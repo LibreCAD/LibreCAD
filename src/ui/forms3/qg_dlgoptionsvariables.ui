@@ -1,0 +1,172 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_DlgOptionsVariables</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>QG_DlgOptionsVariables</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>439</width>
+            <height>312</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Drawing Variables</string>
+    </property>
+    <property name="sizeGripEnabled">
+        <bool>true</bool>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>11</number>
+        </property>
+        <property name="spacing">
+            <number>6</number>
+        </property>
+        <widget class="QTable">
+            <column>
+                <property name="text">
+                    <string>Variable</string>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>Code</string>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>Value</string>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>tabVariables</cstring>
+            </property>
+            <property name="resizePolicy">
+                <enum>Default</enum>
+            </property>
+            <property name="vScrollBarMode">
+                <enum>AlwaysOn</enum>
+            </property>
+            <property name="hScrollBarMode">
+                <enum>AlwaysOff</enum>
+            </property>
+            <property name="numRows">
+                <number>0</number>
+            </property>
+            <property name="numCols">
+                <number>3</number>
+            </property>
+            <property name="showGrid">
+                <bool>true</bool>
+            </property>
+            <property name="selectionMode">
+                <enum>NoSelection</enum>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>Layout1</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <property name="margin">
+                    <number>0</number>
+                </property>
+                <property name="spacing">
+                    <number>6</number>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>Horizontal Spacing2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>buttonOk</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;OK</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+O</string>
+                    </property>
+                    <property name="autoDefault">
+                        <bool>true</bool>
+                    </property>
+                    <property name="default">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>buttonCancel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Cancel</string>
+                    </property>
+                    <property name="accel">
+                        <string>Esc</string>
+                    </property>
+                    <property name="autoDefault">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<connections>
+    <connection>
+        <sender>buttonCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgOptionsVariables</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>buttonOk</tabstop>
+    <tabstop>buttonCancel</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in declaration">rs_graphic.h</include>
+    <include location="local" impldecl="in declaration">rs_filterdxf.h</include>
+    <include location="local" impldecl="in declaration">rs_math.h</include>
+    <include location="local" impldecl="in declaration">rs_system.h</include>
+    <include location="global" impldecl="in implementation">qmessagebox.h</include>
+    <include location="local" impldecl="in implementation">rs_units.h</include>
+    <include location="local" impldecl="in implementation">rs_filterdxf.h</include>
+    <include location="local" impldecl="in implementation">qg_dlgoptionsvariables.ui.h</include>
+</includes>
+<variables>
+    <variable access="private">QStringList listPrec1;</variable>
+    <variable access="private">RS_Graphic* graphic;</variable>
+</variables>
+<slots>
+    <slot>setGraphic( RS_Graphic * g )</slot>
+    <slot>updateVariables()</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

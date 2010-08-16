@@ -1,0 +1,171 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_ArcOptions</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_ArcOptions</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>50</x>
+            <y>14</y>
+            <width>90</width>
+            <height>22</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>0</hsizetype>
+            <vsizetype>0</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>90</width>
+            <height>22</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Arc Options</string>
+    </property>
+    <widget class="QButtonGroup">
+        <property name="name">
+            <cstring>buttonGroup1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>78</width>
+                <height>19</height>
+            </rect>
+        </property>
+        <property name="lineWidth">
+            <number>0</number>
+        </property>
+        <property name="title">
+            <string></string>
+        </property>
+        <property name="flat">
+            <bool>true</bool>
+        </property>
+        <widget class="QRadioButton">
+            <property name="name">
+                <cstring>rbNeg</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>38</x>
+                    <y>2</y>
+                    <width>36</width>
+                    <height>19</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+            <property name="pixmap">
+                <pixmap>image0</pixmap>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Clockwise</string>
+            </property>
+        </widget>
+        <widget class="QRadioButton">
+            <property name="name">
+                <cstring>rbPos</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>2</x>
+                    <y>2</y>
+                    <width>36</width>
+                    <height>19</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+            <property name="pixmap">
+                <pixmap>image1</pixmap>
+            </property>
+            <property name="checked">
+                <bool>true</bool>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Counter Clockwise</string>
+            </property>
+        </widget>
+    </widget>
+    <widget class="Line">
+        <property name="name">
+            <cstring>sep1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>80</x>
+                <y>2</y>
+                <width>6</width>
+                <height>19</height>
+            </rect>
+        </property>
+        <property name="sizePolicy">
+            <sizepolicy>
+                <hsizetype>0</hsizetype>
+                <vsizetype>1</vsizetype>
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+            </sizepolicy>
+        </property>
+        <property name="frameShape">
+            <enum>VLine</enum>
+        </property>
+        <property name="frameShadow">
+            <enum>Sunken</enum>
+        </property>
+        <property name="orientation">
+            <enum>Vertical</enum>
+        </property>
+    </widget>
+</widget>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="359">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232345130345530563054d2e152d2534856f0cbcf4b05b113816c65033000719541dcb43418570f1928c34412c1002800134984284854868924c2b4c0449005c02228022822104096482276113d24a1443d5417821868bed0838bc07d0a14a9b5e602001541473d</data>
+    </image>
+    <image name="image1">
+        <data format="XPM.GZ" length="359">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232345130345530563054d2e152d2534856f0cbcf4b05b195816c65033000711341dcb43418570f0894c100c4828a80d9100a2202150033c02270019010d8163d24a04c8408a62e0222896080623b42044508cd170811b84f11227090a8546bcd050037df450f</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>rbPos</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>QG_ArcOptions</receiver>
+        <slot>updateDirection(bool)</slot>
+    </connection>
+    <connection>
+        <sender>rbNeg</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>QG_ArcOptions</receiver>
+        <slot>updateDirection(bool)</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in implementation">rs_settings.h</include>
+    <include location="local" impldecl="in declaration">rs_arc.h</include>
+    <include location="local" impldecl="in declaration">rs_actiondrawarc.h</include>
+    <include location="local" impldecl="in implementation">qg_arcoptions.ui.h</include>
+</includes>
+<variables>
+    <variable>RS_ActionDrawArc* action;</variable>
+</variables>
+<slots>
+    <slot>setAction( RS_ActionInterface * a, bool update )</slot>
+    <slot>updateDirection( bool )</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">destroy()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

@@ -1,0 +1,169 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_BevelOptions</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_BevelOptions</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>341</width>
+            <height>24</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>4</hsizetype>
+            <vsizetype>0</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>341</width>
+            <height>22</height>
+        </size>
+    </property>
+    <property name="maximumSize">
+        <size>
+            <width>400</width>
+            <height>32767</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Bevel Options</string>
+    </property>
+    <property name="toolTip" stdset="0">
+        <string></string>
+    </property>
+    <hbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>1</number>
+        </property>
+        <widget class="QCheckBox">
+            <property name="name">
+                <cstring>cbTrim</cstring>
+            </property>
+            <property name="text">
+                <string>Trim</string>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Check to trim both entities to the bevel</string>
+            </property>
+        </widget>
+        <widget class="Line">
+            <property name="name">
+                <cstring>sep1_2</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>1</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="frameShape">
+                <enum>VLine</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>lLength1</cstring>
+            </property>
+            <property name="text">
+                <string>Length 1:</string>
+            </property>
+        </widget>
+        <widget class="QLineEdit">
+            <property name="name">
+                <cstring>leLength1</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>lLength2</cstring>
+            </property>
+            <property name="text">
+                <string>Length 2:</string>
+            </property>
+        </widget>
+        <widget class="QLineEdit">
+            <property name="name">
+                <cstring>leLength2</cstring>
+            </property>
+        </widget>
+        <widget class="Line">
+            <property name="name">
+                <cstring>sep1</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>1</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="frameShape">
+                <enum>VLine</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+        </widget>
+    </hbox>
+</widget>
+<connections>
+    <connection>
+        <sender>leLength1</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>QG_BevelOptions</receiver>
+        <slot>updateData()</slot>
+    </connection>
+    <connection>
+        <sender>cbTrim</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>QG_BevelOptions</receiver>
+        <slot>updateData()</slot>
+    </connection>
+    <connection>
+        <sender>leLength2</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>QG_BevelOptions</receiver>
+        <slot>updateData()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in declaration">rs_line.h</include>
+    <include location="local" impldecl="in declaration">rs_settings.h</include>
+    <include location="local" impldecl="in declaration">rs_modification.h</include>
+    <include location="local" impldecl="in declaration">rs_actionmodifybevel.h</include>
+    <include location="local" impldecl="in implementation">qg_beveloptions.ui.h</include>
+</includes>
+<variables>
+    <variable>RS_ActionModifyBevel* action;</variable>
+</variables>
+<slots>
+    <slot>setAction( RS_ActionInterface * a, bool update )</slot>
+    <slot>updateData()</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">destroy()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

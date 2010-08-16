@@ -1,0 +1,226 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>QG_PrintPreviewOptions</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_PrintPreviewOptions</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>12</x>
+            <y>6</y>
+            <width>200</width>
+            <height>22</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>1</hsizetype>
+            <vsizetype>0</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>200</width>
+            <height>22</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Print Preview Options</string>
+    </property>
+    <property name="toolTip" stdset="0">
+        <string></string>
+    </property>
+    <hbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>1</number>
+        </property>
+        <widget class="QComboBox">
+            <property name="name">
+                <cstring>cbScale</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>110</width>
+                    <height>0</height>
+                </size>
+            </property>
+            <property name="editable">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <widget class="QToolButton">
+            <property name="name">
+                <cstring>bBlackWhite</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>1</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+            <property name="toggleButton">
+                <bool>true</bool>
+            </property>
+            <property name="iconSet">
+                <iconset>image0</iconset>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Toggle Black / White mode</string>
+            </property>
+        </widget>
+        <widget class="QToolButton">
+            <property name="name">
+                <cstring>bCenter</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>1</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+            <property name="iconSet">
+                <iconset>image1</iconset>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Center to page</string>
+            </property>
+        </widget>
+        <widget class="QToolButton">
+            <property name="name">
+                <cstring>bFit</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>1</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+            <property name="iconSet">
+                <iconset>image2</iconset>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Fit to page</string>
+            </property>
+        </widget>
+        <widget class="Line">
+            <property name="name">
+                <cstring>sep1_2</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>1</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="frameShape">
+                <enum>VLine</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+        </widget>
+    </hbox>
+</widget>
+<images>
+    <image name="image0">
+        <data format="PNG" length="127">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000004649444154789c633c76ec1803350013554ca1a6412c0c0c0c0c565656ff2931e4d8b1638c2c30ceffffb8cd6264642468d8e00ba3518346b441f0944d4ceac50718876f3102009def0bd0f4fe09550000000049454e44ae426082</data>
+    </image>
+    <image name="image1">
+        <data format="PNG" length="157">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000006449444154789cdd94410ac0200c04678bff7f56be951e4a410f69139a5e5c10f620c3185199191d395a289d2001de011a00eedf58927e9e9174ada79e0201dca7755f7bc968b5138a342aa06cc6db86ec8d8646d1b04b46b344d4d346d5b43d11edfb8d9c979d1ad2379d77780000000049454e44ae426082</data>
+    </image>
+    <image name="image2">
+        <data format="PNG" length="156">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000006349444154789cdd94410ac0200c0467a5ff7f56be951e8aad82945af750ba20e460865d4c5444e050b1509c2001e9006d00996b2c495734e9386fead3515535d61abcab5b50195d7aaab6a78b36aba1a3557d3cdaecf377bd403a06d2b622faef37b203df1d1fe188aacf900000000049454e44ae426082</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>bCenter</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_PrintPreviewOptions</receiver>
+        <slot>center()</slot>
+    </connection>
+    <connection>
+        <sender>bBlackWhite</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>QG_PrintPreviewOptions</receiver>
+        <slot>setBlackWhite(bool)</slot>
+    </connection>
+    <connection>
+        <sender>cbScale</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>QG_PrintPreviewOptions</receiver>
+        <slot>scale(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>cbScale</sender>
+        <signal>activated(const QString&amp;)</signal>
+        <receiver>QG_PrintPreviewOptions</receiver>
+        <slot>scale(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>bFit</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_PrintPreviewOptions</receiver>
+        <slot>fit()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in declaration">rs_line.h</include>
+    <include location="local" impldecl="in declaration">rs_settings.h</include>
+    <include location="local" impldecl="in declaration">rs_modification.h</include>
+    <include location="local" impldecl="in declaration">rs_actionprintpreview.h</include>
+    <include location="local" impldecl="in implementation">qg_printpreviewoptions.ui.h</include>
+</includes>
+<variables>
+    <variable>RS_ActionPrintPreview* action;</variable>
+    <variable access="private">QStringList imperialScales;</variable>
+    <variable access="private">QStringList metricScales;</variable>
+    <variable access="private">bool updateDisabled;</variable>
+</variables>
+<slots>
+    <slot>setAction( RS_ActionInterface * a, bool update )</slot>
+    <slot>updateData()</slot>
+    <slot>center()</slot>
+    <slot>setBlackWhite( bool on )</slot>
+    <slot>fit()</slot>
+    <slot>scale( const QString &amp; s )</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+    <function access="private" specifier="non virtual">destroy()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

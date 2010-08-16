@@ -1,0 +1,258 @@
+<manstyle>
+  <opt name="PageTitle" value="Writing DXF Files" />
+  <section>Writing DXF Files</section>
+  <idx>Writing,Output,DL_Codes,DXF 2000,DXF 2002,R12</idx>
+
+  <para>
+  To write a DXF file, you need to wrap the entities, layers, blocks, ..
+  you have into the wrapper classes of dxflib. Since dxflib does not
+  store any entities, you need to iterate through your entities and
+  call the write functions for each of them. Please note that you 
+  have to stick to the exact order in which you call the write
+  functions of dxflib. Otherwise your DXF file will not be standard
+  conform.
+  </para>
+
+  <subsection>Creating the Writer Object</subsection>
+
+  <para>
+  To create a DXF writer object you need to specify the file name
+  as well as the DXF version you want to produce. At the time of
+  writing only two DXF versions were supported: R12 and 
+  DXF 2000/2002. The dxflib codes for DXF version R12 is
+  DL_Codes::AC1009 and for DXF 2000/2002 DL_Codes::AC1015.
+  </para>
+
+  <para>
+  There are two APIs you will need to write a DXF file. The
+  API in DL_WriterA offers low level functions to write basic 
+  key/value tuples on which a DXF file is based. 
+  Creating a valid DXF file using only these functions would
+  be very difficult and inconvenient. Therefore, there is
+  a higher level API in the DL_Dxf class which allows you
+  to write for example a whole line without knowing the
+  key/value tuples that are needed for it.
+  </para>
+
+  <para>
+  The following code creates and opens a file for a DXF 2000/2002
+  drawing: 
+  </para>
+
+  <includecode src="code/write01.cpp" />
+
+  <!-- Header -->
+  
+  <subsection>
+  Writing the DXF Header
+  </subsection>
+  <idx>Header</idx>
+
+  <subsubsection>
+  Opening the DXF Header
+  </subsubsection>
+
+  <para>
+  The DXF header contains information about the DXF version. It has
+  to be written before anything else with 
+  </para>
+
+  <includecode src="code/write02.cpp" />
+
+  <para>
+  The following list shows how a DXF header typically looks like:
+  </para>
+
+  <includecode src="code/header.dxf" />
+  
+  <para>
+  As you can see, the writeHeader() function does not close
+  the header. This is because you might want to store a set of
+  variables into it. If you have to store variables, you have to 
+  do it now. If not, proceed with "Closing the Header".
+  </para>
+
+  <subsubsection>
+  Storing Additional Variables
+  </subsubsection>
+  <idx>Variables</idx>
+
+  <para>
+  Variables in the DXF header are used to store meta data for 
+  the drawing contained in the file. For a description of
+  all supported variables, please refer to the DXF documentation
+  <a href="appendix_bib.html#dxf">[DXF]</a>.
+  </para>
+
+  <para>
+  The following code snippet shows examples for storing variables of 
+  different types. You can store as many variables as you need but
+  you have to stick to the supported variable names and types in order
+  to create a valid DXF file.
+  </para>
+  
+  <includecode src="code/write03.cpp" />
+  
+  <subsubsection>
+  Closing the Header
+  </subsubsection>
+
+  <para>
+  Use the following code to close the DXF header (end the current section):
+  </para>
+
+  <includecode src="code/write04.cpp" />
+
+  <!-- Tables -->
+
+  <subsection>
+  Writing the Tables Section
+  </subsection>
+  <idx>Tables</idx>
+
+  <subsubsection>
+  Opening the Tables Section
+  </subsubsection>
+
+  <para>
+  The tables section of a DXF file contains some tables defining 
+  viewports, linestyles, layers, etc.
+  </para>
+
+  <para>
+  Open the tables section with the function:
+  </para>
+
+  <includecode src="code/write10.cpp" />
+
+  <subsubsection>
+  Writing the Viewports
+  </subsubsection>
+  <idx>Viewports</idx>
+
+  <para>
+  Viewports are not directly supported by dxflib. However, they 
+  still need to be there in a valid DXF file. You can write the
+  standard viewports using the function:
+  </para>
+  
+  <includecode src="code/write11.cpp" />
+  
+  <subsubsection>
+  Writing the Linetypes
+  </subsubsection>
+  <idx>Linetypes</idx>
+
+  <para>
+  Only linetypes that are actually used need to be defined in the 
+  DXF file. For simplification, you might want to store all 
+  linetypes supported by dxflib as shown below.
+  </para>
+
+  <includecode src="code/write12.cpp" />
+  
+  <subsubsection>
+  Writing the Layers
+  </subsubsection>
+  <idx>Layers</idx>
+
+  <para>
+  Layers are a substantial part of most DXF drawings. All layers
+  that are used in the drawing need to be defined in this 
+  table section. The following example code writes three layers
+  with names "0", "mainlayer" and "anotherlayer" to the DXF file.
+  Note that before writing the layers, you need to specify 
+  how many layers there are in total. Layer "0" is the default
+  layer. It cannot be omitted.
+  </para>
+
+  <includecode src="code/write13.cpp" />
+
+  <para>
+  The default line width is given in 1/100mm. The color enum
+  in namespace DL_Codes defines the most common colors.
+  </para>
+
+  <subsubsection>
+  Writing Various Other Tables
+  </subsubsection>
+
+  <para>
+  These tables are also needed. For more information, please refer
+  to the DXF documentation <a href="appendix_bib.html#dxf">[DXF]</a>.
+  </para>
+  
+  <includecode src="code/write14.cpp" />
+
+  <subsubsection>
+  Writing Dimension Styles
+  </subsubsection>
+  <idx>Dimension Styles</idx>
+
+  <para>
+  Dimension Styles define the look of dimensions.
+  </para>
+
+  <includecode src="code/write15.cpp" />
+  
+  <subsubsection>
+  Writing Block Records
+  </subsubsection>
+  <idx>Block Records</idx>
+
+  <para>
+  Block records define the names of available blocks in the DXF
+  file. The following example declares the existence of two blocks 
+  with names "myblock1" and "myblock2". Note that the first
+  call is also needed. It opens the blocks table and writes 
+  some standard blocks that might be required by the DXF 
+  version.
+  </para>
+
+  <includecode src="code/write16.cpp" />
+  
+  <subsubsection>
+  Ending the Tables Section
+  </subsubsection>
+
+  <includecode src="code/write17.cpp" />
+
+  <subsection>
+  Writing the Blocks Section
+  </subsection>
+  <idx>Blocks</idx>
+
+  <para>
+  The blocks section defines the entities of each block.
+  </para>
+
+  <includecode src="code/write20.cpp" />
+  
+  <subsection>
+  Writing the Entities Section
+  </subsection>
+  <idx>Entities</idx>
+
+  <para>
+  The entities section defines the entities of the drawing. The 
+  two entities in the following example use the attributes
+  of their layer (256 = color by layer, -1 = line width by layer, 
+  "BYLAYER" = line style by layer). 
+  </para>
+
+  <includecode src="code/write30.cpp" />
+  
+  <subsection>
+  Writing the Objects Section
+  </subsection>
+  
+  <includecode src="code/write40.cpp" />
+  
+  <subsection>
+  Ending and Closing the File
+  </subsection>
+  
+  <includecode src="code/write50.cpp" />
+
+</manstyle>
+

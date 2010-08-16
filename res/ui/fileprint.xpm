@@ -1,0 +1,29 @@
+/* XPM */
+static const char* fileprint_xpm[]={
+"18 18 6 1",
+"# c #000000",
+"a c #ffffff",
+"b c #808080",
+"c c #ff0000",
+"d c #c0c0c0",
+". c None",
+"..................",
+"....##########....",
+"....#aaaaaaaa#....",
+"....#a#b#aaaa#....",
+"....#aaaaaaaa#....",
+"....#a#b#aaaa#....",
+"....#aaaaaaaa#....",
+"....#a#b#b#ba#....",
+"....#aaaaaaaa#....",
+".################.",
+".#aaaaaaaaaaaaaa#.",
+".#accddddddddddd#.",
+".#addddddddddddd#.",
+".#addddddddddddd#.",
+".################.",
+"..#bbbbbbbbbbbb#..",
+"..##############..",
+".................."};
+
+

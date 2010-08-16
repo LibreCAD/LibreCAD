@@ -1,0 +1,258 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_CadToolBarCircles</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_CadToolBarCircles</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>34</x>
+            <y>0</y>
+            <width>56</width>
+            <height>336</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>0</hsizetype>
+            <vsizetype>1</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>56</width>
+            <height>336</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Circles</string>
+    </property>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bCircle2P</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>48</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image0</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Circle with two opposite points</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bCircleCR</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>20</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image1</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Circle with center and radius</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bCircle</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>20</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image2</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Circle with center and point</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bCircle3P</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>48</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image3</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Circle with three points</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bBack</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>56</width>
+                <height>20</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image4</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Back to main menu</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bCircleParallel</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>76</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image5</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Concentric</string>
+        </property>
+    </widget>
+</widget>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="485">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b4500022630543251d2e253d856405bffcbc54105b19c856360003103711c44d4b8371f5c040190c206c98288c0fa1a1a2503110484c8489220922449105c11a718ba2090285e92f4a8a7b21be4412c4220ad2883724f5d042bdd69a0b00187157cf</data>
+    </image>
+    <image name="image1">
+        <data format="XPM.GZ" length="485">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b4500022630543251d2e253d856405bffcbc54105b19c856360003103711c44d4b8371f5c040190c206c98288c0fa1a1a250313d2813228a24a897a80c15451104a941174dd48389a2090285514513f530451313f58816453819b7a81e9a30a67b9144518595f1870e8e90d4430bf55a6b2e00672357d6</data>
+    </image>
+    <image name="image2">
+        <data format="XPM.GZ" length="485">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b4500022630543251d2e253d856405bffcbc54105b19c856360003103711c44d4b8371f5c040190c206c98288c0fa1a1a2503110484c8489220922449105c11a718ba2090285098b82ec215694187349712faa8f411cccd00131f186a41e5aa8d75a730100767257b9</data>
+    </image>
+    <image name="image3">
+        <data format="XPM.GZ" length="485">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b4500022630543251d2e253d856405bffcbc54105b19c856360003103711c44d4b8371f5c040190c206ca86862a2324c0e45540f06404c88a8b29e1ea628b220c8143ca268824061fa8b22fb0cc9bdd84551bda10c0f1d65144198a89e32b690d4430bf55a6b2e007da458b1</data>
+    </image>
+    <image name="image4">
+        <data format="XPM.GZ" length="309">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232345330345430563054d2e152d2534856f0cbcf4b05b113816c65033000719541dc343000ab0402e5443d38808a2927628801851295c1002e06128201a818b2104c2c118b981e36313d6c627a89986e0109628ae9218bd55a730100b0a148a8</data>
+    </image>
+    <image name="image5">
+        <data format="XPM.GZ" length="409">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade6523234530022630543251d2e253d856405bffcbc54105b19c856360003103711c44d4b8371f54040190cc04ca8189407a121625011b028540c2c94080410419818840f222162206589109d204a192a9608333f11454c198c088b61e8c5b0039b5bb0ba199bdfb086015a58d55a730100037f4e43</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>bCircle</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarCircles</receiver>
+        <slot>drawCircle()</slot>
+    </connection>
+    <connection>
+        <sender>bCircleCR</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarCircles</receiver>
+        <slot>drawCircleCR()</slot>
+    </connection>
+    <connection>
+        <sender>bCircle2P</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarCircles</receiver>
+        <slot>drawCircle2P()</slot>
+    </connection>
+    <connection>
+        <sender>bCircle3P</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarCircles</receiver>
+        <slot>drawCircle3P()</slot>
+    </connection>
+    <connection>
+        <sender>bCircleParallel</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarCircles</receiver>
+        <slot>drawCircleParallel()</slot>
+    </connection>
+    <connection>
+        <sender>bBack</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarCircles</receiver>
+        <slot>back()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>bBack</tabstop>
+    <tabstop>bCircle</tabstop>
+    <tabstop>bCircleCR</tabstop>
+    <tabstop>bCircle2P</tabstop>
+    <tabstop>bCircle3P</tabstop>
+    <tabstop>bCircleParallel</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in declaration">qg_actionhandler.h</include>
+    <include location="local" impldecl="in implementation">qg_cadtoolbar.h</include>
+    <include location="local" impldecl="in implementation">qg_cadtoolbarcircles.ui.h</include>
+</includes>
+<forwards>
+    <forward>class QG_CadToolBar</forward>
+</forwards>
+<variables>
+    <variable>QG_ActionHandler* actionHandler;</variable>
+    <variable>QG_CadToolBar* cadToolBar;</variable>
+</variables>
+<slots>
+    <slot>mousePressEvent( QMouseEvent * e )</slot>
+    <slot>contextMenuEvent( QContextMenuEvent * e )</slot>
+    <slot>setCadToolBar( QG_CadToolBar * tb )</slot>
+    <slot>drawCircle()</slot>
+    <slot>drawCircleCR()</slot>
+    <slot>drawCircle2P()</slot>
+    <slot>drawCircle3P()</slot>
+    <slot>drawCircleParallel()</slot>
+    <slot>back()</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>
