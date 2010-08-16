@@ -1,0 +1,174 @@
+/****************************************************************************
+**
+** This file is part of the CADuntu project, a 2D CAD program
+**
+** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+**
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by 
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+**
+** This copyright notice MUST APPEAR in all copies of the script!  
+**
+**********************************************************************/
+
+#include "rs_actiondrawlinehorvert.h"
+#include "rs_snapper.h"
+
+
+
+RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(
+    RS_EntityContainer& container,
+    RS_GraphicView& graphicView)
+        :RS_PreviewActionInterface("Draw horizontal/vertical lines",
+                           container, graphicView) {
+    reset();
+    RS_DEBUG->print("RS_ActionDrawLineHorVert::constructor");
+}
+
+
+
+RS_ActionDrawLineHorVert::~RS_ActionDrawLineHorVert() {}
+
+
+QAction* RS_ActionDrawLineHorVert::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
+/* RVT_PORT    QAction* action = new QAction(tr("hor./vert. line"),
+                                  tr("H&orizontal / Vertical"),
+                                  QKeySequence(), NULL); */
+    QAction* action = new QAction(tr("hor./vert. line"), NULL);
+    action->setStatusTip(tr("Draw horizontal/vertical lines"));
+    return action;
+}
+
+void RS_ActionDrawLineHorVert::reset() {
+    data = RS_LineData(RS_Vector(false),
+                       RS_Vector(false));
+}
+
+
+
+void RS_ActionDrawLineHorVert::init(int status) {
+    RS_PreviewActionInterface::init(status);
+
+    reset();
+    RS_DEBUG->print("RS_ActionDrawLineHorVert::init");
+}
+
+
+
+void RS_ActionDrawLineHorVert::trigger() {
+    RS_PreviewActionInterface::trigger();
+
+    RS_Line* line = new RS_Line(container, data);
+    line->setLayerToActive();
+    line->setPenToActive();
+    container->addEntity(line);
+
+    // upd. undo list:
+    if (document!=NULL) {
+        document->startUndoCycle();
+        document->addUndoable(line);
+        document->endUndoCycle();
+    }
+
+	graphicView->redraw(RS2::RedrawDrawing);
+    graphicView->moveRelativeZero(line->getMiddlepoint());
+    RS_DEBUG->print("RS_ActionDrawLineHorVert::trigger():"
+                    " line added: %d", line->getId());
+
+}
+
+
+
+void RS_ActionDrawLineHorVert::mouseMoveEvent(RS_MouseEvent* e) {
+    RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent begin");
+
+    RS_Vector mouse = snapPoint(e);
+    if (getStatus()==SetEndpoint && p1.valid) {
+        RS_Vector p2x = RS_Vector(mouse.x, p1.y);
+        RS_Vector p2y = RS_Vector(p1.x, mouse.y);
+        if (mouse.distanceTo(p2y) > mouse.distanceTo(p2x))
+            p2 = p2x;
+        else
+            p2 = p2y;
+        deletePreview();
+        data = RS_LineData(p1, p2);
+        preview->addEntity(new RS_Line(preview, data));
+        drawPreview();
+    }
+
+    RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent end");
+}
+
+
+
+void RS_ActionDrawLineHorVert::mouseReleaseEvent(RS_MouseEvent* e) {
+    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+        RS_Vector mouse = snapPoint(e);
+
+        switch (getStatus()) {
+        case SetStartpoint:
+            p1 = mouse;
+            setStatus(SetEndpoint);
+            break;
+
+        case SetEndpoint:
+            p2 = mouse;
+            trigger();
+            setStatus(SetStartpoint);
+            break;
+
+        default:
+            break;
+        }
+    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+        deletePreview();
+        init(getStatus()-1);
+    }
+}
+
+
+
+void RS_ActionDrawLineHorVert::updateMouseButtonHints() {
+    switch (getStatus()) {
+    case SetStartpoint:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first point"),
+                                            tr("Cancel"));
+        break;
+    case SetEndpoint:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second point"),
+                                            tr("Back"));
+        break;
+    default:
+        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        break;
+    }
+}
+
+
+void RS_ActionDrawLineHorVert::updateMouseCursor() {
+    graphicView->setMouseCursor(RS2::CadCursor);
+}
+
+
+void RS_ActionDrawLineHorVert::updateToolBar() {
+    if (!isFinished()) {
+        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
+    } else {
+        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarLines);
+    }
+}
+
+// EOF

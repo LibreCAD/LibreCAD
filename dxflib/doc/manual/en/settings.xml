@@ -1,0 +1,168 @@
+<manstyle>
+  <opt name="ContentsHeader" value="Contents" />
+
+  <opt name="IndexHeader" value="Index" />
+
+  <opt name="FigureLabel" value="Figure" />
+
+  <opt name="ChapterLabel" value="Chapter" />
+
+  <print>
+    <opt name="LeftMargin" value="33" />
+
+    <opt name="RightMargin" value="33" />
+
+    <opt name="TopMargin" value="32" />
+
+    <opt name="BottomMargin" value="25" />
+
+    <opt name="FrontTitleFontSize" value="0.7" />
+
+    <opt name="FrontTitleFont" value="Utopia" />
+	
+    <opt name="FrontInfoFontSize" value="0.4" />
+
+    <opt name="ReleaseFontSize" value="0.4" />
+
+    <opt name="ReleaseFont" value="Utopia" />
+
+    <opt name="ContentsFont" value="Utopia" />
+
+    <opt name="ContentsTopMargin0" value="6" />
+
+    <opt name="ContentsBottomMargin0" value="6" />
+
+    <opt name="ContentsFontSize0" value="0.6" />
+
+    <opt name="ContentsTopMargin1" value="2" />
+
+    <opt name="ContentsBottomMargin1" value="2" />
+
+    <opt name="ContentsFontSize1" value="0.4" />
+
+    <opt name="ContentsTopMargin2" value="2" />
+
+    <opt name="ContentsBottomMargin2" value="2" />
+
+    <opt name="ContentsFontSize2" value="0.3" />
+
+    <opt name="IndexFont" value="Utopia" />
+
+    <opt name="IndexFontSize" value="0.4" />
+
+    <opt name="IndexLetterFont" value="Utopia" />
+
+    <opt name="IndexLetterFontSize" value="0.5" />
+
+    <opt name="ColumnSpacing" value="2" />
+
+    <opt name="ChapterFontSize" value="0.4" />
+
+    <opt name="ChapterMargin" value="4" />
+
+    <opt name="Font" value="Utopia" />
+
+    <opt name="HeaderFont" value="Utopia" />
+
+    <opt name="TopFont" value="Utopia" />
+
+<!-- Code -->
+    <opt name="CodeFont" value="Courier" />
+
+    <opt name="CodeLeftMargin" value="35" />
+
+<!-- Chapter in header -->
+    <opt name="TopFontSize" value="0.36" />
+
+    <opt name="ParaTopMargin" value="0" />
+
+    <opt name="ParaBottomMargin" value="2" />
+
+    <opt name="ParaFontSize" value="0.40" />
+
+    <opt name="ImageTopMargin" value="4" />
+
+    <opt name="ImageSpace" value="2" />
+
+    <opt name="ImageBottomMargin" value="4" />
+
+    <opt name="ImageFontSize" value="0.4" />
+
+    <opt name="ToolbarTopMargin" value="0" />
+
+    <opt name="ToolbarBottomMargin" value="2" />
+
+    <opt name="ToolbarFactor" value="7" />
+
+<!-- Header 0 (Chapter) and Contents -->
+    <opt name="TopMargin0" value="24" />
+
+    <opt name="BottomMargin0" value="20" />
+
+    <opt name="LeftMargin0" value="30" />
+
+    <opt name="FontSize0" value="0.7" />
+
+    <opt name="TopMargin1" value="4" />
+
+    <opt name="BottomMargin1" value="8" />
+
+    <opt name="LeftMargin1" value="30" />
+
+    <opt name="FontSize1" value="0.6" />
+
+    <opt name="TopMargin2" value="3" />
+
+    <opt name="BottomMargin2" value="6" />
+
+    <opt name="LeftMargin2" value="32" />
+
+    <opt name="FontSize2" value="0.5" />
+
+    <opt name="PageNumberPos" value="6" />
+	
+    <opt name="PageFont" value="Utopia" />
+	
+    <opt name="PageFontSize" value="0.36" />
+
+    <opt name="TopPos" value="8" />
+  </print>
+
+  <html>
+    <opt name="HtmlWidth" value="400" />
+
+    <opt name="HtmlImgFormat" value="png" />
+
+    <opt name="HtmlTheme"
+    value="/home/andrew/data/RibbonSoft/projects/QCad2/manstyle/themes/default" />
+
+    <opt name="HtmlFileHome" value="index.html" />
+
+    <opt name="HtmlFileContents" value="contents.html" />
+
+    <opt name="HtmlFileIndex" value="index2.html" />
+
+    <opt name="HtmlFileFirst" value="index.html" />
+
+    <opt name="HtmlFileLast" value="index2.html" />
+
+    <opt name="HtmlFileContentsNext" value="license.html" />
+
+    <opt name="HtmlFileContentsPrev" value="index.html" />
+
+    <opt name="HtmlTextHome" value="Home" />
+	
+    <opt name="HtmlTextContents" value="Contents" />
+	
+    <opt name="HtmlTextIndex" value="Index" />
+
+    <opt name="HtmlTextNext" value="Next" />
+
+    <opt name="HtmlTextPrev" value="Prev" />
+
+    <opt name="HtmlTextFirst" value="First" />
+
+    <opt name="HtmlTextLast" value="Last" />
+  </html>
+</manstyle>
+

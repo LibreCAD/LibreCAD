@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>QCad - Construction - Texts</title>
+  <meta name="generator" content="ManStyle">
+  <meta name="author" content="Andrew Mustun">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="5">
+	  <img src="img/space.png" width="5" height="1" border="0">
+	</td>
+    <td width="105">
+	  <img src="img/space.png" width="105" height="1" border="0">
+	</td>
+    <td width="15">
+	  <img src="img/space.png" width="15" height="1" border="0">
+	</td>
+    <td width="460">
+	  <img src="img/space.png" width="460" height="1" border="0">
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td align="center">
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="construction_ellipse.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="construction_dim.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            <center>QCad User Reference Manual<br>
+	           <img src="img/separator.png"></center>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+	<td>
+<a name="Text"></a>
+<a name="14_6"></a><h2>Texts</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_text.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Draw - Text</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+text</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Use this tool to create single line and multi line texts.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Just after launching the tool, the text dialog is presented in which
+      you can choose the font and enter the text you want to create (Figure
+      32).</li>
+    </ol>
+  </p>
+<p class="figure">
+<a href="img/textdialog01.png"><img border="0" src="img/textdialog01_t.png"></a></p><p class="figure_label">
+<b>Figure 32:&nbsp;</b>The text
+  creation dialog.</p>
+<p>
+
+    <ol>
+      <li value="2">Choose the font name and attributes in the upper left area
+      of the dialog (Figure 33). For a complete list of all
+      available fonts, please refer to the appendix. In the height field, enter
+      the height of the text in the unit of your drawing. To choose normal
+      line spacing, click the checkbox "Default line spacing". You can increase
+      or decrease the line spacing by disabling the checkbox and entering a
+      value in the "Line spacing" box. The value entered is a factor relative
+      to the default (1.0). Valid values range from 0.25 to 4.00. Values
+      outside this range are allowed but break compatibility to other CAD
+      programs such as AutoCAD.</li>
+    </ol>
+  </p>
+<p class="figure">
+<img border="0" src="img/textdialog02.png"></p><p class="figure_label">
+<b>Figure 33:&nbsp;</b>Font
+  selection.</p>
+<p>
+
+    <ol>
+      <li value="3">Choose the alignment of the text (Figure
+      34).</li>
+    </ol>
+  </p>
+<p class="figure">
+<img border="0" src="img/textdialog03.png"></p><p class="figure_label">
+<b>Figure 34:&nbsp;</b>Text
+  alignment.</p>
+<p>
+
+    <ol>
+      <li value="4">Enter the angle for the text (Figure 35).
+      Normal horizontal texts have an angle of zero degrees.</li>
+    </ol>
+  </p>
+<p class="figure">
+<img border="0" src="img/textdialog04.png"></p><p class="figure_label">
+<b>Figure 35:&nbsp;</b>Text
+  angle.</p>
+<p>
+
+    <ol>
+      <li value="5">Enter the text you want to create in the large text box
+      (Figure 36). You can also use the icons above the box to
+      load texts, save texts you've already entered or to paste texts from the
+      clipboard.
+      <br>
+
+      To enter special symbols that are not available on your keyboard, you can
+      use the combobox at the bottom left of the dialog (Figure
+      37). Simply choose a symbol from the list and it will be
+      placed at the current cursor position in the text box.
+      <br>
+
+      If the symbol list doesn't contain the symbol you need, please use the
+      comboboxes at the bottom right to choose any character from the unicode
+      char set (Figure 38). Note that the font you've chosen
+      might not contain the characters you insert. In that case the characters
+      will be ignored.
+      <br>
+
+      To insert a unicode character, select the unicode page in the first
+      combobox and choose the character from the second combobox. Now click the
+      button at the right to insert the character at the current cursor
+      position.</li>
+    </ol>
+  </p>
+<p class="figure">
+<img border="0" src="img/textdialog05.png"></p><p class="figure_label">
+<b>Figure 36:&nbsp;</b>The text area
+  where you can enter or load a text.</p>
+<p class="figure">
+<img border="0" src="img/textdialog06.png"></p><p class="figure_label">
+<b>Figure 37:&nbsp;</b>Insert special
+  symbols using the Symbol combobox.</p>
+<p class="figure">
+<img border="0" src="img/textdialog07.png"></p><p class="figure_label">
+<b>Figure 38:&nbsp;</b>Insert any
+  unicode characters with the unicode tools..</p>
+<p>
+
+    <ol>
+      <li value="6">Click "OK" to exit the text dialog.</li> 
+	  
+	  <li>Use the mouse to specify the location of the text or enter
+      a co-ordinate in the command line.</li>
+
+	  <li>
+	  Often, users need to create a number of similar texts. For that reason
+	  the text tool doesn't terminate after creating the first text entity.
+	  You can change the text and the text angle in the options toolbar and 
+	  create other texts with similar settings.
+	  </li>
+
+      <li>Right click or press Escape to stop the text tool.</li>
+    </ol>
+  </p>
+<a name="14_6_1"></a><h3>Advanced Text Commands</h3>
+
+<p>
+
+  Sometimes it's useful to put two texts on top of each other (e.g. for 
+  tolerances). There's a sepcial escape sequence you can type anywhere
+  in the text to achieve that. For example the sequence "10\S+0.05\-0.05;
+  Millimeter" would produce a tolerance symbol as shown in Figure 
+  39.
+  </p>
+<p class="figure">
+<img border="0" src="imgs/textdialog08.png"></p><p class="figure_label">
+<b>Figure 39:&nbsp;</b>Text produced
+  by the string "10\S+0.05\-0.05; Millimeter".</p>
+    </td>
+  </tr>
+  
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td valign=top>
+       <br>
+
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="construction_ellipse.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="construction_dim.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+      </table>
+	   
+       <p class="footer">
+       [ <a href="index.html">Home</a> | 
+	     <a href="contents.html">Contents</a> |
+		 <a href="index2.html">Index</a> ]<br>
+       [ <a href="license.html">1</a> | <a href="preface.html">2</a> | <a href="basics.html">3</a> | <a href="start.html">4</a> | <a href="gui.html">5</a> | <a href="commandline.html">6</a> | <a href="file.html">7</a> | <a href="printing.html">8</a> | <a href="edit.html">9</a> | <a href="view.html">10</a> | <a href="layers.html">11</a> | <a href="blocks.html">12</a> | <a href="snapping.html">13</a> | <a href="construction.html">14</a> | <a href="selection.html">15</a> | <a href="modification.html">16</a> | <a href="information.html">17</a> | <a href="options_general.html">18</a> | <a href="options_drawing.html">19</a> | <a href="appendix.html">20</a> ]</p>
+       <p class="footer2">
+	   Copyright  2003 <a href="http://www.ribbonsoft.com">RibbonSoft</a>, Inc.<br>All Rights Reserved.<br>
+       This Manual was created with <a href="http://www.ribbonsoft.com/manstyle.html">ManStyle</a>.
+       </p>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

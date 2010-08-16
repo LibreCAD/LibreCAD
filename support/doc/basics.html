@@ -1,0 +1,380 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>QCad - Basics</title>
+  <meta name="generator" content="ManStyle">
+  <meta name="author" content="Andrew Mustun">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="5">
+	  <img src="img/space.png" width="5" height="1" border="0">
+	</td>
+    <td width="105">
+	  <img src="img/space.png" width="105" height="1" border="0">
+	</td>
+    <td width="15">
+	  <img src="img/space.png" width="15" height="1" border="0">
+	</td>
+    <td width="460">
+	  <img src="img/space.png" width="460" height="1" border="0">
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td align="center">
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="preface.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="start.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            <center>QCad User Reference Manual<br>
+	           <img src="img/separator.png"></center>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+	<td>
+<a name="3"></a><h1>3 Basic CAD Concepts</h1>
+
+<p>
+<i>This chapter is intended to introduce you into the basic concepts
+  of a CAD system. If you're used to working with CAD system you might want to
+  skip this chapter. Please note that the concepts mentioned in this chapter
+  are all later described in detail.</i></p>
+<a name="Entity"></a>
+<a name="Graphic Object"></a>
+<a name="3_1"></a><h2>Entities</h2>
+
+<p>
+Entities are graphical objects in a CAD system. Typical entities which
+  are supported by most CAD systems are: points, lines and circular and
+  elliptical arcs. More complex and CAD specific entities include polylines,
+  texts, dimensioning, hatches and splines.</p>
+<a name="Attribute"></a>
+<a name="3_2"></a><h2>Attributes</h2>
+
+<p>
+Every entity has certain attributes such as its color, line type and
+  line width.</p>
+<a name="Layer"></a>
+<a name="3_3"></a><h2>Layers</h2>
+
+<p>
+A basic concept of computer aided drafting is the use of layers to
+  organize a drawing. Every entity of a drawing is on exactly one layer and a
+  layer can contain lots of entities. Typically entities with a common
+  'function' or common attributes are put on the same layer. E.g. you might
+  want to put all axes in a drawing on a layer named 'axes' (see Figure
+  1). Layers can have attributes (color, line width, line style).
+  Each entity can have its own attributes or have its attributes defined by the
+  layer it is placed on. In the latter case you can change for example the
+  color of all 'axes' entities by changing the color of the layer
+  'axes'.</p>
+<p>
+In manual drafting, a similar approach was used. Different building
+  systems, such as wiring and air conditioning were often drawn on separate
+  transparent sheet of paper. These sheets were then overlaid on one another to
+  produce final drawings.</p>
+<p class="figure">
+<img border="0" src="imgs/layers01.png"></p><p class="figure_label">
+<b>Figure 1:&nbsp;</b>Example use of
+  layers.</p>
+<a name="Block"></a>
+<a name="Insert"></a>
+<a name="Group of entities"></a>
+<a name="3_4"></a><h2>Blocks</h2>
+
+<p>
+A Block is a group of entities. Blocks can be inserted into the same
+  graphic more than once with different Attributes and different locations,
+  scaling factors and rotation angles (see Figure 2). Such an
+  instance of a block is usually called an Insert. Inserts have attributes just
+  like entities and layers. An Entity that is part of an Insert can have its
+  own attributes or share the attributes of the Insert. Once created, Inserts
+  are still linked to the Block they instantiate. The power of inserts is, that
+  you can modify the Block once and all Inserts will be updated
+  accordingly.</p>
+<p class="figure">
+<img border="0" src="imgs/blocks01.png"></p><p class="figure_label">
+<b>Figure 2:&nbsp;</b>Three instances
+  (Inserts) of a Block with different colors, angles and scalings.</p>
+<a name="3_5"></a><h2>Drafting in CAD</h2>
+
+<p>
+In many ways, CAD is similar to traditional drafting. When drawing a
+  plan or a view of an object on a paper, you would use tools such as a ruler
+  to draw lines. In CAD systems there is a variety of tools available to
+  achieve the same goal. The big advantage of a CAD system is the fact that you
+  can change every entity of your drawing easily after you've created it. This
+  might be the most difficult thing to learn when moving from paper to CAD.
+  When working with a CAD system you will very often create lines that won't be
+  on the final printout or which don't have the correct length and need to be
+  trimmed later (see Figure 3). A common mistake of CAD beginners
+  is wanting to create the final drawing right away.</p>
+<p class="figure">
+<img border="0" src="imgs/concept01.png"></p><p class="figure_label">
+<b>Figure 3:&nbsp;</b>Three possible steps
+  to quickly create a drawing using supportive constructions and the ability of
+  a CAD system to change existing entities.</p>
+<a name="Co-ordinate Systems"></a>
+<a name="3_6"></a><h2>Co-ordinate Systems</h2>
+
+<p>
+A good understanding of how co-ordinates work is absolutely crucial if
+  you are to make the best use of any CAD program. If you're not familiar with
+  co-ordinates it's highly recommended that you take some time to familiarize
+  yourself with the basic concepts.</p>
+<a name="Origin"></a>
+<a name="Zero"></a>
+<a name="Relative zero"></a>
+<a name="3_6_1"></a><h3>Origin</h3>
+
+<p>
+The origin of the drawing is the point where the X and Y axis cross
+  each other. It's the absolute zero of the drawing. In addition to the origin
+  there's a relative zero point in QCad. This is a helpful spot that changes
+  it's position depending on the current user interactions. The relative zero
+  point can also be moved around by the user.</p>
+<a name="Cartesian Co-ordinates"></a>
+<a name="X-Ordinate"></a>
+<a name="Y-Ordinate"></a>
+<a name="3_6_2"></a><h3>Cartesian Co-ordinates</h3>
+
+<p>
+<i>(named after the French philosopher Ren&eacute; Descartes
+  1596-1650)</i></p>
+<p>
+The Cartesian co-ordinate system is the standard co-ordinate system
+  where the position of a point can be described by its distance from two axes,
+  X and Y. Cartesian co-ordinates in QCad are written in the format:</p>
+<p class="code">
+x-ordinate,y-ordinate</p>
+<p>
+
+  where x-ordinate can be a number such as <code>2.5</code> or a mathematical
+  expression like <code>cos(30)/2</code> (see 
+  <a href="expressions.html">Mathematical Expressions</a>).
+  </p>
+<p class="figure">
+<img border="0" src="imgs/co-ordinate01.png"></p><p class="figure_label">
+<b>Figure 4:&nbsp;</b>Absolute
+  Cartesian Co-ordinates 
+  <code>40,30</code>
+
+  .</p>
+<p>
+Cartesian co-ordinates can also originate in a position different from
+  the origin. In that case we talk about 'relative co-ordinates'. In QCad,
+  relative Cartesian co-ordinates are written in the format:</p>
+<p class="code">
+@x-ordinate,y-ordinate</p>
+<p class="figure">
+<img border="0" src="imgs/co-ordinate02.png"></p><p class="figure_label">
+<b>Figure 5:&nbsp;</b>Relative
+  Cartesian Co-ordinates @ 
+  <code>30,10</code>
+
+  .</p>
+<a name="Polar Co-ordinates"></a>
+<a name="Angle"></a>
+<a name="3_6_3"></a><h3>Polar Co-ordinates</h3>
+
+<p>
+Polar co-ordinates use a distance and an angle to describe the position
+  of a point. In QCad, polar co-ordinates are noted in the format:</p>
+<p class="code">
+distance&lt;angle</p>
+<p class="figure">
+<img border="0" src="imgs/co-ordinate03.png"></p><p class="figure_label">
+<b>Figure 6:&nbsp;</b>Absolute
+  Polar Co-ordinates 
+  <code>50&lt;37</code>
+
+  .</p>
+<p>
+Just like Cartesian co-ordinates, polar co-ordinates can also originate
+  in a position different from the origin. In QCad, relative polar co-ordinates
+  are written in the format:</p>
+<p class="code">
+@distance&lt;angle</p>
+<p class="figure">
+<img border="0" src="imgs/co-ordinate04.png"></p><p class="figure_label">
+<b>Figure 7:&nbsp;</b>Relative
+  Polar Co-ordinates 
+  <code>@31.6&lt;18.4</code>
+
+  .</p>
+<a name="Object Snapping"></a>
+<a name="Grid Snapping"></a>
+<a name="Snapping"></a>
+<a name="3_7"></a><h2>Object and Grid Snapping</h2>
+
+<p>
+Whenever you need to specify a co-ordinate in QCad, you can use the
+  snap feature which allows you to precisely select grid points or significant
+  points on existing objects: endpoints or midpoints of lines, etc.</p>
+<p>
+The chapter 
+  <a href="snapping.html">"Object Snap"</a>
+
+  gives you an overview over all snap tools.</p>
+<a name="Transform"></a>
+<a name="Duplicate"></a>
+<a name="Select Objects"></a>
+<a name="3_8"></a><h2>Basic Editing</h2>
+
+<p>
+Entities can be inserted, selected, and, once selected, can be deleted,
+  transformed or duplicated. To insert an entity means to draw it by selecting
+  the appropriate drawing tool, such as line, arc, etc., and by locating points
+  that define the object to be drawn, such as the endpoints of a line.</p>
+<p>
+The chapter 
+  <a href="construction.html">"Entity Drawing Commands"</a>
+
+  lists all tools for adding new entities to a drawing.</p>
+<a name="Select Entities"></a>
+<a name="Entity Selection"></a>
+<a name="3_8_1"></a><h3>Entity Selection</h3>
+
+<p>
+An entity must be selected before it can be deleted, duplicated, or
+  transformed. Entity selection is one of the most basic of CAD operations.
+  QCad offers a wide variety of selection tools to quickly select groups of
+  entities, entities within a range, connected entities, etc.</p>
+<p>
+The chapter 
+  <a href="selection.html">"Entity Selection"</a>
+
+  introduces you into the selection tools of QCad.</p>
+<a name="Deletion"></a>
+<a name="Delete Entities"></a>
+<a name="3_8_2"></a><h3>Deletion</h3>
+
+<p>
+Deleting an entity means to remove it from the drawing.</p>
+<a name="Modifications"></a>
+<a name="Transformations"></a>
+<a name="3_8_3"></a><h3>Modifications</h3>
+
+<p>
+Basic modifications of a CAD systems include translation, rotation,
+  reflection, and scaling. As well as these operations which don't alter the
+  characteristic geometry of selected entities, there are some that do. You can
+  break, trim, extend or stretch existing entities.</p>
+<p>
+The chapter 
+  <a href="modification.html">"Modification"</a>
+
+  lists and describes all tools for modifying and deleting entities.</p>
+<a name="Viewing"></a>
+<a name="Drawing scale"></a>
+<a name="Sheet size"></a>
+<a name="3_9"></a><h2>Viewing in CAD</h2>
+
+<p>
+Unlike in manual drafting, there is no need in CAD to determine in
+  advance the sheet size and drawing scale. There is 
+  <b>no</b>
+
+  drawing scale: all sizes and distances are specified using their full-scale
+  values. A 10 meter object is drawn as a 10 meter object. Only at the printing
+  stage, the drawing scale needs to be determined based on sheet size and
+  drawing size.</p>
+<p>
+On the screen, the user can adjust the currently visible area of the
+  drawing by zooming in to view more detail or zooming out to view a wider
+  extent. Another important viewing operation in CAD is panning. To see another
+  portion of the drawing without changing the display scale, a user pans to it
+  by "moving" a rectangular display window until it's over the desired
+  spot.</p>
+<a name="Visible area"></a>
+<a name="Zooming"></a>
+<a name="Display"></a>
+<p>
+Chapter 
+  <a href="view.html">"Viewing"</a>
+
+  is all about zooming and viewing functions.</p>
+    </td>
+  </tr>
+  
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td valign=top>
+       <br>
+
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="preface.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="start.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+      </table>
+	   
+       <p class="footer">
+       [ <a href="index.html">Home</a> | 
+	     <a href="contents.html">Contents</a> |
+		 <a href="index2.html">Index</a> ]<br>
+       [ <a href="license.html">1</a> | <a href="preface.html">2</a> | <a href="basics.html">3</a> | <a href="start.html">4</a> | <a href="gui.html">5</a> | <a href="commandline.html">6</a> | <a href="file.html">7</a> | <a href="printing.html">8</a> | <a href="edit.html">9</a> | <a href="view.html">10</a> | <a href="layers.html">11</a> | <a href="blocks.html">12</a> | <a href="snapping.html">13</a> | <a href="construction.html">14</a> | <a href="selection.html">15</a> | <a href="modification.html">16</a> | <a href="information.html">17</a> | <a href="options_general.html">18</a> | <a href="options_drawing.html">19</a> | <a href="appendix.html">20</a> ]</p>
+       <p class="footer2">
+	   Copyright  2003 <a href="http://www.ribbonsoft.com">RibbonSoft</a>, Inc.<br>All Rights Reserved.<br>
+       This Manual was created with <a href="http://www.ribbonsoft.com/manstyle.html">ManStyle</a>.
+       </p>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

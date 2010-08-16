@@ -1,0 +1,177 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>QG_LibraryWidget</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_LibraryWidget</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>146</width>
+            <height>413</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Library Browser</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>2</number>
+        </property>
+        <property name="spacing">
+            <number>2</number>
+        </property>
+        <widget class="QListView">
+            <column>
+                <property name="text">
+                    <string>Directories</string>
+                </property>
+                <property name="clickable">
+                    <bool>false</bool>
+                </property>
+                <property name="resizable">
+                    <bool>false</bool>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>lvDirectory</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>7</hsizetype>
+                    <vsizetype>2</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>0</width>
+                    <height>32</height>
+                </size>
+            </property>
+            <property name="rootIsDecorated">
+                <bool>true</bool>
+            </property>
+            <property name="resizeMode">
+                <enum>LastColumn</enum>
+            </property>
+            <property name="treeStepSize">
+                <number>14</number>
+            </property>
+        </widget>
+        <widget class="QIconView">
+            <property name="name">
+                <cstring>ivPreview</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>7</hsizetype>
+                    <vsizetype>2</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>0</width>
+                    <height>32</height>
+                </size>
+            </property>
+            <property name="acceptDrops">
+                <bool>false</bool>
+            </property>
+            <property name="resizePolicy">
+                <enum>AutoOneFit</enum>
+            </property>
+            <property name="dragAutoScroll">
+                <bool>false</bool>
+            </property>
+            <property name="spacing">
+                <number>2</number>
+            </property>
+            <property name="arrangement">
+                <enum>LeftToRight</enum>
+            </property>
+            <property name="resizeMode">
+                <enum>Adjust</enum>
+            </property>
+            <property name="maxItemWidth">
+                <number>64</number>
+            </property>
+            <property name="autoArrange">
+                <bool>true</bool>
+            </property>
+            <property name="itemsMovable">
+                <bool>false</bool>
+            </property>
+            <property name="wordWrapIconText">
+                <bool>false</bool>
+            </property>
+            <property name="showToolTips">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>bInsert</cstring>
+            </property>
+            <property name="text">
+                <string>Insert</string>
+            </property>
+        </widget>
+    </vbox>
+</widget>
+<connections>
+    <connection>
+        <sender>lvDirectory</sender>
+        <signal>currentChanged(QListViewItem*)</signal>
+        <receiver>QG_LibraryWidget</receiver>
+        <slot>updatePreview(QListViewItem*)</slot>
+    </connection>
+    <connection>
+        <sender>bInsert</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_LibraryWidget</receiver>
+        <slot>insert()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in declaration">qg_actionhandler.h</include>
+    <include location="global" impldecl="in declaration">qdir.h</include>
+    <include location="global" impldecl="in declaration">qmap.h</include>
+    <include location="local" impldecl="in declaration">qg_listviewitem.h</include>
+    <include location="global" impldecl="in implementation">iostream</include>
+    <include location="local" impldecl="in implementation">rs_system.h</include>
+    <include location="local" impldecl="in implementation">rs_painterqt.h</include>
+    <include location="local" impldecl="in implementation">rs_staticgraphicview.h</include>
+    <include location="local" impldecl="in implementation">rs_graphic.h</include>
+    <include location="local" impldecl="in implementation">rs_actionlibraryinsert.h</include>
+    <include location="local" impldecl="in implementation">qg_librarywidget.ui.h</include>
+</includes>
+<variables>
+    <variable access="private">QG_ActionHandler* actionHandler;</variable>
+</variables>
+<signals>
+    <signal>escape();</signal>
+</signals>
+<slots>
+    <slot>setActionHandler( QG_ActionHandler * ah )</slot>
+    <slot>keyPressEvent( QKeyEvent * e )</slot>
+    <slot>insert()</slot>
+    <slot>appendTree( QG_ListViewItem * item, QString directory )</slot>
+    <slot>updatePreview( QListViewItem * item )</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+    <function returnType="QString">getItemDir( QListViewItem * item )</function>
+    <function returnType="QString">getItemPath( QIconViewItem * item )</function>
+    <function returnType="QPixmap">getPixmap( const QString &amp; dir, const QString &amp; dxfFile, const QString &amp; dxfPath )</function>
+    <function returnType="QString">getPathToPixmap( const QString &amp; dir, const QString &amp; dxfFile, const QString &amp; dxfPath )</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

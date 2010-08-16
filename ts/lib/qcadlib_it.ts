@@ -1,0 +1,89 @@
+<!DOCTYPE TS><TS>
+<context>
+    <name>QObject</name>
+    <message>
+        <source>None</source>
+        <translation>Nessuno</translation>
+    </message>
+    <message>
+        <source>Inch</source>
+        <translation>Pollice</translation>
+    </message>
+    <message>
+        <source>Foot</source>
+        <translation>Piede</translation>
+    </message>
+    <message>
+        <source>Mile</source>
+        <translation>Miglio</translation>
+    </message>
+    <message>
+        <source>Millimeter</source>
+        <translation>Millimetro</translation>
+    </message>
+    <message>
+        <source>Centimeter</source>
+        <translation>Centimetro</translation>
+    </message>
+    <message>
+        <source>Meter</source>
+        <translation>Metro</translation>
+    </message>
+    <message>
+        <source>Kilometer</source>
+        <translation>Kilometro</translation>
+    </message>
+    <message>
+        <source>Microinch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mil</source>
+        <translation>Millesimo di pollice</translation>
+    </message>
+    <message>
+        <source>Yard</source>
+        <translation>Iarda</translation>
+    </message>
+    <message>
+        <source>Angstrom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nanometer</source>
+        <translation>Nanometro</translation>
+    </message>
+    <message>
+        <source>Micron</source>
+        <translation>Micromillimetro</translation>
+    </message>
+    <message>
+        <source>Decimeter</source>
+        <translation>Decimetro</translation>
+    </message>
+    <message>
+        <source>Decameter</source>
+        <translation>Decametro</translation>
+    </message>
+    <message>
+        <source>Hectometer</source>
+        <translation>Ettometro</translation>
+    </message>
+    <message>
+        <source>Gigameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Astro</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lightyear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parsec</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+</TS>

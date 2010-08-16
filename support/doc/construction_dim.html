@@ -1,0 +1,589 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>QCad - Construction - Dimensions</title>
+  <meta name="generator" content="ManStyle">
+  <meta name="author" content="Andrew Mustun">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="5">
+	  <img src="img/space.png" width="5" height="1" border="0">
+	</td>
+    <td width="105">
+	  <img src="img/space.png" width="105" height="1" border="0">
+	</td>
+    <td width="15">
+	  <img src="img/space.png" width="15" height="1" border="0">
+	</td>
+    <td width="460">
+	  <img src="img/space.png" width="460" height="1" border="0">
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td align="center">
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="construction_text.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="construction_hatch.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            <center>QCad User Reference Manual<br>
+	           <img src="img/separator.png"></center>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+	<td>
+<a name="Dimension"></a>
+<a name="14_7"></a><h2>Dimensions</h2>
+
+<p>
+<i>This chapter is about constructing dimensions. Figure 40
+  shows the notation that is used when referring to dimension parts.</i></p>
+<p class="figure">
+<img border="0" src="img/dim01.png"></p><p class="figure_label">
+<b>Figure 40:&nbsp;</b>Notation for
+  dimensions.</p>
+<p>
+
+    <b>Options Toolbar:</b>
+  </p>
+<p>
+The dimensioning tools may show individual option toolbars, but also
+  share one common toolbar. It allows you to enter a text label for the
+  dimension:</p>
+<p>
+<img border="0" src="img/options_dimension.png"><br>
+</p>
+<p>
+This text label can be any text. When left empty, the label is
+  generated automatically and contains the measured distance of the dimension.
+  To add additional signs or letters to a measured dimension, you can use the
+  combination 
+  <code><></code>
+
+  to insert the automatically generated label anywhere in the text you
+  entered.</p>
+<p>
+Examples:</p>
+<p>
+
+    <table>
+      <tr>
+        <td>
+          <p>
+            <b>Chosen label in the toolbar:</b>
+          </p>
+        </td>
+
+        <td>
+          <p>
+            <b>Example for the generated label:</b>
+          </p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <p>
+            <code>a</code>
+          </p>
+        </td>
+
+        <td>
+          <p>
+            <code>a</code>
+          </p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <p>
+            <code>&lt;&gt;</code>
+          </p>
+        </td>
+
+        <td>
+          <p>
+            <code>20</code>
+          </p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <p>
+            <code>&lt;&gt; H7</code>
+          </p>
+        </td>
+
+        <td>
+          <p>
+            <code>20 H7</code>
+          </p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <p>
+            <code>&oslash;&lt;&gt;</code>
+          </p>
+        </td>
+
+        <td>
+          <p>
+            <code>&oslash;20</code>
+          </p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<a name="Aligned Dimension"></a>
+<a name="Dimension - Aligned"></a>
+<a name="14_7_1"></a><h3>Aligned Dimension</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_dim_aligned.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Dimension - Aligned</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+da</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Creates aligned dimensions. Aligned dimensions usually measure the
+  length of an existing line (Figure 41). The dimension line is
+  always parallel to the line between the two extension line endpoints.</p>
+<p class="figure">
+<img border="0" src="imgs/dimaligned01.png"></p><p class="figure_label">
+<b>Figure 41:&nbsp;</b>Sample for an
+  aligned dimension.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Set the first extention line endpoint with the mouse or enter a
+      co-ordinate in the command line.</li>
+
+      <li>Set the second extension line endpoint.</li>
+
+      <li>Set the position of the dimension line.</li>
+    </ol>
+  </p>
+<a name="Linear Dimension"></a>
+<a name="Dimension - Linear"></a>
+<a name="14_7_2"></a><h3>Linear Dimensions</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_dim_linear.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Dimension - Linear</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+dr</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Options Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="img/options_dim_linear.png"><br>
+</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Creates linear dimensions. Linear dimensions are usually used to
+  measure vertical or horizontal distances but can also measure distances with
+  any other angle. Figure 42 shows a horizontal version of a
+  linear dimension.</p>
+<p class="figure">
+<img border="0" src="imgs/dimlinear01.png"></p><p class="figure_label">
+<b>Figure 42:&nbsp;</b>Example of a
+  horizontal, linear dimension.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Enter the angle of the dimension in the options toolbar or click the
+      vertical or horizontal button to set the angle to 0 or 90.</li>
+
+      <li>Set the first extention line endpoint with the mouse or enter a
+      co-ordinate in the command line.</li>
+
+      <li>Set the second extension line endpoint.</li>
+
+      <li>Set the position of the dimension line.</li>
+    </ol>
+  </p>
+<a name="Horizontal Dimension"></a>
+<a name="Vertical Dimension"></a>
+<a name="Dimension - Horizontal"></a>
+<a name="Dimension - Vertical"></a>
+<a name="14_7_3"></a><h3>Horizontal / Vertical Dimensions</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_dim_hor_ver.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Dimension - Horizontal</p>
+<p class="code">
+Dimension - Vertical</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+dh, dv</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+This tool behaves essentially like the one described above (Linear
+  Dimension). The only difference is that you cannot enter an angle.</p>
+<a name="Radial Dimension"></a>
+<a name="Dimension - Radial"></a>
+<a name="14_7_4"></a><h3>Radial Dimensions</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_dim_radial.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Dimension - Radial</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Creates radial dimensions for circle or arc entities (Figure
+  43).</p>
+<p class="figure">
+<img border="0" src="imgs/dimradial01.png"></p><p class="figure_label">
+<b>Figure 43:&nbsp;</b>Example of a
+  radial dimension.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Choose a circle or arc entity.</li>
+
+      <li>Set the position of the radial dimension line using the mouse or by
+      entering a co-ordinate or an angle in the command line.</li>
+    </ol>
+  </p>
+<a name="Diametric Dimension"></a>
+<a name="Dimension - Diametric"></a>
+<a name="14_7_5"></a><h3>Diametric Dimensions</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_dim_diametric.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Dimension - Diametric</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Creates diametric dimensions for circle or arc entities (Figure
+  44).</p>
+<p class="figure">
+<img border="0" src="imgs/dimdiametric01.png"></p><p class="figure_label">
+<b>Figure 44:&nbsp;</b>Example of
+  a diametric dimension.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Choose a circle or arc entity.</li>
+
+      <li>Set the position of the diametric dimension line using the mouse or
+      by entering a co-ordinate or an angle in the command line.</li>
+    </ol>
+  </p>
+<a name="Angular Dimension"></a>
+<a name="Dimension - Angular"></a>
+<a name="14_7_6"></a><h3>Angular Dimensions</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_dim_angular.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Dimension - Angular</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Creates angular dimensions between two reference lines. 
+  (Figure 45).</p>
+<p class="figure">
+<img border="0" src="imgs/dimangular01.png"></p><p class="figure_label">
+<b>Figure 45:&nbsp;</b>Example of
+  an angular dimension.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Choose the first line entity.</li>
+	  
+      <li>Choose the second line entity.</li>
+
+      <li>Set the position of the angular dimension line using the mouse or
+      by entering a co-ordinate in the command line.</li>
+    </ol>
+  </p>
+<a name="Leader"></a>
+<a name="Dimension - Leader"></a>
+<a name="Arrow"></a>
+<a name="Pointer"></a>
+<a name="14_7_7"></a><h3>Leader</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_dim_leader.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Dimension - Leader</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+dl</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Leaders are arrows that usually point from a 
+  text entity to an other entity (Figure 46). In the figure 
+  the text entity "N7" is connected to a surface with a leader.</p>
+<p class="figure">
+<img border="0" src="imgs/dimleader01.png"></p><p class="figure_label">
+<b>Figure 46:&nbsp;</b>Example of
+  a leader.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Set the location where the leader points to or enter a co-ordinate
+	  in the command line.</li>
+	  
+      <li>Set the location of the next edge of the leader line.</li>
+
+      <li>Set the other edges of the leader line and press Return to 
+	  finish.</li>
+    </ol>
+  </p>
+    </td>
+  </tr>
+  
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td valign=top>
+       <br>
+
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="construction_text.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="construction_hatch.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+      </table>
+	   
+       <p class="footer">
+       [ <a href="index.html">Home</a> | 
+	     <a href="contents.html">Contents</a> |
+		 <a href="index2.html">Index</a> ]<br>
+       [ <a href="license.html">1</a> | <a href="preface.html">2</a> | <a href="basics.html">3</a> | <a href="start.html">4</a> | <a href="gui.html">5</a> | <a href="commandline.html">6</a> | <a href="file.html">7</a> | <a href="printing.html">8</a> | <a href="edit.html">9</a> | <a href="view.html">10</a> | <a href="layers.html">11</a> | <a href="blocks.html">12</a> | <a href="snapping.html">13</a> | <a href="construction.html">14</a> | <a href="selection.html">15</a> | <a href="modification.html">16</a> | <a href="information.html">17</a> | <a href="options_general.html">18</a> | <a href="options_drawing.html">19</a> | <a href="appendix.html">20</a> ]</p>
+       <p class="footer2">
+	   Copyright  2003 <a href="http://www.ribbonsoft.com">RibbonSoft</a>, Inc.<br>All Rights Reserved.<br>
+       This Manual was created with <a href="http://www.ribbonsoft.com/manstyle.html">ManStyle</a>.
+       </p>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

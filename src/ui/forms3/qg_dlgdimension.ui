@@ -1,0 +1,261 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_DlgDimension</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>QG_DlgDimension</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>424</width>
+            <height>218</height>
+        </rect>
+    </property>
+    <property name="baseSize">
+        <size>
+            <width>0</width>
+            <height>0</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Dimension</string>
+    </property>
+    <property name="sizeGripEnabled">
+        <bool>false</bool>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>11</number>
+        </property>
+        <property name="spacing">
+            <number>6</number>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout10</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout41</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout2</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>lLayer</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>5</hsizetype>
+                                            <vsizetype>5</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="text">
+                                        <string>Layer:</string>
+                                    </property>
+                                </widget>
+                                <widget class="QG_LayerBox">
+                                    <property name="name">
+                                        <cstring>cbLayer</cstring>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                        <widget class="QG_WidgetPen">
+                            <property name="name">
+                                <cstring>wPen</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>3</hsizetype>
+                                    <vsizetype>3</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+                <widget class="QG_DimensionLabelEditor">
+                    <property name="name">
+                        <cstring>wLabel</cstring>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout8</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer1</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>79</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>bOk</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;OK</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+O</string>
+                    </property>
+                    <property name="autoDefault">
+                        <bool>true</bool>
+                    </property>
+                    <property name="default">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>bCancel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Cancel</string>
+                    </property>
+                    <property name="accel">
+                        <string>Esc</string>
+                    </property>
+                    <property name="autoDefault">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<customwidgets>
+    <customwidget>
+        <class>QG_WidgetPen</class>
+        <header location="local">qg_widgetpen.h</header>
+        <sizehint>
+            <width>-1</width>
+            <height>-1</height>
+        </sizehint>
+        <container>0</container>
+        <sizepolicy>
+            <hordata>5</hordata>
+            <verdata>5</verdata>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+        <pixmap>image0</pixmap>
+    </customwidget>
+    <customwidget>
+        <class>QG_LayerBox</class>
+        <header location="local">qg_layerbox.h</header>
+        <sizehint>
+            <width>140</width>
+            <height>22</height>
+        </sizehint>
+        <container>0</container>
+        <sizepolicy>
+            <hordata>7</hordata>
+            <verdata>0</verdata>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+        <pixmap>image1</pixmap>
+        <signal>layerChanged(const RS_Layer* layer)</signal>
+        <slot access="public" specifier="">slot()</slot>
+        <slot access="public" specifier="">slotLayerChanged(int index)</slot>
+    </customwidget>
+    <customwidget>
+        <class>QG_DimensionLabelEditor</class>
+        <header location="local">qg_dimensionlabeleditor.h</header>
+        <sizehint>
+            <width>128</width>
+            <height>128</height>
+        </sizehint>
+        <container>0</container>
+        <sizepolicy>
+            <hordata>7</hordata>
+            <verdata>5</verdata>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+        <pixmap>image1</pixmap>
+    </customwidget>
+</customwidgets>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="45">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade6523250004143a55a6b2e0026630c4f</data>
+    </image>
+    <image name="image1">
+        <data format="XPM.GZ" length="2926">789c9d95594f32591086effd15c4ba3393fae895ee4ce6824540141011b7c95cf406a202caa6f065fefb549faaea0b24996fc623cb937aeb3d55754e871f67a587eb6ee9ecc7c96a1dada74929798e96a5b374339bedfefceb8f9f27a7b65da27fcb724bf6e96f27a783752929f516f32c070402289b3fc39d8203c3136157e276c1260eac0f0ade0907927f2d9c58261f929cad72be0cef8535ff5959e277c201ef0fa02cf1ae7022f9efca12ff301ca81e87c21a5f32db5acf95b0eebfcdd92e2be3a5b0fa7986435bfd6e981d99278c0ae6795c288b3e2b98e3036157d8f839961308af985df51b1b0e9dc0098ddf5a3811fd7dceaee52a370d475e28f9b7ca1c07539f67173c144e65be2fcae2d763f62d89df2acb7cc282393e57b6b9ff58d893fca632c7d1ccc78bbcd48b4c7cc2ec4bfdf0aa2cfbf50be6fa2c65d9af2aacfd2c94e53cccf9fa7645eb7794a59ebdb027fe5565895f09cb7e981a267f9febaf3117fab6702af599e7a5e2049e6dce1377c25affa6608e4786e34a58894dfc8b59f5f890731087e28f2de648fbdb16ccfd6c9465bf7365c732f12f61ed3f5016fd4a59f4e6790fddd00a5d137f638eb4bfa532df5ffc148ea4be5ac17c5ea9b2ecd72b98efff403893fa1accb12d5c5696fd4d7f6152c41f95c53f2a98f56b6597fbf3857da9b75e30fb5584b59fa78239de5596fd3e0be6fdccf311b99115f1fcdaccb12fe77927ac7e2365f1c382793e63e14cfccdf3132571e69b1f07e83327d23fbac2bee4d785d57f2a9c89de9c6fecaa1fce98135bf845b9e2189e2a07e6fee287b0cfcf3bce9525ff5d38927a1bcca9cc1b66ca528ff93d89d338e3f9e182b9c86f31a752ff609d2f847f5f83b5ea31c218137a4f8fac0cc738e10cd6d3b7189f718a2ff88a6f38c339ad05adfcf31d3f7089ab037d42ea356e708b9ff8853bdc6395de6b58c706ad736c1ee823f2de608b146dbcc08e8976f012afb04b3975ec1de853aa2457f749d5c16b1ce00d0ecdf75b1ce1dd11fd1b55d236cef7f8808ff88465b4d02676d03da29f51dd9e513fa28f150c3004246d07002288bfe9e7d45f0712f22635a490d15ef730361e3b389c67aedf2390ea3157e73dc333e9a6f042d13ebc7ed32f6882405d3ee1c678030ee10d6630a76f162c8ee8f37adeb14c0aaa0b3e68b725ac80a2b039a29f630db6e46bc127d5fd45de4b5226b0833d8ea07a445f871ae96dacc218ead08073c835136842eba8be016db830e77a419f21aca143f76c025b9ae7e5813ea35bd5a0731fd1c4877a7f614fde57d085deb7f31ad31dccf54fd087883ab7a88f6baabb45fdf760003707fa09ddd826f66048af1826f00a0bb3aa7009b73082bb03fd2faeffa7fff58cfffcbcfffdfbc93f7f7d62d7</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>bCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgDimension</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>bOk</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgDimension</receiver>
+        <slot>accept()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="global" impldecl="in implementation">qmessagebox.h</include>
+    <include location="local" impldecl="in declaration">rs_dimension.h</include>
+    <include location="local" impldecl="in declaration">rs.h</include>
+    <include location="local" impldecl="in declaration">rs_graphic.h</include>
+    <include location="local" impldecl="in implementation">qg_dlgdimension.ui.h</include>
+</includes>
+<variables>
+    <variable access="private">RS_Dimension* dim;</variable>
+</variables>
+<slots>
+    <slot>setDim( RS_Dimension &amp; d )</slot>
+    <slot>updateDim()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>qg_layerbox.h</includehint>
+    <includehint>qg_widgetpen.h</includehint>
+    <includehint>qg_dimensionlabeleditor.h</includehint>
+</includehints>
+</UI>

@@ -1,0 +1,186 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_CoordinateWidget</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_CoordinateWidget</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>380</width>
+            <height>27</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>1</hsizetype>
+            <vsizetype>1</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>380</width>
+            <height>27</height>
+        </size>
+    </property>
+    <property name="maximumSize">
+        <size>
+            <width>500</width>
+            <height>50</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Coordinates</string>
+    </property>
+    <hbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
+        <property name="spacing">
+            <number>0</number>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout22</cstring>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <property name="margin">
+                    <number>0</number>
+                </property>
+                <property name="spacing">
+                    <number>0</number>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>lCoord1</cstring>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <family>Helvetica</family>
+                            <pointsize>7</pointsize>
+                        </font>
+                    </property>
+                    <property name="frameShape">
+                        <enum>NoFrame</enum>
+                    </property>
+                    <property name="frameShadow">
+                        <enum>Plain</enum>
+                    </property>
+                    <property name="text">
+                        <string>Coordinates</string>
+                    </property>
+                </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>lCoord1b</cstring>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <family>Helvetica</family>
+                            <pointsize>7</pointsize>
+                        </font>
+                    </property>
+                    <property name="frameShape">
+                        <enum>NoFrame</enum>
+                    </property>
+                    <property name="frameShadow">
+                        <enum>Plain</enum>
+                    </property>
+                    <property name="text">
+                        <string>Coordinates</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="Line">
+            <property name="name">
+                <cstring>line1</cstring>
+            </property>
+            <property name="frameShape">
+                <enum>VLine</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout23</cstring>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <property name="margin">
+                    <number>0</number>
+                </property>
+                <property name="spacing">
+                    <number>0</number>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>lCoord2</cstring>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <family>Helvetica</family>
+                            <pointsize>7</pointsize>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>Coordinates</string>
+                    </property>
+                </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>lCoord2b</cstring>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <family>Helvetica</family>
+                            <pointsize>7</pointsize>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>Coordinates</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+    </hbox>
+</widget>
+<includes>
+    <include location="local" impldecl="in declaration">rs_vector.h</include>
+    <include location="local" impldecl="in declaration">rs_math.h</include>
+    <include location="local" impldecl="in declaration">rs_graphic.h</include>
+    <include location="local" impldecl="in declaration">rs_math.h</include>
+    <include location="local" impldecl="in implementation">rs_settings.h</include>
+    <include location="local" impldecl="in implementation">qg_coordinatewidget.ui.h</include>
+</includes>
+<variables>
+    <variable access="private">RS_Graphic* graphic;</variable>
+    <variable access="private">int prec;</variable>
+    <variable access="private">RS2::LinearFormat format;</variable>
+    <variable access="private">int aprec;</variable>
+    <variable access="private">RS2::AngleFormat aformat;</variable>
+</variables>
+<slots>
+    <slot>init()</slot>
+    <slot>setGraphic( RS_Graphic * graphic )</slot>
+    <slot>setCoordinates( const RS_Vector &amp; abs, const RS_Vector &amp; rel, bool updateFormat )</slot>
+    <slot>setCoordinates( double x, double y, double rx, double ry, bool updateFormat )</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

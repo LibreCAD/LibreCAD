@@ -1,0 +1,346 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_CadToolBarDim</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_CadToolBarDim</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>34</x>
+            <y>0</y>
+            <width>56</width>
+            <height>336</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>0</hsizetype>
+            <vsizetype>1</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>56</width>
+            <height>336</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Dimensions</string>
+    </property>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bBack</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>56</width>
+                <height>20</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image0</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Back to main menu</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bAligned</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>20</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image1</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Aligned Dimension</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bLinear</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>20</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image2</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Linear Dimension</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bLinearHor</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>48</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image3</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Horizontal Dimension</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bLinearVer</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>48</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image4</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Vertical Dimension</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bRadial</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>76</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image5</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Radial Dimension</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bDiametric</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>76</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image6</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Diametric Dimension</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bAngular</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>104</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image7</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Angular Dimension</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bLeader</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>104</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image8</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Leader</string>
+        </property>
+    </widget>
+</widget>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="309">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232345330345430563054d2e152d2534856f0cbcf4b05b113816c65033000719541dc343000ab0402e5443d38808a2927628801851295c1002e06128201a818b2104c2c118b981e36313d6c627a89986e0109628ae9218bd55a730100b0a148a8</data>
+    </image>
+    <image name="image1">
+        <data format="XPM.GZ" length="485">789c65d04d0ac2301005e07d4e31e4ed82b41637827804c5a5202e42b4e8a20a5a1722dedde6af99a92190ccc73079a436b4df6dc8d4ead9dbfeeac85dec83cce9d575efc371fd51ba59d2b017d4e899d21539dade6f677fc770c73c2c5f5a5fb66d2eab71219d52334f34b1500091277311bb656f2048cd092cd7824c196685c0a0888f178cbd08490ba609b293cde5386600c7920c0c595e867f3f99f4bb523f6e6f590d</data>
+    </image>
+    <image name="image2">
+        <data format="XPM.GZ" length="426">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b45030345330523054d2e152d2534856f0cbcf4b05b195816c650330004bc181329446158509a3894285514495959521c268e62a4354a3aa050b29a38a2ac3a59144118248a248823051651441b0a832c47274b5ca6097629880aa12c95c6ca27a58ccc51056aab5e6020069f44c40</data>
+    </image>
+    <image name="image3">
+        <data format="XPM.GZ" length="264">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232345530345030523054d2e15252564856f0cbcf4b05b1f5806c65033000739591811e540826aa071742a8d3830aa1025caab09985cd4632846aadb90038002d1f</data>
+    </image>
+    <image name="image4">
+        <data format="XPM.GZ" length="284">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232345030345530523054d2e15252564856f0cbcf4b05b1f5806c6503300073e100ac5059594f190c203ca03082a707867039549534e0a1d987e2161495487ea8b5e602008b432f81</data>
+    </image>
+    <image name="image5">
+        <data format="XPM.GZ" length="360">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b45030345630523054d2e152d2534856f0cbcf4b05b195816c650330004b21016530892caa0c134413850ac24495810048c0581051b01a65881488051685685456861b0e7612b25d20f50851650446568b2c83218a7099329a208acbf4d044216e4712adb5e60200781c4013</data>
+    </image>
+    <image name="image6">
+        <data format="XPM.GZ" length="359">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade6523234550022230543251d2e253d856405bffcbc54105b19c856360003b0140828830098051582f2c0144408220016840ac14580aa945184c0a64184901501096421653d74211805135286db8110421808b511ee7484239014e1743d363fa28644ad351700c9aa3f10</data>
+    </image>
+    <image name="image7">
+        <data format="XPM.GZ" length="470">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b4500022230543251d2e253d856405bffcbc54105b19c856360003b0140c28c318c8a27041645165652c6a9541c2ca68a2ca60d5686a95a1ca5144618a504411b62b2344118248a24882506114bfc15d8d2eaa8c5514bb5a884f3044f560a2ca1800532d569741446badb900a3c55290</data>
+    </image>
+    <image name="image8">
+        <data format="XPM.GZ" length="264">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232345530345030523054d2e152d2534856f0cbcf4b05b195816c650330004ba1022421652840082963a852c6d08810810829238b40859045c042206b308470b90b2e546bcd050084ae30e7</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>bAligned</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarDim</receiver>
+        <slot>drawDimAligned()</slot>
+    </connection>
+    <connection>
+        <sender>bLinearHor</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarDim</receiver>
+        <slot>drawDimLinearHor()</slot>
+    </connection>
+    <connection>
+        <sender>bLinearVer</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarDim</receiver>
+        <slot>drawDimLinearVer()</slot>
+    </connection>
+    <connection>
+        <sender>bLinear</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarDim</receiver>
+        <slot>drawDimLinear()</slot>
+    </connection>
+    <connection>
+        <sender>bBack</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarDim</receiver>
+        <slot>back()</slot>
+    </connection>
+    <connection>
+        <sender>bRadial</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarDim</receiver>
+        <slot>drawDimRadial()</slot>
+    </connection>
+    <connection>
+        <sender>bDiametric</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarDim</receiver>
+        <slot>drawDimDiametric()</slot>
+    </connection>
+    <connection>
+        <sender>bAngular</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarDim</receiver>
+        <slot>drawDimAngular()</slot>
+    </connection>
+    <connection>
+        <sender>bLeader</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarDim</receiver>
+        <slot>drawDimLeader()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in declaration">qg_actionhandler.h</include>
+    <include location="local" impldecl="in implementation">qg_cadtoolbar.h</include>
+    <include location="local" impldecl="in implementation">qg_cadtoolbardim.ui.h</include>
+</includes>
+<forwards>
+    <forward>class QG_CadToolBar</forward>
+</forwards>
+<variables>
+    <variable>QG_CadToolBar* cadToolBar;</variable>
+    <variable>QG_ActionHandler* actionHandler;</variable>
+</variables>
+<slots>
+    <slot>mousePressEvent( QMouseEvent * e )</slot>
+    <slot>contextMenuEvent( QContextMenuEvent * e )</slot>
+    <slot>setCadToolBar( QG_CadToolBar * tb )</slot>
+    <slot>drawDimAligned()</slot>
+    <slot>drawDimLinear()</slot>
+    <slot>drawDimLinearHor()</slot>
+    <slot>drawDimLinearVer()</slot>
+    <slot>drawDimRadial()</slot>
+    <slot>drawDimDiametric()</slot>
+    <slot>drawDimAngular()</slot>
+    <slot>drawDimLeader()</slot>
+    <slot>back()</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

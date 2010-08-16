@@ -1,0 +1,110 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_TrimAmountOptions</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_TrimAmountOptions</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>129</width>
+            <height>24</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>4</hsizetype>
+            <vsizetype>5</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>128</width>
+            <height>22</height>
+        </size>
+    </property>
+    <property name="maximumSize">
+        <size>
+            <width>170</width>
+            <height>32767</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Trim Amount Options</string>
+    </property>
+    <property name="toolTip" stdset="0">
+        <string>Distance. Negative values for trimming, positive values for extending.</string>
+    </property>
+    <hbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>1</number>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>lDist</cstring>
+            </property>
+            <property name="text">
+                <string>Amount:</string>
+            </property>
+        </widget>
+        <widget class="QLineEdit">
+            <property name="name">
+                <cstring>leDist</cstring>
+            </property>
+        </widget>
+        <widget class="Line">
+            <property name="name">
+                <cstring>sep1</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>1</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="frameShape">
+                <enum>VLine</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+        </widget>
+    </hbox>
+</widget>
+<connections>
+    <connection>
+        <sender>leDist</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>QG_TrimAmountOptions</receiver>
+        <slot>updateDist(const QString&amp;)</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in declaration">rs_line.h</include>
+    <include location="local" impldecl="in declaration">rs_settings.h</include>
+    <include location="local" impldecl="in declaration">rs_actionmodifytrimamount.h</include>
+    <include location="local" impldecl="in implementation">qg_trimamountoptions.ui.h</include>
+</includes>
+<variables>
+    <variable>RS_ActionModifyTrimAmount* action;</variable>
+</variables>
+<slots>
+    <slot>setAction( RS_ActionInterface * a, bool update )</slot>
+    <slot>updateDist( const QString &amp; d )</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">destroy()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

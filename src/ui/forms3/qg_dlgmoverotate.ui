@@ -1,0 +1,347 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_DlgMoveRotate</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>QG_DlgMoveRotate</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>338</width>
+            <height>219</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>1</hsizetype>
+            <vsizetype>1</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>300</width>
+            <height>190</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Move/Rotate Options</string>
+    </property>
+    <property name="icon">
+        <pixmap>image0</pixmap>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>layout</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>40</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>bOk</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;OK</string>
+                    </property>
+                    <property name="default">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>bCancel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Cancel</string>
+                    </property>
+                    <property name="accel">
+                        <string>Esc</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QLayoutWidget" row="0" column="1">
+            <property name="name">
+                <cstring>layout8</cstring>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>lHelp</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap>image1</pixmap>
+                    </property>
+                    <property name="alignment">
+                        <set>AlignCenter</set>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout7</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>lAngle</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Angle (a):</string>
+                            </property>
+                            <property name="buddy" stdset="0">
+                                <cstring>leAngle</cstring>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer13</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>41</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QLineEdit">
+                            <property name="name">
+                                <cstring>leAngle</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>cbCurrentAttributes</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use current &amp;attributes</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>cbCurrentLayer</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use current &amp;layer</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QButtonGroup" row="0" column="0">
+            <property name="name">
+                <cstring>bgNumber</cstring>
+            </property>
+            <property name="title">
+                <string>Number of copies</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QRadioButton">
+                    <property name="name">
+                        <cstring>rbMove</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>1</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>0</width>
+                            <height>18</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Delete Original</string>
+                    </property>
+                </widget>
+                <widget class="QRadioButton">
+                    <property name="name">
+                        <cstring>rbCopy</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>1</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>0</width>
+                            <height>18</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Keep Original</string>
+                    </property>
+                </widget>
+                <widget class="QRadioButton">
+                    <property name="name">
+                        <cstring>rbMultiCopy</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>1</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>0</width>
+                            <height>18</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Multiple Copies</string>
+                    </property>
+                </widget>
+                <widget class="QLineEdit">
+                    <property name="name">
+                        <cstring>leNumber</cstring>
+                    </property>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer7</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>21</height>
+                        </size>
+                    </property>
+                </spacer>
+            </vbox>
+        </widget>
+    </grid>
+</widget>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="500">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b4500022130543251d2e253d856405bffcbc54103b11c856360003105719c64d4b03719340dcb43498ac1e1c282b2b8369a82884a78c260a1686888108b0f910a007150452e8a210266e13506c03b3305ca6ac87210a03b84513491145114e4ac214058ac144f51291d4a18b264101dc36340b21e626a28bd65a7301004c335f05</data>
+    </image>
+    <image name="image1">
+        <data format="XPM.GZ" length="4984">789cdd97cd4ec3300c80ef7d8aa8be5528a3d238211e01c47112e2d0162a380c24180734f1ee908aaa4dfc93b44937862f4de2d95f9ccc71b22ad4e6f65a15abec7d57ed9e1bd53c556faa78f8d86e3fefeeaff6595e96176a5daab52af3b32cd7aa5137af2f8fa60d3f6d38efc474ebbedbb6a65b996edbf65a7d7839192c4c184d8605200960148b613bdf34564f024fc282f50951c858a004f9ee47582c1130e3f9174b4cc81d8358d5782c146bc521f976028ec2ba8b27ba166738058b774cc2caa6c1582a313c010d2673b14c3602d1a2c033b15c2afab0923d81ad5c7796dda01d5295d412e696e73f81ad8cb07ec75abc889496f5ec8dd60a771c0fde3bac9dbfc8f232fab620144b5872ff55ae087a6de3b09aaef8c9b0b477e04b7b92c3513efe3c47675c0542d09a9841886504b6e3d4eec00258c2d3182b9064acf72e85caa08d654b9d7897f20b2e83b5fb0ba1d42109beb0a27471b19abf4547619d65c758cdbd1922b0ba2605cf2e3136a99c129678a91c02ab83f73029967a982d8f0d4fcfff803dd22227906361bf2eb36fb1ef7b0a</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>rbMove</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>leNumber</receiver>
+        <slot>setDisabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>rbCopy</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>leNumber</receiver>
+        <slot>setDisabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>rbMultiCopy</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>leNumber</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>bOk</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgMoveRotate</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
+        <sender>bCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgMoveRotate</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>rbMove</tabstop>
+    <tabstop>rbCopy</tabstop>
+    <tabstop>rbMultiCopy</tabstop>
+    <tabstop>leNumber</tabstop>
+    <tabstop>leAngle</tabstop>
+    <tabstop>cbCurrentAttributes</tabstop>
+    <tabstop>cbCurrentLayer</tabstop>
+    <tabstop>bOk</tabstop>
+    <tabstop>bCancel</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in declaration">rs_modification.h</include>
+    <include location="local" impldecl="in implementation">rs_settings.h</include>
+    <include location="local" impldecl="in implementation">qg_dlgmoverotate.ui.h</include>
+</includes>
+<variables>
+    <variable access="private">bool useCurrentAttributes;</variable>
+    <variable access="private">bool useCurrentLayer;</variable>
+    <variable access="private">int numberMode;</variable>
+    <variable access="private">QString copies;</variable>
+    <variable access="private">RS_MoveRotateData* data;</variable>
+    <variable access="private">QString angle;</variable>
+</variables>
+<slots>
+    <slot>setData( RS_MoveRotateData * d )</slot>
+    <slot>updateData()</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+    <function access="private" specifier="non virtual">destroy()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

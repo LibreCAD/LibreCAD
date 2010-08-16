@@ -1,0 +1,61 @@
+/****************************************************************************
+**
+** This file is part of the CADuntu project, a 2D CAD program
+**
+** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+**
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by 
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+**
+** This copyright notice MUST APPEAR in all copies of the script!  
+**
+**********************************************************************/
+
+
+#ifndef RS_PREVIEW_H
+#define RS_PREVIEW_H
+
+#include "rs_entitycontainer.h"
+
+class RS_Entity;
+class RS_GraphicView;
+class RS_Vector;
+class RS_MouseEvent;
+
+/**
+ * This class supports previewing. The RS_Snapper class uses
+ * an instance of RS_Preview to preview entities, ranges, 
+ * lines, arcs, ... on the fly.
+ *
+ * @author Andrew Mustun
+ */
+class RS_Preview : public RS_EntityContainer {
+public:
+    RS_Preview(RS_EntityContainer* parent=NULL);
+    ~RS_Preview();
+	
+    virtual void addEntity(RS_Entity* entity);
+	void addCloneOf(RS_Entity* entity);
+    virtual void addSelectionFrom(RS_EntityContainer& container);
+    virtual void addAllFrom(RS_EntityContainer& container);
+    virtual void addStretchablesFrom(RS_EntityContainer& container,
+	       const RS_Vector& v1, const RS_Vector& v2);
+
+private:
+	int maxEntities;
+};
+
+#endif

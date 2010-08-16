@@ -1,0 +1,656 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>QCad - Appendix - Mathematical Expressions</title>
+  <meta name="generator" content="ManStyle">
+  <meta name="author" content="Andrew Mustun">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="5">
+	  <img src="img/space.png" width="5" height="1" border="0">
+	</td>
+    <td width="105">
+	  <img src="img/space.png" width="105" height="1" border="0">
+	</td>
+    <td width="15">
+	  <img src="img/space.png" width="15" height="1" border="0">
+	</td>
+    <td width="460">
+	  <img src="img/space.png" width="460" height="1" border="0">
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td align="center">
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="appendix_patterns.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="appendix_units.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            <center>QCad User Reference Manual<br>
+	           <img src="img/separator.png"></center>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+	<td>
+<a name="Expressions"></a>
+<a name="Mathematical Expressions"></a>
+<a name="20_4"></a><h2>Mathematical Expressions</h2>
+
+<p>
+QCad comes with a built in mathematical expression parser called
+  'fparser'. The parser was written by 
+  <a href="http://www.students.tut.fi/~warp">Juha Nieminen 'Warp'</a>
+
+  of the 
+  <a href="http://www.tut.fi">Tampere University of Technology</a>
+
+  Finland. Whenever there are input fields which expect a real value from the
+  user, you can type any expression that is recognized by the parser instead.
+  This way you always have a powerful calculator at hand.</p>
+<a name="20_4_1"></a><h3>Supported Constants</h3>
+
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>pi</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>3.14159265</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<a name="20_4_2"></a><h3>Supported Functions</h3>
+
+<p>
+The following table lists all functions supported by the expression
+  parser. You can also find the same table in the 
+  <a href="http://www.students.tut.fi/~warp/FunctionParser/">original
+  documentation of 'fparser'</a>
+
+  .</p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>abs(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Absolute value of A.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>acos(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Arc-cosine of A. Returns the angle, measured in degrees, whose
+          cosine is A.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>acosh(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Same as acos() but for hyperbolic cosine.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>asin(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Arc-sine of A. Returns the angle, measured in degrees, whose sine
+          is A.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>asinh(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Same as asin() but for hyperbolic sine.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>atan(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Arc-tangent of (A). Returns the angle, measured in degrees, whose
+          tangent is (A).</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>atan2(A,B)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Arc-tangent of A/B. The two main differences to atan() is that it
+          will return the right angle depending on the signs of A and B (atan()
+          can only return values between -pi/2 and pi/2), and that the return
+          value of pi/2 and -pi/2 are possible.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>atanh(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Same as atan() but for hyperbolic tangent.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>ceil(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Ceiling of A. Returns the smallest integer greater than A. Rounds
+          up to the next higher integer.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>cos(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Cosine of A. Returns the cosine of the angle A, where A is
+          measured in degrees.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>cosh(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Same as cos() but for hyperbolic cosine.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>cot(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Cotangent of A (equivalent to 1/tan(A)).</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>csc(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Cosecant of A (equivalent to 1/sin(A)).</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>eval(...)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>This a recursive call to the function to be evaluated. The number
+          of parameters must be the same as the number of parameters taken by
+          the function. Usually called inside if() to avoid infinite
+          recursion.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>exp(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Exponential of A. Returns the value of e raised to the power A
+          where e is the base of the natural logarithm, i.e. the non-repeating
+          value approximately equal to 2.71828182846.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>floor(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Floor of A. Returns the largest integer less than A. Rounds down
+          to the next lower integer.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>if(A,B,C)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>If int(A) differs from 0, the return value of this function is B,
+          else C. Only the parameter which needs to be evaluated is evaluated,
+          the other parameter is skipped; this makes it safe to use eval() in
+          them.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>int(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Rounds A to the closest integer. 0.5 is rounded to 1.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>log(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Natural (base e) logarithm of A.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>log10(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Base 10 logarithm of A.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>max(A,B)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>If A&gt;B, the result is A, else B.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>min(A,B)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>If A&lt;B, the result is A, else B.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>sec(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Secant of A (equivalent to 1/cos(A)).</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>sin(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Sine of A. Returns the sine of the angle A, where A is measured in
+          degrees.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>sinh(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Same as sin() but for hyperbolic sine.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>sqrt(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Square root of A. Returns the value whose square is A.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>tan(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Tangent of A. Returns the tangent of the angle A, where A is
+          measured in degrees.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+<p>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="5%">
+        </td>
+
+        <td valign="top" width="25%">
+          <code>tanh(A)</code>
+        </td>
+
+        <td valign="top" width="70%">
+          <p>Same as tan() but for hyperbolic tangent.</p>
+        </td>
+      </tr>
+    </table>
+  </p>
+    </td>
+  </tr>
+  
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td valign=top>
+       <br>
+
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="appendix_patterns.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="appendix_units.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+      </table>
+	   
+       <p class="footer">
+       [ <a href="index.html">Home</a> | 
+	     <a href="contents.html">Contents</a> |
+		 <a href="index2.html">Index</a> ]<br>
+       [ <a href="license.html">1</a> | <a href="preface.html">2</a> | <a href="basics.html">3</a> | <a href="start.html">4</a> | <a href="gui.html">5</a> | <a href="commandline.html">6</a> | <a href="file.html">7</a> | <a href="printing.html">8</a> | <a href="edit.html">9</a> | <a href="view.html">10</a> | <a href="layers.html">11</a> | <a href="blocks.html">12</a> | <a href="snapping.html">13</a> | <a href="construction.html">14</a> | <a href="selection.html">15</a> | <a href="modification.html">16</a> | <a href="information.html">17</a> | <a href="options_general.html">18</a> | <a href="options_drawing.html">19</a> | <a href="appendix.html">20</a> ]</p>
+       <p class="footer2">
+	   Copyright  2003 <a href="http://www.ribbonsoft.com">RibbonSoft</a>, Inc.<br>All Rights Reserved.<br>
+       This Manual was created with <a href="http://www.ribbonsoft.com/manstyle.html">ManStyle</a>.
+       </p>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>QG_CadToolBarMain</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_CadToolBarMain</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>34</x>
+            <y>0</y>
+            <width>56</width>
+            <height>336</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>0</hsizetype>
+            <vsizetype>3</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>56</width>
+            <height>336</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Main</string>
+    </property>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuLine</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>0</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image0</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Show menu "Lines"</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuArc</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>28</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image1</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Show menu "Arcs"</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuPoint</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image2</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Points</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuSpline</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>56</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image3</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Splines</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuEllipse</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>56</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image4</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Show menu "Ellipses"</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuCircle</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>28</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image5</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Show menu "Circles"</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuText</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>116</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image6</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Texts</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuDim</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>116</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image7</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Show menu "Dimensions"</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuHatch</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>144</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image8</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Hatches / Solid Fills</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuImage</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>144</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image9</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Raster Image</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuModify</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>176</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image10</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Show menu "Edit"</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuInfo</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>176</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image11</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Show menu "Measure"</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuBlock</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>204</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image12</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Create Block</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuSelect</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>204</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image13</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Show menu "Select"</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bMenuPolyline</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>84</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="iconSet">
+            <iconset>image14</iconset>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Polylines</string>
+        </property>
+    </widget>
+</widget>
+<images>
+    <image name="image0">
+        <data format="PNG" length="155">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000006249444154789cedd3310e80300805d08ff154707e7a2d9c4888da94960e0efeed33bc81006953ecc8b145f9a1d7088b098b793f570000d0a614e769a807a4a1113084b240179a051ed02ae0a14ffd9ab05819f29594a078d9a517897d09ba23007001d5ff28983200ab010000000049454e44ae426082</data>
+    </image>
+    <image name="image1">
+        <data format="PNG" length="168">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000006f49444154789cadd45b0a00210805508d5995aedfb6e57c093d64a6d4fb1979909450ba40459e9bcb4caceb9974c123682cb6a2eb8e0cf9027e2126d613c0d22a10178a201b144526c81b6db8a368371b944903c8bdcd0455a40462624d4336ed1434ae0c46ffa375ef421d79cbfb02781f31369efd62470000000049454e44ae426082</data>
+    </image>
+    <image name="image2">
+        <data format="PNG" length="149">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000005c49444154789c633c7aec280321606d65fdffe8b1a38cf8d43011348548c088cf45d656d6ffd1c570b90caf41c8060e0eaf9102a8e622b20cc21609031346f892038a41c444332e75d4f51a292918af413040acd7b081d1944d180000d50a369b1ab65e2b0000000049454e44ae426082</data>
+    </image>
+    <image name="image3">
+        <data format="PNG" length="191">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000008649444154789cad94410ec02008048bf155f27efc963dd1180ab8b67233c5e9e81249ba5c27aa1ca1cc206e3cb8f1f805e2c643ba9074a1afb0d7d1563035b73dee1d45b0d9dcf614c422aa795f989a85ab4dd49fc6bf63fa80a24d280c1ac8ec482e0889deaef527901132b0db03a9df6d8a1531f2604b23c4ca2bcade238521a9a5a09dba01518570213f74102c0000000049454e44ae426082</data>
+    </image>
+    <image name="image4">
+        <data format="PNG" length="191">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000008649444154789cadd3511280200804d0c5e95479fef55af585d3900a587c3941cf1d4b6123b255cf7ae99a8d0200c70ea02feb33368a44128d00db7713e98ede5cf90359425144e7865026c934510679ce9659235b1dca22767ef9d5a2488776cfe5057d49a2250052ffcbac174ae4218073fb239755d7c2c6d78e1e60910ed98677661601801b901076d0fa7b2fb70000000049454e44ae426082</data>
+    </image>
+    <image name="image5">
+        <data format="PNG" length="177">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000007849444154789cdd53410ec020082b66af92f7e3b7dcc9843064e83cad472da5552069020baedced9934a10751e1f204bca2e80e006838e2cafdad6bc42b2b22c39117bd648a33200069371a36c531477f169a7d67046f5cce465b71351b5ed24bbbbb6b5cb9d3d7ed1f5c57280bdd70fbb1adeb2d212ffa0dcc20536c751dcae30000000049454e44ae426082</data>
+    </image>
+    <image name="image6">
+        <data format="PNG" length="172">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000007349444154789cbd94410ec02008048be9abe4fdf82d7b323176c5c59aee153219812856ec3a917484b20269d6aa59eb67500fdc06b12694911513160c41511bd7a8d9f456219067e3d5a0d168c158c978d9cc7c10f84610d418dedaec19ab53485e3112b16210c21e63eb7b0d7b37ff7c23913c623e3c1f250ecb560000000049454e44ae426082</data>
+    </image>
+    <image name="image7">
+        <data format="PNG" length="172">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000007349444154789cdd93410ec020080417d357c9fbe15bf644426b8b563995939165b2102051414694148a81b872fb5a78afe91c45d028576685230d89ca526b00202a64efc37f1ad00b9edc78adc5a5b537c08ca61b76048b72b97bf44f10651c2d576edb8e6c9fb6407e299741c3eb5f8100c0096b1a32dd425789c30000000049454e44ae426082</data>
+    </image>
+    <image name="image8">
+        <data format="PNG" length="194">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000008949444154789ccd946b0a00210884d7a553e5f9f55aedaf01d7b407c4b20341f6f8c8c92251b94ee83e4239092aa349aedc5620a2422108005121c4e8fb186b3bd0685314432f8f762136f5d46c2ce2ca0dcd8f5b68b11bbd27511a80faf1ee44990756db1ecd643d7add5a6464564b36fd0e949d6ca504a61e7d5e47846f64f55d451215a2dffd470f7a8891a3ce6d4bb60000000049454e44ae426082</data>
+    </image>
+    <image name="image9">
+        <data format="PNG" length="175">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000007649444154789ccd94bb15803008452f9e2ce12a3a852eea146415dd020b4c72ecfc50e435bc503cb84510cd4a84869094c8a004304fb3fd09d1ac92dad3b3cc4084c71edcc4a295295f7cd9ac06bdc1b9a3b93a461b37efec8bbdf24561685c7fcdbe0a30cdda215adde858bd0a6dd2135f7bdddda313cd3c86fda699b9440000000049454e44ae426082</data>
+    </image>
+    <image name="image10">
+        <data format="PNG" length="166">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000006d49444154789ced92410ac030080427a5afd2f727dfb287225821a56972e8a10b1e5c65d8484a6d9515da96503e0902cc629d37bbf6eee559dcd9016a6b25e3dd53118bf39ebfbb991747d54d34aa65c7ee3ecdbda769cbffb36fa5a2360d525183c9440e990245c86b5086001c8f184ff25bc6793b0000000049454e44ae426082</data>
+    </image>
+    <image name="image11">
+        <data format="PNG" length="153">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000006049444154789cdd93310ec0200c03e38a5791f7876f990984286a5180052f78088715615832d9a1670be56e501011d1a8f45cb66478252259cf19dfebcc8eda9766fc9144a118005f73bfc29d15d1a85c0695cfbc046a1be106f5b5728146ddccae01351162d1e77c0000000049454e44ae426082</data>
+    </image>
+    <image name="image12">
+        <data format="PNG" length="222">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e57000000a549444154789ccd94410ec3200c0467a3bc8467c0fbcd33f215f74053419a028972e84a1c90cc60b32b64d97842cb231460054831f99dc3964d0d08c07dbb049142b37f6cb4ff03ade392a2e39b1c35d5911470df9a05addb43d00e3993fbf6817547eb416a98147c01b895c6e3a55e71d4abfcd10d94ce65d9883179aee2be2bc5e43389974279ec33c855755db36c1ae5470a58360dedefc176084c26fb0dfb32b7fe465e873a48550a3915e90000000049454e44ae426082</data>
+    </image>
+    <image name="image13">
+        <data format="PNG" length="214">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000009d49444154789ca593410e84300c03ed15af4ade9f7ecb7b805c80b65e6d4e4885e9d80aac5170262205006314dfce8f7f015b900b588222522ee015d41604e03577033d62442a23553f581db3189240d2867d565d48425eb65bd0ee0517b605b9300b449ee957b0e5669384747ebb2b7d6ad41680176d6ad40624d556b3c948d1f9fb3352d75e3d22b6a955f6ea827eb640358a779b7b6756b49549cf171cf563c2239b25250000000049454e44ae426082</data>
+    </image>
+    <image name="image14">
+        <data format="PNG" length="154">89504e470d0a1a0a0000000d494844520000001200000012080600000056ce8e570000006149444154789cddd3b10ec0200804d062fa55dcf71fbf85130d69ba880c8d37e9e01b0e141aaf8e8c16e597d09d2f50789c6994120485af3ece191dc80375a417a25172d19548deec0a16ddca995f040adf86a2d72d280fa70cbd275c82bed66402a6f12381fc45c14d0000000049454e44ae426082</data>
+    </image>
+</images>
+<includes>
+    <include location="local" impldecl="in declaration">qg_actionhandler.h</include>
+    <include location="local" impldecl="in implementation">qg_cadtoolbar.h</include>
+</includes>
+<forwards>
+    <forward>class QG_CadToolBar</forward>
+</forwards>
+<slots>
+    <slot>init()</slot>
+    <slot>setCadToolBar( QG_CadToolBar * tb )</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

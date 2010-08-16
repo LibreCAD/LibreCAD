@@ -1,0 +1,208 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_ExitDialog</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>QG_ExitDialog</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>450</width>
+            <height>106</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>1</hsizetype>
+            <vsizetype>5</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>450</width>
+            <height>0</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>QCad</string>
+    </property>
+    <property name="sizeGripEnabled">
+        <bool>false</bool>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>11</number>
+        </property>
+        <property name="spacing">
+            <number>6</number>
+        </property>
+        <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>layButtons</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>Horizontal Spacing2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>bLeave</cstring>
+                    </property>
+                    <property name="text">
+                        <string>C&amp;lose</string>
+                    </property>
+                    <property name="autoDefault">
+                        <bool>true</bool>
+                    </property>
+                    <property name="default">
+                        <bool>false</bool>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>bSave</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Save</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>bSaveAs</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Save &amp;As..</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>bCancel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Cancel</string>
+                    </property>
+                    <property name="autoDefault">
+                        <bool>true</bool>
+                    </property>
+                    <property name="default">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+            </hbox>
+        </widget>
+        <widget class="QLabel" row="0" column="1">
+            <property name="name">
+                <cstring>lQuestion</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>1</vsizetype>
+                    <horstretch>1</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>No Text supplied.</string>
+            </property>
+            <property name="alignment">
+                <set>WordBreak|AlignCenter</set>
+            </property>
+        </widget>
+        <widget class="QLabel" row="0" column="0">
+            <property name="name">
+                <cstring>l_icon</cstring>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+        </widget>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>bLeave</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_ExitDialog</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
+        <sender>bCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_ExitDialog</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>bSave</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_ExitDialog</receiver>
+        <slot>slotSave()</slot>
+    </connection>
+    <connection>
+        <sender>bSaveAs</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_ExitDialog</receiver>
+        <slot>slotSaveAs()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>bCancel</tabstop>
+    <tabstop>bLeave</tabstop>
+    <tabstop>bSave</tabstop>
+    <tabstop>bSaveAs</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in implementation">qg_exitdialog.ui.h</include>
+</includes>
+<slots>
+    <slot>setText( const QString &amp; text )</slot>
+    <slot>setTitle( const QString &amp; text )</slot>
+    <slot>setForce( bool force )</slot>
+    <slot>slotSaveAs()</slot>
+    <slot>slotSave()</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

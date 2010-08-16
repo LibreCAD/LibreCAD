@@ -1,0 +1,812 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>QCad - Construction - Lines</title>
+  <meta name="generator" content="ManStyle">
+  <meta name="author" content="Andrew Mustun">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="5">
+	  <img src="img/space.png" width="5" height="1" border="0">
+	</td>
+    <td width="105">
+	  <img src="img/space.png" width="105" height="1" border="0">
+	</td>
+    <td width="15">
+	  <img src="img/space.png" width="15" height="1" border="0">
+	</td>
+    <td width="460">
+	  <img src="img/space.png" width="460" height="1" border="0">
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td align="center">
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="construction_point.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="construction_arc.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            <center>QCad User Reference Manual<br>
+	           <img src="img/separator.png"></center>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+	<td>
+<a name="Line"></a>
+<a name="14_2"></a><h2>Lines</h2>
+
+<p>
+Click the line button in the CAD toolbar to show the line toolbar
+  (Figure 29).</p>
+<p class="figure">
+<a href="img/toolbar_line.png"><img border="0" src="img/toolbar_line_t.png"></a></p><p class="figure_label">
+<b>Figure 29:&nbsp;</b>The line
+  toolbar.</p>
+<a name="Sequence of Lines"></a>
+<a name="Line"></a>
+<a name="Line - Sequence"></a>
+<a name="14_2_1"></a><h3>Sequence Of Lines</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_line_2p.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Draw - Line - 2 Points</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+line</p>
+<p>
+
+    <b>Options Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="img/options_line.png"><br>
+</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+This tool lets you draw a sequence of one or more straight
+  lines.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Specify the startpoint of the first line segment. You can use the
+      mouse or enter a co-ordinate in the console.</li>
+
+      <li>Specify the endpoint of the first line segment.</li>
+
+      <li>Specify the endpoints of additional line segments. Type 
+      <code>c</code>
+
+      or 
+      <code>close</code>
+
+      or click the 'Close' button in the Options Toolbar to close the sequence.
+      If you need to undo a single line segment, you can do so by entering 
+      <code>u</code>
+
+      or 
+      <code>undo</code>
+
+      or clicking the 'Undo' button.</li>
+    </ol>
+  </p>
+<a name="Line"></a>
+<a name="Angle"></a>
+<a name="Line - Angle"></a>
+<a name="14_2_2"></a><h3>Line With Given Angle</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_line_angle.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Draw - Line - Angle</p>
+<p>
+
+    <b>Options Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="img/options_line_angle.png"><br>
+</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Use this tool to create lines with a given angle. The line will have to
+  be trimmed to the desired length after creating it.</p>
+<p>
+
+    <ol>
+      <li>Enter the angle and length of the line in the options toolbar. You
+      can also use the command line: 
+      <code>angle</code>
+
+      , 
+      <code>ang</code>
+
+      or 
+      <code>a</code>
+
+      to change the angle. 
+      <code>length</code>
+
+      , 
+      <code>len</code>
+
+      or 
+      <code>l</code>
+
+      to change the length.</li>
+
+      <li>Place the line with the mouse or by entering a co-ordinate in the
+      command line.</li>
+    </ol>
+  </p>
+<a name="Line"></a>
+<a name="Horizontal"></a>
+<a name="Vertical"></a>
+<a name="Line - Horizontal"></a>
+<a name="Line - Vertical"></a>
+<a name="14_2_3"></a><h3>Horizontal / Vertical Line</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_line_hv.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Draw - Line - Horizontal / Vertical</p>
+<p>
+
+    <b>Options Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="img/options_line_hv.png"><br>
+</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Use this tool to create horizontal (vertical) lines. This tool
+  essentially behaves like the one described above, except that you cannot
+  input an angle.</p>
+<a name="Rectangle"></a>
+<a name="Line - Rectangle"></a>
+<a name="14_2_4"></a><h3>Rectangle</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_line_rectangle.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Draw - Line - Rectangle</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+rec, rectang, rectangle</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Use this tool to create rectangular shapes more quickly than with the
+  line tool. A rectangle consists of four separate lines.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Specify the first corner of the rectangle.</li>
+
+      <li>Drag the mouse to the second corner and click to specify the second
+      corner of the rectangle. Alternatively you can enter the co-ordinate of
+      the second corner in the command prompt. E.g. to create a rectangle with
+      width 50 and height 25, enter 
+      <code>@50,25</code>
+
+      .</li>
+    </ol>
+  </p>
+<a name="Parallel"></a>
+<a name="Parallel Line"></a>
+<a name="Line - Parallel"></a>
+<a name="14_2_5"></a><h3>Parallel</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_line_parallel.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Draw - Line - Parallel</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Options Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="img/options_line_parallel.png"><br>
+</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+With this tool you can create parallels to existing line, arc and
+  circle entities.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Enter the distance of the parallel from the original entity into the
+      options toolbar shown at the top or enter 
+      <code>distance</code>
+
+      , 
+      <code>dist</code>
+
+      or 
+      <code>d</code>
+
+      in the command line, followed by the distance.</li>
+
+      <li>Click the entity to which you want to create a parallel. The parallel
+      is created on the side on which the mouse cursor is located while
+      selecting the entity.</li>
+    </ol>
+  </p>
+<a name="Bisector"></a>
+<a name="Angle Bisector"></a>
+<a name="Line - Bisector"></a>
+<a name="14_2_6"></a><h3>Bisector</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_line_bisector.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Draw - Line - Bisector</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Options Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="img/options_line_bisector.png"><br>
+</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Use this tool for creating angle bisectors between two line
+  entities.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>In the options toolbar enter the length of the bisector(s), starting
+      from the intersection point of the two lines. In the second text box,
+      type the number of angle bisectors you want to create. The default is '1'
+      but you can also create multiple bisectors as shown in Figure
+      30. To specify the length in the command line, enter 
+      <code>length</code>
+
+      , 
+      <code>len</code>
+
+      or 
+      <code>l</code>
+
+      , followed by the length. To specify the number of bisectors in the
+      command line, enter 
+      <code>number</code>
+
+      , 
+      <code>num</code>
+
+      or 
+      <code>n</code>
+
+      , followed by the number.</li>
+
+      <li>Click the first line entity which defines the angle.</li>
+
+      <li>Click the second line entity so that the preview shows the angle
+      bisector(s) you want to create.</li>
+    </ol>
+  </p>
+<p class="figure">
+<img border="0" src="img/bisector01.png"></p><p class="figure_label">
+<b>Figure 30:&nbsp;</b>Construction of
+  Bisectors.</p>
+<a name="Tangent"></a>
+<a name="Line - Tangent"></a>
+<a name="14_2_7"></a><h3>Tangent From Point to Arc / Circle</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_line_tangent1.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Draw - Line - Tangent (P,C)</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Create tangents from a co-ordinate to an existing arc or circle entity
+  with this tool.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Use the mouse to specify the location of the startpoint of the line
+      or enter a co-ordinate in the command line.</li>
+
+      <li>Click the arc or circle entity to which you want to create the
+      tangent. Usually, two tangents are possible. When moving the mouse
+      around, you can see a preview of the tangent that will be created.</li>
+    </ol>
+  </p>
+<a name="Tangent"></a>
+<a name="Line - Tangent"></a>
+<a name="14_2_8"></a><h3>Tangent From Arc to Arc / Circle to Circle</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_line_tangent2.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Draw - Line - Tangent (C,C)</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Create tangents from one existing arc or circle entity to another one
+  with this tool.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Click the first arc or circle entity to which you want to create the
+      tangent.</li>
+
+      <li>Click the second arc or circle entity to which you want to create the
+      tangent. Usually, four tangents are possible. When moving the mouse
+      around, you can see a preview of the tangent that will be created.</li>
+    </ol>
+  </p>
+<a name="Orthogonal"></a>
+<a name="Line - Orthogonal"></a>
+<a name="14_2_9"></a><h3>Line Orthogonal to Another Entity</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_line_orthogonal.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Draw - Line - Orthogonal</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+This tool lets you create lines orthogonal to existing entities. The
+  existing entity can be a line or an arc / circle.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Click the existing entity.</li>
+
+      <li>Place the line with the mouse or enter a co-ordinate in the command
+      line.</li>
+    </ol>
+  </p>
+<a name="Relative Angle"></a>
+<a name="Line - Relative Angle"></a>
+<a name="14_2_10"></a><h3>Line with Relative Angle to Another Entity</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_line_relangle.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Draw - Line - Relative Angle</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Create lines with a relative angle to existing entities with this tool.
+  The existing entity can be a line or an arc / circle. Lines with a relative
+  angle of 0 degrees to an arc are tangents.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Enter the angle in the options toolbar.</li>
+
+      <li>Click the existing entity.</li>
+
+      <li>Place the line with the mouse or enter a co-ordinate in the command
+      line.</li>
+    </ol>
+  </p>
+<a name="Freehand Line"></a>
+<a name="Line - Freehand"></a>
+<a name="14_2_11"></a><h3>Freehand Line</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_line_freehand.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Draw - Line - Freehand</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+With this tool you can draw freehand lines. Please use this tool
+  sparingly since technical drawings usually require absolute accuracy.
+  However, on some occasions this tool might come in handy (e.g. for broken
+  edges like shown in Figure 31).</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Place the mouse at the startpoint of the freehand line, press the
+      left mouse button and keep it down.</li>
+
+      <li>Now move the mouse around to draw the line. At the endpoint of the
+      freehand line, let go of the mouse button.</li>
+    </ol>
+  </p>
+<p class="figure">
+<img border="0" src="imgs/linefreehand01.png"></p><p class="figure_label">
+<b>Figure 31:&nbsp;</b>Example
+  use for the freehand line tool.</p>
+<a name="Polygon"></a>
+<a name="Line - Polygon"></a>
+<a name="14_2_12"></a><h3>Polygon with Center and Corner</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_line_polygon.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Draw - Line - Polygon (Cen,Cor)</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Options Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="img/options_line_polygon.png"><br>
+</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Creates polygons with the center and one corner given.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Enter the degree of the polygon (number of edges / corners) in the
+      options toolbar. Valid numbers range from 3 to 9999.</li>
+
+      <li>Set the center of the polygon using the mouse or enter a co-ordinate
+      in the command line.</li>
+
+      <li>Set the first corner of the polygon.</li>
+    </ol>
+  </p>
+<a name="Polygon"></a>
+<a name="Line - Polygon"></a>
+<a name="14_2_13"></a><h3>Polygon with Two Corners</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_line_polygon2.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Draw - Line - Polygon (Cor,Cor)</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Options Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="img/options_line_polygon.png"><br>
+</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Creates polygons with two corners given.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Enter the degree of the polygon (number of edges / corners) in the
+      options toolbar. Valid numbers range from 3 to 9999.</li>
+
+      <li>Set the first corner of the polygon using the mouse or enter a
+      co-ordinate in the command line.</li>
+
+      <li>Set the second corner of the polygon.</li>
+    </ol>
+  </p>
+    </td>
+  </tr>
+  
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td valign=top>
+       <br>
+
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="construction_point.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="construction_arc.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+      </table>
+	   
+       <p class="footer">
+       [ <a href="index.html">Home</a> | 
+	     <a href="contents.html">Contents</a> |
+		 <a href="index2.html">Index</a> ]<br>
+       [ <a href="license.html">1</a> | <a href="preface.html">2</a> | <a href="basics.html">3</a> | <a href="start.html">4</a> | <a href="gui.html">5</a> | <a href="commandline.html">6</a> | <a href="file.html">7</a> | <a href="printing.html">8</a> | <a href="edit.html">9</a> | <a href="view.html">10</a> | <a href="layers.html">11</a> | <a href="blocks.html">12</a> | <a href="snapping.html">13</a> | <a href="construction.html">14</a> | <a href="selection.html">15</a> | <a href="modification.html">16</a> | <a href="information.html">17</a> | <a href="options_general.html">18</a> | <a href="options_drawing.html">19</a> | <a href="appendix.html">20</a> ]</p>
+       <p class="footer2">
+	   Copyright  2003 <a href="http://www.ribbonsoft.com">RibbonSoft</a>, Inc.<br>All Rights Reserved.<br>
+       This Manual was created with <a href="http://www.ribbonsoft.com/manstyle.html">ManStyle</a>.
+       </p>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

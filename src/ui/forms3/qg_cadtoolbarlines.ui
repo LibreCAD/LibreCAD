@@ -1,0 +1,570 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_CadToolBarLines</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_CadToolBarLines</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>34</x>
+            <y>0</y>
+            <width>56</width>
+            <height>338</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>0</hsizetype>
+            <vsizetype>1</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>56</width>
+            <height>336</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Lines</string>
+    </property>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bBack</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>56</width>
+                <height>20</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image0</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Back to main menu</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bNormal</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>20</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image1</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Line with two points</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bAngle</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>20</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image2</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Line with given angle</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bHorizontal</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>48</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image3</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Horizontal lines</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bVertical</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>48</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image4</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Vertical lines</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bRectangle</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>76</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image5</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Rectangles</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bBisector</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>76</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image6</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Bisectors</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bParallel</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>104</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image7</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Parallels with distance</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bTangent1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>132</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image8</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Tangents from point to circle</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bTangent2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>132</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image9</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Tangents from circle to circle</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bOrthogonal</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>160</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image10</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Orthogonal lines</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bRelAngle</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>160</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image11</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Lines with relative angles</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bPolygon</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>188</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image12</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Polygons with Center and Corner</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bPolygon2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>188</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image13</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Polygons with two Corners</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bFree</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>216</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image14</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Freehand lines</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bParallelThrough</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>104</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image15</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Parallels through point</string>
+        </property>
+    </widget>
+</widget>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="309">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232345330345430563054d2e152d2534856f0cbcf4b05b113816c65033000719541dc343000ab0402e5443d38808a2927628801851295c1002e06128201a818b2104c2c118b981e36313d6c627a89986e0109628ae9218bd55a730100b0a148a8</data>
+    </image>
+    <image name="image1">
+        <data format="XPM.GZ" length="375">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b45030345630563054d2e152d2534856f0cbcf4b05b113816c65033000719541dcb43418570f0d28eb6111555656c6144dc4a6361144a089268205d14413a134b268224c10593411a107218a2408174d441684882aa328848a023da38729aa872ea8a7546bcd0500a1f6477e</data>
+    </image>
+    <image name="image2">
+        <data format="XPM.GZ" length="320">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232345730345430563054d2e152d2534856f0cbcf4b05b195816c65033000711341dcb43418570f15282b630a2aebe9a10b2a03c5d00595c1248aa032440c455019c640082ac3c510820821a86022b232a860626222aa53a12ad1046badb900647f3c84</data>
+    </image>
+    <image name="image3">
+        <data format="XPM.GZ" length="151">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232345730064243251d2e253d856405bffcbc54103b11c856360003105719c44d4b8371f594f55001588db272220ac0aeb2d69a0b00b93c2243</data>
+    </image>
+    <image name="image4">
+        <data format="XPM.GZ" length="207">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade652325630345700124a3a5c4a7a0ac90a7ef979a920b63290ad6c0006206e22889b9606e3ea29ebd19a4a0453898989305ead351700855a26c1</data>
+    </image>
+    <image name="image5">
+        <data format="XPM.GZ" length="419">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b45030345530563054d2e152d2534856f0cbcf4b05b113816c65033000719541dcb43418574f590f0d8015292b27a2003d6c6aa1a289c35154192a8a0280c10216d5c3505b6bcd050013725618</data>
+    </image>
+    <image name="image6">
+        <data format="XPM.GZ" length="500">789c8d8fc10ac2300c86ef7d8ad0dc8a740e3c08e223281e05f190548b1ea6a0f320e2bbbbb62b4be7417f0a6bbe7d4ddacac076b30253a97b4bedd9813bd10dcce1d134cfdd7ef952ba9e43b76650eb89d2161cacaf9763d873b7c7694c282997de871243e97dfe6b63d00ef941252c2875f9c70df0db1d54969404146e3ccd2c3bc40694c411b5b98ba4cc91869b248afd182a5cec6753e9f6b30b17f36c2bde868c39943ec9b5a3e8f7427d00323661e4</data>
+    </image>
+    <image name="image7">
+        <data format="XPM.GZ" length="419">789c65d0b10ec2201006e09da7b8c0464c2b89c6c1f8081a4713e30028d1a136d176688cef2ed01e3df006f2ff1f0c176a09a7e31e64cdde9dee1e16ec5dbf405efba619ce97dd8771b501b5861528be60bc020b87f6790bd9f82c967142d5589d0b5584ea1cde566484f0478e91729c8862a21909217ad205c657258e29a9317f684cb6929ea8c0913244223853424ae587207eb7ec07062a50e2</data>
+    </image>
+    <image name="image8">
+        <data format="XPM.GZ" length="485">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b4500022630543251d2e253d856405bffcbc54103b11c856360003105719c44d4b8371f5d080b21e16516565650cd1c4440cb58940311040128509218b228410a28989403b94d14495614e421685f3949144113a61c2f417c5ee321cbe0087298a8f6badb900348058fe</data>
+    </image>
+    <image name="image9">
+        <data format="XPM.GZ" length="485">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b4500022630543251d2e253d856405bffcbc54103b11c856360003105719c44d4b8371f590803210e8e9a18926826550451313a11a90451381aad045410a3144a126a2882626422c5746b60d660b8acb94e1ae85d2604f217962a044b1bb0ce1533d1451b09794112629d55a7301002bb15814</data>
+    </image>
+    <image name="image10">
+        <data format="XPM.GZ" length="375">789c65d0b10ac2301006e03d4f71f4df825c0d5d04f1111447411c8e68d1a10ab60e22bebb4d6ae2496ec9fd5f42c8a5b6b4dbaec9d6a61f64b878f267b9933d3ebaeeb93fac5ea6720b720d35e4aa99a9983c6d6ed753e831f698c70a51426cdb14792cb02a24550c70a9a1c99a382e3f8d19d39e52967c8d5211e152212815ea21790ae8877c351dfa53355856e84f98a6782fcd0770c7455e</data>
+    </image>
+    <image name="image11">
+        <data format="XPM.GZ" length="375">789c6dceb10a02310c06e0bd4f11fa6f4572965b04f1111447411c42f5d0e114f41c447c77ad5e4bee6a2024ff3784548e36eb25b9cadc3ae94e81c251aee4f6f7b67d6c778ba7b17e46bea69abc9d18cb146875391fe28ecf8ee9b76294189b2645ce857efc51804b8d3dd08463c5efb256e96da022c2a522a352a46f954263d2fc935670a91823dbd7dcbc016ed8455e</data>
+    </image>
+    <image name="image12">
+        <data format="XPM.GZ" length="485">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b4500022630543251d2e253d856405bffcbc54105b19c856360003103711c44d4b8371f5a0405919c6421255062354518842655451651453a0a27013214cb0a83292205839d8857a684019b728ccd4c44498c9844511ae80b84c99b0a8b21e19a2c8c28948e100078920f721873a92da5a6b2e009dcc57f7</data>
+    </image>
+    <image name="image13">
+        <data format="XPM.GZ" length="485">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b4500022630543251d2e253d856405bffcbc54105b19c856360003103711c44d4b8371f5a0405919c6421255062354518842655451651453a0a27013214cb0a83292205839d8857a684019b7a81e9ab0b21ec9a268c2584595f5c810d54b440826c27cac979898a80c0540264eb5b5d65c002d0d584b</data>
+    </image>
+    <image name="image14">
+        <data format="XPM.GZ" length="360">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b45030345630523054d2e152d2534856f0cbcf4b05b195816c650330004b61000c51656565245110074481314c541926806c82b21ed1a2ca7ab84411b6414595f54814c5e20684b7b0fb18225a6bcd0500f79940e4</data>
+    </image>
+    <image name="image15">
+        <data format="XPM.GZ" length="404">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232345730345530563054d2e152d2534856f0cbcf4b05b113816c65033000719541dcb43418570f09282b03095441b010aa20540859102e841044128209a2084104d184d06d0783c4440cc1c4443495ca602174772a6398999888e178884614416421ac4e020ad65a730100cd364bd6</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>bNormal</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLine()</slot>
+    </connection>
+    <connection>
+        <sender>bFree</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLineFree()</slot>
+    </connection>
+    <connection>
+        <sender>bParallel</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLineParallel()</slot>
+    </connection>
+    <connection>
+        <sender>bAngle</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLineAngle()</slot>
+    </connection>
+    <connection>
+        <sender>bHorizontal</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLineHorizontal()</slot>
+    </connection>
+    <connection>
+        <sender>bBisector</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLineBisector()</slot>
+    </connection>
+    <connection>
+        <sender>bTangent1</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLineTangent1()</slot>
+    </connection>
+    <connection>
+        <sender>bTangent2</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLineTangent2()</slot>
+    </connection>
+    <connection>
+        <sender>bRectangle</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLineRectangle()</slot>
+    </connection>
+    <connection>
+        <sender>bBack</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>back()</slot>
+    </connection>
+    <connection>
+        <sender>bRelAngle</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLineRelAngle()</slot>
+    </connection>
+    <connection>
+        <sender>bVertical</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLineVertical()</slot>
+    </connection>
+    <connection>
+        <sender>bOrthogonal</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLineOrthogonal()</slot>
+    </connection>
+    <connection>
+        <sender>bPolygon</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLinePolygon()</slot>
+    </connection>
+    <connection>
+        <sender>bPolygon2</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLinePolygon2()</slot>
+    </connection>
+    <connection>
+        <sender>bParallelThrough</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarLines</receiver>
+        <slot>drawLineParallelThrough()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in declaration">qg_actionhandler.h</include>
+    <include location="local" impldecl="in implementation">qg_cadtoolbar.h</include>
+    <include location="local" impldecl="in implementation">qg_cadtoolbarlines.ui.h</include>
+</includes>
+<forwards>
+    <forward>class QG_CadToolBar</forward>
+</forwards>
+<variables>
+    <variable>QG_CadToolBar* cadToolBar;</variable>
+    <variable>QG_ActionHandler* actionHandler;</variable>
+</variables>
+<slots>
+    <slot>contextMenuEvent( QContextMenuEvent * e )</slot>
+    <slot>setCadToolBar( QG_CadToolBar * tb )</slot>
+    <slot>drawLine()</slot>
+    <slot>drawLineAngle()</slot>
+    <slot>drawLineHorizontal()</slot>
+    <slot>drawLineHorVert()</slot>
+    <slot>drawLineVertical()</slot>
+    <slot>drawLineParallel()</slot>
+    <slot>drawLineParallelThrough()</slot>
+    <slot>drawLineRectangle()</slot>
+    <slot>drawLineBisector()</slot>
+    <slot>drawLineTangent1()</slot>
+    <slot>drawLineTangent2()</slot>
+    <slot>drawLineOrthogonal()</slot>
+    <slot>drawLineRelAngle()</slot>
+    <slot>drawLineFree()</slot>
+    <slot>drawLinePolygon()</slot>
+    <slot>drawLinePolygon2()</slot>
+    <slot>back()</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

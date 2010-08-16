@@ -1,0 +1,718 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>QCad - Snapping</title>
+  <meta name="generator" content="ManStyle">
+  <meta name="author" content="Andrew Mustun">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="5">
+	  <img src="img/space.png" width="5" height="1" border="0">
+	</td>
+    <td width="105">
+	  <img src="img/space.png" width="105" height="1" border="0">
+	</td>
+    <td width="15">
+	  <img src="img/space.png" width="15" height="1" border="0">
+	</td>
+    <td width="460">
+	  <img src="img/space.png" width="460" height="1" border="0">
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td align="center">
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="blocks.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="construction.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            <center>QCad User Reference Manual<br>
+	           <img src="img/separator.png"></center>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+	<td>
+<a name="Snapping"></a>
+<a name="Object Snap"></a>
+<a name="Entity Snap"></a>
+<a name="13"></a><h1>13 Object Snap</h1>
+
+<p>
+<i>This chapter lists all snap modes that can be activated to assist
+  the user when setting points to exact co-ordinates.</i></p>
+<p>
+For most constructions and modifications in QCad, it is necessary to
+  specify the co-ordinates of reference points, startpoints, endpoints, centers
+  or other identifying points. In order to make it possible to pick exact
+  positions defined by previously drawn entities or by the grid, QCad offers
+  you a set of object snap modes. The toolbar that features those modes, is
+  automatically shown whenever it makes sense to use them (Figure
+  20).</p>
+<p class="figure">
+<a href="img/toolbar_snap.png"><img border="0" src="img/toolbar_snap_t.png"></a></p><p class="figure_label">
+<b>Figure 20:&nbsp;</b>The snap
+  toolbar.</p>
+<a name="Free Positioning"></a>
+<a name="Snap - Free"></a>
+<a name="13_1"></a><h2>Free Positioning</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_free.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - Free</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+os</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Allows the user to set the co-ordinate freely using the mouse. Note,
+  that this is almost never the recommended way of setting co-ordinates in a
+  CAD system.</p>
+<a name="Grid"></a>
+<a name="Snap - Grid"></a>
+<a name="13_2"></a><h2>Snap to Grid</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_grid.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - Grid</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+sg</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Snaps to grid points.</p>
+<a name="Endpoints"></a>
+<a name="Snap - Endpoints"></a>
+<a name="13_3"></a><h2>Snap to Endpoints</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_endpoint.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - Endpoints</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+se</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Snaps to endpoints of lines and arcs and to points (Figure
+  21).</p>
+<p class="figure">
+<img border="0" src="imgs/snapendpoint.png"></p><p class="figure_label">
+<b>Figure 21:&nbsp;</b>Endpoints
+  found by the snap tool.</p>
+<a name="On Entity"></a>
+<a name="Snap - On Entity"></a>
+<a name="13_4"></a><h2>Snap to Points on Entities</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_onentity.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - On Entity</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+sn</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Snaps to the closest point that is on an entity (Figure
+  22).</p>
+<p class="figure">
+<img border="0" src="imgs/snaponentity.png"></p><p class="figure_label">
+<b>Figure 22:&nbsp;</b>'On Entity'
+  snaps to any point on the line of an entity.</p>
+<a name="Centers"></a>
+<a name="Snap - Centers"></a>
+<a name="13_5"></a><h2>Snap to Centers</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_center.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - Centers</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+so</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Snaps to centers of lines and arcs and to points (Figure
+  23).</p>
+<p class="figure">
+<img border="0" src="imgs/snapcenter.png"></p><p class="figure_label">
+<b>Figure 23:&nbsp;</b>Centers found by
+  the snap tool.</p>
+<a name="Middles"></a>
+<a name="Snap - Middle"></a>
+<a name="13_6"></a><h2>Snap to Middle Points</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_middle.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - Middle</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+sm</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Snaps to middle points of lines and arcs and to points (Figure
+  24). Note that the middle point of an arc is in the middle of the
+  arc line while the center is at the center of the arc.</p>
+<p class="figure">
+<img border="0" src="imgs/snapmiddle.png"></p><p class="figure_label">
+<b>Figure 24:&nbsp;</b>Middle points
+  found by the snap tool.</p>
+<a name="Distance from Endpoint"></a>
+<a name="Snap - Distance from Endpoint"></a>
+<a name="13_7"></a><h2>Snap to Distance Points</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_dist.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - Distance from Endpoint</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Options Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="img/options_snap_dist.png"><br>
+</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Snaps to points with a given distance from endpoints (Figure
+  25). The distance can be adjusted in the options toolbar.</p>
+<p class="figure">
+<img border="0" src="imgs/snapdist.png"></p><p class="figure_label">
+<b>Figure 25:&nbsp;</b>Example snap points
+  for the snap tool 'Distance from Endpoint'.</p>
+<a name="Intersection"></a>
+<a name="Snap - Intersection"></a>
+<a name="13_8"></a><h2>Snap to Intersections</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_intersa.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - Intersection</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+si</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Snaps to intersections between entities (Figure
+  26).</p>
+<p class="figure">
+<img border="0" src="imgs/snapintersa.png"></p><p class="figure_label">
+<b>Figure 26:&nbsp;</b>The Intersection
+  Snap tool finds automatically all visible intersection points.</p>
+<a name="Intersection"></a>
+<a name="Snap - Intersection Manually"></a>
+<a name="13_9"></a><h2>Snap to Intersections Manually</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_intersm.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - Intersection Manually</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Sometimes the intersection snap mode cannot be used to snap to an
+  intersection point because the point is not on one or both of the entities.
+  The second intersection tool lets you specify the two entities and then snaps
+  the intersection point even if it's outside the entities (Figure
+  27).</p>
+<p class="figure">
+<img border="0" src="imgs/snapintersm.png"></p><p class="figure_label">
+<b>Figure 27:&nbsp;</b>The Manual
+  Intersection Snap tool also lets you specify invisible intersection
+  points.</p>
+<a name="13_10"></a><h2>Snap Restrictions</h2>
+
+<p>
+In addition to the snap functions described above, QCad can further
+  restrict the position of the mouse cursor orthogonally to the position of the
+  relative zero point. Figure 28 illustrates an example of
+  how to use snap restrictions.
+  <br>
+
+  The 'Snap Point' is the point the user wants to specify. It's the point on
+  the bottom line of the shape that has the same X-co-ordinate like the center
+  of the full circle.
+  <br>
+
+  The mouse cursor is located at the circle line. Because QCad is in the snap
+  mode "Snap to Center Points", the center of the circle would normally be the
+  snap point. A small rhombus highlights that point ("Center Point"). With the
+  snap restriction "Restrict Horizontally" activated, QCad snaps to the point
+  on the horizontal position of the relative zero point ("Snap Point").</p>
+<p class="figure">
+<a href="img/snap_restriction01.png"><img border="0" src="img/snap_restriction01_t.png"></a></p><p class="figure_label">
+<b>Figure 28:&nbsp;</b>
+  Snap restrictions further limit the snap position to imaginary lines
+  orthogonally to the relative zero point.</p>
+<a name="Restrict Nothing"></a>
+<a name="Snap - Restrict Nothing"></a>
+<a name="13_10_1"></a><h3>Restrict Nothing</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_restrict_no.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - Restrict Nothing</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Disables all restrictions.</p>
+<a name="Restrict Orthogonally"></a>
+<a name="Snap - Restrict Orthogonally"></a>
+<a name="13_10_2"></a><h3>Restrict Orthogonally</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_restrict_ortho.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - Restrict Orthogonally</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Restricts orthogonally to relative zero point.</p>
+<a name="Restrict Horizontally"></a>
+<a name="Snap - Restrict Horizontally"></a>
+<a name="13_10_3"></a><h3>Restrict Horizontally</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_restrict_horizontal.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - Restrict Horizontally</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Restricts horizontally to relative zero point.</p>
+<a name="Restrict Vertically"></a>
+<a name="Snap - Restrict Vertically"></a>
+<a name="13_10_4"></a><h3>Restrict Vertically</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_restrict_vertical.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - Restrict Vertically</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Restricts vertically to relative zero point.</p>
+<a name="13_11"></a><h2>Relative Zero Point</h2>
+
+<p>
+As mentioned previously, there is a relative Zero point in every QCad
+  drawing. It appears as a small red circle with a hair cross. The relative
+  zero point is the reference point for relative co-ordinates you enter in the
+  command line and for snapping restrictions.
+  <br>
+
+  Normally, the relative zero point moves around automatically. For example if
+  you're drawing a 
+  <a href="construction.html#Sequence%20of%20Lines">sequence of lines</a>
+
+  , the relative zero point always moves to the last point you've set. The next
+  point of the sequence can then be defined in relative co-ordinates to the
+  last point.
+  <br>
+
+  Sometimes this is not convenient and you would rather want to set the
+  relative zero point to another position or lock its position so it stops
+  moving around automatically. The snap toolbar offers two tools that do
+  exactly this.</p>
+<a name="Move Relative Zero"></a>
+<a name="Relative Zero"></a>
+<a name="Set Relative Zero"></a>
+<a name="Snap - Relative
+  Zero"></a>
+<a name="13_11_1"></a><h3>Moving the Relative Zero Point</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_relzero.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - Set Relative Zero</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Lets the user set a new location for the relative zero point.</p>
+<a name="Lock Relative Zero"></a>
+<a name="Relative Zero"></a>
+<a name="Unlock Relative Zero"></a>
+<a name="Snap - Lock
+  Relative Zero"></a>
+<a name="13_11_2"></a><h3>(Un-)locking the Relative Zero Point</h3>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_snap_relzero_lock.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Snap - (Un-)Lock Relative Zero</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+When enabled, this switch locks the position of the relative zero point.
+  This means it doesn't move around automatically. You can still move it
+  manually using the tool described above.</p>
+    </td>
+  </tr>
+  
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td valign=top>
+       <br>
+
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="blocks.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="construction.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+      </table>
+	   
+       <p class="footer">
+       [ <a href="index.html">Home</a> | 
+	     <a href="contents.html">Contents</a> |
+		 <a href="index2.html">Index</a> ]<br>
+       [ <a href="license.html">1</a> | <a href="preface.html">2</a> | <a href="basics.html">3</a> | <a href="start.html">4</a> | <a href="gui.html">5</a> | <a href="commandline.html">6</a> | <a href="file.html">7</a> | <a href="printing.html">8</a> | <a href="edit.html">9</a> | <a href="view.html">10</a> | <a href="layers.html">11</a> | <a href="blocks.html">12</a> | <a href="snapping.html">13</a> | <a href="construction.html">14</a> | <a href="selection.html">15</a> | <a href="modification.html">16</a> | <a href="information.html">17</a> | <a href="options_general.html">18</a> | <a href="options_drawing.html">19</a> | <a href="appendix.html">20</a> ]</p>
+       <p class="footer2">
+	   Copyright  2003 <a href="http://www.ribbonsoft.com">RibbonSoft</a>, Inc.<br>All Rights Reserved.<br>
+       This Manual was created with <a href="http://www.ribbonsoft.com/manstyle.html">ManStyle</a>.
+       </p>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
