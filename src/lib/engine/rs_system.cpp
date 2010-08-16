@@ -362,9 +362,11 @@ RS_StringList RS_System::getDirectoryList(const RS_String& subDirectory) {
 // RVT_PORT I don't think we need this here anymore        dirList.append(appDir + "/../../../" + subDirectory);
     }
 #endif
-	
-	// Add support directory if run from same location as compiled, mainly for Linux but it can't hurt for Windows
+
+#ifndef __APPLE__
+	// Add support directory if caduntu is run-in-place, not for Apple because it uses resources
 	dirList.append(appDir + "/support/" + subDirectory);
+#endif
 
     // Individual directories:
     RS_SETTINGS->beginGroup("/Paths");
