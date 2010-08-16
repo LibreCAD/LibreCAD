@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>QCad - Appendix - QCad 1</title>
+  <meta name="generator" content="ManStyle">
+  <meta name="author" content="Andrew Mustun">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="5">
+	  <img src="img/space.png" width="5" height="1" border="0">
+	</td>
+    <td width="105">
+	  <img src="img/space.png" width="105" height="1" border="0">
+	</td>
+    <td width="15">
+	  <img src="img/space.png" width="15" height="1" border="0">
+	</td>
+    <td width="460">
+	  <img src="img/space.png" width="460" height="1" border="0">
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td align="center">
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="appendix_papers.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="appendix_bib.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            <center>QCad User Reference Manual<br>
+	           <img src="img/separator.png"></center>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+	<td>
+<a name="QCad 1"></a>
+<a name="Migration"></a>
+<a name="20_7"></a><h2>Migration from QCad 1</h2>
+
+<p>
+<i>
+  This chapter lists known problems when migrating from QCad 1 to QCad 2
+  and should be a help to those who convert drawings from QCad 1 to
+  QCad 2.
+  </i></p>
+<a name="20_7_1"></a><h3>DXF Compatibility</h3>
+
+<p>
+
+  When opening DXF drawings made with QCad 1, you might experience problems
+  with dimensions, hatches and texts. This is because the DXF format produced
+  by QCad 1 is not 100% standard compliant. You can import DXF drawings from
+  QCad 1 by changing the format in the File Open dialog to
+  'QCad 1.x file (*.dxf *.DXF)' as shown in Figure 152.
+  </p>
+<p class="figure">
+<a href="img/qcad1_open.png"><img border="0" src="img/qcad1_open_t.png"></a></p><p class="figure_label">
+<b>Figure 152:&nbsp;</b>
+  Opening QCad 1 drawings.</p>
+<p>
+
+  Rounded texts are no longer supported in QCad 2 for better compatibility 
+  with other programs. You can import rounded texts by splitting them up
+  into single elements in QCad 1.
+  </p>
+<a name="20_7_2"></a><h3>Layer Handling</h3>
+
+<p>
+
+  Changeing layer attributes in QCad 1 had no effect on already 
+  constructed entities.
+  In QCad 2, changing layer attributes can also change the attributes of all
+  entities that are on that layer and have attributes that are set to
+  "ByLayer".
+  </p>
+<p>
+
+  When migrating from QCad 1 to QCad 2, tou might find that the attributes
+  of the entities in old drawings are no longer appropriate. Usually it's
+  recommendable to set all attributes to "ByLayer". To do that, choose
+  <code>Attributes</code> from the <code>Modify</code> menu. Then select
+  all entities and click the 'Continue' button. In the dialog, change all 
+  attributes to 'By Layer' as shown in Figure 153.
+  </p>
+<p class="figure">
+<img border="0" src="img/qcad1_attributes.png"></p><p class="figure_label">
+<b>Figure 153:&nbsp;</b>
+  Changing all attributes to 'By Layer'.</p>
+    </td>
+  </tr>
+  
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td valign=top>
+       <br>
+
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="appendix_papers.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="appendix_bib.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+      </table>
+	   
+       <p class="footer">
+       [ <a href="index.html">Home</a> | 
+	     <a href="contents.html">Contents</a> |
+		 <a href="index2.html">Index</a> ]<br>
+       [ <a href="license.html">1</a> | <a href="preface.html">2</a> | <a href="basics.html">3</a> | <a href="start.html">4</a> | <a href="gui.html">5</a> | <a href="commandline.html">6</a> | <a href="file.html">7</a> | <a href="printing.html">8</a> | <a href="edit.html">9</a> | <a href="view.html">10</a> | <a href="layers.html">11</a> | <a href="blocks.html">12</a> | <a href="snapping.html">13</a> | <a href="construction.html">14</a> | <a href="selection.html">15</a> | <a href="modification.html">16</a> | <a href="information.html">17</a> | <a href="options_general.html">18</a> | <a href="options_drawing.html">19</a> | <a href="appendix.html">20</a> ]</p>
+       <p class="footer2">
+	   Copyright  2003 <a href="http://www.ribbonsoft.com">RibbonSoft</a>, Inc.<br>All Rights Reserved.<br>
+       This Manual was created with <a href="http://www.ribbonsoft.com/manstyle.html">ManStyle</a>.
+       </p>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<manstyle>
+  <opt name="PageTitle" value="Appendix - Bibliography" />
+  <section>Appendix</section>
+
+  <subsection>Bibliography</subsection>
+  
+    <para>
+      <a name="dxf" /><b>[DXF]</b><br/>
+	  <a href="http://www.autodesk.com/techpubs/autocad/acad2000/dxf/">
+	  http://www.autodesk.com/techpubs/autocad/acad2000/dxf</a><br/>
+	  Autodesk DXF Reference
+    </para>
+  
+    <idx>DXF,Autodesk</idx>
+	
+    <para>
+      <a name="cygwin" /><b>[CYGWIN]</b><br/>
+	  <a href="http://www.cygwin.com">http://www.cygwin.com</a><br/>
+	  cygwin - a Linux-like environment for Windows.
+    </para>
+    
+    <idx>cygwin</idx>
+	
+    <!--
+    <para>
+      <a name="bcc" /><b>[BCC]</b><br/>
+	  <a href="http://www.borland.com/bcppbuilder/freecompiler/">
+	  http://www.borland.com/bcppbuilder/freecompiler</a><br/>
+	  Free C++ command line tools from Borland.
+    </para>
+    -->
+
+</manstyle>
+

@@ -1,0 +1,345 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>QCad - Editing</title>
+  <meta name="generator" content="ManStyle">
+  <meta name="author" content="Andrew Mustun">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="5">
+	  <img src="img/space.png" width="5" height="1" border="0">
+	</td>
+    <td width="105">
+	  <img src="img/space.png" width="105" height="1" border="0">
+	</td>
+    <td width="15">
+	  <img src="img/space.png" width="15" height="1" border="0">
+	</td>
+    <td width="460">
+	  <img src="img/space.png" width="460" height="1" border="0">
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td align="center">
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="printing.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="view.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            <center>QCad User Reference Manual<br>
+	           <img src="img/separator.png"></center>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+	<td>
+<a name="9"></a><h1>9 Basic Editing Commands</h1>
+
+<a name="Undo"></a>
+<a name="Edit - Undo"></a>
+<a name="9_1"></a><h2>Undo</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_undo.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Edit - Undo</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+oo, Ctrl-Z</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+undo, u</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+The Undo command takes back the last drawing or modification command
+  that was executed. QCad can take back more than one command. E.g. if you've
+  just created a line and a circle which you want to take back, launch the undo
+  command twice. 
+  <br>
+
+  Undo cannot undo all actions. Some actions like file actions and layer
+  actions can't be undone.</p>
+<a name="Redo"></a>
+<a name="Edit - Redo"></a>
+<a name="9_2"></a><h2>Redo</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_redo.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Edit - Redo</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+uu, Ctrl-Shift-Z</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+redo</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+The redo command is the counterpart of the undo command. It makes
+  changes undone before reappear.</p>
+<a name="Copy"></a>
+<a name="Edit - Copy"></a>
+<a name="9_3"></a><h2>Copy</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_copy.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Edit - Copy</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+Ctrl-C</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+You might know the copy / paste mechanism from other applications. QCad
+  offers a similar set of tools to copy entities from one drawing to another. 
+  Objects that are copied are stored on the QCad internal clipboard. This
+  clipboard can only be accessed from QCad itself. You cannot paste graphical 
+  objects copied in other applications into QCad nor can you paste 
+  QCad entities into other applications.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>After starting the copy tool, the CAD toolbar shows the selection
+      tools. Use them to select the entities you want to copy to the
+      clipboard.</li>
+
+      <li>Click the right arrow button in the CAD toolbar to continue.</li>
+
+      <li>Set the reference point with the mouse or enter a co-ordinate in the
+      command line. The reference point will be used to position the entities
+      when pasting them into a drawing again.</li>
+    </ol>
+  </p>
+<a name="Cut"></a>
+<a name="Edit - Cut"></a>
+<a name="9_4"></a><h2>Cut</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_cut.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Edit - Cut</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+Ctrl-X</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+The cut command essentially works like the copy command described
+  above. The only difference is that the selected entities will be removed from
+  the current drawing after being copied to the clipboard.</p>
+<a name="Paste"></a>
+<a name="Edit - Paste"></a>
+<a name="9_5"></a><h2>Paste</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_paste.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Edit - Paste</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+Ctrl-V</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+The paste command inserts the entities previously copied to the
+  clipboard. Paste is especially useful to transfer entities from one drawing to
+  another.
+  <br>
+
+  All layers needed by the clipboard contents are pasted into the layerlist.
+  Existing layers with the same name don't get overwritten. Sometimes this
+  might lead to unexpected results. If an entity gets its attributes from the
+  layer, it might be red in the original drawing and appear green in the
+  drawing where you paste it. That's the case if a layer exists in both
+  drawings with different attributes.
+  <br>
+
+  Inserts (references to blocks) that are on the clipboard will be pasted
+  together with the blocks they refer to. Blocks in the current drawing don't
+  get overwritten. This might lead to totally unexpected results in some cases.
+  Make sure that different blocks never have the same name in drawings for
+  which you use the copy / paste tools.</p>
+    </td>
+  </tr>
+  
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td valign=top>
+       <br>
+
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="printing.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="view.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+      </table>
+	   
+       <p class="footer">
+       [ <a href="index.html">Home</a> | 
+	     <a href="contents.html">Contents</a> |
+		 <a href="index2.html">Index</a> ]<br>
+       [ <a href="license.html">1</a> | <a href="preface.html">2</a> | <a href="basics.html">3</a> | <a href="start.html">4</a> | <a href="gui.html">5</a> | <a href="commandline.html">6</a> | <a href="file.html">7</a> | <a href="printing.html">8</a> | <a href="edit.html">9</a> | <a href="view.html">10</a> | <a href="layers.html">11</a> | <a href="blocks.html">12</a> | <a href="snapping.html">13</a> | <a href="construction.html">14</a> | <a href="selection.html">15</a> | <a href="modification.html">16</a> | <a href="information.html">17</a> | <a href="options_general.html">18</a> | <a href="options_drawing.html">19</a> | <a href="appendix.html">20</a> ]</p>
+       <p class="footer2">
+	   Copyright  2003 <a href="http://www.ribbonsoft.com">RibbonSoft</a>, Inc.<br>All Rights Reserved.<br>
+       This Manual was created with <a href="http://www.ribbonsoft.com/manstyle.html">ManStyle</a>.
+       </p>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

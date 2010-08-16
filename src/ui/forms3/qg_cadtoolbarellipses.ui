@@ -1,0 +1,154 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_CadToolBarEllipses</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_CadToolBarEllipses</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>34</x>
+            <y>0</y>
+            <width>56</width>
+            <height>336</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>0</hsizetype>
+            <vsizetype>1</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>56</width>
+            <height>336</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Ellipses</string>
+    </property>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bEllipseArcAxes</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>20</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image0</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Ellipse arc with center, two points and angles</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bEllipseAxes</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>20</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image1</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Ellipse with Center and two points</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bBack</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>56</width>
+                <height>20</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image2</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Back to main menu</string>
+        </property>
+    </widget>
+</widget>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="485">789c95d0bf0a02310c06f0bd4f119aad48cec345101f417114c421540f1d4ec13b0711dfdd36dc9f5c9c0ca57cdf6f08a54580fd6e03a1704dcbed3542bcf003c2e959d7afc371fd76be5c423a0b28fdcc798208dbfbed9c33a68c73995c39d7aaea2be9414466a388e9322a464ca8552ce1440754ca3c2219659a288a74d82baa2583a25a92b3d6f125a216ad7649fecea25152fa83ffe967e5be42c55aa5</data>
+    </image>
+    <image name="image1">
+        <data format="XPM.GZ" length="485">789c5dd0c10ac2300c06e07b9f2234b7229dc38b203e82e251100fa13af43005370f22bebb6dd8da34a1943f1f3484360e8e871db8c60c238df700e1462f709777df7f4ee7edd7d8760df1aca0b50b633d04d83f1fd79431665c72a59652db7573eb6521229152c4782965f3e4512a5bc44a330a252ae89592af1459269c15c590ac2886a42cb56cc2aa51eb94f8ef34d69a83502c6ff25c6179b3caa2fe36e60f2fe85a37</data>
+    </image>
+    <image name="image2">
+        <data format="XPM.GZ" length="309">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232345330345430563054d2e152d2534856f0cbcf4b05b113816c65033000719541dc343000ab0402e5443d38808a2927628801851295c1002e06128201a818b2104c2c118b981e36313d6c627a89986e0109628ae9218bd55a730100b0a148a8</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>bEllipseAxes</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarEllipses</receiver>
+        <slot>drawEllipseAxis()</slot>
+    </connection>
+    <connection>
+        <sender>bEllipseArcAxes</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarEllipses</receiver>
+        <slot>drawEllipseArcAxis()</slot>
+    </connection>
+    <connection>
+        <sender>bBack</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarEllipses</receiver>
+        <slot>back()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in declaration">qg_actionhandler.h</include>
+    <include location="local" impldecl="in implementation">qg_cadtoolbar.h</include>
+    <include location="local" impldecl="in implementation">qg_cadtoolbarellipses.ui.h</include>
+</includes>
+<forwards>
+    <forward>class QG_CadToolBar</forward>
+</forwards>
+<variables>
+    <variable>QG_CadToolBar* cadToolBar;</variable>
+    <variable>QG_ActionHandler* actionHandler;</variable>
+</variables>
+<slots>
+    <slot>mousePressEvent( QMouseEvent * e )</slot>
+    <slot>contextMenuEvent( QContextMenuEvent * e )</slot>
+    <slot>setCadToolBar( QG_CadToolBar * tb )</slot>
+    <slot>drawEllipseAxis()</slot>
+    <slot>drawEllipseArcAxis()</slot>
+    <slot>back()</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

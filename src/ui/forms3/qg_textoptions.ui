@@ -1,0 +1,157 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_TextOptions</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_TextOptions</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>22</x>
+            <y>99</y>
+            <width>300</width>
+            <height>24</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>0</hsizetype>
+            <vsizetype>0</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>200</width>
+            <height>22</height>
+        </size>
+    </property>
+    <property name="maximumSize">
+        <size>
+            <width>300</width>
+            <height>32767</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Text Options</string>
+    </property>
+    <property name="toolTip" stdset="0">
+        <string></string>
+    </property>
+    <hbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>1</number>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>lText</cstring>
+            </property>
+            <property name="text">
+                <string>Text:</string>
+            </property>
+        </widget>
+        <widget class="QTextEdit">
+            <property name="name">
+                <cstring>teText</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>0</width>
+                    <height>22</height>
+                </size>
+            </property>
+            <property name="maximumSize">
+                <size>
+                    <width>32767</width>
+                    <height>22</height>
+                </size>
+            </property>
+            <property name="vScrollBarMode">
+                <enum>AlwaysOff</enum>
+            </property>
+            <property name="hScrollBarMode">
+                <enum>AlwaysOff</enum>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>lAngle</cstring>
+            </property>
+            <property name="text">
+                <string>Angle:</string>
+            </property>
+        </widget>
+        <widget class="QLineEdit">
+            <property name="name">
+                <cstring>leAngle</cstring>
+            </property>
+        </widget>
+        <widget class="Line">
+            <property name="name">
+                <cstring>sep1</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>1</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="frameShape">
+                <enum>VLine</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+        </widget>
+    </hbox>
+</widget>
+<connections>
+    <connection>
+        <sender>teText</sender>
+        <signal>textChanged()</signal>
+        <receiver>QG_TextOptions</receiver>
+        <slot>updateText()</slot>
+    </connection>
+    <connection>
+        <sender>leAngle</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>QG_TextOptions</receiver>
+        <slot>updateAngle()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in declaration">rs_line.h</include>
+    <include location="local" impldecl="in declaration">rs_settings.h</include>
+    <include location="local" impldecl="in declaration">rs_modification.h</include>
+    <include location="local" impldecl="in declaration">rs_actiondrawtext.h</include>
+    <include location="local" impldecl="in implementation">qg_textoptions.ui.h</include>
+    <include location="local" impldecl="in implementation">rs_system.h</include>
+    <include location="local" impldecl="in implementation">rs_filterdxf.h</include>
+    <include location="global" impldecl="in implementation">qtextcodec.h</include>
+</includes>
+<variables>
+    <variable>RS_ActionDrawText* action;</variable>
+</variables>
+<slots>
+    <slot>setAction( RS_ActionInterface * a, bool update )</slot>
+    <slot>updateText()</slot>
+    <slot>updateAngle()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

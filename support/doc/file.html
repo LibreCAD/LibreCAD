@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>QCad - File Handling</title>
+  <meta name="generator" content="ManStyle">
+  <meta name="author" content="Andrew Mustun">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="5">
+	  <img src="img/space.png" width="5" height="1" border="0">
+	</td>
+    <td width="105">
+	  <img src="img/space.png" width="105" height="1" border="0">
+	</td>
+    <td width="15">
+	  <img src="img/space.png" width="15" height="1" border="0">
+	</td>
+    <td width="460">
+	  <img src="img/space.png" width="460" height="1" border="0">
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td align="center">
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="commandline.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="printing.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            <center>QCad User Reference Manual<br>
+	           <img src="img/separator.png"></center>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+	<td>
+<a name="File"></a>
+<a name="DXF"></a>
+<a name="7"></a><h1>7 File Handling</h1>
+
+<p>
+QCad can load DXF files from older QCad versions, AutoCAD &reg; and
+  other application that can produce DXF files. When saving files, QCad follows
+  the DXF 2000 standard [<a href="appendix_bib.html#dxf">DXF</a>].</p>
+<a name="File"></a>
+<a name="New Drawing"></a>
+<a name="File - New"></a>
+<a name="Create Drawing"></a>
+<a name="7_1"></a><h2>Create New Drawings</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_file_new.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+File - New</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+Ctrl-N</p>
+<p>
+
+  Create new drawings using this command. New drawings are completely empty
+  (no entities, no layers, no blocks). Often, users create drawing templates
+  with the layers and blocks they use most and sometimes already contain a 
+  drawing border. If you have such a template you might want to load that
+  instead of creating a blank drawing from scratch.
+  </p>
+<a name="File"></a>
+<a name="Open Drawing"></a>
+<a name="File - Open"></a>
+<a name="7_2"></a><h2>Opening Drawings</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_file_open.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+File - Open</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+Ctrl-O</p>
+<p>
+Use this command to open DXF files. The file is loaded and shown in a
+  new window within the QCad application window. You can switch between
+  different loaded drawings using the menu 'Windows'.</p>
+<p>
+Please note that QCad only loads those entities in the file which are
+  also supported by the QCad engine. All other entities are ignored. If you
+  import a DXF drawing created by another program, you should save that drawing
+  under a new name before working with it. If you save such a drawing to the
+  same file, non-supported entities will be lost.</p>
+<a name="File"></a>
+<a name="Save File"></a>
+<a name="File - Save"></a>
+<a name="File - Save As"></a>
+<a name="7_3"></a><h2>Saving Drawings</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_file_save.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+File - Save</p>
+<p class="code">
+File - Save As</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+Ctrl-S (save)</p>
+<p>
+This command saves the current drawing to a file. Use the toolbar
+  button or the menu 
+  <code>File - Save</code>
+
+  to save the drawing to the same file it was loaded from. If you want to save
+  a newly created drawing or save the current drawing to a new file, use the
+  menu 
+  <code>File - Save As</code>
+
+  instead.</p>
+<a name="Export"></a>
+<a name="Bitmap"></a>
+<a name="Raster Graphic"></a>
+<a name="PNG"></a>
+<a name="GIF"></a>
+<a name="XPM"></a>
+<a name="XBM"></a>
+<a name="JPEG"></a>
+<a name="7_4"></a><h2>Exporting Drawings as Bitmaps</h2>
+
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+File - Export..</p>
+<p>
+This command exports the current drawing to a bitmap.</p>
+<p>
+A dialog for selecting the output file is presented. After the file
+  is selected, a second dialog asks the user for the bitmap size and
+  the background color.</p>
+<a name="File"></a>
+<a name="Close File"></a>
+<a name="File - Close"></a>
+<a name="7_5"></a><h2>Closing Drawings</h2>
+
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+File - Close</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+Ctrl-W</p>
+<p>
+This command closes the current drawing. You will be given the options
+  to save the drawing before closing it, to save it to a new file or to discard
+  all changes.
+  </p>
+    </td>
+  </tr>
+  
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td valign=top>
+       <br>
+
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="commandline.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="printing.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+      </table>
+	   
+       <p class="footer">
+       [ <a href="index.html">Home</a> | 
+	     <a href="contents.html">Contents</a> |
+		 <a href="index2.html">Index</a> ]<br>
+       [ <a href="license.html">1</a> | <a href="preface.html">2</a> | <a href="basics.html">3</a> | <a href="start.html">4</a> | <a href="gui.html">5</a> | <a href="commandline.html">6</a> | <a href="file.html">7</a> | <a href="printing.html">8</a> | <a href="edit.html">9</a> | <a href="view.html">10</a> | <a href="layers.html">11</a> | <a href="blocks.html">12</a> | <a href="snapping.html">13</a> | <a href="construction.html">14</a> | <a href="selection.html">15</a> | <a href="modification.html">16</a> | <a href="information.html">17</a> | <a href="options_general.html">18</a> | <a href="options_drawing.html">19</a> | <a href="appendix.html">20</a> ]</p>
+       <p class="footer2">
+	   Copyright  2003 <a href="http://www.ribbonsoft.com">RibbonSoft</a>, Inc.<br>All Rights Reserved.<br>
+       This Manual was created with <a href="http://www.ribbonsoft.com/manstyle.html">ManStyle</a>.
+       </p>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

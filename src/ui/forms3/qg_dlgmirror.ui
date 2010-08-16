@@ -1,0 +1,237 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_DlgMirror</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>QG_DlgMirror</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>342</width>
+            <height>192</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>1</hsizetype>
+            <vsizetype>1</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>300</width>
+            <height>190</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Mirroring Options</string>
+    </property>
+    <property name="icon">
+        <pixmap>image0</pixmap>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLabel" row="0" column="1">
+            <property name="name">
+                <cstring>lHelp</cstring>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+            <property name="pixmap">
+                <pixmap>image1</pixmap>
+            </property>
+            <property name="alignment">
+                <set>AlignCenter</set>
+            </property>
+        </widget>
+        <widget class="QButtonGroup" row="0" column="0" rowspan="3" colspan="1">
+            <property name="name">
+                <cstring>bgNumber</cstring>
+            </property>
+            <property name="title">
+                <string>Number of copies</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QRadioButton">
+                    <property name="name">
+                        <cstring>rbMove</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>1</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>0</width>
+                            <height>18</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Delete Original</string>
+                    </property>
+                </widget>
+                <widget class="QRadioButton">
+                    <property name="name">
+                        <cstring>rbCopy</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>1</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>0</width>
+                            <height>18</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Keep Original</string>
+                    </property>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer7</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>21</height>
+                        </size>
+                    </property>
+                </spacer>
+            </vbox>
+        </widget>
+        <widget class="QCheckBox" row="1" column="1">
+            <property name="name">
+                <cstring>cbCurrentAttributes</cstring>
+            </property>
+            <property name="text">
+                <string>Use current &amp;attributes</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox" row="2" column="1">
+            <property name="name">
+                <cstring>cbCurrentLayer</cstring>
+            </property>
+            <property name="text">
+                <string>Use current &amp;layer</string>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget" row="3" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>layout</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>40</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>bOk</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;OK</string>
+                    </property>
+                    <property name="default">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>bCancel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Cancel</string>
+                    </property>
+                    <property name="accel">
+                        <string>Esc</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </grid>
+</widget>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="482">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232345730b45030513054d2e152d2534856f0cbcf4b05b113816c65033000719561dcb434103709c44d4b83c9ea4181328c01174c040b2611164c4c0473939288125446134c849b99448ca01eaa60a21e5c1084900595090b26a2f8280945508fa060225a80248105c100ea4d10c01ec8b5d65c008b1e6537</data>
+    </image>
+    <image name="image1">
+        <data format="XPM.GZ" length="3509">789cddd6cd4ac3401007f07b9e62c8de826c2b452fe223281e05f1f0275af450855a0fa5f8ee3696e8ee7c35d2554af6d0ceccf2636892ce66d2d0edcd153593ea6d85d5734bed1396d43cbc2f16ebbbfbcb4d559fcde87c4a333aad4faa3a524bd7af2f8f5d8c6d1ca65fab4b4397cee77d1acd15ecadd140678da6e37f422410bf8732de079175d4a40f95c48760bf51916521c45595b2284494b743481f0696fb10312a0f00973e0cbce041249f4154fe0022fd0ab2340c9a2509917d07a53608da350e9107412b168560119f39892c0393ba31ac7e421f8af1a8436b24aab10fe540d660767fcd49de270560fe0cdb6707864067e71bb2ffa9735a6100d43a32c86791773ea20414f3d63d91713894678a737176151f5a2f0f3d943b7b3a6e4b3ba8acb4a3b67d3c6f560742678da6e371c18f8bea13397891c5</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>bOk</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgMirror</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
+        <sender>bCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgMirror</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in declaration">rs_modification.h</include>
+    <include location="local" impldecl="in implementation">rs_settings.h</include>
+    <include location="local" impldecl="in implementation">qg_dlgmirror.ui.h</include>
+</includes>
+<variables>
+    <variable access="private">RS_MirrorData* data;</variable>
+    <variable access="private">QString copies;</variable>
+    <variable access="private">int numberMode;</variable>
+    <variable access="private">bool useCurrentLayer;</variable>
+    <variable access="private">bool useCurrentAttributes;</variable>
+</variables>
+<slots>
+    <slot>setData( RS_MirrorData * d )</slot>
+    <slot>updateData()</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+    <function access="private" specifier="non virtual">destroy()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

@@ -1,0 +1,47 @@
+
+<manstyle>
+	<include src="settings.xml" nooutput="true"/>
+	
+	<opt name="BookTitle" value="dxflib"/>
+    <opt name="Product" value="dxflib" />
+	<opt name="BookSubTitle" value="Programmer's Guide"/>
+	<opt name="Company" value="RibbonSoft"/>
+	<opt name="ReleaseLabel" value="Release"/>
+	<opt name="Release" value="March 2005"/>
+	<opt name="AuthorLabel" value="Author"/>
+	<opt name="Author" value="Andrew Mustun"/>
+	<opt name="Translator" value="Andrew Mustun"/>
+	<opt name="Copyright" 
+	  value="Copyright &copy; 2004-2005 &lt;a href=&quot;http://www.ribbonsoft.com&quot;&gt;RibbonSoft&lt;/a&gt;, Inc.&lt;br&gt;All Rights Reserved."/>
+	<opt name="ManStyle" value="This Manual was created with &lt;a href=&quot;http://www.ribbonsoft.com/manstyle.html&quot;&gt;ManStyle&lt;/a&gt;."/>
+
+	<html>
+	<para>
+	  &lt;br&gt; &lt;br&gt; &lt;br&gt; &lt;br&gt; &lt;br&gt;
+	  &lt;center&gt;
+	  &lt;br&gt; &lt;br&gt;
+      &lt;font size="+2"&gt;dxflib&lt;/font&gt;
+	  &lt;br&gt;
+	  &lt;br&gt;
+      &lt;font size="+2"&gt;Programmer's Guide&lt;/font&gt;
+	  &lt;/center&gt;
+	  &lt;br&gt; &lt;br&gt; &lt;br&gt; &lt;br&gt; &lt;br&gt;
+	  &lt;br&gt; &lt;br&gt; &lt;br&gt; &lt;br&gt; &lt;br&gt;
+	  &lt;br&gt; &lt;br&gt; &lt;br&gt; &lt;br&gt;
+	  &lt;center&gt;
+	  &lt;b&gt;Author:&lt;/b&gt; Andrew Mustun&lt;br&gt;
+	  &lt;b&gt;Copyright:&lt;/b&gt; &copy; by RibbonSoft, Andrew Mustun 2004-2005.
+	  All rights reserved.&lt;br&gt;
+	  &lt;b&gt;Revision:&lt;/b&gt; March, 2005
+	  &lt;/center&gt;
+	</para>
+	</html>
+	
+	<include src="overview.xml"/>
+	<include src="compiling.xml"/>
+	<include src="reading.xml"/>
+	<include src="writing.xml"/>
+	<include src="appendix_bib.xml"/>
+	<include src="index2.xml"/>
+</manstyle>
+

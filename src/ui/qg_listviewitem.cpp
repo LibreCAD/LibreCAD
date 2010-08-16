@@ -1,0 +1,125 @@
+/****************************************************************************
+**
+** This file is part of the CADuntu project, a 2D CAD program
+**
+** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+**
+**
+** This file may be distributed and/or modified under the terms of the
+** GNU General Public License version 2 as published by the Free Software 
+** Foundation and appearing in the file gpl-2.0.txt included in the
+** packaging of this file.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+**
+** This copyright notice MUST APPEAR in all copies of the script!  
+**
+**********************************************************************/
+
+#include "qg_listviewitem.h"
+
+#include <qpixmap.h>
+
+#include "ui/folderclosed.xpm"
+#include "ui/folderopen.xpm"
+
+/**
+ * Constructor for list view items with a folder icon.
+ */
+QG_ListViewItem::QG_ListViewItem(QG_ListViewItem* par,
+                                 const QString& label,
+                                 bool open,
+                                 int id)
+        : Q3ListViewItem(par) {
+    this->par = par;
+    this->label = label;
+    this->id = id;
+
+    setPixmap(0, QPixmap((open ? folderopen_xpm : folderclosed_xpm)));
+    setOpen(open);
+}
+
+
+
+/**
+ * Constructor for root items.
+ */
+QG_ListViewItem::QG_ListViewItem(Q3ListView * par,
+                                 const QString& label,
+                                 bool open,
+                                 int id)
+        : Q3ListViewItem(par) {
+		
+    par = 0;
+    this->label = label;
+    this->id = id;
+
+    setPixmap(0, QPixmap((open ? folderopen_xpm : folderclosed_xpm)));
+
+    setOpen(open);
+}
+
+
+
+/**
+ * Opens or closes the item.
+ */
+void QG_ListViewItem::setOpen(bool open) {
+    if (open==true) {
+        setPixmap(0, QPixmap(folderopen_xpm));
+	}
+    else {
+        setPixmap(0, QPixmap(folderclosed_xpm));
+	}
+
+    Q3ListViewItem::setOpen(open);
+}
+
+
+
+/**
+ * Called in the beginning.
+ */
+void QG_ListViewItem::setup() {
+    Q3ListViewItem::setup();
+}
+
+
+
+/**
+ * Returns the "path" of this item (like: "Project/Page1/Paragraph1/").
+ */
+QString QG_ListViewItem::getFullPath() {
+    QString s;
+    if (par!=NULL) {
+        s = par->getFullPath();
+        s.append(text(0));
+        s.append("/");
+    } else {
+        s = text(0);
+        s.append("/");
+    }
+    return s;
+}
+
+
+/**
+ * Returns the text of the given column of this item.
+ */
+QString QG_ListViewItem::text(int column) const {
+    if (column==0) {
+        return label;
+	}
+    else {
+        return "Column1";
+	}
+}
+

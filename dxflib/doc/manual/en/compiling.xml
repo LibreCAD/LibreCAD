@@ -1,0 +1,75 @@
+<manstyle>
+  <opt name="PageTitle" value="Compiling dxflib" />
+  <section>Compiling dxflib</section>
+
+  <idx>Compilation</idx>
+
+  <!-- Unix -->
+  <subsection>Unix / Linux</subsection>
+  <idx>Unix,Linux</idx>
+
+  <para>Under Unix and Linux Systems, compiling dxflib is a simple standard
+  procedure:</para>
+
+  <includecode src="code/compile_unix.sh" />
+
+  <para>This creates the file './lib/dxflib.a' . To compile a dynamic version
+  of dxflib, run 'make shared' instead of 'make' . This will create the file
+  './lib/libdxf.so.2.0.x.x' and the link './lib/libdxf.so' that points to
+  './lib/libdxf.so.2.0.x.x' .</para>
+
+  <para>Instead of running 'make install', you can also copy the header files
+  into a header directory of your choice and copy the library files into a
+  library directory of your choice.</para>
+
+  <!-- Windows -->
+  <subsection>Windows</subsection>
+  <idx>Windows</idx>
+
+  <para>There are many different ways to compile dxflib under Windows. You can
+  use Microsoft's Visual C++ compiler, Borland's C++ command line tools, gcc
+  and many other compilers. 
+  <br />
+
+  For this manual, only the process of compiling dxflib using cygwin
+  <a href="appendix_bib.html#cygwin">[CYGWIN]</a> and the gcc compiler 
+  from the MinGW32 package is shown:
+  <!-- 
+    Borland C++ command line tools <a href="appendix_bib.html#bcc">[BCC]</a>.
+  -->
+  </para>
+  
+  <includecode src="code/compile_win.sh" />
+
+  <!--
+  <para>
+  <ul>
+  <li>Launch a cygwin console</li>
+  <li>Set the environment variable BCB to point to your installation 
+  directory of the Borland C++ compiler (Windows style). E.g.:<br/>
+  <code>export BCB=c:\\Borland\\BCC55</code></li>
+  <li>Check if bcc32 can be found:<br/>
+  <code>bcc32</code><br/>
+  If that is not the case, please add the path where 
+  the bcc32.exe binary is located to your PATH variable (Unix style):<br/>
+  <code>export PATH=/cygdrive/c/Borland/BCC55/Bin:$PATH</code></li>
+  <li>Because Windows doesn't support links, you need to copy the header 
+  files to the include directories:<br/>
+  <code>
+  cd dxflib/src<br/>
+  cp `find . -name "*.h"` ../include/
+  </code></li>
+  <li>Compile the library using the makefile that comes with the 
+  package:<br/>
+  <code>cd dxflib/src<br/>
+  /cygdrive/c/Borland/BCC55/Bin/make.exe -f makefile_win_bcc55
+  </code>
+  </li>
+  <li>Check if the file dxflib.lib was created in ./lib:<br/>
+  <code>ls -la ./lib</code></li>
+  </ul>
+  </para>
+  -->
+
+</manstyle>
+

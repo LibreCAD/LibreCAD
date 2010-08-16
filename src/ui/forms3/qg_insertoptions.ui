@@ -1,0 +1,242 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_InsertOptions</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_InsertOptions</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>550</width>
+            <height>24</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>4</hsizetype>
+            <vsizetype>0</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>550</width>
+            <height>22</height>
+        </size>
+    </property>
+    <property name="maximumSize">
+        <size>
+            <width>600</width>
+            <height>32767</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Insert Options</string>
+    </property>
+    <property name="toolTip" stdset="0">
+        <string></string>
+    </property>
+    <hbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>1</number>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>lAngle</cstring>
+            </property>
+            <property name="text">
+                <string>Angle:</string>
+            </property>
+        </widget>
+        <widget class="QLineEdit">
+            <property name="name">
+                <cstring>leAngle</cstring>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Rotation Angle</string>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>lFactor</cstring>
+            </property>
+            <property name="text">
+                <string>Factor:</string>
+            </property>
+        </widget>
+        <widget class="QLineEdit">
+            <property name="name">
+                <cstring>leFactor</cstring>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Scale Factor</string>
+            </property>
+        </widget>
+        <widget class="Line">
+            <property name="name">
+                <cstring>sep1_2</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>1</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="frameShape">
+                <enum>VLine</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>lArray</cstring>
+            </property>
+            <property name="text">
+                <string>Array:</string>
+            </property>
+        </widget>
+        <widget class="QSpinBox">
+            <property name="name">
+                <cstring>sbColumns</cstring>
+            </property>
+            <property name="maxValue">
+                <number>10000</number>
+            </property>
+            <property name="minValue">
+                <number>1</number>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Number of Columns</string>
+            </property>
+        </widget>
+        <widget class="QSpinBox">
+            <property name="name">
+                <cstring>sbRows</cstring>
+            </property>
+            <property name="maxValue">
+                <number>10000</number>
+            </property>
+            <property name="minValue">
+                <number>1</number>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Number of Rows</string>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>lSpacing</cstring>
+            </property>
+            <property name="text">
+                <string>Spacing:</string>
+            </property>
+        </widget>
+        <widget class="QLineEdit">
+            <property name="name">
+                <cstring>leColumnSpacing</cstring>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Column Spacing</string>
+            </property>
+        </widget>
+        <widget class="QLineEdit">
+            <property name="name">
+                <cstring>leRowSpacing</cstring>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Row Spacing</string>
+            </property>
+        </widget>
+        <widget class="Line">
+            <property name="name">
+                <cstring>sep1</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>1</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="frameShape">
+                <enum>VLine</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+        </widget>
+    </hbox>
+</widget>
+<connections>
+    <connection>
+        <sender>leAngle</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>QG_InsertOptions</receiver>
+        <slot>updateData()</slot>
+    </connection>
+    <connection>
+        <sender>leFactor</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>QG_InsertOptions</receiver>
+        <slot>updateData()</slot>
+    </connection>
+    <connection>
+        <sender>sbColumns</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>QG_InsertOptions</receiver>
+        <slot>updateData()</slot>
+    </connection>
+    <connection>
+        <sender>sbRows</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>QG_InsertOptions</receiver>
+        <slot>updateData()</slot>
+    </connection>
+    <connection>
+        <sender>leColumnSpacing</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>QG_InsertOptions</receiver>
+        <slot>updateData()</slot>
+    </connection>
+    <connection>
+        <sender>leRowSpacing</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>QG_InsertOptions</receiver>
+        <slot>updateData()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in declaration">rs_line.h</include>
+    <include location="local" impldecl="in declaration">rs_settings.h</include>
+    <include location="local" impldecl="in declaration">rs_modification.h</include>
+    <include location="local" impldecl="in declaration">rs_actionblocksinsert.h</include>
+    <include location="local" impldecl="in implementation">qg_insertoptions.ui.h</include>
+</includes>
+<variables>
+    <variable>RS_ActionBlocksInsert* action;</variable>
+</variables>
+<slots>
+    <slot>setAction( RS_ActionInterface * a, bool update )</slot>
+    <slot>updateData()</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">destroy()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

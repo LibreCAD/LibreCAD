@@ -1,0 +1,1773 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>QG_DlgText</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>QG_DlgText</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>619</width>
+            <height>429</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Text</string>
+    </property>
+    <property name="sizeGripEnabled">
+        <bool>true</bool>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout6</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout5</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QButtonGroup">
+                            <property name="name">
+                                <cstring>bgFont</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>5</hsizetype>
+                                    <vsizetype>5</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="title">
+                                <string>Font</string>
+                            </property>
+                            <grid>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <property name="spacing">
+                                    <number>2</number>
+                                </property>
+                                <widget class="QLineEdit" row="1" column="1">
+                                    <property name="name">
+                                        <cstring>leHeight</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>7</hsizetype>
+                                            <vsizetype>0</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                </widget>
+                                <widget class="QLabel" row="1" column="0">
+                                    <property name="name">
+                                        <cstring>lHeight</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>&amp;Height:</string>
+                                    </property>
+                                    <property name="buddy" stdset="0">
+                                        <cstring>leHeight</cstring>
+                                    </property>
+                                </widget>
+                                <spacer row="5" column="1">
+                                    <property name="name">
+                                        <cstring>spacer2_2</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Vertical</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>20</width>
+                                            <height>16</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget class="QG_FontBox" row="0" column="0" rowspan="1" colspan="2">
+                                    <property name="name">
+                                        <cstring>cbFont</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>7</hsizetype>
+                                            <vsizetype>0</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                </widget>
+                                <spacer row="5" column="0">
+                                    <property name="name">
+                                        <cstring>spacer2</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Vertical</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>20</width>
+                                            <height>16</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget class="QLabel" row="3" column="0">
+                                    <property name="name">
+                                        <cstring>lLineSpacingFactor</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Line &amp;spacing:</string>
+                                    </property>
+                                    <property name="buddy" stdset="0">
+                                        <cstring>leLineSpacingFactor</cstring>
+                                    </property>
+                                </widget>
+                                <widget class="QLineEdit" row="3" column="1">
+                                    <property name="name">
+                                        <cstring>leLineSpacingFactor</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>7</hsizetype>
+                                            <vsizetype>0</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                </widget>
+                                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+                                    <property name="name">
+                                        <cstring>cbDefault</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>7</hsizetype>
+                                            <vsizetype>0</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="text">
+                                        <string>&amp;Default line spacing</string>
+                                    </property>
+                                    <property name="accel">
+                                        <string>Alt+D</string>
+                                    </property>
+                                </widget>
+                            </grid>
+                        </widget>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout4</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QButtonGroup">
+                                    <property name="name">
+                                        <cstring>bgAlignment</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>0</hsizetype>
+                                            <vsizetype>5</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="title">
+                                        <string>Alignment</string>
+                                    </property>
+                                    <grid>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QToolButton" row="0" column="2">
+                                            <property name="name">
+                                                <cstring>bTR</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>5</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>25</width>
+                                                    <height>25</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string></string>
+                                            </property>
+                                            <property name="toggleButton">
+                                                <bool>true</bool>
+                                            </property>
+                                            <property name="iconSet">
+                                                <iconset>image0</iconset>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Top Right</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QToolButton" row="0" column="0">
+                                            <property name="name">
+                                                <cstring>bTL</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>5</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>25</width>
+                                                    <height>25</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string></string>
+                                            </property>
+                                            <property name="toggleButton">
+                                                <bool>true</bool>
+                                            </property>
+                                            <property name="iconSet">
+                                                <iconset>image1</iconset>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Top Left</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QToolButton" row="1" column="0">
+                                            <property name="name">
+                                                <cstring>bML</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>5</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>25</width>
+                                                    <height>25</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string></string>
+                                            </property>
+                                            <property name="toggleButton">
+                                                <bool>true</bool>
+                                            </property>
+                                            <property name="iconSet">
+                                                <iconset>image2</iconset>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Middle Left</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QToolButton" row="1" column="1">
+                                            <property name="name">
+                                                <cstring>bMC</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>5</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>25</width>
+                                                    <height>25</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string></string>
+                                            </property>
+                                            <property name="toggleButton">
+                                                <bool>true</bool>
+                                            </property>
+                                            <property name="iconSet">
+                                                <iconset>image3</iconset>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Middle Center</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QToolButton" row="1" column="2">
+                                            <property name="name">
+                                                <cstring>bMR</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>5</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>25</width>
+                                                    <height>25</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string></string>
+                                            </property>
+                                            <property name="toggleButton">
+                                                <bool>true</bool>
+                                            </property>
+                                            <property name="iconSet">
+                                                <iconset>image4</iconset>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Middle Right</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QToolButton" row="2" column="0">
+                                            <property name="name">
+                                                <cstring>bBL</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>5</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>25</width>
+                                                    <height>25</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string></string>
+                                            </property>
+                                            <property name="toggleButton">
+                                                <bool>true</bool>
+                                            </property>
+                                            <property name="iconSet">
+                                                <iconset>image5</iconset>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Bottom Left</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QToolButton" row="2" column="2">
+                                            <property name="name">
+                                                <cstring>bBR</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>5</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>25</width>
+                                                    <height>25</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string></string>
+                                            </property>
+                                            <property name="toggleButton">
+                                                <bool>true</bool>
+                                            </property>
+                                            <property name="iconSet">
+                                                <iconset>image6</iconset>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Bottom Right</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QToolButton" row="2" column="1">
+                                            <property name="name">
+                                                <cstring>bBC</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>5</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>25</width>
+                                                    <height>25</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string></string>
+                                            </property>
+                                            <property name="toggleButton">
+                                                <bool>true</bool>
+                                            </property>
+                                            <property name="iconSet">
+                                                <iconset>image7</iconset>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Bottom Center</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QToolButton" row="0" column="1">
+                                            <property name="name">
+                                                <cstring>bTC</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>5</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>25</width>
+                                                    <height>25</height>
+                                                </size>
+                                            </property>
+                                            <property name="text">
+                                                <string></string>
+                                            </property>
+                                            <property name="toggleButton">
+                                                <bool>true</bool>
+                                            </property>
+                                            <property name="iconSet">
+                                                <iconset>image8</iconset>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Top Center</string>
+                                            </property>
+                                        </widget>
+                                    </grid>
+                                </widget>
+                                <widget class="QButtonGroup">
+                                    <property name="name">
+                                        <cstring>bgShape</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>1</hsizetype>
+                                            <vsizetype>5</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>80</width>
+                                            <height>0</height>
+                                        </size>
+                                    </property>
+                                    <property name="title">
+                                        <string>Angle</string>
+                                    </property>
+                                    <vbox>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QLineEdit">
+                                            <property name="name">
+                                                <cstring>leAngle</cstring>
+                                            </property>
+                                            <property name="sizePolicy">
+                                                <sizepolicy>
+                                                    <hsizetype>7</hsizetype>
+                                                    <vsizetype>0</vsizetype>
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                        </widget>
+                                        <spacer>
+                                            <property name="name">
+                                                <cstring>spacer13</cstring>
+                                            </property>
+                                            <property name="orientation">
+                                                <enum>Vertical</enum>
+                                            </property>
+                                            <property name="sizeType">
+                                                <enum>Expanding</enum>
+                                            </property>
+                                            <property name="sizeHint">
+                                                <size>
+                                                    <width>20</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </vbox>
+                                </widget>
+                            </hbox>
+                        </widget>
+                    </vbox>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout3</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout9</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>lText</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Text:</string>
+                                    </property>
+                                </widget>
+                                <spacer>
+                                    <property name="name">
+                                        <cstring>spacer4</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>110</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget class="QToolButton">
+                                    <property name="name">
+                                        <cstring>bClear</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                    <property name="iconSet">
+                                        <iconset>image9</iconset>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Clear Text</string>
+                                    </property>
+                                </widget>
+                                <widget class="QToolButton">
+                                    <property name="name">
+                                        <cstring>bLoad</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                    <property name="iconSet">
+                                        <iconset>image10</iconset>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Load Text From File</string>
+                                    </property>
+                                </widget>
+                                <widget class="QToolButton">
+                                    <property name="name">
+                                        <cstring>bSave</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                    <property name="iconSet">
+                                        <iconset>image11</iconset>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Save Text To File</string>
+                                    </property>
+                                </widget>
+                                <widget class="QToolButton">
+                                    <property name="name">
+                                        <cstring>bCut</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                    <property name="iconSet">
+                                        <iconset>image12</iconset>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Cut</string>
+                                    </property>
+                                </widget>
+                                <widget class="QToolButton">
+                                    <property name="name">
+                                        <cstring>bCopy</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                    <property name="iconSet">
+                                        <iconset>image13</iconset>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Copy</string>
+                                    </property>
+                                </widget>
+                                <widget class="QToolButton">
+                                    <property name="name">
+                                        <cstring>bPaste</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                    <property name="iconSet">
+                                        <iconset>image14</iconset>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Paste</string>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                        <widget class="QTextEdit">
+                            <property name="name">
+                                <cstring>teText</cstring>
+                            </property>
+                            <property name="textFormat">
+                                <enum>PlainText</enum>
+                            </property>
+                            <property name="linkUnderline">
+                                <bool>false</bool>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout7</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QButtonGroup">
+                    <property name="name">
+                        <cstring>buttonGroup7</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>148</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                    <property name="title">
+                        <string>Insert Symbol</string>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QComboBox">
+                            <item>
+                                <property name="text">
+                                    <string>Diameter (ø)</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Degree (°)</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Plus / Minus (±)</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>At (@)</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Hash (#)</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Dollar ($)</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Copyright (©)</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Registered (®)</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Paragraph (§)</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Pi (¶)</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Pound (£)</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Yen (¥)</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Times (×)</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Division (÷)</string>
+                                </property>
+                            </item>
+                            <property name="name">
+                                <cstring>cbSymbol</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>3</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+                <widget class="QButtonGroup">
+                    <property name="name">
+                        <cstring>buttonGroup5</cstring>
+                    </property>
+                    <property name="title">
+                        <string>Insert Unicode</string>
+                    </property>
+                    <grid>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel" row="0" column="0">
+                            <property name="name">
+                                <cstring>textLabel1</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Page:</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="1" column="0">
+                            <property name="name">
+                                <cstring>textLabel1_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Char:</string>
+                            </property>
+                        </widget>
+                        <widget class="QComboBox" row="0" column="1">
+                            <item>
+                                <property name="text">
+                                    <string>[0000-007F] Basic Latin</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0080-00FF] Latin-1 Supplementary</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0100-017F] Latin Extended-A</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0180-024F] Latin Extended-B</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0250-02AF] IPA Extensions</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[02B0-02FF] Spacing Modifier Letters</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0300-036F] Combining Diacritical Marks</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0370-03FF] Greek and Coptic</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0400-04FF] Cyrillic</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0500-052F] Cyrillic Supplementary</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0530-058F] Armenian</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0590-05FF] Hebrew</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0600-06FF] Arabic</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0700-074F] Syriac</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0780-07BF] Thaana</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0900-097F] Devanagari</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0980-09FF] Bengali</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0A00-0A7F] Gurmukhi</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0A80-0AFF] Gujarati</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0B00-0B7F] Oriya</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0B80-0BFF] Tamil</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0C00-0C7F] Telugu</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0C80-0CFF] Kannada</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0D00-0D7F] Malayalam</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0D80-0DFF] Sinhala</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0E00-0E7F] Thai</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0E80-0EFF] Lao</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[0F00-0FFF] Tibetan</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1000-109F] Myanmar</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[10A0-10FF] Georgian</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1100-11FF] Hangul Jamo</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1200-137F] Ethiopic</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[13A0-13FF] Cherokee</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1400-167F] Unified Canadian Aboriginal Syllabic</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1680-169F] Ogham</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[16A0-16FF] Runic</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1700-171F] Tagalog</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1720-173F] Hanunoo</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1740-175F] Buhid</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1760-177F] Tagbanwa</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1780-17FF] Khmer</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1800-18AF] Mongolian</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1E00-1EFF] Latin Extended Additional</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1F00-1FFF] Greek Extended</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2000-206F] General Punctuation</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2070-209F] Superscripts and Subscripts</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[20A0-20CF] Currency Symbols</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[20D0-20FF] Combining Marks for Symbols</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2100-214F] Letterlike Symbols</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2150-218F] Number Forms</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2190-21FF] Arrows</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2200-22FF] Mathematical Operators</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2300-23FF] Miscellaneous Technical</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2400-243F] Control Pictures</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2440-245F] Optical Character Recognition</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2460-24FF] Enclosed Alphanumerics</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2500-257F] Box Drawing</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2580-259F] Block Elements</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[25A0-25FF] Geometric Shapes</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2600-26FF] Miscellaneous Symbols</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2700-27BF] Dingbats</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[27C0-27EF] Miscellaneous Mathematical Symbols-A</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[27F0-27FF] Supplemental Arrows-A</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2800-28FF] Braille Patterns</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2900-297F] Supplemental Arrows-B</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2980-29FF] Miscellaneous Mathematical Symbols-B</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2A00-2AFF] Supplemental Mathematical Operators</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2E80-2EFF] CJK Radicals Supplement</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2F00-2FDF] Kangxi Radicals</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2FF0-2FFF] Ideographic Description Characters</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[3000-303F] CJK Symbols and Punctuation</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[3040-309F] Hiragana</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[30A0-30FF] Katakana</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[3100-312F] Bopomofo</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[3130-318F] Hangul Compatibility Jamo</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[3190-319F] Kanbun</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[31A0-31BF] Bopomofo Extended</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[3200-32FF] Enclosed CJK Letters and Months</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[3300-33FF] CJK Compatibility</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[3400-4DBF] CJK Unified Ideographs Extension A</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[4E00-9FAF] CJK Unified Ideographs</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[A000-A48F] Yi Syllables</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[A490-A4CF] Yi Radicals</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[AC00-D7AF] Hangul Syllables</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[D800-DBFF] High Surrogates</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[DC00-DFFF] Low Surrogate Area</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[E000-F8FF] Private Use Area</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[F900-FAFF] CJK Compatibility Ideographs</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[FB00-FB4F] Alphabetic Presentation Forms</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[FB50-FDFF] Arabic Presentation Forms-A</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[FE00-FE0F] Variation Selectors</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[FE20-FE2F] Combining Half Marks</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[FE30-FE4F] CJK Compatibility Forms</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[FE50-FE6F] Small Form Variants</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[FE70-FEFF] Arabic Presentation Forms-B</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[FF00-FFEF] Halfwidth and Fullwidth Forms</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[FFF0-FFFF] Specials</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[10300-1032F] Old Italic</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[10330-1034F] Gothic</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[10400-1044F] Deseret</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1D000-1D0FF] Byzantine Musical Symbols</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1D100-1D1FF] Musical Symbols</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[1D400-1D7FF] Mathematical Alphanumeric Symbols</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[20000-2A6DF] CJK Unified Ideographs Extension B</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[E0000-E007F] Tags</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[F0000-FFFFD] Supplementary Private Use Area-A</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>[100000-10FFFD] Supplementary Private Use Area-B</string>
+                                </property>
+                            </item>
+                            <property name="name">
+                                <cstring>cbUniPage</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>3</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>280</width>
+                                    <height>0</height>
+                                </size>
+                            </property>
+                        </widget>
+                        <widget class="QComboBox" row="1" column="1">
+                            <property name="name">
+                                <cstring>cbUniChar</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>3</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>92</width>
+                                    <height>0</height>
+                                </size>
+                            </property>
+                        </widget>
+                        <widget class="QToolButton" row="0" column="2">
+                            <property name="name">
+                                <cstring>bUnicode</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>5</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>25</width>
+                                    <height>25</height>
+                                </size>
+                            </property>
+                            <property name="maximumSize">
+                                <size>
+                                    <width>25</width>
+                                    <height>25</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                        </widget>
+                    </grid>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>Layout1</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <property name="margin">
+                    <number>0</number>
+                </property>
+                <property name="spacing">
+                    <number>6</number>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>Horizontal Spacing2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>buttonOk</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;OK</string>
+                    </property>
+                    <property name="autoDefault">
+                        <bool>true</bool>
+                    </property>
+                    <property name="default">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>buttonCancel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Cancel</string>
+                    </property>
+                    <property name="accel">
+                        <string>Esc</string>
+                    </property>
+                    <property name="autoDefault">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<customwidgets>
+    <customwidget>
+        <class>QG_FontBox</class>
+        <header location="local">qg_fontbox.h</header>
+        <sizehint>
+            <width>140</width>
+            <height>22</height>
+        </sizehint>
+        <container>0</container>
+        <sizepolicy>
+            <hordata>7</hordata>
+            <verdata>0</verdata>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+        <pixmap>image15</pixmap>
+        <signal>fontChanged(RS_Font*)</signal>
+        <slot access="protected" specifier="">slotFontChanged(int)</slot>
+        <slot access="public" specifier="">slot()</slot>
+    </customwidget>
+</customwidgets>
+<images>
+    <image name="image0">
+        <data format="PNG" length="159">89504e470d0a1a0a0000000d494844520000000f0000000f08060000003bd6954a0000006649444154789cc592410a80400c0327b29fb2ff273eab1ec4a50882bb1e36a716322185ca36b3daa6c9a5b020730448d4e74659aa6c0b20225ec35b35ddf35b1097b1870ddf7cd8122092f6057856b7ad08f2135c6bc79fda356018ae2d34fbdb117bae7bcf139da82854623ca04d0000000049454e44ae426082</data>
+    </image>
+    <image name="image1">
+        <data format="PNG" length="151">89504e470d0a1a0a0000000d494844520000000f0000000f08060000003bd6954a0000005e49444154789cc5914b0e80200c4419c3a59cfbe771acba514940a2c105b36a9b794d3f02d2acb669f22fac4829aea480a661d5f09372d3ab33704e633b6826cb0564ef01450c4c23adbbf63a38bf5baa6cdfbf04d4c1a34b3fd5d7ed7c009fe323dac4ec15220000000049454e44ae426082</data>
+    </image>
+    <image name="image2">
+        <data format="PNG" length="152">89504e470d0a1a0a0000000d494844520000000f0000000f08060000003bd6954a0000005f49444154789ce592410ac0301002dd924fd5ff3379d6f6144842290db914ea515915d900649f0935b48863f5e063c7b6d376f6e2cccdfa567239ed6c76ab730fc940b46ab61378f4db1bac428472a8fc265592ca4cf4d5efd06bf1c3f7bc0002ab2cd4180a8a6a0000000049454e44ae426082</data>
+    </image>
+    <image name="image3">
+        <data format="PNG" length="156">89504e470d0a1a0a0000000d494844520000000f0000000f08060000003bd6954a0000006349444154789ce592510a80300c4313d9a97a7fde8e35bf8a73329421f861fed2366d5a6a40abd896959f8a8b2445449324c0991863c91380cb9309b3e653713baa2ec2e45b4f72c268718677af1d110d70055b521decf675a79d7beb7771c0fee17bee1e1b37e47bfa357b0000000049454e44ae426082</data>
+    </image>
+    <image name="image4">
+        <data format="PNG" length="169">89504e470d0a1a0a0000000d494844520000000f0000000f08060000003bd6954a0000007049444154789ce552490e802010eb183f45ff9ff2ac7a701b88463979b0490399d00eb384248c822c966a4cc3ca84efc401c0002029f620c923b6df5b18528df94d866cbc9a8701e19538a390f6ea6000f036aedb33d389e3df4e3d68ba4dd27d7d3d626395ce2579125dbd8b1faee70230b847bdaf4d66e80000000049454e44ae426082</data>
+    </image>
+    <image name="image5">
+        <data format="PNG" length="154">89504e470d0a1a0a0000000d494844520000000f0000000f08060000003bd6954a0000006149444154789ccd92510a80300c431bf152f6fec463d5af49ec06ae2862be36ba47dec640d2dcb7207758314b15f807bcb685bb870e484267baefe05940f38e766b1b594cc19f6a23cc4e55adc91623c3045fcedc26ddb9f6bf41b2d4a679f46007d2a22f13707093d80000000049454e44ae426082</data>
+    </image>
+    <image name="image6">
+        <data format="PNG" length="174">89504e470d0a1a0a0000000d494844520000000f0000000f08060000003bd6954a0000007549444154789cc593510a80300c4353f152e6fe64c7aa1fa2963a95aa60fe9692f44199494255e4e452b3a19c0cfa2f3c0200498fa624ebf971b685b349d2d777f4f742ff083b23668a8c4d2eab4bd8b9a88c1d0b6eb133f2443a6000e106f8e11c5772ecbda3d4ba5bceb9b12db3271f63d5ab3bcf4fbe41551fe24ca20000000049454e44ae426082</data>
+    </image>
+    <image name="image7">
+        <data format="PNG" length="168">89504e470d0a1a0a0000000d494844520000000f0000000f08060000003bd6954a0000006f49444154789cc593410e80200c04b7864fd9ff677d563d18e26a5a542ef644d84e9842309298ad659afc156e00e0eea19b24adaf4759ab0092d6c12c7ba5ad6079b2eadd81aa86da4ff0e7db56c3527b758f388250053532202e4fd12b702286b4058ddcf2d91c6292f7d86f1f6307270340164b2009230000000049454e44ae426082</data>
+    </image>
+    <image name="image8">
+        <data format="PNG" length="162">89504e470d0a1a0a0000000d494844520000000f0000000f08060000003bd6954a0000006949444154789cc551410ec02008a38b9f1aff4f7d16bb8c8429261b3bd893420ba40549a9e2282bff8adbaa71aa9abf3b898c0311b3ac6182404a29d2c80e0d5b723c17f3be04d16d55350e27fae05877de2bc3c681fedf175549ec3e2c7376909cd248ddfe8a7d865d61e02e10e488f27d0000000049454e44ae426082</data>
+    </image>
+    <image name="image9">
+        <data format="PNG" length="534">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff61000001dd49444154789c8d93bd6a554110c77fb367f728184424825656a24d7c019b54e203d85af9043e808d45c05ab0b1b411045bb5b09240081a3f903426515050f192fbedfdd8dd198b734e3c68727160617776f7b733fb9f91f5cdedcea9934bc7d48cc6d4603a9d11e791ce7edfa5a8dd5e7f7cede68dab1ff8db5ebddd99a8aab547ced9c693688361b437eff7ece3ee377bf662ebe783874f57cd8cf670ff100111c13910a7b8c271f6dc32ab5756962f5d38fffcd19397d7db670f05182040597a3e7dfec2c6c616afdf6d93e2b41c0e7a8f6fdfb97f6b2100409ce004ce2c9f661e8d1fdfbbecec7ea53c5e321cf5d69a73fed0cb80132145e5f2ca4566d3c87eb74f67bf4708259b1beb2c049819392b894caff78bd168ca6c36a70c81103c45512c06243586a3392925341b65191007aa4af001118e06c4ac4c2691ac5532ae103c0e91929c1321843ac90650cfa73123404cb956c0a119c4411245b2029ec27ba415826f6448490f4293422019825435218215e0140a814ae8ca9cb67f1e2a48e3ace9ae70080e11a95fff13c19175f0bfe61a8269d544581560abb730ad175649dc4ec1377b4b27c28153a152c1202523ab91724663c68792b68ebe3f188cd7eede4bcef9fa11457098296660756798199821e2180f86b306f01bdac4fd8b610d6ad50000000049454e44ae426082</data>
+    </image>
+    <image name="image10">
+        <data format="PNG" length="804">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff61000002eb49444154789ca58fcb6b5c650047cf7dcccb99492736b19d1892460c384d25c66a8982a512ed2a940a8208a2c6078822a23b155ca81bf14f2888082abae946bb104a8ba22dd848d33649b52993ce24934c92c99d49e6bebefb3d5c08455ce8c2dff677cee258c618fecfdcff0266de3e5fcad9d687b96c7a7a6d2378e4ab5353cdbffff6bfc92fbef6c3d17bca8533af3effc09bafbf3231621bf3c13f19ebc073573f9b9ce8cff881c6003f5f6cfa4f0cb7dfd95fb0df38f2e0e07bc71f1feac9651d84d09c3e53ddfdfa9b85e9b3df9ff8f1764265b43833f3421fad1df0251cbc2f4bbcc8f44b4f0d95c72abd040174bb0a344c3d3658fce9d7f54facbbbf7bc6ac4ed700dc748a6e6fc92e0442e3cdb719331d4ebe75a85c2c3ac4314809b60d89546cb4256395bec98172f3a4d573fa4b7ac0950ab481f5cb5b8c17258f3e3d72bb2f9381b4053aebf0eea93a57aa92817d790e8cdffb51ffa875e2f7b98672b502c7862893e3db4b5bfce6ed90c4095229540228c3b51b1daa6d87a1fb876944297a1f1aecd9bad03c26fd955957198d6bc1f9b9807e93a2bf94227232b4434d6757e3750df9a102872a79aed4200c35de92a7ebe7e66d4c74d6d5cad0ee42b3d6e5d3f7470862496a5f8a6b758bed3f0c1b4d437dddb0b916e1adb4e8dc6810af761aa4923b48eb4baeeb5afc321b52192e90d96b7371115acb9ae535879b37352bb588c6aaa07dab85d8f6200c0dd81a3ba9a1ac051b0b2ecf6d73f4708eeb1ed4c334f3cb1aafa349a42612869d56888881740edc2c58aa8495ccd3dabbe4deaac55446d394efcab20738d803770e3a74b613061c496f1cb0df512421285f12fbd25aa9ebc266435e35e69874ab4b3b4c1ddec3f1d134584009a232040104be269e7409424dd737047e0121b27cfc79186e2eeb590037e90a9e1ccfff25035890cddb388e8bd1094228944c10224488083f4a5858dc6d505017002c77e29cf7f091be423e63a314a01589d4249140c40211c7882841c6022924712cd9a8ca2f4cebd99701fe04aa0f80de45b126990000000049454e44ae426082</data>
+    </image>
+    <image name="image11">
+        <data format="PNG" length="622">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000023549444154789ca593b16e55471086bf73cde5da2660e9364824150a950b9a4451a40851923e6f404949cd6ba4a1420a2852a4f002942011514446011a6499042cd9d7be3ef7eceeccee9eb33b296e6c4ca063a429e7d33ffffcd398199f5367007eb9ff787b6dfdec54438f951e1794b6f5782f884442504422aa89f991676bebc5a23ddab969f6f21166c6ef0f9f852e56abb5dacf0f9ed84fb7eedad3adbfadd6fa51bfd83eb4db777eb5c9d9ef76cd8c118077a96f5d8ff6f0f4cfd7ecbcdda7944faf369b3b423fb0bab67efe64051f022e44d6c6c68fd7af72edfb4d36af5cfa2420c6c8db37ffd0f77d3901048988647673e6876fae504a617614d89d0d9452a8c5e86bc5bbc01fcf5ed1751d66e5bd89c12b290fbc79d71224a3312131a3312392e8bc673e3b627e3827a74c9f32a59c02b8a038af18c6852f268cc70d2b0d58ce68cd3429311919d3f3ebece74ce73a6a3d0590a0b44eb9fcd505beddfc128052c0b982484424e27d048c7bbf3de2e5f3bf3e0484b0bc718a85fdbd840f19d51e958868fa2f0b89332b0dc147a208c7015c2ad0c8c20516dd846168702e9e04e75881486265d410422025fd9f89a21c1ccc99ae4f902084a0a82e878e41aacaa8192112c84980530abc13dad611a61b2cba44d7292209d578d2227109d0c43024e09402dff971bb77c0de6485f4f54572eec8594929116322e748ce09aca19dcda8da01cd18a0313336366e6c8f1a9bd2f49c3bb78a5965182a5029c530336aad2c0d5fd0f70e18cfcd5e5d6e3ef79dff05b2b7de32a8ffa8bc0000000049454e44ae426082</data>
+    </image>
+    <image name="image12">
+        <data format="PNG" length="762">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff61000002c149444154789c8d925d48936114c7cffba16e739fe5c4962bb53421486631240411844025b52098c6ac1ba31b2f82a2255e755337a1379933c38c84521b96a5a998cadc9a96d3a9f935293ff2731fba77ef5a7bf7be4f17b56114ea1fcecd73cef33bffc339801082ddc2601828b458a65167a725ef7f791cf6904211a3572ae5e0f1d0e137bdbe3dc660309603c0de00a19027a7691fb8dd140000e8743532b95cd2909a7ab47a5f00978b028af2c3cccc375452a29325251d6e2d28c8cc73bb29e7be000e8707b6b6b66172723645ad4e6fd668ce655bad76b6af6fa81c00004308ed0aa8ab7b87709c85951587bfb4349767324df8babb3f96d5d7573c0700207716bf2d91cac828488ce207b943427afec47d447d1e1e83e32909909393c16b78dab96d3459b55d1d55af437fc20e1a35e222551a7737fe14798c141381f54f9c855bf33d6989b8d32488cdc0cc9691e5a5d9f1cba6a1a6fe9d4d31841054e58b2e9ccf0cb4f225a4870b12b6986422215241c4331cc10d2ea6e1a63722b04dad5f7f61343efa67468410b4692357e72a08baeea2381721042337c51a6e548a38472ca27a64881990205f8b686aad51d23b7c4b54f6cf21254507e2e617d09c75911da92a924983045b0cae208cd6f847b73739449c24819714991aab22b393b388daf765a24b21033800c0a203f39f5570695989fe3695c23ba49433f9bd06d43b6e63f223822ce61d0850d3cd8cf6eb2be6068f61e1a002340d57315e18d065175cfb60c7975471ac1a0724ea30e3950b0bfc42ed4bdff71feb2c2c8f07fb27ec9ea6413b5fff658c754444b24a76552c08afb1da4a3f93f1c4ed3f098fd0ee12d0ba1e8f336471798175c649d9d3fd76919acff781fa4820666d03b339bdd14c18807eefd2f527fe92799a7c78e54ca0b238dddb4ae27040ca2030cc44b7df366e52e1117613edf2ddab35f3ea85188a8520e21e9ba31e3837687d28ff0b172478b2ac0565630000000049454e44ae426082</data>
+    </image>
+    <image name="image13">
+        <data format="PNG" length="593">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000021849444154789c7d92cb4a5c411086bfeaee3973c611417211110251b39090598ab8c8222f1212920708248b1102821b4dde203197951b1f20ccd2808a06c445445422518859a8a873c6b99ed395c578d749416daae8bfffffeb96d9d9f583cece76a7ea89638ff78a31969595cdf6e5e5b5e713132fbef0bf5a5ada6c78eff5b46b35affbfb155d5dfdab5353df7564e4d31b55a5559bab82d64210046c6cfc616fef80300cdee5f3936f5b19b8262002491293cbf53338f89081815e44ccfd5602ee26016b2dc562994aa54e474796e1e1478f17167e7d88e338532c56b233333fbe8d8fbffc78238328f2babd7da87373eb7a7454bd34dfd989746beb50a7a7e77474f4eb6b55bdeca05a8572b98a31166b2de9f4f93a9b05ef33ecee1e124511e974f83e9f9fbc7bc64015eaf506ce19c2d02122a85ec9eb842048d1dd7d87fefe7bb4b585afce04ea7510b188b4c205c608e9748aaeae5bf4f4dcc6b914ce98f387704e30c6912470717e5ae5729d52a98cf74a26934644705154218a1a445115ef15ef3d49a2d4eb3172c14e14798e8f6ba80ad96c066b2dce812b14e6a70a857973f9a65a25977bf06468a8b7ef146e1c37080287310663e4c4a1e0c6c69e3dbd296fa1b0fcd97bfa8c8124f1586b8863c55a83b50611dbe4d20a5818862751009a51acbd4ef8da4f3c27de3c984a8188e07d0a118f480c808869426c25b0b8f8b3b6b6f61ba004a0aa244973a79a2002a55225fe07d9bb1db50b9787950000000049454e44ae426082</data>
+    </image>
+    <image name="image14">
+        <data format="PNG" length="766">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff61000002c549444154789c75934d685c5518869fefdc33f7de949acc64f2eb0489b4a50d8252b0622c44840811d155bb105dd45d7061eda6882e2cb8a8b86ac145d1950b71d32ec4ad282e941614a10b3735894e7f0869f3d3ccdc7be79e7b7eba48274917be9b031fe77b3ece7bbe574208f4b5b8f8f96cab3571a1d51a6d003c78b06d6e2daf5efae6caf9abfc8fe4af0bd37565ba0bbf3d9c99b8537fe783c5c5d347a65a4d00d6d7b7b8f2f58febeaf6b5afde6c5e5fea5afdebc92feeb6f70374a5e3ef0fbff1fa42f8a5c94bc75ee0c0404abb7d1f1148928457e75e6cfefef3df9f8dcf1f24fc71f3e64f1f0dbf357f696317a2f5d4d8cbf51387185929f867e916edf67f804324104525ce450c4f948ccf4e92adad3cbf9abf360eec02a2f716a63e7ee6b9463a395c92e87f19ad2ff3f4c8128dc1750a7b8438ae71f4f034b67c96adf21876e2d4d16b3fdc187c6576e60680de7e58e13a394389e3e489be33866ea638d49b677aba81a920eb425a0f8c9aee9c45e62e5fbe3a7ef6eca94f75a76bf0bd0ed678e808082831e479864b2b00e21ae821a8e5968d5e45a75310c7f127172f7e774077738b2b725ce50901080185c19aa720dd73bbffdb5a6b46468688e31ad6ba33da5796d0cbb099854e058505db23480dea7b802882288ad05ad1680c91a631f7eeada18373d8cd0e6eb580d28340f0254e174f2c8c735096155956e27d20496244041d8cc1deddc4762c88ec78e84b5cad04d96bce73439e1784e019184800502a429395d88d1eceed4d53dee05d8f3ec1188f31155114912420b2735904349525aa2a5cb56fbf9d41a4a09f126b2d220a91808842ebc786a3d077365859be6d8f2bc56e0395a51ab48c09380fce05440479fcc427b2b0b6159dfef6fac087f53418ef778ade2a73b0599b7c3752ef2b054952c37b8788a094a2aac07b500a647f9cf7ebcb73e766c68ebffd671a139cf33e040821b0737a80787373fbfe2390d74cbee495a4910000000049454e44ae426082</data>
+    </image>
+    <image name="image15">
+        <data format="PNG" length="824">89504e470d0a1a0a0000000d4948445200000016000000160806000000c4b46c3b000002ff49444154789cb59531681c4714863f992dde820cb370815b50600f54e8ca0ba43970712a8fb838438a3895634813d238a5ab80e314ae4d0a812060a4226017c27221c8a9da6b8c4fe0e00d28b0571cec82043b85611f78c12966efa4bb8bc085f29a6567df7cef9f7fdeccaec571cc2cbaddee47ae21e2385e5b9b815f1ebcfcd8de6a63ad25cb338af7c52741acb5a4a729a3d723a82ec6bd99d267bf3f23fc1c4cab2442d14a915986e792fdfa59569766573049417784f1b12e8267954dab24b78714450a28beaf941f847c2a14e70a0841035a2d45d641eb027213c210c69756320767794684d6508bef0befde1a860796e4c402333542b4256c0f0cdd1e50b97191458be6e0e27d81563a87c643d8fb2d7793d685d696413cc8a6cae46f65f7d79c7c62b87b4f2e15fd0fb0d302be0fefde4a0d557a5f35e90f84e0334014d590f855c9de4ecee17e4eb319d1ff3a00ec02f8c67299f283307c61e7d06fbf1782d082588a33e1cf1705fd81cf773f3601e1f9bec59e2f4b5c7ef5209f0ac95f16630cfd818067c103b586dd274a726229cee0fe8380d191cb4d1267d3d58aa1de7d258ceae5d7d0a78fdd269a86f0c52d414c49bbe3762c9b686de41560d7a72e41c4795a6486a78f95e4c4151481d686efbe7b3398ac58b1a23868b8c474aaa8068c8e714a8dd06c1af2a9e5d1c38c641c909dba6e08237f19b358a7ac5cf3479bc2e41f257e55d2ffc6a73833746f09e186cfa387904f2cbffc90a2aa9886d0e99464d3c5965b512cebd01f1800f67672e2a392fb0f023a3d883a053ffddcc2340dd65ab452b6074dc2cd15c1cbceb863daed413e353cdfcfd97d92333a12da6d0181ec3443cf753ef3cdd092de0e116ff1a02cdc157338ca9d7b8269461cfee1ba2139b9286e1a427f10110f2d561555b076d18a39383d4d99a4c0cd0b787f20747b214962c8266e3cdcf0e97c59126ec2f6edd089f40a92f115e0d1eb11ba238461dd6a15f32b53666de841965bb203575a3cc15a48c64a965fe57105e3635db8fa96dcffc431172b5d715d7103dc3fea7f015f373c8ee3b57f0135105a0ffe02a8010000000049454e44ae426082</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>buttonOk</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
+        <sender>buttonCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>bTL</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>setAlignmentTL()</slot>
+    </connection>
+    <connection>
+        <sender>bTC</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>setAlignmentTC()</slot>
+    </connection>
+    <connection>
+        <sender>bTR</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>setAlignmentTR()</slot>
+    </connection>
+    <connection>
+        <sender>bML</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>setAlignmentML()</slot>
+    </connection>
+    <connection>
+        <sender>bMC</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>setAlignmentMC()</slot>
+    </connection>
+    <connection>
+        <sender>bMR</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>setAlignmentMR()</slot>
+    </connection>
+    <connection>
+        <sender>bBL</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>setAlignmentBL()</slot>
+    </connection>
+    <connection>
+        <sender>bBC</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>setAlignmentBC()</slot>
+    </connection>
+    <connection>
+        <sender>bBR</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>setAlignmentBR()</slot>
+    </connection>
+    <connection>
+        <sender>cbDefault</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>leLineSpacingFactor</receiver>
+        <slot>setDisabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>cbDefault</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>defaultChanged(bool)</slot>
+    </connection>
+    <connection>
+        <sender>bClear</sender>
+        <signal>clicked()</signal>
+        <receiver>teText</receiver>
+        <slot>clear()</slot>
+    </connection>
+    <connection>
+        <sender>bCut</sender>
+        <signal>clicked()</signal>
+        <receiver>teText</receiver>
+        <slot>cut()</slot>
+    </connection>
+    <connection>
+        <sender>bCopy</sender>
+        <signal>clicked()</signal>
+        <receiver>teText</receiver>
+        <slot>copy()</slot>
+    </connection>
+    <connection>
+        <sender>bPaste</sender>
+        <signal>clicked()</signal>
+        <receiver>teText</receiver>
+        <slot>paste()</slot>
+    </connection>
+    <connection>
+        <sender>bLoad</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>loadText()</slot>
+    </connection>
+    <connection>
+        <sender>bSave</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>saveText()</slot>
+    </connection>
+    <connection>
+        <sender>cbUniPage</sender>
+        <signal>activated(int)</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>updateUniCharComboBox(int)</slot>
+    </connection>
+    <connection>
+        <sender>bUnicode</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>insertChar()</slot>
+    </connection>
+    <connection>
+        <sender>cbUniPage</sender>
+        <signal>activated(int)</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>updateUniCharButton(int)</slot>
+    </connection>
+    <connection>
+        <sender>cbUniChar</sender>
+        <signal>activated(int)</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>updateUniCharButton(int)</slot>
+    </connection>
+    <connection>
+        <sender>cbSymbol</sender>
+        <signal>activated(int)</signal>
+        <receiver>QG_DlgText</receiver>
+        <slot>insertSymbol(int)</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in declaration">rs_text.h</include>
+    <include location="local" impldecl="in declaration">rs_settings.h</include>
+    <include location="local" impldecl="in declaration">rs_font.h</include>
+    <include location="local" impldecl="in declaration">rs_math.h</include>
+    <include location="global" impldecl="in declaration">qfile.h</include>
+    <include location="global" impldecl="in declaration">qfiledialog.h</include>
+    <include location="local" impldecl="in declaration">rs_filterdxf.h</include>
+    <include location="local" impldecl="in implementation">qg_dlgtext.ui.h</include>
+</includes>
+<variables>
+    <variable access="private">bool isNew;</variable>
+    <variable access="private">RS_Text* text;</variable>
+    <variable access="private">RS_Font* font;</variable>
+</variables>
+<slots>
+    <slot>updateUniCharComboBox( int )</slot>
+    <slot>setText( RS_Text &amp; t, bool isNew )</slot>
+    <slot>updateText()</slot>
+    <slot>setAlignmentTL()</slot>
+    <slot>setAlignmentTC()</slot>
+    <slot>setAlignmentTR()</slot>
+    <slot>setAlignmentML()</slot>
+    <slot>setAlignmentMC()</slot>
+    <slot>setAlignmentMR()</slot>
+    <slot>setAlignmentBL()</slot>
+    <slot>setAlignmentBC()</slot>
+    <slot>setAlignmentBR()</slot>
+    <slot>setAlignment( int a )</slot>
+    <slot>setFont( const QString &amp; f )</slot>
+    <slot>defaultChanged( bool )</slot>
+    <slot>loadText()</slot>
+    <slot>load( const QString &amp; fn )</slot>
+    <slot>saveText()</slot>
+    <slot>save( const QString &amp; fn )</slot>
+    <slot>insertSymbol( int )</slot>
+    <slot>updateUniCharButton( int )</slot>
+    <slot>insertChar()</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+    <function access="private" specifier="non virtual">destroy()</function>
+    <function returnType="int">getAlignment()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>qg_fontbox.h</includehint>
+</includehints>
+</UI>

@@ -1,0 +1,32 @@
+<manstyle>
+  <opt name="PageTitle" value="Reading DXF Files" />
+  <section>Reading DXF Files</section>
+  <idx>Reading,Parsing,Creation Interface,DL_CreationAdapter</idx>
+
+  <img src="img/dxflib.png" ref="dxflib01" width="80">dxflib parses DXF files
+  and calls functions in your class. In those functions you can for example add
+  the entities to a vector or list of entities.</img>
+
+  <subsection>Implementing the Creation Interface</subsection>
+
+  <para>Your C++ class that handles DXF entities has to be derived from
+  DL_CreationInterface or DL_CreationAdapter. In most cases DL_CreationAdapter
+  is more convenient because it doesn't force you to implement all
+  functions.</para>
+
+  <includecode src="code/mydxffilter.h" />
+
+  <para>The implementation of the functions in your class will typically add
+  the entities to a container of entities or use the information in another
+  way.</para>
+
+  <includecode src="code/addline.cpp" />
+
+  <newpage />
+
+  <para>When reading a DXF file you simply pass on a reference to an object of
+  your class to the parser.</para>
+
+  <includecode src="code/parse.cpp" />
+</manstyle>
+

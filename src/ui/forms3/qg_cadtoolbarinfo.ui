@@ -1,0 +1,250 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_CadToolBarInfo</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_CadToolBarInfo</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>34</x>
+            <y>0</y>
+            <width>56</width>
+            <height>336</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>0</hsizetype>
+            <vsizetype>1</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>56</width>
+            <height>336</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Info</string>
+    </property>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bDist</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>20</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image0</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Distance (Point, Point)</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bDist2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>20</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image1</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Distance (Entity, Point)</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bBack</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>56</width>
+                <height>20</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image2</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Back to main menu</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bAngle</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>48</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image3</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Angle</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bTotalLength</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>28</x>
+                <y>48</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image4</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Total length of selected entities</string>
+        </property>
+    </widget>
+    <widget class="QToolButton">
+        <property name="name">
+            <cstring>bArea</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>76</y>
+                <width>28</width>
+                <height>28</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image5</pixmap>
+        </property>
+        <property name="toolTip" stdset="0">
+            <string>Area of polygon</string>
+        </property>
+    </widget>
+</widget>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="485">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b4500022630543251d2e253d856405bffcbc54103b11c856360003105719c44d4b8371f530007544959595b189268201865a344198b958d482e844900c763780c413b1b80c6a12ba7b41c2caca58d40285b1f84d19432d363790275a6bcd05003e955e5d</data>
+    </image>
+    <image name="image1">
+        <data format="XPM.GZ" length="485">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b4500022630543251d2e253d856405bffcbc54103b11c856360003105719c44d4b8371f5c040590f01e0a2c88204445104f18ba20ac24413c1004d54590f45102eaa87a9166c6a2248064c218b820154073800906c07092b2ba38942dca28c081d385056c6268ae4630a446badb90065f05db5</data>
+    </image>
+    <image name="image2">
+        <data format="XPM.GZ" length="309">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232345330345430563054d2e152d2534856f0cbcf4b05b113816c65033000719541dc343000ab0402e5443d38808a2927628801851295c1002e06128201a818b2104c2c118b981e36313d6c627a89986e0109628ae9218bd55a730100b0a148a8</data>
+    </image>
+    <image name="image3">
+        <data format="XPM.GZ" length="569">789c75d1cd0ac2300c00e07b9f222cb722ddd4a3f8088a47413c84ead0c314dc3c88f8ee362dad71edc218cd97fe2c5dad61bfdb80ae553fd070b5602ff4007d7a76ddeb705cbf55b568c03d4b9857335519b0b0bddfce3c4637c6c607a7c469dbc6d4b8c0f40ae157f9c89d850b82a563c1c3ee44653786720fbbd084c742f274284d7828fcf59b1cb1e0861b897d4945933be36f3e0a0d2ba4c70be2abf28e52c57c941abeceff9791261fa9f7cf4a7d010d0d6534</data>
+    </image>
+    <image name="image4">
+        <data format="XPM.GZ" length="485">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade65232b4500022630543251d2e253d856405bffcbc54103b11c856360003105719c44d4b8371f530003e51655480572d040015618822c410a2c86208db8877197613f494c1482f110ce0e6eae94185516c83894285514d8009a3db86a2160650cc850ba2b801c317b5d65c00215f59fd</data>
+    </image>
+    <image name="image5">
+        <data format="XPM.GZ" length="569">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade6523232500022630543251d2e253d856405bffcbc54105b19c856360003103711c44d4b8371f5b0008ac4956100555c39110a50c5e1c2a8e208611471246164716461247114618438aa305c1c4d98fae2e880c2702646bcd69a0b0076147fe4</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>bDist</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarInfo</receiver>
+        <slot>infoDist()</slot>
+    </connection>
+    <connection>
+        <sender>bBack</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarInfo</receiver>
+        <slot>back()</slot>
+    </connection>
+    <connection>
+        <sender>bDist2</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarInfo</receiver>
+        <slot>infoDist2()</slot>
+    </connection>
+    <connection>
+        <sender>bAngle</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarInfo</receiver>
+        <slot>infoAngle()</slot>
+    </connection>
+    <connection>
+        <sender>bTotalLength</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarInfo</receiver>
+        <slot>infoTotalLength()</slot>
+    </connection>
+    <connection>
+        <sender>bArea</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_CadToolBarInfo</receiver>
+        <slot>infoArea()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in declaration">qg_actionhandler.h</include>
+    <include location="local" impldecl="in implementation">qg_cadtoolbar.h</include>
+    <include location="local" impldecl="in implementation">qg_cadtoolbarinfo.ui.h</include>
+</includes>
+<forwards>
+    <forward>class QG_CadToolBar</forward>
+</forwards>
+<variables>
+    <variable>QG_ActionHandler* actionHandler;</variable>
+    <variable>QG_CadToolBar* cadToolBar;</variable>
+</variables>
+<slots>
+    <slot>mousePressEvent( QMouseEvent * e )</slot>
+    <slot>contextMenuEvent( QContextMenuEvent * e )</slot>
+    <slot>setCadToolBar( QG_CadToolBar * tb )</slot>
+    <slot>infoDist()</slot>
+    <slot>infoDist2()</slot>
+    <slot>infoAngle()</slot>
+    <slot>infoTotalLength()</slot>
+    <slot>infoArea()</slot>
+    <slot>back()</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

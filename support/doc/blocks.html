@@ -1,0 +1,369 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>QCad - Blocks</title>
+  <meta name="generator" content="ManStyle">
+  <meta name="author" content="Andrew Mustun">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="5">
+	  <img src="img/space.png" width="5" height="1" border="0">
+	</td>
+    <td width="105">
+	  <img src="img/space.png" width="105" height="1" border="0">
+	</td>
+    <td width="15">
+	  <img src="img/space.png" width="15" height="1" border="0">
+	</td>
+    <td width="460">
+	  <img src="img/space.png" width="460" height="1" border="0">
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td align="center">
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="layers.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="snapping.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            <center>QCad User Reference Manual<br>
+	           <img src="img/separator.png"></center>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+	<td>
+<a name="12"></a><h1>12 Blocks</h1>
+
+<p>
+<i>Blocks are named groups of entities which can be inserted into a
+  drawing multiple times with different attributes at different locations. Such
+  an inserted instance of a block is called an 
+  <b>Insert</b>
+
+  .</i></p>
+<p class="figure">
+<img border="0" src="img/blocklist01.png"></p><p class="figure_label">
+<b>Figure 17:&nbsp;</b>Block list.</p>
+<a name="12_1"></a><h2>Changing the Visibility of a Block</h2>
+
+<p>
+Double-click on a block in the block list to toggle it's visibility. 
+  Alternatively, you can right-click on it and choose "Toggle Visibility" 
+  from the context menu (Figure 18).</p>
+<p class="figure">
+<img border="0" src="img/blockmenu01.png"></p><p class="figure_label">
+<b>Figure 18:&nbsp;</b>Context menu of
+  the block list.</p>
+<a name="12_2"></a><h2>Changing the Visibility of all Blocks</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_block_toggle_all.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Block - Defreeze All</p>
+<p class="code">
+Block - Freeze All</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+The two buttons shown above can be used to defreeze or freeze all
+  blocks at once. The same function is also available from the context
+  menu.</p>
+<a name="12_3"></a><h2>Adding New Blocks</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_block_add.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Block - Add Block</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+This command creates a new empty block. The block dialog is shown where
+  you can specify the name for the new block (Figure 19).
+  If you want to create a block from existing entities, please use 
+  the "Create Block" command instead.</p>
+<p class="figure">
+<img border="0" src="img/blockdialog01.png"></p><p class="figure_label">
+<b>Figure 19:&nbsp;</b>Dialog for
+  creating new blocks.</p>
+<a name="12_4"></a><h2>Removing Blocks</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_block_delete.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Block - Remove Block</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Removes the active block. Please note that this action cannot be
+  undone. The block and all inserts of the block will be deleted.</p>
+<a name="12_5"></a><h2>Renaming Blocks</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_block_rename.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Block - Rename Block</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Renames the active block. The same dialog is presented as for creating
+  new blocks (Figure 19). Please note that this action cannot be
+  automatically undone. The block and all inserts of the block will be
+  renamed.</p>
+<a name="12_6"></a><h2>Editing Blocks</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_block_edit.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Block - Edit Block</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+This command opens the active block in a new document window where it
+  can be modified just like any other drawing. To update the inserts that exist
+  inside your drawing, simply activate the drawing window either by using the
+  Windows menu or by clicking in it.</p>
+<a name="12_7"></a><h2>Inserting Blocks</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_block_insert.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Block - Insert Block</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Options Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="img/options_block.png"><br>
+</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Inserts the active block into the drawing.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Choose the block you want to insert from the list.</li>
+
+      <li>Click the insert button or choose 'Insert Block' from the menu.</li>
+
+      <li>Enter the rotation angle and scaling factor for the insert in the
+      options toolbar.</li>
+
+      <li>To create an array of inserts, enter the number of columns and rows
+      in the options toolbar and specify the column and row spacing.</li>
+    </ol>
+  </p>
+<a name="12_8"></a><h2>Creating Blocks from Existing Entities</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_block_create.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Block - Create Block</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Creates a block from existing entities.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Select the entities you want to use for the block.</li>
+
+      <li>Click the right arrow button in the CAD toolbar to continue.</li>
+
+      <li>Set the reference point of the block using the mouse or enter a
+      co-ordinate in the command line.</li>
+
+      <li>Enter a name for the new block in the dialog that is shown (Figure
+      19) and click OK.</li>
+    </ol>
+  </p>
+<p>
+
+  The block is now added to the block list and can be inserted into the 
+  drawing. The entities you selected in step 1 are removed and replaced by
+  an insert of the block. If you don't want that you can use 'undo' to 
+  delete that insert. To restore the original entities, use 'undo' again.
+  The undo / redo functions have no influence on the blocks themselves.
+  Once a block is created it won't be removed again with undo.
+  </p>
+    </td>
+  </tr>
+  
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td valign=top>
+       <br>
+
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="layers.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="snapping.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+      </table>
+	   
+       <p class="footer">
+       [ <a href="index.html">Home</a> | 
+	     <a href="contents.html">Contents</a> |
+		 <a href="index2.html">Index</a> ]<br>
+       [ <a href="license.html">1</a> | <a href="preface.html">2</a> | <a href="basics.html">3</a> | <a href="start.html">4</a> | <a href="gui.html">5</a> | <a href="commandline.html">6</a> | <a href="file.html">7</a> | <a href="printing.html">8</a> | <a href="edit.html">9</a> | <a href="view.html">10</a> | <a href="layers.html">11</a> | <a href="blocks.html">12</a> | <a href="snapping.html">13</a> | <a href="construction.html">14</a> | <a href="selection.html">15</a> | <a href="modification.html">16</a> | <a href="information.html">17</a> | <a href="options_general.html">18</a> | <a href="options_drawing.html">19</a> | <a href="appendix.html">20</a> ]</p>
+       <p class="footer2">
+	   Copyright  2003 <a href="http://www.ribbonsoft.com">RibbonSoft</a>, Inc.<br>All Rights Reserved.<br>
+       This Manual was created with <a href="http://www.ribbonsoft.com/manstyle.html">ManStyle</a>.
+       </p>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

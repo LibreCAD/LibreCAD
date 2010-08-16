@@ -1,0 +1,471 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>QCad - Selection</title>
+  <meta name="generator" content="ManStyle">
+  <meta name="author" content="Andrew Mustun">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="5">
+	  <img src="img/space.png" width="5" height="1" border="0">
+	</td>
+    <td width="105">
+	  <img src="img/space.png" width="105" height="1" border="0">
+	</td>
+    <td width="15">
+	  <img src="img/space.png" width="15" height="1" border="0">
+	</td>
+    <td width="460">
+	  <img src="img/space.png" width="460" height="1" border="0">
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td align="center">
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="construction_image.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="modification.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            <center>QCad User Reference Manual<br>
+	           <img src="img/separator.png"></center>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+	<td>
+<a name="Selection"></a>
+<a name="Entity Selection"></a>
+<a name="Tagging"></a>
+<a name="15"></a><h1>15 Entity Selection</h1>
+
+<p>
+<i>The selection tools documented in this chapter are used to select
+  entities for later modification. For example if you want to move some
+  entities, you need to select them before you can do so. The selection tells
+  QCad which entities you intend to move. 
+  <br>
+
+  Selected entities are highlighted in the graphic view with red color and a
+  unique tight dotted line pattern.</i></p>
+<a name="Deselecting All"></a>
+<a name="Select - Deselect All"></a>
+<a name="15_1"></a><h2>Deselecting All</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_deselect_all.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Select - Deselect All</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Deselects all entities on all currently visible layers. Use this tool
+  to make sure that no entities are selected.</p>
+<a name="Selecting All"></a>
+<a name="Select - Select All"></a>
+<a name="15_2"></a><h2>Selecting All</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_select_all.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Select - Select All</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Selects all entities on all currently visible layers.</p>
+<a name="Selecting Single Entities"></a>
+<a name="Select - Select Entity"></a>
+<a name="15_3"></a><h2>Selecting Single Entities</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_select_single.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Select - Select Entity</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Selects single entities.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ul>
+      <li>Use the mouse to specify the entities to select. If you click an
+      entity that is already selected it will get deselected.</li>
+    </ul>
+  </p>
+<a name="Selecting Contours"></a>
+<a name="Select - Contour"></a>
+<a name="Deselect - Contour"></a>
+<a name="15_4"></a><h2>Selecting Contours</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_select_contour.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Select - (De-)Select Contour</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Selects or deselects entities that are connected to each other and
+  form a contour (closed or open).</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ul>
+      <li>Use the mouse to pick one entity of the contour you want to select.
+      The algorithm then searches from the endpoints of the selected entity in
+      both directions for entities that are connected to this entity. All
+      connected entities get selected if the entity you picked was unselected.
+      Otherwise the whole contour will be deselected.</li>
+    </ul>
+  </p>
+<a name="Window Deselection"></a>
+<a name="Deselecting Window"></a>
+<a name="Deselecting Range"></a>
+<a name="Deselecting
+  Area"></a>
+<a name="Deselecting Rectangle"></a>
+<a name="15_5"></a><h2>Window Deselection</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_deselect_window.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Select - Deselect Window</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Deselects all entities that are entirely within a given
+  window.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Click the first corner of the window using the left mouse
+      button.</li>
+
+      <li>Drag the mouse to the other corner.</li>
+
+      <li>Click the second corner of the window.</li>
+    </ol>
+  </p>
+<a name="Window Selection"></a>
+<a name="Selecting Window"></a>
+<a name="Selecting Range"></a>
+<a name="Selecting
+  Area"></a>
+<a name="Selecting Rectangle"></a>
+<a name="15_6"></a><h2>Window Selection</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_select_window.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Select - Select Window</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Selects all entities that are entirely within a given window.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+Analog to deselecting entities in a window.</p>
+<a name="Inverting Selection"></a>
+<a name="Select - Invert Selection"></a>
+<a name="15_7"></a><h2>Inverting Selection</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_select_invert.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Select - Invert Selection</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Selects all unselected entities and deselects all selected
+  entities.</p>
+<a name="Deselect Intersected Entities"></a>
+<a name="15_8"></a><h2>Deselect Intersected Entities</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_deselect_inters.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Select - Deselect Intersected</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Deselects all entities that are intersected by a line.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Set the startpoint of the line using the left mouse button.</li>
+
+      <li>Drag the mouse to the endpoint of the line.</li>
+
+      <li>Set the endpoint of the line. All entities that are intersected by
+      the line you've just drawn will be deselected.</li>
+    </ol>
+  </p>
+<a name="Select Intersected Entities"></a>
+<a name="15_9"></a><h2>Select Intersected Entities</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_select_inters.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Select - Select Intersected</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Selects all entities that are intersected by a line.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+Analog to deselecting intersected entities.</p>
+    </td>
+  </tr>
+  
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td valign=top>
+       <br>
+
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="construction_image.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="modification.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+      </table>
+	   
+       <p class="footer">
+       [ <a href="index.html">Home</a> | 
+	     <a href="contents.html">Contents</a> |
+		 <a href="index2.html">Index</a> ]<br>
+       [ <a href="license.html">1</a> | <a href="preface.html">2</a> | <a href="basics.html">3</a> | <a href="start.html">4</a> | <a href="gui.html">5</a> | <a href="commandline.html">6</a> | <a href="file.html">7</a> | <a href="printing.html">8</a> | <a href="edit.html">9</a> | <a href="view.html">10</a> | <a href="layers.html">11</a> | <a href="blocks.html">12</a> | <a href="snapping.html">13</a> | <a href="construction.html">14</a> | <a href="selection.html">15</a> | <a href="modification.html">16</a> | <a href="information.html">17</a> | <a href="options_general.html">18</a> | <a href="options_drawing.html">19</a> | <a href="appendix.html">20</a> ]</p>
+       <p class="footer2">
+	   Copyright  2003 <a href="http://www.ribbonsoft.com">RibbonSoft</a>, Inc.<br>All Rights Reserved.<br>
+       This Manual was created with <a href="http://www.ribbonsoft.com/manstyle.html">ManStyle</a>.
+       </p>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

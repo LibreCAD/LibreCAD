@@ -1,0 +1,342 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_DlgSpline</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>QG_DlgSpline</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>406</width>
+            <height>234</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>1</hsizetype>
+            <vsizetype>1</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>300</width>
+            <height>190</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Spline</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout42</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout41</cstring>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>64</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout2</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>lLayer</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>5</hsizetype>
+                                            <vsizetype>5</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="text">
+                                        <string>Layer:</string>
+                                    </property>
+                                </widget>
+                                <widget class="QG_LayerBox">
+                                    <property name="name">
+                                        <cstring>cbLayer</cstring>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                        <widget class="QG_WidgetPen">
+                            <property name="name">
+                                <cstring>wPen</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>3</hsizetype>
+                                    <vsizetype>3</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+                <widget class="QButtonGroup">
+                    <property name="name">
+                        <cstring>buttonGroup8</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>1</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="title">
+                        <string>Geometry</string>
+                    </property>
+                    <grid>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <spacer row="2" column="0">
+                            <property name="name">
+                                <cstring>spacer58</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <spacer row="2" column="1">
+                            <property name="name">
+                                <cstring>spacer61</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QLabel" row="0" column="0">
+                            <property name="name">
+                                <cstring>lDegree</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Degree:</string>
+                            </property>
+                        </widget>
+                        <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
+                            <property name="name">
+                                <cstring>cbClosed</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Closed</string>
+                            </property>
+                        </widget>
+                        <widget class="QComboBox" row="0" column="1">
+                            <item>
+                                <property name="text">
+                                    <string>1</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>2</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>3</string>
+                                </property>
+                            </item>
+                            <property name="name">
+                                <cstring>cbDegree</cstring>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>64</width>
+                                    <height>0</height>
+                                </size>
+                            </property>
+                        </widget>
+                    </grid>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>40</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>bOk</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;OK</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+O</string>
+                    </property>
+                    <property name="default">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>bCancel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Cancel</string>
+                    </property>
+                    <property name="accel">
+                        <string>Esc</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<customwidgets>
+    <customwidget>
+        <class>QG_WidgetPen</class>
+        <header location="local">qg_widgetpen.h</header>
+        <sizehint>
+            <width>-1</width>
+            <height>-1</height>
+        </sizehint>
+        <container>0</container>
+        <sizepolicy>
+            <hordata>5</hordata>
+            <verdata>5</verdata>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+        <pixmap>image0</pixmap>
+    </customwidget>
+    <customwidget>
+        <class>QG_LayerBox</class>
+        <header location="local">qg_layerbox.h</header>
+        <sizehint>
+            <width>140</width>
+            <height>22</height>
+        </sizehint>
+        <container>0</container>
+        <sizepolicy>
+            <hordata>7</hordata>
+            <verdata>0</verdata>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+        <pixmap>image1</pixmap>
+        <signal>layerChanged(const RS_Layer* layer)</signal>
+        <slot access="public" specifier="">slot()</slot>
+        <slot access="public" specifier="">slotLayerChanged(int index)</slot>
+    </customwidget>
+</customwidgets>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="45">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade6523250004143a55a6b2e0026630c4f</data>
+    </image>
+    <image name="image1">
+        <data format="XPM.GZ" length="3368">789c9595c94eeb581086f73c4544ed50ab6eecd889ad562f1802843961a6d58b632764228c616cf5bb77f9d45fe75e11165c4c703e55d55fc319f8b152bb38daafadfc587a9abbf9b8ac9523f7585be93fcf66ef7ffff3d7bf4bcb715c93df2891d7f21f4bcb5cd4cadac1ddedc003fd02ddf9af16274075ffe3b91738f33c01276aa722b0b753ec390b7c0cce107f092e238d7fa838aa578fe713b0c5bf1aabdddd8033e49f1923be052e11df31867dc77366fe1c81cdbeab1c5b3d4d30f2d351c571dd988fc196ffda731e43cf811b98a79b06d6fa5e8c11ff1458e775054ec0dd8a1b91f9731d9ca9dd0d9513d35ff79c9b9dc7c68ddcdbf7c125ecefca16cf7e9e4994987dcfb34b73d86363e41f559cc6691ff93f8c119f2a3723b5bb8931faffc91abf691cabfd0e9c42ffd21876bf9ea90bf946c6a9f37ca66cf16e0c463fb46a8cf95e0456bb3346be3ad8fa3d34463fcf153763b33b678cf853e516e6415bc688bf31567fde04a7e8cffcd13ffbf56f4afea6ef971265f157bdd218f9d7c0e8878fc0a88ffdfe6f355a51abe1b9ad9c59ff0781fd7e62afdf2a5a79abf0f63765f377857123f2f67bb0e5f3e7256bb4f24cf3ed83fbcad4530efe99e722373e5476981faf05d679ad1aa3fe0b63ad8737c0982fed19c33ea8384ff2284f3c1f283b9be746609dc79bb19e37877837403d3bca458cf3531a23de9fdfbc147fed673bb0d6f7688cfc5960cdd737c6bc87caa2affe8dc09aefc338d17e3be026f291b1fad318ecb0bf38b0f677628cf5f1f7ab4b4c8f7363d4731b58eb2763d43f02231f9f0656bd8631f44cdfe6d535c67afaf9b8d245aef43c05a7e04439c44f8d511f2b9736cf79609d0ff44b9bd719d8ea7b0763fdd89f8742ea6beabfed73e53206df05d6fbecd618e7f311dc84ff0bd82993df7f453fd81f02abdecc58f737a56087fbf3d518f14f81f5bed17afb7dac07b58dd19fbfcfcab418383d3f73e550df36d8fa7f0eacfa57ca03ccbb3b67928ffbc6435eaf10ef92fb3ce06b1e7ef18c78cc138d80bee329dff08c6ff98eeff9811ff989e7fcecdf2ffcca6ffcfed39f0bf93610ef0f5ee5355ee70d6ef3266fc9df6deec8b3c3bbbcf7497f5fb40ff8503c8eb8cb3d6fedf1b1d0099f4accd927fd219f7bef0bf1eaf1255f719d23ff3de606279c7ed26f4addeba25629b738e39c98881c891695d45fd4a7016fd075e54d431ad1980f684253bae11ecde896ee16f41fe95e6c0f9c55def4484f92ab4573afd1a6e785fa5f65264ebc72effd22b1aff446eff421d60b5a5dd09fd39af8af134b254fbe8f8836a84d958aa3ad85fab765de3dea48979b555db4237ebbb447fbf23ea0c3c5fa799b643ea2d595ba7ba2bd2b9e0f744c27dca0d32feaef5029fe056f499767744e173413cb842ee98aea5fe877a4d7a85a577aa148a6b94fb1ecb3091d5183924ffa234a659f9c4ae61b8e6cffd2896837a945d9c2fa8e650fcadea2bc72e3b69399b842a2afe41eebbb81bbfea43f7143d983a91b714a776e4cab74e89f3a6db9899bba9b4ffadf7c82fe6ff857e7f7f7f425e25b39baf3e5fffe5cfa1fdc4beba0</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>bOk</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgSpline</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
+        <sender>bCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>QG_DlgSpline</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>bOk</tabstop>
+    <tabstop>bCancel</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in declaration">rs_pen.h</include>
+    <include location="local" impldecl="in declaration">qg_widgetpen.h</include>
+    <include location="local" impldecl="in implementation">rs_spline.h</include>
+    <include location="local" impldecl="in implementation">rs_graphic.h</include>
+    <include location="local" impldecl="in implementation">rs_layer.h</include>
+</includes>
+<forwards>
+    <forward>class RS_Spline;</forward>
+</forwards>
+<variables>
+    <variable access="private">RS_Spline* spline;</variable>
+</variables>
+<slots>
+    <slot>setSpline( RS_Spline &amp; e )</slot>
+    <slot>updateSpline()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>qg_layerbox.h</includehint>
+    <includehint>qg_widgetpen.h</includehint>
+</includehints>
+</UI>

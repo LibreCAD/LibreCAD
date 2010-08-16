@@ -1,0 +1,1111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>QCad - Modification</title>
+  <meta name="generator" content="ManStyle">
+  <meta name="author" content="Andrew Mustun">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="5">
+	  <img src="img/space.png" width="5" height="1" border="0">
+	</td>
+    <td width="105">
+	  <img src="img/space.png" width="105" height="1" border="0">
+	</td>
+    <td width="15">
+	  <img src="img/space.png" width="15" height="1" border="0">
+	</td>
+    <td width="460">
+	  <img src="img/space.png" width="460" height="1" border="0">
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td align="center">
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="selection.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="information.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            <center>QCad User Reference Manual<br>
+	           <img src="img/separator.png"></center>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+	<td>
+<a name="Modification"></a>
+<a name="Edit"></a>
+<a name="16"></a><h1>16 Modification</h1>
+
+<p>
+<i>Modification tools allow the user to modify existing entities. This
+  chapter is a brief overview over the modification tools of QCad
+  (Figure 51).</i></p>
+<p class="figure">
+<a href="img/toolbar_modify.png"><img border="0" src="img/toolbar_modify_t.png"></a></p><p class="figure_label">
+<b>Figure 51:&nbsp;</b>The 
+  modification toolbar.</p>
+<a name="Move"></a>
+<a name="Modify - Move"></a>
+<a name="Translate"></a>
+<a name="Copy"></a>
+<a name="16_1"></a><h2>Move</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_move.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Move</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Moves or copies entities. This tool can create single or multiple
+  copies of existing entities.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>After starting the move tool, the CAD toolbar shows the selection
+      tools. Use them to select the entities you want to move or copy.</li>
+
+      <li>Click the right arrow button in the CAD toolbar to continue.</li>
+
+      <li>Set the reference point with the mouse or enter a co-ordinate in the
+      command line.</li>
+
+      <li>Set the target point. To move the selected entities by a given
+      amount, e.g. by 50 to the right, enter 
+      <code>@50,0</code>
+
+      in the command line.</li>
+
+      <li>The move dialog is displayed (Figure 52). To move the
+      entities, choose "Delete Original", to copy them choose "Keep Original".
+      Finally you can create a number of copies at once, by choosing "Multiple
+      Copies" and entering the number of copies in the text line below. Note
+      that '9' will create 9 copies and keep the original - so there will be 10
+      instances of the entities in the end. The copies will have the same
+      attributes and be on the same layer as the original entities. To change
+      that default behavior, you can tick "Use current attributes" or "Use
+      current layer".</li>
+	  
+      <li>Click OK to move / copy the entities. The selected entities
+      will be deselected automatically.</li>
+    </ol>
+  </p>
+<p class="figure">
+<img border="0" src="img/movedialog01.png"></p><p class="figure_label">
+<b>Figure 52:&nbsp;</b>Move options
+  dialog.</p>
+<a name="Rotate"></a>
+<a name="Modify - Rotate"></a>
+<a name="16_2"></a><h2>Rotate</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_rotate.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Rotate</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Rotates entities by a given angle around a given center. This tool can
+  create single or multiple copies of existing entities.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>After starting the rotate tool, the CAD toolbar shows the selection
+      tools. Use them to select the entities you want to rotate.</li>
+
+      <li>Click the right arrow button in the CAD toolbar to continue.</li>
+
+      <li>Set the center of the rotation with the mouse or enter a co-ordinate
+      in the command line.</li>
+
+      <li>The rotate dialog is displayed (Figure 53). To rotate
+      the entities without keeping the original entities, choose "Delete
+      Original", to copy them choose "Keep Original". Finally you can create a
+      number of rotated copies at once, by choosing "Multiple Copies" and
+      entering the number of copies in the text line below. Note that '9' will
+      create 9 copies and keep the original - so there will be 10 instances of
+      the entities in the end. The copies will have the same attributes and be
+      on the same layer as the original entities. To change that default
+      behavior, you can tick "Use current attributes" or "Use current
+      layer".</li>
+
+      <li>Click OK to rotate the entities. The selected entities will
+      be deselected automatically.</li>
+    </ol>
+  </p>
+<p class="figure">
+<img border="0" src="img/rotatedialog01.png"></p><p class="figure_label">
+<b>Figure 53:&nbsp;</b>Rotate
+  options dialog.</p>
+<a name="Scale"></a>
+<a name="Modify - Scale"></a>
+<a name="16_3"></a><h2>Scale</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_scale.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Scale</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Scales entities by a given factor from a given center. This tool can
+  create single or multiple copies of existing entities.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>After starting the scale tool, the CAD toolbar shows the selection
+      tools. Use them to select the entities you want to scale.</li>
+
+      <li>Click the right arrow button in the CAD toolbar to continue.</li>
+
+      <li>Set the center of the scaling with the mouse or enter a co-ordinate
+      in the command line.</li>
+
+      <li>The scale dialog is displayed (Figure 54). To scale
+      the entities without keeping the original entities, choose "Delete
+      Original", to copy them choose "Keep Original". Finally you can create a
+      number of scaled copies at once, by choosing "Multiple Copies" and
+      entering the number of copies in the text line below. Note that '9' will
+      create 9 copies and keep the original - so there will be 10 instances of
+      the entities in the end. The copies will have the same attributes and be
+      on the same layer as the original entities. To change that default
+      behavior, you can tick "Use current attributes" or "Use current
+      layer".</li>
+    </ol>
+  </p>
+<p class="figure">
+<img border="0" src="img/scaledialog01.png"></p><p class="figure_label">
+<b>Figure 54:&nbsp;</b>Scale options
+  dialog.</p>
+<p>
+
+    <ol>
+      <li value="5">Click OK to scale the entities. The selected entities will
+      be deselected automatically.</li>
+    </ol>
+  </p>
+<a name="Mirror"></a>
+<a name="Modify - Mirror"></a>
+<a name="16_4"></a><h2>Mirror</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_mirror.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Mirror</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Mirrors entities at a given axe. This tool can create a mirrored copy
+  of existing entities.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>After starting the mirror tool, the CAD toolbar shows the selection
+      tools. Use them to select the entities you want to mirror.</li>
+
+      <li>Click the right arrow button in the CAD toolbar to continue.</li>
+
+      <li>Set the first endpoint of the mirror axes with the mouse or enter a
+      co-ordinate in the command line.</li>
+
+      <li>Set the second endpoint of the mirror axes.</li>
+
+      <li>The mirror dialog is displayed (Figure 55). To mirror
+      the entities without keeping the original entities, choose "Delete
+      Original", to copy them choose "Keep Original". The copy will have the
+      same attributes and be on the same layer as the original entities. To
+      change that default behavior, you can tick "Use current attributes" or
+      "Use current layer".</li>
+
+      <li value="6">Click OK to mirror the entities. The selected entities will
+      be deselected automatically.</li>
+    </ol>
+  </p>
+<p class="figure">
+<img border="0" src="img/mirrordialog01.png"></p><p class="figure_label">
+<b>Figure 55:&nbsp;</b>Mirror
+  options dialog.</p>
+<a name="Move and Rotate"></a>
+<a name="Modify - Move and Rotate"></a>
+<a name="16_5"></a><h2>Move and Rotate</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_moverotate.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Move and Rotate</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Moves or copies and simultaneously rotates entities. This tool can
+  create single or multiple copies of existing entities.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>After starting the move and rotate tool, the CAD toolbar shows the
+      selection tools. Use them to select the entities you want to move or
+      copy.</li>
+
+      <li>Click the right arrow button in the CAD toolbar to continue.</li>
+
+      <li>Enter the rotation angle in the options toolbar or use the command
+	  <code>angle</code>, <code>ang</code> or <code>a</code> in the command
+	  line.</li>
+
+      <li>Set the reference point with the mouse or enter a co-ordinate in the
+      command line.</li>
+
+      <li>Set the target point. To move the selected entities by a given
+      amount, e.g. by 50 to the right, enter 
+      <code>@50,0</code>
+
+      in the command line. In Figure 56, the two reference
+      points are labeled. The rotation angle in the example is 15 degrees and
+      the number of copies four. This results in a total rotation angle of 60
+      degrees.</li>
+
+      <li>The move and rotate dialog is displayed (Figure
+      59). To move the entities, choose "Delete Original",
+      to copy them choose "Keep Original". Finally you can create a number of
+      copies at once, by choosing "Multiple Copies" and entering the number of
+      copies in the text line below. Note that '9' will create 9 copies and
+      keep the original - so there will be 10 instances of the entities in the
+      end. The copies will have the same attributes and be on the same layer as
+      the original entities. To change that default behavior, you can tick "Use
+      current attributes" or "Use current layer".</li>
+	  
+      <li>Click OK to move and rotate the entities. The selected
+      entities will be deselected automatically.</li>
+    </ol>
+  </p>
+<p class="figure">
+<img border="0" src="imgs/modifymoverotate01.png"></p><p class="figure_label">
+<b>Figure 56:&nbsp;</b>
+  Move and Rotate reference point (4.) and target point (5.).</p>
+<p class="figure">
+<img border="0" src="img/moverotatedialog01.png"></p><p class="figure_label">
+<b>Figure 57:&nbsp;</b>
+  Move and Rotate options dialog.</p>
+<a name="Rotate and Counter-rotate"></a>
+<a name="Modify - Rotate 2"></a>
+<a name="16_6"></a><h2>Rotate and Counter-rotate (Rotate 2)</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_rotate2.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Rotate 2</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Rotates and counter-rotates entities. This tool can create single or
+  multiple copies of existing entities. Use it if you want to rotate objects
+  around a center without rotating the objects themselves.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>After starting the rotate 2 tool, the CAD toolbar shows the selection
+      tools. Use them to select the entities you want to move or copy.</li>
+
+      <li>Click the right arrow button in the CAD toolbar to continue.</li>
+
+      <li>Set the center for the main rotation with the mouse or enter a
+      co-ordinate in the command line.</li>
+
+      <li>Set the center of the rotation for the individual objects. The second
+      center is rotated together with the entities around the first center
+      (Figure 58).</li>
+
+      <li>The rotate 2 dialog is displayed (Figure
+      fig:rotate2dialog01). To move the entities, choose "Delete Original",
+      to copy them choose "Keep Original". Finally you can create a number of
+      copies at once, by choosing "Multiple Copies" and entering the number of
+      copies in the text line below. Note that '9' will create 9 copies and
+      keep the original - so there will be 10 instances of the entities in the
+      end. The copies will have the same attributes and be on the same layer as
+      the original entities. To change that default behavior, you can tick "Use
+      current attributes" or "Use current layer".</li>
+	  
+      <li>Click OK to move and rotate the entities. The selected
+      entities will be deselected automatically.</li>
+    </ol>
+  </p>
+<p class="figure">
+<img border="0" src="imgs/modifyrotate201.png"></p><p class="figure_label">
+<b>Figure 58:&nbsp;</b>Rotate
+  around two centers, an absolute center (3.) and a relative center
+  (4.).</p>
+<p class="figure">
+<img border="0" src="img/moverotatedialog01.png"></p><p class="figure_label">
+<b>Figure 59:&nbsp;</b>
+  Move and Rotate options dialog.</p>
+<a name="Trim"></a>
+<a name="Extend"></a>
+<a name="Modify - Trim"></a>
+<a name="16_7"></a><h2>Trim / Extend</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_trim.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Trim</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Trims or extends a line or arc to meet another entity (Figure
+  60).</p>
+<p class="figure">
+<img border="0" src="imgs/modifytrim01.png"></p><p class="figure_label">
+<b>Figure 60:&nbsp;</b>With the trim
+  tool, the line at the left can be easily shortened to meet the arc.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Choose the limiting entity to which one or more other entities need
+      to be trimmed.</li>
+
+      <li>Choose the entities that you want to trim to the limiting entity.
+      Often there are two possibilities for the entity to be trimmed. In Figure
+      60 you might want the top part of the line to stay and the
+      lower part to disappear. In that case you would have to click the trim
+      entity at the upper part. You always need to pick the part of the entity
+      that you want to stay.</li>
+
+      <li>Right click twice or press Escape twice to stop the tool.</li>
+    </ol>
+  </p>
+<a name="Trim"></a>
+<a name="Extend"></a>
+<a name="Modify - Trim Two"></a>
+<a name="16_8"></a><h2>Trim Two Entities</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_trim2.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Trim Two</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Trims or extends two line or arc entities at once to meet each other at
+  their intersection point (Figure 61).</p>
+<p class="figure">
+<img border="0" src="imgs/modifytrim201.png"></p><p class="figure_label">
+<b>Figure 61:&nbsp;</b>With the
+  second trim tool, the line and the arc can both be trimmed to build an edge
+  at once.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Choose the first entity to be trimmed to an edge.</li>
+
+      <li>Choose the second entity to be trimmed to an edge.</li>
+
+      <li>Right click twice or press Escape twice to stop the tool.</li>
+    </ol>
+  </p>
+<a name="Lengthen"></a>
+<a name="Shorten"></a>
+<a name="Modify - Lengthen"></a>
+<a name="16_9"></a><h2>Lengthen</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_lengthen.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Lengthen</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Options Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="img/options_lengthen.png"><br>
+</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+The Lengthen command can be used to either lengthen or shorten Lines or
+  Arcs without the use of boundary edges.</p>
+<p class="figure">
+<img border="0" src="imgs/modifylengthen01.png"></p><p class="figure_label">
+<b>Figure 62:&nbsp;</b>The
+  Lengthen tool lets you trim an entity by a given amount.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Enter the distance you want to lengthen an entity by in the options
+      toolbar. A positive value lengthens the entity, while a negative value
+      shortens it. E.g. a value of '5' will lengthen the chosen entity by 5
+      parts of the drawing unit.</li>
+
+      <li>Choose the entity to be lengthened or shortened somewhere close to
+      the end you want to modify.</li>
+
+      <li>Right click twice or press Escape twice to stop the tool.</li>
+    </ol>
+  </p>
+<a name="Bevel"></a>
+<a name="Chamfer"></a>
+<a name="Modify - Bevel"></a>
+<a name="16_10"></a><h2>Bevel</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_bevel.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Bevel</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Options Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="img/options_bevel.png"><br>
+</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Bevels the corner of a contour. Optionally, the edge entities of the
+  corner can be trimmed automatically to fit the new shape.</p>
+<p class="figure">
+<img border="0" src="imgs/modifybevel01.png"></p><p class="figure_label">
+<b>Figure 63:&nbsp;</b>The bevel
+  tool with trimming enabled.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Enter the geometry of the bevel in the options toolbar. 'Distance 1'
+      is the distance the bevel line will have from the (imaginary)
+      intersection of the two edges. 'Distance 2' is the same distance for the
+      second edge.</li>
+
+      <li>Tick 'Trim' if you want to trim the entities automatically. If the
+      option is disabled, the edges will stay untouched.</li>
+
+      <li>Choose the first edge entity (a line or arc).</li>
+
+      <li>Choose the second edge.</li>
+    </ol>
+  </p>
+<a name="Round"></a>
+<a name="Fillet"></a>
+<a name="Modify - Round"></a>
+<a name="16_11"></a><h2>Round</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_round.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Round</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Options Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="img/options_round.png"><br>
+</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Rounds the corner of a contour. Optionally, the edge entities of the
+  corner can be trimmed automatically to fit the new shape.</p>
+<p class="figure">
+<img border="0" src="imgs/modifyround01.png"></p><p class="figure_label">
+<b>Figure 64:&nbsp;</b>The round
+  tool with trimming enabled.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Enter the radius of the rounding in the options toolbar.</li>
+
+      <li>Tick 'Trim' if you want to trim the entities automatically. If the
+      option is disabled, the edges will stay untouched.</li>
+
+      <li>Choose the first edge entity (a line or arc).</li>
+
+      <li>Choose the second edge.</li>
+    </ol>
+  </p>
+<a name="Divide"></a>
+<a name="Cut"></a>
+<a name="Scissors"></a>
+<a name="Modify - Divide"></a>
+<a name="16_12"></a><h2>Divide</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_divide.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Divide</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Divides entities into two separate entities.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Choose the entity you want to divide.</li>
+
+      <li>Set the cutting point using the mouse. The cutting point is usually
+      the intersection point with another entity. Choose the intersection snap
+      mode to automatically snap to intersections.</li>
+    </ol>
+  </p>
+<a name="Stretch"></a>
+<a name="Modify - Stretch"></a>
+<a name="16_13"></a><h2>Stretch</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_stretch.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Stretch</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Stretches contours.</p>
+<p class="figure">
+<img border="0" src="imgs/modifystretch01.png"></p><p class="figure_label">
+<b>Figure 65:&nbsp;</b>The
+  stretch tool comes in handy when you need to lengthen or shorten complex
+  constructions.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Set the first corner of the stretch area.</li>
+
+      <li>Set the second corner of the stretch area.</li>
+
+      <li>Set the reference point for the translation using the mouse or enter
+      a co-ordinate in the command line.</li>
+
+      <li>Set the target point.</li>
+    </ol>
+  </p>
+<a name="Properties"></a>
+<a name="Modify - Properties"></a>
+<a name="Entity Properties"></a>
+<a name="16_14"></a><h2>Properties</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_properties.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Properties</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Modify the attributes and geometry of entities in a dialog.
+  Depending on the entity type, different dialogs are presented to 
+  modify important attributes and properties of the entity.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Click the entity to modify.</li>
+    </ol>
+  </p>
+<a name="Attributes"></a>
+<a name="Modify - Attributes"></a>
+<a name="16_15"></a><h2>Attributes</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_attributes.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Attributes</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Modify the attributes of a selected group of entities.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>After starting the tool, the CAD toolbar shows the selection tools.
+      Use them to select the entities for which you want to change the
+	  attributes.</li>
+
+      <li>Click the right arrow button in the CAD toolbar to continue.</li>
+
+	  <li>In the dialog shown, change only those attributes that you want
+	  to become the same for all selected entities. E.g. if you set the
+	  color to blue, all selected entities will become blue but their
+	  line width, layer and line style will stay the same.</li>
+    </ol>
+  </p>
+<a name="Delete"></a>
+<a name="Remove"></a>
+<a name="Modify - Delete"></a>
+<a name="16_16"></a><h2>Deleting Entities</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_delete.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Delete</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Deletes entities.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>After starting the tool, the CAD toolbar shows the selection tools.
+      Use them to select the entities you want to remove from the drawing.</li>
+
+      <li>Click the right arrow button in the CAD toolbar to continue.
+	  The selected entities will be deleted.</li>
+    </ol>
+  </p>
+<a name="Explode"></a>
+<a name="Modify - Explode"></a>
+<a name="16_17"></a><h2>Exploding Groups</h2>
+
+<p>
+
+    <b>CAD Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_edit_explode.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+Modify - Explode</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+
+    <b>Description:</b>
+  </p>
+<p>
+Converts blocks, polylines, texts, dimensions and hatches into
+  basic atomic entities. Dimensions are split into lines, arrows and
+  the text as still one entity. Texts are split into lines and arcs.<br>
+  To split everything into atomic entities, use the command twice for all
+  entities.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>After starting the tool, the CAD toolbar shows the selection tools.
+      Use them to select the entities you want to explode.</li>
+
+      <li>Click the right arrow button in the CAD toolbar to continue.</li>
+    </ol>
+  </p>
+    </td>
+  </tr>
+  
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td valign=top>
+       <br>
+
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="selection.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="information.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+      </table>
+	   
+       <p class="footer">
+       [ <a href="index.html">Home</a> | 
+	     <a href="contents.html">Contents</a> |
+		 <a href="index2.html">Index</a> ]<br>
+       [ <a href="license.html">1</a> | <a href="preface.html">2</a> | <a href="basics.html">3</a> | <a href="start.html">4</a> | <a href="gui.html">5</a> | <a href="commandline.html">6</a> | <a href="file.html">7</a> | <a href="printing.html">8</a> | <a href="edit.html">9</a> | <a href="view.html">10</a> | <a href="layers.html">11</a> | <a href="blocks.html">12</a> | <a href="snapping.html">13</a> | <a href="construction.html">14</a> | <a href="selection.html">15</a> | <a href="modification.html">16</a> | <a href="information.html">17</a> | <a href="options_general.html">18</a> | <a href="options_drawing.html">19</a> | <a href="appendix.html">20</a> ]</p>
+       <p class="footer2">
+	   Copyright  2003 <a href="http://www.ribbonsoft.com">RibbonSoft</a>, Inc.<br>All Rights Reserved.<br>
+       This Manual was created with <a href="http://www.ribbonsoft.com/manstyle.html">ManStyle</a>.
+       </p>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>QG_LinePolygonOptions</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>QG_LinePolygonOptions</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>140</width>
+            <height>22</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>4</hsizetype>
+            <vsizetype>5</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>100</width>
+            <height>22</height>
+        </size>
+    </property>
+    <property name="maximumSize">
+        <size>
+            <width>140</width>
+            <height>22</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Polygon Options</string>
+    </property>
+    <hbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>1</number>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>lNumber</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>1</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>Number:</string>
+            </property>
+        </widget>
+        <widget class="QSpinBox">
+            <property name="name">
+                <cstring>sbNumber</cstring>
+            </property>
+            <property name="maxValue">
+                <number>9999</number>
+            </property>
+            <property name="minValue">
+                <number>3</number>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Number of edges</string>
+            </property>
+        </widget>
+        <widget class="Line">
+            <property name="name">
+                <cstring>sep1</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>1</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="frameShape">
+                <enum>VLine</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+        </widget>
+    </hbox>
+</widget>
+<connections>
+    <connection>
+        <sender>sbNumber</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>QG_LinePolygonOptions</receiver>
+        <slot>updateNumber(int)</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in declaration">rs_line.h</include>
+    <include location="local" impldecl="in declaration">rs_settings.h</include>
+    <include location="local" impldecl="in declaration">rs_actiondrawlinepolygon.h</include>
+    <include location="local" impldecl="in implementation">qg_linepolygonoptions.ui.h</include>
+</includes>
+<variables>
+    <variable>RS_ActionDrawLinePolygon* action;</variable>
+</variables>
+<slots>
+    <slot>setAction( RS_ActionInterface * a, bool update )</slot>
+    <slot>updateNumber( int n )</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">destroy()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

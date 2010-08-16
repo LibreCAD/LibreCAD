@@ -1,0 +1,345 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>QCad - Viewing</title>
+  <meta name="generator" content="ManStyle">
+  <meta name="author" content="Andrew Mustun">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<table width="500" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="5">
+	  <img src="img/space.png" width="5" height="1" border="0">
+	</td>
+    <td width="105">
+	  <img src="img/space.png" width="105" height="1" border="0">
+	</td>
+    <td width="15">
+	  <img src="img/space.png" width="15" height="1" border="0">
+	</td>
+    <td width="460">
+	  <img src="img/space.png" width="460" height="1" border="0">
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td align="center">
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="edit.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="layers.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            <center>QCad User Reference Manual<br>
+	           <img src="img/separator.png"></center>
+          </td>
+        </tr>
+        <tr>
+          <td align=center valign=top>
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td valign="top" bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+	<td>
+<a name="10"></a><h1>10 Viewing</h1>
+
+<p>
+<i>The view menu and toolbar offer some tools to adjust the current
+  viewport of the drawing. All these tools have absolutely no effect on the
+  entities of the drawing. They only change the zoom factor and the visible
+  area (viewport).</i></p>
+<p>
+Viewing tools are probably the most often used functions in a CAD
+  system. They can be easily accessed from the viewing toolbar (Figure
+  12). For the ones you use most, it's worth remembering and
+  using the hotkey. To show the whole drawing, simply press 
+  <code>ZA</code>. 
+  If the command line has the keyboard focus, you need to press the Escape
+  key to release the focus first.</p>
+<p class="figure">
+<img border="0" src="imgs/toolbar_view.png"></p><p class="figure_label">
+<b>Figure 12:&nbsp;</b>The viewing
+  toolbar.</p>
+<a name="Scrolling"></a>
+<a name="Scrollbars"></a>
+<a name="Panning"></a>
+<a name="10_1"></a><h2>Scrolling</h2>
+
+<p>
+
+  Use the two scrollbars at the right and the bottom of a drawing window to 
+  scroll around in a drawing. If you have a wheel mouse, you can also use
+  the wheel to scroll up and down or left and right while holding down the
+  shift key.<br>
+  If your mouse has three mouse buttons, the middle mouse button
+  can be used to change the current view by dragging the drawing around.
+  </p>
+<a name="View"></a>
+<a name="Redraw"></a>
+<a name="Regen"></a>
+<a name="10_2"></a><h2>Redrawing</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_view_redraw.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+View - Redraw</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+zr, rg</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+regen</p>
+<p>
+Redraws the current drawing. After moving or deleting a lot of entities
+  the drawing can look incomplete or 'fuzzy'. With this function you can
+  regenerate the graphic view.</p>
+<a name="Zoom in"></a>
+<a name="Zoom out"></a>
+<a name="Zoom"></a>
+<a name="10_3"></a><h2>Zooming In / Out</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_view_in_out.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+View - Zoom in</p>
+<p class="code">
+View - Zoom out</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
++ / -</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+This tool increases / decreases the current viewing factor by 1.5. The
+  same effect can also be achieved by pressing the Control-Key on the keyboard
+  and moving the mouse wheel (Figure 13).</p>
+<p class="figure">
+<img border="0" src="imgs/wheel_zoom_in_out.png"></p><p class="figure_label">
+<b>Figure 13:&nbsp;</b>Use
+  the Control-Key and the mouse wheel to zoom in / out quickly.</p>
+<a name="Zoom auto"></a>
+<a name="Auto zoom"></a>
+<a name="10_4"></a><h2>Auto Zoom</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_view_auto.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+View - Auto Zoom</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+za</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+Scales the drawing view so that all entities that are on visible layers
+  fit on the screen.</p>
+<a name="Zoom window"></a>
+<a name="Window zoom"></a>
+<a name="10_5"></a><h2>Window Zoom</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_view_window.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+View - Window Zoom</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+zw</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+This tool offers a quick way to view a certain area of the
+  drawing.</p>
+<p>
+
+    <b>Procedure:</b>
+  </p>
+<p>
+
+    <ol>
+      <li>Specify the first corner of the area you want to view. Click the left
+      mouse button at that corner and keep it down.</li>
+
+      <li>Drag the mouse to the second corner of the area.</li>
+
+      <li>Let go of the mouse button at the second corner.</li>
+    </ol>
+  </p>
+<p>
+Note: Alternatively you can specify the first and the second corner
+  each with a single mouse click instead of dragging the mouse around with the
+  mouse button pressed.</p>
+<a name="Zoom Pan"></a>
+<a name="Panning"></a>
+<a name="View - Pan Zoom"></a>
+<a name="10_6"></a><h2>Panning</h2>
+
+<p>
+
+    <b>Toolbar:</b>
+  </p>
+<p>
+<img border="0" src="imgs/toolbar_view_pan.png"><br>
+</p>
+<p>
+
+    <b>Menu:</b>
+  </p>
+<p class="code">
+View - Pan Zoom</p>
+<p>
+
+    <b>Hotkey:</b>
+  </p>
+<p class="code">
+zp</p>
+<p>
+
+    <b>Command:</b>
+  </p>
+<p class="code">
+?</p>
+<p>
+Panning means moving around in the drawing. The quickest way to 
+  do so is using the middle mouse button and move the view similar like
+  you would move a paper around: press the middle mouse button and hold it
+  while moving the drawing around. If your mouse doesn't have a middle mouse
+  button you can use this tool instead and do the same with the left mouse
+  button. Click the right mouse button when you're done.</p>
+    </td>
+  </tr>
+  
+  <tr>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td bgcolor="#e6e8f2">&nbsp;</td>
+    <td></td>
+    <td valign=top>
+       <br>
+
+      <table width="460" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="460" align="center" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td bgcolor="#626993" align="left">
+				  &nbsp;
+				</td>
+				<td bgcolor="#626993" align="right">
+				<a href="contents.html" alt="Contents"><img src="img/toolbar_cont.png" border="0" alt="Contents"></a>
+				<a href="index.html" alt="First"><img src="img/toolbar_first.png" border="0" alt="First"></a>
+				<a href="edit.html" alt="Prev"><img src="img/toolbar_prev.png" border="0" alt="Prev"></a>
+				<a href="index.html" alt="Home"><img src="img/toolbar_home.png" border="0" alt="Home"></a>
+				<a href="layers.html" alt="Next"><img src="img/toolbar_next.png" border="0" alt="Next"></a>
+				<a href="index2.html" alt="Last"><img src="img/toolbar_last.png" border="0" alt="Last"></a>
+			    </td>
+			  </tr>
+			</table>
+          </td>
+        </tr>
+      </table>
+	   
+       <p class="footer">
+       [ <a href="index.html">Home</a> | 
+	     <a href="contents.html">Contents</a> |
+		 <a href="index2.html">Index</a> ]<br>
+       [ <a href="license.html">1</a> | <a href="preface.html">2</a> | <a href="basics.html">3</a> | <a href="start.html">4</a> | <a href="gui.html">5</a> | <a href="commandline.html">6</a> | <a href="file.html">7</a> | <a href="printing.html">8</a> | <a href="edit.html">9</a> | <a href="view.html">10</a> | <a href="layers.html">11</a> | <a href="blocks.html">12</a> | <a href="snapping.html">13</a> | <a href="construction.html">14</a> | <a href="selection.html">15</a> | <a href="modification.html">16</a> | <a href="information.html">17</a> | <a href="options_general.html">18</a> | <a href="options_drawing.html">19</a> | <a href="appendix.html">20</a> ]</p>
+       <p class="footer2">
+	   Copyright  2003 <a href="http://www.ribbonsoft.com">RibbonSoft</a>, Inc.<br>All Rights Reserved.<br>
+       This Manual was created with <a href="http://www.ribbonsoft.com/manstyle.html">ManStyle</a>.
+       </p>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

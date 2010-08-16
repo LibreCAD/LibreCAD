@@ -1,0 +1,137 @@
+/* Normal text */
+p,center,b,li { 
+  color:#505050;
+  font-family:Arial,Helvetica,Geneva,sans-serif;
+  font-size:10pt;
+}
+
+/* Paragraph */
+p { 
+  margin-left:0.5cm;
+  margin-top:0.2cm;
+  margin-bottom:0.0cm;
+}
+
+/* Lists */
+li { 
+  margin-left:0.0cm;
+  margin-top:0.0cm;
+  margin-bottom:0.0cm;
+}
+
+/* Links */
+a {
+  text-decoration: none;
+  color: #52658b;
+  background-color: transparent;
+}
+
+/* Paragraph for figures */
+p.figure { 
+  text-align:center;
+  margin-top:0.8cm;
+  margin-bottom:0.3cm;
+}
+
+/* Paragraph for figure labels */
+p.figure_label { 
+  text-align:center;
+  margin-top:0.0cm;
+  margin-bottom:0.8cm;
+}
+
+/* Headers */
+h1,h2,h3,h4 {
+  font-family:Arial,Helvetica,Geneva,sans-serif;
+  margin-bottom:0.0cm;
+}
+
+/* Header 1 */
+h1 {
+  color:#808080;
+  font-size:18pt;
+  font-weight:bold;
+  margin-left:0.0cm;
+  margin-top:0.5cm;
+  background-color:#e6e8f2;
+}
+
+/* Header 2 */
+h2 {
+  color:#52658b;
+  font-size:14pt;
+  margin-left:0.0cm;
+  margin-top:0.5cm;
+}
+
+/* Header 3 */
+h3 {
+  color:#52658b;
+  font-size:12pt;
+  margin-left:0.25cm;
+  margin-top:0.3cm;
+}
+
+/* Code */
+p.code {
+  font-family:Courier,sans-serif;
+  background:#f1f3fe;
+  color:#555555;
+  margin-left:0.5cm;
+  margin-top:0.4cm;
+  margin-bottom:0.2cm;
+}
+
+/* contents */
+p.cont1 {
+  color:#808080;
+  font-size:16pt;
+  font-weight:bold;
+  margin-left:0.0cm;
+  margin-top:0.5cm;
+}
+
+p.cont2 {
+  color:#52658b;
+  font-size:12pt;
+  margin-left:0.5cm;
+  margin-top:0.2cm;
+}
+
+p.cont3 {
+  color:#52658b;
+  font-size:10pt;
+  margin-left:1.0cm;
+  margin-top:0.2cm;
+}
+
+p.footer {
+  color:#808080;
+  font-size:9pt;
+  text-align: center;
+  margin-top:0cm;
+  margin-bottom:0cm;
+}
+
+p.footer2 {
+  color:#808080;
+  font-size:7pt;
+  text-align: center;
+  margin-top:0cm;
+  margin-bottom:0cm;
+}
+
+/* index */
+p.indexletter {
+  color:#808080;
+  font-size:16pt;
+  font-weight:bold;
+  margin-left:0.0cm;
+  margin-top:0.5cm;
+}
+
+p.indexentry {
+  margin-top:0cm;
+  margin-bottom:0cm;
+}
+
