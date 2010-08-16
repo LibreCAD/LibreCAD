@@ -42,7 +42,8 @@ QAction* RS_ActionFileSave::createGUIAction(RS2::ActionType /*type*/, QObject* p
 /* RVT_PORT    QAction* action = new QAction(tr("Save Drawing"), 
 								  qPixmapFromMimeSource("filesave2.png"),
                                   tr("&Save"), Qt::CTRL+Qt::Key_S, parent); */
-    QAction* action = new QAction(tr("Save Drawing"),  parent);
+    QAction* action = new QAction(qPixmapFromMimeSource("filesave2.png"),
+								  tr("Save Drawing"),  parent);
     action->setStatusTip(tr("Saves the current drawing"));
     return action;
 }
