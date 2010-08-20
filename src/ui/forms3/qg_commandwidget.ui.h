@@ -129,7 +129,7 @@ void QG_CommandWidget::setCommandMode() {
 
 void QG_CommandWidget::setNormalMode() {
     // RVT_PORT lCommand->setPaletteForegroundColor(Qt::black);
-    lCommand->setPaletteForegroundColor(Qt::black);
+    lCommand->setPaletteForegroundColor(RS_Color(0,0,0));
 }
 
 void QG_CommandWidget::redirectStderr() {
