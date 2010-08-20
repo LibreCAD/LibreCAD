@@ -1,21 +1,7 @@
+
+---- UNIX and OSX users ----
 Unzip or checkout a version of CADuntu into a directory.
 CD into that directory and follow these instructions:
-
-# Compiling dxflib
-cd dxflib
-./configure
-(Don't run make depend on OSX, this might fail)
-make
-
-cd ..
-
-# Compile fparser
-cd fparser
-./configure
-(Don't run make depend on OSX, this might fail)
-make
-
-cd ..
 
 # Build makefile and compule CADuntu
 
@@ -23,10 +9,15 @@ qmake
 make
 
 
+---- Windows Users ----
 
-So far, we have been testing this on the following platforms
+Download a copy of QT SDk from http://qt.nokia.com/downloads/
 
------ (Danielfalck)
+After installation, start qtCreator and load caduntu.pro,
+from the the build menu select 'Build All'
+
+
+----- 
 Ubuntu Lucid
 gcc version 4.4.3 (Ubuntu 4.4.3-4ubuntu5)
 Using Qt version 4.6.2 in /usr/lib
@@ -40,4 +31,8 @@ Using Qt version 4.6.3 in /opt/local/libexec/qt4-mac/lib
 Debian 5.0.3
 gcc (Debian 4.3.2-1.1) 4.3.2
 Using Qt version 4.4.3 in /usr/lib
+
+----- (RVT)
+Windows XP
+Using Qt version 4.7.0
 

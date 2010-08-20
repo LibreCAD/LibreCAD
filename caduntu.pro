@@ -20,7 +20,7 @@ exists( custom.pro ) {
 # Add qt3support
 QT +=  qt3support
 
-CONFIG += qt warn_on link_prl uic3 debug
+CONFIG += qt warn_on link_prl uic3 release
 
 QMAKE_CXXFLAGS_DEBUG += 
 QMAKE_CXXFLAGS += 
@@ -49,7 +49,7 @@ win32 {
     TARGET = Caduntu
     DEFINES += QC_APPDIR="\"Caduntu\""
     DEFINES += QINITIMAGES_CADUNTU="qInitImages_Caduntu"
-    RC_FILE = res/main/caduntu.rc                                                                                                                                      
+#    RC_FILE = res/main/caduntu.rc
     DESTDIR     = .
 }
 
@@ -61,9 +61,9 @@ macx:QMAKE_POST_LINK = make postprocess
 
 
 # Additional libraries to load
-LIBS += \
-        -Ldxflib/lib -ldxf \
-        -Lfparser/lib -lfparser
+#LIBS += \
+#        -Ldxflib/lib -ldxf \
+#        -Lfparser/lib -lfparser
                 
 # Store intermedia stuff somewhere else
 OBJECTS_DIR 	= intermediate/obj
@@ -74,11 +74,11 @@ UI_HERADERS_DIR = intermediate/ui
 UI_SOURCES_DIR  = intermediate/ui
 
 INCLUDEPATH += \
-		fparser/include \
-		dxflib/include \
-		src/cmd \
-		src/lib/actions \
-		src/lib/creation \
+                dxflib/src \
+                fparser/src \
+                src/cmd \
+                src/lib/actions \
+                src/lib/creation \
 		src/lib/debug \
 		src/lib/engine \
 		src/lib/fileio \
@@ -97,6 +97,16 @@ INCLUDEPATH += \
 #################################################################################	
 # Library
 HEADERS     = \
+                dxflib/src/dl_attributes.h \
+                dxflib/src/dl_codes.h \
+                dxflib/src/dl_creationadapter.h \
+                dxflib/src/dl_creationinterface.h \
+                dxflib/src/dl_dxf.h \
+                dxflib/src/dl_entities.h \
+                dxflib/src/dl_exception.h \
+                dxflib/src/dl_extrusion.h \
+                dxflib/src/dl_writer_ascii.h \
+                fparser/src/fparser.h \
 		src/lib/actions/rs_actioninterface.h \
 		src/lib/actions/rs_preview.h \
 		src/lib/actions/rs_previewactioninterface.h \
@@ -200,6 +210,9 @@ HEADERS     = \
 		src/lib/scripting/rs_scriptlist.h
 		
 SOURCES     = \ 
+                dxflib/src/dl_dxf.cpp \
+                dxflib/src/dl_writer_ascii.cpp \
+                fparser/src/fparser.cpp \
 		src/lib/actions/rs_actioninterface.cpp \
 		src/lib/actions/rs_preview.cpp \
 		src/lib/actions/rs_previewactioninterface.cpp \
