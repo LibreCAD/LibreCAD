@@ -462,6 +462,7 @@ void QC_ApplicationWindow::initActions() {
     menu->insertSeparator();
     menuBar()->insertItem(tr("&File"), menu);
     addToolBar(Qt::TopToolBarArea, tb); //tr("File");
+
     fileMenu = menu;
 
     // Editing actions:
@@ -511,6 +512,7 @@ void QC_ApplicationWindow::initActions() {
     //
     //menu = new QPopupMenu(this);
     //menuBar()->insertItem(tr("&Options"), menu);
+	
 
     // Viewing / Zooming actions:
     //
@@ -1095,6 +1097,9 @@ void QC_ApplicationWindow::initActions() {
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     menuBar()->insertItem(tr("&Block"), menu);
 	
+	QMainWindow::addToolBarBreak(Qt::TopToolBarArea);
+	
+
 	addToolBar(Qt::TopToolBarArea, penToolBar);                                                                                                               
     addToolBar(Qt::TopToolBarArea, optionWidget); 
 	
@@ -1299,15 +1304,18 @@ void QC_ApplicationWindow::initMenuBar() {
 void QC_ApplicationWindow::initToolBar() {
     RS_DEBUG->print("QC_ApplicationWindow::initToolBar()");
 
-    fileToolBar = new QToolBar( "File Operations", this);
+	QSizePolicy toolBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed); 
+
+    fileToolBar = new QToolBar( "File Operations", this);	
+	fileToolBar->setSizePolicy(toolBarPolicy);
+	
     editToolBar = new QToolBar( "Edit Operations", this);
+	editToolBar->setSizePolicy(toolBarPolicy);
     zoomToolBar = new QToolBar( "Zoom Operations", this);
-    penToolBar = new QG_PenToolBar("Pen Selection", this);
-
-	QSizePolicy penToolBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed); 
-	penToolBar->setMinimumSize(440,30);
-	penToolBar->setSizePolicy(penToolBarPolicy);	
-
+	zoomToolBar->setSizePolicy(toolBarPolicy);
+	    
+	penToolBar = new QG_PenToolBar("Pen Selection", this);
+	penToolBar->setSizePolicy(toolBarPolicy);
 	
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
             this, SLOT(slotPenChanged(RS_Pen))); 
