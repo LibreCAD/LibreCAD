@@ -146,9 +146,9 @@ public:
 
         // bright background:
         if (bg.red()+bg.green()+bg.blue()>380) {
-            foreground = Qt::black;
+            foreground = RS_Color(0,0,0);
         } else {
-            foreground = Qt::white;
+            foreground = RS_Color(255,255,255);
         }
     }
 	

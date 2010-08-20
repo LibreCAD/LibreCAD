@@ -345,8 +345,8 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
     if (actionHandler!=NULL) {
         Q3PopupMenu* contextMenu = new Q3PopupMenu(this);
         QLabel* caption = new QLabel(tr("Layer Menu"), this);
-        caption->setPaletteBackgroundColor(Qt::black);
-        caption->setPaletteForegroundColor(Qt::white);
+        caption->setPaletteBackgroundColor(RS_Color(0,0,0));
+        caption->setPaletteForegroundColor(RS_Color(255,255,255));
         caption->setAlignment( Qt::AlignCenter );
 // RVT_PORT        contextMenu->insertItem( caption );
         contextMenu->insertItem( tr("&Defreeze all Layers"), actionHandler,
