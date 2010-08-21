@@ -12,15 +12,11 @@ DEFINES += QC_APPNAME="\"CADuntu\""
 DEFINES += QC_COMPANYNAME="\"CADuntu\""
 DEFINES += QC_VERSION="\"1.0.0alpha1\""
 
-# Include any custom.pro files for personal/special builds
-exists( custom.pro ) {
-	include( custom.pro )
-}
 
 # Add qt3support
 QT +=  qt3support
 
-CONFIG += qt warn_on link_prl uic3 release
+CONFIG += qt warn_on link_prl uic3
 
 QMAKE_CXXFLAGS_DEBUG += 
 QMAKE_CXXFLAGS += 
@@ -783,3 +779,7 @@ IMAGES += \
 #		res/main/main.qrc
 	
         
+# Include any custom.pro files for personal/special builds
+exists( custom.pro ) {
+	include( custom.pro )
+}
