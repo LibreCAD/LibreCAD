@@ -2666,7 +2666,8 @@ void QC_ApplicationWindow::updateGrids() {
             if (m!=NULL) {
                 QG_GraphicView* gv = m->getGraphicView();
                 if (gv!=NULL) {
-                    gv->updateGrid();
+                    // gv->updateGrid();
+                    gv->redraw(RS2::RedrawGrid);
                 }
             }
         }
@@ -2823,8 +2824,8 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
                 gv->setMetaGridColor(metaGridColor);
                 gv->setSelectedColor(selectedColor);
                 gv->setHighlightedColor(highlightedColor);
-                gv->updateGrid();
-                gv->redraw();
+//                gv->updateGrid();
+                gv->redraw(RS2::RedrawGrid);
             }
         }
     }

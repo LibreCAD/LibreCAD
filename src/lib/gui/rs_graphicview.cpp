@@ -507,8 +507,8 @@ void RS_GraphicView::zoomIn(double f, const RS_Vector& center) {
 
     //adjustOffsetControls();
     //adjustZoomControls();
-    //updateGrid();
-    //redraw();
+    // updateGrid();
+    redraw();
 }
 
 
@@ -521,7 +521,7 @@ void RS_GraphicView::zoomInX(double f) {
     offsetX=(int)((offsetX-getWidth()/2)*f)+getWidth()/2;
     adjustOffsetControls();
     adjustZoomControls();
-    updateGrid();
+    // updateGrid();
     redraw();
 }
 
@@ -535,7 +535,7 @@ void RS_GraphicView::zoomInY(double f) {
     offsetY=(int)((offsetY-getHeight()/2)*f)+getHeight()/2;
     adjustOffsetControls();
     adjustZoomControls();
-    updateGrid();
+//    updateGrid();
     redraw();
 }
 
@@ -568,7 +568,7 @@ void RS_GraphicView::zoomOutX(double f) {
     offsetX=(int)(offsetX/f);
     adjustOffsetControls();
     adjustZoomControls();
-    updateGrid();
+//    updateGrid();
     redraw();
 }
 
@@ -587,7 +587,7 @@ void RS_GraphicView::zoomOutY(double f) {
     offsetY=(int)(offsetY/f);
     adjustOffsetControls();
     adjustZoomControls();
-    updateGrid();
+//    updateGrid();
     redraw();
 }
 
@@ -658,7 +658,8 @@ void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
         RS_DEBUG->print("centerOffsetY");
         centerOffsetY();
         RS_DEBUG->print("updateGrid");
-        updateGrid();
+		//    updateGrid();
+
         redraw();
     }
     RS_DEBUG->print("RS_GraphicView::zoomAuto OK");
@@ -709,7 +710,8 @@ void RS_GraphicView::restoreView() {
 	
     adjustOffsetControls();
     adjustZoomControls();
-    updateGrid();
+	//    updateGrid();
+
 	redraw();
 }
 
@@ -773,7 +775,8 @@ void RS_GraphicView::zoomAutoY(bool axis) {
                             - (minY*factor.y)) + borderBottom;
             adjustOffsetControls();
             adjustZoomControls();
-            updateGrid();
+			//    updateGrid();
+
         }
         RS_DEBUG->print("Auto zoom y ok");
     }
@@ -855,7 +858,8 @@ void RS_GraphicView::zoomWindow(RS_Vector v1, RS_Vector v2,
 
     adjustOffsetControls();
     adjustZoomControls();
-    updateGrid();
+	//    updateGrid();
+
     redraw();
 }
 
@@ -873,7 +877,8 @@ void RS_GraphicView::zoomPan(int dx, int dy) {
 
     adjustOffsetControls();
     //adjustZoomControls();
-    updateGrid();
+	//    updateGrid();
+
     redraw();
 }
 
@@ -899,7 +904,8 @@ void RS_GraphicView::zoomScroll(RS2::Direction direction) {
     }
     adjustOffsetControls();
     adjustZoomControls();
-    updateGrid();
+	//    updateGrid();
+
     redraw();
 }
 
@@ -956,7 +962,8 @@ void RS_GraphicView::zoomPage() {
     centerOffsetY();
     adjustOffsetControls();
     adjustZoomControls();
-    updateGrid();
+	//    updateGrid();
+
     redraw();
 }
 
@@ -1436,10 +1443,12 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
         return;
     }
 	
+	
     // draw grid:
     //painter->setPen(Qt::gray);
     painter->setPen(gridColor);
 
+	grid->updatePointArray();
     RS_Vector* pts = grid->getPoints();
     if (pts!=NULL) {
         for (int i=0; i<grid->count(); ++i) {
@@ -1505,17 +1514,6 @@ void RS_GraphicView::drawOverlay(RS_Painter *painter) {
 		}
 	}
 }
-
-/**
- * Updates the grid if there is one. 
- */
-void RS_GraphicView::updateGrid() {
-    if (grid!=NULL) {
-        grid->update();
-    }
-}
-
-
 
 /**
  * Sets the default snap mode used by newly created actions.

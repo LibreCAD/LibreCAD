@@ -64,7 +64,7 @@ RS_Grid::~RS_Grid() {
 /**
  * Updates the grid point array.
  */
-void RS_Grid::update() {
+void RS_Grid::updatePointArray() {
     RS_DEBUG->print("RS_Grid::update");
     if (graphicView->isGridOn()) {
 

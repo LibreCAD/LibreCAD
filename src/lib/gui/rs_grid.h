@@ -42,7 +42,7 @@ public:
     RS_Grid(RS_GraphicView* graphicView);
     ~RS_Grid();
 
-    void update();
+    void updatePointArray();
 	
 	/**
 	 * @return Array of all visible grid points.

@@ -124,7 +124,7 @@ void QG_CommandWidget::setActionHandler(QG_ActionHandler* ah) {
 
 void QG_CommandWidget::setCommandMode() {
     // RVT_PORT lCommand->setPaletteForegroundColor(Qt::blue);
-    lCommand->setPaletteForegroundColor(Qt::blue);
+    lCommand->setPaletteForegroundColor(RS_Color(0,0,255));
 }
 
 void QG_CommandWidget::setNormalMode() {

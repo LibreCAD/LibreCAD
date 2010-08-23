@@ -329,7 +329,7 @@ void QG_GraphicView::resizeEvent(QResizeEvent* /*e*/) {
     RS_DEBUG->print("QG_GraphicView::resizeEvent begin");
     adjustOffsetControls();
     adjustZoomControls();
-    updateGrid();
+//     updateGrid();
     RS_DEBUG->print("QG_GraphicView::resizeEvent end");
 }
 
@@ -713,8 +713,8 @@ void QG_GraphicView::slotHScrolled(int value) {
         setOffsetX(-value);
     }
     //if (isUpdateEnabled()) {
-    updateGrid();
-    redraw();
+//         updateGrid();
+    redraw(RS2::RedrawGrid);
 }
 
 
@@ -735,8 +735,8 @@ void QG_GraphicView::slotVScrolled(int value) {
         setOffsetY(value);
     }
     //if (isUpdateEnabled()) {
-    updateGrid();
-    redraw();
+  //  updateGrid();
+    redraw(RS2::RedrawGrid);
 }
 
 QPixmap* QG_GraphicView::getPixmapForView(QPixmap *pm)
