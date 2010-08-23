@@ -62,7 +62,7 @@ void RS_ActionOptionsDrawing::trigger() {
         RS_DIALOGFACTORY->updateCoordinateWidget(RS_Vector(0.0,0.0),
                 RS_Vector(0.0,0.0),
                 true);
-        graphicView->updateGrid();
+        graphicView->redraw(RS2::RedrawGrid);
         graphicView->redraw(RS2::RedrawDrawing); 
     }
     finish();
