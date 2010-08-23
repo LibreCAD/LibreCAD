@@ -341,7 +341,6 @@ public:
     virtual void drawGrid(RS_Painter *painter);
     virtual void drawMetaGrid(RS_Painter *painter);
 	virtual void drawOverlay(RS_Painter *painter);
-    virtual void updateGrid();
     RS_Grid* getGrid() {
         return grid;
     }
