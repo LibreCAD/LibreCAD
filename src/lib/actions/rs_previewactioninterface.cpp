@@ -70,7 +70,7 @@ RS_ActionInterface(name, container, graphicView) {
 
 /** Destructor */
 RS_PreviewActionInterface::~RS_PreviewActionInterface() {
-	graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
+// RVT_OVERLAY graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
 	delete preview;
 }
 
@@ -115,8 +115,8 @@ void RS_PreviewActionInterface::trigger() {
  */
 void RS_PreviewActionInterface::deletePreview() {
 	preview->clear();
-	graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
-	graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
+// RVT_OVERLAY 		graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
+	graphicView->redraw(RS2::RedrawOverlay); 
 }
 
 
@@ -128,9 +128,10 @@ void RS_PreviewActionInterface::drawPreview() {
     if (preview && !preview->isEmpty()) {
 		// RVT_PORT How does offset work??        painter->setOffset(offset);
 		RS_EntityContainer *container=graphicView->getOverlayContainer(RS2::ActionPreviewEntity);
+		container->clear();
 		container->setOwner(false); // Little hack for now so we don't delete teh preview twice
 		container->addEntity(preview);
-		graphicView->redraw(RS2::RedrawDrawing);
+		graphicView->redraw(RS2::RedrawOverlay);
     }
 }
 
