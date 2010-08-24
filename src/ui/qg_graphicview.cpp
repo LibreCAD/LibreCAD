@@ -714,7 +714,7 @@ void QG_GraphicView::slotHScrolled(int value) {
     }
     //if (isUpdateEnabled()) {
 //         updateGrid();
-    redraw(RS2::RedrawGrid);
+    redraw();
 }
 
 
@@ -736,7 +736,7 @@ void QG_GraphicView::slotVScrolled(int value) {
     }
     //if (isUpdateEnabled()) {
   //  updateGrid();
-    redraw(RS2::RedrawGrid);
+    redraw();
 }
 
 QPixmap* QG_GraphicView::getPixmapForView(QPixmap *pm)
