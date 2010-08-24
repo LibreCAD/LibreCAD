@@ -340,7 +340,8 @@ public:
     virtual void drawPaper(RS_Painter *painter);
     virtual void drawGrid(RS_Painter *painter);
     virtual void drawMetaGrid(RS_Painter *painter);
-	virtual void drawOverlay(RS_Painter *painter);
+	virtual void drawOverlay(RS_Painter *painter);	
+		
     RS_Grid* getGrid() {
         return grid;
     }
@@ -446,7 +447,7 @@ public:
 		draftMode=dm;
 	}
 	
-	RS_EntityContainer* getOverlayContainer(RS2::OverlayGraphics position);
+	virtual RS_EntityContainer* getOverlayContainer(RS2::OverlayGraphics position);
 	
 protected:
 	

@@ -464,7 +464,7 @@ void RS_Snapper::showOptions() {
 void RS_Snapper::deleteSnapper() {
 	RS_DEBUG->print("RS_Snapper::Delete Snapper");
 	
-	graphicView->getOverlayContainer(RS2::Snapper)->clear();
+// RVT_OVERLAY 	graphicView->getOverlayContainer(RS2::Snapper)->clear();
 	graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
 }
 
@@ -505,10 +505,10 @@ void RS_Snapper::drawSnapper() {
 														RS_Vector(graphicView->toGuiX(snapCoord.x), graphicView->getHeight())));
 				line->setPen(crossHairPen);
 				container->addEntity(line);
-
+				
             }
+			graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
 			RS_DEBUG->print("RS_Snapper::Snapped draw end");
-
         }
         if (snapCoord.valid && snapCoord!=snapSpot) {
 			
@@ -529,9 +529,9 @@ void RS_Snapper::drawSnapper() {
 			line->setPen(crossHairPen);
 			container->addEntity(line);
 			
+			graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
         }
     }
-	graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
 
 }
 
