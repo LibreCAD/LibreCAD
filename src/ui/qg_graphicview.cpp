@@ -760,7 +760,7 @@ QPixmap* QG_GraphicView::getPixmapForView(QPixmap *pm)
  */
 void QG_GraphicView::paintEvent(QPaintEvent *) {
     RS_DEBUG->print("QG_GraphicView::paintEvent begin");
-
+	
 	RS_SETTINGS->beginGroup("/Appearance");
     bool draftMode = (bool)RS_SETTINGS->readNumEntry("/DraftMode", 0);
     RS_SETTINGS->endGroup();
