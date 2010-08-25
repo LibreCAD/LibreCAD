@@ -464,7 +464,7 @@ void RS_Snapper::showOptions() {
 void RS_Snapper::deleteSnapper() {
 	RS_DEBUG->print("RS_Snapper::Delete Snapper");
 	
-// RVT_OVERLAY 	graphicView->getOverlayContainer(RS2::Snapper)->clear();
+	graphicView->getOverlayContainer(RS2::Snapper)->clear();
 	graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
 }
 
