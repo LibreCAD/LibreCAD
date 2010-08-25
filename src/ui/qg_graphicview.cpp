@@ -319,8 +319,8 @@ void QG_GraphicView::updateGridStatusWidget(const RS_String& text) {
  */
 void QG_GraphicView::redraw(RS2::RedrawMethod method) { 
 	redrawMethod=(RS2::RedrawMethod ) (redrawMethod | method);
-//	update();
-	repaint();
+	update(); // Paint when reeady to pain
+//	repaint(); //Paint immediate
 }
 
 
