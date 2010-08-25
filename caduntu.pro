@@ -54,6 +54,10 @@ macx:postprocess.commands = scripts/postprocess-osx.sh
 macx:QMAKE_EXTRA_TARGETS += postprocess
 macx:QMAKE_POST_LINK = make postprocess
 
+unix:postprocess.commands = scripts/postprocess-unix.sh
+unix:QMAKE_EXTRA_TARGETS += postprocess
+unix:QMAKE_POST_LINK = make postprocess
+
 
 
 # Additional libraries to load
