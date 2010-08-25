@@ -131,8 +131,8 @@ bool RS_Font::loadFont() {
             RS_StringList::Iterator it3 = lst.begin();
 
 			// RVT_PORT sometimes it happens that the size is < 2
-//			if (lst.size()<2) 
-//				continue;
+			if (lst.size()<2) 
+				continue;
 			
             RS_String identifier = (*it3).stripWhiteSpace();
             it3++;
