@@ -2523,6 +2523,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
 
                 QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), workspace,
                                                    0, Qt::WDestructiveClose);
+				workspace->addWindow(w);
+				w->setWindowState(Qt::WindowMaximized);
                 parent->addChildWindow(w);
                 //connect(w, SIGNAL(signalClosing()),
                 //        this, SLOT(slotFileClosing()));
