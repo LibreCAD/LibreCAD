@@ -77,7 +77,7 @@ void RS_ActionPrintPreview::mouseMoveEvent(RS_MouseEvent* e) {
 			graphic->setPaperInsertionBase(pinsbase-v2*scale+v1*scale);
 		}
 		v1 = v2;
-			graphicView->redraw(RS2::RedrawOverlay);
+			graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
 		break;
 
 	default:
