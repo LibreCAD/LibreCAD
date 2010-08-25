@@ -365,7 +365,7 @@ RS_StringList RS_System::getDirectoryList(const RS_String& subDirectory) {
 
 #ifndef __APPLE__
 	// Add support directory if caduntu is run-in-place, not for Apple because it uses resources
-	dirList.append(appDir + "/support/" + subDirectory);
+	dirList.append(appDir + "/resources/" + subDirectory);
 #endif
 
     // Individual directories:
