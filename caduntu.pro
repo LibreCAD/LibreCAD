@@ -10,7 +10,7 @@ TEMPLATE = app
 DEFINES += QC_APPKEY="\"/CADuntu\""
 DEFINES += QC_APPNAME="\"CADuntu\""
 DEFINES += QC_COMPANYNAME="\"CADuntu\""
-DEFINES += QC_VERSION="\"1.0.0alpha1\""
+DEFINES += QC_VERSION="\"1.0.0alpha2\""
 
 
 # Add qt3support
