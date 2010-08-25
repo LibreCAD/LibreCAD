@@ -49,12 +49,18 @@ win32 {
     DESTDIR     = .
 }
 
+# Make translations at the end of the process
+maketranslation.commands += lrelease caduntu.pro
+QMAKE_EXTRA_TARGETS += maketranslations
+QMAKE_POST_LINK = make maketranslations
+
+
 # Postprocess for osx
-macx:postprocess.commands = scripts/postprocess-osx.sh
+macx:postprocess.commands += scripts/postprocess-osx.sh
 macx:QMAKE_EXTRA_TARGETS += postprocess
 macx:QMAKE_POST_LINK = make postprocess
 
-unix:postprocess.commands = scripts/postprocess-unix.sh
+unix:postprocess.commands += scripts/postprocess-unix.sh
 unix:QMAKE_EXTRA_TARGETS += postprocess
 unix:QMAKE_POST_LINK = make postprocess
 
@@ -69,6 +75,7 @@ unix:QMAKE_POST_LINK = make postprocess
 OBJECTS_DIR 	= intermediate/obj
 MOC_DIR     	= intermediate/moc
 RCC_DIR     	= intermediate/rcc
+TS_DIR      	= intermediate/ts
 UI_DIR      	= intermediate/ui
 UI_HERADERS_DIR = intermediate/ui
 UI_SOURCES_DIR  = intermediate/ui
