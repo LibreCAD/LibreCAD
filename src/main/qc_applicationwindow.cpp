@@ -2465,7 +2465,7 @@ void QC_ApplicationWindow::slotFilePrint() {
 
         gv.setContainer(graphic);
 
-        gv.drawEntity(graphic, true);
+        gv.drawEntity(painter, graphic, true);
 
         // GraphicView deletes painter
         painter->end();
