@@ -45,11 +45,11 @@ RS_ActionPrintPreview::~RS_ActionPrintPreview() {
 
 
 QAction* RS_ActionPrintPreview::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT	QAction* action = new QAction(tr("Print Preview"), qPixmapFromMimeSource("fileprintpreview.png"), tr("Print Pre&view"),
-								  QKeySequence(), NULL); */
-	QAction* action = new QAction(qPixmapFromMimeSource("fileprintpreview.png"), tr("Print Preview"), NULL);
-        action->setStatusTip(tr("Shows a preview of a print"));
-		return action;
+	// tr("Print Preview")
+	QAction* action = new QAction(tr("Print Pre&view"), NULL);
+	action->setIcon(QIcon(":/actions/fileprintpreview.png"));
+    action->setStatusTip(tr("Shows a preview of a print"));	
+	return action;
 }
 
 

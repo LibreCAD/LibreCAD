@@ -38,12 +38,10 @@ RS_ActionFileOpen::RS_ActionFileOpen(RS_EntityContainer& container,
 
 
 QAction* RS_ActionFileOpen::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {
-    //icon = QPixmap(fileopen_xpm);
-/* RVT_PORT    QAction* action = new QAction(tr("Open Drawing"),
-                                  qPixmapFromMimeSource("fileopen2.png"),
-                                  tr("&Open..."), Qt::CTRL+Qt::Key_O, parent); */
-    QAction* action = new QAction(qPixmapFromMimeSource("fileopen2.png"),
-                                 tr("Open Drawing"), parent);
+	// tr("Open Drawing")
+	QAction* action = new QAction(tr("&Open..."), parent);
+	action->setIcon(QIcon(":/actions/fileopen2.png"));
+	action->setShortcut(QKeySequence::Open);
     action->setStatusTip(tr("Opens an existing drawing"));
     return action;
 }
