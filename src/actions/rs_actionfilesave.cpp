@@ -38,13 +38,13 @@ RS_ActionFileSave::RS_ActionFileSave(RS_EntityContainer& container,
 
 
 QAction* RS_ActionFileSave::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {
-    //icon = QPixmap(filesave_xpm);
-/* RVT_PORT    QAction* action = new QAction(tr("Save Drawing"), 
-								  qPixmapFromMimeSource("filesave2.png"),
-                                  tr("&Save"), Qt::CTRL+Qt::Key_S, parent); */
-    QAction* action = new QAction(qPixmapFromMimeSource("filesave2.png"),
-								  tr("Save Drawing"),  parent);
+	
+	//(tr("Save Drawing")
+	QAction* action = new QAction(tr("&Save"), parent);
+	action->setIcon(QIcon(":/actions/filesave2.png"));
+	action->setShortcut(QKeySequence::Save);
     action->setStatusTip(tr("Saves the current drawing"));
+	
     return action;
 }
 

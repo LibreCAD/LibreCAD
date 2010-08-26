@@ -223,32 +223,31 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
         break;
 
     case RS2::ActionFileExport:
-			/* RVT_PORT
-			action = new QAction(tr("Export Drawing"), tr("&Export..."),
-								 0, mw); */
-			action = new QAction(tr("Export Drawing"), mw);
-        action->setStatusTip(tr("Exports the current drawing as bitmap"));
+			// tr("Export Drawing")
+			action = new QAction(tr("&Export..."), NULL);
+			action->setStatusTip(tr("Exports the current drawing as bitmap"));			
+			
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotFileExport()));
         break;
 
     case RS2::ActionFileClose:
-			/* RVT_PORT
-			action = new QAction(tr("Close Drawing"), qPixmapFromMimeSource("fileclose.png"), tr("&Close"),
-								 Qt::CTRL+Qt::Key_W, mw); */
-		action = new QAction( qPixmapFromMimeSource("fileclose.png"), tr("Close Drawing"), mw);
-        action->setStatusTip(tr("Closes the current drawing"));
-        connect(action, SIGNAL(activated()),
+			// tr("Close Drawing")
+			action = new QAction(tr("&Close"), mw);
+			action->setIcon(QIcon(":/actions/fileclose.png"));
+			action->setShortcut(QKeySequence::Close);
+			action->setStatusTip(tr("Closes the current drawing"));			
+			connect(action, SIGNAL(activated()),
                 obj, SLOT(slotFileClose()));
         break;
 
-    case RS2::ActionFilePrint:
-        icon = qPixmapFromMimeSource("fileprint.png");
-		/* RVT_PORT
-		 action = new QAction(tr("Print Drawing"), icon, tr("&Print..."),
-		 Qt::CTRL+Qt::Key_P, mw); */
-			action = new QAction(icon, tr("Print Drawing"), mw); 
-        action->setStatusTip(tr("Prints out the current drawing"));
+    case RS2::ActionFilePrint:			
+			// tr("Print Drawing")
+			action = new QAction(tr("&Print..."), mw);
+			action->setIcon(QIcon(":/actions/fileprint.png"));
+			action->setShortcut(QKeySequence::Print);
+			action->setStatusTip(tr("Prints out the current drawing"));
+			
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotFilePrint()));
         break;
