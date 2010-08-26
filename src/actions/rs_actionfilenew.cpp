@@ -38,11 +38,12 @@ RS_ActionFileNew::RS_ActionFileNew(RS_EntityContainer& container,
 
 
 QAction* RS_ActionFileNew::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {
-/* RVT_PORT    QAction* action = new QAction(tr("New Drawing"), qPixmapFromMimeSource("filenew.png"),
-								  tr("&New"), Qt::CTRL+Qt::Key_N, parent); */
-    QAction* action = new QAction(qPixmapFromMimeSource("filenew.png"),
-								  tr("New Drawing"), parent);
+	// tr("New Drawing")
+	QAction* action = new QAction(tr("&New..."), parent);
+	action->setIcon(QIcon(":/actions/filenew.png"));
+	action->setShortcut(QKeySequence::New);
     action->setStatusTip(tr("Creates a new drawing"));
+	
     return action;
 }
 
