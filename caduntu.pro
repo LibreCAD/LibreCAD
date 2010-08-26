@@ -576,8 +576,8 @@ TRANSLATIONS += \
 		ts/actions/qcadactions_sk.ts \
 		ts/actions/qcadactions_tr.ts
 		
-#RESOURCES += \
-# res/actions/actions.qrc
+RESOURCES += \
+ res/actions/actions.qrc
 
 IMAGES += \
 		res/actions/configure.png \
@@ -740,8 +740,8 @@ TRANSLATIONS += \
 		ts/ui/qcadguiqt_sk.ts \
 		ts/ui/qcadguiqt_tr.ts
 
-#RESOURCES += \
-#		res/ui/ui.qrc
+RESOURCES += \
+		res/ui/ui.qrc
 		
 		
 #################################################################################
@@ -786,8 +786,8 @@ IMAGES += \
 		res/main/caduntu16.png \
 		res/main/caduntu.png
 
-#RESOURCES += \
-#		res/main/main.qrc
+RESOURCES += \
+		res/main/main.qrc
 	
         
 # Include any custom.pro files for personal/special builds
