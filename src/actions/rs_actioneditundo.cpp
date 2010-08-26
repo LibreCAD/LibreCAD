@@ -50,20 +50,18 @@ RS_ActionEditUndo::~RS_ActionEditUndo() {}
 
 QAction* RS_ActionEditUndo::createGUIAction(RS2::ActionType type, QObject* parent) {
     QAction* action;
-    if (type==RS2::ActionEditUndo) {
-        //icon = QPixmap(editundo_xpm);
-/* RVT_PORT        action = new QAction(tr("Undo"),
-                             qPixmapFromMimeSource("undo2.png"), tr("&Undo"),
-                             Qt::CTRL+Qt::Key_Z, parent); */
-        action = new QAction(qPixmapFromMimeSource("undo2.png"), tr("Undo"), parent);
-        action->setStatusTip(tr("Undoes last action"));
+    if (type==RS2::ActionEditUndo) {		
+		// tr("Undo")
+		action = new QAction(tr("&Undo"), parent);
+		action->setIcon(QIcon(":/actions/undo2.png"));
+		action->setShortcut(QKeySequence::Undo);
+		action->setStatusTip(tr("Undoes last action"));
     } else {
-        //icon = QPixmap(editredo_xpm);
- /* RVT_PORT       action = new QAction(tr("Redo"),
-                             qPixmapFromMimeSource("redo2.png"), tr("&Redo"),
-                             Qt::CTRL+Qt::SHIFT+Qt::Key_Z, parent); */
-        action = new QAction(qPixmapFromMimeSource("redo2.png"), tr("Redo"), parent);
-        action->setStatusTip(tr("Redoes last action"));
+		// tr("Redo")
+		action = new QAction(tr("&Redo"), parent);
+		action->setIcon(QIcon(":/actions/redo2.png"));
+		action->setShortcut(QKeySequence::Redo);
+		action->setStatusTip(tr("Redoes last action"));
     }
 
     return action;

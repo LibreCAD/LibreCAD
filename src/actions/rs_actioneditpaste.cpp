@@ -47,12 +47,13 @@ RS_ActionEditPaste::~RS_ActionEditPaste() {}
 
 
 QAction* RS_ActionEditPaste::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {
-    //icon = QPixmap(editpaste_xpm);
-/* RVT_PORT    QAction* action = new QAction(tr("Paste"),
-                                  qPixmapFromMimeSource("editpaste2.png"), tr("&Paste"),
-                                  Qt::CTRL+Qt::Key_V, parent); */
-    QAction* action = new QAction(qPixmapFromMimeSource("editpaste2.png"), tr("Paste"), parent);
-    action->setStatusTip(tr("Pastes the clipboard contents"));
+	// tr("Paste")
+	QAction* action = new QAction(tr("&Paste"), parent);
+	action->setIcon(QIcon(":/actions/editpaste2.png"));
+	action->setShortcut(QKeySequence::Paste);
+	action->setStatusTip(tr("Pastes the clipboard contents"));
+	
+	
     return action;
 }
 

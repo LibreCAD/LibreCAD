@@ -39,11 +39,10 @@ RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(RS_EntityContainer& container,
 
 
 QAction* RS_ActionOptionsDrawing::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Drawing"), tr("Current &Drawing Preferences")+"...",
-                                  QKeySequence(), NULL); */
-
-    QAction* action = new QAction(tr("Drawing"),  NULL);
-    action->setStatusTip(tr("Settings for the current Drawing"));
+	// tr("Drawing")
+	QAction* action = new QAction(tr("Current &Drawing Preferences"), NULL);
+	action->setShortcut(QKeySequence::Preferences);
+	action->setStatusTip(tr("Settings for the current Drawing"));
     return action;
 }
 

@@ -39,10 +39,10 @@ RS_ActionModifyCut::RS_ActionModifyCut(RS_EntityContainer& container,
 }
 
 QAction* RS_ActionModifyCut::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Divide"), tr("&Divide"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Divide"),  NULL);
-    action->setStatusTip(tr("Cut Entities"));
+	// tr("Divide")
+	QAction *action = new QAction(tr("&Divide"), NULL);
+	//action->setIcon(QIcon(":/actions/xxxx.png"));
+	action->setStatusTip(tr("Cut Entities"));
     return action;
 }
 
