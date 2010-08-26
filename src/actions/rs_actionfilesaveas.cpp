@@ -36,12 +36,12 @@ RS_ActionFileSaveAs::RS_ActionFileSaveAs(RS_EntityContainer& container,
 
 
 QAction* RS_ActionFileSaveAs::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT	QAction* action = new QAction(tr("Save Drawing As"), qPixmapFromMimeSource("filesaveas.png"), tr("Save &as..."),
-								  QKeySequence(), NULL); */
-	QAction* action = new QAction( qPixmapFromMimeSource("filesaveas.png"), tr("Save Drawing As"), NULL);
-        action->setStatusTip(tr("Saves the current drawing under"
-                                " a new filename"));
-		return action;
+	// tr("Save Drawing As")
+	QAction* action = new QAction(tr("Save &as..."), NULL);
+	action->setIcon(QIcon(":/actions/filesaveas.png"));
+	action->setShortcut(QKeySequence::SaveAs);
+    action->setStatusTip(tr("Saves the current drawing under a new filename"));
+	return action;
 }
 
 void RS_ActionFileSaveAs::trigger() {
