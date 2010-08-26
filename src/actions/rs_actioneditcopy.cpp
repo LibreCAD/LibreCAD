@@ -53,19 +53,17 @@ QAction* RS_ActionEditCopy::createGUIAction(RS2::ActionType type, QObject* paren
     QAction* action;
 
     if (type==RS2::ActionEditCopy) {
-        //QPixmap icon = QPixmap(editcopy_xpm);
-		/* RVT_PORT        action = new QAction(tr("Copy"), qPixmapFromMimeSource("editcopy2.png"), tr("&Copy"),
-		 Qt::CTRL+Qt::Key_C, parent); */
-        action = new QAction(qPixmapFromMimeSource("editcopy2.png"),tr("Copy"),  parent);
-        action->setStatusTip(tr("Copies entities"
-                                " to the clipboard"));
+		// tr("Copy")
+		action = new QAction(tr("&Copy"), parent);
+		action->setIcon(QIcon(":/actions/editcopy2.png"));
+		action->setShortcut(QKeySequence::Copy);
+		action->setStatusTip(tr("Copies entities to the clipboard"));
     } else {
-        //icon = QPixmap(editcut_xpm);
-/* RVT_PORT        action = new QAction(tr("Cut"), qPixmapFromMimeSource("editcut2.png"), tr("Cu&t"),
-                             Qt::CTRL+Qt::Key_X, parent); */
-        action = new QAction(qPixmapFromMimeSource("editcut2.png"), tr("Cut"),  parent);
-        action->setStatusTip(tr("Cuts entities "
-                                " to the clipboard"));
+		// tr("Cut")
+		action = new QAction(tr("Cu&t"), parent);
+		action->setIcon(QIcon(":/actions/editcut2.png"));
+		action->setShortcut(QKeySequence::Cut);
+		action->setStatusTip(tr("Cuts entities to the clipboard"));
     }
     return action;
 }
