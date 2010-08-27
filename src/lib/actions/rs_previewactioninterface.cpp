@@ -70,7 +70,7 @@ RS_ActionInterface(name, container, graphicView) {
 
 /** Destructor */
 RS_PreviewActionInterface::~RS_PreviewActionInterface() {
-// RVT_OVERLAY graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
+	graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
 	delete preview;
 }
 
@@ -114,8 +114,8 @@ void RS_PreviewActionInterface::trigger() {
  * Deletes the preview from the screen.
  */
 void RS_PreviewActionInterface::deletePreview() {
+	graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
 	preview->clear();
-// RVT_OVERLAY 		graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
 	graphicView->redraw(RS2::RedrawOverlay); 
 }
 
