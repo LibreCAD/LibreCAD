@@ -27,6 +27,7 @@
 // RVT_PORT changed QSettings s(QSettings::Ini) to QSettings s("./qcad.ini", QSettings::IniFormat);
 
 #include "rs_settings.h"
+#include "rs_debug.h"
 #include <iostream>
 
 RS_Settings* RS_Settings::uniqueInstance = NULL;
@@ -52,8 +53,9 @@ void RS_Settings::init(const RS_String& companyKey,
                        const RS_String& appKey) {
 
     group = "";
-    this->appKey = appKey;
+	
     this->companyKey = companyKey;
+    this->appKey = appKey;
 
     //insertSearchPath(QSettings::Windows, companyKey + appKey);
     //insertSearchPath(QSettings::Unix, "/usr/share/");
@@ -77,72 +79,75 @@ void RS_Settings::endGroup() {
 }
 
 bool RS_Settings::writeEntry(const RS_String& key, int value) {
-    RS_String s = RS_String("%1").arg(value);
-    return writeEntry(key, s);
+    return writeEntry(key, QVariant(value));
+}
+
+bool RS_Settings::writeEntry(const RS_String& key,const QString& value) {
+    return writeEntry(key, QVariant(value));
 }
 
 bool RS_Settings::writeEntry(const RS_String& key, double value) {
-    RS_String s = RS_String("%1").arg(value);
-    return writeEntry(key, s);
+    return writeEntry(key, QVariant(value));
 }
 
-bool RS_Settings::writeEntry(const RS_String& key, const RS_String& value) {
-    bool ret;
-    QSettings s(XSTR(QC_COMPANYNAME), XSTR(QC_APPNAME));
-    s.insertSearchPath(QSettings::Windows, companyKey);
+bool RS_Settings::writeEntry(const RS_String& key, const QVariant& value) {
+	QSettings s(companyKey, appKey);
+    // RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 
-    ret = s.writeEntry(QString("%1%2%3").arg(appKey).arg(group).arg(key), value);
+    s.setValue(QString("%1%2").arg(group).arg(key), value);
 
 	addToCache(key, value);
-    return ret;
-
+	
+	// RVT_PORT todo, remove bool 
+    return true;
 }
 
 RS_String RS_Settings::readEntry(const RS_String& key,
                                  const RS_String& def,
                                  bool* ok) {
-
+	
     // lookup:
-    RS_String ret = readEntryCache(key);
-    if (ret==RS_String::null) {
-        QSettings s("./" XSTR(QC_APPKEY) ".ini", QSettings::IniFormat);
-    	s.insertSearchPath(QSettings::Windows, companyKey);
-
-        ret = s.readEntry(QString("%1%2%3").arg(appKey).arg(group).arg(key), 
-			def, ok);
+    QVariant ret = readEntryCache(key);
+    if (ret==NULL) {
+				
+        QSettings s(companyKey, appKey);
+    	// RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 		
+		if (ok!=NULL) {
+			*ok=s.contains(QString("%1%2").arg(group).arg(key));
+		}
+		
+        ret = s.value(QString("%1%2").arg(group).arg(key), QVariant(def));
+
 		addToCache(key, ret);
     }
 
-    return ret;
+    return ret.toString();
 
 }
 
 int RS_Settings::readNumEntry(const RS_String& key, int def, bool* ok) {
-	
+
     // lookup:
-    RS_String sret = readEntryCache(key);
-    if (sret==RS_String::null) {
-    	int ret;
-    	QSettings s("./" XSTR(QC_APPKEY) ".ini", QSettings::IniFormat);
-    	s.insertSearchPath(QSettings::Windows, companyKey);
+    QVariant ret = readEntryCache(key);
+    if (ret==NULL) {
+        QSettings s(companyKey, appKey);
+    	// RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 
-        ret = s.readNumEntry(QString("%1%2%3").arg(appKey).arg(group).arg(key), 
-			def, ok);
-		addToCache(key, RS_String("%1").arg(ret));
-		return ret;
+		if (ok!=NULL) {
+			*ok=s.contains(QString("%1%2").arg(group).arg(key));
+		}
+        ret = s.value(QString("%1%2").arg(group).arg(key), QVariant(def));
+		addToCache(key, ret);
 	}
-	else {
-    	return sret.toInt();
-	}
-
+	return ret.toInt();
 }
 
 
-RS_String RS_Settings::readEntryCache(const RS_String& key) {
-	RS_String* s = cache.find(key);
+QVariant RS_Settings::readEntryCache(const RS_String& key) {
+	QVariant* s = cache.find(key);
 	if (s==NULL) {
-		return RS_String::null;
+		return NULL;
 	}
 	else {
 		return *s;
@@ -150,6 +155,6 @@ RS_String RS_Settings::readEntryCache(const RS_String& key) {
 }
 
 
-void RS_Settings::addToCache(const RS_String& key, const RS_String& value) {
-	cache.replace(key, new RS_String(value));
+void RS_Settings::addToCache(const RS_String& key, const QVariant& value) {
+	cache.replace(key, new QVariant(value));
 }
