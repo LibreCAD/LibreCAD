@@ -64,9 +64,8 @@ public:
     /**
      * Initialize the system.
      *
-     * @param appName Application name
-     * @param appDirName Application directory name used for 
-     *     subdirectories in /usr, /etc ~/.
+     * @param companyKey Company Key
+     * @param appKey Application key
      */
     void init(const RS_String& companyKey, const RS_String& appKey);
 
@@ -75,22 +74,25 @@ public:
 
     bool writeEntry(const RS_String& key, int value);
     bool writeEntry(const RS_String& key, double value);
-    bool writeEntry(const RS_String& key, const RS_String& value);
+    bool writeEntry(const RS_String& key, const QVariant& value);
+    bool writeEntry(const RS_String& key, const QString& value);
     RS_String readEntry(const RS_String& key,
                         const RS_String& def = RS_String::null,
                         bool* ok = 0);
     int readNumEntry(const RS_String& key, int def=0, bool* ok=0);
 	
-    RS_String readEntryCache(const RS_String& key);
-	void addToCache(const RS_String& key, const RS_String& value);
 
 public:
     ~RS_Settings();
 
+private:
+	QVariant readEntryCache(const RS_String& key);
+	void addToCache(const RS_String& key, const QVariant& value);
+
 protected:
     static RS_Settings* uniqueInstance;
 
-	RS_Dict<RS_String> cache;
+	RS_Dict<QVariant> cache;
     RS_String companyKey;
     RS_String appKey;
     RS_String group;
