@@ -32,7 +32,7 @@
 
 /**
  * Class for a overlay line entity. It's used to draw lines on the overlay paint event
- * The main difference is that the coordinates are actual screen coordinates
+ * The main difference is that the coordinates are actual screen coordinates and not real world coordinates
  *
  * @author R. van Twisk
  */

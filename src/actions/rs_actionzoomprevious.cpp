@@ -40,11 +40,12 @@ RS_ActionZoomPrevious::RS_ActionZoomPrevious(RS_EntityContainer& container,
 
 
 QAction* RS_ActionZoomPrevious::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT	QAction* action = new QAction(tr("Previous View"), qPixmapFromMimeSource("zoomprevious.png"),
-								  tr("&Previous View"), QKeySequence(), NULL); */
-	QAction* action = new QAction(qPixmapFromMimeSource("zoomprevious.png"),tr("Previous View"),NULL);
-        action->setStatusTip(tr("Shows previous view"));
-		return action;
+	// tr("Previous View")
+	QAction* action = new QAction(tr("&Previous View"), NULL);
+	action->setIcon(QIcon(":/actions/zoomprevious.png"));
+	action->setStatusTip(tr("Shows previous view"));
+	
+	return action;
 }
 
 

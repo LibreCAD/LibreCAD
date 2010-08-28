@@ -628,4 +628,19 @@ void RS_PainterQt::resetClipping() {
     setClipping(false);
 }
 
-
+void RS_PainterQt::fillRect ( const QRectF & rectangle, const RS_Color & color ) {
+	
+	double x1=rectangle.left();
+	double x2=rectangle.right();
+	double y1=rectangle.top();
+	double y2=rectangle.bottom();
+	
+	QPainter::fillRect(toScreenX(x1),toScreenY(y1),toScreenX(x2)-toScreenX(x1),toScreenY(y2)-toScreenX(y1), color);
+}
+void RS_PainterQt::fillRect ( const QRectF & rectangle, const QBrush & brush ) {
+	double x1=rectangle.left();
+	double x2=rectangle.right();
+	double y1=rectangle.top();
+	double y2=rectangle.bottom();
+	QPainter::fillRect(toScreenX(x1),toScreenY(y1),toScreenX(x2),toScreenY(y2), brush);
+}

@@ -310,7 +310,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     // the thumbnail must be created in the user's home.
 
     // create all directories needed:
-    RS_SYSTEM->createHomePath("/." XSTR(QC_APPKEY) "/library" + dir);
+    // RVT_PORT RS_SYSTEM->createHomePath("/." XSTR(QC_APPKEY) "/library" + dir);
     /*QString d = "/." XSTR(QC_APPKEY) "/library" + dir;
     QDir dr;
 

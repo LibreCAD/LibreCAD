@@ -165,6 +165,8 @@ public:
     void setPen(const RS_Pen& pen) {
         this->pen = pen;
     }
+	
+	
     void setPenToActive();
     RS_Pen getPen(bool resolve = true) const;
 
@@ -523,7 +525,7 @@ protected:
 
     //! pen (attributes) for this entity
     RS_Pen pen;
-
+	
 	//! auto updating enabled?
 	bool updateEnabled;
 

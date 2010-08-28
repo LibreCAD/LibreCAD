@@ -70,7 +70,6 @@ RS_GraphicView::RS_GraphicView()
     zoomFrozen = false;
     //gridVisible = true;
     draftMode = false;
-    //drawRecursion = 0;
 
     borderLeft = 0;
     borderTop = 0;
@@ -84,15 +83,6 @@ RS_GraphicView::RS_GraphicView()
 
     defaultSnapMode = RS2::SnapFree;
     defaultSnapRes = RS2::RestrictNothing;
-
-    /*
-       background = RS_Color(0,0,0);
-       foreground = RS_Color(255,255,255);
-       gridColor = RS_Color("gray");
-    metaGridColor = RS_Color("#404040");
-       selectedColor = RS_Color("#a54747");
-       highlightedColor = RS_Color("#739373");
-    */
 
     RS_SETTINGS->beginGroup("/Appearance");
     setBackground(QColor(RS_SETTINGS->readEntry("/BackgroundColor", "#000000")));
@@ -1089,8 +1079,6 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity* e) {
         painter->setPen(pen);
 }
 
-
-
 /**
  * Draws an entity. Might be recusively called e.g. for polylines.
  * If the class wide painter is NULL a new painter will be created 
@@ -1124,9 +1112,6 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double patter
              toGuiY(e->getMin().y)<0 || toGuiY(e->getMax().y)>getHeight())) {
         return;
     } */
-
-    //drawRecursion++;
-    //RS_DEBUG->print("recursion 1: %d", drawRecursion);
 
     // set pen (color):
     setPenForEntity(painter, e );
@@ -1213,14 +1198,12 @@ void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e, double p
  */
 void RS_GraphicView::deleteEntity(RS_Entity* e) {
 	
-	RS_DEBUG->print("RS_GraphicView::deleteEntity will for now redraw the whole screen instead of just deleting the entity");
-    requestUpdate(true);
-	return;
-
 	// RVT_PORT When we delete a single entoty, we can do this but we need to remove this then also from containerEntities
-	//setDeleteMode(true);
-    //drawEntity(e);
-    //setDeleteMode(false);
+	RS_DEBUG->print("RS_GraphicView::deleteEntity will for now redraw the whole screen instead of just deleting the entity");
+	setDeleteMode(true);
+    drawEntity(e);
+	setDeleteMode(false);
+	redraw(RS2::RedrawDrawing);
 }
 
 
@@ -1667,7 +1650,7 @@ void RS_GraphicView::setRelativeZero(const RS_Vector& pos) {
  */
 void RS_GraphicView::moveRelativeZero(const RS_Vector& pos) {
     setRelativeZero(pos);
-	requestUpdate(true);
+	redraw(RS2::RedrawGrid);
 }
 
 

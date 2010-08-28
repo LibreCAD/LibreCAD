@@ -101,9 +101,10 @@ public:
     virtual void drawTextV(int x1, int y1, int x2, int y2,
                            const RS_String& text) = 0;
 
-    virtual void fillRect(int x1, int y1, int w, int h,
-                          const RS_Color& col) = 0;
-
+    virtual void fillRect(int x1, int y1, int w, int h, const RS_Color& col) = 0;
+	virtual void fillRect ( const QRectF & rectangle, const RS_Color & color ) = 0;
+	virtual void fillRect ( const QRectF & rectangle, const QBrush & brush ) = 0;
+	
     virtual void fillTriangle(const RS_Vector& p1,
                               const RS_Vector& p2,
                               const RS_Vector& p3) = 0;

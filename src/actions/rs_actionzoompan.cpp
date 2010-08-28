@@ -37,10 +37,11 @@ RS_ActionZoomPan::RS_ActionZoomPan(RS_EntityContainer& container,
 
 
 QAction* RS_ActionZoomPan::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Pan Zoom"), qPixmapFromMimeSource("zoompan.png"),
-                                  tr("&Pan Zoom"), QKeySequence(), NULL); */
-    QAction* action = new QAction(qPixmapFromMimeSource("zoompan.png"),tr("Pan Zoom"), NULL);
-    action->setStatusTip(tr("Realtime Panning"));
+	// tr("Pan Zoom")
+	QAction* action = new QAction(tr("&Pan Zoom"), NULL);
+	action->setIcon(QIcon(":/actions/zoompan.png"));
+	action->setStatusTip(tr("Realtime Panning"));
+	
     return action;
 }
 

@@ -30,6 +30,7 @@
 #include "rs_modification.h"
 #include "rs_snapper.h"
 #include "rs_selection.h"
+#include "rs_overlaybox.h"
 
 
 
@@ -159,19 +160,29 @@ void RS_ActionDefault::mouseMoveEvent(RS_MouseEvent* e) {
             v2 = mouse;
 
             deletePreview();
-
-            preview->addEntity(new RS_Line(preview,
-                                           RS_LineData(RS_Vector(v1.x, v1.y),
-                                                       RS_Vector(v2.x, v1.y))));
-            preview->addEntity(new RS_Line(preview,
-                                           RS_LineData(RS_Vector(v2.x, v1.y),
-                                                       RS_Vector(v2.x, v2.y))));
-            preview->addEntity(new RS_Line(preview,
-                                           RS_LineData(RS_Vector(v2.x, v2.y),
-                                                       RS_Vector(v1.x, v2.y))));
-            preview->addEntity(new RS_Line(preview,
-                                           RS_LineData(RS_Vector(v1.x, v2.y),
-                                                       RS_Vector(v1.x, v1.y))));
+			
+			RS_Pen pen(RS_Color(50,50,255,40), RS2::Width00, RS2::SolidLine);
+			RS_OverlayBox* ob=new RS_OverlayBox(preview, RS_OverlayBoxData(v1, v2));
+			ob->setPen(pen);	
+			preview->addEntity(ob);
+			
+			// TODO change to a rs_box sort of entity
+			RS_Line* e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v1.y),  RS_Vector(v2.x, v1.y)));
+			e->setPen(RS_Pen(RS_Color(218,105,24), RS2::Width01, RS2::SolidLine));
+			preview->addEntity(e);
+			
+			e=new RS_Line(preview, RS_LineData(RS_Vector(v2.x, v1.y),  RS_Vector(v2.x, v2.y)));
+			e->setPen(RS_Pen(RS_Color(218,105,24), RS2::Width01, RS2::SolidLine));
+			preview->addEntity(e);
+			
+			e=new RS_Line(preview, RS_LineData(RS_Vector(v2.x, v2.y),  RS_Vector(v1.x, v2.y)));
+			e->setPen(RS_Pen(RS_Color(218,105,24), RS2::Width01, RS2::SolidLine));
+			preview->addEntity(e);
+			
+			e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v2.y),  RS_Vector(v1.x, v1.y)));
+			e->setPen(RS_Pen(RS_Color(218,105,24), RS2::Width01, RS2::SolidLine));
+			preview->addEntity(e);
+			
             drawPreview();
         }
 

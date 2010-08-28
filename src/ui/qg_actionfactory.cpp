@@ -272,29 +272,30 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
         // Viewing actions:
         //
     case RS2::ActionViewGrid:
-        icon = qPixmapFromMimeSource("viewgrid.png");
-			/* RVT_PORT
-			action = new QAction(tr("Grid"), icon, tr("&Grid"),
-								 0, mw, 0, true); */
-			action = new QAction(icon, tr("Grid"), mw);
-        action->setStatusTip(tr("Enables/disables the grid"));
-        connect(action, SIGNAL(toggled(bool)),
+			// tr("Grid")
+			action = new QAction(tr("&Grid"), mw);
+			action->setIcon(QIcon(":/actions/viewgrid.png"));
+			action->setShortcut(tr("CTRL-G"));
+			action->setStatusTip(tr("Enables/disables the grid"));
+			action->setCheckable(true);
+			connect(action, SIGNAL(toggled(bool)),
                 obj, SLOT(slotViewGrid(bool)));
         break;
     case RS2::ActionViewDraft:
-        icon = qPixmapFromMimeSource("viewdraft.png");
-		/* RVT_PORT	action = new QAction(tr("Draft"), icon, tr("&Draft"),
-								 0, mw, 0, true); */
-		action = new QAction(icon, tr("Draft"), mw);
-        action->setStatusTip(tr("Enables/disables the draft mode"));
-        connect(action, SIGNAL(toggled(bool)),
+			// tr("Draft")
+			action = new QAction(tr("&Draft"), mw);
+			action->setIcon(QIcon(":/actions/viewdraft.png"));
+			action->setStatusTip(tr("Enables/disables the draft mode"));
+			action->setCheckable(true);			
+			connect(action, SIGNAL(toggled(bool)),
                 obj, SLOT(slotViewDraft(bool)));
         break;
     case RS2::ActionViewStatusBar:
-		/*RVT_PORT	action = new QAction(tr("Statusbar"), tr("&Statusbar"),
-								 0, mw, 0, true); */
-			action = new QAction(tr("Statusbar"), mw);
-        action->setStatusTip(tr("Enables/disables the statusbar"));
+			// tr("Statusbar")
+			action = new QAction(tr("&Statusbar"), mw);
+			action->setStatusTip(tr("Enables/disables the statusbar"));
+			action->setCheckable(true);
+			
         connect(action, SIGNAL(toggled(bool)),
                 obj, SLOT(slotViewStatusBar(bool)));
         break;
@@ -899,7 +900,10 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
 								 0, mw, "snapGrid", true); */
 			action = new QAction(tr("Grid"),  mw);
         action->setStatusTip(tr("Grid positioning"));
-        actionHandler->setActionSnapGrid(action);
+			
+//			QStyleOptionMenuItem::NonExclusive
+			
+        actionHandler->setActionSnapGrid(action);			
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotSnapGrid()));
         break;
