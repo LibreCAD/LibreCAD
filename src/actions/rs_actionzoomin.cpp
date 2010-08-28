@@ -51,15 +51,17 @@ QAction* RS_ActionZoomIn::createGUIAction(RS2::ActionType type, QObject* /*paren
     QAction* action;
 
     if (type==RS2::ActionZoomIn) {
-/* RVT_PORT        action = new QAction(tr("Zoom in"), qPixmapFromMimeSource("zoomin.png"),
-                             tr("Zoom &In"), QKeySequence(), NULL); */
-        action = new QAction( qPixmapFromMimeSource("zoomin.png"),tr("Zoom in"),NULL);
-        action->setStatusTip(tr("Zooms in"));
+		// tr("Zoom in")
+		action = new QAction(tr("Zoom &In"), NULL);
+		action->setIcon(QIcon(":/actions/zoomin.png"));
+		action->setShortcut(QKeySequence::ZoomIn);
+		action->setStatusTip(tr("Zooms in"));
     } else {
-  /* RVT_PORT       action = new QAction(tr("Zoom out"), qPixmapFromMimeSource("zoomout.png"),
-                             tr("Zoom &Out"), QKeySequence(), NULL); */
-        action = new QAction( qPixmapFromMimeSource("zoomout.png"),tr("Zoom out"),NULL);
-        action->setStatusTip(tr("Zooms out"));
+		// tr("Zoom Out")
+		action = new QAction(tr("Zoom &Out"), NULL);
+		action->setIcon(QIcon(":/actions/zoomout.png"));
+		action->setShortcut(QKeySequence::ZoomOut);
+		action->setStatusTip(tr("Zooms out"));
     }
     return action;
 }

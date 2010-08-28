@@ -451,14 +451,6 @@ public:
 	
 protected:
 	
-	bool fullRedraw;
-	
-	/* Requests a update of the ascreen, setting full to true it will do a full redraw including the container items if available
-	 */
-	inline void requestUpdate(bool full=false) {
-		fullRedraw=fullRedraw||full;
-		//update();
-	}
 	
     RS_EntityContainer* container; // Holds a pointer to all the enties
     RS_EventHandler* eventHandler; 
@@ -524,7 +516,6 @@ private:
 	bool printPreview;
 	//! Active when printing only:
 	bool printing;
-	//int drawRecursion;
 	
 	// Map that will be used for overlaying additional items on top of the main CAD drawing
 	QMap<int, RS_EntityContainer *> overlayEntities;

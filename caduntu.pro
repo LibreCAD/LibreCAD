@@ -161,6 +161,7 @@ HEADERS     = \
 		src/lib/engine/rs_leader.h \
 		src/lib/engine/rs_line.h \
 		src/lib/engine/rs_overlayline.h \
+		src/lib/engine/rs_overlaybox.h \
 		src/lib/engine/rs_pattern.h \
 		src/lib/engine/rs_patternlist.h \
 		src/lib/engine/rs_pen.h \
@@ -254,6 +255,7 @@ SOURCES     = \
 		src/lib/engine/rs_leader.cpp \
 		src/lib/engine/rs_line.cpp \
 		src/lib/engine/rs_overlayline.cpp \
+		src/lib/engine/rs_overlaybox.cpp \
 		src/lib/engine/rs_pattern.cpp \
 		src/lib/engine/rs_patternlist.cpp \
 		src/lib/engine/rs_point.cpp \

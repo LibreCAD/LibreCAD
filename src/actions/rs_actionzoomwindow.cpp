@@ -50,10 +50,11 @@ RS_ActionZoomWindow::RS_ActionZoomWindow(RS_EntityContainer& container,
 
 
 QAction* RS_ActionZoomWindow::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Window Zoom"), qPixmapFromMimeSource("zoomwindow.png"),
-                                  tr("&Window Zoom"), QKeySequence(), NULL); */
-    QAction* action = new QAction( qPixmapFromMimeSource("zoomwindow.png"),tr("Window Zoom"), NULL);
-    action->setStatusTip(tr("Zooms in a window"));
+	// tr("Window Zoom")
+	QAction* action = new QAction(tr("&Window Zoom"), NULL);
+	action->setIcon(QIcon(":/actions/zoomwindow.png"));
+	action->setStatusTip(tr("Zooms in a window"));
+	
     return action;
 }
 

@@ -139,7 +139,8 @@ public:
         EntityDimLeader,    /**< Leader Dimension */
         EntityHatch,        /**< Hatch */
         EntityImage,        /**< Image */
-        EntitySpline        /**< Spline */
+        EntitySpline,       /**< Spline */
+		EntityOverlayBox    /**< OverlayBox */
     };
 
     /**

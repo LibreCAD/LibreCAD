@@ -110,6 +110,7 @@ void RS_Painter::drawRect(const RS_Vector& p1, const RS_Vector& p2) {
 }
 
 
+
 void RS_Painter::drawHandle(const RS_Vector& p, const RS_Color& c, int size) {
 	if (size<0) {
 		size = 2;

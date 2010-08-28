@@ -600,9 +600,12 @@ void QC_ApplicationWindow::initActions() {
     // RVT_PORT menu->insertItem(tr("Vie&ws"), createDockWindowMenu(NoToolBars));
     // RVT_PORT menu->insertItem(tr("Tool&bars"), createDockWindowMenu(OnlyToolBars));
 
-/* RVT_PORT    action = new QAction(tr("Focus on Command Line"), qPixmapFromMimeSource("editclear.png"),
-                         tr("Focus on &Command Line"), Qt::Key_Space, this); */
-    action = new QAction( qPixmapFromMimeSource("editclear.png"),tr("Focus on Command Line"), this);
+	// tr("Focus on Command Line")
+	action = new QAction(tr("Focus on &Command Line"), this);
+	action->setIcon(QIcon(":/main/editclear.png"));
+	action->setShortcut(tr("CTRL+M"));
+	action->setStatusTip(tr("Focus on Command Line"));
+		
     connect(action, SIGNAL(activated()),
             this, SLOT(slotFocusCommandLine()));
     action->addTo(menu);
@@ -1116,19 +1119,6 @@ void QC_ApplicationWindow::initActions() {
     scriptMenu = 0;
     scriptOpenIDE = 0;
     scriptRun = 0;
-#endif
-
-    // CAM menu:
-#ifdef RS_CAM
-
-    menu=new Q3PopupMenu(this);
-    action = actionFactory.createAction(RS2::ActionCamExportAuto, actionHandler);
-    action->addTo(menu);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action = actionFactory.createAction(RS2::ActionCamReorder, actionHandler);
-    action->addTo(menu);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&CAM"), menu);
 #endif
 
 #ifdef RVT_CAM

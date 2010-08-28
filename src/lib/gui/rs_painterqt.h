@@ -51,6 +51,8 @@ public:
     virtual void drawPoint(const RS_Vector& p);
     virtual void drawLine(const RS_Vector& p1, const RS_Vector& p2);
     //virtual void drawRect(const RS_Vector& p1, const RS_Vector& p2);
+	virtual void fillRect ( const QRectF & rectangle, const RS_Color & color );
+	virtual void fillRect ( const QRectF & rectangle, const QBrush & brush );
     virtual void drawArc(const RS_Vector& cp, double radius,
                          double a1, double a2,
                          const RS_Vector& p1, const RS_Vector& p2,
