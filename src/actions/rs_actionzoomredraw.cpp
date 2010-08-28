@@ -42,10 +42,12 @@ RS_ActionZoomRedraw::RS_ActionZoomRedraw(RS_EntityContainer& container,
 
 
 QAction* RS_ActionZoomRedraw::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/*  RVT_PORT  QAction* action = new QAction(tr("Redraw"), qPixmapFromMimeSource("zoomredraw.png"),
-                                  tr("&Redraw"), QKeySequence(), NULL); */
-    QAction* action = new QAction( qPixmapFromMimeSource("zoomredraw.png"),tr("Redraw"), NULL);
-    action->setStatusTip(tr("Redraw"));
+	// tr("Redraw")
+	QAction* action = new QAction(tr("&Redraw"), NULL);
+	action->setIcon(QIcon(":/actions/zoomredraw.png"));
+	action->setShortcut(QKeySequence::Cut);
+	action->setStatusTip(tr("Redraw"));
+	
     return action;
 }
 

@@ -45,11 +45,12 @@ RS_ActionZoomAuto::RS_ActionZoomAuto(RS_EntityContainer& container,
 
 
 QAction* RS_ActionZoomAuto::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/*	QAction* action = new QAction(tr("Auto Zoom"), qPixmapFromMimeSource("zoomauto.png"),
-								  tr("&Auto Zoom"), QKeySequence(), NULL); */
-	QAction* action = new QAction( qPixmapFromMimeSource("zoomauto.png"), tr("Auto Zoom"), NULL);
-        action->setStatusTip(tr("Zooms automatic"));
-		return action;
+	// tr("Auto Zoom")
+	QAction* action = new QAction(tr("&Auto Zoom"), NULL);
+	action->setIcon(QIcon(":/actions/zoomauto.png"));
+	action->setStatusTip(tr("Zooms automatic"));
+
+	return action;
 }
 
 
