@@ -23,7 +23,7 @@
 **********************************************************************/
 
 
-#include "RS_OverlayBox.h"
+#include "rs_overlaybox.h"
 
 #include "rs_debug.h"
 #include "rs_graphicview.h"
