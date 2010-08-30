@@ -25,7 +25,6 @@
 **********************************************************************/
 
 #include "main.h"
-
 #include <locale.h>
 
 #include <qapplication.h>
