@@ -23,9 +23,9 @@ QMAKE_CXXFLAGS_DEBUG +=
 QMAKE_CXXFLAGS += 
 
 # Make translations at the end of the process
-maketranslation.commands += lrelease caduntu.pro
-QMAKE_EXTRA_TARGETS += maketranslations
-QMAKE_POST_LINK = make maketranslations
+#maketranslations.commands += lrelease caduntu.pro
+#QMAKE_EXTRA_TARGETS += maketranslations
+#QMAKE_POST_LINK += make maketranslations
 
 unix {
     macx {

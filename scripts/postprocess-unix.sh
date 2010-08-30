@@ -10,6 +10,7 @@ cp support/patterns/*.dxf $RESOURCEDIR/patterns
 cp support/fonts/*.cxf $RESOURCEDIR/fonts
 
 # Generate translations
+lrelease caduntu.pro
 mkdir -p $RESOURCEDIR/qm
  
 # Go into translations directory
