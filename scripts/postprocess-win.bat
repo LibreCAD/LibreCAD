@@ -17,9 +17,8 @@ copy support\fonts\*.cxf %RESOURCEDIR%\fonts
 REM Generate translations
 echo "Generating Translations"
 lrelease caduntu.pro
-
-echo "Copying translations files"
 mkdir %RESOURCEDIR%\qm 
+
 for %%D in (actions,cmd,lib,main,ui) do (
 	cd %TSDIR%
 	cd "%%D"
