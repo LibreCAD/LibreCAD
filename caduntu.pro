@@ -22,6 +22,11 @@ CONFIG += qt warn_on link_prl uic3
 QMAKE_CXXFLAGS_DEBUG += 
 QMAKE_CXXFLAGS += 
 
+# Make translations at the end of the process
+maketranslation.commands += lrelease caduntu.pro
+QMAKE_EXTRA_TARGETS += maketranslations
+QMAKE_POST_LINK = make maketranslations
+
 unix {
     macx {
 	TARGET = Caduntu
@@ -30,6 +35,9 @@ unix {
 	RESOURCEDIR= Caduntu.app/Contents/Resources
 	RC_FILE = res/main/caduntu.icns
 	DESTDIR     = .
+        postprocess.commands += scripts/postprocess-osx.sh
+        QMAKE_EXTRA_TARGETS += postprocess
+        QMAKE_POST_LINK = make postprocess
     } else {
         TARGET = caduntu
         DEFINES += QC_APPDIR="\"caduntu\""
@@ -37,6 +45,9 @@ unix {
 	RESOURCEDIR= caduntu/Resources
 	RC_FILE = res/main/caduntu.icns
 	DESTDIR     = unix
+        postprocess.commands += scripts/postprocess-unix.sh
+        QMAKE_EXTRA_TARGETS += postprocess
+        QMAKE_POST_LINK = make postprocess
     }
 }
 
@@ -46,25 +57,12 @@ win32 {
     TARGET = Caduntu
     DEFINES += QC_APPDIR="\"Caduntu\""
     DEFINES += QINITIMAGES_CADUNTU="qInitImages_Caduntu"
-#    RC_FILE = res/main/caduntu.rc
+#    RC_FILE = res/main/caduntu.icns
     DESTDIR     = .
+    postprocess.commands += scripts/postprocess-win.bat
+    QMAKE_EXTRA_TARGETS += postprocess
+    QMAKE_POST_LINK = make postprocess
 }
-
-# Make translations at the end of the process
-maketranslation.commands += lrelease caduntu.pro
-QMAKE_EXTRA_TARGETS += maketranslations
-QMAKE_POST_LINK = make maketranslations
-
-
-# Postprocess for osx
-macx:postprocess.commands += scripts/postprocess-osx.sh
-macx:QMAKE_EXTRA_TARGETS += postprocess
-macx:QMAKE_POST_LINK = make postprocess
-
-unix:postprocess.commands += scripts/postprocess-unix.sh
-unix:QMAKE_EXTRA_TARGETS += postprocess
-unix:QMAKE_POST_LINK = make postprocess
-
 
 
 # Additional libraries to load

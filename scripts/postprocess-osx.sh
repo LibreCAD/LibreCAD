@@ -10,9 +10,6 @@ cp support/patterns/*.dxf $RESOURCEDIR/patterns
 cp support/fonts/*.cxf $RESOURCEDIR/fonts    
 
 # Generate translations
-lrelease caduntu.pro
-
-
 mkdir -p $RESOURCEDIR/qm
  
 # Go into translations directory
@@ -22,9 +19,8 @@ do
     cd $dir
     for tf in *.qm
     do
-	cp $tf $RESOURCEDIR/qm/$tf
+		cp $tf $RESOURCEDIR/qm/$tf
     done
     
     cd "$TSDIR"
- 
 done
