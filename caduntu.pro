@@ -35,9 +35,10 @@ unix {
 	RESOURCEDIR= Caduntu.app/Contents/Resources
 	RC_FILE = res/main/caduntu.icns
 	DESTDIR     = .
-        postprocess.commands += scripts/postprocess-osx.sh
-        QMAKE_EXTRA_TARGETS += postprocess
-        QMAKE_POST_LINK = $$MAKE_CMD postprocess
+#        postprocess.commands += scripts/postprocess-osx.sh
+#        QMAKE_EXTRA_TARGETS += postprocess
+#        QMAKE_POST_LINK = $$MAKE_CMD postprocess
+        QMAKE_POST_LINK = scripts/postprocess-osx.sh
     } else {
         TARGET = caduntu
         DEFINES += QC_APPDIR="\"caduntu\""
@@ -45,9 +46,10 @@ unix {
 	RESOURCEDIR= caduntu/Resources
 	RC_FILE = res/main/caduntu.icns
 	DESTDIR     = unix
-        postprocess.commands += scripts/postprocess-unix.sh
-        QMAKE_EXTRA_TARGETS += postprocess
-        QMAKE_POST_LINK = $$MAKE_CMD postprocess
+#        postprocess.commands += scripts/postprocess-unix.sh
+#        QMAKE_EXTRA_TARGETS += postprocess
+#        QMAKE_POST_LINK = $$MAKE_CMD postprocess
+        QMAKE_POST_LINK = scripts/postprocess-unix.sh
     }
 }
 
