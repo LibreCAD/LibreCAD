@@ -37,7 +37,7 @@ unix {
 	DESTDIR     = .
         postprocess.commands += scripts/postprocess-osx.sh
         QMAKE_EXTRA_TARGETS += postprocess
-        QMAKE_POST_LINK = make postprocess
+        QMAKE_POST_LINK = $$MAKE_CMD postprocess
     } else {
         TARGET = caduntu
         DEFINES += QC_APPDIR="\"caduntu\""
@@ -47,11 +47,12 @@ unix {
 	DESTDIR     = unix
         postprocess.commands += scripts/postprocess-unix.sh
         QMAKE_EXTRA_TARGETS += postprocess
-        QMAKE_POST_LINK = make postprocess
+        QMAKE_POST_LINK = $$MAKE_CMD postprocess
     }
 }
 
 win32 {
+    CONFIG += release
     QMAKE_CFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
     TARGET = Caduntu
@@ -59,9 +60,7 @@ win32 {
     DEFINES += QINITIMAGES_CADUNTU="qInitImages_Caduntu"
 #    RC_FILE = res/main/caduntu.icns
     DESTDIR     = .
-    postprocess.commands += scripts/postprocess-win.bat
-    QMAKE_EXTRA_TARGETS += postprocess
-    QMAKE_POST_LINK = make postprocess
+    QMAKE_POST_LINK = scripts\postprocess-win.bat
 }
 
 
