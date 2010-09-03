@@ -40,9 +40,8 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
 
 
 QAction* RS_ActionSelectSingle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Select Entity"), tr("(De-)&Select Entity"),
-                                  QKeySequence(), NULL); */
     QAction* action = new QAction(tr("Select Entity"),  NULL);
+	action->setIcon(QIcon(":/extui/selectsingle.png"));
     action->setStatusTip(tr("Selects single Entities"));
     return action;
 }

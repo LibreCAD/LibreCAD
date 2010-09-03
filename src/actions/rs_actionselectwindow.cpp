@@ -52,9 +52,11 @@ QAction* RS_ActionSelectWindow::createGUIAction(RS2::ActionType type, QObject* /
 
     if (type==RS2::ActionSelectWindow) {
         action = new QAction(tr("Select Window"),  NULL);
+		action->setIcon(QIcon(":/extui/selectwindow.png"));
         action->setStatusTip(tr("Selects all Entities in a given Window"));
     } else {
         action = new QAction(tr("Deselect Window"), NULL);
+		action->setIcon(QIcon(":/extui/deselectwindow.png"));
         action->setStatusTip(tr("Deselects all Entities"
                                 " in a given Window"));		
 	}
