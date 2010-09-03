@@ -37,11 +37,11 @@ RS_ActionDrawPoint::RS_ActionDrawPoint(RS_EntityContainer& container,
 
 
 QAction* RS_ActionDrawPoint::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	/* RVT_PORT    QAction* action = new QAction(tr("Points"), tr("&Points"),
-	 QKeySequence(), NULL); */
-	QAction* action = new QAction(tr("Points"),  NULL);
+	// (tr("Points")
+	QAction* action = new QAction(tr("&Points"),  NULL);
+	action->setIcon(QIcon(":/extui/points.png"));
     action->setStatusTip(tr("Draw Points"));
-
+	
     return action;
 }
 
