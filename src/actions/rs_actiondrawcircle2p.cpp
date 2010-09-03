@@ -42,9 +42,9 @@ RS_ActionDrawCircle2P::~RS_ActionDrawCircle2P() {}
 
 
 QAction* RS_ActionDrawCircle2P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	/* RVT_PORT QAction* action = new QAction(tr("Circle: 2 Points"), tr("2 Points"),
-	 QKeySequence(), NULL); */
-	QAction* action = new QAction(tr("Circle: 2 Points"),  NULL);
+	// tr("Circle: 2 Points")
+	QAction* action = new QAction(tr("2 Points"),  NULL);
+	action->setIcon(QIcon(":/extui/circles2p.png"));
     action->setStatusTip(tr("Draw circles with 2 points"));
 
     return action;

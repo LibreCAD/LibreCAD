@@ -45,10 +45,9 @@ RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
 RS_ActionDrawArc::~RS_ActionDrawArc() {}
 
 QAction* RS_ActionDrawArc::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Arc: Center, Point, Angles"),
-                                  tr("&Center, Point, Angles"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Arc: Center, Point, Angles"),NULL);
+	// (tr("Arc: Center, Point, Angles")
+    QAction* action = new QAction(tr("&Center, Point, Angles"),NULL);
+	action->setIcon(QIcon(":/extui/arcscraa.png"));
     action->setStatusTip(tr("Draw arcs"));
     return action;
 }

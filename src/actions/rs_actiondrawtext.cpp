@@ -43,9 +43,9 @@ RS_ActionDrawText::RS_ActionDrawText(RS_EntityContainer& container,
 
 
 QAction* RS_ActionDrawText::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	/* RVT_PORT    QAction* action = new QAction(tr("Text"), tr("&Text"),
-	 QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Text"),  NULL);
+	// tr("Text")
+    QAction* action = new QAction(tr("&Text"),  NULL);
+	action->setIcon(QIcon(":/extui/menutext.png"));
     action->setStatusTip(tr("Draw Text Entities"));
     return action;
 }
