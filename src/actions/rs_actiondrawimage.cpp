@@ -45,11 +45,11 @@ RS_ActionDrawImage::~RS_ActionDrawImage() {}
 
 
 QAction* RS_ActionDrawImage::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT	QAction* action = new QAction(tr("Image"), tr("&Image"),
-								  QKeySequence(), NULL); */
-	QAction* action = new QAction(tr("Image"),  NULL);
-        action->setStatusTip(tr("Insert Image (Bitmap)"));
-		return action;
+	// tr("Image")
+	QAction* action = new QAction(tr("&Image"),  NULL);
+	action->setIcon(QIcon(":/extui/menuimage.png"));
+	action->setStatusTip(tr("Insert Image (Bitmap)"));
+	return action;
 }
 
 void RS_ActionDrawImage::init(int status) {

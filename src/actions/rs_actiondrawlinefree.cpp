@@ -45,8 +45,8 @@ RS_ActionDrawLineFree::~RS_ActionDrawLineFree() {
 }
 
 QAction* RS_ActionDrawLineFree::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("&Freehand Line"),
-    QAction* action = new QAction(tr("Line: Freehand"), NULL);
+	// tr(""Line: Freehand"),
+    QAction* action = new QAction(tr("&Freehand Line"), NULL);
 	action->setIcon(QIcon(":/extui/linesfree.png"));
     action->setStatusTip(tr("Draw freehand lines"));
     return action;

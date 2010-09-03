@@ -57,14 +57,14 @@ QAction* RS_ActionDrawEllipseAxis::createGUIAction(RS2::ActionType type, QObject
     QAction* action;
 
     if (type==RS2::ActionDrawEllipseArcAxis) {
-/* RVT_PORT        action = new QAction(tr("Ellipse Arc with Axis"),
-                             tr("&Ellipse Arc (Axis)"), QKeySequence(), NULL); */
-        action = new QAction(tr("Ellipse Arc with Axis"), NULL);
+		// (tr("Ellipse Arc with Axis")
+        action = new QAction(tr("&Ellipse Arc (Axis)"), NULL);
+		action->setIcon(QIcon(":/extui/ellipsearcsaxes.png"));
         action->setStatusTip(tr("Draw Ellipse Arcs"));
     } else {
-/* RVT_PORT        action = new QAction(tr("Ellipse with Axis"),
-                             tr("&Ellipse (Axis)"), QKeySequence(), NULL); */
-        action = new QAction(tr("Ellipse with Axis"), NULL);
+		// tr("Ellipse with Axis")
+        action = new QAction(tr("&Ellipse (Axis)"), NULL);
+		action->setIcon(QIcon(":/extui/ellipsesaxes.png"));
         action->setStatusTip(tr("Draw Ellipses"));
     }
     return action;

@@ -1187,7 +1187,8 @@ void QC_ApplicationWindow::initActions() {
 
 /* RVT_PORT    testInsertImage = new QAction("Insert Image",
                                   "Insert Image", 0, this); */
-    testInsertImage = new QAction("Insert Image", this);
+	// "Insert Image",
+    testInsertImage = new QAction(tr("Insert Image"), this);
     connect(testInsertImage, SIGNAL(activated()),
             this, SLOT(slotTestInsertImage()));
 

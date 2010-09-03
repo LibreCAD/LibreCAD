@@ -43,11 +43,10 @@ RS_ActionDrawCircle3P::~RS_ActionDrawCircle3P() {}
 
 
 QAction* RS_ActionDrawCircle3P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Circle: 3 Points"), tr("3 Points"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Circle: 3 Points"), NULL);
+	// "Circle: 3 Points"
+    QAction* action = new QAction(tr("3 Points"), NULL);
+	action->setIcon(QIcon(":/extui/circles3p.png"));
     action->setStatusTip(tr("Draw circles with 3 points"));
-
     return action;
 }
 

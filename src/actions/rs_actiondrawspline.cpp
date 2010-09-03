@@ -46,11 +46,10 @@ RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
 RS_ActionDrawSpline::~RS_ActionDrawSpline() {}
 
 
-QAction* RS_ActionDrawSpline::createGUIAction(RS2::ActionType /*type*/, 
-				QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Spline"), tr("&Spline"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Spline"),  NULL);
+QAction* RS_ActionDrawSpline::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
+	// tr("Spline")
+    QAction* action = new QAction(tr("&Spline"),  NULL);
+	action->setIcon(QIcon(":/extui/menuspline.png"));
     action->setStatusTip(tr("Draw splines"));
     return action;
 }
