@@ -46,10 +46,9 @@ RS_ActionDrawArc3P::~RS_ActionDrawArc3P() {}
 
 
 QAction* RS_ActionDrawArc3P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/*RVT_PORT	QAction* action = new QAction(tr("Arc: 3 Points"),
-								  tr("&3 Points"),
-								  QKeySequence(), NULL); */
-	QAction* action = new QAction(tr("Arc: 3 Points"), NULL);
+	// tr("Arc: 3 Points"
+	QAction* action = new QAction(tr("&3 Points"), NULL);
+	action->setIcon(QIcon(":/extui/arcs3p.png"));
  	action->setStatusTip(tr("Draw arcs with 3 points"));
 		return action;
 }

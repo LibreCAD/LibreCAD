@@ -42,9 +42,9 @@ RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container,
 
 
 QAction* RS_ActionDrawHatch::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
- /* RVT_PORT   QAction* action = new QAction(tr("Hatch"), tr("&Hatch"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Hatch"),  NULL);
+	// tr("Hatch")
+    QAction* action = new QAction(tr("&Hatch"),  NULL);
+	action->setIcon(QIcon(":/extui/menuhatch.png"));
     action->setStatusTip(tr("Draw Hatches and Solid Fills"));
     return action;
 }
