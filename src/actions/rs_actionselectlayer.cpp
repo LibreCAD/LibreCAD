@@ -39,8 +39,6 @@ RS_ActionSelectLayer::RS_ActionSelectLayer(RS_EntityContainer& container,
 
 
 QAction* RS_ActionSelectLayer::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("(De-)Select Layer"), tr("(De-)Select Layer"),
-                                  QKeySequence(), NULL); */
     QAction* action = new QAction(tr("(De-)Select Layer"), NULL);
     action->setStatusTip(tr("(De-)Selects layers"));
     return action;

@@ -35,8 +35,6 @@ RS_ActionSelectInvert::RS_ActionSelectInvert(RS_EntityContainer& container,
 
 
 QAction* RS_ActionSelectInvert::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Invert Selection"), tr("&Invert Selection"),
-                                  QKeySequence(), NULL); */
     QAction* action = new QAction(tr("Invert Selection"),  NULL);
     action->setStatusTip(tr("Inverts the current selection"));
     return action;

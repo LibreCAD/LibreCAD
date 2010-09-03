@@ -39,15 +39,16 @@ RS_ActionSelectAll::RS_ActionSelectAll(RS_EntityContainer& container,
 QAction* RS_ActionSelectAll::createGUIAction(RS2::ActionType type, QObject* parent) {
     QAction* action;
     if (type==RS2::ActionSelectAll) {
-/* RVT_PORT        action = new QAction(tr("Select All"), tr("Select &All"),
-                             Qt::CTRL+Qt::Key_A, parent); */
-        action = new QAction(tr("Select All"), parent);
-        action->setStatusTip(tr("Selects all Entities"));
-    } else {
-/* RVT_PORT        action = new QAction(tr("Deselect all"), tr("Deselect &all"),
-                             Qt::CTRL+Qt::Key_K, parent); */
-        action = new QAction(tr("Deselect all"), parent);
-        action->setStatusTip(tr("Deselects all Entities"));
+		// tr("Select All")
+		QAction* action = new QAction(tr("Select &All"), parent);
+		action->setShortcut(QKeySequence::SelectAll);
+		action->setStatusTip(tr("Selects all Entities"));
+	} else {
+		// tr("Deselect all")
+		action = new QAction(tr("Deselect &all"), parent);
+		action->setShortcut(QKeySequence(tr("Ctrl+K")));
+		action->setStatusTip(tr("Deselects all Entities"));
+		
     }
     return action;
 }
