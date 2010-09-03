@@ -51,17 +51,13 @@ QAction* RS_ActionSelectWindow::createGUIAction(RS2::ActionType type, QObject* /
     QAction* action;
 
     if (type==RS2::ActionSelectWindow) {
-/* RVT_PORT        action = new QAction(tr("Select Window"), tr("Select &Window"),
-                             QKeySequence(), NULL); */
         action = new QAction(tr("Select Window"),  NULL);
         action->setStatusTip(tr("Selects all Entities in a given Window"));
     } else {
-/* RVT_PORT        action = new QAction(tr("Deselect Window"), tr("Deselect &Window"),
-                             QKeySequence(), NULL); */
         action = new QAction(tr("Deselect Window"), NULL);
         action->setStatusTip(tr("Deselects all Entities"
-                                " in a given Window"));
-    }
+                                " in a given Window"));		
+	}
     return action;
 }
 
