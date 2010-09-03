@@ -51,14 +51,9 @@ RS_ActionSelectIntersected::RS_ActionSelectIntersected(
 QAction* RS_ActionSelectIntersected::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
     QAction* action;
     if (type==RS2::ActionSelectIntersected) {
- /* RVT_PORT        action = new QAction(tr("Select Intersected Entities"), tr("In&tersected Entities"),
-                             QKeySequence(), NULL); */
         action = new QAction(tr("Select Intersected Entities"),  NULL);
         action->setStatusTip(tr("Selects all entities intersected by a line"));
     } else {
-/* RVT_PORT        action = new QAction(tr("Deselect Intersected Entities"),
-                             tr("Deselect Inte&rsected Entities"),
-                             QKeySequence(), NULL); */
         action = new QAction(tr("Deselect Intersected Entities"), NULL);
         action->setStatusTip(tr("Deselects all entities intersected by a line"));
     }
