@@ -43,9 +43,9 @@ RS_ActionDrawLinePolygon::RS_ActionDrawLinePolygon(
 }
 
 QAction* RS_ActionDrawLinePolygon::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Polygon"), tr("Pol&ygon (Cen,Cor)"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Polygon"),  NULL);
+	// Polygon
+    QAction* action = new QAction(tr("Pol&ygon (Cen,Cor)"),  NULL);
+		action->setIcon(QIcon(":/extui/linespolygon.png"));
     action->setStatusTip(tr("Draw polygon with center and corner"));
     return action;
 }

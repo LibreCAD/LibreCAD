@@ -43,9 +43,9 @@ RS_ActionDrawLinePolygon2::RS_ActionDrawLinePolygon2(
 }
 
 QAction* RS_ActionDrawLinePolygon2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT   QAction* action = new QAction(tr("Polygon"), tr("Polygo&n (Cor,Cor)"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Polygon"), NULL);
+	// tr("Polygon")
+    QAction* action = new QAction(tr("Polygo&n (Cor,Cor)"), NULL);
+	action->setIcon(QIcon(":/extui/linespolygon2.png"));
     action->setStatusTip(tr("Draw polygon with two corners"));
     return action;
 }
