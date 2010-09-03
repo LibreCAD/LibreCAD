@@ -45,10 +45,9 @@ RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
 
 
 QAction* RS_ActionDrawLineParallelThrough::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Parallel through point"),
-                                  tr("Par&allel through point"),
-                                  QKeySequence(), NULL); */
+	// tr("Par&allel through point"),
     QAction* action = new QAction(tr("Parallel through point"), NULL);
+	action->setIcon(QIcon(":/extui/linesparathrough.png"));
     action->setStatusTip(tr("Draw parallel through a given point"));
     return action;
 }

@@ -49,17 +49,15 @@ QAction* RS_ActionDrawLineParallel::createGUIAction(RS2::ActionType type, QObjec
     QAction* action = NULL;
 
     if (type==RS2::ActionDrawLineParallel) {
-/* RVT_PORT        action = new QAction(tr("Parallel"), tr("Para&llel"),
-                             QKeySequence(), NULL); */
+		// tr("Para&llel"),
         action = new QAction(tr("Parallel"), NULL);
+		action->setIcon(QIcon(":/extui/linespara.png"));
     } else if (type==RS2::ActionDrawArcParallel) {
-/* RVT_PORT          action = new QAction(tr("Concentric"), tr("&Concentric"),
-                             QKeySequence(), NULL);*/
         action = new QAction(tr("Concentric"), NULL);
+		action->setIcon(QIcon(":/extui/arcspara.png"));
     } else if (type==RS2::ActionDrawCircleParallel) {
-/* RVT_PORT          action = new QAction(tr("Concentric"), tr("&Concentric"),
-                             QKeySequence(), NULL);*/
         action = new QAction(tr("Concentric"), NULL);
+		action->setIcon(QIcon(":/extui/circlespara.png"));
     }
     action->setStatusTip(tr("Draw parallels to existing lines, arcs, "
                             "circles"));

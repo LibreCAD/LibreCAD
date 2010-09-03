@@ -42,11 +42,11 @@ RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
 RS_ActionDrawLineRectangle::~RS_ActionDrawLineRectangle() {}
 
 QAction* RS_ActionDrawLineRectangle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT	QAction* action = new QAction(tr("Rectangle"), tr("&Rectangle"),
-								  QKeySequence(), NULL); */
+	//  tr("&Rectangle"),
 	QAction* action = new QAction(tr("Rectangle"), NULL);
-        action->setStatusTip(tr("Draw rectangles"));
-		return action;
+	action->setIcon(QIcon(":/extui/linesrect.png"));
+    action->setStatusTip(tr("Draw rectangles"));
+	return action;
 }
 
 

@@ -47,9 +47,9 @@ RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(
 }
 
 QAction* RS_ActionDrawLineBisector::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Bisector"), tr("&Bisector"),
-                                  QKeySequence(), NULL); */
+	// tr("&Bisector"),
     QAction* action = new QAction(tr("Bisector"), NULL);
+	action->setIcon(QIcon(":/extui/linesbisector.png"));
     action->setStatusTip(tr("Draw bisectors"));
     return action;
 }

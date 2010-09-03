@@ -43,9 +43,9 @@ RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 
 
 QAction* RS_ActionDrawLineTangent1::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Tangent (P,C)"), tr("&Tangent (P,C)"),
-                                  QKeySequence(), NULL); */
+	// tr("&Tangent (P,C)"),
     QAction* action = new QAction(tr("Tangent (P,C)"), NULL);
+	action->setIcon(QIcon(":/extui/linestan1.png"));
     action->setStatusTip(tr("Draw tangent (point, circle)"));
     return action;
 }

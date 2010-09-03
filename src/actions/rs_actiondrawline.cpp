@@ -47,9 +47,9 @@ RS_ActionDrawLine::~RS_ActionDrawLine() {}
 
 
 QAction* RS_ActionDrawLine::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Line: 2 Points"), tr("&2 Points"),
-                                  QKeySequence(), NULL); */
+	//tr("&2 Points")
     QAction* action = new QAction(tr("Line: 2 Points"), NULL);
+	action->setIcon(QIcon(":/extui/linesnormal.png"));
     action->setStatusTip(tr("Draw lines"));
     return action;
 }
