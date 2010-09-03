@@ -40,6 +40,7 @@ RS_ActionSelectLayer::RS_ActionSelectLayer(RS_EntityContainer& container,
 
 QAction* RS_ActionSelectLayer::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action = new QAction(tr("(De-)Select Layer"), NULL);
+	action->setIcon(QIcon(":/extui/selectlayer.png"));
     action->setStatusTip(tr("(De-)Selects layers"));
     return action;
 }

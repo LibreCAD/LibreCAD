@@ -42,11 +42,13 @@ QAction* RS_ActionSelectAll::createGUIAction(RS2::ActionType type, QObject* pare
 		// tr("Select All")
 		QAction* action = new QAction(tr("Select &All"), parent);
 		action->setShortcut(QKeySequence::SelectAll);
+		action->setIcon(QIcon(":/extui/selectall.png"));
 		action->setStatusTip(tr("Selects all Entities"));
 	} else {
 		// tr("Deselect all")
 		action = new QAction(tr("Deselect &all"), parent);
 		action->setShortcut(QKeySequence(tr("Ctrl+K")));
+		action->setIcon(QIcon(":/extui/selectnothing.png"));
 		action->setStatusTip(tr("Deselects all Entities"));
 		
     }
