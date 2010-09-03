@@ -80,6 +80,11 @@ UI_DIR      	= intermediate/ui
 UI_HERADERS_DIR = intermediate/ui
 UI_SOURCES_DIR  = intermediate/ui
 
+
+RESOURCES += \
+		res/extui/extui.qrc
+
+
 INCLUDEPATH += \
                 dxflib/src \
                 fparser/src \
