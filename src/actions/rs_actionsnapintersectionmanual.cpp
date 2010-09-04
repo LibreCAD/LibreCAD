@@ -46,10 +46,10 @@ RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(
 
 
 QAction* RS_ActionSnapIntersectionManual::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Intersection Manually"), tr("I&ntersection Manually"),
-                                  QKeySequence(), NULL, 0, true); */
-    QAction* action = new QAction(tr("Intersection Manually"), NULL);
+	//tr("Intersection Manually")
+    QAction* action = new QAction(tr("I&ntersection Manually"), NULL);
     action->setStatusTip(tr("Snap to intersection points manually"));
+	action->setIcon(QIcon(":/extui/snapintersectionm.png"));	
     return action;
 }
 

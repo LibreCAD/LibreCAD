@@ -886,86 +886,89 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
         // Snapping actions:
         //
     case RS2::ActionSnapFree:
-/*	RVT_PORT		action = new QAction(tr("Free"), tr("&Free"),
-								 0, mw, 0, true); */
-			action = new QAction(tr("Free"), mw);
+		// tr("Free")
+		action = new QAction(tr("&Free"), mw);
         action->setStatusTip(tr("Free positioning"));
+		action->setCheckable(true);
+		action->setIcon(QIcon(":/extui/snapfree.png"));
         actionHandler->setActionSnapFree(action);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotSnapFree()));
         break;
 
     case RS2::ActionSnapGrid:
-/* RVT_PORT			action = new QAction(tr("Grid"), tr("&Grid"),
-								 0, mw, "snapGrid", true); */
-			action = new QAction(tr("Grid"),  mw);
+		// tr("Grid")
+		action = new QAction(tr("&Grid"),  mw);
         action->setStatusTip(tr("Grid positioning"));
-			
-//			QStyleOptionMenuItem::NonExclusive
-			
+		action->setCheckable(true);
+		action->setIcon(QIcon(":/extui/snapgrid.png"));
         actionHandler->setActionSnapGrid(action);			
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotSnapGrid()));
         break;
 
     case RS2::ActionSnapEndpoint:
-/* RVT_PORT
- action = new QAction(tr("Endpoints"), tr("&Endpoints"),
- 0, mw, 0, true); */
-			action = new QAction(tr("Endpoints"),mw); 
+		//	tr("Endpoints")			
+		action = new QAction(tr("&Endpoints"),mw); 
         action->setStatusTip(tr("Snap to endpoints"));
-        actionHandler->setActionSnapEndpoint(action);
+		action->setCheckable(true);
+		action->setIcon(QIcon(":/extui/snapendpoint.png"));
+		actionHandler->setActionSnapEndpoint(action);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotSnapEndpoint()));
         break;
 
     case RS2::ActionSnapOnEntity:
-/* RVT_PORT			action = new QAction(tr("On Entity"), tr("&On Entity"),
-								 0, mw, 0, true); */
-			action = new QAction(tr("On Entity"),  mw);
+		// tr("&n Entity")
+		action = new QAction(tr("&On Entity"),  mw);
         action->setStatusTip(tr("Snap to nearest point on entity"));
+		action->setCheckable(true);
+		action->setIcon(QIcon(":/extui/snaponentity.png"));
         actionHandler->setActionSnapOnEntity(action);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotSnapOnEntity()));
         break;
 
     case RS2::ActionSnapCenter:
-/* RVT_PORT			action = new QAction(tr("Center"), tr("&Center"),
-								 0, mw, 0, true); */
-			action = new QAction(tr("Center"), mw);
+		// tr("Center")
+		action = new QAction(tr("&Center"), mw);
         action->setStatusTip(tr("Snap to centers"));
+		action->setCheckable(true);
+		action->setIcon(QIcon(":/extui/snapcenter.png"));
         actionHandler->setActionSnapCenter(action);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotSnapCenter()));
         break;
 
     case RS2::ActionSnapMiddle:
-/* RVT_PORT			action = new QAction(tr("Middle"), tr("&Middle"),
-								 0, mw, 0, true); */
-			action = new QAction(tr("Middle"), mw);
+		// tr("Middle")
+		action = new QAction(tr("&Middle"), mw);
         action->setStatusTip(tr("Snap to middle points"));
+		action->setCheckable(true);
+		action->setIcon(QIcon(":/extui/snapmiddle.png"));
         actionHandler->setActionSnapMiddle(action);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotSnapMiddle()));
         break;
 
     case RS2::ActionSnapDist:
-/* RVT_PORT			action = new QAction(tr("Distance from Endpoint"),
-								 tr("&Distance from Endpoint"),
-								 0, mw, 0, true); */
-			action = new QAction(tr("Distance from Endpoint"),mw);
-			action->setStatusTip(tr("Snap to points with a given"
+		// tr("Distance from Endpoint")
+		action = new QAction(tr("&Distance from Endpoint"),mw);
+		action->setStatusTip(tr("Snap to points with a given"
                                 " distance to an endpoint"));
+		action->setCheckable(true);
+		action->setIcon(QIcon(":/extui/snapdist.png"));
         actionHandler->setActionSnapDist(action);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotSnapDist()));
         break;
 
     case RS2::ActionSnapIntersection:
-/* RVT_PORT			action = new QAction(tr("Intersection"), tr("&Intersection"),
-								 0, mw, 0, true); */
-			action = new QAction(tr("Intersection"), mw);
+		// tr("Intersection")
+		action = new QAction(tr("&Intersection"), mw);
         action->setStatusTip(tr("Snap to intersection points"));
+		action->setCheckable(true);
+		action->setIcon(QIcon(":/extui/snapintersection.png"));
         actionHandler->setActionSnapIntersection(action);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotSnapIntersection()));
@@ -981,44 +984,45 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
         // Snap restriction actions:
         //
     case RS2::ActionRestrictNothing:
-/* RVT_PORT			action = new QAction(tr("Restrict Nothing"), tr("Restrict &Nothing"),
-								 0, mw, 0, true); */
-			action = new QAction(tr("Restrict Nothing"), mw);
+		// tr("Restrict Nothing")
+		action = new QAction(tr("Restrict &Nothing"), mw);
         action->setStatusTip(tr("No snap restriction"));
+		action->setCheckable(true);
+		action->setIcon(QIcon(":/extui/restrictnothing.png"));
         actionHandler->setActionRestrictNothing(action);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotRestrictNothing()));
         break;
 
     case RS2::ActionRestrictOrthogonal:
-/* RVT_PORT			action = new QAction(tr("Restrict Orthogonally"),
-								 tr("Restrict &Orthogonally"),
-								 0, mw, 0, true); */
-			action = new QAction(tr("Restrict Orthogonally"),mw);
-			action->setStatusTip(tr("Restrict snapping orthogonally"));
+		// tr("Restrict Orthogonally")
+		action = new QAction(tr("Restrict &Orthogonally"),mw);
+		action->setStatusTip(tr("Restrict snapping orthogonally"));
         actionHandler->setActionRestrictOrthogonal(action);
+		action->setCheckable(true);
+		action->setIcon(QIcon(":/extui/restrictorthogonal.png"));
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotRestrictOrthogonal()));
         break;
 
     case RS2::ActionRestrictHorizontal:
-/* RVT_PORT			action = new QAction(tr("Restrict Horizontally"),
-								 tr("Restrict &Horizontally"),
-								 0, mw, 0, true); */
-			action = new QAction(tr("Restrict Horizontally"), mw);
-			action->setStatusTip(tr("Restrict snapping horizontally"));
+		// (tr("Restrict Horizontally")
+		action = new QAction(tr("Restrict &Horizontally"), mw);
+		action->setStatusTip(tr("Restrict snapping horizontally"));
         actionHandler->setActionRestrictHorizontal(action);
+		action->setCheckable(true);
+		action->setIcon(QIcon(":/extui/restricthorizontal.png"));
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotRestrictHorizontal()));
         break;
 
     case RS2::ActionRestrictVertical:
-/* RVT_PORT			action = new QAction(tr("Restrict Vertically"),
-								 tr("Restrict &Vertically"),
-								 0, mw, 0, true); */
-			action = new QAction(tr("Restrict Vertically"), mw);
-			action->setStatusTip(tr("Restrict snapping vertically"));
+		// tr("Restrict Vertically")
+		action = new QAction(tr("Restrict&Vertically"), mw);
+		action->setStatusTip(tr("Restrict snapping vertically"));
         actionHandler->setActionRestrictVertical(action);
+		action->setCheckable(true);
+		action->setIcon(QIcon(":/extui/restrictvertical.png"));
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotRestrictVertical()));
         break;
