@@ -43,16 +43,16 @@ QAction* RS_ActionLayersFreezeAll::createGUIAction(RS2::ActionType type, QObject
     QAction* action=NULL;
 	
 	if (type==RS2::ActionLayersFreezeAll) {
-/* RVT_PORT  		action = new QAction(tr("Freeze all"), tr("&Freeze all"),
-							 QKeySequence(), NULL); */
-		action = new QAction(tr("Freeze all"),  NULL);
+		// tr("Freeze all")
+		action = new QAction(tr("&Freeze all"),  NULL);
     	action->setStatusTip(tr("Freeze all layers"));
+		action->setIcon(QIcon(":/ui/hiddenblock.png"));
 	}
 	else if (type==RS2::ActionLayersDefreezeAll) {
-/* RVT_PORT        action = new QAction(tr("Defreeze all"), tr("&Defreeze all"),
-                             QKeySequence(), NULL); */
-        action = new QAction(tr("Defreeze all"),   NULL);
+		// tr("Defreeze all")
+        action = new QAction(tr("&Defreeze all"),   NULL);
         action->setStatusTip(tr("Defreeze all layers"));
+		action->setIcon(QIcon(":/ui/visibleblock.png"));
 	}
     return action;
 }

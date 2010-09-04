@@ -36,10 +36,10 @@ RS_ActionLayersEdit::RS_ActionLayersEdit(RS_EntityContainer& container,
 
 
 QAction* RS_ActionLayersEdit::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Edit Layer"), tr("&Edit Layer"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Edit Layer"), NULL);
+	// tr("Edit Layer")
+    QAction* action = new QAction(tr("&Edit Layer"), NULL);
     action->setStatusTip(tr("Edit Layer"));
+	action->setIcon(QIcon(":/ui/layeredit.png"));
     return action;
 }
 

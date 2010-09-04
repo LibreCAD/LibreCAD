@@ -39,13 +39,11 @@ RS_ActionBlocksRemove::RS_ActionBlocksRemove(RS_EntityContainer& container,
 
 
 QAction* RS_ActionBlocksRemove::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-// RVT_PORT	QAction* action = new QAction(tr("Remove Block"), tr("&Remove Block"),
-//								  QKeySequence(), NULL);
-
-	QAction* action = new QAction(tr("Remove Block"), NULL);
-        action->setStatusTip(tr("Remove Block"));
-
-		return action;
+	// tr("Remove Block")
+	QAction* action = new QAction(tr("&Remove Block"), NULL);
+    action->setStatusTip(tr("Remove Block"));
+	action->setIcon(QIcon(":/ui/blockremove.png"));
+	return action;
 }
 
 void RS_ActionBlocksRemove::trigger() {
