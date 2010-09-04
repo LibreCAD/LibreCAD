@@ -37,9 +37,9 @@ RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
 
 
 QAction* RS_ActionModifyMove::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Move / Copy"), tr("&Move / Copy"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Move / Copy"),  NULL);
+	// tr("&Move / Copy")
+    QAction* action = new QAction(tr("&Move / Copy"),  NULL);
+	action->setIcon(QIcon(":/extui/modifymove.png"));
     action->setStatusTip(tr("Move or copy entities one or multiple times"));
     return action;
 }

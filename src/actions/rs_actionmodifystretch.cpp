@@ -42,9 +42,9 @@ RS_ActionModifyStretch::RS_ActionModifyStretch(RS_EntityContainer& container,
 }
 
 QAction* RS_ActionModifyStretch::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Stretch"), tr("&Stretch"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Stretch"), NULL);
+	// tr("Stretch")
+    QAction* action = new QAction(tr("&Stretch"), NULL);
+	action->setIcon(QIcon(":/extui/modifystretch.png"));
     action->setStatusTip(tr("Stretch Entities"));
     return action;
 }

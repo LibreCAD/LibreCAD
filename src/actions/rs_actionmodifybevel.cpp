@@ -43,9 +43,9 @@ RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
 
 
 QAction* RS_ActionModifyBevel::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Bevel"), tr("&Bevel"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Bevel"),  NULL);
+	// tr("Bevel")
+    QAction* action = new QAction(tr("&Bevel"),  NULL);
+	action->setIcon(QIcon(":/extui/modifybevel.png"));
     action->setStatusTip(tr("Bevel Entities"));
     return action;
 }

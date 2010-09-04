@@ -42,11 +42,11 @@ RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
 }
 
 QAction* RS_ActionModifyRound::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT	QAction* action = new QAction(tr("Round"), tr("&Round"),
-								  QKeySequence(), NULL); */
-	QAction* action = new QAction(tr("Round"), NULL);
-        action->setStatusTip(tr("Round Entities"));
-		return action;
+	// (tr("Round")
+	QAction* action = new QAction(tr("&Round"), NULL);
+	action->setIcon(QIcon(":/extui/modifyround.png"));
+    action->setStatusTip(tr("Round Entities"));
+	return action;
 }
 
 
