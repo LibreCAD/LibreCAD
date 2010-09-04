@@ -43,18 +43,17 @@ QAction* RS_ActionBlocksFreezeAll::createGUIAction(RS2::ActionType type, QObject
     QAction* action = NULL;
 	
 	if (type==RS2::ActionBlocksFreezeAll) {
-		// RVT_PORT
-/*		action= new QAction(tr("Freeze all"), tr("&Freeze all"),
-							QKeySequence(), NULL); */
-		action= new QAction(tr("Freeze all"), NULL);
+		// tr("Freeze all")
+		action= new QAction(tr("&Freeze all"), NULL);
     	action->setStatusTip(tr("Freeze all blocks"));
+		action->setIcon(QIcon(":/ui/blockfreeze.png"));
 	}
 	else if (type==RS2::ActionBlocksDefreezeAll) {
-		// RVT_PORT		
-		/*        action = new QAction(tr("Defreeze all"), tr("&Defreeze all"),
-		 QKeySequence(), NULL); */
-		action = new QAction(tr("Defreeze all"), NULL); 
+		// tr("&Defreeze all")
+		action = new QAction(tr("&Defreeze all"), NULL); 
         action->setStatusTip(tr("Defreeze all blocks"));
+		action->setIcon(QIcon(":/ui/blockdefreeze.png"));
+
 	}
 
     return action;

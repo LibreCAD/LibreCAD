@@ -48,14 +48,10 @@ RS_ActionBlocksCreate::~RS_ActionBlocksCreate() {}
 
 
 QAction* RS_ActionBlocksCreate::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// RVT_PORT from
-	/*
-	 QAction* action = new QAction(tr("Create Block"),
-	 tr("&Create Block"),
-	 QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Create Block"), NULL); 
+	// (tr("Create Block"),
+    QAction* action = new QAction(tr("&Create Block"), NULL); 
     action->setStatusTip(tr("Create Block"));
-
+	action->setIcon(QIcon(":/extui/menublock.png"));
     return action;
 }
 

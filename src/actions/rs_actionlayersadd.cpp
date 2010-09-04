@@ -36,11 +36,9 @@ RS_ActionLayersAdd::RS_ActionLayersAdd(RS_EntityContainer& container,
 
 
 QAction* RS_ActionLayersAdd::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Add Layer"), tr("&Add Layer"),
-                                  QKeySequence(), NULL); */
     QAction* action = new QAction(tr("Add Layer"), NULL);
     action->setStatusTip(tr("Add Layer"));
-
+	action->setIcon(QIcon(":/ui/layeradd.png"));
     return action;
 }
 

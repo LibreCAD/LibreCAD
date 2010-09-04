@@ -37,14 +37,11 @@ RS_ActionBlocksEdit::RS_ActionBlocksEdit(RS_EntityContainer& container,
 
 
 QAction* RS_ActionBlocksEdit::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// RVT_PORT from
-	/*
-        QAction* action = new QAction(tr("Edit Block"), tr("&Edit Block"),
-                             QKeySequence(), NULL);
-	 */
-	QAction* action = new QAction(tr("Edit Block"), NULL);
-        action->setStatusTip(tr("Edit Block"));
-		return action;
+	//  tr("&Edit Block")
+	QAction* action = new QAction( tr("&Edit Block"), NULL);
+    action->setStatusTip(tr("Edit Block"));
+	action->setIcon(QIcon(":/ui/blockedit.png"));
+	return action;
 }
 
 
