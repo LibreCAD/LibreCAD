@@ -42,11 +42,10 @@ RS_ActionDimAngular::RS_ActionDimAngular(
 }
 
 QAction* RS_ActionDimAngular::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-// RVT_PORT    QAction* action = new QAction(tr("Angular"), tr("&Angular"),
-//                                  QKeySequence(), NULL);
-    QAction* action = new QAction(tr("Angular"), NULL);
+	// tr("Angular"),
+    QAction* action = new QAction(tr("&Angular"), NULL);
+	action->setIcon(QIcon(":/extui/dimangular.png"));
     action->setStatusTip(tr("Angular Dimension"));
-
     return action;
 }
 

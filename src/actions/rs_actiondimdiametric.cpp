@@ -42,11 +42,10 @@ RS_ActionDimDiametric::RS_ActionDimDiametric(
 
 
 QAction* RS_ActionDimDiametric::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-// RVT_PORT    QAction* action = new QAction(tr("Diametric"), tr("&Diametric"),
-//                                  QKeySequence(), NULL);
-    QAction* action = new QAction(tr("Diametric"),  NULL);
+	// tr("Diametric")
+    QAction* action = new QAction(tr("&Diametric"),  NULL);
+	action->setIcon(QIcon(":/extui/dimdiametric.png"));
     action->setStatusTip(tr("Diametric Dimension"));
-
     return action;
 }
 
