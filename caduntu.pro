@@ -725,8 +725,7 @@ FORMS3       = \
 		src/ui/forms3/qg_splineoptions.ui \
 		src/ui/forms3/qg_textoptions.ui \
 		src/ui/forms3/qg_trimamountoptions.ui \
-		src/ui/forms3/qg_widgetpen.ui \
-		src/ui/forms3/qg_dlgimageoptions.ui
+		src/ui/forms3/qg_widgetpen.ui 
 		
 TRANSLATIONS += \
 		ts/ui/qcadguiqt_cs.ts \
