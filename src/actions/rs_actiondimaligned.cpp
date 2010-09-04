@@ -45,12 +45,11 @@ RS_ActionDimAligned::RS_ActionDimAligned(RS_EntityContainer& container,
 RS_ActionDimAligned::~RS_ActionDimAligned() {}
 
 QAction* RS_ActionDimAligned::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-// RVT_PORT	QAction* action = new QAction(tr("Aligned"), tr("&Aligned"),
-//								  QKeySequence(), NULL);
-	QAction* action = new QAction(tr("Aligned"),  NULL);
-        action->setStatusTip(tr("Aligned Dimension"));
-
-		return action;
+	//tr("Aligned")
+	QAction* action = new QAction(tr("&Aligned"),  NULL);
+	action->setIcon(QIcon(":/extui/dimaligned.png"));
+	action->setStatusTip(tr("Aligned Dimension"));
+	return action;
 }
 
 

@@ -42,9 +42,9 @@ RS_ActionDimRadial::RS_ActionDimRadial(
 
 
 QAction* RS_ActionDimRadial::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
- /*  RVT_PORT QAction* action = new QAction(tr("Radial"), tr("&Radial"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Radial"),  NULL);
+	// tr("Radial")
+    QAction* action = new QAction(tr("&Radial"),  NULL);
+	action->setIcon(QIcon(":/extui/dimradial.png"));
     action->setStatusTip(tr("Radial Dimension"));
 
     return action;

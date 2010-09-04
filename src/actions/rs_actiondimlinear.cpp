@@ -62,23 +62,23 @@ QAction* RS_ActionDimLinear::createGUIAction(RS2::ActionType type, QObject* /*pa
     switch (type) {
     default:
     case RS2::ActionDimLinear:
-// RVT_PORT			action = new QAction(tr("Linear"), tr("&Linear"),
-//								 QKeySequence(), NULL);
-			action = new QAction(tr("Linear"),  NULL);
+		// tr("Linear")
+		action = new QAction(tr("&Linear"),  NULL);
+		action->setIcon(QIcon(":/extui/dimaligned.png"));
         action->setStatusTip(tr("Linear Dimension"));
         break;
 
     case RS2::ActionDimLinearHor:
-// RVT_PORT			action = new QAction(tr("Horizontal"), tr("&Horizontal"),
-//								 QKeySequence(), NULL);
-			action = new QAction(tr("Horizontal"), NULL);
+		// tr("Horizontal")
+		action = new QAction(tr("&Horizontal"), NULL);
+		action->setIcon(QIcon(":/extui/dimhor.png"));
         action->setStatusTip(tr("Horizontal Dimension"));
         break;
 
     case RS2::ActionDimLinearVer:
-// RVT_PORT			action = new QAction(tr("Vertical"), tr("&Vertical"),
-//								 QKeySequence(), NULL); 
-			action = new QAction(tr("Vertical"), NULL);
+		// tr("Vertical")
+		action = new QAction(tr("&Vertical"), NULL);
+		action->setIcon(QIcon(":/extui/dimver.png"));
         action->setStatusTip(tr("Vertical Dimension"));
         break;
     }
