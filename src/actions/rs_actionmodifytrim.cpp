@@ -50,16 +50,16 @@ QAction* RS_ActionModifyTrim::createGUIAction(RS2::ActionType type, QObject* /*p
 	switch (type) {
 	default:
 	case RS2::ActionModifyTrim:
-/* RVT_PORT			action = new QAction(tr("Trim"), tr("&Trim"),
-								 QKeySequence(), NULL); */
-			action = new QAction(tr("Trim"), NULL);
+		// (tr("Trim")
+		action = new QAction(tr("&Trim"), NULL);
+		action->setIcon(QIcon(":/extui/modifytrim.png"));
 	    action->setStatusTip(tr("Trim Entities"));
 		break;
 
 	case RS2::ActionModifyTrim2:
-/* RVT_PORT			action = new QAction(tr("Trim Two"), tr("&Trim Two"),
-								 QKeySequence(), NULL); */
-			action = new QAction(tr("Trim Two"), NULL);
+		// tr("Trim Two")
+		action = new QAction(tr("&Trim Two"), NULL);
+		action->setIcon(QIcon(":/extui/modifytrim2.png"));
         action->setStatusTip(tr("Trim two Entities"));
 		break;
 	}

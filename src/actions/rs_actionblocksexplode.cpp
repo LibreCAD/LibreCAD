@@ -43,15 +43,10 @@ RS_ActionBlocksExplode::~RS_ActionBlocksExplode() {}
 
 
 QAction* RS_ActionBlocksExplode::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// RVT_PORT from
-	/*
-    QAction* action = new QAction(tr("Explode"),
-                                  tr("&Explode"),
-                                  QKeySequence(), NULL);
-	 */
-    QAction* action = new QAction(tr("Explode"), NULL);
+	// tr("Explode"),
+    QAction* action = new QAction(tr("&Explode"), NULL);
+	action->setIcon(QIcon(":/extui/modifyexplode.png"));
     action->setStatusTip(tr("Explode Blocks and other Entity Groups"));
-
     return action;
 }
 
