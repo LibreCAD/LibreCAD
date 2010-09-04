@@ -43,11 +43,10 @@ RS_ActionDimLeader::~RS_ActionDimLeader() {}
 
 
 QAction* RS_ActionDimLeader::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-// RVT_PORT    QAction* action = new QAction(tr("Leader"), tr("&Leader"),
-//                                  QKeySequence(), NULL);
-    QAction* action = new QAction(tr("Leader"), NULL);
+	// tr("Leader")
+    QAction* action = new QAction(tr("&Leader"), NULL);
+	action->setIcon(QIcon(":/extui/dimleader.png"));
     action->setStatusTip(tr("Leader Dimension"));
-
     return action;
 }
 
