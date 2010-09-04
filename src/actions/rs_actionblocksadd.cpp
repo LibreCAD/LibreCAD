@@ -37,14 +37,10 @@ RS_ActionBlocksAdd::RS_ActionBlocksAdd(RS_EntityContainer& container,
 
 
 QAction* RS_ActionBlocksAdd::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-// RVT_PORT ported from
-//    QAction* action = new QAction( tr("Add Block"),tr("&Add Block"),
-//								  QKeySequence(),
-//								  NULL);
-
-    QAction* action = new QAction( tr("Add Block"), NULL);
-	
+	// tr("Add Block")
+    QAction* action = new QAction(tr("&Add Block"), NULL);	
     action->setStatusTip(tr("Add Block"));
+	action->setIcon(QIcon(":/ui/blockadd.png"));
     return action;
 }
 

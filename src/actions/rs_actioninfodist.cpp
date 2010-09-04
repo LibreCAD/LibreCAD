@@ -37,12 +37,11 @@ RS_ActionInfoDist::RS_ActionInfoDist(RS_EntityContainer& container,
 
 
 QAction* RS_ActionInfoDist::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT	QAction* action = new QAction(tr("Distance Point to Point"),
-								  tr("&Distance Point to Point"),
-								  QKeySequence(), NULL); */
-	QAction* action = new QAction(tr("Distance Point to Point"), NULL);
+	// tr("Distance Point to Point")
+	QAction* action = new QAction(tr("&Distance Point to Point"), NULL);
 	action->setStatusTip(tr("Measures the distance between two points"));
-		return action;
+	action->setIcon(QIcon(":/extui/restricthorizontal.png"));
+	return action;
 }
 
 

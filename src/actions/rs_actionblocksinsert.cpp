@@ -44,12 +44,10 @@ RS_ActionBlocksInsert::RS_ActionBlocksInsert(RS_EntityContainer& container,
 RS_ActionBlocksInsert::~RS_ActionBlocksInsert() {}
 
 QAction* RS_ActionBlocksInsert::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-// RVT_PORT
-/*    QAction* action = new QAction(tr("Insert Block"), tr("&Insert Block"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Insert Block"),  NULL);
+	// tr("Insert Block")
+    QAction* action = new QAction(tr("&Insert Block"),  NULL);
     action->setStatusTip(tr("Insert Block"));
-
+	action->setIcon(QIcon(":/ui/blockinsert.png"));
     return action;
 }
 
