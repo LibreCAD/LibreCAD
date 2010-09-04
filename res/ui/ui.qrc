@@ -5,6 +5,8 @@
 <file>blockedit.png</file>
 <file>blockinsert.png</file>
 <file>blockremove.png</file>
+<file>blockfreeze.png</file>
+<file>blockdefreeze.png</file>
 <file>color00.png</file>
 <file>color01.png</file>
 <file>color02.png</file>
@@ -33,6 +35,7 @@
 <file>folderopen.png</file>
 <file>hiddenblock.png</file>
 <file>hiddenlayer.png</file>
+<file>layertoggle.png</file>
 <file>layeradd.png</file>
 <file>layeredit.png</file>
 <file>layerremove.png</file>
