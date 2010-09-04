@@ -39,11 +39,10 @@ RS_ActionModifyAttributes::RS_ActionModifyAttributes(
 
 
 QAction* RS_ActionModifyAttributes::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Attributes"), tr("&Attributes"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Attributes"),  NULL);
+	// tr("Attributes")
+    QAction* action = new QAction(tr("&Attributes"),  NULL);
+	action->setIcon(QIcon(":/extui/modifyattributes.png"));
     action->setStatusTip(tr("Modify Entity Attributes"));
-
     return action;
 }
 

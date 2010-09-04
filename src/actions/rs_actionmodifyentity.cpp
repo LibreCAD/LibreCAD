@@ -39,9 +39,9 @@ RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
 
 
 QAction* RS_ActionModifyEntity::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/*RVT_PORT    QAction* action = new QAction(tr("Properties"), tr("&Properties"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Properties"), NULL);
+	// tr("Properties")
+    QAction* action = new QAction(tr("&Properties"), NULL);
+	action->setIcon(QIcon(":/extui/modifyentity.png"));
     action->setStatusTip(tr("Modify Entity Properties"));
     return action;
 }

@@ -37,9 +37,9 @@ RS_ActionModifyScale::RS_ActionModifyScale(RS_EntityContainer& container,
 
 
 QAction* RS_ActionModifyScale::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Scale"), tr("&Scale"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Scale"),  NULL);
+	// "Scale"
+    QAction* action = new QAction(tr("&Scale"),  NULL);
+	action->setIcon(QIcon(":/extui/modifyscale.png"));
     action->setStatusTip(tr("Scale Entities"));
     return action;
 }

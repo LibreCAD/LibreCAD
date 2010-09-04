@@ -39,10 +39,11 @@ RS_ActionModifyDelete::RS_ActionModifyDelete(RS_EntityContainer& container,
                     container, graphicView) {}
 
 QAction* RS_ActionModifyDelete::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Delete"), tr("&Delete"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Delete"),  NULL);
+	// tr("Delete")
+    QAction* action = new QAction(tr("&Delete"),  NULL);
+	action->setIcon(QIcon(":/extui/modifydelete.png"));
     action->setStatusTip(tr("Delete Entities"));
+	action->setShortcut(QKeySequence::Delete);
     return action;
 }
 

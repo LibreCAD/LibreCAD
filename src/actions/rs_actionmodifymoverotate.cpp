@@ -38,10 +38,10 @@ RS_ActionModifyMoveRotate::RS_ActionModifyMoveRotate(
 }
 
 QAction* RS_ActionModifyMoveRotate::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Move and Rotate"), tr("M&ove and Rotate"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Move and Rotate"), NULL);
-    action->setStatusTip(tr("Move and Rotate Entities"));
+	// tr("Move and Rotate")
+    QAction* action = new QAction(tr("M&ove and Rotate"), NULL);
+	action->setIcon(QIcon(":/extui/modifymoverotate.png"));
+	action->setStatusTip(tr("Move and Rotate Entities"));
     return action;
 }
 

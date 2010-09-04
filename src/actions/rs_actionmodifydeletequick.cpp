@@ -43,18 +43,12 @@ RS_ActionModifyDeleteQuick::RS_ActionModifyDeleteQuick(
 
 
 QAction* RS_ActionModifyDeleteQuick::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {
-#ifdef __APPLE__
-	QKeySequence s = Qt::Key_Backspace;
-#else
-	QKeySequence s = Qt::Key_Delete;
-#endif
-
-/*RVT_PORT	QAction* action = new QAction(tr("Delete selected"), 
-								  tr("&Delete selected"),
-								  s, parent); */
-	QAction* action = new QAction(tr("Delete selected"), parent);
+	// (tr("Delete selected"
+	QAction* action = new QAction(tr("&Delete selected"), parent);
+	action->setIcon(QIcon(":/extui/modifydelete.png"));
 	action->setStatusTip(tr("Delete selected entities"));
-		return action;
+	// action->setShortcut(QKeySequence::Delete);
+	return action;
 }
 
 
