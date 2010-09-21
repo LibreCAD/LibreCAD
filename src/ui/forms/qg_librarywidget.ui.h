@@ -325,7 +325,6 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     RS_StaticGraphicView gv(128,128, painter);
     RS_Graphic graphic;
     if (graphic.open(dxfPath, RS2::FormatUnknown)) {
-        RS_Color Qt::black(0,0,0);
         for (RS_Entity* e=graphic.firstEntity(RS2::ResolveAll);
                 e!=NULL; e=graphic.nextEntity(RS2::ResolveAll)) {
             RS_Pen pen = e->getPen();
