@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QG_CadToolBarLines</class>
+ <widget class="QWidget" name="QG_CadToolBarLines">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>56</width>
+    <height>338</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>56</width>
+    <height>336</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Lines</string>
+  </property>
+  <widget class="QToolButton" name="bBack">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>56</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Back to main menu</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bNormal">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>20</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Line with two points</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/linesnormal.png</normaloff>:/ui/icons/linesnormal.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bAngle">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>20</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Line with given angle</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/linesangle.png</normaloff>:/ui/icons/linesangle.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bHorizontal">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>48</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Horizontal lines</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/lineshor.png</normaloff>:/ui/icons/lineshor.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bVertical">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>48</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Vertical lines</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/linesver.png</normaloff>:/ui/icons/linesver.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bRectangle">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>76</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Rectangles</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/linesrect.png</normaloff>:/ui/icons/linesrect.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bBisector">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>76</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Bisectors</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/linesbisector.png</normaloff>:/ui/icons/linesbisector.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bParallel">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>104</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Parallels with distance</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/linespara.png</normaloff>:/ui/icons/linespara.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bTangent1">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>132</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Tangents from point to circle</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/linestan1.png</normaloff>:/ui/icons/linestan1.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bTangent2">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>132</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Tangents from circle to circle</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/linestan2.png</normaloff>:/ui/icons/linestan2.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bOrthogonal">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>160</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Orthogonal lines</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/linesorthogonal.png</normaloff>:/ui/icons/linesorthogonal.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bRelAngle">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>160</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Lines with relative angles</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/linesrelativeangle.png</normaloff>:/ui/icons/linesrelativeangle.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bPolygon">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>188</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Polygons with Center and Corner</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/linespolygon.png</normaloff>:/ui/icons/linespolygon.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bPolygon2">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>188</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Polygons with two Corners</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/linespolygon2.png</normaloff>:/ui/icons/linespolygon2.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bFree">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>216</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Freehand lines</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/linesfree.png</normaloff>:/ui/icons/linesfree.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bParallelThrough">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>104</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Parallels through point</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/linesparathrough.png</normaloff>:/ui/icons/linesparathrough.png</iconset>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <includes>
+  <include location="local">qg_actionhandler.h</include>
+ </includes>
+ <resources>
+  <include location="png/icons.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>bNormal</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bFree</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLineFree()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bParallel</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLineParallel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bAngle</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLineAngle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bHorizontal</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLineHorizontal()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bBisector</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLineBisector()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bTangent1</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLineTangent1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bTangent2</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLineTangent2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bRectangle</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLineRectangle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bBack</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>back()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bRelAngle</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLineRelAngle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bVertical</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLineVertical()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bOrthogonal</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLineOrthogonal()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bPolygon</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLinePolygon()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bPolygon2</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLinePolygon2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bParallelThrough</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLineParallelThrough()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

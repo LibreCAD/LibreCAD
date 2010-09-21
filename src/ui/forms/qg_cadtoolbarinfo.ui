@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QG_CadToolBarInfo</class>
+ <widget class="QWidget" name="QG_CadToolBarInfo">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>56</width>
+    <height>336</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>56</width>
+    <height>336</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Info</string>
+  </property>
+  <widget class="QToolButton" name="bDist">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>20</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Distance (Point, Point)</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/infodist.png</normaloff>:/ui/icons/infodist.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bDist2">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>20</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Distance (Entity, Point)</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/infodist2.png</normaloff>:/ui/icons/infodist2.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bBack">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>56</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Back to main menu</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bAngle">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>48</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Angle</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/infoangle.png</normaloff>:/ui/icons/infoangle.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bTotalLength">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>48</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Total length of selected entities</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/infototallength.png</normaloff>:/ui/icons/infototallength.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bArea">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>76</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Area of polygon</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/infoarea.png</normaloff>:/ui/icons/infoarea.png</iconset>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <includes>
+  <include location="local">qg_actionhandler.h</include>
+ </includes>
+ <resources>
+  <include location="png/icons.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>bDist</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarInfo</receiver>
+   <slot>infoDist()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bBack</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarInfo</receiver>
+   <slot>back()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bDist2</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarInfo</receiver>
+   <slot>infoDist2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bAngle</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarInfo</receiver>
+   <slot>infoAngle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bTotalLength</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarInfo</receiver>
+   <slot>infoTotalLength()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bArea</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarInfo</receiver>
+   <slot>infoArea()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

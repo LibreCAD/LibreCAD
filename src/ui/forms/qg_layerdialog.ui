@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" stdsetdef="1">
+  <resources><include location="png/icons.qrc"/></resources><author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>QG_LayerDialog</class>
+  <widget class="QDialog" name="QG_LayerDialog">
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>253</width>
+        <height>203</height>
+      </rect>
+    </property>
+    <property name="baseSize">
+      <size>
+        <width>0</width>
+        <height>0</height>
+      </size>
+    </property>
+    <property name="windowTitle">
+      <string>Layer Settings</string>
+    </property>
+    <property name="sizeGripEnabled">
+      <bool>false</bool>
+    </property>
+    <layout class="QVBoxLayout">
+      <property name="margin">
+        <number>11</number>
+      </property>
+      <property name="spacing">
+        <number>6</number>
+      </property>
+      <item>
+        <layout class="QHBoxLayout">
+          <item>
+            <widget class="QLabel" name="lName">
+              <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+              </property>
+              <property name="frameShadow">
+                <enum>QFrame::Plain</enum>
+              </property>
+              <property name="text">
+                <string>Layer Name:</string>
+              </property>
+              <property name="wordWrap">
+                <bool>false</bool>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <spacer name="spacer87">
+              <property name="sizeHint">
+                <size>
+                  <width>51</width>
+                  <height>21</height>
+                </size>
+              </property>
+              <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+              </property>
+            </spacer>
+          </item>
+          <item>
+            <widget class="QLineEdit" name="leName">
+              <property name="text">
+                <string/>
+              </property>
+            </widget>
+          </item>
+        </layout>
+      </item>
+      <item>
+        <widget class="QG_WidgetPen" name="wPen"/>
+      </item>
+      <item>
+        <layout class="QHBoxLayout">
+          <item>
+            <spacer name="spacer1">
+              <property name="sizeHint">
+                <size>
+                  <width>79</width>
+                  <height>20</height>
+                </size>
+              </property>
+              <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+              </property>
+            </spacer>
+          </item>
+          <item>
+            <widget class="QPushButton" name="bOk">
+              <property name="text">
+                <string>&amp;OK</string>
+              </property>
+              <property name="shortcut">
+                <string>Alt+O</string>
+              </property>
+              <property name="autoDefault">
+                <bool>true</bool>
+              </property>
+              <property name="default">
+                <bool>true</bool>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="bCancel">
+              <property name="text">
+                <string>Cancel</string>
+              </property>
+              <property name="shortcut">
+                <string>Esc</string>
+              </property>
+              <property name="autoDefault">
+                <bool>true</bool>
+              </property>
+            </widget>
+          </item>
+        </layout>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11"/>
+  <customwidgets>
+    <customwidget>
+      <class>QG_WidgetPen</class>
+      <extends>QWidget</extends>
+      <header location="local">qg_widgetpen.h</header>
+      <sizehint>
+        <width>-1</width>
+        <height>-1</height>
+      </sizehint>
+      <container>0</container>
+      <sizepolicy>
+        <hordata>5</hordata>
+        <verdata>5</verdata>
+      </sizepolicy>
+      <pixmap>image0</pixmap>
+    </customwidget>
+  </customwidgets>
+  <images>
+    <image name="image0">
+      <data format="XPM.GZ" length="45">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade6523250004143a55a6b2e0026630c4f</data>
+    </image>
+  </images>
+  <includes>
+    <include location="local">rs_pen.h</include>
+    <include location="local">rs_layer.h</include>
+    <include location="local">rs.h</include>
+    <include location="local">qg_widgetpen.h</include>
+    <include location="local">rs_layerlist.h</include>
+    <include location="local">qg_widgetpen.h</include>
+  </includes>
+  <connections>
+    <connection>
+      <sender>bCancel</sender>
+      <signal>clicked()</signal>
+      <receiver>QG_LayerDialog</receiver>
+      <slot>reject()</slot>
+    </connection>
+    <connection>
+      <sender>bOk</sender>
+      <signal>clicked()</signal>
+      <receiver>QG_LayerDialog</receiver>
+      <slot>validate()</slot>
+    </connection>
+  </connections>
+</ui>

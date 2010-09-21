@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QG_CadToolBarModify</class>
+ <widget class="QWidget" name="QG_CadToolBarModify">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>56</width>
+    <height>448</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>56</width>
+    <height>336</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Modify</string>
+  </property>
+  <widget class="QToolButton" name="bBack">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>56</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Back to main menu</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bStretch">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>206</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Stretch</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifystretch.png</normaloff>:/ui/icons/modifystretch.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bRound">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>172</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Round</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifyround.png</normaloff>:/ui/icons/modifyround.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bBevel">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>172</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Bevel</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifybevel.png</normaloff>:/ui/icons/modifybevel.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bTrimAmount">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>138</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Trim by amount</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifytrimamount.png</normaloff>:/ui/icons/modifytrimamount.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bTrim">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>110</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Trim / Extend</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifytrim.png</normaloff>:/ui/icons/modifytrim.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bDelete">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>268</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Delete</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifydelete.png</normaloff>:/ui/icons/modifydelete.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bAttributes">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>240</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Edit Entity Attributes</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifyattributes.png</normaloff>:/ui/icons/modifyattributes.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMirror">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>48</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Mirror</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifymirror.png</normaloff>:/ui/icons/modifymirror.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bScale">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>48</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Scale</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifyscale.png</normaloff>:/ui/icons/modifyscale.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bRotate">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>20</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Rotate</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifyrotate.png</normaloff>:/ui/icons/modifyrotate.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMove">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>20</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Move</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifymove.png</normaloff>:/ui/icons/modifymove.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMoveRotate">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>76</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Move and Rotate</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifymoverotate.png</normaloff>:/ui/icons/modifymoverotate.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bRotate2">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>76</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Rotate around two centers</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifyrotate2.png</normaloff>:/ui/icons/modifyrotate2.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bTrim2">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>110</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Trim / Extend two</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifytrim2.png</normaloff>:/ui/icons/modifytrim2.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bCut">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>206</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Divide</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifycut.png</normaloff>:/ui/icons/modifycut.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bExplode">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>268</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Explode</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifyexplode.png</normaloff>:/ui/icons/modifyexplode.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bExplodeText">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>302</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Explode Text into Letters</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifyexplodetext.png</normaloff>:/ui/icons/modifyexplodetext.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bEntity">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>240</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Edit Entity Geometry</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifyentity.png</normaloff>:/ui/icons/modifyentity.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bEntityText">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>302</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Edit Text</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/modifytext.png</normaloff>:/ui/icons/modifytext.png</iconset>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <includes>
+  <include location="local">qg_actionhandler.h</include>
+ </includes>
+ <resources>
+  <include location="png/icons.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>bMove</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyMove()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bBack</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>back()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bRotate</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyRotate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bEntity</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyEntity()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bScale</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyScale()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyDelete()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bTrim</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyTrim()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bMirror</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyMirror()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bTrim2</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyTrim2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bMoveRotate</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyMoveRotate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bTrimAmount</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyTrimAmount()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bCut</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyCut()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bRotate2</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyRotate2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bStretch</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyStretch()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bBevel</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyBevel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bRound</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyRound()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bExplode</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyExplode()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bAttributes</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyAttributes()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bExplodeText</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyExplodeText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bEntityText</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyEntity()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

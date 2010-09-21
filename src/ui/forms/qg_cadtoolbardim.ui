@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QG_CadToolBarDim</class>
+ <widget class="QWidget" name="QG_CadToolBarDim">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>56</width>
+    <height>336</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>56</width>
+    <height>336</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Dimensions</string>
+  </property>
+  <widget class="QToolButton" name="bBack">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>56</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Back to main menu</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bAligned">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>20</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Aligned Dimension</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/dimaligned.png</normaloff>:/ui/icons/dimaligned.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bLinear">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>20</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Linear Dimension</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/dimaligned.png</normaloff>:/ui/icons/dimaligned.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bLinearHor">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>48</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Horizontal Dimension</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/dimhor.png</normaloff>:/ui/icons/dimhor.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bLinearVer">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>48</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Vertical Dimension</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/dimver.png</normaloff>:/ui/icons/dimver.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bRadial">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>76</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Radial Dimension</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/dimradial.png</normaloff>:/ui/icons/dimradial.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bDiametric">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>76</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Diametric Dimension</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/dimdiametric.png</normaloff>:/ui/icons/dimdiametric.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bAngular">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>104</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Angular Dimension</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/dimangular.png</normaloff>:/ui/icons/dimangular.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bLeader">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>104</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Leader</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/dimleader.png</normaloff>:/ui/icons/dimleader.png</iconset>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <includes>
+  <include location="local">qg_actionhandler.h</include>
+ </includes>
+ <resources>
+  <include location="png/icons.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>bAligned</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarDim</receiver>
+   <slot>drawDimAligned()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bLinearHor</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarDim</receiver>
+   <slot>drawDimLinearHor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bLinearVer</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarDim</receiver>
+   <slot>drawDimLinearVer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bLinear</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarDim</receiver>
+   <slot>drawDimLinear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bBack</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarDim</receiver>
+   <slot>back()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bRadial</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarDim</receiver>
+   <slot>drawDimRadial()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bDiametric</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarDim</receiver>
+   <slot>drawDimDiametric()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bAngular</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarDim</receiver>
+   <slot>drawDimAngular()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bLeader</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarDim</receiver>
+   <slot>drawDimLeader()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

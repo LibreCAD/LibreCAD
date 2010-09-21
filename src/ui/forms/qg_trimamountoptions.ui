@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" stdsetdef="1">
+  <resources><include location="png/icons.qrc"/></resources><author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>QG_TrimAmountOptions</class>
+  <widget class="QWidget" name="QG_TrimAmountOptions">
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>129</width>
+        <height>24</height>
+      </rect>
+    </property>
+    <property name="sizePolicy">
+      <sizepolicy>
+        <hsizetype>4</hsizetype>
+        <vsizetype>5</vsizetype>
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+      </sizepolicy>
+    </property>
+    <property name="minimumSize">
+      <size>
+        <width>128</width>
+        <height>22</height>
+      </size>
+    </property>
+    <property name="maximumSize">
+      <size>
+        <width>170</width>
+        <height>32767</height>
+      </size>
+    </property>
+    <property name="windowTitle">
+      <string>Trim Amount Options</string>
+    </property>
+    <property name="toolTip" stdset="0">
+      <string>Distance. Negative values for trimming, positive values for extending.</string>
+    </property>
+    <layout class="QHBoxLayout">
+      <property name="margin">
+        <number>1</number>
+      </property>
+      <item>
+        <widget class="QLabel" name="lDist">
+          <property name="text">
+            <string>Amount:</string>
+          </property>
+          <property name="wordWrap">
+            <bool>false</bool>
+          </property>
+        </widget>
+      </item>
+      <item>
+        <widget class="QLineEdit" name="leDist"/>
+      </item>
+      <item>
+        <widget class="Line" name="sep1">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>0</hsizetype>
+              <vsizetype>1</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="frameShape">
+            <enum>QFrame::VLine</enum>
+          </property>
+          <property name="frameShadow">
+            <enum>QFrame::Sunken</enum>
+          </property>
+        </widget>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11"/>
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+  <includes>
+    <include location="local">rs_line.h</include>
+    <include location="local">rs_settings.h</include>
+    <include location="local">rs_actionmodifytrimamount.h</include>
+  </includes>
+  <connections>
+    <connection>
+      <sender>leDist</sender>
+      <signal>textChanged(QString)</signal>
+      <receiver>QG_TrimAmountOptions</receiver>
+      <slot>updateDist(QString)</slot>
+    </connection>
+  </connections>
+</ui>
