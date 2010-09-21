@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QG_CadToolBarArcs</class>
+ <widget class="QWidget" name="QG_CadToolBarArcs">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>56</width>
+    <height>336</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>56</width>
+    <height>336</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Arcs</string>
+  </property>
+  <widget class="QToolButton" name="bBack">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>56</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Back to main menu</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bArcParallel">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>48</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Concentric</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/arcspara.png</normaloff>:/ui/icons/arcspara.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bArc">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>20</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Arc with Center, Point, Angles</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/arcscraa.png</normaloff>:/ui/icons/arcscraa.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bArc3P">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>20</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Arc with three points</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/arcs3p.png</normaloff>:/ui/icons/arcs3p.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bArcTangential">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>48</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Arc tangential to base entity with radius</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/arcstangential.png</normaloff>:/ui/icons/arcstangential.png</iconset>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>bBack</tabstop>
+  <tabstop>bArc</tabstop>
+  <tabstop>bArc3P</tabstop>
+  <tabstop>bArcParallel</tabstop>
+ </tabstops>
+ <includes>
+  <include location="local">qg_actionhandler.h</include>
+ </includes>
+ <resources>
+  <include location="png/icons.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>bArc</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarArcs</receiver>
+   <slot>drawArc()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bArc3P</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarArcs</receiver>
+   <slot>drawArc3P()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bArcParallel</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarArcs</receiver>
+   <slot>drawArcParallel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bBack</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarArcs</receiver>
+   <slot>back()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bArcTangential</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarArcs</receiver>
+   <slot>drawArcTangential()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

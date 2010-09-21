@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QG_CadToolBarMain</class>
+ <widget class="QWidget" name="QG_CadToolBarMain">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>56</width>
+    <height>336</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>56</width>
+    <height>336</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Main</string>
+  </property>
+  <widget class="QToolButton" name="bMenuLine">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>0</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Show menu &quot;Lines&quot;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/menuline.png</normaloff>:/ui/icons/menuline.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuArc">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>28</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Show menu &quot;Arcs&quot;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/menuarc.png</normaloff>:/ui/icons/menuarc.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuPoint">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Points</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/points.png</normaloff>:/ui/icons/points.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuSpline">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>56</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Splines</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/menuspline.png</normaloff>:/ui/icons/menuspline.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuEllipse">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>56</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Show menu &quot;Ellipses&quot;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/menuellipse.png</normaloff>:/ui/icons/menuellipse.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuCircle">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>28</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Show menu &quot;Circles&quot;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/menucircle.png</normaloff>:/ui/icons/menucircle.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuText">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>116</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Texts</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/menutext.png</normaloff>:/ui/icons/menutext.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuDim">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>116</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Show menu &quot;Dimensions&quot;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/dimhor.png</normaloff>:/ui/icons/dimhor.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuHatch">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>144</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Hatches / Solid Fills</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/menuhatch.png</normaloff>:/ui/icons/menuhatch.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuImage">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>144</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Raster Image</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/menuimage.png</normaloff>:/ui/icons/menuimage.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuModify">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>176</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Show menu &quot;Edit&quot;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/menuedit.png</normaloff>:/ui/icons/menuedit.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuInfo">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>176</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Show menu &quot;Measure&quot;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/menumeasure.png</normaloff>:/ui/icons/menumeasure.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuBlock">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>204</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Create Block</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/menublock.png</normaloff>:/ui/icons/menublock.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuSelect">
+   <property name="geometry">
+    <rect>
+     <x>28</x>
+     <y>204</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Show menu &quot;Select&quot;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/menuselect.png</normaloff>:/ui/icons/menuselect.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuPolyline">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>84</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Polylines</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="png/icons.qrc">
+     <normaloff>:/ui/icons/menupolyline.png</normaloff>:/ui/icons/menupolyline.png</iconset>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <includes>
+  <include location="local">qg_actionhandler.h</include>
+ </includes>
+ <resources>
+  <include location="png/icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>
