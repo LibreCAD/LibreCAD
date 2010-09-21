@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" stdsetdef="1">
+  <resources><include location="png/icons.qrc"/></resources><author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>QG_LibraryWidget</class>
+  <widget class="QWidget" name="QG_LibraryWidget">
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>146</width>
+        <height>413</height>
+      </rect>
+    </property>
+    <property name="windowTitle">
+      <string>Library Browser</string>
+    </property>
+    <layout class="QVBoxLayout">
+      <property name="margin">
+        <number>2</number>
+      </property>
+      <property name="spacing">
+        <number>2</number>
+      </property>
+      <item>
+        <widget class="Q3ListView" name="lvDirectory">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>7</hsizetype>
+              <vsizetype>13</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="minimumSize">
+            <size>
+              <width>0</width>
+              <height>32</height>
+            </size>
+          </property>
+          <property name="rootIsDecorated">
+            <bool>true</bool>
+          </property>
+          <property name="resizeMode">
+            <enum>Q3ListView::LastColumn</enum>
+          </property>
+          <property name="treeStepSize">
+            <number>14</number>
+          </property>
+          <column>
+            <property name="text">
+              <string>Directories</string>
+            </property>
+            <property name="clickable">
+              <bool>false</bool>
+            </property>
+            <property name="resizable">
+              <bool>false</bool>
+            </property>
+          </column>
+        </widget>
+      </item>
+      <item>
+        <widget class="Q3IconView" name="ivPreview">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>7</hsizetype>
+              <vsizetype>13</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="minimumSize">
+            <size>
+              <width>0</width>
+              <height>32</height>
+            </size>
+          </property>
+          <property name="acceptDrops">
+            <bool>false</bool>
+          </property>
+          <property name="resizePolicy">
+            <enum>Q3ScrollView::AutoOneFit</enum>
+          </property>
+          <property name="dragAutoScroll">
+            <bool>false</bool>
+          </property>
+          <property name="spacing">
+            <number>2</number>
+          </property>
+          <property name="arrangement">
+            <enum>Q3IconView::LeftToRight</enum>
+          </property>
+          <property name="resizeMode">
+            <enum>Q3IconView::Adjust</enum>
+          </property>
+          <property name="maxItemWidth">
+            <number>64</number>
+          </property>
+          <property name="autoArrange">
+            <bool>true</bool>
+          </property>
+          <property name="itemsMovable">
+            <bool>false</bool>
+          </property>
+          <property name="wordWrapIconText">
+            <bool>false</bool>
+          </property>
+          <property name="showToolTips">
+            <bool>true</bool>
+          </property>
+        </widget>
+      </item>
+      <item>
+        <widget class="QPushButton" name="bInsert">
+          <property name="text">
+            <string>Insert</string>
+          </property>
+        </widget>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11"/>
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+  <includes>
+    <include location="local">qg_actionhandler.h</include>
+    <include location="global">qdir.h</include>
+    <include location="global">qmap.h</include>
+    <include location="local">qg_listviewitem.h</include>
+  </includes>
+  <connections>
+    <connection>
+      <sender>lvDirectory</sender>
+      <signal>currentChanged(Q3ListViewItem*)</signal>
+      <receiver>QG_LibraryWidget</receiver>
+      <slot>updatePreview(Q3ListViewItem*)</slot>
+    </connection>
+    <connection>
+      <sender>bInsert</sender>
+      <signal>clicked()</signal>
+      <receiver>QG_LibraryWidget</receiver>
+      <slot>insert()</slot>
+    </connection>
+  </connections>
+</ui>

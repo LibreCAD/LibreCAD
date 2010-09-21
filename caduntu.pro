@@ -17,7 +17,7 @@ DEFINES += QC_VERSION="\"1.0.0alpha3\""
 # Add qt3support
 QT +=  qt3support
 
-CONFIG += qt warn_on link_prl uic3
+CONFIG += qt warn_on link_prl 
 
 QMAKE_CXXFLAGS_DEBUG += 
 QMAKE_CXXFLAGS += 
@@ -103,8 +103,8 @@ INCLUDEPATH += \
 		src/actions \
 		src/main \
 		src/ui \
-		src/ui/forms3 \
-		res 		
+		src/ui/forms \
+		res
 
 #################################################################################	
 # Library
@@ -635,6 +635,78 @@ HEADERS += \
 		src/ui/qg_recentfiles.h \
 		src/ui/qg_scrollbar.h \
 		src/ui/qg_widthbox.h \
+	    src/ui/forms/qg_arcoptions.h \
+	    src/ui/forms/qg_beveloptions.h \
+	    src/ui/forms/qg_blockdialog.h \
+	    src/ui/forms/qg_cadtoolbar.h \
+	    src/ui/forms/qg_cadtoolbardim.h \
+	    src/ui/forms/qg_cadtoolbarellipses.h \
+	    src/ui/forms/qg_cadtoolbarcircles.h \
+	    src/ui/forms/qg_cadtoolbarlines.h \
+	    src/ui/forms/qg_cadtoolbarpoints.h \
+	    src/ui/forms/qg_cadtoolbarselect.h \
+	    src/ui/forms/qg_cadtoolbarpolylines.h \
+	    src/ui/forms/qg_cadtoolbarsplines.h \
+	    src/ui/forms/qg_cadtoolbarinfo.h \
+	    src/ui/forms/qg_cadtoolbarmain.h \
+	    src/ui/forms/qg_cadtoolbarsnap.h \
+	    src/ui/forms/qg_cadtoolbarmodify.h \
+	    src/ui/forms/qg_commandwidget.h \
+	    src/ui/forms/qg_cadtoolbararcs.h \
+	    src/ui/forms/qg_circleoptions.h \
+	    src/ui/forms/qg_coordinatewidget.h \
+	    src/ui/forms/qg_arctangentialoptions.h \
+	    src/ui/forms/qg_dimensionlabeleditor.h \
+	    src/ui/forms/qg_dimlinearoptions.h \
+	    src/ui/forms/qg_dimoptions.h \
+	    src/ui/forms/qg_dlgarc.h \
+	    src/ui/forms/qg_dlgattributes.h \
+	    src/ui/forms/qg_dlgcircle.h \
+	    src/ui/forms/qg_dlgdimension.h \
+	    src/ui/forms/qg_dlgdimlinear.h \
+	    src/ui/forms/qg_dlgellipse.h \
+	    src/ui/forms/qg_dlghatch.h \
+	    src/ui/forms/qg_dlgimageoptions.h \
+	    src/ui/forms/qg_dlginitial.h \
+	    src/ui/forms/qg_dlginsert.h \
+	    src/ui/forms/qg_dlgline.h \
+	    src/ui/forms/qg_dlgmirror.h \
+	    src/ui/forms/qg_dlgmove.h \
+	    src/ui/forms/qg_dlgmoverotate.h \
+	    src/ui/forms/qg_dlgoptionsdrawing.h \
+	    src/ui/forms/qg_dlgoptionsgeneral.h \
+	    src/ui/forms/qg_dlgoptionsvariables.h \
+	    src/ui/forms/qg_dlgpoint.h \
+	    src/ui/forms/qg_dlgrotate.h \
+	    src/ui/forms/qg_dlgrotate2.h \
+	    src/ui/forms/qg_dlgscale.h \
+	    src/ui/forms/qg_dlgspline.h \
+	    src/ui/forms/qg_dlgtext.h \
+	    src/ui/forms/qg_exitdialog.h \
+	    src/ui/forms/qg_imageoptions.h \
+	    src/ui/forms/qg_insertoptions.h \
+	    src/ui/forms/qg_layerdialog.h \
+	    src/ui/forms/qg_libraryinsertoptions.h \
+	    src/ui/forms/qg_librarywidget.h \
+	    src/ui/forms/qg_lineangleoptions.h \
+	    src/ui/forms/qg_linebisectoroptions.h \
+	    src/ui/forms/qg_lineoptions.h \
+	    src/ui/forms/qg_lineparalleloptions.h \
+	    src/ui/forms/qg_lineparallelthroughoptions.h \
+	    src/ui/forms/qg_linepolygon2options.h \
+	    src/ui/forms/qg_linepolygonoptions.h \
+	    src/ui/forms/qg_linerelangleoptions.h \
+	    src/ui/forms/qg_mousewidget.h \
+	    src/ui/forms/qg_moverotateoptions.h \
+	    src/ui/forms/qg_printpreviewoptions.h \
+	    src/ui/forms/qg_roundoptions.h \
+	    src/ui/forms/qg_selectionwidget.h \
+	    src/ui/forms/qg_snapdistoptions.h \
+	    src/ui/forms/qg_splineoptions.h \
+	    src/ui/forms/qg_textoptions.h \
+	    src/ui/forms/qg_trimamountoptions.h \
+	    src/ui/forms/qg_widgetpen.h \
+
 
 SOURCES += \
 		src/ui/qg_actionfactory.cpp \
@@ -653,79 +725,151 @@ SOURCES += \
 		src/ui/qg_patternbox.cpp \
 		src/ui/qg_pentoolbar.cpp \
 		src/ui/qg_recentfiles.cpp \
-		src/ui/qg_widthbox.cpp 
+		src/ui/qg_widthbox.cpp \
+	    src/ui/forms/qg_arcoptions.cpp \
+	    src/ui/forms/qg_arctangentialoptions.cpp \
+	    src/ui/forms/qg_beveloptions.cpp \
+	    src/ui/forms/qg_blockdialog.cpp \
+	    src/ui/forms/qg_cadtoolbar.cpp \
+	    src/ui/forms/qg_cadtoolbararcs.cpp \
+	    src/ui/forms/qg_cadtoolbarcircles.cpp \
+	    src/ui/forms/qg_cadtoolbardim.cpp \
+	    src/ui/forms/qg_cadtoolbarellipses.cpp \
+	    src/ui/forms/qg_cadtoolbarinfo.cpp \
+	    src/ui/forms/qg_cadtoolbarlines.cpp \
+	    src/ui/forms/qg_cadtoolbarmain.cpp \
+	    src/ui/forms/qg_cadtoolbarmodify.cpp \
+	    src/ui/forms/qg_cadtoolbarpoints.cpp \
+	    src/ui/forms/qg_cadtoolbarpolylines.cpp \
+	    src/ui/forms/qg_cadtoolbarselect.cpp \
+	    src/ui/forms/qg_cadtoolbarsnap.cpp \
+	    src/ui/forms/qg_cadtoolbarsplines.cpp \
+	    src/ui/forms/qg_circleoptions.cpp \
+	    src/ui/forms/qg_commandwidget.cpp \
+	    src/ui/forms/qg_coordinatewidget.cpp \
+	    src/ui/forms/qg_dimensionlabeleditor.cpp \
+	    src/ui/forms/qg_dimlinearoptions.cpp \
+	    src/ui/forms/qg_dimoptions.cpp \
+	    src/ui/forms/qg_dlgarc.cpp \
+	    src/ui/forms/qg_dlgattributes.cpp \
+	    src/ui/forms/qg_dlgcircle.cpp \
+	    src/ui/forms/qg_dlgdimension.cpp \
+	    src/ui/forms/qg_dlgdimlinear.cpp \
+	    src/ui/forms/qg_dlgellipse.cpp \
+	    src/ui/forms/qg_dlghatch.cpp \
+	    src/ui/forms/qg_dlgimageoptions.cpp \
+	    src/ui/forms/qg_dlginitial.cpp \
+	    src/ui/forms/qg_dlginsert.cpp \
+	    src/ui/forms/qg_dlgline.cpp \
+	    src/ui/forms/qg_dlgmirror.cpp \
+	    src/ui/forms/qg_dlgmove.cpp \
+	    src/ui/forms/qg_dlgmoverotate.cpp \
+	    src/ui/forms/qg_dlgoptionsdrawing.cpp \
+	    src/ui/forms/qg_dlgoptionsgeneral.cpp \
+	    src/ui/forms/qg_dlgoptionsvariables.cpp \
+	    src/ui/forms/qg_dlgpoint.cpp \
+	    src/ui/forms/qg_dlgrotate.cpp \
+	    src/ui/forms/qg_dlgrotate2.cpp \
+	    src/ui/forms/qg_dlgscale.cpp \
+	    src/ui/forms/qg_dlgspline.cpp \
+	    src/ui/forms/qg_dlgtext.cpp \
+	    src/ui/forms/qg_exitdialog.cpp \
+	    src/ui/forms/qg_imageoptions.cpp \
+	    src/ui/forms/qg_insertoptions.cpp \
+	    src/ui/forms/qg_layerdialog.cpp \
+	    src/ui/forms/qg_libraryinsertoptions.cpp \
+	    src/ui/forms/qg_librarywidget.cpp \
+	    src/ui/forms/qg_lineangleoptions.cpp \
+	    src/ui/forms/qg_linebisectoroptions.cpp \
+	    src/ui/forms/qg_lineoptions.cpp \
+	    src/ui/forms/qg_lineparalleloptions.cpp \
+	    src/ui/forms/qg_lineparallelthroughoptions.cpp \
+	    src/ui/forms/qg_linepolygon2options.cpp \
+	    src/ui/forms/qg_linepolygonoptions.cpp \
+	    src/ui/forms/qg_linerelangleoptions.cpp \
+	    src/ui/forms/qg_mousewidget.cpp \
+	    src/ui/forms/qg_moverotateoptions.cpp \
+	    src/ui/forms/qg_printpreviewoptions.cpp \
+	    src/ui/forms/qg_roundoptions.cpp \
+	    src/ui/forms/qg_selectionwidget.cpp \
+	    src/ui/forms/qg_snapdistoptions.cpp \
+	    src/ui/forms/qg_splineoptions.cpp \
+	    src/ui/forms/qg_textoptions.cpp \
+	    src/ui/forms/qg_trimamountoptions.cpp \
+	    src/ui/forms/qg_widgetpen.cpp
+	    
 
-FORMS3       = \
-		src/ui/forms3/qg_commandwidget.ui \
-		src/ui/forms3/qg_arcoptions.ui \
-		src/ui/forms3/qg_arctangentialoptions.ui \
-		src/ui/forms3/qg_beveloptions.ui \
-		src/ui/forms3/qg_blockdialog.ui \
-		src/ui/forms3/qg_cadtoolbar.ui \
-		src/ui/forms3/qg_cadtoolbararcs.ui \
-		src/ui/forms3/qg_cadtoolbarcircles.ui \
-		src/ui/forms3/qg_cadtoolbardim.ui \
-		src/ui/forms3/qg_cadtoolbarellipses.ui \
-		src/ui/forms3/qg_cadtoolbarinfo.ui \
-		src/ui/forms3/qg_cadtoolbarlines.ui \
-		src/ui/forms3/qg_cadtoolbarmain.ui \
-		src/ui/forms3/qg_cadtoolbarmodify.ui \
-		src/ui/forms3/qg_cadtoolbarpoints.ui \
-		src/ui/forms3/qg_cadtoolbarpolylines.ui \
-		src/ui/forms3/qg_cadtoolbarselect.ui \
-		src/ui/forms3/qg_cadtoolbarsnap.ui \
-		src/ui/forms3/qg_cadtoolbarsplines.ui \
-		src/ui/forms3/qg_circleoptions.ui \
-		src/ui/forms3/qg_coordinatewidget.ui \
-		src/ui/forms3/qg_dimensionlabeleditor.ui \
-		src/ui/forms3/qg_dimlinearoptions.ui \
-		src/ui/forms3/qg_dimoptions.ui \
-		src/ui/forms3/qg_dlgattributes.ui \
-		src/ui/forms3/qg_dlghatch.ui \
-		src/ui/forms3/qg_dlginitial.ui \
-		src/ui/forms3/qg_dlginsert.ui \
-		src/ui/forms3/qg_dlgimageoptions.ui \
-		src/ui/forms3/qg_dlgarc.ui \
-		src/ui/forms3/qg_dlgcircle.ui \
-		src/ui/forms3/qg_dlgdimension.ui \
-		src/ui/forms3/qg_dlgdimlinear.ui \
-		src/ui/forms3/qg_dlgline.ui \
-		src/ui/forms3/qg_dlgellipse.ui \
-		src/ui/forms3/qg_dlgmirror.ui \
-		src/ui/forms3/qg_dlgmove.ui \
-		src/ui/forms3/qg_dlgmoverotate.ui \
-		src/ui/forms3/qg_dlgoptionsdrawing.ui \
-		src/ui/forms3/qg_dlgoptionsgeneral.ui \
-		src/ui/forms3/qg_dlgpoint.ui \
-		src/ui/forms3/qg_dlgrotate.ui \
-		src/ui/forms3/qg_dlgrotate2.ui \
-		src/ui/forms3/qg_dlgscale.ui \
-		src/ui/forms3/qg_dlgspline.ui \
-		src/ui/forms3/qg_dlgtext.ui \
-		src/ui/forms3/qg_exitdialog.ui \
-		src/ui/forms3/qg_imageoptions.ui \
-		src/ui/forms3/qg_insertoptions.ui \
-		src/ui/forms3/qg_layerdialog.ui \
-		src/ui/forms3/qg_libraryinsertoptions.ui \
-		src/ui/forms3/qg_librarywidget.ui \
-		src/ui/forms3/qg_lineangleoptions.ui \
-		src/ui/forms3/qg_linebisectoroptions.ui \
-		src/ui/forms3/qg_lineoptions.ui \
-		src/ui/forms3/qg_lineparalleloptions.ui \
-		src/ui/forms3/qg_lineparallelthroughoptions.ui \
-		src/ui/forms3/qg_linepolygon2options.ui \
-		src/ui/forms3/qg_linepolygonoptions.ui \
-		src/ui/forms3/qg_linerelangleoptions.ui \
-		src/ui/forms3/qg_mousewidget.ui \
-		src/ui/forms3/qg_moverotateoptions.ui \
-		src/ui/forms3/qg_printpreviewoptions.ui \
-		src/ui/forms3/qg_roundoptions.ui \
-		src/ui/forms3/qg_selectionwidget.ui \
-		src/ui/forms3/qg_snapdistoptions.ui \
-		src/ui/forms3/qg_splineoptions.ui \
-		src/ui/forms3/qg_textoptions.ui \
-		src/ui/forms3/qg_trimamountoptions.ui \
-		src/ui/forms3/qg_widgetpen.ui 
+FORMS       = \
+		src/ui/forms/qg_commandwidget.ui \
+		src/ui/forms/qg_arcoptions.ui \
+		src/ui/forms/qg_arctangentialoptions.ui \
+		src/ui/forms/qg_beveloptions.ui \
+		src/ui/forms/qg_blockdialog.ui \
+		src/ui/forms/qg_cadtoolbar.ui \
+		src/ui/forms/qg_cadtoolbararcs.ui \
+		src/ui/forms/qg_cadtoolbarcircles.ui \
+		src/ui/forms/qg_cadtoolbardim.ui \
+		src/ui/forms/qg_cadtoolbarellipses.ui \
+		src/ui/forms/qg_cadtoolbarinfo.ui \
+		src/ui/forms/qg_cadtoolbarlines.ui \
+		src/ui/forms/qg_cadtoolbarmain.ui \
+		src/ui/forms/qg_cadtoolbarmodify.ui \
+		src/ui/forms/qg_cadtoolbarpoints.ui \
+		src/ui/forms/qg_cadtoolbarpolylines.ui \
+		src/ui/forms/qg_cadtoolbarselect.ui \
+		src/ui/forms/qg_cadtoolbarsnap.ui \
+		src/ui/forms/qg_cadtoolbarsplines.ui \
+		src/ui/forms/qg_circleoptions.ui \
+		src/ui/forms/qg_coordinatewidget.ui \
+		src/ui/forms/qg_dimensionlabeleditor.ui \
+		src/ui/forms/qg_dimlinearoptions.ui \
+		src/ui/forms/qg_dimoptions.ui \
+		src/ui/forms/qg_dlgattributes.ui \
+		src/ui/forms/qg_dlghatch.ui \
+		src/ui/forms/qg_dlginitial.ui \
+		src/ui/forms/qg_dlginsert.ui \
+		src/ui/forms/qg_dlgimageoptions.ui \
+		src/ui/forms/qg_dlgarc.ui \
+		src/ui/forms/qg_dlgcircle.ui \
+		src/ui/forms/qg_dlgdimension.ui \
+		src/ui/forms/qg_dlgdimlinear.ui \
+		src/ui/forms/qg_dlgline.ui \
+		src/ui/forms/qg_dlgellipse.ui \
+		src/ui/forms/qg_dlgmirror.ui \
+		src/ui/forms/qg_dlgmove.ui \
+		src/ui/forms/qg_dlgmoverotate.ui \
+		src/ui/forms/qg_dlgoptionsdrawing.ui \
+		src/ui/forms/qg_dlgoptionsgeneral.ui \
+		src/ui/forms/qg_dlgpoint.ui \
+		src/ui/forms/qg_dlgrotate.ui \
+		src/ui/forms/qg_dlgrotate2.ui \
+		src/ui/forms/qg_dlgscale.ui \
+		src/ui/forms/qg_dlgspline.ui \
+		src/ui/forms/qg_dlgtext.ui \
+		src/ui/forms/qg_exitdialog.ui \
+		src/ui/forms/qg_imageoptions.ui \
+		src/ui/forms/qg_insertoptions.ui \
+		src/ui/forms/qg_layerdialog.ui \
+		src/ui/forms/qg_libraryinsertoptions.ui \
+		src/ui/forms/qg_librarywidget.ui \
+		src/ui/forms/qg_lineangleoptions.ui \
+		src/ui/forms/qg_linebisectoroptions.ui \
+		src/ui/forms/qg_lineoptions.ui \
+		src/ui/forms/qg_lineparalleloptions.ui \
+		src/ui/forms/qg_lineparallelthroughoptions.ui \
+		src/ui/forms/qg_linepolygon2options.ui \
+		src/ui/forms/qg_linepolygonoptions.ui \
+		src/ui/forms/qg_linerelangleoptions.ui \
+		src/ui/forms/qg_mousewidget.ui \
+		src/ui/forms/qg_moverotateoptions.ui \
+		src/ui/forms/qg_printpreviewoptions.ui \
+		src/ui/forms/qg_roundoptions.ui \
+		src/ui/forms/qg_selectionwidget.ui \
+		src/ui/forms/qg_snapdistoptions.ui \
+		src/ui/forms/qg_splineoptions.ui \
+		src/ui/forms/qg_textoptions.ui \
+		src/ui/forms/qg_trimamountoptions.ui \
+		src/ui/forms/qg_widgetpen.ui 
 		
 TRANSLATIONS += \
 		ts/ui/qcadguiqt_cs.ts \
