@@ -56,13 +56,14 @@ public:
     {
         if (QG_DlgLine->objectName().isEmpty())
             QG_DlgLine->setObjectName(QString::fromUtf8("QG_DlgLine"));
-        QG_DlgLine->resize(457, 195);
+        /* RVT DLG does sizing
+		QG_DlgLine->resize(457, 195);
         QSizePolicy sizePolicy(static_cast<QSizePolicy::Policy>(1), static_cast<QSizePolicy::Policy>(1));
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(QG_DlgLine->sizePolicy().hasHeightForWidth());
         QG_DlgLine->setSizePolicy(sizePolicy);
-        QG_DlgLine->setMinimumSize(QSize(300, 190));
+        QG_DlgLine->setMinimumSize(QSize(300, 190)); */
         vboxLayout = new QVBoxLayout(QG_DlgLine);
         vboxLayout->setSpacing(6);
         vboxLayout->setContentsMargins(11, 11, 11, 11);
