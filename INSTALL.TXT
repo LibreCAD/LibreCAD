@@ -8,6 +8,7 @@ CD into that directory and follow these instructions:
 qmake
 make
 
+NOTE: On systems (Ubuntu??) You might need to run qmake-qt4 instead of just qmake
 
 ---- Windows Users ----
 
