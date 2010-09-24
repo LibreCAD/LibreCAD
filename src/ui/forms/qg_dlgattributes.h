@@ -41,13 +41,13 @@ public:
     {
         if (QG_DlgAttributes->objectName().isEmpty())
             QG_DlgAttributes->setObjectName(QString::fromUtf8("QG_DlgAttributes"));
-        QG_DlgAttributes->resize(300, 192);
+        /* RVT dlg is set in UI QG_DlgAttributes->resize(300, 192); 
         QSizePolicy sizePolicy(static_cast<QSizePolicy::Policy>(1), static_cast<QSizePolicy::Policy>(1));
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(QG_DlgAttributes->sizePolicy().hasHeightForWidth());
         QG_DlgAttributes->setSizePolicy(sizePolicy);
-        QG_DlgAttributes->setMinimumSize(QSize(300, 190));
+        QG_DlgAttributes->setMinimumSize(QSize(300, 190)); */
         vboxLayout = new QVBoxLayout(QG_DlgAttributes);
         vboxLayout->setSpacing(6);
         vboxLayout->setContentsMargins(11, 11, 11, 11);
