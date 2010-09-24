@@ -40,10 +40,11 @@ public:
     {
         if (QG_WidgetPen->objectName().isEmpty())
             QG_WidgetPen->setObjectName(QString::fromUtf8("QG_WidgetPen"));
-        QG_WidgetPen->resize(236, 121);
+		/* UI does sizing RVT
+        QG_WidgetPen->resize(236, 121); */
         gridLayout = new QGridLayout(QG_WidgetPen);
         gridLayout->setSpacing(0);
-        gridLayout->setContentsMargins(0, 0, 0, 0);
+        gridLayout->setContentsMargins(0, 0, 0, 0); 
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         bgPen = new Q3ButtonGroup(QG_WidgetPen);
         bgPen->setObjectName(QString::fromUtf8("bgPen"));
