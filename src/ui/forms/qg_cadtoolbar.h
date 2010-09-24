@@ -37,11 +37,12 @@ public:
         if (QG_CadToolBar->objectName().isEmpty())
             QG_CadToolBar->setObjectName(QString::fromUtf8("QG_CadToolBar"));
         QG_CadToolBar->resize(56, 336);
+		/*
         QSizePolicy sizePolicy(static_cast<QSizePolicy::Policy>(0), static_cast<QSizePolicy::Policy>(3));
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(QG_CadToolBar->sizePolicy().hasHeightForWidth());
-        QG_CadToolBar->setSizePolicy(sizePolicy);
+        QG_CadToolBar->setSizePolicy(sizePolicy); */
         QG_CadToolBar->setMinimumSize(QSize(56, 336));
 
         retranslateUi(QG_CadToolBar);

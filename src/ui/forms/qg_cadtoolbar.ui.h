@@ -129,7 +129,7 @@ void QG_CadToolBar::createSubToolBars(QG_ActionHandler* ah) {
     tbSelect->setCadToolBar(this);
     tbSelect->hide();
 
-    //showToolBarMain();
+    showToolBarMain();
 }
 
 
