@@ -108,7 +108,7 @@ RS_String RS_Settings::readEntry(const RS_String& key,
 	
     // lookup:
     QVariant ret = readEntryCache(key);
-    if (ret.isValid()) {
+    if (!ret.isValid()) {
 				
         QSettings s(companyKey, appKey);
     	// RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
@@ -130,7 +130,7 @@ int RS_Settings::readNumEntry(const RS_String& key, int def, bool* ok) {
 
     // lookup:
     QVariant ret = readEntryCache(key);
-    if (ret==NULL) {
+    if (!ret.isValid()) {
         QSettings s(companyKey, appKey);
     	// RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 
