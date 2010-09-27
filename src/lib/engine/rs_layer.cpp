@@ -55,7 +55,7 @@ std::ostream& operator << (std::ostream& os, const RS_Layer& l) {
     os << " name: " << l.getName().latin1()
     << " pen: " << l.getPen()
 	<< " frozen: " << (int)l.isFrozen()
-	<< " address: " << (int)(&l)
+	<< " address: " << &l
     << std::endl;
     return os;
 }
