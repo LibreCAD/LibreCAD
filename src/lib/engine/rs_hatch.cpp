@@ -493,7 +493,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view,
                 se!=NULL;
                 se = nextEntity()) {
 
-            view->drawEntity(se);
+            view->drawEntity(painter,se);
         }
         return;
     }
