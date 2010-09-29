@@ -2881,7 +2881,10 @@ void QC_ApplicationWindow::slotHelpAbout() {
 #else
                        "<h2>"+ XSTR(QC_APPNAME)+ "</h2>" +
 #endif
-                       tr("Version: %1 %2").arg(XSTR(QC_VERSION)).arg(edition) + "<br>" +
+				tr("Version: %1 %2").arg(XSTR(QC_VERSION)).arg(edition) + "<br>" +
+#ifdef QC_SVNREVISION
+				tr("SVN Revision: %1").arg(XSTR(QC_SVNREVISION)) + "<br>" +
+#endif
                        tr("Date: %1").arg(__DATE__) + "<br>" +
 				"(c) 2010 by R. van Twisk<br>"
                        "<br>" +
