@@ -45,7 +45,7 @@ RS_ActionLockRelativeZero::RS_ActionLockRelativeZero(
 QAction* RS_ActionLockRelativeZero::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("(Un-)Lock Relative Zero"
     QAction* action = new QAction(tr("(Un-)&Lock Relative Zero"),  NULL);
-    action->setStatusTip(tr("(Un-)Lock relative Zero"));
+    //action->zetStatusTip(tr("(Un-)Lock relative Zero"));
 	action->setIcon(QIcon(":/extui/relzerolock.png"));
 	action->setCheckable(true);
     return action;

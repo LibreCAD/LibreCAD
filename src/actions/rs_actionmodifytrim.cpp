@@ -53,14 +53,14 @@ QAction* RS_ActionModifyTrim::createGUIAction(RS2::ActionType type, QObject* /*p
 		// (tr("Trim")
 		action = new QAction(tr("&Trim"), NULL);
 		action->setIcon(QIcon(":/extui/modifytrim.png"));
-	    action->setStatusTip(tr("Trim Entities"));
+	    //action->zetStatusTip(tr("Trim Entities"));
 		break;
 
 	case RS2::ActionModifyTrim2:
 		// tr("Trim Two")
 		action = new QAction(tr("&Trim Two"), NULL);
 		action->setIcon(QIcon(":/extui/modifytrim2.png"));
-        action->setStatusTip(tr("Trim two Entities"));
+        //action->zetStatusTip(tr("Trim two Entities"));
 		break;
 	}
 	

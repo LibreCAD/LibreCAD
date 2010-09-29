@@ -46,7 +46,7 @@ QAction* RS_ActionBlocksExplode::createGUIAction(RS2::ActionType /*type*/, QObje
 	// tr("Explode"),
     QAction* action = new QAction(tr("&Explode"), NULL);
 	action->setIcon(QIcon(":/extui/modifyexplode.png"));
-    action->setStatusTip(tr("Explode Blocks and other Entity Groups"));
+    //action->zetStatusTip(tr("Explode Blocks and other Entity Groups"));
     return action;
 }
 

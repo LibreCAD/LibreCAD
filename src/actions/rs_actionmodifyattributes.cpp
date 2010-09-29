@@ -42,7 +42,7 @@ QAction* RS_ActionModifyAttributes::createGUIAction(RS2::ActionType /*type*/, QO
 	// tr("Attributes")
     QAction* action = new QAction(tr("&Attributes"),  NULL);
 	action->setIcon(QIcon(":/extui/modifyattributes.png"));
-    action->setStatusTip(tr("Modify Entity Attributes"));
+    //action->zetStatusTip(tr("Modify Entity Attributes"));
     return action;
 }
 

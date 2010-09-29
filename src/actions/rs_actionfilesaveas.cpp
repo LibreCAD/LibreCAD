@@ -43,7 +43,7 @@ QAction* RS_ActionFileSaveAs::createGUIAction(RS2::ActionType /*type*/, QObject*
 #if QT_VERSION >= 0x040500
 	action->setShortcut(QKeySequence::SaveAs);
 #endif
-    action->setStatusTip(tr("Saves the current drawing under a new filename"));
+    //action->zetStatusTip(tr("Saves the current drawing under a new filename"));
 	return action;
 }
 

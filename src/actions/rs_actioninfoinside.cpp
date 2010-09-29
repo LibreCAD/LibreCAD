@@ -56,8 +56,7 @@ QAction* RS_ActionInfoInside::createGUIAction(RS2::ActionType /*type*/, QObject*
                                   tr("&Point inside contour"),
                                   QKeySequence(), NULL); */
     QAction* action = new QAction(tr("Point inside contour"), NULL);
-    action->setStatusTip(tr("Checks if a given point is inside the "
-                            "selected contour"));
+    //action->zetStatusTip(tr("Checks if a given point is inside the selected contour"));
 
     return action;
 }

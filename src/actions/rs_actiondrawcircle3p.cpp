@@ -46,7 +46,7 @@ QAction* RS_ActionDrawCircle3P::createGUIAction(RS2::ActionType /*type*/, QObjec
 	// "Circle: 3 Points"
     QAction* action = new QAction(tr("3 Points"), NULL);
 	action->setIcon(QIcon(":/extui/circles3p.png"));
-    action->setStatusTip(tr("Draw circles with 3 points"));
+    //action->zetStatusTip(tr("Draw circles with 3 points"));
     return action;
 }
 

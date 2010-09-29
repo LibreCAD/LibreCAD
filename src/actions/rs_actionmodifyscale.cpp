@@ -40,7 +40,7 @@ QAction* RS_ActionModifyScale::createGUIAction(RS2::ActionType /*type*/, QObject
 	// "Scale"
     QAction* action = new QAction(tr("&Scale"),  NULL);
 	action->setIcon(QIcon(":/extui/modifyscale.png"));
-    action->setStatusTip(tr("Scale Entities"));
+    //action->zetStatusTip(tr("Scale Entities"));
     return action;
 }
 

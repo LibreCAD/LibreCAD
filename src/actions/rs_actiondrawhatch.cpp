@@ -45,7 +45,7 @@ QAction* RS_ActionDrawHatch::createGUIAction(RS2::ActionType /*type*/, QObject* 
 	// tr("Hatch")
     QAction* action = new QAction(tr("&Hatch"),  NULL);
 	action->setIcon(QIcon(":/extui/menuhatch.png"));
-    action->setStatusTip(tr("Draw Hatches and Solid Fills"));
+    //action->zetStatusTip(tr("Draw Hatches and Solid Fills"));
     return action;
 }
 

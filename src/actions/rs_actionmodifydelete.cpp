@@ -42,7 +42,7 @@ QAction* RS_ActionModifyDelete::createGUIAction(RS2::ActionType /*type*/, QObjec
 	// tr("Delete")
     QAction* action = new QAction(tr("&Delete"),  NULL);
 	action->setIcon(QIcon(":/extui/modifydelete.png"));
-    action->setStatusTip(tr("Delete Entities"));
+    //action->zetStatusTip(tr("Delete Entities"));
 	//action->setShortcut(QKeySequence::Delete);
     return action;
 }

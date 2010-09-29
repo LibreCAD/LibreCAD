@@ -45,7 +45,7 @@ QAction* RS_ActionDimDiametric::createGUIAction(RS2::ActionType /*type*/, QObjec
 	// tr("Diametric")
     QAction* action = new QAction(tr("&Diametric"),  NULL);
 	action->setIcon(QIcon(":/extui/dimdiametric.png"));
-    action->setStatusTip(tr("Diametric Dimension"));
+    //action->zetStatusTip(tr("Diametric Dimension"));
     return action;
 }
 

@@ -46,7 +46,7 @@ QAction* RS_ActionModifyBevel::createGUIAction(RS2::ActionType /*type*/, QObject
 	// tr("Bevel")
     QAction* action = new QAction(tr("&Bevel"),  NULL);
 	action->setIcon(QIcon(":/extui/modifybevel.png"));
-    action->setStatusTip(tr("Bevel Entities"));
+    //action->zetStatusTip(tr("Bevel Entities"));
     return action;
 }
 

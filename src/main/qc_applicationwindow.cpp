@@ -604,7 +604,7 @@ void QC_ApplicationWindow::initActions() {
 	action = new QAction(tr("Focus on &Command Line"), this);
 	action->setIcon(QIcon(":/main/editclear.png"));
 	action->setShortcut(tr("CTRL+M"));
-	action->setStatusTip(tr("Focus on Command Line"));
+	//action->zetStatusTip(tr("Focus on Command Line"));
 		
     connect(action, SIGNAL(activated()),
             this, SLOT(slotFocusCommandLine()));
@@ -1138,13 +1138,13 @@ void QC_ApplicationWindow::initActions() {
 							   tr("&About %1").arg(QC_APPNAME), 0, this); */
     helpAboutApp = new QAction(qPixmapFromMimeSource(QC_APP_ICON16), tr("About"), this);
 
-    helpAboutApp->setStatusTip(tr("About the application"));
+    //helpAboutApp->zetStatusTip(tr("About the application"));
     //helpAboutApp->setWhatsThis(tr("About\n\nAbout the application"));
     connect(helpAboutApp, SIGNAL(activated()),
             this, SLOT(slotHelpAbout()));
 
     helpManual = new QAction(qPixmapFromMimeSource("contents.png"), tr("&Manual"), this);
-    helpManual->setStatusTip(tr("Launch the online manual"));
+    //helpManual->zetStatusTip(tr("Launch the online manual"));
     connect(helpManual, SIGNAL(activated()),
             this, SLOT(slotHelpManual()));
 
@@ -1568,7 +1568,7 @@ void QC_ApplicationWindow::initView() {
     	QAction* action = new QAction("Blah", 
 			QPixmap::fromMimeSource("zoomwindow.png"),
             "&Blah", QKeySequence(), NULL);
-    	action->setStatusTip("Blah blah");
+    	//action->zetStatusTip("Blah blah");
 		action->addTo(tb);
 	}
 }*/

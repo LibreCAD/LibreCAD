@@ -40,7 +40,7 @@ RS_ActionModifyRotate2::RS_ActionModifyRotate2(
 QAction* RS_ActionModifyRotate2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Rotate Two")
 	QAction* action = new QAction(tr("Rotate T&wo"), NULL);
-	action->setStatusTip(tr("Rotate Entities around two centers"));
+	//action->zetStatusTip(tr("Rotate Entities around two centers"));
 	action->setIcon(QIcon(":/extui/modifyrotate2.png"));
 	return action;
 }

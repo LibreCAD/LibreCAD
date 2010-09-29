@@ -45,7 +45,7 @@ QAction* RS_ActionModifyStretch::createGUIAction(RS2::ActionType /*type*/, QObje
 	// tr("Stretch")
     QAction* action = new QAction(tr("&Stretch"), NULL);
 	action->setIcon(QIcon(":/extui/modifystretch.png"));
-    action->setStatusTip(tr("Stretch Entities"));
+    //action->zetStatusTip(tr("Stretch Entities"));
     return action;
 }
 

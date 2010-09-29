@@ -48,7 +48,7 @@ QAction* RS_ActionDrawLineParallelThrough::createGUIAction(RS2::ActionType /*typ
 	// tr("Par&allel through point"),
     QAction* action = new QAction(tr("Parallel through point"), NULL);
 	action->setIcon(QIcon(":/extui/linesparathrough.png"));
-    action->setStatusTip(tr("Draw parallel through a given point"));
+    //action->zetStatusTip(tr("Draw parallel through a given point"));
     return action;
 }
 

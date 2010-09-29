@@ -40,7 +40,7 @@ QAction* RS_ActionModifyRotate::createGUIAction(RS2::ActionType /*type*/, QObjec
 	// tr("Rotate")
     QAction* action = new QAction(tr("&Rotate"), NULL);
 	action->setIcon(QIcon(":/extui/modifyrotate.png"));
-    action->setStatusTip(tr("Rotate Entities"));
+    //action->zetStatusTip(tr("Rotate Entities"));
     return action;
 }
 

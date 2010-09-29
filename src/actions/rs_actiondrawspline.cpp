@@ -50,7 +50,7 @@ QAction* RS_ActionDrawSpline::createGUIAction(RS2::ActionType /*type*/, QObject*
 	// tr("Spline")
     QAction* action = new QAction(tr("&Spline"),  NULL);
 	action->setIcon(QIcon(":/extui/menuspline.png"));
-    action->setStatusTip(tr("Draw splines"));
+    //action->zetStatusTip(tr("Draw splines"));
     return action;
 }
 

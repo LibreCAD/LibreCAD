@@ -39,7 +39,7 @@ RS_ActionBlocksEdit::RS_ActionBlocksEdit(RS_EntityContainer& container,
 QAction* RS_ActionBlocksEdit::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	//  tr("&Edit Block")
 	QAction* action = new QAction( tr("&Edit Block"), NULL);
-    action->setStatusTip(tr("Edit Block"));
+    //action->zetStatusTip(tr("Edit Block"));
 	action->setIcon(QIcon(":/ui/blockedit.png"));
 	return action;
 }

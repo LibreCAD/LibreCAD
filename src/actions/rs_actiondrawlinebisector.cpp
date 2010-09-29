@@ -50,7 +50,7 @@ QAction* RS_ActionDrawLineBisector::createGUIAction(RS2::ActionType /*type*/, QO
 	// tr("&Bisector"),
     QAction* action = new QAction(tr("Bisector"), NULL);
 	action->setIcon(QIcon(":/extui/linesbisector.png"));
-    action->setStatusTip(tr("Draw bisectors"));
+    //action->zetStatusTip(tr("Draw bisectors"));
     return action;
 }
 

@@ -38,7 +38,7 @@ RS_ActionLayersEdit::RS_ActionLayersEdit(RS_EntityContainer& container,
 QAction* RS_ActionLayersEdit::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Edit Layer")
     QAction* action = new QAction(tr("&Edit Layer"), NULL);
-    action->setStatusTip(tr("Edit Layer"));
+    //action->zetStatusTip(tr("Edit Layer"));
 	action->setIcon(QIcon(":/ui/layeredit.png"));
     return action;
 }

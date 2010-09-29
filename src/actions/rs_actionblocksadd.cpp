@@ -39,7 +39,7 @@ RS_ActionBlocksAdd::RS_ActionBlocksAdd(RS_EntityContainer& container,
 QAction* RS_ActionBlocksAdd::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Add Block")
     QAction* action = new QAction(tr("&Add Block"), NULL);	
-    action->setStatusTip(tr("Add Block"));
+    //action->zetStatusTip(tr("Add Block"));
 	action->setIcon(QIcon(":/ui/blockadd.png"));
     return action;
 }

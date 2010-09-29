@@ -48,7 +48,7 @@ QAction* RS_ActionDrawLineHorVert::createGUIAction(RS2::ActionType /*type*/, QOb
                                   tr("H&orizontal / Vertical"),
                                   QKeySequence(), NULL); */
     QAction* action = new QAction(tr("hor./vert. line"), NULL);
-    action->setStatusTip(tr("Draw horizontal/vertical lines"));
+    //action->zetStatusTip(tr("Draw horizontal/vertical lines"));
     return action;
 }
 

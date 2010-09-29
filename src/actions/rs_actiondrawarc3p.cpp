@@ -49,7 +49,7 @@ QAction* RS_ActionDrawArc3P::createGUIAction(RS2::ActionType /*type*/, QObject* 
 	// tr("Arc: 3 Points"
 	QAction* action = new QAction(tr("&3 Points"), NULL);
 	action->setIcon(QIcon(":/extui/arcs3p.png"));
- 	action->setStatusTip(tr("Draw arcs with 3 points"));
+ 	//action->zetStatusTip(tr("Draw arcs with 3 points"));
 		return action;
 }
 

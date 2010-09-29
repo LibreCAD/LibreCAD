@@ -48,7 +48,7 @@ QAction* RS_ActionPrintPreview::createGUIAction(RS2::ActionType /*type*/, QObjec
 	// tr("Print Preview")
 	QAction* action = new QAction(tr("Print Pre&view"), NULL);
 	action->setIcon(QIcon(":/actions/fileprintpreview.png"));
-    action->setStatusTip(tr("Shows a preview of a print"));	
+    //action->zetStatusTip(tr("Shows a preview of a print"));	
 	return action;
 }
 

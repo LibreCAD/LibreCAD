@@ -41,7 +41,7 @@ QAction* RS_ActionInfoArea::createGUIAction(RS2::ActionType /*type*/, QObject* /
                                   tr("&Polygonal Area"),
                                   QKeySequence(), NULL); */
     QAction* action = new QAction(tr("Polygonal Area"), NULL);
-    action->setStatusTip(tr("Measures the area of a polygon"));
+    //action->zetStatusTip(tr("Measures the area of a polygon"));
     return action;
 }
 

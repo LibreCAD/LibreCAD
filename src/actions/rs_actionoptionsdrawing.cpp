@@ -45,7 +45,7 @@ QAction* RS_ActionOptionsDrawing::createGUIAction(RS2::ActionType /*type*/, QObj
 #if QT_VERSION >= 0x040600
 	action->setShortcut(QKeySequence::Preferences);
 #endif 
-	action->setStatusTip(tr("Settings for the current Drawing"));
+	//action->zetStatusTip(tr("Settings for the current Drawing"));
     return action;
 }
 

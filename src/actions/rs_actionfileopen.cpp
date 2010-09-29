@@ -42,7 +42,7 @@ QAction* RS_ActionFileOpen::createGUIAction(RS2::ActionType /*type*/, QObject* p
 	QAction* action = new QAction(tr("&Open..."), parent);
 	action->setIcon(QIcon(":/actions/fileopen2.png"));
 	action->setShortcut(QKeySequence::Open);
-    action->setStatusTip(tr("Opens an existing drawing"));
+    //action->zetStatusTip(tr("Opens an existing drawing"));
     return action;
 }
 
