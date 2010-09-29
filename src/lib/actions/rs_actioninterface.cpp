@@ -256,11 +256,10 @@ void RS_ActionInterface::setFinished() {
 void RS_ActionInterface::finish() {
 	RS_DEBUG->print("RS_ActionInterface::finish");
     status = -1;
+    finished = true;
     graphicView->setMouseCursor(RS2::ArrowCursor);
-    //graphicView->requestToolBar(RS2::ToolBarMain);
     updateToolBar();
     hideOptions();
-    finished = true;
     RS_Snapper::finish();
 	RS_DEBUG->print("RS_ActionInterface::finish: OK");
 }
