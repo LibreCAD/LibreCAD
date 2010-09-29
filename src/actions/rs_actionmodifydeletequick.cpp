@@ -47,7 +47,7 @@ QAction* RS_ActionModifyDeleteQuick::createGUIAction(RS2::ActionType /*type*/, Q
 	QAction* action = new QAction(tr("&Delete selected"), parent);
 	action->setIcon(QIcon(":/extui/modifydelete.png"));
 	action->setStatusTip(tr("Delete selected entities"));
-	// action->setShortcut(QKeySequence::Delete);
+	action->setShortcut(QKeySequence::Delete);
 	return action;
 }
 
