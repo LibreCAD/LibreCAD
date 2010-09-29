@@ -1090,6 +1090,12 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity* e) {
  */
 void RS_GraphicView::drawEntity(RS_Entity* e, double patternOffset) {
 	RS_DEBUG->print("RS_GraphicView::drawEntity(RS_Entity*,patternOffset) not supported anymore");
+	// RVT_PORT this needs to be optimized
+	// ONe way to do is to send a RS2::RedrawSelected, then teh draw routine will onyl draw all selected entities
+	// Dis-advantage is that we still need to iterate over all entities, but
+	// this might be very fast
+	// For now we just redraw the drawing untill we are going to optmize drawing
+	redraw(RS2::RedrawDrawing); 
 }
 void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double patternOffset) {
 
