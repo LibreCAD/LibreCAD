@@ -13,7 +13,6 @@ DEFINES += QC_COMPANYNAME="\"CADuntu\""
 DEFINES += QC_COMPANYKEY="\"CADuntu\""
 DEFINES += QC_VERSION="\"1.0.0beta1\""
 
-
 # Add qt3support
 QT +=  qt3support
 
@@ -28,6 +27,10 @@ QMAKE_CXXFLAGS +=
 #QMAKE_POST_LINK += make maketranslations
 
 unix {
+    # Get SVN revision number
+    SVNREVISION = $$system(svn info -R | grep -o \"Revision: [0-9]*\" | sed -e \"s/Revision: //\" | head -n1)
+    DEFINES += QC_SVNREVISION=\"$$SVNREVISION\"
+
     macx {
 	TARGET = Caduntu
 	DEFINES += QC_APPDIR="\"Caduntu\""
@@ -57,6 +60,7 @@ win32 {
     CONFIG += release
     QMAKE_CFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
+    DEFINES += QC_SVNREVISION=\"\"
     TARGET = Caduntu
     DEFINES += QC_APPDIR="\"Caduntu\""
     DEFINES += QINITIMAGES_CADUNTU="qInitImages_Caduntu"
