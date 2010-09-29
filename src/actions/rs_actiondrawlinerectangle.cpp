@@ -45,7 +45,7 @@ QAction* RS_ActionDrawLineRectangle::createGUIAction(RS2::ActionType /*type*/, Q
 	//  tr("&Rectangle"),
 	QAction* action = new QAction(tr("Rectangle"), NULL);
 	action->setIcon(QIcon(":/extui/linesrect.png"));
-    action->setStatusTip(tr("Draw rectangles"));
+    //action->zetStatusTip(tr("Draw rectangles"));
 	return action;
 }
 

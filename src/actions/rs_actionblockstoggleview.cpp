@@ -43,7 +43,7 @@ QAction* RS_ActionBlocksToggleView::createGUIAction(RS2::ActionType /*type*/, QO
 //								  QKeySequence(), NULL);
 	
 	QAction* action = new QAction(tr("Toggle Block Visibility"),  NULL);
-	action->setStatusTip(tr("Toggle Block"));
+	//action->zetStatusTip(tr("Toggle Block"));
 
 		return action;
 }

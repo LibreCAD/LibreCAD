@@ -48,7 +48,7 @@ QAction* RS_ActionDimAligned::createGUIAction(RS2::ActionType /*type*/, QObject*
 	//tr("Aligned")
 	QAction* action = new QAction(tr("&Aligned"),  NULL);
 	action->setIcon(QIcon(":/extui/dimaligned.png"));
-	action->setStatusTip(tr("Aligned Dimension"));
+	//action->zetStatusTip(tr("Aligned Dimension"));
 	return action;
 }
 

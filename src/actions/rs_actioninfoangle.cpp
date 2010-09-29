@@ -43,7 +43,7 @@ QAction* RS_ActionInfoAngle::createGUIAction(RS2::ActionType /*type*/, QObject* 
                                   QKeySequence(), NULL); */
 
     QAction* action = new QAction(tr("Angle between two lines"), NULL);
-    action->setStatusTip(tr("Measures the angle between two lines"));
+    //action->zetStatusTip(tr("Measures the angle between two lines"));
 	action->setIcon(QIcon(":/extui/infoangle.png"));
     return action;
 }

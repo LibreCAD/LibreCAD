@@ -46,7 +46,7 @@ QAction* RS_ActionDimLeader::createGUIAction(RS2::ActionType /*type*/, QObject* 
 	// tr("Leader")
     QAction* action = new QAction(tr("&Leader"), NULL);
 	action->setIcon(QIcon(":/extui/dimleader.png"));
-    action->setStatusTip(tr("Leader Dimension"));
+    //action->zetStatusTip(tr("Leader Dimension"));
     return action;
 }
 

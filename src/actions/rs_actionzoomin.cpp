@@ -55,13 +55,13 @@ QAction* RS_ActionZoomIn::createGUIAction(RS2::ActionType type, QObject* /*paren
 		action = new QAction(tr("Zoom &In"), NULL);
 		action->setIcon(QIcon(":/actions/zoomin.png"));
 		action->setShortcut(QKeySequence::ZoomIn);
-		action->setStatusTip(tr("Zooms in"));
+		//action->zetStatusTip(tr("Zooms in"));
     } else {
 		// tr("Zoom Out")
 		action = new QAction(tr("Zoom &Out"), NULL);
 		action->setIcon(QIcon(":/actions/zoomout.png"));
 		action->setShortcut(QKeySequence::ZoomOut);
-		action->setStatusTip(tr("Zooms out"));
+		//action->zetStatusTip(tr("Zooms out"));
     }
     return action;
 }

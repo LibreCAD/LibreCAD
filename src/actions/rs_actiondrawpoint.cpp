@@ -40,7 +40,7 @@ QAction* RS_ActionDrawPoint::createGUIAction(RS2::ActionType /*type*/, QObject* 
 	// (tr("Points")
 	QAction* action = new QAction(tr("&Points"),  NULL);
 	action->setIcon(QIcon(":/extui/points.png"));
-    action->setStatusTip(tr("Draw Points"));
+    //action->zetStatusTip(tr("Draw Points"));
 	
     return action;
 }

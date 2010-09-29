@@ -225,7 +225,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
     case RS2::ActionFileExport:
 			// tr("Export Drawing")
 			action = new QAction(tr("&Export..."), NULL);
-			action->setStatusTip(tr("Exports the current drawing as bitmap"));			
+			//action->zetStatusTip(tr("Exports the current drawing as bitmap"));			
 			
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotFileExport()));
@@ -236,7 +236,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
 			action = new QAction(tr("&Close"), mw);
 			action->setIcon(QIcon(":/actions/fileclose.png"));
 			action->setShortcut(QKeySequence::Close);
-			action->setStatusTip(tr("Closes the current drawing"));			
+			//action->zetStatusTip(tr("Closes the current drawing"));			
 			connect(action, SIGNAL(activated()),
                 obj, SLOT(slotFileClose()));
         break;
@@ -246,7 +246,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
 			action = new QAction(tr("&Print..."), mw);
 			action->setIcon(QIcon(":/actions/fileprint.png"));
 			action->setShortcut(QKeySequence::Print);
-			action->setStatusTip(tr("Prints out the current drawing"));
+			//action->zetStatusTip(tr("Prints out the current drawing"));
 			
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotFilePrint()));
@@ -264,7 +264,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
 			 tr("&Quit"),
 			 Qt::CTRL+Qt::Key_Q, mw); */
 			action = new QAction(qPixmapFromMimeSource("exit.png"), tr("Quit"), mw);
-			action->setStatusTip(tr("Quits the application"));
+			//action->zetStatusTip(tr("Quits the application"));
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotFileQuit()));
         break;
@@ -276,7 +276,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
 			action = new QAction(tr("&Grid"), mw);
 			action->setIcon(QIcon(":/actions/viewgrid.png"));
 			action->setShortcut(tr("CTRL-G"));
-			action->setStatusTip(tr("Enables/disables the grid"));
+			//action->zetStatusTip(tr("Enables/disables the grid"));
 			action->setCheckable(true);
 			connect(action, SIGNAL(toggled(bool)),
                 obj, SLOT(slotViewGrid(bool)));
@@ -285,7 +285,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
 			// tr("Draft")
 			action = new QAction(tr("&Draft"), mw);
 			action->setIcon(QIcon(":/actions/viewdraft.png"));
-			action->setStatusTip(tr("Enables/disables the draft mode"));
+			//action->zetStatusTip(tr("Enables/disables the draft mode"));
 			action->setCheckable(true);			
 			connect(action, SIGNAL(toggled(bool)),
                 obj, SLOT(slotViewDraft(bool)));
@@ -293,7 +293,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
     case RS2::ActionViewStatusBar:
 			// tr("Statusbar")
 			action = new QAction(tr("&Statusbar"), mw);
-			action->setStatusTip(tr("Enables/disables the statusbar"));
+			//action->zetStatusTip(tr("Enables/disables the statusbar"));
 			action->setCheckable(true);
 			
         connect(action, SIGNAL(toggled(bool)),
@@ -303,7 +303,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
                    case RS2::ActionViewLayerList:
                        action = new QAction(tr("Layer List"), tr("&Layer List"),
                                             0, mw, 0, true);
-                       action->setStatusTip(tr("Enables/disables the layerlist"));
+                       //action->zetStatusTip(tr("Enables/disables the layerlist"));
                        connect(action, SIGNAL(toggled(bool)),
                                obj, SLOT(slotViewLayerList(bool)));
                        break;
@@ -311,7 +311,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
                    case RS2::ActionViewBlockList:
                        action = new QAction(tr("Block List"), tr("&Block List"),
                                             0, mw, 0, true);
-                       action->setStatusTip(tr("Enables/disables the blocklist"));
+                       //action->zetStatusTip(tr("Enables/disables the blocklist"));
                        connect(action, SIGNAL(toggled(bool)),
                                obj, SLOT(slotViewBlockList(bool)));
                        break;
@@ -319,7 +319,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
                    case RS2::ActionViewCommandLine:
                        action = new QAction(tr("Command Widget"), tr("&Command Widget"),
                                             0, mw, 0, true);
-                       action->setStatusTip(tr("Enables/disables the command widget"));
+                       //action->zetStatusTip(tr("Enables/disables the command widget"));
                        connect(action, SIGNAL(toggled(bool)),
                                obj, SLOT(slotViewCommandLine(bool)));
                        break;
@@ -327,7 +327,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
                    case RS2::ActionViewOptionToolbar:
                        action = new QAction(tr("Option Toolbar"), tr("&Option Toolbar"),
                                             0, mw, 0, true);
-                       action->setStatusTip(tr("Enables/disables the option toolbar"));
+                       //action->zetStatusTip(tr("Enables/disables the option toolbar"));
                        connect(action, SIGNAL(toggled(bool)),
                                obj, SLOT(slotViewOptionToolbar(bool)));
                        break;
@@ -570,7 +570,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
 		/*
         action = new QAction(tr("Relative angle"), tr("R&elative angle"),
                              0, mw);
-        action->setStatusTip(tr("Draw line with relative angle"));
+        //action->zetStatusTip(tr("Draw line with relative angle"));
 		*/
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotDrawLineRelAngle()));
@@ -608,7 +608,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
         action = new QAction(tr("Circle: Center, Radius"),
                              tr("Center, &Radius"),
                              0, mw);
-        action->setStatusTip(tr("Draw circles with center and radius"));
+        //action->zetStatusTip(tr("Draw circles with center and radius"));
 		*/
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotDrawCircleCR()));
@@ -793,7 +793,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
 		/*
         action = new QAction(tr("Move"), tr("&Move"),
                              0, mw);
-        action->setStatusTip(tr("Move Entities"));
+        //action->zetStatusTip(tr("Move Entities"));
 		*/
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotModifyMove()));
@@ -888,7 +888,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
     case RS2::ActionSnapFree:
 		// tr("Free")
 		action = new QAction(tr("&Free"), mw);
-        action->setStatusTip(tr("Free positioning"));
+        //action->zetStatusTip(tr("Free positioning"));
 		action->setCheckable(true);
 		action->setIcon(QIcon(":/extui/snapfree.png"));
         actionHandler->setActionSnapFree(action);
@@ -899,7 +899,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
     case RS2::ActionSnapGrid:
 		// tr("Grid")
 		action = new QAction(tr("&Grid"),  mw);
-        action->setStatusTip(tr("Grid positioning"));
+        //action->zetStatusTip(tr("Grid positioning"));
 		action->setCheckable(true);
 		action->setIcon(QIcon(":/extui/snapgrid.png"));
         actionHandler->setActionSnapGrid(action);			
@@ -910,7 +910,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
     case RS2::ActionSnapEndpoint:
 		//	tr("Endpoints")			
 		action = new QAction(tr("&Endpoints"),mw); 
-        action->setStatusTip(tr("Snap to endpoints"));
+        //action->zetStatusTip(tr("Snap to endpoints"));
 		action->setCheckable(true);
 		action->setIcon(QIcon(":/extui/snapendpoint.png"));
 		actionHandler->setActionSnapEndpoint(action);
@@ -921,7 +921,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
     case RS2::ActionSnapOnEntity:
 		// tr("&n Entity")
 		action = new QAction(tr("&On Entity"),  mw);
-        action->setStatusTip(tr("Snap to nearest point on entity"));
+        //action->zetStatusTip(tr("Snap to nearest point on entity"));
 		action->setCheckable(true);
 		action->setIcon(QIcon(":/extui/snaponentity.png"));
         actionHandler->setActionSnapOnEntity(action);
@@ -932,7 +932,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
     case RS2::ActionSnapCenter:
 		// tr("Center")
 		action = new QAction(tr("&Center"), mw);
-        action->setStatusTip(tr("Snap to centers"));
+        //action->zetStatusTip(tr("Snap to centers"));
 		action->setCheckable(true);
 		action->setIcon(QIcon(":/extui/snapcenter.png"));
         actionHandler->setActionSnapCenter(action);
@@ -943,7 +943,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
     case RS2::ActionSnapMiddle:
 		// tr("Middle")
 		action = new QAction(tr("&Middle"), mw);
-        action->setStatusTip(tr("Snap to middle points"));
+        //action->zetStatusTip(tr("Snap to middle points"));
 		action->setCheckable(true);
 		action->setIcon(QIcon(":/extui/snapmiddle.png"));
         actionHandler->setActionSnapMiddle(action);
@@ -954,8 +954,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
     case RS2::ActionSnapDist:
 		// tr("Distance from Endpoint")
 		action = new QAction(tr("&Distance from Endpoint"),mw);
-		action->setStatusTip(tr("Snap to points with a given"
-                                " distance to an endpoint"));
+		//action->zetStatusTip(tr("Snap to points with a given distance to an endpoint"));
 		action->setCheckable(true);
 		action->setIcon(QIcon(":/extui/snapdist.png"));
         actionHandler->setActionSnapDist(action);
@@ -966,7 +965,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
     case RS2::ActionSnapIntersection:
 		// tr("Intersection")
 		action = new QAction(tr("&Intersection"), mw);
-        action->setStatusTip(tr("Snap to intersection points"));
+        //action->zetStatusTip(tr("Snap to intersection points"));
 		action->setCheckable(true);
 		action->setIcon(QIcon(":/extui/snapintersection.png"));
         actionHandler->setActionSnapIntersection(action);
@@ -986,7 +985,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
     case RS2::ActionRestrictNothing:
 		// tr("Restrict Nothing")
 		action = new QAction(tr("Restrict &Nothing"), mw);
-        action->setStatusTip(tr("No snap restriction"));
+        //action->zetStatusTip(tr("No snap restriction"));
 		action->setCheckable(true);
 		action->setIcon(QIcon(":/extui/restrictnothing.png"));
         actionHandler->setActionRestrictNothing(action);
@@ -997,7 +996,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
     case RS2::ActionRestrictOrthogonal:
 		// tr("Restrict Orthogonally")
 		action = new QAction(tr("Restrict &Orthogonally"),mw);
-		action->setStatusTip(tr("Restrict snapping orthogonally"));
+		//action->zetStatusTip(tr("Restrict snapping orthogonally"));
         actionHandler->setActionRestrictOrthogonal(action);
 		action->setCheckable(true);
 		action->setIcon(QIcon(":/extui/restrictorthogonal.png"));
@@ -1008,7 +1007,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
     case RS2::ActionRestrictHorizontal:
 		// (tr("Restrict Horizontally")
 		action = new QAction(tr("Restrict &Horizontally"), mw);
-		action->setStatusTip(tr("Restrict snapping horizontally"));
+		//action->zetStatusTip(tr("Restrict snapping horizontally"));
         actionHandler->setActionRestrictHorizontal(action);
 		action->setCheckable(true);
 		action->setIcon(QIcon(":/extui/restricthorizontal.png"));
@@ -1019,7 +1018,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
     case RS2::ActionRestrictVertical:
 		// tr("Restrict Vertically")
 		action = new QAction(tr("Restrict&Vertically"), mw);
-		action->setStatusTip(tr("Restrict snapping vertically"));
+		//action->zetStatusTip(tr("Restrict snapping vertically"));
         actionHandler->setActionRestrictVertical(action);
 		action->setCheckable(true);
 		action->setIcon(QIcon(":/extui/restrictvertical.png"));
@@ -1189,7 +1188,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
 								 mw);
 			
 			
-			action->setStatusTip(tr("General Application Preferences"));
+			//action->zetStatusTip(tr("General Application Preferences"));
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotOptionsGeneral()));
         break;
@@ -1208,8 +1207,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
 								 tr("&Open IDE"),
 								 0, mw); */
 			action = new QAction(tr("Open IDE"), mw);
-			action->setStatusTip(tr("Opens the integrated development "
-		   "environment for scripting"));
+			//action->zetStatusTip(tr("Opens the integrated development environment for scripting"));
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotScriptOpenIDE()));
 		break;
@@ -1219,7 +1217,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
 								 tr("&Run Script.."),
 								 0, mw); */
 			action = new QAction(tr("Run Script.."), mw);
-			action->setStatusTip(tr("Runs a script"));
+			//action->zetStatusTip(tr("Runs a script"));
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotScriptRun()));
 		break;

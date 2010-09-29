@@ -53,7 +53,7 @@ QAction* RS_ActionZoomWindow::createGUIAction(RS2::ActionType /*type*/, QObject*
 	// tr("Window Zoom")
 	QAction* action = new QAction(tr("&Window Zoom"), NULL);
 	action->setIcon(QIcon(":/actions/zoomwindow.png"));
-	action->setStatusTip(tr("Zooms in a window"));
+	//action->zetStatusTip(tr("Zooms in a window"));
 	
     return action;
 }

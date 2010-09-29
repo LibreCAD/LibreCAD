@@ -39,7 +39,7 @@ QAction* RS_ActionModifyMirror::createGUIAction(RS2::ActionType /*type*/, QObjec
 	// tr("Mirror"
     QAction* action = new QAction(tr("&Mirror"), NULL);
 	action->setIcon(QIcon(":/extui/modifymirror.png"));
-    action->setStatusTip(tr("Mirror Entities"));
+    //action->zetStatusTip(tr("Mirror Entities"));
     return action;
 }
 

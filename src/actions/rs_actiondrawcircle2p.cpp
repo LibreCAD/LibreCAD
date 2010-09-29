@@ -45,7 +45,7 @@ QAction* RS_ActionDrawCircle2P::createGUIAction(RS2::ActionType /*type*/, QObjec
 	// tr("Circle: 2 Points")
 	QAction* action = new QAction(tr("2 Points"),  NULL);
 	action->setIcon(QIcon(":/extui/circles2p.png"));
-    action->setStatusTip(tr("Draw circles with 2 points"));
+    //action->zetStatusTip(tr("Draw circles with 2 points"));
 
     return action;
 }

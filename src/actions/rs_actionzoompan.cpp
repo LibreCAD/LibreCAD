@@ -40,7 +40,7 @@ QAction* RS_ActionZoomPan::createGUIAction(RS2::ActionType /*type*/, QObject* /*
 	// tr("Pan Zoom")
 	QAction* action = new QAction(tr("&Pan Zoom"), NULL);
 	action->setIcon(QIcon(":/actions/zoompan.png"));
-	action->setStatusTip(tr("Realtime Panning"));
+	//action->zetStatusTip(tr("Realtime Panning"));
 	
     return action;
 }

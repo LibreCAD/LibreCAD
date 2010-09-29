@@ -43,7 +43,7 @@ QAction* RS_ActionZoomPrevious::createGUIAction(RS2::ActionType /*type*/, QObjec
 	// tr("Previous View")
 	QAction* action = new QAction(tr("&Previous View"), NULL);
 	action->setIcon(QIcon(":/actions/zoomprevious.png"));
-	action->setStatusTip(tr("Shows previous view"));
+	//action->zetStatusTip(tr("Shows previous view"));
 	
 	return action;
 }

@@ -41,7 +41,7 @@ QAction* RS_ActionSetRelativeZero::createGUIAction(RS2::ActionType /*type*/, QOb
 /* RVT_PORT    QAction* action = new QAction(tr("Set Relative Zero"), tr("&Set Relative Zero"),
                                   QKeySequence(), NULL); */
     QAction* action = new QAction(tr("Set Relative Zero"), NULL);
-    action->setStatusTip(tr("Set position of the Relative Zero point"));
+    //action->zetStatusTip(tr("Set position of the Relative Zero point"));
 	action->setIcon(QIcon(":/extui/relzeromove.png"));
     return action;
 }

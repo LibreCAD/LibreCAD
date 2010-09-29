@@ -43,7 +43,7 @@ QAction* RS_ActionFileSave::createGUIAction(RS2::ActionType /*type*/, QObject* p
 	QAction* action = new QAction(tr("&Save"), parent);
 	action->setIcon(QIcon(":/actions/filesave2.png"));
 	action->setShortcut(QKeySequence::Save);
-    action->setStatusTip(tr("Saves the current drawing"));
+    //action->zetStatusTip(tr("Saves the current drawing"));
 	
     return action;
 }

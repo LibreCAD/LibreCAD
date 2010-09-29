@@ -45,7 +45,7 @@ QAction* RS_ActionModifyRound::createGUIAction(RS2::ActionType /*type*/, QObject
 	// (tr("Round")
 	QAction* action = new QAction(tr("&Round"), NULL);
 	action->setIcon(QIcon(":/extui/modifyround.png"));
-    action->setStatusTip(tr("Round Entities"));
+    //action->zetStatusTip(tr("Round Entities"));
 	return action;
 }
 

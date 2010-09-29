@@ -46,7 +46,7 @@ QAction* RS_ActionDrawText::createGUIAction(RS2::ActionType /*type*/, QObject* /
 	// tr("Text")
     QAction* action = new QAction(tr("&Text"),  NULL);
 	action->setIcon(QIcon(":/extui/menutext.png"));
-    action->setStatusTip(tr("Draw Text Entities"));
+    //action->zetStatusTip(tr("Draw Text Entities"));
     return action;
 }
 
