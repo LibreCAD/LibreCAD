@@ -48,7 +48,7 @@ QAction* RS_ActionDrawArc::createGUIAction(RS2::ActionType /*type*/, QObject* /*
 	// (tr("Arc: Center, Point, Angles")
     QAction* action = new QAction(tr("&Center, Point, Angles"),NULL);
 	action->setIcon(QIcon(":/extui/arcscraa.png"));
-    action->setStatusTip(tr("Draw arcs"));
+    //action->zetStatusTip(tr("Draw arcs"));
     return action;
 }
 

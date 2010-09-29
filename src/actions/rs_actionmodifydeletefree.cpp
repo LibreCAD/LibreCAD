@@ -42,7 +42,7 @@ QAction* RS_ActionModifyDeleteFree::createGUIAction(RS2::ActionType /*type*/, QO
 /* RVT_PORT    QAction* action = new QAction(tr("Delete Freehand"), tr("&Delete Freehand"),
                                   QKeySequence(), NULL); */
     QAction* action = new QAction(tr("Delete Freehand"), NULL);
-    action->setStatusTip(tr("Delete Freehand"));
+    //action->zetStatusTip(tr("Delete Freehand"));
     return action;
 }
 

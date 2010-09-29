@@ -50,7 +50,7 @@ RS_ActionBlocksCreate::~RS_ActionBlocksCreate() {}
 QAction* RS_ActionBlocksCreate::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// (tr("Create Block"),
     QAction* action = new QAction(tr("&Create Block"), NULL); 
-    action->setStatusTip(tr("Create Block"));
+    //action->zetStatusTip(tr("Create Block"));
 	action->setIcon(QIcon(":/extui/menublock.png"));
     return action;
 }

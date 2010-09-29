@@ -42,7 +42,7 @@ QAction* RS_ActionFileNew::createGUIAction(RS2::ActionType /*type*/, QObject* pa
 	QAction* action = new QAction(tr("&New..."), parent);
 	action->setIcon(QIcon(":/actions/filenew.png"));
 	action->setShortcut(QKeySequence::New);
-    action->setStatusTip(tr("Creates a new drawing"));
+    //action->zetStatusTip(tr("Creates a new drawing"));
 	
     return action;
 }

@@ -50,7 +50,7 @@ QAction* RS_ActionLibraryInsert::createGUIAction(RS2::ActionType /*type*/, QObje
                                   tr("&Insert Library Object"),
                                   QKeySequence(), NULL); */
     QAction* action = new QAction(tr("Insert Library Object"), NULL);
-    action->setStatusTip(tr("Inserts an Object from the part library."));
+    //action->zetStatusTip(tr("Inserts an Object from the part library."));
     return action;
 }
 

@@ -47,7 +47,7 @@ QAction* RS_ActionDrawCircleCR::createGUIAction(RS2::ActionType /*type*/, QObjec
 	// "Circle: Center, Radius"
     QAction* action = new QAction(tr("Center, &Radius"), NULL);
 		action->setIcon(QIcon(":/extui/circlescr.png"));
-    action->setStatusTip(tr("Draw circles with center and radius"));
+    //action->zetStatusTip(tr("Draw circles with center and radius"));
     return action;
 }
 

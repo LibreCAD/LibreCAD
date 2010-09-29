@@ -42,7 +42,7 @@ QAction* RS_ActionToolRegenerateDimensions::createGUIAction(RS2::ActionType /*ty
                                   tr("&Regenerate Dimension Entities"),
                                   QKeySequence(), NULL); */
     QAction* action = new QAction(tr("Regenerate Dimension Entities"), NULL);
-    action->setStatusTip(tr("Regenerates all Dimension Entities"));
+    //action->zetStatusTip(tr("Regenerates all Dimension Entities"));
 
     return action;
 }

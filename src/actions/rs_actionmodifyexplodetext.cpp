@@ -46,7 +46,7 @@ QAction* RS_ActionModifyExplodeText::createGUIAction(RS2::ActionType /*type*/, Q
 	// tr("Explode Text")
     QAction* action = new QAction(tr("&Explode Text into Letters"), NULL);
 	action->setIcon(QIcon(":/extui/modifyexplodetext.png"));
-    action->setStatusTip(tr("Explodes Text Entities into single Letters"));
+    //action->zetStatusTip(tr("Explodes Text Entities into single Letters"));
     return action;
 }
 

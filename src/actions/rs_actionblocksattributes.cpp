@@ -43,7 +43,7 @@ QAction* RS_ActionBlocksAttributes::createGUIAction(RS2::ActionType /*type*/, QO
 	// tr("Rename Block")
     QAction* action = new QAction(tr("&Rename Block"), NULL);
 	action->setIcon(QIcon(":/ui/blockattributes.png"));
-    action->setStatusTip(tr("Rename Block and all Inserts"));
+    //action->zetStatusTip(tr("Rename Block and all Inserts"));
     return action;
 }
 

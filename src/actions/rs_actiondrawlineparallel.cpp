@@ -59,8 +59,7 @@ QAction* RS_ActionDrawLineParallel::createGUIAction(RS2::ActionType type, QObjec
         action = new QAction(tr("Concentric"), NULL);
 		action->setIcon(QIcon(":/extui/circlespara.png"));
     }
-    action->setStatusTip(tr("Draw parallels to existing lines, arcs, "
-                            "circles"));
+    //action->zetStatusTip(tr("Draw parallels to existing lines, arcs, "circles"));
     return action;
 }
 

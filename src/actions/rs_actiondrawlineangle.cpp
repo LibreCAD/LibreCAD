@@ -57,19 +57,19 @@ QAction* RS_ActionDrawLineAngle::createGUIAction(RS2::ActionType type, QObject* 
 		// "Line: Angle"
 		action = new QAction(tr("&Angle"),  NULL);
 		action->setIcon(QIcon(":/extui/linesangle.png"));
-	    action->setStatusTip(tr("Draw lines with a given angle"));
+	    //action->zetStatusTip(tr("Draw lines with a given angle"));
 	}
 	else if (type==RS2::ActionDrawLineHorizontal) {
 		//  tr("Line: Horizontal"),
         action = new QAction(tr("&Horizontal"),  NULL);
 		action->setIcon(QIcon(":/extui/lineshor.png"));
-        action->setStatusTip(tr("Draw horizontal lines"));
+        //action->zetStatusTip(tr("Draw horizontal lines"));
 	}
 	else if (type==RS2::ActionDrawLineVertical) {
 		// tr("H&orizontal / Vertical"),
         action = new QAction(tr("hor./vert. line"), NULL);
 		action->setIcon(QIcon(":/extui/linesver.png"));
-        action->setStatusTip(tr("Draw horizontal/vertical lines"));
+        //action->zetStatusTip(tr("Draw horizontal/vertical lines"));
 	}
     return action;
 }

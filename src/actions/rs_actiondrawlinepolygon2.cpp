@@ -46,7 +46,7 @@ QAction* RS_ActionDrawLinePolygon2::createGUIAction(RS2::ActionType /*type*/, QO
 	// tr("Polygon")
     QAction* action = new QAction(tr("Polygo&n (Cor,Cor)"), NULL);
 	action->setIcon(QIcon(":/extui/linespolygon2.png"));
-    action->setStatusTip(tr("Draw polygon with two corners"));
+    //action->zetStatusTip(tr("Draw polygon with two corners"));
     return action;
 }
 

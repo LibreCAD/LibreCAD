@@ -42,7 +42,7 @@ RS_ActionInfoTotalLength::RS_ActionInfoTotalLength(RS_EntityContainer& container
 QAction* RS_ActionInfoTotalLength::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Total length of selected entities")
     QAction* action = new QAction(tr("&Total length of selected entities"), NULL);
-    action->setStatusTip(tr("Measures the total length of all selected entities"));
+    //action->zetStatusTip(tr("Measures the total length of all selected entities"));
 	action->setIcon(QIcon(":/extui/infototallength.png"));
     return action;
 }

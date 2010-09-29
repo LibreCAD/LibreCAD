@@ -45,13 +45,13 @@ QAction* RS_ActionLayersFreezeAll::createGUIAction(RS2::ActionType type, QObject
 	if (type==RS2::ActionLayersFreezeAll) {
 		// tr("Freeze all")
 		action = new QAction(tr("&Freeze all"),  NULL);
-    	action->setStatusTip(tr("Freeze all layers"));
+    	//action->zetStatusTip(tr("Freeze all layers"));
 		action->setIcon(QIcon(":/ui/hiddenblock.png"));
 	}
 	else if (type==RS2::ActionLayersDefreezeAll) {
 		// tr("Defreeze all")
         action = new QAction(tr("&Defreeze all"),   NULL);
-        action->setStatusTip(tr("Defreeze all layers"));
+        //action->zetStatusTip(tr("Defreeze all layers"));
 		action->setIcon(QIcon(":/ui/visibleblock.png"));
 	}
     return action;
