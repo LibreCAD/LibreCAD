@@ -1712,8 +1712,6 @@ void QG_DialogFactory::updateCoordinateWidget(const RS_Vector& abs,
  */
 void QG_DialogFactory::updateMouseWidget(const RS_String& left,
         const RS_String& right) {
- RS_DEBUG->print("updateMouseWidget: Gives seg-fault");
-	return;
     if (mouseWidget!=NULL) {
         mouseWidget->setHelp(left, right);
     }
