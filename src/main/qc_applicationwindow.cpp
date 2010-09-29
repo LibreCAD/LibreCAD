@@ -171,7 +171,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     emit windowsChanged(FALSE);
 
 	
-    statusBar()->message(XSTR(QC_APPNAME) " Ready", 2000);
+    statusBar()->showMessage(XSTR(QC_APPNAME) " Ready", 2000);
     //setFocusPolicy(WheelFocus);
 }
 
@@ -264,7 +264,7 @@ void QC_ApplicationWindow::slotRunScript(const QString& name) {
 		return;
 	}
 
-    statusBar()->message(tr("Running script '%1'").arg(name), 2000);
+    statusBar()->showMessage(tr("Running script '%1'").arg(name), 2000);
 
 	QStringList scriptList = RS_SYSTEM->getScriptList();
 	scriptList.append(RS_SYSTEM->getHomeDir() + "/." XSTR(QC_APPKEY) "/" + name);
@@ -306,7 +306,7 @@ void QC_ApplicationWindow::slotInsertBlock() {
 void QC_ApplicationWindow::slotInsertBlock(const QString& name) {
 	RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: '%s'", name.latin1());
 
-    statusBar()->message(tr("Inserting block '%1'").arg(name), 2000);
+    statusBar()->showMessage(tr("Inserting block '%1'").arg(name), 2000);
 
 	RS_GraphicView* graphicView = getGraphicView();
 	RS_Document* document = getDocument();
@@ -1900,7 +1900,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     static int id = 0;
     id++;
 
-    statusBar()->message(tr("Creating new file..."));
+    statusBar()->showMessage(tr("Creating new file..."));
 
     RS_DEBUG->print("  creating MDI window");
     QC_MDIWindow* w = new QC_MDIWindow(doc, workspace,
@@ -1952,7 +1952,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         w->show();
     }
     slotWindowActivated(w);
-    statusBar()->message(tr("New Drawing created."), 2000);
+    statusBar()->showMessage(tr("New Drawing created."), 2000);
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNew() OK");
     setFocus();
@@ -1986,7 +1986,7 @@ void QC_ApplicationWindow::slotFileOpen() {
 void QC_ApplicationWindow::slotFileOpenRecent(int id) {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpenRecent()");
 
-    statusBar()->message(tr("Opening recent file..."));
+    statusBar()->showMessage(tr("Opening recent file..."));
     QString fileName = recentFiles->get(id);
 
     if (fileName.endsWith(" (DXF 1)")) {
@@ -2072,9 +2072,9 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName,
         commandWidget->processStderr();
         QString message=tr("Loaded document: ")+fileName;
         commandWidget->appendHistory(message);
-        statusBar()->message(message, 2000);
+        statusBar()->showMessage(message, 2000);
     } else {
-        statusBar()->message(tr("Opening aborted"), 2000);
+        statusBar()->showMessage(tr("Opening aborted"), 2000);
     }
     QApplication::restoreOverrideCursor();
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen(..) OK");
@@ -2088,7 +2088,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName,
 void QC_ApplicationWindow::slotFileSave() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileSave()");
 
-    statusBar()->message(tr("Saving drawing..."));
+    statusBar()->showMessage(tr("Saving drawing..."));
 
     QC_MDIWindow* w = getMDIWindow();
     QString name;
@@ -2100,7 +2100,7 @@ void QC_ApplicationWindow::slotFileSave() {
             if (w->slotFileSave(cancelled)) {
                 if (!cancelled) {
                     name = w->getDocument()->getFilename();
-                    statusBar()->message(tr("Saved drawing: %1").arg(name), 2000);
+                    statusBar()->showMessage(tr("Saved drawing: %1").arg(name), 2000);
                 }
             } else {
                 // error
@@ -2122,7 +2122,7 @@ void QC_ApplicationWindow::slotFileSave() {
 void QC_ApplicationWindow::slotFileSaveAs() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileSaveAs()");
 
-    statusBar()->message(tr("Saving drawing under new filename..."));
+    statusBar()->showMessage(tr("Saving drawing under new filename..."));
 
     QC_MDIWindow* w = getMDIWindow();
     QString name;
@@ -2146,7 +2146,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
     updateRecentFilesMenu();
 
     QString message = tr("Saved drawing: %1").arg(name);
-    statusBar()->message(message, 2000);
+    statusBar()->showMessage(message, 2000);
     commandWidget->appendHistory(message);
 }
 
@@ -2158,7 +2158,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
 void QC_ApplicationWindow::slotFileExport() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileExport()");
 
-    statusBar()->message(tr("Exporting drawing..."));
+    statusBar()->showMessage(tr("Exporting drawing..."));
 
     QC_MDIWindow* w = getMDIWindow();
     QString fn;
@@ -2249,7 +2249,7 @@ void QC_ApplicationWindow::slotFileExport() {
                                           dlg.isBackgroundBlack());
                 if (ret) {
                     QString message = tr("Exported: %1").arg(fn);
-                    statusBar()->message(message, 2000);
+                    statusBar()->showMessage(message, 2000);
                     commandWidget->appendHistory(message);
                 }
             }
@@ -2288,7 +2288,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
         return false;
     }
 
-    statusBar()->message(tr("Exporting..."));
+    statusBar()->showMessage(tr("Exporting..."));
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
     bool ret = false;
@@ -2339,9 +2339,9 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     delete buffer;
 
     if (ret) {
-        statusBar()->message(tr("Export complete"), 2000);
+        statusBar()->showMessage(tr("Export complete"), 2000);
     } else {
-        statusBar()->message(tr("Export failed!"), 2000);
+        statusBar()->showMessage(tr("Export failed!"), 2000);
     }
 
     return ret;
@@ -2407,7 +2407,7 @@ void QC_ApplicationWindow::slotFilePrint() {
         return;
     }
 
-    statusBar()->message(tr("Printing..."));
+    statusBar()->showMessage(tr("Printing..."));
     QPrinter* printer;
     printer = new QPrinter(QPrinter::HighResolution);
     bool landscape = false;
@@ -2471,7 +2471,7 @@ void QC_ApplicationWindow::slotFilePrint() {
 
     delete printer;
 
-    statusBar()->message(tr("Printing complete"), 2000);
+    statusBar()->showMessage(tr("Printing complete"), 2000);
 }
 
 
@@ -2579,7 +2579,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
 void QC_ApplicationWindow::slotFileQuit() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileQuit()");
 
-    statusBar()->message(tr("Exiting application..."));
+    statusBar()->showMessage(tr("Exiting application..."));
 
     if (queryExit(false)) {
         qApp->exit(0);
