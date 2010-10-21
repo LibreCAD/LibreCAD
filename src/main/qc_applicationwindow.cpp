@@ -726,12 +726,12 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-#ifdef RS_PROF
+
     action = actionFactory.createAction(RS2::ActionDrawPolyline,
                                         actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-#endif
+
     menu->insertItem(tr("&Line"), subMenu);
 
     // Arcs:
@@ -784,13 +784,14 @@ void QC_ApplicationWindow::initActions() {
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     menu->insertItem(tr("&Spline"), subMenu);
     
-#ifdef RS_PROF
 	// Polylines:
     subMenu=new Q3PopupMenu(this);
     action = actionFactory.createAction(RS2::ActionDrawPolyline,
                                         actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    menu->insertItem(tr("&Polyline"), subMenu);
+
     action = actionFactory.createAction(RS2::ActionPolylineAdd,
                                         actionHandler);
     action->addTo(subMenu);
@@ -807,8 +808,6 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertItem(tr("&Polyline"), subMenu);
-#endif
 	
     // Text:
     action = actionFactory.createAction(RS2::ActionDrawText,
@@ -1515,10 +1514,11 @@ void QC_ApplicationWindow::initView() {
     // dw->setResizeEnabled(true);
     dw->setCaption(tr("Library Browser"));
     // dw->setCloseMode(QDockWidget::Always);
-	addDockWidget(Qt::AllDockWidgetAreas , dw);  // , tw
+    addDockWidget(Qt::LeftDockWidgetArea , dw);
 
     libraryDockWindow = dw;
     libraryDockWindow->hide();
+	
 
     RS_DEBUG->print("  command widget..");
     dw = new QDockWidget("Command", this);
