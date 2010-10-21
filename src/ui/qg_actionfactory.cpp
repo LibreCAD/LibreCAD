@@ -101,6 +101,7 @@
 #include "rs_actionmodifymove.h"
 #include "rs_actionmodifymoverotate.h"
 #include "rs_actionmodifyrotate.h"
+#include "rs_actionmodifyrotate2.h"
 #include "rs_actionmodifyround.h"
 #include "rs_actionmodifyscale.h"
 #include "rs_actionmodifystretch.h"
@@ -824,7 +825,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
         break;
 
     case RS2::ActionModifyRotate2:
-		action = RS_ActionModifyRotate::createGUIAction(id, mw);
+		action = RS_ActionModifyRotate2::createGUIAction(id, mw);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotModifyRotate2()));
         break;
