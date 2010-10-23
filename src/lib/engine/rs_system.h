@@ -68,13 +68,13 @@ public:
 	void initLanguageList();
 
     bool checkInit();
-	bool createHomePath(const QString& p);
+    bool createPaths(const QString& p);
 
     /**
      * @return Users home directory.
      */
     RS_String getHomeDir() {
-        return RS_Dir::homeDirPath();
+        return RS_Dir::homePath();
     }
 
     /**

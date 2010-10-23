@@ -92,7 +92,11 @@ int main(int argc, char** argv) {
 	// avoid . / , confusion on German environments
 	setlocale(LC_ALL, "C");
 
+        QCoreApplication::setApplicationName(XSTR(QC_APPNAME));
+        QCoreApplication::setApplicationVersion(XSTR(QC_VERSION));
+
     QApplication app(argc, argv);
+
 
 	// for image mime resources from png files
 	//  TODO: kinda dirty to call that explicitly

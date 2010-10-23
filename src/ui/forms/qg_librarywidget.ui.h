@@ -13,6 +13,7 @@
 //Added by qt3to4:
 #include <QPixmap>
 #include <QKeyEvent>
+#include <QDesktopServices>
 
 void QG_LibraryWidget::init() {
     actionHandler = NULL;
@@ -163,7 +164,7 @@ void QG_LibraryWidget::updatePreview(Q3ListViewItem* item) {
     // Fill items into icon view:
     Q3IconViewItem* newItem;
     for (it=itemPathList.begin(); it!=itemPathList.end(); ++it) {
-        QString label = QFileInfo(*it).baseName(true);
+        QString label = QFileInfo(*it).baseName();
         QPixmap pixmap = getPixmap(directory, QFileInfo(*it).fileName(), (*it));
         newItem = new Q3IconViewItem(ivPreview, label, pixmap);
     }
@@ -251,13 +252,16 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
         const QString& dxfFile,
         const QString& dxfPath) {
 
+    // the thumbnail must be created in the user's home.
+    QString iconCacheLocation=QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/iconCache/";
+
     RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: "
                     "dir: '%s' dxfFile: '%s' dxfPath: '%s'",
                     dir.latin1(), dxfFile.latin1(), dxfPath.latin1());
 
     // List of all directories that contain part libraries:
     QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
-    directoryList.prepend(RS_SYSTEM->getHomeDir() + "/.qcad/library");
+    directoryList.prepend(iconCacheLocation);
     QStringList::Iterator it;
 
     QFileInfo fiDxf(dxfPath);
@@ -268,7 +272,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     //  in the current library path:
     for (it=directoryList.begin(); it!=directoryList.end(); ++it) {
         itemDir = (*it)+dir;
-        pngPath = itemDir + "/" + fiDxf.baseName(true) + ".png";
+        pngPath = itemDir + "/" + fiDxf.baseName() + ".png";
         RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: checking: '%s'",
                         pngPath.latin1());
         QFileInfo fiPng(pngPath);
@@ -288,34 +292,11 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
         }
     }
 
-    // the thumbnail must be created in the user's home.
-
     // create all directories needed:
-    RS_SYSTEM->createHomePath("/.qcad/library" + dir);
-    /*QString d = "/.qcad/library" + dir;
-    QDir dr;
+    RS_SYSTEM->createPaths(iconCacheLocation + dir);
 
-    QStringList dirs = QStringList::split('/', d, false);
-    QString created = RS_SYSTEM->getHomeDir();
-    for (it=dirs.begin(); it!=dirs.end(); ++it) {
-        created += QString("/%1").arg(*it);
-        
-        if (created.isEmpty() || QFileInfo(created).isDir() || dr.mkdir(created, true)) {
-    RS_DEBUG->print("QG_LibraryWidget: Created directory '%s'", 
-    created.latin1());
-    	}
-        else {
-    RS_DEBUG->print(RS_Debug::D_ERROR, 
-    "QG_LibraryWidget: Cannot create directory '%s'", 
-    created.latin1());
-            return "";
-        }
-}
-    */
-
-    QString d = RS_SYSTEM->getHomeDir() + "/.qcad/library" + dir;
-
-    pngPath = d + "/" + fiDxf.baseName(true) + ".png";
+    QString foo=iconCacheLocation + dir + "/" + fiDxf.baseName() + ".png";
+    pngPath = iconCacheLocation + dir + "/" + fiDxf.baseName() + ".png";
 
     QPixmap* buffer = new QPixmap(128,128);
     RS_PainterQt* painter = new RS_PainterQt(buffer);
@@ -334,7 +315,12 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
 
         gv.setContainer(&graphic);
         gv.zoomAuto(false);
-        gv.drawEntity(&graphic, true);
+        // gv.drawEntity(&graphic, true);
+
+        for (RS_Entity* e=graphic.firstEntity(RS2::ResolveAll);
+                e!=NULL; e=graphic.nextEntity(RS2::ResolveAll)) {
+            gv.drawEntity(painter, e);
+        }
 
         QImageWriter iio;
         QImage img;
