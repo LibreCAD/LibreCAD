@@ -119,12 +119,13 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         : QMainWindow(0, "", Qt::WDestructiveClose),
         QG_MainWindowInterface()
 {
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
+
     appWindow = this;
     // RVT_PORT assistant = NULL;
     workspace = NULL;
     
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
      setIcon(qPixmapFromMimeSource(QC_APP_ICON));
 
 	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating action handler");

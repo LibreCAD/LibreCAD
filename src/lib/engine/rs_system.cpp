@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -34,6 +34,7 @@
 #include "rs_regexp.h"
 #include "rs_translator.h"
 #include "rs_fileinfo.h"
+#include <QDesktopServices>
 
 RS_System* RS_System::uniqueInstance = NULL;
 
@@ -43,7 +44,7 @@ RS_System* RS_System::uniqueInstance = NULL;
  *
  * @param appName Application name (e.g. "QCad II")
  * @param appVersion Application version (e.g. "1.2.3")
- * @param appDirName Application directory name used for 
+ * @param appDirName Application directory name used for
  *     subdirectories in /usr, /etc ~/.
  * @param appDir Absolute application directory (e.g. /opt/qcad)
  *                 defaults to current directory.
@@ -191,7 +192,7 @@ void RS_System::loadTranslation(const RS_String& lang, const RS_String& langCmd)
         if (tQCadLib->load(langFile, (*it))) {
             qApp->installTranslator(tQCadLib);
         }
-		
+
         langFile = "qcadcam_" + lang + ".qm";
         if (tQCadLib!=NULL) {
             qApp->removeTranslator(tQCadCam);
@@ -223,7 +224,7 @@ void RS_System::loadTranslation(const RS_String& lang, const RS_String& langCmd)
 bool RS_System::checkInit() {
     if (!initialized) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-			"RS_System::checkInit: System not initialized.\n"
+                        "RS_System::checkInit: System not initialized.\n"
             "Use RS_SYSTEM->init(appname, appdirname) to do so.");
     }
     return initialized;
@@ -235,27 +236,27 @@ bool RS_System::checkInit() {
 /**
  * Creates all given directories in the user's home.
  */
-bool RS_System::createHomePath(const QString& p) {
+bool RS_System::createPaths(const QString& p) {
     QDir dr;
 
     QStringList dirs = QStringList::split('/', p, false);
-    QString created = getHomeDir();
+    QString created = "";
     for (QStringList::Iterator it=dirs.begin(); it!=dirs.end(); ++it) {
         created += QString("/%1").arg(*it);
-        
+
         if (created.isEmpty() || QFileInfo(created).isDir() || dr.mkdir(created, true)) {
-			RS_DEBUG->print("RS_System::createHomePath: Created directory '%s'", 
-				created.latin1());
-    	}
+                        RS_DEBUG->print("RS_System::createPaths: Created directory '%s'",
+                                created.latin1());
+        }
         else {
-			RS_DEBUG->print(RS_Debug::D_ERROR, 
-				"RS_System::createHomePath: Cannot create directory '%s'", 
-				created.latin1());
+                        RS_DEBUG->print(RS_Debug::D_ERROR,
+                                "RS_System::createPaths: Cannot create directory '%s'",
+                                created.latin1());
             return false;
         }
     }
 
-	return true;
+        return true;
 }
 
 
@@ -271,11 +272,11 @@ RS_StringList RS_System::getFileList(const RS_String& subDirectory,
 
     checkInit();
 
-	RS_DEBUG->print("RS_System::getFileList: subdirectory %s ", subDirectory.latin1());
-	RS_DEBUG->print("RS_System::getFileList: appDirName %s ", appDirName.latin1());
-	RS_DEBUG->print("RS_System::getFileList: getCurrentDir %s ", getCurrentDir().latin1());
+        RS_DEBUG->print("RS_System::getFileList: subdirectory %s ", subDirectory.latin1());
+        RS_DEBUG->print("RS_System::getFileList: appDirName %s ", appDirName.latin1());
+        RS_DEBUG->print("RS_System::getFileList: getCurrentDir %s ", getCurrentDir().latin1());
 
-	
+
     /*RS_StringList dirList;
 
     // Redhat style:
@@ -286,7 +287,7 @@ RS_StringList RS_System::getFileList(const RS_String& subDirectory,
 
     dirList.append("/usr/X11R6/share/" + appDirName);
     dirList.append(getHomeDir() + "/." + appDirName);
-	 
+
 
     // Local directory:
     dirList.append(".");
@@ -332,11 +333,13 @@ RS_StringList RS_System::getFileList(const RS_String& subDirectory,
  */
 RS_StringList RS_System::getDirectoryList(const RS_String& subDirectory) {
     RS_StringList dirList;
-
 #ifdef __APPLE__
-
-    if (subDirectory!="library") {
+        dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif
+#ifdef __WIN__
+        dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
+#endif
+
         //local (application) directory has priority over other dirs:
         if (!appDir.isEmpty() && appDir!="/" && appDir!=getHomeDir()) {
             dirList.append(appDir + "/" + subDirectory);
@@ -351,21 +354,16 @@ RS_StringList RS_System::getDirectoryList(const RS_String& subDirectory) {
         dirList.append("/usr/X11R6/share/" + appDirName + "/" + subDirectory);
         dirList.append(getHomeDir() + "/." + appDirName + "/" + subDirectory);
 
-#ifdef __APPLE__
-
-    }
-#endif
 
 #ifdef __APPLE__
     if (!appDir.isEmpty() && appDir!="/") {
         dirList.append(appDir + "/../Resources/" + subDirectory);
-// RVT_PORT I don't think we need this here anymore        dirList.append(appDir + "/../../../" + subDirectory);
     }
 #endif
 
 #ifndef __APPLE__
-	// Add support directory if caduntu is run-in-place, not for Apple because it uses resources
-	dirList.append(appDir + "/resources/" + subDirectory);
+        // Add support directory if caduntu is run-in-place, not for Apple because it uses resources
+        dirList.append(appDir + "/resources/" + subDirectory);
 #endif
 
     // Individual directories:
@@ -407,7 +405,7 @@ RS_StringList RS_System::getDirectoryList(const RS_String& subDirectory) {
 
 /**
  * Converts a language string to a symbol (e.g. Deutsch or German to 'de').
- * 
+ *
  * Supported languages: http://ftp.ics.uci.edu/pub/ietf/http/related/iso639.txt
  */
 RS_String RS_System::languageToSymbol(const RS_String& lang) {
@@ -841,7 +839,7 @@ RS_String RS_System::languageToSymbol(const RS_String& lang) {
 
 
 /**
- * Converst a language two-letter-code into a readable string 
+ * Converst a language two-letter-code into a readable string
  * (e.g. 'de' to Deutsch)
  */
 RS_String RS_System::symbolToLanguage(const RS_String& symb) {
@@ -1382,9 +1380,9 @@ RS_String RS_System::getEncoding(const RS_String& str) {
 /** Returns ISO code for given locale. Needed for win32 to convert
  from system encodings.
  Locale names mostly copied from XFree86.
- 
+
  The code may be incomplete (chinese/japanese locales, etc.)
- 
+
  2004-05-13, J Staniek
 */
 static QMap<Q3CString,Q3CString> loc_map;
@@ -1510,5 +1508,3 @@ Q3CString RS_System::localeToISO(const Q3CString& locale) {
         return "ISO8859-1";
     return l;
 }
-
-
