@@ -1770,7 +1770,8 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(int id) {
     QWidget* w = workspace->windowList().at(id);
     if (w!=NULL) {
         w->showNormal();
-        //w->setFocus();
+        w->setFocus();
+        // RVT_PORT need to reset/cleanup current menu here to avoid menu clutter
     }
 }
 
