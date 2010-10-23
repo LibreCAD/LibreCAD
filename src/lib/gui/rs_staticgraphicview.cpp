@@ -75,6 +75,7 @@ int RS_StaticGraphicView::getHeight() {
 void RS_StaticGraphicView::paint() {
     RS_DEBUG->print("RS_StaticGraphicView::paint begin");
     // drawIt();
+    redraw(RS2::RedrawAll);
     RS_DEBUG->print("RS_StaticGraphicView::paint end");
 }
 
