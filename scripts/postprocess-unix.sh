@@ -8,6 +8,8 @@ mkdir -p $RESOURCEDIR/fonts
 mkdir -p $RESOURCEDIR/patterns
 cp support/patterns/*.dxf $RESOURCEDIR/patterns
 cp support/fonts/*.cxf $RESOURCEDIR/fonts
+find support/library -type d -not -path "*.svn*"  | sed s/support// | xargs -IFILES  mkdir $RESOURCEDIR/FILES
+find support/library -type f -iname *.dxf -not -path "*.svn*"  | sed s/support// | xargs -IFILES  cp support/FILES $RESOURCEDIR/FILES
 
 # Generate translations
 lrelease caduntu.pro
