@@ -261,26 +261,6 @@ RS_StringList RS_System::getFileList(const RS_String& subDirectory,
         RS_DEBUG->print("RS_System::getFileList: getCurrentDir %s ", getCurrentDir().latin1());
 
 
-    /*RS_StringList dirList;
-
-    // Redhat style:
-    dirList.append("/usr/share/" + appDirName);
-
-    // SuSE style:
-    dirList.append("/usr/X11R6/" + appDirName);
-
-    dirList.append("/usr/X11R6/share/" + appDirName);
-    dirList.append(getHomeDir() + "/." + appDirName);
-
-
-    // Local directory:
-    dirList.append(".");
-    //dirList.append(getCurrentDir());
-
-    // Debian Doc:
-    /usr/share/doc/qcad/html/en/
-    */
-
     RS_StringList dirList = getDirectoryList(subDirectory);
 
     RS_StringList fileList;
@@ -320,9 +300,6 @@ RS_StringList RS_System::getDirectoryList(const RS_String& _subDirectory) {
 
     QString subDirectory=QDir::fromNativeSeparators(_subDirectory);
 
-
-    QString FOO=QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-
 #ifdef Q_OS_MAC
         dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif
@@ -345,13 +322,13 @@ RS_StringList RS_System::getDirectoryList(const RS_String& _subDirectory) {
         dirList.append(getHomeDir() + "/." + appDirName + "/" + subDirectory);
 
 
-#ifdef __APPLE__
+#ifdef Q_OS_MAC
     if (!appDir.isEmpty() && appDir!="/") {
         dirList.append(appDir + "/../Resources/" + subDirectory);
     }
 #endif
 
-#ifndef __APPLE__
+#ifndef Q_OS_MAC
         // Add support directory if caduntu is run-in-place, not for Apple because it uses resources
         dirList.append(appDir + "/resources/" + subDirectory);
 #endif
