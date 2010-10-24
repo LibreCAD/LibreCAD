@@ -333,10 +333,12 @@ RS_StringList RS_System::getFileList(const RS_String& subDirectory,
  */
 RS_StringList RS_System::getDirectoryList(const RS_String& subDirectory) {
     RS_StringList dirList;
-#ifdef __APPLE__
+    QString FOO=QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+
+#ifdef Q_OS_MAC
         dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif
-#ifdef __WIN__
+#ifdef Q_OS_WIN32
         dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif
 
