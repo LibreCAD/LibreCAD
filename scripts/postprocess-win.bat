@@ -10,8 +10,13 @@ REM Postprocess for windows
 echo " Copying fonts and pattersn"
 mkdir %RESOURCEDIR%\fonts
 mkdir %RESOURCEDIR%\patterns
+mkdir %RESOURCEDIR%\library
+mkdir %RESOURCEDIR%\library\misc
+mkdir %RESOURCEDIR%\library\templates
 copy support\patterns\*.dxf %RESOURCEDIR%\patterns
 copy support\fonts\*.cxf %RESOURCEDIR%\fonts
+copy support\library\misc\*.dxf %RESOURCEDIR%\library\misc
+copy support\library\templates\*.dxf %RESOURCEDIR%\library\templates
 
 
 REM Generate translations
