@@ -236,27 +236,11 @@ bool RS_System::checkInit() {
 /**
  * Creates all given directories in the user's home.
  */
-bool RS_System::createPaths(const QString& p) {
-    QDir dr;
-
-    QStringList dirs = QStringList::split('/', p, false);
-    QString created = "";
-    for (QStringList::Iterator it=dirs.begin(); it!=dirs.end(); ++it) {
-        created += QString("/%1").arg(*it);
-
-        if (created.isEmpty() || QFileInfo(created).isDir() || dr.mkdir(created, true)) {
-                        RS_DEBUG->print("RS_System::createPaths: Created directory '%s'",
-                                created.latin1());
-        }
-        else {
-                        RS_DEBUG->print(RS_Debug::D_ERROR,
-                                "RS_System::createPaths: Cannot create directory '%s'",
-                                created.latin1());
-            return false;
-        }
-    }
-
-        return true;
+bool RS_System::createPaths(const QString& directory) {
+    QDir dir;
+    dir.cd(QDir::homePath());
+    dir.mkpath(directory);
+    return true;
 }
 
 
@@ -331,8 +315,12 @@ RS_StringList RS_System::getFileList(const RS_String& subDirectory,
  * @return List of all directories in subdirectory 'subDirectory' in
  * all possible QCad directories.
  */
-RS_StringList RS_System::getDirectoryList(const RS_String& subDirectory) {
+RS_StringList RS_System::getDirectoryList(const RS_String& _subDirectory) {
     RS_StringList dirList;
+
+    QString subDirectory=QDir::fromNativeSeparators(_subDirectory);
+
+
     QString FOO=QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
 
 #ifdef Q_OS_MAC
