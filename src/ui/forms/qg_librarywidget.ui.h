@@ -118,7 +118,7 @@ void QG_LibraryWidget::appendTree(QG_ListViewItem* item, QString directory) {
                     }
                 }
 
-                appendTree(newItem, directory+"/"+(*it));
+                appendTree(newItem, directory+QDir::separator()+(*it));
             }
         }
     }
@@ -153,7 +153,7 @@ void QG_LibraryWidget::updatePreview(Q3ListViewItem* item) {
                 itemDir.entryList("*.dxf", QDir::Files, QDir::Name);
             QStringList::Iterator it2;
             for (it2=itemNameList.begin(); it2!=itemNameList.end(); ++it2) {
-                itemPathList += itemDir.path()+"/"+(*it2);
+                itemPathList += itemDir.path()+QDir::separator()+(*it2);
             }
         }
     }
@@ -183,7 +183,7 @@ QString QG_LibraryWidget::getItemDir(Q3ListViewItem* item) {
     }
 
     Q3ListViewItem* parent = item->parent();
-    return getItemDir(parent) + QString("/%1").arg(item->text(0));
+    return getItemDir(parent) + QDir::separator() + QString("%1").arg(item->text(0));
 }
 
 
@@ -203,7 +203,7 @@ QString QG_LibraryWidget::getItemPath(Q3IconViewItem* item) {
         for (it=directoryList.begin(); it!=directoryList.end(); ++it) {
             itemDir.setPath((*it)+dir);
             if (itemDir.exists()) {
-                QString f = (*it) + dir + "/" + item->text() + ".dxf";
+                QString f = (*it) + dir + QDir::separator() + item->text() + ".dxf";
                 if (QFileInfo(f).isReadable()) {
                     return f;
                 }
@@ -253,7 +253,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
         const QString& dxfPath) {
 
     // the thumbnail must be created in the user's home.
-    QString iconCacheLocation=QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/iconCache/";
+    QString iconCacheLocation=QDesktopServices::storageLocation(QDesktopServices::DataLocation) + QDir::separator() + "iconCache" + QDir::separator();
 
     RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: "
                     "dir: '%s' dxfFile: '%s' dxfPath: '%s'",
@@ -272,7 +272,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     //  in the current library path:
     for (it=directoryList.begin(); it!=directoryList.end(); ++it) {
         itemDir = (*it)+dir;
-        pngPath = itemDir + "/" + fiDxf.baseName() + ".png";
+        pngPath = itemDir + QDir::separator() + fiDxf.baseName() + ".png";
         RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: checking: '%s'",
                         pngPath.latin1());
         QFileInfo fiPng(pngPath);
@@ -295,8 +295,8 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     // create all directories needed:
     RS_SYSTEM->createPaths(iconCacheLocation + dir);
 
-    QString foo=iconCacheLocation + dir + "/" + fiDxf.baseName() + ".png";
-    pngPath = iconCacheLocation + dir + "/" + fiDxf.baseName() + ".png";
+    QString foo=iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
+    pngPath = iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
 
     QPixmap* buffer = new QPixmap(128,128);
     RS_PainterQt* painter = new RS_PainterQt(buffer);
