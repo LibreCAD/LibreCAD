@@ -47,7 +47,7 @@
 #include <qapplication.h>
 #include <qdatetime.h>
 #include <qfile.h>
-#include <q3filedialog.h>
+#include <qfiledialog.h>
 #include <qnamespace.h>
 #include <qmessagebox.h>
 #include <q3paintdevicemetrics.h>
@@ -2160,7 +2160,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
 void QC_ApplicationWindow::slotFileExport() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileExport()");
 
-    statusBar()->showMessage(tr("Exporting drawing..."));
+    statusBar()->showMessage(tr("Exporting drawing..."), 2000);
 
     QC_MDIWindow* w = getMDIWindow();
     QString fn;
@@ -2168,50 +2168,34 @@ void QC_ApplicationWindow::slotFileExport() {
 
         // read default settings:
         RS_SETTINGS->beginGroup("/Paths");
-        RS_String defDir = RS_SETTINGS->readEntry("/ExportImage",
-                           RS_SYSTEM->getHomeDir());
+        RS_String defDir = RS_SETTINGS->readEntry("/ExportImage", RS_SYSTEM->getHomeDir());
         RS_String defFilter = RS_SETTINGS->readEntry("/ExportImageFilter",
-                              "Portable Network Graphic (*.png)");
+                                                     QString("%1 (*.%2)").arg(QG_DialogFactory::extToFormat("png")).arg("png"));
         RS_SETTINGS->endGroup();
 
         bool cancel = false;
 
-        Q3FileDialog fileDlg(NULL, "", true);
-
-        //RVT_PORT Q3StrList f = QImageIO::outputFormats();
-        //QStringList formats = QStringList::fromStrList(f);
         QStringList filters;
-        //QString all = "";
-
-		/* RVT_PORT		for (QStringList::Iterator it = formats.begin();
-		 it!=formats.end(); ++it) { */
-
-        foreach (QByteArray format, QImageReader::supportedImageFormats()) {    
-			filters.append(format);  
-			/* RVT_PORT
+        foreach (QByteArray format, QImageWriter::supportedImageFormats()) {
             QString st;
-            if ((*it)=="JPEG") {
+            if (format=="JPEG") {
                 st = QString("%1 (*.%2 *.jpg)")
-                     .arg(QG_DialogFactory::extToFormat(*it))
-                     .arg(QString(*it).lower());
+                     .arg(QG_DialogFactory::extToFormat(format))
+                     .arg(QString(format).lower());
             } else {
                 st = QString("%1 (*.%2)")
-                     .arg(QG_DialogFactory::extToFormat(*it))
-                     .arg(QString(*it).lower());
+                     .arg(QG_DialogFactory::extToFormat(format))
+                     .arg(QString(format).lower());
             }
-            filters.append(st); */
-
-            //if (!all.isEmpty()) {
-            //    all += " ";
-            //}
-            //all += QString("*.%1").arg(QString(*it).lower());
+            filters.append(st);
         }
 
+
+        QFileDialog fileDlg(this, "", false);
         fileDlg.setFilters(filters);
-        fileDlg.setMode(Q3FileDialog::AnyFile);
-        fileDlg.setCaption(QObject::tr("Export Image"));
-        fileDlg.setDir(defDir);
-        fileDlg.setSelectedFilter(defFilter);
+        fileDlg.setFileMode(QFileDialog::AnyFile);
+        fileDlg.selectFilter(defFilter);
+        fileDlg.setAcceptMode(QFileDialog::AcceptSave);
 
         if (fileDlg.exec()==QDialog::Accepted) {
             fn = fileDlg.selectedFile();
@@ -2321,7 +2305,10 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     }
     gv.setContainer(graphic);
     gv.zoomAuto(false);
-    gv.drawEntity(graphic, true);
+    for (RS_Entity* e=graphic->firstEntity(RS2::ResolveAll);
+            e!=NULL; e=graphic->nextEntity(RS2::ResolveAll)) {
+        gv.drawEntity(painter, e);
+    }
 
     // RVT_PORT QImageIO iio;
     QImageWriter iio;
@@ -2334,6 +2321,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 	if (iio.write(img)) {
         ret = true;
     }
+    QString error=iio.errorString();
     QApplication::restoreOverrideCursor();
 
     // GraphicView deletes painter
