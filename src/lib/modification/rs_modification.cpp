@@ -646,7 +646,6 @@ bool RS_Modification::splitPolyline(RS_Polyline& polyline,
  *
  * @return Pointer to the new polyline or NULL.
  */
-/*
 RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
         const RS_AtomicEntity& segment,
         const RS_Vector& node) {
@@ -752,7 +751,7 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
 
     return newPolyline;
 }
-*/
+
 
 
 
@@ -763,7 +762,7 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
  *
  * @return Pointer to the new polyline or NULL.
  */
-/*
+
 RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
         const RS_Vector& node) {
 
@@ -897,7 +896,7 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
 
     return newPolyline;
 }
-*/
+
 
 
 
@@ -909,7 +908,7 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
  *
  * @return Pointer to the new polyline or NULL.
  */
-/*
+
 RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
         RS_AtomicEntity& segment, const RS_Vector& node1, const RS_Vector& node2) {
 
@@ -1136,7 +1135,7 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
 
     return newPolyline;
 }
-*/
+
 
 
 
@@ -1150,7 +1149,7 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
  *
  * @return Pointer to the new polyline or NULL.
  */
-/*
+
 RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
         RS_AtomicEntity& segment1,
         RS_AtomicEntity& segment2) {
@@ -1379,7 +1378,7 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
 
     return newPolyline;
 }
-*/
+
 
 
 

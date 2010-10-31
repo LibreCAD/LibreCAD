@@ -461,7 +461,7 @@ void RS_Snapper::showOptions() {
 /**
  * Deletes the snapper from the screen.
  */
-void RS_Snapper::deleteSnapper() {
+void RS_Snapper::deleteSnapper() {// RVT_PORT (can be deleted??)
 	RS_DEBUG->print("RS_Snapper::Delete Snapper");
 	
 	graphicView->getOverlayContainer(RS2::Snapper)->clear();

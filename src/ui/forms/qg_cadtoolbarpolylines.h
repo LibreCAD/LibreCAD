@@ -83,33 +83,19 @@ public:
     {
         QG_CadToolBarPolylines->setWindowTitle(QApplication::translate("QG_CadToolBarPolylines", "Polylines", 0, QApplication::UnicodeUTF8));
         bBack->setText(QString());
-#ifndef QT_NO_TOOLTIP
         bBack->setProperty("toolTip", QVariant(QApplication::translate("QG_CadToolBarPolylines", "Back to main menu", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_TOOLTIP
         bPolyline->setText(QString());
-#ifndef QT_NO_TOOLTIP
         bPolyline->setProperty("toolTip", QVariant(QApplication::translate("QG_CadToolBarPolylines", "Create Polyline", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_TOOLTIP
         bPolylineTrim->setText(QString());
-#ifndef QT_NO_TOOLTIP
         bPolylineTrim->setProperty("toolTip", QVariant(QApplication::translate("QG_CadToolBarPolylines", "Trim segments", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_TOOLTIP
         bPolylineDelBetween->setText(QString());
-#ifndef QT_NO_TOOLTIP
         bPolylineDelBetween->setProperty("toolTip", QVariant(QApplication::translate("QG_CadToolBarPolylines", "Delete between two nodes", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_TOOLTIP
         bPolylineDel->setText(QString());
-#ifndef QT_NO_TOOLTIP
         bPolylineDel->setProperty("toolTip", QVariant(QApplication::translate("QG_CadToolBarPolylines", "Delete node", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_TOOLTIP
         bPolylineAdd->setText(QString());
-#ifndef QT_NO_TOOLTIP
         bPolylineAdd->setProperty("toolTip", QVariant(QApplication::translate("QG_CadToolBarPolylines", "Add node", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_TOOLTIP
         bPolylineAppend->setText(QString());
-#ifndef QT_NO_TOOLTIP
         bPolylineAppend->setProperty("toolTip", QVariant(QApplication::translate("QG_CadToolBarPolylines", "Append node", 0, QApplication::UnicodeUTF8)));
-#endif // QT_NO_TOOLTIP
     } // retranslateUi
 
 

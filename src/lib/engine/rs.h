@@ -233,12 +233,14 @@ public:
         ActionDrawSpline,
         ActionDrawPolyline,
         ActionDrawText,
-        
+		
 		ActionPolylineAdd,
 		ActionPolylineAppend,
 		ActionPolylineDel,
 		ActionPolylineDelBetween,
 		ActionPolylineTrim,
+		ActionPolylineEquidistant,
+		ActionPolylineSegment,
 
         ActionDimAligned,
         ActionDimLinear,

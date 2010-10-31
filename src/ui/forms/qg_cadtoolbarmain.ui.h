@@ -8,9 +8,6 @@
 *****************************************************************************/
 
 void QG_CadToolBarMain::init() {
-#ifndef RS_PROF
-	bMenuPolyline->hide();
-#endif
 }
 
 void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
