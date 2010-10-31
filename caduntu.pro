@@ -457,7 +457,15 @@ HEADERS += \
 		src/actions/rs_actionzoomprevious.h \
 		src/actions/rs_actionzoomredraw.h \
 		src/actions/rs_actionzoomscroll.h \
-		src/actions/rs_actionzoomwindow.h
+		src/actions/rs_actionzoomwindow.h \
+		src/actions/rs_actiondrawpolyline.h \
+		src/actions/rs_actionpolylineadd.h \
+		src/actions/rs_actionpolylineappend.h \
+		src/actions/rs_actionpolylinedel.h \
+		src/actions/rs_actionpolylinedelbetween.h \
+		src/actions/rs_actionpolylinetrim.h \
+		src/actions/rs_actionpolylineequidistant.h \
+		src/actions/rs_actionpolylinesegment.h
 
 SOURCES += \
 		src/actions/rs_actionblocksadd.cpp \
@@ -566,7 +574,15 @@ SOURCES += \
 		src/actions/rs_actionzoomprevious.cpp \
 		src/actions/rs_actionzoomredraw.cpp \
 		src/actions/rs_actionzoomscroll.cpp \
-		src/actions/rs_actionzoomwindow.cpp
+		src/actions/rs_actionzoomwindow.cpp \
+		src/actions/rs_actiondrawpolyline.cpp \
+		src/actions/rs_actionpolylineadd.cpp \
+		src/actions/rs_actionpolylineappend.cpp \
+		src/actions/rs_actionpolylinedel.cpp \
+		src/actions/rs_actionpolylinedelbetween.cpp \
+		src/actions/rs_actionpolylinetrim.cpp \
+		src/actions/rs_actionpolylineequidistant.cpp \
+		src/actions/rs_actionpolylinesegment.cpp
 
 TRANSLATIONS += \
 		ts/actions/qcadactions_cs.ts \
@@ -702,6 +718,7 @@ HEADERS += \
 	    src/ui/forms/qg_linerelangleoptions.h \
 	    src/ui/forms/qg_mousewidget.h \
 	    src/ui/forms/qg_moverotateoptions.h \
+	    src/ui/forms/qg_polylineoptions.h \
 	    src/ui/forms/qg_printpreviewoptions.h \
 	    src/ui/forms/qg_roundoptions.h \
 	    src/ui/forms/qg_selectionwidget.h \
@@ -710,6 +727,78 @@ HEADERS += \
 	    src/ui/forms/qg_textoptions.h \
 	    src/ui/forms/qg_trimamountoptions.h \
 	    src/ui/forms/qg_widgetpen.h \
+src/ui/forms/qg_arcoptions.ui.h \
+src/ui/forms/qg_arctangentialoptions.ui.h \
+src/ui/forms/qg_beveloptions.ui.h \
+src/ui/forms/qg_blockdialog.ui.h \
+src/ui/forms/qg_cadtoolbar.ui.h \
+src/ui/forms/qg_cadtoolbararcs.ui.h \
+src/ui/forms/qg_cadtoolbarcircles.ui.h \
+src/ui/forms/qg_cadtoolbardim.ui.h \
+src/ui/forms/qg_cadtoolbarellipses.ui.h \
+src/ui/forms/qg_cadtoolbarinfo.ui.h \
+src/ui/forms/qg_cadtoolbarlines.ui.h \
+src/ui/forms/qg_cadtoolbarmain.ui.h \
+src/ui/forms/qg_cadtoolbarmodify.ui.h \
+src/ui/forms/qg_cadtoolbarpoints.ui.h \
+src/ui/forms/qg_cadtoolbarpolylines.ui.h \
+src/ui/forms/qg_cadtoolbarselect.ui.h \
+src/ui/forms/qg_cadtoolbarsnap.ui.h \
+src/ui/forms/qg_cadtoolbarsplines.ui.h \
+src/ui/forms/qg_circleoptions.ui.h \
+src/ui/forms/qg_commandwidget.ui.h \
+src/ui/forms/qg_coordinatewidget.ui.h \
+src/ui/forms/qg_dimensionlabeleditor.ui.h \
+src/ui/forms/qg_dimlinearoptions.ui.h \
+src/ui/forms/qg_dimoptions.ui.h \
+src/ui/forms/qg_dlgarc.ui.h \
+src/ui/forms/qg_dlgattributes.ui.h \
+src/ui/forms/qg_dlgcircle.ui.h \
+src/ui/forms/qg_dlgdimension.ui.h \
+src/ui/forms/qg_dlgdimlinear.ui.h \
+src/ui/forms/qg_dlgellipse.ui.h \
+src/ui/forms/qg_dlghatch.ui.h \
+src/ui/forms/qg_dlgimageoptions.ui.h \
+src/ui/forms/qg_dlginitial.ui.h \
+src/ui/forms/qg_dlginsert.ui.h \
+src/ui/forms/qg_dlgline.ui.h \
+src/ui/forms/qg_dlgmirror.ui.h \
+src/ui/forms/qg_dlgmove.ui.h \
+src/ui/forms/qg_dlgmoverotate.ui.h \
+src/ui/forms/qg_dlgoptionsdrawing.ui.h \
+src/ui/forms/qg_dlgoptionsgeneral.ui.h \
+src/ui/forms/qg_dlgoptionsvariables.ui.h \
+src/ui/forms/qg_dlgpoint.ui.h \
+src/ui/forms/qg_dlgrotate.ui.h \
+src/ui/forms/qg_dlgrotate2.ui.h \
+src/ui/forms/qg_dlgscale.ui.h \
+src/ui/forms/qg_dlgspline.ui.h \
+src/ui/forms/qg_dlgtext.ui.h \
+src/ui/forms/qg_exitdialog.ui.h \
+src/ui/forms/qg_imageoptions.ui.h \
+src/ui/forms/qg_insertoptions.ui.h \
+src/ui/forms/qg_layerdialog.ui.h \
+src/ui/forms/qg_libraryinsertoptions.ui.h \
+src/ui/forms/qg_librarywidget.ui.h \
+src/ui/forms/qg_lineangleoptions.ui.h \
+src/ui/forms/qg_linebisectoroptions.ui.h \
+src/ui/forms/qg_lineoptions.ui.h \
+src/ui/forms/qg_lineparalleloptions.ui.h \
+src/ui/forms/qg_lineparallelthroughoptions.ui.h \
+src/ui/forms/qg_linepolygon2options.ui.h \
+src/ui/forms/qg_linepolygonoptions.ui.h \
+src/ui/forms/qg_linerelangleoptions.ui.h \
+src/ui/forms/qg_mousewidget.ui.h \
+src/ui/forms/qg_moverotateoptions.ui.h \
+src/ui/forms/qg_polylineoptions.ui.h \
+src/ui/forms/qg_printpreviewoptions.ui.h \
+src/ui/forms/qg_roundoptions.ui.h \
+src/ui/forms/qg_selectionwidget.ui.h \
+src/ui/forms/qg_snapdistoptions.ui.h \
+src/ui/forms/qg_splineoptions.ui.h \
+src/ui/forms/qg_textoptions.ui.h \
+src/ui/forms/qg_trimamountoptions.ui.h \
+src/ui/forms/qg_widgetpen.ui.h
 
 
 SOURCES += \
@@ -793,6 +882,7 @@ SOURCES += \
 	    src/ui/forms/qg_linerelangleoptions.cpp \
 	    src/ui/forms/qg_mousewidget.cpp \
 	    src/ui/forms/qg_moverotateoptions.cpp \
+	    src/ui/forms/qg_polylineoptions.cpp \
 	    src/ui/forms/qg_printpreviewoptions.cpp \
 	    src/ui/forms/qg_roundoptions.cpp \
 	    src/ui/forms/qg_selectionwidget.cpp \
@@ -866,6 +956,7 @@ FORMS       = \
 		src/ui/forms/qg_linerelangleoptions.ui \
 		src/ui/forms/qg_mousewidget.ui \
 		src/ui/forms/qg_moverotateoptions.ui \
+		src/ui/forms/qg_polylineoptions.ui \
 		src/ui/forms/qg_printpreviewoptions.ui \
 		src/ui/forms/qg_roundoptions.ui \
 		src/ui/forms/qg_selectionwidget.ui \
@@ -948,3 +1039,4 @@ RESOURCES += \
 exists( custom.pro ) {
 	include( custom.pro )
 }
+

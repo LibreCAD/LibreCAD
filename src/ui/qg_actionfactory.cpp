@@ -126,14 +126,12 @@
 #include "rs_actionzoompan.h"
 #include "rs_actionzoomredraw.h"
 #include "rs_actionzoomwindow.h"
-
-#ifdef RS_PROF
 #include "rs_actiondrawpolyline.h"
+
 #include "rs_actionpolylineadd.h"
 #include "rs_actionpolylinedel.h"
 #include "rs_actionpolylinedelbetween.h"
 #include "rs_actionpolylinetrim.h"
-#endif
 
 #ifdef RS_CAM
 #include "rs_actioncamexportauto.h"
@@ -577,13 +575,11 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
                 obj, SLOT(slotDrawLineRelAngle()));
         break;
 
-#ifdef RS_PROF
     case RS2::ActionDrawPolyline:
 		action = RS_ActionDrawPolyline::createGUIAction(id, mw);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotDrawPolyline()));
         break;
-#endif
 		
     case RS2::ActionDrawLinePolygon:
 		action = RS_ActionDrawLinePolygon::createGUIAction(id, mw);
@@ -669,7 +665,6 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
                 obj, SLOT(slotDrawSpline()));
         break;
     
-#ifdef RS_PROF
 	case RS2::ActionPolylineAdd:
 		action = RS_ActionPolylineAdd::createGUIAction(id, mw);
         connect(action, SIGNAL(activated()),
@@ -693,7 +688,6 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotPolylineTrim()));
         break;
-#endif
 
     case RS2::ActionDrawText:
 		action = RS_ActionDrawText::createGUIAction(id, mw);
@@ -825,7 +819,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
         break;
 
     case RS2::ActionModifyRotate2:
-		action = RS_ActionModifyRotate2::createGUIAction(id, mw);
+                action = RS_ActionModifyRotate2::createGUIAction(id, mw);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotModifyRotate2()));
         break;

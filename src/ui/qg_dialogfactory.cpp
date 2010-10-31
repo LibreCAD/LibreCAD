@@ -92,9 +92,7 @@
 #include "qg_textoptions.h"
 #include "qg_trimamountoptions.h"
 
-#ifdef RS_PROF
 #include "qg_polylineoptions.h"
-#endif
 
 #ifdef RS_CAM
 #include "rs_camdialog.h"
@@ -786,7 +784,6 @@ void QG_DialogFactory::requestLineOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestPolylineOptions(RS_ActionInterface* action,
         bool on, bool update) {
 		
-#ifdef RS_PROF
     static QG_PolylineOptions* toolWidget = NULL;
 
     if (optionWidget!=NULL) {
@@ -800,7 +797,6 @@ void QG_DialogFactory::requestPolylineOptions(RS_ActionInterface* action,
 			toolWidget->show();
         }
     }
-#endif
 }
 
 

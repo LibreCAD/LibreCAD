@@ -127,14 +127,12 @@
 #include "rs_actionzoomredraw.h"
 #include "rs_actionzoomwindow.h"
 
-#ifdef RS_PROF
 #include "rs_actiondrawpolyline.h"
 #include "rs_actionpolylineadd.h"
 #include "rs_actionpolylineappend.h"
 #include "rs_actionpolylinedel.h"
 #include "rs_actionpolylinedelbetween.h"
 #include "rs_actionpolylinetrim.h"
-#endif
 
 #ifdef RS_CAM
 #include "rs_actioncamexportauto.h"
@@ -394,7 +392,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawLineRelAngle:
         a = new RS_ActionDrawLineRelAngle(*doc, *gv, M_PI/2.0, false);
         break;
-#ifdef RS_PROF
     case RS2::ActionDrawPolyline:
         a = new RS_ActionDrawPolyline(*doc, *gv);
         break;
@@ -413,7 +410,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionPolylineTrim:
         a = new RS_ActionPolylineTrim(*doc, *gv);
         break;
-#endif
     case RS2::ActionDrawLinePolygon:
         a = new RS_ActionDrawLinePolygon(*doc, *gv);
         break;
