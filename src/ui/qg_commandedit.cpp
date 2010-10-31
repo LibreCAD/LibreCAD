@@ -47,7 +47,6 @@ QG_CommandEdit::QG_CommandEdit(QWidget* parent, const char* name)
  * Destructor
  */
 QG_CommandEdit::~QG_CommandEdit() {
-	it = 0;
 }
 
 
@@ -72,46 +71,45 @@ bool QG_CommandEdit::event(QEvent* e) {
  * History (arrow key up/down) support, tab.
  */
 void QG_CommandEdit::keyPressEvent(QKeyEvent* e) {
-	switch (e->key()) {
-	case Qt::Key_Up:
-	//RVT_PORT		if (it!=historyList.begin() && it!=0) {
-		if (it!=historyList.begin() && !historyList.isEmpty()) {
-			it--;
-			setText(*it);
-		}
-		break;
-		
-	case Qt::Key_Down:
-	// RVT_PORT		if (it!=historyList.end() && it!=0) {
-		if (it!=historyList.begin() && !historyList.isEmpty()) {
-			it++;
-			if (it!=historyList.end()) {
-				setText(*it);
-			}
-			else {
-				setText("");
-			}
-		}
-		break;
 
-	case Qt::Key_Return:
-		historyList.append(text());
-		it = historyList.end();
-		QLineEdit::keyPressEvent(e);
-		break;
-		
-	case Qt::Key_Escape:
-		if (text().isEmpty()) {
-			emit escape();
-		}
-		else {
-			setText("");
-		}
-		break;
-		
-	default:
-		QLineEdit::keyPressEvent(e);
-		break;
+	switch (e->key()) {
+            case Qt::Key_Up:
+                    if (!historyList.isEmpty() && it>historyList.begin()) {
+                            it--;
+                            setText(*it);
+                    }
+                    break;
+
+            case Qt::Key_Down:
+                    if (!historyList.isEmpty() && it<historyList.end() ) {
+                            it++;
+                            if (it<historyList.end()) {
+                                    setText(*it);
+                            }
+                            else {
+                                    setText("");
+                            }
+                    }
+                    break;
+
+            case Qt::Key_Return:
+                    historyList.append(text());
+                    it = historyList.end();
+                    QLineEdit::keyPressEvent(e);
+                    break;
+
+            case Qt::Key_Escape:
+                    if (text().isEmpty()) {
+                            emit escape();
+                    }
+                    else {
+                            setText("");
+                    }
+                    break;
+
+            default:
+                    QLineEdit::keyPressEvent(e);
+                    break;
 	}
 }
 
