@@ -114,7 +114,7 @@ public:
      */
     virtual void suspend() {
 		// RVT Don't delete the snapper here!
-        deleteSnapper();
+        // RVT_PORT (can be deleted)();
         snapSpot = snapCoord = RS_Vector(false);
     }
 
