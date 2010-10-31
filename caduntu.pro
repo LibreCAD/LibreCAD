@@ -11,7 +11,7 @@ DEFINES += QC_APPKEY="\"/CADuntu\""
 DEFINES += QC_APPNAME="\"CADuntu\""
 DEFINES += QC_COMPANYNAME="\"CADuntu\""
 DEFINES += QC_COMPANYKEY="\"CADuntu\""
-DEFINES += QC_VERSION="\"1.0.0beta2\""
+DEFINES += QC_VERSION="\"1.0.0beta3\""
 
 # Add qt3support
 QT +=  qt3support
