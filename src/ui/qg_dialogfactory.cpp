@@ -231,16 +231,14 @@ RS_Layer* QG_DialogFactory::requestLayerRemovalDialog(RS_LayerList* layerList) {
 
     if (layer!=NULL) {
         if (layer->getName()!="0") {
-            int remove =
-                QMessageBox::information(
-                    parent,
+            QMessageBox msgBox(
+                    QMessageBox::Warning,
                     QMessageBox::tr("Remove Layer"),
                     QMessageBox::tr("Layer \"%1\" and all "
                                     "entities on it will be removed.")
                     .arg(layer->getName()),
-                    QMessageBox::Ok,
-                    QMessageBox::Cancel);
-            if (remove==1) {}
+                    QMessageBox::Ok | QMessageBox::Cancel);
+            if (msgBox.exec()==QMessageBox::Ok) {}
             else {
                 layer = NULL;
             }
@@ -406,14 +404,14 @@ RS_Block* QG_DialogFactory::requestBlockRemovalDialog(RS_BlockList* blockList) {
 
     if (block!=NULL) {
         int remove =
-            QMessageBox::information(parent,
+            QMessageBox::warning(parent,
                                      QMessageBox::tr("Remove Block"),
                                      QMessageBox::tr("Block \"%1\" and all "
                                                      "its entities will be removed.")
                                      .arg(block->getName()),
                                      QMessageBox::Ok,
                                      QMessageBox::Cancel);
-        if (remove==1) {}
+        if (remove==QMessageBox::Ok) {}
         else {
             block = NULL;
         }
