@@ -38,6 +38,7 @@
 #include <qapplication.h>
 #include <qcursor.h>
 #include <qpainter.h>
+#include <QMessageBox>
 
 int QC_MDIWindow::idCounter = 0;
 
@@ -377,7 +378,6 @@ bool QC_MDIWindow::slotFileSaveAs(bool &cancelled) {
 }
 
 
-
 /**
  * Requests the closing of this MDI window.
  *
@@ -391,14 +391,15 @@ bool QC_MDIWindow::slotFileClose(bool force) {
 
     if(document!=NULL && document->isModified()) {
         QG_ExitDialog dlg(this);
+
         dlg.setForce(force);
         if (document->getFilename().isEmpty()) {
             dlg.setText(tr("Do you really want to close the drawing?"));
         } else {
-			QString fn = document->getFilename();
-			if (fn.length() > 50) {
-				fn = QString("%1...%2").arg(fn.left(24)).arg(fn.right(24));
-			}
+                        QString fn = document->getFilename();
+                        if (fn.length() > 50) {
+                                fn = QString("%1...%2").arg(fn.left(24)).arg(fn.right(24));
+                        }
             dlg.setText(tr("Do you really want to close the file\n%1?")
                         .arg(fn));
         }
@@ -435,7 +436,6 @@ bool QC_MDIWindow::slotFileClose(bool force) {
 
     return succ;
 }
-
 
 
 void QC_MDIWindow::slotFilePrint() {

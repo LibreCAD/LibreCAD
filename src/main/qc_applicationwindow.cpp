@@ -366,10 +366,13 @@ void QC_ApplicationWindow::finishSplashScreen() {
 /**
  * Close Event. Called when the user tries to close the app.
  */
-void QC_ApplicationWindow::closeEvent(QCloseEvent* /*ce*/) {
+void QC_ApplicationWindow::closeEvent(QCloseEvent* ce) {
     RS_DEBUG->print("QC_ApplicationWindow::closeEvent()");
 
-    slotFileQuit();
+    if (!queryExit(false)) {
+        ce->ignore();
+    }
+
 
     RS_DEBUG->print("QC_ApplicationWindow::closeEvent(): OK");
 }
@@ -2026,7 +2029,6 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName,
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: open file");
         
-        // RVT_PORT RS_APP->processEvents(1000);
         RS_APP->processEvents(QEventLoop::AllEvents, 1000);
 
         // open the file in the new view:
