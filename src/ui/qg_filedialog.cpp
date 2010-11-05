@@ -110,18 +110,15 @@ RS_String QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type)
                                          QObject::tr("%1 already exists.\n"
                                                      "Do you want to replace it?")
                                          .arg(fn),
-                                         QObject::tr("Yes"), QObject::tr("No"),
-                                         QObject::tr("Cancel"), 0, 1 );
+                                         QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,QMessageBox::Cancel);
 
                 switch (choice) {
-                case 0:
-                    done = true;
-                    break;
-                case 1:
-                case 2:
-                default:
-                    done = false;
-                    break;
+                    case QMessageBox::Yes:
+                        done = true;
+                        break;
+                    default:
+                        done = false;
+                        break;
                 }
             } else {
                 done = true;
