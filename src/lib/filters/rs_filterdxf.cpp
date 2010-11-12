@@ -147,7 +147,7 @@ void RS_FilterDXF::addLayer(const DL_LayerData& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: creating layer");
 
-    RS_Layer* layer = new RS_Layer(data.name.c_str());
+    RS_Layer* layer = new RS_Layer(QString::fromUtf8(data.name.c_str()));
     RS_DEBUG->print("RS_FilterDXF::addLayer: set pen");
     layer->setPen(attributesToPen(attributes));
     //layer->setFlags(data.flags&0x07);
