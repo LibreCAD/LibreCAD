@@ -3,7 +3,7 @@
  */
 
 /*****************************************************************************
-**  $Id: test_creationclass.cpp 163 2003-07-01 15:51:48Z andrew $
+**  $Id: test_creationclass.cpp 8865 2008-02-04 18:54:02Z andrew $
 **
 **  This is part of the dxflib library
 **  Copyright (C) 2001 Andrew Mustun
@@ -102,6 +102,16 @@ void Test_CreationClass::addVertex(const DL_VertexData& data) {
 }
 
 
+void Test_CreationClass::add3dFace(const DL_3dFaceData& data) {
+    printf("3DFACE\n");
+    for (int i=0; i<4; i++) {
+        printf("   corner %d: %6.3f %6.3f %6.3f\n", 
+            i, data.x[i], data.y[i], data.z[i]);
+    }
+    printAttributes();
+}
+
+
 void Test_CreationClass::printAttributes() {
     printf("  Attributes: Layer: %s, ", attributes.getLayer().c_str());
     printf(" Color: ");
@@ -124,5 +134,7 @@ void Test_CreationClass::printAttributes() {
     }
     printf(" Type: %s\n", attributes.getLineType().c_str());
 }
+    
+    
 
 // EOF

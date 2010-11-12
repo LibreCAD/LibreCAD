@@ -146,6 +146,7 @@ void RS_FilterDXF::addLayer(const DL_LayerData& data) {
     RS_DEBUG->print("  adding layer: %s", data.name.c_str());
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: creating layer");
+
     RS_Layer* layer = new RS_Layer(data.name.c_str());
     RS_DEBUG->print("RS_FilterDXF::addLayer: set pen");
     layer->setPen(attributesToPen(attributes));
@@ -2576,6 +2577,15 @@ int RS_FilterDXF::colorToNumber(const RS_Color& col) {
     }
 }
 
+void RS_FilterDXF::add3dFace(const DL_3dFaceData& data) {
+    RS_DEBUG->print("RS_FilterDXF::add3dFace(const DL_3dFaceData& data) not yet implemented");
+}
+void RS_FilterDXF::addDimOrdinate(const DL_DimensionData&, const DL_DimOrdinateData&) {
+    RS_DEBUG->print("RS_FilterDXF::addDimOrdinate(const DL_DimensionData&, const DL_DimOrdinateData&) not yet implemented");
+}
+void RS_FilterDXF::addComment(const char*) {
+    RS_DEBUG->print("RS_FilterDXF::addComment(const char*) not yet implemented.");
+}
 
 
 /**

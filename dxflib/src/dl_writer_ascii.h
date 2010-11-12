@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: dl_writer_ascii.h 242 2004-04-12 22:39:43Z andrew $
+** $Id: dl_writer_ascii.h 2719 2005-09-24 20:41:23Z andrew $
 **
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 ** Copyright (C) 2001 Robert J. Campbell Jr.
@@ -35,7 +35,6 @@
 #include "dl_writer.h"
 #include <fstream>
 #include <string>
-#include <cstring> 
 using std::string;
 
 /**
@@ -50,7 +49,7 @@ using std::string;
  */
 class DL_WriterA : public DL_Writer {
 public:
-    DL_WriterA(char* fname, DL_Codes::version version=VER_2000)
+    DL_WriterA(const char* fname, DL_Codes::version version=VER_2000)
             : DL_Writer(version), m_ofile(fname) {}
     virtual ~DL_WriterA() {}
 

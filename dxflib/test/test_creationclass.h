@@ -3,7 +3,7 @@
  */
 
 /*****************************************************************************
-**  $Id: test_creationclass.h 219 2004-01-07 23:08:40Z andrew $
+**  $Id: test_creationclass.h 8865 2008-02-04 18:54:02Z andrew $
 **
 **  This is part of the dxflib library
 **  Copyright (C) 2001 Andrew Mustun
@@ -47,6 +47,7 @@ public:
     virtual void addCircle(const DL_CircleData& data);
     virtual void addPolyline(const DL_PolylineData& data);
     virtual void addVertex(const DL_VertexData& data);
+    virtual void add3dFace(const DL_3dFaceData& data);
 
     void printAttributes();
 };

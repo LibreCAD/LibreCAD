@@ -1,0 +1,179 @@
+dxflib COMMERCIAL LICENSE AGREEMENT
+FOR PROFESSIONAL EDITIONS
+Agreement version 1.2
+
+IMPORTANT-READ CAREFULLY: 
+1. This RibbonSoft End-User License Agreement ("Agreement") is a legal
+agreement between you (either an individual or a legal entity)
+("Licensee") and RibbonSoft GmbH ("RibbonSoft") for the RibbonSoft 
+software product(s) accompanying this Agreement, which include(s) 
+computer software and may include "online" or electronic documentation,
+associated media, and printed materials, including the source code,
+example programs and the documentation ("Licensed Software").
+
+2. The Licensed Software is protected by copyright laws and
+international copyright treaties, as well as other intellectual
+property laws and treaties. The Licensed Software is licensed, not
+sold.
+
+3. By installing, copying, or otherwise using the Licensed Software,
+Licensee agrees to be bound by the terms of this Agreement. If
+Licensee does not agree to the terms of this Agreement, Licensee may
+not install, copy, or otherwise use the Licensed Software. 
+
+4. Upon Licensee's acceptance of the terms and conditions of this
+Agreement, RibbonSoft grants Licensee the right to use the Licensed
+Software in the manner provided below.
+
+5. RibbonSoft grants to Licensee as an individual a royalty-free,
+personal, non-exclusive, non-transferable, perpetual license to make 
+and use copies of the Licensed Software for the sole purposes of 
+designing, developing, and testing Licensee's software product(s)
+("Applications"). Licensee may install copies of the Licensed Software
+on an unlimited number of computers provided that Licensee is the only
+individual using the Licensed Software. If Licensee is an entity,
+RibbonSoft grants Licensee the right to designate one, and only one,
+individual within Licensee's organization who shall have the sole
+right to use the Licensed Software in the manner provided
+above. Licensee may at any time, but not more frequently that once
+every six (6) months, designate another individual within Licensee's
+organization to replace the current designated user by notifying
+RibbonSoft, so long as there is no more than one designated user at any
+given time.
+
+GENERAL TERMS THAT APPLY TO APPLICATIONS AND REDISTRIBUTABLES
+6. RibbonSoft grants Licensee a nonexclusive, royalty-free right to
+reproduce and distribute the object code form of certain portions of the
+Licensed Software ("Redistributables"), as specified in Appendix 1,
+Section 1, for execution on any operating system. Copies of 
+Redistributables may only be distributed with and for the sole purpose 
+of executing Applications permitted under this Agreement that Licensee 
+has created using the Licensed Software. Under no circumstances may any 
+copies of Redistributables be distributed separately. This Agreement 
+does not give Licensee any rights to distribute any of the parts of 
+the Licensed Software listed in Appendix 1, Section 2, neither as a 
+whole nor as parts or snippets of code. 
+
+7. The license granted in this Agreement for Licensee to create
+Applications and distribute them to Licensee's customers is subject 
+to all of the following conditions:
+(i) Licensee will indemnify and hold RibbonSoft, its related companies 
+and its suppliers, harmless from and against any claims or liabilities 
+arising out of the use, reproduction or distribution of Applications; 
+(ii) Applications must be developed using a licensed, registered copy 
+of the Licensed Software; (iii) Applications must add primary and 
+substantial functionality to the Licensed Software; (iv) Applications 
+may not pass on functionality which in any way makes it possible for 
+others to create software with the Licensed Software; (v) Applications 
+may not compete with the Licensed Software; (iv) Licensee may not use 
+RibbonSoft's or any of its suppliers' names, logos, or trademarks to 
+market Application(s), except to state that Application was developed 
+using the Licensed Software.
+
+NOTE: dxflib Open Source Edition is licensed under the terms of the 
+GPL and not under this Agreement. If Licensee has, at any time, 
+developed all (or any portions of) the Application(s) using RibbonSoft's 
+publicly licensed dxflib Open Source Edition, Licensee must comply 
+with RibbonSoft's requirements and license such Application(s) 
+(or any portions derived there from) under the terms of the Free Software 
+Foundation's GNU General Public License version 2 (the "GPL") a copy of 
+which is located at http://www.gnu.org/copyleft/gpl.html#SEC1 
+(i.e., any Product(s) and/or parts, components, portions thereof developed 
+using GPL licensed software, including dxflib Open Source Edition, must 
+be licensed under the terms of the GPL, and the GPL-based source code must 
+be made available upon request).
+
+WARRANTY DISCLAIMER
+8. The Licensed Software is licensed to Licensee "as is". To the
+maximum extent permitted by applicable law, RibbonSoft on behalf of
+itself and its suppliers, disclaims all warranties and conditions,
+either express or implied, including, but not limited to, implied
+warranties of merchantability, fitness for a particular purpose, title
+and non-infringement with regard to the Licensed Software.
+
+LIMITATION OF LIABILITY
+9. If, RibbonSoft's warranty disclaimer notwithstanding, RibbonSoft is
+held liable to Licensee, whether in contract, tort or any other legal
+theory, based on the Licensed Software, RibbonSoft's entire liability
+to Licensee and Licensee's exclusive remedy shall be, at RibbonSoft's
+option, either (A) return of the price Licensee paid for the Licensed
+Software, or (B) repair or replacement of the Licensed Software,
+provided Licensee returns to RibbonSoft all copies of the Licensed
+Software as originally delivered to Licensee. RibbonSoft shall not
+under any circumstances be liable to Licensee based on failure of the
+Licensed Software if the failure resulted from accident, abuse or
+misapplication, nor shall RibbonSoft under any circumstances be liable
+for special damages, punitive or exemplary damages, damages for loss
+of profits or interruption of business or for loss or corruption of
+data. Any award of damages from RibbonSoft to Licensee shall not exceed
+the total amount Licensee has paid to RibbonSoft in connection with
+this Agreement.
+
+SUPPORT AND UPDATES
+10. Licensee will be eligible to access to Updates ("Updates") to 
+the Licensed Software for a period not to exceed one year from the 
+date of initial delivery ("Initial Term"), in accordance with 
+RibbonSoft's then current policies and procedures, if any. Such 
+policies and procedures may be changed from time to time. Following 
+the Initial Term, RibbonSoft will no longer make the Licensed Software 
+available to Licensee unless Licensee purchases additional Updates
+according to section 11 below.
+
+GENERAL PROVISIONS
+11. Licensee Name: RibbonSoft may include Licensee's company name in a
+publicly available list of RibbonSoft customers.
+
+12. Renewal of Updates: Licensee may purchase additional Updates 
+following the Initial Term at RibbonSoft's terms and conditions 
+applicable at the time of renewal.
+
+13. No Assignment: Neither this Agreement nor Licensee's rights under
+this Agreement are assignable or transferable by Licensee either in
+whole or in part to any third party without RibbonSoft's written
+consent.  Any attempted assignment or transfer in violation of the
+foregoing shall be void. RibbonSoft may assign or transfer this
+Agreement to any third party who acquires substantially all of
+RibbonSoft copyrights in and to the Licensed Software.
+
+14. Termination: RibbonSoft may terminate the Agreement at any time
+immediately upon written notice by RibbonSoft to Licensee if Licensee
+breaches this Agreement, fails to pay the fees for the Licensed
+Software, or infringes RibbonSoft's intellectual property in or to the
+Licensed Software. Upon termination of the Licenses, Licensee shall
+return to RibbonSoft all copies of Licensed Software that were supplied
+by RibbonSoft. All other copies of Licensed Software in the possession
+or control of Licensee must be erased or destroyed. An officer of
+Licensee must promptly deliver to RibbonSoft a written confirmation
+that this has occurred.
+
+15. Entire Agreement: This Agreement constitutes the complete
+agreement between the parties and supersedes all prior or
+contemporaneous discussions, representations, and proposals, written
+or oral, with respect to the subject matters discussed herein. No
+modification of this Agreement will be effective unless contained in a
+writing executed by an authorized representative of each party. No
+term or condition contained in Licensee's purchase order will apply
+unless expressly accepted by RibbonSoft in writing. If any provision of
+the Agreement is found void or unenforceable, the remainder will
+remain valid and enforceable according to its terms. If any remedy
+provided is determined to have failed for its essential purpose, all
+limitations of liability and exclusions of damages set forth in this
+Agreement shall remain in effect.
+
+16. Governing law, legal venue: This Agreement shall be construed,
+interpreted and governed by the laws of Switzerland, the legal venue 
+to be Zurich City Court. RibbonSoft reserves all rights not specifically
+granted in this Agreement.
+
+Appendix 1:
+
+1. Parts of the Licensed Software that are permitted for distribution
+("Redistributables"): 
+
+- The Licensed Software's library in object code form
+
+2. Parts of the Licensed Software that are not permitted for distribution 
+include, but are not limited to: 
+
+- The Licensed Software's source code and header files
+- The Licensed Software's documentation
