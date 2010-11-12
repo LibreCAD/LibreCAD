@@ -5,8 +5,8 @@ bindir =	${exec_prefix}/bin
 
 OBJF =		main.o \
             test_creationclass.o
-EXTERN_LIBS = -L../lib -ldxf -L/usr/X11R6/lib -lX11
-INCLUDES = -I../include
+EXTERN_LIBS = -L../lib -ldxflib -L/usr/X11R6/lib -lX11
+INCLUDES = -I../src
 
 all: main
 

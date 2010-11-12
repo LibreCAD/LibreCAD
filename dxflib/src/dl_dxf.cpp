@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: dl_dxf.cpp 2398 2005-06-06 18:12:14Z andrew $
+** $Id: dl_dxf.cpp 8865 2008-02-04 18:54:02Z andrew $
 **
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -68,8 +68,6 @@ DL_Dxf::DL_Dxf() {
     maxHatchEdges = NULL;
     hatchEdgeIndex = NULL;
     dropEdges = false;
-
-    //bulge = 0.0;
 }
 
 
@@ -158,7 +156,7 @@ bool DL_Dxf::in(const string& file, DL_CreationInterface* creationInterface) {
 #ifndef __GCC2x__
 bool DL_Dxf::in(std::stringstream& stream,
                 DL_CreationInterface* creationInterface) {
-
+    
     int errorCounter = 0;
 
     if (stream.good()) {
@@ -251,8 +249,8 @@ bool DL_Dxf::readDxfGroups(std::stringstream& stream,
         groupCode = (unsigned int)stringToInt(groupCodeTmp, &ok);
 
         if (ok) {
-            //std::cout << groupCode << "\n";
-            //std::cout << groupValue << "\n";
+            //std::cout << "group code: " << groupCode << "\n";
+            //std::cout << "group value: " << groupValue << "\n";
             line+=2;
             processDXFGroup(creationInterface, groupCode, groupValue);
         } else {
@@ -261,9 +259,9 @@ bool DL_Dxf::readDxfGroups(std::stringstream& stream,
                 (*errorCounter)++;
             }
             // try to fix:
-            std::cerr << "DXF read error: trying to fix..\n";
+            //std::cerr << "DXF read error: trying to fix..\n";
             // drop a line to sync:
-            DL_Dxf::getChoppedLine(groupCodeTmp, DL_DXF_MAXLINE, stream);
+            //DL_Dxf::getChoppedLine(groupCodeTmp, DL_DXF_MAXLINE, stream);
         }
     }
     return !stream.eof();
@@ -331,9 +329,14 @@ bool DL_Dxf::getChoppedLine(char *s, unsigned int size,
 
     if (!stream.eof()) {
         // Only the useful part of the line
-        stream.getline(s, size);
-        stripWhiteSpace(&s);
+        char* line = new char[size+1];
+        char* oriLine = line;
+        stream.getline(line, size);
+        stripWhiteSpace(&line);
+        strncpy(s, line, size);
+        s[size] = '\0';
         assert(size > strlen(s));
+        delete[] oriLine;
         return true;
     } else {
         s[0] = '\0';
@@ -357,7 +360,6 @@ bool DL_Dxf::getChoppedLine(char *s, unsigned int size,
 bool DL_Dxf::stripWhiteSpace(char** s) {
     // last non-NULL char:
     int lastChar = strlen(*s) - 1;
-    //std::cout << "lastChar: " << lastChar << "\n";
 
     // Is last character CR or LF?
     while ( (lastChar >= 0) &&
@@ -371,7 +373,7 @@ bool DL_Dxf::stripWhiteSpace(char** s) {
     while ((*s)[0]==' ' || (*s)[0]=='\t') {
         ++(*s);
     }
-
+    
     return ((*s) ? true : false);
 }
 
@@ -392,10 +394,6 @@ bool DL_Dxf::stripWhiteSpace(char** s) {
 bool DL_Dxf::processDXFGroup(DL_CreationInterface* creationInterface,
                              int groupCode, const char *groupValue) {
 
-
-    //std::cout << "DL_Dxf::processDXFGroup: " << groupCode << ": "
-    //<< groupValue << "\n";
-
     // Init on first call
     if (firstCall) {
         for (int i=0; i<DL_DXF_MAXGROUPCODE; ++i) {
@@ -407,12 +405,12 @@ bool DL_Dxf::processDXFGroup(DL_CreationInterface* creationInterface,
 
     // Indicates comment or dxflib version:
     if (groupCode==999) {
-        //std::cout << "999: " << groupValue << "\n";
         if (groupValue!=NULL) {
             if (!strncmp(groupValue, "dxflib", 6)) {
-                //std::cout << "dxflib version found" << "\n";
                 libVersion = getLibVersion(&groupValue[7]);
             }
+            
+            addComment(creationInterface, groupValue);
         }
     }
 
@@ -558,6 +556,10 @@ bool DL_Dxf::processDXFGroup(DL_CreationInterface* creationInterface,
                 case 5:
                     addDimAngular3P(creationInterface);
                     break;
+                
+                case 6:
+                    addDimOrdinate(creationInterface);
+                    break;
 
                 default:
                     break;
@@ -584,6 +586,10 @@ bool DL_Dxf::processDXFGroup(DL_CreationInterface* creationInterface,
         case DL_ENTITY_TRACE:
             addTrace(creationInterface);
             break;
+        
+        case DL_ENTITY_3DFACE:
+            add3dFace(creationInterface);
+            break;
 
         case DL_ENTITY_SOLID:
             addSolid(creationInterface);
@@ -592,7 +598,7 @@ bool DL_Dxf::processDXFGroup(DL_CreationInterface* creationInterface,
         case DL_ENTITY_SEQEND:
             endSequence(creationInterface);
             break;
-
+        
         default:
             break;
         }
@@ -671,6 +677,8 @@ bool DL_Dxf::processDXFGroup(DL_CreationInterface* creationInterface,
            currentEntity = DL_ENTITY_TRACE;
         } else if (!strcmp(groupValue, "SOLID")) {
            currentEntity = DL_ENTITY_SOLID;
+        } else if (!strcmp(groupValue, "3DFACE")) {
+           currentEntity = DL_ENTITY_3DFACE;
         } else if (!strcmp(groupValue, "SEQEND")) {
             currentEntity = DL_ENTITY_SEQEND;
         } else {
@@ -727,6 +735,15 @@ bool DL_Dxf::processDXFGroup(DL_CreationInterface* creationInterface,
         return false;
     }
     return false;
+}
+
+
+
+/**
+ * Adds a comment from the DXF file.
+ */
+void DL_Dxf::addComment(DL_CreationInterface* creationInterface, const char* comment) {
+    creationInterface->addComment(comment);
 }
 
 
@@ -905,40 +922,28 @@ void DL_Dxf::addVertex(DL_CreationInterface* creationInterface) {
  * Adds a spline entity that was read from the file via the creation interface.
  */
 void DL_Dxf::addSpline(DL_CreationInterface* creationInterface) {
-    DL_SplineData sd(toInt(values[71], 3), toInt(values[72], 0),
-                     toInt(values[73], 0), toInt(values[70], 4));
+    DL_SplineData sd(toInt(values[71], 3), 
+                     maxKnots, 
+                     maxControlPoints, 
+                     toInt(values[70], 4));
+    /*DL_SplineData sd(toInt(values[71], 3), toInt(values[72], 0),
+                     toInt(values[73], 0), toInt(values[70], 4));*/
     creationInterface->addSpline(sd);
 
-    for (int i=0; i<maxControlPoints; i++) {
+    int i;
+    for (i=0; i<maxControlPoints; i++) {
         DL_ControlPointData d(controlPoints[i*3],
                               controlPoints[i*3+1],
                               controlPoints[i*3+2]);
 
         creationInterface->addControlPoint(d);
     }
+    for (i=0; i<maxKnots; i++) {
+      DL_KnotData k(knots[i]);
+
+      creationInterface->addKnot(k);
+    }
 }
-
-
-
-/**
- * Adds a knot to the previously added spline. 
- */
-/*
-void DL_Dxf::addKnot(DL_CreationInterface* creationInterface) {
-   std::cout << "DL_Dxf::addKnot\n";
-}
-*/
-
-
-
-/**
- * Adds a control point to the previously added spline. 
- */
-/*
-void DL_Dxf::addControlPoint(DL_CreationInterface* creationInterface) {
-    std::cout << "DL_Dxf::addControlPoint\n";
-}
-*/
 
 
 
@@ -1017,6 +1022,7 @@ void DL_Dxf::addInsert(DL_CreationInterface* creationInterface) {
 }
 
 
+
 /**
  * Adds a trace entity (4 edge closed polyline) that was read from the file via the creation interface.
  *
@@ -1032,6 +1038,24 @@ void DL_Dxf::addTrace(DL_CreationInterface* creationInterface) {
     }
     creationInterface->addTrace(td);
 }
+
+
+
+/**
+ * Adds a 3dface entity that was read from the file via the creation interface.
+ */
+void DL_Dxf::add3dFace(DL_CreationInterface* creationInterface) {
+    DL_3dFaceData td;
+    
+    for (int k = 0; k < 4; k++) {
+       td.x[k] = toReal(values[10 + k]);
+       td.y[k] = toReal(values[20 + k]);
+       td.z[k] = toReal(values[30 + k]);
+    }
+    creationInterface->add3dFace(td);
+}
+
+
 
 /**
  * Adds a solid entity (filled trace) that was read from the file via the creation interface.
@@ -1287,8 +1311,6 @@ bool DL_Dxf::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
     // Allocate hatch loops (group code 91):
     if (groupCode==91 && toInt(groupValue)>0) {
 
-        //std::cout << "allocating " << toInt(groupValue) << " loops\n";
-
         if (hatchLoops!=NULL) {
             delete[] hatchLoops;
             hatchLoops = NULL;
@@ -1310,23 +1332,18 @@ bool DL_Dxf::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
         }
         maxHatchLoops = toInt(groupValue);
 
-        //std::cout << "maxHatchLoops: " << maxHatchLoops << "\n";
-
         if (maxHatchLoops>0) {
             hatchLoops = new DL_HatchLoopData[maxHatchLoops];
             maxHatchEdges = new int[maxHatchLoops];
             hatchEdgeIndex = new int[maxHatchLoops];
             hatchEdges = new DL_HatchEdgeData*[maxHatchLoops];
-            //std::cout << "new hatchEdges[" << maxHatchLoops << "]\n";
             for (int i=0; i<maxHatchLoops; ++i) {
                 hatchEdges[i] = NULL;
-                //std::cout << "hatchEdges[" << i << "] = NULL\n";
                 maxHatchEdges[i] = 0;
             }
             hatchLoopIndex = -1;
             dropEdges = false;
         }
-        //std::cout << "done\n";
         return true;
     }
 
@@ -1336,7 +1353,6 @@ bool DL_Dxf::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
                 maxHatchEdges!=NULL && hatchEdgeIndex!=NULL &&
                 hatchEdges!=NULL) {
 
-            //std::cout << "  allocating " << toInt(groupValue) << " edges\n";
             dropEdges = false;
 
             hatchLoopIndex++;
@@ -1346,16 +1362,11 @@ bool DL_Dxf::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
             maxHatchEdges[hatchLoopIndex] = toInt(groupValue);
             hatchEdgeIndex[hatchLoopIndex] = -1;
             hatchEdges[hatchLoopIndex]
-            = new DL_HatchEdgeData[toInt(groupValue)];
-
-            //std::cout << "hatchEdges[" << hatchLoopIndex << "] = new "
-            //  << toInt(groupValue) << "\n";
+                = new DL_HatchEdgeData[toInt(groupValue)];
             firstPolylineStatus = 0;
         } else {
-            //std::cout << "dropping " << toInt(groupValue) << " edges\n";
             dropEdges = true;
         }
-        //std::cout << "done\n";
         return true;
     }
 
@@ -1371,22 +1382,13 @@ bool DL_Dxf::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
             groupCode==72 &&
             !dropEdges) {
 
-        //std::cout << "Init hatch edge for non-polyline boundary\n";
-        //std::cout << "hatchLoopIndex: " << hatchLoopIndex << "\n";
-        //std::cout << "maxHatchLoops: " << maxHatchLoops << "\n";
-
         hatchEdgeIndex[hatchLoopIndex]++;
-
-        //std::cout << "  init edge: type: "
-        //<< toInt(groupValue)
-        //<< " index: " << hatchEdgeIndex[hatchLoopIndex] << "\n";
 
         hatchEdges[hatchLoopIndex][hatchEdgeIndex[hatchLoopIndex]]
         .type = toInt(groupValue);
         hatchEdges[hatchLoopIndex][hatchEdgeIndex[hatchLoopIndex]]
         .defined = false;
 
-        //std::cout << "done\n";
         return true;
     }
 
@@ -1406,18 +1408,6 @@ bool DL_Dxf::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
              groupCode==11 || groupCode==21 ||
              groupCode==40 || groupCode==50 ||
              groupCode==51 || groupCode==73)) {
-
-        //std::cout << "Handle hatch edge for non-polyline boundary\n";
-        //std::cout << "  found edge data: " << groupCode << "\n";
-        //std::cout << "     value: " << toReal(groupValue) << "\n";
-
-        // can crash:
-        //std::cout << "     defined: "
-        //   << (int)hatchEdges[hatchLoopIndex]
-        //   [hatchEdgeIndex[hatchLoopIndex]].defined << "\n";
-
-        //std::cout << "92 flag: '" << values[92] << "'\n";
-        //std::cout << "92 flag (int): '" << atoi(values[92]) << "'\n";
 
         if (hatchEdges[hatchLoopIndex]
                 [hatchEdgeIndex[hatchLoopIndex]].defined==false) {
@@ -1887,6 +1877,29 @@ void DL_Dxf::addDimAngular3P(DL_CreationInterface* creationInterface) {
 
 
 /**
+ * Adds an ordinate dimension entity that was read from the file via the creation interface.
+ */
+void DL_Dxf::addDimOrdinate(DL_CreationInterface* creationInterface) {
+    DL_DimensionData d = getDimData();
+
+    // ordinate dimension:
+    DL_DimOrdinateData dl(
+        // definition point 1
+        toReal(values[13], 0.0),
+        toReal(values[23], 0.0),
+        toReal(values[33], 0.0),
+        // definition point 2
+        toReal(values[14], 0.0),
+        toReal(values[24], 0.0),
+        toReal(values[34], 0.0),
+        (toInt(values[70])&64)==64         // true: X-type, false: Y-type
+    );
+    creationInterface->addDimOrdinate(d, dl);
+}
+
+
+
+/**
  * Adds a leader entity that was read from the file via the creation interface.
  */
 void DL_Dxf::addLeader(DL_CreationInterface* creationInterface) {
@@ -2059,8 +2072,10 @@ DL_WriterA* DL_Dxf::out(const char* file, DL_Codes::version version) {
     DL_WriterA* dw = new DL_WriterA(f, version);
     if (dw->openFailed()) {
         delete dw;
+        delete[] f;
         return NULL;
     } else {
+        delete[] f;
         return dw;
     }
 }
@@ -2351,6 +2366,55 @@ void DL_Dxf::writeEllipse(DL_WriterA& dw,
         dw.dxfReal(41, data.angle1);
         dw.dxfReal(42, data.angle2);
     }
+}
+    
+    
+
+/**
+ * Writes a solid entity to the file.
+ *
+ * @param dw DXF writer
+ * @param data Entity data from the file
+ * @param attrib Attributes
+ */
+void DL_Dxf::writeSolid(DL_WriterA& dw,
+                   const DL_SolidData& data,
+                   const DL_Attributes& attrib) {
+    dw.entity("SOLID");
+    if (version==VER_2000) {
+        dw.dxfString(100, "AcDbEntity");
+        dw.dxfString(100, "AcDbTrace");
+    }
+    dw.entityAttributes(attrib);
+    dw.coord(10, data.x[0], data.y[0], data.z[0]);
+    dw.coord(11, data.x[1], data.y[1], data.z[1]);
+    dw.coord(12, data.x[2], data.y[2], data.z[2]);
+    dw.coord(13, data.x[3], data.y[3], data.z[3]);
+    dw.dxfReal(39, data.thickness);
+}
+
+
+
+/**
+ * Writes a 3d face entity to the file.
+ *
+ * @param dw DXF writer
+ * @param data Entity data from the file
+ * @param attrib Attributes
+ */
+void DL_Dxf::write3dFace(DL_WriterA& dw,
+                   const DL_3dFaceData& data,
+                   const DL_Attributes& attrib) {
+    dw.entity("3DFACE");
+    if (version==VER_2000) {
+        dw.dxfString(100, "AcDbEntity");
+        dw.dxfString(100, "AcDbFace");
+    }
+    dw.entityAttributes(attrib);
+    dw.coord(10, data.x[0], data.y[0], data.z[0]);
+    dw.coord(11, data.x[1], data.y[1], data.z[1]);
+    dw.coord(12, data.x[2], data.y[2], data.z[2]);
+    dw.coord(13, data.x[3], data.y[3], data.z[3]);
 }
 
 
@@ -2866,6 +2930,69 @@ void DL_Dxf::writeDimAngular3P(DL_WriterA& dw,
 
 
 
+
+/**
+ * Writes an ordinate dimension entity to the file.
+ *
+ * @param dw DXF writer
+ * @param data Generic dimension data for from the file
+ * @param data Specific ordinate dimension data from the file
+ * @param attrib Attributes
+ */
+void DL_Dxf::writeDimOrdinate(DL_WriterA& dw,
+                             const DL_DimensionData& data,
+                             const DL_DimOrdinateData& edata,
+                             const DL_Attributes& attrib) {
+
+    dw.entity("DIMENSION");
+
+    if (version==VER_2000) {
+        dw.dxfString(100, "AcDbEntity");
+    }
+    dw.entityAttributes(attrib);
+    if (version==VER_2000) {
+        dw.dxfString(100, "AcDbDimension");
+    }
+
+    dw.dxfReal(10, data.dpx);
+    dw.dxfReal(20, data.dpy);
+    dw.dxfReal(30, 0.0);
+
+    dw.dxfReal(11, data.mpx);
+    dw.dxfReal(21, data.mpy);
+    dw.dxfReal(31, 0.0);
+
+    int type = 6;
+    if (edata.xtype) {
+        type+=64;
+    }
+
+    dw.dxfInt(70, type);
+    if (version>VER_R12) {
+        dw.dxfInt(71, data.attachmentPoint);
+        dw.dxfInt(72, data.lineSpacingStyle); // opt
+        dw.dxfReal(41, data.lineSpacingFactor); // opt
+    }
+
+    dw.dxfString(1, data.text);   // opt
+    //dw.dxfString(3, data.style);
+    dw.dxfString(3, "Standard");
+
+    if (version==VER_2000) {
+        dw.dxfString(100, "AcDbOrdinateDimension");
+    }
+
+    dw.dxfReal(13, edata.dpx1);
+    dw.dxfReal(23, edata.dpy1);
+    dw.dxfReal(33, 0.0);
+
+    dw.dxfReal(14, edata.dpx2);
+    dw.dxfReal(24, edata.dpy2);
+    dw.dxfReal(34, 0.0);
+}
+
+
+
 /**
  * Writes a leader entity to the file.
  *
@@ -3168,7 +3295,7 @@ void DL_Dxf::writeLayer(DL_WriterA& dw,
     }
 
     int color = attrib.getColor();
-    if (color<=0 || color>=256) {
+    if (color>=256) {
         std::cerr << "Layer color cannot be " << color << ". Changed to 7.\n";
         color = 7;
     }
@@ -4393,6 +4520,14 @@ void DL_Dxf::writeObjectsEnd(DL_WriterA& dw) {
     dw.dxfString(  0, "ENDSEC");
 }
 
+    
+
+/**
+ * Writes a comment to the DXF file.
+ */
+void DL_Dxf::writeComment(DL_WriterA& dw, const string& comment) {
+    dw.dxfString(999, comment);
+}
 
 
 /**
@@ -4856,19 +4991,15 @@ int DL_Dxf::getLibVersion(const char* str) {
 
         strncpy(v[0], str, d[0]);
         v[0][d[0]] = '\0';
-        //std::cout << "v[0]: " << atoi(v[0]) << "\n";
 
         strncpy(v[1], &str[d[0]+1], d[1]-d[0]-1);
         v[1][d[1]-d[0]-1] = '\0';
-        //std::cout << "v[1]: " << atoi(v[1]) << "\n";
 
         strncpy(v[2], &str[d[1]+1], d[2]-d[1]-1);
         v[2][d[2]-d[1]-1] = '\0';
-        //std::cout << "v[2]: " << atoi(v[2]) << "\n";
 
         strncpy(v[3], &str[d[2]+1], d[3]-d[2]-1);
         v[3][d[3]-d[2]-1] = '\0';
-        //std::cout << "v[3]: " << atoi(v[3]) << "\n";
 
         ret = (atoi(v[0])<<(3*8)) +
               (atoi(v[1])<<(2*8)) +

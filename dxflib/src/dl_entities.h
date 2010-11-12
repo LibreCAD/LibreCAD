@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: dl_entities.h 2398 2005-06-06 18:12:14Z andrew $
+** $Id: dl_entities.h 7812 2008-01-04 16:56:09Z andrew $
 **
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -311,15 +311,60 @@ struct DL_VertexData {
 
 
 /**
- * Trace Data.
+ * Trace Data / solid data / 3d face data.
  *
- * @author AHM
+ * @author Andrew Mustun
  */
 struct DL_TraceData {
+    DL_TraceData() {
+        thickness = 0.0;
+        for (int i=0; i<4; i++) {
+            x[i] = 0.0;
+            y[i] = 0.0;
+            z[i] = 0.0;
+        }
+    }
+    
+    /**
+     * Constructor.
+     * Parameters: see member variables.
+     */
+    DL_TraceData(double sx1, double sy1, double sz1,
+                double sx2, double sy2, double sz2,
+                double sx3, double sy3, double sz3,
+                double sx4, double sy4, double sz4,
+                double sthickness=0.0) {
+
+        thickness = sthickness;
+
+        x[0] = sx1;
+        y[0] = sy1;
+        z[0] = sz1;
+
+        x[1] = sx2;
+        y[1] = sy2;
+        z[1] = sz2;
+        
+        x[2] = sx3;
+        y[2] = sy3;
+        z[2] = sz3;
+        
+        x[3] = sx4;
+        y[3] = sy4;
+        z[3] = sz4;
+    }
+
+    /*! Thickness */
+    double thickness;
+    
+    /*! Points */
     double x[4];
     double y[4];
     double z[4];
 };
+
+
+
 
 
 /**
@@ -328,6 +373,12 @@ struct DL_TraceData {
  * @author AHM
  */
 typedef DL_TraceData DL_SolidData;
+
+
+/**
+ * 3dface Data.
+ */
+typedef DL_TraceData DL_3dFaceData;
 
 
 /**
@@ -1040,6 +1091,51 @@ struct DL_DimAngular3PData {
     double dpy3;
     /*! Z Coordinate of definition point 3. */
     double dpz3;
+};
+
+
+
+/**
+ * Ordinate Dimension Data.
+ *
+ * @author Andrew Mustun
+ */
+struct DL_DimOrdinateData {
+    /**
+     * Constructor.
+     * Parameters: see member variables.
+     */
+    DL_DimOrdinateData(double ddpx1, double ddpy1, double ddpz1,
+                      double ddpx2, double ddpy2, double ddpz2,
+                      bool dxtype) {
+
+        dpx1 = ddpx1;
+        dpy1 = ddpy1;
+        dpz1 = ddpz1;
+
+        dpx2 = ddpx2;
+        dpy2 = ddpy2;
+        dpz2 = ddpz2;
+
+        xtype = dxtype;
+    }
+
+    /*! X Coordinate of definition point 1. */
+    double dpx1;
+    /*! Y Coordinate of definition point 1. */
+    double dpy1;
+    /*! Z Coordinate of definition point 1. */
+    double dpz1;
+
+    /*! X Coordinate of definition point 2. */
+    double dpx2;
+    /*! Y Coordinate of definition point 2. */
+    double dpy2;
+    /*! Z Coordinate of definition point 2. */
+    double dpz2;
+
+    /*! True if the dimension indicates the X-value, false for Y-value */
+    bool xtype;
 };
 
 

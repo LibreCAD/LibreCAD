@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: dl_exception.h 163 2003-07-01 15:51:48Z andrew $
+** $Id: dl_exception.h 3591 2006-10-18 21:23:25Z andrew $
 **
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 ** Copyright (C) 2001 Robert J. Campbell Jr.

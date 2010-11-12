@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: dl_dxf.h 2398 2005-06-06 18:12:14Z andrew $
+** $Id: dl_dxf.h 8865 2008-02-04 18:54:02Z andrew $
 **
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -34,8 +34,6 @@
 #include <sstream>
 #endif
 
-#include <cstring> 
-
 #include "dl_attributes.h"
 #include "dl_codes.h"
 #include "dl_entities.h"
@@ -55,7 +53,7 @@ class DL_CreationInterface;
 class DL_WriterA;
 
 
-#define DL_VERSION     "2.0.4.8"
+#define DL_VERSION     "2.2.0.0"
 
 #define DL_UNKNOWN               0
 #define DL_LAYER                10
@@ -85,7 +83,8 @@ class DL_WriterA;
 #define DL_ENTITY_IMAGEDEF     119
 #define DL_ENTITY_TRACE        120
 #define DL_ENTITY_SOLID        121
-#define DL_ENTITY_SEQEND       122
+#define DL_ENTITY_3DFACE       122
+#define DL_ENTITY_SEQEND       123
 
 
 /**
@@ -117,9 +116,8 @@ public:
 					   int* errorCounter = NULL);
     static bool getChoppedLine(char* s, unsigned int size,
                                FILE *stream);
-
+    
 #ifndef __GCC2x__
-
     bool readDxfGroups(std::stringstream &stream,
                        DL_CreationInterface* creationInterface,
 					   int* errorCounter = NULL);
@@ -154,6 +152,7 @@ public:
     void addInsert(DL_CreationInterface* creationInterface);
     
     void addTrace(DL_CreationInterface* creationInterface);
+    void add3dFace(DL_CreationInterface* creationInterface);
     void addSolid(DL_CreationInterface* creationInterface);
 
     void addMText(DL_CreationInterface* creationInterface);
@@ -172,10 +171,13 @@ public:
     void addDimDiametric(DL_CreationInterface* creationInterface);
     void addDimAngular(DL_CreationInterface* creationInterface);
     void addDimAngular3P(DL_CreationInterface* creationInterface);
+    void addDimOrdinate(DL_CreationInterface* creationInterface);
     void addLeader(DL_CreationInterface* creationInterface);
     void addHatch(DL_CreationInterface* creationInterface);
     void addImage(DL_CreationInterface* creationInterface);
     void addImageDef(DL_CreationInterface* creationInterface);
+    
+    void addComment(DL_CreationInterface* creationInterface, const char* comment);
 
 	void endEntity(DL_CreationInterface* creationInterface);
 	
@@ -216,6 +218,12 @@ public:
     void writeEllipse(DL_WriterA& dw,
                       const DL_EllipseData& data,
                       const DL_Attributes& attrib);
+    void writeSolid(DL_WriterA& dw,
+                   const DL_SolidData& data,
+                   const DL_Attributes& attrib);
+    void write3dFace(DL_WriterA& dw,
+                   const DL_3dFaceData& data,
+                   const DL_Attributes& attrib);
     void writeInsert(DL_WriterA& dw,
                      const DL_InsertData& data,
                      const DL_Attributes& attrib);
@@ -249,6 +257,10 @@ public:
                            const DL_DimensionData& data,
                            const DL_DimAngular3PData& edata,
                            const DL_Attributes& attrib);
+    void writeDimOrdinate(DL_WriterA& dw,
+                         const DL_DimensionData& data,
+                         const DL_DimOrdinateData& edata,
+                         const DL_Attributes& attrib);
     void writeLeader(DL_WriterA& dw,
                      const DL_LeaderData& data,
                      const DL_Attributes& attrib);
@@ -298,6 +310,8 @@ public:
     void writeBlockRecord(DL_WriterA& dw, const string& name);
     void writeObjects(DL_WriterA& dw);
     void writeObjectsEnd(DL_WriterA& dw);
+    
+    void writeComment(DL_WriterA& dw, const string& comment);
 
     /**
      * Converts the given string into a double or returns the given 
