@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: dl_creationinterface.h 2397 2005-06-06 18:11:14Z andrew $
+** $Id: dl_creationinterface.h 8865 2008-02-04 18:54:02Z andrew $
 **
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -104,6 +104,9 @@ public:
     
     /** Called for every trace start */
     virtual void addTrace(const DL_TraceData& data) = 0;
+    
+    /** Called for every 3dface start */
+    virtual void add3dFace(const DL_3dFaceData& data) = 0;
 
     /** Called for every solid start */
     virtual void addSolid(const DL_SolidData& data) = 0;
@@ -156,6 +159,12 @@ public:
      */
     virtual void addDimAngular3P(const DL_DimensionData& data,
                               const DL_DimAngular3PData& edata) = 0;
+	
+    /**
+     * Called for every ordinate dimension entity. 
+     */
+    virtual void addDimOrdinate(const DL_DimensionData& data,
+                             const DL_DimOrdinateData& edata) = 0;
     
     /** 
 	 * Called for every leader start. 
@@ -196,6 +205,11 @@ public:
 	 * Called after an entity has been completed.  
 	 */
     virtual void endEntity() = 0;
+    
+    /**
+     * Called for every comment in the DXF file (code 999).
+     */
+    virtual void addComment(const char* comment) = 0;
 
     /**
      * Called for every vector variable in the DXF file (e.g. "$EXTMIN").

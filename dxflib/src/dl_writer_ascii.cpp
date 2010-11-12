@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: dl_writer_ascii.cpp 242 2004-04-12 22:39:43Z andrew $
+** $Id: dl_writer_ascii.cpp 7444 2007-12-01 19:42:39Z andrew $
 **
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 ** Copyright (C) 2001 Robert J. Campbell Jr.
@@ -124,7 +124,7 @@ void DL_WriterA::dxfHex(int gc, int value) const {
 void DL_WriterA::dxfString(int gc, const char* value) const {
     if (value==NULL) {
 #ifndef __GCC2x__
-        throw DL_NullStrExc();
+        //throw DL_NullStrExc();
 #endif
     }
     m_ofile << (gc<10 ? "  " : (gc<100 ? " " : "")) << gc << "\n"

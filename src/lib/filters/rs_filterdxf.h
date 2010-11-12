@@ -125,6 +125,10 @@ public:
     virtual void endEntity();
     virtual void endSequence() {}
 
+    virtual void add3dFace(const DL_3dFaceData& data);
+    virtual void addDimOrdinate(const DL_DimensionData&, const DL_DimOrdinateData&);
+    virtual void addComment(const char*);
+
     virtual void setVariableVector(const char* key,
                                    double v1, double v2, double v3, int code);
     virtual void setVariableString(const char* key, const char* value, int code);

@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: dl_writer.h 2398 2005-06-06 18:12:14Z andrew $
+** $Id: dl_writer.h 7207 2007-11-19 08:17:22Z andrew $
 **
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 ** Copyright (C) 2001 Robert J. Campbell Jr.
@@ -32,12 +32,15 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#if defined(__OS2__)||defined(__EMX__)||defined(_WIN32)
+#if defined(__OS2__)||defined(__EMX__)
 #define strcasecmp(s,t) stricmp(s,t)
 #endif
 
+#if defined(WIN32)
+#define strcasecmp(s,t) _stricmp(s,t)
+#endif
+
 #include <iostream>
-#include <cstring> 
 
 #include "dl_attributes.h"
 #include "dl_codes.h"
