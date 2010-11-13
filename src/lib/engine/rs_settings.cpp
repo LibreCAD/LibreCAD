@@ -126,6 +126,28 @@ RS_String RS_Settings::readEntry(const RS_String& key,
 
 }
 
+QByteArray RS_Settings::readByteArrayEntry(const RS_String& key,
+                    const RS_String& def,
+                    bool* ok) {
+    QVariant ret = readEntryCache(key);
+    if (!ret.isValid()) {
+
+        QSettings s(companyKey, appKey);
+        // RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
+
+                if (ok!=NULL) {
+                        *ok=s.contains(QString("%1%2").arg(group).arg(key));
+                }
+
+        ret = s.value(QString("%1%2").arg(group).arg(key), QVariant(def));
+
+                addToCache(key, ret);
+    }
+
+    return ret.toByteArray();
+
+}
+
 int RS_Settings::readNumEntry(const RS_String& key, int def, bool* ok) {
 
     // lookup:
