@@ -946,6 +946,7 @@ TRANSLATIONS += ts/ui/qcadguiqt_cs.ts \
     ts/ui/qcadguiqt_sk.ts \
     ts/ui/qcadguiqt_tr.ts
 RESOURCES += res/ui/ui.qrc
+RESOURCES += src/ui/forms/png/icons.qrc
 
 # ################################################################################
 # Main
