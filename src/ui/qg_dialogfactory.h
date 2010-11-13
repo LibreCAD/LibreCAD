@@ -28,6 +28,7 @@
 #define QG_DIALOGFACTORY_H
 
 #include <qwidget.h>
+#include <QToolBar>
 
 #include "rs_dialogfactoryinterface.h"
 #include "rs_vector.h"
@@ -68,7 +69,7 @@ protected:
      */
     virtual void setOptionWidget(QToolBar* ow) {
 		RS_DEBUG->print("QG_DialogFactory::setOptionWidget");
-        optionWidget = (QWidget *)ow;
+        optionWidget = ow;
 		RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");
     }
 
@@ -269,7 +270,7 @@ protected:
     //! Pointer to the widget which can host dialogs
     QWidget* parent;
     //! Pointer to the widget which can host individual tool options
-    QWidget* optionWidget;
+    QToolBar* optionWidget;
     //! Pointer to the coordinate widget.
     QG_CoordinateWidget* coordinateWidget;
     //! Pointer to the mouse widget.
