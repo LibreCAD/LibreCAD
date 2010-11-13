@@ -213,16 +213,7 @@ HEADERS = \
     src/lib/scripting/rs_python_wrappers.h \
     src/lib/scripting/rs_script.h \
     src/lib/scripting/rs_scriptlist.h \
-    dxflib/src/dl_attributes.h \
-    dxflib/src/dl_exception.h \
-    dxflib/src/dl_extrusion.h \
-    dxflib/src/dl_writer_ascii.h \
-    dxflib/src/dl_codes.h \
-    dxflib/src/dl_writer.h \
-    dxflib/src/dl_entities.h \
-    dxflib/src/dl_creationadapter.h \
-    dxflib/src/dl_creationinterface.h \
-    dxflib/src/dl_dxf.h
+
 SOURCES = dxflib/src/dl_dxf.cpp \
     dxflib/src/dl_writer_ascii.cpp \
     fparser/src/fparser.cpp \
@@ -298,8 +289,7 @@ SOURCES = dxflib/src/dl_dxf.cpp \
     src/lib/scripting/rs_python_wrappers.cpp \
     src/lib/scripting/rs_script.cpp \
     src/lib/scripting/rs_scriptlist.cpp \
-    dxflib/src/dl_writer_ascii.cpp \
-    dxflib/src/dl_dxf.cpp
+
 TRANSLATIONS = ts/lib/qcadlib_cs.ts \
     ts/lib/qcadlib_et.ts \
     ts/lib/qcadlib_en.ts \
