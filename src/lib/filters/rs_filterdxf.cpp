@@ -165,8 +165,6 @@ void RS_FilterDXF::addLayer(const DL_LayerData& data) {
     RS_DEBUG->print("RS_FilterDXF::addLayer: OK");
 }
 
-
-
 /**
  * Implementation of the method which handles blocks.
  *
@@ -180,15 +178,15 @@ void RS_FilterDXF::addBlock(const DL_BlockData& data) {
 
 
     // Prevent special blocks (paper_space, model_space) from being added:
-    if (RS_String(data.name.c_str()).lower()!="*paper_space0" &&
-            RS_String(data.name.c_str()).lower()!="*paper_space" &&
-            RS_String(data.name.c_str()).lower()!="*model_space" &&
-            RS_String(data.name.c_str()).lower()!="$paper_space0" &&
-            RS_String(data.name.c_str()).lower()!="$paper_space" &&
-            RS_String(data.name.c_str()).lower()!="$model_space") {
+    if (RS_String(QString::fromUtf8(data.name.c_str())).lower()!="*paper_space0" &&
+            RS_String(QString::fromUtf8(data.name.c_str())).lower()!="*paper_space" &&
+            RS_String(QString::fromUtf8(data.name.c_str())).lower()!="*model_space" &&
+            RS_String(QString::fromUtf8(data.name.c_str())).lower()!="$paper_space0" &&
+            RS_String(QString::fromUtf8(data.name.c_str())).lower()!="$paper_space" &&
+            RS_String(QString::fromUtf8(data.name.c_str())).lower()!="$model_space") {
 
 #ifndef RS_NO_COMPLEX_ENTITIES
-        if (RS_String(data.name.c_str()).startsWith("__CE")) {
+        if (RS_String(QString::fromUtf8(QString::fromUtf8(data.name.c_str()))).startsWith("__CE")) {
             RS_EntityContainer* ec = new RS_EntityContainer();
             ec->setLayer("0");
             currentContainer = ec;
@@ -200,7 +198,7 @@ void RS_FilterDXF::addBlock(const DL_BlockData& data) {
             RS_Vector bp(data.bpx, data.bpy);
             RS_Block* block =
                 new RS_Block(graphic,
-                             RS_BlockData(data.name.c_str(), bp, false));
+                             RS_BlockData(QString::fromUtf8(data.name.c_str()), bp, false));
             //block->setFlags(flags);
 
             if (graphic->addBlock(block)) {
@@ -475,7 +473,7 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
     RS2::HAlign halign;
     RS2::TextDrawingDirection dir;
     RS2::TextLineSpacingStyle lss;
-    RS_String sty = data.style.c_str();
+    RS_String sty = QString::fromUtf8(data.style.c_str());
 
     if (data.attachmentPoint<=3) {
         valign=RS2::VAlignTop;
@@ -507,7 +505,7 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
         lss = RS2::Exact;
     }
 
-    mtext+=QString(data.text.c_str());
+    mtext+=QString(QString::fromUtf8(data.text.c_str()));
 
     RS_String locallyEncoded = mtext;
     RS_String enc = RS_System::getEncoding(
@@ -653,7 +651,8 @@ RS_DimensionData RS_FilterDXF::convDimensionData(
     RS2::VAlign valign;
     RS2::HAlign halign;
     RS2::TextLineSpacingStyle lss;
-    RS_String sty = data.style.c_str();
+    RS_String sty = QString::fromUtf8(data.style.c_str());
+
     RS_String t; //= data.text;
 
     // middlepoint of text can be 0/0 which is considered to be invalid (!):
@@ -893,7 +892,7 @@ void RS_FilterDXF::addHatch(const DL_HatchData& data) {
                          RS_HatchData(data.solid,
                                       data.scale,
                                       data.angle,
-                                      RS_String(data.pattern.c_str())));
+                                      RS_String(QString::fromUtf8(data.pattern.c_str()))));
     setEntityAttributes(hatch, attributes);
 
     currentContainer->addEntity(hatch);
@@ -1005,7 +1004,7 @@ void RS_FilterDXF::linkImage(const DL_ImageDefData& data) {
     RS_DEBUG->print("RS_FilterDXF::linkImage");
 
     int handle = RS_String(data.ref.c_str()).toInt(NULL, 16);
-    RS_String sfile(data.file.c_str());
+    RS_String sfile(QString::fromUtf8(data.file.c_str()));
     RS_FileInfo fiDxf(file);
     RS_FileInfo fiBitmap(sfile);
 
@@ -2366,10 +2365,11 @@ void RS_FilterDXF::setEntityAttributes(RS_Entity* entity,
         entity->setLayer("0");
     } else {
         // add layer in case it doesn't exist:
-        if (graphic->findLayer(attrib.getLayer().c_str())==NULL) {
+
+        if (graphic->findLayer(QString::fromUtf8(attrib.getLayer().c_str()))==NULL) {
             addLayer(DL_LayerData(attrib.getLayer(), 0));
         }
-        entity->setLayer(attrib.getLayer().c_str());
+        entity->setLayer(QString::fromUtf8(attrib.getLayer().c_str()));
     }
 
     // Color:
