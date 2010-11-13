@@ -42,7 +42,7 @@ RS_System* RS_System::uniqueInstance = NULL;
 /**
  * Initializes the system.
  *
- * @param appName Application name (e.g. "QCad II")
+ * @param appName Application name (e.g. "caduntu II")
  * @param appVersion Application version (e.g. "1.2.3")
  * @param appDirName Application directory name used for
  *     subdirectories in /usr, /etc ~/.
@@ -108,13 +108,13 @@ void RS_System::initLanguageList() {
  */
 void RS_System::loadTranslation(const RS_String& lang, const RS_String& langCmd) {
     static RS_Translator* tQt = NULL;
-    static RS_Translator* tQCad = NULL;
-    static RS_Translator* tQCadGuiQt = NULL;
-    static RS_Translator* tQCadActions = NULL;
-    static RS_Translator* tQCadCmd = NULL;
-    static RS_Translator* tQCadLib = NULL;
-    static RS_Translator* tQCadCam = NULL;
-    static RS_Translator* tQCadProf = NULL;
+    static RS_Translator* tCaduntu = NULL;
+    static RS_Translator* tCaduntuGuiQt = NULL;
+    static RS_Translator* tCaduntuActions = NULL;
+    static RS_Translator* tCaduntuCmd = NULL;
+    static RS_Translator* tCaduntuLib = NULL;
+    static RS_Translator* tCaduntuCam = NULL;
+    static RS_Translator* tCaduntuProf = NULL;
 
     RS_String langFile;
 
@@ -141,76 +141,76 @@ void RS_System::loadTranslation(const RS_String& lang, const RS_String& langCmd)
         }
 
 
-        langFile = "qcad_" + lang + ".qm";
-        if (tQCad!=NULL) {
-            qApp->removeTranslator(tQCad);
-            delete tQCad;
+        langFile = "caduntu_" + lang + ".qm";
+        if (tCaduntu!=NULL) {
+            qApp->removeTranslator(tCaduntu);
+            delete tCaduntu;
         }
-        tQCad = new QTranslator(0);
-        if (tQCad->load(langFile, (*it))) {
-            qApp->installTranslator(tQCad);
-        }
-
-
-        langFile = "qcadguiqt_" + lang + ".qm";
-        if (tQCadGuiQt!=NULL) {
-            qApp->removeTranslator(tQCadGuiQt);
-            delete tQCadGuiQt;
-        }
-        tQCadGuiQt = new QTranslator(0);
-        if (tQCadGuiQt->load(langFile, (*it))) {
-            qApp->installTranslator(tQCadGuiQt);
+        tCaduntu = new QTranslator(0);
+        if (tCaduntu->load(langFile, (*it))) {
+            qApp->installTranslator(tCaduntu);
         }
 
 
-        langFile = "qcadactions_" + lang + ".qm";
-        if (tQCadActions!=NULL) {
-            qApp->removeTranslator(tQCadActions);
-            delete tQCadActions;
+        langFile = "caduntuguiqt_" + lang + ".qm";
+        if (tCaduntuGuiQt!=NULL) {
+            qApp->removeTranslator(tCaduntuGuiQt);
+            delete tCaduntuGuiQt;
         }
-        tQCadActions = new QTranslator(0);
-        if (tQCadActions->load(langFile, (*it))) {
-            qApp->installTranslator(tQCadActions);
-        }
-
-        langFile = "qcadcmd_" + langCmd + ".qm";
-        if (tQCadCmd!=NULL) {
-            qApp->removeTranslator(tQCadCmd);
-            delete tQCadCmd;
-        }
-        tQCadCmd = new QTranslator(0);
-        if (tQCadCmd->load(langFile, (*it))) {
-            qApp->installTranslator(tQCadCmd);
+        tCaduntuGuiQt = new QTranslator(0);
+        if (tCaduntuGuiQt->load(langFile, (*it))) {
+            qApp->installTranslator(tCaduntuGuiQt);
         }
 
-        langFile = "qcadlib_" + lang + ".qm";
-        if (tQCadLib!=NULL) {
-            qApp->removeTranslator(tQCadLib);
-            delete tQCadLib;
+
+        langFile = "caduntuactions_" + lang + ".qm";
+        if (tCaduntuActions!=NULL) {
+            qApp->removeTranslator(tCaduntuActions);
+            delete tCaduntuActions;
         }
-        tQCadLib = new QTranslator(0);
-        if (tQCadLib->load(langFile, (*it))) {
-            qApp->installTranslator(tQCadLib);
+        tCaduntuActions = new QTranslator(0);
+        if (tCaduntuActions->load(langFile, (*it))) {
+            qApp->installTranslator(tCaduntuActions);
         }
 
-        langFile = "qcadcam_" + lang + ".qm";
-        if (tQCadLib!=NULL) {
-            qApp->removeTranslator(tQCadCam);
-            delete tQCadCam;
+        langFile = "caduntucmd_" + langCmd + ".qm";
+        if (tCaduntuCmd!=NULL) {
+            qApp->removeTranslator(tCaduntuCmd);
+            delete tCaduntuCmd;
         }
-        tQCadCam = new QTranslator(0);
-        if (tQCadCam->load(langFile, (*it))) {
-            qApp->installTranslator(tQCadCam);
+        tCaduntuCmd = new QTranslator(0);
+        if (tCaduntuCmd->load(langFile, (*it))) {
+            qApp->installTranslator(tCaduntuCmd);
         }
 
-        langFile = "qcadprof_" + lang + ".qm";
-        if (tQCadProf!=NULL) {
-            qApp->removeTranslator(tQCadProf);
-            delete tQCadProf;
+        langFile = "caduntulib_" + lang + ".qm";
+        if (tCaduntuLib!=NULL) {
+            qApp->removeTranslator(tCaduntuLib);
+            delete tCaduntuLib;
         }
-        tQCadProf = new QTranslator(0);
-        if (tQCadProf->load(langFile, (*it))) {
-            qApp->installTranslator(tQCadProf);
+        tCaduntuLib = new QTranslator(0);
+        if (tCaduntuLib->load(langFile, (*it))) {
+            qApp->installTranslator(tCaduntuLib);
+        }
+
+        langFile = "caduntucam_" + lang + ".qm";
+        if (tCaduntuLib!=NULL) {
+            qApp->removeTranslator(tCaduntuCam);
+            delete tCaduntuCam;
+        }
+        tCaduntuCam = new QTranslator(0);
+        if (tCaduntuCam->load(langFile, (*it))) {
+            qApp->installTranslator(tCaduntuCam);
+        }
+
+        langFile = "caduntuprof_" + lang + ".qm";
+        if (tCaduntuProf!=NULL) {
+            qApp->removeTranslator(tCaduntuProf);
+            delete tCaduntuProf;
+        }
+        tCaduntuProf = new QTranslator(0);
+        if (tCaduntuProf->load(langFile, (*it))) {
+            qApp->installTranslator(tCaduntuProf);
         }
     }
 }
