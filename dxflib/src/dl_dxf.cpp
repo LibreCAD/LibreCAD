@@ -1,6 +1,7 @@
 /****************************************************************************
 ** $Id: dl_dxf.cpp 8865 2008-02-04 18:54:02Z andrew $
 **
+** Copyright (C) 2010 R. van Twisk
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 ** This file is part of the dxflib project.
