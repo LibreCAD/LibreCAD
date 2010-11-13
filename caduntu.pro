@@ -290,43 +290,43 @@ SOURCES = dxflib/src/dl_dxf.cpp \
     src/lib/scripting/rs_script.cpp \
     src/lib/scripting/rs_scriptlist.cpp \
 
-TRANSLATIONS = ts/lib/qcadlib_cs.ts \
-    ts/lib/qcadlib_et.ts \
-    ts/lib/qcadlib_en.ts \
-    ts/lib/qcadlib_da.ts \
-    ts/lib/qcadlib_de.ts \
-    ts/lib/qcadlib_el.ts \
-    ts/lib/qcadlib_fr.ts \
-    ts/lib/qcadlib_hu.ts \
-    ts/lib/qcadlib_it.ts \
-    ts/lib/qcadlib_nl.ts \
-    ts/lib/qcadlib_no.ts \
-    ts/lib/qcadlib_pl.ts \
-    ts/lib/qcadlib_ru.ts \
-    ts/lib/qcadlib_sk.ts \
-    ts/lib/qcadlib_tr.ts
+TRANSLATIONS = ts/lib/caduntulib_cs.ts \
+    ts/lib/caduntulib_et.ts \
+    ts/lib/caduntulib_en.ts \
+    ts/lib/caduntulib_da.ts \
+    ts/lib/caduntulib_de.ts \
+    ts/lib/caduntulib_el.ts \
+    ts/lib/caduntulib_fr.ts \
+    ts/lib/caduntulib_hu.ts \
+    ts/lib/caduntulib_it.ts \
+    ts/lib/caduntulib_nl.ts \
+    ts/lib/caduntulib_no.ts \
+    ts/lib/caduntulib_pl.ts \
+    ts/lib/caduntulib_ru.ts \
+    ts/lib/caduntulib_sk.ts \
+    ts/lib/caduntulib_tr.ts
 
 # ################################################################################
 # Command
 HEADERS += src/cmd/rs_commands.h
 SOURCES += src/cmd/rs_commands.cpp
-TRANSLATIONS += ts/cmd/qcadcmd_cs.ts \
-    ts/cmd/qcadcmd_et.ts \
-    ts/cmd/qcadcmd_en.ts \
-    ts/cmd/qcadcmd_da.ts \
-    ts/cmd/qcadcmd_de.ts \
-    ts/cmd/qcadcmd_el.ts \
-    ts/cmd/qcadcmd_es.ts \
-    ts/cmd/qcadcmd_fr.ts \
-    ts/cmd/qcadcmd_hu.ts \
-    ts/cmd/qcadcmd_it.ts \
-    ts/cmd/qcadcmd_nl.ts \
-    ts/cmd/qcadcmd_no.ts \
-    ts/cmd/qcadcmd_pa.ts \
-    ts/cmd/qcadcmd_pl.ts \
-    ts/cmd/qcadcmd_ru.ts \
-    ts/cmd/qcadcmd_sk.ts \
-    ts/cmd/qcadcmd_tr.ts
+TRANSLATIONS += ts/cmd/caduntucmd_cs.ts \
+    ts/cmd/caduntucmd_et.ts \
+    ts/cmd/caduntucmd_en.ts \
+    ts/cmd/caduntucmd_da.ts \
+    ts/cmd/caduntucmd_de.ts \
+    ts/cmd/caduntucmd_el.ts \
+    ts/cmd/caduntucmd_es.ts \
+    ts/cmd/caduntucmd_fr.ts \
+    ts/cmd/caduntucmd_hu.ts \
+    ts/cmd/caduntucmd_it.ts \
+    ts/cmd/caduntucmd_nl.ts \
+    ts/cmd/caduntucmd_no.ts \
+    ts/cmd/caduntucmd_pa.ts \
+    ts/cmd/caduntucmd_pl.ts \
+    ts/cmd/caduntucmd_ru.ts \
+    ts/cmd/caduntucmd_sk.ts \
+    ts/cmd/caduntucmd_tr.ts
 
 # ################################################################################
 # Actions
@@ -560,23 +560,23 @@ SOURCES += src/actions/rs_actionblocksadd.cpp \
     src/actions/rs_actionpolylinetrim.cpp \
     src/actions/rs_actionpolylineequidistant.cpp \
     src/actions/rs_actionpolylinesegment.cpp
-TRANSLATIONS += ts/actions/qcadactions_cs.ts \
-    ts/actions/qcadactions_en.ts \
-    ts/actions/qcadactions_et.ts \
-    ts/actions/qcadactions_da.ts \
-    ts/actions/qcadactions_de.ts \
-    ts/actions/qcadactions_el.ts \
-    ts/actions/qcadactions_es.ts \
-    ts/actions/qcadactions_fr.ts \
-    ts/actions/qcadactions_hu.ts \
-    ts/actions/qcadactions_it.ts \
-    ts/actions/qcadactions_nl.ts \
-    ts/actions/qcadactions_no.ts \
-    ts/actions/qcadactions_pa.ts \
-    ts/actions/qcadactions_pl.ts \
-    ts/actions/qcadactions_ru.ts \
-    ts/actions/qcadactions_sk.ts \
-    ts/actions/qcadactions_tr.ts
+TRANSLATIONS += ts/actions/caduntuactions_cs.ts \
+    ts/actions/caduntuactions_en.ts \
+    ts/actions/caduntuactions_et.ts \
+    ts/actions/caduntuactions_da.ts \
+    ts/actions/caduntuactions_de.ts \
+    ts/actions/caduntuactions_el.ts \
+    ts/actions/caduntuactions_es.ts \
+    ts/actions/caduntuactions_fr.ts \
+    ts/actions/caduntuactions_hu.ts \
+    ts/actions/caduntuactions_it.ts \
+    ts/actions/caduntuactions_nl.ts \
+    ts/actions/caduntuactions_no.ts \
+    ts/actions/caduntuactions_pa.ts \
+    ts/actions/caduntuactions_pl.ts \
+    ts/actions/caduntuactions_ru.ts \
+    ts/actions/caduntuactions_sk.ts \
+    ts/actions/caduntuactions_tr.ts
 RESOURCES += res/actions/actions.qrc
 IMAGES += res/actions/configure.png \
     res/actions/editcopy2.png \
@@ -928,23 +928,23 @@ FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_textoptions.ui \
     src/ui/forms/qg_trimamountoptions.ui \
     src/ui/forms/qg_widgetpen.ui
-TRANSLATIONS += ts/ui/qcadguiqt_cs.ts \
-    ts/ui/qcadguiqt_et.ts \
-    ts/ui/qcadguiqt_en.ts \
-    ts/ui/qcadguiqt_da.ts \
-    ts/ui/qcadguiqt_de.ts \
-    ts/ui/qcadguiqt_el.ts \
-    ts/ui/qcadguiqt_es.ts \
-    ts/ui/qcadguiqt_fr.ts \
-    ts/ui/qcadguiqt_hu.ts \
-    ts/ui/qcadguiqt_it.ts \
-    ts/ui/qcadguiqt_nl.ts \
-    ts/ui/qcadguiqt_no.ts \
-    ts/ui/qcadguiqt_pa.ts \
-    ts/ui/qcadguiqt_pl.ts \
-    ts/ui/qcadguiqt_ru.ts \
-    ts/ui/qcadguiqt_sk.ts \
-    ts/ui/qcadguiqt_tr.ts
+TRANSLATIONS += ts/ui/caduntuguiqt_cs.ts \
+    ts/ui/caduntuguiqt_et.ts \
+    ts/ui/caduntuguiqt_en.ts \
+    ts/ui/caduntuguiqt_da.ts \
+    ts/ui/caduntuguiqt_de.ts \
+    ts/ui/caduntuguiqt_el.ts \
+    ts/ui/caduntuguiqt_es.ts \
+    ts/ui/caduntuguiqt_fr.ts \
+    ts/ui/caduntuguiqt_hu.ts \
+    ts/ui/caduntuguiqt_it.ts \
+    ts/ui/caduntuguiqt_nl.ts \
+    ts/ui/caduntuguiqt_no.ts \
+    ts/ui/caduntuguiqt_pa.ts \
+    ts/ui/caduntuguiqt_pl.ts \
+    ts/ui/caduntuguiqt_ru.ts \
+    ts/ui/caduntuguiqt_sk.ts \
+    ts/ui/caduntuguiqt_tr.ts
 RESOURCES += res/ui/ui.qrc
 RESOURCES += src/ui/forms/png/icons.qrc
 
@@ -960,23 +960,23 @@ SOURCES += src/main/qc_applicationwindow.cpp \
     src/main/qc_graphicview.cpp \
     src/main/qc_mdiwindow.cpp \
     src/main/main.cpp
-TRANSLATIONS += ts/main/qcad_cs.ts \
-    ts/main/qcad_et.ts \
-    ts/main/qcad_en.ts \
-    ts/main/qcad_da.ts \
-    ts/main/qcad_de.ts \
-    ts/main/qcad_el.ts \
-    ts/main/qcad_es.ts \
-    ts/main/qcad_fr.ts \
-    ts/main/qcad_hu.ts \
-    ts/main/qcad_it.ts \
-    ts/main/qcad_nl.ts \
-    ts/main/qcad_no.ts \
-    ts/main/qcad_pa.ts \
-    ts/main/qcad_pl.ts \
-    ts/main/qcad_ru.ts \
-    ts/main/qcad_sk.ts \
-    ts/main/qcad_tr.ts
+TRANSLATIONS += ts/main/caduntu_cs.ts \
+    ts/main/caduntu_et.ts \
+    ts/main/caduntu_en.ts \
+    ts/main/caduntu_da.ts \
+    ts/main/caduntu_de.ts \
+    ts/main/caduntu_el.ts \
+    ts/main/caduntu_es.ts \
+    ts/main/caduntu_fr.ts \
+    ts/main/caduntu_hu.ts \
+    ts/main/caduntu_it.ts \
+    ts/main/caduntu_nl.ts \
+    ts/main/caduntu_no.ts \
+    ts/main/caduntu_pa.ts \
+    ts/main/caduntu_pl.ts \
+    ts/main/caduntu_ru.ts \
+    ts/main/caduntu_sk.ts \
+    ts/main/caduntu_tr.ts
 IMAGES += res/main/contents.png \
     res/main/document.png \
     res/main/editclear.png \
