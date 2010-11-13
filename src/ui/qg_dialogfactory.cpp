@@ -746,7 +746,8 @@ void QG_DialogFactory::requestPrintPreviewOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_PrintPreviewOptions(optionWidget);
+            toolWidget = new QG_PrintPreviewOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
@@ -767,9 +768,10 @@ void QG_DialogFactory::requestLineOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_LineOptions(optionWidget);
+            toolWidget = new QG_LineOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action);
-			toolWidget->show();
+            toolWidget->show();
         }
     }
 	RS_DEBUG->print("QG_DialogFactory::requestLineOptions: OK");
@@ -790,9 +792,10 @@ void QG_DialogFactory::requestPolylineOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_PolylineOptions(optionWidget);
+            toolWidget = new QG_PolylineOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
-			toolWidget->show();
+            toolWidget->show();
         }
     }
 }
@@ -812,8 +815,9 @@ void QG_DialogFactory::requestLineParallelOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_LineParallelOptions(optionWidget);
-            toolWidget->setAction(action, update);
+           toolWidget = new QG_LineParallelOptions();
+           optionWidget->addWidget(toolWidget);
+           toolWidget->setAction(action, update);
 			toolWidget->show();
         }
     }
@@ -835,7 +839,8 @@ void QG_DialogFactory::requestLineParallelThroughOptions(
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_LineParallelThroughOptions(optionWidget);
+            toolWidget = new QG_LineParallelThroughOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
@@ -857,7 +862,8 @@ void QG_DialogFactory::requestLineAngleOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_LineAngleOptions(optionWidget);
+            toolWidget = new QG_LineAngleOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
             //toolWidget->setData(&angle, &length, fixedAngle, update);
 			toolWidget->show();
@@ -881,7 +887,8 @@ void QG_DialogFactory::requestLineRelAngleOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_LineRelAngleOptions(optionWidget);
+            toolWidget = new QG_LineRelAngleOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
             //toolWidget->setData(&angle, &length, fixedAngle, update);
 			toolWidget->show();
@@ -905,7 +912,8 @@ void QG_DialogFactory::requestLineBisectorOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_LineBisectorOptions(optionWidget);
+            toolWidget = new QG_LineBisectorOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
@@ -927,7 +935,8 @@ void QG_DialogFactory::requestLinePolygonOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_LinePolygonOptions(optionWidget);
+            toolWidget = new QG_LinePolygonOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
@@ -949,7 +958,8 @@ void QG_DialogFactory::requestLinePolygon2Options(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_LinePolygon2Options(optionWidget);
+            toolWidget = new QG_LinePolygon2Options();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
@@ -972,7 +982,8 @@ void QG_DialogFactory::requestArcOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_ArcOptions(optionWidget);
+            toolWidget = new QG_ArcOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
             //toolWidget->setData(&data);
 			toolWidget->show();
@@ -996,7 +1007,8 @@ void QG_DialogFactory::requestArcTangentialOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_ArcTangentialOptions(optionWidget);
+            toolWidget = new QG_ArcTangentialOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
             //toolWidget->setData(&data);
 			toolWidget->show();
@@ -1019,7 +1031,8 @@ void QG_DialogFactory::requestCircleOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_CircleOptions(optionWidget);
+            toolWidget = new QG_CircleOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
@@ -1040,7 +1053,8 @@ void QG_DialogFactory::requestSplineOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_SplineOptions(optionWidget);
+            toolWidget = new QG_SplineOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
@@ -1063,7 +1077,8 @@ void QG_DialogFactory::requestTextOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_TextOptions(optionWidget);
+            toolWidget = new QG_TextOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
@@ -1085,7 +1100,8 @@ void QG_DialogFactory::requestInsertOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_InsertOptions(optionWidget);
+            toolWidget = new QG_InsertOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
@@ -1108,7 +1124,8 @@ void QG_DialogFactory::requestImageOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_ImageOptions(optionWidget);
+            toolWidget = new QG_ImageOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
@@ -1131,7 +1148,8 @@ void QG_DialogFactory::requestDimensionOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_DimOptions(optionWidget);
+            toolWidget = new QG_DimOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
@@ -1154,7 +1172,8 @@ void QG_DialogFactory::requestDimLinearOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_DimLinearOptions(optionWidget);
+            toolWidget = new QG_DimLinearOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
@@ -1175,7 +1194,8 @@ void QG_DialogFactory::requestSnapDistOptions(double& dist, bool on) {
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_SnapDistOptions(optionWidget);
+            toolWidget = new QG_SnapDistOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setDist(&dist);
 			toolWidget->show();
         }
@@ -1197,7 +1217,8 @@ void QG_DialogFactory::requestMoveRotateOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_MoveRotateOptions(optionWidget);
+            toolWidget = new QG_MoveRotateOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
@@ -1219,7 +1240,8 @@ void QG_DialogFactory::requestTrimAmountOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_TrimAmountOptions(optionWidget);
+            toolWidget = new QG_TrimAmountOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
@@ -1241,9 +1263,10 @@ void QG_DialogFactory::requestBevelOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_BevelOptions(optionWidget);
+            toolWidget = new QG_BevelOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
-			toolWidget->show();
+            toolWidget->show();
         }
     }
 }
@@ -1263,9 +1286,10 @@ void QG_DialogFactory::requestRoundOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_RoundOptions(optionWidget);
+            toolWidget = new QG_RoundOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
-			toolWidget->show();
+            toolWidget->show();
         }
     }
 }
@@ -1285,7 +1309,8 @@ void QG_DialogFactory::requestLibraryInsertOptions(RS_ActionInterface* action,
             toolWidget = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_LibraryInsertOptions(optionWidget);
+            toolWidget = new QG_LibraryInsertOptions();
+            optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
 			toolWidget->show();
         }
