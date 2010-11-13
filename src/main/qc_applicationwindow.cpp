@@ -54,12 +54,9 @@
 #include <qpainter.h>
 #include <qprinter.h>
 #include <qtimer.h>
-#include <q3textstream.h>
 #include <q3vbox.h>
 
-#include <q3dockwindow.h>
 #include <qeventloop.h>
-#include <q3textedit.h>
 
 #include "rs_application.h"
 #include "rs_actiondrawlinefree.h"
@@ -1302,14 +1299,18 @@ void QC_ApplicationWindow::initToolBar() {
 
     fileToolBar = new QToolBar( "File Operations", this);	
 	fileToolBar->setSizePolicy(toolBarPolicy);
+	fileToolBar->setObjectName ( "FileTB" );
 	
     editToolBar = new QToolBar( "Edit Operations", this);
 	editToolBar->setSizePolicy(toolBarPolicy);
+	editToolBar->setObjectName ( "EditTB" );
     zoomToolBar = new QToolBar( "Zoom Operations", this);
 	zoomToolBar->setSizePolicy(toolBarPolicy);
+	zoomToolBar->setObjectName ( "ZoomTB" );
 	    
 	penToolBar = new QG_PenToolBar("Pen Selection", this);
 	penToolBar->setSizePolicy(toolBarPolicy);
+	penToolBar->setObjectName ( "PenTB" );
 	
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
             this, SLOT(slotPenChanged(RS_Pen))); 
@@ -1318,6 +1319,7 @@ void QC_ApplicationWindow::initToolBar() {
 	QSizePolicy optionWidgetBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed); 
 	optionWidget->setMinimumSize(440,30);
 	optionWidget->setSizePolicy(optionWidgetBarPolicy);	
+	optionWidget->setObjectName ( "ToolTB" );
 	
     //optionWidget->setFixedExtentHeight(26);
     //optionWidget->setHorizontallyStretchable(true);
@@ -1328,6 +1330,7 @@ void QC_ApplicationWindow::initToolBar() {
 	t->setMinimumSize(59,250);
 	QSizePolicy policy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding); 
 	t->setSizePolicy(policy);
+	t->setObjectName ( "CADTB" );
    // t->setFixedExtentWidth(59);
    // t->setVerticallyStretchable(true);
 	addToolBar(Qt::LeftToolBarArea, t); 
@@ -1410,11 +1413,8 @@ void QC_ApplicationWindow::initSettings() {
  */
 void QC_ApplicationWindow::restoreDocks() {
     RS_SETTINGS->beginGroup("/Geometry");
-    QString docks = RS_SETTINGS->readEntry("/DockWindows", "");
+    restoreState ( RS_SETTINGS->readByteArrayEntry("/DockWindows", ""));
     RS_SETTINGS->endGroup();
-
-    Q3TextStream ts(&docks, QIODevice::ReadOnly);
-// RVT_PORT    ts >> *this;
 }
 
 
@@ -1423,8 +1423,6 @@ void QC_ApplicationWindow::restoreDocks() {
  */
 void QC_ApplicationWindow::storeSettings() {
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings()");
-    QString docks;
-    Q3TextStream ts(&docks, QIODevice::WriteOnly);
 
     RS_SETTINGS->beginGroup("/RecentFiles");
     for (int i=0; i<recentFiles->count(); ++i) {
@@ -1438,8 +1436,7 @@ void QC_ApplicationWindow::storeSettings() {
     RS_SETTINGS->writeEntry("/WindowHeight", height());
     RS_SETTINGS->writeEntry("/WindowX", x());
     RS_SETTINGS->writeEntry("/WindowY", y());
-// RVT_PORT    ts << *this;
-    RS_SETTINGS->writeEntry("/DockWindows", docks);
+    RS_SETTINGS->writeEntry("/DockWindows", QVariant (saveState()));
     RS_SETTINGS->endGroup();
 
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings(): OK");
@@ -1464,6 +1461,7 @@ void QC_ApplicationWindow::initView() {
 
     RS_DEBUG->print("  layer widget..");
     dw = new QDockWidget( "Layer", this);
+	dw->setObjectName ( "LayerDW" );
     layerWidget = new QG_LayerWidget(actionHandler, dw, "Layer");
     layerWidget->setFocusPolicy(Qt::NoFocus);
     connect(layerWidget, SIGNAL(escape()),
@@ -1486,6 +1484,7 @@ void QC_ApplicationWindow::initView() {
 
     RS_DEBUG->print("  block widget..");
     dw = new QDockWidget("Block", this);
+	dw->setObjectName ( "BlockDW" );
     // dw->setResizeEnabled(true);
     blockWidget = new QG_BlockWidget(actionHandler, dw, "Block");
     blockWidget->setFocusPolicy(Qt::NoFocus);
@@ -1504,6 +1503,7 @@ void QC_ApplicationWindow::initView() {
 
     RS_DEBUG->print("  library widget..");
     dw = new QDockWidget("Library", this);
+	dw->setObjectName ( "LibraryDW" );
     libraryWidget = new QG_LibraryWidget(dw, "Library");
     libraryWidget->setActionHandler(actionHandler);
     libraryWidget->setFocusPolicy(Qt::NoFocus);
@@ -1526,6 +1526,7 @@ void QC_ApplicationWindow::initView() {
 
     RS_DEBUG->print("  command widget..");
     dw = new QDockWidget("Command", this);
+	dw->setObjectName ( "CommandDW" );
     // dw->setResizeEnabled(true);
     commandWidget = new QG_CommandWidget(dw, "Command");
     commandWidget->setActionHandler(actionHandler);

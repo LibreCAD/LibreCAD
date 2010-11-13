@@ -79,6 +79,9 @@ public:
     RS_String readEntry(const RS_String& key,
                         const RS_String& def = RS_String::null,
                         bool* ok = 0);
+    QByteArray readByteArrayEntry(const RS_String& key,
+                        const RS_String& def = RS_String::null,
+                        bool* ok = 0);
     int readNumEntry(const RS_String& key, int def=0, bool* ok=0);
 	
 
