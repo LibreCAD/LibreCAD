@@ -3826,8 +3826,8 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <translation>Paragraaf (§)</translation>
     </message>
     <message encoding="UTF-8">
-        <source>Pi (¶)</source>
-        <translation>Pi (¶)</translation>
+        <source>Pi (π)</source>
+        <translation>Pi (π)</translation>
     </message>
     <message encoding="UTF-8">
         <source>Pound (£)</source>

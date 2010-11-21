@@ -3100,7 +3100,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
         <translation type="unfinished"></translation>
     </message>
     <message encoding="UTF-8">
-        <source>Pi (¶)</source>
+        <source>Pi (π)</source>
         <translation type="unfinished"></translation>
     </message>
     <message encoding="UTF-8">
