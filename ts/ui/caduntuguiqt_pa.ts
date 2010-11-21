@@ -2565,8 +2565,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>ਪੈਰਾ (§)</translation>
     </message>
     <message encoding="UTF-8">
-        <source>Pi (¶)</source>
-        <translation>ਪਾਈ (¶)</translation>
+        <source>Pi (π)</source>
+        <translation>ਪਾਈ (π)</translation>
     </message>
     <message encoding="UTF-8">
         <source>Pound (£)</source>

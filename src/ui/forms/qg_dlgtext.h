@@ -638,7 +638,7 @@ public:
          << QApplication::translate("QG_DlgText", "Copyright (\302\251)", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("QG_DlgText", "Registered (\302\256)", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("QG_DlgText", "Paragraph (\302\247)", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("QG_DlgText", "Pi (\302\266)", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("QG_DlgText", "Pi (π)", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("QG_DlgText", "Pound (\302\243)", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("QG_DlgText", "Yen (\302\245)", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("QG_DlgText", "Times (\303\227)", 0, QApplication::UnicodeUTF8)

@@ -3833,8 +3833,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>Параграф (§)</translation>
     </message>
     <message encoding="UTF-8">
-        <source>Pi (¶)</source>
-        <translation>Число Пи (¶)</translation>
+        <source>Pi (π)</source>
+        <translation>Число Пи (π)</translation>
     </message>
     <message encoding="UTF-8">
         <source>Pound (£)</source>

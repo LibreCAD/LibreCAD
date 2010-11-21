@@ -2852,8 +2852,8 @@ Neid sätteid saab hiljem muuta QCad-i dialoogis Sätted.</translation>
         <translation>Paragrahv (§)</translation>
     </message>
     <message encoding="UTF-8">
-        <source>Pi (¶)</source>
-        <translation>Pii (¶)</translation>
+        <source>Pi (π)</source>
+        <translation>Pii (π)</translation>
     </message>
     <message encoding="UTF-8">
         <source>Pound (£)</source>
