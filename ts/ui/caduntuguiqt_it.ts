@@ -3844,8 +3844,8 @@ Puoi cambiare in seguito queste impostazioni nelle Opzioni di Qcad.</translation
         <translation>Paragrafo (§)</translation>
     </message>
     <message encoding="UTF-8">
-        <source>Pi (¶)</source>
-        <translation>Fine Paragrafo (¶)</translation>
+        <source>Pi (π)</source>
+        <translation>Fine Paragrafo (π)</translation>
     </message>
     <message encoding="UTF-8">
         <source>Pound (£)</source>

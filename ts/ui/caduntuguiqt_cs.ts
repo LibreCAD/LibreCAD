@@ -3841,7 +3841,7 @@ Toto nastavení můžete později změnit v menu Nastavení QCADu.</translation>
         <translation>Paragraf (§)</translation>
     </message>
     <message encoding="UTF-8">
-        <source>Pi (¶)</source>
+        <source>Pi (π)</source>
         <translation></translation>
     </message>
     <message encoding="UTF-8">

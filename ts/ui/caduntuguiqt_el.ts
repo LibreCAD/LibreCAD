@@ -3821,8 +3821,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>Παράγραφος (§)</translation>
     </message>
     <message encoding="UTF-8">
-        <source>Pi (¶)</source>
-        <translation>π (¶)</translation>
+        <source>Pi (π)</source>
+        <translation>π (π)</translation>
     </message>
     <message encoding="UTF-8">
         <source>Pound (£)</source>

@@ -2564,7 +2564,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message encoding="UTF-8">
-        <source>Pi (¶)</source>
+        <source>Pi (π)</source>
         <translation type="unfinished"></translation>
     </message>
     <message encoding="UTF-8">

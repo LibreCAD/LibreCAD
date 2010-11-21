@@ -138,9 +138,6 @@
             <property name="shortcut">
              <string>Alt+D</string>
             </property>
-            <attribute name="buttonGroup">
-             <string/>
-            </attribute>
            </widget>
           </item>
          </layout>
@@ -181,15 +178,12 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="png/icons.qrc">
+               <iconset>
                 <normaloff>:/ui/icons/align_tr.png</normaloff>:/ui/icons/align_tr.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
               </property>
-              <attribute name="buttonGroup">
-               <string/>
-              </attribute>
              </widget>
             </item>
             <item row="0" column="0">
@@ -213,15 +207,12 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="png/icons.qrc">
+               <iconset>
                 <normaloff>:/ui/icons/align_tl.png</normaloff>:/ui/icons/align_tl.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
               </property>
-              <attribute name="buttonGroup">
-               <string/>
-              </attribute>
              </widget>
             </item>
             <item row="1" column="0">
@@ -245,15 +236,12 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="png/icons.qrc">
+               <iconset>
                 <normaloff>:/ui/icons/align_ml.png</normaloff>:/ui/icons/align_ml.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
               </property>
-              <attribute name="buttonGroup">
-               <string/>
-              </attribute>
              </widget>
             </item>
             <item row="1" column="1">
@@ -277,15 +265,12 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="png/icons.qrc">
+               <iconset>
                 <normaloff>:/ui/icons/align_mc.png</normaloff>:/ui/icons/align_mc.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
               </property>
-              <attribute name="buttonGroup">
-               <string/>
-              </attribute>
              </widget>
             </item>
             <item row="1" column="2">
@@ -309,15 +294,12 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="png/icons.qrc">
+               <iconset>
                 <normaloff>:/ui/icons/align_mr.png</normaloff>:/ui/icons/align_mr.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
               </property>
-              <attribute name="buttonGroup">
-               <string/>
-              </attribute>
              </widget>
             </item>
             <item row="2" column="0">
@@ -341,15 +323,12 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="png/icons.qrc">
+               <iconset>
                 <normaloff>:/ui/icons/align_bl.png</normaloff>:/ui/icons/align_bl.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
               </property>
-              <attribute name="buttonGroup">
-               <string/>
-              </attribute>
              </widget>
             </item>
             <item row="2" column="2">
@@ -373,15 +352,12 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="png/icons.qrc">
+               <iconset>
                 <normaloff>:/ui/icons/align_br.png</normaloff>:/ui/icons/align_br.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
               </property>
-              <attribute name="buttonGroup">
-               <string/>
-              </attribute>
              </widget>
             </item>
             <item row="2" column="1">
@@ -405,15 +381,12 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="png/icons.qrc">
+               <iconset>
                 <normaloff>:/ui/icons/align_bc.png</normaloff>:/ui/icons/align_bc.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
               </property>
-              <attribute name="buttonGroup">
-               <string/>
-              </attribute>
              </widget>
             </item>
             <item row="0" column="1">
@@ -437,15 +410,12 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="png/icons.qrc">
+               <iconset>
                 <normaloff>:/ui/icons/align_tc.png</normaloff>:/ui/icons/align_tc.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
               </property>
-              <attribute name="buttonGroup">
-               <string/>
-              </attribute>
              </widget>
             </item>
            </layout>
@@ -541,7 +511,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="png/icons.qrc">
+            <iconset>
              <normaloff>:/ui/icons/filenew.png</normaloff>:/ui/icons/filenew.png</iconset>
            </property>
           </widget>
@@ -555,7 +525,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="png/icons.qrc">
+            <iconset>
              <normaloff>:/ui/icons/fileopen.png</normaloff>:/ui/icons/fileopen.png</iconset>
            </property>
           </widget>
@@ -569,7 +539,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="png/icons.qrc">
+            <iconset>
              <normaloff>:/ui/icons/filesave.png</normaloff>:/ui/icons/filesave.png</iconset>
            </property>
           </widget>
@@ -583,7 +553,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="png/icons.qrc">
+            <iconset>
              <normaloff>:/ui/icons/editcut.png</normaloff>:/ui/icons/editcut.png</iconset>
            </property>
           </widget>
@@ -597,7 +567,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="png/icons.qrc">
+            <iconset>
              <normaloff>:/ui/icons/editcopy.png</normaloff>:/ui/icons/editcopy.png</iconset>
            </property>
           </widget>
@@ -611,7 +581,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="png/icons.qrc">
+            <iconset>
              <normaloff>:/ui/icons/editpaste.png</normaloff>:/ui/icons/editpaste.png</iconset>
            </property>
           </widget>
@@ -620,10 +590,7 @@
        </item>
        <item>
         <widget class="Q3TextEdit" name="teText">
-         <property name="textFormat">
-          <enum>Qt::PlainText</enum>
-         </property>
-         <property name="linkUnderline">
+         <property name="linkUnderline" stdset="0">
           <bool>false</bool>
          </property>
         </widget>
@@ -707,7 +674,7 @@
           </item>
           <item>
            <property name="text">
-            <string>Pi (¶)</string>
+            <string>Pi (π)</string>
            </property>
           </item>
           <item>
@@ -1356,9 +1323,6 @@
           <property name="text">
            <string/>
           </property>
-          <attribute name="buttonGroup">
-           <string/>
-          </attribute>
          </widget>
         </item>
        </layout>
@@ -1438,6 +1402,7 @@
    <class>Q3TextEdit</class>
    <extends>Q3Frame</extends>
    <header>q3textedit.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>QG_FontBox</class>
@@ -1455,9 +1420,7 @@
   <include location="local">rs_filterdxf.h</include>
   <include location="local">qg_fontbox.h</include>
  </includes>
- <resources>
-  <include location="png/icons.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonOk</sender>

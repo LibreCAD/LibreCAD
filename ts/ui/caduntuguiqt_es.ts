@@ -3823,8 +3823,8 @@ Pre&amp;cisión:</translation>
         <translation>Parágrafo (§)</translation>
     </message>
     <message encoding="UTF-8">
-        <source>Pi (¶)</source>
-        <translation>Pi (¶)</translation>
+        <source>Pi (π)</source>
+        <translation>Pi (π)</translation>
     </message>
     <message encoding="UTF-8">
         <source>Pound (£)</source>

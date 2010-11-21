@@ -2861,8 +2861,8 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
         <translation>Paragraf (§)</translation>
     </message>
     <message encoding="UTF-8">
-        <source>Pi (¶)</source>
-        <translation>Pi (¶)</translation>
+        <source>Pi (π)</source>
+        <translation>Pi (π)</translation>
     </message>
     <message encoding="UTF-8">
         <source>Pound (£)</source>

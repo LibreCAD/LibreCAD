@@ -2853,8 +2853,8 @@ Tieto nastavenia môžete neskôr zmeniť v dialógovom okne Nastavenia.</transl
         <translation>Paragraf (§)</translation>
     </message>
     <message encoding="UTF-8">
-        <source>Pi (¶)</source>
-        <translation>Pí (¶)</translation>
+        <source>Pi (π)</source>
+        <translation>Pí (π)</translation>
     </message>
     <message encoding="UTF-8">
         <source>Pound (£)</source>
