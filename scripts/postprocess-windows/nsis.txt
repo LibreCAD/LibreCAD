@@ -1,6 +1,5 @@
 ;NSIS Modern User Interface
 ;Basic Example Script
-;Written by Joost Verburg
 
 ;--------------------------------
 ;Include Modern UI
@@ -12,14 +11,14 @@
 ;General
 
   ;Name and file
-  Name "CADuntu"
-  OutFile "CADuntu-Installer.exe"
+  Name "LibreCAD"
+  OutFile "LibreCAD-Installer.exe"
 
   ;Default installation folder
-  InstallDir "$PROGRAMFILES\CADuntu"
+  InstallDir "$PROGRAMFILES\LibreCAD"
 
   ;Get installation folder from registry if available
-  InstallDirRegKey HKCU "Software\CADuntu" ""
+  InstallDirRegKey HKCU "Software\LibreCAD" ""
 
   ;Request application pivileges for Windows Vista
   RequestExecutionLevel admin
@@ -95,18 +94,18 @@ Section "Install Section" SecInstall
   File "C:\Qt\2010.04\qt\bin\libgcc_s_dw2-1.dll"
 
   ;Store installation folder
-  WriteRegStr HKCU "Software\CADuntu" "" $INSTDIR
+  WriteRegStr HKCU "Software\LibreCAD" "" $INSTDIR
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
   ; create shortcuts
-  createShortCut "$DESKTOP\CADuntu.lnk" "$INSTDIR\Caduntu.exe"
+  createShortCut "$DESKTOP\LibreCAD.lnk" "$INSTDIR\LibreCAD.exe"
 
   ; Startmenu shortcuts
-  createDirectory "$SMPROGRAMS\CADuntu\"
-  createShortCut "$SMPROGRAMS\CADuntu\CADuntu.lnk" "$INSTDIR\Caduntu.exe"
-  createShortCut "$SMPROGRAMS\CADuntu\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
+  createDirectory "$SMPROGRAMS\LibreCAD\"
+  createShortCut "$SMPROGRAMS\LibreCAD\LibreCAD.lnk" "$INSTDIR\LibreCAD.exe"
+  createShortCut "$SMPROGRAMS\LibreCAD\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 
 SectionEnd
 
@@ -124,11 +123,11 @@ Section "Uninstall"
   ;ADD YOUR OWN FILES HERE...
 
   Delete "$INSTDIR\Uninstall.exe"
-  RMDir /r "$SMPROGRAMS\CADuntu\"
+  RMDir /r "$SMPROGRAMS\LibreCAD\"
   RMDir /r $INSTDIR
 
   RMDir "$INSTDIR"
 
-  DeleteRegKey /ifempty HKCU "Software\CADuntu"
+  DeleteRegKey /ifempty HKCU "Software\LibreCAD"
 
 SectionEnd

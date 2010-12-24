@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** This file is part of the CADuntu project, a 2D CAD program
+** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -141,9 +141,9 @@ static PyObject *py_rsPyAddLine(PyObject* /*self*/, PyObject* args) {
 }
 
 /**
- * The caduntu module's function table.
+ * The librecad module's function table.
  */
-static PyMethodDef rsCADuntuMethods[] =
+static PyMethodDef rsLibreCADMethods[] =
     {
         {"inc",     py_inc,     1,
          "a silly example method"},
@@ -153,13 +153,13 @@ static PyMethodDef rsCADuntuMethods[] =
     };
 
 /**
- * Python will call this when the caduntu module is imported.
+ * Python will call this when the librecad module is imported.
  */
 void init_pyextension() {
-    printf("c: adding module: caduntu\n");
-    PyImport_AddModule("caduntu");
-    Py_InitModule("caduntu", rsCADuntuMethods);
-    printf("c: module caduntu: OK\n");
+    printf("c: adding module: librecad\n");
+    PyImport_AddModule("librecad");
+    Py_InitModule("librecad", rsLibreCADMethods);
+    printf("c: module librecad: OK\n");
 }
 
 #endif

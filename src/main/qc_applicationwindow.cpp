@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** This file is part of the CADuntu project, a 2D CAD program
+** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -100,10 +100,10 @@
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 
 #ifndef QC_APP_ICON
-# define QC_APP_ICON "caduntu.png"
+# define QC_APP_ICON "librecad.png"
 #endif
 #ifndef QC_APP_ICON16
-# define QC_APP_ICON16 "caduntu16.png"
+# define QC_APP_ICON16 "librecad16.png"
 #endif
 
 # include <qsplashscreen.h>
@@ -2867,7 +2867,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
 
     QMessageBox box(this);
     box.setCaption(tr("About..."));
-    box.setText(       QString("<qt>") +  // no center for main stream CADuntu
+    box.setText(       QString("<qt>") +  // no center for main stream LibreCAD
 #ifdef QC_ABOUT_HEADER
                        QString("<center>") + 
                        QString(XSTR(QC_ABOUT_HEADER)) +
@@ -2882,7 +2882,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
 				"(c) 2010 by R. van Twisk<br>"
                        "<br>" +
                        tr("Modules: %1").arg(modulesString) + "<br>" +
-                       QString("<a href=\"http://www.caduntu.org\">http://www.caduntu.org</a>")+"<br><br><br>"+
+                       QString("<a href=\"http://www.LibreCAD.org\">http://www.LibreCAD.org</a>")+"<br><br><br>"+
 				"<font size=\"1\">Portions (c) by RibbonSoft, Andrew Mustun</font>" 
 
 #ifdef QC_ABOUT_ADD_COMPANY
@@ -2916,8 +2916,8 @@ void QC_ApplicationWindow::slotHelpManual() {
 			this, SLOT(slotError(const QString&)));
         QStringList args;
         args << "-profile";
-        args << QDir::convertSeparators(RS_SYSTEM->getDocPath() + "/caduntudoc.adp");
-//        args << QString("doc") + QDir::separator() + QString("caduntudoc.adp");
+        args << QDir::convertSeparators(RS_SYSTEM->getDocPath() + "/librecaddoc.adp");
+//        args << QString("doc") + QDir::separator() + QString("librecaddoc.adp");
 
         assistant->setArguments(args);
     }

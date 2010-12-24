@@ -1,14 +1,14 @@
 <RCC version="1.0">
 <qresource prefix="/main">
-<file>caduntu.png</file>
-<file>caduntu16.png</file>
+<file>librecad.png</file>
+<file>librecad16.png</file>
 <file>contents.png</file>
 <file>document.png</file>
 <file>editclear.png</file>
 <file>filenew.png</file>
 <file>fileopen.png</file>
 <file>filesave.png</file>
-<file>intro_caduntu.png</file>
-<file>splash_caduntu.png</file>
+<file>intro_librecad.png</file>
+<file>splash_librecad.png</file>
 </qresource>
 </RCC>

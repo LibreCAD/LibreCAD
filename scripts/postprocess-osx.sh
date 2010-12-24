@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RESOURCEDIR="`pwd`/Caduntu.app/Contents/Resources"
+RESOURCEDIR="`pwd`/LibreCAD.app/Contents/Resources"
 TSDIR="`pwd`/ts"
 
 # Postprocess for osx                                                                                                                                                
@@ -12,7 +12,7 @@ find support/library -type d -not -path "*.svn*"  | sed s/support// | xargs -IFI
 find support/library -type f -iname *.dxf -not -path "*.svn*"  | sed s/support// | xargs -IFILES  cp support/FILES $RESOURCEDIR/FILES 
 
 # Generate translations
-lrelease caduntu.pro
+lrelease librecad.pro
 mkdir -p $RESOURCEDIR/qm
  
 # Go into translations directory
