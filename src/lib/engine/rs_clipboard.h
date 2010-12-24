@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** This file is part of the CADuntu project, a 2D CAD program
+** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -38,7 +38,7 @@ class RS_Layer;
 class RS_Entity;
 
 /**
- * CADuntu internal clipboard. We don't use the system clipboard for
+ * LibreCAD internal clipboard. We don't use the system clipboard for
  * better portaility.
  * Implemented as singleton.
  *

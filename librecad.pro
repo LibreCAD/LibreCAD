@@ -1,11 +1,11 @@
-# CADuntu project file
-# (c) Ries van Twisk (caduntu@rvt.dds.nl)
+# LibreCAD project file
+# (c) Ries van Twisk (librecad@rvt.dds.nl)
 TEMPLATE = app
-DEFINES += QC_APPKEY="\"/CADuntu\""
-DEFINES += QC_APPNAME="\"CADuntu\""
-DEFINES += QC_COMPANYNAME="\"CADuntu\""
-DEFINES += QC_COMPANYKEY="\"CADuntu\""
-DEFINES += QC_VERSION="\"1.0.0beta4\""
+DEFINES += QC_APPKEY="\"/LibreCAD\""
+DEFINES += QC_APPNAME="\"LibreCAD\""
+DEFINES += QC_COMPANYNAME="\"LibreCAD\""
+DEFINES += QC_COMPANYKEY="\"LibreCAD\""
+DEFINES += QC_VERSION="\"1.0.0beta5\""
 
 # Add qt3support
 QT += qt3support
@@ -16,7 +16,7 @@ QMAKE_CXXFLAGS_DEBUG +=
 QMAKE_CXXFLAGS += 
 
 # Make translations at the end of the process
-# maketranslations.commands += lrelease caduntu.pro
+# maketranslations.commands += lrelease librecad.pro
 # QMAKE_EXTRA_TARGETS += maketranslations
 # QMAKE_POST_LINK += make maketranslations
 unix { 
@@ -24,11 +24,11 @@ unix {
     SVNREVISION = $$system(svn info -R | grep -o \"Revision: [0-9]*\" | sed -e \"s/Revision: //\" | head -n1)
     DEFINES += QC_SVNREVISION=\"$$SVNREVISION\"
     macx { 
-        TARGET = Caduntu
-        DEFINES += QC_APPDIR="\"Caduntu\""
-        DEFINES += QINITIMAGES_CADUNTU="qInitImages_Caduntu"
-        RESOURCEDIR = Caduntu.app/Contents/Resources
-        RC_FILE = res/main/caduntu.icns
+        TARGET = LibreCAD
+        DEFINES += QC_APPDIR="\"LibreCAD\""
+        DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
+        RESOURCEDIR = LibreCAD.app/Contents/Resources
+        RC_FILE = res/main/librecad.icns
         DESTDIR = .
         
         # postprocess.commands += scripts/postprocess-osx.sh
@@ -37,11 +37,11 @@ unix {
         QMAKE_POST_LINK = scripts/postprocess-osx.sh
     }
     else { 
-        TARGET = caduntu
-        DEFINES += QC_APPDIR="\"caduntu\""
-        DEFINES += QINITIMAGES_CADUNTU="qInitImages_caduntu"
-        RESOURCEDIR = caduntu/Resources
-        RC_FILE = res/main/caduntu.icns
+        TARGET = librecad
+        DEFINES += QC_APPDIR="\"librecad\""
+        DEFINES += QINITIMAGES_LIBRECAD="qInitImages_librecad"
+        RESOURCEDIR = librecad/Resources
+        RC_FILE = res/main/librecad.icns
         DESTDIR = unix
         
         # postprocess.commands += scripts/postprocess-unix.sh
@@ -55,11 +55,11 @@ win32 {
     QMAKE_CFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
     DEFINES += QC_SVNREVISION=\"\"
-    TARGET = Caduntu
-    DEFINES += QC_APPDIR="\"Caduntu\""
-    DEFINES += QINITIMAGES_CADUNTU="qInitImages_Caduntu"
+    TARGET = LibreCAD
+    DEFINES += QC_APPDIR="\"LibreCAD\""
+    DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
     
-    # RC_FILE = res/main/caduntu.icns
+    # RC_FILE = res/main/librecad.icns
     DESTDIR = .
     QMAKE_POST_LINK = scripts\postprocess-win.bat
 }
@@ -290,43 +290,43 @@ SOURCES = dxflib/src/dl_dxf.cpp \
     src/lib/scripting/rs_script.cpp \
     src/lib/scripting/rs_scriptlist.cpp \
 
-TRANSLATIONS = ts/lib/caduntulib_cs.ts \
-    ts/lib/caduntulib_et.ts \
-    ts/lib/caduntulib_en.ts \
-    ts/lib/caduntulib_da.ts \
-    ts/lib/caduntulib_de.ts \
-    ts/lib/caduntulib_el.ts \
-    ts/lib/caduntulib_fr.ts \
-    ts/lib/caduntulib_hu.ts \
-    ts/lib/caduntulib_it.ts \
-    ts/lib/caduntulib_nl.ts \
-    ts/lib/caduntulib_no.ts \
-    ts/lib/caduntulib_pl.ts \
-    ts/lib/caduntulib_ru.ts \
-    ts/lib/caduntulib_sk.ts \
-    ts/lib/caduntulib_tr.ts
+TRANSLATIONS = ts/lib/librecadlib_cs.ts \
+    ts/lib/librecadlib_et.ts \
+    ts/lib/librecadlib_en.ts \
+    ts/lib/librecadlib_da.ts \
+    ts/lib/librecadlib_de.ts \
+    ts/lib/librecadlib_el.ts \
+    ts/lib/librecadlib_fr.ts \
+    ts/lib/librecadlib_hu.ts \
+    ts/lib/librecadlib_it.ts \
+    ts/lib/librecadlib_nl.ts \
+    ts/lib/librecadlib_no.ts \
+    ts/lib/librecadlib_pl.ts \
+    ts/lib/librecadlib_ru.ts \
+    ts/lib/librecadlib_sk.ts \
+    ts/lib/librecadlib_tr.ts
 
 # ################################################################################
 # Command
 HEADERS += src/cmd/rs_commands.h
 SOURCES += src/cmd/rs_commands.cpp
-TRANSLATIONS += ts/cmd/caduntucmd_cs.ts \
-    ts/cmd/caduntucmd_et.ts \
-    ts/cmd/caduntucmd_en.ts \
-    ts/cmd/caduntucmd_da.ts \
-    ts/cmd/caduntucmd_de.ts \
-    ts/cmd/caduntucmd_el.ts \
-    ts/cmd/caduntucmd_es.ts \
-    ts/cmd/caduntucmd_fr.ts \
-    ts/cmd/caduntucmd_hu.ts \
-    ts/cmd/caduntucmd_it.ts \
-    ts/cmd/caduntucmd_nl.ts \
-    ts/cmd/caduntucmd_no.ts \
-    ts/cmd/caduntucmd_pa.ts \
-    ts/cmd/caduntucmd_pl.ts \
-    ts/cmd/caduntucmd_ru.ts \
-    ts/cmd/caduntucmd_sk.ts \
-    ts/cmd/caduntucmd_tr.ts
+TRANSLATIONS += ts/cmd/librecadcmd_cs.ts \
+    ts/cmd/librecadcmd_et.ts \
+    ts/cmd/librecadcmd_en.ts \
+    ts/cmd/librecadcmd_da.ts \
+    ts/cmd/librecadcmd_de.ts \
+    ts/cmd/librecadcmd_el.ts \
+    ts/cmd/librecadcmd_es.ts \
+    ts/cmd/librecadcmd_fr.ts \
+    ts/cmd/librecadcmd_hu.ts \
+    ts/cmd/librecadcmd_it.ts \
+    ts/cmd/librecadcmd_nl.ts \
+    ts/cmd/librecadcmd_no.ts \
+    ts/cmd/librecadcmd_pa.ts \
+    ts/cmd/librecadcmd_pl.ts \
+    ts/cmd/librecadcmd_ru.ts \
+    ts/cmd/librecadcmd_sk.ts \
+    ts/cmd/librecadcmd_tr.ts
 
 # ################################################################################
 # Actions
@@ -560,23 +560,23 @@ SOURCES += src/actions/rs_actionblocksadd.cpp \
     src/actions/rs_actionpolylinetrim.cpp \
     src/actions/rs_actionpolylineequidistant.cpp \
     src/actions/rs_actionpolylinesegment.cpp
-TRANSLATIONS += ts/actions/caduntuactions_cs.ts \
-    ts/actions/caduntuactions_en.ts \
-    ts/actions/caduntuactions_et.ts \
-    ts/actions/caduntuactions_da.ts \
-    ts/actions/caduntuactions_de.ts \
-    ts/actions/caduntuactions_el.ts \
-    ts/actions/caduntuactions_es.ts \
-    ts/actions/caduntuactions_fr.ts \
-    ts/actions/caduntuactions_hu.ts \
-    ts/actions/caduntuactions_it.ts \
-    ts/actions/caduntuactions_nl.ts \
-    ts/actions/caduntuactions_no.ts \
-    ts/actions/caduntuactions_pa.ts \
-    ts/actions/caduntuactions_pl.ts \
-    ts/actions/caduntuactions_ru.ts \
-    ts/actions/caduntuactions_sk.ts \
-    ts/actions/caduntuactions_tr.ts
+TRANSLATIONS += ts/actions/librecadactions_cs.ts \
+    ts/actions/librecadactions_en.ts \
+    ts/actions/librecadactions_et.ts \
+    ts/actions/librecadactions_da.ts \
+    ts/actions/librecadactions_de.ts \
+    ts/actions/librecadactions_el.ts \
+    ts/actions/librecadactions_es.ts \
+    ts/actions/librecadactions_fr.ts \
+    ts/actions/librecadactions_hu.ts \
+    ts/actions/librecadactions_it.ts \
+    ts/actions/librecadactions_nl.ts \
+    ts/actions/librecadactions_no.ts \
+    ts/actions/librecadactions_pa.ts \
+    ts/actions/librecadactions_pl.ts \
+    ts/actions/librecadactions_ru.ts \
+    ts/actions/librecadactions_sk.ts \
+    ts/actions/librecadactions_tr.ts
 RESOURCES += res/actions/actions.qrc
 IMAGES += res/actions/configure.png \
     res/actions/editcopy2.png \
@@ -928,23 +928,23 @@ FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_textoptions.ui \
     src/ui/forms/qg_trimamountoptions.ui \
     src/ui/forms/qg_widgetpen.ui
-TRANSLATIONS += ts/ui/caduntuguiqt_cs.ts \
-    ts/ui/caduntuguiqt_et.ts \
-    ts/ui/caduntuguiqt_en.ts \
-    ts/ui/caduntuguiqt_da.ts \
-    ts/ui/caduntuguiqt_de.ts \
-    ts/ui/caduntuguiqt_el.ts \
-    ts/ui/caduntuguiqt_es.ts \
-    ts/ui/caduntuguiqt_fr.ts \
-    ts/ui/caduntuguiqt_hu.ts \
-    ts/ui/caduntuguiqt_it.ts \
-    ts/ui/caduntuguiqt_nl.ts \
-    ts/ui/caduntuguiqt_no.ts \
-    ts/ui/caduntuguiqt_pa.ts \
-    ts/ui/caduntuguiqt_pl.ts \
-    ts/ui/caduntuguiqt_ru.ts \
-    ts/ui/caduntuguiqt_sk.ts \
-    ts/ui/caduntuguiqt_tr.ts
+TRANSLATIONS += ts/ui/librecadguiqt_cs.ts \
+    ts/ui/librecadguiqt_et.ts \
+    ts/ui/librecadguiqt_en.ts \
+    ts/ui/librecadguiqt_da.ts \
+    ts/ui/librecadguiqt_de.ts \
+    ts/ui/librecadguiqt_el.ts \
+    ts/ui/librecadguiqt_es.ts \
+    ts/ui/librecadguiqt_fr.ts \
+    ts/ui/librecadguiqt_hu.ts \
+    ts/ui/librecadguiqt_it.ts \
+    ts/ui/librecadguiqt_nl.ts \
+    ts/ui/librecadguiqt_no.ts \
+    ts/ui/librecadguiqt_pa.ts \
+    ts/ui/librecadguiqt_pl.ts \
+    ts/ui/librecadguiqt_ru.ts \
+    ts/ui/librecadguiqt_sk.ts \
+    ts/ui/librecadguiqt_tr.ts
 RESOURCES += res/ui/ui.qrc
 RESOURCES += src/ui/forms/png/icons.qrc
 
@@ -960,28 +960,28 @@ SOURCES += src/main/qc_applicationwindow.cpp \
     src/main/qc_graphicview.cpp \
     src/main/qc_mdiwindow.cpp \
     src/main/main.cpp
-TRANSLATIONS += ts/main/caduntu_cs.ts \
-    ts/main/caduntu_et.ts \
-    ts/main/caduntu_en.ts \
-    ts/main/caduntu_da.ts \
-    ts/main/caduntu_de.ts \
-    ts/main/caduntu_el.ts \
-    ts/main/caduntu_es.ts \
-    ts/main/caduntu_fr.ts \
-    ts/main/caduntu_hu.ts \
-    ts/main/caduntu_it.ts \
-    ts/main/caduntu_nl.ts \
-    ts/main/caduntu_no.ts \
-    ts/main/caduntu_pa.ts \
-    ts/main/caduntu_pl.ts \
-    ts/main/caduntu_ru.ts \
-    ts/main/caduntu_sk.ts \
-    ts/main/caduntu_tr.ts
+TRANSLATIONS += ts/main/librecad_cs.ts \
+    ts/main/librecad_et.ts \
+    ts/main/librecad_en.ts \
+    ts/main/librecad_da.ts \
+    ts/main/librecad_de.ts \
+    ts/main/librecad_el.ts \
+    ts/main/librecad_es.ts \
+    ts/main/librecad_fr.ts \
+    ts/main/librecad_hu.ts \
+    ts/main/librecad_it.ts \
+    ts/main/librecad_nl.ts \
+    ts/main/librecad_no.ts \
+    ts/main/librecad_pa.ts \
+    ts/main/librecad_pl.ts \
+    ts/main/librecad_ru.ts \
+    ts/main/librecad_sk.ts \
+    ts/main/librecad_tr.ts
 IMAGES += res/main/contents.png \
     res/main/document.png \
     res/main/editclear.png \
-    res/main/caduntu16.png \
-    res/main/caduntu.png
+    res/main/librecad16.png \
+    res/main/librecad.png
 RESOURCES += res/main/main.qrc
 
 # Include any custom.pro files for personal/special builds

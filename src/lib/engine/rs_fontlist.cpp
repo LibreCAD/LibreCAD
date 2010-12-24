@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** This file is part of the CADuntu project, a 2D CAD program
+** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -113,7 +113,7 @@ RS_Font* RS_FontList::requestFont(const RS_String& name) {
     RS_String name2 = name.lower();
     RS_Font* foundFont = NULL;
 
-    // CADuntu 1 compatibility:
+    // LibreCAD 1 compatibility:
     if (name2.contains('#') && name2.contains('_')) {
         name2 = name2.left(name2.find('_'));
     } else if (name2.contains('#')) {

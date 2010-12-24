@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** This file is part of the CADuntu project, a 2D CAD program
+** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -32,7 +32,7 @@
 #include "rs_mouseevent.h"
 
 /**
- * Translates Qt stuff into caduntu stuff.
+ * Translates Qt stuff into LibreCAD stuff.
  */
 class QG_Qt2Rs {
 
