@@ -1,9 +1,9 @@
 
 ---- UNIX and OSX users ----
-Unzip or checkout a version of CADuntu into a directory.
+Unzip or checkout a version of LibreCAD into a directory.
 CD into that directory and follow these instructions:
 
-# Build makefile and compule CADuntu
+# Build makefile and compule LibreCAD
 
 qmake
 make
@@ -14,7 +14,7 @@ NOTE: On systems (Ubuntu??) You might need to run qmake-qt4 instead of just qmak
 
 Download a copy of QT SDk from http://qt.nokia.com/downloads/
 
-After installation, start qtCreator and load caduntu.pro,
+After installation, start qtCreator and load LibreCAD.pro,
 from the the build menu select 'Build All'
 
 
