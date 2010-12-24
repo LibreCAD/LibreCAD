@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** This file is part of the CADuntu project, a 2D CAD program
+** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -31,9 +31,9 @@
 
 
 /**
- * This is the CADuntu specific implementation of a widget which can create and
+ * This is the LibreCAD specific implementation of a widget which can create and
  * show dialogs. Some functions cannot be implemented on the
- * caduntu library level and need to be implemented here,
+ * LibreCAD library level and need to be implemented here,
  * on the application level.
  */
 class QC_DialogFactory: public QG_DialogFactory {

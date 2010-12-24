@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** This file is part of the CADuntu project, a 2D CAD program
+** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -47,7 +47,7 @@ RS_Settings::RS_Settings() {
  * @param companyKey String that identifies the company. Must start
  *        with a "/". E.g. "/RibbonSoft"
  * @param appKey String that identifies the application. Must start
- *        with a "/". E.g. "/CADuntu"
+ *        with a "/". E.g. "/LibreCAD"
  */
 void RS_Settings::init(const RS_String& companyKey,
                        const RS_String& appKey) {

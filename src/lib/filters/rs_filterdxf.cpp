@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** This file is part of the CADuntu project, a 2D CAD program
+** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -1476,7 +1476,7 @@ void RS_FilterDXF::writeLineType(DL_WriterA& dw, RS2::LineType t) {
 /**
  * Writes an application id to the DXF file.
  *
- * @param appid Application ID (e.g. "CADuntu").
+ * @param appid Application ID (e.g. "LibreCAD").
  */
 void RS_FilterDXF::writeAppid(DL_WriterA& dw, const char* appid) {
     dxf.writeAppid(dw, appid);

@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** This file is part of the CADuntu project, a 2D CAD program
+** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -43,7 +43,7 @@
  * lines, arcs, ... in widgets. All angles in rad.
  *
  * Note that this is just an interface used as a slot to 
- * communicate with the CADuntu from a GUI level. This 
+ * communicate with the LibreCAD from a GUI level. This 
  * does not contain any Qt or platform specific code.
  */
 class RS_Painter {

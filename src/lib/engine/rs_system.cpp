@@ -1,13 +1,13 @@
 /****************************************************************************
 **
-** This file is part of the CADuntu project, a 2D CAD program
+** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
 ** This program is free software; you can redistribute it and/or modify
-** it under the terms of the GNU General Public License as published by
+** it under the terms of the GNU General Public License as published by 
 ** the Free Software Foundation; either version 2 of the License, or
 ** (at your option) any later version.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-**
+** 
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!
+** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
 
@@ -42,7 +42,7 @@ RS_System* RS_System::uniqueInstance = NULL;
 /**
  * Initializes the system.
  *
- * @param appName Application name (e.g. "caduntu II")
+ * @param appName Application name (e.g. "librecad II")
  * @param appVersion Application version (e.g. "1.2.3")
  * @param appDirName Application directory name used for
  *     subdirectories in /usr, /etc ~/.
@@ -108,13 +108,13 @@ void RS_System::initLanguageList() {
  */
 void RS_System::loadTranslation(const RS_String& lang, const RS_String& langCmd) {
     static RS_Translator* tQt = NULL;
-    static RS_Translator* tCaduntu = NULL;
-    static RS_Translator* tCaduntuGuiQt = NULL;
-    static RS_Translator* tCaduntuActions = NULL;
-    static RS_Translator* tCaduntuCmd = NULL;
-    static RS_Translator* tCaduntuLib = NULL;
-    static RS_Translator* tCaduntuCam = NULL;
-    static RS_Translator* tCaduntuProf = NULL;
+    static RS_Translator* tLibreCAD = NULL;
+    static RS_Translator* tLibreCADGuiQt = NULL;
+    static RS_Translator* tLibreCADActions = NULL;
+    static RS_Translator* tLibreCADCmd = NULL;
+    static RS_Translator* tLibreCADLib = NULL;
+    static RS_Translator* tLibreCADCam = NULL;
+    static RS_Translator* tLibreCADProf = NULL;
 
     RS_String langFile;
 
@@ -141,76 +141,76 @@ void RS_System::loadTranslation(const RS_String& lang, const RS_String& langCmd)
         }
 
 
-        langFile = "caduntu_" + lang + ".qm";
-        if (tCaduntu!=NULL) {
-            qApp->removeTranslator(tCaduntu);
-            delete tCaduntu;
+        langFile = "librecad_" + lang + ".qm";
+        if (tLibreCAD!=NULL) {
+            qApp->removeTranslator(tLibreCAD);
+            delete tLibreCAD;
         }
-        tCaduntu = new QTranslator(0);
-        if (tCaduntu->load(langFile, (*it))) {
-            qApp->installTranslator(tCaduntu);
-        }
-
-
-        langFile = "caduntuguiqt_" + lang + ".qm";
-        if (tCaduntuGuiQt!=NULL) {
-            qApp->removeTranslator(tCaduntuGuiQt);
-            delete tCaduntuGuiQt;
-        }
-        tCaduntuGuiQt = new QTranslator(0);
-        if (tCaduntuGuiQt->load(langFile, (*it))) {
-            qApp->installTranslator(tCaduntuGuiQt);
+        tLibreCAD = new QTranslator(0);
+        if (tLibreCAD->load(langFile, (*it))) {
+            qApp->installTranslator(tLibreCAD);
         }
 
 
-        langFile = "caduntuactions_" + lang + ".qm";
-        if (tCaduntuActions!=NULL) {
-            qApp->removeTranslator(tCaduntuActions);
-            delete tCaduntuActions;
+        langFile = "librecadguiqt_" + lang + ".qm";
+        if (tLibreCADGuiQt!=NULL) {
+            qApp->removeTranslator(tLibreCADGuiQt);
+            delete tLibreCADGuiQt;
         }
-        tCaduntuActions = new QTranslator(0);
-        if (tCaduntuActions->load(langFile, (*it))) {
-            qApp->installTranslator(tCaduntuActions);
-        }
-
-        langFile = "caduntucmd_" + langCmd + ".qm";
-        if (tCaduntuCmd!=NULL) {
-            qApp->removeTranslator(tCaduntuCmd);
-            delete tCaduntuCmd;
-        }
-        tCaduntuCmd = new QTranslator(0);
-        if (tCaduntuCmd->load(langFile, (*it))) {
-            qApp->installTranslator(tCaduntuCmd);
+        tLibreCADGuiQt = new QTranslator(0);
+        if (tLibreCADGuiQt->load(langFile, (*it))) {
+            qApp->installTranslator(tLibreCADGuiQt);
         }
 
-        langFile = "caduntulib_" + lang + ".qm";
-        if (tCaduntuLib!=NULL) {
-            qApp->removeTranslator(tCaduntuLib);
-            delete tCaduntuLib;
+
+        langFile = "librecadactions_" + lang + ".qm";
+        if (tLibreCADActions!=NULL) {
+            qApp->removeTranslator(tLibreCADActions);
+            delete tLibreCADActions;
         }
-        tCaduntuLib = new QTranslator(0);
-        if (tCaduntuLib->load(langFile, (*it))) {
-            qApp->installTranslator(tCaduntuLib);
+        tLibreCADActions = new QTranslator(0);
+        if (tLibreCADActions->load(langFile, (*it))) {
+            qApp->installTranslator(tLibreCADActions);
         }
 
-        langFile = "caduntucam_" + lang + ".qm";
-        if (tCaduntuLib!=NULL) {
-            qApp->removeTranslator(tCaduntuCam);
-            delete tCaduntuCam;
+        langFile = "librecadcmd_" + langCmd + ".qm";
+        if (tLibreCADCmd!=NULL) {
+            qApp->removeTranslator(tLibreCADCmd);
+            delete tLibreCADCmd;
         }
-        tCaduntuCam = new QTranslator(0);
-        if (tCaduntuCam->load(langFile, (*it))) {
-            qApp->installTranslator(tCaduntuCam);
+        tLibreCADCmd = new QTranslator(0);
+        if (tLibreCADCmd->load(langFile, (*it))) {
+            qApp->installTranslator(tLibreCADCmd);
         }
 
-        langFile = "caduntuprof_" + lang + ".qm";
-        if (tCaduntuProf!=NULL) {
-            qApp->removeTranslator(tCaduntuProf);
-            delete tCaduntuProf;
+        langFile = "librecadlib_" + lang + ".qm";
+        if (tLibreCADLib!=NULL) {
+            qApp->removeTranslator(tLibreCADLib);
+            delete tLibreCADLib;
         }
-        tCaduntuProf = new QTranslator(0);
-        if (tCaduntuProf->load(langFile, (*it))) {
-            qApp->installTranslator(tCaduntuProf);
+        tLibreCADLib = new QTranslator(0);
+        if (tLibreCADLib->load(langFile, (*it))) {
+            qApp->installTranslator(tLibreCADLib);
+        }
+
+        langFile = "librecadcam_" + lang + ".qm";
+        if (tLibreCADLib!=NULL) {
+            qApp->removeTranslator(tLibreCADCam);
+            delete tLibreCADCam;
+        }
+        tLibreCADCam = new QTranslator(0);
+        if (tLibreCADCam->load(langFile, (*it))) {
+            qApp->installTranslator(tLibreCADCam);
+        }
+
+        langFile = "librecadprof_" + lang + ".qm";
+        if (tLibreCADProf!=NULL) {
+            qApp->removeTranslator(tLibreCADProf);
+            delete tLibreCADProf;
+        }
+        tLibreCADProf = new QTranslator(0);
+        if (tLibreCADProf->load(langFile, (*it))) {
+            qApp->installTranslator(tLibreCADProf);
         }
     }
 }
@@ -329,7 +329,7 @@ RS_StringList RS_System::getDirectoryList(const RS_String& _subDirectory) {
 #endif
 
 #ifndef Q_OS_MAC
-        // Add support directory if caduntu is run-in-place, not for Apple because it uses resources
+        // Add support directory if librecad is run-in-place, not for Apple because it uses resources
         dirList.append(appDir + "/resources/" + subDirectory);
 #endif
 

@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** This file is part of the CADuntu project, a 2D CAD program
+** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -39,7 +39,7 @@ class QC_ApplicationWindow;
 
 /**
  * A view widget for the visualisation of drawings.
- * Very thin wrapper for CAduntu specific settings.
+ * Very thin wrapper for LibreCAD specific settings.
  *
  * @author Andrew Mustun
  */

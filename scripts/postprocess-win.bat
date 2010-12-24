@@ -21,7 +21,7 @@ copy support\library\templates\*.dxf %RESOURCEDIR%\library\templates
 
 REM Generate translations
 echo "Generating Translations"
-lrelease caduntu.pro
+lrelease librecad.pro
 mkdir %RESOURCEDIR%\qm 
 
 for %%D in (actions,cmd,lib,main,ui) do (

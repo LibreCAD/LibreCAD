@@ -1,26 +1,26 @@
 /****************************************************************************
-** $Id: dl_attributes.h 2334 2005-03-27 23:37:52Z andrew $
 **
+** This file is part of the LibreCAD project, a 2D CAD program
+**
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
-** This file is part of the dxflib project.
 **
-** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by 
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
 **
-** Licensees holding valid dxflib Professional Edition licenses may use 
-** this file in accordance with the dxflib Commercial License
-** Agreement provided with the Software.
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-**
-** See http://www.ribbonsoft.com for further details.
-**
-** Contact info@ribbonsoft.com if any conditions of this licensing are
-** not clear to you.
+** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
 

@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** This file is part of the CADuntu project, a 2D CAD program
+** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -315,7 +315,7 @@ void RS_GraphicView::enter() {
 
 /**
  * Called by the actual GUI class which implements the RS_GraphicView 
- * interface to notify CADuntu about mouse events.
+ * interface to notify LibreCAD about mouse events.
  */
 void RS_GraphicView::mousePressEvent(RS_MouseEvent* e) {
     if (eventHandler!=NULL) {
@@ -327,7 +327,7 @@ void RS_GraphicView::mousePressEvent(RS_MouseEvent* e) {
 
 /**
  * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify CADuntu about mouse events.
+ * interface to notify LibreCAD about mouse events.
  */
 void RS_GraphicView::mouseReleaseEvent(RS_MouseEvent* e) {
 	RS_DEBUG->print("RS_GraphicView::mouseReleaseEvent");
@@ -351,7 +351,7 @@ void RS_GraphicView::mouseReleaseEvent(RS_MouseEvent* e) {
 
 /**
  * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify CADuntu about mouse events.
+ * interface to notify LibreCAD about mouse events.
  */
 void RS_GraphicView::mouseMoveEvent(RS_MouseEvent* e) {
     RS_DEBUG->print("RS_GraphicView::mouseMoveEvent begin");
@@ -393,7 +393,7 @@ void RS_GraphicView::mouseMoveEvent(RS_MouseEvent* e) {
 
 /**
  * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify CADuntu about mouse events.
+ * interface to notify LibreCAD about mouse events.
  */
 void RS_GraphicView::mouseLeaveEvent() {
     if (eventHandler!=NULL) {
@@ -405,7 +405,7 @@ void RS_GraphicView::mouseLeaveEvent() {
 
 /**
  * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify CADuntu about mouse events.
+ * interface to notify LibreCAD about mouse events.
  */
 void RS_GraphicView::mouseEnterEvent() {
     if (eventHandler!=NULL) {
@@ -417,7 +417,7 @@ void RS_GraphicView::mouseEnterEvent() {
 
 /**
  * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify CADuntu about key events.
+ * interface to notify LibreCAD about key events.
  */
 void RS_GraphicView::keyPressEvent(RS_KeyEvent* e) {
     if (eventHandler!=NULL) {
@@ -429,7 +429,7 @@ void RS_GraphicView::keyPressEvent(RS_KeyEvent* e) {
 
 /**
  * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify CADuntu about key events.
+ * interface to notify LibreCAD about key events.
  */
 void RS_GraphicView::keyReleaseEvent(RS_KeyEvent* e) {
     if (eventHandler!=NULL) {

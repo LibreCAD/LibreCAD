@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** This file is part of the CADuntu project, a 2D CAD program
+** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (caduntu@rvt.dds.nl)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -55,9 +55,9 @@
 
 #include "qc_applicationwindow.h"
 
-# include "main/intro_caduntu.xpm"
+# include "main/intro_librecad.xpm"
 # ifndef QC_CUSTOM_SPLASH
-#  include "main/splash_caduntu.xpm"
+#  include "main/splash_librecad.xpm"
 # endif
 
 #ifndef QC_SPLASH_TXTCOL
@@ -65,10 +65,10 @@
 #endif
 
 // for image mime resources from png files
-extern void QINITIMAGES_CADUNTU();
+extern void QINITIMAGES_LIBRECAD();
 
 #ifdef RS_SCRIPTING
-//	extern void qInitImages_Caduntu();
+//	extern void qInitImages_LibreCAD();
 #endif
 
 #ifdef QC_BUILTIN_STYLE
@@ -100,9 +100,9 @@ int main(int argc, char** argv) {
 
 	// for image mime resources from png files
 	//  TODO: kinda dirty to call that explicitly
-	QINITIMAGES_CADUNTU();
+	QINITIMAGES_LIBRECAD();
 #ifdef RS_SCRIPTING
-//	qInitImages_caduntu();
+//	qInitImages_librecad();
 #endif
 
 	for (int i=0; i<app.argc(); i++) {
