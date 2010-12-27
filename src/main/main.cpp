@@ -55,11 +55,6 @@
 
 #include "qc_applicationwindow.h"
 
-# include "main/intro_librecad.xpm"
-# ifndef QC_CUSTOM_SPLASH
-#  include "main/splash_librecad.xpm"
-# endif
-
 #ifndef QC_SPLASH_TXTCOL
 # define QC_SPLASH_TXTCOL Qt::black
 #endif
@@ -148,7 +143,7 @@ int main(int argc, char** argv) {
 		"preferred language.<br>"
 		"You can changes these settings later in the "
 		"Options Dialog of " XSTR(QC_APPNAME) ".");
-		QPixmap pxm(intro_xpm);
+                QPixmap pxm(":/main/intro_librecad.png");
 		di.setPixmap(pxm);
 		if (di.exec()) {
 			RS_SETTINGS->beginGroup("/Defaults");
@@ -164,7 +159,7 @@ int main(int argc, char** argv) {
 # ifdef QC_CUSTOM_SPLASH
 	QPixmap* pixmap = new QPixmap(qPixmapFromMimeSource(QC_CUSTOM_SPLASH)); 
 # else
-	QPixmap* pixmap = new QPixmap(splash_xpm);
+        QPixmap* pixmap = new QPixmap(":/main/splash_librecad.png");
 # endif
 
 /*
