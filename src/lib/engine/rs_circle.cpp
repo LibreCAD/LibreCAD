@@ -254,7 +254,15 @@ double RS_Circle::getDistanceToPoint(const RS_Vector& coord,
         *entity = this;
     }
 
-    return fabs((coord-data.center).magnitude() - data.radius);
+    // RVT Jan 6 2010, allow selections to mid point of circle
+    float dToEdge=fabs((coord-data.center).magnitude() - data.radius);
+    float dToCenter=data.center.distanceTo(coord);
+
+    if (dToEdge<dToCenter) {
+        return dToEdge;
+    } else {
+        return dToCenter;
+    }
 }
 
 

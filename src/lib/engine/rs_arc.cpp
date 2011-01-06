@@ -425,7 +425,16 @@ double RS_Arc::getDistanceToPoint(const RS_Vector& coord,
                                 data.angle1, data.angle2,
                                 isReversed())) {
 
-        return fabs((coord-data.center).magnitude() - data.radius);
+        // RVT 6 Jan 2011 : Added selection by center point of arc
+        float dToEdge=fabs((coord-data.center).magnitude() - data.radius);
+        float dToCenter=data.center.distanceTo(coord);
+
+        if (dToEdge<dToCenter) {
+            return dToEdge;
+        } else {
+            return dToCenter;
+        }
+
     } else {
         return RS_MAXDOUBLE;
     }
