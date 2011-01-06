@@ -324,7 +324,14 @@ double RS_Ellipse::getDistanceToPoint(const RS_Vector& coord,
     double dist = RS_MAXDOUBLE;
     getNearestPointOnEntity(coord, true, &dist, entity);
 
-    return dist;
+    // RVT 6 Jan 2011 : Add selection by center point
+    float dToCenter=data.center.distanceTo(coord);
+
+    if (dist<dToCenter) {
+        return dist;
+    } else {
+        return dToCenter;
+    }
 
 }
 
