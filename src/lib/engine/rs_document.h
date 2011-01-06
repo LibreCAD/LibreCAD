@@ -53,7 +53,7 @@ public:
     virtual RS_BlockList* getBlockList() = 0;
 
     virtual void newDoc() = 0;
-    virtual bool save() = 0;
+    virtual bool save(bool isAutoSave = false) = 0;
     virtual bool saveAs(const RS_String &filename, RS2::FormatType type) = 0;
     virtual bool open(const RS_String &filename, RS2::FormatType type) = 0;
 	
@@ -98,6 +98,13 @@ public:
     }
 	
     /**
+     * @return Auto-save file name of the document currently loaded.
+     */
+    RS_String getAutoSaveFilename() const {
+        return autosaveFilename;
+    }
+	
+    /**
      * Sets file name for the document currently loaded.
      */
     void setFilename(const RS_String& fn) {
@@ -136,6 +143,8 @@ protected:
     RS_Pen activePen;
     /** File name of the document or empty for a new document. */
     RS_String filename;
+	/** Auto-save file name of document. */
+	RS_String autosaveFilename;
 	/** Format type */
 	RS2::FormatType formatType;
 };

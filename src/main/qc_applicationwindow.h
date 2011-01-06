@@ -37,6 +37,7 @@
 #include <qsplitter.h>
 #include <qstatusbar.h>
 #include <q3table.h>
+#include <qtimer.h>
 #include <qtoolbar.h>
 #include <qtoolbutton.h>
 #include <q3whatsthis.h>
@@ -145,6 +146,8 @@ public slots:
     void slotFileSave();
     /** saves a document under a different filename*/
     void slotFileSaveAs();
+    /** auto-save document */
+    void slotFileAutoSave();
 	/** exports the document as bitmap */
 	void slotFileExport();
 	bool slotFileExport(const QString& name, const QString& format, 
@@ -345,6 +348,7 @@ protected:
 private:
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
+    QTimer *autosaveTimer;
 
     /** Workspace for MDI */
     QWorkspace* workspace;

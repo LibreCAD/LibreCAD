@@ -325,23 +325,32 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
 /**
  * Saves the current file.
  *
+ * @param  isAutoSave true if this is an "autosave" operation.
+ *                    false if this is "Save" operation requested
+ *                    by the user.
  * @return true if the file was saved successfully.
  *         false if the file could not be saved or the document 
  *         is invalid.
  */
-bool QC_MDIWindow::slotFileSave(bool &cancelled) {
+bool QC_MDIWindow::slotFileSave(bool &cancelled, bool isAutoSave) {
     RS_DEBUG->print("QC_MDIWindow::slotFileSave()");
     bool ret = false;
     cancelled = false;
 
     if (document!=NULL) {
-        if (document->getFilename().isEmpty()) {
-            ret = slotFileSaveAs(cancelled);
+	if (isAutoSave) {
+	    // Autosave filename is always supposed to be present.
+	    // Autosave does not change the cursor.
+            ret = document->save(true);
         } else {
-            QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-            ret = document->save();
-            QApplication::restoreOverrideCursor();
-        }
+	    if (document->getFilename().isEmpty()) {
+		ret = slotFileSaveAs(cancelled);
+	    } else {
+		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+		ret = document->save();
+		QApplication::restoreOverrideCursor();
+	    }
+	}
     }
 
     return ret;

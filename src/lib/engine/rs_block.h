@@ -128,7 +128,7 @@ public:
     /**
      * Reimplementation from RS_Document. Saves the parent graphic document.
      */
-    virtual bool save();
+    virtual bool save(bool isAutoSave = false);
 
     /**
      * Reimplementation from RS_Document. Does nothing.
