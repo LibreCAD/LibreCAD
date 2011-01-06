@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+#include <qfile.h>
+#include <qfileinfo.h>
 
 #include "rs_graphic.h"
 
@@ -178,21 +180,46 @@ void RS_Graphic::newDoc() {
 /**
  * Saves this graphic with the current filename and settings.
  */
-bool RS_Graphic::save() {
+bool RS_Graphic::save(bool isAutoSave) {
 
 	bool ret = false;
+
 	
     RS_DEBUG->print("RS_Graphic::save");
-    RS_DEBUG->print("  file: %s", filename.latin1());
-    RS_DEBUG->print("  format: %d", (int)formatType);
+	if (isAutoSave && !isModified()) {
+	    RS_DEBUG->print("  autsave and not modified => not saved");
+		ret = true;
+	} else {
+		const RS_String *actualName;
+		RS2::FormatType actualType;
 
-    RS_DEBUG->print("  export...");
-    ret = RS_FILEIO->fileExport(*this, filename, formatType);
+		actualType = formatType;
+		if (isAutoSave) {
+			actualName = new QString(autosaveFilename);
+			if (formatType == RS2::FormatUnknown) {
+				actualType = RS2::FormatDXF;
+			}
+		} else {
+			actualName = new QString(filename);
+		}
+	    RS_DEBUG->print("  file: %s", actualName->latin1());
+		RS_DEBUG->print("  format: %d", (int)actualType);
+		RS_DEBUG->print("  export...");
+		ret = RS_FILEIO->fileExport(*this, *actualName, actualType);
+		delete actualName;
 
-	if (ret) {
-		setModified(false);
-		layerList.setModified(false);
-		blockList.setModified(false);
+		if (ret && !isAutoSave) {
+		    setModified(false);
+			layerList.setModified(false);
+			blockList.setModified(false);
+			// Remove old autosave file
+			QFile f(autosaveFilename);
+			if (f.exists()) {
+				RS_DEBUG->print("  removing old autosave file %s",
+								autosaveFilename.latin1());
+				f.remove();
+			}
+		}
 	}
 
     RS_DEBUG->print("RS_Graphic::save ok");
@@ -210,9 +237,28 @@ bool RS_Graphic::saveAs(const RS_String &filename, RS2::FormatType type) {
     RS_DEBUG->print("RS_Graphic::saveAs");
 
     this->filename = filename;
+	RS_String *oldAutosaveName = new RS_String(autosaveFilename);
+	QFileInfo finfo(filename);
+	// Construct new autosave filename by prepending # to the filename
+	// part, using the same directory as the destination file.
+	this->autosaveFilename = finfo.dirPath() + "/#" + finfo.fileName();
 	this->formatType = type;
 
-    return save();
+    bool ret = save();
+
+	if (ret) {
+		// save was successful, remove old autosave file
+		QFile f(*oldAutosaveName);
+		if (f.exists()) {
+			RS_DEBUG->print("removing old autosave file %s",
+							oldAutosaveName->latin1());
+			f.remove();
+		}
+	}
+
+	delete oldAutosaveName;
+
+	return ret;
 }
 
 
@@ -226,6 +272,10 @@ bool RS_Graphic::open(const RS_String &filename, RS2::FormatType type) {
 	bool ret = false;
 
     this->filename = filename;
+	QFileInfo finfo(filename);
+	// Construct new autosave filename by prepending # to the filename
+	// part, using the same directory as the destination file.
+	this->autosaveFilename = finfo.dirPath() + "/#" + finfo.fileName();
 
     // clean all:
     newDoc();

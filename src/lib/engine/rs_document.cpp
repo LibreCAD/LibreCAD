@@ -40,6 +40,7 @@ RS_Document::RS_Document(RS_EntityContainer* parent)
     RS_DEBUG->print("RS_Document::RS_Document() ");
 
     filename = "";
+    autosaveFilename = "Unnamed";
 	formatType = RS2::FormatUnknown;
     setModified(false);
     RS_Color col(RS2::FlagByLayer);

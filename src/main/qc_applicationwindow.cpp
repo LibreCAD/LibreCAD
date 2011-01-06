@@ -165,6 +165,13 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init MDI");
     initMDI();
 
+    // Activate autosave timer
+    autosaveTimer = new QTimer(this, "autosave");
+    connect(autosaveTimer, SIGNAL(timeout()), this, SLOT(slotFileAutoSave()));
+    RS_SETTINGS->beginGroup("/Defaults");
+    autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000);
+    RS_SETTINGS->endGroup();
+
     // Disable menu and toolbar items
     emit windowsChanged(FALSE);
 
@@ -2138,6 +2145,11 @@ void QC_ApplicationWindow::slotFileSaveAs() {
             	name = w->getDocument()->getFilename();
             	recentFiles->add(name);
             	w->setCaption(name);
+		if (!autosaveTimer->isActive()) {
+                    RS_SETTINGS->beginGroup("/Defaults");
+                    autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000);
+                    RS_SETTINGS->endGroup();
+                }
 	    }
         } else {
             // error
@@ -2153,6 +2165,37 @@ void QC_ApplicationWindow::slotFileSaveAs() {
     QString message = tr("Saved drawing: %1").arg(name);
     statusBar()->showMessage(message, 2000);
     commandWidget->appendHistory(message);
+}
+
+
+
+/**
+ * Autosave.
+ */
+void QC_ApplicationWindow::slotFileAutoSave() {
+    RS_DEBUG->print("QC_ApplicationWindow::slotFileAutoSave()");
+
+    statusBar()->message(tr("Auto-saving drawing..."));
+
+    QC_MDIWindow* w = getMDIWindow();
+    QString name;
+    if (w!=NULL) {
+	bool cancelled;
+	if (w->slotFileSave(cancelled, true)) {
+	    // auto-save cannot be cancelled by user, so the
+	    // "cancelled" parameter is a dummy
+	    statusBar()->message(tr("Auto-saved drawing"), 2000);
+	} else {
+	    // error
+	    autosaveTimer->stop();
+	    QMessageBox::information(this, QMessageBox::tr("Warning"),
+				     tr("Cannot auto-save the file\n%1\nPlease "
+					"check the permissions.\n"
+					"Auto-save disabled.")
+				     .arg(w->getDocument()->getAutoSaveFilename()),
+				     QMessageBox::Ok);
+	}
+    }
 }
 
 

@@ -78,10 +78,10 @@ RS_BlockList* RS_Block::getBlockList() {
 }
 
 
-bool RS_Block::save() {
+bool RS_Block::save(bool isAutoSave) {
     RS_Graphic* g = getGraphic();
     if (g!=NULL) {
-        return g->save();
+        return g->save(isAutoSave);
     } else {
         return false;
     }

@@ -69,7 +69,7 @@ public:
     }
 
     virtual void newDoc();
-    virtual bool save();
+    virtual bool save(bool isAutoSave = false);
     virtual bool saveAs(const RS_String& filename, RS2::FormatType type);
     virtual bool open(const RS_String& filename, RS2::FormatType type);
 	
