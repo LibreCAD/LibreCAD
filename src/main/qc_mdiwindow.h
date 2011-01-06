@@ -66,7 +66,7 @@ public slots:
 
     void slotFileNew();
     bool slotFileOpen(const QString& fileName, RS2::FormatType type);
-    bool slotFileSave(bool &cancelled);
+    bool slotFileSave(bool &cancelled, bool isAutoSave=false);
     bool slotFileSaveAs(bool &cancelled);
     bool slotFileClose(bool force);
     void slotFilePrint();

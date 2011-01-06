@@ -121,7 +121,7 @@ void QG_DlgOptionsGeneral::init() {
     RS_SETTINGS->beginGroup("/Defaults");
     cbUnit->setCurrentText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit) ));
     // Auto save timer
-    cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTimer", 5));
+    cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
     RS_SETTINGS->endGroup();
 
     restartNeeded = false;
