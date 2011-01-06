@@ -26,17 +26,8 @@
 #ifndef QG_CADTOOLBAR_H
 #define QG_CADTOOLBAR_H
 
-#include <qvariant.h>
-
 class QG_ActionHandler;
 
-#include <Qt3Support/Q3MimeSourceFactory>
-#include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QHeaderView>
-#include <QtGui/QWidget>
 #include "qg_cadtoolbararcs.h"
 #include "qg_cadtoolbarcircles.h"
 #include "qg_cadtoolbardim.h"
@@ -50,43 +41,7 @@ class QG_ActionHandler;
 #include "qg_cadtoolbarselect.h"
 #include "qg_cadtoolbarsnap.h"
 #include "qg_cadtoolbarsplines.h"
-
-QT_BEGIN_NAMESPACE
-
-class Ui_QG_CadToolBar
-{
-public:
-
-    void setupUi(QWidget *QG_CadToolBar)
-    {
-        if (QG_CadToolBar->objectName().isEmpty())
-            QG_CadToolBar->setObjectName(QString::fromUtf8("QG_CadToolBar"));
-        QG_CadToolBar->resize(56, 336);
-		/*
-        QSizePolicy sizePolicy(static_cast<QSizePolicy::Policy>(0), static_cast<QSizePolicy::Policy>(3));
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(QG_CadToolBar->sizePolicy().hasHeightForWidth());
-        QG_CadToolBar->setSizePolicy(sizePolicy); */
-        QG_CadToolBar->setMinimumSize(QSize(56, 336));
-
-        retranslateUi(QG_CadToolBar);
-
-        QMetaObject::connectSlotsByName(QG_CadToolBar);
-    } // setupUi
-
-    void retranslateUi(QWidget *QG_CadToolBar)
-    {
-        QG_CadToolBar->setWindowTitle(QApplication::translate("QG_CadToolBar", "CAD Tools", 0, QApplication::UnicodeUTF8));
-    } // retranslateUi
-
-};
-
-namespace Ui {
-    class QG_CadToolBar: public Ui_QG_CadToolBar {};
-} // namespace Ui
-
-QT_END_NAMESPACE
+#include "intermediate/ui/ui_qg_cadtoolbar.h"
 
 class QG_CadToolBar : public QWidget, public Ui::QG_CadToolBar
 {

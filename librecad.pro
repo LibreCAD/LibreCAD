@@ -11,7 +11,7 @@ DEFINES += QC_VERSION="\"1.0.0beta5\""
 QT += qt3support
 CONFIG += qt \
     warn_on \
-    link_prl
+    link_prl 
 QMAKE_CXXFLAGS_DEBUG += 
 QMAKE_CXXFLAGS += 
 
@@ -897,6 +897,7 @@ FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_dlgmoverotate.ui \
     src/ui/forms/qg_dlgoptionsdrawing.ui \
     src/ui/forms/qg_dlgoptionsgeneral.ui \
+    src/ui/forms/qg_dlgoptionsvariables.ui \
     src/ui/forms/qg_dlgpoint.ui \
     src/ui/forms/qg_dlgrotate.ui \
     src/ui/forms/qg_dlgrotate2.ui \
