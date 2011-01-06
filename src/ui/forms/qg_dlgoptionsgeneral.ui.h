@@ -120,6 +120,8 @@ void QG_DlgOptionsGeneral::init() {
 #endif
     RS_SETTINGS->beginGroup("/Defaults");
     cbUnit->setCurrentText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit) ));
+    // Auto save timer
+    cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTimer", 5));
     RS_SETTINGS->endGroup();
 
     restartNeeded = false;
@@ -170,8 +172,9 @@ void QG_DlgOptionsGeneral::ok() {
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Defaults");
-    RS_SETTINGS->writeEntry("/Unit", 
+    RS_SETTINGS->writeEntry("/Unit",
         RS_Units::unitToString( RS_Units::stringToUnit( cbUnit->currentText() ), false/*untr.*/) );
+    RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value() );
     RS_SETTINGS->endGroup();
 
     if (restartNeeded==true) {
