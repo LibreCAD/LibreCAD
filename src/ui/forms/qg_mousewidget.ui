@@ -122,8 +122,8 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="png/icons.qrc">
-       <normaloff>:/ui/icons/restrictnothing.png</normaloff>:/ui/icons/restrictnothing.png</iconset>
+      <iconset resource="../../../res/ui/ui.qrc">
+       <normaloff>:/ui/mouse.png</normaloff>:/ui/mouse.png</iconset>
      </property>
     </widget>
    </item>
@@ -131,7 +131,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/ui/ui.qrc"/>
  </resources>
  <connections/>
 </ui>
