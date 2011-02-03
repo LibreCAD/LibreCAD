@@ -67,7 +67,6 @@ win32 {
 # Additional libraries to load
 # LIBS += \
 # -Ldxflib/lib -ldxf \
-# -Lfparser/lib -lfparser
 # Store intermedia stuff somewhere else
 OBJECTS_DIR = intermediate/obj
 MOC_DIR = intermediate/moc
@@ -78,7 +77,7 @@ UI_HERADERS_DIR = intermediate/ui
 UI_SOURCES_DIR = intermediate/ui
 RESOURCES += res/extui/extui.qrc
 INCLUDEPATH += dxflib/src \
-    fparser/src \
+    fparser \
     src/cmd \
     src/lib/actions \
     src/lib/creation \
@@ -110,7 +109,7 @@ HEADERS = \
     dxflib/src/dl_extrusion.h \
     dxflib/src/dl_writer.h \
     dxflib/src/dl_writer_ascii.h \
-    fparser/src/fparser.h \
+    fparser/fparser.hh \
     src/lib/actions/rs_actioninterface.h \
     src/lib/actions/rs_preview.h \
     src/lib/actions/rs_previewactioninterface.h \
@@ -212,11 +211,11 @@ HEADERS = \
     src/lib/scripting/rs_simplepython.h \
     src/lib/scripting/rs_python_wrappers.h \
     src/lib/scripting/rs_script.h \
-    src/lib/scripting/rs_scriptlist.h \
+    src/lib/scripting/rs_scriptlist.h 
 
 SOURCES = dxflib/src/dl_dxf.cpp \
     dxflib/src/dl_writer_ascii.cpp \
-    fparser/src/fparser.cpp \
+    fparser/fparser.cc \
     src/lib/actions/rs_actioninterface.cpp \
     src/lib/actions/rs_preview.cpp \
     src/lib/actions/rs_previewactioninterface.cpp \

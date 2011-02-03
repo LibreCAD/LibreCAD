@@ -38,9 +38,7 @@
 // RVT port abs issue on latest compiler?
 #include <cstdlib>
 
-#ifndef RS_NO_FPARSER
-#include "fparser.h"
-#endif
+#include "fparser.hh"
 
 #include "rs.h"
 #include "rs_string.h"
@@ -91,7 +89,6 @@ public:
      */
 	// Keep that in the header file for dynamic inclusion/exclusion.
     static double eval(const RS_String& expr, bool* ok) {
-#ifndef RS_NO_FPARSER
         if (expr.isEmpty()) {
             if (ok!=NULL) {
                 *ok = false;
@@ -131,10 +128,6 @@ public:
         }
 
         return fp.Eval(NULL);
-#else
-        //std::cerr << "RS_Math::eval: No FParser support compiled in.\n";
-        return expr.toDouble();
-#endif
     }
 
     static RS_String doubleToString(double value, double prec);
