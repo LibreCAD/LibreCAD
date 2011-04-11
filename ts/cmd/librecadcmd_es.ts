@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="es_AR">
 <context>
     <name>RS_Commands</name>
     <message>
@@ -662,7 +664,7 @@
     </message>
     <message>
         <source>polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <source>pa</source>
@@ -672,7 +674,7 @@
     <message>
         <source>tm</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cortar segmentos</translation>
     </message>
 </context>
 </TS>
