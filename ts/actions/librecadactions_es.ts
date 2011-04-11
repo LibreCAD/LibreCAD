@@ -37,7 +37,7 @@
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Especifique punto de referencia</translation>
+        <translation>Especificar punto de referencia</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -59,15 +59,15 @@
     <name>RS_ActionBlocksExplode</name>
     <message>
         <source>Explode</source>
-        <translation>Expota</translation>
+        <translation>Desagrupar</translation>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Explota</translation>
+        <translation>Desagrupar</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
-        <translation>Explosiona bloques y otros grupos de entidades</translation>
+        <translation>Descomponer bloques y otros grupos de objetos</translation>
     </message>
 </context>
 <context>
@@ -109,11 +109,11 @@
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Especifique punto de referencia</translation>
+        <translation>Especificar punto de referencia</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -121,27 +121,27 @@
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Meta ángulo:</translation>
+        <translation>Ángulo:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation>Meta factor:</translation>
+        <translation>Factor:</translation>
     </message>
     <message>
         <source>Enter columns:</source>
-        <translation>Meta columnas:</translation>
+        <translation>Columnas:</translation>
     </message>
     <message>
         <source>Enter rows:</source>
-        <translation>Meta filas:</translation>
+        <translation>Filas:</translation>
     </message>
     <message>
         <source>Enter column spacing:</source>
-        <translation>Meta espacio entre columnas:</translation>
+        <translation>Espacio entre columnas:</translation>
     </message>
     <message>
         <source>Enter row spacing:</source>
-        <translation>Meta espacio entre filas:</translation>
+        <translation>Espacio entre filas:</translation>
     </message>
     <message>
         <source></source>
@@ -183,7 +183,7 @@
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -202,7 +202,7 @@
     </message>
     <message>
         <source>Specify first extension line origin</source>
-        <translation>Especifique primera extensión de la línea original</translation>
+        <translation>Especificar primera extensión de la línea original</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -210,19 +210,19 @@
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation>Especifique segunda extensión de la línea original</translation>
+        <translation>Especificar segunda extensión de la línea original</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Volver</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation>Especifique localización de la línea de cota</translation>
+        <translation>Especificar localización de la línea de cota</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Meta el texto de cota:</translation>
+        <translation>Texto de cota:</translation>
     </message>
 </context>
 <context>
@@ -253,11 +253,11 @@
     </message>
     <message>
         <source>Specify dimension arc line location</source>
-        <translation>Especifique localización de la línea de cota angular</translation>
+        <translation>Especificar localización de la línea de cota angular</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Meta texto de cota:</translation>
+        <translation>Texto de cota:</translation>
     </message>
 </context>
 <context>
@@ -276,15 +276,15 @@
     </message>
     <message>
         <source>Not a circle or arc entity</source>
-        <translation>Entidad circular no válida</translation>
+        <translation>Objeto circular no válido</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation>Seleccione arco o entidad circular</translation>
+        <translation>Seleccione arco u objeto circular</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -292,11 +292,11 @@
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation>Especifique localización de línea de cota</translation>
+        <translation>Especificar localización de línea de cota</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Meta texto de cota:</translation>
+        <translation>Texto de cota:</translation>
     </message>
 </context>
 <context>
@@ -315,7 +315,7 @@
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Especifique punto de destino</translation>
+        <translation>Especificar punto de destino</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -323,7 +323,7 @@
     </message>
     <message>
         <source>Specify next point</source>
-        <translation>Especifique punto siguiente</translation>
+        <translation>Especificar punto siguiente</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -370,11 +370,11 @@
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Specify first extension line origin</source>
-        <translation>Especifique primera extensión de la línea original</translation>
+        <translation>Especificar primera extensión de la línea original</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -382,23 +382,23 @@
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation>Especifique segunda extensión de la línea original</translation>
+        <translation>Especificar segunda extensión de la línea original</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation>Especifique localización de la línea de cota</translation>
+        <translation>Especificar localización de la línea de cota</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Meta texto de cota:</translation>
+        <translation>Texto de cota:</translation>
     </message>
     <message>
         <source>Enter dimension line angle:</source>
-        <translation>meta ángulo en línea de cota:</translation>
+        <translation>Ángulo en línea de cota:</translation>
     </message>
 </context>
 <context>
@@ -417,15 +417,15 @@
     </message>
     <message>
         <source>Not a circle or arc entity</source>
-        <translation>Entidad circular no válida</translation>
+        <translation>Objeto circular no válido</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation>Seleccione arco o entidad circular</translation>
+        <translation>Seleccione arco u objeto circular</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -433,11 +433,11 @@
     </message>
     <message>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Especifique posición de la línea de cota o meta ángulo:</translation>
+        <translation>Especificar posición de la línea de cota o meta ángulo:</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Meta texto de cota:</translation>
+        <translation>Texto de cota:</translation>
     </message>
 </context>
 <context>
@@ -452,11 +452,11 @@
     </message>
     <message>
         <source>Draw arcs</source>
-        <translation>Dibuja arcos</translation>
+        <translation>Dibujar arcos</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Not a valid chord length</source>
@@ -464,7 +464,7 @@
     </message>
     <message>
         <source>Specify center</source>
-        <translation>Especifique centro</translation>
+        <translation>Especificar centro</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -472,27 +472,27 @@
     </message>
     <message>
         <source>Specify radius</source>
-        <translation>Especifique radio</translation>
+        <translation>Especificar radio</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
-        <translation>Especifique ángulo de partida:</translation>
+        <translation>Especificar ángulo de partida:</translation>
     </message>
     <message>
         <source>Specify end angle or [Angle/chord Length]</source>
-        <translation>Especifique ángulo final o ángulo acorde a la longitud</translation>
+        <translation>Especificar ángulo final o ángulo acorde a la longitud</translation>
     </message>
     <message>
         <source>Specify included angle:</source>
-        <translation>Especifique ángulo incluido:</translation>
+        <translation>Especificar ángulo incluido:</translation>
     </message>
     <message>
         <source>Specify chord length:</source>
-        <translation>Especifique longitud acorde:</translation>
+        <translation>Especificar longitud acorde:</translation>
     </message>
 </context>
 <context>
@@ -515,7 +515,7 @@
     </message>
     <message>
         <source>Specify startpoint or [Center]</source>
-        <translation>Especifique punto de partida o [centro]</translation>
+        <translation>Especificar punto de partida o [centro]</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -523,34 +523,34 @@
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Especifique segundo punto</translation>
+        <translation>Especificar segundo punto</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
-        <translation>Especifique punto final</translation>
+        <translation>Especificar punto final</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
         <source>Arc: Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Acro: Tangente</translation>
     </message>
     <message>
         <source>&amp;Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tangente</translation>
     </message>
     <message>
         <source>Draw arcs tangential to base entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dibujar Arco tangente sobre objeto</translation>
     </message>
     <message>
         <source>Specify base entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Especificar objeto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -558,11 +558,11 @@
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation type="unfinished">Especifique ángulo final</translation>
+        <translation type="unfinished">Especificar ángulo final</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Atrás</translation>
     </message>
 </context>
 <context>
@@ -581,11 +581,11 @@
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation>Especifique centro</translation>
+        <translation>Especificar centro</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -593,11 +593,11 @@
     </message>
     <message>
         <source>Specify radius</source>
-        <translation>Especifique radio</translation>
+        <translation>Especificar radio</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -620,7 +620,7 @@
     </message>
     <message>
         <source>Specify first point</source>
-        <translation>Especifique primer punto</translation>
+        <translation>Especificar primer punto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -628,11 +628,11 @@
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Especifique segundo punto</translation>
+        <translation>Especificar segundo punto</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -655,7 +655,7 @@
     </message>
     <message>
         <source>Specify first point</source>
-        <translation>Especifique primer punto</translation>
+        <translation>Especificar primer punto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -663,15 +663,15 @@
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Especifique segundo punto</translation>
+        <translation>Especificar segundo punto</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify third point</source>
-        <translation>Especifique tercer punto</translation>
+        <translation>Especificar tercer punto</translation>
     </message>
 </context>
 <context>
@@ -690,11 +690,11 @@
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Specify circle center</source>
-        <translation>Especifique centro de la circunferencia</translation>
+        <translation>Especificar centro de la circunferencia</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -702,11 +702,11 @@
     </message>
     <message>
         <source>Specify circle radius</source>
-        <translation>Especifique radio de la circunferencia</translation>
+        <translation>Especificar radio de la circunferencia</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -737,11 +737,11 @@
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Specify ellipse center</source>
-        <translation>Especifique centro de la elipse</translation>
+        <translation>Especificar centro de la elipse</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -749,53 +749,53 @@
     </message>
     <message>
         <source>Specify endpoint of major axis</source>
-        <translation>Especifique punto final del eje mayor</translation>
+        <translation>Especificar punto final del eje mayor</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation>Especifique punto final o longitud del eje menor:</translation>
+        <translation>Especificar punto final o longitud del eje menor:</translation>
     </message>
     <message>
         <source>Specify start angle</source>
-        <translation>Especifique angulo de aranque</translation>
+        <translation>Especificar angulo de aranque</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation>Especifique ángulo final</translation>
+        <translation>Especificar ángulo final</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawHatch</name>
     <message>
         <source>Hatch</source>
-        <translation>Rayado</translation>
+        <translation>Relleno</translation>
     </message>
     <message>
         <source>&amp;Hatch</source>
-        <translation>&amp;Rayado</translation>
+        <translation>Relleno</translation>
     </message>
     <message>
         <source>Draw Hatches and Solid Fills</source>
-        <translation>Dibuja rayado y rellenos</translation>
+        <translation>Sombreado rayado y rellenos</translation>
     </message>
     <message>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Área de sombreado no válida, verifique que el objeto este cerrado</translation>
     </message>
     <message>
         <source>Hatch created successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sombreado realizado</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
     <message>
         <source>Image</source>
-        <translation>imagen</translation>
+        <translation>Imagen</translation>
     </message>
     <message>
         <source>&amp;Image</source>
@@ -803,15 +803,15 @@
     </message>
     <message>
         <source>Insert Image (Bitmap)</source>
-        <translation>Inserta imagen (en mapa de bit)</translation>
+        <translation>Insertar imagen (mapa de bits)</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Especifique punto de referencia</translation>
+        <translation>Especificar punto de referencia</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -819,11 +819,11 @@
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Meta ángulo:</translation>
+        <translation>Ángulo:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation>Meta factor:</translation>
+        <translation>Factor:</translation>
     </message>
     <message>
         <source></source>
@@ -842,11 +842,11 @@
     </message>
     <message>
         <source>Draw lines</source>
-        <translation>Dibuja líneas</translation>
+        <translation>Dibujar líneas</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation>Especifique primer punto</translation>
+        <translation>Especificar primer punto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -854,23 +854,23 @@
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation>Especifique primer punto o [1%]</translation>
+        <translation>Especificar primer punto o [1%]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation>Especifique próximo punto</translation>
+        <translation>Especificar próximo punto</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>No puede cerrar la secuencia de líneas: No hay suficientes entidades definidas.</translation>
+        <translation>No se puede cerrar la secuencia de líneas: No hay suficientes objetos definidos.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>No puede deshacer: No hay suficientes entidades definidas.</translation>
+        <translation>No se puede deshacer: No hay suficientes objetos definidos.</translation>
     </message>
 </context>
 <context>
@@ -885,15 +885,15 @@
     </message>
     <message>
         <source>Draw lines with a given angle</source>
-        <translation>Dibuja líneas con un ángulo dado</translation>
+        <translation>Dibujar líneas con un ángulo dado</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Specify position</source>
-        <translation>Especifique posición</translation>
+        <translation>Especificar posición</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -901,15 +901,15 @@
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Meta angulo:</translation>
+        <translation>Angulo:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Enter length:</source>
-        <translation>Meta longitud:</translation>
+        <translation>Longitud:</translation>
     </message>
     <message>
         <source>Line: Horizontal</source>
@@ -948,11 +948,11 @@
     </message>
     <message>
         <source>Draw bisectors</source>
-        <translation>Dibuja bisectrices</translation>
+        <translation>Dibujar bisectrices</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Select first line</source>
@@ -968,15 +968,15 @@
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
-        <translation>Meta longitud de la bisectriz:</translation>
+        <translation>Longitud de la bisectriz:</translation>
     </message>
     <message>
         <source>Enter number of bisectors:</source>
-        <translation>Meta número de bisectrices:</translation>
+        <translation>Número de bisectrices:</translation>
     </message>
 </context>
 <context>
@@ -991,11 +991,11 @@
     </message>
     <message>
         <source>Draw freehand lines</source>
-        <translation>Dibuja líneas a mano alzada</translation>
+        <translation>Dibujar líneas a mano alzada</translation>
     </message>
     <message>
         <source>Click and drag to draw a line</source>
-        <translation>Pincha y arrastra para dibujar una línea</translation>
+        <translation>Cliquear y arrastrar para dibujar una línea</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1014,11 +1014,11 @@
     </message>
     <message>
         <source>Draw horizontal/vertical lines</source>
-        <translation>Dibuja líneas horizontales/verticales</translation>
+        <translation>Dibujar líneas horizontales/verticales</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation>Especifique primer punto</translation>
+        <translation>Especificar primer punto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1026,11 +1026,11 @@
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Especifique segundo punto</translation>
+        <translation>Especificar segundo punto</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -1049,7 +1049,7 @@
     </message>
     <message>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>Especifique distancia &lt;%1&gt; o seleccione entidad o [%2]</translation>
+        <translation>Especificar distancia &lt;%1&gt; o seleccione objeto o [%2]</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1057,11 +1057,11 @@
     </message>
     <message>
         <source>Enter number:</source>
-        <translation>Meta número:</translation>
+        <translation>Número:</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
@@ -1092,7 +1092,7 @@
     </message>
     <message>
         <source>Select entity</source>
-        <translation>Seleccione entidad</translation>
+        <translation>Seleccione objeto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1100,11 +1100,11 @@
     </message>
     <message>
         <source>Specify through point</source>
-        <translation>Especifique punto a través</translation>
+        <translation>Especificar punto a través</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -1116,7 +1116,7 @@
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
 </context>
 <context>
@@ -1131,19 +1131,19 @@
     </message>
     <message>
         <source>Draw polygon with center and corner</source>
-        <translation>Dibuja poligono con centro y esquina</translation>
+        <translation>Dibujar poligono con centro y esquina</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation>Especifique centro</translation>
+        <translation>Especificar centro</translation>
     </message>
     <message>
         <source>Specify a corner</source>
-        <translation>Especifique esquina</translation>
+        <translation>Especificar esquina</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation>Meta número:</translation>
+        <translation>Número:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
@@ -1151,7 +1151,7 @@
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source></source>
@@ -1174,7 +1174,7 @@
     </message>
     <message>
         <source>Specify first corner</source>
-        <translation>Especifique primera esquina</translation>
+        <translation>Especificar primera esquina</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1182,11 +1182,11 @@
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation>Especifique segunda esquina</translation>
+        <translation>Especificar segunda esquina</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -1198,7 +1198,7 @@
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation>Expresión no válida.</translation>
+        <translation>Comando no válido.</translation>
     </message>
 </context>
 <context>
@@ -1213,11 +1213,11 @@
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation type="obsolete">Dibuja polilíneas</translation>
+        <translation type="obsolete">Dibujar polilíneas</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="obsolete">Especifique primer punto</translation>
+        <translation type="obsolete">Especificar primer punto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1225,23 +1225,23 @@
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="obsolete">Especifique primer punto o [1%]</translation>
+        <translation type="obsolete">Especificar primer punto o [1%]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="obsolete">Atras</translation>
+        <translation type="obsolete">Atrás</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="obsolete">Especifique punto siguiente</translation>
+        <translation type="obsolete">Especificar punto siguiente</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="obsolete">No puede cerrar la secuencia de líneas: No hay suficientes entidades definidas.</translation>
+        <translation type="obsolete">No puede cerrar la secuencia de líneas: No hay suficientes objetos definidos.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="obsolete">No puede deshacer: No hay suficientes entidades definidas.</translation>
+        <translation type="obsolete">No se puede deshacer: No hay suficientes objetos definidos.</translation>
     </message>
 </context>
 <context>
@@ -1260,7 +1260,7 @@
     </message>
     <message>
         <source>Specify first corner</source>
-        <translation>Especifique primera esquina</translation>
+        <translation>Especificar primera esquina</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1268,11 +1268,11 @@
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation>Especifique segunda esquina</translation>
+        <translation>Especificar segunda esquina</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -1287,11 +1287,11 @@
     </message>
     <message>
         <source>Draw line with relative angle</source>
-        <translation>Dibuja líneas con ángulo relativo</translation>
+        <translation>Dibujar líneas con ángulo relativo</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Select base entity</source>
@@ -1303,11 +1303,11 @@
     </message>
     <message>
         <source>Specify position</source>
-        <translation>Especifique posición</translation>
+        <translation>Especificar posición</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Orthogonal</source>
@@ -1319,7 +1319,7 @@
     </message>
     <message>
         <source>Draw orthogonal line</source>
-        <translation>Dibuja una línea ortogonal</translation>
+        <translation>Dibujar una línea ortogonal</translation>
     </message>
 </context>
 <context>
@@ -1334,11 +1334,11 @@
     </message>
     <message>
         <source>Draw tangent (point, circle)</source>
-        <translation>Dibuja tangente (punto, circunferencia)</translation>
+        <translation>Dibujar tangente (punto, circunferencia)</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation>Especifique punto</translation>
+        <translation>Especificar punto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1350,7 +1350,7 @@
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -1365,7 +1365,7 @@
     </message>
     <message>
         <source>Draw tangent (circle, circle)</source>
-        <translation>Dibuja tangente (Circunferencia, circunferencia)</translation>
+        <translation>Dibujar tangente (Circunferencia, circunferencia)</translation>
     </message>
     <message>
         <source>Select first circle or arc</source>
@@ -1381,7 +1381,7 @@
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -1396,11 +1396,11 @@
     </message>
     <message>
         <source>Draw Points</source>
-        <translation>Dibuja puntos</translation>
+        <translation>Dibujar puntos</translation>
     </message>
     <message>
         <source>Specify location</source>
-        <translation>Especifique localización</translation>
+        <translation>Especificar localización</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1419,11 +1419,11 @@
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation type="obsolete">Dibuja polilíneas</translation>
+        <translation type="obsolete">Dibujar polilíneas</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="obsolete">Especifique primer punto</translation>
+        <translation type="obsolete">Especificar primer punto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1431,34 +1431,34 @@
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="obsolete">Especifique primer punto o [1%]</translation>
+        <translation type="obsolete">Especificar primer punto o [1%]</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="obsolete">No puede cerrar la secuencia de líneas: No hay suficientes entidades definidas.</translation>
+        <translation type="obsolete">No puede cerrar la secuencia de líneas: No hay suficientes objetos definidos.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="obsolete">No puede deshacer: No hay suficientes entidades definidas.</translation>
+        <translation type="obsolete">No puede deshacer: No hay suficientes objetos definidos.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawSpline</name>
     <message>
         <source>Spline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Curva</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Curva</translation>
     </message>
     <message>
         <source>Draw splines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dibujar Curvas</translation>
     </message>
     <message>
         <source>Specify first control point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Especificar primer punto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1466,19 +1466,19 @@
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Especificar próximo punto o [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Atrás</translation>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Especificar siguiente punto de referencia</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">No puede deshacer: No hay suficientes entidades definidas.</translation>
+        <translation type="unfinished">No puede deshacer: No hay suficientes Objetos definidos.</translation>
     </message>
 </context>
 <context>
@@ -1493,11 +1493,11 @@
     </message>
     <message>
         <source>Draw Text Entities</source>
-        <translation>Dibuja entidades de texto</translation>
+        <translation>Dibujar objetos de texto</translation>
     </message>
     <message>
         <source>Specify insertion point</source>
-        <translation>Especifique punto de inserción</translation>
+        <translation>Especificar punto de inserción</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1505,11 +1505,11 @@
     </message>
     <message>
         <source>Enter text:</source>
-        <translation>Meta texto:</translation>
+        <translation>Texto:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -1524,7 +1524,7 @@
     </message>
     <message>
         <source>Copies entities to the clipboard</source>
-        <translation>Copia entidades en el portapapeles</translation>
+        <translation>Copiar objeto al portapapeles</translation>
     </message>
     <message>
         <source>Cut</source>
@@ -1536,11 +1536,11 @@
     </message>
     <message>
         <source>Cuts entities  to the clipboard</source>
-        <translation>Cota entidades a el portapapeles</translation>
+        <translation>Cortar objeto al  portapapeles</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Especifique punto de referencia</translation>
+        <translation>Especificar punto de referencia</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1559,11 +1559,11 @@
     </message>
     <message>
         <source>Pastes the clipboard contents</source>
-        <translation>Pega los contenidos del portapapeles</translation>
+        <translation>Pegar desde el portapapeles</translation>
     </message>
     <message>
         <source>Set reference point</source>
-        <translation>Meta el punto de referencia</translation>
+        <translation>Punto de referencia</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1605,11 +1605,11 @@
     </message>
     <message>
         <source>&amp;New</source>
-        <translation>&amp;Nuevo</translation>
+        <translation>Nuevo</translation>
     </message>
     <message>
         <source>Creates a new drawing</source>
-        <translation>Crea un nuevo dibujo</translation>
+        <translation>Crear un nuevo dibujo</translation>
     </message>
 </context>
 <context>
@@ -1624,7 +1624,7 @@
     </message>
     <message>
         <source>Opens an existing drawing</source>
-        <translation>Abre un dibujo existente</translation>
+        <translation>Abrir un dibujo existente</translation>
     </message>
 </context>
 <context>
@@ -1654,7 +1654,7 @@
     </message>
     <message>
         <source>Saves the current drawing under a new filename</source>
-        <translation>Guarda el dibujo actual con un nuevo nombre de archivo</translation>
+        <translation>Guardar el dibujo actual con un nuevo nombre de archivo</translation>
     </message>
 </context>
 <context>
@@ -1669,7 +1669,7 @@
     </message>
     <message>
         <source>Measures the angle between two lines</source>
-        <translation>Mide el ángulo entre dos líneas</translation>
+        <translation>Medir el ángulo entre dos líneas</translation>
     </message>
     <message>
         <source>Angle: %1%2</source>
@@ -1677,11 +1677,11 @@
     </message>
     <message>
         <source>Lines are parallel</source>
-        <translation>Lineas son paralelas</translation>
+        <translation>Las lineas son paralelas</translation>
     </message>
     <message>
         <source>Specify first line</source>
-        <translation>Especifique la primera línea</translation>
+        <translation>Especificar la primera línea</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1689,30 +1689,30 @@
     </message>
     <message>
         <source>Specify second line</source>
-        <translation>Especifique la segunda línea</translation>
+        <translation>Especificar la segunda línea</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Área poligonal</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Área poligonal</translation>
     </message>
     <message>
         <source>Measures the area of a polygon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dimensiones del area poligonal</translation>
     </message>
     <message>
         <source>Area: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Área: %1</translation>
     </message>
     <message>
         <source>Circumference: %1</source>
@@ -1720,11 +1720,11 @@
     </message>
     <message>
         <source>Point: %1/%2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Punto: %1/%2</translation>
     </message>
     <message>
         <source>Specify first point of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Especificar primer punto del polígono</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1732,11 +1732,11 @@
     </message>
     <message>
         <source>Specify next point of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Especificar siguiente punto del polígono</translation>
     </message>
     <message>
         <source>Terminate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Finalizar</translation>
     </message>
 </context>
 <context>
@@ -1751,7 +1751,7 @@
     </message>
     <message>
         <source>Measures the distance between two points</source>
-        <translation>Mide la distancia entre dos puntos</translation>
+        <translation>Medir la distancia entre dos puntos</translation>
     </message>
     <message>
         <source>Distance: %1</source>
@@ -1759,7 +1759,7 @@
     </message>
     <message>
         <source>Specify first point of distance</source>
-        <translation>Especifique primer punto de distancia</translation>
+        <translation>Especificar primer punto de distancia</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1767,11 +1767,11 @@
     </message>
     <message>
         <source>Specify second point of distance</source>
-        <translation>Especifique segundo punto de distancia</translation>
+        <translation>Especificar segundo punto de distancia</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -1782,11 +1782,11 @@
     </message>
     <message>
         <source>&amp;Distance Entity to Point</source>
-        <translation>&amp;Distancia de entidad a punto</translation>
+        <translation>&amp;Distancia de objeto a punto</translation>
     </message>
     <message>
         <source>Measures the distance between an entity and a point</source>
-        <translation>Mide la distancia entre una entidad y un punto</translation>
+        <translation>Medir la distancia entre una objeto y un punto</translation>
     </message>
     <message>
         <source>Distance: %1</source>
@@ -1794,7 +1794,7 @@
     </message>
     <message>
         <source>Specify entity</source>
-        <translation>Especifique entidad</translation>
+        <translation>Especificar objeto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1802,11 +1802,11 @@
     </message>
     <message>
         <source>Specify point</source>
-        <translation>Especifique punto</translation>
+        <translation>Especificar punto</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -1821,19 +1821,19 @@
     </message>
     <message>
         <source>Checks if a given point is inside the selected contour</source>
-        <translation>Comprueba si un punto dado esta dentro del contorno seleccionado</translation>
+        <translation>Comprobar si un punto dado esta dentro del contorno seleccionado</translation>
     </message>
     <message>
         <source>Point is inside selected contour.</source>
-        <translation>El punto esta dentro del contorno seleccionado.</translation>
+        <translation>El punto está dentro del contorno seleccionado.</translation>
     </message>
     <message>
         <source>Point is outside selected contour.</source>
-        <translation>El punto esta fuera del contorno seleccionado.</translation>
+        <translation>El punto está fuera del contorno seleccionado.</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation>Especifique punto</translation>
+        <translation>Especificar punto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1844,23 +1844,23 @@
     <name>RS_ActionInfoTotalLength</name>
     <message>
         <source>Total length of selected entities</source>
-        <translation>Longitud total de las entidades seleccionadas</translation>
+        <translation>Longitud total de los objetos seleccionadas</translation>
     </message>
     <message>
         <source>&amp;Total length of selected entities</source>
-        <translation>&amp;Longitud total de las entidades seleccionadas</translation>
+        <translation>&amp;Longitud total de selección</translation>
     </message>
     <message>
         <source>Measures the total length of all selected entities</source>
-        <translation>Mide la longitud total de todas las entidades seleccionadas</translation>
+        <translation>Medir la longitud total de selección</translation>
     </message>
     <message>
         <source>Total Length of selected entities: %1</source>
-        <translation>Longitud total de las entidades seleccionadas: %1</translation>
+        <translation>Longitud total de selección: %1</translation>
     </message>
     <message>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation>Al menos una de las entidades seleccionadas no puede ser medida.</translation>
+        <translation>Al menos una de los objetos seleccionadas no puede ser medida.</translation>
     </message>
 </context>
 <context>
@@ -1969,11 +1969,11 @@
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Especifique el punto de referencia</translation>
+        <translation>Especificar el punto de referencia</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1981,11 +1981,11 @@
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Meta ángulo:</translation>
+        <translation>Ángulo:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation>Meta factor:</translation>
+        <translation>Factor:</translation>
     </message>
     <message>
         <source></source>
@@ -1993,22 +1993,22 @@
     </message>
     <message>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">No se puede abrir el archivo &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLockRelativeZero</name>
     <message>
         <source>(Un-)Lock Relative Zero</source>
-        <translation>Bloquea o desbloquea el cero relativo</translation>
+        <translation>Habilitar el cero relativo</translation>
     </message>
     <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>&amp;Bloquea o desbloquea el cero relativo</translation>
+        <translation>Habilitar el cero relativo</translation>
     </message>
     <message>
         <source>(Un-)Lock relative Zero</source>
-        <translation>Bloquea o desbloquea el cero relativo</translation>
+        <translation>Habilitar el cero relativo</translation>
     </message>
 </context>
 <context>
@@ -2023,7 +2023,7 @@
     </message>
     <message>
         <source>Modify Entity Attributes</source>
-        <translation>Modifica los atributos de entidades</translation>
+        <translation>Modifica los atributos del objeto</translation>
     </message>
 </context>
 <context>
@@ -2038,11 +2038,11 @@
     </message>
     <message>
         <source>Bevel Entities</source>
-        <translation>Entidades del chafán</translation>
+        <translation>Objetos del chafán</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Select first entity</source>
@@ -2062,11 +2062,11 @@
     </message>
     <message>
         <source>Enter length 1:</source>
-        <translation>Meta longitud 1:</translation>
+        <translation>Longitud 1:</translation>
     </message>
     <message>
         <source>Enter length 2:</source>
-        <translation>Meta longitud 2:</translation>
+        <translation>Longitud 2:</translation>
     </message>
 </context>
 <context>
@@ -2081,27 +2081,27 @@
     </message>
     <message>
         <source>Cut Entities</source>
-        <translation>Corta entidades</translation>
+        <translation>Cortar objetos</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation>Entidad no encontrada.</translation>
+        <translation>Objeto no encontrado.</translation>
     </message>
     <message>
         <source>Entity must be a line, arc or circle.</source>
-        <translation>La entidad debe ser una linea, arco o circunferencia.</translation>
+        <translation>El Objeto debe ser una linea, arco o circunferencia.</translation>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
-        <translation>El punto de corte eata invalidado.</translation>
+        <translation>El punto de corte no es válido.</translation>
     </message>
     <message>
         <source>Cutting point is not on entity.</source>
-        <translation>El punto de corte no esta en la entidad.</translation>
+        <translation>El punto de corte no esta en el objeto.</translation>
     </message>
     <message>
         <source>Specify entity to cut</source>
-        <translation>Especifique entidad a cortar</translation>
+        <translation>Especificar objeto a cortar</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2109,11 +2109,11 @@
     </message>
     <message>
         <source>Specify cutting point</source>
-        <translation>Especifique punto de corte</translation>
+        <translation>Especificar punto de corte</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -2128,7 +2128,7 @@
     </message>
     <message>
         <source>Delete Entities</source>
-        <translation>Borrar entidades</translation>
+        <translation>Borrar objetos</translation>
     </message>
 </context>
 <context>
@@ -2143,7 +2143,7 @@
     </message>
     <message>
         <source>Specify first break point on a polyline</source>
-        <translation>Especifique primer punto de ruptura en una polilínea</translation>
+        <translation>Especificar primer punto de ruptura en una polilínea</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2151,62 +2151,62 @@
     </message>
     <message>
         <source>Specify second break point on the same polyline</source>
-        <translation>Especifique segundo punto de ruptura en la misma polilínea</translation>
+        <translation>Especificar segundo punto de ruptura en la misma polilínea</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Los objetos no estan en la misma polilinea</translation>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El resultado del segundo objeto no es una polilinea</translation>
     </message>
     <message>
         <source>Parent of second entity is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El resultado del segundo objeto no es válido</translation>
     </message>
     <message>
         <source>One of the chosen entities is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Uno de los objetos no es válido</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El resultado del primer objeto no es una polilinea</translation>
     </message>
     <message>
         <source>Parent of first entity is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El resultado del segundo objeto no es válido</translation>
     </message>
     <message>
         <source>First entity is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El primer objeto no es válido</translation>
     </message>
     <message>
         <source>Second entity is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> El segundo objeto no es válido</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteQuick</name>
     <message>
         <source>Delete selected</source>
-        <translation>Borrar lo seleccionado</translation>
+        <translation>Quitar seleccion</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
-        <translation>&amp;Borrar lo seleccionado</translation>
+        <translation>Quitar seleccion</translation>
     </message>
     <message>
         <source>Delete selected entities</source>
-        <translation>Borra las entidades seleccionadas</translation>
+        <translation>Borrar objetos seleccionados</translation>
     </message>
     <message>
         <source>Pick entity to delete</source>
-        <translation>Pinche entidades a seleccionar</translation>
+        <translation>Seleccionar objetos</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2225,7 +2225,7 @@
     </message>
     <message>
         <source>Modify Entity Properties</source>
-        <translation>Modificar propiedades de entidades</translation>
+        <translation>Modificar propiedades de objetos</translation>
     </message>
 </context>
 <context>
@@ -2236,11 +2236,11 @@
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;Desagrupa Texto en Letras</translation>
+        <translation>&amp;Desagrupar Texto en Letras</translation>
     </message>
     <message>
         <source>Explodes Text Entities into single Letters</source>
-        <translation>Desagrupa Entidades de Texto en Letras sencillas</translation>
+        <translation>Desagrupar objetos de Texto en Letras sencillas</translation>
     </message>
 </context>
 <context>
@@ -2255,11 +2255,11 @@
     </message>
     <message>
         <source>Mirror Entities</source>
-        <translation>Entidades simétricas</translation>
+        <translation>Objetos simétricos</translation>
     </message>
     <message>
         <source>Specify first point of mirror line</source>
-        <translation>Especifique primer punto del eje de simetria</translation>
+        <translation>Especificar primer punto del eje de simetria</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2267,11 +2267,11 @@
     </message>
     <message>
         <source>Specify second point of mirror line</source>
-        <translation>Especifique segundo punto de la línea de simetria</translation>
+        <translation>Especificar segundo punto de la línea de simetria</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -2286,11 +2286,11 @@
     </message>
     <message>
         <source>Move Entities</source>
-        <translation type="obsolete">Mueve entidades</translation>
+        <translation type="obsolete">Mover objetos</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Especifique punto de referencia</translation>
+        <translation>Especificar punto de referencia</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2298,11 +2298,11 @@
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Especifique punto de destino</translation>
+        <translation>Especificar punto de destino</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Move / Copy</source>
@@ -2329,15 +2329,15 @@
     </message>
     <message>
         <source>Move and Rotate Entities</source>
-        <translation>Mueve y rota entidades</translation>
+        <translation>Mueve y rota objetos</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Especifique punto de referencia</translation>
+        <translation>Especificar punto de referencia</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2345,15 +2345,15 @@
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Especifique punto de destino</translation>
+        <translation>Especificar punto de destino</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
-        <translation>Meta ángulo de rotación:</translation>
+        <translation>Ángulo de rotación:</translation>
     </message>
 </context>
 <context>
@@ -2368,34 +2368,34 @@
     </message>
     <message>
         <source>Rotate Entities</source>
-        <translation>Rota entidades</translation>
+        <translation>Rotar objetos</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Especifique punto de referencia</translation>
+        <translation>Especificar punto de referencia</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate2</name>
     <message>
         <source>Rotate Two</source>
-        <translation>Rotar a dos</translation>
+        <translation>Rotar dos</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation>Rotar a &amp;dos</translation>
+        <translation>Rotar &amp;dos</translation>
     </message>
     <message>
         <source>Rotate Entities around two centers</source>
-        <translation>Rota entidades alrededor de dos centros</translation>
+        <translation>Rotar objetos alrededor de dos centros</translation>
     </message>
     <message>
         <source>Specify absolute reference point</source>
-        <translation>Especifique punto de referencia absoluto</translation>
+        <translation>Especificar punto de referencia absoluto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2403,11 +2403,11 @@
     </message>
     <message>
         <source>Specify relative reference point</source>
-        <translation>Especifique punto de referencia relativo</translation>
+        <translation>Especificar punto de referencia relativo</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -2422,27 +2422,27 @@
     </message>
     <message>
         <source>Round Entities</source>
-        <translation>Gira entidades</translation>
+        <translation>Girar entidades</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Specify first entity</source>
-        <translation>Especifique primera entidad</translation>
+        <translation>Especificar primer objeto</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify second entity</source>
-        <translation>Especifique segunda entidad</translation>
+        <translation>Especificar segundo objeto</translation>
     </message>
     <message>
         <source>Enter radius:</source>
-        <translation>Meta radio:</translation>
+        <translation>Radio:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2461,11 +2461,11 @@
     </message>
     <message>
         <source>Scale Entities</source>
-        <translation>Escala entidades</translation>
+        <translation>Escala objetos</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Especifique punto de referencia</translation>
+        <translation>Especificar punto de referencia</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2484,11 +2484,11 @@
     </message>
     <message>
         <source>Stretch Entities</source>
-        <translation>Estira entidades</translation>
+        <translation>Estirar objetos</translation>
     </message>
     <message>
         <source>Specify first corner</source>
-        <translation>Especifique primera esquina</translation>
+        <translation>Especificar primera esquina</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2496,19 +2496,19 @@
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation>Especifique segunda esquina</translation>
+        <translation>Especificar segunda esquina</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Especifique punto de referencia</translation>
+        <translation>Especificar punto de referencia</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Especifique punto de destino</translation>
+        <translation>Especificar punto de destino</translation>
     </message>
 </context>
 <context>
@@ -2523,11 +2523,11 @@
     </message>
     <message>
         <source>Trim Entities</source>
-        <translation>Recorta entidades</translation>
+        <translation>Recortar objetos</translation>
     </message>
     <message>
         <source>Select first trim entity</source>
-        <translation>Seleccione primera entidad a recortar</translation>
+        <translation>Seleccionar primer objeto a recortar</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2535,23 +2535,23 @@
     </message>
     <message>
         <source>Select limiting entity</source>
-        <translation>Seleccione la entidad límite para recortar</translation>
+        <translation>Seleccionar objeto límite para recortar</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
-        <translation>Seleccione la segunda entidad a recortar</translation>
+        <translation>Seleccionar segundo objeto a recortar</translation>
     </message>
     <message>
         <source>Select entity to trim</source>
-        <translation>Seleccione entidad a recortar</translation>
+        <translation>Seleccionar objeto a recortar</translation>
     </message>
     <message>
         <source>Trim Two</source>
-        <translation>Recorta Dos</translation>
+        <translation>Recortar Dos</translation>
     </message>
     <message>
         <source>&amp;Trim Two</source>
@@ -2559,7 +2559,7 @@
     </message>
     <message>
         <source>Trim two Entities</source>
-        <translation>Recortar dos Entidades</translation>
+        <translation>Recortar dos objetos</translation>
     </message>
 </context>
 <context>
@@ -2578,27 +2578,27 @@
     </message>
     <message>
         <source>No entity found. </source>
-        <translation>Entidad no encontrada.</translation>
+        <translation>Objeto no encontrado.</translation>
     </message>
     <message>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation>La entidad elegida esta dentro de un bloque. Por favor, edite el bloque.</translation>
+        <translation>El objeto elegido está dentro de un bloque. Por favor, edite el bloque.</translation>
     </message>
     <message>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>La entidad elegida no esta partida o no puede ser cortada.</translation>
+        <translation>El objeto elegida no está partida o no puede ser cortada.</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresión no válida</translation>
+        <translation>Comando no válido</translation>
     </message>
     <message>
         <source>Select entity to trim or enter distance:</source>
-        <translation>Seleccione entidad a cortar o meta distancia:</translation>
+        <translation>Seleccione objeto a cortar o distancia:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -2609,7 +2609,7 @@
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>Preferencias para el &amp;dibujo actual</translation>
+        <translation>Propiedades de &amp;dibujo</translation>
     </message>
     <message>
         <source>Settings for the current Drawing</source>
@@ -2663,7 +2663,7 @@
     </message>
     <message>
         <source>Shows a preview of a print</source>
-        <translation>Muestra la vista previa a imprimir</translation>
+        <translation>Previsualizar impresión</translation>
     </message>
 </context>
 <context>
@@ -2678,65 +2678,65 @@
     </message>
     <message>
         <source>Selects all Entities</source>
-        <translation>Selecciona todas las entidades</translation>
+        <translation>Selecciona todos los objetos</translation>
     </message>
     <message>
         <source>Deselect all</source>
-        <translation>Quitar la selección a todo</translation>
+        <translation>Deseleccionar todo</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation>Quitar la selección a &amp;todo</translation>
+        <translation>Deseleccionar  &amp;todo</translation>
     </message>
     <message>
         <source>Deselects all Entities</source>
-        <translation>Quitar la selección a todas las entidades</translation>
+        <translation>Deseleccionar objetos</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectContour</name>
     <message>
         <source>(De-)Select Contour</source>
-        <translation>(De-)Seleccionar contorno</translation>
+        <translation>Deseleccionar contorno</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation>(De-)Seleccionar &amp;contorno</translation>
+        <translation>Deseleccionar  &amp;contorno</translation>
     </message>
     <message>
         <source>(De-)Selects connected entities</source>
-        <translation>(De-)Seleccionar entidades conectadas</translation>
+        <translation>Deseleccionar objetos conectados</translation>
     </message>
     <message>
         <source>Entity must be an Atomic Entity.</source>
-        <translation>La entidad debe ser partida.</translation>
+        <translation>El objeto debe ser partida.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectIntersected</name>
     <message>
         <source>Select Intersected Entities</source>
-        <translation>Selecciona entidades interseccionadas</translation>
+        <translation>Seleccionar intersección</translation>
     </message>
     <message>
         <source>In&amp;tersected Entities</source>
-        <translation>En&amp;tidades interseccionadas</translation>
+        <translation>In&amp;tersección</translation>
     </message>
     <message>
         <source>Selects all entities intersected by a line</source>
-        <translation>Selecciona todas las entidades interseccionadas por una línea</translation>
+        <translation>Seleccionar intersecciones</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation>Quita la selección a entidades interseccionadas</translation>
+        <translation>Deseleccionar intersecciones</translation>
     </message>
     <message>
         <source>Deselect Inte&amp;rsected Entities</source>
-        <translation>Quita la selección a entidades inte&amp;rseccionadas</translation>
+        <translation>Deseleccionar inte&amp;rsecciones</translation>
     </message>
     <message>
         <source>Deselects all entities intersected by a line</source>
-        <translation>Quita la selección a todas la entidades interseccionadas por una línea</translation>
+        <translation>Seleccionar intersecciones</translation>
     </message>
     <message>
         <source>Choose first point of intersection line</source>
@@ -2752,7 +2752,7 @@
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -2767,33 +2767,33 @@
     </message>
     <message>
         <source>Inverts the current selection</source>
-        <translation>Invierte la selección actual</translation>
+        <translation>Inviertir la selección</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectLayer</name>
     <message>
         <source>(De-)Select Layer</source>
-        <translation>(De-)Seleccionar capa</translation>
+        <translation>Deseleccionar capa</translation>
     </message>
     <message>
         <source>(De-)Selects layers</source>
-        <translation>(De-)Seleccionar capas</translation>
+        <translation>Deseleccionar capas</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectSingle</name>
     <message>
         <source>Select Entity</source>
-        <translation>Selecciona entidades</translation>
+        <translation>Seleccionar</translation>
     </message>
     <message>
         <source>(De-)&amp;Select Entity</source>
-        <translation>(De-)&amp;Selecciona entidades</translation>
+        <translation>De&amp;seleccionar objeto</translation>
     </message>
     <message>
         <source>Selects single Entities</source>
-        <translation>Selecciona entidades simples</translation>
+        <translation>Seleccionar objeto simple</translation>
     </message>
 </context>
 <context>
@@ -2808,19 +2808,19 @@
     </message>
     <message>
         <source>Selects all Entities in a given Window</source>
-        <translation>Selecciona todas las entidades que estan dentro de una ventana</translation>
+        <translation>Selecciona todos los objetos que están dentro de una ventana</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation>Quita la selección por ventana</translation>
+        <translation>Deseleccionar ventana</translation>
     </message>
     <message>
         <source>Deselect &amp;Window</source>
-        <translation>Quita la selección por &amp;ventana</translation>
+        <translation>Deseleccionar  &amp;ventana</translation>
     </message>
     <message>
         <source>Deselects all Entities in a given Window</source>
-        <translation>Quita la selección a todas las entidades que estan dentro de la ventana</translation>
+        <translation>Deseleccionar todo dentro de la ventana</translation>
     </message>
     <message>
         <source>Choose first edge</source>
@@ -2836,7 +2836,7 @@
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -2847,15 +2847,15 @@
     </message>
     <message>
         <source>&amp;Set Relative Zero</source>
-        <translation>&amp;Coloca el cero relativo</translation>
+        <translation>&amp;Colocar el cero relativo</translation>
     </message>
     <message>
         <source>Set position of the Relative Zero point</source>
-        <translation>Coloca la posición del punto cero relativo</translation>
+        <translation>Colocar la posición del punto cero relativo</translation>
     </message>
     <message>
         <source>Set relative Zero</source>
-        <translation>Coloca cero relativo</translation>
+        <translation>Colocar cero relativo</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2874,114 +2874,114 @@
     </message>
     <message>
         <source>Snap to intersection points manually</source>
-        <translation>Pincha el punto de intersección manualmente</translation>
+        <translation>Seleccionar intersección</translation>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation>Seleccione primera entidad</translation>
+        <translation>Seleccione primer objeto</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation>Seleccione segunda entidad</translation>
+        <translation>Seleccione segundo objeto</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
         <source>Regenerate Dimension Entities</source>
-        <translation>Regenera las entidades de cota</translation>
+        <translation>Regenerar objetos de cota</translation>
     </message>
     <message>
         <source>&amp;Regenerate Dimension Entities</source>
-        <translation>&amp;Regenera las entidades de cota</translation>
+        <translation>&amp;Regenerar objetos de cota</translation>
     </message>
     <message>
         <source>Regenerates all Dimension Entities</source>
-        <translation>Regenera todas las entidades de cota</translation>
+        <translation>Regenerar todos los objetos de cota</translation>
     </message>
     <message>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Regenerada %1 de entidades de cota</translation>
+        <translation>Regenerado %1 de objetos de cota</translation>
     </message>
     <message>
         <source>No dimension entities found</source>
-        <translation>Entidades de cota no encontradas</translation>
+        <translation>Objetos de cota no encontrados</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomAuto</name>
     <message>
         <source>Auto Zoom</source>
-        <translation>Auto zoom</translation>
+        <translation>Acercamiento</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation>&amp;Auto zoom</translation>
+        <translation>&amp;Acercamiento</translation>
     </message>
     <message>
         <source>Zooms automatic</source>
-        <translation>Zoom automático</translation>
+        <translation>Acercamiento</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomIn</name>
     <message>
         <source>Zoom in</source>
-        <translation>Mete zoom</translation>
+        <translation>Acercar</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation>&amp;Mete zoom</translation>
+        <translation>&amp;Acercar</translation>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation>Mete zoom</translation>
+        <translation>Acercar</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation>Salir de zoom</translation>
+        <translation>Alejar</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation>&amp;Salir de zoom</translation>
+        <translation>&amp;Alejar</translation>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation>Salir de zoom</translation>
+        <translation>Salir de Acercar</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomPan</name>
     <message>
         <source>Pan Zoom</source>
-        <translation>Zoom pantalla</translation>
+        <translation>Acercar pantalla</translation>
     </message>
     <message>
         <source>&amp;Pan Zoom</source>
-        <translation>Zoom &amp;pantalla</translation>
+        <translation>Acercar &amp;pantalla</translation>
     </message>
     <message>
         <source>Realtime Panning</source>
-        <translation>Realtime Panning</translation>
+        <translation>Arrastrar</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomPrevious</name>
     <message>
         <source>Previous View</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Previsualización</translation>
     </message>
     <message>
         <source>&amp;Previous View</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Previsualización</translation>
     </message>
     <message>
         <source>Shows previous view</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mostrar Previsualización</translation>
     </message>
 </context>
 <context>
@@ -2999,19 +2999,19 @@
     <name>RS_ActionZoomWindow</name>
     <message>
         <source>Window Zoom</source>
-        <translation>Zoom ventana</translation>
+        <translation>Ampliar ventana</translation>
     </message>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation>Zoom &amp;ventana</translation>
+        <translation>Ampliar &amp;ventana</translation>
     </message>
     <message>
         <source>Zooms in a window</source>
-        <translation>Zoomen una ventana</translation>
+        <translation>Hacercar en ventana</translation>
     </message>
     <message>
         <source>Specify first edge</source>
-        <translation>Especifique primer borde</translation>
+        <translation>Especificar primer borde</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3019,11 +3019,11 @@
     </message>
     <message>
         <source>Specify second edge</source>
-        <translation>Especifique segundo borde</translation>
+        <translation>Especificar segundo borde</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Atras</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 </TS>
