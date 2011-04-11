@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>Quits the application</source>
-        <translation>Salir de la aplicación</translation>
+        <translation>Salir de la LibreCAD</translation>
     </message>
     <message>
         <source>Zoom in</source>
@@ -832,15 +832,15 @@
     </message>
     <message>
         <source>Grid</source>
-        <translation>Rejilla</translation>
+        <translation>Grilla</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation>&amp;Rejilla</translation>
+        <translation>Grilla</translation>
     </message>
     <message>
         <source>Grid positioning</source>
-        <translation>Forzado a rejilla</translation>
+        <translation>Forzado a Grilla</translation>
     </message>
     <message>
         <source>Endpoints</source>
@@ -936,7 +936,7 @@
     </message>
     <message>
         <source>No snap restriction</source>
-        <translation>No restringir a rejilla</translation>
+        <translation>No restringir a Grilla</translation>
     </message>
     <message>
         <source>Restrict Orthogonally</source>
@@ -948,7 +948,7 @@
     </message>
     <message>
         <source>Restrict snapping orthogonally</source>
-        <translation>Restringir ortogonalmente y en rejilla</translation>
+        <translation>Restringir ortogonalmente y en Grilla</translation>
     </message>
     <message>
         <source>Restrict Horizontally</source>
@@ -960,7 +960,7 @@
     </message>
     <message>
         <source>Restrict snapping horizontally</source>
-        <translation>Restringir horizontalmente y en rejilla</translation>
+        <translation>Restringir horizontalmente y en Grilla</translation>
     </message>
     <message>
         <source>Restrict Vertically</source>
@@ -972,7 +972,7 @@
     </message>
     <message>
         <source>Restrict snapping vertically</source>
-        <translation>Restringir verticalmente y en rejilla</translation>
+        <translation>Restringir verticalmente y en Grilla</translation>
     </message>
     <message>
         <source>Set Relative Zero</source>
@@ -1156,7 +1156,7 @@
     </message>
     <message>
         <source>General Application Preferences</source>
-        <translation>Preferencias Generales de la Aplicación</translation>
+        <translation>Preferencias Generales de LibreCAD</translation>
     </message>
     <message>
         <source>Drawing</source>
@@ -1344,11 +1344,11 @@
     </message>
     <message>
         <source>Application</source>
-        <translation>Aplicación</translation>
+        <translation>LibreCAD</translation>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
-        <translation>&amp;Preferencias de la Aplicación</translation>
+        <translation>&amp;Preferencias de LibreCAD</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
@@ -1360,7 +1360,7 @@
     </message>
     <message>
         <source>Enables/disables the grid</source>
-        <translation>Activa/Desactiva la rejilla</translation>
+        <translation>Activa/Desactiva la Grilla</translation>
     </message>
     <message>
         <source>Circle: Concentric</source>
@@ -1502,7 +1502,7 @@
     <name>QG_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opciiones de Arco tangente</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -1556,7 +1556,7 @@
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -1671,7 +1671,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arco tangente con radio en objeto</translation>
     </message>
 </context>
 <context>
@@ -1795,7 +1795,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>Area of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Area de poligono</translation>
     </message>
 </context>
 <context>
@@ -1933,11 +1933,11 @@ en otra ventana</translation>
     </message>
     <message>
         <source>Splines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Curvas</translation>
     </message>
     <message>
         <source>Polylines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Polilineas</translation>
     </message>
 </context>
 <context>
@@ -2046,35 +2046,35 @@ en otra ventana</translation>
     <name>QG_CadToolBarPolylines</name>
     <message>
         <source>Polylines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Polilineas</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ir al menu principal</translation>
     </message>
     <message>
         <source>Create Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Crear Polilinea</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Borrar entre dos puntos</translation>
     </message>
     <message>
         <source>Add node</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Añadir punto</translation>
     </message>
     <message>
         <source>Delete node</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Borrar punto</translation>
     </message>
     <message>
         <source>Trim segments</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cortar segmentos</translation>
     </message>
     <message>
         <source>Append node</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Añadir punto</translation>
     </message>
 </context>
 <context>
@@ -2144,7 +2144,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>Snap to grid</source>
-        <translation>Forzar a rejilla</translation>
+        <translation>Forzar a Grilla</translation>
     </message>
     <message>
         <source>Free positioning</source>
@@ -2207,15 +2207,15 @@ en otra ventana</translation>
     <name>QG_CadToolBarSplines</name>
     <message>
         <source>Splines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Curvas</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Regresar al menu</translation>
     </message>
     <message>
         <source>Spline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Curva</translation>
     </message>
 </context>
 <context>
@@ -2253,7 +2253,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>Cyan</source>
-        <translation>Azul Claro</translation>
+        <translation>Celeste</translation>
     </message>
     <message>
         <source>Blue</source>
@@ -2277,7 +2277,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>Others..</source>
-        <translation>Otros..</translation>
+        <translation>Otro..</translation>
     </message>
     <message>
         <source>Unchanged</source>
@@ -2435,7 +2435,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -2462,7 +2462,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -2505,7 +2505,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -2536,7 +2536,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -2563,7 +2563,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -2579,7 +2579,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dimensiones</translation>
     </message>
 </context>
 <context>
@@ -2634,7 +2634,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -2677,7 +2677,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -2704,7 +2704,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
 &lt;/font&gt;
 &lt;br&gt;
 Por favor seleccione idioma y unidad a emplear en sus nuevos dibujos.&lt;br&gt;(new line)
-Puede cambiar estos parámetros posteriormente en Edición/Preferencias Aplicación.</translation>
+Puede cambiar estos parámetros posteriormente en Edición/Preferencias LibreCAD.</translation>
     </message>
     <message>
         <source>Default Unit:</source>
@@ -2720,7 +2720,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias Aplicaci
     </message>
     <message>
         <source>OK</source>
-        <translation>Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Enter</source>
@@ -2779,7 +2779,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias Aplicaci
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -2822,7 +2822,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias Aplicaci
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -2861,7 +2861,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias Aplicaci
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -2904,7 +2904,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias Aplicaci
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -2931,7 +2931,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias Aplicaci
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -3018,11 +3018,11 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias Aplicaci
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Paper Format</source>
-        <translation>Formato del papel</translation>
+        <translation>Tamaño de hoja</translation>
     </message>
     <message>
         <source>Text Height:</source>
@@ -3086,23 +3086,23 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias Aplicaci
     </message>
     <message>
         <source>&amp;Paper</source>
-        <translation>&amp;Papel</translation>
+        <translation>Hoja</translation>
     </message>
     <message>
         <source>&amp;Landscape</source>
-        <translation>&amp;Apaisado</translation>
+        <translation>Horizontal</translation>
     </message>
     <message>
         <source>P&amp;ortrait</source>
-        <translation>&amp;Retrato</translation>
+        <translation>Vertical</translation>
     </message>
     <message>
         <source>Paper &amp;Height:</source>
-        <translation>A&amp;ltura papel: </translation>
+        <translation>A&amp;ltura: </translation>
     </message>
     <message>
         <source>Paper &amp;Width:</source>
-        <translation>A&amp;nchura papel:</translation>
+        <translation>A&amp;nchura:</translation>
     </message>
     <message>
         <source>&amp;Units</source>
@@ -3147,15 +3147,15 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation>&amp;Rejilla</translation>
+        <translation>Grilla</translation>
     </message>
     <message>
         <source>Grid Settings</source>
-        <translation>Configuración de la Rejilla</translation>
+        <translation>Configuración de la Grilla</translation>
     </message>
     <message>
         <source>Show Grid</source>
-        <translation>Mostrar Rejilla</translation>
+        <translation>Mostrar Grilla</translation>
     </message>
     <message>
         <source>X Spacing:</source>
@@ -3171,11 +3171,11 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>Splines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Curvas</translation>
     </message>
     <message>
         <source>Number of line segments per spline patch:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Números de segmentos en curva</translation>
     </message>
     <message>
         <source>4</source>
@@ -3238,7 +3238,7 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Language</source>
@@ -3270,7 +3270,7 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>Application Preferences</source>
-        <translation>Preferencias de la Aplicación</translation>
+        <translation>Preferencias de LibreCAD</translation>
     </message>
     <message>
         <source>Defaults for new drawings</source>
@@ -3282,11 +3282,11 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>&amp;GUI Language:</source>
-        <translation>Parte &amp;Gráfica: </translation>
+        <translation>Idioma de Menu: </translation>
     </message>
     <message>
         <source>&amp;Command Language:</source>
-        <translation>Parte &amp;Comandos:</translation>
+        <translation>Idioma de Comandos:</translation>
     </message>
     <message>
         <source>&amp;Show large crosshairs</source>
@@ -3330,11 +3330,11 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>G&amp;rid Color:</source>
-        <translation>&amp;Color puntos rejilla:</translation>
+        <translation>Color de puntos en grilla:</translation>
     </message>
     <message>
-        <source>&amp;Meta Grid Color:</source>
-        <translation>&amp;Color líneas rejilla:</translation>
+        <source>Color de grilla:</source>
+        <translation>&amp;Color líneas Grilla:</translation>
     </message>
     <message>
         <source>Black</source>
@@ -3346,15 +3346,15 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>Gray</source>
-        <translation type="obsolete">Gris claro</translation>
+        <translation type="obsolete">Gris 25</translation>
     </message>
     <message>
         <source>Darkgray</source>
-        <translation type="obsolete">Gris oscuro</translation>
+        <translation type="obsolete">Gris 50</translation>
     </message>
     <message>
         <source>#404040</source>
-        <translation>#404040</translation>
+        <translation>Gris 75</translation>
     </message>
     <message>
         <source>Fontsize</source>
@@ -3402,19 +3402,19 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>#000000</source>
-        <translation>#000000</translation>
+        <translation>Negro</translation>
     </message>
     <message>
         <source>#ffffff</source>
-        <translation>#ffffff</translation>
+        <translation>Blanco</translation>
     </message>
     <message>
         <source>#c0c0c0</source>
-        <translation>#c0c0c0</translation>
+        <translation>Gris claro</translation>
     </message>
     <message>
         <source>#808080</source>
-        <translation>#808080</translation>
+        <translation>Gria oscuro</translation>
     </message>
     <message>
         <source>S&amp;elected Color:</source>
@@ -3422,11 +3422,11 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>#a54747</source>
-        <translation>#a54747</translation>
+        <translation>Morado</translation>
     </message>
     <message>
         <source>#739373</source>
-        <translation>#739373</translation>
+        <translation>Verde oscuro</translation>
     </message>
     <message>
         <source>&amp;Highlighted Color:</source>
@@ -3434,11 +3434,11 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>A&amp;utomatically scale grid</source>
-        <translation>Escala la rejilla a&amp;utomáticamente</translation>
+        <translation>Escala la Grilla a&amp;utomáticamente</translation>
     </message>
     <message>
         <source>Minimal Grid Spacing:</source>
-        <translation type="obsolete">Espaciado mínimo de la Rejilla:</translation>
+        <translation type="obsolete">Espacio mínimo de grilla:</translation>
     </message>
     <message>
         <source>4</source>
@@ -3454,7 +3454,7 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>Please restart the application to apply all changes.</source>
-        <translation>Por favor, reinicie la aplicación para aplicar todos los cambios.</translation>
+        <translation>Por favor, reinicie LibreCAD para aplicar todos los cambios.</translation>
     </message>
     <message>
         <source>Alt+S</source>
@@ -3466,7 +3466,7 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>Minimal Grid Spacing (px):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Espaciado en grilla (px)</translation>
     </message>
 </context>
 <context>
@@ -3497,7 +3497,7 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -3516,7 +3516,7 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -3567,7 +3567,7 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -3610,7 +3610,7 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -3649,7 +3649,7 @@ Pre&amp;cisión:</translation>
     <name>QG_DlgSpline</name>
     <message>
         <source>Spline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Curva</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -3661,11 +3661,11 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Grados</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cerrar</translation>
     </message>
     <message>
         <source>1</source>
@@ -3681,7 +3681,7 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;Vale</translation>
+        <translation type="unfinished">Aceptar</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -3712,11 +3712,11 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>Load Text From File</source>
-        <translation>Cargar texto de fichero</translation>
+        <translation>Cargar texto desde archivo</translation>
     </message>
     <message>
         <source>Save Text To File</source>
-        <translation>Guardar texto a fichero</translation>
+        <translation>Guardar texto en Archivo</translation>
     </message>
     <message>
         <source>Cut</source>
@@ -3780,7 +3780,7 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Insert Symbol</source>
@@ -4413,7 +4413,7 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -4574,7 +4574,7 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Vale</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -4994,15 +4994,15 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Modo contraste</translation>
     </message>
     <message>
         <source>Center to page</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Centrar pagina</translation>
     </message>
     <message>
         <source>Fit to page</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ajustar a pantalla</translation>
     </message>
 </context>
 <context>
@@ -5054,11 +5054,11 @@ Pre&amp;cisión:</translation>
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opciones de curva</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Grados</translation>
     </message>
     <message>
         <source>1</source>
@@ -5074,7 +5074,7 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">cerrar</translation>
     </message>
     <message>
         <source>Undo</source>

@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="es_AR">
 <context>
     <name></name>
     <message>
@@ -29,7 +31,7 @@
     <name>QC_ApplicationWindow</name>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;Fichero</translation>
+        <translation>&amp;Archivo</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
@@ -101,19 +103,19 @@
     </message>
     <message>
         <source>About</source>
-        <translation>Acerca de</translation>
+        <translation>Sobre LibreCAD</translation>
     </message>
     <message>
         <source>&amp;About...</source>
-        <translation type="obsolete">&amp;Acerca de...</translation>
+        <translation type="obsolete">&amp;Sobre LibreCAD...</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation>Acerca de la aplicación</translation>
+        <translation>Sobre LibreCad</translation>
     </message>
     <message>
         <source>&amp;Scripts</source>
-        <translation>&amp;Guiones</translation>
+        <translation>&amp;Scripts</translation>
     </message>
     <message>
         <source>&amp;Windows</source>
@@ -141,15 +143,15 @@
     </message>
     <message>
         <source>Creating new file...</source>
-        <translation>Creando un fichero nuevo...</translation>
+        <translation>Creando un archivo nuevo...</translation>
     </message>
     <message>
         <source>unnamed document %1</source>
-        <translation>documento sin nombre %1</translation>
+        <translation>Dibujo %1</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>Abriendo fichero reciente...</translation>
+        <translation>Abriendo archivo reciente...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -157,7 +159,7 @@
     </message>
     <message>
         <source>Opening aborted</source>
-        <translation>Abortada la carga</translation>
+        <translation>Carga cancelada</translation>
     </message>
     <message>
         <source>Printing...</source>
@@ -165,11 +167,11 @@
     </message>
     <message>
         <source>Exiting application...</source>
-        <translation>Saliendo de la aplicación...</translation>
+        <translation>Saliendo de LibreCAD...</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation>Acerca de...</translation>
+        <translation>Sobre LibreCAD...</translation>
     </message>
     <message>
         <source>Version: </source>
@@ -177,7 +179,7 @@
     </message>
     <message>
         <source>File</source>
-        <translation>Fichero</translation>
+        <translation>Archivo</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -258,11 +260,11 @@ Date: %1</source>
     </message>
     <message>
         <source>Export failed!</source>
-        <translation>¡Cascó la exportación!</translation>
+        <translation>¡Falló la exportación!</translation>
     </message>
     <message>
         <source>Printing complete</source>
-        <translation>Finalizada la impresión</translation>
+        <translation>Finalizó la impresión</translation>
     </message>
     <message>
         <source>Command line</source>
@@ -274,7 +276,7 @@ Date: %1</source>
     </message>
     <message>
         <source>&amp;About %1</source>
-        <translation>&amp;Acerca de %1</translation>
+        <translation>&amp;Sobre LibreCAD %1</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -300,7 +302,7 @@ Date: %1</source>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
-        <translation>No puedo abrir el archivo
+        <translation>No se pudo abrir el archivo
 %1
 Compruebe los permisos.</translation>
     </message>
@@ -308,7 +310,7 @@ Compruebe los permisos.</translation>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
-        <translation>No puedo guardar el archivo
+        <translation>No se pudo guardar el archivo
 %1
 Compruebe los permisos.</translation>
     </message>
@@ -339,28 +341,28 @@ You can save your work now.</source>
 automáticamente pasados 10 min. Este software no
 es adecuado para su uso en producción.
 Por favor, compre una versión completa de la
-aplicación en $2.
+LibreCAD en $2.
 Ahora puede guardar su trabajo.</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ventana</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Curva</translation>
     </message>
     <message>
         <source>Running script &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Corriendo script &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Inserting block &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Insertando bloque &apos;%1&apos;</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
 </context>
 <context>
@@ -372,16 +374,16 @@ Ahora puede guardar su trabajo.</translation>
     <message>
         <source>Do you really want to close the file
 %1?</source>
-        <translation>¿Realmente quiere cerrar el fichero
+        <translation>¿Quiere cerrar el archivo
 %1?</translation>
     </message>
     <message>
         <source>Do you really want to close the drawing?</source>
-        <translation>¿Realmente quiere cerrar el dibujo?</translation>
+        <translation>¿Quiere cerrar el dibujo?</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation>Cerrando el Dibujo</translation>
+        <translation>Cerrando Dibujo</translation>
     </message>
 </context>
 <context>
@@ -395,15 +397,15 @@ Ahora puede guardar su trabajo.</translation>
     <name>QObject</name>
     <message>
         <source>Export Image</source>
-        <translation>Exportar imagen</translation>
+        <translation type="unfinished">Exportar imagen</translation>
     </message>
     <message>
         <source>Loading..</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Buscando...</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Buscando librerias</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
