@@ -133,21 +133,21 @@ void QG_ColorBox::setColor(const RS_Color& color) {
         setCurrentItem(0);
     } else if (color.isByBlock() && showByLayer) {
         setCurrentItem(1);
-    } else if (color==Qt::red) {
+    } else if (color==QColor(Qt::red)) {
         setCurrentItem(0+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==Qt::yellow) {
+    } else if (color==QColor(Qt::yellow)) {
         setCurrentItem(1+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==Qt::green) {
+    } else if (color==QColor(Qt::green)) {
         setCurrentItem(2+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==Qt::cyan) {
+    } else if (color==QColor(Qt::cyan)) {
         setCurrentItem(3+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==Qt::blue) {
+    } else if (color==QColor(Qt::blue)) {
         setCurrentItem(4+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==Qt::magenta) {
+    } else if (color==QColor(Qt::magenta)) {
         setCurrentItem(5+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==Qt::white || color==Qt::black) {
+    } else if (color==QColor(Qt::white) || color==QColor(Qt::black)) {
         setCurrentItem(6+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==Qt::gray) {
+    } else if (color==QColor(127,127,127)) {
         setCurrentItem(7+(int)showByLayer*2 + (int)showUnchanged);
     } else if (color==QColor(191,191,191)) {
         setCurrentItem(8+(int)showByLayer*2 + (int)showUnchanged);
