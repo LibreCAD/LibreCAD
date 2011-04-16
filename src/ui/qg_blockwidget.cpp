@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2010-2011 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -38,31 +38,21 @@
 #include <QKeyEvent>
 #include <Q3VBoxLayout>
 
-#include "ui/visibleblock.xpm"
-#include "ui/hiddenblock.xpm"
-#include "ui/blockadd.xpm"
-#include "ui/blockremove.xpm"
-#include "ui/blockedit.xpm"
-#include "ui/blockattributes.xpm"
-#include "ui/blockinsert.xpm"
-
-
-
 /**
  * Constructor.
  */
 QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
                                const char* name, Qt::WFlags f)
         : QWidget(parent, name, f),
-        pxmVisible(visibleblock_xpm),
-        pxmHidden(hiddenblock_xpm),
-        pxmAdd(blockadd_xpm),
-        pxmRemove(blockremove_xpm),
-        pxmAttributes(blockattributes_xpm),
-        pxmEdit(blockedit_xpm),
-        pxmInsert(blockinsert_xpm),
-        pxmDefreezeAll(visibleblock_xpm),
-pxmFreezeAll(hiddenblock_xpm) {
+        pxmVisible(":/ui/visibleblock.png"),
+        pxmHidden(":/ui/hiddenblock.png"),
+        pxmAdd(":/ui/blockadd.png"),
+        pxmRemove(":/ui/blockremove.png"),
+        pxmAttributes(":/ui/blockattributes.png"),
+        pxmEdit(":/ui/blockedit.png"),
+        pxmInsert(":/ui/blockinsert.png"),
+        pxmDefreezeAll(":/ui/visibleblock.png"),
+        pxmFreezeAll(":/ui/hiddenblock.png") {
 
     actionHandler = ah;
     blockList = NULL;
