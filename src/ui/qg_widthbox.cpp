@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2010-2011 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -25,25 +25,8 @@
 **********************************************************************/
 
 #include "qg_widthbox.h"
-
 #include <qpixmap.h>
-
 #include "rs_debug.h"
-
-#include "ui/width00.xpm"
-#include "ui/width01.xpm"
-#include "ui/width02.xpm"
-#include "ui/width03.xpm"
-#include "ui/width04.xpm"
-#include "ui/width05.xpm"
-#include "ui/width06.xpm"
-#include "ui/width07.xpm"
-#include "ui/width08.xpm"
-#include "ui/width09.xpm"
-#include "ui/width10.xpm"
-#include "ui/width11.xpm"
-#include "ui/width12.xpm"
-
 
 /**
  * Default Constructor. You must call init manually if you choose
@@ -87,37 +70,37 @@ void QG_WidthBox::init(bool showByLayer, bool showUnchanged) {
 	this->showUnchanged = showUnchanged;
 
     if (showUnchanged) {
-        insertItem(QPixmap(width00_xpm), tr("- Unchanged -"));
+        insertItem(QPixmap(":ui/width00.png"), tr("- Unchanged -"));
     }
     if (showByLayer) {
-        insertItem(QPixmap(width00_xpm), tr("By Layer"));
-        insertItem(QPixmap(width00_xpm), tr("By Block"));
+        insertItem(QPixmap(":ui/width00.png"), tr("By Layer"));
+        insertItem(QPixmap(":ui/width00.png"), tr("By Block"));
     }
-    insertItem(QPixmap(width01_xpm), tr("Default"));
-    insertItem(QPixmap(width01_xpm), tr("0.00mm"));
-    insertItem(QPixmap(width01_xpm), tr("0.05mm"));
-    insertItem(QPixmap(width01_xpm), tr("0.09mm"));
-    insertItem(QPixmap(width01_xpm), tr("0.13mm (ISO)"));
-    insertItem(QPixmap(width01_xpm), tr("0.15mm"));
-    insertItem(QPixmap(width01_xpm), tr("0.18mm (ISO)"));
-    insertItem(QPixmap(width01_xpm), tr("0.20mm"));
-    insertItem(QPixmap(width01_xpm), tr("0.25mm (ISO)"));
-    insertItem(QPixmap(width01_xpm), tr("0.30mm"));
-    insertItem(QPixmap(width03_xpm), tr("0.35mm (ISO)"));
-    insertItem(QPixmap(width03_xpm), tr("0.40mm"));
-    insertItem(QPixmap(width04_xpm), tr("0.50mm (ISO)"));
-    insertItem(QPixmap(width05_xpm), tr("0.53mm"));
-    insertItem(QPixmap(width05_xpm), tr("0.60mm"));
-    insertItem(QPixmap(width06_xpm), tr("0.70mm (ISO)"));
-    insertItem(QPixmap(width07_xpm), tr("0.80mm"));
-    insertItem(QPixmap(width08_xpm), tr("0.90mm"));
-    insertItem(QPixmap(width09_xpm), tr("1.00mm (ISO)"));
-    insertItem(QPixmap(width10_xpm), tr("1.06mm"));
-    insertItem(QPixmap(width10_xpm), tr("1.20mm"));
-    insertItem(QPixmap(width12_xpm), tr("1.40mm (ISO)"));
-    insertItem(QPixmap(width12_xpm), tr("1.58mm"));
-    insertItem(QPixmap(width12_xpm), tr("2.00mm (ISO)"));
-    insertItem(QPixmap(width12_xpm), tr("2.11mm"));
+    insertItem(QPixmap(":ui/width01.png"), tr("Default"));
+    insertItem(QPixmap(":ui/width01.png"), tr("0.00mm"));
+    insertItem(QPixmap(":ui/width01.png"), tr("0.05mm"));
+    insertItem(QPixmap(":ui/width01.png"), tr("0.09mm"));
+    insertItem(QPixmap(":ui/width01.png"), tr("0.13mm (ISO)"));
+    insertItem(QPixmap(":ui/width01.png"), tr("0.15mm"));
+    insertItem(QPixmap(":ui/width01.png"), tr("0.18mm (ISO)"));
+    insertItem(QPixmap(":ui/width01.png"), tr("0.20mm"));
+    insertItem(QPixmap(":ui/width01.png"), tr("0.25mm (ISO)"));
+    insertItem(QPixmap(":ui/width01.png"), tr("0.30mm"));
+    insertItem(QPixmap(":ui/width03.png"), tr("0.35mm (ISO)"));
+    insertItem(QPixmap(":ui/width03.png"), tr("0.40mm"));
+    insertItem(QPixmap(":ui/width04.png"), tr("0.50mm (ISO)"));
+    insertItem(QPixmap(":ui/width05.png"), tr("0.53mm"));
+    insertItem(QPixmap(":ui/width05.png"), tr("0.60mm"));
+    insertItem(QPixmap(":ui/width06.png"), tr("0.70mm (ISO)"));
+    insertItem(QPixmap(":ui/width07.png"), tr("0.80mm"));
+    insertItem(QPixmap(":ui/width08.png"), tr("0.90mm"));
+    insertItem(QPixmap(":ui/width09.png"), tr("1.00mm (ISO)"));
+    insertItem(QPixmap(":ui/width10.png"), tr("1.06mm"));
+    insertItem(QPixmap(":ui/width10.png"), tr("1.20mm"));
+    insertItem(QPixmap(":ui/width12.png"), tr("1.40mm (ISO)"));
+    insertItem(QPixmap(":ui/width12.png"), tr("1.58mm"));
+    insertItem(QPixmap(":ui/width12.png"), tr("2.00mm (ISO)"));
+    insertItem(QPixmap(":ui/width12.png"), tr("2.11mm"));
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotWidthChanged(int)));
@@ -245,55 +228,55 @@ void QG_WidthBox::setLayerWidth(RS2::LineWidth w) {
         switch(w) {
         default:
         case RS2::Width00:
-            pixmap = QPixmap(width00_xpm);
+            pixmap = QPixmap(":ui/width00.png");
             break;
         case RS2::Width01:
         case RS2::Width02:
-            pixmap = QPixmap(width01_xpm);
+            pixmap = QPixmap(":ui/width01.png");
             break;
         case RS2::Width03:
         case RS2::Width04:
-            pixmap = QPixmap(width02_xpm);
+            pixmap = QPixmap(":ui/width02.png");
             break;
         case RS2::Width05:
         case RS2::Width06:
-            pixmap = QPixmap(width03_xpm);
+            pixmap = QPixmap(":ui/width03.png");
             break;
         case RS2::Width07:
         case RS2::Width08:
-            pixmap = QPixmap(width04_xpm);
+            pixmap = QPixmap(":ui/width04.png");
             break;
         case RS2::Width09:
         case RS2::Width10:
-            pixmap = QPixmap(width05_xpm);
+            pixmap = QPixmap(":ui/width05.png");
             break;
         case RS2::Width11:
         case RS2::Width12:
-            pixmap = QPixmap(width06_xpm);
+            pixmap = QPixmap(":ui/width06.png");
             break;
         case RS2::Width13:
         case RS2::Width14:
-            pixmap = QPixmap(width07_xpm);
+            pixmap = QPixmap(":ui/width07.png");
             break;
         case RS2::Width15:
         case RS2::Width16:
-            pixmap = QPixmap(width08_xpm);
+            pixmap = QPixmap(":ui/width08.png");
             break;
         case RS2::Width17:
         case RS2::Width18:
-            pixmap = QPixmap(width09_xpm);
+            pixmap = QPixmap(":ui/width09.png");
             break;
         case RS2::Width19:
         case RS2::Width20:
-            pixmap = QPixmap(width10_xpm);
+            pixmap = QPixmap(":ui/width10.png");
             break;
         case RS2::Width21:
         case RS2::Width22:
-            pixmap = QPixmap(width11_xpm);
+            pixmap = QPixmap(":ui/width11.png");
             break;
         case RS2::Width23:
             //case RS2::Width24:
-            pixmap = QPixmap(width12_xpm);
+            pixmap = QPixmap(":ui/width12.png");
             break;
         }
 
