@@ -25,25 +25,8 @@
 **********************************************************************/
 
 #include "qg_linetypebox.h"
-
 #include <qpixmap.h>
-
 #include "rs_debug.h"
-
-#include "ui/linetype00.xpm"
-#include "ui/linetype01.xpm"
-#include "ui/linetype02.xpm"
-#include "ui/linetype03.xpm"
-#include "ui/linetype04.xpm"
-#include "ui/linetype05.xpm"
-#include "ui/linetype06.xpm"
-#include "ui/linetype07.xpm"
-//#include "ui/linetype08.xpm"
-//#include "ui/linetype09.xpm"
-//#include "ui/linetype10.xpm"
-//#include "ui/linetype11.xpm"
-//#include "ui/linetype12.xpm"
-
 
 /**
  * Default Constructor. You must call init manually if you choose
@@ -88,33 +71,33 @@ void QG_LineTypeBox::init(bool showByLayer, bool showUnchanged) {
 	this->showUnchanged = showUnchanged;
 
     if (showUnchanged) {
-        insertItem(QPixmap(linetype00_xpm), tr("- Unchanged -"));
+        insertItem(QPixmap(":ui/linetype00.png"), tr("- Unchanged -"));
 	}
 
     if (showByLayer) {
-        insertItem(QPixmap(linetype00_xpm), tr("By Layer"));
-        insertItem(QPixmap(linetype00_xpm), tr("By Block"));
+        insertItem(QPixmap(":ui/linetype00.png"), tr("By Layer"));
+        insertItem(QPixmap(":ui/linetype00.png"), tr("By Block"));
     }
-    insertItem(QPixmap(linetype00_xpm), tr("No Pen"));
-    insertItem(QPixmap(linetype01_xpm), tr("Continuous"));
-    insertItem(QPixmap(linetype02_xpm), tr("Dot"));
-    insertItem(QPixmap(linetype02_xpm), tr("Dot (small)"));
-    insertItem(QPixmap(linetype02_xpm), tr("Dot (large)"));
-    insertItem(QPixmap(linetype03_xpm), tr("Dash"));
-    insertItem(QPixmap(linetype03_xpm), tr("Dash (small)"));
-    insertItem(QPixmap(linetype03_xpm), tr("Dash (large)"));
-    insertItem(QPixmap(linetype04_xpm), tr("Dash Dot"));
-    insertItem(QPixmap(linetype04_xpm), tr("Dash Dot (small)"));
-    insertItem(QPixmap(linetype04_xpm), tr("Dash Dot (large)"));
-    insertItem(QPixmap(linetype05_xpm), tr("Divide"));
-    insertItem(QPixmap(linetype05_xpm), tr("Divide (small)"));
-    insertItem(QPixmap(linetype05_xpm), tr("Divide (large)"));
-    insertItem(QPixmap(linetype06_xpm), tr("Center"));
-    insertItem(QPixmap(linetype06_xpm), tr("Center (small)"));
-    insertItem(QPixmap(linetype06_xpm), tr("Center (large)"));
-    insertItem(QPixmap(linetype07_xpm), tr("Border"));
-    insertItem(QPixmap(linetype07_xpm), tr("Border (small)"));
-    insertItem(QPixmap(linetype07_xpm), tr("Border (large)"));
+    insertItem(QPixmap(":ui/linetype00.png"), tr("No Pen"));
+    insertItem(QPixmap(":ui/linetype01.png"), tr("Continuous"));
+    insertItem(QPixmap(":ui/linetype02.png"), tr("Dot"));
+    insertItem(QPixmap(":ui/linetype02.png"), tr("Dot (small)"));
+    insertItem(QPixmap(":ui/linetype02.png"), tr("Dot (large)"));
+    insertItem(QPixmap(":ui/linetype03.png"), tr("Dash"));
+    insertItem(QPixmap(":ui/linetype03.png"), tr("Dash (small)"));
+    insertItem(QPixmap(":ui/linetype03.png"), tr("Dash (large)"));
+    insertItem(QPixmap(":ui/linetype04.png"), tr("Dash Dot"));
+    insertItem(QPixmap(":ui/linetype04.png"), tr("Dash Dot (small)"));
+    insertItem(QPixmap(":ui/linetype04.png"), tr("Dash Dot (large)"));
+    insertItem(QPixmap(":ui/linetype05.png"), tr("Divide"));
+    insertItem(QPixmap(":ui/linetype05.png"), tr("Divide (small)"));
+    insertItem(QPixmap(":ui/linetype05.png"), tr("Divide (large)"));
+    insertItem(QPixmap(":ui/linetype06.png"), tr("Center"));
+    insertItem(QPixmap(":ui/linetype06.png"), tr("Center (small)"));
+    insertItem(QPixmap(":ui/linetype06.png"), tr("Center (large)"));
+    insertItem(QPixmap(":ui/linetype07.png"), tr("Border"));
+    insertItem(QPixmap(":ui/linetype07.png"), tr("Border (small)"));
+    insertItem(QPixmap(":ui/linetype07.png"), tr("Border (large)"));
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotLineTypeChanged(int)));
@@ -233,23 +216,23 @@ void QG_LineTypeBox::setLayerLineType(RS2::LineType t) {
         QPixmap pixmap;
         switch(t) {
         case RS2::NoPen:
-            pixmap = QPixmap(linetype00_xpm);
+            pixmap = QPixmap(":ui/linetype00.png");
             break;
         default:
         case RS2::SolidLine:
-            pixmap = QPixmap(linetype01_xpm);
+            pixmap = QPixmap(":ui/linetype01.png");
             break;
         case RS2::DashLine:
-            pixmap = QPixmap(linetype02_xpm);
+            pixmap = QPixmap(":ui/linetype02.png");
             break;
         case RS2::DotLine:
-            pixmap = QPixmap(linetype03_xpm);
+            pixmap = QPixmap(":ui/linetype03.png");
             break;
         case RS2::DashDotLine:
-            pixmap = QPixmap(linetype04_xpm);
+            pixmap = QPixmap(":ui/linetype04.png");
             break;
         case RS2::DivideLine:
-            pixmap = QPixmap(linetype05_xpm);
+            pixmap = QPixmap(":ui/linetype05.png");
             break;
         }
 
