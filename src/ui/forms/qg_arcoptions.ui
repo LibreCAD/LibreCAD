@@ -59,8 +59,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset resource="png/icons.qrc">
-      <normaloff>:/ui/icons/dirpos.png</normaloff>:/ui/icons/dirpos.png</iconset>
+     <iconset resource="../../../res/extui/extui.qrc">
+      <normaloff>:/extui/dirpos.png</normaloff>:/extui/dirpos.png</iconset>
     </property>
    </widget>
    <widget class="QRadioButton" name="rbPos">
@@ -79,8 +79,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset resource="png/icons.qrc">
-      <normaloff>:/ui/icons/dirneg.png</normaloff>:/ui/icons/dirneg.png</iconset>
+     <iconset resource="../../res/extui/extui.qrc">
+      <normaloff>:/extui/dirneg.png</normaloff>:/extui/dirneg.png</iconset>
     </property>
     <property name="checked">
      <bool>true</bool>
@@ -130,7 +130,7 @@
   <include location="local">rs_actiondrawarc.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

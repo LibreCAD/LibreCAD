@@ -100,8 +100,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="png/icons.qrc">
-       <normaloff>:/ui/icons/dimhor.png</normaloff>:/ui/icons/dimhor.png</iconset>
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/dimhor.png</normaloff>:/extui/dimhor.png</iconset>
      </property>
     </widget>
    </item>
@@ -123,8 +123,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="png/icons.qrc">
-       <normaloff>:/ui/icons/dimver.png</normaloff>:/ui/icons/dimver.png</iconset>
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/dimver.png</normaloff>:/extui/dimver.png</iconset>
      </property>
     </widget>
    </item>
@@ -159,7 +159,7 @@
   <include location="local">rs_settings.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -179,7 +179,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>:/ui/icons/align_tr.png</normaloff>:/ui/icons/align_tr.png</iconset>
+                <normaloff>:/extui/align_tr.png</normaloff>:/extui/align_tr.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -208,7 +208,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>:/ui/icons/align_tl.png</normaloff>:/ui/icons/align_tl.png</iconset>
+                <normaloff>:/extui/align_tl.png</normaloff>:/extui/align_tl.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -237,7 +237,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>:/ui/icons/align_ml.png</normaloff>:/ui/icons/align_ml.png</iconset>
+                <normaloff>:/extui/align_ml.png</normaloff>:/extui/align_ml.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -266,7 +266,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>:/ui/icons/align_mc.png</normaloff>:/ui/icons/align_mc.png</iconset>
+                <normaloff>:/extui/align_mc.png</normaloff>:/extui/align_mc.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -295,7 +295,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>:/ui/icons/align_mr.png</normaloff>:/ui/icons/align_mr.png</iconset>
+                <normaloff>:/extui/align_mr.png</normaloff>:/extui/align_mr.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -324,7 +324,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>:/ui/icons/align_bl.png</normaloff>:/ui/icons/align_bl.png</iconset>
+                <normaloff>:/extui/align_bl.png</normaloff>:/extui/align_bl.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -353,7 +353,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>:/ui/icons/align_br.png</normaloff>:/ui/icons/align_br.png</iconset>
+                <normaloff>:/extui/align_br.png</normaloff>:/extui/align_br.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -382,7 +382,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>:/ui/icons/align_bc.png</normaloff>:/ui/icons/align_bc.png</iconset>
+                <normaloff>:/extui/align_bc.png</normaloff>:/extui/align_bc.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -411,7 +411,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>:/ui/icons/align_tc.png</normaloff>:/ui/icons/align_tc.png</iconset>
+                <normaloff>:/extui/align_tc.png</normaloff>:/extui/align_tc.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -512,7 +512,7 @@
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/ui/icons/filenew.png</normaloff>:/ui/icons/filenew.png</iconset>
+             <normaloff>:/extui/filenew.png</normaloff>:/extui/filenew.png</iconset>
            </property>
           </widget>
          </item>
@@ -526,7 +526,7 @@
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/ui/icons/fileopen.png</normaloff>:/ui/icons/fileopen.png</iconset>
+             <normaloff>:/extui/fileopen.png</normaloff>:/extui/fileopen.png</iconset>
            </property>
           </widget>
          </item>
@@ -540,7 +540,7 @@
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/ui/icons/filesave.png</normaloff>:/ui/icons/filesave.png</iconset>
+             <normaloff>:/extui/filesave.png</normaloff>:/extui/filesave.png</iconset>
            </property>
           </widget>
          </item>
@@ -554,7 +554,7 @@
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/ui/icons/editcut.png</normaloff>:/ui/icons/editcut.png</iconset>
+             <normaloff>:/extui/editcut.png</normaloff>:/extui/editcut.png</iconset>
            </property>
           </widget>
          </item>
@@ -568,7 +568,7 @@
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/ui/icons/editcopy.png</normaloff>:/ui/icons/editcopy.png</iconset>
+             <normaloff>:/extui/editcopy.png</normaloff>:/extui/editcopy.png</iconset>
            </property>
           </widget>
          </item>
@@ -582,7 +582,7 @@
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/ui/icons/editpaste.png</normaloff>:/ui/icons/editpaste.png</iconset>
+             <normaloff>:/extui/editpaste.png</normaloff>:/extui/editpaste.png</iconset>
            </property>
           </widget>
          </item>

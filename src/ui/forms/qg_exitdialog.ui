@@ -148,7 +148,7 @@
   <tabstop>bSaveAs</tabstop>
  </tabstops>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

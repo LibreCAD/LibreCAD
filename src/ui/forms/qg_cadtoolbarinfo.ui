@@ -41,8 +41,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/infodist.png</normaloff>:/ui/icons/infodist.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/infodist.png</normaloff>:/extui/infodist.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bDist2">
@@ -61,8 +61,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/infodist2.png</normaloff>:/ui/icons/infodist2.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/infodist2.png</normaloff>:/extui/infodist2.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bBack">
@@ -81,8 +81,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bAngle">
@@ -101,8 +101,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/infoangle.png</normaloff>:/ui/icons/infoangle.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/infoangle.png</normaloff>:/extui/infoangle.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bTotalLength">
@@ -121,8 +121,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/infototallength.png</normaloff>:/ui/icons/infototallength.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/infototallength.png</normaloff>:/extui/infototallength.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bArea">
@@ -141,8 +141,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/infoarea.png</normaloff>:/ui/icons/infoarea.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/infoarea.png</normaloff>:/extui/infoarea.png</iconset>
    </property>
   </widget>
  </widget>
@@ -151,7 +151,7 @@
   <include location="local">qg_actionhandler.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

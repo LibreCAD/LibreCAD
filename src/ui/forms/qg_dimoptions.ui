@@ -69,8 +69,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="png/icons.qrc">
-       <normaloff>:/ui/icons/char_diameter.png</normaloff>:/ui/icons/char_diameter.png</iconset>
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/char_diameter.png</normaloff>:/extui/char_diameter.png</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -133,8 +133,8 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="png/icons.qrc">
-       <normaloff>:/ui/icons/tolerance1.png</normaloff>:/ui/icons/tolerance1.png</iconset>
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/tolerance1.png</normaloff>:/extui/tolerance1.png</iconset>
      </property>
     </widget>
    </item>
@@ -154,8 +154,8 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="png/icons.qrc">
-       <normaloff>:/ui/icons/tolerance2.png</normaloff>:/ui/icons/tolerance2.png</iconset>
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/tolerance2.png</normaloff>:/extui/tolerance2.png</iconset>
      </property>
     </widget>
    </item>
@@ -194,7 +194,7 @@
   <include location="local">rs_settings.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -21,7 +21,9 @@ QMAKE_CXXFLAGS +=
 # QMAKE_POST_LINK += make maketranslations
 unix { 
     # Get SVN revision number
-    SVNREVISION = $$system(svn info -R | grep -o \"Revision: [0-9]*\" | sed -e \"s/Revision: //\" | head -n1)
+    # SVNREVISION = $$system(svn info -R | grep -o \"Revision: [0-9]*\" | sed -e \"s/Revision: //\" | head -n1)
+    # Temporary disabled getting SCM version
+    SVNREVISION="Git Version"
     DEFINES += QC_SVNREVISION=\"$$SVNREVISION\"
     macx { 
         TARGET = LibreCAD
@@ -946,7 +948,6 @@ TRANSLATIONS += ts/ui/librecadguiqt_cs.ts \
     ts/ui/librecadguiqt_sk.ts \
     ts/ui/librecadguiqt_tr.ts
 RESOURCES += res/ui/ui.qrc
-RESOURCES += src/ui/forms/png/icons.qrc
 
 # ################################################################################
 # Main

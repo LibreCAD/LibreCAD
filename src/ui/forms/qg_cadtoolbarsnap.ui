@@ -41,8 +41,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bGrid">
@@ -61,8 +61,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/snapgrid.png</normaloff>:/ui/icons/snapgrid.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/snapgrid.png</normaloff>:/extui/snapgrid.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -84,8 +84,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/snapfree.png</normaloff>:/ui/icons/snapfree.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/snapfree.png</normaloff>:/extui/snapfree.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -107,8 +107,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/snapendpoint.png</normaloff>:/ui/icons/snapendpoint.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/snapendpoint.png</normaloff>:/extui/snapendpoint.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -130,8 +130,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/snaponentity.png</normaloff>:/ui/icons/snaponentity.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/snaponentity.png</normaloff>:/extui/snaponentity.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -153,8 +153,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/snapmiddle.png</normaloff>:/ui/icons/snapmiddle.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/snapmiddle.png</normaloff>:/extui/snapmiddle.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -176,8 +176,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/snapcenter.png</normaloff>:/ui/icons/snapcenter.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/snapcenter.png</normaloff>:/extui/snapcenter.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -199,8 +199,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/snapdist.png</normaloff>:/ui/icons/snapdist.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/snapdist.png</normaloff>:/extui/snapdist.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -222,8 +222,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/snapintersection.png</normaloff>:/ui/icons/snapintersection.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/snapintersection.png</normaloff>:/extui/snapintersection.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -245,8 +245,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/snapfree.png</normaloff>:/ui/icons/snapfree.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/snapfree.png</normaloff>:/extui/snapfree.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -268,8 +268,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/restrictorthogonal.png</normaloff>:/ui/icons/restrictorthogonal.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/restrictorthogonal.png</normaloff>:/extui/restrictorthogonal.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -291,8 +291,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/restricthorizontal.png</normaloff>:/ui/icons/restricthorizontal.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/restricthorizontal.png</normaloff>:/extui/restricthorizontal.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -314,8 +314,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/restrictvertical.png</normaloff>:/ui/icons/restrictvertical.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/restrictvertical.png</normaloff>:/extui/restrictvertical.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -337,8 +337,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/relzeromove.png</normaloff>:/ui/icons/relzeromove.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/relzeromove.png</normaloff>:/extui/relzeromove.png</iconset>
    </property>
    <property name="checkable">
     <bool>false</bool>
@@ -360,8 +360,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/relzerolock.png</normaloff>:/ui/icons/relzerolock.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/relzerolock.png</normaloff>:/extui/relzerolock.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -383,8 +383,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/snapintersectionm.png</normaloff>:/ui/icons/snapintersectionm.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/snapintersectionm.png</normaloff>:/extui/snapintersectionm.png</iconset>
    </property>
    <property name="checkable">
     <bool>false</bool>
@@ -396,7 +396,7 @@
   <include location="local">qg_actionhandler.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

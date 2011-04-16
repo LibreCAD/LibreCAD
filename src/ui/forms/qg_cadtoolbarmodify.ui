@@ -41,8 +41,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bStretch">
@@ -61,8 +61,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifystretch.png</normaloff>:/ui/icons/modifystretch.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifystretch.png</normaloff>:/extui/modifystretch.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bRound">
@@ -81,8 +81,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifyround.png</normaloff>:/ui/icons/modifyround.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifyround.png</normaloff>:/extui/modifyround.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bBevel">
@@ -101,8 +101,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifybevel.png</normaloff>:/ui/icons/modifybevel.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifybevel.png</normaloff>:/extui/modifybevel.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bTrimAmount">
@@ -121,8 +121,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifytrimamount.png</normaloff>:/ui/icons/modifytrimamount.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifytrimamount.png</normaloff>:/extui/modifytrimamount.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bTrim">
@@ -141,8 +141,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifytrim.png</normaloff>:/ui/icons/modifytrim.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifytrim.png</normaloff>:/extui/modifytrim.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bDelete">
@@ -161,8 +161,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifydelete.png</normaloff>:/ui/icons/modifydelete.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifydelete.png</normaloff>:/extui/modifydelete.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bAttributes">
@@ -181,8 +181,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifyattributes.png</normaloff>:/ui/icons/modifyattributes.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifyattributes.png</normaloff>:/extui/modifyattributes.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMirror">
@@ -201,8 +201,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifymirror.png</normaloff>:/ui/icons/modifymirror.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifymirror.png</normaloff>:/extui/modifymirror.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bScale">
@@ -221,8 +221,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifyscale.png</normaloff>:/ui/icons/modifyscale.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifyscale.png</normaloff>:/extui/modifyscale.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bRotate">
@@ -241,8 +241,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifyrotate.png</normaloff>:/ui/icons/modifyrotate.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifyrotate.png</normaloff>:/extui/modifyrotate.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMove">
@@ -261,8 +261,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifymove.png</normaloff>:/ui/icons/modifymove.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifymove.png</normaloff>:/extui/modifymove.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMoveRotate">
@@ -281,8 +281,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifymoverotate.png</normaloff>:/ui/icons/modifymoverotate.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifymoverotate.png</normaloff>:/extui/modifymoverotate.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bRotate2">
@@ -301,8 +301,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifyrotate2.png</normaloff>:/ui/icons/modifyrotate2.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifyrotate2.png</normaloff>:/extui/modifyrotate2.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bTrim2">
@@ -321,8 +321,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifytrim2.png</normaloff>:/ui/icons/modifytrim2.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifytrim2.png</normaloff>:/extui/modifytrim2.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bCut">
@@ -341,8 +341,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifycut.png</normaloff>:/ui/icons/modifycut.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifycut.png</normaloff>:/extui/modifycut.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bExplode">
@@ -361,8 +361,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifyexplode.png</normaloff>:/ui/icons/modifyexplode.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifyexplode.png</normaloff>:/extui/modifyexplode.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bExplodeText">
@@ -381,8 +381,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifyexplodetext.png</normaloff>:/ui/icons/modifyexplodetext.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifyexplodetext.png</normaloff>:/extui/modifyexplodetext.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bEntity">
@@ -401,8 +401,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifyentity.png</normaloff>:/ui/icons/modifyentity.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifyentity.png</normaloff>:/extui/modifyentity.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bEntityText">
@@ -421,8 +421,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/modifytext.png</normaloff>:/ui/icons/modifytext.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/modifytext.png</normaloff>:/extui/modifytext.png</iconset>
    </property>
   </widget>
  </widget>
@@ -431,7 +431,7 @@
   <include location="local">qg_actionhandler.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

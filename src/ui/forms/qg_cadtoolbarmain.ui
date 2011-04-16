@@ -41,8 +41,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/menuline.png</normaloff>:/ui/icons/menuline.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/menuline.png</normaloff>:/extui/menuline.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuArc">
@@ -61,8 +61,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/menuarc.png</normaloff>:/ui/icons/menuarc.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/menuarc.png</normaloff>:/extui/menuarc.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuPoint">
@@ -81,8 +81,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/points.png</normaloff>:/ui/icons/points.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/points.png</normaloff>:/extui/points.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuSpline">
@@ -101,8 +101,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/menuspline.png</normaloff>:/ui/icons/menuspline.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/menuspline.png</normaloff>:/extui/menuspline.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuEllipse">
@@ -121,8 +121,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/menuellipse.png</normaloff>:/ui/icons/menuellipse.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/menuellipse.png</normaloff>:/extui/menuellipse.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuCircle">
@@ -141,8 +141,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/menucircle.png</normaloff>:/ui/icons/menucircle.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/menucircle.png</normaloff>:/extui/menucircle.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuText">
@@ -161,8 +161,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/menutext.png</normaloff>:/ui/icons/menutext.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/menutext.png</normaloff>:/extui/menutext.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuDim">
@@ -181,8 +181,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/dimhor.png</normaloff>:/ui/icons/dimhor.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/dimhor.png</normaloff>:/extui/dimhor.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuHatch">
@@ -201,8 +201,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/menuhatch.png</normaloff>:/ui/icons/menuhatch.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/menuhatch.png</normaloff>:/extui/menuhatch.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuImage">
@@ -221,8 +221,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/menuimage.png</normaloff>:/ui/icons/menuimage.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/menuimage.png</normaloff>:/extui/menuimage.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuModify">
@@ -241,8 +241,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/menuedit.png</normaloff>:/ui/icons/menuedit.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/menuedit.png</normaloff>:/extui/menuedit.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuInfo">
@@ -261,8 +261,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/menumeasure.png</normaloff>:/ui/icons/menumeasure.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/menumeasure.png</normaloff>:/extui/menumeasure.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuBlock">
@@ -281,8 +281,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/menublock.png</normaloff>:/ui/icons/menublock.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/menublock.png</normaloff>:/extui/menublock.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuSelect">
@@ -301,8 +301,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/menuselect.png</normaloff>:/ui/icons/menuselect.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/menuselect.png</normaloff>:/extui/menuselect.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuPolyline">
@@ -321,8 +321,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/menupolyline.png</normaloff>:/ui/icons/menupolyline.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/menupolyline.png</normaloff>:/extui/menupolyline.png</iconset>
    </property>
   </widget>
  </widget>
@@ -331,7 +331,7 @@
   <include location="local">qg_actionhandler.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -41,8 +41,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/ellipsearcsaxes.png</normaloff>:/ui/icons/ellipsearcsaxes.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/ellipsearcsaxes.png</normaloff>:/extui/ellipsearcsaxes.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bEllipseAxes">
@@ -61,8 +61,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/ellipsesaxes.png</normaloff>:/ui/icons/ellipsesaxes.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/ellipsesaxes.png</normaloff>:/extui/ellipsesaxes.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bBack">
@@ -81,8 +81,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
    </property>
   </widget>
  </widget>
@@ -91,7 +91,7 @@
   <include location="local">qg_actionhandler.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>
