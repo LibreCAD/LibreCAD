@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2010-2011 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -28,9 +28,6 @@
 
 #include <qpixmap.h>
 
-#include "ui/folderclosed.xpm"
-#include "ui/folderopen.xpm"
-
 /**
  * Constructor for list view items with a folder icon.
  */
@@ -43,7 +40,7 @@ QG_ListViewItem::QG_ListViewItem(QG_ListViewItem* par,
     this->label = label;
     this->id = id;
 
-    setPixmap(0, QPixmap((open ? folderopen_xpm : folderclosed_xpm)));
+    setPixmap(0, QPixmap((open ? QPixmap(":/uit/folderopen.png") : QPixmap(":/uit/folderclosed.png"))));
     setOpen(open);
 }
 
@@ -62,7 +59,7 @@ QG_ListViewItem::QG_ListViewItem(Q3ListView * par,
     this->label = label;
     this->id = id;
 
-    setPixmap(0, QPixmap((open ? folderopen_xpm : folderclosed_xpm)));
+    setPixmap(0, QPixmap((open ? QPixmap(":/uit/folderopen.png") : QPixmap(":/uit/folderclosed.png"))));
 
     setOpen(open);
 }
@@ -74,10 +71,10 @@ QG_ListViewItem::QG_ListViewItem(Q3ListView * par,
  */
 void QG_ListViewItem::setOpen(bool open) {
     if (open==true) {
-        setPixmap(0, QPixmap(folderopen_xpm));
+        setPixmap(0, QPixmap(QPixmap(":/uit/folderopen.png")));
 	}
     else {
-        setPixmap(0, QPixmap(folderclosed_xpm));
+        setPixmap(0, QPixmap(QPixmap(":/uit/folderclosed.png")));
 	}
 
     Q3ListViewItem::setOpen(open);
