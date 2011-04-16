@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2010-2011 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -39,35 +39,23 @@
 #include <QKeyEvent>
 #include <Q3VBoxLayout>
 
-#include "ui/layerstatus_00.xpm"
-#include "ui/layerstatus_01.xpm"
-#include "ui/layerstatus_10.xpm"
-#include "ui/layerstatus_11.xpm"
-#include "ui/visibleblock.xpm"
-#include "ui/hiddenblock.xpm"
-#include "ui/layeradd.xpm"
-#include "ui/layerremove.xpm"
-#include "ui/layeredit.xpm"
-
-
-
 /**
  * Constructor.
  */
 QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
                                const char* name, Qt::WFlags f)
         : QWidget(parent, name, f),
-        pxmLayerStatus00(layerstatus_00_xpm),
-        pxmLayerStatus01(layerstatus_01_xpm),
-        pxmLayerStatus10(layerstatus_10_xpm),
-        pxmLayerStatus11(layerstatus_11_xpm),
-        pxmVisible(visibleblock_xpm),
-        pxmHidden(hiddenblock_xpm),
-        pxmAdd(layeradd_xpm),
-        pxmRemove(layerremove_xpm),
-        pxmEdit(layeredit_xpm),
-        pxmDefreezeAll(visibleblock_xpm),
-        pxmFreezeAll(hiddenblock_xpm) {
+        pxmLayerStatus00(":ui/layerstatus_00.png"),
+        pxmLayerStatus01(":ui/layerstatus_01.png"),
+        pxmLayerStatus10(":ui/layerstatus_10.png"),
+        pxmLayerStatus11(":ui/layerstatus_11.png"),
+        pxmVisible(":ui/visibleblock.png"),
+        pxmHidden(":ui/hiddenblock.png"),
+        pxmAdd(":ui/layeradd.png"),
+        pxmRemove(":ui/layerremove.png"),
+        pxmEdit(":ui/layeredit.png"),
+        pxmDefreezeAll(":ui/visibleblock.png"),
+        pxmFreezeAll(":ui/hiddenblock.png") {
 
     actionHandler = ah;
     layerList = NULL;
