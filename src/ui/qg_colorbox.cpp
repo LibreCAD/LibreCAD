@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2010-2011 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -29,21 +29,6 @@
 #include <qcolordialog.h>
 #include <qpainter.h>
 #include <qpixmap.h>
-
-#include "ui/color00.xpm"
-#include "ui/color01.xpm"
-#include "ui/color02.xpm"
-#include "ui/color03.xpm"
-#include "ui/color04.xpm"
-#include "ui/color05.xpm"
-#include "ui/color06.xpm"
-#include "ui/color07.xpm"
-#include "ui/color08.xpm"
-#include "ui/color09.xpm"
-#include "ui/color11.xpm"
-#include "ui/color14.xpm"
-#include "ui/colorxx.xpm"
-
 
 /**
  * Default Constructor. You must call init manually if you choose
@@ -89,24 +74,23 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     this->showUnchanged = showUnchanged;
 
     if (showUnchanged) {
-		insertItem(QPixmap(color00_xpm), tr("Unchanged"));
+                insertItem(QPixmap(":/ui/color00.png"), tr("Unchanged"));
 	}
     if (showByLayer) {
-        insertItem(QPixmap(color00_xpm), tr("By Layer"));
-        insertItem(QPixmap(color00_xpm), tr("By Block"));
+        insertItem(QPixmap(":/ui/color00.png"), tr("By Layer"));
+        insertItem(QPixmap(":/ui/color00.png"), tr("By Block"));
     }
-    insertItem(QPixmap(color01_xpm), tr("Red"));
-    insertItem(QPixmap(color02_xpm), tr("Yellow"));
-    insertItem(QPixmap(color03_xpm), tr("Green"));
-    insertItem(QPixmap(color04_xpm), tr("Cyan"));
-    insertItem(QPixmap(color05_xpm), tr("Blue"));
-    insertItem(QPixmap(color06_xpm), tr("Magenta"));
-    insertItem(QPixmap(color07_xpm), tr("Black / White"));
-    insertItem(QPixmap(color08_xpm), tr("Gray"));
-    insertItem(QPixmap(color09_xpm), tr("Light Gray"));
-    //insertItem(QPixmap(color11_xpm), tr("11"));
-    //insertItem(QPixmap(color14_xpm), tr("14"));
-    insertItem(QPixmap(colorxx_xpm), tr("Others.."));
+
+    insertItem(QPixmap(":/ui/color01.png"), tr("Red"));
+    insertItem(QPixmap(":/ui/color02.png"), tr("Yellow"));
+    insertItem(QPixmap(":/ui/color03.png"), tr("Green"));
+    insertItem(QPixmap(":/ui/color04.png"), tr("Cyan"));
+    insertItem(QPixmap(":/ui/color05.png"), tr("Blue"));
+    insertItem(QPixmap(":/ui/color06.png"), tr("Magenta"));
+    insertItem(QPixmap(":/ui/color07.png"), tr("Black / White"));
+    insertItem(QPixmap(":/ui/color08.png"), tr("Gray"));
+    insertItem(QPixmap(":/ui/color09.png"), tr("Light Gray"));
+    insertItem(QPixmap(":/ui/colorxx.png"), tr("Others.."));
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotColorChanged(int)));
@@ -170,9 +154,9 @@ void QG_ColorBox::setLayerColor(const RS_Color& color) {
     if (showByLayer) {
         QPixmap pixmap;
         if (color==Qt::black || color==Qt::white) {
-            pixmap = color07_xpm;
+            pixmap = QPixmap(":/ui/color07.png");
         } else {
-            pixmap = color00_xpm;
+            pixmap = QPixmap(":/ui/color00.png");
             int w = pixmap.width();
             int h = pixmap.height();
             QPainter painter(&pixmap);
