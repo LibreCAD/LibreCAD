@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2010-2011 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -58,19 +58,6 @@
 #include "qg_dialogfactory.h"
 #include "qg_qt2rs.h"
 
-#ifndef __APPLE__
-#include "ui/cur_glass_bmp.xpm"
-#include "ui/cur_glass_mask.xpm"
-#include "ui/cur_cad_bmp.xpm"
-#include "ui/cur_cad_mask.xpm"
-#include "ui/cur_del_bmp.xpm"
-#include "ui/cur_del_mask.xpm"
-#include "ui/cur_select_bmp.xpm"
-#include "ui/cur_select_mask.xpm"
-#include "ui/cur_hand_bmp.xpm"
-#include "ui/cur_hand_mask.xpm"
-#endif
-
 
 #define QG_SCROLLMARGIN 400
 
@@ -116,28 +103,28 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WFlags f)
 #ifndef __APPLE__
     // Mouse Cursors:
     QBitmap bmp;
-    QPixmap cur1(cur_cad_bmp_xpm);
-    bmp = QPixmap(cur_cad_mask_xpm);
+    QPixmap cur1(":ui/cur_cad_bmp.png");
+    bmp = QPixmap(":ui/cur_cad_mask.png");
     cur1.setMask(bmp);
     curCad = new QCursor(cur1, 15, 15);
 
-    QPixmap cur2(cur_glass_bmp_xpm);
-    bmp = QPixmap(cur_glass_mask_xpm);
+    QPixmap cur2(":ui/cur_glass_bmp.png");
+    bmp = QPixmap(":ui/cur_glass_mask.png");
     cur2.setMask(bmp);
     curMagnifier = new QCursor(cur2, 12, 12);
 
-    QPixmap cur3(cur_del_bmp_xpm);
-    bmp = QPixmap(cur_del_mask_xpm);
+    QPixmap cur3(":ui/cur_del_bmp.png");
+    bmp = QPixmap(":ui/cur_del_mask.png");
     cur3.setMask(bmp);
     curDel = new QCursor(cur3, 15, 15);
 
-    QPixmap cur4(cur_select_bmp_xpm);
-    bmp = QPixmap(cur_select_mask_xpm);
+    QPixmap cur4(":ui/cur_select_bmp.png");
+    bmp = QPixmap(":ui/cur_select_mask.png");
     cur4.setMask(bmp);
     curSelect = new QCursor(cur4, 15, 15);
 
-    QPixmap cur5(cur_hand_bmp_xpm);
-    bmp = QPixmap(cur_hand_mask_xpm);
+    QPixmap cur5(":ui/cur_hand_bmp.png");
+    bmp = QPixmap(":ui/cur_hand_mask.png");
     cur5.setMask(bmp);
     curHand = new QCursor(cur5, 15, 15);
 #else
