@@ -74,8 +74,8 @@
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset resource="png/icons.qrc">
-         <normaloff>:/ui/icons/dlgmodifymoverotate.png</normaloff>:/ui/icons/dlgmodifymoverotate.png</iconset>
+        <iconset resource="../../../res/extui/extui.qrc">
+         <normaloff>:/extui/dlgmodifymoverotate.png</normaloff>:/extui/dlgmodifymoverotate.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -257,7 +257,7 @@
   <include location="local">rs_modification.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

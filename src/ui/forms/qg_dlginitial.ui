@@ -177,7 +177,7 @@ You can changes these settings later in the Options Dialog of QCad.</string>
   <include location="local">rs_units.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

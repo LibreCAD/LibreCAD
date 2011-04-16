@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0" stdsetdef="1">
-  <resources><include location="png/icons.qrc"/></resources><author></author>
+  <resources><include location="../../../res/extui/extui.qrc"/></resources><author></author>
   <comment></comment>
   <exportmacro></exportmacro>
   <class>QG_LineParallelOptions</class>

@@ -41,8 +41,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bAligned">
@@ -61,8 +61,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/dimaligned.png</normaloff>:/ui/icons/dimaligned.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/dimaligned.png</normaloff>:/extui/dimaligned.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bLinear">
@@ -81,8 +81,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/dimaligned.png</normaloff>:/ui/icons/dimaligned.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/dimaligned.png</normaloff>:/extui/dimaligned.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bLinearHor">
@@ -101,8 +101,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/dimhor.png</normaloff>:/ui/icons/dimhor.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/dimhor.png</normaloff>:/extui/dimhor.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bLinearVer">
@@ -121,8 +121,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/dimver.png</normaloff>:/ui/icons/dimver.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/dimver.png</normaloff>:/extui/dimver.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bRadial">
@@ -141,8 +141,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/dimradial.png</normaloff>:/ui/icons/dimradial.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/dimradial.png</normaloff>:/extui/dimradial.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bDiametric">
@@ -161,8 +161,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/dimdiametric.png</normaloff>:/ui/icons/dimdiametric.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/dimdiametric.png</normaloff>:/extui/dimdiametric.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bAngular">
@@ -181,8 +181,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/dimangular.png</normaloff>:/ui/icons/dimangular.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/dimangular.png</normaloff>:/extui/dimangular.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bLeader">
@@ -201,8 +201,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/dimleader.png</normaloff>:/ui/icons/dimleader.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/dimleader.png</normaloff>:/extui/dimleader.png</iconset>
    </property>
   </widget>
  </widget>
@@ -211,7 +211,7 @@
   <include location="local">qg_actionhandler.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

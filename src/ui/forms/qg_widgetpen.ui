@@ -169,7 +169,7 @@
   <include location="local">qg_widthbox.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -41,8 +41,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bNormal">
@@ -61,8 +61,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/linesnormal.png</normaloff>:/ui/icons/linesnormal.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/linesnormal.png</normaloff>:/extui/linesnormal.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bAngle">
@@ -81,8 +81,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/linesangle.png</normaloff>:/ui/icons/linesangle.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/linesangle.png</normaloff>:/extui/linesangle.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bHorizontal">
@@ -101,8 +101,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/lineshor.png</normaloff>:/ui/icons/lineshor.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/lineshor.png</normaloff>:/extui/lineshor.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bVertical">
@@ -121,8 +121,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/linesver.png</normaloff>:/ui/icons/linesver.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/linesver.png</normaloff>:/extui/linesver.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bRectangle">
@@ -141,8 +141,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/linesrect.png</normaloff>:/ui/icons/linesrect.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/linesrect.png</normaloff>:/extui/linesrect.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bBisector">
@@ -161,8 +161,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/linesbisector.png</normaloff>:/ui/icons/linesbisector.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/linesbisector.png</normaloff>:/extui/linesbisector.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bParallel">
@@ -181,8 +181,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/linespara.png</normaloff>:/ui/icons/linespara.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/linespara.png</normaloff>:/extui/linespara.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bTangent1">
@@ -201,8 +201,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/linestan1.png</normaloff>:/ui/icons/linestan1.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/linestan1.png</normaloff>:/extui/linestan1.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bTangent2">
@@ -221,8 +221,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/linestan2.png</normaloff>:/ui/icons/linestan2.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/linestan2.png</normaloff>:/extui/linestan2.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bOrthogonal">
@@ -241,8 +241,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/linesorthogonal.png</normaloff>:/ui/icons/linesorthogonal.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/linesorthogonal.png</normaloff>:/extui/linesorthogonal.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bRelAngle">
@@ -261,8 +261,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/linesrelativeangle.png</normaloff>:/ui/icons/linesrelativeangle.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/linesrelativeangle.png</normaloff>:/extui/linesrelativeangle.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bPolygon">
@@ -281,8 +281,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/linespolygon.png</normaloff>:/ui/icons/linespolygon.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/linespolygon.png</normaloff>:/extui/linespolygon.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bPolygon2">
@@ -301,8 +301,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/linespolygon2.png</normaloff>:/ui/icons/linespolygon2.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/linespolygon2.png</normaloff>:/extui/linespolygon2.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bFree">
@@ -321,8 +321,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/linesfree.png</normaloff>:/ui/icons/linesfree.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/linesfree.png</normaloff>:/extui/linesfree.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bParallelThrough">
@@ -341,8 +341,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/linesparathrough.png</normaloff>:/ui/icons/linesparathrough.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/linesparathrough.png</normaloff>:/extui/linesparathrough.png</iconset>
    </property>
   </widget>
  </widget>
@@ -351,7 +351,7 @@
   <include location="local">qg_actionhandler.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

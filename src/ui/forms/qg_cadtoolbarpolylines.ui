@@ -41,8 +41,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bPolyline">
@@ -61,8 +61,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/polyline.png</normaloff>:/ui/icons/polyline.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/polyline.png</normaloff>:/extui/polyline.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bPolylineTrim">
@@ -81,8 +81,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/polylinetrim.png</normaloff>:/ui/icons/polylinetrim.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/polylinetrim.png</normaloff>:/extui/polylinetrim.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bPolylineDelBetween">
@@ -101,8 +101,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/polylinedelbetween.png</normaloff>:/ui/icons/polylinedelbetween.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/polylinedelbetween.png</normaloff>:/extui/polylinedelbetween.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bPolylineDel">
@@ -121,8 +121,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/polylinedel.png</normaloff>:/ui/icons/polylinedel.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/polylinedel.png</normaloff>:/extui/polylinedel.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bPolylineAdd">
@@ -141,8 +141,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/polylineadd.png</normaloff>:/ui/icons/polylineadd.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/polylineadd.png</normaloff>:/extui/polylineadd.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bPolylineAppend">
@@ -161,8 +161,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/polylineappend.png</normaloff>:/ui/icons/polylineappend.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/polylineappend.png</normaloff>:/extui/polylineappend.png</iconset>
    </property>
   </widget>
  </widget>
@@ -171,7 +171,7 @@
   <include location="local">qg_actionhandler.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>
