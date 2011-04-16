@@ -66,8 +66,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="png/icons.qrc">
-       <normaloff>:/ui/icons/printbw.png</normaloff>:/ui/icons/printbw.png</iconset>
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/printbw.png</normaloff>:/extui/printbw.png</iconset>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -89,8 +89,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="png/icons.qrc">
-       <normaloff>:/ui/icons/printcenter.png</normaloff>:/ui/icons/printcenter.png</iconset>
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/printcenter.png</normaloff>:/extui/printcenter.png</iconset>
      </property>
     </widget>
    </item>
@@ -109,8 +109,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="png/icons.qrc">
-       <normaloff>:/ui/icons/printfit.png</normaloff>:/ui/icons/printfit.png</iconset>
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/printfit.png</normaloff>:/extui/printfit.png</iconset>
      </property>
     </widget>
    </item>
@@ -140,7 +140,7 @@
   <include location="local">rs_actionprintpreview.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

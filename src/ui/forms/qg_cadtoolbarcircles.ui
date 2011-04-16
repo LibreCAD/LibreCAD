@@ -41,8 +41,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/circles2p.png</normaloff>:/ui/icons/circles2p.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/circles2p.png</normaloff>:/extui/circles2p.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bCircleCR">
@@ -61,8 +61,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/circlescr.png</normaloff>:/ui/icons/circlescr.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/circlescr.png</normaloff>:/extui/circlescr.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bCircle">
@@ -81,8 +81,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/circles.png</normaloff>:/ui/icons/circles.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/circles.png</normaloff>:/extui/circles.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bCircle3P">
@@ -101,8 +101,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/circles3p.png</normaloff>:/ui/icons/circles3p.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/circles3p.png</normaloff>:/extui/circles3p.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bBack">
@@ -121,8 +121,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bCircleParallel">
@@ -141,8 +141,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/circlespara.png</normaloff>:/ui/icons/circlespara.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/circlespara.png</normaloff>:/extui/circlespara.png</iconset>
    </property>
   </widget>
  </widget>
@@ -159,7 +159,7 @@
   <include location="local">qg_actionhandler.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

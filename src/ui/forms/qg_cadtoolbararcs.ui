@@ -41,8 +41,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bArcParallel">
@@ -61,8 +61,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/arcspara.png</normaloff>:/ui/icons/arcspara.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/arcspara.png</normaloff>:/extui/arcspara.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bArc">
@@ -81,8 +81,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/arcscraa.png</normaloff>:/ui/icons/arcscraa.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/arcscraa.png</normaloff>:/extui/arcscraa.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bArc3P">
@@ -101,8 +101,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/arcs3p.png</normaloff>:/ui/icons/arcs3p.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/arcs3p.png</normaloff>:/extui/arcs3p.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bArcTangential">
@@ -121,8 +121,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/arcstangential.png</normaloff>:/ui/icons/arcstangential.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/arcstangential.png</normaloff>:/extui/arcstangential.png</iconset>
    </property>
   </widget>
  </widget>
@@ -137,7 +137,7 @@
   <include location="local">qg_actionhandler.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

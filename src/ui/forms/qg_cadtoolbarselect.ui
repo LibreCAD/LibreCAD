@@ -41,8 +41,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/selectall.png</normaloff>:/ui/icons/selectall.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/selectall.png</normaloff>:/extui/selectall.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bBack">
@@ -61,8 +61,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/back.png</normaloff>:/ui/icons/back.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bInters">
@@ -81,8 +81,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/selectinters.png</normaloff>:/ui/icons/selectinters.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/selectinters.png</normaloff>:/extui/selectinters.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bUnInters">
@@ -101,8 +101,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/deselectinters.png</normaloff>:/ui/icons/deselectinters.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/deselectinters.png</normaloff>:/extui/deselectinters.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bUnAll">
@@ -121,8 +121,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/selectnothing.png</normaloff>:/ui/icons/selectnothing.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/selectnothing.png</normaloff>:/extui/selectnothing.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bInvert">
@@ -141,8 +141,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/selectinvert.png</normaloff>:/ui/icons/selectinvert.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/selectinvert.png</normaloff>:/extui/selectinvert.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bLayer">
@@ -161,8 +161,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/selectlayer.png</normaloff>:/ui/icons/selectlayer.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/selectlayer.png</normaloff>:/extui/selectlayer.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bContour">
@@ -181,8 +181,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/selectcontour.png</normaloff>:/ui/icons/selectcontour.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/selectcontour.png</normaloff>:/extui/selectcontour.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bSingle">
@@ -201,8 +201,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/selectsingle.png</normaloff>:/ui/icons/selectsingle.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/selectsingle.png</normaloff>:/extui/selectsingle.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bUnWindow">
@@ -221,8 +221,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/deselectwindow.png</normaloff>:/ui/icons/deselectwindow.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/deselectwindow.png</normaloff>:/extui/deselectwindow.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bWindow">
@@ -241,8 +241,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/selectwindow.png</normaloff>:/ui/icons/selectwindow.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/selectwindow.png</normaloff>:/extui/selectwindow.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bDoit">
@@ -261,8 +261,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="png/icons.qrc">
-     <normaloff>:/ui/icons/forward.png</normaloff>:/ui/icons/forward.png</iconset>
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/forward.png</normaloff>:/extui/forward.png</iconset>
    </property>
   </widget>
  </widget>
@@ -272,7 +272,7 @@
   <include location="local">qg_actionhandler.h</include>
  </includes>
  <resources>
-  <include location="png/icons.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>
