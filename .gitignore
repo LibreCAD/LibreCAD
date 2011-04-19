@@ -1,0 +1,14 @@
+# Apple generated directories
+LibreCAD.app/
+LibreCAD.pbproj/
+Info.plist
+
+# Unix generated directories (except Apple)
+unix/
+
+# All platforms generated directories and files
+*.qm
+intermediate/
+Makefile
+qmake_image_collection.cpp
+librecad.pro.user
