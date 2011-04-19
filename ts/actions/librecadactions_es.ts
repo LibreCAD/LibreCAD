@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="es_AR">
 <context>
     <name>RS_ActionBlocksAdd</name>
     <message>
@@ -145,7 +147,7 @@
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -538,31 +540,31 @@
     <name>RS_ActionDrawArcTangential</name>
     <message>
         <source>Arc: Tangential</source>
-        <translation type="unfinished">Acro: Tangente</translation>
+        <translation>Acro: Tangente</translation>
     </message>
     <message>
         <source>&amp;Tangential</source>
-        <translation type="unfinished">Tangente</translation>
+        <translation>Tangente</translation>
     </message>
     <message>
         <source>Draw arcs tangential to base entity</source>
-        <translation type="unfinished">Dibujar Arco tangente sobre objeto</translation>
+        <translation>Dibujar Arco tangente sobre objeto</translation>
     </message>
     <message>
         <source>Specify base entity</source>
-        <translation type="unfinished">Especificar objeto</translation>
+        <translation>Especificar objeto</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation type="unfinished">Especificar ángulo final</translation>
+        <translation>Especificar ángulo final</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -784,11 +786,11 @@
     </message>
     <message>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation type="unfinished">Área de sombreado no válida, verifique que el objeto este cerrado</translation>
+        <translation>Área de sombreado no válida, verifique que el objeto este cerrado</translation>
     </message>
     <message>
         <source>Hatch created successfully.</source>
-        <translation type="unfinished">Sombreado realizado</translation>
+        <translation>Sombreado realizado</translation>
     </message>
 </context>
 <context>
@@ -827,7 +829,7 @@
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1155,7 +1157,7 @@
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1446,39 +1448,39 @@
     <name>RS_ActionDrawSpline</name>
     <message>
         <source>Spline</source>
-        <translation type="unfinished">Curva</translation>
+        <translation>Curva</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished">Curva</translation>
+        <translation>Curva</translation>
     </message>
     <message>
         <source>Draw splines</source>
-        <translation type="unfinished">Dibujar Curvas</translation>
+        <translation>Dibujar Curvas</translation>
     </message>
     <message>
         <source>Specify first control point</source>
-        <translation type="unfinished">Especificar primer punto</translation>
+        <translation>Especificar primer punto</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished">Especificar próximo punto o [%1]</translation>
+        <translation>Especificar próximo punto o [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation type="unfinished">Especificar siguiente punto de referencia</translation>
+        <translation>Especificar siguiente punto de referencia</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">No puede deshacer: No hay suficientes Objetos definidos.</translation>
+        <translation>No puede deshacer: No hay suficientes Objetos definidos.</translation>
     </message>
 </context>
 <context>
@@ -1700,43 +1702,43 @@
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation type="unfinished">Área poligonal</translation>
+        <translation>Área poligonal</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
-        <translation type="unfinished">Área poligonal</translation>
+        <translation>Área poligonal</translation>
     </message>
     <message>
         <source>Measures the area of a polygon</source>
-        <translation type="unfinished">Dimensiones del area poligonal</translation>
+        <translation>Dimensiones del area poligonal</translation>
     </message>
     <message>
         <source>Area: %1</source>
-        <translation type="unfinished">Área: %1</translation>
+        <translation>Área: %1</translation>
     </message>
     <message>
         <source>Circumference: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Point: %1/%2</source>
-        <translation type="unfinished">Punto: %1/%2</translation>
+        <translation>Punto: %1/%2</translation>
     </message>
     <message>
         <source>Specify first point of polygon</source>
-        <translation type="unfinished">Especificar primer punto del polígono</translation>
+        <translation>Especificar primer punto del polígono</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify next point of polygon</source>
-        <translation type="unfinished">Especificar siguiente punto del polígono</translation>
+        <translation>Especificar siguiente punto del polígono</translation>
     </message>
     <message>
         <source>Terminate</source>
-        <translation type="unfinished">Finalizar</translation>
+        <translation>Finalizar</translation>
     </message>
 </context>
 <context>
@@ -1989,11 +1991,11 @@
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="unfinished">No se puede abrir el archivo &apos;%1&apos;</translation>
+        <translation>No se puede abrir el archivo &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -2159,35 +2161,35 @@
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished">Los objetos no estan en la misma polilinea</translation>
+        <translation>Los objetos no estan en la misma polilinea</translation>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
-        <translation type="unfinished">El resultado del segundo objeto no es una polilinea</translation>
+        <translation>El resultado del segundo objeto no es una polilinea</translation>
     </message>
     <message>
         <source>Parent of second entity is NULL</source>
-        <translation type="unfinished">El resultado del segundo objeto no es válido</translation>
+        <translation>El resultado del segundo objeto no es válido</translation>
     </message>
     <message>
         <source>One of the chosen entities is NULL</source>
-        <translation type="unfinished">Uno de los objetos no es válido</translation>
+        <translation>Uno de los objetos no es válido</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished">El resultado del primer objeto no es una polilinea</translation>
+        <translation>El resultado del primer objeto no es una polilinea</translation>
     </message>
     <message>
         <source>Parent of first entity is NULL</source>
-        <translation type="unfinished">El resultado del segundo objeto no es válido</translation>
+        <translation>El resultado del segundo objeto no es válido</translation>
     </message>
     <message>
         <source>First entity is NULL</source>
-        <translation type="unfinished">El primer objeto no es válido</translation>
+        <translation>El primer objeto no es válido</translation>
     </message>
     <message>
         <source>Second entity is NULL</source>
-        <translation type="unfinished"> El segundo objeto no es válido</translation>
+        <translation> El segundo objeto no es válido</translation>
     </message>
 </context>
 <context>
@@ -2916,15 +2918,15 @@
     <name>RS_ActionZoomAuto</name>
     <message>
         <source>Auto Zoom</source>
-        <translation>Acercamiento</translation>
+        <translation>Ajustar todo</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation>&amp;Acercamiento</translation>
+        <translation>&amp;Ajustar todo</translation>
     </message>
     <message>
         <source>Zooms automatic</source>
-        <translation>Acercamiento</translation>
+        <translation>Ajustar todo</translation>
     </message>
 </context>
 <context>
@@ -2958,7 +2960,7 @@
     <name>RS_ActionZoomPan</name>
     <message>
         <source>Pan Zoom</source>
-        <translation>Acercar pantalla</translation>
+        <translation>Arrastrar pantalla</translation>
     </message>
     <message>
         <source>&amp;Pan Zoom</source>
@@ -2973,15 +2975,15 @@
     <name>RS_ActionZoomPrevious</name>
     <message>
         <source>Previous View</source>
-        <translation type="unfinished">Previsualización</translation>
+        <translation>Previsualización</translation>
     </message>
     <message>
         <source>&amp;Previous View</source>
-        <translation type="unfinished">Previsualización</translation>
+        <translation>Previsualización</translation>
     </message>
     <message>
         <source>Shows previous view</source>
-        <translation type="unfinished">Mostrar Previsualización</translation>
+        <translation>Mostrar Previsualización</translation>
     </message>
 </context>
 <context>
@@ -2999,7 +3001,7 @@
     <name>RS_ActionZoomWindow</name>
     <message>
         <source>Window Zoom</source>
-        <translation>Ampliar ventana</translation>
+        <translation>Ampliar selección</translation>
     </message>
     <message>
         <source>&amp;Window Zoom</source>
