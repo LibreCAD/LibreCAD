@@ -1,21 +1,21 @@
 <assistantconfig version="3.2.0">
   <profile>
-    <property name="name">QCadManual</property>
+    <property name="name">LibreCADManual</property>
 
-    <property name="title">QCad Manual</property>
+    <property name="title">LibreCAD Manual</property>
 
-    <property name="applicationicon">imgs/qcadicon.png</property>
+    <property name="applicationicon">imgs/LibreCADicon.png</property>
 
     <property name="startpage">index.html</property>
 
-    <property name="aboutmenutext">About QCad Manual</property>
+    <property name="aboutmenutext">About LibreCAD Manual</property>
 
     <property name="abouturl">about.txt</property>
 
     <property name="assistantdocs">.</property>
   </profile>
 
-  <DCF ref="index.html" icon="imgs/manual.png" title="QCad Manual">
+  <DCF ref="index.html" icon="imgs/manual.png" title="LibreCAD Manual">
     <section ref="index.html" title="Home">
     </section>
 
@@ -52,25 +52,25 @@
 
       <keyword ref="preface.html#2_2">CAD - For the Uninitiated</keyword>
 
-      <section ref="preface.html#2_3" title="Is QCad for me?">
+      <section ref="preface.html#2_3" title="Is LibreCAD for me?">
       </section>
 
-      <keyword ref="preface.html#2_3">Is QCad for me?</keyword>
+      <keyword ref="preface.html#2_3">Is LibreCAD for me?</keyword>
 
-      <section ref="preface.html#2_4" title="Who Is Behind QCad?">
+      <section ref="preface.html#2_4" title="Who Is Behind LibreCAD?">
       </section>
 
-      <keyword ref="preface.html#2_4">Who Is Behind QCad?</keyword>
+      <keyword ref="preface.html#2_4">Who Is Behind LibreCAD?</keyword>
 
-      <section ref="preface.html#2_5" title="How can I get QCad?">
+      <section ref="preface.html#2_5" title="How can I get LibreCAD?">
       </section>
 
-      <keyword ref="preface.html#2_5">How can I get QCad?</keyword>
+      <keyword ref="preface.html#2_5">How can I get LibreCAD?</keyword>
 
-      <section ref="preface.html#2_6" title="QCad and Qt">
+      <section ref="preface.html#2_6" title="LibreCAD and Qt">
       </section>
 
-      <keyword ref="preface.html#2_6">QCad and Qt</keyword>
+      <keyword ref="preface.html#2_6">LibreCAD and Qt</keyword>
     </section>
 
     <section ref="basics.html" title="3 Basic CAD Concepts">
@@ -150,8 +150,8 @@
       <keyword ref="basics.html#3_9">Viewing in CAD</keyword>
     </section>
 
-    <section ref="start.html" title="4 Starting a QCad Session">
-      <keyword ref="start.html">Starting a QCad Session</keyword>
+    <section ref="start.html" title="4 Starting a LibreCAD Session">
+      <keyword ref="start.html">Starting a LibreCAD Session</keyword>
 
       <section ref="start.html#4_1" title="Windows Operating Systems">
       </section>
@@ -169,8 +169,8 @@
       <keyword ref="start.html#4_3">Mac OS X Operating System</keyword>
     </section>
 
-    <section ref="gui.html" title="5 QCad's User Interface">
-      <keyword ref="gui.html">QCad's User Interface</keyword>
+    <section ref="gui.html" title="5 LibreCAD's User Interface">
+      <keyword ref="gui.html">LibreCAD's User Interface</keyword>
 
       <section ref="gui.html#5_1" title="Main Application Window">
       </section>
@@ -1101,20 +1101,20 @@
 
       <keyword ref="appendix_papers.html#20_6_2">Other Formats</keyword>
 
-      <section ref="appendix_qcad1.html#20_7" title="Migration from QCad 1">
+      <section ref="appendix_LibreCAD1.html#20_7" title="Migration from LibreCAD 1">
       </section>
 
-      <keyword ref="appendix_qcad1.html#20_7">Migration from QCad 1</keyword>
+      <keyword ref="appendix_LibreCAD1.html#20_7">Migration from LibreCAD 1</keyword>
 
-      <section ref="appendix_qcad1.html#20_7_1" title="DXF Compatibility">
+      <section ref="appendix_LibreCAD1.html#20_7_1" title="DXF Compatibility">
       </section>
 
-      <keyword ref="appendix_qcad1.html#20_7_1">DXF Compatibility</keyword>
+      <keyword ref="appendix_LibreCAD1.html#20_7_1">DXF Compatibility</keyword>
 
-      <section ref="appendix_qcad1.html#20_7_2" title="Layer Handling">
+      <section ref="appendix_LibreCAD1.html#20_7_2" title="Layer Handling">
       </section>
 
-      <keyword ref="appendix_qcad1.html#20_7_2">Layer Handling</keyword>
+      <keyword ref="appendix_LibreCAD1.html#20_7_2">Layer Handling</keyword>
 
       <section ref="appendix_bib.html#20_8" title="Bibliography">
       </section>
