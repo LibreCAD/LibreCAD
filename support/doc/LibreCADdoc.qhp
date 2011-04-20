@@ -1,0 +1,845 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+    <namespace>LibreCAD.org</namespace>
+    <virtualFolder>librecad</virtualFolder>
+    <filterSection>
+        <toc>
+            <section title="LibreCAD Manual" ref="index.html">
+                <section title="Home" ref="index.html"/>
+                <section title="1 License" ref="license.html">
+                    <section title="Copyright" ref="license.html#1_1"/>
+                    <section title="Trademarks" ref="license.html#1_2"/>
+                    <section title="The GNU General Public License" ref="license.html#1_3"/>
+                </section>
+                <section title="2 Preface" ref="preface.html">
+                    <section title="Scope of This Manual" ref="preface.html#2_1"/>
+                    <section title="CAD - For the Uninitiated" ref="preface.html#2_2"/>
+                    <section title="Is LibreCAD for me?" ref="preface.html#2_3"/>
+                    <section title="Who Is Behind LibreCAD?" ref="preface.html#2_4"/>
+                    <section title="How can I get LibreCAD?" ref="preface.html#2_5"/>
+                    <section title="LibreCAD and Qt" ref="preface.html#2_6"/>
+                </section>
+                <section title="3 Basic CAD Concepts" ref="basics.html">
+                    <section title="Entities" ref="basics.html#3_1"/>
+                    <section title="Attributes" ref="basics.html#3_2"/>
+                    <section title="Layers" ref="basics.html#3_3"/>
+                    <section title="Blocks" ref="basics.html#3_4"/>
+                    <section title="Drafting in CAD" ref="basics.html#3_5"/>
+                    <section title="Co-ordinate Systems" ref="basics.html#3_6"/>
+                    <section title="Origin" ref="basics.html#3_6_1"/>
+                    <section title="Cartesian Co-ordinates" ref="basics.html#3_6_2"/>
+                    <section title="Polar Co-ordinates" ref="basics.html#3_6_3"/>
+                    <section title="Object and Grid Snapping" ref="basics.html#3_7"/>
+                    <section title="Basic Editing" ref="basics.html#3_8"/>
+                    <section title="Entity Selection" ref="basics.html#3_8_1"/>
+                    <section title="Deletion" ref="basics.html#3_8_2"/>
+                    <section title="Modifications" ref="basics.html#3_8_3"/>
+                    <section title="Viewing in CAD" ref="basics.html#3_9"/>
+                </section>
+                <section title="4 Starting a LibreCAD Session" ref="start.html">
+                    <section title="Windows Operating Systems" ref="start.html#4_1"/>
+                    <section title="Linux / Unix Operating Systems" ref="start.html#4_2"/>
+                    <section title="Mac OS X Operating System" ref="start.html#4_3"/>
+                </section>
+                <section title="5 LibreCAD's User Interface" ref="gui.html">
+                    <section title="Main Application Window" ref="gui.html#5_1"/>
+                    <section title="Menu and CAD Toolbar" ref="gui.html#5_2"/>
+                    <section title="Layer- and Block List" ref="gui.html#5_3"/>
+                    <section title="Status Bar" ref="gui.html#5_4"/>
+                    <section title="Command Widget" ref="gui.html#5_5"/>
+                    <section title="Option Toolbar" ref="gui.html#5_6"/>
+                    <section title="Executing Commands" ref="gui.html#5_7"/>
+                    <section title="Modes" ref="gui.html#5_8"/>
+                    <section title="Command Mode" ref="gui.html#5_8_1"/>
+                    <section title="Normal Mode" ref="gui.html#5_8_2"/>
+                </section>
+                <section title="6 Command Line" ref="commandline.html">
+                    <section title="A Word About Keyboard Focus" ref="commandline.html#6_1"/>
+                </section>
+                <section title="7 File Handling" ref="file.html">
+                    <section title="Create New Drawings" ref="file.html#7_1"/>
+                    <section title="Opening Drawings" ref="file.html#7_2"/>
+                    <section title="Saving Drawings" ref="file.html#7_3"/>
+                    <section title="Exporting Drawings as Bitmaps" ref="file.html#7_4"/>
+                    <section title="Closing Drawings" ref="file.html#7_5"/>
+                </section>
+                <section title="8 Printing" ref="printing.html">
+                    <section title="Print Preview" ref="printing.html#8_1"/>
+                    <section title="Print" ref="printing.html#8_2"/>
+                    <section title="Printing to Files" ref="printing.html#8_2_1"/>
+                </section>
+                <section title="9 Basic Editing Commands" ref="edit.html">
+                    <section title="Undo" ref="edit.html#9_1"/>
+                    <section title="Redo" ref="edit.html#9_2"/>
+                    <section title="Copy" ref="edit.html#9_3"/>
+                    <section title="Cut" ref="edit.html#9_4"/>
+                    <section title="Paste" ref="edit.html#9_5"/>
+                </section>
+                <section title="10 Viewing" ref="view.html">
+                    <section title="Scrolling" ref="view.html#10_1"/>
+                    <section title="Redrawing" ref="view.html#10_2"/>
+                    <section title="Zooming In / Out" ref="view.html#10_3"/>
+                    <section title="Auto Zoom" ref="view.html#10_4"/>
+                    <section title="Window Zoom" ref="view.html#10_5"/>
+                    <section title="Panning" ref="view.html#10_6"/>
+                </section>
+                <section title="11 Layers" ref="layers.html">
+                    <section title="Changing the Visibility of a Layer" ref="layers.html#11_1"/>
+                    <section title="Changing the Visibility of all Layers" ref="layers.html#11_2"/>
+                    <section title="Adding New Layers" ref="layers.html#11_3"/>
+                    <section title="Deleting Layers" ref="layers.html#11_4"/>
+                    <section title="Editing Layer Attributes" ref="layers.html#11_5"/>
+                </section>
+                <section title="12 Blocks" ref="blocks.html">
+                    <section title="Changing the Visibility of a Block" ref="blocks.html#12_1"/>
+                    <section title="Changing the Visibility of all Blocks" ref="blocks.html#12_2"/>
+                    <section title="Adding New Blocks" ref="blocks.html#12_3"/>
+                    <section title="Removing Blocks" ref="blocks.html#12_4"/>
+                    <section title="Renaming Blocks" ref="blocks.html#12_5"/>
+                    <section title="Editing Blocks" ref="blocks.html#12_6"/>
+                    <section title="Inserting Blocks" ref="blocks.html#12_7"/>
+                    <section title="Creating Blocks from Existing Entities" ref="blocks.html#12_8"/>
+                </section>
+                <section title="13 Object Snap" ref="snapping.html">
+                    <section title="Free Positioning" ref="snapping.html#13_1"/>
+                    <section title="Snap to Grid" ref="snapping.html#13_2"/>
+                    <section title="Snap to Endpoints" ref="snapping.html#13_3"/>
+                    <section title="Snap to Points on Entities" ref="snapping.html#13_4"/>
+                    <section title="Snap to Centers" ref="snapping.html#13_5"/>
+                    <section title="Snap to Middle Points" ref="snapping.html#13_6"/>
+                    <section title="Snap to Distance Points" ref="snapping.html#13_7"/>
+                    <section title="Snap to Intersections" ref="snapping.html#13_8"/>
+                    <section title="Snap to Intersections Manually" ref="snapping.html#13_9"/>
+                    <section title="Snap Restrictions" ref="snapping.html#13_10"/>
+                    <section title="Restrict Nothing" ref="snapping.html#13_10_1"/>
+                    <section title="Restrict Orthogonally" ref="snapping.html#13_10_2"/>
+                    <section title="Restrict Horizontally" ref="snapping.html#13_10_3"/>
+                    <section title="Restrict Vertically" ref="snapping.html#13_10_4"/>
+                    <section title="Relative Zero Point" ref="snapping.html#13_11"/>
+                    <section title="Moving the Relative Zero Point" ref="snapping.html#13_11_1"/>
+                    <section title="(Un-)locking the Relative Zero Point" ref="snapping.html#13_11_2"/>
+                </section>
+                <section title="14 Entity Drawing Commands" ref="construction.html">
+                    <section title="Points" ref="construction_point.html#14_1"/>
+                    <section title="Single Points" ref="construction_point.html#14_1_1"/>
+                    <section title="Lines" ref="construction_line.html#14_2"/>
+                    <section title="Sequence Of Lines" ref="construction_line.html#14_2_1"/>
+                    <section title="Line With Given Angle" ref="construction_line.html#14_2_2"/>
+                    <section title="Horizontal / Vertical Line" ref="construction_line.html#14_2_3"/>
+                    <section title="Rectangle" ref="construction_line.html#14_2_4"/>
+                    <section title="Parallel" ref="construction_line.html#14_2_5"/>
+                    <section title="Bisector" ref="construction_line.html#14_2_6"/>
+                    <section title="Tangent From Point to Arc / Circle" ref="construction_line.html#14_2_7"/>
+                    <section title="Tangent From Arc to Arc / Circle to Circle" ref="construction_line.html#14_2_8"/>
+                    <section title="Line Orthogonal to Another Entity" ref="construction_line.html#14_2_9"/>
+                    <section title="Line with Relative Angle to Another Entity" ref="construction_line.html#14_2_10"/>
+                    <section title="Freehand Line" ref="construction_line.html#14_2_11"/>
+                    <section title="Polygon with Center and Corner" ref="construction_line.html#14_2_12"/>
+                    <section title="Polygon with Two Corners" ref="construction_line.html#14_2_13"/>
+                    <section title="Arcs" ref="construction_arc.html#14_3"/>
+                    <section title="Arc with Center, Radius and Angles" ref="construction_arc.html#14_3_1"/>
+                    <section title="Arc with 3 Points" ref="construction_arc.html#14_3_2"/>
+                    <section title="Parallel Arc" ref="construction_arc.html#14_3_3"/>
+                    <section title="Circles" ref="construction_circle.html#14_4"/>
+                    <section title="Circle with Center and Point" ref="construction_circle.html#14_4_1"/>
+                    <section title="Circle with Center and Radius" ref="construction_circle.html#14_4_2"/>
+                    <section title="Circle with 2 Points" ref="construction_circle.html#14_4_3"/>
+                    <section title="Circle with 3 Points" ref="construction_circle.html#14_4_4"/>
+                    <section title="Concentric Circle" ref="construction_circle.html#14_4_5"/>
+                    <section title="Ellipses" ref="construction_ellipse.html#14_5"/>
+                    <section title="Full Ellipse" ref="construction_ellipse.html#14_5_1"/>
+                    <section title="Ellipse Arc" ref="construction_ellipse.html#14_5_2"/>
+                    <section title="Text" ref="construction_text.html#14_6"/>
+                    <section title="Advanced Text Commands" ref="construction_text.html#14_6_1"/>
+                    <section title="Dimensions" ref="construction_dim.html#14_7"/>
+                    <section title="Aligned Dimension" ref="construction_dim.html#14_7_1"/>
+                    <section title="Linear Dimensions" ref="construction_dim.html#14_7_2"/>
+                    <section title="Horizontal / Vertical Dimensions" ref="construction_dim.html#14_7_3"/>
+                    <section title="Radial Dimensions" ref="construction_dim.html#14_7_4"/>
+                    <section title="Diametric Dimensions" ref="construction_dim.html#14_7_5"/>
+                    <section title="Angular Dimensions" ref="construction_dim.html#14_7_6"/>
+                    <section title="Leader" ref="construction_dim.html#14_7_7"/>
+                    <section title="Hatches and Solid Fills" ref="construction_hatch.html#14_8"/>
+                    <section title="Images" ref="construction_image.html#14_9"/>
+                </section>
+                <section title="15 Entity Selection" ref="selection.html">
+                    <section title="Deselecting All" ref="selection.html#15_1"/>
+                    <section title="Selecting All" ref="selection.html#15_2"/>
+                    <section title="Selecting Single Entities" ref="selection.html#15_3"/>
+                    <section title="Selecting Contours" ref="selection.html#15_4"/>
+                    <section title="Window Deselection" ref="selection.html#15_5"/>
+                    <section title="Window Selection" ref="selection.html#15_6"/>
+                    <section title="Inverting Selection" ref="selection.html#15_7"/>
+                    <section title="Deselect Intersected Entities" ref="selection.html#15_8"/>
+                    <section title="Select Intersected Entities" ref="selection.html#15_9"/>
+                </section>
+                <section title="16 Modification" ref="modification.html">
+                    <section title="Move" ref="modification.html#16_1"/>
+                    <section title="Rotate" ref="modification.html#16_2"/>
+                    <section title="Scale" ref="modification.html#16_3"/>
+                    <section title="Mirror" ref="modification.html#16_4"/>
+                    <section title="Move and Rotate" ref="modification.html#16_5"/>
+                    <section title="Rotate and Counter-rotate (Rotate 2)" ref="modification.html#16_6"/>
+                    <section title="Trim / Extend" ref="modification.html#16_7"/>
+                    <section title="Trim Two Entities" ref="modification.html#16_8"/>
+                    <section title="Lengthen" ref="modification.html#16_9"/>
+                    <section title="Bevel" ref="modification.html#16_10"/>
+                    <section title="Round" ref="modification.html#16_11"/>
+                    <section title="Divide" ref="modification.html#16_12"/>
+                    <section title="Stretch" ref="modification.html#16_13"/>
+                    <section title="Properties" ref="modification.html#16_14"/>
+                    <section title="Attributes" ref="modification.html#16_15"/>
+                    <section title="Deleting Entities" ref="modification.html#16_16"/>
+                    <section title="Exploding Groups" ref="modification.html#16_17"/>
+                </section>
+                <section title="17 Getting Measurements" ref="information.html">
+                    <section title="Distance (Point, Point)" ref="information.html#17_1"/>
+                    <section title="Distance (Entity, Point)" ref="information.html#17_2"/>
+                    <section title="Angle" ref="information.html#17_3"/>
+                </section>
+                <section title="18 Application Preferences" ref="options_general.html">
+                    <section title="Appearance" ref="options_general.html#18_1"/>
+                    <section title="Language" ref="options_general.html#18_1_1"/>
+                    <section title="Graphic View" ref="options_general.html#18_1_2"/>
+                    <section title="Paths" ref="options_general.html#18_2"/>
+                </section>
+                <section title="19 Drawing Preferences" ref="options_drawing.html">
+                    <section title="Paper" ref="options_drawing.html#19_1"/>
+                    <section title="Units" ref="options_drawing.html#19_2"/>
+                    <section title="Dimensions" ref="options_drawing.html#19_3"/>
+                </section>
+                <section title="20 Appendix" ref="appendix.html">
+                    <section title="Hotkeys" ref="appendix_hotkeys.html#20_1"/>
+                    <section title="Command Line" ref="appendix_hotkeys.html#20_1_1"/>
+                    <section title="File Handling" ref="appendix_hotkeys.html#20_1_2"/>
+                    <section title="Basic Editing" ref="appendix_hotkeys.html#20_1_3"/>
+                    <section title="View" ref="appendix_hotkeys.html#20_1_4"/>
+                    <section title="Layer Handling" ref="appendix_hotkeys.html#20_1_5"/>
+                    <section title="Snapping" ref="appendix_hotkeys.html#20_1_6"/>
+                    <section title="Construction" ref="appendix_hotkeys.html#20_1_7"/>
+                    <section title="Dimensioning" ref="appendix_hotkeys.html#20_1_8"/>
+                    <section title="Entity Selection" ref="appendix_hotkeys.html#20_1_9"/>
+                    <section title="Modification" ref="appendix_hotkeys.html#20_1_10"/>
+                    <section title="Fonts" ref="appendix_fonts.html#20_2"/>
+                    <section title="Patterns" ref="appendix_patterns.html#20_3"/>
+                    <section title="Mathematical Expressions" ref="appendix_expressions.html#20_4"/>
+                    <section title="Supported Constants" ref="appendix_expressions.html#20_4_1"/>
+                    <section title="Supported Functions" ref="appendix_expressions.html#20_4_2"/>
+                    <section title="Drawing Units" ref="appendix_units.html#20_5"/>
+                    <section title="Supported Length Units" ref="appendix_units.html#20_5_1"/>
+                    <section title="Display Formats for Lengths" ref="appendix_units.html#20_5_2"/>
+                    <section title="Supported Angle Units" ref="appendix_units.html#20_5_3"/>
+                    <section title="Display Formats for Angles" ref="appendix_units.html#20_5_4"/>
+                    <section title="Supported Paper Formats" ref="appendix_papers.html#20_6"/>
+                    <section title="Metric (ISO)" ref="appendix_papers.html#20_6_1"/>
+                    <section title="Other Formats" ref="appendix_papers.html#20_6_2"/>
+                    <section title="Migration from LibreCAD 1" ref="appendix_LibreCAD1.html#20_7"/>
+                    <section title="DXF Compatibility" ref="appendix_LibreCAD1.html#20_7_1"/>
+                    <section title="Layer Handling" ref="appendix_LibreCAD1.html#20_7_2"/>
+                    <section title="Bibliography" ref="appendix_bib.html#20_8"/>
+                </section>
+                <section title=" Index" ref="index2.html"/>
+            </section>
+        </toc>
+        <keywords>
+            <keyword name="License" ref="license.html" id="license::License"/>
+            <keyword name="Copyright" ref="license.html#1_1" id="license::Copyright"/>
+            <keyword name="Trademarks" ref="license.html#1_2" id="license::Trademarks"/>
+            <keyword name="The GNU General Public License" ref="license.html#1_3" id="license::The GNU General Public License"/>
+            <keyword name="GNU" ref="license.html#1_3" id="license::GNU"/>
+            <keyword name="GPL" ref="license.html#1_3" id="license::GPL"/>
+            <keyword name="License" ref="license.html#1_3" id="license::License"/>
+            <keyword name="Scope of This Manual" ref="preface.html#2_1" id="preface::Scope of This Manual"/>
+            <keyword name="CAD - For the Uninitiated" ref="preface.html#2_2" id="preface::CAD - For the Uninitiated"/>
+            <keyword name="Is LibreCAD for me?" ref="preface.html#2_3" id="preface::Is LibreCAD for me?"/>
+            <keyword name="Who Is Behind LibreCAD?" ref="preface.html#2_4" id="preface::Who Is Behind LibreCAD?"/>
+            <keyword name="How can I get LibreCAD?" ref="preface.html#2_5" id="preface::How can I get LibreCAD?"/>
+            <keyword name="LibreCAD and Qt" ref="preface.html#2_6" id="preface::LibreCAD and Qt"/>
+            <keyword name="Entities" ref="basics.html#3_1" id="basics::Entities"/>
+            <keyword name="Attributes" ref="basics.html#3_2" id="basics::Attributes"/>
+            <keyword name="Layers" ref="basics.html#3_3" id="basics::Layers"/>
+            <keyword name="Blocks" ref="basics.html#3_4" id="basics::Blocks"/>
+            <keyword name="Drafting in CAD" ref="basics.html#3_5" id="basics::Drafting in CAD"/>
+            <keyword name="Co-ordinate Systems" ref="basics.html#3_6" id="basics::Co-ordinate Systems"/>
+            <keyword name="Origin" ref="basics.html#3_6_1" id="basics::Origin"/>
+            <keyword name="Cartesian Co-ordinates" ref="basics.html#3_6_2" id="basics::Cartesian Co-ordinates"/>
+            <keyword name="Polar Co-ordinates" ref="basics.html#3_6_3" id="basics::Polar Co-ordinates"/>
+            <keyword name="Object and Grid Snapping" ref="basics.html#3_7" id="basics::Object and Grid Snapping"/>
+            <keyword name="Basic Editing" ref="basics.html#3_8" id="basics::Basic Editing"/>
+            <keyword name="Entity Selection" ref="basics.html#3_8_1" id="basics::Entity Selection"/>
+            <keyword name="Deletion" ref="basics.html#3_8_2" id="basics::Deletion"/>
+            <keyword name="Modifications" ref="basics.html#3_8_3" id="basics::Modifications"/>
+            <keyword name="Viewing in CAD" ref="basics.html#3_9" id="basics::Viewing in CAD"/>
+            <keyword name="Starting a LibreCAD Session" ref="start.html" id="start::Starting a LibreCAD Session"/>
+            <keyword name="Windows Operating Systems" ref="start.html#4_1" id="start::Windows Operating Systems"/>
+            <keyword name="Linux / Unix Operating Systems" ref="start.html#4_2" id="start::Linux / Unix Operating Systems"/>
+            <keyword name="Mac OS X Operating System" ref="start.html#4_3" id="start::Mac OS X Operating System"/>
+            <keyword name="LibreCAD's User Interface" ref="gui.html" id="gui::LibreCAD's User Interface"/>
+            <keyword name="Main Application Window" ref="gui.html#5_1" id="gui::Main Application Window"/>
+            <keyword name="Menu and CAD Toolbar" ref="gui.html#5_2" id="gui::Menu and CAD Toolbar"/>
+            <keyword name="Layer- and Block List" ref="gui.html#5_3" id="gui::Layer- and Block List"/>
+            <keyword name="Status Bar" ref="gui.html#5_4" id="gui::Status Bar"/>
+            <keyword name="Command Widget" ref="gui.html#5_5" id="gui::Command Widget"/>
+            <keyword name="Option Toolbar" ref="gui.html#5_6" id="gui::Option Toolbar"/>
+            <keyword name="Executing Commands" ref="gui.html#5_7" id="gui::Executing Commands"/>
+            <keyword name="Modes" ref="gui.html#5_8" id="gui::Modes"/>
+            <keyword name="Command Mode" ref="gui.html#5_8_1" id="gui::Command Mode"/>
+            <keyword name="Normal Mode" ref="gui.html#5_8_2" id="gui::Normal Mode"/>
+            <keyword name="Command Line" ref="commandline.html" id="commandline::Command Line"/>
+            <keyword name="A Word About Keyboard Focus" ref="commandline.html#6_1" id="commandline::A Word About Keyboard Focus"/>
+            <keyword name="File Handling" ref="file.html" id="file::File Handling"/>
+            <keyword name="Create New Drawings" ref="file.html#7_1" id="file::Create New Drawings"/>
+            <keyword name="Opening Drawings" ref="file.html#7_2" id="file::Opening Drawings"/>
+            <keyword name="Saving Drawings" ref="file.html#7_3" id="file::Saving Drawings"/>
+            <keyword name="Exporting Drawings as Bitmaps" ref="file.html#7_4" id="file::Exporting Drawings as Bitmaps"/>
+            <keyword name="Closing Drawings" ref="file.html#7_5" id="file::Closing Drawings"/>
+            <keyword name="Printing" ref="printing.html" id="printing::Printing"/>
+            <keyword name="Print Preview" ref="printing.html#8_1" id="printing::Print Preview"/>
+            <keyword name="Print" ref="printing.html#8_2" id="printing::Print"/>
+            <keyword name="Printing to Files" ref="printing.html#8_2_1" id="printing::Printing to Files"/>
+            <keyword name="Basic Editing Commands" ref="edit.html" id="edit::Basic Editing Commands"/>
+            <keyword name="Undo" ref="edit.html#9_1" id="edit::Undo"/>
+            <keyword name="Redo" ref="edit.html#9_2" id="edit::Redo"/>
+            <keyword name="Copy" ref="edit.html#9_3" id="edit::Copy"/>
+            <keyword name="Cut" ref="edit.html#9_4" id="edit::Cut"/>
+            <keyword name="Paste" ref="edit.html#9_5" id="edit::Paste"/>
+            <keyword name="Viewing" ref="view.html" id="view::Viewing"/>
+            <keyword name="Scrolling" ref="view.html#10_1" id="view::Scrolling"/>
+            <keyword name="Redrawing" ref="view.html#10_2" id="view::Redrawing"/>
+            <keyword name="Zooming In / Out" ref="view.html#10_3" id="view::Zooming In / Out"/>
+            <keyword name="Auto Zoom" ref="view.html#10_4" id="view::Auto Zoom"/>
+            <keyword name="Window Zoom" ref="view.html#10_5" id="view::Window Zoom"/>
+            <keyword name="Panning" ref="view.html#10_6" id="view::Panning"/>
+            <keyword name="Layers" ref="layers.html" id="layers::Layers"/>
+            <keyword name="Changing the Visibility of a&#10;      Layer" ref="layers.html#11_1" id="layers::Changing the Visibility of a&#10;      Layer"/>
+            <keyword name="Changing the Visibility of all&#10;      Layers" ref="layers.html#11_2" id="layers::Changing the Visibility of all&#10;      Layers"/>
+            <keyword name="Adding New Layers" ref="layers.html#11_3" id="layers::Adding New Layers"/>
+            <keyword name="Deleting Layers" ref="layers.html#11_4" id="layers::Deleting Layers"/>
+            <keyword name="Editing Layer Attributes" ref="layers.html#11_5" id="layers::Editing Layer Attributes"/>
+            <keyword name="Blocks" ref="blocks.html" id="blocks::Blocks"/>
+            <keyword name="Changing the Visibility of a&#10;      Block" ref="blocks.html#12_1" id="blocks::Changing the Visibility of a&#10;      Block"/>
+            <keyword name="Changing the Visibility of all&#10;      Blocks" ref="blocks.html#12_2" id="blocks::Changing the Visibility of all&#10;      Blocks"/>
+            <keyword name="Adding New Blocks" ref="blocks.html#12_3" id="blocks::Adding New Blocks"/>
+            <keyword name="Removing Blocks" ref="blocks.html#12_4" id="blocks::Removing Blocks"/>
+            <keyword name="Renaming Blocks" ref="blocks.html#12_5" id="blocks::Renaming Blocks"/>
+            <keyword name="Editing Blocks" ref="blocks.html#12_6" id="blocks::Editing Blocks"/>
+            <keyword name="Inserting Blocks" ref="blocks.html#12_7" id="blocks::Inserting Blocks"/>
+            <keyword name="Creating Blocks from Existing&#10;      Entities" ref="blocks.html#12_8" id="blocks::Creating Blocks from Existing&#10;      Entities"/>
+            <keyword name="Object Snap" ref="snapping.html" id="snapping::Object Snap"/>
+            <keyword name="Free Positioning" ref="snapping.html#13_1" id="snapping::Free Positioning"/>
+            <keyword name="Snap to Grid" ref="snapping.html#13_2" id="snapping::Snap to Grid"/>
+            <keyword name="Snap to Endpoints" ref="snapping.html#13_3" id="snapping::Snap to Endpoints"/>
+            <keyword name="Snap to Points on Entities" ref="snapping.html#13_4" id="snapping::Snap to Points on Entities"/>
+            <keyword name="Snap to Centers" ref="snapping.html#13_5" id="snapping::Snap to Centers"/>
+            <keyword name="Snap to Middle Points" ref="snapping.html#13_6" id="snapping::Snap to Middle Points"/>
+            <keyword name="Snap to Distance Points" ref="snapping.html#13_7" id="snapping::Snap to Distance Points"/>
+            <keyword name="Snap to Intersections" ref="snapping.html#13_8" id="snapping::Snap to Intersections"/>
+            <keyword name="Snap to Intersections&#10;      Manually" ref="snapping.html#13_9" id="snapping::Snap to Intersections&#10;      Manually"/>
+            <keyword name="Snap Restrictions" ref="snapping.html#13_10" id="snapping::Snap Restrictions"/>
+            <keyword name="Restrict Nothing" ref="snapping.html#13_10_1" id="snapping::Restrict Nothing"/>
+            <keyword name="Restrict Orthogonally" ref="snapping.html#13_10_2" id="snapping::Restrict Orthogonally"/>
+            <keyword name="Restrict Horizontally" ref="snapping.html#13_10_3" id="snapping::Restrict Horizontally"/>
+            <keyword name="Restrict Vertically" ref="snapping.html#13_10_4" id="snapping::Restrict Vertically"/>
+            <keyword name="Relative Zero Point" ref="snapping.html#13_11" id="snapping::Relative Zero Point"/>
+            <keyword name="Moving the Relative Zero&#10;      Point" ref="snapping.html#13_11_1" id="snapping::Moving the Relative Zero&#10;      Point"/>
+            <keyword name="Un-)locking the Relative Zero&#10;      Point" ref="snapping.html#13_11_2" id="snapping::Un-)locking the Relative Zero&#10;      Point"/>
+            <keyword name="Entity Drawing Commands" ref="construction.html" id="construction::Entity Drawing Commands"/>
+            <keyword name="Points" ref="construction_point.html#14_1" id="construction_point::Points"/>
+            <keyword name="Single Points" ref="construction_point.html#14_1_1" id="construction_point::Single Points"/>
+            <keyword name="Lines" ref="construction_line.html#14_2" id="construction_line::Lines"/>
+            <keyword name="Sequence Of Lines" ref="construction_line.html#14_2_1" id="construction_line::Sequence Of Lines"/>
+            <keyword name="Line With Given&#10;      Angle" ref="construction_line.html#14_2_2" id="construction_line::Line With Given&#10;      Angle"/>
+            <keyword name="Horizontal / Vertical&#10;      Line" ref="construction_line.html#14_2_3" id="construction_line::Horizontal / Vertical&#10;      Line"/>
+            <keyword name="Rectangle" ref="construction_line.html#14_2_4" id="construction_line::Rectangle"/>
+            <keyword name="Parallel" ref="construction_line.html#14_2_5" id="construction_line::Parallel"/>
+            <keyword name="Bisector" ref="construction_line.html#14_2_6" id="construction_line::Bisector"/>
+            <keyword name="Tangent From Point to Arc /&#10;      Circle" ref="construction_line.html#14_2_7" id="construction_line::Tangent From Point to Arc /&#10;      Circle"/>
+            <keyword name="Tangent From Arc to Arc /&#10;      Circle to Circle" ref="construction_line.html#14_2_8" id="construction_line::Tangent From Arc to Arc /&#10;      Circle to Circle"/>
+            <keyword name="Line Orthogonal to Another&#10;      Entity" ref="construction_line.html#14_2_9" id="construction_line::Line Orthogonal to Another&#10;      Entity"/>
+            <keyword name="Line with Relative Angle to&#10;      Another Entity" ref="construction_line.html#14_2_10" id="construction_line::Line with Relative Angle to&#10;      Another Entity"/>
+            <keyword name="Freehand Line" ref="construction_line.html#14_2_11" id="construction_line::Freehand Line"/>
+            <keyword name="Polygon with Center and&#10;      Corner" ref="construction_line.html#14_2_12" id="construction_line::Polygon with Center and&#10;      Corner"/>
+            <keyword name="Polygon with Two&#10;      Corners" ref="construction_line.html#14_2_13" id="construction_line::Polygon with Two&#10;      Corners"/>
+            <keyword name="Arcs" ref="construction_arc.html#14_3" id="construction_arc::Arcs"/>
+            <keyword name="Arc with Center, Radius and&#10;      Angles" ref="construction_arc.html#14_3_1" id="construction_arc::Arc with Center, Radius and&#10;      Angles"/>
+            <keyword name="Arc with 3 Points" ref="construction_arc.html#14_3_2" id="construction_arc::Arc with 3 Points"/>
+            <keyword name="Parallel Arc" ref="construction_arc.html#14_3_3" id="construction_arc::Parallel Arc"/>
+            <keyword name="Circles" ref="construction_circle.html#14_4" id="construction_circle::Circles"/>
+            <keyword name="Circle with Center and&#10;      Point" ref="construction_circle.html#14_4_1" id="construction_circle::Circle with Center and&#10;      Point"/>
+            <keyword name="Circle with Center and&#10;      Radius" ref="construction_circle.html#14_4_2" id="construction_circle::Circle with Center and&#10;      Radius"/>
+            <keyword name="Circle with 2&#10;      Points" ref="construction_circle.html#14_4_3" id="construction_circle::Circle with 2&#10;      Points"/>
+            <keyword name="Circle with 3&#10;      Points" ref="construction_circle.html#14_4_4" id="construction_circle::Circle with 3&#10;      Points"/>
+            <keyword name="Concentric&#10;      Circle" ref="construction_circle.html#14_4_5" id="construction_circle::Concentric&#10;      Circle"/>
+            <keyword name="Ellipses" ref="construction_ellipse.html#14_5" id="construction_ellipse::Ellipses"/>
+            <keyword name="Full Ellipse" ref="construction_ellipse.html#14_5_1" id="construction_ellipse::Full Ellipse"/>
+            <keyword name="Ellipse Arc" ref="construction_ellipse.html#14_5_2" id="construction_ellipse::Ellipse Arc"/>
+            <keyword name="Text" ref="construction_text.html#14_6" id="construction_text::Text"/>
+            <keyword name="Advanced Text&#10;      Commands" ref="construction_text.html#14_6_1" id="construction_text::Advanced Text&#10;      Commands"/>
+            <keyword name="Dimensions" ref="construction_dim.html#14_7" id="construction_dim::Dimensions"/>
+            <keyword name="Aligned Dimension" ref="construction_dim.html#14_7_1" id="construction_dim::Aligned Dimension"/>
+            <keyword name="Linear Dimensions" ref="construction_dim.html#14_7_2" id="construction_dim::Linear Dimensions"/>
+            <keyword name="Horizontal / Vertical&#10;      Dimensions" ref="construction_dim.html#14_7_3" id="construction_dim::Horizontal / Vertical&#10;      Dimensions"/>
+            <keyword name="Radial Dimensions" ref="construction_dim.html#14_7_4" id="construction_dim::Radial Dimensions"/>
+            <keyword name="Diametric&#10;      Dimensions" ref="construction_dim.html#14_7_5" id="construction_dim::Diametric&#10;      Dimensions"/>
+            <keyword name="Angular Dimensions" ref="construction_dim.html#14_7_6" id="construction_dim::Angular Dimensions"/>
+            <keyword name="Leader" ref="construction_dim.html#14_7_7" id="construction_dim::Leader"/>
+            <keyword name="Hatches and Solid&#10;      Fills" ref="construction_hatch.html#14_8" id="construction_hatch::Hatches and Solid&#10;      Fills"/>
+            <keyword name="Images" ref="construction_image.html#14_9" id="construction_image::Images"/>
+            <keyword name="Entity Selection" ref="selection.html" id="selection::Entity Selection"/>
+            <keyword name="Deselecting All" ref="selection.html#15_1" id="selection::Deselecting All"/>
+            <keyword name="Selecting All" ref="selection.html#15_2" id="selection::Selecting All"/>
+            <keyword name="Selecting Single Entities" ref="selection.html#15_3" id="selection::Selecting Single Entities"/>
+            <keyword name="Selecting Contours" ref="selection.html#15_4" id="selection::Selecting Contours"/>
+            <keyword name="Window Deselection" ref="selection.html#15_5" id="selection::Window Deselection"/>
+            <keyword name="Window Selection" ref="selection.html#15_6" id="selection::Window Selection"/>
+            <keyword name="Inverting Selection" ref="selection.html#15_7" id="selection::Inverting Selection"/>
+            <keyword name="Deselect Intersected&#10;      Entities" ref="selection.html#15_8" id="selection::Deselect Intersected&#10;      Entities"/>
+            <keyword name="Select Intersected Entities" ref="selection.html#15_9" id="selection::Select Intersected Entities"/>
+            <keyword name="Modification" ref="modification.html" id="modification::Modification"/>
+            <keyword name="Move" ref="modification.html#16_1" id="modification::Move"/>
+            <keyword name="Rotate" ref="modification.html#16_2" id="modification::Rotate"/>
+            <keyword name="Scale" ref="modification.html#16_3" id="modification::Scale"/>
+            <keyword name="Mirror" ref="modification.html#16_4" id="modification::Mirror"/>
+            <keyword name="Move and Rotate" ref="modification.html#16_5" id="modification::Move and Rotate"/>
+            <keyword name="Rotate and Counter-rotate (Rotate&#10;      2)" ref="modification.html#16_6" id="modification::Rotate and Counter-rotate (Rotate&#10;      2)"/>
+            <keyword name="Trim / Extend" ref="modification.html#16_7" id="modification::Trim / Extend"/>
+            <keyword name="Trim Two Entities" ref="modification.html#16_8" id="modification::Trim Two Entities"/>
+            <keyword name="Lengthen" ref="modification.html#16_9" id="modification::Lengthen"/>
+            <keyword name="Bevel" ref="modification.html#16_10" id="modification::Bevel"/>
+            <keyword name="Round" ref="modification.html#16_11" id="modification::Round"/>
+            <keyword name="Divide" ref="modification.html#16_12" id="modification::Divide"/>
+            <keyword name="Stretch" ref="modification.html#16_13" id="modification::Stretch"/>
+            <keyword name="Properties" ref="modification.html#16_14" id="modification::Properties"/>
+            <keyword name="Attributes" ref="modification.html#16_15" id="modification::Attributes"/>
+            <keyword name="Deleting Entities" ref="modification.html#16_16" id="modification::Deleting Entities"/>
+            <keyword name="Exploding Groups" ref="modification.html#16_17" id="modification::Exploding Groups"/>
+            <keyword name="Getting Measurements" ref="information.html" id="information::Getting Measurements"/>
+            <keyword name="Distance (Point, Point)" ref="information.html#17_1" id="information::Distance (Point, Point)"/>
+            <keyword name="Distance (Entity, Point)" ref="information.html#17_2" id="information::Distance (Entity, Point)"/>
+            <keyword name="Angle" ref="information.html#17_3" id="information::Angle"/>
+            <keyword name="Application Preferences" ref="options_general.html" id="options_general::Application Preferences"/>
+            <keyword name="Appearance" ref="options_general.html#18_1" id="options_general::Appearance"/>
+            <keyword name="Language" ref="options_general.html#18_1_1" id="options_general::Language"/>
+            <keyword name="Graphic View" ref="options_general.html#18_1_2" id="options_general::Graphic View"/>
+            <keyword name="Paths" ref="options_general.html#18_2" id="options_general::Paths"/>
+            <keyword name="Drawing Preferences" ref="options_drawing.html" id="options_drawing::Drawing Preferences"/>
+            <keyword name="Paper" ref="options_drawing.html#19_1" id="options_drawing::Paper"/>
+            <keyword name="Units" ref="options_drawing.html#19_2" id="options_drawing::Units"/>
+            <keyword name="Dimensions" ref="options_drawing.html#19_3" id="options_drawing::Dimensions"/>
+            <keyword name="Appendix" ref="appendix.html" id="appendix::Appendix"/>
+            <keyword name="Hotkeys" ref="appendix_hotkeys.html#20_1" id="appendix_hotkeys::Hotkeys"/>
+            <keyword name="Command Line" ref="appendix_hotkeys.html#20_1_1" id="appendix_hotkeys::Command Line"/>
+            <keyword name="File Handling" ref="appendix_hotkeys.html#20_1_2" id="appendix_hotkeys::File Handling"/>
+            <keyword name="Basic Editing" ref="appendix_hotkeys.html#20_1_3" id="appendix_hotkeys::Basic Editing"/>
+            <keyword name="View" ref="appendix_hotkeys.html#20_1_4" id="appendix_hotkeys::View"/>
+            <keyword name="Layer Handling" ref="appendix_hotkeys.html#20_1_5" id="appendix_hotkeys::Layer Handling"/>
+            <keyword name="Snapping" ref="appendix_hotkeys.html#20_1_6" id="appendix_hotkeys::Snapping"/>
+            <keyword name="Construction" ref="appendix_hotkeys.html#20_1_7" id="appendix_hotkeys::Construction"/>
+            <keyword name="Dimensioning" ref="appendix_hotkeys.html#20_1_8" id="appendix_hotkeys::Dimensioning"/>
+            <keyword name="Entity Selection" ref="appendix_hotkeys.html#20_1_9" id="appendix_hotkeys::Entity Selection"/>
+            <keyword name="Modification" ref="appendix_hotkeys.html#20_1_10" id="appendix_hotkeys::Modification"/>
+            <keyword name="Fonts" ref="appendix_fonts.html#20_2" id="appendix_fonts::Fonts"/>
+            <keyword name="Patterns" ref="appendix_patterns.html#20_3" id="appendix_patterns::Patterns"/>
+            <keyword name="Mathematical&#10;      Expressions" ref="appendix_expressions.html#20_4" id="appendix_expressions::Mathematical&#10;      Expressions"/>
+            <keyword name="Supported&#10;      Constants" ref="appendix_expressions.html#20_4_1" id="appendix_expressions::Supported&#10;      Constants"/>
+            <keyword name="Supported&#10;      Functions" ref="appendix_expressions.html#20_4_2" id="appendix_expressions::Supported&#10;      Functions"/>
+            <keyword name="Drawing Units" ref="appendix_units.html#20_5" id="appendix_units::Drawing Units"/>
+            <keyword name="Supported Length&#10;      Units" ref="appendix_units.html#20_5_1" id="appendix_units::Supported Length&#10;      Units"/>
+            <keyword name="Display Formats for&#10;      Lengths" ref="appendix_units.html#20_5_2" id="appendix_units::Display Formats for&#10;      Lengths"/>
+            <keyword name="Supported Angle Units" ref="appendix_units.html#20_5_3" id="appendix_units::Supported Angle Units"/>
+            <keyword name="Display Formats for&#10;      Angles" ref="appendix_units.html#20_5_4" id="appendix_units::Display Formats for&#10;      Angles"/>
+            <keyword name="Supported Paper&#10;      Formats" ref="appendix_papers.html#20_6" id="appendix_papers::Supported Paper&#10;      Formats"/>
+            <keyword name="Metric (ISO)" ref="appendix_papers.html#20_6_1" id="appendix_papers::Metric (ISO)"/>
+            <keyword name="Other Formats" ref="appendix_papers.html#20_6_2" id="appendix_papers::Other Formats"/>
+            <keyword name="Migration from LibreCAD 1" ref="appendix_LibreCAD1.html#20_7" id="appendix_LibreCAD1::Migration from LibreCAD 1"/>
+            <keyword name="DXF Compatibility" ref="appendix_LibreCAD1.html#20_7_1" id="appendix_LibreCAD1::DXF Compatibility"/>
+            <keyword name="Layer Handling" ref="appendix_LibreCAD1.html#20_7_2" id="appendix_LibreCAD1::Layer Handling"/>
+            <keyword name="Bibliography" ref="appendix_bib.html#20_8" id="appendix_bib::Bibliography"/>
+            <keyword name="Index" ref="index2.html" id="index2::Index"/>
+        </keywords>
+        <files>
+            <file>appendix.html</file>
+            <file>appendix_bib.html</file>
+            <file>appendix_expressions.html</file>
+            <file>appendix_fonts.html</file>
+            <file>appendix_hotkeys.html</file>
+            <file>appendix_LibreCAD1.html</file>
+            <file>appendix_papers.html</file>
+            <file>appendix_patterns.html</file>
+            <file>appendix_units.html</file>
+            <file>basics.html</file>
+            <file>blocks.html</file>
+            <file>commandline.html</file>
+            <file>construction.html</file>
+            <file>construction_arc.html</file>
+            <file>construction_circle.html</file>
+            <file>construction_dim.html</file>
+            <file>construction_ellipse.html</file>
+            <file>construction_hatch.html</file>
+            <file>construction_image.html</file>
+            <file>construction_line.html</file>
+            <file>construction_point.html</file>
+            <file>construction_text.html</file>
+            <file>contents.html</file>
+            <file>edit.html</file>
+            <file>file.html</file>
+            <file>gui.html</file>
+            <file>index.html</file>
+            <file>index2.html</file>
+            <file>information.html</file>
+            <file>layers.html</file>
+            <file>license.html</file>
+            <file>modification.html</file>
+            <file>options_drawing.html</file>
+            <file>options_general.html</file>
+            <file>preface.html</file>
+            <file>printing.html</file>
+            <file>selection.html</file>
+            <file>snapping.html</file>
+            <file>start.html</file>
+            <file>styles.css</file>
+            <file>view.html</file>
+            <file>img/bisector01.png</file>
+            <file>img/blockdialog01.png</file>
+            <file>img/blocklist01.png</file>
+            <file>img/blockmenu01.png</file>
+            <file>img/blocks01.png</file>
+            <file>img/co-ordinate01.png</file>
+            <file>img/co-ordinate02.png</file>
+            <file>img/co-ordinate03.png</file>
+            <file>img/co-ordinate04.png</file>
+            <file>img/command_line01.png</file>
+            <file>img/command_line01_t.png</file>
+            <file>img/concept01.png</file>
+            <file>img/dim01.png</file>
+            <file>img/hatch01.png</file>
+            <file>img/hatchdialog01.png</file>
+            <file>img/hatchdialog01_t.png</file>
+            <file>img/image01.png</file>
+            <file>img/image01_t.png</file>
+            <file>img/layerdialog01.png</file>
+            <file>img/layerlist01.png</file>
+            <file>img/layermenu01.png</file>
+            <file>img/layers01.png</file>
+            <file>img/LibreCAD1_attributes.png</file>
+            <file>img/LibreCAD1_open.png</file>
+            <file>img/LibreCAD1_open_t.png</file>
+            <file>img/mirrordialog01.png</file>
+            <file>img/modifylengthen01.png</file>
+            <file>img/modifystretch01.png</file>
+            <file>img/modifytrim01.png</file>
+            <file>img/modifytrim201.png</file>
+            <file>img/movedialog01.png</file>
+            <file>img/moverotatedialog01.png</file>
+            <file>img/option_dialog01.png</file>
+            <file>img/option_dialog01b.png</file>
+            <file>img/option_dialog02.png</file>
+            <file>img/option_dialog02_t.png</file>
+            <file>img/option_dialog10.png</file>
+            <file>img/option_dialog10_t.png</file>
+            <file>img/option_dialog11.png</file>
+            <file>img/option_dialog11_t.png</file>
+            <file>img/option_dialog12.png</file>
+            <file>img/option_dialog12_t.png</file>
+            <file>img/option_dimension01.png</file>
+            <file>img/options_bevel.png</file>
+            <file>img/options_block.png</file>
+            <file>img/options_dim_linear.png</file>
+            <file>img/options_dimension.png</file>
+            <file>img/options_image.png</file>
+            <file>img/options_lengthen.png</file>
+            <file>img/options_line.png</file>
+            <file>img/options_line_angle.png</file>
+            <file>img/options_line_bisector.png</file>
+            <file>img/options_line_hv.png</file>
+            <file>img/options_line_parallel.png</file>
+            <file>img/options_line_polygon.png</file>
+            <file>img/options_round.png</file>
+            <file>img/options_snap_dist.png</file>
+            <file>img/print01.png</file>
+            <file>img/print01_t.png</file>
+            <file>img/rotatedialog01.png</file>
+            <file>img/scaledialog01.png</file>
+            <file>img/screen01.png</file>
+            <file>img/screen01_t.png</file>
+            <file>img/separator.png</file>
+            <file>img/snap_restriction01.png</file>
+            <file>img/snap_restriction01_t.png</file>
+            <file>img/space.png</file>
+            <file>img/textdialog01.png</file>
+            <file>img/textdialog01_t.png</file>
+            <file>img/textdialog02.png</file>
+            <file>img/textdialog03.png</file>
+            <file>img/textdialog04.png</file>
+            <file>img/textdialog05.png</file>
+            <file>img/textdialog06.png</file>
+            <file>img/textdialog07.png</file>
+            <file>img/toolbar_cont.png</file>
+            <file>img/toolbar_file_new.png</file>
+            <file>img/toolbar_file_open.png</file>
+            <file>img/toolbar_file_save.png</file>
+            <file>img/toolbar_first.png</file>
+            <file>img/toolbar_home.png</file>
+            <file>img/toolbar_last.png</file>
+            <file>img/toolbar_layer_add.png</file>
+            <file>img/toolbar_layer_delete.png</file>
+            <file>img/toolbar_layer_edit.png</file>
+            <file>img/toolbar_layer_toggle_all.png</file>
+            <file>img/toolbar_line.png</file>
+            <file>img/toolbar_line_2p.png</file>
+            <file>img/toolbar_line_angle.png</file>
+            <file>img/toolbar_line_bisector.png</file>
+            <file>img/toolbar_line_hv.png</file>
+            <file>img/toolbar_line_parallel.png</file>
+            <file>img/toolbar_line_rectangle.png</file>
+            <file>img/toolbar_line_t.png</file>
+            <file>img/toolbar_line_tangent1.png</file>
+            <file>img/toolbar_modify.png</file>
+            <file>img/toolbar_modify_t.png</file>
+            <file>img/toolbar_next.png</file>
+            <file>img/toolbar_opt.png</file>
+            <file>img/toolbar_point_single.png</file>
+            <file>img/toolbar_prev.png</file>
+            <file>img/toolbar_snap.png</file>
+            <file>img/toolbar_snap_t.png</file>
+            <file>img/toolbar_view.png</file>
+            <file>img/toolbar_view_auto.png</file>
+            <file>img/toolbar_view_in_out.png</file>
+            <file>img/toolbar_view_redraw.png</file>
+            <file>img/toolbar_view_window.png</file>
+            <file>img/wheel_zoom_in_out.png</file>
+            <file>imgs/blocks01.png</file>
+            <file>imgs/co-ordinate01.png</file>
+            <file>imgs/co-ordinate02.png</file>
+            <file>imgs/co-ordinate03.png</file>
+            <file>imgs/co-ordinate04.png</file>
+            <file>imgs/concept01.png</file>
+            <file>imgs/dim01.png</file>
+            <file>imgs/dimaligned01.png</file>
+            <file>imgs/dimangular01.png</file>
+            <file>imgs/dimdiametric01.png</file>
+            <file>imgs/dimleader01.png</file>
+            <file>imgs/dimlinear01.png</file>
+            <file>imgs/dimradial01.png</file>
+            <file>imgs/font_courier.png</file>
+            <file>imgs/font_cursive.png</file>
+            <file>imgs/font_cyrilc2.png</file>
+            <file>imgs/font_cyrillic.png</file>
+            <file>imgs/font_cyrillic_ol.png</file>
+            <file>imgs/font_gothgbt.png</file>
+            <file>imgs/font_gothgrt.png</file>
+            <file>imgs/font_gothitt.png</file>
+            <file>imgs/font_greek_ol.png</file>
+            <file>imgs/font_greekc.png</file>
+            <file>imgs/font_greekcs.png</file>
+            <file>imgs/font_greekp.png</file>
+            <file>imgs/font_greeks.png</file>
+            <file>imgs/font_iso8859-11.png</file>
+            <file>imgs/font_italicc.png</file>
+            <file>imgs/font_italiccs.png</file>
+            <file>imgs/font_italict.png</file>
+            <file>imgs/font_japanese.png</file>
+            <file>imgs/font_kochigothic.png</file>
+            <file>imgs/font_kochimincho.png</file>
+            <file>imgs/font_normal.png</file>
+            <file>imgs/font_normallatin1.png</file>
+            <file>imgs/font_normallatin2.png</file>
+            <file>imgs/font_romanc.png</file>
+            <file>imgs/font_romancs.png</file>
+            <file>imgs/font_romand.png</file>
+            <file>imgs/font_romanp.png</file>
+            <file>imgs/font_romans.png</file>
+            <file>imgs/font_romans2.png</file>
+            <file>imgs/font_romant.png</file>
+            <file>imgs/font_scriptc.png</file>
+            <file>imgs/font_scripts.png</file>
+            <file>imgs/font_standard.png</file>
+            <file>imgs/font_symbol.png</file>
+            <file>imgs/font_symbol_astro.png</file>
+            <file>imgs/font_symbol_misc1.png</file>
+            <file>imgs/font_symbol_misc2.png</file>
+            <file>imgs/font_unicode.png</file>
+            <file>imgs/hatch01.png</file>
+            <file>imgs/hatch02.png</file>
+            <file>imgs/hatch_angle.png</file>
+            <file>imgs/hatch_ansi31.png</file>
+            <file>imgs/hatch_ar-b816.png</file>
+            <file>imgs/hatch_ar-b816c.png</file>
+            <file>imgs/hatch_ar-b88.png</file>
+            <file>imgs/hatch_ar-brelm.png</file>
+            <file>imgs/hatch_ar-brstd.png</file>
+            <file>imgs/hatch_ar-conc.png</file>
+            <file>imgs/hatch_ar-hbone.png</file>
+            <file>imgs/hatch_ar-parq1.png</file>
+            <file>imgs/hatch_ar-roof.png</file>
+            <file>imgs/hatch_ar-rshke.png</file>
+            <file>imgs/hatch_arcs.png</file>
+            <file>imgs/hatch_arcs_2.png</file>
+            <file>imgs/hatch_box.png</file>
+            <file>imgs/hatch_brick.png</file>
+            <file>imgs/hatch_brstone.png</file>
+            <file>imgs/hatch_clay.png</file>
+            <file>imgs/hatch_concrete.png</file>
+            <file>imgs/hatch_cross.png</file>
+            <file>imgs/hatch_daemon.png</file>
+            <file>imgs/hatch_dolmit.png</file>
+            <file>imgs/hatch_earth.png</file>
+            <file>imgs/hatch_escher.png</file>
+            <file>imgs/hatch_flex.png</file>
+            <file>imgs/hatch_grass.png</file>
+            <file>imgs/hatch_grass_b.png</file>
+            <file>imgs/hatch_hex.png</file>
+            <file>imgs/hatch_hexagon_a.png</file>
+            <file>imgs/hatch_hexagon_b.png</file>
+            <file>imgs/hatch_honeycomb.png</file>
+            <file>imgs/hatch_hound.png</file>
+            <file>imgs/hatch_iso03w100.png</file>
+            <file>imgs/hatch_iso03w100a.png</file>
+            <file>imgs/hatch_misc01.png</file>
+            <file>imgs/hatch_misc02.png</file>
+            <file>imgs/hatch_misc03.png</file>
+            <file>imgs/hatch_paisley.png</file>
+            <file>imgs/hatch_pantagon_a.png</file>
+            <file>imgs/hatch_pantagon_b.png</file>
+            <file>imgs/hatch_plastic.png</file>
+            <file>imgs/hatch_sacncr.png</file>
+            <file>imgs/hatch_sand.png</file>
+            <file>imgs/hatch_square.png</file>
+            <file>imgs/hatch_triangle_a.png</file>
+            <file>imgs/hatch_triangle_b.png</file>
+            <file>imgs/image01.png</file>
+            <file>imgs/layers01.png</file>
+            <file>imgs/LibreCADicon.png</file>
+            <file>imgs/linefreehand01.png</file>
+            <file>imgs/logo_LibreCAD.png</file>
+            <file>imgs/modifybevel01.png</file>
+            <file>imgs/modifylengthen01.png</file>
+            <file>imgs/modifymoverotate01.png</file>
+            <file>imgs/modifyrotate201.png</file>
+            <file>imgs/modifyround01.png</file>
+            <file>imgs/modifystretch01.png</file>
+            <file>imgs/modifytrim01.png</file>
+            <file>imgs/modifytrim201.png</file>
+            <file>imgs/options_arc.png</file>
+            <file>imgs/options_printpreview.png</file>
+            <file>imgs/snapcenter.png</file>
+            <file>imgs/snapdist.png</file>
+            <file>imgs/snapendpoint.png</file>
+            <file>imgs/snapintersa.png</file>
+            <file>imgs/snapintersm.png</file>
+            <file>imgs/snapmiddle.png</file>
+            <file>imgs/snaponentity.png</file>
+            <file>imgs/textdialog08.png</file>
+            <file>imgs/toolbar_arc_3p.png</file>
+            <file>imgs/toolbar_arc_craa.png</file>
+            <file>imgs/toolbar_arc_parallel.png</file>
+            <file>imgs/toolbar_block_add.png</file>
+            <file>imgs/toolbar_block_create.png</file>
+            <file>imgs/toolbar_block_delete.png</file>
+            <file>imgs/toolbar_block_edit.png</file>
+            <file>imgs/toolbar_block_insert.png</file>
+            <file>imgs/toolbar_block_rename.png</file>
+            <file>imgs/toolbar_block_toggle_all.png</file>
+            <file>imgs/toolbar_circle_2p.png</file>
+            <file>imgs/toolbar_circle_3p.png</file>
+            <file>imgs/toolbar_circle_cp.png</file>
+            <file>imgs/toolbar_circle_cr.png</file>
+            <file>imgs/toolbar_circle_parallel.png</file>
+            <file>imgs/toolbar_deselect_all.png</file>
+            <file>imgs/toolbar_deselect_inters.png</file>
+            <file>imgs/toolbar_deselect_window.png</file>
+            <file>imgs/toolbar_dim_aligned.png</file>
+            <file>imgs/toolbar_dim_angular.png</file>
+            <file>imgs/toolbar_dim_diametric.png</file>
+            <file>imgs/toolbar_dim_hor_ver.png</file>
+            <file>imgs/toolbar_dim_leader.png</file>
+            <file>imgs/toolbar_dim_linear.png</file>
+            <file>imgs/toolbar_dim_radial.png</file>
+            <file>imgs/toolbar_edit_attributes.png</file>
+            <file>imgs/toolbar_edit_bevel.png</file>
+            <file>imgs/toolbar_edit_copy.png</file>
+            <file>imgs/toolbar_edit_cut.png</file>
+            <file>imgs/toolbar_edit_delete.png</file>
+            <file>imgs/toolbar_edit_divide.png</file>
+            <file>imgs/toolbar_edit_explode.png</file>
+            <file>imgs/toolbar_edit_lengthen.png</file>
+            <file>imgs/toolbar_edit_mirror.png</file>
+            <file>imgs/toolbar_edit_move.png</file>
+            <file>imgs/toolbar_edit_moverotate.png</file>
+            <file>imgs/toolbar_edit_paste.png</file>
+            <file>imgs/toolbar_edit_properties.png</file>
+            <file>imgs/toolbar_edit_redo.png</file>
+            <file>imgs/toolbar_edit_rotate.png</file>
+            <file>imgs/toolbar_edit_rotate2.png</file>
+            <file>imgs/toolbar_edit_round.png</file>
+            <file>imgs/toolbar_edit_scale.png</file>
+            <file>imgs/toolbar_edit_stretch.png</file>
+            <file>imgs/toolbar_edit_trim.png</file>
+            <file>imgs/toolbar_edit_trim2.png</file>
+            <file>imgs/toolbar_edit_undo.png</file>
+            <file>imgs/toolbar_ellipse.png</file>
+            <file>imgs/toolbar_ellipse_arc.png</file>
+            <file>imgs/toolbar_file_new.png</file>
+            <file>imgs/toolbar_file_open.png</file>
+            <file>imgs/toolbar_file_print.png</file>
+            <file>imgs/toolbar_file_printpreview.png</file>
+            <file>imgs/toolbar_file_save.png</file>
+            <file>imgs/toolbar_hatch.png</file>
+            <file>imgs/toolbar_image.png</file>
+            <file>imgs/toolbar_info_angle.png</file>
+            <file>imgs/toolbar_info_dist.png</file>
+            <file>imgs/toolbar_info_dist2.png</file>
+            <file>imgs/toolbar_layer_add.png</file>
+            <file>imgs/toolbar_layer_delete.png</file>
+            <file>imgs/toolbar_layer_edit.png</file>
+            <file>imgs/toolbar_layer_toggle_all.png</file>
+            <file>imgs/toolbar_line.png</file>
+            <file>imgs/toolbar_line_2p.png</file>
+            <file>imgs/toolbar_line_angle.png</file>
+            <file>imgs/toolbar_line_bisector.png</file>
+            <file>imgs/toolbar_line_freehand.png</file>
+            <file>imgs/toolbar_line_hv.png</file>
+            <file>imgs/toolbar_line_orthogonal.png</file>
+            <file>imgs/toolbar_line_parallel.png</file>
+            <file>imgs/toolbar_line_polygon.png</file>
+            <file>imgs/toolbar_line_polygon2.png</file>
+            <file>imgs/toolbar_line_rectangle.png</file>
+            <file>imgs/toolbar_line_relangle.png</file>
+            <file>imgs/toolbar_line_t.png</file>
+            <file>imgs/toolbar_line_tangent1.png</file>
+            <file>imgs/toolbar_line_tangent2.png</file>
+            <file>imgs/toolbar_point_single.png</file>
+            <file>imgs/toolbar_select_all.png</file>
+            <file>imgs/toolbar_select_contour.png</file>
+            <file>imgs/toolbar_select_inters.png</file>
+            <file>imgs/toolbar_select_invert.png</file>
+            <file>imgs/toolbar_select_single.png</file>
+            <file>imgs/toolbar_select_window.png</file>
+            <file>imgs/toolbar_snap.png</file>
+            <file>imgs/toolbar_snap_center.png</file>
+            <file>imgs/toolbar_snap_dist.png</file>
+            <file>imgs/toolbar_snap_endpoint.png</file>
+            <file>imgs/toolbar_snap_free.png</file>
+            <file>imgs/toolbar_snap_grid.png</file>
+            <file>imgs/toolbar_snap_intersa.png</file>
+            <file>imgs/toolbar_snap_intersm.png</file>
+            <file>imgs/toolbar_snap_middle.png</file>
+            <file>imgs/toolbar_snap_onentity.png</file>
+            <file>imgs/toolbar_snap_relzero.png</file>
+            <file>imgs/toolbar_snap_relzero_lock.png</file>
+            <file>imgs/toolbar_snap_restrict_horizontal.png</file>
+            <file>imgs/toolbar_snap_restrict_no.png</file>
+            <file>imgs/toolbar_snap_restrict_ortho.png</file>
+            <file>imgs/toolbar_snap_restrict_vertical.png</file>
+            <file>imgs/toolbar_snap_t.png</file>
+            <file>imgs/toolbar_text.png</file>
+            <file>imgs/toolbar_view.png</file>
+            <file>imgs/toolbar_view_auto.png</file>
+            <file>imgs/toolbar_view_in_out.png</file>
+            <file>imgs/toolbar_view_pan.png</file>
+            <file>imgs/toolbar_view_redraw.png</file>
+            <file>imgs/toolbar_view_window.png</file>
+            <file>imgs/wheel_zoom_in_out.png</file>
+        </files>
+    </filterSection>
+</QtHelpProject>
