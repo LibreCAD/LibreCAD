@@ -51,6 +51,8 @@
 
 // RVT_PORT added
 #include <QDockWidget>
+#include <QtHelp>
+#include <QTextEdit>
 
 #include "rs_document.h"
 
@@ -412,7 +414,8 @@ private:
     // Toolbar for CAD tools
     QG_CadToolBar* cadToolBar;
 
-	// RVT_PORT QAssistantClient* assistant;
+    QHelpEngine* helpEngine;
+    QDockWidget *helpWindow;
 
     QAction* scriptOpenIDE;
     QAction* scriptRun;
