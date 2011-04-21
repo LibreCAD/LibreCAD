@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include "qc_applicationwindow.h"
+#include "helpbrowser.h"
 //Added by qt3to4:
 #include <Q3StrList>
 #include <QPixmap>
@@ -38,7 +39,7 @@
 #include <QImageReader>
 // RVT_PORT added
 #include <QImageWriter>
-
+#include <QDesktopServices>
 
 #include <fstream>
 
@@ -119,7 +120,9 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
     appWindow = this;
-    // RVT_PORT assistant = NULL;
+    helpEngine = NULL;
+    helpWindow = NULL;
+
     workspace = NULL;
     
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
@@ -214,14 +217,18 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting dialog factory: OK");
 
-	/*RVT_PORT     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: " 
+    RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
 	"deleting assistant.."); 
-    if (assistant!=NULL) {
-        delete assistant;
+    if (helpEngine!=NULL) {
+        delete helpEngine;
     }
+    if (helpWindow!=NULL) {
+        delete helpWindow;
+    }
+
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting assistant: OK");
-	*/
+
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: OK");
 }
 
@@ -2948,28 +2955,34 @@ void QC_ApplicationWindow::slotHelpAbout() {
  */
 void QC_ApplicationWindow::slotHelpManual() {
     RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual()");
-/*
-    if (assistant==NULL) {
-        RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
-                        RS_SYSTEM->getAppDir().latin1());
-        RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
-                        RS_SYSTEM->getAppDir().latin1());
-        assistant = new QAssistantClient(RS_SYSTEM->getAppDir()+"/bin", this);
-		connect(assistant, SIGNAL(error(const QString&)), 
-			this, SLOT(slotError(const QString&)));
-        QStringList args;
-        args << "-profile";
-        args << QDir::convertSeparators(RS_SYSTEM->getDocPath() + "/librecaddoc.adp");
-//        args << QString("doc") + QDir::separator() + QString("librecaddoc.adp");
 
-        assistant->setArguments(args);
+    if (helpEngine==NULL) {
+        RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
+                        RS_SYSTEM->getAppDir().latin1());
+        RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
+                        RS_SYSTEM->getAppDir().latin1());
+        QString foo=RS_SYSTEM->getDocPath() + "/LibreCADdoc.qhc";
+        helpEngine = new QHelpEngine(RS_SYSTEM->getDocPath() + "/LibreCADdoc.qhc", this);
+        helpEngine->setupData();
+
+        helpWindow = new QDockWidget(tr("Help"), this);
+        QSplitter *helpPanel = new QSplitter(Qt::Horizontal);
+        HelpBrowser *helpBrowser = new HelpBrowser(helpEngine);
+
+        helpPanel->insertWidget(0, helpEngine->contentWidget());
+        helpPanel->insertWidget(1, helpBrowser);
+        helpPanel->setStretchFactor(1, 1);
+        helpWindow->setWidget(helpPanel);
+
+        addDockWidget(Qt::TopDockWidgetArea, helpWindow);
+
+        connect(helpEngine->contentWidget(), SIGNAL(linkActivated(const QUrl &)), helpBrowser, SLOT(setSource(const QUrl &)));
+
     }
-    assistant->openAssistant();
-    //assistant->showPage("index.html");
- */
+    if (helpWindow) {
+        helpWindow->show();
+    }
 }
-
-
 
 /**
  * Testing function.
