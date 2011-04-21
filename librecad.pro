@@ -11,7 +11,9 @@ DEFINES += QC_VERSION="\"1.0.0beta5\""
 QT += qt3support
 CONFIG += qt \
     warn_on \
-    link_prl 
+    link_prl \
+    help
+
 QMAKE_CXXFLAGS_DEBUG += 
 QMAKE_CXXFLAGS += 
 
@@ -65,6 +67,7 @@ win32 {
     DESTDIR = .
     QMAKE_POST_LINK = scripts\postprocess-win.bat
 }
+
 
 # Additional libraries to load
 # LIBS += \
@@ -951,15 +954,19 @@ RESOURCES += res/ui/ui.qrc
 
 # ################################################################################
 # Main
-HEADERS += src/main/qc_applicationwindow.h \
+HEADERS += \
+    src/main/qc_applicationwindow.h \
     src/main/qc_dialogfactory.h \
     src/main/qc_graphicview.h \
     src/main/qc_mdiwindow.h \
+    src/main/helpbrowser.h \
     src/main/main.h
-SOURCES += src/main/qc_applicationwindow.cpp \
+SOURCES += \
+    src/main/qc_applicationwindow.cpp \
     src/main/qc_dialogfactory.cpp \
     src/main/qc_graphicview.cpp \
     src/main/qc_mdiwindow.cpp \
+    src/main/helpbrowser.cpp \
     src/main/main.cpp
 TRANSLATIONS += ts/main/librecad_cs.ts \
     ts/main/librecad_et.ts \
