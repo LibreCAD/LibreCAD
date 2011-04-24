@@ -12,3 +12,5 @@ intermediate/
 Makefile
 qmake_image_collection.cpp
 librecad.pro.user
+*.qch
+*.qhc
