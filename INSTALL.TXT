@@ -3,12 +3,21 @@
 Unzip or checkout a version of LibreCAD into a directory.
 CD into that directory and follow these instructions:
 
-# Build makefile and compule LibreCAD
+# Build makefile and compile LibreCAD
 
-qmake
+qmake 
 make
 
-NOTE: On systems (Ubuntu??) You might need to run qmake-qt4 instead of just qmake
+---- Ubuntu/Debian users ----
+
+Make sure you have the qt-4 SDK installed 
+Install the qt4 SDK by executing the following commands:
+
+sudo apt-get install g++ gcc make git-core libqt4-dev qt4-qmake libqt4-qt3support qt4-dev-tools
+
+See elso : http://www.librecad.org/2010/10/debian-64-bit-and-ubuntu-compile-how-to/
+
+NOTE 1: On systems (Ubuntu??) You might need to run qmake-qt4 instead of just qmake
 
 ---- Windows Users ----
 
