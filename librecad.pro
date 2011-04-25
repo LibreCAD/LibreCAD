@@ -297,6 +297,7 @@ SOURCES = dxflib/src/dl_dxf.cpp \
 TRANSLATIONS = ts/lib/librecadlib_cs.ts \
     ts/lib/librecadlib_et.ts \
     ts/lib/librecadlib_en.ts \
+    ts/lib/librecadlib_es.ts \
     ts/lib/librecadlib_da.ts \
     ts/lib/librecadlib_de.ts \
     ts/lib/librecadlib_el.ts \
