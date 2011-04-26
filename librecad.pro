@@ -18,9 +18,6 @@ QMAKE_CXXFLAGS_DEBUG +=
 QMAKE_CXXFLAGS += 
 
 # Make translations at the end of the process
-# maketranslations.commands += lrelease librecad.pro
-# QMAKE_EXTRA_TARGETS += maketranslations
-# QMAKE_POST_LINK += make maketranslations
 unix { 
     # Get SVN revision number
     # SVNREVISION = $$system(svn info -R | grep -o \"Revision: [0-9]*\" | sed -e \"s/Revision: //\" | head -n1)
@@ -31,26 +28,18 @@ unix {
         TARGET = LibreCAD
         DEFINES += QC_APPDIR="\"LibreCAD\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
-        RESOURCEDIR = LibreCAD.app/Contents/Resources
         RC_FILE = res/main/librecad.icns
         DESTDIR = .
         
-        # postprocess.commands += scripts/postprocess-osx.sh
-        # QMAKE_EXTRA_TARGETS += postprocess
-        # QMAKE_POST_LINK = $$MAKE_CMD postprocess
         QMAKE_POST_LINK = scripts/postprocess-osx.sh
     }
     else { 
         TARGET = librecad
         DEFINES += QC_APPDIR="\"librecad\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_librecad"
-        RESOURCEDIR = librecad/Resources
         RC_FILE = res/main/librecad.icns
         DESTDIR = unix
         
-        # postprocess.commands += scripts/postprocess-unix.sh
-        # QMAKE_EXTRA_TARGETS += postprocess
-        # QMAKE_POST_LINK = $$MAKE_CMD postprocess
         QMAKE_POST_LINK = scripts/postprocess-unix.sh
     }
 }
