@@ -2961,22 +2961,27 @@ void QC_ApplicationWindow::slotHelpManual() {
                         RS_SYSTEM->getAppDir().latin1());
         RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
                         RS_SYSTEM->getAppDir().latin1());
-        QString foo=RS_SYSTEM->getDocPath() + "/LibreCADdoc.qhc";
-        helpEngine = new QHelpEngine(RS_SYSTEM->getDocPath() + "/LibreCADdoc.qhc", this);
-        helpEngine->setupData();
 
-        helpWindow = new QDockWidget(tr("Help"), this);
-        QSplitter *helpPanel = new QSplitter(Qt::Horizontal);
-        HelpBrowser *helpBrowser = new HelpBrowser(helpEngine);
+        if ((RS_SYSTEM->getDocPath().length()>0) && (QFile::exists(RS_SYSTEM->getDocPath()+ "/LibreCADdoc.qhc")==true)) {
+            helpEngine = new QHelpEngine(RS_SYSTEM->getDocPath() + "/LibreCADdoc.qhc", this);
 
-        helpPanel->insertWidget(0, helpEngine->contentWidget());
-        helpPanel->insertWidget(1, helpBrowser);
-        helpPanel->setStretchFactor(1, 1);
-        helpWindow->setWidget(helpPanel);
+            helpEngine->setupData();
 
-        addDockWidget(Qt::TopDockWidgetArea, helpWindow);
+            helpWindow = new QDockWidget(tr("Help"), this);
+            QSplitter *helpPanel = new QSplitter(Qt::Horizontal);
+            HelpBrowser *helpBrowser = new HelpBrowser(helpEngine);
 
-        connect(helpEngine->contentWidget(), SIGNAL(linkActivated(const QUrl &)), helpBrowser, SLOT(setSource(const QUrl &)));
+            helpPanel->insertWidget(0, helpEngine->contentWidget());
+            helpPanel->insertWidget(1, helpBrowser);
+            helpPanel->setStretchFactor(1, 1);
+            helpWindow->setWidget(helpPanel);
+
+            addDockWidget(Qt::TopDockWidgetArea, helpWindow);
+
+            connect(helpEngine->contentWidget(), SIGNAL(linkActivated(const QUrl &)), helpBrowser, SLOT(setSource(const QUrl &)));
+        } else {
+            QMessageBox::information(this, "Helpfiles not found", tr("Bugger, I couldn't find the helpfiles on the filesystem."));
+        }
 
     }
     if (helpWindow) {
