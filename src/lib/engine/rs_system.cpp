@@ -312,24 +312,29 @@ RS_StringList RS_System::getDirectoryList(const RS_String& _subDirectory) {
             dirList.append(appDir + "/" + subDirectory);
         }
 
+        // Ubuntu
+        dirList.append("/usr/share/doc/" + appDirName + "/" + subDirectory);
+
         // Redhat style:
         dirList.append("/usr/share/" + appDirName + "/" + subDirectory);
 
-        // SuSE style:
-        dirList.append("/usr/X11R6/" + appDirName + "/" + subDirectory);
+        // Others, RVT April 25, 2011 removed, doesn anybody use that still?
+        // dirList.append("/usr/X11R6/share/" + appDirName + "/" + subDirectory);
 
-        dirList.append("/usr/X11R6/share/" + appDirName + "/" + subDirectory);
+        // Unix home directory, it's old style but some people might have stuff there.
         dirList.append(getHomeDir() + "/." + appDirName + "/" + subDirectory);
 
 
 #ifdef Q_OS_MAC
+    // Apple uses the resource directory
     if (!appDir.isEmpty() && appDir!="/") {
         dirList.append(appDir + "/../Resources/" + subDirectory);
     }
 #endif
 
 #ifndef Q_OS_MAC
-        // Add support directory if librecad is run-in-place, not for Apple because it uses resources
+        // Add support directory if librecad is run-in-place,
+        // not for Apple because it uses resources this is more for unix systems
         dirList.append(appDir + "/resources/" + subDirectory);
 #endif
 
