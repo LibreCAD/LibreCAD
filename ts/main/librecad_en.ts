@@ -348,5 +348,9 @@ You can save your work now.</source>
         <source>Loading File %1..</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

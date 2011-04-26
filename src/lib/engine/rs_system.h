@@ -128,7 +128,10 @@ public:
      */
     RS_String getDocPath() {
         RS_StringList lst = getDirectoryList("doc");
-		return lst.first();
+
+        if( !(lst.isEmpty()) ){
+            return lst.first();
+        } else return QString();
     }
 
 	/**
