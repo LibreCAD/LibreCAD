@@ -295,6 +295,7 @@ TRANSLATIONS = ts/lib/librecadlib_cs.ts \
     ts/lib/librecadlib_nl.ts \
     ts/lib/librecadlib_no.ts \
     ts/lib/librecadlib_pl.ts \
+    ts/lib/librecadlib_pt.ts \
     ts/lib/librecadlib_ru.ts \
     ts/lib/librecadlib_sk.ts \
     ts/lib/librecadlib_tr.ts
@@ -317,6 +318,7 @@ TRANSLATIONS += ts/cmd/librecadcmd_cs.ts \
     ts/cmd/librecadcmd_no.ts \
     ts/cmd/librecadcmd_pa.ts \
     ts/cmd/librecadcmd_pl.ts \
+    ts/cmd/librecadcmd_pt.ts \
     ts/cmd/librecadcmd_ru.ts \
     ts/cmd/librecadcmd_sk.ts \
     ts/cmd/librecadcmd_tr.ts
@@ -567,6 +569,7 @@ TRANSLATIONS += ts/actions/librecadactions_cs.ts \
     ts/actions/librecadactions_no.ts \
     ts/actions/librecadactions_pa.ts \
     ts/actions/librecadactions_pl.ts \
+    ts/actions/librecadactions_pt.ts \    
     ts/actions/librecadactions_ru.ts \
     ts/actions/librecadactions_sk.ts \
     ts/actions/librecadactions_tr.ts
@@ -936,6 +939,7 @@ TRANSLATIONS += ts/ui/librecadguiqt_cs.ts \
     ts/ui/librecadguiqt_no.ts \
     ts/ui/librecadguiqt_pa.ts \
     ts/ui/librecadguiqt_pl.ts \
+    ts/ui/librecadguiqt_pt.ts \
     ts/ui/librecadguiqt_ru.ts \
     ts/ui/librecadguiqt_sk.ts \
     ts/ui/librecadguiqt_tr.ts
@@ -971,6 +975,7 @@ TRANSLATIONS += ts/main/librecad_cs.ts \
     ts/main/librecad_no.ts \
     ts/main/librecad_pa.ts \
     ts/main/librecad_pl.ts \
+    ts/main/librecad_pt.ts \
     ts/main/librecad_ru.ts \
     ts/main/librecad_sk.ts \
     ts/main/librecad_tr.ts
