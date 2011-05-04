@@ -8,17 +8,26 @@ QT       += gui
 TEMPLATE = lib
 CONFIG += plugin
 VERSION = 1.0.0
+PLUGIN_NAME=asciifile
+
+SOURCES += asciifile.cpp
+HEADERS += asciifile.h
 
 win32 {
     debug {
-        TARGET = ../../debug/resources/plugins/asciifile
+        TARGET = ../../debug/resources/plugins/$$PLUGIN_NAME
 
     } else {
-        TARGET = ../../release/resources/plugins/asciifile
+        TARGET = ../../release/resources/plugins/$$PLUGIN_NAME
     }
 }
 unix {
-    TARGET = ../../unix/resources/plugins/asciifile
+    macx { 
+	TARGET = ../../LibreCAD.app/Contents/Resources/plugins/$$PLUGIN_NAME
+    }
+    else { 
+	TARGET = ../../unix/resources/plugins/$$PLUGIN_NAME
+    }
 }
 
 INCLUDEPATH    += ../../src/plugins
@@ -32,6 +41,3 @@ UI_DIR = ../intermediate/ui
 UI_HERADERS_DIR = ../intermediate/ui
 UI_SOURCES_DIR = ../intermediate/ui
 
-SOURCES += asciifile.cpp
-
-HEADERS += asciifile.h
