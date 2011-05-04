@@ -34,7 +34,6 @@
 #include <q3mimefactory.h>
 #include <QKeyEvent>
 #include <Q3Frame>
-#include <Q3PopupMenu>
 // RVT_PORT added
 #include <QImageReader>
 // RVT_PORT added
@@ -430,14 +429,14 @@ void QC_ApplicationWindow::initActions() {
 
     QG_ActionFactory actionFactory(actionHandler, this);
     QAction* action;
-    Q3PopupMenu* menu;
+    QMenu* menu;
     QToolBar* tb;
-    Q3PopupMenu* subMenu;
+    QMenu* subMenu;
 
 
     // File actions:
     //
-    menu = new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&File"));
     tb = fileToolBar;
     tb->setCaption("File");
 
@@ -475,14 +474,13 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionFileQuit, this);
     action->addTo(menu);
     menu->insertSeparator();
-    menuBar()->insertItem(tr("&File"), menu);
     addToolBar(Qt::TopToolBarArea, tb); //tr("File");
 
     fileMenu = menu;
 
     // Editing actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Edit"));
     tb = editToolBar;
     tb->setCaption("Edit");
 
@@ -519,7 +517,6 @@ void QC_ApplicationWindow::initActions() {
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
-    menuBar()->insertItem(tr("&Edit"), menu);
     //addToolBar(tb, tr("Edit"));
 	addToolBar(Qt::TopToolBarArea, tb); //tr("Edit");
 
@@ -531,7 +528,7 @@ void QC_ApplicationWindow::initActions() {
 
     // Viewing / Zooming actions:
     //
-    menu = new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&View"));
     menu->setCheckable(true);
     tb = zoomToolBar;
     tb->setCaption("View");
@@ -625,12 +622,12 @@ void QC_ApplicationWindow::initActions() {
             this, SLOT(slotFocusCommandLine()));
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&View"), menu);
     //addToolBar(tb, tr("View"));
 	addToolBar(Qt::TopToolBarArea, tb); //tr("View");
+
     // Selecting actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Select"));
     action = actionFactory.createAction(RS2::ActionDeselectAll, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -663,21 +660,19 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionSelectLayer, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&Select"), menu);
 
     // Drawing actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Draw"));
 
     // Points:
-    subMenu=new Q3PopupMenu(this);
+    subMenu= menu->addMenu(tr("&Point"));
     action = actionFactory.createAction(RS2::ActionDrawPoint, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertItem(tr("&Point"), subMenu);
 
     // Lines:
-    subMenu=new Q3PopupMenu(this);
+    subMenu= menu->addMenu(tr("&Line"));
     action = actionFactory.createAction(RS2::ActionDrawLine,
                                         actionHandler);
     action->addTo(subMenu);
@@ -747,10 +742,8 @@ void QC_ApplicationWindow::initActions() {
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
-    menu->insertItem(tr("&Line"), subMenu);
-
     // Arcs:
-    subMenu=new Q3PopupMenu(this);
+    subMenu= menu->addMenu(tr("&Arc"));
     action = actionFactory.createAction(RS2::ActionDrawArc, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -760,9 +753,9 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionDrawArcParallel, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertItem(tr("&Arc"), subMenu);
+
     // Circles:
-    subMenu=new Q3PopupMenu(this);
+    subMenu= menu->addMenu(tr("&Circle"));
     action = actionFactory.createAction(RS2::ActionDrawCircle, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -778,10 +771,9 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionDrawCircleParallel, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertItem(tr("&Circle"), subMenu);
 	
     // Ellipses:
-    subMenu=new Q3PopupMenu(this);
+    subMenu= menu->addMenu(tr("&Ellipse"));
     action = actionFactory.createAction(RS2::ActionDrawEllipseAxis,
                                         actionHandler);
     action->addTo(subMenu);
@@ -790,22 +782,19 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertItem(tr("&Ellipse"), subMenu);
 
     // Splines:
-    subMenu=new Q3PopupMenu(this);
+    subMenu= menu->addMenu(tr("&Spline"));
     action = actionFactory.createAction(RS2::ActionDrawSpline, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertItem(tr("&Spline"), subMenu);
     
 	// Polylines:
-    subMenu=new Q3PopupMenu(this);
+    subMenu= menu->addMenu(tr("&Polyline"));
     action = actionFactory.createAction(RS2::ActionDrawPolyline,
                                         actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertItem(tr("&Polyline"), subMenu);
 
     action = actionFactory.createAction(RS2::ActionPolylineAdd,
                                         actionHandler);
@@ -839,16 +828,17 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&Draw"), menu);
 
     // Dimensioning actions:
     //
 #ifdef __APPLE1__
 
-    Q3PopupMenu* m = menu;
-#endif
+    QMenu* m = menu;
+    menu= m->addMenu(tr("&Dimension"));
 
-    menu=new Q3PopupMenu(this);
+#else
+    menu = menuBar()->addMenu(tr("&Dimension"));
+#endif
     action = actionFactory.createAction(RS2::ActionDimAligned, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -873,17 +863,10 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionDimLeader, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-#ifdef __APPLE1__
-
-    m->insertItem(tr("&Dimension"), menu);
-#else
-
-    menuBar()->insertItem(tr("&Dimension"), menu);
-#endif
 
     // Modifying actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Modify"));
     action = actionFactory.createAction(RS2::ActionModifyMove,
                                         actionHandler);
     action->addTo(menu);
@@ -962,11 +945,10 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionBlocksExplode, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&Modify"), menu);
 
     // Snapping actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Snap"));
     action = actionFactory.createAction(RS2::ActionSnapFree, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -1025,11 +1007,10 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&Snap"), menu);
 
     // Info actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Info"));
     //action = actionFactory.createAction(RS2::ActionInfoInside,
     //                                    actionHandler);
     //action->addTo(menu);
@@ -1049,11 +1030,10 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&Info"), menu);
 
     // Layer actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Layer"));
     action = actionFactory.createAction(RS2::ActionLayersDefreezeAll,
                                         actionHandler);
     action->addTo(menu);
@@ -1076,11 +1056,10 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&Layer"), menu);
 
     // Block actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Block"));
     action = actionFactory.createAction(RS2::ActionBlocksDefreezeAll,
                                         actionHandler);
     action->addTo(menu);
@@ -1112,7 +1091,6 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionBlocksExplode, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&Block"), menu);
 	
 	QMainWindow::addToolBarBreak(Qt::TopToolBarArea);
 	
@@ -1124,7 +1102,7 @@ void QC_ApplicationWindow::initActions() {
 #ifdef RS_SCRIPTING
     // Scripts menu:
     //
-    scriptMenu = new Q3PopupMenu(this);
+    scriptMenu = new QMenu(tr("&Scripts"));
     scriptOpenIDE = actionFactory.createAction(RS2::ActionScriptOpenIDE, this);
     scriptOpenIDE->addTo(scriptMenu);
     scriptRun = actionFactory.createAction(RS2::ActionScriptRun, this);
@@ -1136,13 +1114,11 @@ void QC_ApplicationWindow::initActions() {
 #endif
 
 #ifdef RVT_CAM
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&CAM"));
 
     action = actionFactory.createAction(RS2::ActionCamMakeProfile, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    
-    menuBar()->insertItem(tr("&CAM"), menu);
 #endif
 
     // Help menu:
@@ -1251,53 +1227,48 @@ void QC_ApplicationWindow::initActions() {
 void QC_ApplicationWindow::initMenuBar() {
     RS_DEBUG->print("QC_ApplicationWindow::initMenuBar()");
 
-    // menuBar entry windowsMenu
-    windowsMenu = new Q3PopupMenu(this);
-    windowsMenu->setCheckable(true);
-    connect(windowsMenu, SIGNAL(aboutToShow()),
-            this, SLOT(slotWindowsMenuAboutToShow()));
-
     // menuBar entry scriptMenu
-    //scriptMenu = new QPopupMenu(this);
+#ifdef RS_SCRIPTING
+    menuBar()->addMenu(scriptMenu);
+#endif
     //scriptMenu->setCheckable(true);
     //scriptOpenIDE->addTo(scriptMenu);
     //scriptRun->addTo(scriptMenu);
     //connect(scriptMenu, SIGNAL(aboutToShow()),
     //        this, SLOT(slotScriptMenuAboutToShow()));
 
+    // menuBar entry windowsMenu
+    windowsMenu = menuBar()->addMenu(tr("&Window"));
+    windowsMenu->setCheckable(true);
+    connect(windowsMenu, SIGNAL(aboutToShow()),
+            this, SLOT(slotWindowsMenuAboutToShow()));
+
+    menuBar()->insertSeparator();
     // menuBar entry helpMenu
-    helpMenu=new Q3PopupMenu();
+    helpMenu = menuBar()->addMenu(tr("&Help"));
     helpManual->addTo(helpMenu);
     helpMenu->insertSeparator();
     helpAboutApp->addTo(helpMenu);
 
     // menuBar entry test menu
-    testMenu=new Q3PopupMenu();
-    testDumpEntities->addTo(testMenu);
-    testDumpUndo->addTo(testMenu);
-    testUpdateInserts->addTo(testMenu);
-    testDrawFreehand->addTo(testMenu);
-    testInsertBlock->addTo(testMenu);
-    testInsertText->addTo(testMenu);
-    testInsertImage->addTo(testMenu);
-    testInsertEllipse->addTo(testMenu);
-    testUnicode->addTo(testMenu);
-    testMath01->addTo(testMenu);
-    testResize640->addTo(testMenu);
-    testResize800->addTo(testMenu);
-    testResize1024->addTo(testMenu);
-
-    // menuBar configuration
-#ifdef RS_SCRIPTING
-    menuBar()->insertItem(tr("&Scripts"), scriptMenu);
-#endif    
-    menuBar()->insertItem(tr("&Window"), windowsMenu);
-    menuBar()->insertSeparator();
-    menuBar()->insertItem(tr("&Help"), helpMenu);
     if (QC_DEBUGGING) {
-        menuBar()->insertItem(tr("De&bugging"), testMenu);
+        testMenu = menuBar()->addMenu(tr("De&bugging"));
+        testDumpEntities->addTo(testMenu);
+        testDumpUndo->addTo(testMenu);
+        testUpdateInserts->addTo(testMenu);
+        testDrawFreehand->addTo(testMenu);
+        testInsertBlock->addTo(testMenu);
+        testInsertText->addTo(testMenu);
+        testInsertImage->addTo(testMenu);
+        testInsertEllipse->addTo(testMenu);
+        testUnicode->addTo(testMenu);
+        testMath01->addTo(testMenu);
+        testResize640->addTo(testMenu);
+        testResize800->addTo(testMenu);
+        testResize1024->addTo(testMenu);
     }
 
+    // menuBar configuration
     recentFiles = new QG_RecentFiles(9);
 }
 
