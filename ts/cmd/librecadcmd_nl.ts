@@ -1,4 +1,5 @@
-<!DOCTYPE TS><TS>
+<!DOCTYPE TS>
+<TS language="nl">
 <context>
     <name>RS_Commands</name>
     <message>
@@ -335,7 +336,7 @@
     </message>
     <message>
         <source>Available commands:</source>
-        <translation>Beschikbare commando&apos;s:</translation>
+        <translation>Beschikbare commando's:</translation>
     </message>
     <message>
         <source>ln</source>
@@ -626,7 +627,7 @@
     </message>
     <message>
         <source>a</source>
-        <translation type="unfinished"></translation>
+        <translation>a</translation>
     </message>
     <message>
         <source>ci</source>
@@ -653,15 +654,15 @@
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>r</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>pa</source>
@@ -671,7 +672,7 @@
     <message>
         <source>tm</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
