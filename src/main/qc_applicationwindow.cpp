@@ -437,6 +437,7 @@ void QC_ApplicationWindow::initActions() {
     // File actions:
     //
     menu = menuBar()->addMenu(tr("&File"));
+    menu->setName("File");
     tb = fileToolBar;
     tb->setCaption("File");
 
@@ -455,6 +456,8 @@ void QC_ApplicationWindow::initActions() {
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionFileExport, this);
     action->addTo(menu);
+    subMenu = menu->addMenu(tr("Import"));
+    subMenu->setName("Import");
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     menu->insertSeparator();
     action = actionFactory.createAction(RS2::ActionFileClose, this);
@@ -481,6 +484,7 @@ void QC_ApplicationWindow::initActions() {
     // Editing actions:
     //
     menu = menuBar()->addMenu(tr("&Edit"));
+    menu->setName("Edit");
     tb = editToolBar;
     tb->setCaption("Edit");
 
@@ -529,6 +533,7 @@ void QC_ApplicationWindow::initActions() {
     // Viewing / Zooming actions:
     //
     menu = menuBar()->addMenu(tr("&View"));
+    menu->setName("View");
     menu->setCheckable(true);
     tb = zoomToolBar;
     tb->setCaption("View");
@@ -628,6 +633,7 @@ void QC_ApplicationWindow::initActions() {
     // Selecting actions:
     //
     menu = menuBar()->addMenu(tr("&Select"));
+    menu->setName("Select");
     action = actionFactory.createAction(RS2::ActionDeselectAll, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -664,15 +670,18 @@ void QC_ApplicationWindow::initActions() {
     // Drawing actions:
     //
     menu = menuBar()->addMenu(tr("&Draw"));
+    menu->setName("Draw");
 
     // Points:
     subMenu= menu->addMenu(tr("&Point"));
+    subMenu->setName("Point");
     action = actionFactory.createAction(RS2::ActionDrawPoint, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Lines:
     subMenu= menu->addMenu(tr("&Line"));
+    subMenu->setName("Line");
     action = actionFactory.createAction(RS2::ActionDrawLine,
                                         actionHandler);
     action->addTo(subMenu);
@@ -744,6 +753,7 @@ void QC_ApplicationWindow::initActions() {
 
     // Arcs:
     subMenu= menu->addMenu(tr("&Arc"));
+    subMenu->setName("Arc");
     action = actionFactory.createAction(RS2::ActionDrawArc, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -756,6 +766,7 @@ void QC_ApplicationWindow::initActions() {
 
     // Circles:
     subMenu= menu->addMenu(tr("&Circle"));
+    subMenu->setName("Circle");
     action = actionFactory.createAction(RS2::ActionDrawCircle, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -771,9 +782,10 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionDrawCircleParallel, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-	
+
     // Ellipses:
     subMenu= menu->addMenu(tr("&Ellipse"));
+    subMenu->setName("Ellipse");
     action = actionFactory.createAction(RS2::ActionDrawEllipseAxis,
                                         actionHandler);
     action->addTo(subMenu);
@@ -785,12 +797,14 @@ void QC_ApplicationWindow::initActions() {
 
     // Splines:
     subMenu= menu->addMenu(tr("&Spline"));
+    subMenu->setName("Spline");
     action = actionFactory.createAction(RS2::ActionDrawSpline, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     
 	// Polylines:
     subMenu= menu->addMenu(tr("&Polyline"));
+    subMenu->setName("Polyline");
     action = actionFactory.createAction(RS2::ActionDrawPolyline,
                                         actionHandler);
     action->addTo(subMenu);
@@ -832,13 +846,12 @@ void QC_ApplicationWindow::initActions() {
     // Dimensioning actions:
     //
 #ifdef __APPLE1__
-
     QMenu* m = menu;
     menu= m->addMenu(tr("&Dimension"));
-
 #else
     menu = menuBar()->addMenu(tr("&Dimension"));
 #endif
+    menu->setName("Dimension");
     action = actionFactory.createAction(RS2::ActionDimAligned, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -867,6 +880,7 @@ void QC_ApplicationWindow::initActions() {
     // Modifying actions:
     //
     menu = menuBar()->addMenu(tr("&Modify"));
+    menu->setName("Modify");
     action = actionFactory.createAction(RS2::ActionModifyMove,
                                         actionHandler);
     action->addTo(menu);
@@ -949,6 +963,7 @@ void QC_ApplicationWindow::initActions() {
     // Snapping actions:
     //
     menu = menuBar()->addMenu(tr("&Snap"));
+    menu->setName("Snap");
     action = actionFactory.createAction(RS2::ActionSnapFree, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -1011,6 +1026,7 @@ void QC_ApplicationWindow::initActions() {
     // Info actions:
     //
     menu = menuBar()->addMenu(tr("&Info"));
+    menu->setName("Info");
     //action = actionFactory.createAction(RS2::ActionInfoInside,
     //                                    actionHandler);
     //action->addTo(menu);
@@ -1034,6 +1050,7 @@ void QC_ApplicationWindow::initActions() {
     // Layer actions:
     //
     menu = menuBar()->addMenu(tr("&Layer"));
+    menu->setName("Layer");
     action = actionFactory.createAction(RS2::ActionLayersDefreezeAll,
                                         actionHandler);
     action->addTo(menu);
@@ -1060,6 +1077,7 @@ void QC_ApplicationWindow::initActions() {
     // Block actions:
     //
     menu = menuBar()->addMenu(tr("&Block"));
+    menu->setName("Block");
     action = actionFactory.createAction(RS2::ActionBlocksDefreezeAll,
                                         actionHandler);
     action->addTo(menu);
@@ -1103,6 +1121,7 @@ void QC_ApplicationWindow::initActions() {
     // Scripts menu:
     //
     scriptMenu = new QMenu(tr("&Scripts"));
+    scriptMenu->setName("Scripts");
     scriptOpenIDE = actionFactory.createAction(RS2::ActionScriptOpenIDE, this);
     scriptOpenIDE->addTo(scriptMenu);
     scriptRun = actionFactory.createAction(RS2::ActionScriptRun, this);
@@ -1115,6 +1134,7 @@ void QC_ApplicationWindow::initActions() {
 
 #ifdef RVT_CAM
     menu = menuBar()->addMenu(tr("&CAM"));
+    menu->setName("CAM");
 
     action = actionFactory.createAction(RS2::ActionCamMakeProfile, actionHandler);
     action->addTo(menu);
@@ -1239,6 +1259,7 @@ void QC_ApplicationWindow::initMenuBar() {
 
     // menuBar entry windowsMenu
     windowsMenu = menuBar()->addMenu(tr("&Window"));
+    windowsMenu->setName("Window");
     windowsMenu->setCheckable(true);
     connect(windowsMenu, SIGNAL(aboutToShow()),
             this, SLOT(slotWindowsMenuAboutToShow()));
@@ -1246,6 +1267,7 @@ void QC_ApplicationWindow::initMenuBar() {
     menuBar()->insertSeparator();
     // menuBar entry helpMenu
     helpMenu = menuBar()->addMenu(tr("&Help"));
+    helpMenu->setName("Help");
     helpManual->addTo(helpMenu);
     helpMenu->insertSeparator();
     helpAboutApp->addTo(helpMenu);
@@ -1253,6 +1275,7 @@ void QC_ApplicationWindow::initMenuBar() {
     // menuBar entry test menu
     if (QC_DEBUGGING) {
         testMenu = menuBar()->addMenu(tr("De&bugging"));
+        testMenu->setName("Debugging");
         testDumpEntities->addTo(testMenu);
         testDumpUndo->addTo(testMenu);
         testUpdateInserts->addTo(testMenu);
