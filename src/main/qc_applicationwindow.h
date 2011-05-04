@@ -76,6 +76,8 @@
 #include "qg_cadtoolbar.h"
 #include "qg_commandwidget.h"
 
+#include "qc_plugininterface.h"
+
 class QG_LibraryWidget;
 class QG_CadToolBar;
 /**
@@ -437,6 +439,15 @@ private:
     QAction *testResize640;
     QAction *testResize800;
     QAction *testResize1024;
+
+//Plugin support
+private:
+    void loadPlugins();
+    QMenu *findMenu(QStringList *treemenu);
+    QC_PluginInterface *pluginInterface;
+    QMenu* pluginMenu;
+public slots:
+    void execPlug();
 
 };
 

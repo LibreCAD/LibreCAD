@@ -58,6 +58,9 @@
 
 #include <qeventloop.h>
 
+//Plugin support
+#include <QPluginLoader>
+
 #include "rs_application.h"
 #include "rs_actiondrawlinefree.h"
 #include "rs_actionprintpreview.h"
@@ -96,6 +99,7 @@
 #include "qc_mdiwindow.h"
 #include "qc_dialogfactory.h"
 #include "main.h"
+#include "doc_plugin_interface.h"
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 
@@ -177,11 +181,80 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     // Disable menu and toolbar items
     emit windowsChanged(FALSE);
 
-	
+    //plugin load
+    loadPlugins();
+
     statusBar()->showMessage(XSTR(QC_APPNAME) " Ready", 2000);
     //setFocusPolicy(WheelFocus);
 }
 
+
+QMenu *QC_ApplicationWindow::findMenu(QStringList *treemenu) {
+    QMenu *atMenu = 0;
+    //find menu
+    if (!treemenu->isEmpty()) {
+        atMenu = menuBar()->findChild<QMenu *>(treemenu->takeFirst());
+    }
+    //find submenus
+    while (!treemenu->isEmpty()) {
+        atMenu = atMenu->findChild<QMenu *>(treemenu->takeFirst());
+    }
+    return atMenu;
+}
+
+/**
+ * Loads the found plugins.
+ */
+void QC_ApplicationWindow::loadPlugins() {
+
+    QMenu* pluginMenu = new QMenu(tr("&Plugins"));
+    RS_StringList lst = RS_SYSTEM->getDirectoryList("plugins");
+
+    for (int i = 0; i < lst.size(); ++i) {
+        QDir pluginsDir(lst.at(i));
+        foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
+            QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
+            QObject *plugin = pluginLoader.instance();
+            if (plugin) {
+                QC_PluginInterface *pluginInterface = qobject_cast<QC_PluginInterface *>(plugin);
+                if (pluginInterface) {
+                    QAction *actpl = new QAction(pluginInterface->name(), plugin);
+                    connect(actpl, SIGNAL(triggered()), this, SLOT(execPlug()));
+                    QStringList treemenu = pluginInterface->menu().split('/', QString::SkipEmptyParts);
+                    QMenu *atMenu = findMenu(&treemenu);
+                    if (atMenu)
+                        atMenu->addAction(actpl);
+                    else
+                        pluginMenu->addAction(actpl);
+                }
+            } else {
+                QMessageBox::information(this, "Info", pluginLoader.errorString());
+                RS_DEBUG->print("QC_ApplicationWindow::loadPlugin: %s", pluginLoader.errorString().toLatin1().data());
+            }
+        }
+    }
+    if (pluginMenu->actions().isEmpty())
+        delete (pluginMenu);
+    else
+        menuBar()->addMenu(pluginMenu);
+}
+
+/**
+ * Execute the plugin.
+ */
+void QC_ApplicationWindow::execPlug() {
+    QAction *action = qobject_cast<QAction *>(sender());
+    QC_PluginInterface *plugin = qobject_cast<QC_PluginInterface *>(action->parent());
+//get actual drawing
+    QC_MDIWindow* w = getMDIWindow();
+    RS_Graphic* currdoc = static_cast<RS_Graphic*>(w->getDocument());
+//create document interface instance
+    Doc_plugin_interface pligundoc(currdoc);
+//execute plugin
+    plugin->execComm(&pligundoc, this);
+//TODO call update view
+w->getGraphicView()->redraw();
+}
 
 
 /**
