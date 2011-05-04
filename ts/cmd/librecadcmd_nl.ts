@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>redo</source>
-        <translation>verdoen</translation>
+        <translation>terughalen</translation>
     </message>
     <message>
         <source>r</source>
@@ -654,15 +654,15 @@
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"/>
+        <translation>zv</translation>
     </message>
     <message>
         <source>r</source>
-        <translation type="unfinished"/>
+        <translation>r</translation>
     </message>
     <message>
         <source>polyline</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">polylijn</translation>
     </message>
     <message>
         <source>pa</source>
@@ -672,7 +672,7 @@
     <message>
         <source>tm</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"/>
+        <translation>tm</translation>
     </message>
 </context>
 </TS>
