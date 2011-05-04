@@ -615,15 +615,15 @@
     </message>
     <message>
         <source>po</source>
-        <translation type="unfinished">pu</translation>
+        <translation>pu</translation>
     </message>
     <message>
         <source>ln</source>
-        <translation type="unfinished">ln</translation>
+        <translation>ln</translation>
     </message>
     <message>
         <source>l</source>
-        <translation type="unfinished">l</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>a</source>
@@ -631,25 +631,25 @@
     </message>
     <message>
         <source>ci</source>
-        <translation type="unfinished">ci</translation>
+        <translation>ci</translation>
     </message>
     <message>
         <source>rec</source>
-        <translation type="unfinished">rh</translation>
+        <translation>rh</translation>
     </message>
     <message>
         <source>rectang</source>
-        <translation type="unfinished">rechth</translation>
+        <translation>rechth</translation>
     </message>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished">bv</translation>
+        <translation>bv</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished">ht</translation>
+        <translation>ht</translation>
     </message>
     <message>
         <source>zv</source>
@@ -662,12 +662,12 @@
     </message>
     <message>
         <source>polyline</source>
-        <translation type="unfinished">polylijn</translation>
+        <translation>polylijn</translation>
     </message>
     <message>
         <source>pa</source>
         <comment>parallel</comment>
-        <translation type="unfinished">zp</translation>
+        <translation>zp</translation>
     </message>
     <message>
         <source>tm</source>
