@@ -33,7 +33,6 @@
 #include <qlayout.h>
 #include <q3mainwindow.h>
 #include <qmenubar.h>
-#include <q3popupmenu.h>
 #include <qsplitter.h>
 #include <qstatusbar.h>
 #include <q3table.h>
@@ -76,6 +75,8 @@
 
 #include "qg_cadtoolbar.h"
 #include "qg_commandwidget.h"
+
+#include "qc_plugininterface.h"
 
 class QG_LibraryWidget;
 class QG_CadToolBar;
@@ -398,11 +399,11 @@ private:
 	QS_Scripter* scripter;
 #endif
 
-    Q3PopupMenu* fileMenu;
-    Q3PopupMenu* windowsMenu;
-    Q3PopupMenu* scriptMenu;
-    Q3PopupMenu* helpMenu;
-    Q3PopupMenu* testMenu;
+    QMenu* fileMenu;
+    QMenu* windowsMenu;
+    QMenu* scriptMenu;
+    QMenu* helpMenu;
+    QMenu* testMenu;
 
     /** the main toolbars */
     QToolBar* fileToolBar;
@@ -438,6 +439,15 @@ private:
     QAction *testResize640;
     QAction *testResize800;
     QAction *testResize1024;
+
+//Plugin support
+private:
+    void loadPlugins();
+    QMenu *findMenu(QStringList *treemenu);
+    QC_PluginInterface *pluginInterface;
+    QMenu* pluginMenu;
+public slots:
+    void execPlug();
 
 };
 

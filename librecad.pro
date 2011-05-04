@@ -86,6 +86,7 @@ INCLUDEPATH += dxflib/src \
     src/lib/scripting \
     src/actions \
     src/main \
+    src/plugins \
     src/ui \
     src/ui/forms \
     res
@@ -205,7 +206,10 @@ HEADERS = \
     src/lib/scripting/rs_simplepython.h \
     src/lib/scripting/rs_python_wrappers.h \
     src/lib/scripting/rs_script.h \
-    src/lib/scripting/rs_scriptlist.h 
+    src/lib/scripting/rs_scriptlist.h \ 
+    src/main/doc_plugin_interface.h \
+    src/plugins/document_interface.h \
+    src/plugins/qc_plugininterface.h
 
 SOURCES = dxflib/src/dl_dxf.cpp \
     dxflib/src/dl_writer_ascii.cpp \
@@ -282,6 +286,7 @@ SOURCES = dxflib/src/dl_dxf.cpp \
     src/lib/scripting/rs_python_wrappers.cpp \
     src/lib/scripting/rs_script.cpp \
     src/lib/scripting/rs_scriptlist.cpp \
+    src/main/doc_plugin_interface.cpp
 
 TRANSLATIONS = ts/lib/librecadlib_cs.ts \
     ts/lib/librecadlib_et.ts \
@@ -989,4 +994,3 @@ RESOURCES += res/main/main.qrc
 
 # Include any custom.pro files for personal/special builds
 exists( custom.pro ):include( custom.pro )
-
