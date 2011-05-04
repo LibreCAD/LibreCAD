@@ -1,0 +1,6 @@
+First build Librecad, then goto plugins directory
+qmake
+make
+
+If you want to create a plugin copy directory sample, rename and modify it (or write from scratch).
+edit plugins.pro add the directory name in SUBDIRS
