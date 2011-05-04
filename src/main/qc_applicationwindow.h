@@ -33,7 +33,6 @@
 #include <qlayout.h>
 #include <q3mainwindow.h>
 #include <qmenubar.h>
-#include <q3popupmenu.h>
 #include <qsplitter.h>
 #include <qstatusbar.h>
 #include <q3table.h>
@@ -398,11 +397,11 @@ private:
 	QS_Scripter* scripter;
 #endif
 
-    Q3PopupMenu* fileMenu;
-    Q3PopupMenu* windowsMenu;
-    Q3PopupMenu* scriptMenu;
-    Q3PopupMenu* helpMenu;
-    Q3PopupMenu* testMenu;
+    QMenu* fileMenu;
+    QMenu* windowsMenu;
+    QMenu* scriptMenu;
+    QMenu* helpMenu;
+    QMenu* testMenu;
 
     /** the main toolbars */
     QToolBar* fileToolBar;
