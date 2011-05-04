@@ -8,20 +8,30 @@ QT       += gui
 TEMPLATE = lib
 CONFIG += plugin
 VERSION = 1.0.1
+PLUGIN_NAME=sample
+
+SOURCES += sample.cpp
+
+HEADERS += sample.h
+
 
 # DLLDESTDIR = ../../unix/resources/plugins/
 win32 {
     debug {
-        TARGET = ../../debug/resources/plugins/sample
+        TARGET = ../../debug/resources/plugins/$$PLUGIN_NAME
 
     } else {
-        TARGET = ../../release/resources/plugins/sample
+        TARGET = ../../release/resources/plugins/$$PLUGIN_NAME
     }
 }
 unix {
-    TARGET = ../../unix/resources/plugins/sample
+    macx { 
+	TARGET = ../../LibreCAD.app/Contents/Resources/plugins/$$PLUGIN_NAME
+    }
+    else { 
+	TARGET = ../../unix/resources/plugins/$$PLUGIN_NAME
+    }
 }
-
 INCLUDEPATH    += ../../src/plugins
 
 # Store intermedia stuff somewhere else
@@ -34,7 +44,3 @@ UI_HERADERS_DIR = ../intermediate/ui
 UI_SOURCES_DIR = ../intermediate/ui
 
 #DEFINES += sample_LIBRARY
-
-SOURCES += sample.cpp
-
-HEADERS += sample.h
