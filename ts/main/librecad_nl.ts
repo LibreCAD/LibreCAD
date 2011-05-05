@@ -1,6 +1,7 @@
-<!DOCTYPE TS><TS>
+<!DOCTYPE TS>
+<TS language="nl">
 <context>
-    <name></name>
+    <name/>
     <message>
         <source>Loading..</source>
         <translation type="obsolete">Bezig met laden...</translation>
@@ -149,7 +150,7 @@
     </message>
     <message>
         <source>unnamed document %1</source>
-        <translation>Naamloos Bestand %1</translation>
+        <translation>Naamloos bestand %1</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
@@ -274,8 +275,8 @@ Datum: %1</translation>
         <translation>Comando Regel</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Blok &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Blok '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -349,23 +350,23 @@ U kunt nu uw werk bewaren.</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Scherm</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Spline</translation>
     </message>
     <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Running script '%1'</source>
+        <translation>Huidige script %1</translation>
     </message>
     <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Inserting block '%1'</source>
+        <translation>Blok '%1' wordt toegevoegd</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Polylijn</translation>
     </message>
 </context>
 <context>
@@ -404,15 +405,15 @@ U kunt nu uw werk bewaren.</translation>
     </message>
     <message>
         <source>Loading..</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden..</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliotheek paden worden geladen..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
-        <translation type="unfinished">Bezig met laden van bestand %1..</translation>
+        <translation>Bezig met laden van bestand %1..</translation>
     </message>
 </context>
 </TS>
