@@ -1,4 +1,5 @@
-<!DOCTYPE TS><TS>
+<!DOCTYPE TS>
+<TS language="nl">
 <context>
     <name>QG_ActionFactory</name>
     <message>
@@ -1497,11 +1498,11 @@
     <name>QG_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangentiële Boog Opties</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Radius:</translation>
+        <translation>Straal:</translation>
     </message>
 </context>
 <context>
@@ -1512,8 +1513,7 @@
     </message>
     <message>
         <source>Trim</source>
-        <translation>Trim
-</translation>
+        <translation>Trim</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
@@ -1547,8 +1547,8 @@
         <translation>Blok aan het herbenoemen</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Kon Blok niet benoemen. Er bestaat al een Blok genaamd &quot;%1&quot;.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Kon blok niet benoemen. Er bestaat al een blok genaamd "%1".</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -1667,7 +1667,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Arc rakend aan entiteit basis met een straal</translation>
     </message>
 </context>
 <context>
@@ -1791,7 +1791,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Area of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Gebied van de polygoon</translation>
     </message>
 </context>
 <context>
@@ -1872,48 +1872,48 @@ in een separate Venster</translation>
         <translation>Hoofd</translation>
     </message>
     <message>
-        <source>Show menu &quot;Lines&quot;</source>
-        <translation>Toon menu &quot;Lijnen&quot;</translation>
+        <source>Show menu "Lines"</source>
+        <translation>Toon menu "Lijnen"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Arcs&quot;</source>
-        <translation>Toon menu &quot;Bogen&quot;</translation>
+        <source>Show menu "Arcs"</source>
+        <translation>Toon menu "Bogen"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Circles&quot;</source>
-        <translation>Toon menu &quot;Cirkels&quot;</translation>
+        <source>Show menu "Circles"</source>
+        <translation>Toon menu "Cirkels"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Points&quot;</source>
-        <translation type="obsolete">Toon menu &quot;Punten&quot;</translation>
+        <source>Show menu "Points"</source>
+        <translation type="obsolete">Toon menu "Punten"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Measure&quot;</source>
-        <translation>Toon menu &quot;Meten&quot;</translation>
+        <source>Show menu "Measure"</source>
+        <translation>Toon menu "Meten"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Ellipses&quot;</source>
-        <translation>Toon menu &quot;Ellipsen&quot;</translation>
+        <source>Show menu "Ellipses"</source>
+        <translation>Toon menu "Ellipsen"</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
         <translation>Arceringen / Inkleuringen</translation>
     </message>
     <message>
-        <source>Show menu &quot;Edit&quot;</source>
-        <translation>Toon menu &quot;Bewerken&quot;</translation>
+        <source>Show menu "Edit"</source>
+        <translation>Toon menu "Bewerken"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Dimensions&quot;</source>
-        <translation>Toon menu &quot;Bematen&quot;</translation>
+        <source>Show menu "Dimensions"</source>
+        <translation>Toon menu "Bematen"</translation>
     </message>
     <message>
         <source>Texts</source>
         <translation>Tekst</translation>
     </message>
     <message>
-        <source>Show menu &quot;Select&quot;</source>
-        <translation>Toon menu &quot;Selecteer&quot;</translation>
+        <source>Show menu "Select"</source>
+        <translation>Toon menu "Selecteer"</translation>
     </message>
     <message>
         <source>Create Block</source>
@@ -1925,15 +1925,15 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Points</source>
-        <translation type="unfinished">Punten</translation>
+        <translation>Punten</translation>
     </message>
     <message>
         <source>Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>Splines</translation>
     </message>
     <message>
         <source>Polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Polylijnen</translation>
     </message>
 </context>
 <context>
@@ -2046,35 +2046,35 @@ in een separate Venster</translation>
     <name>QG_CadToolBarPolylines</name>
     <message>
         <source>Polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Polylijnen</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="unfinished">Terug naar Hoofdmenu</translation>
+        <translation>Terug naar hoofdmenu</translation>
     </message>
     <message>
         <source>Create Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Maak polylijn</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijderen tussen twee knooppunten</translation>
     </message>
     <message>
         <source>Add node</source>
-        <translation type="unfinished"></translation>
+        <translation>Toevoeging knooppunt</translation>
     </message>
     <message>
         <source>Delete node</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder knooppunt</translation>
     </message>
     <message>
         <source>Trim segments</source>
-        <translation type="unfinished"></translation>
+        <translation>Trim segmenten</translation>
     </message>
     <message>
         <source>Append node</source>
-        <translation type="unfinished"></translation>
+        <translation>Knooppunt toevoegen</translation>
     </message>
 </context>
 <context>
@@ -2207,15 +2207,15 @@ in een separate Venster</translation>
     <name>QG_CadToolBarSplines</name>
     <message>
         <source>Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>Splines</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="unfinished">Terug naar Hoofdmenu</translation>
+        <translation>Terug naar hoofdmenu</translation>
     </message>
     <message>
         <source>Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Spline</translation>
     </message>
 </context>
 <context>
@@ -2579,7 +2579,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>maatgeving</translation>
     </message>
 </context>
 <context>
@@ -2695,12 +2695,12 @@ in een separate Venster</translation>
         <translation>Welcom</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcom by QCad&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Welcom by QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 U kunt nu de eenheid kiezen voor nieuwe tekeningen en uw voorkeurstaal &lt;br&gt;
@@ -2841,7 +2841,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Cancel</source>
-        <translation></translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -2919,7 +2919,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     <name>QG_DlgMoveRotate</name>
     <message>
         <source>Move/Rotate Options</source>
-        <translation>Verplaats / Roteer Opties</translation>
+        <translation>Verplaats/Roteer Opties</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3053,7 +3053,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <translation>Graden</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Te meten eenheid</translation>
     </message>
     <message>
@@ -3061,8 +3061,8 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <translation>Opties</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Voor de lengte formaten &apos;Werktuigbouw&apos; en &apos;Bouwkunde&apos; moet de eenheid naar Inch worden gezet.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>Voor de lengte formaten 'Werktuigbouw' en 'Bouwkunde' moet de eenheid naar Inch worden gezet.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -3174,43 +3174,43 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>Splines</translation>
     </message>
     <message>
         <source>Number of line segments per spline patch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aantal lijnsegmenten per spline patch:</translation>
     </message>
     <message>
         <source>4</source>
-        <translation type="unfinished">4</translation>
+        <translation>4</translation>
     </message>
     <message>
         <source>8</source>
-        <translation type="unfinished">8</translation>
+        <translation>8</translation>
     </message>
     <message>
         <source>16</source>
-        <translation type="unfinished">16</translation>
+        <translation>16</translation>
     </message>
     <message>
         <source>32</source>
-        <translation type="unfinished">32</translation>
+        <translation>32</translation>
     </message>
     <message>
         <source>64</source>
-        <translation type="unfinished">64</translation>
+        <translation>64</translation>
     </message>
     <message>
         <source>0.01</source>
-        <translation type="unfinished">0.01</translation>
+        <translation>0.01</translation>
     </message>
     <message>
         <source>0.1</source>
-        <translation type="unfinished">0.1</translation>
+        <translation>0.1</translation>
     </message>
     <message>
         <source>10</source>
-        <translation type="unfinished">10</translation>
+        <translation>10</translation>
     </message>
 </context>
 <context>
@@ -3389,7 +3389,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>10</source>
-        <translation>1010</translation>
+        <translation>10</translation>
     </message>
     <message>
         <source>11</source>
@@ -3461,15 +3461,15 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Alt+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+S</translation>
     </message>
     <message>
         <source>Alt+U</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+U</translation>
     </message>
     <message>
         <source>Minimal Grid Spacing (px):</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimale Rastergrootte (px):</translation>
     </message>
 </context>
 <context>
@@ -3586,11 +3586,11 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Angle (&amp;a):</source>
-        <translation>&amp;Hoek (&amp;a):</translation>
+        <translation>Hoek (&amp;a):</translation>
     </message>
     <message>
         <source>Angle (&amp;b):</source>
-        <translation>&amp;Hoek (&amp;b):</translation>
+        <translation>Hoek (&amp;b):</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
@@ -3652,51 +3652,51 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     <name>QG_DlgSpline</name>
     <message>
         <source>Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Laag:</translation>
+        <translation>Laag:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Geometrie</translation>
+        <translation>Geometrie</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation type="unfinished"></translation>
+        <translation>Graad:</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Gesloten</translation>
     </message>
     <message>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation>1</translation>
     </message>
     <message>
         <source>2</source>
-        <translation type="unfinished">2</translation>
+        <translation>2</translation>
     </message>
     <message>
         <source>3</source>
-        <translation type="unfinished">3</translation>
+        <translation>3</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished">Alt+O</translation>
+        <translation>Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation>Esc</translation>
     </message>
 </context>
 <context>
@@ -4299,7 +4299,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>&amp;Default line spacing</source>
-        <translation>Lijn Tussen&amp;afstend bij verstek</translation>
+        <translation>&amp;Standaard regelafstand</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -4315,7 +4315,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Alt+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+D</translation>
     </message>
 </context>
 <context>
@@ -4997,15 +4997,15 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Wissel Zwart / Wit-modus</translation>
     </message>
     <message>
         <source>Center to page</source>
-        <translation type="unfinished"></translation>
+        <translation>Centreer op pagina</translation>
     </message>
     <message>
         <source>Fit to page</source>
-        <translation type="unfinished"></translation>
+        <translation>Passend op pagina</translation>
     </message>
 </context>
 <context>
@@ -5020,11 +5020,11 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Vink af om beide Elementen tot een Afronding te trimmen</translation>
+        <translation>Vink af om beide elementen tot een afronding te trimmen</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Radius:</translation>
+        <translation>Straal:</translation>
     </message>
 </context>
 <context>
@@ -5057,31 +5057,31 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Spline Opties</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation type="unfinished"></translation>
+        <translation>Graad:</translation>
     </message>
     <message>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation>1</translation>
     </message>
     <message>
         <source>2</source>
-        <translation type="unfinished">2</translation>
+        <translation>2</translation>
     </message>
     <message>
         <source>3</source>
-        <translation type="unfinished">3</translation>
+        <translation>3</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Gesloten</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Herstel</translation>
+        <translation>Herstel</translation>
     </message>
 </context>
 <context>
@@ -5122,7 +5122,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Line type:</source>
-        <translation>Lijn Type:</translation>
+        <translation>Lijntype:</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -5145,7 +5145,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Default</source>
-        <translation>Bij Verstek</translation>
+        <translation>Standaard</translation>
     </message>
     <message>
         <source>0.00mm</source>
@@ -5259,12 +5259,12 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <translation>Wis Laag</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation>Laag &quot;%1&quot; en alle Elementen daarop worden verwijderd.</translation>
+        <source>Layer "%1" and all entities on it will be removed.</source>
+        <translation>Laag "%1" en alle elementen daarop worden verwijderd.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Laag &quot;%1&quot; kan niet worden verwijderd.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>Laag "%1" kan niet worden verwijderd.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -5275,16 +5275,16 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <translation>Wis Blok</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Blok &quot;%1&quot; en alle Elementen daarop worden verwijderd.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>Blok "%1" en alle elementen daarop worden verwijderd.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Laag Eigenschappen</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>De Laag met naam &quot;%1&quot; bestaat. Kies een andere naam.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>De Laag met naam "%1" bestaat. Kies een andere naam.</translation>
     </message>
 </context>
 <context>
