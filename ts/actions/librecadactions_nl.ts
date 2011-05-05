@@ -1,4 +1,5 @@
-<!DOCTYPE TS><TS>
+<!DOCTYPE TS>
+<TS language="nl">
 <context>
     <name>RS_ActionBlocksAdd</name>
     <message>
@@ -29,7 +30,7 @@
     <name>RS_ActionBlocksCreate</name>
     <message>
         <source>Specify reference point</source>
-        <translation>Specificeer een Referentiepunt</translation>
+        <translation>Specificeer een referentiepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -82,7 +83,7 @@
     </message>
     <message>
         <source>Freeze all blocks</source>
-        <translation>Vergrendel alle Blokken</translation>
+        <translation>Vergrendel alle blokken</translation>
     </message>
     <message>
         <source>Defreeze all</source>
@@ -94,18 +95,18 @@
     </message>
     <message>
         <source>Defreeze all blocks</source>
-        <translation>Ontgrendel alle Blokken</translation>
+        <translation>Ontgrendel alle blokken</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksInsert</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specificeer een Referentiepunt</translation>
+        <translation>Specificeer een referentiepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -113,27 +114,27 @@
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Geef een Hoek op:</translation>
+        <translation>Geef een hoek op:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation>Geef een Waarde op:</translation>
+        <translation>Geef een waarde op:</translation>
     </message>
     <message>
         <source>Enter columns:</source>
-        <translation>Geef het aantal Kolommen op:</translation>
+        <translation>Geef het aantal kolommen op:</translation>
     </message>
     <message>
         <source>Enter rows:</source>
-        <translation>Geef het aantal Rijen op:</translation>
+        <translation>Geef het aantal rijen op:</translation>
     </message>
     <message>
         <source>Enter column spacing:</source>
-        <translation>Geef de Ruimte tussen de Kolommen op:</translation>
+        <translation>Geef kolomafstand in:</translation>
     </message>
     <message>
         <source>Enter row spacing:</source>
-        <translation>Geef de Ruimte tussen de Rijen op:</translation>
+        <translation>Geef de ruimte tussen de rijen op:</translation>
     </message>
     <message>
         <source>Insert Block</source>
@@ -144,8 +145,8 @@
         <translation>&amp;Plaats Blok</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -178,7 +179,7 @@
     <name>RS_ActionDefault</name>
     <message>
         <source>Choose second edge</source>
-        <translation>Kies de tweede Kant</translation>
+        <translation>Kies tweede rand</translation>
     </message>
     <message>
         <source>Back</source>
@@ -189,7 +190,7 @@
     <name>RS_ActionDimAligned</name>
     <message>
         <source>Specify first extension line origin</source>
-        <translation>Specificeer de eerste Oorsprong van de Extentielijn</translation>
+        <translation>Specificeer de eerste oorsprong van de extentielijn</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -197,7 +198,7 @@
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation>Specificeer de tweede Oorsprong van de Extentielijn</translation>
+        <translation>Specificeer de tweede oorsprong van de extentielijn</translation>
     </message>
     <message>
         <source>Back</source>
@@ -205,11 +206,11 @@
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation>Specificeer Maatlijn Locatie</translation>
+        <translation>Specificeer maatlijn locatie</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Geef een Tekst op bij de Maat:</translation>
+        <translation>Geef een tekst op bij de maat:</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -228,7 +229,7 @@
     <name>RS_ActionDimAngular</name>
     <message>
         <source>Select first line</source>
-        <translation>Selecteer eerste Lijn</translation>
+        <translation>Selecteer eerste lijn</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -236,15 +237,15 @@
     </message>
     <message>
         <source>Select second line</source>
-        <translation>Selecteer tweede Lijn</translation>
+        <translation>Selecteer tweede lijn</translation>
     </message>
     <message>
         <source>Specify dimension arc line location</source>
-        <translation>Specificeer Boogmaat Locatie</translation>
+        <translation>Specificeer boogmaat locatie</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Geef een Tekst op bij de Maat:</translation>
+        <translation>Geef een tekst op bij de maat:</translation>
     </message>
     <message>
         <source>Angular</source>
@@ -263,15 +264,15 @@
     <name>RS_ActionDimDiametric</name>
     <message>
         <source>Not a circle or arc entity</source>
-        <translation>Geen Cirkel of Boog Element</translation>
+        <translation>Geen cirkel of boog element</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation>Selecteer Cirkel of Boog Element</translation>
+        <translation>Selecteer cirkel of boog element</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -279,11 +280,11 @@
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation>Specificeer Maatlijn Locatie</translation>
+        <translation>Geef maatlijn locatie</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Geef een Tekst op bij de Maat:</translation>
+        <translation>Voer dimensie tekst:</translation>
     </message>
     <message>
         <source>Diametric</source>
@@ -302,7 +303,7 @@
     <name>RS_ActionDimLeader</name>
     <message>
         <source>Specify target point</source>
-        <translation>Specificeer doel Punt</translation>
+        <translation>Geef doel punt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -310,7 +311,7 @@
     </message>
     <message>
         <source>Specify next point</source>
-        <translation>Specificeer volgend Punt</translation>
+        <translation>Specificeer volgend punt</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -333,11 +334,11 @@
     <name>RS_ActionDimLinear</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify first extension line origin</source>
-        <translation>Specificeer de eerste Oorsprong van de Extentielijn</translation>
+        <translation>Specificeer de eerste oorsprong van de extentielijn</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -345,7 +346,7 @@
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation>Specificeer de tweede Oorsprong van de Extentielijn</translation>
+        <translation>Specificeer de tweede oorsprong van de extentielijn</translation>
     </message>
     <message>
         <source>Back</source>
@@ -353,23 +354,23 @@
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation>Specificeer Maatlijn Locatie</translation>
+        <translation>Specificeer maatlijn locatie</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Geef een Tekst op bij de Maat:</translation>
+        <translation>Geef een tekst op bij de maat:</translation>
     </message>
     <message>
         <source>Enter dimension line angle:</source>
-        <translation>Geef de Hoek op van de Maatlijn:</translation>
+        <translation>Geef de hoek op van de maatlijn:</translation>
     </message>
     <message>
         <source>Linear</source>
-        <translation>Liniair</translation>
+        <translation>Lineaire</translation>
     </message>
     <message>
         <source>&amp;Linear</source>
-        <translation>&amp;Liniair</translation>
+        <translation>&amp;Lineare</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
@@ -404,15 +405,15 @@
     <name>RS_ActionDimRadial</name>
     <message>
         <source>Not a circle or arc entity</source>
-        <translation>Geen Cirkel of Boog Element</translation>
+        <translation>Geen cirkel of boog element</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation>Selecteer Cirkel of Boog Element</translation>
+        <translation>Selecteer cirkel of boog element</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -420,11 +421,11 @@
     </message>
     <message>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Specificeer Positie van de Maatlijn of geef Hoek op:</translation>
+        <translation>Specificeer positie van de maatlijn of geef hoek op:</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Geef een Tekst op bij de Maat:</translation>
+        <translation>Geef een tekst op bij de maat:</translation>
     </message>
     <message>
         <source>Radial</source>
@@ -443,15 +444,15 @@
     <name>RS_ActionDrawArc</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Not a valid chord length</source>
-        <translation>Geen geldige Booglengte</translation>
+        <translation>Geen geldige booglengte</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation>Specificeer Centerpunt</translation>
+        <translation>Specificeer centerpunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -459,7 +460,7 @@
     </message>
     <message>
         <source>Specify radius</source>
-        <translation>Specificeer Radius</translation>
+        <translation>Specificeer straal</translation>
     </message>
     <message>
         <source>Back</source>
@@ -467,19 +468,19 @@
     </message>
     <message>
         <source>Specify start angle:</source>
-        <translation>Specificeer begin Hoek:</translation>
+        <translation>Specificeer begin hoek:</translation>
     </message>
     <message>
         <source>Specify end angle or [Angle/chord Length]</source>
-        <translation>Specificeer eind Hoek of (Hoek/Booglengte)</translation>
+        <translation>Specificeer eind Hoek of [Hoek/Booglengte]</translation>
     </message>
     <message>
         <source>Specify included angle:</source>
-        <translation>Specificeer ingesloten Hoek:</translation>
+        <translation>Specificeer ingesloten hoek:</translation>
     </message>
     <message>
         <source>Specify chord length:</source>
-        <translation>Specificeer Booglengte:</translation>
+        <translation>Specificeer booglengte:</translation>
     </message>
     <message>
         <source>Arc: Center, Point, Angles</source>
@@ -498,7 +499,7 @@
     <name>RS_ActionDrawArc3P</name>
     <message>
         <source>Invalid arc data.</source>
-        <translation>Geen geldige Boog gegevens.</translation>
+        <translation>Boog gegevens ongeldig.</translation>
     </message>
     <message>
         <source>Specify startpoint or [Center]</source>
@@ -510,7 +511,7 @@
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Specificeer tweede Punt</translation>
+        <translation>Specificeer tweede punt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -518,7 +519,7 @@
     </message>
     <message>
         <source>Specify endpoint</source>
-        <translation>Specificeer Eindpunt</translation>
+        <translation>Specificeer eindpunt</translation>
     </message>
     <message>
         <source>Arc: 3 Points</source>
@@ -537,42 +538,42 @@
     <name>RS_ActionDrawArcTangential</name>
     <message>
         <source>Arc: Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation>Boog: Tangentiële</translation>
     </message>
     <message>
         <source>&amp;Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tangentiële</translation>
     </message>
     <message>
         <source>Draw arcs tangential to base entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Teken bogen tangentieel rakend aan basis entiteit</translation>
     </message>
     <message>
         <source>Specify base entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificeer basis entiteit</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuleer</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation type="unfinished">Specificeer eind Hoek</translation>
+        <translation>Specificeer eind hoek</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Terug</translation>
+        <translation>Terug</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation>Specificeer Centerpunt</translation>
+        <translation>Specificeer middenpunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -580,7 +581,7 @@
     </message>
     <message>
         <source>Specify radius</source>
-        <translation>Specificeer Radius</translation>
+        <translation>Specificeer straal</translation>
     </message>
     <message>
         <source>Back</source>
@@ -607,7 +608,7 @@
     </message>
     <message>
         <source>Specify first point</source>
-        <translation>Specificeer eerste Punt</translation>
+        <translation>Specificeer eerste punt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -615,7 +616,7 @@
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Specificeer tweede Punt</translation>
+        <translation>Specificeer tweede punt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -638,11 +639,11 @@
     <name>RS_ActionDrawCircle3P</name>
     <message>
         <source>Invalid circle data.</source>
-        <translation>Geen geldige Boog gegevens.</translation>
+        <translation>Ongeldige boog gegevens</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation>Specificeer eerste Punt</translation>
+        <translation>Specificeer eerste punt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -650,7 +651,7 @@
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Specificeer tweede Punt</translation>
+        <translation>Specificeer tweede punt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -658,7 +659,7 @@
     </message>
     <message>
         <source>Specify third point</source>
-        <translation>Specificeer derde Punt</translation>
+        <translation>Specificeer derde punt</translation>
     </message>
     <message>
         <source>Circle: 3 Points</source>
@@ -677,11 +678,11 @@
     <name>RS_ActionDrawCircleCR</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify circle center</source>
-        <translation>Specificeer Cirkel Centerpunt</translation>
+        <translation>Specificeer middenpunt cirkel</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -689,7 +690,7 @@
     </message>
     <message>
         <source>Specify circle radius</source>
-        <translation>Specificeer Cikel Radius</translation>
+        <translation>Specificeer straal cirkel</translation>
     </message>
     <message>
         <source>Back</source>
@@ -712,11 +713,11 @@
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify ellipse center</source>
-        <translation>Specificeer Ellips Centerpunt</translation>
+        <translation>Specificeer midden punt ellipse</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -724,7 +725,7 @@
     </message>
     <message>
         <source>Specify endpoint of major axis</source>
-        <translation>Specificeer Eindpunt van de lange As</translation>
+        <translation>Specificeer eindpunt van de lange as</translation>
     </message>
     <message>
         <source>Back</source>
@@ -732,15 +733,15 @@
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation>Specificeer Eindpunt of Lengte van de korte As:</translation>
+        <translation>Specificeer eindpunt of lengte van de korte as:</translation>
     </message>
     <message>
         <source>Specify start angle</source>
-        <translation>Specificeer begin Hoek</translation>
+        <translation>Specificeer begin hoek</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation>Specificeer eind Hoek</translation>
+        <translation>Specificeer eind hoek</translation>
     </message>
     <message>
         <source>Ellipse Arc with Axis</source>
@@ -783,22 +784,22 @@
     </message>
     <message>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ongeldige invul gebied. Controleer of de entiteiten gekozen vorm is van een of meer gesloten contouren.</translation>
     </message>
     <message>
         <source>Hatch created successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>Invulling succesvol aangemaakt.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specificeer een Referentiepunt</translation>
+        <translation>Specificeer een referentiepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -806,11 +807,11 @@
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Geef een Hoek op:</translation>
+        <translation>Geef een hoek op:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation>Geef een Waarde op:</translation>
+        <translation>Geef een waarde op:</translation>
     </message>
     <message>
         <source>Image</source>
@@ -825,15 +826,15 @@
         <translation>Voeg Afbeelding (Bitmap) in</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLine</name>
     <message>
         <source>Specify first point</source>
-        <translation>Specificeer eerste Punt</translation>
+        <translation>Specificeer eerste punt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -841,7 +842,7 @@
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation>Specificeer volgend Punt of [%1]</translation>
+        <translation>Specificeer volgend punt of [%1]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -849,7 +850,7 @@
     </message>
     <message>
         <source>Specify next point</source>
-        <translation>Specificeer volgend Punt</translation>
+        <translation>Specificeer volgend punt</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
@@ -865,22 +866,22 @@
     </message>
     <message>
         <source>&amp;2 Points</source>
-        <translation>&amp;Punten</translation>
+        <translation>&amp;2 Punten</translation>
     </message>
     <message>
         <source>Draw lines</source>
-        <translation>Teken Lijnen</translation>
+        <translation>Teken lijnen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineAngle</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify position</source>
-        <translation>Specificeer een Positie</translation>
+        <translation>Specificeer een positie</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -888,7 +889,7 @@
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Geef een Hoek op:</translation>
+        <translation>Geef een hoek op:</translation>
     </message>
     <message>
         <source>Back</source>
@@ -896,7 +897,7 @@
     </message>
     <message>
         <source>Enter length:</source>
-        <translation>Geef een Lengte op:</translation>
+        <translation>Geef een lengte op:</translation>
     </message>
     <message>
         <source>Line: Angle</source>
@@ -939,11 +940,11 @@
     <name>RS_ActionDrawLineBisector</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Select first line</source>
-        <translation>Selecteer eerste Lijn</translation>
+        <translation>Selecteer eerste lijn</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -951,7 +952,7 @@
     </message>
     <message>
         <source>Select second line</source>
-        <translation>Selecteer tweede Lijn</translation>
+        <translation>Selecteer tweede lijn</translation>
     </message>
     <message>
         <source>Back</source>
@@ -959,11 +960,11 @@
     </message>
     <message>
         <source>Enter bisector length:</source>
-        <translation>Geef lengte op van de Bissectrice:</translation>
+        <translation>Geef lengte op van de bissectrice:</translation>
     </message>
     <message>
         <source>Enter number of bisectors:</source>
-        <translation>Geef het aantal Bissectrices:</translation>
+        <translation>Geef het aantal bissectrices:</translation>
     </message>
     <message>
         <source>Bisector</source>
@@ -975,7 +976,7 @@
     </message>
     <message>
         <source>Draw bisectors</source>
-        <translation>Teken Bissectice</translation>
+        <translation>Teken bissectice</translation>
     </message>
 </context>
 <context>
@@ -990,22 +991,22 @@
     </message>
     <message>
         <source>Line: Freehand</source>
-        <translation>Lijn: Losse Pols</translation>
+        <translation>Lijn: vrije vorm</translation>
     </message>
     <message>
         <source>&amp;Freehand Line</source>
-        <translation>Lo&amp;sse Pols Lijn</translation>
+        <translation>&amp;Vrije vorm</translation>
     </message>
     <message>
         <source>Draw freehand lines</source>
-        <translation>Teken lijnen uit de losse pols</translation>
+        <translation>Teken vrije vorm lijnen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
     <message>
         <source>Specify first point</source>
-        <translation>Specificeer eerste Punt</translation>
+        <translation>Specificeer eerste punt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1013,7 +1014,7 @@
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Specificeer tweede Punt</translation>
+        <translation>Specificeer tweede punt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1048,7 +1049,7 @@
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
@@ -1068,7 +1069,7 @@
     </message>
     <message>
         <source>Draw parallels to existing lines, arcs, circles</source>
-        <translation>Teken Parallellen aan bestaande lijnen, bogen, cirkels</translation>
+        <translation>Teken parallellen aan bestaande lijnen, bogen, cirkels</translation>
     </message>
     <message>
         <source>Concentric</source>
@@ -1083,7 +1084,7 @@
     <name>RS_ActionDrawLineParallelThrough</name>
     <message>
         <source>Select entity</source>
-        <translation>Selecteer Element</translation>
+        <translation>Selecteer element</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1091,7 +1092,7 @@
     </message>
     <message>
         <source>Specify through point</source>
-        <translation>Specificeer het Punt waardoor</translation>
+        <translation>Geef door punt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1107,30 +1108,30 @@
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Parallel through point</source>
-        <translation>Parallel door Punt</translation>
+        <translation>Parallel door punt</translation>
     </message>
     <message>
         <source>Par&amp;allel through point</source>
-        <translation>Par&amp;allel door Punt</translation>
+        <translation>Par&amp;allel door punt</translation>
     </message>
     <message>
         <source>Draw parallel through a given point</source>
-        <translation>Teken Parallel door een bepaalde Punt</translation>
+        <translation>Teken parallel door een bepaalde punt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
         <source>Specify center</source>
-        <translation>Specificeer Centerpunt</translation>
+        <translation>Specificeer midden punt</translation>
     </message>
     <message>
         <source>Specify a corner</source>
-        <translation>Specificeer een Hoekpunt</translation>
+        <translation>Specificeer een hoek</translation>
     </message>
     <message>
         <source>Enter number:</source>
@@ -1142,11 +1143,11 @@
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Polygon</source>
-        <translation>Polygoon</translation>
+        <translation>Veelhoek</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
@@ -1154,18 +1155,18 @@
     </message>
     <message>
         <source>Draw polygon with center and corner</source>
-        <translation>Teken polygoon met center en hoekpunt</translation>
+        <translation>Teken veelhoek met center en hoekpunt</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygon2</name>
     <message>
         <source>Specify first corner</source>
-        <translation>Specificeer eerste Hoekpunt</translation>
+        <translation>Specificeer eerste hoek</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1173,7 +1174,7 @@
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation>Specificeer tweede Hoekpunt</translation>
+        <translation>Specificeer tweede hoekpunt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1189,11 +1190,11 @@
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation>Geen geldige Expressie.</translation>
+        <translation>Geen geldige expressie.</translation>
     </message>
     <message>
         <source>Polygon</source>
-        <translation>Polygoon</translation>
+        <translation>Veelhoek</translation>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
@@ -1201,7 +1202,7 @@
     </message>
     <message>
         <source>Draw polygon with two corners</source>
-        <translation>Teken polygoon met twee hoekpunten</translation>
+        <translation>Teken veelhoek met twee hoekpunten</translation>
     </message>
 </context>
 <context>
@@ -1251,7 +1252,7 @@
     <name>RS_ActionDrawLineRectangle</name>
     <message>
         <source>Specify first corner</source>
-        <translation>Specificeer eerste Hoekpunt</translation>
+        <translation>Specificeer eerste hoek</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1259,7 +1260,7 @@
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation>Specificeer tweede Hoekpunt</translation>
+        <translation>Specificeer tweede hoek</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1275,18 +1276,18 @@
     </message>
     <message>
         <source>Draw rectangles</source>
-        <translation>Teken Rechthoeken</translation>
+        <translation>Teken rechthoeken</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Select base entity</source>
-        <translation>Selecteer basis Element</translation>
+        <translation>Selecteer basis element</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1294,7 +1295,7 @@
     </message>
     <message>
         <source>Specify position</source>
-        <translation>Specificeer een Positie</translation>
+        <translation>Specificeer een positie</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1302,15 +1303,15 @@
     </message>
     <message>
         <source>Relative angle</source>
-        <translation>Relatieve Hoek</translation>
+        <translation>Relatieve hoek</translation>
     </message>
     <message>
         <source>R&amp;elative angle</source>
-        <translation>R&amp;elatieve Hoek</translation>
+        <translation>R&amp;elatieve hoek</translation>
     </message>
     <message>
         <source>Draw line with relative angle</source>
-        <translation>Teken lijn met relatieve Hoek</translation>
+        <translation>Teken lijn met relatieve hoek</translation>
     </message>
     <message>
         <source>Orthogonal</source>
@@ -1329,7 +1330,7 @@
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <source>Specify point</source>
-        <translation>Specificeer Eindpunt</translation>
+        <translation>Specificeer eindpunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1357,14 +1358,14 @@
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
-        <translation>Selecteer Cirkel, Boog of Ellips</translation>
+        <translation>Selecteer cirkel, boog of ellipse</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
     <message>
         <source>Select first circle or arc</source>
-        <translation>Selecteer eerste Cirkel of Boog</translation>
+        <translation>Selecteer eerste cirkel of boog</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1372,7 +1373,7 @@
     </message>
     <message>
         <source>Select second circle or arc</source>
-        <translation>Selecteer tweede Cirkel of Boog</translation>
+        <translation>Selecteer tweede cirkel of boog</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1395,7 +1396,7 @@
     <name>RS_ActionDrawPoint</name>
     <message>
         <source>Specify location</source>
-        <translation>Specificeer een Locatie</translation>
+        <translation>Specificeer een locatie</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1453,46 +1454,46 @@
     <name>RS_ActionDrawSpline</name>
     <message>
         <source>Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Spline</translation>
     </message>
     <message>
         <source>Draw splines</source>
-        <translation type="unfinished"></translation>
+        <translation>Teken splines</translation>
     </message>
     <message>
         <source>Specify first control point</source>
-        <translation type="unfinished"></translation>
+        <translation>Geef eerste controlepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuleer</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificeer volgende controle punt of [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Terug</translation>
+        <translation>Terug</translation>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation type="unfinished"></translation>
+        <translation>Geef volgende controlepunt</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan niet ongedaan maken: geen genoeg entiteiten gedefinieerd.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawText</name>
     <message>
         <source>Specify insertion point</source>
-        <translation>Specificeer Invoerpunt</translation>
+        <translation>Specificeer invoerpunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1523,7 +1524,7 @@
     <name>RS_ActionEditCopy</name>
     <message>
         <source>Specify reference point</source>
-        <translation>Specificeer een Referentiepunt</translation>
+        <translation>Specificeer een referentiepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1539,7 +1540,7 @@
     </message>
     <message>
         <source>Copies entities to the clipboard</source>
-        <translation>Kopieër Elementen naar Klembord</translation>
+        <translation>Kopieër elementen naar klembord</translation>
     </message>
     <message>
         <source>Cut</source>
@@ -1551,14 +1552,14 @@
     </message>
     <message>
         <source>Cuts entities  to the clipboard</source>
-        <translation>Knip Elementen naar Klembord</translation>
+        <translation>Knip elementen naar klembord</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditPaste</name>
     <message>
         <source>Set reference point</source>
-        <translation>Plaats een Referentiepunt</translation>
+        <translation>Plaats een referentiepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1574,7 +1575,7 @@
     </message>
     <message>
         <source>Pastes the clipboard contents</source>
-        <translation>Plak  Elementen van Klembord</translation>
+        <translation>Plak elementen van klembord</translation>
     </message>
 </context>
 <context>
@@ -1616,7 +1617,7 @@
     </message>
     <message>
         <source>Creates a new drawing</source>
-        <translation>Nieuwe Tekening</translation>
+        <translation>Maak nieuwe tekening</translation>
     </message>
 </context>
 <context>
@@ -1631,7 +1632,7 @@
     </message>
     <message>
         <source>Opens an existing drawing</source>
-        <translation>Open Bestaande tekening</translation>
+        <translation>Open bestaande tekening</translation>
     </message>
 </context>
 <context>
@@ -1646,7 +1647,7 @@
     </message>
     <message>
         <source>Saves the current drawing</source>
-        <translation>Bewaar huidige Tekening</translation>
+        <translation>Bewaar huidige tekening</translation>
     </message>
 </context>
 <context>
@@ -1661,7 +1662,7 @@
     </message>
     <message>
         <source>Saves the current drawing under a new filename</source>
-        <translation>Bewaar huidige Tekening onder andere Naam</translation>
+        <translation>Bewaar huidige tekening onder andere naam</translation>
     </message>
 </context>
 <context>
@@ -1672,11 +1673,11 @@
     </message>
     <message>
         <source>Lines are parallel</source>
-        <translation>Lijnen zijn Parallel</translation>
+        <translation>Lijnen zijn parallel</translation>
     </message>
     <message>
         <source>Specify first line</source>
-        <translation>Specificeer eerste Lijn</translation>
+        <translation>Specificeer eerste lijn</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1684,7 +1685,7 @@
     </message>
     <message>
         <source>Specify second line</source>
-        <translation>Specificeer tweede Lijn</translation>
+        <translation>Specificeer tweede lijn</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1692,58 +1693,58 @@
     </message>
     <message>
         <source>Angle between two lines</source>
-        <translation>Hoek tussen twee Lijnen</translation>
+        <translation>Hoek tussen twee lijnen</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
-        <translation>&amp;Hoek tussen twee Lijnen</translation>
+        <translation>&amp;Hoek tussen twee lijnen</translation>
     </message>
     <message>
         <source>Measures the angle between two lines</source>
-        <translation>Meet de afstand tussen twee Lijnen</translation>
+        <translation>Meet de afstand tussen twee lijnen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Veelhoekig gebied</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Veelhoekig gebied</translation>
     </message>
     <message>
         <source>Measures the area of a polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereken oppervlakte van een veelhoek</translation>
     </message>
     <message>
         <source>Area: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Oppervlak: %1</translation>
     </message>
     <message>
         <source>Circumference: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Omtrek: %1</translation>
     </message>
     <message>
         <source>Point: %1/%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Punt: %1/%2</translation>
     </message>
     <message>
         <source>Specify first point of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Geef eerste punt van veelhoek</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuleer</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Specify next point of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Geef volgende punt van de veelhoek</translation>
     </message>
     <message>
         <source>Terminate</source>
-        <translation type="unfinished"></translation>
+        <translation>Beëindig</translation>
     </message>
 </context>
 <context>
@@ -1754,7 +1755,7 @@
     </message>
     <message>
         <source>Specify first point of distance</source>
-        <translation>Specificeer eerste Punt van de Afstand</translation>
+        <translation>Specificeer eerste punt van de afstand</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1762,7 +1763,7 @@
     </message>
     <message>
         <source>Specify second point of distance</source>
-        <translation>Specificeer tweede Punt van de Afstand</translation>
+        <translation>Specificeer tweede punt van de afstand</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1778,7 +1779,7 @@
     </message>
     <message>
         <source>Measures the distance between two points</source>
-        <translation>Meet afstand tussen twee Punten</translation>
+        <translation>Meet afstand tussen twee punten</translation>
     </message>
 </context>
 <context>
@@ -1789,7 +1790,7 @@
     </message>
     <message>
         <source>Specify entity</source>
-        <translation>Specificeer een Element</translation>
+        <translation>Specificeer een element</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1797,7 +1798,7 @@
     </message>
     <message>
         <source>Specify point</source>
-        <translation>Specificeer een Afstandpunt</translation>
+        <translation>Specificeer een afstandpunt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1813,22 +1814,22 @@
     </message>
     <message>
         <source>Measures the distance between an entity and a point</source>
-        <translation>Meet de afstand tussen een Element en een Punt</translation>
+        <translation>Meet de afstand tussen een element en een punt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoInside</name>
     <message>
         <source>Point is inside selected contour.</source>
-        <translation>Het Punt bevindt zich binnen het geselecteerde Contour.</translation>
+        <translation>Het punt bevindt zich binnen het geselecteerde contour.</translation>
     </message>
     <message>
         <source>Point is outside selected contour.</source>
-        <translation>Het Punt bevindt zich buiten het geselecteerde Contour.</translation>
+        <translation>Het punt bevindt zich buiten het geselecteerde contour.</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation>Specificeer Punt</translation>
+        <translation>Specificeer punt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1836,15 +1837,15 @@
     </message>
     <message>
         <source>Point inside contour</source>
-        <translation>Punt Binnen Contour</translation>
+        <translation>Punt binnen contour</translation>
     </message>
     <message>
         <source>&amp;Point inside contour</source>
-        <translation>&amp;Punt Binnen Contour</translation>
+        <translation>&amp;Punt binnen contour</translation>
     </message>
     <message>
         <source>Checks if a given point is inside the selected contour</source>
-        <translation>Contoleer of gegeven Punt zich in een Contour bevind</translation>
+        <translation>Controleer of gegeven punt zich in een contour bevind</translation>
     </message>
 </context>
 <context>
@@ -1855,19 +1856,19 @@
     </message>
     <message>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation>Ten minste één van de geselecteerde Elementen kan niet gemeten worden.</translation>
+        <translation>Ten minste één van de geselecteerde elementen kan niet gemeten worden.</translation>
     </message>
     <message>
         <source>Total length of selected entities</source>
-        <translation>Totale Lengte van geselecteerde Elementen</translation>
+        <translation>Totale lengte van geselecteerde elementen</translation>
     </message>
     <message>
         <source>&amp;Total length of selected entities</source>
-        <translation>&amp;Totale Lengte van geselecteerde Elementen</translation>
+        <translation>&amp;Totale lengte van geselecteerde elementen</translation>
     </message>
     <message>
         <source>Measures the total length of all selected entities</source>
-        <translation>Meet de Totale Lengte van geselecteerde Elementen</translation>
+        <translation>Meet de totale lengte van geselecteerde elementen</translation>
     </message>
 </context>
 <context>
@@ -1904,7 +1905,7 @@
     </message>
     <message>
         <source>Freeze all layers</source>
-        <translation>Vergrendel alle Lagen</translation>
+        <translation>Vergrendel alle lagen</translation>
     </message>
     <message>
         <source>Defreeze all</source>
@@ -1916,7 +1917,7 @@
     </message>
     <message>
         <source>Defreeze all layers</source>
-        <translation>Ontgrendel alle Lagen</translation>
+        <translation>Ontgrendel alle lagen</translation>
     </message>
 </context>
 <context>
@@ -1964,11 +1965,11 @@
     <name>RS_ActionLibraryInsert</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specificeer een Referentiepunt</translation>
+        <translation>Specificeer een referentiepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1976,11 +1977,11 @@
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Geef een Hoek op:</translation>
+        <translation>Geef een hoek op:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation>Geef een Waarde op:</translation>
+        <translation>Geef een waarde op:</translation>
     </message>
     <message>
         <source>Insert Library Object</source>
@@ -1995,12 +1996,12 @@
         <translation>Voegt een Object uit de Onderdeel Bibliotheek in.</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Kan bestand '%1' niet openen</translation>
     </message>
 </context>
 <context>
@@ -2037,11 +2038,11 @@
     <name>RS_ActionModifyBevel</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation>Selecteer eerste Element</translation>
+        <translation>Selecteer eerste element</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2049,7 +2050,7 @@
     </message>
     <message>
         <source>Select second entity</source>
-        <translation>Selecteer tweede Element</translation>
+        <translation>Selecteer tweede eement</translation>
     </message>
     <message>
         <source>Back</source>
@@ -2057,11 +2058,11 @@
     </message>
     <message>
         <source>Enter length 1:</source>
-        <translation>Geef Lengte 1 op:</translation>
+        <translation>Geef lengte 1 op:</translation>
     </message>
     <message>
         <source>Enter length 2:</source>
-        <translation>Geef Lengte 2 op:</translation>
+        <translation>Geef lengte 2 op:</translation>
     </message>
     <message>
         <source>Bevel</source>
@@ -2092,7 +2093,7 @@
     </message>
     <message>
         <source>Specify entity to cut</source>
-        <translation>Specificeer te snijden Element</translation>
+        <translation>Specificeer te snijden element</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2100,7 +2101,7 @@
     </message>
     <message>
         <source>Specify cutting point</source>
-        <translation>Specificeer Snijpunt</translation>
+        <translation>Specificeer snijpunt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -2120,7 +2121,7 @@
     </message>
     <message>
         <source>Entity must be a line, arc or circle.</source>
-        <translation>Element dient een Lijn, Boog of Cirkel te zijn.</translation>
+        <translation>Element dient een lijn, boog of cirkel te zijn.</translation>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
@@ -2128,7 +2129,7 @@
     </message>
     <message>
         <source>Cutting point is not on entity.</source>
-        <translation>Snijpunt bevindt zich niet op Element.</translation>
+        <translation>Snijpunt bevindt zich niet op element.</translation>
     </message>
 </context>
 <context>
@@ -2150,7 +2151,7 @@
     <name>RS_ActionModifyDeleteFree</name>
     <message>
         <source>Specify first break point on a polyline</source>
-        <translation>Specificeer eerste Breekpunt op een Polylijn</translation>
+        <translation>Specificeer eerste breekpunt op een polylijn</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2158,7 +2159,7 @@
     </message>
     <message>
         <source>Specify second break point on the same polyline</source>
-        <translation>Specificeer tweede Breekpunt op dezelvde Polylijn</translation>
+        <translation>Specificeer tweede breekpunt op dezelfde polylijn</translation>
     </message>
     <message>
         <source>Back</source>
@@ -2166,50 +2167,50 @@
     </message>
     <message>
         <source>Delete Freehand</source>
-        <translation>Wis Losse Pols</translation>
+        <translation>Wis vrije vorm</translation>
     </message>
     <message>
         <source>&amp;Delete Freehand</source>
-        <translation>&amp;Wis Losse Pols</translation>
+        <translation>&amp;Wis vrije vorm</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entiteiten bevinden zich niet in dezelfde vrije vorm.</translation>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouder van de tweede entiteit is niet een vrije vorm</translation>
     </message>
     <message>
         <source>Parent of second entity is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouder van de tweede entiteit is NULL</translation>
     </message>
     <message>
         <source>One of the chosen entities is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Een van de gekozen entiteiten is NULL</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouder van de eerste instantie is geen polylijn</translation>
     </message>
     <message>
         <source>Parent of first entity is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouder van de eerste entiteit is NULL</translation>
     </message>
     <message>
         <source>First entity is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Eerste entiteit is NULL</translation>
     </message>
     <message>
         <source>Second entity is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Tweede entiteit is NULL</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteQuick</name>
     <message>
         <source>Pick entity to delete</source>
-        <translation>Kies een Element om te verwijderen</translation>
+        <translation>Kies een element om te verwijderen</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2217,15 +2218,15 @@
     </message>
     <message>
         <source>Delete selected</source>
-        <translation>Wis Selectie</translation>
+        <translation>Wis selectie</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
-        <translation>&amp;Wis Selectie</translation>
+        <translation>&amp;Wis selectie</translation>
     </message>
     <message>
         <source>Delete selected entities</source>
-        <translation>Wis geselecteerde Elementen</translation>
+        <translation>Wis geselecteerde elementen</translation>
     </message>
 </context>
 <context>
@@ -2262,7 +2263,7 @@
     <name>RS_ActionModifyMirror</name>
     <message>
         <source>Specify first point of mirror line</source>
-        <translation>Specificeer de eerste Punt van de Spiegellijn</translation>
+        <translation>Specificeer de eerste punt van de spiegellijn</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2270,7 +2271,7 @@
     </message>
     <message>
         <source>Specify second point of mirror line</source>
-        <translation>Specificeer de tweede Punt van de Spiegellijn</translation>
+        <translation>Specificeer de tweede punt van de spiegellijn</translation>
     </message>
     <message>
         <source>Back</source>
@@ -2293,7 +2294,7 @@
     <name>RS_ActionModifyMove</name>
     <message>
         <source>Specify reference point</source>
-        <translation>Specificeer een Referentiepunt</translation>
+        <translation>Specificeer een referentiepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2301,7 +2302,7 @@
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Specificeer doel Punt</translation>
+        <translation>Specificeer doel punt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -2329,18 +2330,18 @@
     </message>
     <message>
         <source>Move or copy entities one or multiple times</source>
-        <translation>Verplaats of Copieer Elementen één of meerdere keren</translation>
+        <translation>Verplaats of kopieer elementen één of meerdere keren</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specificeer een Referentiepunt</translation>
+        <translation>Specificeer een referentiepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2348,7 +2349,7 @@
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Specificeer doel Punt</translation>
+        <translation>Specificeer doel punt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -2356,7 +2357,7 @@
     </message>
     <message>
         <source>Enter rotation angle:</source>
-        <translation>Geef de Rotatiehoek op:</translation>
+        <translation>Geef de rotatiehoek op:</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -2375,7 +2376,7 @@
     <name>RS_ActionModifyRotate</name>
     <message>
         <source>Specify reference point</source>
-        <translation>Specificeer een Referentiepunt</translation>
+        <translation>Specificeer een referentiepunt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -2398,7 +2399,7 @@
     <name>RS_ActionModifyRotate2</name>
     <message>
         <source>Specify absolute reference point</source>
-        <translation>Specificeer een absolute Referentiepunt</translation>
+        <translation>Specificeer een absolute referentiepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2406,7 +2407,7 @@
     </message>
     <message>
         <source>Specify relative reference point</source>
-        <translation>Specificeer een relatieve Referentiepunt</translation>
+        <translation>Specificeer een relatief referentiepunt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -2429,11 +2430,11 @@
     <name>RS_ActionModifyRound</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify first entity</source>
-        <translation>Specificeer eerste Element</translation>
+        <translation>Specificeer eerste element</translation>
     </message>
     <message>
         <source>Back</source>
@@ -2441,11 +2442,11 @@
     </message>
     <message>
         <source>Specify second entity</source>
-        <translation>Specificeer tweede Element</translation>
+        <translation>Specificeer tweede element</translation>
     </message>
     <message>
         <source>Enter radius:</source>
-        <translation>Geef een Radius op:</translation>
+        <translation>Geef een straal:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2468,7 +2469,7 @@
     <name>RS_ActionModifyScale</name>
     <message>
         <source>Specify reference point</source>
-        <translation>Specificeer een Referentiepunt</translation>
+        <translation>Specificeer een referentiepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2491,7 +2492,7 @@
     <name>RS_ActionModifyStretch</name>
     <message>
         <source>Specify first corner</source>
-        <translation>Specificeer eerste Hoekpunt</translation>
+        <translation>Specificeer eerste hoekpunt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2499,7 +2500,7 @@
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation>Specificeer tweede Hoekpunt</translation>
+        <translation>Specificeer tweede hoekpunt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -2507,11 +2508,11 @@
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specificeer een Referentiepunt</translation>
+        <translation>Specificeer een referentiepunt</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Specificeer doel Punt</translation>
+        <translation>Specificeer doel punt</translation>
     </message>
     <message>
         <source>Stretch</source>
@@ -2530,7 +2531,7 @@
     <name>RS_ActionModifyTrim</name>
     <message>
         <source>Select first trim entity</source>
-        <translation>Selecteer eerste Element om te Trimmen</translation>
+        <translation>Selecteer eerste element om te trimmen</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2538,7 +2539,7 @@
     </message>
     <message>
         <source>Select limiting entity</source>
-        <translation>Selecteer begrenzende Element</translation>
+        <translation>Selecteer begrenzende element</translation>
     </message>
     <message>
         <source>Back</source>
@@ -2546,11 +2547,11 @@
     </message>
     <message>
         <source>Select second trim entity</source>
-        <translation>Selecteer tweede Element om te Trimmen</translation>
+        <translation>Selecteer tweede element om te trimmen</translation>
     </message>
     <message>
         <source>Select entity to trim</source>
-        <translation>Selecteer Element om te Trimmen</translation>
+        <translation>Selecteer element om te trimmen</translation>
     </message>
     <message>
         <source>Trim</source>
@@ -2593,11 +2594,11 @@
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Geen geldige Expressie</translation>
+        <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Select entity to trim or enter distance:</source>
-        <translation>Selecteer Element om te Trimmen of geef een afstand op:</translation>
+        <translation>Selecteer element om te trimmen of geef een afstand op:</translation>
     </message>
     <message>
         <source>Back</source>
@@ -2694,7 +2695,7 @@
     </message>
     <message>
         <source>Shows a preview of a print</source>
-        <translation>Laat Afdruk Voorbeeld zien</translation>
+        <translation>Laat afdruk voorbeeld zien</translation>
     </message>
 </context>
 <context>
@@ -2771,7 +2772,7 @@
     </message>
     <message>
         <source>Selects all entities intersected by a line</source>
-        <translation>Selecteert alle Elementen die door een lijn gekruist worden</translation>
+        <translation>Selecteert alle elementen die door een lijn gekruist worden</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
@@ -2783,15 +2784,15 @@
     </message>
     <message>
         <source>Deselects all entities intersected by a line</source>
-        <translation>Deselecteert alle Elementen die door een lijn gekruist worden</translation>
+        <translation>Deselecteert alle elementen die door een lijn gekruist worden</translation>
     </message>
     <message>
         <source>Choose first point of intersection line</source>
-        <translation>Kies eerste Punt van Snijlijn</translation>
+        <translation>Kies eerste punt van snijlijn</translation>
     </message>
     <message>
         <source>Choose second point of intersection line</source>
-        <translation>Kies tweede Punt van Snijlijn</translation>
+        <translation>Kies tweede punt van snijlijn</translation>
     </message>
 </context>
 <context>
@@ -2806,7 +2807,7 @@
     </message>
     <message>
         <source>Inverts the current selection</source>
-        <translation>Inverteert de huidige Selectie</translation>
+        <translation>Inverteert de huidige selectie</translation>
     </message>
 </context>
 <context>
@@ -2839,7 +2840,7 @@
     <name>RS_ActionSelectWindow</name>
     <message>
         <source>Choose first edge</source>
-        <translation>Kies de eerste Kant</translation>
+        <translation>Kies de eerste kant</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2847,7 +2848,7 @@
     </message>
     <message>
         <source>Choose second edge</source>
-        <translation>Kies de tweede Kant</translation>
+        <translation>Kies de tweede kant</translation>
     </message>
     <message>
         <source>Back</source>
@@ -2905,7 +2906,7 @@
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
         <source>Select first entity</source>
-        <translation>Selecteer eerste Element</translation>
+        <translation>Selecteer eerste element</translation>
     </message>
     <message>
         <source>Back</source>
@@ -2913,7 +2914,7 @@
     </message>
     <message>
         <source>Select second entity</source>
-        <translation>Selecteer tweede Element</translation>
+        <translation>Selecteer tweede element</translation>
     </message>
     <message>
         <source>Intersection Manually</source>
@@ -2925,7 +2926,7 @@
     </message>
     <message>
         <source>Snap to intersection points manually</source>
-        <translation>Snap handmatig naar Intersectie Punten</translation>
+        <translation>Snap handmatig naar intersectie punten</translation>
     </message>
 </context>
 <context>
@@ -2944,18 +2945,18 @@
     </message>
     <message>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Geregenereerde %1 Maat Elementen</translation>
+        <translation>Gegenereerd, %1 elementen</translation>
     </message>
     <message>
         <source>No dimension entities found</source>
-        <translation>Geen Maat Elementen gevonden</translation>
+        <translation>Geen maat elementen gevonden</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomAuto</name>
     <message>
         <source>Auto Zoom</source>
-        <translation>Auto Zoom</translation>
+        <translation>Auto zoom</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
@@ -3012,15 +3013,15 @@
     <name>RS_ActionZoomPrevious</name>
     <message>
         <source>Previous View</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorige weergave</translation>
     </message>
     <message>
         <source>&amp;Previous View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vorige weergave</translation>
     </message>
     <message>
         <source>Shows previous view</source>
-        <translation type="unfinished"></translation>
+        <translation>Laat vorige weergave zien</translation>
     </message>
 </context>
 <context>
@@ -3038,7 +3039,7 @@
     <name>RS_ActionZoomWindow</name>
     <message>
         <source>Specify first edge</source>
-        <translation>Specificeer eerste Kant</translation>
+        <translation>Specificeer eerste kant</translation>
     </message>
     <message>
         <source>Cancel</source>
