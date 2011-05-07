@@ -259,10 +259,9 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
         break;
 
     case RS2::ActionFileQuit:
-			/*RVT_PORT action = new QAction(tr("Quit"), qPixmapFromMimeSource("exit.png"), 
-			 tr("&Quit"),
-			 Qt::CTRL+Qt::Key_Q, mw); */
-			action = new QAction(qPixmapFromMimeSource("exit.png"), tr("Quit"), mw);
+                        action = new QAction(tr("&Quit"), mw);
+                        action->setIcon(QIcon(":/actions/exit.png"));
+                        action->setShortcut(QKeySequence::Quit);
 			//action->zetStatusTip(tr("Quits the application"));
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotFileQuit()));
