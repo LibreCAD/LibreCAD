@@ -28,14 +28,8 @@ mkdir -p $RESOURCEDIR/qm
  
 # Go into translations directory
 cd "$TSDIR"
-for dir in actions cmd lib main ui
-do 
-    cd $dir
-    for tf in *.qm
-    do
+for tf in *.qm
+do
 		cp $tf $RESOURCEDIR/qm/$tf
-    done
-    
-    cd "$TSDIR" 
 done
 
