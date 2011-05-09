@@ -45,7 +45,7 @@ RS_Commands::RS_Commands() {
 	mainCommands.insert(tr("point"), new RS2::ActionType(RS2::ActionDrawPoint));
 	shortCommands.insert(tr("po"), new RS2::ActionType(RS2::ActionDrawPoint));
 	
-	mainCommands.insert(tr("line"), new RS2::ActionType(RS2::ActionDrawLine));
+        mainCommands.insert(tr("line"), new RS2::ActionType(RS2::ActionDrawLine));
 	shortCommands.insert(tr("ln"), new RS2::ActionType(RS2::ActionDrawLine));
 	shortCommands.insert(tr("l"), new RS2::ActionType(RS2::ActionDrawLine));
 	
@@ -84,12 +84,15 @@ RS_Commands::RS_Commands() {
 	mainCommands.insert(tr("zv", "zoom - previous"), new RS2::ActionType(RS2::ActionZoomPrevious));
 
 	// edit:
-	mainCommands.insert(tr("undo"), new RS2::ActionType(RS2::ActionEditUndo));
+        mainCommands.insert(tr("kill"), new RS2::ActionType(RS2::ActionEditKillAllActions));
+        shortCommands.insert(tr("k"), new RS2::ActionType(RS2::ActionEditKillAllActions));
+
+        mainCommands.insert(tr("undo"), new RS2::ActionType(RS2::ActionEditUndo));
 	shortCommands.insert(tr("u", "undo"), new RS2::ActionType(RS2::ActionEditUndo));
 	
-	mainCommands.insert(tr("redo"), new RS2::ActionType(RS2::ActionEditRedo));
-	shortCommands.insert(tr("r"), new RS2::ActionType(RS2::ActionEditRedo));
-	
+        mainCommands.insert(tr("redo"), new RS2::ActionType(RS2::ActionEditRedo));
+        shortCommands.insert(tr("r"), new RS2::ActionType(RS2::ActionEditRedo));
+
     // dimensions:
     mainCommands.insert(tr("da", "dimension - aligned"), new RS2::ActionType(RS2::ActionDimAligned));
     shortCommands.insert(tr("da"), new RS2::ActionType(RS2::ActionDimAligned));
@@ -424,6 +427,8 @@ RS_String RS_Commands::command(const RS_String& cmd) {
         return tr("trim");
     } else if (cmd=="undo") {
         return tr("undo");
+    } else if (cmd=="back") {
+        return tr("back");
     }
 
     RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -543,6 +548,11 @@ bool RS_Commands::checkCommand(const RS_String& cmd, const RS_String& str,
     } else if (cmd=="undo") {
         if (strl==tr("undo") ||
                 strl==tr("u", "undo")) {
+            return true;
+        }
+    } else if (cmd=="back") {
+        if (strl==tr("back") ||
+                strl==tr("b", "back")) {
             return true;
         }
     }

@@ -119,6 +119,7 @@ public slots:
     void finishSplashScreen();
 	void slotFocus();
     void slotBack();
+    void slotKillAllActions();
     //void slotNext();
     void slotEnter();
     void slotFocusCommandLine();
