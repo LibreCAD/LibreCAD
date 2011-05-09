@@ -143,6 +143,8 @@
 #include "rvt_actioncammakeprofile.h"
 #endif
 
+#include "rs_selection.h"
+
 #include "qg_mainwindowinterface.h"
 #include "qg_cadtoolbarsnap.h"
 
@@ -218,7 +220,6 @@ RS_ActionInterface* QG_ActionHandler::getCurrentAction() {
  */
 RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction()");
-    
 	RS_GraphicView* gv = mainWindow->getGraphicView();
     RS_Document* doc = mainWindow->getDocument();
     RS_ActionInterface* a = NULL;
@@ -253,6 +254,17 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 
         // Editing actions:
         //
+    case RS2::ActionEditKillAllActions:
+        if (gv!=NULL) {
+            // DO we need to call some form of a 'clean' function?
+            gv->killAllActions();
+            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+
+            RS_Selection s((RS_EntityContainer&)*doc, gv);
+            s.selectAll(false);
+            RS_DIALOGFACTORY->updateSelectionWidget(doc->countSelected());
+        }
+        break;
     case RS2::ActionEditUndo:
         a = new RS_ActionEditUndo(true, *doc, *gv);
         break;
@@ -771,7 +783,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     }
 	
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction(): OK");
-
     return a;
 }
 
@@ -985,6 +996,9 @@ void QG_ActionHandler::slotToolRegenerateDimensions() {
     setCurrentAction(RS2::ActionToolRegenerateDimensions);
 }
 
+void QG_ActionHandler::slotEditKillAllActions() {
+    setCurrentAction(RS2::ActionEditKillAllActions);
+}
 void QG_ActionHandler::slotEditUndo() {
     setCurrentAction(RS2::ActionEditUndo);
 }

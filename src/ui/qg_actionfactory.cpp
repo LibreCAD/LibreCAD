@@ -259,10 +259,9 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
         break;
 
     case RS2::ActionFileQuit:
-			/*RVT_PORT action = new QAction(tr("Quit"), qPixmapFromMimeSource("exit.png"), 
-			 tr("&Quit"),
-			 Qt::CTRL+Qt::Key_Q, mw); */
-			action = new QAction(qPixmapFromMimeSource("exit.png"), tr("Quit"), mw);
+                        action = new QAction(tr("&Quit"), mw);
+                        action->setIcon(QIcon(":/actions/exit.png"));
+                        action->setShortcut(QKeySequence::Quit);
 			//action->zetStatusTip(tr("Quits the application"));
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotFileQuit()));
@@ -386,8 +385,14 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
 
         // Editing actions:
         //
+    case RS2::ActionEditKillAllActions:
+        action = new QAction(tr("&back"), mw);
+        action->setIcon(QIcon(":/actions/back.png"));
+        connect(action, SIGNAL(activated()),
+                obj, SLOT(slotEditKillAllActions()));
+        break;
     case RS2::ActionEditUndo:
-		action = RS_ActionEditUndo::createGUIAction(id, mw);
+        action = RS_ActionEditUndo::createGUIAction(id, mw);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotEditUndo()));
         break;
