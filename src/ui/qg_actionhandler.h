@@ -81,8 +81,9 @@ public slots:
     void slotZoomPrevious();
     void slotZoomRedraw();
 
-	void slotToolRegenerateDimensions();
+    void slotToolRegenerateDimensions();
 
+    void slotEditKillAllActions();
     void slotEditUndo();
     void slotEditRedo();
     void slotEditCut();

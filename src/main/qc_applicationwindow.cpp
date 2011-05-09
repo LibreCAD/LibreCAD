@@ -83,6 +83,7 @@
 #include "rs_system.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_painterqt.h"
+#include "rs_selection.h"
 
 #include "qg_cadtoolbarmain.h"
 #include "qg_colorbox.h"
@@ -506,7 +507,6 @@ void QC_ApplicationWindow::initActions() {
     QToolBar* tb;
     QMenu* subMenu;
 
-
     // File actions:
     //
     menu = menuBar()->addMenu(tr("&File"));
@@ -561,10 +561,17 @@ void QC_ApplicationWindow::initActions() {
     tb = editToolBar;
     tb->setCaption("Edit");
 
+    action = actionFactory.createAction(RS2::ActionEditKillAllActions, actionHandler);
+    action->addTo(tb);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+
+    tb->addSeparator();
+
     action = actionFactory.createAction(RS2::ActionEditUndo, actionHandler);
     action->addTo(menu);
     action->addTo(tb);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+
     action = actionFactory.createAction(RS2::ActionEditRedo, actionHandler);
     action->addTo(menu);
     action->addTo(tb);
@@ -1700,6 +1707,20 @@ void QC_ApplicationWindow::slotBack() {
     }
 }
 
+void QC_ApplicationWindow::slotKillAllActions() {
+    RS_GraphicView* gv = getGraphicView();
+    QC_MDIWindow* m = getMDIWindow();
+    if (gv!=NULL and m!=NULL and m->getDocument()!=NULL) {
+        gv->killAllActions();
+        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+
+        RS_Selection s((RS_EntityContainer&)*m->getDocument(), gv);
+        s.selectAll(false);
+        RS_DIALOGFACTORY->updateSelectionWidget(m->getDocument()->countSelected());
+
+        gv->redraw(RS2::RedrawAll);
+    }
+}
 
 
 /**
@@ -4066,87 +4087,90 @@ bool QC_ApplicationWindow::queryExit(bool force) {
  */
 void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
 
-    // timer
+    // multi key codes:
     static QTime ts = QTime();
-    static QString firstKey = "";
+    static QList<int> doubleCharacters;
+    QTime now = QTime::currentTime();
+    bool actionProcessed=false;
+    doubleCharacters << e->key();
+    doubleCharacters=doubleCharacters.mid(doubleCharacters.length()-2,2);
+    if (ts.msecsTo(now)<2000) {
 
-    // single key codes:
-    switch (e->key()) {
-    case Qt::Key_Shift:
-    case Qt::Key_Control:
-    case Qt::Key_Meta:
-    case Qt::Key_Alt:
-    case Qt::Key_CapsLock: {
-            QMainWindow::keyPressEvent(e);
+        QString code="";
+        QList<int>::iterator i;
+        for (i = doubleCharacters.begin(); i != doubleCharacters.end(); ++i)
+             code += QChar(*i);
 
-            // forward to actions:
-            RS_GraphicView* graphicView = getGraphicView();
-            if (graphicView!=NULL) {
-                graphicView->keyPressEvent(e);
-            }
-            e->accept();
+        // Check against double keycode handler
+        if (actionHandler->keycode(code)==true) {
+            actionProcessed=true;
         }
-        break;
 
-    case Qt::Key_Escape:
-        firstKey = "";
-        slotBack();
-        e->accept();
-        break;
+        // Matches doublescape, since this is not a action, it's not done in actionHandler (is that logical??)
+        if (doubleCharacters == (QList<int>() << Qt::Key_Escape << Qt::Key_Escape) ) {
+            slotKillAllActions();
+            actionProcessed=true;
+            RS_DEBUG->print("QC_ApplicationWindow::Got double escape!");
+        }
 
-    case Qt::Key_Return:
-        if (firstKey.isEmpty()) {
+        if (actionProcessed) {
+            doubleCharacters.clear();
+        }
+    }
+    ts = now;
+
+    if (actionProcessed==false) {
+        // single key codes:
+        switch (e->key()) {
+        case Qt::Key_Shift:
+        case Qt::Key_Control:
+        case Qt::Key_Meta:
+        case Qt::Key_Alt:
+        case Qt::Key_CapsLock: {
+                QMainWindow::keyPressEvent(e);
+
+                // forward to actions:
+                RS_GraphicView* graphicView = getGraphicView();
+                if (graphicView!=NULL) {
+                    graphicView->keyPressEvent(e);
+                }
+                e->accept();
+            }
+            break;
+
+        case Qt::Key_Escape:
+            slotBack();
+            e->accept();
+            break;
+
+        case Qt::Key_Return:
             slotEnter();
             e->accept();
-        }
-        break;
+            break;
 
-    case Qt::Key_Plus:
-        if (firstKey.isEmpty()) {
+        case Qt::Key_Plus:
             actionHandler->slotZoomIn();
             e->accept();
-        }
-        break;
+            break;
 
-    case Qt::Key_Minus:
-        if (firstKey.isEmpty()) {
+        case Qt::Key_Minus:
             actionHandler->slotZoomOut();
             e->accept();
-        }
-        break;
+            break;
 
-    default:
-        e->ignore();
-        break;
+        default:
+            e->ignore();
+            RS_DEBUG->print("QC_ApplicationWindow::KeyPressEvent: IGNORED");
+            break;
+        }
     }
 
     if (e->isAccepted()) {
+        RS_DEBUG->print("QC_ApplicationWindow::KeyPressEvent: Accepted");
         return;
     }
 
-    QTime now = QTime::currentTime();
 
-    // multi key codes:
-    if (ts.msecsTo(now)<2000) {
-        QString code =
-            QString("%1%2").arg(firstKey).arg(QChar(e->key())).lower();
-
-        if (actionHandler->keycode(code)==false) {
-            ts = now;
-            if (QChar(e->key()).isPrint()) {
-                firstKey += e->key();
-            }
-        }
-        else {
-            firstKey="";
-        }
-    }
-    else {
-        ts = now;
-        if (QChar(e->key()).isPrint()) {
-            firstKey = e->key();
-        }
-    }
 
     QMainWindow::keyPressEvent(e);
 }
@@ -4174,5 +4198,6 @@ void QC_ApplicationWindow::keyReleaseEvent(QKeyEvent* e) {
 
     QMainWindow::keyPressEvent(e);
 }
+
 
 
