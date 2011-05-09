@@ -1,6 +1,360 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name></name>
+    <message>
+        <source>Loading..</source>
+        <translation type="obsolete">Nahrávám..</translation>
+    </message>
+    <message>
+        <source>Loading Library Paths..</source>
+        <translation type="obsolete">Nahrávám cesty ke knihovnám..</translation>
+    </message>
+    <message>
+        <source>Loading File %1..</source>
+        <translation type="obsolete">Nahrávám soubor %1..</translation>
+    </message>
+</context>
+<context>
+    <name>@default</name>
+    <message>
+        <source>Loading..</source>
+        <translation type="obsolete">Nahrávám..</translation>
+    </message>
+    <message>
+        <source>Loading Library Paths..</source>
+        <translation type="obsolete">Nahrávám cesty ke knihovnám..</translation>
+    </message>
+    <message>
+        <source>Loading File %1..</source>
+        <translation type="obsolete">Nahrávám soubor %1..</translation>
+    </message>
+</context>
+<context>
     <name>QC_ApplicationWindow</name>
+    <message>
+        <source>&amp;File</source>
+        <translation>&amp;Soubor</translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation>Úp&amp;ravy</translation>
+    </message>
+    <message>
+        <source>Focus on Command Line</source>
+        <translation type="obsolete">Přejít na příkazový řádek</translation>
+    </message>
+    <message>
+        <source>Focus on &amp;Command Line</source>
+        <translation>Přejít na pří&amp;kazový řádek</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation>&amp;Zobrazit</translation>
+    </message>
+    <message>
+        <source>&amp;Select</source>
+        <translation>&amp;Výběr</translation>
+    </message>
+    <message>
+        <source>&amp;Point</source>
+        <translation>&amp;Bod</translation>
+    </message>
+    <message>
+        <source>&amp;Line</source>
+        <translation>&amp;Úsečka</translation>
+    </message>
+    <message>
+        <source>&amp;Arc</source>
+        <translation>&amp;Oblouk</translation>
+    </message>
+    <message>
+        <source>&amp;Circle</source>
+        <translation>&amp;Kružnice</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse</source>
+        <translation>&amp;Elipsa</translation>
+    </message>
+    <message>
+        <source>&amp;Draw</source>
+        <translation>&amp;Kreslit</translation>
+    </message>
+    <message>
+        <source>&amp;Dimension</source>
+        <translation>Kó&amp;ta</translation>
+    </message>
+    <message>
+        <source>&amp;Modify</source>
+        <translation>&amp;Modifikace</translation>
+    </message>
+    <message>
+        <source>&amp;Snap</source>
+        <translation>&amp;Uchopit</translation>
+    </message>
+    <message>
+        <source>&amp;Info</source>
+        <translation>&amp;Info</translation>
+    </message>
+    <message>
+        <source>&amp;Layer</source>
+        <translation>&amp;Hladina</translation>
+    </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation>&amp;Blok</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation>O programu</translation>
+    </message>
+    <message>
+        <source>&amp;About...</source>
+        <translation type="obsolete">&amp;O programu...</translation>
+    </message>
+    <message>
+        <source>About the application</source>
+        <translation type="obsolete">O programu</translation>
+    </message>
+    <message>
+        <source>&amp;Scripts</source>
+        <translation>Skript&amp;y</translation>
+    </message>
+    <message>
+        <source>&amp;Windows</source>
+        <translation type="obsolete">&amp;Okna</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation>&amp;Nápověda</translation>
+    </message>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation>Od&amp;ladit</translation>
+    </message>
+    <message>
+        <source>&amp;Cascade</source>
+        <translation>&amp;Na sebe</translation>
+    </message>
+    <message>
+        <source>&amp;Tile</source>
+        <translation>&amp;Dlaždice</translation>
+    </message>
+    <message>
+        <source>Tile &amp;Horizontally</source>
+        <translation>Dlaždice &amp;vodorovně</translation>
+    </message>
+    <message>
+        <source>Creating new file...</source>
+        <translation>Vytvářím nový soubor...</translation>
+    </message>
+    <message>
+        <source>unnamed document %1</source>
+        <translation>nepojmenovaný dokument %1</translation>
+    </message>
+    <message>
+        <source>Opening recent file...</source>
+        <translation>Otevírám nejčastěji otevíraný soubor...</translation>
+    </message>
+    <message>
+        <source>Loaded document: </source>
+        <translation>Nahraný dokument:</translation>
+    </message>
+    <message>
+        <source>Opening aborted</source>
+        <translation>Otevírání přerušeno</translation>
+    </message>
+    <message>
+        <source>Printing...</source>
+        <translation>Probíhá tisk...</translation>
+    </message>
+    <message>
+        <source>Exiting application...</source>
+        <translation>Ukončuji program...</translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation>O programu...</translation>
+    </message>
+    <message>
+        <source>Version: </source>
+        <translation type="obsolete">Verze:</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation type="obsolete">Soubor</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="obsolete">Úpravy</translation>
+    </message>
+    <message>
+        <source>Vie&amp;ws</source>
+        <translation type="obsolete">Podok&amp;na</translation>
+    </message>
+    <message>
+        <source>Tool&amp;bars</source>
+        <translation type="obsolete">Nást&amp;rojové lišty</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation type="obsolete">Zobrazit</translation>
+    </message>
+    <message>
+        <source>Pen</source>
+        <translation type="obsolete">Pero</translation>
+    </message>
+    <message>
+        <source>Tool Options</source>
+        <translation type="obsolete">Vlastnosti nástroje</translation>
+    </message>
+    <message>
+        <source>Layer List</source>
+        <translation>Seznam hladin</translation>
+    </message>
+    <message>
+        <source>Block List</source>
+        <translation>Seznam bloků</translation>
+    </message>
+    <message>
+        <source>
+Date: %1</source>
+        <translation type="obsolete">
+Datum: %1</translation>
+    </message>
+    <message>
+        <source>Library Browser</source>
+        <translation>Prohlížeč knihoven</translation>
+    </message>
+    <message>
+        <source>Print preview for %1</source>
+        <translation>Náhled před tiskem pro %1</translation>
+    </message>
+    <message>
+        <source>New Drawing created.</source>
+        <translation>Nový výkres vytvořen.</translation>
+    </message>
+    <message>
+        <source>Saving drawing...</source>
+        <translation>Ukládám výkres...</translation>
+    </message>
+    <message>
+        <source>Saved drawing: %1</source>
+        <translation>Uložený výkres: %1</translation>
+    </message>
+    <message>
+        <source>Saving drawing under new filename...</source>
+        <translation>Ukládám výkres pod novým jménem...</translation>
+    </message>
+    <message>
+        <source>Exporting drawing...</source>
+        <translation>Exportuji výkres...</translation>
+    </message>
+    <message>
+        <source>Exported: %1</source>
+        <translation>Exporotvaný: %1</translation>
+    </message>
+    <message>
+        <source>Exporting...</source>
+        <translation>Exportuji...</translation>
+    </message>
+    <message>
+        <source>Export complete</source>
+        <translation>Exportování dokončeno</translation>
+    </message>
+    <message>
+        <source>Export failed!</source>
+        <translation>Export neúspěšný!</translation>
+    </message>
+    <message>
+        <source>Printing complete</source>
+        <translation>Tisk dokončen</translation>
+    </message>
+    <message>
+        <source>Command line</source>
+        <translation>Příkazový řádek</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="obsolete">Manuál</translation>
+    </message>
+    <message>
+        <source>&amp;Manual</source>
+        <translation>&amp;Manuál</translation>
+    </message>
+    <message>
+        <source>Launch the online manual</source>
+        <translation type="obsolete">Spustí on-line manuál</translation>
+    </message>
+    <message>
+        <source>Block &apos;%1&apos;</source>
+        <translation>Blok &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Cannot open the file
+%1
+Please check the permissions.</source>
+        <translation>Nelze otevřít soubor
+%1
+Zkontrolujte prosím přístupová práva.</translation>
+    </message>
+    <message>
+        <source>Cannot save the file
+%1
+Please check the permissions.</source>
+        <translation>Nelze uložit soubor
+%1
+Zkontrolujte prosím přístupová práva.</translation>
+    </message>
+    <message>
+        <source>&amp;CAM</source>
+        <translation>&amp;CAM</translation>
+    </message>
+    <message>
+        <source>Simulation Controls</source>
+        <translation type="obsolete">Ovládání simulace</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Nic</translation>
+    </message>
+    <message>
+        <source>Version: %1 %2</source>
+        <translation>Verze: %1 %2</translation>
+    </message>
+    <message>
+        <source>Modules: %1</source>
+        <translation>Moduly: %1</translation>
+    </message>
+    <message>
+        <source>&amp;About %1</source>
+        <translation type="obsolete">&amp;O programu %1</translation>
+    </message>
+    <message>
+        <source>Date: %1</source>
+        <translation>Datum: %1</translation>
+    </message>
+    <message>
+        <source>This is a %1 version which terminates
+automatically after 10min. This software is
+not intended for production use. Please buy
+a full version of the application from
+%2.
+You can save your work now.</source>
+        <translation type="obsolete">Toto je %1 verze, která bude
+automaticky po 10-ti minutách ukončena. Tento program
+není určen k ostrému nasazení. Zakupte si prosím
+plnou verzi programu z
+%2.
+Nyní můžete uložit svou práci.</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation>&amp;Okno</translation>
+    </message>
+    <message>
+        <source>&amp;Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Running script &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
@@ -10,195 +364,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Focus on &amp;Command Line</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Polyline</source>
+        <translation type="unfinished">&amp;Lomená čára</translation>
     </message>
     <message>
         <source>CTRL+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Spline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Dimension</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Snap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;CAM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Insert Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Scripts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>De&amp;bugging</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Layer List</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Library Browser</source>
-        <translation type="unfinished">Prohlížeč knihoven součástí</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creating new file...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>unnamed document %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New Drawing created.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Opening recent file...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot open the file
-%1
-Please check the permissions.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Loaded document: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving drawing...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saved drawing: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot save the file
-%1
-Please check the permissions.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving drawing under new filename...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -217,63 +391,7 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Print preview for %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Version: %1 %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SVN Revision: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Date: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modules: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -288,17 +406,22 @@ Auto-save disabled.</source>
 <context>
     <name>QC_MDIWindow</name>
     <message>
-        <source>Do you really want to close the drawing?</source>
-        <translation type="unfinished"></translation>
+        <source>Loaded document: </source>
+        <translation type="obsolete">Nahraný dokument:</translation>
     </message>
     <message>
         <source>Do you really want to close the file
 %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Skutečně si přejete uzavřít soubor
+%1?</translation>
+    </message>
+    <message>
+        <source>Do you really want to close the drawing?</source>
+        <translation>Skutečně si přejete uzavřít výkres?</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavírám výkres</translation>
     </message>
 </context>
 <context>
@@ -5821,7 +5944,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nic</translation>
     </message>
     <message>
         <source>Inch</source>
@@ -5904,406 +6027,554 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Export Image</source>
+        <translation type="obsolete">Exportovat obrázek</translation>
+    </message>
+    <message>
         <source>Loading..</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrávám..</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrávám cesty ke knihovnám..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrávám soubor %1..</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
     <message>
+        <source>Add Block</source>
+        <translation type="obsolete">Přidat blok</translation>
+    </message>
+    <message>
         <source>&amp;Add Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Při&amp;dat blok</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksAttributes</name>
     <message>
+        <source>Rename Block</source>
+        <translation type="obsolete">Přejmenovat blok</translation>
+    </message>
+    <message>
         <source>&amp;Rename Block</source>
-        <translation type="unfinished">Pře&amp;jmenovat blok</translation>
+        <translation>Pře&amp;jmenovat blok</translation>
+    </message>
+    <message>
+        <source>Rename Block and all Inserts</source>
+        <translation type="obsolete">Přejmenuje blok a všechny vložky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <source>&amp;Create Block</source>
-        <translation type="unfinished">&amp;Vytvořit blok</translation>
-    </message>
-    <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej referenční bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Create Block</source>
+        <translation type="obsolete">Vytvořit Blok</translation>
+    </message>
+    <message>
+        <source>&amp;Create Block</source>
+        <translation>&amp;Vytvořit blok</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksEdit</name>
     <message>
+        <source>Edit Block</source>
+        <translation type="obsolete">Editovat blok</translation>
+    </message>
+    <message>
         <source>&amp;Edit Block</source>
-        <translation type="unfinished">&amp;Editovat blok</translation>
+        <translation>&amp;Editovat blok</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
     <message>
+        <source>Explode</source>
+        <translation type="obsolete">Rozložit</translation>
+    </message>
+    <message>
         <source>&amp;Explode</source>
-        <translation type="unfinished">Rozloži&amp;t</translation>
+        <translation>&amp;Rozložit</translation>
+    </message>
+    <message>
+        <source>Explode Blocks and other Entity Groups</source>
+        <translation type="obsolete">Rozloží bloky a jiné skupiny prvků</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksFreezeAll</name>
     <message>
+        <source>Freeze all</source>
+        <translation type="obsolete">Zmrazit vše</translation>
+    </message>
+    <message>
         <source>&amp;Freeze all</source>
-        <translation type="unfinished">&amp;Skrýt vše</translation>
+        <translation>&amp;Zmrazit vše</translation>
+    </message>
+    <message>
+        <source>Freeze all blocks</source>
+        <translation type="obsolete">Zmrazí všechny bloky</translation>
+    </message>
+    <message>
+        <source>Defreeze all</source>
+        <translation type="obsolete">Rozmrazit vše</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation type="unfinished">&amp;Zobrazit vše</translation>
+        <translation>&amp;Rozmrazit vše</translation>
+    </message>
+    <message>
+        <source>Defreeze all blocks</source>
+        <translation type="obsolete">Rozmrazí všechny bloky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksInsert</name>
     <message>
-        <source>&amp;Insert Block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej referenční bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej úhel:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej měřítko:</translation>
     </message>
     <message>
         <source>Enter columns:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej počet sloupců:</translation>
     </message>
     <message>
         <source>Enter rows:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej počet řádků:</translation>
     </message>
     <message>
         <source>Enter column spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej vzdálenost mezi sloupci:</translation>
     </message>
     <message>
         <source>Enter row spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej vzdálenost mezi řádky:</translation>
+    </message>
+    <message>
+        <source>Insert Block</source>
+        <translation type="obsolete">Vložit blok</translation>
+    </message>
+    <message>
+        <source>&amp;Insert Block</source>
+        <translation>&amp;Vložit blok</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksRemove</name>
     <message>
+        <source>Remove Block</source>
+        <translation type="obsolete">Odstranit blok</translation>
+    </message>
+    <message>
         <source>&amp;Remove Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstr&amp;anit blok</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation type="unfinished">Přepnout viditelnost bloku</translation>
+        <translation>Přepnout viditelnost bloku</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Block</source>
+        <translation type="obsolete">Přep&amp;nout blok</translation>
+    </message>
+    <message>
+        <source>Toggle Block</source>
+        <translation type="obsolete">Přepnout blok</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDefault</name>
     <message>
         <source>Choose second edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvol druhou hranu</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimAligned</name>
     <message>
-        <source>&amp;Aligned</source>
-        <translation type="unfinished">&amp;Zarovnaná</translation>
-    </message>
-    <message>
         <source>Specify first extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Urči první úsečku pro prodloužení</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Urči druhou úsečku pro prodloužení</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej umístění kótovací čáry</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlož text kóty:</translation>
+    </message>
+    <message>
+        <source>Aligned</source>
+        <translation type="obsolete">Zarovnaná</translation>
+    </message>
+    <message>
+        <source>&amp;Aligned</source>
+        <translation>&amp;Zarovnaná</translation>
+    </message>
+    <message>
+        <source>Aligned Dimension</source>
+        <translation type="obsolete">Zarovnaná kóta</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
     <message>
-        <source>&amp;Angular</source>
-        <translation type="unfinished">&amp;Úhel</translation>
-    </message>
-    <message>
         <source>Select first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber první úsečku</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Select second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber druhou úsečku</translation>
     </message>
     <message>
         <source>Specify dimension arc line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej umístění kóty poloměru</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlož text kóty:</translation>
+    </message>
+    <message>
+        <source>Angular</source>
+        <translation type="obsolete">Úhel</translation>
+    </message>
+    <message>
+        <source>&amp;Angular</source>
+        <translation>&amp;Úhel</translation>
+    </message>
+    <message>
+        <source>Angular Dimension</source>
+        <translation type="obsolete">Úhlová kóta</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimDiametric</name>
     <message>
-        <source>&amp;Diametric</source>
-        <translation type="unfinished">P&amp;růměr</translation>
-    </message>
-    <message>
         <source>Not a circle or arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Prvek není kružnice ani oblouk</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber oblouk nebo kruhový prvek</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej umístění kótovací čáry</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlož text kóty:</translation>
+    </message>
+    <message>
+        <source>Diametric</source>
+        <translation type="obsolete">Průměr</translation>
+    </message>
+    <message>
+        <source>&amp;Diametric</source>
+        <translation>P&amp;růměr</translation>
+    </message>
+    <message>
+        <source>Diametric Dimension</source>
+        <translation type="obsolete">Kóta průměru</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimLeader</name>
     <message>
-        <source>&amp;Leader</source>
-        <translation type="unfinished">&amp;Odkaz</translation>
-    </message>
-    <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej cílový bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej další bod</translation>
     </message>
     <message>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokončit</translation>
+    </message>
+    <message>
+        <source>Leader</source>
+        <translation type="obsolete">Odkaz</translation>
+    </message>
+    <message>
+        <source>&amp;Leader</source>
+        <translation>&amp;Odkaz</translation>
+    </message>
+    <message>
+        <source>Leader Dimension</source>
+        <translation type="obsolete">Odkaz</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimLinear</name>
     <message>
-        <source>&amp;Linear</source>
-        <translation type="unfinished">&amp;Přímá</translation>
-    </message>
-    <message>
-        <source>&amp;Horizontal</source>
-        <translation type="unfinished">&amp;Vodorovně</translation>
-    </message>
-    <message>
-        <source>&amp;Vertical</source>
-        <translation type="unfinished">&amp;Svisle</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Specify first extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Urči první úsečku pro prodloužení</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Urči druhou úsečku pro prodloužení</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej umístění kótovací čáry</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlož text kóty:</translation>
     </message>
     <message>
         <source>Enter dimension line angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej úhel kótovací čáry:</translation>
+    </message>
+    <message>
+        <source>Linear</source>
+        <translation type="obsolete">Přímá</translation>
+    </message>
+    <message>
+        <source>&amp;Linear</source>
+        <translation>&amp;Přímá</translation>
+    </message>
+    <message>
+        <source>Linear Dimension</source>
+        <translation type="obsolete">Přímá kóta</translation>
+    </message>
+    <message>
+        <source>Horizontal</source>
+        <translation type="obsolete">Vodorovná</translation>
+    </message>
+    <message>
+        <source>&amp;Horizontal</source>
+        <translation>&amp;Vodorovná</translation>
+    </message>
+    <message>
+        <source>Horizontal Dimension</source>
+        <translation type="obsolete">Vodorovná kóta</translation>
+    </message>
+    <message>
+        <source>Vertical</source>
+        <translation type="obsolete">Svislá</translation>
+    </message>
+    <message>
+        <source>&amp;Vertical</source>
+        <translation>&amp;Svislá</translation>
+    </message>
+    <message>
+        <source>Vertical Dimension</source>
+        <translation type="obsolete">Svislá kóta</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimRadial</name>
     <message>
-        <source>&amp;Radial</source>
-        <translation type="unfinished">Polo&amp;měr</translation>
-    </message>
-    <message>
         <source>Not a circle or arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Prvek není kružnice ani oblouk</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber oblouk nebo kruhový prvek</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify dimension line position or enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Urči polohu kótovací čáry nebo zadej úhel:</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlož text kóty:</translation>
+    </message>
+    <message>
+        <source>Radial</source>
+        <translation type="obsolete">Poloměr</translation>
+    </message>
+    <message>
+        <source>&amp;Radial</source>
+        <translation>&amp;Poloměr</translation>
+    </message>
+    <message>
+        <source>Radial Dimension</source>
+        <translation type="obsolete">Kóta poloměru</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArc</name>
     <message>
-        <source>&amp;Center, Point, Angles</source>
-        <translation type="unfinished">&amp;Střed, Bod, Úhel</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Not a valid chord length</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatná délka tětivy</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej střed</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej poloměr</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej počáteční úhel:</translation>
     </message>
     <message>
         <source>Specify end angle or [Angle/chord Length]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej koncový úhel nebo [Úhel/Délka tětivy]</translation>
     </message>
     <message>
         <source>Specify included angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej sevřený úhel:</translation>
     </message>
     <message>
         <source>Specify chord length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej délku tětivy:</translation>
+    </message>
+    <message>
+        <source>Arc: Center, Point, Angles</source>
+        <translation type="obsolete">Oblouk: Střed, Bod, Úhel</translation>
+    </message>
+    <message>
+        <source>&amp;Center, Point, Angles</source>
+        <translation>&amp;Střed, Bod, Úhel</translation>
+    </message>
+    <message>
+        <source>Draw arcs</source>
+        <translation type="obsolete">Kreslí oblouky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
     <message>
-        <source>&amp;3 Points</source>
-        <translation type="unfinished">&amp;3 body</translation>
-    </message>
-    <message>
         <source>Invalid arc data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatné zadání oblouku.</translation>
     </message>
     <message>
         <source>Specify startpoint or [Center]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej počáteční bod nebo [Střed]</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej druhý bod</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej koncový bod</translation>
+    </message>
+    <message>
+        <source>Arc: 3 Points</source>
+        <translation type="obsolete">Oblouk: 3 body</translation>
+    </message>
+    <message>
+        <source>&amp;3 Points</source>
+        <translation>&amp;3 body</translation>
+    </message>
+    <message>
+        <source>Draw arcs with 3 points</source>
+        <translation type="obsolete">Kreslí oblouky zadané 3 body</translation>
     </message>
 </context>
 <context>
@@ -6322,613 +6593,888 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zadej koncový úhel</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zpět</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
-        <source>Center, &amp;Point</source>
-        <translation type="unfinished">Střed, &amp;Bod</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej střed</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej poloměr</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Circle: Center, Point</source>
+        <translation type="obsolete">Kružnice: Střed, Bod</translation>
+    </message>
+    <message>
+        <source>Center, &amp;Point</source>
+        <translation>Střed, &amp;Bod</translation>
+    </message>
+    <message>
+        <source>Draw circles with center and point</source>
+        <translation type="obsolete">Kreslí kružnice zadané středem a bodem</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle2P</name>
     <message>
-        <source>2 Points</source>
-        <translation type="unfinished">2 body</translation>
-    </message>
-    <message>
         <source>Invalid Circle data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatné zadání kružnice.</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej první bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej druhý bod</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Circle: 2 Points</source>
+        <translation type="obsolete">Kružnice: 2 body</translation>
+    </message>
+    <message>
+        <source>2 Points</source>
+        <translation>2 body</translation>
+    </message>
+    <message>
+        <source>Draw circles with 2 points</source>
+        <translation type="obsolete">Kreslí kružnice zadané 2 body</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle3P</name>
     <message>
-        <source>3 Points</source>
-        <translation type="unfinished">3 body</translation>
-    </message>
-    <message>
         <source>Invalid circle data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatné zadání kružnice.</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej první bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej druhý bod</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Specify third point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej třetí bod</translation>
+    </message>
+    <message>
+        <source>Circle: 3 Points</source>
+        <translation type="obsolete">Kružnice: 3 body</translation>
+    </message>
+    <message>
+        <source>3 Points</source>
+        <translation>3 body</translation>
+    </message>
+    <message>
+        <source>Draw circles with 3 points</source>
+        <translation type="obsolete">Kreslí kružnice zadané 3 body</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleCR</name>
     <message>
-        <source>Center, &amp;Radius</source>
-        <translation type="unfinished">Střed, &amp;Poloměr</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Specify circle center</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej střed kružnice</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify circle radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej poloměr kružnice</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Circle: Center, Radius</source>
+        <translation type="obsolete">Kružnice: Střed, Poloměr</translation>
+    </message>
+    <message>
+        <source>Center, &amp;Radius</source>
+        <translation>Střed, &amp;Poloměr</translation>
+    </message>
+    <message>
+        <source>Draw circles with center and radius</source>
+        <translation type="obsolete">Kreslí kružnice zadané středem a poloměrem</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
-        <source>&amp;Ellipse Arc (Axis)</source>
-        <translation type="unfinished">Elipsovitý &amp;oblouk (osa)</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse (Axis)</source>
-        <translation type="unfinished">&amp;Elipsa (Osa)</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Specify ellipse center</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej střed elipsy</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify endpoint of major axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej koncový bod hlavní osy</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej koncový bod nebo délku vedlejší osy:</translation>
     </message>
     <message>
         <source>Specify start angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej počáteční úhel</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej koncový úhel</translation>
+    </message>
+    <message>
+        <source>Ellipse Arc with Axis</source>
+        <translation type="obsolete">Elipsovité oblouky zadané osou</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse Arc (Axis)</source>
+        <translation>&amp;Elipsovitý oblouk (osa)</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse Arcs</source>
+        <translation type="obsolete">Kreslí elipsovité oblouky</translation>
+    </message>
+    <message>
+        <source>Ellipse with Axis</source>
+        <translation type="obsolete">Elipsa zadaná osou</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse (Axis)</source>
+        <translation>&amp;Elipsa (Osa)</translation>
+    </message>
+    <message>
+        <source>Draw Ellipses</source>
+        <translation type="obsolete">Kreslí elipsy</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawHatch</name>
     <message>
-        <source>&amp;Hatch</source>
-        <translation type="unfinished">&amp;Šrafy</translation>
+        <source>Hatch</source>
+        <translation type="obsolete">Šrafy</translation>
     </message>
     <message>
-        <source>Hatch created successfully.</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Hatch</source>
+        <translation>&amp;Šrafy</translation>
+    </message>
+    <message>
+        <source>Draw Hatches and Solid Fills</source>
+        <translation type="obsolete">Kreslí šrafy a výplně ploch</translation>
     </message>
     <message>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatné určení šrafované plochy. Zkontrolujte prosím, zda-li vybrané prvky tvoří uzavřený obrys.</translation>
+    </message>
+    <message>
+        <source>Hatch created successfully.</source>
+        <translation>Šrafy vytvořeny.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
     <message>
-        <source>&amp;Image</source>
-        <translation type="unfinished">Ob&amp;rázek</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej referenční bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej úhel:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej měřítko:</translation>
+    </message>
+    <message>
+        <source>Image</source>
+        <translation type="obsolete">Obrázek</translation>
+    </message>
+    <message>
+        <source>&amp;Image</source>
+        <translation>&amp;Obrázek</translation>
+    </message>
+    <message>
+        <source>Insert Image (Bitmap)</source>
+        <translation type="obsolete">Vložit obrázek (bitmapu)</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLine</name>
     <message>
-        <source>&amp;2 Points</source>
-        <translation type="unfinished">2 &amp;Body</translation>
-    </message>
-    <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej první bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej další bod nebo [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej další bod</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu uzavřít posloupnost čar: Ještě nejsou definovány všechny prvky.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu vrátit zpět: Ještě nejsou definovány všechny prvky.</translation>
+    </message>
+    <message>
+        <source>Line: 2 Points</source>
+        <translation type="obsolete">Úsečka: 2 body</translation>
+    </message>
+    <message>
+        <source>&amp;2 Points</source>
+        <translation>2 &amp;Body</translation>
+    </message>
+    <message>
+        <source>Draw lines</source>
+        <translation type="obsolete">Kreslí úsečky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineAngle</name>
     <message>
+        <source>Not a valid expression</source>
+        <translation>Neplatný výraz</translation>
+    </message>
+    <message>
+        <source>Specify position</source>
+        <translation>Zadej pozici</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Enter angle:</source>
+        <translation>Zadej úhel:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Enter length:</source>
+        <translation>Zadej délku:</translation>
+    </message>
+    <message>
+        <source>Line: Angle</source>
+        <translation type="obsolete">Úsečka: úhel</translation>
+    </message>
+    <message>
         <source>&amp;Angle</source>
-        <translation type="unfinished">&amp;Úhel</translation>
+        <translation>&amp;Úhel</translation>
+    </message>
+    <message>
+        <source>Draw lines with a given angle</source>
+        <translation type="obsolete">Kreslí úsečky pod daným úhlem</translation>
+    </message>
+    <message>
+        <source>Line: Horizontal</source>
+        <translation type="obsolete">Úsečka: Vodorovně</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
-        <translation type="unfinished">&amp;Vodorovně</translation>
+        <translation>&amp;Vodorovně</translation>
+    </message>
+    <message>
+        <source>Draw horizontal lines</source>
+        <translation type="obsolete">Kreslí vodorovné úsečky</translation>
+    </message>
+    <message>
+        <source>hor./vert. line</source>
+        <translation type="obsolete">vod./svis. úsečka</translation>
+    </message>
+    <message>
+        <source>H&amp;orizontal / Vertical</source>
+        <translation type="obsolete">V&amp;odorovně / Svisle</translation>
+    </message>
+    <message>
+        <source>Draw horizontal/vertical lines</source>
+        <translation type="obsolete">Kreslí vodorovné / svislé úsečky </translation>
     </message>
     <message>
         <source>Vertical</source>
         <translation type="unfinished">Svislá</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineBisector</name>
     <message>
-        <source>Bisector</source>
-        <translation type="unfinished">Osa úhlu</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Select first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber první úsečku</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Select second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber druhou úsečku</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej délku úsečky dělící úhel:</translation>
     </message>
     <message>
         <source>Enter number of bisectors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej počet úseček dělících úhel:</translation>
+    </message>
+    <message>
+        <source>Bisector</source>
+        <translation>Osa</translation>
+    </message>
+    <message>
+        <source>&amp;Bisector</source>
+        <translation type="obsolete">&amp;Osa</translation>
+    </message>
+    <message>
+        <source>Draw bisectors</source>
+        <translation type="obsolete">Kreslí osy</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineFree</name>
     <message>
-        <source>&amp;Freehand Line</source>
-        <translation type="unfinished">Čára od r&amp;uky</translation>
-    </message>
-    <message>
         <source>Click and drag to draw a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Pro nakreslení úsečky klikni a táhni kurzorem</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Line: Freehand</source>
+        <translation type="obsolete">Čára: Od ruky</translation>
+    </message>
+    <message>
+        <source>&amp;Freehand Line</source>
+        <translation>Čára od &amp;ruky</translation>
+    </message>
+    <message>
+        <source>Draw freehand lines</source>
+        <translation type="obsolete">Kreslí čáru od ruky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
     <message>
-        <source>Vertical</source>
-        <translation type="unfinished">Svislá</translation>
-    </message>
-    <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej první bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej druhý bod</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>hor./vert. line</source>
+        <translation type="obsolete">vod./svis. úsečka</translation>
+    </message>
+    <message>
+        <source>H&amp;orizontal / Vertical</source>
+        <translation type="obsolete">V&amp;odorovně / Svisle</translation>
+    </message>
+    <message>
+        <source>Draw horizontal/vertical lines</source>
+        <translation type="obsolete">Kreslí vodorovné / svislé úsečky </translation>
+    </message>
+    <message>
+        <source>Vertical</source>
+        <translation type="unfinished">Svislá</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallel</name>
     <message>
-        <source>Parallel</source>
-        <translation type="unfinished">Rovnoběžně</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="unfinished"></translation>
+        <source>Specify Distance &lt;%1&gt; or select entity or [Through]</source>
+        <translation type="obsolete">Zadej vzdálenost &lt;%1&gt; nebo vyber prvek nebo [Skrz]</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej číslo:</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatné číslo. Zkus 1..99</translation>
+    </message>
+    <message>
+        <source>Parallel</source>
+        <translation>Rovnoběžně</translation>
+    </message>
+    <message>
+        <source>Para&amp;llel</source>
+        <translation type="obsolete">Rovno&amp;běžně</translation>
+    </message>
+    <message>
+        <source>Draw parallels to existing lines, arcs, circles</source>
+        <translation type="obsolete">Kreslí rovnoběžky k existujícím čárám, obloukům, kružnicím</translation>
+    </message>
+    <message>
+        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
+        <translation>Zadej vzdálenost &lt;%1&gt; nebo vyber prvek nebo [%2]</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation>Soustředně</translation>
+    </message>
+    <message>
+        <source>&amp;Concentric</source>
+        <translation type="obsolete">&amp;Soustředně</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
     <message>
-        <source>Parallel through point</source>
-        <translation type="unfinished">Rovnoběžne skrz bod</translation>
-    </message>
-    <message>
         <source>Select entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber prvek</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify through point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej průchozí bod</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished">Počet:</translation>
+        <translation>Číslo:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatné číslo. Zkus 1..99</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
+    </message>
+    <message>
+        <source>Parallel through point</source>
+        <translation>Rovnoběžne skrz bod</translation>
+    </message>
+    <message>
+        <source>Par&amp;allel through point</source>
+        <translation type="obsolete">Rov&amp;noběžně skrz bod</translation>
+    </message>
+    <message>
+        <source>Draw parallel through a given point</source>
+        <translation type="obsolete">Kreslí rovnoběžku procházející daným bodem</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="unfinished">&amp;Mnohoúhelník (Stř,Roh)</translation>
-    </message>
-    <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej střed</translation>
     </message>
     <message>
         <source>Specify a corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej roh</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej číslo:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatné číslo. Zkus 1..9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
+    </message>
+    <message>
+        <source>Polygon</source>
+        <translation type="obsolete">Mnohoúhelník</translation>
+    </message>
+    <message>
+        <source>Pol&amp;ygon (Cen,Cor)</source>
+        <translation>Mnohoú&amp;helník (Stř,Roh)</translation>
+    </message>
+    <message>
+        <source>Draw polygon with center and corner</source>
+        <translation type="obsolete">Kreslí mnohoúhelník zadaný středem a rohem</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygon2</name>
     <message>
-        <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Specify first corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej první roh</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej druhý roh</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished">Počet:</translation>
+        <translation>Číslo:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatné číslo. Zkus 1..9999</translation>
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz.</translation>
+    </message>
+    <message>
+        <source>Polygon</source>
+        <translation type="obsolete">Mnohoúhelník</translation>
+    </message>
+    <message>
+        <source>Polygo&amp;n (Cor,Cor)</source>
+        <translation>Mnohoúh&amp;elník (Roh,Roh)</translation>
+    </message>
+    <message>
+        <source>Draw polygon with two corners</source>
+        <translation type="obsolete">Kreslí mnohoúhelník zadaný dvěma rohy</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLinePolyline</name>
+    <message>
+        <source>Polyline</source>
+        <translation type="obsolete">Lomená čára</translation>
+    </message>
+    <message>
+        <source>&amp;Polyline</source>
+        <translation type="obsolete">&amp;Lomená čára</translation>
+    </message>
+    <message>
+        <source>Draw polylines</source>
+        <translation type="obsolete">Kreslí lomené čáry</translation>
+    </message>
+    <message>
+        <source>Specify first point</source>
+        <translation type="obsolete">Zadej první bod</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Zrušit</translation>
+    </message>
+    <message>
+        <source>Specify next point or [%1]</source>
+        <translation type="obsolete">Zadej další bod nebo [%1]</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="obsolete">Zpět</translation>
+    </message>
+    <message>
+        <source>Specify next point</source>
+        <translation type="obsolete">Zadej další bod</translation>
+    </message>
+    <message>
+        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
+        <translation type="obsolete">Nemohu uzavřít posloupnost čar: Ještě nejsou definovány všechny prvky.</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="obsolete">Nemohu vrátit zpět: Ještě nejsou definovány všechny prvky.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineRectangle</name>
     <message>
-        <source>Rectangle</source>
-        <translation type="unfinished">Obdélník</translation>
-    </message>
-    <message>
         <source>Specify first corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej první roh</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej druhý roh</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation>Obdélník</translation>
+    </message>
+    <message>
+        <source>&amp;Rectangle</source>
+        <translation type="obsolete">&amp;Obdélník</translation>
+    </message>
+    <message>
+        <source>Draw rectangles</source>
+        <translation type="obsolete">Kreslí obdélníky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
-        <source>Relative angle</source>
-        <translation type="unfinished">Relativní úhel</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="unfinished">Kolmo</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Select base entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber základní prvek</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify position</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej pozici</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Relative angle</source>
+        <translation>Relativní úhel</translation>
+    </message>
+    <message>
+        <source>R&amp;elative angle</source>
+        <translation type="obsolete">R&amp;elativní úhel</translation>
+    </message>
+    <message>
+        <source>Draw line with relative angle</source>
+        <translation type="obsolete">Kreslí úsečku zadanou relativním úhlem</translation>
+    </message>
+    <message>
+        <source>Orthogonal</source>
+        <translation>Kolmo</translation>
+    </message>
+    <message>
+        <source>&amp;Orthogonal</source>
+        <translation type="obsolete">&amp;Kolmo</translation>
+    </message>
+    <message>
+        <source>Draw orthogonal line</source>
+        <translation type="obsolete">Nakreslí kolmou úsečku</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
-        <source>Tangent (P,C)</source>
-        <translation type="unfinished">Tečna (B,K)</translation>
-    </message>
-    <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished"></translation>
+        <source>Select circle or arc</source>
+        <translation type="obsolete">Vyber kružnici nebo oblouk</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Tangent (P,C)</source>
+        <translation>Tečna (B,K)</translation>
+    </message>
+    <message>
+        <source>&amp;Tangent (P,C)</source>
+        <translation type="obsolete">&amp;Tečna (B,K)</translation>
+    </message>
+    <message>
+        <source>Draw tangent (point, circle)</source>
+        <translation type="obsolete">Kreslí tečnu (bod, kružnice)</translation>
+    </message>
+    <message>
+        <source>Select circle, arc or ellipse</source>
+        <translation>Vyber kružnici, oblouk nebo elipsu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
     <message>
-        <source>Tangent (C,C)</source>
-        <translation type="unfinished">Tečna (K,K)</translation>
-    </message>
-    <message>
         <source>Select first circle or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber první kružnici nebo oblouk</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Select second circle or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber druhou kružnici nebo oblouk</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Tangent (C,C)</source>
+        <translation>Tečna (K,K)</translation>
+    </message>
+    <message>
+        <source>Tan&amp;gent (C,C)</source>
+        <translation type="obsolete">Teč&amp;na (K,K)</translation>
+    </message>
+    <message>
+        <source>Draw tangent (circle, circle)</source>
+        <translation type="obsolete">Kreslí tečnu (kružnice,kružnice)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawPoint</name>
     <message>
-        <source>&amp;Points</source>
-        <translation type="unfinished">&amp;Body</translation>
-    </message>
-    <message>
         <source>Specify location</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej umístění</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Points</source>
+        <translation type="obsolete">Body</translation>
+    </message>
+    <message>
+        <source>&amp;Points</source>
+        <translation>&amp;Body</translation>
+    </message>
+    <message>
+        <source>Draw Points</source>
+        <translation type="obsolete">Kreslí body</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawPolyline</name>
     <message>
+        <source>Polyline</source>
+        <translation type="obsolete">Lomená čára</translation>
+    </message>
+    <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Lomená čára</translation>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kreslí lomené čáry</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zadej první bod</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6936,26 +7482,26 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zadej další bod nebo [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zpět</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zadej další bod</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Undo disallowed due a fatal bug somewhere. Sorry.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nemohu uzavřít posloupnost čar: Ještě nejsou definovány všechny prvky.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">Nemohu vrátit zpět: Ještě nejsou definovány všechny prvky.</translation>
+    </message>
+    <message>
+        <source>Undo disallowed due a fatal bug somewhere. Sorry.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6979,7 +7525,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zpět</translation>
     </message>
     <message>
         <source>Specify next control point</source>
@@ -6987,79 +7533,139 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nemohu vrátit zpět: Ještě nejsou definovány všechny prvky.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawText</name>
     <message>
-        <source>&amp;Text</source>
-        <translation type="unfinished">&amp;Text</translation>
-    </message>
-    <message>
         <source>Specify insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej bod pro vložení</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Enter text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlož text:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="obsolete">Text</translation>
+    </message>
+    <message>
+        <source>&amp;Text</source>
+        <translation>&amp;Text</translation>
+    </message>
+    <message>
+        <source>Draw Text Entities</source>
+        <translation type="obsolete">Tvoří textové prvky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditCopy</name>
     <message>
-        <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Kopírovat</translation>
-    </message>
-    <message>
-        <source>Cu&amp;t</source>
-        <translation type="unfinished">Vyj&amp;mout</translation>
-    </message>
-    <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej referenční bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="obsolete">Kopírovat</translation>
+    </message>
+    <message>
+        <source>&amp;Copy</source>
+        <translation>&amp;Kopírovat</translation>
+    </message>
+    <message>
+        <source>Copies entities to the clipboard</source>
+        <translation type="obsolete">Zkopíruje prvky do schránky</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="obsolete">Vyjmout</translation>
+    </message>
+    <message>
+        <source>Cu&amp;t</source>
+        <translation>Vyjmou&amp;t</translation>
+    </message>
+    <message>
+        <source>Cuts entities  to the clipboard</source>
+        <translation type="obsolete">Vyjme prvky a uloží je do schránky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditPaste</name>
     <message>
-        <source>&amp;Paste</source>
-        <translation type="unfinished">&amp;Vložit</translation>
-    </message>
-    <message>
         <source>Set reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastav referenční bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="obsolete">Vložit</translation>
+    </message>
+    <message>
+        <source>&amp;Paste</source>
+        <translation>&amp;Vložit</translation>
+    </message>
+    <message>
+        <source>Pastes the clipboard contents</source>
+        <translation type="obsolete">Vloží obsah schránky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditUndo</name>
     <message>
+        <source>Undo</source>
+        <translation type="obsolete">Zpět</translation>
+    </message>
+    <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished">&amp;Zpět</translation>
+        <translation>&amp;Zpět</translation>
+    </message>
+    <message>
+        <source>Undoes last action</source>
+        <translation type="obsolete">Vrátí zpět poslední akci</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="obsolete">Vpřed</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished">&amp;Vpřed</translation>
+        <translation>&amp;Vpřed</translation>
+    </message>
+    <message>
+        <source>Redoes last action</source>
+        <translation type="obsolete">Opakuje posledně vrácenou akci</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileNew</name>
+    <message>
+        <source>New Drawing</source>
+        <translation type="obsolete">Nový výkres</translation>
+    </message>
+    <message>
+        <source>&amp;New</source>
+        <translation type="obsolete">&amp;Nový</translation>
+    </message>
+    <message>
+        <source>Creates a new drawing</source>
+        <translation type="obsolete">Vytvoří nový výkres</translation>
+    </message>
     <message>
         <source>&amp;New...</source>
         <translation type="unfinished"></translation>
@@ -7068,53 +7674,85 @@ Přejete si ho přepsat?</translation>
 <context>
     <name>RS_ActionFileOpen</name>
     <message>
+        <source>Open Drawing</source>
+        <translation type="obsolete">Otevřít výkres</translation>
+    </message>
+    <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished">&amp;Otevřít...</translation>
+        <translation>&amp;Otevřít...</translation>
+    </message>
+    <message>
+        <source>Opens an existing drawing</source>
+        <translation type="obsolete">Otevře výkres</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileSave</name>
     <message>
+        <source>Save Drawing</source>
+        <translation type="obsolete">Uložit výkres</translation>
+    </message>
+    <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Uložit</translation>
+        <translation>&amp;Uložit</translation>
+    </message>
+    <message>
+        <source>Saves the current drawing</source>
+        <translation type="obsolete">Uloží aktuální výkres</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileSaveAs</name>
     <message>
+        <source>Save Drawing As</source>
+        <translation type="obsolete">Uložit výkres jako</translation>
+    </message>
+    <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Uložit &amp;jako...</translation>
+        <translation>Uložit &amp;jako...</translation>
+    </message>
+    <message>
+        <source>Saves the current drawing under a new filename</source>
+        <translation type="obsolete">Uloží aktuální výkres pod novým jménem</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoAngle</name>
     <message>
-        <source>Angle between two lines</source>
-        <translation type="unfinished">Úhel mezi dvěma čarami</translation>
-    </message>
-    <message>
         <source>Angle: %1%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Úhel: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
-        <translation type="unfinished"></translation>
+        <translation>Čáry jsou rovnoběžné</translation>
     </message>
     <message>
         <source>Specify first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej první úsečku</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej druhou úsečku</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Angle between two lines</source>
+        <translation>Úhel mezi dvěma čarami</translation>
+    </message>
+    <message>
+        <source>&amp;Angle between two lines</source>
+        <translation type="obsolete">&amp;Úhel mezi dvěma čarami</translation>
+    </message>
+    <message>
+        <source>Measures the angle between two lines</source>
+        <translation type="obsolete">Změří úhel mezi dvěma čarami</translation>
     </message>
 </context>
 <context>
@@ -7155,272 +7793,436 @@ Přejete si ho přepsat?</translation>
 <context>
     <name>RS_ActionInfoDist</name>
     <message>
-        <source>&amp;Distance Point to Point</source>
-        <translation type="unfinished">Vzdálenost z &amp;bodu do bodu</translation>
-    </message>
-    <message>
         <source>Distance: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Vzdálenost: %1</translation>
     </message>
     <message>
         <source>Specify first point of distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej první bod vzdálenosti</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify second point of distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej druhý bod vzdálenosti</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Distance Point to Point</source>
+        <translation type="obsolete">Vzdálenost z bodu do bodu</translation>
+    </message>
+    <message>
+        <source>&amp;Distance Point to Point</source>
+        <translation>&amp;Vzdálenost z bodu do bodu</translation>
+    </message>
+    <message>
+        <source>Measures the distance between two points</source>
+        <translation type="obsolete">Změří vzdálenost mezi dvěma body</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
     <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="unfinished">Vzdálenost od &amp;prvku k bodu</translation>
-    </message>
-    <message>
         <source>Distance: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Vzdálenost: %1</translation>
     </message>
     <message>
         <source>Specify entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej prvek</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej bod</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Distance Entity to Point</source>
+        <translation type="obsolete">Vzdálenost od prvku k bodu</translation>
+    </message>
+    <message>
+        <source>&amp;Distance Entity to Point</source>
+        <translation>&amp;Vzdálenost od prvku k bodu</translation>
+    </message>
+    <message>
+        <source>Measures the distance between an entity and a point</source>
+        <translation type="obsolete">Změří vzdálenost mezi prvkem a bodem</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoInside</name>
     <message>
-        <source>Point inside contour</source>
-        <translation type="unfinished">Bod uvnitř obrysu</translation>
-    </message>
-    <message>
         <source>Point is inside selected contour.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bod je uvnitř vybraného obrysu.</translation>
     </message>
     <message>
         <source>Point is outside selected contour.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bod je mimo vybraný obrysu.</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Point inside contour</source>
+        <translation>Bod uvnitř obrysu</translation>
+    </message>
+    <message>
+        <source>&amp;Point inside contour</source>
+        <translation type="obsolete">&amp;Bod uvnitř obrysu</translation>
+    </message>
+    <message>
+        <source>Checks if a given point is inside the selected contour</source>
+        <translation type="obsolete">Zkontroluje, zda-li je zadaný bod uvnitř zvoleného obrysu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoTotalLength</name>
     <message>
+        <source>Total length of selected entities</source>
+        <translation type="obsolete">Celková délka vybraných prvků</translation>
+    </message>
+    <message>
         <source>&amp;Total length of selected entities</source>
-        <translation type="unfinished">&amp;Celková délka vybraných prvků</translation>
+        <translation>&amp;Celková délka vybraných prvků</translation>
+    </message>
+    <message>
+        <source>Measures the total length of all selected entities</source>
+        <translation type="obsolete">Změří celkovou délku vybraných prvků</translation>
     </message>
     <message>
         <source>Total Length of selected entities: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Celková délka vybraných prvků: %1</translation>
     </message>
     <message>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nejméně jeden z vybraných prvků nemohl být změřen.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation type="unfinished">Vytvoří novou hladinu</translation>
+        <translation>Přidat hladinu</translation>
+    </message>
+    <message>
+        <source>&amp;Add Layer</source>
+        <translation type="obsolete">Přida&amp;t hladinu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersEdit</name>
     <message>
+        <source>Edit Layer</source>
+        <translation type="obsolete">Edituj hladinu</translation>
+    </message>
+    <message>
         <source>&amp;Edit Layer</source>
-        <translation type="unfinished">&amp;Editovat hladinu</translation>
+        <translation>&amp;Edituj hladinu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersFreezeAll</name>
     <message>
+        <source>Freeze all</source>
+        <translation type="obsolete">Zmrazit vše</translation>
+    </message>
+    <message>
         <source>&amp;Freeze all</source>
-        <translation type="unfinished">&amp;Skrýt vše</translation>
+        <translation>&amp;Zmrazit vše</translation>
+    </message>
+    <message>
+        <source>Freeze all layers</source>
+        <translation type="obsolete">Zmrazí všechny hladiny</translation>
+    </message>
+    <message>
+        <source>Defreeze all</source>
+        <translation type="obsolete">Rozmrazit vše</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation type="unfinished">&amp;Zobrazit vše</translation>
+        <translation>&amp;Rozmrazit vše</translation>
+    </message>
+    <message>
+        <source>Defreeze all layers</source>
+        <translation type="obsolete">Rozmrazí všechny hladiny</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit hladinu</translation>
+    </message>
+    <message>
+        <source>&amp;Remove Layer</source>
+        <translation type="obsolete">&amp;Odstranit hladinu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Přepne zámek hladiny</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Lock</source>
+        <translation type="obsolete">&amp;Přepnout zámek</translation>
+    </message>
+    <message>
+        <source>Toggle Lock</source>
+        <translation type="obsolete">Přepnout zámek</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleView</name>
     <message>
+        <source>Toggle Layer Visibility</source>
+        <translation type="obsolete">Přepnout viditelnost hladiny</translation>
+    </message>
+    <message>
         <source>&amp;Toggle Layer</source>
-        <translation type="unfinished">Přep&amp;nout hladinu</translation>
+        <translation>Přep&amp;nout hladinu</translation>
+    </message>
+    <message>
+        <source>Toggle Layer</source>
+        <translation type="obsolete">Přepnout hladinu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
-        <source>Insert Library Object</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej referenční bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej úhel:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
+        <translation>Zadej měřítko:</translation>
+    </message>
+    <message>
+        <source>Insert Library Object</source>
+        <translation>Vložit objekt z knihovny</translation>
+    </message>
+    <message>
+        <source>&amp;Insert Library Object</source>
+        <translation type="obsolete">&amp;Vložit objekt z knihovny</translation>
+    </message>
+    <message>
+        <source>Inserts an Object from the part library.</source>
+        <translation type="obsolete">Vloží objekt z knihovny součástí.</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Cannot open file &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLockRelativeZero</name>
     <message>
+        <source>(Un-)Lock Relative Zero</source>
+        <translation type="obsolete">(Odemknout) Zamknout relativní počátek</translation>
+    </message>
+    <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="unfinished">(Odemknout) &amp;Zamknout relativní počátek</translation>
+        <translation>(Odemknout) &amp;Zamknout relativní počátek</translation>
+    </message>
+    <message>
+        <source>(Un-)Lock relative Zero</source>
+        <translation type="obsolete">Uzamkne nebo odemkne polohu relativního počátku</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyAttributes</name>
     <message>
+        <source>Attributes</source>
+        <translation type="obsolete">Vlastnosti skupiny prvků</translation>
+    </message>
+    <message>
         <source>&amp;Attributes</source>
-        <translation type="unfinished">&amp;Vlastnosti skupiny prvků</translation>
+        <translation>&amp;Vlastnosti skupiny prvků</translation>
+    </message>
+    <message>
+        <source>Modify Entity Attributes</source>
+        <translation type="obsolete">Uprav vlastnosti prvku</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyBevel</name>
     <message>
-        <source>&amp;Bevel</source>
-        <translation type="unfinished">&amp;Úkos</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber první prvek</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber druhý prvek</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej délku 1:</translation>
     </message>
     <message>
         <source>Enter length 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej délku 2:</translation>
+    </message>
+    <message>
+        <source>Bevel</source>
+        <translation type="obsolete">Úkos</translation>
+    </message>
+    <message>
+        <source>&amp;Bevel</source>
+        <translation>Ú&amp;kos</translation>
+    </message>
+    <message>
+        <source>Bevel Entities</source>
+        <translation type="obsolete">Vytvoří úkos mezi prvky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyCut</name>
     <message>
-        <source>&amp;Divide</source>
-        <translation type="unfinished"></translation>
+        <source>No Entity found.</source>
+        <translation>Nenalezen žádný prvek.</translation>
     </message>
     <message>
-        <source>No Entity found.</source>
+        <source>Cut point is invalid.</source>
+        <translation type="obsolete">Ořezávající bod je neplatný.</translation>
+    </message>
+    <message>
+        <source>Cut point is not on entity.</source>
+        <translation type="obsolete">Ořezávající bod neleží na prvku.</translation>
+    </message>
+    <message>
+        <source>Specify entity to cut</source>
+        <translation>Zadej prvek pro zkrácení</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Specify cutting point</source>
+        <translation>Zadej bod pro ořezání</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="obsolete">Vyjmout</translation>
+    </message>
+    <message>
+        <source>&amp;Cut</source>
+        <translation type="obsolete">Ořez&amp;at</translation>
+    </message>
+    <message>
+        <source>Cut Entities</source>
+        <translation type="obsolete">Ořeže prvky</translation>
+    </message>
+    <message>
+        <source>Entity must be a line, arc or circle.</source>
+        <translation type="obsolete">Prvkem musí být úsečka, oblouk nebo kružnice.</translation>
+    </message>
+    <message>
+        <source>Cutting point is invalid.</source>
+        <translation>Ořezávající bod je neplatný.</translation>
+    </message>
+    <message>
+        <source>Cutting point is not on entity.</source>
+        <translation>Ořezávající bod není prvkem.</translation>
+    </message>
+    <message>
+        <source>&amp;Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle or ellipse.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cutting point is invalid.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cutting point is not on entity.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyDelete</name>
     <message>
+        <source>Delete</source>
+        <translation type="obsolete">Smazat</translation>
+    </message>
+    <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished">&amp;Smazat</translation>
+        <translation>Sma&amp;zat</translation>
+    </message>
+    <message>
+        <source>Delete Entities</source>
+        <translation type="obsolete">Smaže prvky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
+        <source>Specify first break point on a polyline</source>
+        <translation>Zadej první bod pro přerušení na multičáře</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Specify second break point on the same polyline</source>
+        <translation>Zadej druhý bod pro přerušení na multičáře</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Zpět</translation>
+    </message>
+    <message>
         <source>Delete Freehand</source>
-        <translation type="unfinished">Smazat &quot;od ruky&quot;</translation>
+        <translation>Smazat &quot;od ruky&quot;</translation>
+    </message>
+    <message>
+        <source>&amp;Delete Freehand</source>
+        <translation type="obsolete">&amp;Smazat &quot;od ruky&quot;</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -7454,319 +8256,443 @@ Přejete si ho přepsat?</translation>
         <source>Second entity is NULL</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteQuick</name>
     <message>
-        <source>&amp;Delete selected</source>
-        <translation type="unfinished">Označené V&amp;ymaž</translation>
-    </message>
-    <message>
         <source>Pick entity to delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber prvek pro vymazání</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Delete selected</source>
+        <translation type="obsolete">Označené vymaž</translation>
+    </message>
+    <message>
+        <source>&amp;Delete selected</source>
+        <translation>Označené &amp;Vymaž</translation>
+    </message>
+    <message>
+        <source>Delete selected entities</source>
+        <translation type="obsolete">Vymaže vybrané prvky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyEntity</name>
     <message>
+        <source>Properties</source>
+        <translation type="obsolete">Vlastnosti prvku</translation>
+    </message>
+    <message>
         <source>&amp;Properties</source>
-        <translation type="unfinished">&amp;Vlastnosti prvku</translation>
+        <translation>&amp;Vlastnosti prvku</translation>
+    </message>
+    <message>
+        <source>Modify Entity Properties</source>
+        <translation type="obsolete">Uprav vlastnosti prvku</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyExplodeText</name>
     <message>
+        <source>Explode Text</source>
+        <translation type="obsolete">Rozložit text</translation>
+    </message>
+    <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rozložit text na písmena</translation>
+    </message>
+    <message>
+        <source>Explodes Text Entities into single Letters</source>
+        <translation type="obsolete">Rozloží textové prvky na jednotlivá písmena</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMirror</name>
     <message>
-        <source>&amp;Mirror</source>
-        <translation type="unfinished">&amp;Zrcadlení</translation>
-    </message>
-    <message>
         <source>Specify first point of mirror line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej první bod pro osu zrcadlení</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify second point of mirror line</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej druhý bod pro osu zrcadlení</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Mirror</source>
+        <translation type="obsolete">Zrcadlení</translation>
+    </message>
+    <message>
+        <source>&amp;Mirror</source>
+        <translation>&amp;Zrcadlení</translation>
+    </message>
+    <message>
+        <source>Mirror Entities</source>
+        <translation type="obsolete">Ozrcadlí vybrané prvky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMove</name>
     <message>
-        <source>&amp;Move / Copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej referenční bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadeej cílový bod</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translation type="obsolete">Posun</translation>
+    </message>
+    <message>
+        <source>&amp;Move</source>
+        <translation type="obsolete">&amp;Posun</translation>
+    </message>
+    <message>
+        <source>Move Entities</source>
+        <translation type="obsolete">Posune prvky</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="obsolete">Pousnout / Kopírovat</translation>
+    </message>
+    <message>
+        <source>&amp;Move / Copy</source>
+        <translation>&amp;Posunout / Kopírovat</translation>
+    </message>
+    <message>
+        <source>Move or copy entities one or multiple times</source>
+        <translation type="obsolete">Jednou nebo vícekrát posune nebo zkopíruje prvky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
-        <source>M&amp;ove and Rotate</source>
-        <translation type="unfinished">P&amp;osun a Otočení</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej referenční bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej cílový bod</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlož úhel natočení:</translation>
+    </message>
+    <message>
+        <source>Move and Rotate</source>
+        <translation type="obsolete">Posun a otočení</translation>
+    </message>
+    <message>
+        <source>M&amp;ove and Rotate</source>
+        <translation>P&amp;osun a Otočení</translation>
+    </message>
+    <message>
+        <source>Move and Rotate Entities</source>
+        <translation type="obsolete">Posune a otočí prvky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
-        <source>&amp;Rotate</source>
-        <translation type="unfinished">Otoč&amp;ení</translation>
-    </message>
-    <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej referenční bod</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Rotate</source>
+        <translation type="obsolete">Otočení</translation>
+    </message>
+    <message>
+        <source>&amp;Rotate</source>
+        <translation>Otoč&amp;ení</translation>
+    </message>
+    <message>
+        <source>Rotate Entities</source>
+        <translation type="obsolete">Otočí prvky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate2</name>
     <message>
-        <source>Rotate T&amp;wo</source>
-        <translation type="unfinished">Otočit okolo &amp;dvou středů</translation>
-    </message>
-    <message>
         <source>Specify absolute reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej absolutní referenční bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify relative reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej relativní referenční bod</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="obsolete">Otočit okolo dvou</translation>
+    </message>
+    <message>
+        <source>Rotate T&amp;wo</source>
+        <translation>Otočit okolo d&amp;vou</translation>
+    </message>
+    <message>
+        <source>Rotate Entities around two centers</source>
+        <translation type="obsolete">Otočí prvky okolo dvou středů</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRound</name>
     <message>
-        <source>&amp;Round</source>
-        <translation type="unfinished">Zao&amp;blení</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Specify first entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej první prvek</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Specify second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej druhý prvek</translation>
     </message>
     <message>
         <source>Enter radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej poloměr:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Round</source>
+        <translation type="obsolete">Zaoblení</translation>
+    </message>
+    <message>
+        <source>&amp;Round</source>
+        <translation>Zao&amp;blení</translation>
+    </message>
+    <message>
+        <source>Round Entities</source>
+        <translation type="obsolete">Vytvoří zaoblení mezi prvky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
     <message>
-        <source>&amp;Scale</source>
-        <translation type="unfinished">&amp;Měřítko</translation>
-    </message>
-    <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej referenční bod</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Scale</source>
+        <translation type="obsolete">Měřítko</translation>
+    </message>
+    <message>
+        <source>&amp;Scale</source>
+        <translation>&amp;Měřítko</translation>
+    </message>
+    <message>
+        <source>Scale Entities</source>
+        <translation type="obsolete">Změní měřítko prvků</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyStretch</name>
     <message>
-        <source>&amp;Stretch</source>
-        <translation type="unfinished">&amp;Natáhnout</translation>
-    </message>
-    <message>
         <source>Specify first corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej první roh</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej druhý roh</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej referenční bod</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej cílový bod</translation>
+    </message>
+    <message>
+        <source>Stretch</source>
+        <translation type="obsolete">Natáhnout</translation>
+    </message>
+    <message>
+        <source>&amp;Stretch</source>
+        <translation>&amp;Natáhnout</translation>
+    </message>
+    <message>
+        <source>Stretch Entities</source>
+        <translation type="obsolete">Natáhne prvky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyTrim</name>
     <message>
-        <source>&amp;Trim</source>
-        <translation type="unfinished">Z&amp;krátit</translation>
-    </message>
-    <message>
-        <source>&amp;Trim Two</source>
-        <translation type="unfinished">Zkrát&amp;it oba dva</translation>
-    </message>
-    <message>
         <source>Select first trim entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber první prvek pro ořezání</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Select limiting entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber omezující prvek</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber druhý prvek pro ořezání</translation>
     </message>
     <message>
         <source>Select entity to trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber prvek pro ořezání</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="obsolete">Zkrátit</translation>
+    </message>
+    <message>
+        <source>&amp;Trim</source>
+        <translation>Z&amp;krátit</translation>
+    </message>
+    <message>
+        <source>Trim Entities</source>
+        <translation type="obsolete">Zkrátí prvky</translation>
+    </message>
+    <message>
+        <source>Trim Two</source>
+        <translation type="obsolete">Zkrátit dva</translation>
+    </message>
+    <message>
+        <source>&amp;Trim Two</source>
+        <translation>Zk&amp;rátit dva</translation>
+    </message>
+    <message>
+        <source>Trim two Entities</source>
+        <translation type="obsolete">Zkrátí dva prvky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
-        <source>&amp;Lengthen</source>
-        <translation type="unfinished">Prodlo&amp;užit</translation>
-    </message>
-    <message>
         <source>No entity found. </source>
-        <translation type="unfinished"></translation>
+        <translation>Nenalezen žádný prvek.</translation>
     </message>
     <message>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybraný prvek je v bloku. Editujte prosím blok.</translation>
     </message>
     <message>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybraný prvek není samostatný prvek nebo nemůže být ořezán.</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný výraz</translation>
     </message>
     <message>
         <source>Select entity to trim or enter distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber prvek pro ořezání nebo zadej vzdálenost:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Lengthen</source>
+        <translation type="obsolete">Prodloužit</translation>
+    </message>
+    <message>
+        <source>&amp;Lengthen</source>
+        <translation>Prodlo&amp;užit</translation>
+    </message>
+    <message>
+        <source>Lengthen by a given amount</source>
+        <translation type="obsolete">Prodlouží o danou délku</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionOptionsDrawing</name>
     <message>
+        <source>Drawing</source>
+        <translation type="obsolete">Výkres</translation>
+    </message>
+    <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="unfinished">Nastavení &amp;aktuálního výkresu</translation>
+        <translation>Nastavení Aktuálního &amp;Výkresu</translation>
+    </message>
+    <message>
+        <source>Settings for the current Drawing</source>
+        <translation type="obsolete">Nastavení pro aktuální výkres</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAdd</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušit</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Zpět</translation>
+    </message>
     <message>
         <source>&amp;Add node</source>
         <translation type="unfinished"></translation>
@@ -7777,7 +8703,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nenalezen žádný prvek.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
@@ -7796,20 +8722,16 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
-    </message>
-    <message>
         <source>Specify adding node&apos;s point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAppend</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušit</translation>
+    </message>
     <message>
         <source>A&amp;ppend node</source>
         <translation type="unfinished"></translation>
@@ -7820,7 +8742,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nenalezen žádný prvek.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
@@ -7835,24 +8757,28 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
-    </message>
-    <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zadej další bod nebo [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zpět</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zadej další bod</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušit</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Zpět</translation>
+    </message>
     <message>
         <source>&amp;Delete node</source>
         <translation type="unfinished"></translation>
@@ -7863,7 +8789,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nenalezen žádný prvek.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
@@ -7882,20 +8808,20 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
-    </message>
-    <message>
         <source>Specify deleting node&apos;s point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDelBetween</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušit</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Zpět</translation>
+    </message>
     <message>
         <source>Delete &amp;between two nodes</source>
         <translation type="unfinished"></translation>
@@ -7906,7 +8832,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nenalezen žádný prvek.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
@@ -7929,15 +8855,7 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
-    </message>
-    <message>
         <source>Specify first node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7957,7 +8875,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nenalezen žádný prvek.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
@@ -7984,7 +8902,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nenalezen žádný prvek.</translation>
     </message>
     <message>
         <source>Entity must be a line or arc.</source>
@@ -8002,6 +8920,14 @@ Přejete si ho přepsat?</translation>
 <context>
     <name>RS_ActionPolylineTrim</name>
     <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušit</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Zpět</translation>
+    </message>
+    <message>
         <source>&amp;Trim segments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8011,7 +8937,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nenalezen žádný prvek.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
@@ -8030,15 +8956,7 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
-    </message>
-    <message>
         <source>Specify first segment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8049,19 +8967,43 @@ Přejete si ho přepsat?</translation>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
+        <source>Print Preview</source>
+        <translation type="obsolete">Náhled před tiskem</translation>
+    </message>
+    <message>
         <source>Print Pre&amp;view</source>
-        <translation type="unfinished">Ná&amp;hled před tiskem</translation>
+        <translation>Ná&amp;hled před tiskem</translation>
+    </message>
+    <message>
+        <source>Shows a preview of a print</source>
+        <translation type="obsolete">Zobrazí náhled tisku</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectAll</name>
     <message>
+        <source>Select All</source>
+        <translation type="obsolete">Vybrat Vše</translation>
+    </message>
+    <message>
         <source>Select &amp;All</source>
-        <translation type="unfinished">&amp;Vybrat vše</translation>
+        <translation>Vybrat &amp;Vše</translation>
+    </message>
+    <message>
+        <source>Selects all Entities</source>
+        <translation type="obsolete">Vybere všechny prvky</translation>
+    </message>
+    <message>
+        <source>Deselect all</source>
+        <translation type="obsolete">Odznačit Vše</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation type="unfinished">O&amp;dznačit vše</translation>
+        <translation>Odznačit &amp;Vše</translation>
+    </message>
+    <message>
+        <source>Deselects all Entities</source>
+        <translation type="obsolete">Zruší výběr všech prvků</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
@@ -8071,375 +9013,1012 @@ Přejete si ho přepsat?</translation>
 <context>
     <name>RS_ActionSelectContour</name>
     <message>
-        <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished">O(d)značit o&amp;brys</translation>
+        <source>Entity must be an Atomic Entity.</source>
+        <translation>Prvek musí být samostatný prvek.</translation>
     </message>
     <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="unfinished"></translation>
+        <source>(De-)Select Contour</source>
+        <translation type="obsolete">O(d)značit Obrys</translation>
+    </message>
+    <message>
+        <source>(De-)Select &amp;Contour</source>
+        <translation>O(d)značit &amp;Obrys</translation>
+    </message>
+    <message>
+        <source>(De-)Selects connected entities</source>
+        <translation type="obsolete">O(d)značí spojené prvky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectIntersected</name>
     <message>
-        <source>Select Intersected Entities</source>
-        <translation type="unfinished">Vyber protínající se prvky</translation>
-    </message>
-    <message>
-        <source>Deselect Intersected Entities</source>
-        <translation type="unfinished">Zrušit výběr protínajících se prvků</translation>
-    </message>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="unfinished"></translation>
+        <source>Choose first edge</source>
+        <translation type="obsolete">Zvol první hranu</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="unfinished"></translation>
+        <source>Choose second edge</source>
+        <translation type="obsolete">Zvol druhou hranu</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Select Intersected Entities</source>
+        <translation>Vyber protínající se prvky</translation>
+    </message>
+    <message>
+        <source>In&amp;tersected Entities</source>
+        <translation type="obsolete">Pro&amp;tínající se prvky</translation>
+    </message>
+    <message>
+        <source>Selects all entities intersected by a line</source>
+        <translation type="obsolete">Vybere všechny prvky protnuté čarou</translation>
+    </message>
+    <message>
+        <source>Deselect Intersected Entities</source>
+        <translation>Zrušit výběr protínajících se prvků</translation>
+    </message>
+    <message>
+        <source>Deselect Inte&amp;rsected Entities</source>
+        <translation type="obsolete">Zrušit výběr pro&amp;tínajících se prvků</translation>
+    </message>
+    <message>
+        <source>Deselects all entities intersected by a line</source>
+        <translation type="obsolete">Zruší výběr všech prvků které protíná čára</translation>
+    </message>
+    <message>
+        <source>Choose first point of intersection line</source>
+        <translation>Vyberte první bod protínající čáry</translation>
+    </message>
+    <message>
+        <source>Choose second point of intersection line</source>
+        <translation>Vyberte druhý bod protínající čáry</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectInvert</name>
     <message>
         <source>Invert Selection</source>
-        <translation type="unfinished">Inverzní výběr</translation>
+        <translation>Inverzní výběr</translation>
+    </message>
+    <message>
+        <source>&amp;Invert Selection</source>
+        <translation type="obsolete">&amp;Inverzní výběr</translation>
+    </message>
+    <message>
+        <source>Inverts the current selection</source>
+        <translation type="obsolete">Invertuje stávající výběr</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectLayer</name>
     <message>
         <source>(De-)Select Layer</source>
-        <translation type="unfinished">O(d)značit hladinu</translation>
+        <translation>O(d)značit Hladinu</translation>
+    </message>
+    <message>
+        <source>(De-)Selects layers</source>
+        <translation type="obsolete">O(d)značit hladiny</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectSingle</name>
     <message>
         <source>Select Entity</source>
-        <translation type="unfinished">Vyber prvek</translation>
+        <translation>Vyber prvek</translation>
+    </message>
+    <message>
+        <source>(De-)&amp;Select Entity</source>
+        <translation type="obsolete">O(d)&amp;značit Hladinu</translation>
+    </message>
+    <message>
+        <source>Selects single Entities</source>
+        <translation type="obsolete">Vybere jednotlivé prvky</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
     <message>
-        <source>Select Window</source>
-        <translation type="unfinished">Výběr oknem</translation>
-    </message>
-    <message>
-        <source>Deselect Window</source>
-        <translation type="unfinished">Odznačit oknem</translation>
-    </message>
-    <message>
         <source>Choose first edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvol první hranu</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Choose second edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvol druhou hranu</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Select Window</source>
+        <translation>Výběr Oknem</translation>
+    </message>
+    <message>
+        <source>Select &amp;Window</source>
+        <translation type="obsolete">Výběr &amp;Oknem</translation>
+    </message>
+    <message>
+        <source>Selects all Entities in a given Window</source>
+        <translation type="obsolete">Vybere všechny prvky v daném okně</translation>
+    </message>
+    <message>
+        <source>Deselect Window</source>
+        <translation>Odznačit Oknem</translation>
+    </message>
+    <message>
+        <source>Deselect &amp;Window</source>
+        <translation type="obsolete">Odznačit O&amp;knem</translation>
+    </message>
+    <message>
+        <source>Deselects all Entities in a given Window</source>
+        <translation type="obsolete">Odznačí všechny prvky v daném okně</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSetRelativeZero</name>
     <message>
-        <source>Set Relative Zero</source>
-        <translation type="unfinished">Nastavit relativní počátek</translation>
-    </message>
-    <message>
         <source>Set relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastav relativní nulu</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Set Relative Zero</source>
+        <translation>Nastavit relativní počátek</translation>
+    </message>
+    <message>
+        <source>&amp;Set Relative Zero</source>
+        <translation type="obsolete">&amp;Nastavit relativní počátek</translation>
+    </message>
+    <message>
+        <source>Set position of the Relative Zero point</source>
+        <translation type="obsolete">Nastaví pozici relativního počátku</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
-        <source>I&amp;ntersection Manually</source>
-        <translation type="unfinished">Průsečík ma&amp;nuálně</translation>
-    </message>
-    <message>
         <source>Select first entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber první prvek</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber druhý prvek</translation>
+    </message>
+    <message>
+        <source>Intersection Manually</source>
+        <translation type="obsolete">Průsečík manuálně</translation>
+    </message>
+    <message>
+        <source>I&amp;ntersection Manually</source>
+        <translation>Prů&amp;sečík manuálně</translation>
+    </message>
+    <message>
+        <source>Snap to intersection points manually</source>
+        <translation type="obsolete">Uchopení za průsečík ručně</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
         <source>Regenerate Dimension Entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Překreslit kóty</translation>
+    </message>
+    <message>
+        <source>&amp;Regenerate Dimension Entities</source>
+        <translation type="obsolete">&amp;Překreslit kóty</translation>
+    </message>
+    <message>
+        <source>Regenerates all Dimension Entities</source>
+        <translation type="obsolete">Překreslí všechny kóty</translation>
     </message>
     <message>
         <source>Regenerated %1 dimension entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Překresleno %1 kót</translation>
     </message>
     <message>
         <source>No dimension entities found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenalezeny žádné kóty</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomAuto</name>
     <message>
+        <source>Auto Zoom</source>
+        <translation type="obsolete">Automatické zvětšení</translation>
+    </message>
+    <message>
         <source>&amp;Auto Zoom</source>
-        <translation type="unfinished">&amp;Automatické zvětšení</translation>
+        <translation>&amp;Automatické zvětšení</translation>
+    </message>
+    <message>
+        <source>Zooms automatic</source>
+        <translation type="obsolete">Automaticky upraví zobrazení objektů kreslící plochy </translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomIn</name>
     <message>
+        <source>Zoom in</source>
+        <translation type="obsolete">Přiblížit</translation>
+    </message>
+    <message>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">Při&amp;blížit</translation>
+        <translation>Př&amp;iblížit</translation>
+    </message>
+    <message>
+        <source>Zooms in</source>
+        <translation type="obsolete">Přiblíží</translation>
+    </message>
+    <message>
+        <source>Zoom out</source>
+        <translation type="obsolete">Oddálit</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">Od&amp;dálit</translation>
+        <translation>Od&amp;dálit</translation>
+    </message>
+    <message>
+        <source>Zooms out</source>
+        <translation type="obsolete">Oddálí</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomPan</name>
     <message>
+        <source>Pan Zoom</source>
+        <translation type="obsolete">Posun Pohledu</translation>
+    </message>
+    <message>
         <source>&amp;Pan Zoom</source>
-        <translation type="unfinished">Posun Po&amp;hledu</translation>
+        <translation>&amp;Posun Pohledu</translation>
+    </message>
+    <message>
+        <source>Realtime Panning</source>
+        <translation type="obsolete">Posune Pohled na obrazovce</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomPrevious</name>
     <message>
+        <source>Previous View</source>
+        <translation type="obsolete">Předchozí pohled</translation>
+    </message>
+    <message>
         <source>&amp;Previous View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Předchozí pohled</translation>
+    </message>
+    <message>
+        <source>Shows previous view</source>
+        <translation type="obsolete">Zobrazí předchozí pohled</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomRedraw</name>
     <message>
+        <source>Redraw</source>
+        <translation type="obsolete">Překreslit</translation>
+    </message>
+    <message>
         <source>&amp;Redraw</source>
-        <translation type="unfinished">&amp;Překreslit</translation>
+        <translation>&amp;Překreslit</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomWindow</name>
     <message>
-        <source>&amp;Window Zoom</source>
-        <translation type="unfinished">Zvětšit &amp;Okno</translation>
-    </message>
-    <message>
         <source>Specify first edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej první hranu</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Specify second edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej druhou hranu</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Window Zoom</source>
+        <translation type="obsolete">Zvětšit Okno</translation>
+    </message>
+    <message>
+        <source>&amp;Window Zoom</source>
+        <translation>Zvětšit &amp;Okno</translation>
+    </message>
+    <message>
+        <source>Zooms in a window</source>
+        <translation type="obsolete">Přiblíží objekty označené oknem</translation>
     </message>
 </context>
 <context>
     <name>RS_Commands</name>
     <message>
-        <source>point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>po</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ln</source>
-        <translation type="unfinished"></translation>
+        <translation>úsečka</translation>
     </message>
     <message>
         <source>l</source>
-        <translation type="unfinished"></translation>
+        <comment>line</comment>
+        <translation type="obsolete">u</translation>
+    </message>
+    <message>
+        <source>rectangle</source>
+        <translation>obdélník</translation>
+    </message>
+    <message>
+        <source>rec</source>
+        <comment>rectangle</comment>
+        <translation type="obsolete">obd</translation>
+    </message>
+    <message>
+        <source>rectang</source>
+        <comment>rectangle</comment>
+        <translation type="obsolete">obdél</translation>
+    </message>
+    <message>
+        <source>text</source>
+        <translation>text</translation>
+    </message>
+    <message>
+        <source>regen</source>
+        <translation>obnovit</translation>
+    </message>
+    <message>
+        <source>undo</source>
+        <translation>zpět</translation>
+    </message>
+    <message>
+        <source>u</source>
+        <comment>undo</comment>
+        <translation>z</translation>
+    </message>
+    <message>
+        <source>redo</source>
+        <translation>dopředu</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>redo</comment>
+        <translation type="obsolete">d</translation>
+    </message>
+    <message>
+        <source>arc</source>
+        <translation>oblouk</translation>
+    </message>
+    <message>
+        <source>a</source>
+        <comment>arc</comment>
+        <translation type="obsolete">o</translation>
+    </message>
+    <message>
+        <source>angle</source>
+        <translation>úhel</translation>
+    </message>
+    <message>
+        <source>factor</source>
+        <translation>měřítko</translation>
+    </message>
+    <message>
+        <source>columns</source>
+        <translation>sloupce</translation>
+    </message>
+    <message>
+        <source>rows</source>
+        <translation>řádky</translation>
+    </message>
+    <message>
+        <source>columnspacing</source>
+        <translation>vzdálenost mezi sloupci</translation>
+    </message>
+    <message>
+        <source>rowspacing</source>
+        <translation>řádkování</translation>
+    </message>
+    <message>
+        <source>ang</source>
+        <comment>angle</comment>
+        <translation>uh</translation>
+    </message>
+    <message>
+        <source>a</source>
+        <comment>angle</comment>
+        <translation>uh</translation>
+    </message>
+    <message>
+        <source>fact</source>
+        <comment>factor</comment>
+        <translation>mer</translation>
+    </message>
+    <message>
+        <source>f</source>
+        <comment>factor</comment>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>cols</source>
+        <comment>columns</comment>
+        <translation>sl</translation>
+    </message>
+    <message>
+        <source>c</source>
+        <comment>columns</comment>
+        <translation>s</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>rows</comment>
+        <translation>r</translation>
+    </message>
+    <message>
+        <source>columnspacing</source>
+        <comment>columnspacing for inserts</comment>
+        <translation>vzdálenost v ose x</translation>
+    </message>
+    <message>
+        <source>colspacing</source>
+        <comment>columnspacing for inserts</comment>
+        <translation>vzdálenost v x</translation>
+    </message>
+    <message>
+        <source>cs</source>
+        <comment>columnspacing for inserts</comment>
+        <translation>vzdx</translation>
+    </message>
+    <message>
+        <source>rowspacing</source>
+        <comment>rowspacing for inserts</comment>
+        <translation>vzdálenost v ose y</translation>
+    </message>
+    <message>
+        <source>rs</source>
+        <comment>rowspacing for inserts</comment>
+        <translation>vzdy</translation>
+    </message>
+    <message>
+        <source>center</source>
+        <translation>střed</translation>
+    </message>
+    <message>
+        <source>cen</source>
+        <comment>center</comment>
+        <translation>str</translation>
+    </message>
+    <message>
+        <source>c</source>
+        <comment>center</comment>
+        <translation>str</translation>
+    </message>
+    <message>
+        <source>reversed</source>
+        <comment>reversed arc</comment>
+        <translation>opačný</translation>
+    </message>
+    <message>
+        <source>rev</source>
+        <comment>reversed arc</comment>
+        <translation>opac</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>reversed arc</comment>
+        <translation>op</translation>
+    </message>
+    <message>
+        <source>point</source>
+        <translation>bod</translation>
+    </message>
+    <message>
+        <source>po</source>
+        <comment>point</comment>
+        <translation>b</translation>
+    </message>
+    <message>
+        <source>offset</source>
+        <translation>ofset</translation>
+    </message>
+    <message>
+        <source>o</source>
+        <comment>offset</comment>
+        <translation>o</translation>
+    </message>
+    <message>
+        <source>parallel</source>
+        <translation>rovnoběžně</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <translation>délka</translation>
+    </message>
+    <message>
+        <source>close</source>
+        <translation>uzavřít</translation>
+    </message>
+    <message>
+        <source>number</source>
+        <translation>počet</translation>
+    </message>
+    <message>
+        <source>through</source>
+        <translation>skrz</translation>
+    </message>
+    <message>
+        <source>help</source>
+        <translation>pomoc</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <comment>help</comment>
+        <translation>?</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <comment>length</comment>
+        <translation>délka</translation>
+    </message>
+    <message>
+        <source>len</source>
+        <comment>length</comment>
+        <translation>del</translation>
+    </message>
+    <message>
+        <source>l</source>
+        <comment>length</comment>
+        <translation>d</translation>
+    </message>
+    <message>
+        <source>c</source>
+        <comment>close</comment>
+        <translation>uz</translation>
+    </message>
+    <message>
+        <source>num</source>
+        <comment>number</comment>
+        <translation>poc</translation>
+    </message>
+    <message>
+        <source>n</source>
+        <comment>number</comment>
+        <translation>p</translation>
+    </message>
+    <message>
+        <source>t</source>
+        <comment>through</comment>
+        <translation>sk</translation>
+    </message>
+    <message>
+        <source>par</source>
+        <comment>parallel</comment>
+        <translation>rovn</translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <translation>délka1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <translation>délka2</translation>
+    </message>
+    <message>
+        <source>radius</source>
+        <translation>poloměr</translation>
+    </message>
+    <message>
+        <source>trim</source>
+        <translation>oříznout</translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <comment>length1</comment>
+        <translation>délka1</translation>
+    </message>
+    <message>
+        <source>len1</source>
+        <comment>length1</comment>
+        <translation>del1</translation>
+    </message>
+    <message>
+        <source>l1</source>
+        <comment>length1</comment>
+        <translation>d1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <comment>length2</comment>
+        <translation>délka2</translation>
+    </message>
+    <message>
+        <source>len2</source>
+        <comment>length2</comment>
+        <translation>del2</translation>
+    </message>
+    <message>
+        <source>l2</source>
+        <comment>length2</comment>
+        <translation>d2</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>radius</comment>
+        <translation>pol</translation>
+    </message>
+    <message>
+        <source>t</source>
+        <comment>text</comment>
+        <translation>t</translation>
+    </message>
+    <message>
+        <source>chord length</source>
+        <translation>délka tětivy</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <comment>chord length</comment>
+        <translation>délka</translation>
+    </message>
+    <message>
+        <source>l</source>
+        <comment>chord length</comment>
+        <translation>dt</translation>
+    </message>
+    <message>
+        <source>Command: %1</source>
+        <translation>Příkaz: %1</translation>
+    </message>
+    <message>
+        <source>Available commands:</source>
+        <translation>Dostupné příkazy:</translation>
+    </message>
+    <message>
+        <source>ln</source>
+        <comment>line</comment>
+        <translation type="obsolete">us</translation>
+    </message>
+    <message>
+        <source>circle</source>
+        <translation>kružnice</translation>
+    </message>
+    <message>
+        <source>ci</source>
+        <comment>circle</comment>
+        <translation>kruz</translation>
+    </message>
+    <message>
+        <source>rg</source>
+        <comment>redraw</comment>
+        <translation type="obsolete">prekr</translation>
+    </message>
+    <message>
+        <source>zr</source>
+        <comment>redraw</comment>
+        <translation type="obsolete">prekr</translation>
+    </message>
+    <message>
+        <source>zw</source>
+        <comment>zoom - window</comment>
+        <translation>zo</translation>
+    </message>
+    <message>
+        <source>zoom - window</source>
+        <translation type="obsolete">zvětšit - okno</translation>
+    </message>
+    <message>
+        <source>za</source>
+        <comment>zoom - auto</comment>
+        <translation>az</translation>
+    </message>
+    <message>
+        <source>zoom - auto</source>
+        <translation type="obsolete">automatické zvětšení</translation>
+    </message>
+    <message>
+        <source>zp</source>
+        <comment>zoom - pan</comment>
+        <translation>pp</translation>
+    </message>
+    <message>
+        <source>zoom - pan</source>
+        <translation type="obsolete">posun pohledu</translation>
+    </message>
+    <message>
+        <source>li</source>
+        <comment>line</comment>
+        <translation>us</translation>
+    </message>
+    <message>
+        <source>re</source>
+        <comment>rectangle</comment>
+        <translation>obd</translation>
+    </message>
+    <message>
+        <source>rp</source>
+        <comment>regular polygon</comment>
+        <translation>pm</translation>
+    </message>
+    <message>
+        <source>c2</source>
+        <comment>2 point circle</comment>
+        <translation>k2b</translation>
+    </message>
+    <message>
+        <source>c3</source>
+        <comment>3 point circle</comment>
+        <translation>k3b</translation>
+    </message>
+    <message>
+        <source>ar</source>
+        <comment>arc</comment>
+        <translation>obl</translation>
+    </message>
+    <message>
+        <source>a3</source>
+        <comment>3 point arc</comment>
+        <translation>o3b</translation>
+    </message>
+    <message>
+        <source>ep</source>
+        <comment>ellipse</comment>
+        <translation>ep</translation>
+    </message>
+    <message>
+        <source>tx</source>
+        <comment>text</comment>
+        <translation>tx</translation>
+    </message>
+    <message>
+        <source>mt</source>
+        <comment>text</comment>
+        <translation>mtx</translation>
+    </message>
+    <message>
+        <source>da</source>
+        <comment>dimension - aligned</comment>
+        <translation>kz</translation>
+    </message>
+    <message>
+        <source>dh</source>
+        <comment>dimension - horizontal</comment>
+        <translation>kh</translation>
+    </message>
+    <message>
+        <source>dv</source>
+        <comment>dimension - vertical</comment>
+        <translation>kv</translation>
+    </message>
+    <message>
+        <source>dr</source>
+        <comment>dimension - linear</comment>
+        <translation>kl</translation>
+    </message>
+    <message>
+        <source>ld</source>
+        <comment>dimension - leader</comment>
+        <translation>kh</translation>
+    </message>
+    <message>
+        <source>rd</source>
+        <comment>redraw</comment>
+        <translation>pr</translation>
+    </message>
+    <message>
+        <source>zi</source>
+        <comment>zoom - in</comment>
+        <translation>zv</translation>
+    </message>
+    <message>
+        <source>zo</source>
+        <comment>zoom - out</comment>
+        <translation>zm</translation>
+    </message>
+    <message>
+        <source>pa</source>
+        <comment>zoom - pan</comment>
+        <translation type="obsolete">pos</translation>
+    </message>
+    <message>
+        <source>os</source>
+        <comment>snap - none</comment>
+        <translation>uz</translation>
+    </message>
+    <message>
+        <source>sg</source>
+        <comment>snap - grid</comment>
+        <translation>um</translation>
+    </message>
+    <message>
+        <source>se</source>
+        <comment>snap - end</comment>
+        <translation>uk</translation>
+    </message>
+    <message>
+        <source>si</source>
+        <comment>snap - intersection</comment>
+        <translation>up</translation>
+    </message>
+    <message>
+        <source>sn</source>
+        <comment>snap - center</comment>
+        <translation>us</translation>
+    </message>
+    <message>
+        <source>sm</source>
+        <comment>snap - middle</comment>
+        <translation>upol</translation>
+    </message>
+    <message>
+        <source>sn</source>
+        <comment>snap - nearest</comment>
+        <translation>ubl</translation>
+    </message>
+    <message>
+        <source>np</source>
+        <comment>snap - nearest point</comment>
+        <translation>ubb</translation>
+    </message>
+    <message>
+        <source>fr*</source>
+        <comment>layers - freeze all</comment>
+        <translation>hlzm*</translation>
+    </message>
+    <message>
+        <source>th*</source>
+        <comment>layers - defreeze all</comment>
+        <translation>hlrzm*</translation>
+    </message>
+    <message>
+        <source>tn</source>
+        <comment>Deselect all</comment>
+        <translation>odvs</translation>
+    </message>
+    <message>
+        <source>ch</source>
+        <comment>modify - bevel (chamfer)</comment>
+        <translation>zk</translation>
+    </message>
+    <message>
+        <source>mt</source>
+        <comment>modify - multi trim (extend)</comment>
+        <translation type="obsolete">prdl</translation>
+    </message>
+    <message>
+        <source>xt</source>
+        <comment>modify - trim (extend)</comment>
+        <translation>pr</translation>
+    </message>
+    <message>
+        <source>rm</source>
+        <comment>modify - trim</comment>
+        <translation>or</translation>
+    </message>
+    <message>
+        <source>mv</source>
+        <comment>modify - move</comment>
+        <translation>pos</translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <comment>modify - mirror</comment>
+        <translation>zrc</translation>
+    </message>
+    <message>
+        <source>ro</source>
+        <comment>modify - rotate</comment>
+        <translation>ot</translation>
+    </message>
+    <message>
+        <source>sz</source>
+        <comment>modify - scale</comment>
+        <translation>mer</translation>
+    </message>
+    <message>
+        <source>ss</source>
+        <comment>modify - stretch</comment>
+        <translation>tah</translation>
+    </message>
+    <message>
+        <source>er</source>
+        <comment>modify - delete (erase)</comment>
+        <translation>smaz</translation>
+    </message>
+    <message>
+        <source>oo</source>
+        <comment>modify - undo (oops)</comment>
+        <translation>zp</translation>
+    </message>
+    <message>
+        <source>uu</source>
+        <comment>modify - redo</comment>
+        <translation>dopr</translation>
+    </message>
+    <message>
+        <source>xp</source>
+        <comment>modify - explode</comment>
+        <translation>rozl</translation>
+    </message>
+    <message>
+        <source>ex</source>
+        <comment>modify - explode</comment>
+        <translation>rozl</translation>
+    </message>
+    <message>
+        <source>dimregen</source>
+        <translation>prkot</translation>
+    </message>
+    <message>
+        <source>po</source>
+        <translation>b</translation>
+    </message>
+    <message>
+        <source>ln</source>
+        <translation>us</translation>
+    </message>
+    <message>
+        <source>l</source>
+        <translation>u</translation>
+    </message>
+    <message>
+        <source>a</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>ci</source>
+        <translation>kruz</translation>
+    </message>
+    <message>
+        <source>rec</source>
+        <translation>obd</translation>
+    </message>
+    <message>
+        <source>rectang</source>
+        <translation>obdél</translation>
+    </message>
+    <message>
+        <source>rg</source>
+        <comment>zoom - redraw</comment>
+        <translation>prekr</translation>
+    </message>
+    <message>
+        <source>zr</source>
+        <comment>zoom - redraw</comment>
+        <translation>prekr</translation>
+    </message>
+    <message>
+        <source>zv</source>
+        <comment>zoom - previous</comment>
+        <translation>př</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <translation>r</translation>
     </message>
     <message>
         <source>polyline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>o</source>
-        <comment>offset</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>parallel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>par</source>
+        <source>pa</source>
         <comment>parallel</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>a</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ci</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rectangle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rectang</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>regen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rg</source>
-        <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>zr</source>
-        <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>zw</source>
-        <comment>zoom - window</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>za</source>
-        <comment>zoom - auto</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>zp</source>
-        <comment>zoom - pan</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>zv</source>
-        <comment>zoom - previous</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>undo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>u</source>
-        <comment>undo</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>redo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>r</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>da</source>
-        <comment>dimension - aligned</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>da</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dh</source>
-        <comment>dimension - horizontal</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dr</source>
-        <comment>dimension - linear</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dr</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dv</source>
-        <comment>dimension - vertical</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dv</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ld</source>
-        <comment>dimension - leader</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ld</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dimregen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">pos</translation>
     </message>
     <message>
         <source>tm</source>
@@ -8447,157 +10026,92 @@ Přejete si ho přepsat?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>da</source>
+        <translation type="unfinished">kz</translation>
+    </message>
+    <message>
+        <source>dh</source>
+        <translation type="unfinished">kh</translation>
+    </message>
+    <message>
+        <source>dr</source>
+        <translation type="unfinished">kl</translation>
+    </message>
+    <message>
+        <source>dv</source>
+        <translation type="unfinished">kv</translation>
+    </message>
+    <message>
+        <source>ld</source>
+        <translation type="unfinished">kh</translation>
+    </message>
+    <message>
         <source>tm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>xt</source>
-        <comment>modify - trim (extend)</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>xt</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">pr</translation>
     </message>
     <message>
         <source>rm</source>
-        <comment>modify - trim</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">or</translation>
     </message>
     <message>
         <source>mv</source>
-        <comment>modify - move</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mv</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">pos</translation>
     </message>
     <message>
         <source>ch</source>
-        <comment>modify - bevel (chamfer)</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">zk</translation>
     </message>
     <message>
         <source>mi</source>
-        <comment>modify - mirror</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">zrc</translation>
     </message>
     <message>
         <source>ro</source>
-        <comment>modify - rotate</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ro</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ot</translation>
     </message>
     <message>
         <source>sz</source>
-        <comment>modify - scale</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sz</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mer</translation>
     </message>
     <message>
         <source>ss</source>
-        <comment>modify - stretch</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ss</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">tah</translation>
     </message>
     <message>
         <source>er</source>
-        <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>er</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">smaz</translation>
     </message>
     <message>
         <source>oo</source>
-        <comment>modify - undo (oops)</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>oo</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">zp</translation>
     </message>
     <message>
         <source>uu</source>
-        <comment>modify - redo</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>uu</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">dopr</translation>
     </message>
     <message>
         <source>xp</source>
-        <comment>modify - explode</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>xp</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">rozl</translation>
     </message>
     <message>
         <source>os</source>
-        <comment>snap - none</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>os</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">uz</translation>
     </message>
     <message>
         <source>sg</source>
-        <comment>snap - grid</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sg</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">um</translation>
     </message>
     <message>
         <source>se</source>
-        <comment>snap - end</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>se</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">uk</translation>
     </message>
     <message>
         <source>si</source>
-        <comment>snap - intersection</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>si</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sn</source>
-        <comment>snap - center</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">up</translation>
     </message>
     <message>
         <source>sn</source>
@@ -8605,381 +10119,15 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>sm</source>
-        <comment>snap - middle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sn</source>
-        <comment>snap - nearest</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">upol</translation>
     </message>
     <message>
         <source>np</source>
-        <comment>snap - nearest point</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>np</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ubb</translation>
     </message>
     <message>
         <source>tn</source>
-        <comment>Deselect all</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Command: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>po</source>
-        <comment>point</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>li</source>
-        <comment>line</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>pa</source>
-        <comment>parallel</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>re</source>
-        <comment>rectangle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rp</source>
-        <comment>regular polygon</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ci</source>
-        <comment>circle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>c2</source>
-        <comment>2 point circle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>c3</source>
-        <comment>3 point circle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ar</source>
-        <comment>arc</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>a3</source>
-        <comment>3 point arc</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ep</source>
-        <comment>ellipse</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tx</source>
-        <comment>text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mt</source>
-        <comment>text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rd</source>
-        <comment>redraw</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>zi</source>
-        <comment>zoom - in</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>zo</source>
-        <comment>zoom - out</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fr*</source>
-        <comment>layers - freeze all</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>th*</source>
-        <comment>layers - defreeze all</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ex</source>
-        <comment>modify - explode</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>angle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>chord length</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>columns</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>columnspacing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rowspacing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>through</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>trim</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ang</source>
-        <comment>angle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>a</source>
-        <comment>angle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cen</source>
-        <comment>center</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>c</source>
-        <comment>center</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length</source>
-        <comment>chord length</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>l</source>
-        <comment>chord length</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>c</source>
-        <comment>close</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cols</source>
-        <comment>columns</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>c</source>
-        <comment>columns</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>columnspacing</source>
-        <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>colspacing</source>
-        <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cs</source>
-        <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fact</source>
-        <comment>factor</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>f</source>
-        <comment>factor</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>?</source>
-        <comment>help</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length</source>
-        <comment>length</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>len</source>
-        <comment>length</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>l</source>
-        <comment>length</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length1</source>
-        <comment>length1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>len1</source>
-        <comment>length1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>l1</source>
-        <comment>length1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length2</source>
-        <comment>length2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>len2</source>
-        <comment>length2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>l2</source>
-        <comment>length2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>num</source>
-        <comment>number</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>n</source>
-        <comment>number</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>radius</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>reversed</source>
-        <comment>reversed arc</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rev</source>
-        <comment>reversed arc</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>reversed arc</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>rows</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rowspacing</source>
-        <comment>rowspacing for inserts</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rs</source>
-        <comment>rowspacing for inserts</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>t</source>
-        <comment>text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>t</source>
-        <comment>through</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Available commands:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">odvs</translation>
     </message>
 </context>
 </TS>
