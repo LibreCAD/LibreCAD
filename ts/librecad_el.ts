@@ -1,204 +1,378 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name></name>
+    <message>
+        <source>Loading..</source>
+        <translation type="obsolete">Φόρτωση..</translation>
+    </message>
+    <message>
+        <source>Loading Library Paths..</source>
+        <translation type="obsolete">Φόρτωση διαδρομών βιβλιοθήκης..</translation>
+    </message>
+    <message>
+        <source>Loading File %1..</source>
+        <translation type="obsolete">Φόρτωση Αρχείου %1..</translation>
+    </message>
+</context>
+<context>
+    <name>@default</name>
+    <message>
+        <source>Loading..</source>
+        <translation type="obsolete">Φόρτωση..</translation>
+    </message>
+    <message>
+        <source>Loading Library Paths..</source>
+        <translation type="obsolete">Φόρτωση διαδρομών βιβλιοθήκης..</translation>
+    </message>
+    <message>
+        <source>Loading File %1..</source>
+        <translation type="obsolete">Φόρτωση Αρχείου %1..</translation>
+    </message>
+</context>
+<context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Αρχείο</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Επεξεργασία</translation>
+    </message>
+    <message>
+        <source>Focus on Command Line</source>
+        <translation type="obsolete">Εστίαση στη γραμμή εντολών</translation>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ε&amp;στίαση στη γραμμή εντολών</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation>Ε&amp;μφάνιση</translation>
+    </message>
+    <message>
+        <source>&amp;Select</source>
+        <translation>Ε&amp;πιλογή</translation>
+    </message>
+    <message>
+        <source>&amp;Point</source>
+        <translation>&amp;Σημείο</translation>
+    </message>
+    <message>
+        <source>&amp;Line</source>
+        <translation>&amp;Γραμμή</translation>
+    </message>
+    <message>
+        <source>&amp;Arc</source>
+        <translation>Τό&amp;ξο</translation>
+    </message>
+    <message>
+        <source>&amp;Circle</source>
+        <translation>&amp;Κύκλος</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse</source>
+        <translation>Έ&amp;λειψη</translation>
+    </message>
+    <message>
+        <source>&amp;Draw</source>
+        <translation>&amp;Σχεδίαση</translation>
+    </message>
+    <message>
+        <source>&amp;Dimension</source>
+        <translation>&amp;Διάσταση</translation>
+    </message>
+    <message>
+        <source>&amp;Modify</source>
+        <translation>&amp;Τροποποίηση</translation>
+    </message>
+    <message>
+        <source>&amp;Snap</source>
+        <translation>Προσκό&amp;λληση</translation>
+    </message>
+    <message>
+        <source>&amp;Info</source>
+        <translation>Πλ&amp;η/ρίες</translation>
+    </message>
+    <message>
+        <source>&amp;Layer</source>
+        <translation>Στ&amp;ρώμα</translation>
+    </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation>Μπλό&amp;κ</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation>Περί</translation>
+    </message>
+    <message>
+        <source>&amp;About...</source>
+        <translation type="obsolete">&amp;Σχετικά...</translation>
+    </message>
+    <message>
+        <source>About the application</source>
+        <translation type="obsolete">Σχετικά με την εφαρμογή</translation>
+    </message>
+    <message>
+        <source>&amp;Scripts</source>
+        <translation>&amp;Scripts</translation>
+    </message>
+    <message>
+        <source>&amp;Windows</source>
+        <translation type="obsolete">Παρά&amp;θυρα</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation>&amp;Βοήθεια</translation>
+    </message>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation>Αποσφαλ&amp;μάτωση</translation>
+    </message>
+    <message>
+        <source>&amp;Cascade</source>
+        <translation>&amp;Καταρράκτης</translation>
+    </message>
+    <message>
+        <source>&amp;Tile</source>
+        <translation>&amp;Πλακάκια</translation>
+    </message>
+    <message>
+        <source>Tile &amp;Horizontally</source>
+        <translation>Πλακάκια &amp;οριζόντια</translation>
+    </message>
+    <message>
+        <source>Creating new file...</source>
+        <translation>Δημιουργία νέου αρχείου...</translation>
+    </message>
+    <message>
+        <source>unnamed document %1</source>
+        <translation>Ανώνυμο εγγραφο %1</translation>
+    </message>
+    <message>
+        <source>Opening recent file...</source>
+        <translation>Άνοιγμα πρόσφατου αρχείου...</translation>
+    </message>
+    <message>
+        <source>Loaded document: </source>
+        <translation>Φορτωμένο Εγγραφο:</translation>
+    </message>
+    <message>
+        <source>Opening aborted</source>
+        <translation>Απόριψη ανοίγματος</translation>
+    </message>
+    <message>
+        <source>Printing...</source>
+        <translation>Εκτύπωση...</translation>
+    </message>
+    <message>
+        <source>Exiting application...</source>
+        <translation>Έξοδος απ&apos;την εφαρμογή...</translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation>Περί...</translation>
+    </message>
+    <message>
+        <source>Version: </source>
+        <translation type="obsolete">Έκδοση:</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation type="obsolete">Αρχείο</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="obsolete">Επεξεργασία</translation>
+    </message>
+    <message>
+        <source>Vie&amp;ws</source>
+        <translation type="obsolete">&amp;Προβολές</translation>
+    </message>
+    <message>
+        <source>Tool&amp;bars</source>
+        <translation type="obsolete">&amp;Γραμμές εργαλείων</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation type="obsolete">Εμφάνιση</translation>
+    </message>
+    <message>
+        <source>Pen</source>
+        <translation type="obsolete">Πένα</translation>
+    </message>
+    <message>
+        <source>Tool Options</source>
+        <translation type="obsolete">Επιλογές εργαλείου</translation>
+    </message>
+    <message>
+        <source>Layer List</source>
+        <translation>Κατάλογος στρωμάτων</translation>
+    </message>
+    <message>
+        <source>Block List</source>
+        <translation>Κατάλογος μπλόκ</translation>
+    </message>
+    <message>
+        <source>
+Date: %1</source>
+        <translation type="obsolete">
+Ημερομηνία: %1</translation>
+    </message>
+    <message>
+        <source>Library Browser</source>
+        <translation>Πίνακας Βιβλιοθήκης</translation>
+    </message>
+    <message>
+        <source>Print preview for %1</source>
+        <translation>Προεπισκόπηση εκτύπωσης για το %1</translation>
+    </message>
+    <message>
+        <source>New Drawing created.</source>
+        <translation>Το νέο σχέδιο δημιουργήθηκε.</translation>
+    </message>
+    <message>
+        <source>Saving drawing...</source>
+        <translation>Αποθήκευση σχεδίου...</translation>
+    </message>
+    <message>
+        <source>Saved drawing: %1</source>
+        <translation>Αποθηκευμένο Σχέδιο: %1</translation>
+    </message>
+    <message>
+        <source>Saving drawing under new filename...</source>
+        <translation>Αποθήκευση Σχεδίου με νέο όνομα...</translation>
+    </message>
+    <message>
+        <source>Exporting drawing...</source>
+        <translation>Εξαγωγή σχεδίου...</translation>
+    </message>
+    <message>
+        <source>Exported: %1</source>
+        <translation>Εξηγμένο: %1</translation>
+    </message>
+    <message>
+        <source>Exporting...</source>
+        <translation>Εξαγωγή...</translation>
+    </message>
+    <message>
+        <source>Export complete</source>
+        <translation>Πέρας εξαγωγής</translation>
+    </message>
+    <message>
+        <source>Export failed!</source>
+        <translation>Σφάλμα εξαγωγής!</translation>
+    </message>
+    <message>
+        <source>Printing complete</source>
+        <translation>Πέρας εκτύπωσης</translation>
+    </message>
+    <message>
+        <source>Command line</source>
+        <translation>Γραμμή εντολών</translation>
+    </message>
+    <message>
+        <source>Block &apos;%1&apos;</source>
+        <translation>Μπλόκ &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Cannot open the file
+%1
+Please check the permissions.</source>
+        <translation>Δεν μπορώ να ανοίξω το αρχείο
+%1
+Ελένξτε τα δικαιώματα.</translation>
+    </message>
+    <message>
+        <source>Cannot save the file
+%1
+Please check the permissions.</source>
+        <translation>Δεν μπορώ να αποθηκεύσω το αρχείο
+%1
+Ελένξτε τα δικαιώματα.</translation>
+    </message>
+    <message>
+        <source>Launch the online manual</source>
+        <translation type="obsolete">Εκκίνηση του online εγχειριδίου</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="obsolete">Εγχειρίδιο</translation>
+    </message>
+    <message>
+        <source>&amp;Manual</source>
+        <translation>Ε&amp;γχειρίδιο</translation>
+    </message>
+    <message>
+        <source>&amp;CAM</source>
+        <translation>&amp;CAM</translation>
+    </message>
+    <message>
+        <source>Simulation Controls</source>
+        <translation type="obsolete">Χειρισμός Εξομοίωσης</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Κανένα</translation>
+    </message>
+    <message>
+        <source>Version: %1 %2</source>
+        <translation>Έκδοση: %1 %2</translation>
+    </message>
+    <message>
+        <source>Modules: %1</source>
+        <translation>Αρθρώματα: %1</translation>
+    </message>
+    <message>
+        <source>&amp;About %1</source>
+        <translation type="obsolete">&amp;Περί %1</translation>
+    </message>
+    <message>
+        <source>Date: %1</source>
+        <translation>Ημερ/νία: %1</translation>
+    </message>
+    <message>
+        <source>This is a %1 version which terminates
+automatically after 10min. This software is
+not intended for production use. Please buy
+a full version of the application from
+%2.
+You can save your work now.</source>
+        <translation type="obsolete">Αυτή είναι %1 έκδοση η οποία τερματίζει
+αυτόματα κάθε 10 λεπτά. Αυτό το λογισμικό
+δέν ενδείκνυται για παραγωγική χρήση. 
+Παρακαλώ αγοράστε την πλήρη έκδοση από
+%2.
+Μπορείτε να αποθηκεύσετε την εργασία σας τώρα.</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation>&amp;Παράθυρο</translation>
+    </message>
+    <message>
+        <source>&amp;Spline</source>
+        <translation>&amp;Καμπύλη</translation>
+    </message>
+    <message>
+        <source>Running script &apos;%1&apos;</source>
+        <translation>Εκτέλεση script &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Inserting block &apos;%1&apos;</source>
+        <translation>Εισαγωγή μπλόκ &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>&amp;Polyline</source>
+        <translation>&amp;Πολυγραμμή</translation>
     </message>
     <message>
         <source>CTRL+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Spline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Dimension</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Snap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;CAM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Insert Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Scripts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>De&amp;bugging</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Layer List</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Library Browser</source>
-        <translation type="unfinished">Πίνακας Βιβλιοθηκών</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creating new file...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>unnamed document %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New Drawing created.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Opening recent file...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot open the file
-%1
-Please check the permissions.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Loaded document: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving drawing...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saved drawing: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot save the file
-%1
-Please check the permissions.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving drawing under new filename...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -217,63 +391,7 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Exporting drawing...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Print preview for %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Version: %1 %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SVN Revision: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Date: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modules: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -288,17 +406,22 @@ Auto-save disabled.</source>
 <context>
     <name>QC_MDIWindow</name>
     <message>
-        <source>Do you really want to close the drawing?</source>
-        <translation type="unfinished"></translation>
+        <source>Loaded document: </source>
+        <translation type="obsolete">Φορτωμένο Εγγραφο:</translation>
     </message>
     <message>
         <source>Do you really want to close the file
 %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Θέλεις πραγματικά να κλείσεις το αρχείο
+%1?</translation>
+    </message>
+    <message>
+        <source>Do you really want to close the drawing?</source>
+        <translation>Θέλεις πραγματικά να κλείσεις το σχέδιο?</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Κλείσιμο Σχεδίου</translation>
     </message>
 </context>
 <context>
@@ -5813,7 +5936,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Κανένα</translation>
     </message>
     <message>
         <source>Inch</source>
@@ -5896,1031 +6019,1434 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Export Image</source>
+        <translation type="obsolete">Εξαγωγή εικόνας</translation>
+    </message>
+    <message>
         <source>Loading..</source>
-        <translation type="unfinished"></translation>
+        <translation>Φόρτωση..</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation type="unfinished"></translation>
+        <translation>Φόρτωση διαδρομών βιβλιοθήκης..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
-        <translation type="unfinished"></translation>
+        <translation>Φόρτωση Αρχείου %1..</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
     <message>
+        <source>Add Block</source>
+        <translation type="obsolete">Πρόσθεση Μπλόκ</translation>
+    </message>
+    <message>
         <source>&amp;Add Block</source>
-        <translation type="unfinished">&amp;Προσθεση Μπλόκ</translation>
+        <translation>&amp;Προσθεση Μπλόκ</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksAttributes</name>
     <message>
+        <source>Rename Block</source>
+        <translation type="obsolete">Μετονομασία Μπλόκ</translation>
+    </message>
+    <message>
         <source>&amp;Rename Block</source>
-        <translation type="unfinished">&amp;Μετονομασία Μπλόκ</translation>
+        <translation>&amp;Μετονομασία Μπλόκ</translation>
+    </message>
+    <message>
+        <source>Rename Block and all Inserts</source>
+        <translation type="obsolete">Μετονομασία Μπλόκ και όλων των εισαγωγών</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <source>&amp;Create Block</source>
-        <translation type="unfinished">Δ&amp;ημιουργία Μπλόκ</translation>
-    </message>
-    <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου αναφοράς</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Create Block</source>
+        <translation type="obsolete">Δημιουργία Μπλόκ</translation>
+    </message>
+    <message>
+        <source>&amp;Create Block</source>
+        <translation>Δ&amp;ημιουργία Μπλόκ</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksEdit</name>
     <message>
+        <source>Edit Block</source>
+        <translation type="obsolete">Διόρθωση Μπλόκ</translation>
+    </message>
+    <message>
         <source>&amp;Edit Block</source>
-        <translation type="unfinished">&amp;Διόρθωση Μπλόκ</translation>
+        <translation>&amp;Διόρθωση Μπλόκ</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
     <message>
+        <source>Explode</source>
+        <translation type="obsolete">Διαχωρισμός</translation>
+    </message>
+    <message>
         <source>&amp;Explode</source>
-        <translation type="unfinished">&amp;Διαχωρισμός</translation>
+        <translation>&amp;Διαχωρισμός</translation>
+    </message>
+    <message>
+        <source>Explode Blocks and other Entity Groups</source>
+        <translation type="obsolete">Διαχωρισμός Μπλόκ και άλλων Ομάδων Στοιχείων</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksFreezeAll</name>
     <message>
+        <source>Freeze all</source>
+        <translation type="obsolete">Απόκρυψη όλων</translation>
+    </message>
+    <message>
         <source>&amp;Freeze all</source>
-        <translation type="unfinished">&amp;Απόκρυψη όλων</translation>
+        <translation>Α&amp;πόκρυψη όλων</translation>
+    </message>
+    <message>
+        <source>Freeze all blocks</source>
+        <translation type="obsolete">Απόκρυψη όλων των Μπλόκ</translation>
+    </message>
+    <message>
+        <source>Defreeze all</source>
+        <translation type="obsolete">Εμφάνιση όλων</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation type="unfinished">&amp;Εμφάνιση όλων</translation>
+        <translation>Εμ&amp;φάνιση όλων</translation>
+    </message>
+    <message>
+        <source>Defreeze all blocks</source>
+        <translation type="obsolete">Εμφάνιση όλων των μπλόκ</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksInsert</name>
     <message>
-        <source>&amp;Insert Block</source>
-        <translation type="unfinished">&amp;Εισαγωγή Μπλόκ</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου αναφοράς</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή γωνίας:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή συντελεστή:</translation>
     </message>
     <message>
         <source>Enter columns:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή στηλών:</translation>
     </message>
     <message>
         <source>Enter rows:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή σειρών:</translation>
     </message>
     <message>
         <source>Enter column spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή διάκενου στηλών:</translation>
     </message>
     <message>
         <source>Enter row spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή διάκενου σειρών:</translation>
+    </message>
+    <message>
+        <source>Insert Block</source>
+        <translation type="obsolete">Εισαγωγή Μπλόκ</translation>
+    </message>
+    <message>
+        <source>&amp;Insert Block</source>
+        <translation>&amp;Εισαγωγή Μπλόκ</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksRemove</name>
     <message>
+        <source>Remove Block</source>
+        <translation type="obsolete">Αφαίρεση Μπλόκ</translation>
+    </message>
+    <message>
         <source>&amp;Remove Block</source>
-        <translation type="unfinished">&amp;Αφαίρεση Μπλόκ</translation>
+        <translation>&amp;Αφαίρεση Μπλόκ</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation type="unfinished">Εναλλαγή ορατότητας Μπλόκ</translation>
+        <translation>Εναλλαγή ορατότητας Μπλόκ</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Block</source>
+        <translation type="obsolete">Ενα&amp;λλαγή Μπλόκ</translation>
+    </message>
+    <message>
+        <source>Toggle Block</source>
+        <translation type="obsolete">Εναλλαγή Μπλόκ</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDefault</name>
     <message>
         <source>Choose second edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή δεύτερου ακρου</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimAligned</name>
     <message>
-        <source>&amp;Aligned</source>
-        <translation type="unfinished">&amp;Στοιχισμένη</translation>
-    </message>
-    <message>
         <source>Specify first extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτου σημείου γραμμής επέκτασης</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός δεύτερου σημείου γραμμής επέκτασης</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός θέσης γραμμής διάστασης</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή κειμένου διάστασης:</translation>
+    </message>
+    <message>
+        <source>Aligned</source>
+        <translation type="obsolete">Στοιχισμένη</translation>
+    </message>
+    <message>
+        <source>&amp;Aligned</source>
+        <translation>&amp;Στοιχισμένη</translation>
+    </message>
+    <message>
+        <source>Aligned Dimension</source>
+        <translation type="obsolete">Στοιχισμένη Διάσταση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
     <message>
-        <source>&amp;Angular</source>
-        <translation type="unfinished">&amp;Γωνία</translation>
-    </message>
-    <message>
         <source>Select first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Επέλεξε πρώτη γραμμή</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Select second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Επέλεξε δεύτερη γραμμή</translation>
     </message>
     <message>
         <source>Specify dimension arc line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός θέσης γραμμής τόξου διάστασης</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή κειμένου διάστασης:</translation>
+    </message>
+    <message>
+        <source>Angular</source>
+        <translation type="obsolete">Γωνία</translation>
+    </message>
+    <message>
+        <source>&amp;Angular</source>
+        <translation>&amp;Γωνία</translation>
+    </message>
+    <message>
+        <source>Angular Dimension</source>
+        <translation type="obsolete">Διάσταση Γωνίας</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimDiametric</name>
     <message>
-        <source>&amp;Diametric</source>
-        <translation type="unfinished">&amp;Διάμετρος</translation>
-    </message>
-    <message>
         <source>Not a circle or arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Οχι στοιχείο κύκλου ή τόξου</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Επέλεξε στοιχείο κύκλου ή τόξου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός θέσης γραμμής διάστασης</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή κειμένου διάστασης:</translation>
+    </message>
+    <message>
+        <source>Diametric</source>
+        <translation type="obsolete">Διάμετρος</translation>
+    </message>
+    <message>
+        <source>&amp;Diametric</source>
+        <translation>&amp;Διάμετρος</translation>
+    </message>
+    <message>
+        <source>Diametric Dimension</source>
+        <translation type="obsolete">Διάμετρος</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimLeader</name>
     <message>
-        <source>&amp;Leader</source>
-        <translation type="unfinished">&amp;Δείκτης</translation>
-    </message>
-    <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου προορισμού</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός επόμενου σημείου</translation>
     </message>
     <message>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Τέλος</translation>
+    </message>
+    <message>
+        <source>Leader</source>
+        <translation type="obsolete">Δείκτης</translation>
+    </message>
+    <message>
+        <source>&amp;Leader</source>
+        <translation>&amp;Δείκτης</translation>
+    </message>
+    <message>
+        <source>Leader Dimension</source>
+        <translation type="obsolete">Δείκτης</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimLinear</name>
     <message>
-        <source>&amp;Linear</source>
-        <translation type="unfinished">&amp;Γραμμική</translation>
-    </message>
-    <message>
-        <source>&amp;Horizontal</source>
-        <translation type="unfinished">&amp;Οριζόντια</translation>
-    </message>
-    <message>
-        <source>&amp;Vertical</source>
-        <translation type="unfinished">&amp;Κάθετα</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Specify first extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτου σημείου γραμμής επέκτασης</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός δεύτερου σημείου γραμμής επέκτασης</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός θέσης γραμμής διάστασης</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή κειμένου διάστασης:</translation>
     </message>
     <message>
         <source>Enter dimension line angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός γωνίας γραμμής διάστασης:</translation>
+    </message>
+    <message>
+        <source>Linear</source>
+        <translation type="obsolete">Γραμμική</translation>
+    </message>
+    <message>
+        <source>&amp;Linear</source>
+        <translation>&amp;Γραμμική</translation>
+    </message>
+    <message>
+        <source>Linear Dimension</source>
+        <translation type="obsolete">Γραμμική Διάσταση</translation>
+    </message>
+    <message>
+        <source>Horizontal</source>
+        <translation type="obsolete">Οριζόντια</translation>
+    </message>
+    <message>
+        <source>&amp;Horizontal</source>
+        <translation>&amp;Οριζόντια</translation>
+    </message>
+    <message>
+        <source>Horizontal Dimension</source>
+        <translation type="obsolete">Οριζόντια Διάσταση</translation>
+    </message>
+    <message>
+        <source>Vertical</source>
+        <translation type="obsolete">Κάθετα</translation>
+    </message>
+    <message>
+        <source>&amp;Vertical</source>
+        <translation>&amp;Κάθετα</translation>
+    </message>
+    <message>
+        <source>Vertical Dimension</source>
+        <translation type="obsolete">Κάθετη Διάσταση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimRadial</name>
     <message>
-        <source>&amp;Radial</source>
-        <translation type="unfinished">&amp;Ακτίνα</translation>
-    </message>
-    <message>
         <source>Not a circle or arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Οχι στοιχείο κύκλου ή τόξου</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Επέλεξε στοιχείο κύκλου ή τόξου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify dimension line position or enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός θέσης γραμμής διάστασης ή εισαγωγή γωνίας:</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή κειμένου διάστασης:</translation>
+    </message>
+    <message>
+        <source>Radial</source>
+        <translation type="obsolete">Ακτινωτή</translation>
+    </message>
+    <message>
+        <source>&amp;Radial</source>
+        <translation>&amp;Ακτίνα</translation>
+    </message>
+    <message>
+        <source>Radial Dimension</source>
+        <translation type="obsolete">Ακτίνα</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArc</name>
     <message>
-        <source>&amp;Center, Point, Angles</source>
-        <translation type="unfinished">&amp;Κέντρο, Σημείο, Γωνίες</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Not a valid chord length</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρο μήκος χορδής</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός κέντρου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός ακτίνας</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός γωνίας αρχής:</translation>
     </message>
     <message>
         <source>Specify end angle or [Angle/chord Length]</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός γωνίας τέλους ή [Γωνία/μήκος Χορδής]</translation>
     </message>
     <message>
         <source>Specify included angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός περιεχόμενης γωνίας:</translation>
     </message>
     <message>
         <source>Specify chord length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός μήκους χορδής:</translation>
+    </message>
+    <message>
+        <source>Arc: Center, Point, Angles</source>
+        <translation type="obsolete">Τόξο: Κέντρο, Σημείο, Γωνίες</translation>
+    </message>
+    <message>
+        <source>&amp;Center, Point, Angles</source>
+        <translation>&amp;Κέντρο, Σημείο, Γωνίες</translation>
+    </message>
+    <message>
+        <source>Draw arcs</source>
+        <translation type="obsolete">Σχεδίαση τόξων</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
     <message>
-        <source>&amp;3 Points</source>
-        <translation type="unfinished">&amp;3 Σημεία</translation>
-    </message>
-    <message>
         <source>Invalid arc data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρα δεδομένα τόξου.</translation>
     </message>
     <message>
         <source>Specify startpoint or [Center]</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός αρχικού σημείου ή [Κέντρο]</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός δεύτερου σημείου</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Specify endpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός άκρου</translation>
+    </message>
+    <message>
+        <source>Arc: 3 Points</source>
+        <translation type="obsolete">Τόξο: 3 Σημεία</translation>
+    </message>
+    <message>
+        <source>&amp;3 Points</source>
+        <translation>&amp;3 Σημεία</translation>
+    </message>
+    <message>
+        <source>Draw arcs with 3 points</source>
+        <translation type="obsolete">Σχεδίαση τόξων με 3 σημεία</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
         <source>Arc: Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation>Τόξο: Εφαπτόμενο</translation>
+    </message>
+    <message>
+        <source>&amp;Tangential</source>
+        <translation type="obsolete">Ε&amp;φαπτόμενο</translation>
+    </message>
+    <message>
+        <source>Draw arcs tangential to base entity</source>
+        <translation type="obsolete">Σχεδιασμός τόξων εφαπτόμενων στο βασικό στοιχείο</translation>
     </message>
     <message>
         <source>Specify base entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός βασικού στοιχείου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός τελικής γωνίας</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
-        <source>Center, &amp;Point</source>
-        <translation type="unfinished">&amp;Κέντρο, Σημείο</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός κέντρου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός ακτίνας</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
+    </message>
+    <message>
+        <source>Circle: Center, Point</source>
+        <translation type="obsolete">Κύκλος: Κέντρο, Σημείο</translation>
+    </message>
+    <message>
+        <source>Center, &amp;Point</source>
+        <translation>&amp;Κέντρο, Σημείο</translation>
+    </message>
+    <message>
+        <source>Draw circles with center and point</source>
+        <translation type="obsolete">Σχεδίαση κύκλων με κέντρο και σημείο</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle2P</name>
     <message>
-        <source>2 Points</source>
-        <translation type="unfinished">2 Σημεία</translation>
-    </message>
-    <message>
         <source>Invalid Circle data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρα δεδομένα κύκλου.</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτου σημείου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός δεύτερου σημείου</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
+    </message>
+    <message>
+        <source>Circle: 2 Points</source>
+        <translation type="obsolete">Κύκλος: 2 Σημεία</translation>
+    </message>
+    <message>
+        <source>2 Points</source>
+        <translation>2 Σημεία</translation>
+    </message>
+    <message>
+        <source>Draw circles with 2 points</source>
+        <translation type="obsolete">Σχεδίαση κύκλων με 2 σημεία</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle3P</name>
     <message>
-        <source>3 Points</source>
-        <translation type="unfinished">3 Σημεία</translation>
-    </message>
-    <message>
         <source>Invalid circle data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρα δεδομένα κύκλου.</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτου σημείου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός δεύτερου σημείου</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Specify third point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός τρίτου σημείου</translation>
+    </message>
+    <message>
+        <source>Circle: 3 Points</source>
+        <translation type="obsolete">Κύκλος: 3 Σημεία</translation>
+    </message>
+    <message>
+        <source>3 Points</source>
+        <translation>3 Σημεία</translation>
+    </message>
+    <message>
+        <source>Draw circles with 3 points</source>
+        <translation type="obsolete">Σχεδίαση κύκλων με 3 σημεία</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleCR</name>
     <message>
-        <source>Center, &amp;Radius</source>
-        <translation type="unfinished">Κ&amp;έντρο, Ακτίνα</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Specify circle center</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός κέντρου κύκλου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify circle radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός ακτίνας κύκλου</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
+    </message>
+    <message>
+        <source>Circle: Center, Radius</source>
+        <translation type="obsolete">Κύκλος: Κέντρο, Ακτίνα</translation>
+    </message>
+    <message>
+        <source>Center, &amp;Radius</source>
+        <translation>Κ&amp;έντρο, Ακτίνα</translation>
+    </message>
+    <message>
+        <source>Draw circles with center and radius</source>
+        <translation type="obsolete">Σχεδίαση κύκλων με κέντρο και ακτίνα</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
-        <source>&amp;Ellipse Arc (Axis)</source>
-        <translation type="unfinished">Ελει&amp;πτικό Τόξο (Άξονας)</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse (Axis)</source>
-        <translation type="unfinished">Ε&amp;λειψη (Άξονας)</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Specify ellipse center</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός κέντρου έλειψης</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify endpoint of major axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός άκρου βασικού άξονα </translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός άκρου δεύτερου άξονα:</translation>
     </message>
     <message>
         <source>Specify start angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός αρχικής γωνίας</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός τελικής γωνίας</translation>
+    </message>
+    <message>
+        <source>Ellipse Arc with Axis</source>
+        <translation type="obsolete">Ελειπτικό Τόξο με Άξονα</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse Arc (Axis)</source>
+        <translation>Ελει&amp;πτικό Τόξο (Άξονας)</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse Arcs</source>
+        <translation type="obsolete">Σχεδίαση Ελειπτικών Τόξων</translation>
+    </message>
+    <message>
+        <source>Ellipse with Axis</source>
+        <translation type="obsolete">Ελειψη με Άξονα</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse (Axis)</source>
+        <translation>Ε&amp;λειψη (Άξονας)</translation>
+    </message>
+    <message>
+        <source>Draw Ellipses</source>
+        <translation type="obsolete">Σχεδίαση Ελείψεων</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawHatch</name>
     <message>
-        <source>&amp;Hatch</source>
-        <translation type="unfinished">&amp;Διαγράμμηση</translation>
+        <source>Hatch</source>
+        <translation type="obsolete">Διαγράμμηση</translation>
     </message>
     <message>
-        <source>Hatch created successfully.</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Hatch</source>
+        <translation>&amp;Διαγράμμηση</translation>
+    </message>
+    <message>
+        <source>Draw Hatches and Solid Fills</source>
+        <translation type="obsolete">Σχεδίαση Διαγραμίσεων και Γεμισμάτων</translation>
     </message>
     <message>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη περιοχή διαγράμμισης. Παρακαλώ ελέγξτε οτι τα επιλεγμένα στοιχεία αποτελούν μια ή περισσότερες κλειστές περιοχές.</translation>
+    </message>
+    <message>
+        <source>Hatch created successfully.</source>
+        <translation>Η διαγράμμηση διμιουργήθηκε με επιτυχία.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
     <message>
-        <source>&amp;Image</source>
-        <translation type="unfinished">&amp;Εικόνα</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου αναφοράς</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή γωνίας:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή συντελεστή:</translation>
+    </message>
+    <message>
+        <source>Image</source>
+        <translation type="obsolete">Εικόνα</translation>
+    </message>
+    <message>
+        <source>&amp;Image</source>
+        <translation>&amp;Εικόνα</translation>
+    </message>
+    <message>
+        <source>Insert Image (Bitmap)</source>
+        <translation type="obsolete">Εισαγωγή Εικόνας (Bitmap)</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLine</name>
     <message>
-        <source>&amp;2 Points</source>
-        <translation type="unfinished">&amp;2 Σημεία</translation>
-    </message>
-    <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτου σημείου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός επόμενου σημείου ή [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός επόμενου σημείου</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν μπορώ να κλείσω συνεχόμενες γραμμές: Οχι αρκετές δηλώσεις στοιχείων ακόμα.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν μπορώ να αναιρέσω: Οχι αρκετές δηλώσεις στοιχείων ακόμα.</translation>
+    </message>
+    <message>
+        <source>Line: 2 Points</source>
+        <translation type="obsolete">Γραμμή: 2 Σημεία</translation>
+    </message>
+    <message>
+        <source>&amp;2 Points</source>
+        <translation>&amp;2 Σημεία</translation>
+    </message>
+    <message>
+        <source>Draw lines</source>
+        <translation type="obsolete">Σχεδίαση γραμμών</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineAngle</name>
     <message>
+        <source>Not a valid expression</source>
+        <translation>Μη έγκυρη δήλωση</translation>
+    </message>
+    <message>
+        <source>Specify position</source>
+        <translation>Καθορισμός θέσης</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Enter angle:</source>
+        <translation>Εισαγωγή γωνίας:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Πίσω</translation>
+    </message>
+    <message>
+        <source>Enter length:</source>
+        <translation>Εισαγωγή μήκους:</translation>
+    </message>
+    <message>
+        <source>Line: Angle</source>
+        <translation type="obsolete">Γραμμή: Γωνία</translation>
+    </message>
+    <message>
         <source>&amp;Angle</source>
-        <translation type="unfinished">&amp;Γωνία</translation>
+        <translation>&amp;Γωνία</translation>
+    </message>
+    <message>
+        <source>Draw lines with a given angle</source>
+        <translation type="obsolete">Σχεδίαση γραμμών με καθορισμένη γωνία</translation>
+    </message>
+    <message>
+        <source>Line: Horizontal</source>
+        <translation type="obsolete">Γραμμή: Οριζόντια</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
-        <translation type="unfinished">&amp;Οριζόντια</translation>
+        <translation>&amp;Οριζόντια</translation>
+    </message>
+    <message>
+        <source>Draw horizontal lines</source>
+        <translation type="obsolete">Σχεδίαση οριζόντιων γραμμών</translation>
+    </message>
+    <message>
+        <source>hor./vert. line</source>
+        <translation type="obsolete">Οριζ./Καθ. γραμμή</translation>
+    </message>
+    <message>
+        <source>H&amp;orizontal / Vertical</source>
+        <translation type="obsolete">Ο&amp;ριζόντια / Κάθετα</translation>
+    </message>
+    <message>
+        <source>Draw horizontal/vertical lines</source>
+        <translation type="obsolete">Σχεδιάζει οριζόντιες/κάθετες γραμμές</translation>
     </message>
     <message>
         <source>Vertical</source>
         <translation type="unfinished">Κάθετα</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineBisector</name>
     <message>
-        <source>Bisector</source>
-        <translation type="unfinished">Διχοτόμος</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Select first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Επέλεξε πρώτη γραμμή</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Select second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Επέλεξε δεύτερη γραμμή</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή μήκους διχοτόμου:</translation>
     </message>
     <message>
         <source>Enter number of bisectors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή αριθμού διχοτόμων:</translation>
+    </message>
+    <message>
+        <source>Bisector</source>
+        <translation>Διχοτόμος</translation>
+    </message>
+    <message>
+        <source>&amp;Bisector</source>
+        <translation type="obsolete">&amp;Διχοτόμος</translation>
+    </message>
+    <message>
+        <source>Draw bisectors</source>
+        <translation type="obsolete">Σχεδίαση διχοτόμων</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineFree</name>
     <message>
-        <source>&amp;Freehand Line</source>
-        <translation type="unfinished">&amp;Χειροποίητη Γραμμή</translation>
-    </message>
-    <message>
         <source>Click and drag to draw a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Κλίκ και σύρε για να σχεδιάσεις μια γραμμή</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Line: Freehand</source>
+        <translation type="obsolete">Γραμμή: Χειροποίητα</translation>
+    </message>
+    <message>
+        <source>&amp;Freehand Line</source>
+        <translation>&amp;Χειροποίητη Γραμμή</translation>
+    </message>
+    <message>
+        <source>Draw freehand lines</source>
+        <translation type="obsolete">Σχεδίαση χειροποίητων γραμμών</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
     <message>
-        <source>Vertical</source>
-        <translation type="unfinished">Κάθετα</translation>
-    </message>
-    <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτου σημείου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός δεύτερου σημείου</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
+    </message>
+    <message>
+        <source>hor./vert. line</source>
+        <translation type="obsolete">Οριζ./Καθ. γραμμή</translation>
+    </message>
+    <message>
+        <source>H&amp;orizontal / Vertical</source>
+        <translation type="obsolete">Ο&amp;ριζόντια / Κάθετα</translation>
+    </message>
+    <message>
+        <source>Draw horizontal/vertical lines</source>
+        <translation type="obsolete">Σχεδιάζει οριζόντιες/κάθετες γραμμές</translation>
+    </message>
+    <message>
+        <source>Vertical</source>
+        <translation type="unfinished">Κάθετα</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallel</name>
     <message>
-        <source>Parallel</source>
-        <translation type="unfinished">Παράλληλα</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="unfinished">Ομόκεντρα</translation>
-    </message>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="unfinished"></translation>
+        <source>Specify Distance &lt;%1&gt; or select entity or [Through]</source>
+        <translation type="obsolete">Καθορισμός απόστασης &lt;%1&gt; ή επέλεξε στοιχείο ή [Through]</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή αριθμού:</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
+    </message>
+    <message>
+        <source>Parallel</source>
+        <translation>Παράλληλες</translation>
+    </message>
+    <message>
+        <source>Para&amp;llel</source>
+        <translation type="obsolete">Πα&amp;ράλληλες</translation>
+    </message>
+    <message>
+        <source>Draw parallels to existing lines, arcs, circles</source>
+        <translation type="obsolete">Σχεδίαση παράλληλων σε υπάρχουσες γραμμές, τόξα, κύκλους</translation>
+    </message>
+    <message>
+        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
+        <translation>Καθόρισε Απόσταση &lt;%1&gt; ή επέλεξε στοιχείο ή [%2]</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρος αριθμός. Δοκίμασε 1..99</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation>Ομόκεντρα</translation>
+    </message>
+    <message>
+        <source>&amp;Concentric</source>
+        <translation type="obsolete">Ο&amp;μόκεντρα</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
     <message>
         <source>Parallel through point</source>
-        <translation type="unfinished">Παράλληλα μέσω σημείου</translation>
+        <translation>Παράλληλες μέσω σημείου</translation>
+    </message>
+    <message>
+        <source>Par&amp;allel through point</source>
+        <translation type="obsolete">Πα&amp;ράλληλες μέσω σημείου</translation>
+    </message>
+    <message>
+        <source>Draw parallel through a given point</source>
+        <translation type="obsolete">Σχεδίαση παράλληλων μέσω καθορισμένου σημείου</translation>
     </message>
     <message>
         <source>Select entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Επέλεξε στοιχείο</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify through point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου διέλευσης</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished">Αριθμός:</translation>
+        <translation>Αριθμός:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρος αριθμός. Δοκίμασε 1..99</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
+        <source>Polygon</source>
+        <translation type="obsolete">Πολύγωνο</translation>
+    </message>
+    <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="unfinished">Π&amp;ολύγωνα (Κεντ,Γων)</translation>
+        <translation>Πολύγω&amp;νο (Κεν,Γων)</translation>
+    </message>
+    <message>
+        <source>Draw polygon with center and corner</source>
+        <translation type="obsolete">Σχεδίαση κύκλων με κέντρο και γωνία</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός κέντρου</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Specify a corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός γωνίας</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή αριθμού:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρος αριθμός. Δοκίμασε 1..999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygon2</name>
     <message>
+        <source>Polygon</source>
+        <translation type="obsolete">Πολύγωνο</translation>
+    </message>
+    <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="unfinished"></translation>
+        <translation>Πολύγω&amp;νο (Γων,Γων)</translation>
+    </message>
+    <message>
+        <source>Draw polygon with two corners</source>
+        <translation type="obsolete">Σχεδίαση Πολύγωνων με 2 γωνίες</translation>
     </message>
     <message>
         <source>Specify first corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτης γωνίας</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός δεύτερης γωνίας</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished">Αριθμός:</translation>
+        <translation>Αριθμός:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρος αριθμός. Δοκίμασε 1..9999</translation>
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση.</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLinePolyline</name>
+    <message>
+        <source>Specify first point</source>
+        <translation type="obsolete">Καθορισμός πρώτου σημείου</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Specify next point or [%1]</source>
+        <translation type="obsolete">Καθορισμός επόμενου σημείου ή [%1]</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="obsolete">Πίσω</translation>
+    </message>
+    <message>
+        <source>Specify next point</source>
+        <translation type="obsolete">Καθορισμός επόμενου σημείου</translation>
+    </message>
+    <message>
+        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
+        <translation type="obsolete">Δεν μπορώ να κλείσω συνεχόμενες γραμμές: Οχι αρκετές δηλώσεις στοιχείων ακόμα.</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="obsolete">Δεν μπορώ να αναιρέσω: Οχι αρκετές δηλώσεις στοιχείων ακόμα.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineRectangle</name>
     <message>
         <source>Rectangle</source>
-        <translation type="unfinished">Ορθογώνιο</translation>
+        <translation>Ορθογώνιο</translation>
+    </message>
+    <message>
+        <source>&amp;Rectangle</source>
+        <translation type="obsolete">Ορ&amp;θογώνιο</translation>
+    </message>
+    <message>
+        <source>Draw rectangles</source>
+        <translation type="obsolete">Σχεδίαση πολύγωνων</translation>
     </message>
     <message>
         <source>Specify first corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτης γωνίας</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός δεύτερης γωνίας</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
         <source>Relative angle</source>
-        <translation type="unfinished">Σχετική γωνία</translation>
+        <translation>Σχετική γωνία</translation>
     </message>
     <message>
-        <source>Orthogonal</source>
-        <translation type="unfinished">Ορθογώνια</translation>
+        <source>R&amp;elative angle</source>
+        <translation type="obsolete">Σ&amp;χετική γωνία</translation>
+    </message>
+    <message>
+        <source>Draw line with relative angle</source>
+        <translation type="obsolete">Σχεδίαση γραμμών με σχετική γωνία</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Select base entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Επέλεξε βασικό στοιχείο</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify position</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός θέσης</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
+    </message>
+    <message>
+        <source>Orthogonal</source>
+        <translation>Ορθογώνια</translation>
+    </message>
+    <message>
+        <source>&amp;Orthogonal</source>
+        <translation type="obsolete">&amp;Ορθογώνια</translation>
+    </message>
+    <message>
+        <source>Draw orthogonal line</source>
+        <translation type="obsolete">Σχεδίαση ορθογώνιων γραμμών</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Εφαπτομένη (Σ,Κ)</translation>
+        <translation>Εφαπτομένη (Σ,Κ)</translation>
+    </message>
+    <message>
+        <source>&amp;Tangent (P,C)</source>
+        <translation type="obsolete">&amp;Εφαπτομένη (Σ,Κ)</translation>
+    </message>
+    <message>
+        <source>Draw tangent (point, circle)</source>
+        <translation type="obsolete">Σχεδίαση εφαπτομένης (σημείο,κύκλος)</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Επέλεξε κύκλο, τόξον ή έλειψη</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
     <message>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Εφαπτομένη (Κ,Κ)</translation>
+        <translation>Εφαπτομένη (Κ,Κ)</translation>
+    </message>
+    <message>
+        <source>Tan&amp;gent (C,C)</source>
+        <translation type="obsolete">Ε&amp;φαπτομένη (Κ,Κ)</translation>
+    </message>
+    <message>
+        <source>Draw tangent (circle, circle)</source>
+        <translation type="obsolete">Σχεδίαση εφαπτομένης (κύκλος,κύκλος)</translation>
     </message>
     <message>
         <source>Select first circle or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Επέλεξε πρώτο κύκλο ή τόξο</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Select second circle or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Επέλεξε δεύτερο κύκλο ή τόξο</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawPoint</name>
     <message>
+        <source>Points</source>
+        <translation type="obsolete">Σημεία</translation>
+    </message>
+    <message>
         <source>&amp;Points</source>
-        <translation type="unfinished">&amp;Σημεία</translation>
+        <translation>&amp;Σημεία</translation>
+    </message>
+    <message>
+        <source>Draw Points</source>
+        <translation type="obsolete">Σχεδίαση Σημείων</translation>
     </message>
     <message>
         <source>Specify location</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός τοποθεσίας</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawPolyline</name>
     <message>
-        <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Draw polylines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Καθορισμός πρώτου σημείου</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6928,130 +7454,206 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Καθορισμός επόμενου σημείου ή [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Πίσω</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Καθορισμός επόμενου σημείου</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
+        <translation type="unfinished">Δεν μπορώ να κλείσω συνεχόμενες γραμμές: Οχι αρκετές δηλώσεις στοιχείων ακόμα.</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">Δεν μπορώ να αναιρέσω: Οχι αρκετές δηλώσεις στοιχείων ακόμα.</translation>
+    </message>
+    <message>
+        <source>&amp;Polyline</source>
+        <translation type="unfinished">&amp;Πολυγραμμή</translation>
+    </message>
+    <message>
+        <source>Draw polylines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Undo disallowed due a fatal bug somewhere. Sorry.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawSpline</name>
     <message>
+        <source>Spline</source>
+        <translation type="obsolete">Καμπύλη</translation>
+    </message>
+    <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Καμπύλη</translation>
+    </message>
+    <message>
+        <source>Draw splines</source>
+        <translation type="obsolete">Σχεδιασμός καμπύλων</translation>
     </message>
     <message>
         <source>Specify first control point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτου σημείου ελέγχου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός επόμενου σημείου ελέγχου ή [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός επόμενου σημείου ελέγχου</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν μπορώ να αναιρέσω: Οχι αρκετές δηλώσεις στοιχείων ακόμα.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawText</name>
     <message>
+        <source>Text</source>
+        <translation type="obsolete">Κείμενο</translation>
+    </message>
+    <message>
         <source>&amp;Text</source>
-        <translation type="unfinished">&amp;Κείμενο</translation>
+        <translation>&amp;Κείμενο</translation>
+    </message>
+    <message>
+        <source>Draw Text Entities</source>
+        <translation type="obsolete">Σχεδίαση Στοιχείων Κειμένου</translation>
     </message>
     <message>
         <source>Specify insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου εισαγωγής</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Enter text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή κειμένου:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditCopy</name>
     <message>
+        <source>Copy</source>
+        <translation type="obsolete">Αντιγραφή</translation>
+    </message>
+    <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">Α&amp;ντιγραφή</translation>
+        <translation>&amp;Αντιγραφή</translation>
+    </message>
+    <message>
+        <source>Copies entities to the clipboard</source>
+        <translation type="obsolete">Αντιγραφή στοιχείων στο clipboard</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="obsolete">Αποκοπή</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished">Απ&amp;οκοπή</translation>
+        <translation>Α&amp;ποκοπή</translation>
+    </message>
+    <message>
+        <source>Cuts entities  to the clipboard</source>
+        <translation type="obsolete">Αποκόπτει στοιχεία στο clipboard</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου αναφοράς</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditPaste</name>
     <message>
+        <source>Paste</source>
+        <translation type="obsolete">Επικόληση</translation>
+    </message>
+    <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished">Επι&amp;κόληση</translation>
+        <translation>Ε&amp;πικόληση</translation>
+    </message>
+    <message>
+        <source>Pastes the clipboard contents</source>
+        <translation type="obsolete">Επικόληση περιεχομένων του clipboard</translation>
     </message>
     <message>
         <source>Set reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου αναφοράς</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditUndo</name>
     <message>
+        <source>Undo</source>
+        <translation type="obsolete">Αναίρεση</translation>
+    </message>
+    <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished">Α&amp;ναίρεση</translation>
+        <translation>Α&amp;ναίρεση</translation>
+    </message>
+    <message>
+        <source>Undoes last action</source>
+        <translation type="obsolete">Αναιρεί την τελευταία πράξη</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="obsolete">Επαναφορά</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished">&amp;Επαναφορά</translation>
+        <translation>&amp;Επαναφορά</translation>
+    </message>
+    <message>
+        <source>Redoes last action</source>
+        <translation type="obsolete">Επαναφέρει την τελευταία αναίρεση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileNew</name>
+    <message>
+        <source>New Drawing</source>
+        <translation type="obsolete">Νέο Σχέδιο</translation>
+    </message>
+    <message>
+        <source>&amp;New</source>
+        <translation type="obsolete">&amp;Νέο</translation>
+    </message>
+    <message>
+        <source>Creates a new drawing</source>
+        <translation type="obsolete">Δημιουργία νέου σχεδίου</translation>
+    </message>
     <message>
         <source>&amp;New...</source>
         <translation type="unfinished"></translation>
@@ -7060,363 +7662,559 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionFileOpen</name>
     <message>
+        <source>Open Drawing</source>
+        <translation type="obsolete">Άνοιγμα Σχεδίου</translation>
+    </message>
+    <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished">&amp;Άνοιγμα...</translation>
+        <translation>&amp;Άνοιγμα...</translation>
+    </message>
+    <message>
+        <source>Opens an existing drawing</source>
+        <translation type="obsolete">Ανοίγει αποθηκευμένο σχέδιο</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileSave</name>
     <message>
+        <source>Save Drawing</source>
+        <translation type="obsolete">Αποθήκευση Σχεδίου</translation>
+    </message>
+    <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">Α&amp;ποθήκευση</translation>
+        <translation>&amp;Αποθήκευση</translation>
+    </message>
+    <message>
+        <source>Saves the current drawing</source>
+        <translation type="obsolete">Αποθηκεύει το τρέχων σχέδιο</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileSaveAs</name>
     <message>
+        <source>Save Drawing As</source>
+        <translation type="obsolete">Αποθήκευση Σχεδίου Ως</translation>
+    </message>
+    <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Αποθήκευση &amp;ως...</translation>
+        <translation>Απο&amp;θήκευση ως...</translation>
+    </message>
+    <message>
+        <source>Saves the current drawing under a new filename</source>
+        <translation type="obsolete">Αποθηκεύει το τρέχων σχέδιο υπό νέο όνομα</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle between two lines</source>
-        <translation type="unfinished">Γωνία μεταξύ δύο γραμμών</translation>
+        <translation>Γωνία μεταξύ δύο γραμμών</translation>
+    </message>
+    <message>
+        <source>&amp;Angle between two lines</source>
+        <translation type="obsolete">&amp;Γωνία μεταξύ δύο γραμμών</translation>
+    </message>
+    <message>
+        <source>Measures the angle between two lines</source>
+        <translation type="obsolete">Μετράει τη γωνία μεταξύ δύο γραμμών</translation>
     </message>
     <message>
         <source>Angle: %1%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Γωνία: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
-        <translation type="unfinished"></translation>
+        <translation>Οι γραμμές είναι παράλληλες</translation>
     </message>
     <message>
         <source>Specify first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτης γραμμής</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός δεύτερης γραμμής</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Πολυγωνική περιοχή</translation>
+    </message>
+    <message>
+        <source>&amp;Polygonal Area</source>
+        <translation type="obsolete">&amp;Πολυγωνική περιοχή</translation>
+    </message>
+    <message>
+        <source>Measures the area of a polygon</source>
+        <translation type="obsolete">Μετράει την περιοχή ενός πολυγώνου</translation>
     </message>
     <message>
         <source>Area: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Περιοχή:%1</translation>
     </message>
     <message>
         <source>Circumference: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Περιφέρεια:%1</translation>
     </message>
     <message>
         <source>Point: %1/%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Σημείο:%1%2</translation>
     </message>
     <message>
         <source>Specify first point of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτου σημείου του πολυγώνου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify next point of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός επόμενου σημείου του πολυγώνου</translation>
     </message>
     <message>
         <source>Terminate</source>
-        <translation type="unfinished"></translation>
+        <translation>Τερματισμός</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoDist</name>
     <message>
+        <source>Distance Point to Point</source>
+        <translation type="obsolete">Απόσταση απο Σημείο σε Σημείο</translation>
+    </message>
+    <message>
         <source>&amp;Distance Point to Point</source>
-        <translation type="unfinished">Απόσταση από &amp;Σημείο σε Σημείο</translation>
+        <translation>&amp;Απόσταση απο Σημείο σε Σημείο</translation>
+    </message>
+    <message>
+        <source>Measures the distance between two points</source>
+        <translation type="obsolete">Μετράει την απόσταση μεταξύ δύο σημείων</translation>
     </message>
     <message>
         <source>Distance: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Απόσταση: %1</translation>
     </message>
     <message>
         <source>Specify first point of distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτου σημείου απόστασης</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second point of distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός δεύτερου σημείου απόστασης</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
     <message>
+        <source>Distance Entity to Point</source>
+        <translation type="obsolete">Απόσταση απο Στοιχείο σε Σημείο</translation>
+    </message>
+    <message>
         <source>&amp;Distance Entity to Point</source>
-        <translation type="unfinished">Απόστ&amp;αση από Στοιχείο σε Σημείο</translation>
+        <translation>Α&amp;πόσταση απο Στοιχείο σε Σημείο</translation>
+    </message>
+    <message>
+        <source>Measures the distance between an entity and a point</source>
+        <translation type="obsolete">Μετράει την απόσταση μεταξύ στοιχείου και σημείου</translation>
     </message>
     <message>
         <source>Distance: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Απόσταση: %1</translation>
     </message>
     <message>
         <source>Specify entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός στοιχείου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoInside</name>
     <message>
         <source>Point inside contour</source>
-        <translation type="unfinished">Σημείο εντος περιγράμματος</translation>
+        <translation>Σημείο εντός περιγράμματος</translation>
+    </message>
+    <message>
+        <source>&amp;Point inside contour</source>
+        <translation type="obsolete">Σ&amp;ημείο εντός περιγράμματος</translation>
+    </message>
+    <message>
+        <source>Checks if a given point is inside the selected contour</source>
+        <translation type="obsolete">Ελέγχει αν ένα καθορισμένο σημείο είναι εντος του επιλεγμένου περιγράμματος</translation>
     </message>
     <message>
         <source>Point is inside selected contour.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το Σημείο είναι εντός του επιλεγμένου περιγράμματος.</translation>
     </message>
     <message>
         <source>Point is outside selected contour.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το Σημείο είναι εκτός του επιλεγμένου περιγράμματος.</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoTotalLength</name>
     <message>
+        <source>Total length of selected entities</source>
+        <translation type="obsolete">Συνολικό μήκος των επιλεγμένων στοιχείων</translation>
+    </message>
+    <message>
         <source>&amp;Total length of selected entities</source>
-        <translation type="unfinished">&amp;Συνολικό μήκος των επιλεγμένων στοιχείων</translation>
+        <translation>Συ&amp;νολικό μήκος των επιλεγμένων στοιχείων</translation>
+    </message>
+    <message>
+        <source>Measures the total length of all selected entities</source>
+        <translation type="obsolete">Μετράει το συνολικό μήκος όλων των επιλεγμένων στοιχείων</translation>
     </message>
     <message>
         <source>Total Length of selected entities: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Συνολικό μήκος των επιλεγμένων στοιχείων: %1</translation>
     </message>
     <message>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation type="unfinished"></translation>
+        <translation>Τουλάχιστον ενα επιλεγμένο στοιχείο δεν μπορεί να μετρηθεί.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation type="unfinished">Πρόσθεση Στρώματος</translation>
+        <translation>Πρόσθεση στρώμματος</translation>
+    </message>
+    <message>
+        <source>&amp;Add Layer</source>
+        <translation type="obsolete">&amp;Πρόσθεση στρώμματος</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersEdit</name>
     <message>
+        <source>Edit Layer</source>
+        <translation type="obsolete">Διόρθωση Στρώμματος</translation>
+    </message>
+    <message>
         <source>&amp;Edit Layer</source>
-        <translation type="unfinished">Διόρ&amp;θωση Στρώματος</translation>
+        <translation>&amp;Διόρθωση Στρώμματος</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersFreezeAll</name>
     <message>
+        <source>Freeze all</source>
+        <translation type="obsolete">Απόκρυψη όλων</translation>
+    </message>
+    <message>
         <source>&amp;Freeze all</source>
-        <translation type="unfinished">&amp;Απόκρυψη όλων</translation>
+        <translation>Α&amp;πόκρυψη όλων</translation>
+    </message>
+    <message>
+        <source>Freeze all layers</source>
+        <translation type="obsolete">Απόκρυψη όλων των στρωμμάτων</translation>
+    </message>
+    <message>
+        <source>Defreeze all</source>
+        <translation type="obsolete">Εμφάνιση όλων</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation type="unfinished">&amp;Εμφάνιση όλων</translation>
+        <translation>Εμ&amp;φάνιση όλων</translation>
+    </message>
+    <message>
+        <source>Defreeze all layers</source>
+        <translation type="obsolete">Εμφάνιση όλων των στρωμμάτων</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation type="unfinished">Αφαίρεση Στρώματος</translation>
+        <translation>Αφαίρεση Στρώμματος</translation>
+    </message>
+    <message>
+        <source>&amp;Remove Layer</source>
+        <translation type="obsolete">Α&amp;φαίρεση Στρώμματος</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Εναλλαγή κλειδώματος στρώμματος</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Lock</source>
+        <translation type="obsolete">Ενα&amp;λλαγή κλειδώματος</translation>
+    </message>
+    <message>
+        <source>Toggle Lock</source>
+        <translation type="obsolete">Εναλλαγή κλειδώματος</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleView</name>
     <message>
+        <source>Toggle Layer Visibility</source>
+        <translation type="obsolete">Εναλλαγή ορατότητας Στρώμματος</translation>
+    </message>
+    <message>
         <source>&amp;Toggle Layer</source>
-        <translation type="unfinished">Ενα&amp;λλαγή στρωμάτων</translation>
+        <translation>Ενα&amp;λλαγή Στρώμματος</translation>
+    </message>
+    <message>
+        <source>Toggle Layer</source>
+        <translation type="obsolete">Εναλλαγή Στρώμματος</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
         <source>Insert Library Object</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή Αντικειμένου Βιβλιοθήκης</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Insert Library Object</source>
+        <translation type="obsolete">Ει&amp;σαγωγή Αντικειμένου Βιβλιοθήκης</translation>
+    </message>
+    <message>
+        <source>Inserts an Object from the part library.</source>
+        <translation type="obsolete">Εισάγει αντικείμενα από τη βιβλιοθήκη.</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου αναφοράς</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή γωνίας:</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή συντελεστή:</translation>
+    </message>
+    <message>
+        <source>Cannot open file &apos;%1&apos;</source>
+        <translation>Αδυναμία ανοίγματος αρχείου &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLockRelativeZero</name>
     <message>
+        <source>(Un-)Lock Relative Zero</source>
+        <translation type="obsolete">(Ξε-)Κλείδωμα Σχετικού σημειου Μηδέν</translation>
+    </message>
+    <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="unfinished">(Απ-)&amp;Ασφάλιση σχετικού σημείου Μηδέν</translation>
+        <translation>(Ξε-)Κ&amp;λείδωμα Σχετικού σημειου Μηδέν</translation>
+    </message>
+    <message>
+        <source>(Un-)Lock relative Zero</source>
+        <translation type="obsolete">(Ξε-)Κλείδωμα σχετικού σημειου Μηδέν</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyAttributes</name>
     <message>
+        <source>Attributes</source>
+        <translation type="obsolete">Χαρακτηριστικά</translation>
+    </message>
+    <message>
         <source>&amp;Attributes</source>
-        <translation type="unfinished">&amp;Χαρακτηριστικά</translation>
+        <translation>&amp;Χαρακτηριστικά</translation>
+    </message>
+    <message>
+        <source>Modify Entity Attributes</source>
+        <translation type="obsolete">Τροποποίηση χαρακτηριστικών στοιχείου</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyBevel</name>
     <message>
+        <source>Bevel</source>
+        <translation type="obsolete">Κυκλικό</translation>
+    </message>
+    <message>
         <source>&amp;Bevel</source>
-        <translation type="unfinished">Λοξή &amp;Γωνία</translation>
+        <translation>Κ&amp;υκλικό</translation>
+    </message>
+    <message>
+        <source>Bevel Entities</source>
+        <translation type="obsolete">Στρογγύλεμα στοιχείων</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή πρώτου στοιχείου </translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή δεύτερου στοιχείου </translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή μήκους 1:</translation>
     </message>
     <message>
         <source>Enter length 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή μήκους 2:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyCut</name>
     <message>
-        <source>&amp;Divide</source>
-        <translation type="unfinished"></translation>
+        <source>Cut</source>
+        <translation type="obsolete">Κοπή</translation>
+    </message>
+    <message>
+        <source>&amp;Cut</source>
+        <translation type="obsolete">&amp;Κοπή</translation>
+    </message>
+    <message>
+        <source>Cut Entities</source>
+        <translation type="obsolete">Κοπή στοιχείων</translation>
     </message>
     <message>
         <source>No Entity found.</source>
+        <translation>Δέν βρέθηκε στοιχείο.</translation>
+    </message>
+    <message>
+        <source>Entity must be a line, arc or circle.</source>
+        <translation type="obsolete">Το Στοιχείο πρέπει να είναι γραμμή, τόξο ή κύκλος.</translation>
+    </message>
+    <message>
+        <source>Cutting point is invalid.</source>
+        <translation>Το σημείο κοπής δεν είναι έγκυρο.</translation>
+    </message>
+    <message>
+        <source>Cutting point is not on entity.</source>
+        <translation>Το σημείο κοπής δεν είναι σε στοιχείο.</translation>
+    </message>
+    <message>
+        <source>Specify entity to cut</source>
+        <translation>Καθορισμός στοιχείου προς κοπή</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Specify cutting point</source>
+        <translation>Καθορισμός σημείου κοπής</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Πίσω</translation>
+    </message>
+    <message>
+        <source>&amp;Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle or ellipse.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cutting point is invalid.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cutting point is not on entity.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyDelete</name>
     <message>
+        <source>Delete</source>
+        <translation type="obsolete">Διαγραφή</translation>
+    </message>
+    <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished">&amp;Διαγραφή</translation>
+        <translation>&amp;Διαγραφή</translation>
+    </message>
+    <message>
+        <source>Delete Entities</source>
+        <translation type="obsolete">Διαγραφή Στοιχείων</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
         <source>Delete Freehand</source>
-        <translation type="unfinished">Διαγραφή Χειροποίητων</translation>
+        <translation>Διαγραφή Χειροποίητης Γραμμής</translation>
+    </message>
+    <message>
+        <source>&amp;Delete Freehand</source>
+        <translation type="obsolete">Διαγραφή &amp;Χειροποίητης Γραμμής</translation>
+    </message>
+    <message>
+        <source>Specify first break point on a polyline</source>
+        <translation>Καθορισμός πρώτου σημείου κοπής σε μια πολυγραμμή</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Specify second break point on the same polyline</source>
+        <translation>Καθορισμός δεύτερου σημείου κοπής σε μια πολυγραμμή</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Τα στοιχεία δεν είναι στην ίδια πολυγραμμή.</translation>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
@@ -7428,7 +8226,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>One of the chosen entities is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Ένα απο τα επιλεγμένα στοιχεία είναι ΑΚΥΡΟ</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
@@ -7440,325 +8238,437 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>First entity is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation>Το πρώτο στοιχείο είναι ΑΚΥΡΟ</translation>
     </message>
     <message>
         <source>Second entity is NULL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Το δεύτερο στοιχείο είναι ΑΚΥΡΟ</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteQuick</name>
     <message>
+        <source>Delete selected</source>
+        <translation type="obsolete">Διαγραφή επιλεγμένων</translation>
+    </message>
+    <message>
         <source>&amp;Delete selected</source>
-        <translation type="unfinished">&amp;Διαγραφή επιλεγμένων</translation>
+        <translation>Δια&amp;γραφή επιλεγμένων</translation>
+    </message>
+    <message>
+        <source>Delete selected entities</source>
+        <translation type="obsolete">Διαγραφή επιλεγμένων στοιχείων</translation>
     </message>
     <message>
         <source>Pick entity to delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Επέλεξε στοιχείο προς διαγραφή</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyEntity</name>
     <message>
+        <source>Properties</source>
+        <translation type="obsolete">Ιδιότητες</translation>
+    </message>
+    <message>
         <source>&amp;Properties</source>
-        <translation type="unfinished">&amp;Ιδιότητες</translation>
+        <translation>Ι&amp;διότητες</translation>
+    </message>
+    <message>
+        <source>Modify Entity Properties</source>
+        <translation type="obsolete">Τροποποίηση ιδιοτήτων στοιχείου</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyExplodeText</name>
     <message>
+        <source>Explode Text</source>
+        <translation type="obsolete">Διαχωρισμός κειμένου</translation>
+    </message>
+    <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Διαχωρισμός Κειμένου σε Γράμματα</translation>
+    </message>
+    <message>
+        <source>Explodes Text Entities into single Letters</source>
+        <translation type="obsolete">Διαχωρίζει Στοιχεία Κειμένου σε μονά Γράμματα</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMirror</name>
     <message>
+        <source>Mirror</source>
+        <translation type="obsolete">Αντιστροφή</translation>
+    </message>
+    <message>
         <source>&amp;Mirror</source>
-        <translation type="unfinished">Α&amp;ντιστροφή</translation>
+        <translation>Αντι&amp;στροφή</translation>
+    </message>
+    <message>
+        <source>Mirror Entities</source>
+        <translation type="obsolete">Αντιστρέφει στοιχεία</translation>
     </message>
     <message>
         <source>Specify first point of mirror line</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτου σημείου της γραμμής αντιστροφής</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second point of mirror line</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός δεύτερου σημείου της γραμμής αντιστροφής</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMove</name>
     <message>
+        <source>Move / Copy</source>
+        <translation type="obsolete">Μετακίνηση / Αντιγραφή</translation>
+    </message>
+    <message>
         <source>&amp;Move / Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Μετακίνηση / Αντιγραφή</translation>
+    </message>
+    <message>
+        <source>Move or copy entities one or multiple times</source>
+        <translation type="obsolete">Μετακινεί ή αντιγράφει στοιχεία μία ή περισσότερες φορές</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου αναφοράς</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου προορισμού</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
+        <source>Move and Rotate</source>
+        <translation type="obsolete">Μετακίνηση και περιστροφή</translation>
+    </message>
+    <message>
         <source>M&amp;ove and Rotate</source>
-        <translation type="unfinished">Με&amp;τακίνηση και Περιστροφή</translation>
+        <translation>Με&amp;τακίνηση και περιστροφή</translation>
+    </message>
+    <message>
+        <source>Move and Rotate Entities</source>
+        <translation type="obsolete">Μετακινεί και περιστρέφει αντικείμενα</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου αναφοράς</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου προορισμού</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός γωνίας περιστροφής:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
+        <source>Rotate</source>
+        <translation type="obsolete">Περιστροφή</translation>
+    </message>
+    <message>
         <source>&amp;Rotate</source>
-        <translation type="unfinished">&amp;Περιστροφή</translation>
+        <translation>&amp;Περιστροφή</translation>
+    </message>
+    <message>
+        <source>Rotate Entities</source>
+        <translation type="obsolete">Περιστροφή στοιχείων</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου αναφοράς</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate2</name>
     <message>
+        <source>Rotate Two</source>
+        <translation type="obsolete">Περιστροφή Δύο</translation>
+    </message>
+    <message>
         <source>Rotate T&amp;wo</source>
-        <translation type="unfinished">Περιστροφή &amp;Δύο</translation>
+        <translation>Περιστροφή &amp;Δύο</translation>
+    </message>
+    <message>
+        <source>Rotate Entities around two centers</source>
+        <translation type="obsolete">Περιστρέφει αντικείμενα περι δύο κέντρων</translation>
     </message>
     <message>
         <source>Specify absolute reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός απόλυτου σημείου αναφοράς</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify relative reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σχετικού σημείου αναφοράς</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRound</name>
     <message>
+        <source>Round</source>
+        <translation type="obsolete">Στρογγύλεμα</translation>
+    </message>
+    <message>
         <source>&amp;Round</source>
-        <translation type="unfinished">Κ&amp;υκλικό</translation>
+        <translation>&amp;Στρογγύλεμα</translation>
+    </message>
+    <message>
+        <source>Round Entities</source>
+        <translation type="obsolete">Στρογγυλεύει Στοιχεία</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Specify first entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτου στοιχείου</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Specify second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός δεύτερου στοιχείου</translation>
     </message>
     <message>
         <source>Enter radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή ακτίνας:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
     <message>
+        <source>Scale</source>
+        <translation type="obsolete">Κλίμακα</translation>
+    </message>
+    <message>
         <source>&amp;Scale</source>
-        <translation type="unfinished">&amp;Κλίμακα</translation>
+        <translation>Κ&amp;λίμακα</translation>
+    </message>
+    <message>
+        <source>Scale Entities</source>
+        <translation type="obsolete">Αλλαγή μεγέθους αντικειμένων</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου αναφοράς</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyStretch</name>
     <message>
+        <source>Stretch</source>
+        <translation type="obsolete">Επέκταση</translation>
+    </message>
+    <message>
         <source>&amp;Stretch</source>
-        <translation type="unfinished">&amp;Επέκταση</translation>
+        <translation>Ε&amp;πέκταση</translation>
+    </message>
+    <message>
+        <source>Stretch Entities</source>
+        <translation type="obsolete">Επέκταση Στοιχείων</translation>
     </message>
     <message>
         <source>Specify first corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτης γωνίας</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός δεύτερης γωνίας</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου αναφοράς</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός σημείου προορισμού</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyTrim</name>
     <message>
+        <source>Trim</source>
+        <translation type="obsolete">Διευθέτηση</translation>
+    </message>
+    <message>
         <source>&amp;Trim</source>
-        <translation type="unfinished">Διευ&amp;θέτηση</translation>
+        <translation>&amp;Διευθέτηση</translation>
+    </message>
+    <message>
+        <source>Trim Entities</source>
+        <translation type="obsolete">Διευθέτηση Στοιχείων</translation>
+    </message>
+    <message>
+        <source>Trim Two</source>
+        <translation type="obsolete">Διευθέτηση Δύο</translation>
     </message>
     <message>
         <source>&amp;Trim Two</source>
-        <translation type="unfinished">&amp;Διευθέτηση Δύο</translation>
+        <translation>Διευ&amp;θέτηση Δύο</translation>
+    </message>
+    <message>
+        <source>Trim two Entities</source>
+        <translation type="obsolete">Διευθέτηση Δύο Στοιχείων</translation>
     </message>
     <message>
         <source>Select first trim entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή πρώτου στοιχείου </translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Select limiting entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή στοιχείου-όριο</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή δεύτερου στοιχείου </translation>
     </message>
     <message>
         <source>Select entity to trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή στοιχείου προς διευθέτηση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
+        <source>Lengthen</source>
+        <translation type="obsolete">Επιμήκυνση</translation>
+    </message>
+    <message>
         <source>&amp;Lengthen</source>
-        <translation type="unfinished">&amp;Επιμήκυνση</translation>
+        <translation>&amp;Επιμήκυνση</translation>
+    </message>
+    <message>
+        <source>Lengthen by a given amount</source>
+        <translation type="obsolete">Επιμήκυνση με καθορισμένο σύνολο</translation>
     </message>
     <message>
         <source>No entity found. </source>
-        <translation type="unfinished"></translation>
+        <translation>Δέν βρέθηκε στοιχείο.</translation>
     </message>
     <message>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το επιλεγμένο στοιχείο ανήκει σε Μπλόκ. Παρακαλώ διορθώστε το μπλόκ.</translation>
     </message>
     <message>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το επιλεγμένο στοιχείο δεν είναι ατομικό στοιχείο ή δεν μπορεί να διευθετηθεί.</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη έγκυρη δήλωση</translation>
     </message>
     <message>
         <source>Select entity to trim or enter distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Επέλεξε στοιχείο προς διευθέτηση ή δώσε απόσταση:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionOptionsDrawing</name>
     <message>
+        <source>Drawing</source>
+        <translation type="obsolete">Σχέδιο</translation>
+    </message>
+    <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="unfinished">Προτιμήσεις &amp;Τρέχοντος Σχεδίου</translation>
+        <translation>Προτιμήσεις &amp;Τρέχοντος Σχεδίου</translation>
+    </message>
+    <message>
+        <source>Settings for the current Drawing</source>
+        <translation type="obsolete">Ρυθμίσεις για το τρέχων Σχέδιο</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAdd</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Πίσω</translation>
+    </message>
     <message>
         <source>&amp;Add node</source>
         <translation type="unfinished"></translation>
@@ -7769,7 +8679,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Δέν βρέθηκε στοιχείο.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
@@ -7788,20 +8698,16 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
-    </message>
-    <message>
         <source>Specify adding node&apos;s point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAppend</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
     <message>
         <source>A&amp;ppend node</source>
         <translation type="unfinished"></translation>
@@ -7812,7 +8718,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Δέν βρέθηκε στοιχείο.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
@@ -7827,24 +8733,28 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
-    </message>
-    <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Καθορισμός επόμενου σημείου ή [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Πίσω</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Καθορισμός επόμενου σημείου</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Πίσω</translation>
+    </message>
     <message>
         <source>&amp;Delete node</source>
         <translation type="unfinished"></translation>
@@ -7855,7 +8765,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Δέν βρέθηκε στοιχείο.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
@@ -7874,20 +8784,20 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
-    </message>
-    <message>
         <source>Specify deleting node&apos;s point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDelBetween</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Πίσω</translation>
+    </message>
     <message>
         <source>Delete &amp;between two nodes</source>
         <translation type="unfinished"></translation>
@@ -7898,7 +8808,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Δέν βρέθηκε στοιχείο.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
@@ -7921,15 +8831,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
-    </message>
-    <message>
         <source>Specify first node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7949,7 +8851,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Δέν βρέθηκε στοιχείο.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
@@ -7976,7 +8878,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Δέν βρέθηκε στοιχείο.</translation>
     </message>
     <message>
         <source>Entity must be a line or arc.</source>
@@ -7994,6 +8896,14 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionPolylineTrim</name>
     <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Πίσω</translation>
+    </message>
+    <message>
         <source>&amp;Trim segments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8003,7 +8913,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Δέν βρέθηκε στοιχείο.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
@@ -8022,15 +8932,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
-    </message>
-    <message>
         <source>Specify first segment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8041,19 +8943,43 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
+        <source>Print Preview</source>
+        <translation type="obsolete">Προεπισκόπηση Εκτύπωσης</translation>
+    </message>
+    <message>
         <source>Print Pre&amp;view</source>
-        <translation type="unfinished">Προεπισκόπηση &amp;Εκτύπωσης</translation>
+        <translation>Προεπισκόπηση &amp;Εκτύπωσης</translation>
+    </message>
+    <message>
+        <source>Shows a preview of a print</source>
+        <translation type="obsolete">Εμφανίζει προεπισκόπηση εκτύπωσης</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectAll</name>
     <message>
+        <source>Select All</source>
+        <translation type="obsolete">Επιλογή Όλων</translation>
+    </message>
+    <message>
         <source>Select &amp;All</source>
-        <translation type="unfinished">Επι&amp;λογή όλων</translation>
+        <translation>&amp;Επιλογή Όλων</translation>
+    </message>
+    <message>
+        <source>Selects all Entities</source>
+        <translation type="obsolete">Επιλογή όλων των στοιχείων</translation>
+    </message>
+    <message>
+        <source>Deselect all</source>
+        <translation type="obsolete">Αποεπιλογή Όλων</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation type="unfinished">Αποεπι&amp;λογή όλων</translation>
+        <translation>Αποεπι&amp;λογή Όλων</translation>
+    </message>
+    <message>
+        <source>Deselects all Entities</source>
+        <translation type="obsolete">Αποεπιλέγει όλα τα στοιχεία</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
@@ -8063,559 +8989,864 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionSelectContour</name>
     <message>
+        <source>(De-)Select Contour</source>
+        <translation type="obsolete">(Απο-)Επιλογή Περιγράμματος</translation>
+    </message>
+    <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished">(Απο-)Επι&amp;λογή Περιγράμματος</translation>
+        <translation>(Απο-)Επιλο&amp;γή Περιγράμματος</translation>
+    </message>
+    <message>
+        <source>(De-)Selects connected entities</source>
+        <translation type="obsolete">(Απο-)Επιλέγει συνδεδεμένα στοιχεία</translation>
     </message>
     <message>
         <source>Entity must be an Atomic Entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το Στοιχείο πρέπει να είναι Ατομικό Στοιχείο.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectIntersected</name>
     <message>
         <source>Select Intersected Entities</source>
-        <translation type="unfinished">Επιλογή διασταυρούμενων Στοιχείων</translation>
+        <translation>Επιλογή Διασταυρούμενων Στοιχείων</translation>
+    </message>
+    <message>
+        <source>In&amp;tersected Entities</source>
+        <translation type="obsolete">&amp;Διασταυρούμενα Στοιχεία</translation>
+    </message>
+    <message>
+        <source>Selects all entities intersected by a line</source>
+        <translation type="obsolete">Επιλέγει όλα τα στοιχεία διασταυρούμενα απο μια γραμμή</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation type="unfinished">Αποεπιλογή διασταυρούμενων Στοιχείων</translation>
+        <translation>Αποεπιλογή Διασταυρούμενων Στοιχείων</translation>
+    </message>
+    <message>
+        <source>Deselect Inte&amp;rsected Entities</source>
+        <translation type="obsolete">Αποεπιλογή &amp;Διασταυρούμενων Στοιχείων</translation>
+    </message>
+    <message>
+        <source>Deselects all entities intersected by a line</source>
+        <translation type="obsolete">Αποεπιλέγει όλα τα στοιχεία διασταυρούμενα απο μια γραμμή</translation>
     </message>
     <message>
         <source>Choose first point of intersection line</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή πρώτου σημείου γραμμής διασταύρωσης</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Choose second point of intersection line</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή δεύτερου σημείου γραμμής διασταύρωσης</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectInvert</name>
     <message>
         <source>Invert Selection</source>
-        <translation type="unfinished">Αντιστροφή επιλογής</translation>
+        <translation>Αντιστροφή Επιλογής</translation>
+    </message>
+    <message>
+        <source>&amp;Invert Selection</source>
+        <translation type="obsolete">Αντι&amp;στροφή Επιλογής</translation>
+    </message>
+    <message>
+        <source>Inverts the current selection</source>
+        <translation type="obsolete">Αντιστρέφει την τρέχουσα επιλογή</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectLayer</name>
     <message>
         <source>(De-)Select Layer</source>
-        <translation type="unfinished">(Απο-)Επιλογή στρώματος</translation>
+        <translation>(Απο-)Επιλογή Στρώματος</translation>
+    </message>
+    <message>
+        <source>(De-)Selects layers</source>
+        <translation type="obsolete">(Απο-)Επιλέγει στρώματα</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectSingle</name>
     <message>
         <source>Select Entity</source>
-        <translation type="unfinished">Επιλογή Στοιχείου</translation>
+        <translation>Επέλεξε στοιχείο</translation>
+    </message>
+    <message>
+        <source>(De-)&amp;Select Entity</source>
+        <translation type="obsolete">(Απο-)&amp;Επιλογή Στοιχείου</translation>
+    </message>
+    <message>
+        <source>Selects single Entities</source>
+        <translation type="obsolete">Επιλέγει μονά Στοιχεία</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
     <message>
         <source>Select Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Πλαίσιο Επιλογής</translation>
+    </message>
+    <message>
+        <source>Select &amp;Window</source>
+        <translation type="obsolete">Π&amp;λαίσιο Επιλογής</translation>
+    </message>
+    <message>
+        <source>Selects all Entities in a given Window</source>
+        <translation type="obsolete">Επιλέγει όλα τα εντός του πλαισίου στοιχεία</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Πλαίσιο Αποεπιλογής</translation>
+    </message>
+    <message>
+        <source>Deselect &amp;Window</source>
+        <translation type="obsolete">Πλαίσιο &amp;Αποεπιλογής</translation>
+    </message>
+    <message>
+        <source>Deselects all Entities in a given Window</source>
+        <translation type="obsolete">Αποεπιλέγει όλα τα εντός του πλαισίου στοιχεία</translation>
     </message>
     <message>
         <source>Choose first edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή πρώτου άκρου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Choose second edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή δεύτερου άκρου</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSetRelativeZero</name>
     <message>
         <source>Set Relative Zero</source>
-        <translation type="unfinished">Καθορισμός σχετικού σημείου Μηδέν</translation>
+        <translation>Καθορισμός Σχετικού σημείου Μηδέν</translation>
+    </message>
+    <message>
+        <source>&amp;Set Relative Zero</source>
+        <translation type="obsolete">Καθορισμός &amp;Σχετικού σημείου Μηδέν</translation>
+    </message>
+    <message>
+        <source>Set position of the Relative Zero point</source>
+        <translation type="obsolete">Καθορίζει τη θέση του σχετικού σημείου μηδέν</translation>
     </message>
     <message>
         <source>Set relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός Σχετικού σημείου Μηδέν</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
+        <source>Intersection Manually</source>
+        <translation type="obsolete">Διασταύρωση Χειροκίνητα</translation>
+    </message>
+    <message>
         <source>I&amp;ntersection Manually</source>
-        <translation type="unfinished">Δ&amp;ιασταυρώσεις χειροκίνητα</translation>
+        <translation>&amp;Διασταύρωση Χειροκίνητα</translation>
+    </message>
+    <message>
+        <source>Snap to intersection points manually</source>
+        <translation type="obsolete">Προσκόλληση σε σημεία διασταύρωσης χειροκίνητα</translation>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή πρώτου στοιχείου </translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή δεύτερου στοιχείου </translation>
     </message>
 </context>
 <context>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
         <source>Regenerate Dimension Entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαναδημιουργία Στοιχείων Διάστασης</translation>
+    </message>
+    <message>
+        <source>&amp;Regenerate Dimension Entities</source>
+        <translation type="obsolete">&amp;Επαναδημιουργία Στοιχείων Διάστασης</translation>
+    </message>
+    <message>
+        <source>Regenerates all Dimension Entities</source>
+        <translation type="obsolete">Επαναδημιουργεί όλα τα Στοιχεία Διάστασης</translation>
     </message>
     <message>
         <source>Regenerated %1 dimension entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαναδημιουργήθηκαν %1 στοιχεία διάστασης</translation>
     </message>
     <message>
         <source>No dimension entities found</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν βρέθηκαν στοιχεία Διάστασης</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomAuto</name>
     <message>
+        <source>Auto Zoom</source>
+        <translation type="obsolete">Αυτόματη Εστίαση</translation>
+    </message>
+    <message>
         <source>&amp;Auto Zoom</source>
-        <translation type="unfinished">Α&amp;υτόματη εστίαση</translation>
+        <translation>Αυτόματη &amp;Εστίαση</translation>
+    </message>
+    <message>
+        <source>Zooms automatic</source>
+        <translation type="obsolete">Εστιάζει αυτόματα</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomIn</name>
     <message>
+        <source>Zoom in</source>
+        <translation type="obsolete">Μεγέθυνση</translation>
+    </message>
+    <message>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">Μεγέ&amp;θυνση</translation>
+        <translation>&amp;Μεγέθυνση</translation>
+    </message>
+    <message>
+        <source>Zooms in</source>
+        <translation type="obsolete">Μεγέθυνση</translation>
+    </message>
+    <message>
+        <source>Zoom out</source>
+        <translation type="obsolete">Σμίκρυνση</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">Σ&amp;μίκρυνση</translation>
+        <translation>&amp;Σμίκρυνση</translation>
+    </message>
+    <message>
+        <source>Zooms out</source>
+        <translation type="obsolete">Σμίκρυνση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomPan</name>
     <message>
+        <source>Pan Zoom</source>
+        <translation type="obsolete">Μετακίνηση Εστίασης</translation>
+    </message>
+    <message>
         <source>&amp;Pan Zoom</source>
-        <translation type="unfinished">&amp;Μετακίνηση εστίασης </translation>
+        <translation>&amp;Μετακίνηση Εστίασης</translation>
+    </message>
+    <message>
+        <source>Realtime Panning</source>
+        <translation type="obsolete">Μετακίνηση σε πραγματικό χρόνο</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomPrevious</name>
     <message>
+        <source>Previous View</source>
+        <translation type="obsolete">Προηγούμενη όψη</translation>
+    </message>
+    <message>
         <source>&amp;Previous View</source>
-        <translation type="unfinished"></translation>
+        <translation>Π&amp;ροηγούμενη όψη</translation>
+    </message>
+    <message>
+        <source>Shows previous view</source>
+        <translation type="obsolete">Εμφανίζει την προηγούμενη όψη</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomRedraw</name>
     <message>
+        <source>Redraw</source>
+        <translation type="obsolete">Επανασχεδίαση</translation>
+    </message>
+    <message>
         <source>&amp;Redraw</source>
-        <translation type="unfinished">&amp;Επανασχεδίαση</translation>
+        <translation>Ε&amp;πανασχεδίαση</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomWindow</name>
     <message>
+        <source>Window Zoom</source>
+        <translation type="obsolete">Παράθυρο Εστίασης</translation>
+    </message>
+    <message>
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished">&amp;Παράθυρο εστίασης</translation>
+        <translation>&amp;Παράθυρο Εστίασης</translation>
+    </message>
+    <message>
+        <source>Zooms in a window</source>
+        <translation type="obsolete">Εστιάζει σε παράθυρο</translation>
     </message>
     <message>
         <source>Specify first edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός πρώτου άκρου</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Καθορισμός δεύτερου άκρου</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
 </context>
 <context>
     <name>RS_Commands</name>
     <message>
-        <source>point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>po</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ln</source>
-        <translation type="unfinished"></translation>
+        <translation>Γραμμή</translation>
     </message>
     <message>
         <source>l</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>o</source>
-        <comment>offset</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>parallel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>par</source>
-        <comment>parallel</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>a</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ci</source>
-        <translation type="unfinished"></translation>
+        <comment>line</comment>
+        <translation type="obsolete">Γρ</translation>
     </message>
     <message>
         <source>rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ορθογώνιο</translation>
     </message>
     <message>
         <source>rec</source>
-        <translation type="unfinished"></translation>
+        <comment>rectangle</comment>
+        <translation type="obsolete">ορθ</translation>
     </message>
     <message>
         <source>rectang</source>
-        <translation type="unfinished"></translation>
+        <comment>rectangle</comment>
+        <translation type="obsolete">Ορθογ</translation>
     </message>
     <message>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>κείμενο</translation>
     </message>
     <message>
         <source>regen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rg</source>
-        <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>zr</source>
-        <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>zw</source>
-        <comment>zoom - window</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>za</source>
-        <comment>zoom - auto</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>zp</source>
-        <comment>zoom - pan</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>zv</source>
-        <comment>zoom - previous</comment>
-        <translation type="unfinished"></translation>
+        <translation>Επαναδημιουργία</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation type="unfinished"></translation>
+        <translation>αναίρεση</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>redo</source>
-        <translation type="unfinished"></translation>
+        <translation>ξανά</translation>
     </message>
     <message>
         <source>r</source>
-        <translation type="unfinished"></translation>
+        <comment>redo</comment>
+        <translation type="obsolete">επ</translation>
+    </message>
+    <message>
+        <source>arc</source>
+        <translation>τόξο</translation>
+    </message>
+    <message>
+        <source>a</source>
+        <comment>arc</comment>
+        <translation type="obsolete">τόξο</translation>
+    </message>
+    <message>
+        <source>angle</source>
+        <translation>γωνία</translation>
+    </message>
+    <message>
+        <source>factor</source>
+        <translation>σχέση</translation>
+    </message>
+    <message>
+        <source>columns</source>
+        <translation>στήλες</translation>
+    </message>
+    <message>
+        <source>rows</source>
+        <translation>σειρές</translation>
+    </message>
+    <message>
+        <source>columnspacing</source>
+        <translation>διάκενοστηλών</translation>
+    </message>
+    <message>
+        <source>rowspacing</source>
+        <translation>διάκενογραμμών</translation>
+    </message>
+    <message>
+        <source>ang</source>
+        <comment>angle</comment>
+        <translation>γων</translation>
+    </message>
+    <message>
+        <source>a</source>
+        <comment>angle</comment>
+        <translation>γων</translation>
+    </message>
+    <message>
+        <source>fact</source>
+        <comment>factor</comment>
+        <translation>σχέση</translation>
+    </message>
+    <message>
+        <source>f</source>
+        <comment>factor</comment>
+        <translation>σχε</translation>
+    </message>
+    <message>
+        <source>cols</source>
+        <comment>columns</comment>
+        <translation>στ</translation>
+    </message>
+    <message>
+        <source>c</source>
+        <comment>columns</comment>
+        <translation>στηλες</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>rows</comment>
+        <translation>γραμ</translation>
+    </message>
+    <message>
+        <source>columnspacing</source>
+        <comment>columnspacing for inserts</comment>
+        <translation>διάκενοστηλών</translation>
+    </message>
+    <message>
+        <source>colspacing</source>
+        <comment>columnspacing for inserts</comment>
+        <translation>διάκστηλών</translation>
+    </message>
+    <message>
+        <source>cs</source>
+        <comment>columnspacing for inserts</comment>
+        <translation>δσ</translation>
+    </message>
+    <message>
+        <source>rowspacing</source>
+        <comment>rowspacing for inserts</comment>
+        <translation>διακγρ</translation>
+    </message>
+    <message>
+        <source>rs</source>
+        <comment>rowspacing for inserts</comment>
+        <translation>δι</translation>
+    </message>
+    <message>
+        <source>center</source>
+        <translation>κέντρο</translation>
+    </message>
+    <message>
+        <source>cen</source>
+        <comment>center</comment>
+        <translation>κεντ</translation>
+    </message>
+    <message>
+        <source>c</source>
+        <comment>center</comment>
+        <translation>κε</translation>
+    </message>
+    <message>
+        <source>reversed</source>
+        <comment>reversed arc</comment>
+        <translation>αντίστροφο</translation>
+    </message>
+    <message>
+        <source>rev</source>
+        <comment>reversed arc</comment>
+        <translation>αντ</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>reversed arc</comment>
+        <translation>αα</translation>
+    </message>
+    <message>
+        <source>point</source>
+        <translation>σημείο</translation>
+    </message>
+    <message>
+        <source>po</source>
+        <comment>point</comment>
+        <translation>ση</translation>
+    </message>
+    <message>
+        <source>offset</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>o</source>
+        <comment>offset</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>parallel</source>
+        <translation>παράληλα</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <translation>μήκος</translation>
+    </message>
+    <message>
+        <source>close</source>
+        <translation>κλείσε</translation>
+    </message>
+    <message>
+        <source>number</source>
+        <translation>αριθμός</translation>
+    </message>
+    <message>
+        <source>through</source>
+        <translation>διαμέσω</translation>
+    </message>
+    <message>
+        <source>help</source>
+        <translation>βοήθεια</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <comment>help</comment>
+        <translation>?</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <comment>length</comment>
+        <translation>μήκος</translation>
+    </message>
+    <message>
+        <source>len</source>
+        <comment>length</comment>
+        <translation>μηκ</translation>
+    </message>
+    <message>
+        <source>l</source>
+        <comment>length</comment>
+        <translation>μη</translation>
+    </message>
+    <message>
+        <source>c</source>
+        <comment>close</comment>
+        <translation>κλ</translation>
+    </message>
+    <message>
+        <source>num</source>
+        <comment>number</comment>
+        <translation>αρι</translation>
+    </message>
+    <message>
+        <source>n</source>
+        <comment>number</comment>
+        <translation>α</translation>
+    </message>
+    <message>
+        <source>t</source>
+        <comment>through</comment>
+        <translation>δια</translation>
+    </message>
+    <message>
+        <source>par</source>
+        <comment>parallel</comment>
+        <translation>παρ</translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <translation>μήκος1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <translation>μήκος2</translation>
+    </message>
+    <message>
+        <source>radius</source>
+        <translation>ακτίνα</translation>
+    </message>
+    <message>
+        <source>trim</source>
+        <translation>περικοπή</translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <comment>length1</comment>
+        <translation>μήκος1</translation>
+    </message>
+    <message>
+        <source>len1</source>
+        <comment>length1</comment>
+        <translation>μηκ1</translation>
+    </message>
+    <message>
+        <source>l1</source>
+        <comment>length1</comment>
+        <translation>μ1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <comment>length2</comment>
+        <translation>μήκος2</translation>
+    </message>
+    <message>
+        <source>len2</source>
+        <comment>length2</comment>
+        <translation>μηκ2</translation>
+    </message>
+    <message>
+        <source>l2</source>
+        <comment>length2</comment>
+        <translation>μ2</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>radius</comment>
+        <translation>ακ</translation>
+    </message>
+    <message>
+        <source>t</source>
+        <comment>text</comment>
+        <translation>κει</translation>
+    </message>
+    <message>
+        <source>chord length</source>
+        <translation>μήκος χορδής</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <comment>chord length</comment>
+        <translation>μήκος</translation>
+    </message>
+    <message>
+        <source>l</source>
+        <comment>chord length</comment>
+        <translation>μηκχορδ</translation>
+    </message>
+    <message>
+        <source>Command: %1</source>
+        <translation>Εντολή: %1</translation>
+    </message>
+    <message>
+        <source>Available commands:</source>
+        <translation>Διαθέσιμες εντολές:</translation>
+    </message>
+    <message>
+        <source>ln</source>
+        <comment>line</comment>
+        <translation type="obsolete">γρ</translation>
+    </message>
+    <message>
+        <source>circle</source>
+        <translation>κύκλος</translation>
+    </message>
+    <message>
+        <source>ci</source>
+        <comment>circle</comment>
+        <translation>κυ</translation>
+    </message>
+    <message>
+        <source>rg</source>
+        <comment>redraw</comment>
+        <translation type="obsolete">σχεδ</translation>
+    </message>
+    <message>
+        <source>zr</source>
+        <comment>redraw</comment>
+        <translation type="obsolete">επσχ</translation>
+    </message>
+    <message>
+        <source>zw</source>
+        <comment>zoom - window</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>za</source>
+        <comment>zoom - auto</comment>
+        <translation>αυτμεγ</translation>
+    </message>
+    <message>
+        <source>zoom - auto</source>
+        <translation type="obsolete">αυτ-μεγ</translation>
+    </message>
+    <message>
+        <source>zp</source>
+        <comment>zoom - pan</comment>
+        <translation>μετ - εστ</translation>
+    </message>
+    <message>
+        <source>zoom - pan</source>
+        <translation type="obsolete">μετ - εστ</translation>
+    </message>
+    <message>
+        <source>li</source>
+        <comment>line</comment>
+        <translation>γρ</translation>
+    </message>
+    <message>
+        <source>re</source>
+        <comment>rectangle</comment>
+        <translation>ορθ</translation>
+    </message>
+    <message>
+        <source>rp</source>
+        <comment>regular polygon</comment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>c2</source>
+        <comment>2 point circle</comment>
+        <translation>κ2</translation>
+    </message>
+    <message>
+        <source>c3</source>
+        <comment>3 point circle</comment>
+        <translation>κ3</translation>
+    </message>
+    <message>
+        <source>ar</source>
+        <comment>arc</comment>
+        <translation>τοξ</translation>
+    </message>
+    <message>
+        <source>a3</source>
+        <comment>3 point arc</comment>
+        <translation>τοξ3</translation>
+    </message>
+    <message>
+        <source>ep</source>
+        <comment>ellipse</comment>
+        <translation>ελειψ</translation>
+    </message>
+    <message>
+        <source>tx</source>
+        <comment>text</comment>
+        <translation>κειμ</translation>
+    </message>
+    <message>
+        <source>mt</source>
+        <comment>text</comment>
+        <translation>κει</translation>
     </message>
     <message>
         <source>da</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>da</source>
-        <translation type="unfinished"></translation>
+        <translation>δσ</translation>
     </message>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dr</source>
-        <comment>dimension - linear</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dr</source>
-        <translation type="unfinished"></translation>
+        <translation>δο</translation>
     </message>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>δκ</translation>
     </message>
     <message>
-        <source>dv</source>
-        <translation type="unfinished"></translation>
+        <source>dr</source>
+        <comment>dimension - linear</comment>
+        <translation>δγ</translation>
     </message>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation type="unfinished"></translation>
+        <translation>δδ</translation>
     </message>
     <message>
-        <source>ld</source>
-        <translation type="unfinished"></translation>
+        <source>rd</source>
+        <comment>redraw</comment>
+        <translation>εσ</translation>
     </message>
     <message>
-        <source>dimregen</source>
-        <translation type="unfinished"></translation>
+        <source>zi</source>
+        <comment>zoom - in</comment>
+        <translation>μεγ</translation>
     </message>
     <message>
-        <source>tm</source>
-        <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <source>zo</source>
+        <comment>zoom - out</comment>
+        <translation>σμ</translation>
     </message>
     <message>
-        <source>tm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>xt</source>
-        <comment>modify - trim (extend)</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>xt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rm</source>
-        <comment>modify - trim</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mv</source>
-        <comment>modify - move</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mv</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ch</source>
-        <comment>modify - bevel (chamfer)</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <comment>modify - mirror</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ro</source>
-        <comment>modify - rotate</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ro</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sz</source>
-        <comment>modify - scale</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sz</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ss</source>
-        <comment>modify - stretch</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ss</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>er</source>
-        <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>er</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>oo</source>
-        <comment>modify - undo (oops)</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>oo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>uu</source>
-        <comment>modify - redo</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>uu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>xp</source>
-        <comment>modify - explode</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>xp</source>
-        <translation type="unfinished"></translation>
+        <source>pa</source>
+        <comment>zoom - pan</comment>
+        <translation type="obsolete">με</translation>
     </message>
     <message>
         <source>os</source>
         <comment>snap - none</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>os</source>
-        <translation type="unfinished"></translation>
+        <translation>ελξχ</translation>
     </message>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sg</source>
-        <translation type="unfinished"></translation>
+        <translation>ελκα</translation>
     </message>
     <message>
         <source>se</source>
         <comment>snap - end</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>se</source>
-        <translation type="unfinished"></translation>
+        <translation>ελτ</translation>
     </message>
     <message>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>si</source>
-        <translation type="unfinished"></translation>
+        <translation>ελδ</translation>
     </message>
     <message>
         <source>sn</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sn</source>
-        <translation type="unfinished"></translation>
+        <translation>ελκ</translation>
     </message>
     <message>
         <source>sm</source>
         <comment>snap - middle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sm</source>
-        <translation type="unfinished"></translation>
+        <translation>ελμ</translation>
     </message>
     <message>
         <source>sn</source>
         <comment>snap - nearest</comment>
-        <translation type="unfinished"></translation>
+        <translation>ελκο</translation>
     </message>
     <message>
         <source>np</source>
         <comment>snap - nearest point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ελκσ</translation>
     </message>
     <message>
-        <source>np</source>
+        <source>fr*</source>
+        <comment>layers - freeze all</comment>
+        <translation>απ</translation>
+    </message>
+    <message>
+        <source>th*</source>
+        <comment>layers - defreeze all</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8624,101 +9855,68 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>tn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Command: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>po</source>
-        <comment>point</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>li</source>
-        <comment>line</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>pa</source>
-        <comment>parallel</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>re</source>
-        <comment>rectangle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rp</source>
-        <comment>regular polygon</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ci</source>
-        <comment>circle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>c2</source>
-        <comment>2 point circle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>c3</source>
-        <comment>3 point circle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ar</source>
-        <comment>arc</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>a3</source>
-        <comment>3 point arc</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ep</source>
-        <comment>ellipse</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tx</source>
-        <comment>text</comment>
+        <source>ch</source>
+        <comment>modify - bevel (chamfer)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>mt</source>
-        <comment>text</comment>
+        <comment>modify - multi trim (extend)</comment>
+        <translation type="obsolete">κει</translation>
+    </message>
+    <message>
+        <source>xt</source>
+        <comment>modify - trim (extend)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>rd</source>
-        <comment>redraw</comment>
+        <source>rm</source>
+        <comment>modify - trim</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>zi</source>
-        <comment>zoom - in</comment>
+        <source>mv</source>
+        <comment>modify - move</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>zo</source>
-        <comment>zoom - out</comment>
+        <source>mi</source>
+        <comment>modify - mirror</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>fr*</source>
-        <comment>layers - freeze all</comment>
+        <source>ro</source>
+        <comment>modify - rotate</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>th*</source>
-        <comment>layers - defreeze all</comment>
+        <source>sz</source>
+        <comment>modify - scale</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ss</source>
+        <comment>modify - stretch</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>er</source>
+        <comment>modify - delete (erase)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>oo</source>
+        <comment>modify - undo (oops)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>uu</source>
+        <comment>modify - redo</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>xp</source>
+        <comment>modify - explode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8727,250 +9925,172 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>angle</source>
+        <source>dimregen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>close</source>
-        <translation type="unfinished"></translation>
+        <source>po</source>
+        <translation>ση</translation>
     </message>
     <message>
-        <source>chord length</source>
-        <translation type="unfinished"></translation>
+        <source>ln</source>
+        <translation>γρ</translation>
     </message>
     <message>
-        <source>columns</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>columnspacing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rowspacing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>through</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>trim</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ang</source>
-        <comment>angle</comment>
+        <source>l</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>a</source>
-        <comment>angle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>center</source>
-        <translation type="unfinished"></translation>
+        <source>ci</source>
+        <translation>κυ</translation>
     </message>
     <message>
-        <source>cen</source>
-        <comment>center</comment>
-        <translation type="unfinished"></translation>
+        <source>rec</source>
+        <translation>ορθ</translation>
     </message>
     <message>
-        <source>c</source>
-        <comment>center</comment>
-        <translation type="unfinished"></translation>
+        <source>rectang</source>
+        <translation>Ορθογ</translation>
     </message>
     <message>
-        <source>length</source>
-        <comment>chord length</comment>
-        <translation type="unfinished"></translation>
+        <source>rg</source>
+        <comment>zoom - redraw</comment>
+        <translation>σχεδ</translation>
     </message>
     <message>
-        <source>l</source>
-        <comment>chord length</comment>
-        <translation type="unfinished"></translation>
+        <source>zr</source>
+        <comment>zoom - redraw</comment>
+        <translation>επσχ</translation>
     </message>
     <message>
-        <source>c</source>
-        <comment>close</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cols</source>
-        <comment>columns</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>c</source>
-        <comment>columns</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>columnspacing</source>
-        <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>colspacing</source>
-        <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cs</source>
-        <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fact</source>
-        <comment>factor</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>f</source>
-        <comment>factor</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>?</source>
-        <comment>help</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length</source>
-        <comment>length</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>len</source>
-        <comment>length</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>l</source>
-        <comment>length</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length1</source>
-        <comment>length1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>len1</source>
-        <comment>length1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>l1</source>
-        <comment>length1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length2</source>
-        <comment>length2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>len2</source>
-        <comment>length2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>l2</source>
-        <comment>length2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>num</source>
-        <comment>number</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>n</source>
-        <comment>number</comment>
+        <source>zv</source>
+        <comment>zoom - previous</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>r</source>
-        <comment>radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>reversed</source>
-        <comment>reversed arc</comment>
+        <source>polyline</source>
+        <translation>πολυγραμμή</translation>
+    </message>
+    <message>
+        <source>pa</source>
+        <comment>parallel</comment>
+        <translation>με</translation>
+    </message>
+    <message>
+        <source>tm</source>
+        <comment>modify - multi trim (extend)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>rev</source>
-        <comment>reversed arc</comment>
+        <source>da</source>
+        <translation type="unfinished">δσ</translation>
+    </message>
+    <message>
+        <source>dh</source>
+        <translation type="unfinished">δο</translation>
+    </message>
+    <message>
+        <source>dr</source>
+        <translation type="unfinished">δγ</translation>
+    </message>
+    <message>
+        <source>dv</source>
+        <translation type="unfinished">δκ</translation>
+    </message>
+    <message>
+        <source>ld</source>
+        <translation type="unfinished">δδ</translation>
+    </message>
+    <message>
+        <source>tm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>r</source>
-        <comment>reversed arc</comment>
+        <source>xt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>r</source>
-        <comment>rows</comment>
+        <source>rm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>rowspacing</source>
-        <comment>rowspacing for inserts</comment>
+        <source>mv</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>rs</source>
-        <comment>rowspacing for inserts</comment>
+        <source>ch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>t</source>
-        <comment>text</comment>
+        <source>mi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>t</source>
-        <comment>through</comment>
+        <source>ro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Available commands:</source>
+        <source>sz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ss</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>er</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>oo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>uu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>xp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>os</source>
+        <translation type="unfinished">ελξχ</translation>
+    </message>
+    <message>
+        <source>sg</source>
+        <translation type="unfinished">ελκα</translation>
+    </message>
+    <message>
+        <source>se</source>
+        <translation type="unfinished">ελτ</translation>
+    </message>
+    <message>
+        <source>si</source>
+        <translation type="unfinished">ελδ</translation>
+    </message>
+    <message>
+        <source>sn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sm</source>
+        <translation type="unfinished">ελμ</translation>
+    </message>
+    <message>
+        <source>np</source>
+        <translation type="unfinished">ελκσ</translation>
+    </message>
+    <message>
+        <source>tn</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
