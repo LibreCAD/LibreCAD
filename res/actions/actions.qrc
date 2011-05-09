@@ -30,5 +30,6 @@
 <file>zoomprevious.png</file>
 <file>zoomredraw.png</file>
 <file>zoomwindow.png</file>
+<file>back.png</file>
 </qresource>
 </RCC>

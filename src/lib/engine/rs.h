@@ -163,6 +163,7 @@ public:
 		
         ActionPrintPreview,
 
+        ActionEditKillAllActions,
         ActionEditUndo,
         ActionEditRedo,
         ActionEditCut,
