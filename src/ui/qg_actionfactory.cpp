@@ -385,8 +385,14 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
 
         // Editing actions:
         //
+    case RS2::ActionEditKillAllActions:
+        action = new QAction(tr("&back"), mw);
+        action->setIcon(QIcon(":/actions/back.png"));
+        connect(action, SIGNAL(activated()),
+                obj, SLOT(slotEditKillAllActions()));
+        break;
     case RS2::ActionEditUndo:
-		action = RS_ActionEditUndo::createGUIAction(id, mw);
+        action = RS_ActionEditUndo::createGUIAction(id, mw);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotEditUndo()));
         break;
