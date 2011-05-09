@@ -217,7 +217,7 @@ void RS_ActionDefault::mousePressEvent(RS_MouseEvent* e) {
                 setStatus(Neutral);
                 RS_DIALOGFACTORY->updateSelectionWidget(
                         container->countSelected());
-				RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+                                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
             }
             break;
 			
