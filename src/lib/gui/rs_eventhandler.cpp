@@ -526,14 +526,12 @@ void RS_EventHandler::killSelectActions() {
  * Kills all running actions. Called when a window is closed.
  */
 void RS_EventHandler::killAllActions() {
-	/*
     for (int c=0; c<RS_MAXACTIONS; ++c) {
         if (currentActions[c]!=NULL) {
             currentActions[c]->finish();
         }
     }
     cleanUp();
-	*/
 }
 
 
