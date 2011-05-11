@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name></name>
     <message>
@@ -2775,27 +2777,27 @@ in a separate window</source>
         <source>Label:</source>
         <translation>Метка:</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>ø</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>°</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>±</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>¶</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>×</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>÷</source>
         <translation></translation>
     </message>
@@ -2822,27 +2824,27 @@ in a separate window</source>
         <source>Insert:</source>
         <translation>Вставить:</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>ø (Diameter)</source>
         <translation>ø (Диаметр)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>° (Degree)</source>
         <translation>° (Градус)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>± (Plus / Minus)</source>
         <translation>Плюс / минус (±)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>¶ (Pi)</source>
         <translation>Число Пи (¶)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>× (Times)</source>
         <translation>Знак умножения (×)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>÷ (Division)</source>
         <translation>Знак деления (÷)</translation>
     </message>
@@ -4320,15 +4322,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Insert Symbol</source>
         <translation>Вставить символ</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Diameter (ø)</source>
         <translation>Диаметр (ø)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Degree (°)</source>
         <translation>Градус (°)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Plus / Minus (±)</source>
         <translation>Плюс / минус (±)</translation>
     </message>
@@ -4344,35 +4346,35 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Dollar ($)</source>
         <translation>Знак доллара ($)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Copyright (©)</source>
         <translation>Copyright (©)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Registered (®)</source>
         <translation>Registered (®)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Paragraph (§)</source>
         <translation>Параграф (§)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Pi (π)</source>
         <translation>Число Пи (π)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Pound (£)</source>
         <translation>Английский фунт (£)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Yen (¥)</source>
         <translation>Японская йена (¥)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Times (×)</source>
         <translation>Знак умножения (×)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Division (÷)</source>
         <translation>Знак деления (÷)</translation>
     </message>
