@@ -24,12 +24,10 @@ echo "Generating Translations"
 lrelease librecad.pro
 mkdir %RESOURCEDIR%\qm 
 
-for %%D in (actions,cmd,lib,main,ui) do (
-	cd %TSDIR%
-	cd "%%D"
-	for /f %%F in ('dir /b *.qm') do (
-		copy %%F %RESOURCEDIR%\qm\%%F
-	)
+
+cd %TSDIR%
+for /f %%F in ('dir /b *.qm') do (
+	copy %%F %RESOURCEDIR%\qm\%%F
 )
 
 cd %PWD%

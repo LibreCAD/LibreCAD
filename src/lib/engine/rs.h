@@ -1155,6 +1155,14 @@ public:
 		RedrawAll = 0xffff
 	};
 
+        /**
+         * Text drawing direction.
+         */
+        enum TextLocaleDirection {
+            locLeftToRight,     /** Left to right **/
+            locRightToLeft      /** Right to Left **/
+        };
+
 };
 
 #endif
