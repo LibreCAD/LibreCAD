@@ -196,6 +196,7 @@ HEADERS = \
     src/lib/gui/rs_painteradapter.h \
     src/lib/gui/rs_painterqt.h \
     src/lib/gui/rs_staticgraphicview.h \
+    src/lib/information/rs_locale.h \
     src/lib/information/rs_information.h \
     src/lib/information/rs_infoarea.h \
     src/lib/modification/rs_modification.h \
@@ -272,6 +273,7 @@ SOURCES = dxflib/src/dl_dxf.cpp \
     src/lib/gui/rs_painter.cpp \
     src/lib/gui/rs_painterqt.cpp \
     src/lib/gui/rs_staticgraphicview.cpp \
+    src/lib/information/rs_locale.cpp \
     src/lib/information/rs_information.cpp \
     src/lib/information/rs_infoarea.cpp \
     src/lib/math/rs_math.cpp \
@@ -906,6 +908,25 @@ TRANSLATIONS = ts/librecad_cs.ts \
     ts/librecad_de.ts \
     ts/librecad_el.ts \
     ts/librecad_es.ts \
+    ts/librecad_es_ar.ts \
+    ts/librecad_es_bo.ts \
+    ts/librecad_es_cl.ts \
+    ts/librecad_es_co.ts \
+    ts/librecad_es_cr.ts \
+    ts/librecad_es_do.ts \
+    ts/librecad_es_ec.ts \
+    ts/librecad_es_gt.ts \
+    ts/librecad_es_hn.ts \
+    ts/librecad_es_mx.ts \
+    ts/librecad_es_ni.ts \
+    ts/librecad_es_pa.ts \
+    ts/librecad_es_pe.ts \
+    ts/librecad_es_pr.ts \
+    ts/librecad_es_py.ts \
+    ts/librecad_es_sv.ts \
+    ts/librecad_es_us.ts \
+    ts/librecad_es_uy.ts \
+    ts/librecad_es_ve.ts \
     ts/librecad_fr.ts \
     ts/librecad_hu.ts \
     ts/librecad_it.ts \
