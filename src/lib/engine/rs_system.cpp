@@ -34,6 +34,8 @@
 #include "rs_regexp.h"
 #include "rs_translator.h"
 #include "rs_fileinfo.h"
+#include "rs_locale.h"
+#include "rs.h"
 #include <QDesktopServices>
 
 RS_System* RS_System::uniqueInstance = NULL;
@@ -64,6 +66,7 @@ void RS_System::init(const RS_String& appName, const RS_String& appVersion,
     RS_DEBUG->print("RS_System::init: App dir: %s", appDir.latin1());
     initialized = true;
 
+    initAllLanguagesList();
     initLanguageList();
 }
 
@@ -88,7 +91,7 @@ void RS_System::initLanguageList() {
         RS_DEBUG->print("RS_System::initLanguageList: qm file: %s",
                         (*it).latin1());
 
-        int i1 = (*it).findRev('_');
+        int i1 = (*it).find('_');
         int i2 = (*it).find('.', i1);
         RS_String l = (*it).mid(i1+1, i2-i1-1);
 
@@ -101,6 +104,257 @@ void RS_System::initLanguageList() {
     RS_DEBUG->print("RS_System::initLanguageList: OK");
 }
 
+void RS_System::addLocale(RS_Locale *locale) {
+    allKnownLocales->append(locale);
+}
+
+#define LNG(canonical, direction, name) \
+    locale=new RS_Locale(); \
+    locale->setCanonical(canonical); \
+    locale->setDirection(direction); \
+    locale->setName(name); \
+    addLocale(locale);
+
+void RS_System::initAllLanguagesList() {
+
+    if (allKnownLocales==NULL) {
+        allKnownLocales=new QList<RS_Locale* >();
+    }
+    allKnownLocales->clear();
+    RS_Locale *locale;
+    LNG("ab"   ,RS2::locLeftToRight, "Abkhazian")
+    LNG("aa"   ,RS2::locLeftToRight, "Afar")
+    LNG("af_ZA",RS2::locLeftToRight, "Afrikaans")
+    LNG("sq_AL",RS2::locLeftToRight, "Albanian")
+    LNG("am"   ,RS2::locLeftToRight, "Amharic")
+    LNG("ar"   ,RS2::locRightToLeft, "Arabic")
+    LNG("ar_DZ",RS2::locRightToLeft, "Arabic (Algeria)")
+    LNG("ar_BH",RS2::locRightToLeft, "Arabic (Bahrain)")
+    LNG("ar_EG",RS2::locRightToLeft, "Arabic (Egypt)")
+    LNG("ar_IQ",RS2::locRightToLeft, "Arabic (Iraq)")
+    LNG("ar_JO",RS2::locRightToLeft, "Arabic (Jordan)")
+    LNG("ar_KW",RS2::locRightToLeft, "Arabic (Kuwait)")
+    LNG("ar_LB",RS2::locRightToLeft, "Arabic (Lebanon)")
+    LNG("ar_LY",RS2::locRightToLeft, "Arabic (Libya)")
+    LNG("ar_MA",RS2::locRightToLeft, "Arabic (Morocco)")
+    LNG("ar_OM",RS2::locRightToLeft, "Arabic (Oman)")
+    LNG("ar_QA",RS2::locRightToLeft, "Arabic (Qatar)")
+    LNG("ar_SA",RS2::locRightToLeft, "Arabic (Saudi Arabia)")
+    LNG("ar_SD",RS2::locRightToLeft, "Arabic (Sudan)")
+    LNG("ar_SY",RS2::locRightToLeft, "Arabic (Syria)")
+    LNG("ar_TN",RS2::locRightToLeft, "Arabic (Tunisia)")
+    LNG("ar_AE",RS2::locRightToLeft, "Arabic (Uae)")
+    LNG("ar_YE",RS2::locRightToLeft, "Arabic (Yemen)")
+    LNG("hy"   ,RS2::locLeftToRight, "Armenian")
+    LNG("as"   ,RS2::locLeftToRight, "Assamese")
+    LNG("ay"   ,RS2::locLeftToRight, "Aymara")
+    LNG("az"   ,RS2::locLeftToRight, "Azeri")
+    LNG("az"   ,RS2::locLeftToRight, "Azeri (Cyrillic)")
+    LNG("az"   ,RS2::locLeftToRight, "Azeri (Latin)")
+    LNG("ba"   ,RS2::locLeftToRight, "Bashkir")
+    LNG("eu_ES",RS2::locLeftToRight, "Basque")
+    LNG("be_BY",RS2::locLeftToRight, "Belarusian")
+    LNG("bn"   ,RS2::locLeftToRight, "Bengali")
+    LNG("dz"   ,RS2::locLeftToRight, "Bhutani")
+    LNG("bh"   ,RS2::locLeftToRight, "Bihari")
+    LNG("bi"   ,RS2::locLeftToRight, "Bislama")
+    LNG("br"   ,RS2::locLeftToRight, "Breton")
+    LNG("bg_BG",RS2::locLeftToRight, "Bulgarian")
+    LNG("my"   ,RS2::locLeftToRight, "Burmese")
+    LNG("km"   ,RS2::locLeftToRight, "Cambodian")
+    LNG("ca_ES",RS2::locLeftToRight, "Catalan")
+    LNG("zh_TW",RS2::locLeftToRight, "Chinese")
+    LNG("zh_CN",RS2::locLeftToRight, "Chinese (Simplified)")
+    LNG("zh_TW",RS2::locLeftToRight, "Chinese (Traditional)")
+    LNG("zh_HK",RS2::locLeftToRight, "Chinese (Hongkong)")
+    LNG("zh_MO",RS2::locLeftToRight, "Chinese (Macau)")
+    LNG("zh_SG",RS2::locLeftToRight, "Chinese (Singapore)")
+    LNG("zh_TW",RS2::locLeftToRight, "Chinese (Taiwan)")
+    LNG("co"   ,RS2::locLeftToRight, "Corsican")
+    LNG("hr_HR",RS2::locLeftToRight, "Croatian")
+    LNG("cs_CZ",RS2::locLeftToRight, "Czech")
+    LNG("da_DK",RS2::locLeftToRight, "Danish")
+    LNG("nl_NL",RS2::locLeftToRight, "Dutch")
+    LNG("nl_BE",RS2::locLeftToRight, "Dutch (Belgian)")
+    LNG("en_GB",RS2::locLeftToRight, "English")
+    LNG("en_GB",RS2::locLeftToRight, "English (U.K.)")
+    LNG("en_US",RS2::locLeftToRight, "English (U.S.)")
+    LNG("en_AU",RS2::locLeftToRight, "English (Australia)")
+    LNG("en_BZ",RS2::locLeftToRight, "English (Belize)")
+    LNG("en_BW",RS2::locLeftToRight, "English (Botswana)")
+    LNG("en_CA",RS2::locLeftToRight, "English (Canada)")
+    LNG("en_CB",RS2::locLeftToRight, "English (Caribbean)")
+    LNG("en_DK",RS2::locLeftToRight, "English (Denmark)")
+    LNG("en_IE",RS2::locLeftToRight, "English (Eire)")
+    LNG("en_JM",RS2::locLeftToRight, "English (Jamaica)")
+    LNG("en_NZ",RS2::locLeftToRight, "English (New Zealand)")
+    LNG("en_PH",RS2::locLeftToRight, "English (Philippines)")
+    LNG("en_ZA",RS2::locLeftToRight, "English (South Africa)")
+    LNG("en_TT",RS2::locLeftToRight, "English (Trinidad)")
+    LNG("en_ZW",RS2::locLeftToRight, "English (Zimbabwe)")
+    LNG("eo"   ,RS2::locLeftToRight, "Esperanto")
+    LNG("et_EE",RS2::locLeftToRight, "Estonian")
+    LNG("fo_FO",RS2::locLeftToRight, "Faeroese")
+    LNG("fa_IR",RS2::locLeftToRight, "Farsi")
+    LNG("fj"   ,RS2::locLeftToRight, "Fiji")
+    LNG("fi_FI",RS2::locLeftToRight, "Finnish")
+    LNG("fr_FR",RS2::locLeftToRight, "French")
+    LNG("fr_BE",RS2::locLeftToRight, "French (Belgian)")
+    LNG("fr_CA",RS2::locLeftToRight, "French (Canadian)")
+    LNG("fr_LU",RS2::locLeftToRight, "French (Luxembourg)")
+    LNG("fr_MC",RS2::locLeftToRight, "French (Monaco)")
+    LNG("fr_CH",RS2::locLeftToRight, "French (Swiss)")
+    LNG("fy"   ,RS2::locLeftToRight, "Frisian")
+    LNG("gl_ES",RS2::locLeftToRight, "Galician")
+    LNG("ka_GE",RS2::locLeftToRight, "Georgian")
+    LNG("de_DE",RS2::locLeftToRight, "German")
+    LNG("de_AT",RS2::locLeftToRight, "German (Austrian)")
+    LNG("de_BE",RS2::locLeftToRight, "German (Belgium)")
+    LNG("de_LI",RS2::locLeftToRight, "German (Liechtenstein)")
+    LNG("de_LU",RS2::locLeftToRight, "German (Luxembourg)")
+    LNG("de_CH",RS2::locLeftToRight, "German (Swiss)")
+    LNG("el_GR",RS2::locLeftToRight, "Greek")
+    LNG("kl_GL",RS2::locLeftToRight, "Greenlandic")
+    LNG("gn"   ,RS2::locLeftToRight, "Guarani")
+    LNG("gu"   ,RS2::locLeftToRight, "Gujarati")
+    LNG("ha"   ,RS2::locLeftToRight, "Hausa")
+    LNG("he_IL",RS2::locRightToLeft, "Hebrew")
+    LNG("hi_IN",RS2::locLeftToRight, "Hindi")
+    LNG("hu_HU",RS2::locLeftToRight, "Hungarian")
+    LNG("is_IS",RS2::locLeftToRight, "Icelandic")
+    LNG("id_ID",RS2::locLeftToRight, "Indonesian")
+    LNG("ia"   ,RS2::locLeftToRight, "Interlingua")
+    LNG("ie"   ,RS2::locLeftToRight, "Interlingue")
+    LNG("iu"   ,RS2::locLeftToRight, "Inuktitut")
+    LNG("ik"   ,RS2::locLeftToRight, "Inupiak")
+    LNG("ga_IE",RS2::locLeftToRight, "Irish")
+    LNG("it_IT",RS2::locLeftToRight, "Italian")
+    LNG("it_CH",RS2::locLeftToRight, "Italian (Swiss)")
+    LNG("ja_JP",RS2::locLeftToRight, "Japanese")
+    LNG("jw"   ,RS2::locLeftToRight, "Javanese")
+    LNG("kn"   ,RS2::locLeftToRight, "Kannada")
+    LNG("ks"   ,RS2::locLeftToRight, "Kashmiri")
+    LNG("ks_IN",RS2::locLeftToRight, "Kashmiri (India)")
+    LNG("kk"   ,RS2::locLeftToRight, "Kazakh")
+    LNG("kw_GB",RS2::locLeftToRight, "Kernewek")
+    LNG("rw"   ,RS2::locLeftToRight, "Kinyarwanda")
+    LNG("ky"   ,RS2::locLeftToRight, "Kirghiz")
+    LNG("rn"   ,RS2::locLeftToRight, "Kirundi")
+    LNG(""     ,RS2::locLeftToRight, "Konkani")
+    LNG("ko_KR",RS2::locLeftToRight, "Korean")
+    LNG("ku_TR",RS2::locLeftToRight, "Kurdish")
+    LNG("lo"   ,RS2::locLeftToRight, "Laothian")
+    LNG("la"   ,RS2::locLeftToRight, "Latin")
+    LNG("lv_LV",RS2::locLeftToRight, "Latvian")
+    LNG("ln"   ,RS2::locLeftToRight, "Lingala")
+    LNG("lt_LT",RS2::locLeftToRight, "Lithuanian")
+    LNG("mk_MK",RS2::locLeftToRight, "Macedonian")
+    LNG("mg"   ,RS2::locLeftToRight, "Malagasy")
+    LNG("ms_MY",RS2::locLeftToRight, "Malay")
+    LNG("ml"   ,RS2::locLeftToRight, "Malayalam")
+    LNG("ms_BN",RS2::locLeftToRight, "Malay (Brunei Darussalam)")
+    LNG("ms_MY",RS2::locLeftToRight, "Malay (Malaysia)")
+    LNG("mt_MT",RS2::locLeftToRight, "Maltese")
+    LNG(""     ,RS2::locLeftToRight, "Manipuri")
+    LNG("mi"   ,RS2::locLeftToRight, "Maori")
+    LNG("mr_IN",RS2::locLeftToRight, "Marathi")
+    LNG("mo"   ,RS2::locLeftToRight, "Moldavian")
+    LNG("mn"   ,RS2::locLeftToRight, "Mongolian")
+    LNG("na"   ,RS2::locLeftToRight, "Nauru")
+    LNG("ne_NP",RS2::locLeftToRight, "Nepali")
+    LNG("ne_IN",RS2::locLeftToRight, "Nepali (India)")
+    LNG("nb_NO",RS2::locLeftToRight, "Norwegian (Bokmal)")
+    LNG("nn_NO",RS2::locLeftToRight, "Norwegian (Nynorsk)")
+    LNG("oc"   ,RS2::locLeftToRight, "Occitan")
+    LNG("or"   ,RS2::locLeftToRight, "Oriya")
+    LNG("om"   ,RS2::locLeftToRight, "(Afan) Oromo")
+    LNG("ps"   ,RS2::locLeftToRight, "Pashto, Pushto")
+    LNG("pl_PL",RS2::locLeftToRight, "Polish")
+    LNG("pt_PT",RS2::locLeftToRight, "Portuguese")
+    LNG("pt_BR",RS2::locLeftToRight, "Portuguese (Brazilian)")
+    LNG("pa"   ,RS2::locLeftToRight, "Punjabi")
+    LNG("qu"   ,RS2::locLeftToRight, "Quechua")
+    LNG("rm"   ,RS2::locLeftToRight, "Rhaeto-Romance")
+    LNG("ro_RO",RS2::locLeftToRight, "Romanian")
+    LNG("ru_RU",RS2::locLeftToRight, "Russian")
+    LNG("ru_UA",RS2::locLeftToRight, "Russian (Ukraine)")
+    LNG("sm"   ,RS2::locLeftToRight, "Samoan")
+    LNG("sg"   ,RS2::locLeftToRight, "Sangho")
+    LNG("sa"   ,RS2::locLeftToRight, "Sanskrit")
+    LNG("gd"   ,RS2::locLeftToRight, "Scots Gaelic")
+    LNG("se_NO",RS2::locLeftToRight, "Northern Sami")
+    LNG("sr_SR",RS2::locLeftToRight, "Serbian")
+    LNG("sr_SR",RS2::locLeftToRight, "Serbian (Cyrillic)")
+    LNG("sr_SR@latin",RS2::locLeftToRight, "Serbian (Latin)")
+    LNG("sr_YU",RS2::locLeftToRight, "Serbian (Cyrillic)")
+    LNG("sr_YU@latin",RS2::locLeftToRight, "Serbian (Latin)")
+    LNG("sh"   ,RS2::locLeftToRight, "Serbo-Croatian")
+    LNG("st"   ,RS2::locLeftToRight, "Sesotho")
+    LNG("tn"   ,RS2::locLeftToRight, "Setswana")
+    LNG("sn"   ,RS2::locLeftToRight, "Shona")
+    LNG("sd"   ,RS2::locLeftToRight, "Sindhi")
+    LNG("si"   ,RS2::locLeftToRight, "Sinhalese")
+    LNG("ss"   ,RS2::locLeftToRight, "Siswati")
+    LNG("sk_SK",RS2::locLeftToRight, "Slovak")
+    LNG("sl_SI",RS2::locLeftToRight, "Slovenian")
+    LNG("so"   ,RS2::locLeftToRight, "Somali")
+    LNG("es_ES",RS2::locLeftToRight, "Spanish")
+    LNG("es_AR",RS2::locLeftToRight, "Spanish (Argentina)")
+    LNG("es_BO",RS2::locLeftToRight, "Spanish (Bolivia)")
+    LNG("es_CL",RS2::locLeftToRight, "Spanish (Chile)")
+    LNG("es_CO",RS2::locLeftToRight, "Spanish (Colombia)")
+    LNG("es_CR",RS2::locLeftToRight, "Spanish (Costa Rica)")
+    LNG("es_DO",RS2::locLeftToRight, "Spanish (Dominican republic)")
+    LNG("es_EC",RS2::locLeftToRight, "Spanish (Ecuador)")
+    LNG("es_SV",RS2::locLeftToRight, "Spanish (El Salvador)")
+    LNG("es_GT",RS2::locLeftToRight, "Spanish (Guatemala)")
+    LNG("es_HN",RS2::locLeftToRight, "Spanish (Honduras)")
+    LNG("es_MX",RS2::locLeftToRight, "Spanish (Mexican)")
+    LNG("es_ES",RS2::locLeftToRight, "Spanish (Modern)")
+    LNG("es_NI",RS2::locLeftToRight, "Spanish (Nicaragua)")
+    LNG("es_PA",RS2::locLeftToRight, "Spanish (Panama)")
+    LNG("es_PY",RS2::locLeftToRight, "Spanish (Paraguay)")
+    LNG("es_PE",RS2::locLeftToRight, "Spanish (Peru)")
+    LNG("es_PR",RS2::locLeftToRight, "Spanish (Puerto Rico)")
+    LNG("es_UY",RS2::locLeftToRight, "Spanish (Uruguay)")
+    LNG("es_US",RS2::locLeftToRight, "Spanish (U.S.)")
+    LNG("es_VE",RS2::locLeftToRight, "Spanish (Venezuela)")
+    LNG("su"   ,RS2::locLeftToRight, "Sundanese")
+    LNG("sw_KE",RS2::locLeftToRight, "Swahili")
+    LNG("sv_SE",RS2::locLeftToRight, "Swedish")
+    LNG("sv_FI",RS2::locLeftToRight, "Swedish (Finland)")
+    LNG("tl_PH",RS2::locLeftToRight, "Tagalog")
+    LNG("tg"   ,RS2::locLeftToRight, "Tajik")
+    LNG("ta"   ,RS2::locLeftToRight, "Tamil")
+    LNG("tt"   ,RS2::locLeftToRight, "Tatar")
+    LNG("te"   ,RS2::locLeftToRight, "Telugu")
+    LNG("th_TH",RS2::locLeftToRight, "Thai")
+    LNG("bo"   ,RS2::locLeftToRight, "Tibetan")
+    LNG("ti"   ,RS2::locLeftToRight, "Tigrinya")
+    LNG("to"   ,RS2::locLeftToRight, "Tonga")
+    LNG("ts"   ,RS2::locLeftToRight, "Tsonga")
+    LNG("tr_TR",RS2::locLeftToRight, "Turkish")
+    LNG("tk"   ,RS2::locLeftToRight, "Turkmen")
+    LNG("tw"   ,RS2::locLeftToRight, "Twi")
+    LNG("ug"   ,RS2::locLeftToRight, "Uighur")
+    LNG("uk_UA",RS2::locLeftToRight, "Ukrainian")
+    LNG("ur"   ,RS2::locLeftToRight, "Urdu")
+    LNG("ur_IN",RS2::locLeftToRight, "Urdu (India)")
+    LNG("ur_PK",RS2::locLeftToRight, "Urdu (Pakistan)")
+    LNG("uz"   ,RS2::locLeftToRight, "Uzbek")
+    LNG("uz"   ,RS2::locLeftToRight, "Uzbek (Cyrillic)")
+    LNG("uz"   ,RS2::locLeftToRight, "Uzbek (Latin)")
+    LNG("ca_ES@valencia",RS2::locLeftToRight, "Valencian")
+    LNG("vi_VN",RS2::locLeftToRight, "Vietnamese")
+    LNG("vo"   ,RS2::locLeftToRight, "Volapuk")
+    LNG("cy"   ,RS2::locLeftToRight, "Welsh")
+    LNG("wo"   ,RS2::locLeftToRight, "Wolof")
+    LNG("xh"   ,RS2::locLeftToRight, "Xhosa")
+    LNG("yi"   ,RS2::locLeftToRight, "Yiddish")
+    LNG("yo"   ,RS2::locLeftToRight, "Yoruba")
+    LNG("za"   ,RS2::locLeftToRight, "Zhuang")
+    LNG("zu"   ,RS2::locLeftToRight, "Zulu")
+}
 
 
 /**
@@ -109,12 +363,6 @@ void RS_System::initLanguageList() {
 void RS_System::loadTranslation(const RS_String& lang, const RS_String& langCmd) {
     static RS_Translator* tQt = NULL;
     static RS_Translator* tLibreCAD = NULL;
-    static RS_Translator* tLibreCADGuiQt = NULL;
-    static RS_Translator* tLibreCADActions = NULL;
-    static RS_Translator* tLibreCADCmd = NULL;
-    static RS_Translator* tLibreCADLib = NULL;
-    static RS_Translator* tLibreCADCam = NULL;
-    static RS_Translator* tLibreCADProf = NULL;
 
     RS_String langFile;
 
@@ -122,24 +370,12 @@ void RS_System::loadTranslation(const RS_String& lang, const RS_String& langCmd)
     RS_StringList lst = getDirectoryList("qm");
 
     RS_SETTINGS->beginGroup("/Paths");
-    lst += RS_StringList::split(";",
-                                RS_SETTINGS->readEntry("/Translations", ""));
+    lst += RS_StringList::split(";", RS_SETTINGS->readEntry("/Translations", ""));
     RS_SETTINGS->endGroup();
 
     for (RS_StringList::Iterator it = lst.begin();
             it!=lst.end();
             ++it) {
-
-        langFile = "qt_" + lang + ".qm";
-        if (tQt!=NULL) {
-            qApp->removeTranslator(tQt);
-            delete tQt;
-        }
-        tQt = new QTranslator(0);
-        if (tQt->load(langFile, (*it))) {
-            qApp->installTranslator(tQt);
-        }
-
 
         langFile = "librecad_" + lang + ".qm";
         if (tLibreCAD!=NULL) {
@@ -149,68 +385,6 @@ void RS_System::loadTranslation(const RS_String& lang, const RS_String& langCmd)
         tLibreCAD = new QTranslator(0);
         if (tLibreCAD->load(langFile, (*it))) {
             qApp->installTranslator(tLibreCAD);
-        }
-
-
-        langFile = "librecadguiqt_" + lang + ".qm";
-        if (tLibreCADGuiQt!=NULL) {
-            qApp->removeTranslator(tLibreCADGuiQt);
-            delete tLibreCADGuiQt;
-        }
-        tLibreCADGuiQt = new QTranslator(0);
-        if (tLibreCADGuiQt->load(langFile, (*it))) {
-            qApp->installTranslator(tLibreCADGuiQt);
-        }
-
-
-        langFile = "librecadactions_" + lang + ".qm";
-        if (tLibreCADActions!=NULL) {
-            qApp->removeTranslator(tLibreCADActions);
-            delete tLibreCADActions;
-        }
-        tLibreCADActions = new QTranslator(0);
-        if (tLibreCADActions->load(langFile, (*it))) {
-            qApp->installTranslator(tLibreCADActions);
-        }
-
-        langFile = "librecadcmd_" + langCmd + ".qm";
-        if (tLibreCADCmd!=NULL) {
-            qApp->removeTranslator(tLibreCADCmd);
-            delete tLibreCADCmd;
-        }
-        tLibreCADCmd = new QTranslator(0);
-        if (tLibreCADCmd->load(langFile, (*it))) {
-            qApp->installTranslator(tLibreCADCmd);
-        }
-
-        langFile = "librecadlib_" + lang + ".qm";
-        if (tLibreCADLib!=NULL) {
-            qApp->removeTranslator(tLibreCADLib);
-            delete tLibreCADLib;
-        }
-        tLibreCADLib = new QTranslator(0);
-        if (tLibreCADLib->load(langFile, (*it))) {
-            qApp->installTranslator(tLibreCADLib);
-        }
-
-        langFile = "librecadcam_" + lang + ".qm";
-        if (tLibreCADLib!=NULL) {
-            qApp->removeTranslator(tLibreCADCam);
-            delete tLibreCADCam;
-        }
-        tLibreCADCam = new QTranslator(0);
-        if (tLibreCADCam->load(langFile, (*it))) {
-            qApp->installTranslator(tLibreCADCam);
-        }
-
-        langFile = "librecadprof_" + lang + ".qm";
-        if (tLibreCADProf!=NULL) {
-            qApp->removeTranslator(tLibreCADProf);
-            delete tLibreCADProf;
-        }
-        tLibreCADProf = new QTranslator(0);
-        if (tLibreCADProf->load(langFile, (*it))) {
-            qApp->installTranslator(tLibreCADProf);
         }
     }
 }
@@ -377,432 +551,16 @@ RS_StringList RS_System::getDirectoryList(const RS_String& _subDirectory) {
 
 /**
  * Converts a language string to a symbol (e.g. Deutsch or German to 'de').
- *
- * Supported languages: http://ftp.ics.uci.edu/pub/ietf/http/related/iso639.txt
+ * Languages taken from RFC3066
  */
 RS_String RS_System::languageToSymbol(const RS_String& lang) {
     RS_String l = lang.lower();
 
-    // don't use else if.. M$ visual wannabe c++ can't handle it
-    if (l=="afar") {
-        return "aa";
-    }
-    if (l=="abkhazian") {
-        return "ab";
-    }
-    if (l=="afrikaans") {
-        return "af";
-    }
-    if (l=="amharic") {
-        return "am";
-    }
-    if (l=="arabic") {
-        return "ar";
-    }
-    if (l=="assamese") {
-        return "as";
-    }
-    if (l=="aymara") {
-        return "ay";
-    }
-    if (l=="azerbaijani") {
-        return "az";
-    }
-    if (l=="bashkir") {
-        return "ba";
-    }
-    if (l=="byelorussian") {
-        return "be";
-    }
-    if (l=="bulgarian") {
-        return "bg";
-    }
-    if (l=="bihari") {
-        return "bh";
-    }
-    if (l=="bislama") {
-        return "bi";
-    }
-    if (l=="bengali" || l=="bangla") {
-        return "bn";
-    }
-    if (l=="tibetan") {
-        return "bo";
-    }
-    if (l=="breton") {
-        return "br";
-    }
-    if (l=="catalan") {
-        return "ca";
-    }
-    if (l=="corsican") {
-        return "co";
-    }
-    if (l=="czech") {
-        return "cs";
-    }
-    if (l=="welsh") {
-        return "cy";
-    }
-    if (l=="danish") {
-        return "da";
-    }
-    if (l=="german" || l=="deutsch") {
-        return "de";
-    }
-    if (l=="bhutani") {
-        return "dz";
-    }
-    if (l=="greek") {
-        return "el";
-    }
-    if (l=="english") {
-        return "en";
-    }
-    if (l=="esperanto") {
-        return "eo";
-    }
-    if (l=="spanish") {
-        return "es";
-    }
-    if (l=="estonian") {
-        return "et";
-    }
-    if (l=="basque") {
-        return "eu";
-    }
-    if (l=="persian") {
-        return "fa";
-    }
-    if (l=="finnish") {
-        return "fi";
-    }
-    if (l=="fiji") {
-        return "fj";
-    }
-    if (l=="faroese") {
-        return "fo";
-    }
-    if (l=="french" || l=="francais") {
-        return "fr";
-    }
-    if (l=="frisian") {
-        return "fy";
-    }
-    if (l=="irish") {
-        return "ga";
-    }
-    if (l=="scots gaelic" || l=="gaelic") {
-        return "gd";
-    }
-    if (l=="galician") {
-        return "gl";
-    }
-    if (l=="guarani") {
-        return "gn";
-    }
-    if (l=="gujarati") {
-        return "gu";
-    }
-    if (l=="hausa") {
-        return "ha";
-    }
-    if (l=="hebrew") {
-        return "he";
-    }
-    if (l=="hindi") {
-        return "hi";
-    }
-    if (l=="croatian") {
-        return "hr";
-    }
-    if (l=="hungarian") {
-        return "hu";
-    }
-    if (l=="armenian") {
-        return "hy";
-    }
-    if (l=="interlingua") {
-        return "ia";
-    }
-    if (l=="indonesian") {
-        return "id";
-    }
-    if (l=="interlingue") {
-        return "ie";
-    }
-    if (l=="inupiak") {
-        return "ik";
-    }
-    if (l=="icelandic") {
-        return "is";
-    }
-    if (l=="italian") {
-        return "it";
-    }
-    if (l=="inuktitut") {
-        return "iu";
-    }
-    if (l=="japanese") {
-        return "ja";
-    }
-    if (l=="javanese") {
-        return "jw";
-    }
-    if (l=="georgian") {
-        return "ka";
-    }
-    if (l=="kazakh") {
-        return "kk";
-    }
-    if (l=="greenlandic") {
-        return "kl";
-    }
-    if (l=="cambodian") {
-        return "km";
-    }
-    if (l=="kannada") {
-        return "kn";
-    }
-    if (l=="korean") {
-        return "ko";
-    }
-    if (l=="kashmiri") {
-        return "ks";
-    }
-    if (l=="kurdish") {
-        return "ku";
-    }
-    if (l=="kirghiz") {
-        return "ky";
-    }
-    if (l=="latin") {
-        return "la";
-    }
-    if (l=="lingala") {
-        return "ln";
-    }
-    if (l=="laothian") {
-        return "lo";
-    }
-    if (l=="lithuanian") {
-        return "lt";
-    }
-    if (l=="latvian" || l=="lettish") {
-        return "lv";
-    }
-    if (l=="malagasy") {
-        return "mg";
-    }
-    if (l=="maori") {
-        return "mi";
-    }
-    if (l=="macedonian") {
-        return "mk";
-    }
-    if (l=="malayalam") {
-        return "ml";
-    }
-    if (l=="mongolian") {
-        return "mn";
-    }
-    if (l=="moldavian") {
-        return "mo";
-    }
-    if (l=="marathi") {
-        return "mr";
-    }
-    if (l=="malay") {
-        return "ms";
-    }
-    if (l=="maltese") {
-        return "mt";
-    }
-    if (l=="burmese") {
-        return "my";
-    }
-    if (l=="nauru") {
-        return "na";
-    }
-    if (l=="nepali") {
-        return "ne";
-    }
-    if (l=="dutch") {
-        return "nl";
-    }
-    if (l=="norwegian") {
-        return "no";
-    }
-    if (l=="occitan") {
-        return "oc";
-    }
-    if (l=="afan" || l=="oromo" || l=="afan oromo") {
-        return "om";
-    }
-    if (l=="oriya") {
-        return "or";
-    }
-    if (l=="punjabi") {
-        return "pa";
-    }
-    if (l=="polish") {
-        return "pl";
-    }
-    if (l=="pashto" || l=="pushto") {
-        return "ps";
-    }
-    if (l=="portuguese") {
-        return "pt";
-    }
-    if (l=="brasilian portuguese") {
-        return "pt-br";
-    }
-    if (l=="quechua") {
-        return "qu";
-    }
-    if (l=="rhaeto-romance") {
-        return "rm";
-    }
-    if (l=="kirundi") {
-        return "rn";
-    }
-    if (l=="romanian") {
-        return "ro";
-    }
-    if (l=="russian") {
-        return "ru";
-    }
-    if (l=="kinyarwanda") {
-        return "rw";
-    }
-    if (l=="sanskrit") {
-        return "sa";
-    }
-    if (l=="sindhi") {
-        return "sd";
-    }
-    if (l=="sangho") {
-        return "sg";
-    }
-    if (l=="serbo-Croatian") {
-        return "sh";
-    }
-    if (l=="sinhalese") {
-        return "si";
-    }
-    if (l=="slovak") {
-        return "sk";
-    }
-    if (l=="slovenian") {
-        return "sl";
-    }
-    if (l=="samoan") {
-        return "sm";
-    }
-    if (l=="shona") {
-        return "sn";
-    }
-    if (l=="somali") {
-        return "so";
-    }
-    if (l=="albanian") {
-        return "sq";
-    }
-    if (l=="serbian") {
-        return "sr";
-    }
-    if (l=="siswati") {
-        return "ss";
-    }
-    if (l=="sesotho") {
-        return "st";
-    }
-    if (l=="sundanese") {
-        return "su";
-    }
-    if (l=="swedish") {
-        return "sv";
-    }
-    if (l=="swahili") {
-        return "sw";
-    }
-    if (l=="tamil") {
-        return "ta";
-    }
-    if (l=="telugu") {
-        return "te";
-    }
-    if (l=="tajik") {
-        return "tg";
-    }
-    if (l=="thai") {
-        return "th";
-    }
-    if (l=="tigrinya") {
-        return "ti";
-    }
-    if (l=="turkmen") {
-        return "tk";
-    }
-    if (l=="tagalog") {
-        return "tl";
-    }
-    if (l=="setswana") {
-        return "tn";
-    }
-    if (l=="tonga") {
-        return "to";
-    }
-    if (l=="turkish") {
-        return "tr";
-    }
-    if (l=="tsonga") {
-        return "ts";
-    }
-    if (l=="tatar") {
-        return "tt";
-    }
-    if (l=="twi") {
-        return "tw";
-    }
-    if (l=="uighur") {
-        return "ug";
-    }
-    if (l=="ukrainian") {
-        return "uk";
-    }
-    if (l=="urdu") {
-        return "ur";
-    }
-    if (l=="uzbek") {
-        return "uz";
-    }
-    if (l=="vietnamese") {
-        return "vi";
-    }
-    if (l=="volapuk") {
-        return "vo";
-    }
-    if (l=="wolof") {
-        return "wo";
-    }
-    if (l=="xhosa") {
-        return "xh";
-    }
-    if (l=="yiddish") {
-        return "yi";
-    }
-    if (l=="yoruba") {
-        return "yo";
-    }
-    if (l=="zhuang") {
-        return "za";
-    }
-    if (l=="chinese") {
-        return "zh";
-    }
-    if (l=="zulu") {
-        return "zu";
+    RS_Locale *locale;
+    foreach (locale, *RS_SYSTEM->allKnownLocales) {
+        if (locale->getName().lower()==l) {
+            return locale->getCanonical();
+        }
     }
 
     return "";
@@ -817,427 +575,13 @@ RS_String RS_System::languageToSymbol(const RS_String& lang) {
 RS_String RS_System::symbolToLanguage(const RS_String& symb) {
     RS_String l = symb.lower();
 
-    if (l=="aa") {
-        return "Afar";
+    RS_Locale *locale;
+    foreach (locale, *RS_SYSTEM->allKnownLocales) {
+        QString canon=locale->getCanonical().lower();
+        if (canon==l || canon==l+"_"+l.upper() || canon.mid(0,2)==l) {
+            return locale->getName();
+        }
     }
-    if (l=="ab") {
-        return "Abkhazian";
-    }
-    if (l=="af") {
-        return "Afrikaans";
-    }
-    if (l=="am") {
-        return "Amharic";
-    }
-    if (l=="ar") {
-        return "Arabic";
-    }
-    if (l=="as") {
-        return "Assamese";
-    }
-    if (l=="ay") {
-        return "Aymara";
-    }
-    if (l=="az") {
-        return "Azerbaijani";
-    }
-    if (l=="ba") {
-        return "Bashkir";
-    }
-    if (l=="be") {
-        return "Byelorussian";
-    }
-    if (l=="bg") {
-        return "Bulgarian";
-    }
-    if (l=="bh") {
-        return "Bihari";
-    }
-    if (l=="bi") {
-        return "Bislama";
-    }
-    if (l=="bn") {
-        return "Bengali";
-    }
-    if (l=="bo") {
-        return "Tibetan";
-    }
-    if (l=="br") {
-        return "Breton";
-    }
-    if (l=="ca") {
-        return "Catalan";
-    }
-    if (l=="co") {
-        return "Corsican";
-    }
-    if (l=="cs") {
-        return "Czech";
-    }
-    if (l=="cy") {
-        return "Welsh";
-    }
-    if (l=="da") {
-        return "Danish";
-    }
-    if (l=="de") {
-        return "German";
-    }
-    if (l=="dz") {
-        return "Bhutani";
-    }
-    if (l=="el") {
-        return "Greek";
-    }
-    if (l=="en") {
-        return "English";
-    }
-    if (l=="eo") {
-        return "Esperanto";
-    }
-    if (l=="es") {
-        return "Spanish";
-    }
-    if (l=="et") {
-        return "Estonian";
-    }
-    if (l=="eu") {
-        return "Basque";
-    }
-    if (l=="fa") {
-        return "Persian";
-    }
-    if (l=="fi") {
-        return "Finnish";
-    }
-    if (l=="fj") {
-        return "Fiji";
-    }
-    if (l=="fo") {
-        return "Faroese";
-    }
-    if (l=="fr") {
-        return "French";
-    }
-    if (l=="fy") {
-        return "Frisian";
-    }
-    if (l=="ga") {
-        return "Irish";
-    }
-    if (l=="gd") {
-        return "Scots Gaelic";
-    }
-    if (l=="gl") {
-        return "Galician";
-    }
-    if (l=="gn") {
-        return "Guarani";
-    }
-    if (l=="gu") {
-        return "Gujarati";
-    }
-    if (l=="ha") {
-        return "Hausa";
-    }
-    if (l=="he") {
-        return "Hebrew";
-    }
-    if (l=="hi") {
-        return "Hindi";
-    }
-    if (l=="hr") {
-        return "Croatian";
-    }
-    if (l=="hu") {
-        return "Hungarian";
-    }
-    if (l=="hy") {
-        return "Armenian";
-    }
-    if (l=="ia") {
-        return "Interlingua";
-    }
-    if (l=="id") {
-        return "Indonesian";
-    }
-    if (l=="ie") {
-        return "Interlingue";
-    }
-    if (l=="ik") {
-        return "Inupiak";
-    }
-    if (l=="is") {
-        return "Icelandic";
-    }
-    if (l=="it") {
-        return "Italian";
-    }
-    if (l=="iu") {
-        return "Inuktitut";
-    }
-    if (l=="ja") {
-        return "Japanese";
-    }
-    if (l=="jw") {
-        return "Javanese";
-    }
-    if (l=="ka") {
-        return "Georgian";
-    }
-    if (l=="kk") {
-        return "Kazakh";
-    }
-    if (l=="kl") {
-        return "Greenlandic";
-    }
-    if (l=="km") {
-        return "Cambodian";
-    }
-    if (l=="kn") {
-        return "Kannada";
-    }
-    if (l=="ko") {
-        return "Korean";
-    }
-    if (l=="ks") {
-        return "Kashmiri";
-    }
-    if (l=="ku") {
-        return "Kurdish";
-    }
-    if (l=="ky") {
-        return "Kirghiz";
-    }
-    if (l=="la") {
-        return "Latin";
-    }
-    if (l=="ln") {
-        return "Lingala";
-    }
-    if (l=="lo") {
-        return "Laothian";
-    }
-    if (l=="lt") {
-        return "Lithuanian";
-    }
-    if (l=="lv") {
-        return "Latvian";
-    }
-    if (l=="mg") {
-        return "Malagasy";
-    }
-    if (l=="mi") {
-        return "Maori";
-    }
-    if (l=="mk") {
-        return "Macedonian";
-    }
-    if (l=="ml") {
-        return "Malayalam";
-    }
-    if (l=="mn") {
-        return "Mongolian";
-    }
-    if (l=="mo") {
-        return "Moldavian";
-    }
-    if (l=="mr") {
-        return "Marathi";
-    }
-    if (l=="ms") {
-        return "Malay";
-    }
-    if (l=="mt") {
-        return "Maltese";
-    }
-    if (l=="my") {
-        return "Burmese";
-    }
-    if (l=="na") {
-        return "Nauru";
-    }
-    if (l=="ne") {
-        return "Nepali";
-    }
-    if (l=="nl") {
-        return "Dutch";
-    }
-    if (l=="no") {
-        return "Norwegian";
-    }
-    if (l=="oc") {
-        return "Occitan";
-    }
-    if (l=="om") {
-        return "Afan Oromo";
-    }
-    if (l=="or") {
-        return "Oriya";
-    }
-    if (l=="pa") {
-        return "Punjabi";
-    }
-    if (l=="pl") {
-        return "Polish";
-    }
-    if (l=="ps") {
-        return "Pashto";
-    }
-    if (l=="pt") {
-        return "Portuguese";
-    }
-    if (l=="pt-br") {
-        return "Brasilian Portuguese";
-    }
-    if (l=="qu") {
-        return "Quechua";
-    }
-    if (l=="rm") {
-        return "Rhaeto-Romance";
-    }
-    if (l=="rn") {
-        return "Kirundi";
-    }
-    if (l=="ro") {
-        return "Romanian";
-    }
-    if (l=="ru") {
-        return "Russian";
-    }
-    if (l=="rw") {
-        return "Kinyarwanda";
-    }
-    if (l=="sa") {
-        return "Sanskrit";
-    }
-    if (l=="sd") {
-        return "Sindhi";
-    }
-    if (l=="sg") {
-        return "Sangho";
-    }
-    if (l=="sh") {
-        return "Serbo-croatian";
-    }
-    if (l=="si") {
-        return "Sinhalese";
-    }
-    if (l=="sk") {
-        return "Slovak";
-    }
-    if (l=="sl") {
-        return "Slovenian";
-    }
-    if (l=="sm") {
-        return "Samoan";
-    }
-    if (l=="sn") {
-        return "Shona";
-    }
-    if (l=="so") {
-        return "Somali";
-    }
-    if (l=="sq") {
-        return "Albanian";
-    }
-    if (l=="sr") {
-        return "Serbian";
-    }
-    if (l=="ss") {
-        return "Siswati";
-    }
-    if (l=="st") {
-        return "Sesotho";
-    }
-    if (l=="su") {
-        return "Sundanese";
-    }
-    if (l=="sv") {
-        return "Swedish";
-    }
-    if (l=="sw") {
-        return "Swahili";
-    }
-    if (l=="ta") {
-        return "Tamil";
-    }
-    if (l=="te") {
-        return "Telugu";
-    }
-    if (l=="tg") {
-        return "Tajik";
-    }
-    if (l=="th") {
-        return "Thai";
-    }
-    if (l=="ti") {
-        return "Tigrinya";
-    }
-    if (l=="tk") {
-        return "Turkmen";
-    }
-    if (l=="tl") {
-        return "Tagalog";
-    }
-    if (l=="tn") {
-        return "Setswana";
-    }
-    if (l=="to") {
-        return "Tonga";
-    }
-    if (l=="tr") {
-        return "Turkish";
-    }
-    if (l=="ts") {
-        return "Tsonga";
-    }
-    if (l=="tt") {
-        return "Tatar";
-    }
-    if (l=="tw") {
-        return "Twi";
-    }
-    if (l=="ug") {
-        return "Uighur";
-    }
-    if (l=="uk") {
-        return "Ukrainian";
-    }
-    if (l=="ur") {
-        return "Urdu";
-    }
-    if (l=="uz") {
-        return "Uzbek";
-    }
-    if (l=="vi") {
-        return "Vietnamese";
-    }
-    if (l=="vo") {
-        return "Volapuk";
-    }
-    if (l=="wo") {
-        return "Wolof";
-    }
-    if (l=="xh") {
-        return "Xhosa";
-    }
-    if (l=="yi") {
-        return "Yiddish";
-    }
-    if (l=="yo") {
-        return "Yoruba";
-    }
-    if (l=="za") {
-        return "Zhuang";
-    }
-    if (l=="zh") {
-        return "Chinese";
-    }
-    if (l=="zu") {
-        return "Zulu";
-    }
-
     return "";
 }
 
@@ -1436,6 +780,7 @@ Q3CString RS_System::localeToISO(const Q3CString& locale) {
         loc_map["de_LU"]="ISO8859-15";
         loc_map["en_IE"]="ISO8859-15";
         loc_map["es"]="ISO8859-15";
+        loc_map["es_EC"]="ISO8859-15";
         loc_map["es_ES"]="ISO8859-15";
         loc_map["eu_ES"]="ISO8859-15";
         loc_map["fi"]="ISO8859-15";
