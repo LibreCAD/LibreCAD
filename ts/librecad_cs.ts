@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name></name>
     <message>
@@ -2771,27 +2773,27 @@ v jiném okně</translation>
         <source>Label:</source>
         <translation>Značka:</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>ø</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>°</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>±</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>¶</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>×</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>÷</source>
         <translation></translation>
     </message>
@@ -2818,27 +2820,27 @@ v jiném okně</translation>
         <source>Insert:</source>
         <translation>Vložit:</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>ø (Diameter)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>° (Degree)</source>
         <translation>° (Stupeň)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>± (Plus / Minus)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>¶ (Pi)</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>× (Times)</source>
         <translation>x (Krát)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>÷ (Division)</source>
         <translation>÷ (Děleno)</translation>
     </message>
@@ -4316,15 +4318,15 @@ Toto nastavení můžete později změnit v menu Nastavení QCADu.</translation>
         <source>Insert Symbol</source>
         <translation>Vlož symbol</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Diameter (ø)</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Degree (°)</source>
         <translation>Stupeň (°)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Plus / Minus (±)</source>
         <translation></translation>
     </message>
@@ -4340,35 +4342,35 @@ Toto nastavení můžete později změnit v menu Nastavení QCADu.</translation>
         <source>Dollar ($)</source>
         <translation>Dolar ($)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Copyright (©)</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Registered (®)</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Paragraph (§)</source>
         <translation>Paragraf (§)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Pi (π)</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Pound (£)</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Yen (¥)</source>
         <translation></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Times (×)</source>
         <translation>Krát (x)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Division (÷)</source>
         <translation></translation>
     </message>

@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
@@ -1481,27 +1483,27 @@ in a separate window</source>
         <source>Label:</source>
         <translation>Etiquette :</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>ø</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>°</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>±</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>¶</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>×</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>÷</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1528,48 +1530,28 @@ in a separate window</source>
         <source>Insert:</source>
         <translation>Insère :</translation>
     </message>
-    <message>
-        <source>&#xf8; (Diameter)</source>
-        <translation type="obsolete">ø (Diamètre)</translation>
-    </message>
-    <message>
-        <source>&#xb0; (Degree)</source>
-        <translation type="obsolete">° (Degrés)</translation>
-    </message>
-    <message>
-        <source>&#xb1; (Plus / Minus)</source>
-        <translation type="obsolete">± (Plus / Moins)</translation>
-    </message>
-    <message>
-        <source>&#xd7; (Times)</source>
-        <translation type="obsolete">× (Par)</translation>
-    </message>
-    <message>
-        <source>&#xf7; (Division)</source>
-        <translation type="obsolete">÷ (Division)</translation>
-    </message>
-    <message encoding="UTF-8">
+    <message utf8="both">
         <source>ø (Diameter)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ø (Diamètre)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="both">
         <source>° (Degree)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">° (Degrés)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="both">
         <source>± (Plus / Minus)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">± (Plus / Moins)</translation>
     </message>
-    <message encoding="UTF-8">
-        <source>¶ (Pi)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
+    <message utf8="both">
         <source>× (Times)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">× (Par)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="both">
         <source>÷ (Division)</source>
+        <translation type="unfinished">÷ (Division)</translation>
+    </message>
+    <message utf8="true">
+        <source>¶ (Pi)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3022,17 +3004,17 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
         <source>Insert Symbol</source>
         <translation>Insère Symbole</translation>
     </message>
-    <message>
-        <source>Diameter (&#xf8;)</source>
-        <translation type="obsolete">Diamètre (ø)</translation>
+    <message utf8="both">
+        <source>Diameter (ø)</source>
+        <translation type="unfinished">Diamètre (ø)</translation>
     </message>
-    <message>
-        <source>Degree (&#xb0;)</source>
-        <translation type="obsolete">Degrés (°)</translation>
+    <message utf8="both">
+        <source>Degree (°)</source>
+        <translation type="unfinished">Degrés (°)</translation>
     </message>
-    <message>
-        <source>Plus / Minus (&#xb1;)</source>
-        <translation type="obsolete">Plus / Moins (±)</translation>
+    <message utf8="both">
+        <source>Plus / Minus (±)</source>
+        <translation type="unfinished">Plus / Moins (±)</translation>
     </message>
     <message>
         <source>At (@)</source>
@@ -3046,21 +3028,21 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
         <source>Dollar ($)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Paragraph (&#xa7;)</source>
-        <translation type="obsolete">Paragraphe (§)</translation>
+    <message utf8="both">
+        <source>Paragraph (§)</source>
+        <translation type="unfinished">Paragraphe (§)</translation>
     </message>
-    <message>
-        <source>Pound (&#xa3;)</source>
-        <translation type="obsolete">Livres (£)</translation>
+    <message utf8="both">
+        <source>Pound (£)</source>
+        <translation type="unfinished">Livres (£)</translation>
     </message>
-    <message>
-        <source>Times (&#xd7;)</source>
-        <translation type="obsolete">Par (×)</translation>
+    <message utf8="both">
+        <source>Times (×)</source>
+        <translation type="unfinished">Par (×)</translation>
     </message>
-    <message>
-        <source>Division (&#xf7;)</source>
-        <translation type="obsolete">Division (÷)</translation>
+    <message utf8="both">
+        <source>Division (÷)</source>
+        <translation type="unfinished">Division (÷)</translation>
     </message>
     <message>
         <source>Insert Unicode</source>
@@ -3530,48 +3512,20 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
         <source>Alt+D</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
-        <source>Diameter (ø)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
-        <source>Degree (°)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
-        <source>Plus / Minus (±)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Copyright (©)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Registered (®)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
-        <source>Paragraph (§)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Pi (π)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
-        <source>Pound (£)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Yen (¥)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
-        <source>Times (×)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
-        <source>Division (÷)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4907,7 +4861,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5580,7 +5534,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5900,7 +5854,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Specify a corner</source>
@@ -6750,7 +6704,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Enter factor:</source>
