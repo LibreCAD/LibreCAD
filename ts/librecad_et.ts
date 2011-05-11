@@ -402,6 +402,14 @@ Auto-save disabled.</source>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -935,11 +943,11 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Välju</translation>
+        <translation type="obsolete">Välju</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="obsolete">&amp;Välju</translation>
+        <translation type="unfinished">&amp;Välju</translation>
     </message>
     <message>
         <source>CTRL-G</source>
@@ -947,6 +955,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict&amp;Vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;back</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9122,6 +9134,23 @@ Määra alguspunkt või [keskpunkt]</translation>
     <message>
         <source>tn</source>
         <translation type="unfinished">dv</translation>
+    </message>
+    <message>
+        <source>kill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>b</source>
+        <comment>back</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
