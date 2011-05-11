@@ -372,6 +372,14 @@ Auto-save disabled.</source>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -645,11 +653,11 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Çık</translation>
+        <translation type="obsolete">Çık</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="obsolete">&amp;Çık</translation>
+        <translation type="unfinished">&amp;Çık</translation>
     </message>
     <message>
         <source>CTRL-G</source>
@@ -657,6 +665,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict&amp;Vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;back</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8773,6 +8785,23 @@ Do you want to replace it?</source>
     <message>
         <source>tn</source>
         <translation type="unfinished">bh</translation>
+    </message>
+    <message>
+        <source>kill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>b</source>
+        <comment>back</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
