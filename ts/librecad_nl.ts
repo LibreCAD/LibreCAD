@@ -1,6 +1,8 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
-    <name></name>
+    <name/>
     <message>
         <source>Loading..</source>
         <translation type="obsolete">Bezig met laden...</translation>
@@ -37,7 +39,7 @@
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>Be&amp;werken</translation>
+        <translation>&amp;Be&amp;werken</translation>
     </message>
     <message>
         <source>Focus on Command Line</source>
@@ -73,7 +75,7 @@
     </message>
     <message>
         <source>&amp;Ellipse</source>
-        <translation>&amp;Ellips</translation>
+        <translation type="unfinished">&amp;Ellipse</translation>
     </message>
     <message>
         <source>&amp;Draw</source>
@@ -89,11 +91,11 @@
     </message>
     <message>
         <source>&amp;Snap</source>
-        <translation>&amp;Snappen</translation>
+        <translation>&amp;Uitlijnen</translation>
     </message>
     <message>
         <source>&amp;Info</source>
-        <translation>&amp;Meten</translation>
+        <translation>&amp;Informatie</translation>
     </message>
     <message>
         <source>&amp;Layer</source>
@@ -137,7 +139,7 @@
     </message>
     <message>
         <source>&amp;Tile</source>
-        <translation>&amp;Naast elkaat</translation>
+        <translation>&amp;Naast elkaar</translation>
     </message>
     <message>
         <source>Tile &amp;Horizontally</source>
@@ -153,11 +155,11 @@
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>Bezig laatst geopend Bestand te openen...</translation>
+        <translation>Bezig laatst geopend bestand te openen...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
-        <translation>Geopend Bestand:</translation>
+        <translation>Geopend bestand:</translation>
     </message>
     <message>
         <source>Opening aborted</source>
@@ -274,8 +276,8 @@ Datum: %1</translation>
         <translation>Comando Regel</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Blok &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Blok '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -356,12 +358,12 @@ U kunt nu uw werk bewaren.</translation>
         <translation>&amp;Spline</translation>
     </message>
     <message>
-        <source>Running script &apos;%1&apos;</source>
+        <source>Running script '%1'</source>
         <translation>Huidige script %1</translation>
     </message>
     <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation>Blok &apos;%1&apos; wordt toegevoegd</translation>
+        <source>Inserting block '%1'</source>
+        <translation>Blok '%1' wordt toegevoegd</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -369,38 +371,38 @@ U kunt nu uw werk bewaren.</translation>
     </message>
     <message>
         <source>CTRL+M</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto-saved drawing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>SVN Revision: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
-        <translation type="unfinished"></translation>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Plugins</source>
@@ -1912,11 +1914,11 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>CTRL-G</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Restrict&amp;Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;back</source>
@@ -1991,8 +1993,8 @@ Auto-save disabled.</source>
         <translation>Blok aan het herbenoemen</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Kon blok niet benoemen. Er bestaat al een blok genaamd &quot;%1&quot;.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Kon blok niet benoemen. Er bestaat al een blok genaamd "%1".</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -2316,48 +2318,48 @@ in een separate Venster</translation>
         <translation>Hoofd</translation>
     </message>
     <message>
-        <source>Show menu &quot;Lines&quot;</source>
-        <translation>Toon menu &quot;Lijnen&quot;</translation>
+        <source>Show menu "Lines"</source>
+        <translation>Toon menu "Lijnen"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Arcs&quot;</source>
-        <translation>Toon menu &quot;Bogen&quot;</translation>
+        <source>Show menu "Arcs"</source>
+        <translation>Toon menu "Bogen"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Circles&quot;</source>
-        <translation>Toon menu &quot;Cirkels&quot;</translation>
+        <source>Show menu "Circles"</source>
+        <translation>Toon menu "Cirkels"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Points&quot;</source>
-        <translation type="obsolete">Toon menu &quot;Punten&quot;</translation>
+        <source>Show menu "Points"</source>
+        <translation type="obsolete">Toon menu "Punten"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Measure&quot;</source>
-        <translation>Toon menu &quot;Meten&quot;</translation>
+        <source>Show menu "Measure"</source>
+        <translation>Toon menu "Meten"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Ellipses&quot;</source>
-        <translation>Toon menu &quot;Ellipsen&quot;</translation>
+        <source>Show menu "Ellipses"</source>
+        <translation>Toon menu "Ellipsen"</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
         <translation>Arceringen / Inkleuringen</translation>
     </message>
     <message>
-        <source>Show menu &quot;Edit&quot;</source>
-        <translation>Toon menu &quot;Bewerken&quot;</translation>
+        <source>Show menu "Edit"</source>
+        <translation>Toon menu "Bewerken"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Dimensions&quot;</source>
-        <translation>Toon menu &quot;Bematen&quot;</translation>
+        <source>Show menu "Dimensions"</source>
+        <translation>Toon menu "Bematen"</translation>
     </message>
     <message>
         <source>Texts</source>
         <translation>Tekst</translation>
     </message>
     <message>
-        <source>Show menu &quot;Select&quot;</source>
-        <translation>Toon menu &quot;Selecteer&quot;</translation>
+        <source>Show menu "Select"</source>
+        <translation>Toon menu "Selecteer"</translation>
     </message>
     <message>
         <source>Create Block</source>
@@ -2767,33 +2769,33 @@ in een separate Venster</translation>
         <source>Label:</source>
         <translation>Label:</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>ø</source>
         <translation>ø</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>°</source>
         <translation>°</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>±</source>
         <translation>±</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>¶</source>
         <translation>¶</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>×</source>
         <translation>×</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>÷</source>
         <translation>÷</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2814,27 +2816,27 @@ in een separate Venster</translation>
         <source>Insert:</source>
         <translation>Invoegen:</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>ø (Diameter)</source>
         <translation>ø (Diameter)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>° (Degree)</source>
         <translation>° (Graden)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>± (Plus / Minus)</source>
         <translation>± (Plus / Minus)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>¶ (Pi)</source>
         <translation>¶ (Pi)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>× (Times)</source>
         <translation>x (Vermenigvuldigen)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>÷ (Division)</source>
         <translation>÷ (Delen)</translation>
     </message>
@@ -3143,12 +3145,12 @@ in een separate Venster</translation>
         <translation>Welcom</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcom by QCad&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Welcom by QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 U kunt nu de eenheid kiezen voor nieuwe tekeningen en uw voorkeurstaal &lt;br&gt;
@@ -3317,7 +3319,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3368,7 +3370,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3419,11 +3421,11 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3517,7 +3519,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <translation>Graden</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Te meten eenheid</translation>
     </message>
     <message>
@@ -3525,8 +3527,8 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <translation>Opties</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Voor de lengte formaten &apos;Werktuigbouw&apos; en &apos;Bouwkunde&apos; moet de eenheid naar Inch worden gezet.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>Voor de lengte formaten 'Werktuigbouw' en 'Bouwkunde' moet de eenheid naar Inch worden gezet.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -3937,34 +3939,34 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Program Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Time between automatc saving of thedocument in minutes.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto save time:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>Drawing Variables</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Variable</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Code</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -3976,7 +3978,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Esc</source>
@@ -4066,7 +4068,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4117,7 +4119,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4168,7 +4170,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4312,15 +4314,15 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <source>Insert Symbol</source>
         <translation>Voeg Symbool in</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Diameter (ø)</source>
         <translation>Diameter (ø)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Degree (°)</source>
         <translation>Graden (°)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Plus / Minus (±)</source>
         <translation>Plus / Minus (±)</translation>
     </message>
@@ -4336,35 +4338,35 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <source>Dollar ($)</source>
         <translation>Dollar ($)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Copyright (©)</source>
         <translation>Copyright (©)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Registered (®)</source>
         <translation>Registered (®)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Paragraph (§)</source>
         <translation>Paragraaf (§)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Pi (π)</source>
         <translation>Pi (π)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Pound (£)</source>
         <translation>Pond (£)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Yen (¥)</source>
         <translation>Yen (¥)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Times (×)</source>
         <translation>Vermenigvuldigen (×)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Division (÷)</source>
         <translation>Delen (÷)</translation>
     </message>
@@ -4877,7 +4879,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>again Still No Text supplied.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5483,7 +5485,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5525,11 +5527,11 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Angle</source>
@@ -5818,12 +5820,12 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <translation>Wis Laag</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation>Laag &quot;%1&quot; en alle elementen daarop worden verwijderd.</translation>
+        <source>Layer "%1" and all entities on it will be removed.</source>
+        <translation>Laag "%1" en alle elementen daarop worden verwijderd.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Laag &quot;%1&quot; kan niet worden verwijderd.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>Laag "%1" kan niet worden verwijderd.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -5834,16 +5836,16 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <translation>Wis Blok</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Blok &quot;%1&quot; en alle elementen daarop worden verwijderd.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>Blok "%1" en alle elementen daarop worden verwijderd.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Laag Eigenschappen</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>De Laag met naam &quot;%1&quot; bestaat. Kies een andere naam.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>De Laag met naam "%1" bestaat. Kies een andere naam.</translation>
     </message>
 </context>
 <context>
@@ -6184,8 +6186,8 @@ Wilt u het vervangen?</translation>
         <translation>&amp;Plaats Blok</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -6865,8 +6867,8 @@ Wilt u het vervangen?</translation>
         <translation type="obsolete">Voeg Afbeelding (Bitmap) in</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -7205,8 +7207,8 @@ Wilt u het vervangen?</translation>
         <translation type="obsolete">Teken veelhoek met center en hoekpunt</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -7498,15 +7500,15 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Undo disallowed due a fatal bug somewhere. Sorry.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7680,7 +7682,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;New...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8059,12 +8061,12 @@ Wilt u het vervangen?</translation>
         <translation type="obsolete">Voegt een Object uit de Onderdeel Bibliotheek in.</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Kan bestand &apos;%1&apos; niet openen</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Kan bestand '%1' niet openen</translation>
     </message>
 </context>
 <context>
@@ -8196,11 +8198,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Entity must be a line, arc, circle or ellipse.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8715,11 +8717,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Add node</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Add polyline&apos;s node</source>
-        <translation type="unfinished"></translation>
+        <source>Add polyline's node</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -8727,23 +8729,23 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="unfinished"></translation>
+        <source>Specify adding node's point</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8754,11 +8756,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>A&amp;ppend node</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
-        <translation type="unfinished"></translation>
+        <source>Append polyline's node</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -8766,19 +8768,19 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Back</source>
@@ -8786,7 +8788,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8801,11 +8803,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Delete node</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
-        <translation type="unfinished"></translation>
+        <source>Delete polyline's node</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -8813,23 +8815,23 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="unfinished"></translation>
+        <source>Specify deleting node's point</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8844,7 +8846,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Delete &amp;between two nodes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Delete between two nodes</source>
@@ -8856,42 +8858,42 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Specify first node</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Specify second node</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -8899,26 +8901,26 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Choose the original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -8926,15 +8928,15 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Entity must be a line or arc.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8949,11 +8951,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Trim segments</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Trim polyline&apos;s segments</source>
-        <translation type="unfinished"></translation>
+        <source>Trim polyline's segments</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -8961,27 +8963,27 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Specifying point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No Segment found on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Specify polyline to trim</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Specify first segment</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Specify second segment</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9027,7 +9029,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9707,7 +9709,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation>Beschikbare commando&apos;s:</translation>
+        <translation>Beschikbare commando's:</translation>
     </message>
     <message>
         <source>ln</source>
@@ -10135,7 +10137,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>sn</source>
-        <translation type="unfinished"></translation>
+        <translation>sn</translation>
     </message>
     <message>
         <source>sm</source>
