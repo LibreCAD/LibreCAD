@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name></name>
     <message>
@@ -3025,27 +3027,27 @@ Fenster editieren</translation>
         <source>Label:</source>
         <translation>Text:</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>ø</source>
         <translation>ø</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>°</source>
         <translation>°</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>±</source>
         <translation>±</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>¶</source>
         <translation>¶</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>×</source>
         <translation>×</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>÷</source>
         <translation>÷</translation>
     </message>
@@ -3072,27 +3074,27 @@ Fenster editieren</translation>
         <source>Insert:</source>
         <translation>Einfügen:</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>ø (Diameter)</source>
         <translation>ø (Durchmesser)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>° (Degree)</source>
         <translation>° (Grad)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>± (Plus / Minus)</source>
         <translation>± (Plus / Minus)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>¶ (Pi)</source>
         <translation>¶ (Pi)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>× (Times)</source>
         <translation>× (Mal)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>÷ (Division)</source>
         <translation>÷ (Division)</translation>
     </message>
@@ -4406,7 +4408,7 @@ Sie können diese Einstellungen auch später im Optionen Dialog von QCad ändern
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4414,7 +4416,7 @@ Sie können diese Einstellungen auch später im Optionen Dialog von QCad ändern
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Esc</translation>
     </message>
 </context>
 <context>
@@ -4862,15 +4864,15 @@ Sie können diese Einstellungen auch später im Optionen Dialog von QCad ändern
         <source>Insert Symbol</source>
         <translation>Symbol einfügen</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Diameter (ø)</source>
         <translation>Durchmesser (ø)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Degree (°)</source>
         <translation>Grad (°)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Plus / Minus (±)</source>
         <translation>Plus / Minus (±)</translation>
     </message>
@@ -4886,35 +4888,35 @@ Sie können diese Einstellungen auch später im Optionen Dialog von QCad ändern
         <source>Dollar ($)</source>
         <translation>Dollar ($)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Copyright (©)</source>
         <translation>Copyright (©)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Registered (®)</source>
         <translation>Registriert (®)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Paragraph (§)</source>
         <translation>Paragraph (§)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Pi (π)</source>
         <translation>Pi (π)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Pound (£)</source>
         <translation>Pfund (£)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Yen (¥)</source>
         <translation>Yen (¥)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Times (×)</source>
         <translation>Mal (×)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Division (÷)</source>
         <translation>Division (÷)</translation>
     </message>
