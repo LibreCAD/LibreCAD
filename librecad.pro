@@ -935,6 +935,7 @@ TRANSLATIONS = ts/librecad_cs.ts \
     ts/librecad_fr.ts \
     ts/librecad_hu.ts \
     ts/librecad_it.ts \
+    ts/librecad_ja.ts \
     ts/librecad_nl.ts \
     ts/librecad_no.ts \
     ts/librecad_pa.ts \
@@ -943,8 +944,8 @@ TRANSLATIONS = ts/librecad_cs.ts \
     ts/librecad_ru.ts \
     ts/librecad_sk.ts \
     ts/librecad_tr.ts \
-    ts/librecad_ja.ts
-
+    ts/librecad_uk.ts \
+    ts/librecad_zh_tw.ts
 
 # Include any custom.pro files for personal/special builds
 exists( custom.pro ):include( custom.pro )
