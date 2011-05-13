@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name></name>
     <message>
@@ -1397,7 +1399,7 @@ i et nyt vindue</translation>
     </message>
     <message>
         <source>Show menu &quot;Edit&quot;</source>
-        <translation>Vis menu &quot;Rediger&quot;<byte value="x9"/></translation>
+        <translation>Vis menu &quot;Rediger&quot;	</translation>
     </message>
     <message>
         <source>Show menu &quot;Dimensions&quot;</source>
@@ -1815,27 +1817,27 @@ i et nyt vindue</translation>
         <source>Label:</source>
         <translation>Etiket:</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>ø</source>
         <translation>ø</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>°</source>
         <translation>°</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>±</source>
         <translation>±</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>¶</source>
         <translation>¶</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>×</source>
         <translation>×</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>÷</source>
         <translation>÷</translation>
     </message>
@@ -1862,27 +1864,27 @@ i et nyt vindue</translation>
         <source>Insert:</source>
         <translation>Indsæt:</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>ø (Diameter)</source>
         <translation>ø (Diameter)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>° (Degree)</source>
         <translation>° (Grader)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>± (Plus / Minus)</source>
         <translation>± (Plus / Minus)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>¶ (Pi)</source>
         <translation>¶ (Pi)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>× (Times)</source>
         <translation>× (Gange)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>÷ (Division)</source>
         <translation>÷ (Division)</translation>
     </message>
@@ -3344,15 +3346,15 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
         <source>Insert Symbol</source>
         <translation>Insæt symbol</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Diameter (ø)</source>
         <translation>Diameter (ø)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Degree (°)</source>
         <translation>Grader (°)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Plus / Minus (±)</source>
         <translation>Plus / Minus (±)</translation>
     </message>
@@ -3368,35 +3370,35 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
         <source>Dollar ($)</source>
         <translation>Dollar ($)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Copyright (©)</source>
         <translation>Copyright (©)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Registered (®)</source>
         <translation>Registreret (®)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Paragraph (§)</source>
         <translation>Paragraf (§)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Pi (π)</source>
         <translation>Pi (π)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Pound (£)</source>
         <translation>Pund (£)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Yen (¥)</source>
         <translation>Yen (¥)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Times (×)</source>
         <translation>Gange (×)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <source>Division (÷)</source>
         <translation>Division (÷)</translation>
     </message>
