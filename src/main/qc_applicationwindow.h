@@ -173,16 +173,8 @@ public slots:
     void slotViewDraft(bool toggle);
     /** toggle the statusbar */
     void slotViewStatusBar(bool toggle);
-    /** toggle the layerlist */
-    //void slotViewLayerList(bool toggle);
-    /** toggle the blocklist */
-    //void slotViewBlockList(bool toggle);
-    /** toggle the command line */
-    //void slotViewCommandLine(bool toggle);
-    /** toggle the option toolbar */
-    //void slotViewOptionToolbar(bool toggle);
 
-    //void slotBlocksEdit();
+    // void slotBlocksEdit();
     void slotOptionsGeneral();
 	
     void slotScriptOpenIDE();
