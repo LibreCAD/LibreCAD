@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2011 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -45,7 +45,7 @@ RS_Commands::RS_Commands() {
 	mainCommands.insert(tr("point"), new RS2::ActionType(RS2::ActionDrawPoint));
 	shortCommands.insert(tr("po"), new RS2::ActionType(RS2::ActionDrawPoint));
 	
-	mainCommands.insert(tr("line"), new RS2::ActionType(RS2::ActionDrawLine));
+        mainCommands.insert(tr("line"), new RS2::ActionType(RS2::ActionDrawLine));
 	shortCommands.insert(tr("ln"), new RS2::ActionType(RS2::ActionDrawLine));
 	shortCommands.insert(tr("l"), new RS2::ActionType(RS2::ActionDrawLine));
 	
@@ -84,14 +84,102 @@ RS_Commands::RS_Commands() {
 	mainCommands.insert(tr("zv", "zoom - previous"), new RS2::ActionType(RS2::ActionZoomPrevious));
 
 	// edit:
-	mainCommands.insert(tr("undo"), new RS2::ActionType(RS2::ActionEditUndo));
+        mainCommands.insert(tr("kill"), new RS2::ActionType(RS2::ActionEditKillAllActions));
+        shortCommands.insert(tr("k"), new RS2::ActionType(RS2::ActionEditKillAllActions));
+
+        mainCommands.insert(tr("undo"), new RS2::ActionType(RS2::ActionEditUndo));
 	shortCommands.insert(tr("u", "undo"), new RS2::ActionType(RS2::ActionEditUndo));
 	
-	mainCommands.insert(tr("redo"), new RS2::ActionType(RS2::ActionEditRedo));
-	shortCommands.insert(tr("r"), new RS2::ActionType(RS2::ActionEditRedo));
-	
+        mainCommands.insert(tr("redo"), new RS2::ActionType(RS2::ActionEditRedo));
+        shortCommands.insert(tr("r"), new RS2::ActionType(RS2::ActionEditRedo));
+
+    // dimensions:
+    mainCommands.insert(tr("da", "dimension - aligned"), new RS2::ActionType(RS2::ActionDimAligned));
+    shortCommands.insert(tr("da"), new RS2::ActionType(RS2::ActionDimAligned));
+    
+    mainCommands.insert(tr("dh", "dimension - horizontal"), new RS2::ActionType(RS2::ActionDimLinearHor));
+    shortCommands.insert(tr("dh"), new RS2::ActionType(RS2::ActionDimLinearHor));
+    
+    mainCommands.insert(tr("dr", "dimension - linear"), new RS2::ActionType(RS2::ActionDimLinear));
+    shortCommands.insert(tr("dr"), new RS2::ActionType(RS2::ActionDimLinear));
+
+    mainCommands.insert(tr("dv", "dimension - vertical"), new RS2::ActionType(RS2::ActionDimLinearVer));
+    shortCommands.insert(tr("dv"), new RS2::ActionType(RS2::ActionDimLinearVer));
+
+    mainCommands.insert(tr("ld", "dimension - leader"), new RS2::ActionType(RS2::ActionDimLeader));
+    shortCommands.insert(tr("ld"), new RS2::ActionType(RS2::ActionDimLeader));
+
 	// tools:
 	mainCommands.insert(tr("dimregen"), new RS2::ActionType(RS2::ActionToolRegenerateDimensions));
+
+    // modify:
+    mainCommands.insert(tr("tm", "modify - multi trim (extend)"), new RS2::ActionType(RS2::ActionModifyTrim2));
+    shortCommands.insert(tr("tm"), new RS2::ActionType(RS2::ActionModifyTrim2));
+
+    mainCommands.insert(tr("xt", "modify - trim (extend)"), new RS2::ActionType(RS2::ActionModifyTrim));
+    shortCommands.insert(tr("xt"), new RS2::ActionType(RS2::ActionModifyTrim));
+
+    mainCommands.insert(tr("rm", "modify - trim"), new RS2::ActionType(RS2::ActionModifyTrim));
+    shortCommands.insert(tr("rm"), new RS2::ActionType(RS2::ActionModifyTrim));
+
+    mainCommands.insert(tr("mv", "modify - move"), new RS2::ActionType(RS2::ActionModifyMove));
+    shortCommands.insert(tr("mv"), new RS2::ActionType(RS2::ActionModifyMove));
+
+    mainCommands.insert(tr("ch", "modify - bevel (chamfer)"), new RS2::ActionType(RS2::ActionModifyBevel));
+    shortCommands.insert(tr("ch"), new RS2::ActionType(RS2::ActionModifyBevel));
+
+    mainCommands.insert(tr("mi", "modify - mirror"), new RS2::ActionType(RS2::ActionModifyMirror));
+    shortCommands.insert(tr("mi"), new RS2::ActionType(RS2::ActionModifyMirror));
+
+    mainCommands.insert(tr("ro", "modify - rotate"), new RS2::ActionType(RS2::ActionModifyRotate));
+    shortCommands.insert(tr("ro"), new RS2::ActionType(RS2::ActionModifyRotate));
+
+    mainCommands.insert(tr("sz", "modify - scale"), new RS2::ActionType(RS2::ActionModifyMove));
+    shortCommands.insert(tr("sz"), new RS2::ActionType(RS2::ActionModifyMove));
+
+    mainCommands.insert(tr("ss", "modify - stretch"), new RS2::ActionType(RS2::ActionModifyStretch));
+    shortCommands.insert(tr("ss"), new RS2::ActionType(RS2::ActionModifyStretch));
+
+    mainCommands.insert(tr("er", "modify - delete (erase)"), new RS2::ActionType(RS2::ActionModifyDelete));
+    shortCommands.insert(tr("er"), new RS2::ActionType(RS2::ActionModifyDelete));
+
+    mainCommands.insert(tr("oo", "modify - undo (oops)"), new RS2::ActionType(RS2::ActionEditUndo));
+    shortCommands.insert(tr("oo"), new RS2::ActionType(RS2::ActionEditUndo));
+
+    mainCommands.insert(tr("uu", "modify - redo"), new RS2::ActionType(RS2::ActionEditRedo));
+    shortCommands.insert(tr("uu"), new RS2::ActionType(RS2::ActionEditRedo));
+
+    mainCommands.insert(tr("xp", "modify - explode"), new RS2::ActionType(RS2::ActionBlocksExplode));
+    shortCommands.insert(tr("xp"), new RS2::ActionType(RS2::ActionBlocksExplode));
+
+    // snap:
+    mainCommands.insert(tr("os", "snap - none"), new RS2::ActionType(RS2::ActionSnapFree));
+    shortCommands.insert(tr("os"), new RS2::ActionType(RS2::ActionSnapFree));
+
+    mainCommands.insert(tr("sg", "snap - grid"), new RS2::ActionType(RS2::ActionSnapGrid));
+    shortCommands.insert(tr("sg"), new RS2::ActionType(RS2::ActionSnapGrid));
+
+    mainCommands.insert(tr("se", "snap - end"), new RS2::ActionType(RS2::ActionSnapEndpoint));
+    shortCommands.insert(tr("se"), new RS2::ActionType(RS2::ActionSnapEndpoint));
+
+    mainCommands.insert(tr("si", "snap - intersection"), new RS2::ActionType(RS2::ActionSnapIntersection));
+    shortCommands.insert(tr("si"), new RS2::ActionType(RS2::ActionSnapIntersection));
+
+    mainCommands.insert(tr("sn", "snap - center"), new RS2::ActionType(RS2::ActionSnapCenter));
+    shortCommands.insert(tr("sn"), new RS2::ActionType(RS2::ActionSnapCenter));
+
+    mainCommands.insert(tr("sm", "snap - middle"), new RS2::ActionType(RS2::ActionSnapMiddle));
+    shortCommands.insert(tr("sm"), new RS2::ActionType(RS2::ActionSnapMiddle));
+
+    mainCommands.insert(tr("sn", "snap - nearest"), new RS2::ActionType(RS2::ActionSnapMiddle));
+    shortCommands.insert(tr("sn"), new RS2::ActionType(RS2::ActionSnapMiddle));
+
+    mainCommands.insert(tr("np", "snap - nearest point"), new RS2::ActionType(RS2::ActionSnapOnEntity));
+    shortCommands.insert(tr("np"), new RS2::ActionType(RS2::ActionSnapOnEntity));
+
+    // selection:
+    mainCommands.insert(tr("tn", "Deselect all"), new RS2::ActionType(RS2::ActionDeselectAll));
+    shortCommands.insert(tr("tn"), new RS2::ActionType(RS2::ActionDeselectAll));
 }
 
 	
@@ -339,6 +427,8 @@ RS_String RS_Commands::command(const RS_String& cmd) {
         return tr("trim");
     } else if (cmd=="undo") {
         return tr("undo");
+    } else if (cmd=="back") {
+        return tr("back");
     }
 
     RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -460,6 +550,11 @@ bool RS_Commands::checkCommand(const RS_String& cmd, const RS_String& str,
                 strl==tr("u", "undo")) {
             return true;
         }
+    } else if (cmd=="back") {
+        if (strl==tr("back") ||
+                strl==tr("b", "back")) {
+            return true;
+        }
     }
 
     return false;
@@ -475,4 +570,3 @@ RS_String RS_Commands::msgAvailableCommands() {
 
 
 // EOF
-

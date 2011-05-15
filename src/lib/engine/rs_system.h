@@ -36,6 +36,8 @@
 #include "rs_stringlist.h"
 //Added by qt3to4:
 #include <Q3CString>
+#include <QList>
+#include "rs_locale.h"
 
 #define RS_SYSTEM RS_System::instance()
 
@@ -50,6 +52,12 @@ class RS_System {
 protected:
     RS_System() {
         initialized = false;
+        allKnownLocales=NULL;
+    }
+    ~RS_System() {
+        while (!allKnownLocales->isEmpty())
+             delete allKnownLocales->takeFirst();
+        delete allKnownLocales;
     }
 
 public:
@@ -59,6 +67,7 @@ public:
     static RS_System* instance() {
         if (uniqueInstance==NULL) {
             uniqueInstance = new RS_System();
+            uniqueInstance->allKnownLocales=NULL;
         }
         return uniqueInstance;
     }
@@ -66,6 +75,7 @@ public:
     void init(const RS_String& appName, const RS_String& appVersion, 
 	          const RS_String& appDirName, const RS_String& appDir="");
 	void initLanguageList();
+        void initAllLanguagesList();
 
     bool checkInit();
     bool createPaths(const QString& p);
@@ -128,7 +138,10 @@ public:
      */
     RS_String getDocPath() {
         RS_StringList lst = getDirectoryList("doc");
-		return lst.first();
+
+        if( !(lst.isEmpty()) ){
+            return lst.first();
+        } else return QString();
     }
 
 	/**
@@ -167,6 +180,9 @@ public:
 	 from system encodings. */
 	static Q3CString localeToISO(const Q3CString& locale);
 
+    private:
+    void addLocale(RS_Locale *locale);
+
 protected:
     static RS_System* uniqueInstance;
 
@@ -176,9 +192,11 @@ protected:
     RS_String appDir;
 	
 	//! List of available translations
-	RS_StringList languageList;
-	
+
+    RS_StringList languageList;
     bool initialized;
+    QList<RS_Locale* > *allKnownLocales;
+
 };
 
 #endif

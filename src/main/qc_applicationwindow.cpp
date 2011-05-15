@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include "qc_applicationwindow.h"
+#include "helpbrowser.h"
 //Added by qt3to4:
 #include <Q3StrList>
 #include <QPixmap>
@@ -33,12 +34,11 @@
 #include <q3mimefactory.h>
 #include <QKeyEvent>
 #include <Q3Frame>
-#include <Q3PopupMenu>
 // RVT_PORT added
 #include <QImageReader>
 // RVT_PORT added
 #include <QImageWriter>
-
+#include <QDesktopServices>
 
 #include <fstream>
 
@@ -57,6 +57,9 @@
 #include <q3vbox.h>
 
 #include <qeventloop.h>
+
+//Plugin support
+#include <QPluginLoader>
 
 #include "rs_application.h"
 #include "rs_actiondrawlinefree.h"
@@ -80,6 +83,7 @@
 #include "rs_system.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_painterqt.h"
+#include "rs_selection.h"
 
 #include "qg_cadtoolbarmain.h"
 #include "qg_colorbox.h"
@@ -96,6 +100,7 @@
 #include "qc_mdiwindow.h"
 #include "qc_dialogfactory.h"
 #include "main.h"
+#include "doc_plugin_interface.h"
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 
@@ -119,7 +124,9 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
     appWindow = this;
-    // RVT_PORT assistant = NULL;
+    helpEngine = NULL;
+    helpWindow = NULL;
+
     workspace = NULL;
     
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
@@ -139,7 +146,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     initView();
 	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init toolbar");
     initToolBar();
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init actions");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init actions");
     initActions();
 	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init menu bar");
     initMenuBar();
@@ -159,7 +166,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_DialogFactory::instance()->setFactoryObject(dialogFactory);
 	RS_DEBUG->print("setting dialog factory object: OK");
 
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
     initSettings();
 
 	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init MDI");
@@ -175,11 +182,80 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     // Disable menu and toolbar items
     emit windowsChanged(FALSE);
 
-	
+    //plugin load
+    loadPlugins();
+
     statusBar()->showMessage(XSTR(QC_APPNAME) " Ready", 2000);
     //setFocusPolicy(WheelFocus);
 }
 
+
+QMenu *QC_ApplicationWindow::findMenu(QStringList *treemenu) {
+    QMenu *atMenu = 0;
+    //find menu
+    if (!treemenu->isEmpty()) {
+        atMenu = menuBar()->findChild<QMenu *>(treemenu->takeFirst());
+    }
+    //find submenus
+    while (!treemenu->isEmpty()) {
+        atMenu = atMenu->findChild<QMenu *>(treemenu->takeFirst());
+    }
+    return atMenu;
+}
+
+/**
+ * Loads the found plugins.
+ */
+void QC_ApplicationWindow::loadPlugins() {
+
+    QMenu* pluginMenu = new QMenu(tr("&Plugins"));
+    RS_StringList lst = RS_SYSTEM->getDirectoryList("plugins");
+
+    for (int i = 0; i < lst.size(); ++i) {
+        QDir pluginsDir(lst.at(i));
+        foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
+            QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
+            QObject *plugin = pluginLoader.instance();
+            if (plugin) {
+                QC_PluginInterface *pluginInterface = qobject_cast<QC_PluginInterface *>(plugin);
+                if (pluginInterface) {
+                    QAction *actpl = new QAction(pluginInterface->name(), plugin);
+                    connect(actpl, SIGNAL(triggered()), this, SLOT(execPlug()));
+                    QStringList treemenu = pluginInterface->menu().split('/', QString::SkipEmptyParts);
+                    QMenu *atMenu = findMenu(&treemenu);
+                    if (atMenu)
+                        atMenu->addAction(actpl);
+                    else
+                        pluginMenu->addAction(actpl);
+                }
+            } else {
+                QMessageBox::information(this, "Info", pluginLoader.errorString());
+                RS_DEBUG->print("QC_ApplicationWindow::loadPlugin: %s", pluginLoader.errorString().toLatin1().data());
+            }
+        }
+    }
+    if (pluginMenu->actions().isEmpty())
+        delete (pluginMenu);
+    else
+        menuBar()->addMenu(pluginMenu);
+}
+
+/**
+ * Execute the plugin.
+ */
+void QC_ApplicationWindow::execPlug() {
+    QAction *action = qobject_cast<QAction *>(sender());
+    QC_PluginInterface *plugin = qobject_cast<QC_PluginInterface *>(action->parent());
+//get actual drawing
+    QC_MDIWindow* w = getMDIWindow();
+    RS_Graphic* currdoc = static_cast<RS_Graphic*>(w->getDocument());
+//create document interface instance
+    Doc_plugin_interface pligundoc(currdoc);
+//execute plugin
+    plugin->execComm(&pligundoc, this);
+//TODO call update view
+w->getGraphicView()->redraw();
+}
 
 
 /**
@@ -214,14 +290,18 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting dialog factory: OK");
 
-	/*RVT_PORT     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: " 
+    RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
 	"deleting assistant.."); 
-    if (assistant!=NULL) {
-        delete assistant;
+    if (helpEngine!=NULL) {
+        delete helpEngine;
     }
+    if (helpWindow!=NULL) {
+        delete helpWindow;
+    }
+
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting assistant: OK");
-	*/
+
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: OK");
 }
 
@@ -423,14 +503,14 @@ void QC_ApplicationWindow::initActions() {
 
     QG_ActionFactory actionFactory(actionHandler, this);
     QAction* action;
-    Q3PopupMenu* menu;
+    QMenu* menu;
     QToolBar* tb;
-    Q3PopupMenu* subMenu;
-
+    QMenu* subMenu;
 
     // File actions:
     //
-    menu = new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&File"));
+    menu->setName("File");
     tb = fileToolBar;
     tb->setCaption("File");
 
@@ -449,6 +529,8 @@ void QC_ApplicationWindow::initActions() {
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionFileExport, this);
     action->addTo(menu);
+    subMenu = menu->addMenu(tr("Import"));
+    subMenu->setName("Import");
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     menu->insertSeparator();
     action = actionFactory.createAction(RS2::ActionFileClose, this);
@@ -468,21 +550,28 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionFileQuit, this);
     action->addTo(menu);
     menu->insertSeparator();
-    menuBar()->insertItem(tr("&File"), menu);
     addToolBar(Qt::TopToolBarArea, tb); //tr("File");
 
     fileMenu = menu;
 
     // Editing actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Edit"));
+    menu->setName("Edit");
     tb = editToolBar;
     tb->setCaption("Edit");
+
+    action = actionFactory.createAction(RS2::ActionEditKillAllActions, actionHandler);
+    action->addTo(tb);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+
+    tb->addSeparator();
 
     action = actionFactory.createAction(RS2::ActionEditUndo, actionHandler);
     action->addTo(menu);
     action->addTo(tb);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+
     action = actionFactory.createAction(RS2::ActionEditRedo, actionHandler);
     action->addTo(menu);
     action->addTo(tb);
@@ -512,7 +601,6 @@ void QC_ApplicationWindow::initActions() {
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
-    menuBar()->insertItem(tr("&Edit"), menu);
     //addToolBar(tb, tr("Edit"));
 	addToolBar(Qt::TopToolBarArea, tb); //tr("Edit");
 
@@ -524,7 +612,8 @@ void QC_ApplicationWindow::initActions() {
 
     // Viewing / Zooming actions:
     //
-    menu = new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&View"));
+    menu->setName("View");
     menu->setCheckable(true);
     tb = zoomToolBar;
     tb->setCaption("View");
@@ -546,20 +635,6 @@ void QC_ApplicationWindow::initActions() {
     action->setChecked(draftMode);
     connect(this, SIGNAL(draftChanged(bool)), action, SLOT(setChecked(bool)));
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-
-    /*
-       action = actionFactory.createAction(RS2::ActionViewLayerList, this);
-       action->addTo(menu);
-       action->setChecked(true);
-       action = actionFactory.createAction(RS2::ActionViewBlockList, this);
-       action->addTo(menu);
-       action->setChecked(true);
-       action = actionFactory.createAction(RS2::ActionViewOptionToolbar, this);
-       action->addTo(menu);
-       action->setChecked(true);
-       action = actionFactory.createAction(RS2::ActionViewCommandLine, this);
-       action->addTo(menu);
-       action->setChecked(true);*/
 
     /*
     action = new QAction(tr("Back"),
@@ -602,8 +677,33 @@ void QC_ApplicationWindow::initActions() {
     menu->insertSeparator();
 
     action = actionFactory.createAction(RS2::ActionViewStatusBar, this);
-    action->addTo(menu);
     action->setChecked(true);
+    action->addTo(menu);
+
+    subMenu= menu->addMenu(tr("&Toolbars"));
+    subMenu->setName("Polyline");
+
+    action = actionFactory.createAction(RS2::ActionViewLayerList, this, this->layerWidget->parentWidget());
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewBlockList, this, this->blockWidget->parentWidget());
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewLibrary, this, this->libraryWidget->parentWidget());
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewCommandLine, this, this->commandWidget->parentWidget());
+    action->addTo(subMenu);
+
+    subMenu->addSeparator();
+
+    action = actionFactory.createAction(RS2::ActionViewPenToolbar, this, this->penToolBar);
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewOptionToolbar, this, this->optionWidget);
+    action->addTo(subMenu);
+    //action = actionFactory.createAction(RS2::ActionViewCadToolbar, this, this->cadToolBar);
+    //action->addTo(subMenu); // RVT CadToolbar is not a correct widget yet to beable to get toogled.
+    action = actionFactory.createAction(RS2::ActionViewFileToolbar, this, this->fileToolBar);
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewEditToolbar, this, this->editToolBar);
+    action->addTo(subMenu);
 
     // RVT_PORT menu->insertItem(tr("Vie&ws"), createDockWindowMenu(NoToolBars));
     // RVT_PORT menu->insertItem(tr("Tool&bars"), createDockWindowMenu(OnlyToolBars));
@@ -618,12 +718,13 @@ void QC_ApplicationWindow::initActions() {
             this, SLOT(slotFocusCommandLine()));
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&View"), menu);
     //addToolBar(tb, tr("View"));
 	addToolBar(Qt::TopToolBarArea, tb); //tr("View");
+
     // Selecting actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Select"));
+    menu->setName("Select");
     action = actionFactory.createAction(RS2::ActionDeselectAll, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -656,21 +757,22 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionSelectLayer, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&Select"), menu);
 
     // Drawing actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Draw"));
+    menu->setName("Draw");
 
     // Points:
-    subMenu=new Q3PopupMenu(this);
+    subMenu= menu->addMenu(tr("&Point"));
+    subMenu->setName("Point");
     action = actionFactory.createAction(RS2::ActionDrawPoint, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertItem(tr("&Point"), subMenu);
 
     // Lines:
-    subMenu=new Q3PopupMenu(this);
+    subMenu= menu->addMenu(tr("&Line"));
+    subMenu->setName("Line");
     action = actionFactory.createAction(RS2::ActionDrawLine,
                                         actionHandler);
     action->addTo(subMenu);
@@ -740,10 +842,9 @@ void QC_ApplicationWindow::initActions() {
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
-    menu->insertItem(tr("&Line"), subMenu);
-
     // Arcs:
-    subMenu=new Q3PopupMenu(this);
+    subMenu= menu->addMenu(tr("&Arc"));
+    subMenu->setName("Arc");
     action = actionFactory.createAction(RS2::ActionDrawArc, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -753,9 +854,10 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionDrawArcParallel, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertItem(tr("&Arc"), subMenu);
+
     // Circles:
-    subMenu=new Q3PopupMenu(this);
+    subMenu= menu->addMenu(tr("&Circle"));
+    subMenu->setName("Circle");
     action = actionFactory.createAction(RS2::ActionDrawCircle, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -771,10 +873,10 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionDrawCircleParallel, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertItem(tr("&Circle"), subMenu);
-	
+
     // Ellipses:
-    subMenu=new Q3PopupMenu(this);
+    subMenu= menu->addMenu(tr("&Ellipse"));
+    subMenu->setName("Ellipse");
     action = actionFactory.createAction(RS2::ActionDrawEllipseAxis,
                                         actionHandler);
     action->addTo(subMenu);
@@ -783,22 +885,21 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertItem(tr("&Ellipse"), subMenu);
 
     // Splines:
-    subMenu=new Q3PopupMenu(this);
+    subMenu= menu->addMenu(tr("&Spline"));
+    subMenu->setName("Spline");
     action = actionFactory.createAction(RS2::ActionDrawSpline, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertItem(tr("&Spline"), subMenu);
     
 	// Polylines:
-    subMenu=new Q3PopupMenu(this);
+    subMenu= menu->addMenu(tr("&Polyline"));
+    subMenu->setName("Polyline");
     action = actionFactory.createAction(RS2::ActionDrawPolyline,
                                         actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertItem(tr("&Polyline"), subMenu);
 
     action = actionFactory.createAction(RS2::ActionPolylineAdd,
                                         actionHandler);
@@ -832,16 +933,16 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&Draw"), menu);
 
     // Dimensioning actions:
     //
 #ifdef __APPLE1__
-
-    Q3PopupMenu* m = menu;
+    QMenu* m = menu;
+    menu= m->addMenu(tr("&Dimension"));
+#else
+    menu = menuBar()->addMenu(tr("&Dimension"));
 #endif
-
-    menu=new Q3PopupMenu(this);
+    menu->setName("Dimension");
     action = actionFactory.createAction(RS2::ActionDimAligned, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -866,17 +967,11 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionDimLeader, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-#ifdef __APPLE1__
-
-    m->insertItem(tr("&Dimension"), menu);
-#else
-
-    menuBar()->insertItem(tr("&Dimension"), menu);
-#endif
 
     // Modifying actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Modify"));
+    menu->setName("Modify");
     action = actionFactory.createAction(RS2::ActionModifyMove,
                                         actionHandler);
     action->addTo(menu);
@@ -955,11 +1050,11 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionBlocksExplode, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&Modify"), menu);
 
     // Snapping actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Snap"));
+    menu->setName("Snap");
     action = actionFactory.createAction(RS2::ActionSnapFree, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -1018,11 +1113,11 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&Snap"), menu);
 
     // Info actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Info"));
+    menu->setName("Info");
     //action = actionFactory.createAction(RS2::ActionInfoInside,
     //                                    actionHandler);
     //action->addTo(menu);
@@ -1042,11 +1137,11 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&Info"), menu);
 
     // Layer actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Layer"));
+    menu->setName("Layer");
     action = actionFactory.createAction(RS2::ActionLayersDefreezeAll,
                                         actionHandler);
     action->addTo(menu);
@@ -1069,11 +1164,11 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&Layer"), menu);
 
     // Block actions:
     //
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&Block"));
+    menu->setName("Block");
     action = actionFactory.createAction(RS2::ActionBlocksDefreezeAll,
                                         actionHandler);
     action->addTo(menu);
@@ -1105,7 +1200,6 @@ void QC_ApplicationWindow::initActions() {
     action = actionFactory.createAction(RS2::ActionBlocksExplode, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menuBar()->insertItem(tr("&Block"), menu);
 	
 	QMainWindow::addToolBarBreak(Qt::TopToolBarArea);
 	
@@ -1117,7 +1211,8 @@ void QC_ApplicationWindow::initActions() {
 #ifdef RS_SCRIPTING
     // Scripts menu:
     //
-    scriptMenu = new Q3PopupMenu(this);
+    scriptMenu = new QMenu(tr("&Scripts"));
+    scriptMenu->setName("Scripts");
     scriptOpenIDE = actionFactory.createAction(RS2::ActionScriptOpenIDE, this);
     scriptOpenIDE->addTo(scriptMenu);
     scriptRun = actionFactory.createAction(RS2::ActionScriptRun, this);
@@ -1129,13 +1224,12 @@ void QC_ApplicationWindow::initActions() {
 #endif
 
 #ifdef RVT_CAM
-    menu=new Q3PopupMenu(this);
+    menu = menuBar()->addMenu(tr("&CAM"));
+    menu->setName("CAM");
 
     action = actionFactory.createAction(RS2::ActionCamMakeProfile, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    
-    menuBar()->insertItem(tr("&CAM"), menu);
 #endif
 
     // Help menu:
@@ -1244,53 +1338,51 @@ void QC_ApplicationWindow::initActions() {
 void QC_ApplicationWindow::initMenuBar() {
     RS_DEBUG->print("QC_ApplicationWindow::initMenuBar()");
 
-    // menuBar entry windowsMenu
-    windowsMenu = new Q3PopupMenu(this);
-    windowsMenu->setCheckable(true);
-    connect(windowsMenu, SIGNAL(aboutToShow()),
-            this, SLOT(slotWindowsMenuAboutToShow()));
-
     // menuBar entry scriptMenu
-    //scriptMenu = new QPopupMenu(this);
+#ifdef RS_SCRIPTING
+    menuBar()->addMenu(scriptMenu);
+#endif
     //scriptMenu->setCheckable(true);
     //scriptOpenIDE->addTo(scriptMenu);
     //scriptRun->addTo(scriptMenu);
     //connect(scriptMenu, SIGNAL(aboutToShow()),
     //        this, SLOT(slotScriptMenuAboutToShow()));
 
+    // menuBar entry windowsMenu
+    windowsMenu = menuBar()->addMenu(tr("&Window"));
+    windowsMenu->setName("Window");
+    windowsMenu->setCheckable(true);
+    connect(windowsMenu, SIGNAL(aboutToShow()),
+            this, SLOT(slotWindowsMenuAboutToShow()));
+
+    menuBar()->insertSeparator();
     // menuBar entry helpMenu
-    helpMenu=new Q3PopupMenu();
+    helpMenu = menuBar()->addMenu(tr("&Help"));
+    helpMenu->setName("Help");
     helpManual->addTo(helpMenu);
     helpMenu->insertSeparator();
     helpAboutApp->addTo(helpMenu);
 
     // menuBar entry test menu
-    testMenu=new Q3PopupMenu();
-    testDumpEntities->addTo(testMenu);
-    testDumpUndo->addTo(testMenu);
-    testUpdateInserts->addTo(testMenu);
-    testDrawFreehand->addTo(testMenu);
-    testInsertBlock->addTo(testMenu);
-    testInsertText->addTo(testMenu);
-    testInsertImage->addTo(testMenu);
-    testInsertEllipse->addTo(testMenu);
-    testUnicode->addTo(testMenu);
-    testMath01->addTo(testMenu);
-    testResize640->addTo(testMenu);
-    testResize800->addTo(testMenu);
-    testResize1024->addTo(testMenu);
-
-    // menuBar configuration
-#ifdef RS_SCRIPTING
-    menuBar()->insertItem(tr("&Scripts"), scriptMenu);
-#endif    
-    menuBar()->insertItem(tr("&Window"), windowsMenu);
-    menuBar()->insertSeparator();
-    menuBar()->insertItem(tr("&Help"), helpMenu);
     if (QC_DEBUGGING) {
-        menuBar()->insertItem(tr("De&bugging"), testMenu);
+        testMenu = menuBar()->addMenu(tr("De&bugging"));
+        testMenu->setName("Debugging");
+        testDumpEntities->addTo(testMenu);
+        testDumpUndo->addTo(testMenu);
+        testUpdateInserts->addTo(testMenu);
+        testDrawFreehand->addTo(testMenu);
+        testInsertBlock->addTo(testMenu);
+        testInsertText->addTo(testMenu);
+        testInsertImage->addTo(testMenu);
+        testInsertEllipse->addTo(testMenu);
+        testUnicode->addTo(testMenu);
+        testMath01->addTo(testMenu);
+        testResize640->addTo(testMenu);
+        testResize800->addTo(testMenu);
+        testResize1024->addTo(testMenu);
     }
 
+    // menuBar configuration
     recentFiles = new QG_RecentFiles(9);
 }
 
@@ -1626,6 +1718,20 @@ void QC_ApplicationWindow::slotBack() {
     }
 }
 
+void QC_ApplicationWindow::slotKillAllActions() {
+    RS_GraphicView* gv = getGraphicView();
+    QC_MDIWindow* m = getMDIWindow();
+    if (gv!=NULL and m!=NULL and m->getDocument()!=NULL) {
+        gv->killAllActions();
+        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+
+        RS_Selection s((RS_EntityContainer&)*m->getDocument(), gv);
+        s.selectAll(false);
+        RS_DIALOGFACTORY->updateSelectionWidget(m->getDocument()->countSelected());
+
+        gv->redraw(RS2::RedrawAll);
+    }
+}
 
 
 /**
@@ -2720,86 +2826,6 @@ void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
     }
 }
 
-
-
-/**
- * Shows / hides the layer list.
- *
- * @param toggle true: show, false: hide.
- */
-/*void QC_ApplicationWindow::slotViewLayerList(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewLayerList()");
- 
-    if (toggle==false) {
-        layerDockWindow->hide();
-    } else {
-        layerDockWindow->show();
-    }
-}
-*/
-
-
-/**
- * Shows / hides the block list.
- *
- * @param toggle true: show, false: hide.
- */
-/*
-void QC_ApplicationWindow::slotViewBlockList(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewBlockList()");
- 
-    if (toggle==false) {
-        blockDockWindow->hide();
-    } else {
-        blockDockWindow->show();
-    }
-}
-*/
-
-
-
-/**
- * Shows / hides the command line.
- *
- * @param toggle true: show, false: hide.
- */
-/*
-void QC_ApplicationWindow::slotViewCommandLine(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewCommandLine()");
- 
-    if (toggle==false) {
-        commandDockWindow->hide();
-        //QG_GraphicView* graphicView = getGraphicView();
-        //if (graphicView!=NULL) {
-        //graphicView->setFocus();
-        //}
-        setFocus();
-    } else {
-        commandDockWindow->show();
-    }
-}
-*/
-
-
-
-/**
- * Shows / hides the option toolbar.
- *
- * @param toggle true: show, false: hide.
- */
-/*
-void QC_ApplicationWindow::slotViewOptionToolbar(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewOptionToolbar()");
- 
-    if (toggle==false) {
-        optionWidget->hide();
-    } else {
-        optionWidget->show();
-    }
-}
-*/
-
-
 /**
  * Creates a new MDI window for editing the selected block.
  */
@@ -2821,8 +2847,7 @@ void QC_ApplicationWindow::slotBlocksEdit() {
             }
         }
     }
-}
-*/
+} */
 
 
 
@@ -2948,28 +2973,39 @@ void QC_ApplicationWindow::slotHelpAbout() {
  */
 void QC_ApplicationWindow::slotHelpManual() {
     RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual()");
-/*
-    if (assistant==NULL) {
-        RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
-                        RS_SYSTEM->getAppDir().latin1());
-        RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
-                        RS_SYSTEM->getAppDir().latin1());
-        assistant = new QAssistantClient(RS_SYSTEM->getAppDir()+"/bin", this);
-		connect(assistant, SIGNAL(error(const QString&)), 
-			this, SLOT(slotError(const QString&)));
-        QStringList args;
-        args << "-profile";
-        args << QDir::convertSeparators(RS_SYSTEM->getDocPath() + "/librecaddoc.adp");
-//        args << QString("doc") + QDir::separator() + QString("librecaddoc.adp");
 
-        assistant->setArguments(args);
+    if (helpEngine==NULL) {
+        RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
+                        RS_SYSTEM->getAppDir().latin1());
+        RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
+                        RS_SYSTEM->getAppDir().latin1());
+
+        if ((RS_SYSTEM->getDocPath().length()>0) && (QFile::exists(RS_SYSTEM->getDocPath()+ "/LibreCADdoc.qhc")==true)) {
+            helpEngine = new QHelpEngine(RS_SYSTEM->getDocPath() + "/LibreCADdoc.qhc", this);
+
+            helpEngine->setupData();
+
+            helpWindow = new QDockWidget(tr("Help"), this);
+            QSplitter *helpPanel = new QSplitter(Qt::Horizontal);
+            HelpBrowser *helpBrowser = new HelpBrowser(helpEngine);
+
+            helpPanel->insertWidget(0, helpEngine->contentWidget());
+            helpPanel->insertWidget(1, helpBrowser);
+            helpPanel->setStretchFactor(1, 1);
+            helpWindow->setWidget(helpPanel);
+
+            addDockWidget(Qt::TopDockWidgetArea, helpWindow);
+
+            connect(helpEngine->contentWidget(), SIGNAL(linkActivated(const QUrl &)), helpBrowser, SLOT(setSource(const QUrl &)));
+        } else {
+            QMessageBox::information(this, "Helpfiles not found", tr("Bugger, I couldn't find the helpfiles on the filesystem."));
+        }
+
     }
-    assistant->openAssistant();
-    //assistant->showPage("index.html");
- */
+    if (helpWindow) {
+        helpWindow->show();
+    }
 }
-
-
 
 /**
  * Testing function.
@@ -3981,87 +4017,90 @@ bool QC_ApplicationWindow::queryExit(bool force) {
  */
 void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
 
-    // timer
+    // multi key codes:
     static QTime ts = QTime();
-    static QString firstKey = "";
+    static QList<int> doubleCharacters;
+    QTime now = QTime::currentTime();
+    bool actionProcessed=false;
+    doubleCharacters << e->key();
+    doubleCharacters=doubleCharacters.mid(doubleCharacters.length()-2,2);
+    if (ts.msecsTo(now)<2000) {
 
-    // single key codes:
-    switch (e->key()) {
-    case Qt::Key_Shift:
-    case Qt::Key_Control:
-    case Qt::Key_Meta:
-    case Qt::Key_Alt:
-    case Qt::Key_CapsLock: {
-            QMainWindow::keyPressEvent(e);
+        QString code="";
+        QList<int>::iterator i;
+        for (i = doubleCharacters.begin(); i != doubleCharacters.end(); ++i)
+             code += QChar(*i);
 
-            // forward to actions:
-            RS_GraphicView* graphicView = getGraphicView();
-            if (graphicView!=NULL) {
-                graphicView->keyPressEvent(e);
-            }
-            e->accept();
+        // Check against double keycode handler
+        if (actionHandler->keycode(code)==true) {
+            actionProcessed=true;
         }
-        break;
 
-    case Qt::Key_Escape:
-        firstKey = "";
-        slotBack();
-        e->accept();
-        break;
+        // Matches doublescape, since this is not a action, it's not done in actionHandler (is that logical??)
+        if (doubleCharacters == (QList<int>() << Qt::Key_Escape << Qt::Key_Escape) ) {
+            slotKillAllActions();
+            actionProcessed=true;
+            RS_DEBUG->print("QC_ApplicationWindow::Got double escape!");
+        }
 
-    case Qt::Key_Return:
-        if (firstKey.isEmpty()) {
+        if (actionProcessed) {
+            doubleCharacters.clear();
+        }
+    }
+    ts = now;
+
+    if (actionProcessed==false) {
+        // single key codes:
+        switch (e->key()) {
+        case Qt::Key_Shift:
+        case Qt::Key_Control:
+        case Qt::Key_Meta:
+        case Qt::Key_Alt:
+        case Qt::Key_CapsLock: {
+                QMainWindow::keyPressEvent(e);
+
+                // forward to actions:
+                RS_GraphicView* graphicView = getGraphicView();
+                if (graphicView!=NULL) {
+                    graphicView->keyPressEvent(e);
+                }
+                e->accept();
+            }
+            break;
+
+        case Qt::Key_Escape:
+            slotBack();
+            e->accept();
+            break;
+
+        case Qt::Key_Return:
             slotEnter();
             e->accept();
-        }
-        break;
+            break;
 
-    case Qt::Key_Plus:
-        if (firstKey.isEmpty()) {
+        case Qt::Key_Plus:
             actionHandler->slotZoomIn();
             e->accept();
-        }
-        break;
+            break;
 
-    case Qt::Key_Minus:
-        if (firstKey.isEmpty()) {
+        case Qt::Key_Minus:
             actionHandler->slotZoomOut();
             e->accept();
-        }
-        break;
+            break;
 
-    default:
-        e->ignore();
-        break;
+        default:
+            e->ignore();
+            RS_DEBUG->print("QC_ApplicationWindow::KeyPressEvent: IGNORED");
+            break;
+        }
     }
 
     if (e->isAccepted()) {
+        RS_DEBUG->print("QC_ApplicationWindow::KeyPressEvent: Accepted");
         return;
     }
 
-    QTime now = QTime::currentTime();
 
-    // multi key codes:
-    if (ts.msecsTo(now)<2000) {
-        QString code =
-            QString("%1%2").arg(firstKey).arg(QChar(e->key())).lower();
-
-        if (actionHandler->keycode(code)==false) {
-            ts = now;
-            if (QChar(e->key()).isPrint()) {
-                firstKey += e->key();
-            }
-        }
-        else {
-            firstKey="";
-        }
-    }
-    else {
-        ts = now;
-        if (QChar(e->key()).isPrint()) {
-            firstKey = e->key();
-        }
-    }
 
     QMainWindow::keyPressEvent(e);
 }
@@ -4089,5 +4128,6 @@ void QC_ApplicationWindow::keyReleaseEvent(QKeyEvent* e) {
 
     QMainWindow::keyPressEvent(e);
 }
+
 
 

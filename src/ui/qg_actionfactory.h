@@ -45,7 +45,7 @@ public:
     QG_ActionFactory(QG_ActionHandler* ah, QWidget* w);
     virtual ~QG_ActionFactory();
 
-    QAction* createAction(RS2::ActionType id, QObject* obj);
+    QAction* createAction(RS2::ActionType id, QObject* obj, QObject* obj2=NULL);
 
 private:
     QG_ActionHandler* actionHandler;

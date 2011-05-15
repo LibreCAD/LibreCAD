@@ -154,7 +154,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/snapmiddle.png</normaloff>:/extui/snapmiddle.png</iconset>
+     <normaloff>:/extui/snapcenter.png</normaloff>:/extui/snapcenter.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -177,7 +177,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/snapcenter.png</normaloff>:/extui/snapcenter.png</iconset>
+     <normaloff>:/extui/snapmiddle.png</normaloff>:/extui/snapmiddle.png</iconset>
    </property>
    <property name="checkable">
     <bool>true</bool>
