@@ -176,7 +176,14 @@ public:
         ActionViewLayerList,
         ActionViewBlockList,
         ActionViewCommandLine,
+        ActionViewLibrary,
+
+        ActionViewPenToolbar,
         ActionViewOptionToolbar,
+        ActionViewCadToolbar,
+        ActionViewFileToolbar,
+        ActionViewEditToolbar,
+
         ActionViewGrid,
         ActionViewDraft,
 
