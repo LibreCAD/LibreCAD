@@ -47,7 +47,8 @@ QAction* RS_ActionSelectAll::createGUIAction(RS2::ActionType type, QObject* pare
 	} else {
 		// tr("Deselect all")
 		action = new QAction(tr("Deselect &all"), parent);
-                action->setShortcut(QKeySequence(tr("Ctrl+K")));
+                // RVT April 29, 2011 - Added esc key to de-select all entities
+                action->setShortcuts(QList<QKeySequence>() << QKeySequence(tr("Ctrl+K")));
                 action->setIcon(QIcon(":/extui/selectnothing.png"));
                 //action->zetStatusTip(tr("Deselects all Entities"));
     }

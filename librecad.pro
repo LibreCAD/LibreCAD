@@ -11,14 +11,13 @@ DEFINES += QC_VERSION="\"1.0.0beta5\""
 QT += qt3support
 CONFIG += qt \
     warn_on \
-    link_prl 
+    link_prl \
+    help
+
 QMAKE_CXXFLAGS_DEBUG += 
 QMAKE_CXXFLAGS += 
 
 # Make translations at the end of the process
-# maketranslations.commands += lrelease librecad.pro
-# QMAKE_EXTRA_TARGETS += maketranslations
-# QMAKE_POST_LINK += make maketranslations
 unix { 
     # Get SVN revision number
     # SVNREVISION = $$system(svn info -R | grep -o \"Revision: [0-9]*\" | sed -e \"s/Revision: //\" | head -n1)
@@ -29,26 +28,18 @@ unix {
         TARGET = LibreCAD
         DEFINES += QC_APPDIR="\"LibreCAD\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
-        RESOURCEDIR = LibreCAD.app/Contents/Resources
         RC_FILE = res/main/librecad.icns
         DESTDIR = .
         
-        # postprocess.commands += scripts/postprocess-osx.sh
-        # QMAKE_EXTRA_TARGETS += postprocess
-        # QMAKE_POST_LINK = $$MAKE_CMD postprocess
         QMAKE_POST_LINK = scripts/postprocess-osx.sh
     }
     else { 
         TARGET = librecad
         DEFINES += QC_APPDIR="\"librecad\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_librecad"
-        RESOURCEDIR = librecad/Resources
         RC_FILE = res/main/librecad.icns
         DESTDIR = unix
         
-        # postprocess.commands += scripts/postprocess-unix.sh
-        # QMAKE_EXTRA_TARGETS += postprocess
-        # QMAKE_POST_LINK = $$MAKE_CMD postprocess
         QMAKE_POST_LINK = scripts/postprocess-unix.sh
     }
 }
@@ -65,6 +56,7 @@ win32 {
     DESTDIR = .
     QMAKE_POST_LINK = scripts\postprocess-win.bat
 }
+
 
 # Additional libraries to load
 # LIBS += \
@@ -94,6 +86,7 @@ INCLUDEPATH += dxflib/src \
     src/lib/scripting \
     src/actions \
     src/main \
+    src/plugins \
     src/ui \
     src/ui/forms \
     res
@@ -204,6 +197,7 @@ HEADERS = \
     src/lib/gui/rs_painteradapter.h \
     src/lib/gui/rs_painterqt.h \
     src/lib/gui/rs_staticgraphicview.h \
+    src/lib/information/rs_locale.h \
     src/lib/information/rs_information.h \
     src/lib/information/rs_infoarea.h \
     src/lib/modification/rs_modification.h \
@@ -213,7 +207,10 @@ HEADERS = \
     src/lib/scripting/rs_simplepython.h \
     src/lib/scripting/rs_python_wrappers.h \
     src/lib/scripting/rs_script.h \
-    src/lib/scripting/rs_scriptlist.h 
+    src/lib/scripting/rs_scriptlist.h \ 
+    src/main/doc_plugin_interface.h \
+    src/plugins/document_interface.h \
+    src/plugins/qc_plugininterface.h
 
 SOURCES = dxflib/src/dl_dxf.cpp \
     dxflib/src/dl_writer_ascii.cpp \
@@ -280,6 +277,7 @@ SOURCES = dxflib/src/dl_dxf.cpp \
     src/lib/gui/rs_painter.cpp \
     src/lib/gui/rs_painterqt.cpp \
     src/lib/gui/rs_staticgraphicview.cpp \
+    src/lib/information/rs_locale.cpp \
     src/lib/information/rs_information.cpp \
     src/lib/information/rs_infoarea.cpp \
     src/lib/math/rs_math.cpp \
@@ -290,44 +288,12 @@ SOURCES = dxflib/src/dl_dxf.cpp \
     src/lib/scripting/rs_python_wrappers.cpp \
     src/lib/scripting/rs_script.cpp \
     src/lib/scripting/rs_scriptlist.cpp \
-
-TRANSLATIONS = ts/lib/librecadlib_cs.ts \
-    ts/lib/librecadlib_et.ts \
-    ts/lib/librecadlib_en.ts \
-    ts/lib/librecadlib_da.ts \
-    ts/lib/librecadlib_de.ts \
-    ts/lib/librecadlib_el.ts \
-    ts/lib/librecadlib_fr.ts \
-    ts/lib/librecadlib_hu.ts \
-    ts/lib/librecadlib_it.ts \
-    ts/lib/librecadlib_nl.ts \
-    ts/lib/librecadlib_no.ts \
-    ts/lib/librecadlib_pl.ts \
-    ts/lib/librecadlib_ru.ts \
-    ts/lib/librecadlib_sk.ts \
-    ts/lib/librecadlib_tr.ts
+    src/main/doc_plugin_interface.cpp
 
 # ################################################################################
 # Command
 HEADERS += src/cmd/rs_commands.h
 SOURCES += src/cmd/rs_commands.cpp
-TRANSLATIONS += ts/cmd/librecadcmd_cs.ts \
-    ts/cmd/librecadcmd_et.ts \
-    ts/cmd/librecadcmd_en.ts \
-    ts/cmd/librecadcmd_da.ts \
-    ts/cmd/librecadcmd_de.ts \
-    ts/cmd/librecadcmd_el.ts \
-    ts/cmd/librecadcmd_es.ts \
-    ts/cmd/librecadcmd_fr.ts \
-    ts/cmd/librecadcmd_hu.ts \
-    ts/cmd/librecadcmd_it.ts \
-    ts/cmd/librecadcmd_nl.ts \
-    ts/cmd/librecadcmd_no.ts \
-    ts/cmd/librecadcmd_pa.ts \
-    ts/cmd/librecadcmd_pl.ts \
-    ts/cmd/librecadcmd_ru.ts \
-    ts/cmd/librecadcmd_sk.ts \
-    ts/cmd/librecadcmd_tr.ts
 
 # ################################################################################
 # Actions
@@ -561,23 +527,6 @@ SOURCES += src/actions/rs_actionblocksadd.cpp \
     src/actions/rs_actionpolylinetrim.cpp \
     src/actions/rs_actionpolylineequidistant.cpp \
     src/actions/rs_actionpolylinesegment.cpp
-TRANSLATIONS += ts/actions/librecadactions_cs.ts \
-    ts/actions/librecadactions_en.ts \
-    ts/actions/librecadactions_et.ts \
-    ts/actions/librecadactions_da.ts \
-    ts/actions/librecadactions_de.ts \
-    ts/actions/librecadactions_el.ts \
-    ts/actions/librecadactions_es.ts \
-    ts/actions/librecadactions_fr.ts \
-    ts/actions/librecadactions_hu.ts \
-    ts/actions/librecadactions_it.ts \
-    ts/actions/librecadactions_nl.ts \
-    ts/actions/librecadactions_no.ts \
-    ts/actions/librecadactions_pa.ts \
-    ts/actions/librecadactions_pl.ts \
-    ts/actions/librecadactions_ru.ts \
-    ts/actions/librecadactions_sk.ts \
-    ts/actions/librecadactions_tr.ts
 RESOURCES += res/actions/actions.qrc
 IMAGES += res/actions/configure.png \
     res/actions/editcopy2.png \
@@ -930,54 +879,24 @@ FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_textoptions.ui \
     src/ui/forms/qg_trimamountoptions.ui \
     src/ui/forms/qg_widgetpen.ui
-TRANSLATIONS += ts/ui/librecadguiqt_cs.ts \
-    ts/ui/librecadguiqt_et.ts \
-    ts/ui/librecadguiqt_en.ts \
-    ts/ui/librecadguiqt_da.ts \
-    ts/ui/librecadguiqt_de.ts \
-    ts/ui/librecadguiqt_el.ts \
-    ts/ui/librecadguiqt_es.ts \
-    ts/ui/librecadguiqt_fr.ts \
-    ts/ui/librecadguiqt_hu.ts \
-    ts/ui/librecadguiqt_it.ts \
-    ts/ui/librecadguiqt_nl.ts \
-    ts/ui/librecadguiqt_no.ts \
-    ts/ui/librecadguiqt_pa.ts \
-    ts/ui/librecadguiqt_pl.ts \
-    ts/ui/librecadguiqt_ru.ts \
-    ts/ui/librecadguiqt_sk.ts \
-    ts/ui/librecadguiqt_tr.ts
 RESOURCES += res/ui/ui.qrc
 
 # ################################################################################
 # Main
-HEADERS += src/main/qc_applicationwindow.h \
+HEADERS += \
+    src/main/qc_applicationwindow.h \
     src/main/qc_dialogfactory.h \
     src/main/qc_graphicview.h \
     src/main/qc_mdiwindow.h \
+    src/main/helpbrowser.h \
     src/main/main.h
-SOURCES += src/main/qc_applicationwindow.cpp \
+SOURCES += \
+    src/main/qc_applicationwindow.cpp \
     src/main/qc_dialogfactory.cpp \
     src/main/qc_graphicview.cpp \
     src/main/qc_mdiwindow.cpp \
+    src/main/helpbrowser.cpp \
     src/main/main.cpp
-TRANSLATIONS += ts/main/librecad_cs.ts \
-    ts/main/librecad_et.ts \
-    ts/main/librecad_en.ts \
-    ts/main/librecad_da.ts \
-    ts/main/librecad_de.ts \
-    ts/main/librecad_el.ts \
-    ts/main/librecad_es.ts \
-    ts/main/librecad_fr.ts \
-    ts/main/librecad_hu.ts \
-    ts/main/librecad_it.ts \
-    ts/main/librecad_nl.ts \
-    ts/main/librecad_no.ts \
-    ts/main/librecad_pa.ts \
-    ts/main/librecad_pl.ts \
-    ts/main/librecad_ru.ts \
-    ts/main/librecad_sk.ts \
-    ts/main/librecad_tr.ts
 IMAGES += res/main/contents.png \
     res/main/document.png \
     res/main/editclear.png \
@@ -985,6 +904,48 @@ IMAGES += res/main/contents.png \
     res/main/librecad.png
 RESOURCES += res/main/main.qrc
 
+# ################################################################################
+# Translations
+TRANSLATIONS = ts/librecad_cs.ts \
+    ts/librecad_et.ts \
+    ts/librecad_en.ts \
+    ts/librecad_da.ts \
+    ts/librecad_de.ts \
+    ts/librecad_el.ts \
+    ts/librecad_es.ts \
+    ts/librecad_es_ar.ts \
+    ts/librecad_es_bo.ts \
+    ts/librecad_es_cl.ts \
+    ts/librecad_es_co.ts \
+    ts/librecad_es_cr.ts \
+    ts/librecad_es_do.ts \
+    ts/librecad_es_ec.ts \
+    ts/librecad_es_gt.ts \
+    ts/librecad_es_hn.ts \
+    ts/librecad_es_mx.ts \
+    ts/librecad_es_ni.ts \
+    ts/librecad_es_pa.ts \
+    ts/librecad_es_pe.ts \
+    ts/librecad_es_pr.ts \
+    ts/librecad_es_py.ts \
+    ts/librecad_es_sv.ts \
+    ts/librecad_es_us.ts \
+    ts/librecad_es_uy.ts \
+    ts/librecad_es_ve.ts \
+    ts/librecad_fr.ts \
+    ts/librecad_hu.ts \
+    ts/librecad_it.ts \
+    ts/librecad_ja.ts \
+    ts/librecad_nl.ts \
+    ts/librecad_no.ts \
+    ts/librecad_pa.ts \
+    ts/librecad_pl.ts \
+    ts/librecad_pt.ts \
+    ts/librecad_ru.ts \
+    ts/librecad_sk.ts \
+    ts/librecad_tr.ts \
+    ts/librecad_uk.ts \
+    ts/librecad_zh_tw.ts
+
 # Include any custom.pro files for personal/special builds
 exists( custom.pro ):include( custom.pro )
-

@@ -163,6 +163,7 @@ public:
 		
         ActionPrintPreview,
 
+        ActionEditKillAllActions,
         ActionEditUndo,
         ActionEditRedo,
         ActionEditCut,
@@ -175,7 +176,14 @@ public:
         ActionViewLayerList,
         ActionViewBlockList,
         ActionViewCommandLine,
+        ActionViewLibrary,
+
+        ActionViewPenToolbar,
         ActionViewOptionToolbar,
+        ActionViewCadToolbar,
+        ActionViewFileToolbar,
+        ActionViewEditToolbar,
+
         ActionViewGrid,
         ActionViewDraft,
 
@@ -1153,6 +1161,14 @@ public:
 		RedrawDrawing = 4,
 		RedrawAll = 0xffff
 	};
+
+        /**
+         * Text drawing direction.
+         */
+        enum TextLocaleDirection {
+            locLeftToRight,     /** Left to right **/
+            locRightToLeft      /** Right to Left **/
+        };
 
 };
 

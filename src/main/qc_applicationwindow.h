@@ -33,7 +33,6 @@
 #include <qlayout.h>
 #include <q3mainwindow.h>
 #include <qmenubar.h>
-#include <q3popupmenu.h>
 #include <qsplitter.h>
 #include <qstatusbar.h>
 #include <q3table.h>
@@ -51,6 +50,8 @@
 
 // RVT_PORT added
 #include <QDockWidget>
+#include <QtHelp>
+#include <QTextEdit>
 
 #include "rs_document.h"
 
@@ -74,6 +75,8 @@
 
 #include "qg_cadtoolbar.h"
 #include "qg_commandwidget.h"
+
+#include "qc_plugininterface.h"
 
 class QG_LibraryWidget;
 class QG_CadToolBar;
@@ -116,6 +119,7 @@ public slots:
     void finishSplashScreen();
 	void slotFocus();
     void slotBack();
+    void slotKillAllActions();
     //void slotNext();
     void slotEnter();
     void slotFocusCommandLine();
@@ -169,16 +173,8 @@ public slots:
     void slotViewDraft(bool toggle);
     /** toggle the statusbar */
     void slotViewStatusBar(bool toggle);
-    /** toggle the layerlist */
-    //void slotViewLayerList(bool toggle);
-    /** toggle the blocklist */
-    //void slotViewBlockList(bool toggle);
-    /** toggle the command line */
-    //void slotViewCommandLine(bool toggle);
-    /** toggle the option toolbar */
-    //void slotViewOptionToolbar(bool toggle);
 
-    //void slotBlocksEdit();
+    // void slotBlocksEdit();
     void slotOptionsGeneral();
 	
     void slotScriptOpenIDE();
@@ -396,11 +392,11 @@ private:
 	QS_Scripter* scripter;
 #endif
 
-    Q3PopupMenu* fileMenu;
-    Q3PopupMenu* windowsMenu;
-    Q3PopupMenu* scriptMenu;
-    Q3PopupMenu* helpMenu;
-    Q3PopupMenu* testMenu;
+    QMenu* fileMenu;
+    QMenu* windowsMenu;
+    QMenu* scriptMenu;
+    QMenu* helpMenu;
+    QMenu* testMenu;
 
     /** the main toolbars */
     QToolBar* fileToolBar;
@@ -412,7 +408,8 @@ private:
     // Toolbar for CAD tools
     QG_CadToolBar* cadToolBar;
 
-	// RVT_PORT QAssistantClient* assistant;
+    QHelpEngine* helpEngine;
+    QDockWidget *helpWindow;
 
     QAction* scriptOpenIDE;
     QAction* scriptRun;
@@ -435,6 +432,15 @@ private:
     QAction *testResize640;
     QAction *testResize800;
     QAction *testResize1024;
+
+//Plugin support
+private:
+    void loadPlugins();
+    QMenu *findMenu(QStringList *treemenu);
+    QC_PluginInterface *pluginInterface;
+    QMenu* pluginMenu;
+public slots:
+    void execPlug();
 
 };
 
