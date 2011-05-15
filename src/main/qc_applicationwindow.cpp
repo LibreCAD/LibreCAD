@@ -146,7 +146,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     initView();
 	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init toolbar");
     initToolBar();
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init actions");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init actions");
     initActions();
 	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init menu bar");
     initMenuBar();
@@ -166,7 +166,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_DialogFactory::instance()->setFactoryObject(dialogFactory);
 	RS_DEBUG->print("setting dialog factory object: OK");
 
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
     initSettings();
 
 	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init MDI");
@@ -637,20 +637,6 @@ void QC_ApplicationWindow::initActions() {
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     /*
-       action = actionFactory.createAction(RS2::ActionViewLayerList, this);
-       action->addTo(menu);
-       action->setChecked(true);
-       action = actionFactory.createAction(RS2::ActionViewBlockList, this);
-       action->addTo(menu);
-       action->setChecked(true);
-       action = actionFactory.createAction(RS2::ActionViewOptionToolbar, this);
-       action->addTo(menu);
-       action->setChecked(true);
-       action = actionFactory.createAction(RS2::ActionViewCommandLine, this);
-       action->addTo(menu);
-       action->setChecked(true);*/
-
-    /*
     action = new QAction(tr("Back"),
                         tr("&Back"), Key_Escape, this);
        connect(action, SIGNAL(activated()),
@@ -691,8 +677,33 @@ void QC_ApplicationWindow::initActions() {
     menu->insertSeparator();
 
     action = actionFactory.createAction(RS2::ActionViewStatusBar, this);
-    action->addTo(menu);
     action->setChecked(true);
+    action->addTo(menu);
+
+    subMenu= menu->addMenu(tr("&Toolbars"));
+    subMenu->setName("Polyline");
+
+    action = actionFactory.createAction(RS2::ActionViewLayerList, this, this->layerWidget->parentWidget());
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewBlockList, this, this->blockWidget->parentWidget());
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewLibrary, this, this->libraryWidget->parentWidget());
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewCommandLine, this, this->commandWidget->parentWidget());
+    action->addTo(subMenu);
+
+    subMenu->addSeparator();
+
+    action = actionFactory.createAction(RS2::ActionViewPenToolbar, this, this->penToolBar);
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewOptionToolbar, this, this->optionWidget);
+    action->addTo(subMenu);
+    //action = actionFactory.createAction(RS2::ActionViewCadToolbar, this, this->cadToolBar);
+    //action->addTo(subMenu); // RVT CadToolbar is not a correct widget yet to beable to get toogled.
+    action = actionFactory.createAction(RS2::ActionViewFileToolbar, this, this->fileToolBar);
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewEditToolbar, this, this->editToolBar);
+    action->addTo(subMenu);
 
     // RVT_PORT menu->insertItem(tr("Vie&ws"), createDockWindowMenu(NoToolBars));
     // RVT_PORT menu->insertItem(tr("Tool&bars"), createDockWindowMenu(OnlyToolBars));
@@ -2815,86 +2826,6 @@ void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
     }
 }
 
-
-
-/**
- * Shows / hides the layer list.
- *
- * @param toggle true: show, false: hide.
- */
-/*void QC_ApplicationWindow::slotViewLayerList(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewLayerList()");
- 
-    if (toggle==false) {
-        layerDockWindow->hide();
-    } else {
-        layerDockWindow->show();
-    }
-}
-*/
-
-
-/**
- * Shows / hides the block list.
- *
- * @param toggle true: show, false: hide.
- */
-/*
-void QC_ApplicationWindow::slotViewBlockList(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewBlockList()");
- 
-    if (toggle==false) {
-        blockDockWindow->hide();
-    } else {
-        blockDockWindow->show();
-    }
-}
-*/
-
-
-
-/**
- * Shows / hides the command line.
- *
- * @param toggle true: show, false: hide.
- */
-/*
-void QC_ApplicationWindow::slotViewCommandLine(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewCommandLine()");
- 
-    if (toggle==false) {
-        commandDockWindow->hide();
-        //QG_GraphicView* graphicView = getGraphicView();
-        //if (graphicView!=NULL) {
-        //graphicView->setFocus();
-        //}
-        setFocus();
-    } else {
-        commandDockWindow->show();
-    }
-}
-*/
-
-
-
-/**
- * Shows / hides the option toolbar.
- *
- * @param toggle true: show, false: hide.
- */
-/*
-void QC_ApplicationWindow::slotViewOptionToolbar(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewOptionToolbar()");
- 
-    if (toggle==false) {
-        optionWidget->hide();
-    } else {
-        optionWidget->show();
-    }
-}
-*/
-
-
 /**
  * Creates a new MDI window for editing the selected block.
  */
@@ -2916,8 +2847,7 @@ void QC_ApplicationWindow::slotBlocksEdit() {
             }
         }
     }
-}
-*/
+} */
 
 
 

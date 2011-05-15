@@ -27,8 +27,10 @@
 #include "qg_actionfactory.h"
 
 #include <qobject.h>
+#include <QDockWidget>
 //Added by qt3to4:
 #include <QPixmap>
+#include <QToolBar>
 #include <q3mimefactory.h>
 
 #include "rs_actionblockscreate.h"
@@ -172,7 +174,7 @@ QG_ActionFactory::~QG_ActionFactory() {}
  *
  * @return Pointer to the action object or NULL if the action is unknown.
  */
-QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
+QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObject* obj2) {
     // assert that action handler is not invalid:
     if (actionHandler==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -289,47 +291,33 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj) {
                 obj, SLOT(slotViewDraft(bool)));
         break;
     case RS2::ActionViewStatusBar:
-			// tr("Statusbar")
-			action = new QAction(tr("&Statusbar"), mw);
-			//action->zetStatusTip(tr("Enables/disables the statusbar"));
-			action->setCheckable(true);
-			
+        // tr("Statusbar")
+        action = new QAction(tr("&Statusbar"), mw);
+        //action->zetStatusTip(tr("Enables/disables the statusbar"));
+        action->setCheckable(true);
+
         connect(action, SIGNAL(toggled(bool)),
                 obj, SLOT(slotViewStatusBar(bool)));
         break;
-        /*
-                   case RS2::ActionViewLayerList:
-                       action = new QAction(tr("Layer List"), tr("&Layer List"),
-                                            0, mw, 0, true);
-                       //action->zetStatusTip(tr("Enables/disables the layerlist"));
-                       connect(action, SIGNAL(toggled(bool)),
-                               obj, SLOT(slotViewLayerList(bool)));
-                       break;
-         
-                   case RS2::ActionViewBlockList:
-                       action = new QAction(tr("Block List"), tr("&Block List"),
-                                            0, mw, 0, true);
-                       //action->zetStatusTip(tr("Enables/disables the blocklist"));
-                       connect(action, SIGNAL(toggled(bool)),
-                               obj, SLOT(slotViewBlockList(bool)));
-                       break;
-         
-                   case RS2::ActionViewCommandLine:
-                       action = new QAction(tr("Command Widget"), tr("&Command Widget"),
-                                            0, mw, 0, true);
-                       //action->zetStatusTip(tr("Enables/disables the command widget"));
-                       connect(action, SIGNAL(toggled(bool)),
-                               obj, SLOT(slotViewCommandLine(bool)));
-                       break;
-         
-                   case RS2::ActionViewOptionToolbar:
-                       action = new QAction(tr("Option Toolbar"), tr("&Option Toolbar"),
-                                            0, mw, 0, true);
-                       //action->zetStatusTip(tr("Enables/disables the option toolbar"));
-                       connect(action, SIGNAL(toggled(bool)),
-                               obj, SLOT(slotViewOptionToolbar(bool)));
-                       break;
-                	*/
+
+    case RS2::ActionViewLayerList:
+    case RS2::ActionViewBlockList:
+    case RS2::ActionViewCommandLine:
+    case RS2::ActionViewLibrary:
+        if (obj2) {
+            action=((QDockWidget *)obj2)->toggleViewAction();
+        }
+        break;
+
+    case RS2::ActionViewPenToolbar:
+    case RS2::ActionViewOptionToolbar:
+    case RS2::ActionViewCadToolbar:
+    case RS2::ActionViewFileToolbar:
+    case RS2::ActionViewEditToolbar:
+        if (obj2) {
+            action=((QToolBar *)obj2)->toggleViewAction();
+        }
+        break;
 
         // Tools:
         //
