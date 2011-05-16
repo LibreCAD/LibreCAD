@@ -6,6 +6,8 @@ DEFINES += QC_APPNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYKEY="\"LibreCAD\""
 DEFINES += QC_VERSION="\"1.0.0beta5\""
+DEFINES += QC_DELAYED_SPLASH_SCREEN=1
+
 
 # Add qt3support
 QT += qt3support

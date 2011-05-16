@@ -107,6 +107,9 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 #ifndef QC_APP_ICON
 # define QC_APP_ICON "librecad.png"
 #endif
+#ifndef QC_ABOUT_ICON
+# define QC_ABOUT_ICON ":/main/intro_librecad.png"
+#endif
 #ifndef QC_APP_ICON16
 # define QC_APP_ICON16 "librecad16.png"
 #endif
@@ -2935,35 +2938,29 @@ void QC_ApplicationWindow::slotHelpAbout() {
 
     QMessageBox box(this);
     box.setCaption(tr("About..."));
-    box.setText(       QString("<qt>") +  // no center for main stream LibreCAD
-#ifdef QC_ABOUT_HEADER
-                       QString("<center>") + 
-                       QString(XSTR(QC_ABOUT_HEADER)) +
-#else
+    box.setText(       QString("<p><font size=\"2\">") +
                        "<h2>"+ XSTR(QC_APPNAME)+ "</h2>" +
-#endif
-				tr("Version: %1 %2").arg(XSTR(QC_VERSION)).arg(edition) + "<br>" +
+                       tr("Version: %1 %2").arg(XSTR(QC_VERSION)).arg(edition) + "<br>" +
 #ifdef QC_SVNREVISION
-				tr("SVN Revision: %1").arg(XSTR(QC_SVNREVISION)) + "<br>" +
+                       tr("SVN Revision: %1").arg(XSTR(QC_SVNREVISION)) + "<br>" +
 #endif
-                       tr("Date: %1").arg(__DATE__) + "<br>" +
-				"(c) 2010 by R. van Twisk<br>"
+                       tr("Compiled on: %1").arg(__DATE__) + "<br>" + "(c) 2011 by Ries. van Twisk<br>"
                        "<br>" +
+                       tr("Program Icons Supplied by") +" Pablo: " + QString("<a href=\"http://www.librecad.com.ar/\">LibreCAD Argentinie</a>") + "<br/>" +
+                       tr("Splash and Logo supplied by") + " Diego " + QString("<a href=\"http://daltom.2082studio.com/\">Daltom Designer</a>")+"<br/>" +
+                       "<br />" +
                        tr("Modules: %1").arg(modulesString) + "<br>" +
-                       QString("<a href=\"http://www.LibreCAD.org\">http://www.LibreCAD.org</a>")+"<br><br><br>"+
-				"<font size=\"1\">Portions (c) by RibbonSoft, Andrew Mustun</font>" 
+                       "<br />" +
+                       tr("Main Website : ") + QString("<a href=\"http://www.LibreCAD.org\">http://www.LibreCAD.org</a>")+"<br><br><br>"+
+                                "<font size=\"1\">Portions (c) by RibbonSoft, Andrew Mustun</font>" +
+                       "</font></p>");
 
-#ifdef QC_ABOUT_ADD_COMPANY
-                       + QString("<br>") + QC_ABOUT_ADD_COMPANY
-                       + QString("</center>")
-#endif
-                       );
-#ifndef QC_ABOUT_HEADER
-    //RVT_PORT box.setIcon( qPixmapFromMimeSource(QC_APP_ICON) );
-    //RVT_PORT box.setFixedWidth(340);
-    //RVT_PORT box.setFixedHeight(250);
-#endif
+    box.setIconPixmap( qPixmapFromMimeSource(QC_ABOUT_ICON) );
+    box.setMinimumSize(500,400);
+    box.setBaseSize(500,400);
+    box.setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     box.exec();
+    box.resize(500,400);
 }
 
 
