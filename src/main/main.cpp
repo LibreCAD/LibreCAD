@@ -221,7 +221,7 @@ int main(int argc, char** argv) {
 #ifdef QSPLASHSCREEN_H
         if (splash) {
                 RS_DEBUG->print("main: updating splash..");
-                splash->message(QObject::tr("Loading Library Paths.."),
+                splash->message(QObject::tr("Loading..."),
                         Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
                 RS_DEBUG->print("main: processing events");
                 qApp->processEvents();
