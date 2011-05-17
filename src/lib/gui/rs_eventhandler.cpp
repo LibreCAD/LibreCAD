@@ -59,19 +59,14 @@ RS_EventHandler::~RS_EventHandler() {
 		defaultAction = NULL;
     }
 
-    killAllActions();
-
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: Deleting all actions..");
     for (int i=0; i<RS_MAXACTIONS; ++i) {
         if (currentActions[i]!=NULL) {
-			currentActions[i]->setFinished();
-            //delete currentActions[i];
-            //currentActions[i] = NULL;
+            currentActions[i]->setFinished();
         }
     }
-	cleanUp();
+    cleanUp();
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: Deleting all actions..: OK");
-
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: OK");
 }
 
@@ -529,6 +524,8 @@ void RS_EventHandler::killAllActions() {
     for (int c=0; c<RS_MAXACTIONS; ++c) {
         if (currentActions[c]!=NULL) {
             currentActions[c]->finish();
+            delete currentActions[c];
+            currentActions[c]=NULL;
         }
     }
     cleanUp();
