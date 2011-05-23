@@ -26,7 +26,7 @@
 #ifndef QG_IMAGEOPTIONS_H
 #define QG_IMAGEOPTIONS_H
 
-#include "intermediate/ui/ui_qg_imageoptions.h"
+#include "ui_qg_imageoptions.h"
 
 class QG_ImageOptions : public QWidget, public Ui::QG_ImageOptions
 {

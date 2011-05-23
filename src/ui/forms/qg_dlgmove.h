@@ -26,7 +26,7 @@
 #ifndef QG_DLGMOVE_H
 #define QG_DLGMOVE_H
 
-#include "intermediate/ui/ui_qg_dlgmove.h"
+#include "ui_qg_dlgmove.h"
 
 class QG_DlgMove : public QDialog, public Ui::QG_DlgMove
 {

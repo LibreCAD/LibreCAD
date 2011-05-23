@@ -26,7 +26,7 @@
 #ifndef QG_DLGATTRIBUTES_H
 #define QG_DLGATTRIBUTES_H
 
-#include "intermediate/ui/ui_qg_dlgattributes.h"
+#include "ui_qg_dlgattributes.h"
 
 class QG_DlgAttributes : public QDialog, public Ui::QG_DlgAttributes
 {

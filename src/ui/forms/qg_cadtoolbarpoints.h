@@ -28,7 +28,7 @@
 
 class QG_CadToolBar;
 
-#include "intermediate/ui/ui_qg_cadtoolbarpoints.h"
+#include "ui_qg_cadtoolbarpoints.h"
 
 class QG_CadToolBarPoints : public QWidget, public Ui::QG_CadToolBarPoints
 {
