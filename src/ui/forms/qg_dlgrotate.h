@@ -26,7 +26,7 @@
 #ifndef QG_DLGROTATE_H
 #define QG_DLGROTATE_H
 
-#include "intermediate/ui/ui_qg_dlgrotate.h"
+#include "ui_qg_dlgrotate.h"
 
 class QG_DlgRotate : public QDialog, public Ui::QG_DlgRotate
 {
