@@ -26,7 +26,7 @@
 #ifndef QG_LAYERDIALOG_H
 #define QG_LAYERDIALOG_H
 
-#include "intermediate/ui/ui_qg_layerdialog.h"
+#include "ui_qg_layerdialog.h"
 
 class QG_LayerDialog : public QDialog, public Ui::QG_LayerDialog
 {

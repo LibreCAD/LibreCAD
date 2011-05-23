@@ -26,7 +26,7 @@
 #ifndef QG_LIBRARYWIDGET_H
 #define QG_LIBRARYWIDGET_H
 
-#include "intermediate/ui/ui_qg_librarywidget.h"
+#include "ui_qg_librarywidget.h"
 
 class QG_LibraryWidget : public QWidget, public Ui::QG_LibraryWidget
 {
