@@ -28,7 +28,7 @@
 
 class RS_Arc;
 
-#include "intermediate/ui/ui_qg_dlgarc.h"
+#include "ui_qg_dlgarc.h"
 
 class QG_DlgArc : public QDialog, public Ui::QG_DlgArc
 {

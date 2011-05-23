@@ -29,7 +29,7 @@
 class QG_CadToolBar;
 
 #include "qg_actionhandler.h"
-#include "intermediate/ui/ui_qg_cadtoolbarellipses.h"
+#include "ui_qg_cadtoolbarellipses.h"
 
 class QG_CadToolBarEllipses : public QWidget, public Ui::QG_CadToolBarEllipses
 {

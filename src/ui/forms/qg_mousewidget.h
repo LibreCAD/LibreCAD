@@ -26,7 +26,7 @@
 #ifndef QG_MOUSEWIDGET_H
 #define QG_MOUSEWIDGET_H
 
-#include "intermediate/ui/ui_qg_mousewidget.h"
+#include "ui_qg_mousewidget.h"
 
 class QG_MouseWidget : public QWidget, public Ui::QG_MouseWidget
 {

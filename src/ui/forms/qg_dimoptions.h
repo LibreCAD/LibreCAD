@@ -26,7 +26,7 @@
 #ifndef QG_DIMOPTIONS_H
 #define QG_DIMOPTIONS_H
 
-#include "intermediate/ui/ui_qg_dimoptions.h"
+#include "ui_qg_dimoptions.h"
 
 class QG_DimOptions : public QWidget, public Ui::QG_DimOptions
 {

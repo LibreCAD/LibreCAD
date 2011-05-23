@@ -28,7 +28,7 @@
 
 class QG_CadToolBar;
 
-#include "intermediate/ui/ui_qg_cadtoolbarsplines.h"
+#include "ui_qg_cadtoolbarsplines.h"
 
 class QG_CadToolBarSplines : public QWidget, public Ui::QG_CadToolBarSplines
 {
