@@ -28,7 +28,7 @@
 
 class QG_CadToolBar;
 
-#include "intermediate/ui/ui_qg_cadtoolbarselect.h"
+#include "ui_qg_cadtoolbarselect.h"
 
 class QG_CadToolBarSelect : public QWidget, public Ui::QG_CadToolBarSelect
 {

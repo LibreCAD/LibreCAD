@@ -28,7 +28,7 @@
 
 class RS_Insert;
 
-#include "intermediate/ui/ui_qg_dlginsert.h"
+#include "ui_qg_dlginsert.h"
 
 class QG_DlgInsert : public QDialog, public Ui::QG_DlgInsert
 {

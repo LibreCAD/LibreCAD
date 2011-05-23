@@ -26,7 +26,7 @@
 #ifndef QG_LINEOPTIONS_H
 #define QG_LINEOPTIONS_H
 
-#include "intermediate/ui/ui_qg_lineoptions.h"
+#include "ui_qg_lineoptions.h"
 
 class QG_LineOptions : public QWidget, public Ui::QG_LineOptions
 {
