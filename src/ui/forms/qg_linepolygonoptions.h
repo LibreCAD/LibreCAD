@@ -26,7 +26,7 @@
 #ifndef QG_LINEPOLYGONOPTIONS_H
 #define QG_LINEPOLYGONOPTIONS_H
 
-#include "intermediate/ui/ui_qg_linepolygonoptions.h"
+#include "ui_qg_linepolygonoptions.h"
 
 class QG_LinePolygonOptions : public QWidget, public Ui::QG_LinePolygonOptions
 {

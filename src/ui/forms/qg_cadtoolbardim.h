@@ -29,7 +29,7 @@
 class QG_CadToolBar;
 
 #include "qg_actionhandler.h"
-#include "intermediate/ui/ui_qg_cadtoolbardim.h"
+#include "ui_qg_cadtoolbardim.h"
 
 class QG_CadToolBarDim : public QWidget, public Ui::QG_CadToolBarDim
 {

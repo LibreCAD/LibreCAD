@@ -26,7 +26,7 @@
 #ifndef QG_MOVEROTATEOPTIONS_H
 #define QG_MOVEROTATEOPTIONS_H
 
-#include "intermediate/ui/ui_qg_moverotateoptions.h"
+#include "ui_qg_moverotateoptions.h"
 
 class QG_MoveRotateOptions : public QWidget, public Ui::QG_MoveRotateOptions
 {

@@ -26,7 +26,7 @@
 #ifndef QG_DLGDIMLINEAR_H
 #define QG_DLGDIMLINEAR_H
 
-#include "intermediate/ui/ui_qg_dlgdimlinear.h"
+#include "ui_qg_dlgdimlinear.h"
 
 class QG_DlgDimLinear : public QDialog, public Ui::QG_DlgDimLinear
 {

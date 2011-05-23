@@ -26,7 +26,7 @@
 #ifndef QG_TEXTOPTIONS_H
 #define QG_TEXTOPTIONS_H
 
-#include "intermediate/ui/ui_qg_textoptions.h"
+#include "ui_qg_textoptions.h"
 
 class QG_TextOptions : public QWidget, public Ui::QG_TextOptions
 {

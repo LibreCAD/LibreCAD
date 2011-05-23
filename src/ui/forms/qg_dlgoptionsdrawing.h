@@ -26,7 +26,7 @@
 #ifndef QG_DLGOPTIONSDRAWING_H
 #define QG_DLGOPTIONSDRAWING_H
 
-#include "intermediate/ui/ui_qg_dlgoptionsdrawing.h"
+#include "ui_qg_dlgoptionsdrawing.h"
 
 class QG_DlgOptionsDrawing : public QDialog, public Ui::QG_DlgOptionsDrawing
 {

@@ -28,7 +28,7 @@
 
 class RS_Ellipse;
 
-#include "intermediate/ui/ui_qg_dlgellipse.h"
+#include "ui_qg_dlgellipse.h"
 
 class QG_DlgEllipse : public QDialog, public Ui::QG_DlgEllipse
 {

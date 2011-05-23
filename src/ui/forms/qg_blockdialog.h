@@ -27,7 +27,7 @@
 #define QG_BLOCKDIALOG_H
 
 #include "rs_blocklist.h"
-#include "intermediate/ui/ui_qg_blockdialog.h"
+#include "ui_qg_blockdialog.h"
 
 class QG_BlockDialog : public QDialog, public Ui::QG_BlockDialog
 {

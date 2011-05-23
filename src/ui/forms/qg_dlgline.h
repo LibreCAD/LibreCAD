@@ -28,7 +28,7 @@
 
 class RS_Line;
 
-#include "intermediate/ui/ui_qg_dlgline.h"
+#include "ui_qg_dlgline.h"
 
 class QG_DlgLine : public QDialog, public Ui::QG_DlgLine
 {
