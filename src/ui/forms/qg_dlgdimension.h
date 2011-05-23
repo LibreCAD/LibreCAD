@@ -26,7 +26,7 @@
 #ifndef QG_DLGDIMENSION_H
 #define QG_DLGDIMENSION_H
 
-#include "intermediate/ui/ui_qg_dlgdimension.h"
+#include "ui_qg_dlgdimension.h"
 
 class QG_DlgDimension : public QDialog, public Ui::QG_DlgDimension
 {

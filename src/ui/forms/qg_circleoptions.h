@@ -27,7 +27,7 @@
 #define QG_CIRCLEOPTIONS_H
 
 #include "rs_actiondrawcirclecr.h"
-#include "intermediate/ui/ui_qg_circleoptions.h"
+#include "ui_qg_circleoptions.h"
 
 class QG_CircleOptions : public QWidget, public Ui::QG_CircleOptions
 {

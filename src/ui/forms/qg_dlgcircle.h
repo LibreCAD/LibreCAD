@@ -28,7 +28,7 @@
 
 class RS_Circle;
 
-#include "intermediate/ui/ui_qg_dlgcircle.h"
+#include "ui_qg_dlgcircle.h"
 
 class QG_DlgCircle : public QDialog, public Ui::QG_DlgCircle
 {
