@@ -26,7 +26,7 @@
 #ifndef QG_SELECTIONWIDGET_H
 #define QG_SELECTIONWIDGET_H
 
-#include "intermediate/ui/ui_qg_selectionwidget.h"
+#include "ui_qg_selectionwidget.h"
 
 class QG_SelectionWidget : public QWidget, public Ui::QG_SelectionWidget
 {

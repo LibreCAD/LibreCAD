@@ -41,7 +41,7 @@ class QG_ActionHandler;
 #include "qg_cadtoolbarselect.h"
 #include "qg_cadtoolbarsnap.h"
 #include "qg_cadtoolbarsplines.h"
-#include "intermediate/ui/ui_qg_cadtoolbar.h"
+#include "ui_qg_cadtoolbar.h"
 
 class QG_CadToolBar : public QWidget, public Ui::QG_CadToolBar
 {

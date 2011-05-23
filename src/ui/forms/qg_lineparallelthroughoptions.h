@@ -26,7 +26,7 @@
 #ifndef QG_LINEPARALLELTHROUGHOPTIONS_H
 #define QG_LINEPARALLELTHROUGHOPTIONS_H
 
-#include "intermediate/ui/ui_qg_lineparallelthroughoptions.h"
+#include "ui_qg_lineparallelthroughoptions.h"
 
 class QG_LineParallelThroughOptions : public QWidget, public Ui::QG_LineParallelThroughOptions
 {

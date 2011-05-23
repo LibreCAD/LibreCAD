@@ -29,4 +29,4 @@ Designed By:
 Diego Alejandro Torres M. "Daltom Designer"
 http://daltom.2082studio.com
 
-CC BY-SA
+Graphics work is supplied under the License : CC BY-SA
