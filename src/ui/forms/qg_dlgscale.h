@@ -26,7 +26,7 @@
 #ifndef QG_DLGSCALE_H
 #define QG_DLGSCALE_H
 
-#include "intermediate/ui/ui_qg_dlgscale.h"
+#include "ui_qg_dlgscale.h"
 
 class QG_DlgScale : public QDialog, public Ui::QG_DlgScale
 {

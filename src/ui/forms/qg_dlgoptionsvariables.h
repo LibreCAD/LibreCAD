@@ -26,7 +26,7 @@
 #ifndef QG_DLGOPTIONSVARIABLES_H
 #define QG_DLGOPTIONSVARIABLES_H
 
-#include "intermediate/ui/ui_qg_dlgoptionsvariables.h"
+#include "ui_qg_dlgoptionsvariables.h"
 
 class QG_DlgOptionsVariables : public QDialog, public Ui::QG_DlgOptionsVariables
 {

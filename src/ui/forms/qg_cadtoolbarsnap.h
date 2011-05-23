@@ -29,7 +29,7 @@
 class QG_CadToolBar;
 class QG_ActionHandler;
 
-#include "intermediate/ui/ui_qg_cadtoolbarsnap.h"
+#include "ui_qg_cadtoolbarsnap.h"
 
 class QG_CadToolBarSnap : public QWidget, public Ui::QG_CadToolBarSnap
 {

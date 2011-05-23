@@ -29,7 +29,7 @@
 class QG_CadToolBar;
 
 #include "qg_actionhandler.h"
-#include "intermediate/ui/ui_qg_cadtoolbararcs.h"
+#include "ui_qg_cadtoolbararcs.h"
 
 class QG_CadToolBarArcs : public QWidget, public Ui::QG_CadToolBarArcs
 {

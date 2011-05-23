@@ -26,7 +26,7 @@
 #ifndef QG_SNAPDISTOPTIONS_H
 #define QG_SNAPDISTOPTIONS_H
 
-#include "intermediate/ui/ui_qg_snapdistoptions.h"
+#include "ui_qg_snapdistoptions.h"
 
 class QG_SnapDistOptions : public QWidget, public Ui::QG_SnapDistOptions
 {
