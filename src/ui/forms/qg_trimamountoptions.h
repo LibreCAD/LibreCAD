@@ -26,7 +26,7 @@
 #ifndef QG_TRIMAMOUNTOPTIONS_H
 #define QG_TRIMAMOUNTOPTIONS_H
 
-#include "intermediate/ui/ui_qg_trimamountoptions.h"
+#include "ui_qg_trimamountoptions.h"
 
 class QG_TrimAmountOptions : public QWidget, public Ui::QG_TrimAmountOptions
 {

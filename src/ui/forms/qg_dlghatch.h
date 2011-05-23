@@ -26,7 +26,7 @@
 #ifndef QG_DLGHATCH_H
 #define QG_DLGHATCH_H
 
-#include "intermediate/ui/ui_qg_dlghatch.h"
+#include "ui_qg_dlghatch.h"
 
 class QG_DlgHatch : public QDialog, public Ui::QG_DlgHatch
 {

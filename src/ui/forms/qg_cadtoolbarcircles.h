@@ -29,7 +29,7 @@
 class QG_CadToolBar;
 
 #include "qg_actionhandler.h"
-#include "intermediate/ui/ui_qg_cadtoolbarcircles.h"
+#include "ui_qg_cadtoolbarcircles.h"
 
 class QG_CadToolBarCircles : public QWidget, public Ui::QG_CadToolBarCircles
 {

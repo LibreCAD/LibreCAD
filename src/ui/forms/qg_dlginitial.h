@@ -26,7 +26,7 @@
 #ifndef QG_DLGINITIAL_H
 #define QG_DLGINITIAL_H
 
-#include "intermediate/ui/ui_qg_dlginitial.h"
+#include "ui_qg_dlginitial.h"
 
 class QG_DlgInitial : public QDialog, public Ui::QG_DlgInitial
 {

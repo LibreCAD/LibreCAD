@@ -26,7 +26,7 @@
 #ifndef QG_ROUNDOPTIONS_H
 #define QG_ROUNDOPTIONS_H
 
-#include "intermediate/ui/ui_qg_roundoptions.h"
+#include "ui_qg_roundoptions.h"
 
 class QG_RoundOptions : public QWidget, public Ui::QG_RoundOptions
 {

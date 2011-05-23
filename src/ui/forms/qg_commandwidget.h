@@ -26,7 +26,7 @@
 #ifndef QG_COMMANDWIDGET_H
 #define QG_COMMANDWIDGET_H
 
-#include "intermediate/ui/ui_qg_commandwidget.h"
+#include "ui_qg_commandwidget.h"
 
 class QG_CommandWidget : public QWidget, public Ui::QG_CommandWidget
 {

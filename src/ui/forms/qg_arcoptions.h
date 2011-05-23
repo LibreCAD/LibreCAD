@@ -27,7 +27,7 @@
 #define QG_ARCOPTIONS_H
 
 #include "rs_actiondrawarc.h"
-#include "intermediate/ui/ui_qg_arcoptions.h"
+#include "ui_qg_arcoptions.h"
 
 class QG_ArcOptions : public QWidget, public Ui::QG_ArcOptions
 {

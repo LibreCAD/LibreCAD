@@ -26,7 +26,7 @@
 #ifndef QG_LINEPARALLELOPTIONS_H
 #define QG_LINEPARALLELOPTIONS_H
 
-#include "intermediate/ui/ui_qg_lineparalleloptions.h"
+#include "ui_qg_lineparalleloptions.h"
 
 class QG_LineParallelOptions : public QWidget, public Ui::QG_LineParallelOptions
 {
