@@ -54,7 +54,7 @@ win32 {
     DEFINES += QC_APPDIR="\"LibreCAD\""
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
     
-    # RC_FILE = res/main/librecad.icns
+    RC_FILE = res\\main\\librecad.rc
     DESTDIR = .
     QMAKE_POST_LINK = scripts\\postprocess-win.bat
 }
