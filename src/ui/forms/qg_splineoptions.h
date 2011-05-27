@@ -26,7 +26,7 @@
 #ifndef QG_SPLINEOPTIONS_H
 #define QG_SPLINEOPTIONS_H
 
-#include "intermediate/ui/ui_qg_splineoptions.h"
+#include "ui_qg_splineoptions.h"
 
 class QG_SplineOptions : public QWidget, public Ui::QG_SplineOptions
 {

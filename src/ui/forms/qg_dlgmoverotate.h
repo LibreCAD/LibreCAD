@@ -26,7 +26,7 @@
 #ifndef QG_DLGMOVEROTATE_H
 #define QG_DLGMOVEROTATE_H
 
-#include "intermediate/ui/ui_qg_dlgmoverotate.h"
+#include "ui_qg_dlgmoverotate.h"
 
 class QG_DlgMoveRotate : public QDialog, public Ui::QG_DlgMoveRotate
 {

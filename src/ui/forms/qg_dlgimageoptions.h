@@ -26,7 +26,7 @@
 #ifndef QG_IMAGEOPTIONSDIALOG_H
 #define QG_IMAGEOPTIONSDIALOG_H
 
-#include "intermediate/ui/ui_qg_dlgimageoptions.h"
+#include "ui_qg_dlgimageoptions.h"
 
 class QG_ImageOptionsDialog : public QDialog, public Ui::QG_ImageOptionsDialog
 {
