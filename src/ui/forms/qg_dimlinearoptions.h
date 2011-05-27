@@ -26,7 +26,7 @@
 #ifndef QG_DIMLINEAROPTIONS_H
 #define QG_DIMLINEAROPTIONS_H
 
-#include "intermediate/ui/ui_qg_dimlinearoptions.h"
+#include "ui_qg_dimlinearoptions.h"
 
 class QG_DimLinearOptions : public QWidget, public Ui::QG_DimLinearOptions
 {

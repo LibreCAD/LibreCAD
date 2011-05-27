@@ -28,7 +28,7 @@
 
 class RS_Point;
 
-#include "intermediate/ui/ui_qg_dlgpoint.h"
+#include "ui_qg_dlgpoint.h"
 
 class QG_DlgPoint : public QDialog, public Ui::QG_DlgPoint
 {
