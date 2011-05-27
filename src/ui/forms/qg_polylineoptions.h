@@ -26,7 +26,7 @@
 #ifndef QG_POLYLINEOPTIONS_H
 #define QG_POLYLINEOPTIONS_H
 
-#include "intermediate/ui/ui_qg_polylineoptions.h"
+#include "ui_qg_polylineoptions.h"
 
 class QG_PolylineOptions : public QWidget, public Ui::QG_PolylineOptions
 {

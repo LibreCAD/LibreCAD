@@ -26,7 +26,7 @@
 #ifndef QG_WIDGETPEN_H
 #define QG_WIDGETPEN_H
 
-#include "intermediate/ui/ui_qg_widgetpen.h"
+#include "ui_qg_widgetpen.h"
 
 class QG_WidgetPen : public QWidget, public Ui::QG_WidgetPen
 {

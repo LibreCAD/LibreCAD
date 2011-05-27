@@ -26,7 +26,7 @@
 #ifndef QG_LINEBISECTOROPTIONS_H
 #define QG_LINEBISECTOROPTIONS_H
 
-#include "intermediate/ui/ui_qg_linebisectoroptions.h"
+#include "ui_qg_linebisectoroptions.h"
 
 class QG_LineBisectorOptions : public QWidget, public Ui::QG_LineBisectorOptions
 {

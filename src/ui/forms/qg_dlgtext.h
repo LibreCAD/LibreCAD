@@ -26,7 +26,7 @@
 #ifndef QG_DLGTEXT_H
 #define QG_DLGTEXT_H
 
-#include "intermediate/ui/ui_qg_dlgtext.h"
+#include "ui_qg_dlgtext.h"
 
 class QG_DlgText : public QDialog, public Ui::QG_DlgText
 {

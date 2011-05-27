@@ -26,7 +26,7 @@
 #ifndef QG_LINEANGLEOPTIONS_H
 #define QG_LINEANGLEOPTIONS_H
 
-#include "intermediate/ui/ui_qg_lineangleoptions.h"
+#include "ui_qg_lineangleoptions.h"
 
 class QG_LineAngleOptions : public QWidget, public Ui::QG_LineAngleOptions
 {
