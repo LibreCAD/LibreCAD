@@ -26,8 +26,7 @@
 
 #include "rs_system.h"
 #include <qtextcodec.h>
-//Added by qt3to4:
-#include <Q3TextStream>
+#include <QTextStream>
 
 void QG_DlgText::init() {
     cbFont->init();
@@ -360,7 +359,7 @@ void QG_DlgText::load(const QString& fn) {
         return;
     }
 
-    Q3TextStream ts(&f);
+    QTextStream ts(&f);
     teText->setText(ts.read());
 }
 
@@ -376,7 +375,7 @@ void QG_DlgText::save(const QString& fn) {
     QString text = teText->text();
     QFile f(fn);
     if (f.open(QIODevice::WriteOnly)) {
-        Q3TextStream t(&f);
+        QTextStream t(&f);
         t << text;
         f.close();
     }
