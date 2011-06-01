@@ -26,8 +26,6 @@
 
 #include <qapplication.h>
 #include <qtextcodec.h>
-//Added by qt3to4:
-#include <Q3CString>
 #include <QTranslator>
 #include "rs_settings.h"
 #include "rs_system.h"
@@ -701,9 +699,9 @@ RS_String RS_System::getEncoding(const RS_String& str) {
 
  2004-05-13, J Staniek
 */
-static QMap<Q3CString,Q3CString> loc_map;
+static QMap<QByteArray,QByteArray> loc_map;
 
-Q3CString RS_System::localeToISO(const Q3CString& locale) {
+QByteArray RS_System::localeToISO(const QByteArray& locale) {
     if (loc_map.isEmpty()) {
         loc_map["croatian"]="ISO8859-2";
         loc_map["cs"]="ISO8859-2";
@@ -820,7 +818,7 @@ Q3CString RS_System::localeToISO(const Q3CString& locale) {
         loc_map["kk"]="KOI8-R";
         loc_map["kk_KZ"]="KOI8-R";
     }
-    Q3CString l = loc_map[locale];
+    QByteArray l = loc_map[locale];
     if (l.isEmpty())
         return "ISO8859-1";
     return l;
