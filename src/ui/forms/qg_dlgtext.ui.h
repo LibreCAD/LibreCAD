@@ -26,9 +26,7 @@
 
 #include "rs_system.h"
 #include <qtextcodec.h>
-//Added by qt3to4:
-#include <Q3TextStream>
-#include <Q3CString>
+#include <QTextStream>
 
 void QG_DlgText::init() {
     cbFont->init();
@@ -96,7 +94,7 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
     if (isNew) {
         RS_SETTINGS->beginGroup("/Draw");
         //default font depending on locale
-        Q3CString iso = RS_System::localeToISO( QTextCodec::locale() );
+        QByteArray iso = RS_System::localeToISO( QTextCodec::locale() );
         if (iso=="ISO8859-1") {
              fon = RS_SETTINGS->readEntry("/TextFont", "normallatin1");
         } else if (iso=="ISO8859-2") {
@@ -361,7 +359,7 @@ void QG_DlgText::load(const QString& fn) {
         return;
     }
 
-    Q3TextStream ts(&f);
+    QTextStream ts(&f);
     teText->setText(ts.read());
 }
 
@@ -377,7 +375,7 @@ void QG_DlgText::save(const QString& fn) {
     QString text = teText->text();
     QFile f(fn);
     if (f.open(QIODevice::WriteOnly)) {
-        Q3TextStream t(&f);
+        QTextStream t(&f);
         t << text;
         f.close();
     }

@@ -34,8 +34,6 @@
 #include "rs_dir.h"
 #include "rs_string.h"
 #include "rs_stringlist.h"
-//Added by qt3to4:
-#include <Q3CString>
 #include <QList>
 #include "rs_locale.h"
 
@@ -178,7 +176,7 @@ public:
 
 	/** Returns ISO code for given locale. Needed for win32 to convert 
 	 from system encodings. */
-	static Q3CString localeToISO(const Q3CString& locale);
+        static QByteArray localeToISO(const QByteArray& locale);
 
     private:
     void addLocale(RS_Locale *locale);
