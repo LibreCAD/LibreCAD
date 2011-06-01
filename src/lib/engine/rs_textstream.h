@@ -28,10 +28,10 @@
 #ifndef RS_TEXTSTREAM_H
 #define RS_TEXTSTREAM_H
 
-#include <q3textstream.h>
-#include <qtextcodec.h>
+#include <QTextStream>
+#include <QTextCodec>
 
-#define RS_TextStream Q3TextStream
+#define RS_TextStream QTextStream
 #define RS_TextCodec QTextCodec
 
 #endif
