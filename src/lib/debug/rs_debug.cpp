@@ -147,7 +147,7 @@ void RS_Debug::timestamp() {
     RS_String nowStr;
 
 		nowStr = now.toString("yyyyMMdd_hh:mm:ss:zzz ");
-    fprintf(stream, nowStr.latin1());
+    fprintf(stream, "%s", nowStr.toLatin1().data());
     fprintf(stream, "\n");
     fflush(stream);
 }
