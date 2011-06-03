@@ -27,6 +27,7 @@ unix {
     SVNREVISION="Git Version"
     DEFINES += QC_SVNREVISION=\"$$SVNREVISION\"
     macx { 
+        CONFIG += x86 x86_64
         TARGET = LibreCAD
         DEFINES += QC_APPDIR="\"LibreCAD\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
