@@ -49,7 +49,7 @@ RS_ActionEditPaste::~RS_ActionEditPaste() {}
 QAction* RS_ActionEditPaste::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {
 	// tr("Paste")
 	QAction* action = new QAction(tr("&Paste"), parent);
-	action->setIcon(QIcon(":/actions/editpaste2.png"));
+        action->setIcon(QIcon::fromTheme("edit-paste", QIcon(":/actions/editpaste2.png")));
 	action->setShortcut(QKeySequence::Paste);
 	//action->zetStatusTip(tr("Pastes the clipboard contents"));
 	
