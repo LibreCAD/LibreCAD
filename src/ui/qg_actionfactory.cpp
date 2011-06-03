@@ -245,7 +245,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
     case RS2::ActionFilePrint:			
 			// tr("Print Drawing")
 			action = new QAction(tr("&Print..."), mw);
-			action->setIcon(QIcon(":/actions/fileprint.png"));
+                        action->setIcon(QIcon::fromTheme("document-print", QIcon(":/actions/fileprint.png")));
 			action->setShortcut(QKeySequence::Print);
 			//action->zetStatusTip(tr("Prints out the current drawing"));
 			
@@ -262,7 +262,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
 
     case RS2::ActionFileQuit:
                         action = new QAction(tr("&Quit"), mw);
-                        action->setIcon(QIcon(":/actions/exit.png"));
+                        action->setIcon(QIcon::fromTheme("application-exit", QIcon(":/actions/exit.png")));
                         action->setShortcut(QKeySequence::Quit);
 			//action->zetStatusTip(tr("Quits the application"));
         connect(action, SIGNAL(activated()),
@@ -375,7 +375,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
         //
     case RS2::ActionEditKillAllActions:
         action = new QAction(tr("&back"), mw);
-        action->setIcon(QIcon(":/actions/back.png"));
+        action->setIcon(QIcon::fromTheme("go-previous-view", QIcon(":/actions/back.png")));
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotEditKillAllActions()));
         break;
