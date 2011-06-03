@@ -24,83 +24,57 @@
 **
 **********************************************************************/
 
+#include <QStatusBar>
+#include <QMenuBar>
+#include <QDockWidget>
+#include <QtHelp>
+#include <QSplitter>
+
 #include "qc_applicationwindow.h"
 #include "helpbrowser.h"
-//Added by qt3to4:
-#include <Q3StrList>
-#include <QPixmap>
-#include <QMouseEvent>
-#include <QCloseEvent>
-#include <q3mimefactory.h>
-#include <QKeyEvent>
-#include <Q3Frame>
-// RVT_PORT added
-#include <QImageReader>
 // RVT_PORT added
 #include <QImageWriter>
-#include <QDesktopServices>
 
 #include <fstream>
 
-#include <q3accel.h>
-#include <qaction.h>
-#include <qapplication.h>
-#include <qdatetime.h>
-#include <qfile.h>
-#include <qfiledialog.h>
-#include <qnamespace.h>
-#include <qmessagebox.h>
-#include <q3paintdevicemetrics.h>
-#include <qpainter.h>
-#include <qprinter.h>
-#include <qtimer.h>
-#include <q3vbox.h>
-
-#include <qeventloop.h>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QTimer>
 
 //Plugin support
 #include <QPluginLoader>
 
 #include "rs_application.h"
-#include "rs_actiondrawlinefree.h"
 #include "rs_actionprintpreview.h"
-#include "rs_creation.h"
-#include "rs_dialogfactory.h"
 #include "rs_dimaligned.h"
 #include "rs_dimlinear.h"
-#include "rs_dimradial.h"
-#include "rs_ellipse.h"
 #include "rs_hatch.h"
 #include "rs_image.h"
-#include "rs_fileio.h"
 #include "rs_insert.h"
 #include "rs_text.h"
 #include "rs_settings.h"
-#include "rs_script.h"
-#include "rs_scriptlist.h"
-#include "rs_solid.h"
 #include "rs_staticgraphicview.h"
 #include "rs_system.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_painterqt.h"
 #include "rs_selection.h"
 
-#include "qg_cadtoolbarmain.h"
-#include "qg_colorbox.h"
+#include "qg_cadtoolbar.h"
+#include "qg_actionfactory.h"
+#include "qg_blockwidget.h"
+#include "qg_librarywidget.h"
+#include "qg_commandwidget.h"
+
 #include "qg_coordinatewidget.h"
 #include "qg_dlgimageoptions.h"
 #include "qg_filedialog.h"
-#include "qg_mousewidget.h"
-#include "qg_pentoolbar.h"
 #include "qg_selectionwidget.h"
-#include "qg_cadtoolbarmain.h"
-#include "qg_dlgimageoptions.h"
 #include "qg_mousewidget.h"
 
-#include "qc_mdiwindow.h"
 #include "qc_dialogfactory.h"
 #include "main.h"
 #include "doc_plugin_interface.h"
+#include "qc_plugininterface.h"
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 
@@ -114,7 +88,7 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 # define QC_APP_ICON16 ":/main/librecad16.png"
 #endif
 
-# include <qsplashscreen.h>
+#include <QSplashScreen>
     extern QSplashScreen *splash;
 
 /**
@@ -484,10 +458,14 @@ void QC_ApplicationWindow::mouseReleaseEvent(QMouseEvent* e) {
 void QC_ApplicationWindow::initMDI() {
     RS_DEBUG->print("QC_ApplicationWindow::initMDI() begin");
 
-    Q3VBox* vb = new Q3VBox(this);
-    vb->setFrameStyle(Q3Frame::StyledPanel | Q3Frame::Sunken);
-    workspace = new QWorkspace(vb);
+    QFrame *vb = new QFrame(this);
+    QVBoxLayout *layout = new QVBoxLayout;
+    vb->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+    layout->setContentsMargins ( 0, 0, 0, 0 );
+    workspace = new QWorkspace();
+    layout->addWidget(workspace);
     workspace->setScrollBarsEnabled(true);
+    vb->setLayout(layout);
     setCentralWidget(vb);
 
     connect(workspace, SIGNAL(windowActivated(QWidget*)),
@@ -684,7 +662,7 @@ void QC_ApplicationWindow::initActions() {
     action->addTo(menu);
 
     subMenu= menu->addMenu(tr("&Toolbars"));
-    subMenu->setName("Polyline");
+    subMenu->setName("Toolbars");
 
     action = actionFactory.createAction(RS2::ActionViewLayerList, this, this->layerWidget->parentWidget());
     action->addTo(subMenu);
@@ -2346,7 +2324,7 @@ void QC_ApplicationWindow::slotFileExport() {
         }
 
 
-        QFileDialog fileDlg(this, "", false);
+        QFileDialog fileDlg(this);
         fileDlg.setFilters(filters);
         fileDlg.setFileMode(QFileDialog::AnyFile);
         fileDlg.selectFilter(defFilter);
@@ -2577,18 +2555,17 @@ void QC_ApplicationWindow::slotFilePrint() {
 
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         printer->setFullPage(true);
-        Q3PaintDeviceMetrics metr(printer);
 
         RS_PainterQt* painter = new RS_PainterQt(printer);
         painter->setDrawingMode(w->getGraphicView()->getDrawingMode());
 
-        RS_StaticGraphicView gv(metr.width(), metr.height(), painter);
+        RS_StaticGraphicView gv(printer->width(), printer->height(), painter);
         gv.setPrinting(true);
         gv.setBorders(0,0,0,0);
 
-        double fx = (double)metr.width() / metr.widthMM()
+        double fx = (double)printer->width() / printer->widthMM()
                     * RS_Units::getFactorToMM(graphic->getUnit());
-        double fy = (double)metr.height() / metr.heightMM()
+        double fy = (double)printer->height() / printer->heightMM()
                     * RS_Units::getFactorToMM(graphic->getUnit());
 
         double f = (fx+fy)/2;
