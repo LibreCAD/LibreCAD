@@ -28,8 +28,6 @@
 
 #include "rs_clipboard.h"
 #include "rs_modification.h"
-//Added by qt3to4:
-#include <q3mimefactory.h>
 
 /**
  * Constructor.
