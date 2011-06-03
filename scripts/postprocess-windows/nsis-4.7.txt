@@ -7,6 +7,8 @@
   !include "MUI2.nsh"
   !include "WinVer.nsh"
 
+  !define MUI_ICON "..\..\res\main\librecad.ico"
+
 ;--------------------------------
 ;General
 

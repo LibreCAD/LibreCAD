@@ -47,7 +47,7 @@ RS_ActionZoomAuto::RS_ActionZoomAuto(RS_EntityContainer& container,
 QAction* RS_ActionZoomAuto::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Auto Zoom")
 	QAction* action = new QAction(tr("&Auto Zoom"), NULL);
-	action->setIcon(QIcon(":/actions/zoomauto.png"));
+        action->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/actions/zoomauto.png")));
 	//action->zetStatusTip(tr("Zooms automatic"));
 
 	return action;
