@@ -26,12 +26,8 @@
 
 #include "qg_actionfactory.h"
 
-#include <qobject.h>
 #include <QDockWidget>
-//Added by qt3to4:
-#include <QPixmap>
 #include <QToolBar>
-#include <q3mimefactory.h>
 
 #include "rs_actionblockscreate.h"
 #include "rs_actionblocksfreezeall.h"
@@ -1167,7 +1163,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
 #endif
                              0, mw); */
 
-			action = new QAction(qPixmapFromMimeSource("configure.png"),
+                        action = new QAction(QIcon(":/actions/configure.png"),
 #ifdef __APPLE__
 								 tr("&Preferences"),
 #else
