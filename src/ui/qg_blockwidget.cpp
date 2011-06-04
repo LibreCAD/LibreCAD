@@ -26,17 +26,9 @@
 
 #include "qg_blockwidget.h"
 
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <q3popupmenu.h>
-#include <qtoolbutton.h>
-#include <qlabel.h>
-#include <qcursor.h>
-//Added by qt3to4:
-#include <Q3HBoxLayout>
-#include <QContextMenuEvent>
-#include <QKeyEvent>
-#include <Q3VBoxLayout>
+#include <QToolTip>
+#include <QToolButton>
+#include <QMenu>
 
 /**
  * Constructor.
@@ -64,8 +56,8 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     listBox->setSmoothScrolling(true);
 	listBox->setFocusPolicy(Qt::NoFocus);
 
-    Q3VBoxLayout* lay = new Q3VBoxLayout(this, 0, -1, "lay");
-
+    QVBoxLayout* lay = new QVBoxLayout(this);
+    lay->setSpacing ( 0 );
     /*
 	QLabel* caption = new QLabel(tr("Block List"), this, "caption");
     caption->setAlignment(Qt::AlignCenter);
@@ -73,8 +65,8 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     caption->setPaletteForegroundColor(white);
 	*/
 
-    Q3HBoxLayout* layButtons = new Q3HBoxLayout(NULL, 0, -1, "layButtons");
-    Q3HBoxLayout* layButtons2 = new Q3HBoxLayout(NULL, 0, -1, "layButtons2");
+    QHBoxLayout* layButtons = new QHBoxLayout();
+    QHBoxLayout* layButtons2 = new QHBoxLayout();
     QToolButton* but;
     // show all blocks:
     but = new QToolButton(this);
@@ -306,7 +298,7 @@ void QG_BlockWidget::slotMouseButtonClicked(int /*button*/,
 void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
 
     //QListBoxItem* item = listBox->selectedItem();
-    Q3PopupMenu* contextMenu = new Q3PopupMenu(this);
+    QMenu* contextMenu = new QMenu(this);
     QLabel* caption = new QLabel(tr("Block Menu"), this);
     caption->setPaletteBackgroundColor(RS_Color(0,0,0));
     caption->setPaletteForegroundColor(RS_Color(255,255,255));
