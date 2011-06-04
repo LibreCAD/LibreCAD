@@ -27,8 +27,6 @@
 #include "rs_actionfileopen.h"
 
 #include "rs_graphic.h"
-//Added by qt3to4:
-#include <q3mimefactory.h>
 
 
 

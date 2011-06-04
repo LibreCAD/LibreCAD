@@ -29,8 +29,6 @@
 #include "rs.h"
 #include "rs_snapper.h"
 #include "rs_point.h"
-//Added by qt3to4:
-#include <q3mimefactory.h>
 
 
 /**

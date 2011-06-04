@@ -28,58 +28,31 @@
 #define QC_APPLICATIONWINDOW_H
 
 
-#include <qaction.h>
-//RVT_PORT #include <qassistantclient.h>
-#include <qlayout.h>
-#include <q3mainwindow.h>
-#include <qmenubar.h>
-#include <qsplitter.h>
-#include <qstatusbar.h>
-#include <q3table.h>
-#include <qtimer.h>
-#include <qtoolbar.h>
-#include <qtoolbutton.h>
-#include <q3whatsthis.h>
-
 #undef QT_NO_WORKSPACE
 #include <qworkspace.h>
-//Added by qt3to4:
-#include <QCloseEvent>
-#include <QMouseEvent>
-#include <QKeyEvent>
 
-// RVT_PORT added
-#include <QDockWidget>
-#include <QtHelp>
-#include <QTextEdit>
-
-#include "rs_document.h"
-
-#include "qc_dialogfactory.h"
-#include "qg_graphicview.h"
 #include "qc_mdiwindow.h"
-
-#include "qg_actionhandler.h"
-#include "qg_actionfactory.h"
-#include "qg_blockwidget.h"
-#include "qg_layerwidget.h"
 #include "qg_mainwindowinterface.h"
-#include "qg_recentfiles.h"
-#include "qg_pentoolbar.h"
-#include "qg_librarywidget.h"
 
 #ifdef RS_SCRIPTING
 #include "qs_scripter.h"
 #include <qsproject.h>
 #endif
 
-#include "qg_cadtoolbar.h"
-#include "qg_commandwidget.h"
-
-#include "qc_plugininterface.h"
-
 class QG_LibraryWidget;
 class QG_CadToolBar;
+class QC_DialogFactory;
+class QG_LayerWidget;
+class QG_BlockWidget;
+class QG_CommandWidget;
+class QG_CoordinateWidget;
+class QG_MouseWidget;
+class QG_SelectionWidget;
+class QG_RecentFiles;
+class QG_PenToolBar;
+class QHelpEngine;
+class QC_PluginInterface;
+
 /**
  * Main application window. Hold together document, view and controls.
  *
