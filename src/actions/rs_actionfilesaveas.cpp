@@ -27,8 +27,6 @@
 #include "rs_actionfilesaveas.h"
 
 #include "rs_graphic.h"
-//Added by qt3to4:
-#include <q3mimefactory.h>
 
 RS_ActionFileSaveAs::RS_ActionFileSaveAs(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
