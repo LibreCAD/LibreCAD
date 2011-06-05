@@ -147,7 +147,15 @@ void RS_FilterDXF::addLayer(const DL_LayerData& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: creating layer");
 
-    RS_Layer* layer = new RS_Layer(QString::fromUtf8(data.name.c_str()));
+    QString layerName="";
+    QTextCodec *codec = QTextCodec::codecForName(RS_System::getEncoding(variables.getString("$DWGCODEPAGE", "ANSI_1252")));
+    if (codec!=NULL) {
+        layerName = codec->toUnicode(toNativeString(data.name.c_str()));
+    } else {
+        layerName = toNativeString(data.name.c_str());
+    }
+
+    RS_Layer* layer = new RS_Layer(layerName);
     RS_DEBUG->print("RS_FilterDXF::addLayer: set pen");
     layer->setPen(attributesToPen(attributes));
     //layer->setFlags(data.flags&0x07);
@@ -1449,7 +1457,7 @@ void RS_FilterDXF::writeLayer(DL_WriterA& dw, RS_Layer* l) {
 
     dxf.writeLayer(
         dw,
-        DL_LayerData((const char*)l->getName().local8Bit(),
+        DL_LayerData((const char*)toDxfString(l->getName()),
                      l->isFrozen() + (l->isLocked()<<2)),
         DL_Attributes(std::string(""),
                       colorToNumber(l->getPen().getColor()),
@@ -2895,20 +2903,6 @@ int RS_FilterDXF::widthToNumber(RS2::LineWidth width) {
  * - %%%p for a plus/minus sign
  */
 RS_String RS_FilterDXF::toDxfString(const RS_String& string) {
-    /*
-       RS_String res = string;
-       // Line feed:
-       res = res.replace(RS_RegExp("\\n"), "\\P");
-       // Space:
-       res = res.replace(RS_RegExp(" "), "\\~");
-       // diameter:
-       res = res.replace(QChar(0x2205), "%%c");
-       // degree:
-       res = res.replace(QChar(0x00B0), "%%d");
-       // plus/minus
-       res = res.replace(QChar(0x00B1), "%%p");
-    */
-
     RS_String res = "";
 
     for (uint i=0; i<string.length(); ++i) {
@@ -2917,9 +2911,10 @@ RS_String RS_FilterDXF::toDxfString(const RS_String& string) {
         case 0x0A:
             res+="\\P";
             break;
-        case 0x20:
-            res+="\\~";
-            break;
+// RVT Space can stay space, verified with DraftSpace
+//        case 0x20:
+//            res+="\\~";
+//            break;
             // diameter:
         case 0x2205:
             res+="%%c";
