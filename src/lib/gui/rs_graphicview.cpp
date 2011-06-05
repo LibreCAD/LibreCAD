@@ -990,8 +990,10 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 
     // drawing meta grid:
     if (!isPrintPreview()) {
+
+        //only drawGrid updates the grid layout (updatePointArray())
+        drawGrid(painter);
         drawMetaGrid(painter);
-		drawGrid(painter);
 
     }
 
