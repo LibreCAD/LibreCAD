@@ -118,7 +118,7 @@ bool RS_Font::loadFont() {
     RS_String line;
 
     // Read line by line until we find a new letter:
-    while (!f.atEnd()) {
+    while (!ts.atEnd()) {
         line = ts.readLine();
 
         if (line.isEmpty()) 
