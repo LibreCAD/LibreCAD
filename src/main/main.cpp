@@ -230,6 +230,10 @@ int main(int argc, char** argv) {
 #endif
 
         // loading files:
+        // renew: avoid . / , confusion on German environments
+        //setlocale(LC_NUMERIC, "C");
+        setlocale(LC_ALL, "C");
+
         RS_DEBUG->print("main: loading files..");
         bool files_loaded = false;
         for (QStringList::Iterator it = fileList.begin(); it != fileList.end();
@@ -260,10 +264,6 @@ int main(int argc, char** argv) {
 #endif
 
     //app.connect(&app, SIGNAL(lastWindowClosed()), &app, SLOT(quit()));
-
-        // renew: avoid . / , confusion on German environments
-        //setlocale(LC_NUMERIC, "C");
-        setlocale(LC_ALL, "C");
 
         RS_DEBUG->print("main: app.exec()");
 
