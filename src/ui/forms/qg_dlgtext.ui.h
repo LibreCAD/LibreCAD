@@ -189,7 +189,7 @@ void QG_DlgText::updateText() {
             )
         );
 #else*/
-        text->setText(RS_FilterDXF::toNativeString(teText->text()));
+        text->setText(teText->text());
 //#endif
         //text->setLetterSpacing(leLetterSpacing.toDouble());
         text->setLineSpacingFactor(leLineSpacingFactor->text().toDouble());
