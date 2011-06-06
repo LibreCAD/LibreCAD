@@ -27,6 +27,7 @@
 #include "rs_system.h"
 #include <qtextcodec.h>
 #include <QTextStream>
+#include <QFileDialog>
 
 void QG_DlgText::init() {
     cbFont->init();
@@ -346,7 +347,7 @@ void QG_DlgText::defaultChanged(bool) {
 }
 
 void QG_DlgText::loadText() {
-    QString fn = Q3FileDialog::getOpenFileName( QString::null, QString::null,
+    QString fn = QFileDialog::getOpenFileName( QString::null, QString::null,
                  this);
     if (!fn.isEmpty()) {
         load(fn);
@@ -364,7 +365,7 @@ void QG_DlgText::load(const QString& fn) {
 }
 
 void QG_DlgText::saveText() {
-    QString fn = Q3FileDialog::getSaveFileName(QString::null, QString::null,
+    QString fn = QFileDialog::getSaveFileName(QString::null, QString::null,
                  this);
     if (!fn.isEmpty()) {
         save(fn);
