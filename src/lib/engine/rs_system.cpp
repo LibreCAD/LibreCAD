@@ -665,7 +665,7 @@ RS_String RS_System::getEncoding(const RS_String& str) {
         return "CP874";
     } else if (l=="cp1250") {
         return "CP1250";
-    } else if (l=="cp1251") {
+    } else if (l=="cp1251" || l=="ansi_1251") {
         return "CP1251";
     } else if (l=="cp1252") {
         return "CP1252";
