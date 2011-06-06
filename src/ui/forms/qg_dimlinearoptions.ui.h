@@ -35,7 +35,7 @@ void QG_DimLinearOptions::setAction(RS_ActionInterface* a, bool update) {
         action = (RS_ActionDimLinear*)a;
 
         QString sa;
-        if (update) {
+        if (!update) {
             sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
         } else {
             RS_SETTINGS->beginGroup("/Dimension");
