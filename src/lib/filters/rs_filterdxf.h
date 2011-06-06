@@ -173,7 +173,7 @@ public:
     DL_Attributes getEntityAttributes(RS_Entity* entity);
 
     static RS_String toDxfString(const RS_String& string);
-    static RS_String toNativeString(const RS_String& string);
+    static RS_String toNativeString(const char* data, const QString& codePage);
 
 public:
     RS_Pen attributesToPen(const DL_Attributes& attrib) const;
