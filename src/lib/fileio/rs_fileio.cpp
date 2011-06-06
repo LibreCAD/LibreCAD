@@ -155,7 +155,7 @@ RS2::FormatType RS_FileIO::detectFormat(const RS_String& file) {
             RS_TextStream ts(&f);
             RS_String line;
             int c=0;
-            while (!f.atEnd() && ++c<100) {
+            while (!ts.atEnd() && ++c<100) {
                 line = ts.readLine();
                 if (line=="$ACADVER") {
                     type = RS2::FormatDXF;

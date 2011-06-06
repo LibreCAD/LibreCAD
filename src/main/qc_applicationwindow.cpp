@@ -2089,11 +2089,7 @@ void QC_ApplicationWindow::slotFileOpenRecent(int id) {
     statusBar()->showMessage(tr("Opening recent file..."));
     QString fileName = recentFiles->get(id);
 
-    if (fileName.endsWith(" (DXF 1)")) {
-        slotFileOpen(fileName.left(fileName.length()-8), RS2::FormatDXF1);
-    } else {
-        slotFileOpen(fileName, RS2::FormatUnknown);
-    }
+    slotFileOpen(fileName, RS2::FormatUnknown);
 }
 
 
@@ -2145,11 +2141,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName,
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: 1");
 
         // update recent files menu:
-        if (type==RS2::FormatDXF1) {
-            recentFiles->add(fileName + " (DXF 1)");
-        } else {
-            recentFiles->add(fileName);
-        }
+        recentFiles->add(fileName);
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: 2");
         updateRecentFilesMenu();
 
