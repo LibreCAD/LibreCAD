@@ -27,8 +27,6 @@
 #include "rs_actionfilesave.h"
 
 #include "rs_graphic.h"
-//Added by qt3to4:
-#include <q3mimefactory.h>
 
 
 
@@ -41,7 +39,7 @@ QAction* RS_ActionFileSave::createGUIAction(RS2::ActionType /*type*/, QObject* p
 	
 	//(tr("Save Drawing")
 	QAction* action = new QAction(tr("&Save"), parent);
-	action->setIcon(QIcon(":/actions/filesave2.png"));
+        action->setIcon(QIcon::fromTheme("document-save", QIcon(":/actions/filesave2.png")));
 	action->setShortcut(QKeySequence::Save);
     //action->zetStatusTip(tr("Saves the current drawing"));
 	

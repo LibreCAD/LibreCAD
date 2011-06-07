@@ -27,8 +27,6 @@
 #include "rs_actionfileopen.h"
 
 #include "rs_graphic.h"
-//Added by qt3to4:
-#include <q3mimefactory.h>
 
 
 
@@ -40,7 +38,7 @@ RS_ActionFileOpen::RS_ActionFileOpen(RS_EntityContainer& container,
 QAction* RS_ActionFileOpen::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {
 	// tr("Open Drawing")
 	QAction* action = new QAction(tr("&Open..."), parent);
-	action->setIcon(QIcon(":/actions/fileopen2.png"));
+        action->setIcon(QIcon::fromTheme("document-open",QIcon(":/actions/fileopen2.png")));
 	action->setShortcut(QKeySequence::Open);
     //action->zetStatusTip(tr("Opens an existing drawing"));
     return action;

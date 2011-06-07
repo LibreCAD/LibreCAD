@@ -26,8 +26,6 @@
 
 #include "rs_actioneditcopy.h"
 #include "rs_modification.h"
-//Added by qt3to4:
-#include <q3mimefactory.h>
 
 /**
  * Constructor.
@@ -55,13 +53,13 @@ QAction* RS_ActionEditCopy::createGUIAction(RS2::ActionType type, QObject* paren
     if (type==RS2::ActionEditCopy) {
 		// tr("Copy")
 		action = new QAction(tr("&Copy"), parent);
-		action->setIcon(QIcon(":/actions/editcopy2.png"));
+                action->setIcon(QIcon::fromTheme("edit-copy", QIcon(":/actions/editcopy2.png")));
 		action->setShortcut(QKeySequence::Copy);
 		//action->zetStatusTip(tr("Copies entities to the clipboard"));
     } else {
 		// tr("Cut")
 		action = new QAction(tr("Cu&t"), parent);
-		action->setIcon(QIcon(":/actions/editcut2.png"));
+                action->setIcon(QIcon::fromTheme("edit-cut", QIcon(":/actions/editcut2.png")));
 		action->setShortcut(QKeySequence::Cut);
 		//action->zetStatusTip(tr("Cuts entities to the clipboard"));
     }

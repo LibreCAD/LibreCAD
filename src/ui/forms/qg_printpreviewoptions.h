@@ -26,7 +26,7 @@
 #ifndef QG_PRINTPREVIEWOPTIONS_H
 #define QG_PRINTPREVIEWOPTIONS_H
 
-#include "intermediate/ui/ui_qg_printpreviewoptions.h"
+#include "ui_qg_printpreviewoptions.h"
 
 class QG_PrintPreviewOptions : public QWidget, public Ui::QG_PrintPreviewOptions
 {

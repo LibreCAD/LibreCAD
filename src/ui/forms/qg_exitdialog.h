@@ -26,7 +26,7 @@
 #ifndef QG_EXITDIALOG_H
 #define QG_EXITDIALOG_H
 
-#include "intermediate/ui/ui_qg_exitdialog.h"
+#include "ui_qg_exitdialog.h"
 
 class QG_ExitDialog : public QDialog, public Ui::QG_ExitDialog
 {
