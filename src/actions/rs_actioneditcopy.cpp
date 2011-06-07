@@ -26,8 +26,6 @@
 
 #include "rs_actioneditcopy.h"
 #include "rs_modification.h"
-//Added by qt3to4:
-#include <q3mimefactory.h>
 
 /**
  * Constructor.

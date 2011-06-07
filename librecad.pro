@@ -921,6 +921,7 @@ RESOURCES += res/main/main.qrc
 TRANSLATIONS = ts/librecad_cs.ts \
     ts/librecad_et.ts \
     ts/librecad_en.ts \
+    ts/librecad_en_au.ts \
     ts/librecad_da.ts \
     ts/librecad_de.ts \
     ts/librecad_el.ts \
@@ -944,8 +945,10 @@ TRANSLATIONS = ts/librecad_cs.ts \
     ts/librecad_es_us.ts \
     ts/librecad_es_uy.ts \
     ts/librecad_es_ve.ts \
+    ts/librecad_fi.ts \
     ts/librecad_fr.ts \
     ts/librecad_hu.ts \
+    ts/librecad_id_ID.ts \
     ts/librecad_it.ts \
     ts/librecad_ja.ts \
     ts/librecad_nl.ts \
@@ -957,6 +960,7 @@ TRANSLATIONS = ts/librecad_cs.ts \
     ts/librecad_sk.ts \
     ts/librecad_tr.ts \
     ts/librecad_uk.ts \
+    ts/librecad_zh_cn.ts \
     ts/librecad_zh_tw.ts
 
 # Include any custom.pro files for personal/special builds

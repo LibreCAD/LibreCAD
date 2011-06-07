@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="tr">
 <context>
     <name>@default</name>
     <message>
@@ -304,7 +304,7 @@ Lütfen dosya izinlerine bakın.</translation>
     </message>
     <message>
         <source>Date: %1</source>
-        <translation>Tarih: %1</translation>
+        <translation type="obsolete">Tarih: %1</translation>
     </message>
     <message>
         <source>This is a %1 version which terminates
@@ -380,6 +380,26 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiled on: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4755,11 +4775,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation type="unfinished">Kütüphaneler aranıyor..</translation>
+        <translation type="obsolete">Kütüphaneler aranıyor..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
         <translation type="unfinished">%1 dosyası yükleniyor..</translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

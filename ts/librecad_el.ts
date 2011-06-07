@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="el">
 <context>
     <name></name>
     <message>
@@ -333,7 +333,7 @@ Please check the permissions.</source>
     </message>
     <message>
         <source>Date: %1</source>
-        <translation>Ημερ/νία: %1</translation>
+        <translation type="obsolete">Ημερ/νία: %1</translation>
     </message>
     <message>
         <source>This is a %1 version which terminates
@@ -371,7 +371,7 @@ You can save your work now.</source>
     </message>
     <message>
         <source>CTRL+M</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+M</translation>
     </message>
     <message>
         <source>Insert Image</source>
@@ -410,6 +410,26 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiled on: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6042,11 +6062,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation>Φόρτωση διαδρομών βιβλιοθήκης..</translation>
+        <translation type="obsolete">Φόρτωση διαδρομών βιβλιοθήκης..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
         <translation>Φόρτωση Αρχείου %1..</translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
