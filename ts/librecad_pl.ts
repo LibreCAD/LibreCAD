@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="pl">
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
@@ -37,7 +36,7 @@
     </message>
     <message>
         <source>&amp;Arc</source>
-        <translation>Łuk</translation>
+        <translation>Ł&amp;uk</translation>
     </message>
     <message>
         <source>&amp;Circle</source>
@@ -121,7 +120,7 @@
     </message>
     <message>
         <source>unnamed document %1</source>
-        <translation>Nienazwany dokument %1</translation>
+        <translation>nienazwany dokument %1</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
@@ -129,7 +128,7 @@
     </message>
     <message>
         <source>Loaded document: </source>
-        <translation>Załadowany dokument:</translation>
+        <translation>Załadowany dokument: </translation>
     </message>
     <message>
         <source>Opening aborted</source>
@@ -283,20 +282,24 @@ Możesz teraz jedynie zapisać swoją pracę.</translation>
         <translation type="obsolete">Sterowanie symulacją</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Blok &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Blok '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
-        <translation>Nie można otworzyć pliku %1. Proszę sprawdzić prawa.</translation>
+        <translation>Nie można otworzyć pliku
+%1
+Proszę sprawdzić prawa do odczytu.</translation>
     </message>
     <message>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
-        <translation>Nie można zapisać pliku %1. Proszę sprawdzić prawa.</translation>
+        <translation>Nie można zapisać pliku
+%1
+Proszę sprawdzić prawa do zapisu.</translation>
     </message>
     <message>
         <source>None</source>
@@ -343,12 +346,12 @@ Możesz teraz zapisać Twoją pracę.
         <translation>&amp;Krzywa składana</translation>
     </message>
     <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation>Uruchamianie skryptu &apos;%1&apos;</translation>
+        <source>Running script '%1'</source>
+        <translation>Uruchamianie skryptu '%1'</translation>
     </message>
     <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation>Wstawianie bloku &apos;%1&apos;</translation>
+        <source>Inserting block '%1'</source>
+        <translation>Wstawianie bloku '%1'</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -356,46 +359,49 @@ Możesz teraz zapisać Twoją pracę.
     </message>
     <message>
         <source>CTRL+M</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+M</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Wstaw obraz</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisywanie rysunku...</translation>
     </message>
     <message>
         <source>Auto-saved drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisano rysunek</translation>
     </message>
     <message>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można zapisać pliku
+%1
+Sprawdź uprawnienia do zapisu.
+Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>SVN Revision: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rewizja SVN: %1</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomoc</translation>
     </message>
     <message>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
-        <translation type="unfinished"></translation>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
+        <translation>Kurde, nie mogę odnaleźć plików pomocy.</translation>
     </message>
     <message>
         <source>&amp;Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1903,15 +1909,15 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>CTRL-G</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <source>Restrict&amp;Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>O&amp;graniczaj pionowo</translation>
     </message>
     <message>
         <source>&amp;back</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1982,8 +1988,8 @@ Auto-save disabled.</source>
         <translation>Zmiana nazwy bloku</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Nie można nazwać bloku. Blok o nazwie &quot;%1&quot; już istnieje.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Nie można nazwać bloku. Blok o nazwie "%1" już istnieje.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -2307,48 +2313,48 @@ w oddzielnym oknie</translation>
         <translation>Główne</translation>
     </message>
     <message>
-        <source>Show menu &quot;Lines&quot;</source>
-        <translation>Pokaż menu &quot;Linie&quot;</translation>
+        <source>Show menu "Lines"</source>
+        <translation>Pokaż menu "Linie"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Arcs&quot;</source>
-        <translation>Pokaż menu &quot;Łuki&quot;</translation>
+        <source>Show menu "Arcs"</source>
+        <translation>Pokaż menu "Łuki"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Circles&quot;</source>
-        <translation>Pokaż menu &quot;Okręgi&quot;</translation>
+        <source>Show menu "Circles"</source>
+        <translation>Pokaż menu "Okręgi"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Points&quot;</source>
-        <translation type="obsolete">Pokaż menu &quot;Punkty&quot;</translation>
+        <source>Show menu "Points"</source>
+        <translation type="obsolete">Pokaż menu "Punkty"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Measure&quot;</source>
-        <translation>Pokaż menu &quot;Pomiar&quot;</translation>
+        <source>Show menu "Measure"</source>
+        <translation>Pokaż menu "Pomiar"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Ellipses&quot;</source>
-        <translation>Pokaz menu &quot;Elipsy&quot;</translation>
+        <source>Show menu "Ellipses"</source>
+        <translation>Pokaz menu "Elipsy"</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
         <translation>Kreskowanie / całkowite Wypełnienia</translation>
     </message>
     <message>
-        <source>Show menu &quot;Edit&quot;</source>
-        <translation>Pokaż menu &quot;Edycja&quot;</translation>
+        <source>Show menu "Edit"</source>
+        <translation>Pokaż menu "Edycja"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Dimensions&quot;</source>
-        <translation>Pokaż menu &quot;Wymiarowanie&quot;</translation>
+        <source>Show menu "Dimensions"</source>
+        <translation>Pokaż menu "Wymiarowanie"</translation>
     </message>
     <message>
         <source>Texts</source>
         <translation>Teksty</translation>
     </message>
     <message>
-        <source>Show menu &quot;Select&quot;</source>
-        <translation>Pokaż menu &quot;Zaznacz&quot;</translation>
+        <source>Show menu "Select"</source>
+        <translation>Pokaż menu "Zaznacz"</translation>
     </message>
     <message>
         <source>Create Block</source>
@@ -2784,7 +2790,7 @@ w oddzielnym oknie</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -3134,12 +3140,12 @@ w oddzielnym oknie</translation>
         <translation>Witaj</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Witaj w programie QCad&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Witaj w programie QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Proszę wybrać jednostkę którą chcesz użyć do tworzena nowych rysunków oraz Twój preferowany język.&lt;br&gt;
@@ -3308,7 +3314,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -3359,7 +3365,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -3410,11 +3416,11 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
 </context>
 <context>
@@ -3508,7 +3514,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
         <translation>Gradusy</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Jednostki geometryczne</translation>
     </message>
     <message>
@@ -3516,8 +3522,8 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
         <translation>Opcje</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Dla formatu długości &quot;Inżynierski&quot; i &quot;Architektoniczny&quot;,jednostka musi byc ustawiona na cale.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>Dla formatu długości 'Inżynierski' i 'Architektoniczny', jednostka musi być ustawiona na cale.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -3916,7 +3922,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>Alt+U</source>
-        <translation></translation>
+        <translation>Alt+U</translation>
     </message>
     <message>
         <source>Minimal Grid Spacing (px):</source>
@@ -3924,50 +3930,50 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>Program Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Time between automatc saving of thedocument in minutes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Czas pomiędzy auto-zapisami pliku w minutach.</translation>
     </message>
     <message>
         <source>Auto save time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Czas autozapisu:</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>Drawing Variables</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmienna</translation>
     </message>
     <message>
         <source>Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Wartość</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished">Alt+O</translation>
+        <translation>Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation>Esc</translation>
     </message>
 </context>
 <context>
@@ -4053,7 +4059,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -4104,7 +4110,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -4155,7 +4161,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -4601,11 +4607,11 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation>[25A0-25FF] Fgury geometryczne</translation>
+        <translation>[25A0-25FF] Figury geometryczne</translation>
     </message>
     <message>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation>[2600-26FF] Miscellaneous Symbols</translation>
+        <translation>[2600-26FF] Różnorakie symbole</translation>
     </message>
     <message>
         <source>[2700-27BF] Dingbats</source>
@@ -4825,7 +4831,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>Alt+D</source>
-        <translation></translation>
+        <translation>Alt+D</translation>
     </message>
 </context>
 <context>
@@ -4864,7 +4870,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>again Still No Text supplied.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5295,7 +5301,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     <name>QG_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation>Opcje &quot;linii równoległej poprzez&quot;</translation>
+        <translation>Opcje "linii równoległej poprzez"</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -5470,7 +5476,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -5488,15 +5494,15 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     <name>QG_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation type="unfinished">Opcje wieloboków</translation>
+        <translation>Opcje łamanej</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Zamknij</translation>
+        <translation>Zamknij</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Cofnij</translation>
+        <translation>Cofnij</translation>
     </message>
     <message>
         <source>Arc</source>
@@ -5504,35 +5510,35 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Promień:</translation>
+        <translation>Promień:</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Linia</translation>
+        <translation>Linia</translation>
     </message>
     <message>
         <source>Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation>Styczny</translation>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>O promieniu</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">Kąt</translation>
+        <translation>Kąt</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Kąt:</translation>
+        <translation>Kąt:</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="unfinished">Zgodnie ze wskazówkami zegara</translation>
+        <translation>Zgodnie ze wskazówkami zegara</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation type="unfinished">Przeciwnie do wskazówek zegara</translation>
+        <translation>Przeciwnie do wskazówek zegara</translation>
     </message>
 </context>
 <context>
@@ -5543,7 +5549,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation>Przełącz tryb czarno-biały</translation>
+        <translation>Przełącz tryb czarny / biały</translation>
     </message>
     <message>
         <source>Center to page</source>
@@ -5649,8 +5655,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     <name>QG_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation>
-Opcje wyrównywania o wartość</translation>
+        <translation type="unfinished">Opcje wyrównywania o wartość</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
@@ -5806,12 +5811,12 @@ Opcje wyrównywania o wartość</translation>
         <translation>Usuń warstwę</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation>Warstwa &quot;%1&quot; oraz wszystkie obiekty na niej zostaną usunięte.</translation>
+        <source>Layer "%1" and all entities on it will be removed.</source>
+        <translation>Warstwa "%1" oraz wszystkie obiekty na niej zostaną usunięte.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Warstwa &quot;%1&quot; nie może zostać usunięta.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>Warstwa "%1" nie może zostać usunięta.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -5822,16 +5827,16 @@ Opcje wyrównywania o wartość</translation>
         <translation>Usuń blok</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Blok &quot;%1&quot; oraz wszystkie jego obiekty zostaną usunięte.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>Blok "%1" oraz wszystkie jego obiekty zostaną usunięte.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Właściwości warstwy</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Warstwa nazwana &quot;%1&quot; już istnieje. Proszę podać inną nazwę.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Warstwa nazwana "%1" już istnieje. Proszę podać inną nazwę.</translation>
     </message>
 </context>
 <context>
@@ -5843,7 +5848,8 @@ Opcje wyrównywania o wartość</translation>
     <message>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation>%1 już istnieje. Czy chcesz zastąpić?</translation>
+        <translation>%1 już istnieje.
+Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -6171,8 +6177,8 @@ Do you want to replace it?</source>
         <translation>&amp;Wstaw blok</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -6852,8 +6858,8 @@ Do you want to replace it?</source>
         <translation type="obsolete">Wstaw Obraz (Bitmapa)</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -6963,7 +6969,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished">Pionowy</translation>
+        <translation>Pionowy</translation>
     </message>
 </context>
 <context>
@@ -7064,7 +7070,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished">Pionowy</translation>
+        <translation>Pionowy</translation>
     </message>
 </context>
 <context>
@@ -7091,7 +7097,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>Wprowadź odległość &lt;%1&gt;, zaznacz obiekt lub [%2]</translation>
+        <translation>Wprowadź odległość &lt;%1&gt; lub zaznacz obiekt lub [%2]</translation>
     </message>
     <message>
         <source>Parallel</source>
@@ -7126,7 +7132,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify through point</source>
-        <translation>Wskaż punkt &quot;poprzez&quot;</translation>
+        <translation>Wskaż punkt "poprzez"</translation>
     </message>
     <message>
         <source>Back</source>
@@ -7192,8 +7198,8 @@ Do you want to replace it?</source>
         <translation type="obsolete">Rysuj wielobok ze środkiem i wierzchołkiem</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -7457,43 +7463,43 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished">Linia ł&amp;amana</translation>
+        <translation>Linia ł&amp;amana</translation>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation type="unfinished">Rysuj linie łamane</translation>
+        <translation>Rysuj linie łamane</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished">Wskaż pierwszy punkt</translation>
+        <translation>Wskaż pierwszy punkt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished">Wskaż pierwszy punkt lub [%1]</translation>
+        <translation>Wskaż następny punkt lub [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Wstecz</translation>
+        <translation>Wstecz</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished">Wskaż następny punkt</translation>
+        <translation>Wskaż następny punkt</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="unfinished">Nie można zamknąć sekwencji linii: niewystarczająca liczba zdefiniowanych obiektów.</translation>
+        <translation>Nie można zamknąć sekwencji linii: niewystarczająca liczba zdefiniowanych obiektów.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Nie można cofnąć: Niewystarczająca liczba zdefiniowanych obiektów.</translation>
+        <translation>Nie można cofnąć: niewystarczająca liczba zdefiniowanych obiektów.</translation>
     </message>
     <message>
         <source>Undo disallowed due a fatal bug somewhere. Sorry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można cofnąć, nieokreślony błąd. Przepraszamy.</translation>
     </message>
 </context>
 <context>
@@ -7547,7 +7553,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Enter text:</source>
-        <translation>Wprowadź tekst</translation>
+        <translation>Wprowadź tekst:</translation>
     </message>
     <message>
         <source>Back</source>
@@ -7667,7 +7673,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;New...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nowy...</translation>
     </message>
 </context>
 <context>
@@ -8046,12 +8052,12 @@ Do you want to replace it?</source>
         <translation type="obsolete">Wstawia obiekt z biblioteki części.</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Nie można otworzyć pliku &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Nie można otworzyć pliku '%1'</translation>
     </message>
 </context>
 <context>
@@ -8183,11 +8189,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Podzie&amp;l</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle or ellipse.</source>
-        <translation type="unfinished"></translation>
+        <translation>Obiekt musi być linią, łukiem, okręgiem lub elipsą.</translation>
     </message>
 </context>
 <context>
@@ -8628,7 +8634,7 @@ Do you want to replace it?</source>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
         <source>No entity found. </source>
-        <translation>Nieznaleziono obiektu.</translation>
+        <translation>Nie znaleziono obiektu. </translation>
     </message>
     <message>
         <source>The chosen Entity is in a block. Please edit the block.</source>
@@ -8682,281 +8688,281 @@ Do you want to replace it?</source>
     <name>RS_ActionPolylineAdd</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Wstecz</translation>
+        <translation>Wstecz</translation>
     </message>
     <message>
         <source>&amp;Add node</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dodaj wierzchołek</translation>
     </message>
     <message>
-        <source>Add polyline&apos;s node</source>
-        <translation type="unfinished"></translation>
+        <source>Add polyline's node</source>
+        <translation>Dołącz wierzchołek</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished">Nieznaleziono obiektu.</translation>
+        <translation>Nie znaleziono obiektu.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Obiekt musi być linią łamaną.</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodany punkt jest nieprawidłowy.</translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodany punkt nie leży na obiekcie.</translation>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaznacz linię łamaną, aby dodać wierzchołki</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="unfinished"></translation>
+        <source>Specify adding node's point</source>
+        <translation>Zdefiniuj punkt nowego wierzchołka</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAppend</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>A&amp;ppend node</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj &amp;wierzchołek</translation>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
-        <translation type="unfinished"></translation>
+        <source>Append polyline's node</source>
+        <translation>Dołącz wierzchołek</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished">Nieznaleziono obiektu.</translation>
+        <translation>Nie znaleziono obiektu.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Obiekt musi być linia łamaną.</translation>
     </message>
     <message>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliknij blisko początku lub końca istniejącej linii łamanej.</translation>
     </message>
     <message>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Wskaż początkowy lub końcowy punkt łamanej</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished">Wskaż pierwszy punkt lub [%1]</translation>
+        <translation>Wskaż następny punkt lub [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Wstecz</translation>
+        <translation>Wstecz</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished">Wskaż następny punkt</translation>
+        <translation>Wskaż następny punkt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Wstecz</translation>
+        <translation>Wstecz</translation>
     </message>
     <message>
         <source>&amp;Delete node</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Usuń wierzchołek</translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
-        <translation type="unfinished"></translation>
+        <source>Delete polyline's node</source>
+        <translation>Usuń wierzchołek</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished">Nieznaleziono obiektu.</translation>
+        <translation>Nie znaleziono obiektu.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Obiekt musi być linią łamaną.</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodany punkt jest nieprawidłowy.</translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodany punkt nie leży na obiekcie.</translation>
     </message>
     <message>
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished"></translation>
+        <translation>Określ linię łamaną, by usunąć wierzchołek</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="unfinished"></translation>
+        <source>Specify deleting node's point</source>
+        <translation>Zaznacz wierzchołek do usunięcia</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDelBetween</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Wstecz</translation>
+        <translation>Wstecz</translation>
     </message>
     <message>
         <source>Delete &amp;between two nodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń &amp;pomiędzy wierzchołkami</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation type="unfinished">Usuń pomiędzy dwoma wierzchołkami</translation>
+        <translation>Usuń pomiędzy dwoma wierzchołkami</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished">Nieznaleziono obiektu.</translation>
+        <translation>Nie znaleziono obiektu.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Obiekt musi być linią łamaną.</translation>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuwany punkt jest nieprawidłowy.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuwany punkt nie leży na obiekcie.</translation>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuwany punkt nie leży na obiekcie.</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz linię łamaną, aby usunąć</translation>
     </message>
     <message>
         <source>Specify first node</source>
-        <translation type="unfinished"></translation>
+        <translation>Określ pierwszy wierzchołek</translation>
     </message>
     <message>
         <source>Specify second node</source>
-        <translation type="unfinished"></translation>
+        <translation>Określ drugi wierzchołek</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Utwórz &amp;równoodległą łamaną</translation>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Twórz równoodległe łamane</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished">Nieznaleziono obiektu.</translation>
+        <translation>Nie znaleziono obiektu.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Obiekt musi być linią łamaną. </translation>
     </message>
     <message>
         <source>Choose the original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Wskaż pierwotną łamaną</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished"></translation>
+        <translation>Utwórz linię łamaną z &amp;istniejących obiektów</translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished"></translation>
+        <translation>Utwórz linię łamaną z istniejących obiektów</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished">Nieznaleziono obiektu.</translation>
+        <translation>Nie znaleziono obiektu.</translation>
     </message>
     <message>
         <source>Entity must be a line or arc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Obiekt musi być linią lub łukiem.</translation>
     </message>
     <message>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Wskaż odcinek pierwotnej łamanej</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineTrim</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Wstecz</translation>
+        <translation>Wstecz</translation>
     </message>
     <message>
         <source>&amp;Trim segments</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Przytnij odcinek</translation>
     </message>
     <message>
-        <source>Trim polyline&apos;s segments</source>
-        <translation type="unfinished"></translation>
+        <source>Trim polyline's segments</source>
+        <translation>Przytnij odcinek łamanej</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished">Nieznaleziono obiektu.</translation>
+        <translation>Nie znaleziono obiektu.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Obiekt musi być linią łamaną.</translation>
     </message>
     <message>
         <source>Specifying point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybrany punkt jest nieprawidłowy.</translation>
     </message>
     <message>
         <source>No Segment found on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieprawidłowy odcinek</translation>
     </message>
     <message>
         <source>Specify polyline to trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Wskaż łamaną do przycięcia</translation>
     </message>
     <message>
         <source>Specify first segment</source>
-        <translation type="unfinished"></translation>
+        <translation>Wskaż pierwszy odcinek</translation>
     </message>
     <message>
         <source>Specify second segment</source>
-        <translation type="unfinished"></translation>
+        <translation>Wskaż drugi odcinek</translation>
     </message>
 </context>
 <context>
@@ -9002,7 +9008,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Ctrl+K</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+K</translation>
     </message>
 </context>
 <context>
@@ -9957,7 +9963,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>dimregen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>po</source>
@@ -10008,7 +10014,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>polilinia</translation>
     </message>
     <message>
         <source>pa</source>
@@ -10018,7 +10024,7 @@ Do you want to replace it?</source>
     <message>
         <source>tm</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>da</source>
@@ -10042,7 +10048,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>tm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>xt</source>
@@ -10110,7 +10116,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>sn</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>sm</source>
@@ -10126,20 +10132,20 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>kill</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>k</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>back</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

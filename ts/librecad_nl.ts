@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="nl">
 <context>
     <name/>
     <message>
@@ -75,7 +74,7 @@
     </message>
     <message>
         <source>&amp;Ellipse</source>
-        <translation type="unfinished">&amp;Ellipse</translation>
+        <translation>&amp;Ovaal</translation>
     </message>
     <message>
         <source>&amp;Draw</source>
@@ -367,50 +366,50 @@ U kunt nu uw werk bewaren.</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polylijn</translation>
+        <translation>&amp;Vrije vorm</translation>
     </message>
     <message>
         <source>CTRL+M</source>
-        <translation type="unfinished"/>
+        <translation>ctrl+m</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished"/>
+        <translation>Afbeelding toevoegen</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
-        <translation type="unfinished"/>
+        <translation>Automatisch opslaan tekening ...</translation>
     </message>
     <message>
         <source>Auto-saved drawing</source>
-        <translation type="unfinished"/>
+        <translation>Automatisch opgeslagen tekening</translation>
     </message>
     <message>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation type="unfinished"/>
+        <translation>Kan bestand %1 niet automatisch opslaan.Automatisch opslaan is uitgeschakeld</translation>
     </message>
     <message>
         <source>SVN Revision: %1</source>
-        <translation type="unfinished"/>
+        <translation>SVN Revision: %1</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"/>
+        <translation>Help</translation>
     </message>
     <message>
         <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
-        <translation type="unfinished"/>
+        <translation>Help bestanden konden niet worden gevonden.</translation>
     </message>
     <message>
         <source>&amp;Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1914,15 +1913,15 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>CTRL-G</source>
-        <translation type="unfinished"/>
+        <translation>ctrl+g</translation>
     </message>
     <message>
         <source>Restrict&amp;Vertically</source>
-        <translation type="unfinished"/>
+        <translation>Beperken &amp;Verticaal</translation>
     </message>
     <message>
         <source>&amp;back</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2113,7 +2112,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation>Arc rakend aan entiteit basis met een straal</translation>
+        <translation>Arc rakend aan element basis met een straal</translation>
     </message>
 </context>
 <context>
@@ -2194,15 +2193,15 @@ in een separate Venster</translation>
     <name>QG_CadToolBarEllipses</name>
     <message>
         <source>Ellipses</source>
-        <translation>Ellipsen</translation>
+        <translation>Ovaalen</translation>
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation>Ellips Boog met Center, twee Punten en Hoeken</translation>
+        <translation>Ovaal Boog met center, twee punten en hoeken</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
-        <translation>Ellips met Center en twee punten</translation>
+        <translation>Ovaal met Center en twee punten</translation>
     </message>
     <message>
         <source>Back to main menu</source>
@@ -2339,7 +2338,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Show menu "Ellipses"</source>
-        <translation>Toon menu "Ellipsen"</translation>
+        <translation>Toon menu "Ovalen"</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
@@ -2379,7 +2378,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Polylines</source>
-        <translation>Polylijnen</translation>
+        <translation>Vrije vormen</translation>
     </message>
 </context>
 <context>
@@ -2492,7 +2491,7 @@ in een separate Venster</translation>
     <name>QG_CadToolBarPolylines</name>
     <message>
         <source>Polylines</source>
-        <translation>Polylijnen</translation>
+        <translation>Vrijevormen</translation>
     </message>
     <message>
         <source>Back to main menu</source>
@@ -2500,7 +2499,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Create Polyline</source>
-        <translation>Maak polylijn</translation>
+        <translation>Maak vrije vorm</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
@@ -2795,7 +2794,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>....</translation>
     </message>
 </context>
 <context>
@@ -3036,7 +3035,7 @@ in een separate Venster</translation>
     <name>QG_DlgEllipse</name>
     <message>
         <source>Ellipse</source>
-        <translation>Ellips</translation>
+        <translation>Ovaal</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -3319,7 +3318,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>....</translation>
     </message>
 </context>
 <context>
@@ -3370,7 +3369,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -3421,11 +3420,11 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished"/>
+        <translation>ctrl+s</translation>
     </message>
 </context>
 <context>
@@ -3939,50 +3938,50 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Program Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Programma Standaardwaarden</translation>
     </message>
     <message>
         <source>Time between automatc saving of thedocument in minutes.</source>
-        <translation type="unfinished"/>
+        <translation>Tijd tussen automatische opslag in minuten.</translation>
     </message>
     <message>
         <source>Auto save time:</source>
-        <translation type="unfinished"/>
+        <translation>Tussentijdse bewaar tijd:</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>Drawing Variables</source>
-        <translation type="unfinished"/>
+        <translation>Tekening Variabelen</translation>
     </message>
     <message>
         <source>Variable</source>
-        <translation type="unfinished"/>
+        <translation>Variabele</translation>
     </message>
     <message>
         <source>Code</source>
-        <translation type="unfinished"/>
+        <translation>Code</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Waarde</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished">Alt+O</translation>
+        <translation>Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation>Esc</translation>
     </message>
 </context>
 <context>
@@ -4028,7 +4027,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Number of copies</source>
-        <translation>Aantal Kopieën</translation>
+        <translation>Aantal kopieën</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -4060,15 +4059,15 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Use current &amp;attributes</source>
-        <translation>Gebruik huidige &amp;Attributen</translation>
+        <translation>Gebruik huidige &amp;attributen</translation>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation>Gebruik huidige &amp;Laag</translation>
+        <translation>Gebruik huidige &amp;laag</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -4083,7 +4082,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Number of copies</source>
-        <translation>Aantal Kopieën</translation>
+        <translation>Aantal kopieën</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -4119,7 +4118,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -4170,7 +4169,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -4879,7 +4878,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>again Still No Text supplied.</source>
-        <translation type="unfinished"/>
+        <translation>opnieuw geen tekst gegeven.</translation>
     </message>
 </context>
 <context>
@@ -5485,7 +5484,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -5503,15 +5502,15 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     <name>QG_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation type="unfinished">Polylijn Opties</translation>
+        <translation>Vrije vorm Opties</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Sluiten</translation>
+        <translation>Sluiten</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Herstel</translation>
+        <translation>Herstel</translation>
     </message>
     <message>
         <source>Arc</source>
@@ -5519,35 +5518,35 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Radius:</translation>
+        <translation>Radius:</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Lijn</translation>
+        <translation>Lijn</translation>
     </message>
     <message>
         <source>Tangential</source>
-        <translation type="unfinished"/>
+        <translation>Tangentieel</translation>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation type="unfinished"/>
+        <translation>Tan Radius</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">Hoek</translation>
+        <translation>Hoek</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Hoek:</translation>
+        <translation>Hoek:</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="unfinished">Rechtsom</translation>
+        <translation>Rechtsom</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation type="unfinished">Linksom</translation>
+        <translation>Linksom</translation>
     </message>
 </context>
 <context>
@@ -6591,7 +6590,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Specify base entity</source>
-        <translation>Specificeer basis entiteit</translation>
+        <translation>Specificeer basis element</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6758,7 +6757,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Specify ellipse center</source>
-        <translation>Specificeer midden punt ellipse</translation>
+        <translation>Specificeer midden punt ovaal</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6790,7 +6789,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Ellipse Arc (Axis)</source>
-        <translation>&amp;Ellips Boog (Assen)</translation>
+        <translation>&amp;Ovaal Boog (Assen)</translation>
     </message>
     <message>
         <source>Draw Ellipse Arcs</source>
@@ -6802,7 +6801,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
-        <translation>&amp;Ellips (Assen)</translation>
+        <translation>&amp;Ovaal (Assen)</translation>
     </message>
     <message>
         <source>Draw Ellipses</source>
@@ -6825,7 +6824,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Ongeldige invul gebied. Controleer of de entiteiten gekozen vorm is van een of meer gesloten contouren.</translation>
+        <translation>Ongeldige invul gebied. Controleer of de elementen gekozen vorm is van een of meer gesloten contouren.</translation>
     </message>
     <message>
         <source>Hatch created successfully.</source>
@@ -6978,7 +6977,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished">Vertikaal</translation>
+        <translation>Vertikaal</translation>
     </message>
 </context>
 <context>
@@ -7079,7 +7078,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished">Vertikaal</translation>
+        <translation>Vertikaal</translation>
     </message>
 </context>
 <context>
@@ -7407,7 +7406,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
-        <translation>Selecteer cirkel, boog of ellipse</translation>
+        <translation>Selecteer cirkel, boog of ovaal</translation>
     </message>
 </context>
 <context>
@@ -7472,43 +7471,43 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished">&amp;Polylijn</translation>
+        <translation>&amp;Vrije vorm</translation>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation type="unfinished">Teken polylijnen</translation>
+        <translation>Teken vrije vormen</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished">Specificeer eerste Punt</translation>
+        <translation>Specificeer eerste punt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuleer</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished">Specificeer volgend Punt of [%1]</translation>
+        <translation>Specificeer volgend Punt of [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Terug</translation>
+        <translation>Terug</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished">Specificeer volgend Punt</translation>
+        <translation>Specificeer volgend Punt</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="unfinished"/>
+        <translation>Kan lijn niet sluiten: Onvoldoende elementen opgegeven.</translation>
     </message>
     <message>
         <source>Undo disallowed due a fatal bug somewhere. Sorry.</source>
-        <translation type="unfinished"/>
+        <translation>Ongedaan maken is niet gelukt vanwege een fout. Sorry.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"/>
+        <translation>Kan niet ongedaan maken: Onvoldoende elementen gedefinieerd.</translation>
     </message>
 </context>
 <context>
@@ -7547,7 +7546,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Kan niet ongedaan maken: geen genoeg entiteiten gedefinieerd.</translation>
+        <translation>Kan niet ongedaan maken: onvoldoende elementen gedefinieerd.</translation>
     </message>
 </context>
 <context>
@@ -7682,7 +7681,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;New...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Nieuw...</translation>
     </message>
 </context>
 <context>
@@ -8198,11 +8197,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Verdelen</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle or ellipse.</source>
-        <translation type="unfinished"/>
+        <translation>Element moet een lijn, boog, cirkel of ovaal zijn.</translation>
     </message>
 </context>
 <context>
@@ -8224,7 +8223,7 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
         <source>Specify first break point on a polyline</source>
-        <translation>Specificeer eerste breekpunt op een polylijn</translation>
+        <translation>Specificeer eerste breekpunt op een vrije vorm</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8232,7 +8231,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Specify second break point on the same polyline</source>
-        <translation>Specificeer tweede breekpunt op dezelfde polylijn</translation>
+        <translation>Specificeer tweede breekpunt op dezelfde vrije vorm</translation>
     </message>
     <message>
         <source>Back</source>
@@ -8248,7 +8247,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
-        <translation>Entiteiten bevinden zich niet in dezelfde vrije vorm.</translation>
+        <translation>Elementen bevinden zich niet in dezelfde vrije vorm.</translation>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
@@ -8264,7 +8263,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation>Ouder van de eerste instantie is geen polylijn</translation>
+        <translation>Ouder van de eerste instantie is geen vrije vorm</translation>
     </message>
     <message>
         <source>Parent of first entity is NULL</source>
@@ -8709,281 +8708,281 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionPolylineAdd</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuleer</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Terug</translation>
+        <translation>Terug</translation>
     </message>
     <message>
         <source>&amp;Add node</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Voeg node toe</translation>
     </message>
     <message>
         <source>Add polyline's node</source>
-        <translation type="unfinished"/>
+        <translation>Voeg knooppunt toe aan vrije vorm</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished">Geen Element gevonden.</translation>
+        <translation>Geen Element gevonden.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation>Element moet een vrije vorm zijn.</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation type="unfinished"/>
+        <translation>Toe te voegen punt is ongeldig.</translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished"/>
+        <translation>Toe te voegen punt is niet op entiteit.</translation>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished"/>
+        <translation>Geef aan vrije vorm om knooppunten toe te voegen</translation>
     </message>
     <message>
         <source>Specify adding node's point</source>
-        <translation type="unfinished"/>
+        <translation>Geef toe te voegen knooppunt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAppend</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuleer</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>A&amp;ppend node</source>
-        <translation type="unfinished"/>
+        <translation>Knoo&amp;ppunt toevoegen</translation>
     </message>
     <message>
         <source>Append polyline's node</source>
-        <translation type="unfinished"/>
+        <translation>Voeg vrije vorm knooppunt</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished">Geen Element gevonden.</translation>
+        <translation>Geen Element gevonden.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation>Element moet een vrije vorm zijn.</translation>
     </message>
     <message>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished"/>
+        <translation>Klik ergens in de buurt van het begin of het einde van de bestaande vrije vorm.</translation>
     </message>
     <message>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished"/>
+        <translation>Geef de vrije vorm ergens in de buurt het begin-of eindpunt</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished"/>
+        <translation>Geef volgende punt [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Terug</translation>
+        <translation>Terug</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"/>
+        <translation>Geef volgende punt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuleer</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Terug</translation>
+        <translation>Terug</translation>
     </message>
     <message>
         <source>&amp;Delete node</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Verwijder knooppunt</translation>
     </message>
     <message>
         <source>Delete polyline's node</source>
-        <translation type="unfinished"/>
+        <translation>Verwijderen knooppunt uit vrije vorm</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished">Geen Element gevonden.</translation>
+        <translation>Geen Element gevonden.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation>Entiteit moet een vrij vorm zijn.</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation type="unfinished"/>
+        <translation>Toe te voegen punt is ongeldig.</translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished"/>
+        <translation>Toe te voegen punt is niet op element.</translation>
     </message>
     <message>
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished"/>
+        <translation>Geef vrije vorm om knooppunt te verwijderen</translation>
     </message>
     <message>
         <source>Specify deleting node's point</source>
-        <translation type="unfinished"/>
+        <translation>Geef de te verwijderen knoop punt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDelBetween</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuleer</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Terug</translation>
+        <translation>Terug</translation>
     </message>
     <message>
         <source>Delete &amp;between two nodes</source>
-        <translation type="unfinished"/>
+        <translation>Verwijder &amp;tussen twee knooppunten</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation type="unfinished">Verwijderen tussen twee knooppunten</translation>
+        <translation>Verwijderen tussen twee knooppunten</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished">Geen Element gevonden.</translation>
+        <translation>Geen Element gevonden.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation>Entiteit moet een vrij vorm zijn</translation>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
-        <translation type="unfinished"/>
+        <translation>De te verwijderen punt is ongeldig.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished"/>
+        <translation>De te verwijderen punt is niet op een element.</translation>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation type="unfinished"/>
+        <translation>De te verwijderen punt is niet op element</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished"/>
+        <translation>Geef vrije vorm  dat verwijderd moet worden tussen knooppunten</translation>
     </message>
     <message>
         <source>Specify first node</source>
-        <translation type="unfinished"/>
+        <translation>Geef eerste knooppunt</translation>
     </message>
     <message>
         <source>Specify second node</source>
-        <translation type="unfinished"/>
+        <translation>Geef tweede knooppunt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="unfinished"/>
+        <translation>Maak &amp;Equidistant vrije vormen</translation>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation type="unfinished"/>
+        <translation>Maak Equidistant vrije vormen</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished">Geen Element gevonden.</translation>
+        <translation>Geen Element gevonden.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation>Element moet een vrij vorm zijn</translation>
     </message>
     <message>
         <source>Choose the original polyline</source>
-        <translation type="unfinished"/>
+        <translation>Kies de originele vrije vorm</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished"/>
+        <translation>Maak vrije vorm van bestaande &amp;Segmenten</translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished"/>
+        <translation>Maak vrije vorm van bestaande &amp;Segmenten</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished">Geen Element gevonden.</translation>
+        <translation>Geen Element gevonden.</translation>
     </message>
     <message>
         <source>Entity must be a line or arc.</source>
-        <translation type="unfinished"/>
+        <translation>Element moet een lijn of boog zijn.</translation>
     </message>
     <message>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished"/>
+        <translation>Kies een element op de oorspronkelijke vrije vorm</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Annuleer</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineTrim</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuleer</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Terug</translation>
+        <translation>Terug</translation>
     </message>
     <message>
         <source>&amp;Trim segments</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Knip Segmenten</translation>
     </message>
     <message>
         <source>Trim polyline's segments</source>
-        <translation type="unfinished"/>
+        <translation>Knip uit vrije vorm segmenten</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished">Geen Element gevonden.</translation>
+        <translation>Geen Element gevonden.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation>Element dient een vrije vorm te zijn</translation>
     </message>
     <message>
         <source>Specifying point is invalid.</source>
-        <translation type="unfinished"/>
+        <translation>Gegeven punt is ongeldig.</translation>
     </message>
     <message>
         <source>No Segment found on entity.</source>
-        <translation type="unfinished"/>
+        <translation>Geen element op entiteit.</translation>
     </message>
     <message>
         <source>Specify polyline to trim</source>
-        <translation type="unfinished"/>
+        <translation>Geen vrij vorm om te knippen</translation>
     </message>
     <message>
         <source>Specify first segment</source>
-        <translation type="unfinished"/>
+        <translation>Geef eerste segment</translation>
     </message>
     <message>
         <source>Specify second segment</source>
-        <translation type="unfinished"/>
+        <translation>Geef tweede segment</translation>
     </message>
 </context>
 <context>
@@ -9029,7 +9028,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
-        <translation type="unfinished"/>
+        <translation>ctrl+k</translation>
     </message>
 </context>
 <context>
@@ -10035,7 +10034,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>polyline</source>
-        <translation>polylijn</translation>
+        <translation>vrije vorm</translation>
     </message>
     <message>
         <source>pa</source>
@@ -10049,91 +10048,91 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>da</source>
-        <translation type="unfinished">mu</translation>
+        <translation>mu</translation>
     </message>
     <message>
         <source>dh</source>
-        <translation type="unfinished">mh</translation>
+        <translation>mh</translation>
     </message>
     <message>
         <source>dr</source>
-        <translation type="unfinished">mr</translation>
+        <translation>mr</translation>
     </message>
     <message>
         <source>dv</source>
-        <translation type="unfinished">mv</translation>
+        <translation>mv</translation>
     </message>
     <message>
         <source>ld</source>
-        <translation type="unfinished">ml</translation>
+        <translation>ml</translation>
     </message>
     <message>
         <source>tm</source>
-        <translation type="unfinished">tm</translation>
+        <translation>tm</translation>
     </message>
     <message>
         <source>xt</source>
-        <translation type="unfinished">xt</translation>
+        <translation>xt</translation>
     </message>
     <message>
         <source>rm</source>
-        <translation type="unfinished">tr</translation>
+        <translation>tr</translation>
     </message>
     <message>
         <source>mv</source>
-        <translation type="unfinished">vp</translation>
+        <translation>vp</translation>
     </message>
     <message>
         <source>ch</source>
-        <translation type="unfinished">af</translation>
+        <translation>af</translation>
     </message>
     <message>
         <source>mi</source>
-        <translation type="unfinished">sp</translation>
+        <translation>sp</translation>
     </message>
     <message>
         <source>ro</source>
-        <translation type="unfinished">ro</translation>
+        <translation>ro</translation>
     </message>
     <message>
         <source>sz</source>
-        <translation type="unfinished">sc</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <source>ss</source>
-        <translation type="unfinished">ur</translation>
+        <translation>ur</translation>
     </message>
     <message>
         <source>er</source>
-        <translation type="unfinished">vw</translation>
+        <translation>vw</translation>
     </message>
     <message>
         <source>oo</source>
-        <translation type="unfinished">oo</translation>
+        <translation>oo</translation>
     </message>
     <message>
         <source>uu</source>
-        <translation type="unfinished">hh</translation>
+        <translation>hh</translation>
     </message>
     <message>
         <source>xp</source>
-        <translation type="unfinished">xp</translation>
+        <translation>xp</translation>
     </message>
     <message>
         <source>os</source>
-        <translation type="unfinished">sn</translation>
+        <translation>sn</translation>
     </message>
     <message>
         <source>sg</source>
-        <translation type="unfinished">sg</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <source>se</source>
-        <translation type="unfinished">se</translation>
+        <translation>se</translation>
     </message>
     <message>
         <source>si</source>
-        <translation type="unfinished">si</translation>
+        <translation>si</translation>
     </message>
     <message>
         <source>sn</source>
@@ -10141,32 +10140,32 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>sm</source>
-        <translation type="unfinished">sm</translation>
+        <translation>sm</translation>
     </message>
     <message>
         <source>np</source>
-        <translation type="unfinished">sp</translation>
+        <translation>sp</translation>
     </message>
     <message>
         <source>tn</source>
-        <translation type="unfinished">da</translation>
+        <translation>da</translation>
     </message>
     <message>
         <source>kill</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>k</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>back</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
