@@ -2301,19 +2301,20 @@ void QC_ApplicationWindow::slotFileExport() {
         bool cancel = false;
 
         QStringList filters;
-        foreach (QByteArray format, QImageWriter::supportedImageFormats()) {
+        foreach (QString format, QImageWriter::supportedImageFormats()) {
+            format.lower();
             QString st;
-            if (format=="JPEG") {
-                st = QString("%1 (*.%2 *.jpg)")
-                     .arg(QG_DialogFactory::extToFormat(format))
-                     .arg(QString(format).lower());
+            if (format=="jpeg" || format=="tiff") {
+                // Don't add the aliases
             } else {
                 st = QString("%1 (*.%2)")
                      .arg(QG_DialogFactory::extToFormat(format))
-                     .arg(QString(format).lower());
+                     .arg(format);
             }
-            filters.append(st);
+            if (st.length()>0)
+                filters.append(st);
         }
+        filters.removeDuplicates();
 
 
         QFileDialog fileDlg(this);

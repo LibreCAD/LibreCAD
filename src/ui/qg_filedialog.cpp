@@ -71,6 +71,7 @@ RS_String QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type)
     fileDlg->setMode(QFileDialog::AnyFile);
     fileDlg->setCaption(QObject::tr("Save Drawing As"));
     fileDlg->setDir(defDir);
+    fileDlg->setAcceptMode(QFileDialog::AcceptSave);
     fileDlg->selectFilter(defFilter);
 
     // run dialog:
