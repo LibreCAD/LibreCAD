@@ -147,7 +147,7 @@ void RS_FilterDXF::addLayer(const DL_LayerData& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: creating layer");
 
-    RS_Layer* layer = new RS_Layer(toNativeString(data.name.c_str(),variables.getString("$DWGCODEPAGE", "")));
+    RS_Layer* layer = new RS_Layer(toNativeString(data.name.c_str(),variables.getString("$DWGCODEPAGE", "UTF-8")));
     RS_DEBUG->print("RS_FilterDXF::addLayer: set pen");
     layer->setPen(attributesToPen(attributes));
     //layer->setFlags(data.flags&0x07);
@@ -493,7 +493,7 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
     }
 
     mtext+=data.text.c_str();
-    mtext = toNativeString(mtext, variables.getString("$DWGCODEPAGE", ""));
+    mtext = toNativeString(mtext, variables.getString("$DWGCODEPAGE", "UTF-8"));
 
     // use default style for the drawing:
     if (sty.isEmpty()) {
@@ -660,7 +660,7 @@ RS_DimensionData RS_FilterDXF::convDimensionData(
         lss = RS2::Exact;
     }
 
-    t = toNativeString(data.text.c_str(), variables.getString("$DWGCODEPAGE", ""));
+    t = toNativeString(data.text.c_str(), variables.getString("$DWGCODEPAGE", "UTF-8"));
 
     if (sty.isEmpty()) {
         sty = variables.getString("$DIMSTYLE", "Standard");
@@ -2925,12 +2925,10 @@ RS_String RS_FilterDXF::toNativeString(const char* data, const QString& codePage
     // Through a textcoder, if that is possible, to convert the string to unicode
     // We try to use the DWGCODEPAGE if it's available, else we just return the string and assume it's latin1
     if (!res.contains("\\U+")) {
-        if (codePage.length()>0) {
-            QTextCodec *codec = QTextCodec::codecForName(RS_System::getEncoding(codePage));
-            if (codec)
-                res = codec->toUnicode(data);
-            return res;
-        }
+        QTextCodec *codec = QTextCodec::codecForName(RS_System::getEncoding(codePage));
+        if (codec)
+            res = codec->toUnicode(data);
+        return res;
     }
 
 
