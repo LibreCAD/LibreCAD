@@ -74,11 +74,7 @@ extern void QINITIMAGES_LIBRECAD();
 int main(int argc, char** argv) {
 
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);
-    // RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
         RS_DEBUG->print("param 0: %s", argv[0]);
-
-        // avoid . / , confusion on German environments
-        setlocale(LC_ALL, "C");
 
         QCoreApplication::setApplicationName(XSTR(QC_APPNAME));
         QCoreApplication::setApplicationVersion(XSTR(QC_VERSION));
@@ -222,11 +218,6 @@ int main(int argc, char** argv) {
                 RS_DEBUG->print("main: updating splash: OK");
         }
 #endif
-
-        // loading files:
-        // renew: avoid . / , confusion on German environments
-        //setlocale(LC_NUMERIC, "C");
-        setlocale(LC_ALL, "C");
 
         RS_DEBUG->print("main: loading files..");
         bool files_loaded = false;
