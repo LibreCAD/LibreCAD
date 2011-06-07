@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="et">
 <context>
     <name></name>
     <message>
@@ -219,7 +219,7 @@
     </message>
     <message>
         <source>Date: %1</source>
-        <translation>Kuupäev: %1</translation>
+        <translation type="obsolete">Kuupäev: %1</translation>
     </message>
     <message>
         <source>Library Browser</source>
@@ -410,6 +410,26 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiled on: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5056,11 +5076,15 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation>Teekide asukohtade laadimine..</translation>
+        <translation type="obsolete">Teekide asukohtade laadimine..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
         <translation>Faili %1 laadimine..</translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -25,8 +25,6 @@
 **********************************************************************/
 
 #include "rs_actionzoomauto.h"
-//Added by qt3to4:
-#include <q3mimefactory.h>
 
 
 /**

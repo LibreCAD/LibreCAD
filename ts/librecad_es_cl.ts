@@ -324,7 +324,7 @@ Compruebe los permisos.</translation>
     </message>
     <message>
         <source>Date: %1</source>
-        <translation>Fecha: %1</translation>
+        <translation type="obsolete">Fecha: %1</translation>
     </message>
     <message>
         <source>Modules: %1</source>
@@ -405,6 +405,26 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiled on: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6035,11 +6055,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation type="unfinished">Buscando librerias</translation>
+        <translation type="obsolete">Buscando librerias</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
         <translation type="unfinished">Cargando Archivo %1..</translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

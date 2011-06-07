@@ -1,215 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="uk">
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
         <source>Running script &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Виконання сценарію „%1“</translation>
     </message>
     <message>
         <source>Inserting block &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставка блоку „%1“</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Файл</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Редагування</translation>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до &amp;командного рядка</translation>
     </message>
     <message>
         <source>CTRL+M</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+M</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Вигляд</translation>
     </message>
     <message>
         <source>&amp;Select</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Вибір</translation>
     </message>
     <message>
         <source>&amp;Point</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Точка</translation>
     </message>
     <message>
         <source>&amp;Line</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Лінія</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Дуга</translation>
     </message>
     <message>
         <source>&amp;Circle</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Коло</translation>
     </message>
     <message>
         <source>&amp;Ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Еліпс</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Сплайн</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ламана</translation>
     </message>
     <message>
         <source>&amp;Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Креслення</translation>
     </message>
     <message>
         <source>&amp;Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Розмір</translation>
     </message>
     <message>
         <source>&amp;Modify</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Зміна</translation>
     </message>
     <message>
         <source>&amp;Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Прив’язка</translation>
     </message>
     <message>
         <source>&amp;Info</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Інфо</translation>
     </message>
     <message>
         <source>&amp;Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Шар</translation>
     </message>
     <message>
         <source>&amp;Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Блок</translation>
     </message>
     <message>
         <source>&amp;CAM</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;CAM</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Про програму</translation>
     </message>
     <message>
         <source>&amp;Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Посібник</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставити зображення</translation>
     </message>
     <message>
         <source>&amp;Scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Сценарії</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Вікно</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Довідка</translation>
     </message>
     <message>
         <source>De&amp;bugging</source>
-        <translation type="unfinished"></translation>
+        <translation>На&amp;лагодження</translation>
     </message>
     <message>
         <source>Layer List</source>
-        <translation type="unfinished"></translation>
+        <translation>Список шарів</translation>
     </message>
     <message>
         <source>Block List</source>
-        <translation type="unfinished"></translation>
+        <translation>Список блоків</translation>
     </message>
     <message>
         <source>Library Browser</source>
-        <translation type="unfinished">Огляд бібліотеки</translation>
+        <translation>Оглядач бібліотек</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished"></translation>
+        <translation>Командний рядок</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Уступами</translation>
     </message>
     <message>
         <source>&amp;Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Кахлями</translation>
     </message>
     <message>
         <source>Tile &amp;Horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкласти кахлями по &amp;горизонталі</translation>
     </message>
     <message>
         <source>Creating new file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Створення нового файлу …</translation>
     </message>
     <message>
         <source>Block &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Блок „%1“</translation>
     </message>
     <message>
         <source>unnamed document %1</source>
-        <translation type="unfinished"></translation>
+        <translation>неназваний документ „%1“</translation>
     </message>
     <message>
         <source>New Drawing created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Нове креслення створене.</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкриття нещодавно редагованого файлу…</translation>
     </message>
     <message>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо відкрити файл
+„%1“
+Перевірте, будь ласка, права доступу.</translation>
     </message>
     <message>
         <source>Loaded document: </source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажений документ: </translation>
     </message>
     <message>
         <source>Opening aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкриття файлу скасовано</translation>
     </message>
     <message>
         <source>Saving drawing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберігається креслення…</translation>
     </message>
     <message>
         <source>Saved drawing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Збережено креслення: „%1“</translation>
     </message>
     <message>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо зберегти файл
+„%1“
+Перевірте, будь ласка, права доступу.</translation>
     </message>
     <message>
         <source>Saving drawing under new filename...</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберігається креслення з новою назвою…</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Автозбереження креслення…</translation>
     </message>
     <message>
         <source>Auto-saved drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Креслення автоматично збережено</translation>
     </message>
     <message>
         <source>Cannot auto-save the file
@@ -271,10 +275,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Date: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Modules: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -284,6 +284,34 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiled on: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1783,11 +1811,11 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Вихід</translation>
+        <translation type="obsolete">Вихід</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="obsolete">&amp;Вихід</translation>
+        <translation type="unfinished">&amp;Вихід</translation>
     </message>
     <message>
         <source>CTRL-G</source>
@@ -1795,6 +1823,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict&amp;Vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;back</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5918,11 +5950,11 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Loading Library Paths..</source>
+        <source>Loading File %1..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Loading File %1..</source>
+        <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6930,7 +6962,7 @@ Do you want to replace it?</source>
     <name>RS_ActionDrawPolyline</name>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Ламана</translation>
     </message>
     <message>
         <source>Draw polylines</source>
@@ -6973,7 +7005,7 @@ Do you want to replace it?</source>
     <name>RS_ActionDrawSpline</name>
     <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Сплайн</translation>
     </message>
     <message>
         <source>Specify first control point</source>
@@ -8989,6 +9021,23 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Available commands:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>kill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>b</source>
+        <comment>back</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="da">
 <context>
     <name></name>
     <message>
@@ -333,7 +333,7 @@ Check venligst filretighederne.</translation>
     </message>
     <message>
         <source>Date: %1</source>
-        <translation>Dato: %1</translation>
+        <translation type="obsolete">Dato: %1</translation>
     </message>
     <message>
         <source>This is a %1 version which terminates
@@ -410,6 +410,26 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiled on: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1399,7 +1419,7 @@ i et nyt vindue</translation>
     </message>
     <message>
         <source>Show menu &quot;Edit&quot;</source>
-        <translation>Vis menu &quot;Rediger&quot;	</translation>
+        <translation>Vis menu &quot;Rediger&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Dimensions&quot;</source>
@@ -5066,11 +5086,15 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation>Henter biblioteksstier..</translation>
+        <translation type="obsolete">Henter biblioteksstier..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
         <translation>Henter fil %1..</translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
