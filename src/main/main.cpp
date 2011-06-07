@@ -25,16 +25,10 @@
 **********************************************************************/
 
 #include "main.h"
-#include <locale.h>
 
 #include <qapplication.h>
 
-#include <qtimer.h>
-
-# include <QSplashScreen>
-//Added by qt3to4:
-#include <q3mimefactory.h>
-#include <QPixmap>
+#include <QSplashScreen>
 QSplashScreen *splash;
 
 #ifdef RS_SCRIPTING

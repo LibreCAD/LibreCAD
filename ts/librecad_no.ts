@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="no">
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fil</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rediger</translation>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vis</translation>
     </message>
     <message>
         <source>&amp;Select</source>
@@ -25,11 +25,11 @@
     </message>
     <message>
         <source>&amp;Point</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Punkt</translation>
     </message>
     <message>
         <source>&amp;Line</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Linje</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
@@ -37,11 +37,11 @@
     </message>
     <message>
         <source>&amp;Circle</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sirkel</translation>
     </message>
     <message>
         <source>&amp;Ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ellipse</translation>
     </message>
     <message>
         <source>&amp;Draw</source>
@@ -65,7 +65,7 @@
     </message>
     <message>
         <source>&amp;Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Lag</translation>
     </message>
     <message>
         <source>&amp;Block</source>
@@ -153,27 +153,27 @@
     </message>
     <message>
         <source>Saving drawing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagrer tegning...</translation>
     </message>
     <message>
         <source>Saved drawing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagret tegning: %1</translation>
     </message>
     <message>
         <source>Saving drawing under new filename...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagrer tegning under et annet filnavn...</translation>
     </message>
     <message>
         <source>Exporting drawing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksporterer tegning...</translation>
     </message>
     <message>
         <source>Exported: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksporterte: %1</translation>
     </message>
     <message>
         <source>Exporting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksporterer...</translation>
     </message>
     <message>
         <source>Export complete</source>
@@ -181,7 +181,7 @@
     </message>
     <message>
         <source>Export failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportering mislyktes!</translation>
     </message>
     <message>
         <source>Printing complete</source>
@@ -221,15 +221,15 @@ Please check the permissions.</source>
     </message>
     <message>
         <source>Version: %1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Versjon: %1 %2</translation>
     </message>
     <message>
         <source>Modules: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Moduler: %1</translation>
     </message>
     <message>
         <source>Date: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Dato: %1</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -292,6 +292,26 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiled on: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4436,11 +4456,11 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Loading Library Paths..</source>
+        <source>Loading File %1..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Loading File %1..</source>
+        <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

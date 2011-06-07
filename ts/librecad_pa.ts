@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="pa">
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
@@ -281,7 +281,7 @@ Please check the permissions.</source>
     </message>
     <message>
         <source>Date: %1</source>
-        <translation>ਮਿਤੀ: %1</translation>
+        <translation type="obsolete">ਮਿਤੀ: %1</translation>
     </message>
     <message>
         <source>This is a %1 version which terminates
@@ -358,6 +358,26 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiled on: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4622,7 +4642,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation>ਲਾਇਬ੍ਰੇਰੀ ਮਾਰਗ ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..</translation>
+        <translation type="obsolete">ਲਾਇਬ੍ਰੇਰੀ ਮਾਰਗ ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
@@ -4710,6 +4730,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Parsec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

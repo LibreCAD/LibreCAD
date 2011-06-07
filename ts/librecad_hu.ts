@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="hu">
 <context>
     <name></name>
     <message>
@@ -335,7 +335,7 @@ nem menthető. Ellenőrizze a jogokat.</translation>
     </message>
     <message>
         <source>Date: %1</source>
-        <translation>Dátum: %1</translation>
+        <translation type="obsolete">Dátum: %1</translation>
     </message>
     <message>
         <source>This is a %1 version which terminates
@@ -412,6 +412,26 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiled on: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6410,11 +6430,15 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation>Könyvtárak betöltése..</translation>
+        <translation type="obsolete">Könyvtárak betöltése..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
         <translation>%1 fájl betöltése..</translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

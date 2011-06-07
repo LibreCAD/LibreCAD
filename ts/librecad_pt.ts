@@ -117,7 +117,7 @@
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation type="obsolete">&amp;Barras de ferramentas</translation>
+        <translation type="unfinished">&amp;Barras de ferramentas</translation>
     </message>
     <message>
         <source>&amp;Order QCAD Professional Now</source>
@@ -353,10 +353,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Date: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Modules: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -374,6 +370,22 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiled on: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6860,7 +6872,7 @@ Você deseja manter suas modificações, ou as descartar?</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation>Carregando Atalhos para Bibliotecas..</translation>
+        <translation type="obsolete">Carregando Atalhos para Bibliotecas..</translation>
     </message>
     <message>
         <source>Open Image</source>
@@ -6873,6 +6885,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>QCad 1.x file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
