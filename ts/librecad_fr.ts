@@ -281,7 +281,7 @@ Vérifiez les permissions SVP.</translation>
     </message>
     <message>
         <source>Date: %1</source>
-        <translation>Date : %1</translation>
+        <translation type="obsolete">Date : %1</translation>
     </message>
     <message>
         <source>This is a %1 version which terminates
@@ -362,6 +362,26 @@ Sauvegarde automatique désactivée.</translation>
     <message>
         <source>Import</source>
         <translation>Import</translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiled on: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4723,11 +4743,15 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation>Chargement des Chemins d&apos;Accès aux Librairies..</translation>
+        <translation type="obsolete">Chargement des Chemins d&apos;Accès aux Librairies..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
         <translation>Chargement du Fichier %1..</translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

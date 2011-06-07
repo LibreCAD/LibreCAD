@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="nl">
 <context>
-    <name/>
+    <name></name>
     <message>
         <source>Loading..</source>
         <translation type="obsolete">Bezig met laden...</translation>
@@ -275,8 +276,8 @@ Datum: %1</translation>
         <translation>Comando Regel</translation>
     </message>
     <message>
-        <source>Block '%1'</source>
-        <translation>Blok '%1'</translation>
+        <source>Block &apos;%1&apos;</source>
+        <translation>Blok &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -332,7 +333,7 @@ Controleer de toegangsrechten.</translation>
     </message>
     <message>
         <source>Date: %1</source>
-        <translation>Datum: %1</translation>
+        <translation type="obsolete">Datum: %1</translation>
     </message>
     <message>
         <source>This is a %1 version which terminates
@@ -357,12 +358,12 @@ U kunt nu uw werk bewaren.</translation>
         <translation>&amp;Spline</translation>
     </message>
     <message>
-        <source>Running script '%1'</source>
+        <source>Running script &apos;%1&apos;</source>
         <translation>Huidige script %1</translation>
     </message>
     <message>
-        <source>Inserting block '%1'</source>
-        <translation>Blok '%1' wordt toegevoegd</translation>
+        <source>Inserting block &apos;%1&apos;</source>
+        <translation>Blok &apos;%1&apos; wordt toegevoegd</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -400,16 +401,36 @@ Auto-save disabled.</source>
         <translation>Help</translation>
     </message>
     <message>
-        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation>Help bestanden konden niet worden gevonden.</translation>
     </message>
     <message>
         <source>&amp;Plugins</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiled on: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1921,7 +1942,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;back</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1992,8 +2013,8 @@ Auto-save disabled.</source>
         <translation>Blok aan het herbenoemen</translation>
     </message>
     <message>
-        <source>Could not name block. A block named "%1" already exists.</source>
-        <translation>Kon blok niet benoemen. Er bestaat al een blok genaamd "%1".</translation>
+        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <translation>Kon blok niet benoemen. Er bestaat al een blok genaamd &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -2317,48 +2338,48 @@ in een separate Venster</translation>
         <translation>Hoofd</translation>
     </message>
     <message>
-        <source>Show menu "Lines"</source>
-        <translation>Toon menu "Lijnen"</translation>
+        <source>Show menu &quot;Lines&quot;</source>
+        <translation>Toon menu &quot;Lijnen&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Arcs"</source>
-        <translation>Toon menu "Bogen"</translation>
+        <source>Show menu &quot;Arcs&quot;</source>
+        <translation>Toon menu &quot;Bogen&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Circles"</source>
-        <translation>Toon menu "Cirkels"</translation>
+        <source>Show menu &quot;Circles&quot;</source>
+        <translation>Toon menu &quot;Cirkels&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Points"</source>
-        <translation type="obsolete">Toon menu "Punten"</translation>
+        <source>Show menu &quot;Points&quot;</source>
+        <translation type="obsolete">Toon menu &quot;Punten&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Measure"</source>
-        <translation>Toon menu "Meten"</translation>
+        <source>Show menu &quot;Measure&quot;</source>
+        <translation>Toon menu &quot;Meten&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Ellipses"</source>
-        <translation>Toon menu "Ovalen"</translation>
+        <source>Show menu &quot;Ellipses&quot;</source>
+        <translation>Toon menu &quot;Ovalen&quot;</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
         <translation>Arceringen / Inkleuringen</translation>
     </message>
     <message>
-        <source>Show menu "Edit"</source>
-        <translation>Toon menu "Bewerken"</translation>
+        <source>Show menu &quot;Edit&quot;</source>
+        <translation>Toon menu &quot;Bewerken&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Dimensions"</source>
-        <translation>Toon menu "Bematen"</translation>
+        <source>Show menu &quot;Dimensions&quot;</source>
+        <translation>Toon menu &quot;Bematen&quot;</translation>
     </message>
     <message>
         <source>Texts</source>
         <translation>Tekst</translation>
     </message>
     <message>
-        <source>Show menu "Select"</source>
-        <translation>Toon menu "Selecteer"</translation>
+        <source>Show menu &quot;Select&quot;</source>
+        <translation>Toon menu &quot;Selecteer&quot;</translation>
     </message>
     <message>
         <source>Create Block</source>
@@ -3144,12 +3165,12 @@ in een separate Venster</translation>
         <translation>Welcom</translation>
     </message>
     <message>
-        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size="+1"&gt;&lt;b&gt;Welcom by QCad&lt;/b&gt;
+        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcom by QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 U kunt nu de eenheid kiezen voor nieuwe tekeningen en uw voorkeurstaal &lt;br&gt;
@@ -3518,7 +3539,7 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <translation>Graden</translation>
     </message>
     <message>
-        <source>Surveyor's units</source>
+        <source>Surveyor&apos;s units</source>
         <translation>Te meten eenheid</translation>
     </message>
     <message>
@@ -3526,8 +3547,8 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <translation>Opties</translation>
     </message>
     <message>
-        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
-        <translation>Voor de lengte formaten 'Werktuigbouw' en 'Bouwkunde' moet de eenheid naar Inch worden gezet.</translation>
+        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <translation>Voor de lengte formaten &apos;Werktuigbouw&apos; en &apos;Bouwkunde&apos; moet de eenheid naar Inch worden gezet.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -5819,12 +5840,12 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <translation>Wis Laag</translation>
     </message>
     <message>
-        <source>Layer "%1" and all entities on it will be removed.</source>
-        <translation>Laag "%1" en alle elementen daarop worden verwijderd.</translation>
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
+        <translation>Laag &quot;%1&quot; en alle elementen daarop worden verwijderd.</translation>
     </message>
     <message>
-        <source>Layer "%1" can never be removed.</source>
-        <translation>Laag "%1" kan niet worden verwijderd.</translation>
+        <source>Layer &quot;%1&quot; can never be removed.</source>
+        <translation>Laag &quot;%1&quot; kan niet worden verwijderd.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -5835,16 +5856,16 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
         <translation>Wis Blok</translation>
     </message>
     <message>
-        <source>Block "%1" and all its entities will be removed.</source>
-        <translation>Blok "%1" en alle elementen daarop worden verwijderd.</translation>
+        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
+        <translation>Blok &quot;%1&quot; en alle elementen daarop worden verwijderd.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Laag Eigenschappen</translation>
     </message>
     <message>
-        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
-        <translation>De Laag met naam "%1" bestaat. Kies een andere naam.</translation>
+        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
+        <translation>De Laag met naam &quot;%1&quot; bestaat. Kies een andere naam.</translation>
     </message>
 </context>
 <context>
@@ -6033,11 +6054,15 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation>Bibliotheek paden worden geladen..</translation>
+        <translation type="obsolete">Bibliotheek paden worden geladen..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
         <translation>Bezig met laden van bestand %1..</translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6185,8 +6210,8 @@ Wilt u het vervangen?</translation>
         <translation>&amp;Plaats Blok</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -6866,8 +6891,8 @@ Wilt u het vervangen?</translation>
         <translation type="obsolete">Voeg Afbeelding (Bitmap) in</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -7206,8 +7231,8 @@ Wilt u het vervangen?</translation>
         <translation type="obsolete">Teken veelhoek met center en hoekpunt</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -8060,12 +8085,12 @@ Wilt u het vervangen?</translation>
         <translation type="obsolete">Voegt een Object uit de Onderdeel Bibliotheek in.</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
-        <source>Cannot open file '%1'</source>
-        <translation>Kan bestand '%1' niet openen</translation>
+        <source>Cannot open file &apos;%1&apos;</source>
+        <translation>Kan bestand &apos;%1&apos; niet openen</translation>
     </message>
 </context>
 <context>
@@ -8719,7 +8744,7 @@ Wilt u het vervangen?</translation>
         <translation>&amp;Voeg node toe</translation>
     </message>
     <message>
-        <source>Add polyline's node</source>
+        <source>Add polyline&apos;s node</source>
         <translation>Voeg knooppunt toe aan vrije vorm</translation>
     </message>
     <message>
@@ -8743,7 +8768,7 @@ Wilt u het vervangen?</translation>
         <translation>Geef aan vrije vorm om knooppunten toe te voegen</translation>
     </message>
     <message>
-        <source>Specify adding node's point</source>
+        <source>Specify adding node&apos;s point</source>
         <translation>Geef toe te voegen knooppunt</translation>
     </message>
 </context>
@@ -8758,7 +8783,7 @@ Wilt u het vervangen?</translation>
         <translation>Knoo&amp;ppunt toevoegen</translation>
     </message>
     <message>
-        <source>Append polyline's node</source>
+        <source>Append polyline&apos;s node</source>
         <translation>Voeg vrije vorm knooppunt</translation>
     </message>
     <message>
@@ -8805,7 +8830,7 @@ Wilt u het vervangen?</translation>
         <translation>&amp;Verwijder knooppunt</translation>
     </message>
     <message>
-        <source>Delete polyline's node</source>
+        <source>Delete polyline&apos;s node</source>
         <translation>Verwijderen knooppunt uit vrije vorm</translation>
     </message>
     <message>
@@ -8829,7 +8854,7 @@ Wilt u het vervangen?</translation>
         <translation>Geef vrije vorm om knooppunt te verwijderen</translation>
     </message>
     <message>
-        <source>Specify deleting node's point</source>
+        <source>Specify deleting node&apos;s point</source>
         <translation>Geef de te verwijderen knoop punt</translation>
     </message>
 </context>
@@ -8953,7 +8978,7 @@ Wilt u het vervangen?</translation>
         <translation>&amp;Knip Segmenten</translation>
     </message>
     <message>
-        <source>Trim polyline's segments</source>
+        <source>Trim polyline&apos;s segments</source>
         <translation>Knip uit vrije vorm segmenten</translation>
     </message>
     <message>
@@ -9708,7 +9733,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation>Beschikbare commando's:</translation>
+        <translation>Beschikbare commando&apos;s:</translation>
     </message>
     <message>
         <source>ln</source>
@@ -10152,20 +10177,20 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>kill</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>k</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>back</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

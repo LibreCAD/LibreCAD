@@ -229,7 +229,7 @@ Please check the permissions.</source>
     </message>
     <message>
         <source>Date: %1</source>
-        <translation>Dato: %1</translation>
+        <translation type="obsolete">Dato: %1</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -292,6 +292,26 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiled on: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4436,11 +4456,11 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Loading Library Paths..</source>
+        <source>Loading File %1..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Loading File %1..</source>
+        <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

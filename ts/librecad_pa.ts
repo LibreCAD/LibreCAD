@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="pa">
 <context>
@@ -227,8 +228,8 @@
         <translation>ਕਮਾਂਡ ਲਾਇਨ</translation>
     </message>
     <message>
-        <source>Block '%1'</source>
-        <translation>ਬਲਾਕ '%1'</translation>
+        <source>Block &apos;%1&apos;</source>
+        <translation>ਬਲਾਕ &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -280,7 +281,7 @@ Please check the permissions.</source>
     </message>
     <message>
         <source>Date: %1</source>
-        <translation>ਮਿਤੀ: %1</translation>
+        <translation type="obsolete">ਮਿਤੀ: %1</translation>
     </message>
     <message>
         <source>This is a %1 version which terminates
@@ -305,12 +306,12 @@ You can save your work now.</source>
         <translation>ਸਪਲਾਈਨ(&amp;S)</translation>
     </message>
     <message>
-        <source>Running script '%1'</source>
-        <translation>'%1' ਸਕ੍ਰਿਪਟ ਚਲਾਈ ਜਾ ਰਹੀ ਹੈ</translation>
+        <source>Running script &apos;%1&apos;</source>
+        <translation>&apos;%1&apos; ਸਕ੍ਰਿਪਟ ਚਲਾਈ ਜਾ ਰਹੀ ਹੈ</translation>
     </message>
     <message>
-        <source>Inserting block '%1'</source>
-        <translation>ਬਲਾਕ '%1' ਸ਼ਾਮਿਲ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</translation>
+        <source>Inserting block &apos;%1&apos;</source>
+        <translation>ਬਲਾਕ &apos;%1&apos; ਸ਼ਾਮਿਲ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -318,46 +319,66 @@ You can save your work now.</source>
     </message>
     <message>
         <source>CTRL+M</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Auto-saved drawing</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SVN Revision: %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
-        <translation type="unfinished"/>
+        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Plugins</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiled on: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -421,19 +442,19 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Snap to endpoints</source>
-        <translation type="obsolete">ਅੰਤ-ਬਿੰਦੂ 'ਤੇ ਸਨੈਪ</translation>
+        <translation type="obsolete">ਅੰਤ-ਬਿੰਦੂ &apos;ਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <source>On Entity</source>
-        <translation type="obsolete">ਇਕਾਈ 'ਤੇ</translation>
+        <translation type="obsolete">ਇਕਾਈ &apos;ਤੇ</translation>
     </message>
     <message>
         <source>&amp;On Entity</source>
-        <translation>ਇਕਾਈ 'ਤੇ(&amp;O)</translation>
+        <translation>ਇਕਾਈ &apos;ਤੇ(&amp;O)</translation>
     </message>
     <message>
         <source>Snap to nearest point on entity</source>
-        <translation type="obsolete">ਇਕਾਈ ਦੇ ਨੇੜਲੇ ਬਿੰਦੂ 'ਤੇ ਸਨੈਪ</translation>
+        <translation type="obsolete">ਇਕਾਈ ਦੇ ਨੇੜਲੇ ਬਿੰਦੂ &apos;ਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <source>Center</source>
@@ -445,7 +466,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Snap to centers</source>
-        <translation type="obsolete">ਕੇਂਦਰਾਂ 'ਤੇ ਸਨੈਪ</translation>
+        <translation type="obsolete">ਕੇਂਦਰਾਂ &apos;ਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <source>Middle</source>
@@ -457,7 +478,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Snap to middle points</source>
-        <translation type="obsolete">ਮੱਧ ਬਿੰਦੂਆਂ 'ਤੇ ਸਨੈਪ</translation>
+        <translation type="obsolete">ਮੱਧ ਬਿੰਦੂਆਂ &apos;ਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <source>Distance from Endpoint</source>
@@ -469,7 +490,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Snap to points with a given distance to an endpoint</source>
-        <translation type="obsolete">ਇੱਕ ਅੰਤ-ਬਿੰਦੂ ਤੋਂ ਇੱਕ ਦਿੱਤੀ ਦੂਰੀ ਨਾਲ ਬਿੰਦੂ 'ਤੇ ਸਨੈਪ</translation>
+        <translation type="obsolete">ਇੱਕ ਅੰਤ-ਬਿੰਦੂ ਤੋਂ ਇੱਕ ਦਿੱਤੀ ਦੂਰੀ ਨਾਲ ਬਿੰਦੂ &apos;ਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <source>Intersection</source>
@@ -641,15 +662,15 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>CTRL-G</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Restrict&amp;Vertically</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;back</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -720,8 +741,8 @@ Auto-save disabled.</source>
         <translation>ਬਲਾਕ ਨਾਂ-ਤਬਦੀਲ</translation>
     </message>
     <message>
-        <source>Could not name block. A block named "%1" already exists.</source>
-        <translation>ਨਾਂ ਬਲਾਕ ਨਹੀ ਹੋ ਸਕਿਆ। ਬਲਾਕ ਨਾਂ "%1" ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ।</translation>
+        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <translation>ਨਾਂ ਬਲਾਕ ਨਹੀ ਹੋ ਸਕਿਆ। ਬਲਾਕ ਨਾਂ &quot;%1&quot; ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ।</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -832,7 +853,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>ਮੁੱਖ ਮੇਨੂ 'ਤੇ ਵਾਪਿਸ</translation>
+        <translation>ਮੁੱਖ ਮੇਨੂ &apos;ਤੇ ਵਾਪਿਸ</translation>
     </message>
     <message>
         <source>Concentric</source>
@@ -867,7 +888,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>ਮੁੱਖ ਮੇਨੂ 'ਤੇ ਵਾਪਿਸ</translation>
+        <translation>ਮੁੱਖ ਮੇਨੂ &apos;ਤੇ ਵਾਪਿਸ</translation>
     </message>
     <message>
         <source>Concentric</source>
@@ -882,7 +903,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>ਮੁੱਖ ਮੇਨੂ 'ਤੇ ਵਾਪਿਸ</translation>
+        <translation>ਮੁੱਖ ਮੇਨੂ &apos;ਤੇ ਵਾਪਿਸ</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
@@ -933,7 +954,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>ਮੁੱਖ ਮੇਨੂ 'ਤੇ ਵਾਪਿਸ</translation>
+        <translation>ਮੁੱਖ ਮੇਨੂ &apos;ਤੇ ਵਾਪਿਸ</translation>
     </message>
 </context>
 <context>
@@ -944,7 +965,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>ਮੁੱਖ ਮੇਨੂ 'ਤੇ ਵਾਪਿਸ</translation>
+        <translation>ਮੁੱਖ ਮੇਨੂ &apos;ਤੇ ਵਾਪਿਸ</translation>
     </message>
     <message>
         <source>Distance (Point, Point)</source>
@@ -983,7 +1004,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>ਮੁੱਖ ਮੇਨੂ 'ਤੇ ਵਾਪਿਸ</translation>
+        <translation>ਮੁੱਖ ਮੇਨੂ &apos;ਤੇ ਵਾਪਿਸ</translation>
     </message>
     <message>
         <source>Bisectors</source>
@@ -1045,44 +1066,44 @@ in a separate window</source>
         <translation>ਮੁੱਖ</translation>
     </message>
     <message>
-        <source>Show menu "Lines"</source>
-        <translation>"ਰੇਖਾਵਾਂ" ਮੇਨੂ ਵੇਖਾਓ</translation>
+        <source>Show menu &quot;Lines&quot;</source>
+        <translation>&quot;ਰੇਖਾਵਾਂ&quot; ਮੇਨੂ ਵੇਖਾਓ</translation>
     </message>
     <message>
-        <source>Show menu "Arcs"</source>
-        <translation>"ਚਾਪਾਂ" ਮੇਨੂ ਵੇਖਾਓ</translation>
+        <source>Show menu &quot;Arcs&quot;</source>
+        <translation>&quot;ਚਾਪਾਂ&quot; ਮੇਨੂ ਵੇਖਾਓ</translation>
     </message>
     <message>
-        <source>Show menu "Circles"</source>
-        <translation>"ਚੱਕਰ" ਮੇਨੂ ਵੇਖਾਓ</translation>
+        <source>Show menu &quot;Circles&quot;</source>
+        <translation>&quot;ਚੱਕਰ&quot; ਮੇਨੂ ਵੇਖਾਓ</translation>
     </message>
     <message>
-        <source>Show menu "Measure"</source>
-        <translation>"ਮਾਪਕ" ਮੇਨੂ ਵੇਖਾਓ</translation>
+        <source>Show menu &quot;Measure&quot;</source>
+        <translation>&quot;ਮਾਪਕ&quot; ਮੇਨੂ ਵੇਖਾਓ</translation>
     </message>
     <message>
-        <source>Show menu "Ellipses"</source>
-        <translation>"ਅੰਡਾਕਾਰ" ਮੇਨੂ ਵੇਖਾਓ</translation>
+        <source>Show menu &quot;Ellipses&quot;</source>
+        <translation>&quot;ਅੰਡਾਕਾਰ&quot; ਮੇਨੂ ਵੇਖਾਓ</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
         <translation>ਮੋਘਾ / ਗੂੜਾ ਭਰੋ</translation>
     </message>
     <message>
-        <source>Show menu "Edit"</source>
-        <translation>"ਸੋਧ" ਮੇਨੂ ਵੇਖਾਓ</translation>
+        <source>Show menu &quot;Edit&quot;</source>
+        <translation>&quot;ਸੋਧ&quot; ਮੇਨੂ ਵੇਖਾਓ</translation>
     </message>
     <message>
-        <source>Show menu "Dimensions"</source>
-        <translation>"ਮਾਪ" ਮੇਨੂ ਵੇਖਾਓ</translation>
+        <source>Show menu &quot;Dimensions&quot;</source>
+        <translation>&quot;ਮਾਪ&quot; ਮੇਨੂ ਵੇਖਾਓ</translation>
     </message>
     <message>
         <source>Texts</source>
         <translation>ਪਾਠ</translation>
     </message>
     <message>
-        <source>Show menu "Select"</source>
-        <translation>"ਚੋਣ" ਮੇਨੂ ਵੇਖਾਓ</translation>
+        <source>Show menu &quot;Select&quot;</source>
+        <translation>&quot;ਚੋਣ&quot; ਮੇਨੂ ਵੇਖਾਓ</translation>
     </message>
     <message>
         <source>Create Block</source>
@@ -1113,7 +1134,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>ਮੁੱਖ ਮੇਨੂ 'ਤੇ ਵਾਪਿਸ</translation>
+        <translation>ਮੁੱਖ ਮੇਨੂ &apos;ਤੇ ਵਾਪਿਸ</translation>
     </message>
     <message>
         <source>Rotate</source>
@@ -1200,7 +1221,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>ਮੁੱਖ ਮੇਨੂ 'ਤੇ ਵਾਪਿਸ</translation>
+        <translation>ਮੁੱਖ ਮੇਨੂ &apos;ਤੇ ਵਾਪਿਸ</translation>
     </message>
     <message>
         <source>Single points</source>
@@ -1215,7 +1236,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>ਮੁੱਖ ਮੇਨੂ 'ਤੇ ਵਾਪਿਸ</translation>
+        <translation>ਮੁੱਖ ਮੇਨੂ &apos;ਤੇ ਵਾਪਿਸ</translation>
     </message>
     <message>
         <source>Create Polyline</source>
@@ -1254,7 +1275,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>ਮੁੱਖ ਮੇਨੂ 'ਤੇ ਵਾਪਿਸ</translation>
+        <translation>ਮੁੱਖ ਮੇਨੂ &apos;ਤੇ ਵਾਪਿਸ</translation>
     </message>
     <message>
         <source>Select intersected entities</source>
@@ -1305,11 +1326,11 @@ in a separate window</source>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>ਮੁੱਖ ਮੇਨੂ 'ਤੇ ਵਾਪਿਸ</translation>
+        <translation>ਮੁੱਖ ਮੇਨੂ &apos;ਤੇ ਵਾਪਿਸ</translation>
     </message>
     <message>
         <source>Snap to grid</source>
-        <translation>ਗਰਿੱਡ 'ਤੇ ਸਨੈਪ</translation>
+        <translation>ਗਰਿੱਡ &apos;ਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <source>Free positioning</source>
@@ -1317,23 +1338,23 @@ in a separate window</source>
     </message>
     <message>
         <source>Snap to Endpoints</source>
-        <translation>ਅੰਤ-ਬਿੰਦੂਆਂ 'ਤੇ ਸਨੈਪ</translation>
+        <translation>ਅੰਤ-ਬਿੰਦੂਆਂ &apos;ਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <source>Snap to closest point on entity</source>
-        <translation>ਇਕਾਈ 'ਤੇ ਨੇੜਲੇ ਬਿੰਦੂ 'ਤੇ ਸਨੈਪ</translation>
+        <translation>ਇਕਾਈ &apos;ਤੇ ਨੇੜਲੇ ਬਿੰਦੂ &apos;ਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <source>Snap to center points</source>
-        <translation>ਕੇਂਦਰੀ ਬਿੰਦੂਆਂ 'ਤੇ ਸਨੈਪ</translation>
+        <translation>ਕੇਂਦਰੀ ਬਿੰਦੂਆਂ &apos;ਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <source>Snap to middle points</source>
-        <translation>ਮੱਧ ਬਿੰਦੂਆਂ 'ਤੇ ਸਨੈਪ</translation>
+        <translation>ਮੱਧ ਬਿੰਦੂਆਂ &apos;ਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>ਅੰਤ-ਬਿੰਦੂ ਤੋਂ ਇੱਕ ਦਿੱਤੀ ਦੂਰੀ ਨਾਲ ਬਿੰਦੂ 'ਤੇ ਸਨੈਪ</translation>
+        <translation>ਅੰਤ-ਬਿੰਦੂ ਤੋਂ ਇੱਕ ਦਿੱਤੀ ਦੂਰੀ ਨਾਲ ਬਿੰਦੂ &apos;ਤੇ ਸਨੈਪ</translation>
     </message>
     <message>
         <source>Snap to intersections automatically</source>
@@ -1376,7 +1397,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>ਮੁੱਖ ਮੇਨੂ 'ਤੇ ਵਾਪਿਸ</translation>
+        <translation>ਮੁੱਖ ਮੇਨੂ &apos;ਤੇ ਵਾਪਿਸ</translation>
     </message>
     <message>
         <source>Spline</source>
@@ -1514,7 +1535,7 @@ in a separate window</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1860,12 +1881,12 @@ in a separate window</source>
         <translation>ਜੀ ਆਇਆਂ ਨੂੰ</translation>
     </message>
     <message>
-        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size="+1"&gt;&lt;b&gt;QCad ਵਲੋਂ ਜੀ ਆਇਆਂ ਨੂੰ&lt;/b&gt;(new line)
+        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;QCad ਵਲੋਂ ਜੀ ਆਇਆਂ ਨੂੰ&lt;/b&gt;(new line)
 &lt;/font&gt;(new line)
 &lt;br&gt;(new line)
 ਕਿਰਪਾ ਕਰਕੇ ਨਵੀਂ ਡਰਾਇੰਗ ਲਈ ਵਰਤਣ ਲਈ ਇਕਾਈਆਂ ਅਤੇ ਆਪਣੀ ਪਸੰਦੀਦਾ ਭਾਸ਼ਾ ਦੀ ਚੋਣ ਕਰੋ।&lt;br&gt;(new line)
@@ -2034,7 +2055,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2085,7 +2106,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2136,11 +2157,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2234,7 +2255,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>ਗਰੇਡੀਐਂਟ</translation>
     </message>
     <message>
-        <source>Surveyor's units</source>
+        <source>Surveyor&apos;s units</source>
         <translation>ਸਰਵੇਅਰ ਦੀਆਂ ਇਕਾਈਆਂ</translation>
     </message>
     <message>
@@ -2242,8 +2263,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>ਚੋਣ</translation>
     </message>
     <message>
-        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
-        <translation>'ਇੰਜਨੀਅਰਗ' ਅਤੇ 'ਆਰਚੀਟੈਕਚਰਕਲ' ਲੰਬਾਈ ਫਾਰਮਿਟ ਲਈ ਇਕਾਈ ਇੰਚ ਹੀ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
+        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <translation>&apos;ਇੰਜਨੀਅਰਗ&apos; ਅਤੇ &apos;ਆਰਚੀਟੈਕਚਰਕਲ&apos; ਲੰਬਾਈ ਫਾਰਮਿਟ ਲਈ ਇਕਾਈ ਇੰਚ ਹੀ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -2626,34 +2647,34 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Program Defaults</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Time between automatc saving of thedocument in minutes.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Auto save time:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>Drawing Variables</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Variable</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Code</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -2755,7 +2776,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2806,7 +2827,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2857,7 +2878,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3554,7 +3575,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>again Still No Text supplied.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4160,7 +4181,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4178,7 +4199,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <name>QG_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Close</source>
@@ -4186,7 +4207,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Line</source>
@@ -4194,11 +4215,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Tangential</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Angle</source>
@@ -4491,12 +4512,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>ਪਰਤ ਹਟਾਓ</translation>
     </message>
     <message>
-        <source>Layer "%1" and all entities on it will be removed.</source>
-        <translation>ਪਰਤ "%1" ਅਤੇ ਇਸ ਦੀਆਂ ਸਭ ਇਕਾਈਆਂ ਨੂੰ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।</translation>
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
+        <translation>ਪਰਤ &quot;%1&quot; ਅਤੇ ਇਸ ਦੀਆਂ ਸਭ ਇਕਾਈਆਂ ਨੂੰ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।</translation>
     </message>
     <message>
-        <source>Layer "%1" can never be removed.</source>
-        <translation>ਪਰਤ "%1" ਨੂੰ ਕਦੇ ਵੀ ਹਟਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।</translation>
+        <source>Layer &quot;%1&quot; can never be removed.</source>
+        <translation>ਪਰਤ &quot;%1&quot; ਨੂੰ ਕਦੇ ਵੀ ਹਟਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -4507,16 +4528,16 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>ਬਲਾਕ ਹਟਾਓ</translation>
     </message>
     <message>
-        <source>Block "%1" and all its entities will be removed.</source>
-        <translation>ਬਲਾਕ "%1" ਅਤੇ ਇਸ ਦੀਆਂ ਸਭ ਇਕਾਈਆਂ ਨੂੰ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।</translation>
+        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
+        <translation>ਬਲਾਕ &quot;%1&quot; ਅਤੇ ਇਸ ਦੀਆਂ ਸਭ ਇਕਾਈਆਂ ਨੂੰ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>ਪਰਤ ਗੁਣ</translation>
     </message>
     <message>
-        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
-        <translation>"%1"  ਨਾਂ ਨਾਲ ਪਰਤ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਵੱਖਰਾ ਨਾਂ ਦਿਓ।</translation>
+        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
+        <translation>&quot;%1&quot;  ਨਾਂ ਨਾਲ ਪਰਤ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਵੱਖਰਾ ਨਾਂ ਦਿਓ।</translation>
     </message>
 </context>
 <context>
@@ -4621,7 +4642,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation>ਲਾਇਬ੍ਰੇਰੀ ਮਾਰਗ ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..</translation>
+        <translation type="obsolete">ਲਾਇਬ੍ਰੇਰੀ ਮਾਰਗ ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
@@ -4633,83 +4654,87 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Inch</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Millimeter</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Centimeter</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Meter</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Kilometer</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Microinch</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Mil</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Yard</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Angstrom</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Nanometer</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Micron</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Decimeter</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Decameter</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Hectometer</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Gigameter</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Astro</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Lightyear</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Parsec</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4837,8 +4862,8 @@ Do you want to replace it?</source>
         <translation>ਕੋਣ ਦਿਓ:</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Enter factor:</source>
@@ -5534,8 +5559,8 @@ Do you want to replace it?</source>
         <translation>ਕੋਣ ਦਿਓ:</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Enter factor:</source>
@@ -5858,8 +5883,8 @@ Do you want to replace it?</source>
         <translation>ਕੇਂਦਰ ਦਿਓ</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Specify a corner</source>
@@ -6092,7 +6117,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -6120,11 +6145,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Undo disallowed due a fatal bug somewhere. Sorry.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6298,7 +6323,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;New...</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6673,16 +6698,16 @@ Do you want to replace it?</source>
         <translation>ਕੋਣ ਦਿਓ:</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>ਫੈਕਟਰ ਦਿਓ:</translation>
     </message>
     <message>
-        <source>Cannot open file '%1'</source>
-        <translation>ਫਾਇਲ '%1' ਨੂੰ ਖੋਲਿਆ ਨਹੀ ਜਾ ਸਕਦਾ ਹੈ</translation>
+        <source>Cannot open file &apos;%1&apos;</source>
+        <translation>ਫਾਇਲ &apos;%1&apos; ਨੂੰ ਖੋਲਿਆ ਨਹੀ ਜਾ ਸਕਦਾ ਹੈ</translation>
     </message>
 </context>
 <context>
@@ -6806,11 +6831,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle or ellipse.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7305,11 +7330,11 @@ Do you want to replace it?</source>
     <name>RS_ActionPolylineAdd</name>
     <message>
         <source>&amp;Add node</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add polyline's node</source>
-        <translation type="unfinished"/>
+        <source>Add polyline&apos;s node</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -7317,27 +7342,27 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
-        <source>Specify adding node's point</source>
-        <translation type="unfinished"/>
+        <source>Specify adding node&apos;s point</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -7348,11 +7373,11 @@ Do you want to replace it?</source>
     <name>RS_ActionPolylineAppend</name>
     <message>
         <source>A&amp;ppend node</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Append polyline's node</source>
-        <translation type="unfinished"/>
+        <source>Append polyline&apos;s node</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -7360,15 +7385,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7391,11 +7416,11 @@ Do you want to replace it?</source>
     <name>RS_ActionPolylineDel</name>
     <message>
         <source>&amp;Delete node</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete polyline's node</source>
-        <translation type="unfinished"/>
+        <source>Delete polyline&apos;s node</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -7403,27 +7428,27 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
-        <source>Specify deleting node's point</source>
-        <translation type="unfinished"/>
+        <source>Specify deleting node&apos;s point</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -7434,7 +7459,7 @@ Do you want to replace it?</source>
     <name>RS_ActionPolylineDelBetween</name>
     <message>
         <source>Delete &amp;between two nodes</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
@@ -7446,23 +7471,23 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7470,7 +7495,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify first node</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -7478,18 +7503,18 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify second node</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -7497,11 +7522,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Choose the original polyline</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7512,11 +7537,11 @@ Do you want to replace it?</source>
     <name>RS_ActionPolylineSegment</name>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -7524,11 +7549,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Entity must be a line or arc.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7539,11 +7564,11 @@ Do you want to replace it?</source>
     <name>RS_ActionPolylineTrim</name>
     <message>
         <source>&amp;Trim segments</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Trim polyline's segments</source>
-        <translation type="unfinished"/>
+        <source>Trim polyline&apos;s segments</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -7551,19 +7576,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specifying point is invalid.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Segment found on entity.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify polyline to trim</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7571,7 +7596,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify first segment</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -7579,7 +7604,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify second segment</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7625,7 +7650,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Ctrl+K</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8887,7 +8912,7 @@ parallel</translation>
     </message>
     <message>
         <source>sn</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sm</source>
@@ -8909,20 +8934,20 @@ parallel</translation>
     </message>
     <message>
         <source>kill</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>k</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>back</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
