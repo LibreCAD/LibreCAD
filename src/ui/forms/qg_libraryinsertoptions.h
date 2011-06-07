@@ -26,7 +26,7 @@
 #ifndef QG_LIBRARYINSERTOPTIONS_H
 #define QG_LIBRARYINSERTOPTIONS_H
 
-#include "intermediate/ui/ui_qg_libraryinsertoptions.h"
+#include "ui_qg_libraryinsertoptions.h"
 
 class QG_LibraryInsertOptions : public QWidget, public Ui::QG_LibraryInsertOptions
 {

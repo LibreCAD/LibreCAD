@@ -28,7 +28,7 @@
 
 class RS_Spline;
 
-#include "intermediate/ui/ui_qg_dlgspline.h"
+#include "ui_qg_dlgspline.h"
 
 class QG_DlgSpline : public QDialog, public Ui::QG_DlgSpline
 {

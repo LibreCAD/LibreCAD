@@ -25,8 +25,6 @@
 **********************************************************************/
 
 #include "rs_actionprintpreview.h"
-//Added by qt3to4:
-#include <q3mimefactory.h>
 
 /**
  * Constructor.
@@ -47,7 +45,7 @@ RS_ActionPrintPreview::~RS_ActionPrintPreview() {
 QAction* RS_ActionPrintPreview::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Print Preview")
 	QAction* action = new QAction(tr("Print Pre&view"), NULL);
-	action->setIcon(QIcon(":/actions/fileprintpreview.png"));
+        action->setIcon(QIcon::fromTheme("document-print-preview", QIcon(":/actions/fileprintpreview.png")));
     //action->zetStatusTip(tr("Shows a preview of a print"));	
 	return action;
 }

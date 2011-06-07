@@ -6,6 +6,8 @@ DEFINES += QC_APPNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYKEY="\"LibreCAD\""
 DEFINES += QC_VERSION="\"1.0.0beta5\""
+DEFINES += QC_DELAYED_SPLASH_SCREEN=1
+
 
 # Add qt3support
 QT += qt3support
@@ -25,6 +27,7 @@ unix {
     SVNREVISION="Git Version"
     DEFINES += QC_SVNREVISION=\"$$SVNREVISION\"
     macx { 
+        CONFIG += x86 x86_64
         TARGET = LibreCAD
         DEFINES += QC_APPDIR="\"LibreCAD\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
@@ -52,9 +55,9 @@ win32 {
     DEFINES += QC_APPDIR="\"LibreCAD\""
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
     
-    # RC_FILE = res/main/librecad.icns
+    RC_FILE = res\\main\\librecad.rc
     DESTDIR = .
-    QMAKE_POST_LINK = scripts\postprocess-win.bat
+    QMAKE_POST_LINK = scripts\\postprocess-win.bat
 }
 
 
@@ -67,9 +70,10 @@ MOC_DIR = intermediate/moc
 RCC_DIR = intermediate/rcc
 TS_DIR = intermediate/ts
 UI_DIR = intermediate/ui
-UI_HERADERS_DIR = intermediate/ui
+UI_HEADERS_DIR = intermediate/ui
 UI_SOURCES_DIR = intermediate/ui
 RESOURCES += res/extui/extui.qrc
+
 INCLUDEPATH += dxflib/src \
     fparser \
     src/cmd \
@@ -412,6 +416,7 @@ HEADERS += src/actions/rs_actionblocksadd.h \
     src/actions/rs_actionpolylinetrim.h \
     src/actions/rs_actionpolylineequidistant.h \
     src/actions/rs_actionpolylinesegment.h
+
 SOURCES += src/actions/rs_actionblocksadd.cpp \
     src/actions/rs_actionblocksattributes.cpp \
     src/actions/rs_actionblockscreate.cpp \
@@ -527,7 +532,9 @@ SOURCES += src/actions/rs_actionblocksadd.cpp \
     src/actions/rs_actionpolylinetrim.cpp \
     src/actions/rs_actionpolylineequidistant.cpp \
     src/actions/rs_actionpolylinesegment.cpp
+
 RESOURCES += res/actions/actions.qrc
+
 IMAGES += res/actions/configure.png \
     res/actions/editcopy2.png \
     res/actions/editcut2.png \
@@ -718,6 +725,7 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_textoptions.ui.h \
     src/ui/forms/qg_trimamountoptions.ui.h \
     src/ui/forms/qg_widgetpen.ui.h
+
 SOURCES += src/ui/qg_actionfactory.cpp \
     src/ui/qg_actionhandler.cpp \
     src/ui/qg_blockwidget.cpp \
@@ -807,6 +815,7 @@ SOURCES += src/ui/qg_actionfactory.cpp \
     src/ui/forms/qg_textoptions.cpp \
     src/ui/forms/qg_trimamountoptions.cpp \
     src/ui/forms/qg_widgetpen.cpp
+
 FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_arcoptions.ui \
     src/ui/forms/qg_arctangentialoptions.ui \
@@ -879,6 +888,7 @@ FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_textoptions.ui \
     src/ui/forms/qg_trimamountoptions.ui \
     src/ui/forms/qg_widgetpen.ui
+
 RESOURCES += res/ui/ui.qrc
 
 # ################################################################################
@@ -890,6 +900,7 @@ HEADERS += \
     src/main/qc_mdiwindow.h \
     src/main/helpbrowser.h \
     src/main/main.h
+
 SOURCES += \
     src/main/qc_applicationwindow.cpp \
     src/main/qc_dialogfactory.cpp \
@@ -897,6 +908,7 @@ SOURCES += \
     src/main/qc_mdiwindow.cpp \
     src/main/helpbrowser.cpp \
     src/main/main.cpp
+
 IMAGES += res/main/contents.png \
     res/main/document.png \
     res/main/editclear.png \

@@ -29,8 +29,6 @@
 #include "rs.h"
 #include "rs_snapper.h"
 #include "rs_point.h"
-//Added by qt3to4:
-#include <q3mimefactory.h>
 
 
 /**
@@ -52,7 +50,7 @@ RS_ActionZoomWindow::RS_ActionZoomWindow(RS_EntityContainer& container,
 QAction* RS_ActionZoomWindow::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Window Zoom")
 	QAction* action = new QAction(tr("&Window Zoom"), NULL);
-	action->setIcon(QIcon(":/actions/zoomwindow.png"));
+        action->setIcon(QIcon::fromTheme("zoom-select", QIcon(":/actions/zoomwindow.png")));
 	//action->zetStatusTip(tr("Zooms in a window"));
 	
     return action;

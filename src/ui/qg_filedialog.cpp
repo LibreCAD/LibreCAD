@@ -28,8 +28,7 @@
 
 #include "qg_graphicview.h"
 
-//#undef QT_NO_FILEDIALOG
-#include <q3filedialog.h>
+#include <qfiledialog.h>
 #include <qmessagebox.h>
 
 #include "rs_string.h"
@@ -49,18 +48,17 @@
  *         or an empty string if the dialog was cancelled.
  */
 RS_String QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
-#ifndef QT_NO_FILEDIALOG
     // read default settings:
     RS_SETTINGS->beginGroup("/Paths");
     RS_String defDir = RS_SETTINGS->readEntry("/Save",
-                       RS_SYSTEM->getHomeDir());
+                                              RS_SYSTEM->getHomeDir());
     RS_String defFilter = RS_SETTINGS->readEntry("/SaveFilter",
-                          "Drawing Exchange DXF 2000 (*.dxf)");
-	//RS_String defFilter = "Drawing Exchange (*.dxf)";
+                                                 "Drawing Exchange DXF 2000 (*.dxf)");
+    //RS_String defFilter = "Drawing Exchange (*.dxf)";
     RS_SETTINGS->endGroup();
 
     // prepare file save as dialog:
-    Q3FileDialog* fileDlg = new Q3FileDialog(parent,"Save as",true);
+    QFileDialog* fileDlg = new QFileDialog(parent,"Save as");
     QStringList filters;
     bool done = false;
     bool cancel = false;
@@ -70,10 +68,10 @@ RS_String QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type)
     filters.append("Drawing Exchange DXF R12 (*.dxf)");
     filters.append("Font (*.cxf)");
     fileDlg->setFilters(filters);
-    fileDlg->setMode(Q3FileDialog::AnyFile);
+    fileDlg->setMode(QFileDialog::AnyFile);
     fileDlg->setCaption(QObject::tr("Save Drawing As"));
     fileDlg->setDir(defDir);
-	fileDlg->setSelectedFilter(defFilter);
+    fileDlg->selectFilter(defFilter);
 
     // run dialog:
     do {
@@ -89,36 +87,36 @@ RS_String QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type)
                     fn+=".cxf";
                 } else {
                     fn+=".dxf";
-				}
+                }
             }
 
-			// set format:
-			if (type!=NULL) {
+            // set format:
+            if (type!=NULL) {
                 if (fileDlg->selectedFilter()=="Font (*.cxf)") {
-					*type = RS2::FormatCXF;
+                    *type = RS2::FormatCXF;
                 } else if (fileDlg->selectedFilter()=="Drawing Exchange DXF R12 (*.dxf)") {
-					*type = RS2::FormatDXF12;
+                    *type = RS2::FormatDXF12;
                 } else {
-					*type = RS2::FormatDXF;
-				}
-			}
+                    *type = RS2::FormatDXF;
+                }
+            }
 
             // overwrite warning:
             if(QFileInfo(fn).exists()) {
                 int choice =
-                    QMessageBox::warning(parent, QObject::tr("Save Drawing As"),
-                                         QObject::tr("%1 already exists.\n"
-                                                     "Do you want to replace it?")
-                                         .arg(fn),
-                                         QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,QMessageBox::Cancel);
+                        QMessageBox::warning(parent, QObject::tr("Save Drawing As"),
+                                             QObject::tr("%1 already exists.\n"
+                                                         "Do you want to replace it?")
+                                             .arg(fn),
+                                             QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,QMessageBox::Cancel);
 
                 switch (choice) {
-                    case QMessageBox::Yes:
-                        done = true;
-                        break;
-                    default:
-                        done = false;
-                        break;
+                case QMessageBox::Yes:
+                    done = true;
+                    break;
+                default:
+                    done = false;
+                    break;
                 }
             } else {
                 done = true;
@@ -138,12 +136,9 @@ RS_String QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type)
         RS_SETTINGS->endGroup();
     }
 
-	delete fileDlg;
+    delete fileDlg;
 
     return fn;
-#else
-	return "";
-#endif
 }
 
 
@@ -156,33 +151,32 @@ RS_String QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type)
  *         or an empty string if the dialog was cancelled.
  */
 RS_String QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
-#ifndef QT_NO_FILEDIALOG
-	RS_DEBUG->print("QG_FileDialog::getOpenFileName");
+    RS_DEBUG->print("QG_FileDialog::getOpenFileName");
 
     // read default settings:
     RS_SETTINGS->beginGroup("/Paths");
     RS_String defDir = RS_SETTINGS->readEntry("/Open",
-                       RS_SYSTEM->getHomeDir());
+                                              RS_SYSTEM->getHomeDir());
     //RS_String defFilter = RS_SETTINGS->readEntry("/OpenFilter",
     //                      "Drawing Exchange (*.dxf *.DXF)");
-	RS_String defFilter = "Drawing Exchange (*.dxf *.DXF)";
+    RS_String defFilter = "Drawing Exchange (*.dxf *.DXF)";
     RS_SETTINGS->endGroup();
 
-	RS_DEBUG->print("defDir: %s", defDir.latin1());
-	RS_DEBUG->print("defFilter: %s", defFilter.latin1());
+    RS_DEBUG->print("defDir: %s", defDir.latin1());
+    RS_DEBUG->print("defFilter: %s", defFilter.latin1());
 
     RS_String fDxf(QObject::tr("Drawing Exchange %1").arg("(*.dxf *.DXF)"));
     RS_String fDxf1(QObject::tr("QCad 1.x file %1").arg("(*.dxf *.DXF)"));
     RS_String fCxf(QObject::tr("Font %1").arg("(*.cxf)"));
 
-	RS_DEBUG->print("fDxf: %s", fDxf.latin1());
-	RS_DEBUG->print("fDxf1: %s", fDxf1.latin1());
-	RS_DEBUG->print("fCxf: %s", fCxf.latin1());
+    RS_DEBUG->print("fDxf: %s", fDxf.latin1());
+    RS_DEBUG->print("fDxf1: %s", fDxf1.latin1());
+    RS_DEBUG->print("fCxf: %s", fCxf.latin1());
 
     RS_String fn = "";
     bool cancel = false;
 
-    Q3FileDialog* fileDlg = new Q3FileDialog(parent, "File Dialog", true);
+    QFileDialog* fileDlg = new QFileDialog(parent, "File Dialog");
 
     QStringList filters;
     filters.append(fDxf);
@@ -190,18 +184,19 @@ RS_String QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type)
     filters.append(fCxf);
 
     fileDlg->setFilters(filters);
-    fileDlg->setMode(Q3FileDialog::ExistingFile);
+    fileDlg->setMode(QFileDialog::ExistingFile);
     fileDlg->setCaption(QObject::tr("Open Drawing"));
     fileDlg->setDir(defDir);
-    fileDlg->setSelectedFilter(defFilter);
+    fileDlg->selectFilter(defFilter);
 
-	// preview:
-	RS_Graphic* gr = new RS_Graphic;
-	QG_GraphicView* prev = new QG_GraphicView(parent);
-	prev->setContainer(gr);
-	prev->setBorders(1, 1, 1, 1);
-	fileDlg->setContentsPreviewEnabled(true);
+    /** preview RVT PORT preview is currently not supported by QT4
+    RS_Graphic* gr = new RS_Graphic;
+    QG_GraphicView* prev = new QG_GraphicView(parent);
+    prev->setContainer(gr);
+    prev->setBorders(1, 1, 1, 1);
+    fileDlg->setContentsPreviewEnabled(true);
     fileDlg->setContentsPreview(prev, prev);
+    */
 
     if (fileDlg->exec()==QDialog::Accepted) {
         fn = fileDlg->selectedFile();
@@ -219,7 +214,7 @@ RS_String QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type)
     } else {
         cancel = true;
     }
-	
+
     // store new default settings:
     if (!cancel) {
         RS_SETTINGS->beginGroup("/Paths");
@@ -228,17 +223,14 @@ RS_String QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type)
         RS_SETTINGS->endGroup();
     }
 
-	RS_DEBUG->print("QG_FileDialog::getOpenFileName: fileName: %s", fn.latin1());
-	RS_DEBUG->print("QG_FileDialog::getOpenFileName: OK");
+    RS_DEBUG->print("QG_FileDialog::getOpenFileName: fileName: %s", fn.latin1());
+    RS_DEBUG->print("QG_FileDialog::getOpenFileName: OK");
 
-	delete prev;
-	delete gr;
-	delete fileDlg;
+    // RVT PORT delete prev;
+    // RVT PORT delete gr;
+    delete fileDlg;
 
     return fn;
-#else
-	return "";
-#endif
 }
 
 // EOF

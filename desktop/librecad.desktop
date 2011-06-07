@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=LibreCAD
+Comment=A professional CAD System
+Comment[es]=Un sistema CAD profesional
+TryExec=librecad
+Exec=librecad %F
+Icon=librecad
+Categories=Graphics;Engineering;
+MimeType=image/vnd.dxf

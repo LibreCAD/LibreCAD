@@ -24,94 +24,71 @@
 **
 **********************************************************************/
 
+#include <QStatusBar>
+#include <QMenuBar>
+#include <QDockWidget>
+#include <QtHelp>
+#include <QSplitter>
+
 #include "qc_applicationwindow.h"
 #include "helpbrowser.h"
-//Added by qt3to4:
-#include <Q3StrList>
-#include <QPixmap>
-#include <QMouseEvent>
-#include <QCloseEvent>
-#include <q3mimefactory.h>
-#include <QKeyEvent>
-#include <Q3Frame>
-// RVT_PORT added
-#include <QImageReader>
 // RVT_PORT added
 #include <QImageWriter>
-#include <QDesktopServices>
 
 #include <fstream>
 
-#include <q3accel.h>
-#include <qaction.h>
-#include <qapplication.h>
-#include <qdatetime.h>
-#include <qfile.h>
-#include <qfiledialog.h>
-#include <qnamespace.h>
-#include <qmessagebox.h>
-#include <q3paintdevicemetrics.h>
-#include <qpainter.h>
-#include <qprinter.h>
-#include <qtimer.h>
-#include <q3vbox.h>
-
-#include <qeventloop.h>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QTimer>
 
 //Plugin support
 #include <QPluginLoader>
 
 #include "rs_application.h"
-#include "rs_actiondrawlinefree.h"
 #include "rs_actionprintpreview.h"
-#include "rs_creation.h"
-#include "rs_dialogfactory.h"
 #include "rs_dimaligned.h"
 #include "rs_dimlinear.h"
-#include "rs_dimradial.h"
-#include "rs_ellipse.h"
 #include "rs_hatch.h"
 #include "rs_image.h"
-#include "rs_fileio.h"
 #include "rs_insert.h"
 #include "rs_text.h"
 #include "rs_settings.h"
-#include "rs_script.h"
-#include "rs_scriptlist.h"
-#include "rs_solid.h"
 #include "rs_staticgraphicview.h"
 #include "rs_system.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_painterqt.h"
 #include "rs_selection.h"
 
-#include "qg_cadtoolbarmain.h"
-#include "qg_colorbox.h"
+#include "qg_cadtoolbar.h"
+#include "qg_actionfactory.h"
+#include "qg_blockwidget.h"
+#include "qg_librarywidget.h"
+#include "qg_commandwidget.h"
+
 #include "qg_coordinatewidget.h"
 #include "qg_dlgimageoptions.h"
 #include "qg_filedialog.h"
-#include "qg_mousewidget.h"
-#include "qg_pentoolbar.h"
 #include "qg_selectionwidget.h"
-#include "qg_cadtoolbarmain.h"
-#include "qg_dlgimageoptions.h"
 #include "qg_mousewidget.h"
 
-#include "qc_mdiwindow.h"
 #include "qc_dialogfactory.h"
 #include "main.h"
 #include "doc_plugin_interface.h"
+#include "qc_plugininterface.h"
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 
 #ifndef QC_APP_ICON
 # define QC_APP_ICON "librecad.png"
 #endif
+#ifndef QC_ABOUT_ICON
+# define QC_ABOUT_ICON ":/main/intro_librecad.png"
+#endif
 #ifndef QC_APP_ICON16
-# define QC_APP_ICON16 "librecad16.png"
+# define QC_APP_ICON16 ":/main/librecad16.png"
 #endif
 
-# include <qsplashscreen.h>
+#include <QSplashScreen>
     extern QSplashScreen *splash;
 
 /**
@@ -146,7 +123,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     initView();
 	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init toolbar");
     initToolBar();
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init actions");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init actions");
     initActions();
 	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init menu bar");
     initMenuBar();
@@ -166,7 +143,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_DialogFactory::instance()->setFactoryObject(dialogFactory);
 	RS_DEBUG->print("setting dialog factory object: OK");
 
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
     initSettings();
 
 	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init MDI");
@@ -481,10 +458,14 @@ void QC_ApplicationWindow::mouseReleaseEvent(QMouseEvent* e) {
 void QC_ApplicationWindow::initMDI() {
     RS_DEBUG->print("QC_ApplicationWindow::initMDI() begin");
 
-    Q3VBox* vb = new Q3VBox(this);
-    vb->setFrameStyle(Q3Frame::StyledPanel | Q3Frame::Sunken);
-    workspace = new QWorkspace(vb);
+    QFrame *vb = new QFrame(this);
+    QVBoxLayout *layout = new QVBoxLayout;
+    vb->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+    layout->setContentsMargins ( 0, 0, 0, 0 );
+    workspace = new QWorkspace();
+    layout->addWidget(workspace);
     workspace->setScrollBarsEnabled(true);
+    vb->setLayout(layout);
     setCentralWidget(vb);
 
     connect(workspace, SIGNAL(windowActivated(QWidget*)),
@@ -637,20 +618,6 @@ void QC_ApplicationWindow::initActions() {
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     /*
-       action = actionFactory.createAction(RS2::ActionViewLayerList, this);
-       action->addTo(menu);
-       action->setChecked(true);
-       action = actionFactory.createAction(RS2::ActionViewBlockList, this);
-       action->addTo(menu);
-       action->setChecked(true);
-       action = actionFactory.createAction(RS2::ActionViewOptionToolbar, this);
-       action->addTo(menu);
-       action->setChecked(true);
-       action = actionFactory.createAction(RS2::ActionViewCommandLine, this);
-       action->addTo(menu);
-       action->setChecked(true);*/
-
-    /*
     action = new QAction(tr("Back"),
                         tr("&Back"), Key_Escape, this);
        connect(action, SIGNAL(activated()),
@@ -691,8 +658,33 @@ void QC_ApplicationWindow::initActions() {
     menu->insertSeparator();
 
     action = actionFactory.createAction(RS2::ActionViewStatusBar, this);
-    action->addTo(menu);
     action->setChecked(true);
+    action->addTo(menu);
+
+    subMenu= menu->addMenu(tr("&Toolbars"));
+    subMenu->setName("Toolbars");
+
+    action = actionFactory.createAction(RS2::ActionViewLayerList, this, this->layerWidget->parentWidget());
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewBlockList, this, this->blockWidget->parentWidget());
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewLibrary, this, this->libraryWidget->parentWidget());
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewCommandLine, this, this->commandWidget->parentWidget());
+    action->addTo(subMenu);
+
+    subMenu->addSeparator();
+
+    action = actionFactory.createAction(RS2::ActionViewPenToolbar, this, this->penToolBar);
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewOptionToolbar, this, this->optionWidget);
+    action->addTo(subMenu);
+    //action = actionFactory.createAction(RS2::ActionViewCadToolbar, this, this->cadToolBar);
+    //action->addTo(subMenu); // RVT CadToolbar is not a correct widget yet to beable to get toogled.
+    action = actionFactory.createAction(RS2::ActionViewFileToolbar, this, this->fileToolBar);
+    action->addTo(subMenu);
+    action = actionFactory.createAction(RS2::ActionViewEditToolbar, this, this->editToolBar);
+    action->addTo(subMenu);
 
     // RVT_PORT menu->insertItem(tr("Vie&ws"), createDockWindowMenu(NoToolBars));
     // RVT_PORT menu->insertItem(tr("Tool&bars"), createDockWindowMenu(OnlyToolBars));
@@ -2097,11 +2089,7 @@ void QC_ApplicationWindow::slotFileOpenRecent(int id) {
     statusBar()->showMessage(tr("Opening recent file..."));
     QString fileName = recentFiles->get(id);
 
-    if (fileName.endsWith(" (DXF 1)")) {
-        slotFileOpen(fileName.left(fileName.length()-8), RS2::FormatDXF1);
-    } else {
-        slotFileOpen(fileName, RS2::FormatUnknown);
-    }
+    slotFileOpen(fileName, RS2::FormatUnknown);
 }
 
 
@@ -2153,11 +2141,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName,
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: 1");
 
         // update recent files menu:
-        if (type==RS2::FormatDXF1) {
-            recentFiles->add(fileName + " (DXF 1)");
-        } else {
-            recentFiles->add(fileName);
-        }
+        recentFiles->add(fileName);
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: 2");
         updateRecentFilesMenu();
 
@@ -2332,7 +2316,7 @@ void QC_ApplicationWindow::slotFileExport() {
         }
 
 
-        QFileDialog fileDlg(this, "", false);
+        QFileDialog fileDlg(this);
         fileDlg.setFilters(filters);
         fileDlg.setFileMode(QFileDialog::AnyFile);
         fileDlg.selectFilter(defFilter);
@@ -2563,18 +2547,17 @@ void QC_ApplicationWindow::slotFilePrint() {
 
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         printer->setFullPage(true);
-        Q3PaintDeviceMetrics metr(printer);
 
         RS_PainterQt* painter = new RS_PainterQt(printer);
         painter->setDrawingMode(w->getGraphicView()->getDrawingMode());
 
-        RS_StaticGraphicView gv(metr.width(), metr.height(), painter);
+        RS_StaticGraphicView gv(printer->width(), printer->height(), painter);
         gv.setPrinting(true);
         gv.setBorders(0,0,0,0);
 
-        double fx = (double)metr.width() / metr.widthMM()
+        double fx = (double)printer->width() / printer->widthMM()
                     * RS_Units::getFactorToMM(graphic->getUnit());
-        double fy = (double)metr.height() / metr.heightMM()
+        double fy = (double)printer->height() / printer->heightMM()
                     * RS_Units::getFactorToMM(graphic->getUnit());
 
         double f = (fx+fy)/2;
@@ -2815,86 +2798,6 @@ void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
     }
 }
 
-
-
-/**
- * Shows / hides the layer list.
- *
- * @param toggle true: show, false: hide.
- */
-/*void QC_ApplicationWindow::slotViewLayerList(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewLayerList()");
- 
-    if (toggle==false) {
-        layerDockWindow->hide();
-    } else {
-        layerDockWindow->show();
-    }
-}
-*/
-
-
-/**
- * Shows / hides the block list.
- *
- * @param toggle true: show, false: hide.
- */
-/*
-void QC_ApplicationWindow::slotViewBlockList(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewBlockList()");
- 
-    if (toggle==false) {
-        blockDockWindow->hide();
-    } else {
-        blockDockWindow->show();
-    }
-}
-*/
-
-
-
-/**
- * Shows / hides the command line.
- *
- * @param toggle true: show, false: hide.
- */
-/*
-void QC_ApplicationWindow::slotViewCommandLine(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewCommandLine()");
- 
-    if (toggle==false) {
-        commandDockWindow->hide();
-        //QG_GraphicView* graphicView = getGraphicView();
-        //if (graphicView!=NULL) {
-        //graphicView->setFocus();
-        //}
-        setFocus();
-    } else {
-        commandDockWindow->show();
-    }
-}
-*/
-
-
-
-/**
- * Shows / hides the option toolbar.
- *
- * @param toggle true: show, false: hide.
- */
-/*
-void QC_ApplicationWindow::slotViewOptionToolbar(bool toggle) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewOptionToolbar()");
- 
-    if (toggle==false) {
-        optionWidget->hide();
-    } else {
-        optionWidget->show();
-    }
-}
-*/
-
-
 /**
  * Creates a new MDI window for editing the selected block.
  */
@@ -2916,8 +2819,7 @@ void QC_ApplicationWindow::slotBlocksEdit() {
             }
         }
     }
-}
-*/
+} */
 
 
 
@@ -3005,35 +2907,29 @@ void QC_ApplicationWindow::slotHelpAbout() {
 
     QMessageBox box(this);
     box.setCaption(tr("About..."));
-    box.setText(       QString("<qt>") +  // no center for main stream LibreCAD
-#ifdef QC_ABOUT_HEADER
-                       QString("<center>") + 
-                       QString(XSTR(QC_ABOUT_HEADER)) +
-#else
+    box.setText(       QString("<p><font size=\"2\">") +
                        "<h2>"+ XSTR(QC_APPNAME)+ "</h2>" +
-#endif
-				tr("Version: %1 %2").arg(XSTR(QC_VERSION)).arg(edition) + "<br>" +
+                       tr("Version: %1 %2").arg(XSTR(QC_VERSION)).arg(edition) + "<br>" +
 #ifdef QC_SVNREVISION
-				tr("SVN Revision: %1").arg(XSTR(QC_SVNREVISION)) + "<br>" +
+                       tr("SVN Revision: %1").arg(XSTR(QC_SVNREVISION)) + "<br>" +
 #endif
-                       tr("Date: %1").arg(__DATE__) + "<br>" +
-				"(c) 2010 by R. van Twisk<br>"
+                       tr("Compiled on: %1").arg(__DATE__) + "<br>" + "(c) 2011 by Ries. van Twisk<br>"
                        "<br>" +
+                       tr("Program Icons Supplied by") +"<br>&nbsp;&nbsp;&nbsp;Pablo: " + QString("<a href=\"http://www.librecad.com.ar/\">LibreCAD Argentinie</a>") + "<br/>" +
+                       tr("Splash and Logo supplied by") + "<br>&nbsp;&nbsp;&nbsp;Diego " + QString("<a href=\"http://daltom.2082studio.com/\">Daltom Designer</a>") + "<br/>" +
+                       "<br />" +
                        tr("Modules: %1").arg(modulesString) + "<br>" +
-                       QString("<a href=\"http://www.LibreCAD.org\">http://www.LibreCAD.org</a>")+"<br><br><br>"+
-				"<font size=\"1\">Portions (c) by RibbonSoft, Andrew Mustun</font>" 
+                       "<br />" +
+                       tr("Main Website : ") + QString("<a href=\"http://www.LibreCAD.org\">http://www.LibreCAD.org</a>")+"<br><br><br>"+
+                                "<font size=\"1\">Portions (c) by RibbonSoft, Andrew Mustun</font>" +
+                       "</font></p>");
 
-#ifdef QC_ABOUT_ADD_COMPANY
-                       + QString("<br>") + QC_ABOUT_ADD_COMPANY
-                       + QString("</center>")
-#endif
-                       );
-#ifndef QC_ABOUT_HEADER
-    //RVT_PORT box.setIcon( qPixmapFromMimeSource(QC_APP_ICON) );
-    //RVT_PORT box.setFixedWidth(340);
-    //RVT_PORT box.setFixedHeight(250);
-#endif
+    box.setIconPixmap( qPixmapFromMimeSource(QC_ABOUT_ICON) );
+    box.setMinimumSize(500,400);
+    box.setBaseSize(500,400);
+    box.setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     box.exec();
+    box.resize(500,400);
 }
 
 

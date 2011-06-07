@@ -26,7 +26,7 @@
 #ifndef QG_COORDINATEWIDGET_H
 #define QG_COORDINATEWIDGET_H
 
-#include "intermediate/ui/ui_qg_coordinatewidget.h"
+#include "ui_qg_coordinatewidget.h"
 
 class QG_CoordinateWidget : public QWidget, public Ui::QG_CoordinateWidget
 {

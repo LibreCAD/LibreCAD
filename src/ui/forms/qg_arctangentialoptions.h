@@ -27,7 +27,7 @@
 #define QG_ARCTANGENTIALOPTIONS_H
 
 #include "rs_actiondrawarctangential.h"
-#include "intermediate/ui/ui_qg_arctangentialoptions.h"
+#include "ui_qg_arctangentialoptions.h"
 
 class QG_ArcTangentialOptions : public QWidget, public Ui::QG_ArcTangentialOptions
 {

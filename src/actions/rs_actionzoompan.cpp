@@ -27,8 +27,6 @@
 #include "rs_actionzoompan.h"
 #include "rs_snapper.h"
 #include "rs_point.h"
-//Added by qt3to4:
-#include <q3mimefactory.h>
 
 
 RS_ActionZoomPan::RS_ActionZoomPan(RS_EntityContainer& container,

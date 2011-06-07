@@ -15,3 +15,9 @@ librecad.pro.user
 *.qch
 *.qhc
 plugins.pro.user
+
+# Mac store files
+.DS_Store
+
+#pkg files
+*.pkg

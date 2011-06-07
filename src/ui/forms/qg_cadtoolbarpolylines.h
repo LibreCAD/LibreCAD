@@ -28,7 +28,7 @@
 
 class QG_CadToolBar;
 
-#include "intermediate/ui/ui_qg_cadtoolbarpolylines.h"
+#include "ui_qg_cadtoolbarpolylines.h"
 
 class QG_CadToolBarPolylines : public QWidget, public Ui::QG_CadToolBarPolylines
 {

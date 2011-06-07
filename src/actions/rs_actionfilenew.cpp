@@ -27,8 +27,6 @@
 #include "rs_actionfilenew.h"
 
 #include "rs_graphic.h"
-//Added by qt3to4:
-#include <q3mimefactory.h>
 
 
 
@@ -40,7 +38,7 @@ RS_ActionFileNew::RS_ActionFileNew(RS_EntityContainer& container,
 QAction* RS_ActionFileNew::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {
 	// tr("New Drawing")
 	QAction* action = new QAction(tr("&New..."), parent);
-	action->setIcon(QIcon(":/actions/filenew.png"));
+        action->setIcon(QIcon::fromTheme("document-new", QIcon(":/actions/filenew.png")));
 	action->setShortcut(QKeySequence::New);
     //action->zetStatusTip(tr("Creates a new drawing"));
 	
