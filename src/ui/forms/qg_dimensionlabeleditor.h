@@ -26,7 +26,7 @@
 #ifndef QG_DIMENSIONLABELEDITOR_H
 #define QG_DIMENSIONLABELEDITOR_H
 
-#include "intermediate/ui/ui_qg_dimensionlabeleditor.h"
+#include "ui_qg_dimensionlabeleditor.h"
 
 class QG_DimensionLabelEditor : public QWidget, public Ui::QG_DimensionLabelEditor
 {

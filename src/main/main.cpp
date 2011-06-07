@@ -25,16 +25,10 @@
 **********************************************************************/
 
 #include "main.h"
-#include <locale.h>
 
 #include <qapplication.h>
 
-#include <qtimer.h>
-
-# include <QSplashScreen>
-//Added by qt3to4:
-#include <q3mimefactory.h>
-#include <QPixmap>
+#include <QSplashScreen>
 QSplashScreen *splash;
 
 #ifdef RS_SCRIPTING
@@ -221,7 +215,7 @@ int main(int argc, char** argv) {
 #ifdef QSPLASHSCREEN_H
         if (splash) {
                 RS_DEBUG->print("main: updating splash..");
-                splash->message(QObject::tr("Loading Library Paths.."),
+                splash->message(QObject::tr("Loading..."),
                         Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
                 RS_DEBUG->print("main: processing events");
                 qApp->processEvents();
@@ -230,6 +224,10 @@ int main(int argc, char** argv) {
 #endif
 
         // loading files:
+        // renew: avoid . / , confusion on German environments
+        //setlocale(LC_NUMERIC, "C");
+        setlocale(LC_ALL, "C");
+
         RS_DEBUG->print("main: loading files..");
         bool files_loaded = false;
         for (QStringList::Iterator it = fileList.begin(); it != fileList.end();
@@ -260,10 +258,6 @@ int main(int argc, char** argv) {
 #endif
 
     //app.connect(&app, SIGNAL(lastWindowClosed()), &app, SLOT(quit()));
-
-        // renew: avoid . / , confusion on German environments
-        //setlocale(LC_NUMERIC, "C");
-        setlocale(LC_ALL, "C");
 
         RS_DEBUG->print("main: app.exec()");
 

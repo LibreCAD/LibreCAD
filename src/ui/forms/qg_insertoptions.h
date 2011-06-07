@@ -26,7 +26,7 @@
 #ifndef QG_INSERTOPTIONS_H
 #define QG_INSERTOPTIONS_H
 
-#include "intermediate/ui/ui_qg_insertoptions.h"
+#include "ui_qg_insertoptions.h"
 
 class QG_InsertOptions : public QWidget, public Ui::QG_InsertOptions
 {

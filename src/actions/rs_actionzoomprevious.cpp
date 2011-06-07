@@ -25,8 +25,6 @@
 **********************************************************************/
 
 #include "rs_actionzoomprevious.h"
-//Added by qt3to4:
-#include <q3mimefactory.h>
 
 
 /**
@@ -42,7 +40,7 @@ RS_ActionZoomPrevious::RS_ActionZoomPrevious(RS_EntityContainer& container,
 QAction* RS_ActionZoomPrevious::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Previous View")
 	QAction* action = new QAction(tr("&Previous View"), NULL);
-	action->setIcon(QIcon(":/actions/zoomprevious.png"));
+        action->setIcon(QIcon::fromTheme("zoom-previous", QIcon(":/actions/zoomprevious.png")));
 	//action->zetStatusTip(tr("Shows previous view"));
 	
 	return action;

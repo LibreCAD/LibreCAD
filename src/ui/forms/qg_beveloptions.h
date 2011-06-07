@@ -27,7 +27,7 @@
 #define QG_BEVELOPTIONS_H
 
 #include "rs_actionmodifybevel.h"
-#include "intermediate/ui/ui_qg_beveloptions.h"
+#include "ui_qg_beveloptions.h"
 
 class QG_BevelOptions : public QWidget, public Ui::QG_BevelOptions
 {

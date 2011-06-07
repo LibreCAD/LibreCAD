@@ -26,7 +26,7 @@
 #ifndef QG_DLGMIRROR_H
 #define QG_DLGMIRROR_H
 
-#include "intermediate/ui/ui_qg_dlgmirror.h"
+#include "ui_qg_dlgmirror.h"
 
 class QG_DlgMirror : public QDialog, public Ui::QG_DlgMirror
 {

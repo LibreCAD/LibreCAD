@@ -1,0 +1,1 @@
+image/vnd.dxf; libreCAD '%f'; test=test -n "$DISPLAY"; description="Drawing Exchange Format"; nametemplate=%s.dxf

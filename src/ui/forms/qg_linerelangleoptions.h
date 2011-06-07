@@ -26,7 +26,7 @@
 #ifndef QG_LINERELANGLEOPTIONS_H
 #define QG_LINERELANGLEOPTIONS_H
 
-#include "intermediate/ui/ui_qg_linerelangleoptions.h"
+#include "ui_qg_linerelangleoptions.h"
 
 class QG_LineRelAngleOptions : public QWidget, public Ui::QG_LineRelAngleOptions
 {

@@ -147,7 +147,7 @@ void RS_FilterDXF::addLayer(const DL_LayerData& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: creating layer");
 
-    RS_Layer* layer = new RS_Layer(QString::fromUtf8(data.name.c_str()));
+    RS_Layer* layer = new RS_Layer(toNativeString(data.name.c_str(),variables.getString("$DWGCODEPAGE", "")));
     RS_DEBUG->print("RS_FilterDXF::addLayer: set pen");
     layer->setPen(attributesToPen(attributes));
     //layer->setFlags(data.flags&0x07);
@@ -442,19 +442,6 @@ void RS_FilterDXF::addInsert(const DL_InsertData& data) {
  */
 void RS_FilterDXF::addMTextChunk(const char* text) {
     RS_DEBUG->print("RS_FilterDXF::addMTextChunk: %s", text);
-    //mtext += text;
-    //mtext += RS_String::fromUtf8(text);
-
-    /*
-    QCString locallyEncoded = text;
-    RS_String enc = RS_System::getEncoding(variables.getString("$DWGCODEPAGE", "ANSI_1252"));
-    QTextCodec *codec = QTextCodec::codecForName(enc); // get the codec for Japanese
-    if (codec!=NULL) {
-        mtext += codec->toUnicode(toNativeString(locallyEncoded));
-} else {
-        mtext += toNativeString(text);
-}
-    */
     mtext+=text;
 
 }
@@ -505,19 +492,8 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
         lss = RS2::Exact;
     }
 
-    mtext+=QString(QString::fromUtf8(data.text.c_str()));
-
-    RS_String locallyEncoded = mtext;
-    RS_String enc = RS_System::getEncoding(
-                        variables.getString("$DWGCODEPAGE", "ANSI_1252"));
-    // get the codec for Japanese
-    QTextCodec *codec = QTextCodec::codecForName(enc);
-
-    if (codec!=NULL) {
-        mtext = codec->toUnicode(toNativeString(locallyEncoded));
-    } else {
-        mtext = toNativeString(mtext);
-    }
+    mtext+=data.text.c_str();
+    mtext = toNativeString(mtext, variables.getString("$DWGCODEPAGE", ""));
 
     // use default style for the drawing:
     if (sty.isEmpty()) {
@@ -684,7 +660,7 @@ RS_DimensionData RS_FilterDXF::convDimensionData(
         lss = RS2::Exact;
     }
 
-    t = toNativeString(data.text.c_str());
+    t = toNativeString(data.text.c_str(), variables.getString("$DWGCODEPAGE", ""));
 
     if (sty.isEmpty()) {
         sty = variables.getString("$DIMSTYLE", "Standard");
@@ -1449,7 +1425,7 @@ void RS_FilterDXF::writeLayer(DL_WriterA& dw, RS_Layer* l) {
 
     dxf.writeLayer(
         dw,
-        DL_LayerData((const char*)l->getName().local8Bit(),
+        DL_LayerData((const char*)toDxfString(l->getName()),
                      l->isFrozen() + (l->isLocked()<<2)),
         DL_Attributes(std::string(""),
                       colorToNumber(l->getPen().getColor()),
@@ -2895,20 +2871,6 @@ int RS_FilterDXF::widthToNumber(RS2::LineWidth width) {
  * - %%%p for a plus/minus sign
  */
 RS_String RS_FilterDXF::toDxfString(const RS_String& string) {
-    /*
-       RS_String res = string;
-       // Line feed:
-       res = res.replace(RS_RegExp("\\n"), "\\P");
-       // Space:
-       res = res.replace(RS_RegExp(" "), "\\~");
-       // diameter:
-       res = res.replace(QChar(0x2205), "%%c");
-       // degree:
-       res = res.replace(QChar(0x00B0), "%%d");
-       // plus/minus
-       res = res.replace(QChar(0x00B1), "%%p");
-    */
-
     RS_String res = "";
 
     for (uint i=0; i<string.length(); ++i) {
@@ -2917,9 +2879,10 @@ RS_String RS_FilterDXF::toDxfString(const RS_String& string) {
         case 0x0A:
             res+="\\P";
             break;
-        case 0x20:
-            res+="\\~";
-            break;
+// RVT Space can stay space, verified with DraftSpace
+//        case 0x20:
+//            res+="\\~";
+//            break;
             // diameter:
         case 0x2205:
             res+="%%c";
@@ -2955,8 +2918,22 @@ RS_String RS_FilterDXF::toDxfString(const RS_String& string) {
 /**
  * Converts a DXF encoded string into a native Unicode string.
  */
-RS_String RS_FilterDXF::toNativeString(const RS_String& string) {
-    RS_String res = string;
+RS_String RS_FilterDXF::toNativeString(const char* data, const QString& codePage) {
+    RS_String res = QString(data);
+
+    // If the given string doesn't contain any unicode characters, we pass the string
+    // Through a textcoder, if that is possible, to convert the string to unicode
+    // We try to use the DWGCODEPAGE if it's available, else we just return the string and assume it's latin1
+    if (!res.contains("\\U+")) {
+        if (codePage.length()>0) {
+            QTextCodec *codec = QTextCodec::codecForName(RS_System::getEncoding(codePage));
+            if (codec)
+                res = codec->toUnicode(data);
+            return res;
+        }
+    }
+
+
     // Line feed:
     res = res.replace(RS_RegExp("\\\\P"), "\n");
     // Space:
