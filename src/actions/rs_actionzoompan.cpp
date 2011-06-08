@@ -60,11 +60,9 @@ void RS_ActionZoomPan::trigger() {
         graphicView->zoomPan(v2-v1);
         v1 = v2;
 }*/
-    if (x1>=0) {
         graphicView->zoomPan(x2-x1, y2-y1);
         x1 = x2;
         y1 = y2;
-    }
 }
 
 
