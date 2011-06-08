@@ -237,6 +237,9 @@ int main(int argc, char** argv) {
         }
         RS_DEBUG->print("main: loading files: OK");
 
+        // Set LC_NUMERIC so that enetring numeric values uses . as teh decimal seperator
+        setlocale(LC_NUMERIC, "C");
+
 #ifdef QSPLASHSCREEN_H
 # ifndef QC_DELAYED_SPLASH_SCREEN
         if (splash) {
