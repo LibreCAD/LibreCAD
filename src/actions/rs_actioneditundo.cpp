@@ -51,13 +51,21 @@ QAction* RS_ActionEditUndo::createGUIAction(RS2::ActionType type, QObject* paren
     if (type==RS2::ActionEditUndo) {		
 		// tr("Undo")
 		action = new QAction(tr("&Undo"), parent);
+#if QT_VERSION >= 0x040600
                 action->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/actions/undo2.png")));
+#else
+                action->setIcon(QIcon(":/actions/undo2.png"));
+#endif
 		action->setShortcut(QKeySequence::Undo);
 		//action->zetStatusTip(tr("Undoes last action"));
     } else {
 		// tr("Redo")
 		action = new QAction(tr("&Redo"), parent);
+#if QT_VERSION >= 0x040600
                 action->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/actions/redo2.png")));
+#else
+                action->setIcon(QIcon(":/actions/redo2.png"));
+#endif
 		action->setShortcut(QKeySequence::Redo);
 		//action->zetStatusTip(tr("Redoes last action"));
     }
