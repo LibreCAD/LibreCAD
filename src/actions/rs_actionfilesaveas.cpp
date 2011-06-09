@@ -36,7 +36,11 @@ RS_ActionFileSaveAs::RS_ActionFileSaveAs(RS_EntityContainer& container,
 QAction* RS_ActionFileSaveAs::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Save Drawing As")
 	QAction* action = new QAction(tr("Save &as..."), NULL);
+#if QT_VERSION >= 0x040600
         action->setIcon(QIcon::fromTheme("document-save-as", QIcon(":/actions/filesaveas.png")));
+#else
+        action->setIcon(QIcon(":/actions/filesaveas.png"));
+#endif
 // SaveAs was itroduces at 4.5 and later
 #if QT_VERSION >= 0x040500
 	action->setShortcut(QKeySequence::SaveAs);
