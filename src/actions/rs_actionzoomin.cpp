@@ -51,14 +51,22 @@ QAction* RS_ActionZoomIn::createGUIAction(RS2::ActionType type, QObject* /*paren
     if (type==RS2::ActionZoomIn) {
 		// tr("Zoom in")
 		action = new QAction(tr("Zoom &In"), NULL);
+#if QT_VERSION >= 0x040600
                 action->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/actions/zoomin.png")));
+#else
+                action->setIcon(QIcon(":/actions/zoomin.png"));
+#endif
 		action->setShortcut(QKeySequence::ZoomIn);
 		//action->zetStatusTip(tr("Zooms in"));
     } else {
 		// tr("Zoom Out")
 		action = new QAction(tr("Zoom &Out"), NULL);
+#if QT_VERSION >= 0x040600
                 action->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/actions/zoomout.png")));
-		action->setShortcut(QKeySequence::ZoomOut);
+#else
+                action->setIcon(QIcon(":/actions/zoomout.png"));
+#endif
+                action->setShortcut(QKeySequence::ZoomOut);
 		//action->zetStatusTip(tr("Zooms out"));
     }
     return action;
