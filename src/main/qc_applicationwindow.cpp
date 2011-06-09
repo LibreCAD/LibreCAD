@@ -2314,8 +2314,6 @@ void QC_ApplicationWindow::slotFileExport() {
             if (st.length()>0)
                 filters.append(st);
         }
-        filters.removeDuplicates();
-
 
         QFileDialog fileDlg(this);
         fileDlg.setFilters(filters);
@@ -3990,7 +3988,7 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
     QTime now = QTime::currentTime();
     bool actionProcessed=false;
     doubleCharacters << e->key();
-    doubleCharacters=doubleCharacters.mid(doubleCharacters.length()-2,2);
+    doubleCharacters=doubleCharacters.mid(doubleCharacters.size()-2,2);
     if (ts.msecsTo(now)<2000) {
 
         QString code="";

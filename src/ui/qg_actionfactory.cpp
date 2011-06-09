@@ -241,7 +241,11 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
     case RS2::ActionFilePrint:			
 			// tr("Print Drawing")
 			action = new QAction(tr("&Print..."), mw);
+#if QT_VERSION >= 0x040600
                         action->setIcon(QIcon::fromTheme("document-print", QIcon(":/actions/fileprint.png")));
+#else
+                        action->setIcon(QIcon(":/actions/fileprint.png"));
+#endif
 			action->setShortcut(QKeySequence::Print);
 			//action->zetStatusTip(tr("Prints out the current drawing"));
 			
@@ -258,8 +262,12 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
 
     case RS2::ActionFileQuit:
                         action = new QAction(tr("&Quit"), mw);
+#if QT_VERSION >= 0x040600
                         action->setIcon(QIcon::fromTheme("application-exit", QIcon(":/actions/exit.png")));
                         action->setShortcut(QKeySequence::Quit);
+#else
+                        action->setIcon(QIcon(":/actions/exit.png"));
+#endif
 			//action->zetStatusTip(tr("Quits the application"));
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotFileQuit()));
@@ -371,7 +379,11 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
         //
     case RS2::ActionEditKillAllActions:
         action = new QAction(tr("&back"), mw);
+#if QT_VERSION >= 0x040600
         action->setIcon(QIcon::fromTheme("go-previous-view", QIcon(":/actions/back.png")));
+#else
+        action->setIcon(QIcon(":/actions/back.png"));
+#endif
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotEditKillAllActions()));
         break;
