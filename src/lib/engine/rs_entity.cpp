@@ -31,20 +31,15 @@
 
 #include "rs_arc.h"
 #include "rs_circle.h"
-#include "rs_debug.h"
-#include "rs_document.h"
 #include "rs_ellipse.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_line.h"
-#include "rs_painter.h"
 #include "rs_point.h"
 #include "rs_polyline.h"
 #include "rs_text.h"
-#include "rs_stringlist.h"
-
 
 /**
  * Default constructor.
@@ -800,10 +795,10 @@ double RS_Entity::getStyleFactor(RS_GraphicView* view) {
 
 
 /**
- * @return User defined variable connected to this entity.
+ * @return User defined variable connected to this entity or NULL if not found.
  */
-RS_String* RS_Entity::getUserDefVar(RS_String key) {
-    return (this->varList.find(key));
+RS_String RS_Entity::getUserDefVar(RS_String key) {
+    return varList.value(key, NULL);
 }
 
 
@@ -811,7 +806,7 @@ RS_String* RS_Entity::getUserDefVar(RS_String key) {
  * Add a user defined variable to this entity.
  */
 void RS_Entity::setUserDefVar(RS_String key, RS_String val) {
-    varList.insert(key, new RS_String(val));
+    varList.insert(key, val);
 }
 
 
@@ -830,9 +825,11 @@ void RS_Entity::delUserDefVar(RS_String key) {
  */
 RS_StringList RS_Entity::getAllKeys() {
     RS_StringList keys;
-    RS_DictIterator<RS_String> it(varList);
-    for( ; it.current(); ++it )
-        keys.append(it.currentKey());
+    QHash<QString, QString>::const_iterator it = varList.constBegin();
+    while (it != varList.constEnd() ) {
+        keys.append(it.key());
+        ++it;
+    }
 
     return keys;
 }
@@ -867,11 +864,10 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
     os << e.pen << "\n";
 
 	os << "variable list:\n";
-    Q3DictIterator<QString> it(e.varList); // See Q3DictIterator
-    for( ; it.current(); ++it ) {
-		// RVT_PORT added .ascii() becase of the error :  error: ambiguous overload for 'operator<<' in 'os << Q3DictIterator<type>::currentKey() const [with type = QString]()'
-        // os << it.currentKey() << ": " << *it.current() << ", ";
-        os << it.currentKey().ascii() << ": " << *it.current()->ascii() << ", ";
+    QHash<QString, QString>::const_iterator it = e.varList.constBegin();
+    while (it != e.varList.constEnd() ) {
+        os << it.key().toLatin1().data() << ": " << it.value().toLatin1().data() << ", ";
+        ++it;
     }
 
     // There should be a better way then this...
