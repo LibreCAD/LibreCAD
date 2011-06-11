@@ -25,6 +25,7 @@
 **********************************************************************/
 
 
+#include "rs_undocycle.h"
 #include "rs_undo.h"
 
 
@@ -33,11 +34,15 @@
  * Default constructor.
  */
 RS_Undo::RS_Undo() {
-    undoList.setAutoDelete(true);
     undoPointer = -1;
     currentCycle = NULL;
 }
 
+RS_Undo::~RS_Undo() {
+//clear undolist
+while (!undoList.isEmpty())
+     delete undoList.takeFirst();
+}
 
 
 /**
@@ -57,7 +62,7 @@ int RS_Undo::countUndoCycles() {
 int RS_Undo::countRedoCycles() {
     RS_DEBUG->print("RS_Undo::countRedoCycles");
 
-    return (int)undoList.count()-1-undoPointer;
+    return undoList.size()-1-undoPointer;
 }
 
 
@@ -71,7 +76,7 @@ void RS_Undo::addUndoCycle(RS_UndoCycle* i) {
     RS_DEBUG->print("RS_Undo::addUndoCycle");
 	
     undoList.insert(++undoPointer, i);
-	
+
     RS_DEBUG->print("RS_Undo::addUndoCycle: ok");
 }
 
@@ -86,20 +91,22 @@ void RS_Undo::startUndoCycle() {
 
     // definitely delete Undo Cycles and all Undoables in them
     //   that cannot be redone now:
-    while ((int)undoList.count()>undoPointer+1 && (int)undoList.count()>0) {
+    while (undoList.size()>undoPointer+1 && undoList.size()>0) {
 
-        RS_UndoCycle* l = undoList.last();
+        RS_UndoCycle* l = NULL;
+        if (!( undoList.isEmpty()) )
+            l = undoList.last();
         if (l!=NULL) {
             RS_Undoable* u=NULL;
             bool done = false;
             do {
-                u = l->getFirstUndoable();
+                if (!( l->undoables.isEmpty()) )
+                    u = l->undoables.first();
                 if (u!=NULL) {
                     // Remove the pointer from _all_ cycles:
-					for (RS_UndoCycle* l2=undoList.first(); l2!=NULL; 
-						l2=undoList.next()) {
-						l2->removeUndoable(u);
-					}
+                                        for (int i = 0; i < undoList.size(); ++i) {
+                                            (undoList.at(i))->removeUndoable(u);
+                                        }
 
                     // Delete the Undoable for good:
                     if (u->isUndone()) {
@@ -112,7 +119,8 @@ void RS_Undo::startUndoCycle() {
         }
 
         // Remove obsolete undo cycles:
-        undoList.removeLast();
+        RS_UndoCycle* uc =undoList.takeLast();
+        delete uc;
     }
 	
     currentCycle = new RS_UndoCycle();
@@ -153,17 +161,18 @@ void RS_Undo::undo() {
     RS_DEBUG->print("RS_Undo::undo");
 
     if (undoPointer>=0) {
-        RS_UndoCycle* i = undoList.at(undoPointer);
-        if (i!=NULL) {
-            for (RS_Undoable* u=i->undoables.first();
-                    u!=NULL; u=i->undoables.next()) {
-                u->changeUndoState();
+
+        RS_UndoCycle* uc = NULL;
+        if (undoPointer < undoList.size())
+            uc = undoList.at(undoPointer);
+        if (uc != NULL) {
+            for (int i = 0; i < uc->undoables.size(); ++i) {
+                (uc->undoables.at(i))->changeUndoState();
             }
             undoPointer--;
         }
     }
 }
-
 
 
 /**
@@ -172,13 +181,12 @@ void RS_Undo::undo() {
 void RS_Undo::redo() {
     RS_DEBUG->print("RS_Undo::redo");
 
-    if (undoPointer+1<(int)undoList.count()) {
+    if (undoPointer+1 < undoList.size()) {
         undoPointer++;
-        RS_UndoCycle* i = undoList.at(undoPointer);
-        if (i!=NULL) {
-            for (RS_Undoable* u=i->undoables.first();
-                    u!=NULL; u=i->undoables.next()) {
-                u->changeUndoState();
+        RS_UndoCycle* uc = undoList.at(undoPointer);
+        if (uc != NULL) {
+            for (int i = 0; i < uc->undoables.size(); ++i) {
+                (uc->undoables.at(i))->changeUndoState();
             }
         }
     }
@@ -195,7 +203,7 @@ RS_UndoCycle* RS_Undo::getUndoCycle() {
 	
     RS_DEBUG->print("RS_Undo::getUndoCycle");
 
-    if (undoPointer>=0 && undoPointer<(int)undoList.count()) {
+    if ( (undoPointer>=0) && (undoPointer < undoList.size()) ) {
         ret = undoList.at(undoPointer);
     }
     RS_DEBUG->print("RS_Undo::getUndoCycle: OK");
@@ -212,7 +220,7 @@ RS_UndoCycle* RS_Undo::getUndoCycle() {
 RS_UndoCycle* RS_Undo::getRedoCycle() {
     RS_DEBUG->print("RS_Undo::getRedoCycle");
 
-    if (undoPointer+1>=0 && undoPointer+1<(int)undoList.count()) {
+    if ( (undoPointer+1>=0) && (undoPointer+1 < undoList.size()) ) {
         return undoList.at(undoPointer+1);
     }
 
@@ -227,16 +235,16 @@ RS_UndoCycle* RS_Undo::getRedoCycle() {
 std::ostream& operator << (std::ostream& os, RS_Undo& l) {
     os << "Undo List: " <<  "\n";
     os << " Pointer is at: " << l.undoPointer << "\n";
-    for (RS_UndoCycle* i = l.undoList.first();
-            i!=NULL; i = l.undoList.next()) {
+    for (int i = 0; i < l.undoList.size(); ++i) {
+//        (l.undoList.at(i))->changeUndoState();
 
-        if (l.undoList.at()==l.undoPointer) {
+        if (i==l.undoPointer) {
             os << " -->";
         }
 		else {
             os << "    ";
 		}
-        os << *i << "\n";
+        os << *(l.undoList.at(i)) << "\n";
     }
     return os;
 }
