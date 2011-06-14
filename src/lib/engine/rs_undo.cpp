@@ -119,8 +119,7 @@ void RS_Undo::startUndoCycle() {
         }
 
         // Remove obsolete undo cycles:
-        RS_UndoCycle* uc =undoList.takeLast();
-        delete uc;
+        delete undoList.takeLast();
     }
 	
     currentCycle = new RS_UndoCycle();
@@ -236,7 +235,6 @@ std::ostream& operator << (std::ostream& os, RS_Undo& l) {
     os << "Undo List: " <<  "\n";
     os << " Pointer is at: " << l.undoPointer << "\n";
     for (int i = 0; i < l.undoList.size(); ++i) {
-//        (l.undoList.at(i))->changeUndoState();
 
         if (i==l.undoPointer) {
             os << " -->";

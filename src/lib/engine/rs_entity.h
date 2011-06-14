@@ -497,7 +497,7 @@ public:
 	double getStyleFactor(RS_GraphicView* view);
 	
         RS_String getUserDefVar(RS_String key);
-	RS_StringList getAllKeys();
+        QList<RS_String> getAllKeys();
 	void setUserDefVar(RS_String key, RS_String val);
 	void delUserDefVar(RS_String key);
 
