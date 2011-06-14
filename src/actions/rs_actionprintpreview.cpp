@@ -90,7 +90,7 @@ void RS_ActionPrintPreview::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionPrintPreview::mousePressEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case Neutral:
             v1 = graphicView->toGraph(e->x(), e->y());

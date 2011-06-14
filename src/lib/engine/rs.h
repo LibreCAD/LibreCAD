@@ -595,37 +595,6 @@ public:
     };
 
     /**
-     * Mouse button and keyboard state for mouse events.
-     */
-    enum ButtonState {
-        NoButton        = Qt::NoButton,
-        LeftButton      = Qt::LeftButton,
-        RightButton     = Qt::RightButton,
-        MidButton       = Qt::MidButton,
-        MouseButtonMask = Qt::MouseButtonMask,
-        ShiftButton     = Qt::ShiftModifier,
-        ControlButton   = Qt::ControlModifier,
-        AltButton       = Qt::AltModifier,
-        MetaButton      = Qt::MetaModifier,
-        KeyButtonMask   = Qt::KeyboardModifierMask,
-        Keypad          = Qt::KeypadModifier
-    };
-
-    /**
-     * Wrapper for Qt
-     */
-    static Qt::ButtonState rsToQtButtonState(RS2::ButtonState t) {
-        return (Qt::ButtonState)t;
-    }
-
-    /**
-     * Wrapper for Qt
-     */
-    static RS2::ButtonState qtToRsButtonState(Qt::ButtonState t) {
-        return (RS2::ButtonState)t;
-    }
-
-    /**
      * Enum of line styles:
      */
     enum LineType {

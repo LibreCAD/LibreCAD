@@ -96,7 +96,7 @@ void RS_ActionModifyCut::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionModifyCut::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case ChooseCutEntity:
             cutEntity = catchEntity(e);
@@ -133,7 +133,7 @@ void RS_ActionModifyCut::mouseReleaseEvent(RS_MouseEvent* e) {
         default:
             break;
         }
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         if (cutEntity!=NULL) {
             cutEntity->setHighlighted(false);
             graphicView->drawEntity(cutEntity);

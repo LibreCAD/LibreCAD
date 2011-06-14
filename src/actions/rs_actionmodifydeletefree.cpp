@@ -108,7 +108,7 @@ void RS_ActionModifyDeleteFree::trigger() {
 
 
 void RS_ActionModifyDeleteFree::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {
 
