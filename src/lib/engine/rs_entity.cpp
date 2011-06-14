@@ -823,15 +823,8 @@ void RS_Entity::delUserDefVar(RS_String key) {
 /**
  * @return A list of all keys connected to this entity.
  */
-RS_StringList RS_Entity::getAllKeys() {
-    RS_StringList keys;
-    QHash<QString, QString>::const_iterator it = varList.constBegin();
-    while (it != varList.constEnd() ) {
-        keys.append(it.key());
-        ++it;
-    }
-
-    return keys;
+QList<RS_String> RS_Entity::getAllKeys() {
+    return varList.keys();
 }
 
 
