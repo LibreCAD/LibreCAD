@@ -81,7 +81,7 @@ void RS_ActionModifyTrimAmount::mouseReleaseEvent(RS_MouseEvent* e) {
     trimCoord = graphicView->toGraph(e->x(), e->y());
     trimEntity = catchEntity(e);
 
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case ChooseTrimEntity:
             if (trimEntity!=NULL && trimEntity->isAtomic()) {
@@ -105,7 +105,7 @@ void RS_ActionModifyTrimAmount::mouseReleaseEvent(RS_MouseEvent* e) {
         default:
             break;
         }
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     }
 }
