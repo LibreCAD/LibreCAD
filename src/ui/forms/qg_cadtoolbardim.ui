@@ -82,7 +82,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/dimaligned.png</normaloff>:/extui/dimaligned.png</iconset>
+     <normaloff>:/extui/dimlinear.png</normaloff>:/extui/dimlinear.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bLinearHor">
