@@ -111,7 +111,7 @@ void RS_ActionZoomWindow::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionZoomWindow::mousePressEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case 0:
             v1 = snapPoint(e);
@@ -132,12 +132,12 @@ void RS_ActionZoomWindow::mousePressEvent(RS_MouseEvent* e) {
 void RS_ActionZoomWindow::mouseReleaseEvent(RS_MouseEvent* e) {
     RS_DEBUG->print("RS_ActionZoomWindow::mouseReleaseEvent()");
 
-    if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    if (e->button()==Qt::RightButton) {
         if (getStatus()==1) {
             deletePreview();
         }
         init(getStatus()-1);
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    } else if (e->button()==Qt::LeftButton) {
         if (getStatus()==1) {
             v2 = snapPoint(e);
             trigger();

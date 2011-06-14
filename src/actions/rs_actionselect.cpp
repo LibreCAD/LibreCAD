@@ -49,7 +49,7 @@ void RS_ActionSelect::init(int status) {
 
 
 void RS_ActionSelect::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     }
 }

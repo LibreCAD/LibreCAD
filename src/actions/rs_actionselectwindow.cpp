@@ -127,7 +127,7 @@ void RS_ActionSelectWindow::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionSelectWindow::mousePressEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetCorner1:
             v1 = snapPoint(e);
@@ -148,12 +148,12 @@ void RS_ActionSelectWindow::mousePressEvent(RS_MouseEvent* e) {
 void RS_ActionSelectWindow::mouseReleaseEvent(RS_MouseEvent* e) {
     RS_DEBUG->print("RS_ActionSelectWindow::mouseReleaseEvent()");
 
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         if (getStatus()==SetCorner2) {
             v2 = snapPoint(e);
             trigger();
         }
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         if (getStatus()==SetCorner2) {
             deletePreview();
         }
