@@ -696,10 +696,8 @@ void RS_EntityContainer::update() {
     //for (RS_Entity* e=firstEntity(RS2::ResolveNone);
     //        e!=NULL;
     //        e=nextEntity(RS2::ResolveNone)) {
-    RS_Entity* e;
     for (int i = 0; i < entities.size(); ++i) {
         entities.at(i)->update();
-        e->update();
     }
 }
 
