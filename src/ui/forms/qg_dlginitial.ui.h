@@ -37,7 +37,7 @@
 void QG_DlgInitial::init() {
     // Fill combobox with languages:
     QStringList languageList = RS_SYSTEM->getLanguageList();
-    for (RS_StringList::Iterator it = languageList.begin();
+    for (QStringList::Iterator it = languageList.begin();
     	it!=languageList.end();
         it++) {
             
