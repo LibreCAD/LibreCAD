@@ -53,13 +53,21 @@ QAction* RS_ActionEditCopy::createGUIAction(RS2::ActionType type, QObject* paren
     if (type==RS2::ActionEditCopy) {
 		// tr("Copy")
 		action = new QAction(tr("&Copy"), parent);
+#if QT_VERSION >= 0x040600
                 action->setIcon(QIcon::fromTheme("edit-copy", QIcon(":/actions/editcopy2.png")));
+#else
+                action->setIcon(QIcon(":/actions/editcopy2.png"));
+#endif
 		action->setShortcut(QKeySequence::Copy);
 		//action->zetStatusTip(tr("Copies entities to the clipboard"));
     } else {
 		// tr("Cut")
 		action = new QAction(tr("Cu&t"), parent);
+#if QT_VERSION >= 0x040600
                 action->setIcon(QIcon::fromTheme("edit-cut", QIcon(":/actions/editcut2.png")));
+#else
+                action->setIcon(QIcon(":/actions/editcut2.png"));
+#endif
 		action->setShortcut(QKeySequence::Cut);
 		//action->zetStatusTip(tr("Cuts entities to the clipboard"));
     }

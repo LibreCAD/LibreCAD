@@ -98,6 +98,7 @@ bool RS_FilterDXF::fileImport(RS_Graphic& g, const RS_String& file, RS2::FormatT
 
     RS_DEBUG->print("DXF Filter: importing file '%s'...", (const char*)QFile::encodeName(file));
 
+    variables.clear();
     graphic = &g;
     currentContainer = graphic;
     this->file = file;
@@ -136,6 +137,26 @@ bool RS_FilterDXF::fileImport(RS_Graphic& g, const RS_String& file, RS2::FormatT
     return true;
 }
 
+/*
+ * get teh encoding of the DXF files,
+ * Acad versions >= 2007 are UTF-8, others in ANSI_1252
+ */
+QString RS_FilterDXF::getDXFEncoding() {
+
+    QString acadver=variables.getString("$ACADVER", "");
+    acadver.replace(QRegExp("[a-zA-Z]"), "");
+    bool ok;
+    int version=acadver.toInt(&ok);
+
+    // >= ACAD2007
+    if (ok && version >= 1021) {
+        return RS_System::getEncoding("UTF-8");
+    }
+
+    // < ACAD2007
+    QString codePage=variables.getString("$DWGCODEPAGE", "ANSI_1252");
+    return RS_System::getEncoding(codePage);
+}
 
 
 /**
@@ -147,7 +168,7 @@ void RS_FilterDXF::addLayer(const DL_LayerData& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: creating layer");
 
-    RS_Layer* layer = new RS_Layer(toNativeString(data.name.c_str(),variables.getString("$DWGCODEPAGE", "")));
+    RS_Layer* layer = new RS_Layer(toNativeString(data.name.c_str(),getDXFEncoding()));
     RS_DEBUG->print("RS_FilterDXF::addLayer: set pen");
     layer->setPen(attributesToPen(attributes));
     //layer->setFlags(data.flags&0x07);
@@ -461,6 +482,7 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
     RS2::TextDrawingDirection dir;
     RS2::TextLineSpacingStyle lss;
     RS_String sty = QString::fromUtf8(data.style.c_str());
+    sty=sty.lower();
 
     if (data.attachmentPoint<=3) {
         valign=RS2::VAlignTop;
@@ -493,7 +515,7 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
     }
 
     mtext+=data.text.c_str();
-    mtext = toNativeString(mtext, variables.getString("$DWGCODEPAGE", ""));
+    mtext = toNativeString(mtext, getDXFEncoding());
 
     // use default style for the drawing:
     if (sty.isEmpty()) {
@@ -504,7 +526,13 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
         } else {
             sty = variables.getString("$TEXTSTYLE", "Standard");
         }
+    } else {
+        // A certain CAD program uses SIMPLEX, we don't have so we change it to normallatin2
+        if (sty=="simplex") {
+            sty="normallatin2";
+        }
     }
+
 
     RS_DEBUG->print("Text as unicode:");
     RS_DEBUG->printUnicode(mtext);
@@ -660,7 +688,7 @@ RS_DimensionData RS_FilterDXF::convDimensionData(
         lss = RS2::Exact;
     }
 
-    t = toNativeString(data.text.c_str(), variables.getString("$DWGCODEPAGE", ""));
+    t = toNativeString(data.text.c_str(), getDXFEncoding());
 
     if (sty.isEmpty()) {
         sty = variables.getString("$DIMSTYLE", "Standard");
@@ -2918,19 +2946,17 @@ RS_String RS_FilterDXF::toDxfString(const RS_String& string) {
 /**
  * Converts a DXF encoded string into a native Unicode string.
  */
-RS_String RS_FilterDXF::toNativeString(const char* data, const QString& codePage) {
+RS_String RS_FilterDXF::toNativeString(const char* data, const QString& encoding) {
     RS_String res = QString(data);
 
     // If the given string doesn't contain any unicode characters, we pass the string
     // Through a textcoder, if that is possible, to convert the string to unicode
     // We try to use the DWGCODEPAGE if it's available, else we just return the string and assume it's latin1
     if (!res.contains("\\U+")) {
-        if (codePage.length()>0) {
-            QTextCodec *codec = QTextCodec::codecForName(RS_System::getEncoding(codePage));
-            if (codec)
-                res = codec->toUnicode(data);
-            return res;
-        }
+        QTextCodec *codec = QTextCodec::codecForName(encoding);
+        if (codec)
+            res = codec->toUnicode(data);
+        return res;
     }
 
 
