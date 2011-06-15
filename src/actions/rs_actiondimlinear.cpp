@@ -64,7 +64,7 @@ QAction* RS_ActionDimLinear::createGUIAction(RS2::ActionType type, QObject* /*pa
     case RS2::ActionDimLinear:
 		// tr("Linear")
 		action = new QAction(tr("&Linear"),  NULL);
-		action->setIcon(QIcon(":/extui/dimaligned.png"));
+                action->setIcon(QIcon(":/extui/dimlinear.png"));
         //action->zetStatusTip(tr("Linear Dimension"));
         break;
 
