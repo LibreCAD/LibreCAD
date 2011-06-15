@@ -2301,20 +2301,19 @@ void QC_ApplicationWindow::slotFileExport() {
         bool cancel = false;
 
         QStringList filters;
-        foreach (QByteArray format, QImageWriter::supportedImageFormats()) {
+        foreach (QString format, QImageWriter::supportedImageFormats()) {
+            format.lower();
             QString st;
-            if (format=="JPEG") {
-                st = QString("%1 (*.%2 *.jpg)")
-                     .arg(QG_DialogFactory::extToFormat(format))
-                     .arg(QString(format).lower());
+            if (format=="jpeg" || format=="tiff") {
+                // Don't add the aliases
             } else {
                 st = QString("%1 (*.%2)")
                      .arg(QG_DialogFactory::extToFormat(format))
-                     .arg(QString(format).lower());
+                     .arg(format);
             }
-            filters.append(st);
+            if (st.length()>0)
+                filters.append(st);
         }
-
 
         QFileDialog fileDlg(this);
         fileDlg.setFilters(filters);
@@ -2888,14 +2887,7 @@ void QC_ApplicationWindow::slotScriptRun() {
 void QC_ApplicationWindow::slotHelpAbout() {
     RS_DEBUG->print("QC_ApplicationWindow::slotHelpAbout()");
 
-	QString edition;
-    edition = "";
-
     QStringList modules;
-
-#ifdef RS_SCRIPTING
-    modules += "Scripting";
-#endif
 
     QString modulesString;
 
@@ -2909,20 +2901,29 @@ void QC_ApplicationWindow::slotHelpAbout() {
     box.setCaption(tr("About..."));
     box.setText(       QString("<p><font size=\"2\">") +
                        "<h2>"+ XSTR(QC_APPNAME)+ "</h2>" +
-                       tr("Version: %1 %2").arg(XSTR(QC_VERSION)).arg(edition) + "<br>" +
-#ifdef QC_SVNREVISION
-                       tr("SVN Revision: %1").arg(XSTR(QC_SVNREVISION)) + "<br>" +
+                       tr("Version: %1").arg(XSTR(QC_VERSION)) + "<br>" +
+#ifdef QC_SCMREVISION
+                       tr("SCM Revision: %1").arg(XSTR(QC_SCMREVISION)) + "<br>" +
 #endif
-                       tr("Compiled on: %1").arg(__DATE__) + "<br>" + "(c) 2011 by Ries. van Twisk<br>"
-                       "<br>" +
-                       tr("Program Icons Supplied by") +"<br>&nbsp;&nbsp;&nbsp;Pablo: " + QString("<a href=\"http://www.librecad.com.ar/\">LibreCAD Argentinie</a>") + "<br/>" +
-                       tr("Splash and Logo supplied by") + "<br>&nbsp;&nbsp;&nbsp;Diego " + QString("<a href=\"http://daltom.2082studio.com/\">Daltom Designer</a>") + "<br/>" +
+                       tr("Compiled on: %1").arg(__DATE__) + "<br>" +
+                       "Portions (c) 2011 by R. van Twisk" + "<br>" +
+                       tr("Program Icons Supplied by") +"<br>&nbsp;&nbsp;&nbsp;Pablo: " + "<a href=\"http://www.librecad.com.ar/\">LibreCAD Argentinie</a>" + "<br/>" +
+                       tr("Splash and Logo supplied by") + "<br>&nbsp;&nbsp;&nbsp;Diego " + "<a href=\"http://daltom.2082studio.com/\">Daltom Designer</a>" + "<br/>" +
                        "<br />" +
                        tr("Modules: %1").arg(modulesString) + "<br>" +
                        "<br />" +
-                       tr("Main Website : ") + QString("<a href=\"http://www.LibreCAD.org\">http://www.LibreCAD.org</a>")+"<br><br><br>"+
-                                "<font size=\"1\">Portions (c) by RibbonSoft, Andrew Mustun</font>" +
-                       "</font></p>");
+                       tr("Main Website : ") + "<a href=\"http://www.LibreCAD.org\">http://www.LibreCAD.org</a>"+"<br><br><br>"+
+                       "<font size=\"1\">Portions (c) by RibbonSoft, Andrew Mustun</font>" +
+                       "</font></p>" +
+                       "<br>" +
+                       "<center>" +
+                       tr("Please donate to LibreCAD to help maintain the sourcecode and it's website.") +
+                       "<br>" +
+                       "<br>" +
+                       "<a href=\"http://www.librecad.org/donate.html\" alt=\"Donate to LibreCAD\">" +
+                       "<img src=':/main/donate.png' />" +
+                       "</a></center>"
+                       );
 
     box.setIconPixmap( qPixmapFromMimeSource(QC_ABOUT_ICON) );
     box.setMinimumSize(500,400);
@@ -3989,7 +3990,7 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
     QTime now = QTime::currentTime();
     bool actionProcessed=false;
     doubleCharacters << e->key();
-    doubleCharacters=doubleCharacters.mid(doubleCharacters.length()-2,2);
+    doubleCharacters=doubleCharacters.mid(doubleCharacters.size()-2,2);
     if (ts.msecsTo(now)<2000) {
 
         QString code="";

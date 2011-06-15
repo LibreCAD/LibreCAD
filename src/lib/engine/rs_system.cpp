@@ -625,6 +625,8 @@ RS_String RS_System::getEncoding(const RS_String& str) {
         return "utf88-bit";
     } else if (l=="utf16") {
         return "utf16";
+    } else if (l=="utf8" || l=="utf-8") {
+        return "utf-8";
     } else if (l=="koi8-r") {
         return "KOI8-R";
     } else if (l=="koi8-u") {
