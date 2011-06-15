@@ -296,7 +296,7 @@ RS_String RS_Math::doubleToString(double value, double prec) {
     int num = RS_Math::round(value / prec);
 
     exaStr = RS_Math::doubleToString(prec, 10);
-    dotPos = exaStr.find('.');
+    dotPos = exaStr.indexOf('.');
 
     if (dotPos==-1) {
         ret.sprintf("%d", RS_Math::round(num*prec));
