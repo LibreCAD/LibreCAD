@@ -49,7 +49,7 @@ RS_Block::~RS_Block() {}
 
 RS_Entity* RS_Block::clone() {
     RS_Block* blk = new RS_Block(*this);
-	blk->entities.setAutoDelete(entities.autoDelete());
+    blk->setOwner(isOwner());
     blk->detach();
     blk->initId();
     return blk;
