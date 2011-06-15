@@ -139,7 +139,7 @@ public:
 
     virtual RS_Entity* clone() {
         RS_Text* t = new RS_Text(*this);
-		t->entities.setAutoDelete(entities.autoDelete());
+        t->setOwner(isOwner());
         t->initId();
         t->detach();
         return t;
