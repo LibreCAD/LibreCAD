@@ -196,8 +196,10 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container,
 
         if (e->isVisible() &&
                 e->rtti()!=RS2::EntityHatch &&
-                (e->isInWindow(v1, v2) ||
-                 e->hasEndpointsWithinWindow(v1, v2)) && c<maxEntities) {
+                ((e->isInWindow(v1, v2)) ||
+                 e->hasEndpointsWithinWindow(v1, v2)) &&
+
+                c<maxEntities) {
 
             RS_Entity* clone = e->clone();
             //clone->setSelected(false);
