@@ -25,8 +25,10 @@
 **********************************************************************/
 
 
+#include "rs_debug.h"
 #include "rs_blocklist.h"
-
+#include "rs_block.h"
+#include "rs_blocklistlistener.h"
 
 /**
  * Constructor.
@@ -38,8 +40,6 @@
 RS_BlockList::RS_BlockList(bool owner) {
     this->owner = owner;
     //blocks.setAutoDelete(owner);
-    blocks.setAutoDelete(false);
-    blockListListeners.setAutoDelete(false);
     activeBlock = NULL;
 	setModified(false);
 }
@@ -58,7 +58,7 @@ void RS_BlockList::clear() {
  * Activates the given block.
  * Listeners are notified.
  */
-void RS_BlockList::activate(const RS_String& name) {
+void RS_BlockList::activate(const QString& name) {
     RS_DEBUG->print("RS_BlockList::activateBlock");
 
     activate(find(name));
@@ -128,7 +128,7 @@ bool RS_BlockList::add(RS_Block* block, bool notify) {
  * to force an update of GUI blocklists.
  */
 void RS_BlockList::addNotification() {
-    for (uint i=0; i<blockListListeners.count(); ++i) {
+    for (int i=0; i<blockListListeners.size(); ++i) {
         RS_BlockListListener* l = blockListListeners.at(i);
         l->blockAdded(NULL);
     }
@@ -145,9 +145,9 @@ void RS_BlockList::remove(RS_Block* block) {
     RS_DEBUG->print("RS_BlockList::removeBlock()");
 
     // here the block is removed from the list but not deleted
-    blocks.remove(block);
+    blocks.removeOne(block);
 
-    for (uint i=0; i<blockListListeners.count(); ++i) {
+    for (int i=0; i<blockListListeners.size(); ++i) {
         RS_BlockListListener* l = blockListListeners.at(i);
         l->blockRemoved(block);
     }
@@ -177,7 +177,7 @@ void RS_BlockList::remove(RS_Block* block) {
  * @retval true block was successfully renamed.
  * @retval false block couldn't be renamed.
  */
-bool RS_BlockList::rename(RS_Block* block, const RS_String& name) {
+bool RS_BlockList::rename(RS_Block* block, const QString& name) {
 	if (block!=NULL) {
 		if (find(name)==NULL) {
 			block->setName(name);
@@ -213,11 +213,11 @@ void RS_BlockList::editBlock(RS_Block* block, const RS_Block& source) {
  * @return Pointer to the block with the given name or
  * \p NULL if no such block was found.
  */
-RS_Block* RS_BlockList::find(const RS_String& name) {
+RS_Block* RS_BlockList::find(const QString& name) {
     //RS_DEBUG->print("RS_BlockList::find");
 	RS_Block* ret = NULL;
 
-    for (uint i=0; i<count(); ++i) {
+    for (int i=0; i<count(); ++i) {
         RS_Block* b = at(i);
         if (b->getName()==name) {
             ret=b;
@@ -235,10 +235,10 @@ RS_Block* RS_BlockList::find(const RS_String& name) {
  *
  * @param suggestion Suggested name the new name will be based on.
  */
-RS_String RS_BlockList::newName(const RS_String& suggestion) {
-    RS_String name;
+QString RS_BlockList::newName(const QString& suggestion) {
+    QString name;
     for (int i=0; i<1e5; ++i) {
-        name = RS_String("%1-%2").arg(suggestion).arg(i);
+        name = QString("%1-%2").arg(suggestion).arg(i);
         if (find(name)==NULL) {
             return name;
         }
@@ -253,7 +253,7 @@ RS_String RS_BlockList::newName(const RS_String& suggestion) {
  * Switches on / off the given block. 
  * Listeners are notified.
  */
-void RS_BlockList::toggle(const RS_String& name) {
+void RS_BlockList::toggle(const QString& name) {
     toggle(find(name));
 }
 
@@ -271,7 +271,7 @@ void RS_BlockList::toggle(RS_Block* block) {
     block->toggle();
 
     // Notify listeners:
-    for (uint i=0; i<blockListListeners.count(); ++i) {
+    for (int i=0; i<blockListListeners.size(); ++i) {
         RS_BlockListListener* l = blockListListeners.at(i);
 
         l->blockToggled(block);
@@ -287,11 +287,11 @@ void RS_BlockList::toggle(RS_Block* block) {
  */
 void RS_BlockList::freezeAll(bool freeze) {
 
-    for (uint l=0; l<count(); l++) {
+    for (int l=0; l<count(); l++) {
         at(l)->freeze(freeze);
     }
 
-    for (uint i=0; i<blockListListeners.count(); ++i) {
+    for (int i=0; i<blockListListeners.size(); ++i) {
         RS_BlockListListener* l = blockListListeners.at(i);
         l->blockToggled(NULL);
     }
@@ -332,7 +332,7 @@ void RS_BlockList::addListener(RS_BlockListListener* listener) {
  * removes a BlockListListener from the list of listeners. 
  */
 void RS_BlockList::removeListener(RS_BlockListListener* listener) {
-    blockListListeners.remove(listener);
+    blockListListeners.removeOne(listener);
 }
 
 
@@ -343,7 +343,7 @@ void RS_BlockList::removeListener(RS_BlockListListener* listener) {
 std::ostream& operator << (std::ostream& os, RS_BlockList& b) {
 
     os << "Blocklist: \n";
-    for (uint i=0; i<b.count(); ++i) {
+    for (int i=0; i<b.count(); ++i) {
         RS_Block* blk = b.at(i);
 
         os << *blk << "\n";

@@ -28,13 +28,10 @@
 #ifndef RS_LAYERLIST_H
 #define RS_LAYERLIST_H
 
-//#include <vector.h>
+#include <QList>
 
-
-#include "rs_layer.h"
-#include "rs_layerlistlistener.h"
-#include "rs_entity.h"
-#include "rs_ptrlist.h"
+class RS_Layer;
+class RS_LayerListListener;
 
 /**
  * A list of layers.
@@ -51,18 +48,18 @@ public:
     /**
      * @return Number of layers in the list.
      */
-    uint count() const {
+    unsigned int count() const {
         return layers.count();
     }
 
     /**
      * @return Layer at given position or NULL if i is out of range.
      */
-    RS_Layer* at(uint i) {
+    RS_Layer* at(unsigned int i) {
         return layers.at(i);
     }
 
-    void activate(const RS_String& name, bool notify = false);
+    void activate(const QString& name, bool notify = false);
     void activate(RS_Layer* layer, bool notify = false);
     //! @return The active layer of NULL if no layer is activated.
     RS_Layer* getActive() {
@@ -71,10 +68,10 @@ public:
     virtual void add(RS_Layer* layer);
     virtual void remove(RS_Layer* layer);
     virtual void edit(RS_Layer* layer, const RS_Layer& source);
-    RS_Layer* find(const RS_String& name);
-    int getIndex(const RS_String& name);
+    RS_Layer* find(const QString& name);
+    int getIndex(const QString& name);
     int getIndex(RS_Layer* layer);
-    void toggle(const RS_String& name);
+    void toggle(const QString& name);
     void toggle(RS_Layer* layer);
     void toggleLock(RS_Layer* layer);
     void freezeAll(bool freeze);
@@ -111,9 +108,9 @@ public:
 
 private:
     //! layers in the graphic
-    RS_PtrList<RS_Layer> layers;
+    QList<RS_Layer*> layers;
     //! List of registered LayerListListeners
-    RS_PtrList<RS_LayerListListener> layerListListeners;
+    QList<RS_LayerListListener*> layerListListeners;
     //! Currently active layer
     RS_Layer* activeLayer;
     /** Flag set if the layer list was modified and not yet saved. */

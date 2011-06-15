@@ -34,6 +34,7 @@
 #include "rs_insert.h"
 #include "rs_polyline.h"
 #include "rs_text.h"
+#include "rs_layer.h"
 
 
 
