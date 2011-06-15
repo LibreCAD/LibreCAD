@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="en_AU">
 <context>
@@ -10,13 +9,13 @@
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="329"/>
-        <source>Running script &apos;%1&apos;</source>
-        <translation>Running script &apos;%1&apos;</translation>
+        <source>Running script '%1'</source>
+        <translation>Running script '%1'</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="371"/>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation>Inserting block &apos;%1&apos;</translation>
+        <source>Inserting block '%1'</source>
+        <translation>Inserting block '%1'</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="493"/>
@@ -41,7 +40,7 @@
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="664"/>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="693"/>
@@ -211,8 +210,8 @@
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2013"/>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Block &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Block '%1'</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2015"/>
@@ -363,17 +362,17 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2916"/>
         <source>Compiled on: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2918"/>
         <source>Program Icons Supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2919"/>
         <source>Splash and Logo supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Date: %1</source>
@@ -387,7 +386,7 @@ Auto-save disabled.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2923"/>
         <source>Main Website : </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2954"/>
@@ -396,8 +395,8 @@ Auto-save disabled.</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2967"/>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
-        <translation>&apos;Strewth, I couldn&apos;t find the helpfiles on the filesystem.</translation>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
+        <translation>'Strewth, I couldn't find the helpfiles on the filesystem.</translation>
     </message>
 </context>
 <context>
@@ -642,8 +641,8 @@ Auto-save disabled.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_blockdialog.ui.h" line="63"/>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Could not name block. A block named &quot;%1&quot; already exists.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Could not name block. A block named "%1" already exists.</translation>
     </message>
 </context>
 <context>
@@ -1026,13 +1025,13 @@ in a separate window</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="38"/>
-        <source>Show menu &quot;Lines&quot;</source>
-        <translation>Show menu &quot;Lines&quot;</translation>
+        <source>Show menu "Lines"</source>
+        <translation>Show menu "Lines"</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="58"/>
-        <source>Show menu &quot;Arcs&quot;</source>
-        <translation>Show menu &quot;Arcs&quot;</translation>
+        <source>Show menu "Arcs"</source>
+        <translation>Show menu "Arcs"</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="78"/>
@@ -1046,13 +1045,13 @@ in a separate window</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="118"/>
-        <source>Show menu &quot;Ellipses&quot;</source>
-        <translation>Show menu &quot;Ellipses&quot;</translation>
+        <source>Show menu "Ellipses"</source>
+        <translation>Show menu "Ellipses"</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="138"/>
-        <source>Show menu &quot;Circles&quot;</source>
-        <translation>Show menu &quot;Circles&quot;</translation>
+        <source>Show menu "Circles"</source>
+        <translation>Show menu "Circles"</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="158"/>
@@ -1061,8 +1060,8 @@ in a separate window</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="178"/>
-        <source>Show menu &quot;Dimensions&quot;</source>
-        <translation>Show menu &quot;Dimensions&quot;</translation>
+        <source>Show menu "Dimensions"</source>
+        <translation>Show menu "Dimensions"</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="198"/>
@@ -1076,13 +1075,13 @@ in a separate window</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="238"/>
-        <source>Show menu &quot;Edit&quot;</source>
-        <translation>Show menu &quot;Edit&quot;</translation>
+        <source>Show menu "Edit"</source>
+        <translation>Show menu "Edit"</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="258"/>
-        <source>Show menu &quot;Measure&quot;</source>
-        <translation>Show menu &quot;Measure&quot;</translation>
+        <source>Show menu "Measure"</source>
+        <translation>Show menu "Measure"</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="278"/>
@@ -1091,8 +1090,8 @@ in a separate window</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="298"/>
-        <source>Show menu &quot;Select&quot;</source>
-        <translation>Show menu &quot;Select&quot;</translation>
+        <source>Show menu "Select"</source>
+        <translation>Show menu "Select"</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="318"/>
@@ -2036,12 +2035,12 @@ in a separate window</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="64"/>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
@@ -2705,8 +2704,8 @@ You can changes these settings later in the Options Dialogue of QCad.</translati
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui.h" line="59"/>
-        <source>Surveyor&apos;s units</source>
-        <translation>Surveyor&apos;s units</translation>
+        <source>Surveyor's units</source>
+        <translation>Surveyor's units</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui.h" line="234"/>
@@ -2715,8 +2714,8 @@ You can changes these settings later in the Options Dialogue of QCad.</translati
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui.h" line="235"/>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</translation>
     </message>
 </context>
 <context>
@@ -5332,8 +5331,8 @@ You can changes these settings later in the Options Dialogue of QCad.</translati
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui.h" line="50"/>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Layer with a name "%1" already exists. Please specify a different name.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="236"/>
@@ -5343,13 +5342,13 @@ You can changes these settings later in the Options Dialogue of QCad.</translati
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="237"/>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation>Layer &quot;%1&quot; and all entities on it will be removed.</translation>
+        <source>Layer "%1" and all entities on it will be removed.</source>
+        <translation>Layer "%1" and all entities on it will be removed.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="248"/>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Layer &quot;%1&quot; can never be removed.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>Layer "%1" can never be removed.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="293"/>
@@ -5363,8 +5362,8 @@ You can changes these settings later in the Options Dialogue of QCad.</translati
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="409"/>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Block &quot;%1&quot; and all its entities will be removed.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>Block "%1" and all its entities will be removed.</translation>
     </message>
 </context>
 <context>
@@ -5502,7 +5501,7 @@ You can changes these settings later in the Options Dialogue of QCad.</translati
     <message>
         <location filename="../src/main/main.cpp" line="218"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Loading Library Paths..</source>
@@ -7333,8 +7332,8 @@ Do you want to replace it?</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="78"/>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Cannot open file &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Cannot open file '%1'</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="194"/>
@@ -7922,8 +7921,8 @@ Do you want to replace it?</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="43"/>
-        <source>Add polyline&apos;s node</source>
-        <translation>Add polyline&apos;s node</translation>
+        <source>Add polyline's node</source>
+        <translation>Add polyline's node</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="104"/>
@@ -7958,8 +7957,8 @@ Do you want to replace it?</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="164"/>
-        <source>Specify adding node&apos;s point</source>
-        <translation>Specify adding node&apos;s point</translation>
+        <source>Specify adding node's point</source>
+        <translation>Specify adding node's point</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="165"/>
@@ -7976,8 +7975,8 @@ Do you want to replace it?</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="39"/>
-        <source>Append polyline&apos;s node</source>
-        <translation>Append polyline&apos;s node</translation>
+        <source>Append polyline's node</source>
+        <translation>Append polyline's node</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="88"/>
@@ -8030,8 +8029,8 @@ Do you want to replace it?</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="43"/>
-        <source>Delete polyline&apos;s node</source>
-        <translation>Delete polyline&apos;s node</translation>
+        <source>Delete polyline's node</source>
+        <translation>Delete polyline's node</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="106"/>
@@ -8066,8 +8065,8 @@ Do you want to replace it?</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="160"/>
-        <source>Specify deleting node&apos;s point</source>
-        <translation>Specify deleting node&apos;s point</translation>
+        <source>Specify deleting node's point</source>
+        <translation>Specify deleting node's point</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="161"/>
@@ -8217,8 +8216,8 @@ Do you want to replace it?</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="42"/>
-        <source>Trim polyline&apos;s segments</source>
-        <translation>Trim polyline&apos;s segments</translation>
+        <source>Trim polyline's segments</source>
+        <translation>Trim polyline's segments</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="106"/>
