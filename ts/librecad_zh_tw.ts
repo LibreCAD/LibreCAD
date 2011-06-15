@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="zh_TW">
 <context>
@@ -10,13 +9,13 @@
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="329"/>
-        <source>Running script &apos;%1&apos;</source>
-        <translation>執行腳本 &apos;%1&apos;</translation>
+        <source>Running script '%1'</source>
+        <translation>執行腳本 '%1'</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="371"/>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation>插入圖塊 &apos;%1&apos;</translation>
+        <source>Inserting block '%1'</source>
+        <translation>插入圖塊 '%1'</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="493"/>
@@ -41,7 +40,7 @@
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="664"/>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="693"/>
@@ -212,8 +211,8 @@
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2013"/>
-        <source>Block &apos;%1&apos;</source>
-        <translation>圖塊 &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>圖塊 '%1'</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2015"/>
@@ -364,17 +363,17 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2916"/>
         <source>Compiled on: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2918"/>
         <source>Program Icons Supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2919"/>
         <source>Splash and Logo supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Date: %1</source>
@@ -388,7 +387,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2923"/>
         <source>Main Website : </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2954"/>
@@ -397,7 +396,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2967"/>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
         <translation>報錯，我在檔案系統上無法找到說明文件。</translation>
     </message>
 </context>
@@ -643,8 +642,8 @@ Auto-save disabled.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_blockdialog.ui.h" line="63"/>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>無法命名圖塊。名為 &quot;%1&quot; 的圖塊已經存在。</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>無法命名圖塊。名為 "%1" 的圖塊已經存在。</translation>
     </message>
 </context>
 <context>
@@ -1027,13 +1026,13 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="38"/>
-        <source>Show menu &quot;Lines&quot;</source>
-        <translation>顯示 &quot;線&quot; 選單</translation>
+        <source>Show menu "Lines"</source>
+        <translation>顯示 "線" 選單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="58"/>
-        <source>Show menu &quot;Arcs&quot;</source>
-        <translation>顯示 &quot;弧&quot; 選單</translation>
+        <source>Show menu "Arcs"</source>
+        <translation>顯示 "弧" 選單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="78"/>
@@ -1047,13 +1046,13 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="118"/>
-        <source>Show menu &quot;Ellipses&quot;</source>
-        <translation>顯示 &quot;橢圓&quot; 選單</translation>
+        <source>Show menu "Ellipses"</source>
+        <translation>顯示 "橢圓" 選單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="138"/>
-        <source>Show menu &quot;Circles&quot;</source>
-        <translation>顯示 &quot;圓&quot; 選單</translation>
+        <source>Show menu "Circles"</source>
+        <translation>顯示 "圓" 選單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="158"/>
@@ -1062,8 +1061,8 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="178"/>
-        <source>Show menu &quot;Dimensions&quot;</source>
-        <translation>顯示 &quot;標註&quot; 選單</translation>
+        <source>Show menu "Dimensions"</source>
+        <translation>顯示 "標註" 選單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="198"/>
@@ -1077,13 +1076,13 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="238"/>
-        <source>Show menu &quot;Edit&quot;</source>
-        <translation>顯示 &quot;編輯&quot; 選單</translation>
+        <source>Show menu "Edit"</source>
+        <translation>顯示 "編輯" 選單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="258"/>
-        <source>Show menu &quot;Measure&quot;</source>
-        <translation>顯示 &quot;測量&quot; 選單</translation>
+        <source>Show menu "Measure"</source>
+        <translation>顯示 "測量" 選單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="278"/>
@@ -1092,8 +1091,8 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="298"/>
-        <source>Show menu &quot;Select&quot;</source>
-        <translation>顯示 &quot;選取&quot; 選單</translation>
+        <source>Show menu "Select"</source>
+        <translation>顯示 "選取" 選單</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="318"/>
@@ -2037,12 +2036,12 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="64"/>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;歡迎使用 QCad&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;歡迎使用 QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 請選擇您想用於新圖畫的單位和優先使用的語言。&lt;br&gt;
@@ -2706,7 +2705,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui.h" line="59"/>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>測量單位</translation>
     </message>
     <message>
@@ -2716,7 +2715,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui.h" line="235"/>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
         <translation>若長度格式為「工程」和「建築」，此單位必須設為英吋。</translation>
     </message>
 </context>
@@ -5333,8 +5332,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui.h" line="50"/>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>相同名稱 &quot;%1&quot; 的圖層已經存在。請指定不同的名稱。</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>相同名稱 "%1" 的圖層已經存在。請指定不同的名稱。</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="236"/>
@@ -5344,13 +5343,13 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="237"/>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation>圖層&quot;%1&quot;與其所有物件將被移除。</translation>
+        <source>Layer "%1" and all entities on it will be removed.</source>
+        <translation>圖層"%1"與其所有物件將被移除。</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="248"/>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>無法刪除圖層&quot;%1&quot;。</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>無法刪除圖層"%1"。</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="293"/>
@@ -5364,8 +5363,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="409"/>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>圖塊&quot;%1&quot;與其所有物件將被移除。</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>圖塊"%1"與其所有物件將被移除。</translation>
     </message>
 </context>
 <context>
@@ -5503,7 +5502,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/main/main.cpp" line="218"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Loading Library Paths..</source>
@@ -7334,8 +7333,8 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="78"/>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>無法開啟檔案 &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>無法開啟檔案 '%1'</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="194"/>
@@ -7923,7 +7922,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="43"/>
-        <source>Add polyline&apos;s node</source>
+        <source>Add polyline's node</source>
         <translation>新增聚合線的節點</translation>
     </message>
     <message>
@@ -7959,7 +7958,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="164"/>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>指定新增節點的位罝</translation>
     </message>
     <message>
@@ -7977,7 +7976,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="39"/>
-        <source>Append polyline&apos;s node</source>
+        <source>Append polyline's node</source>
         <translation>添加聚合線的節點</translation>
     </message>
     <message>
@@ -8031,7 +8030,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="43"/>
-        <source>Delete polyline&apos;s node</source>
+        <source>Delete polyline's node</source>
         <translation>刪除聚合線的節點</translation>
     </message>
     <message>
@@ -8067,7 +8066,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="160"/>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>指定刪除節點位置</translation>
     </message>
     <message>
@@ -8218,7 +8217,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="42"/>
-        <source>Trim polyline&apos;s segments</source>
+        <source>Trim polyline's segments</source>
         <translation>修剪聚合線的線段</translation>
     </message>
     <message>
