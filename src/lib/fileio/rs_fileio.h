@@ -29,6 +29,7 @@
 
 #include "rs_entitycontainer.h"
 #include "rs_filterinterface.h"
+#include "rs_ptrlist.h"
 
 #define RS_FILEIO RS_FileIO::instance()
 
