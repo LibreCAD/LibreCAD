@@ -24,8 +24,8 @@ unix {
     # Get SVN revision number
     # SVNREVISION = $$system(svn info -R | grep -o \"Revision: [0-9]*\" | sed -e \"s/Revision: //\" | head -n1)
     # Temporary disabled getting SCM version
-    SVNREVISION="Git Version"
-    DEFINES += QC_SVNREVISION=\"$$SVNREVISION\"
+    SCMREVISION=$$system(git describe --tags)
+    DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
     macx { 
         CONFIG += x86 x86_64
         TARGET = LibreCAD
@@ -50,7 +50,7 @@ win32 {
     CONFIG += release
     QMAKE_CFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
-    DEFINES += QC_SVNREVISION=\"\"
+    DEFINES += QC_SCMREVISION=\"\"
     TARGET = LibreCAD
     DEFINES += QC_APPDIR="\"LibreCAD\""
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
