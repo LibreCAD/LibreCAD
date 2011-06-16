@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="es">
 <context>
-    <name></name>
+    <name/>
     <message>
         <source>Loading..</source>
         <translation type="obsolete">Cargando...</translation>
@@ -147,7 +146,7 @@
     </message>
     <message>
         <source>unnamed document %1</source>
-        <translation>Dibujo %1</translation>
+        <translation>dibujo %1</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
@@ -295,8 +294,8 @@ Date: %1</source>
         <translation type="obsolete">Controles de Simulación</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Bloque &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Bloque '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -353,12 +352,12 @@ Ahora puede guardar su trabajo.</translation>
         <translation>&amp;Spline</translation>
     </message>
     <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation>Corriendo script &apos;%1&apos;</translation>
+        <source>Running script '%1'</source>
+        <translation>Corriendo script '%1'</translation>
     </message>
     <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation>Insertando bloque &apos;%1&apos;</translation>
+        <source>Inserting block '%1'</source>
+        <translation>Insertando bloque '%1'</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -399,7 +398,7 @@ Guardado automático desactivado.</translation>
         <translation>Ayuda</translation>
     </message>
     <message>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
         <translation>Se encontraron problemas al buscar archivos de ayuda en el sistema.</translation>
     </message>
     <message>
@@ -412,35 +411,35 @@ Guardado automático desactivado.</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Barras de Herramientas</translation>
     </message>
     <message>
         <source>Compiled on: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilado en: %1</translation>
     </message>
     <message>
         <source>Program Icons Supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation>Iconos del programa diseñados por</translation>
     </message>
     <message>
         <source>Splash and Logo supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation>Bienvenida y Logo diseñados por</translation>
     </message>
     <message>
         <source>Main Website : </source>
-        <translation type="unfinished"></translation>
+        <translation>Sitio Web principal: </translation>
     </message>
     <message>
         <source>Version: %1</source>
-        <translation type="unfinished">Versión: %1</translation>
+        <translation>Versión: %1</translation>
     </message>
     <message>
         <source>SCM Revision: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Revisión SCM: %1</translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation type="unfinished"></translation>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it's website.</source>
+        <translation>Por favor done a LibreCAD para ayudar a mantener el codigo fuente y el sitio web.</translation>
     </message>
 </context>
 <context>
@@ -1313,7 +1312,7 @@ Guardado automático desactivado.</translation>
     </message>
     <message>
         <source>&amp;Endpoints</source>
-        <translation>A &amp;Extremos</translation>
+        <translation>&amp;Extremos</translation>
     </message>
     <message>
         <source>Snap to endpoints</source>
@@ -1337,7 +1336,7 @@ Guardado automático desactivado.</translation>
     </message>
     <message>
         <source>&amp;Center</source>
-        <translation>A &amp;Centro</translation>
+        <translation>&amp;Centro</translation>
     </message>
     <message>
         <source>Snap to centers</source>
@@ -1361,7 +1360,7 @@ Guardado automático desactivado.</translation>
     </message>
     <message>
         <source>&amp;Distance from Endpoint</source>
-        <translation> &amp;Distancia desde Extremo</translation>
+        <translation>&amp;Distancia desde Extremo</translation>
     </message>
     <message>
         <source>Snap to points with a given distance to an endpoint</source>
@@ -2002,11 +2001,11 @@ Guardado automático desactivado.</translation>
     </message>
     <message>
         <source>Length 1:</source>
-        <translation>longitud 1:</translation>
+        <translation>Longitud 1:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation>longitud 2:</translation>
+        <translation>Longitud 2:</translation>
     </message>
 </context>
 <context>
@@ -2028,8 +2027,8 @@ Guardado automático desactivado.</translation>
         <translation>Renombrando Bloque</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>No se pudo nombrar el bloque. El bloque &quot;%1&quot; ya existe.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>No se pudo nombrar el bloque. El bloque "%1" ya existe.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -2094,7 +2093,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation>Alternar &amp;visibilidad</translation>
+        <translation>Alternar &amp;Visibilidad</translation>
     </message>
     <message>
         <source>Show all blocks</source>
@@ -2353,39 +2352,39 @@ en otra ventana</translation>
         <translation>Principal</translation>
     </message>
     <message>
-        <source>Show menu &quot;Lines&quot;</source>
+        <source>Show menu "Lines"</source>
         <translation>Mostrar menú Líneas</translation>
     </message>
     <message>
-        <source>Show menu &quot;Arcs&quot;</source>
+        <source>Show menu "Arcs"</source>
         <translation>Mostrar menú Arcos</translation>
     </message>
     <message>
-        <source>Show menu &quot;Circles&quot;</source>
+        <source>Show menu "Circles"</source>
         <translation>Mostrar menú Círculos</translation>
     </message>
     <message>
-        <source>Show menu &quot;Points&quot;</source>
-        <translation type="obsolete">&quot;Puntos&quot;</translation>
+        <source>Show menu "Points"</source>
+        <translation type="obsolete">"Puntos"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Measure&quot;</source>
+        <source>Show menu "Measure"</source>
         <translation>Mostrar menú Medir</translation>
     </message>
     <message>
-        <source>Show menu &quot;Ellipses&quot;</source>
+        <source>Show menu "Ellipses"</source>
         <translation>Mostrar menú Elipses</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
-        <translation>Sombreado/Relleno solido</translation>
+        <translation>Sombreado / Relleno solido</translation>
     </message>
     <message>
-        <source>Show menu &quot;Edit&quot;</source>
+        <source>Show menu "Edit"</source>
         <translation>Mostrar menú Edición</translation>
     </message>
     <message>
-        <source>Show menu &quot;Dimensions&quot;</source>
+        <source>Show menu "Dimensions"</source>
         <translation>Mostrar menú Acotar</translation>
     </message>
     <message>
@@ -2393,7 +2392,7 @@ en otra ventana</translation>
         <translation>Insertar Texto</translation>
     </message>
     <message>
-        <source>Show menu &quot;Select&quot;</source>
+        <source>Show menu "Select"</source>
         <translation>Mostrar menú Selección</translation>
     </message>
     <message>
@@ -2469,11 +2468,11 @@ en otra ventana</translation>
     </message>
     <message>
         <source>Trim / Extend two</source>
-        <translation>Recortar/Alargar dos</translation>
+        <translation>Recortar / Alargar dos</translation>
     </message>
     <message>
         <source>Trim / Extend</source>
-        <translation>Recortar/Alargar</translation>
+        <translation>Recortar / Alargar</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
@@ -3180,12 +3179,12 @@ en otra ventana</translation>
         <translation>Bienvenido</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Bienvenidos a LibreCAD&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Bienvenidos a LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Por favor seleccione la unidad a utilizar en sus nuevos dibujos y el idioma preferido.&lt;br&gt;
@@ -3554,7 +3553,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
         <translation>Gradianes</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Unidades topográficas</translation>
     </message>
     <message>
@@ -3562,8 +3561,8 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
         <translation>Opciones</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Para mediciones de &quot;Ingenieria&quot; y &quot;Arquitectónicas&quot;, la unidad debe ser la Pulgada.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>Para mediciones de "Ingenieria" y "Arquitectónicas", la unidad debe ser la Pulgada.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -3830,7 +3829,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>G&amp;rid Color:</source>
-        <translation>&amp;Color de la rejilla:</translation>
+        <translation>&amp;Color de la Rejilla:</translation>
     </message>
     <message>
         <source>Color de grilla:</source>
@@ -4855,7 +4854,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>Line &amp;spacing:</source>
-        <translation>&amp;Espacio entre líneas:</translation>
+        <translation>&amp;Espaciado de líneas:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
@@ -5593,7 +5592,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation>Alternar modo Blanco/Negro</translation>
+        <translation>Alternar modo Blanco / Negro</translation>
     </message>
     <message>
         <source>Center to page</source>
@@ -5855,12 +5854,12 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
         <translation>Eliminar Capa</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation>La capa &quot;%1&quot; y todos sus objetos serán eliminados.</translation>
+        <source>Layer "%1" and all entities on it will be removed.</source>
+        <translation>La capa "%1" y todos sus objetos serán eliminados.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>La capa &quot;%1&quot; no podrá ser eliminada.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>La capa "%1" no podrá ser eliminada.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -5871,16 +5870,16 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
         <translation>Eliminar Bloque</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>El bloque &quot;%1&quot; y todos sus objetos serán eliminados.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>El bloque "%1" y todos sus objetos serán eliminados.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Propiedades de capa</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Ya existe una capa &quot;%1&quot;. Por favor especifique otro nombre.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Ya existe una capa "%1". Por favor especifique otro nombre.</translation>
     </message>
 </context>
 <context>
@@ -6077,7 +6076,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargando...</translation>
     </message>
 </context>
 <context>
@@ -6225,8 +6224,8 @@ Do you want to replace it?</source>
         <translation>Espacio entre filas:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -6907,8 +6906,8 @@ Do you want to replace it?</source>
         <translation>Factor:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -7216,7 +7215,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>Pol&amp;igono (Cen, esq)</translation>
+        <translation>Pol&amp;igono (Cen, Esq)</translation>
     </message>
     <message>
         <source>Draw polygon with center and corner</source>
@@ -7243,8 +7242,8 @@ Do you want to replace it?</source>
         <translation>Expresión no válida</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -7255,7 +7254,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>Poligo&amp;no (esq, esq)</translation>
+        <translation>Poligo&amp;no (Esq, Esq)</translation>
     </message>
     <message>
         <source>Draw polygon with two corners</source>
@@ -8093,12 +8092,12 @@ Do you want to replace it?</source>
         <translation>Factor:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>No se puede abrir el archivo &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>No se puede abrir el archivo '%1'</translation>
     </message>
 </context>
 <context>
@@ -8300,7 +8299,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Second entity is NULL</source>
-        <translation> El segundo objeto no es válido</translation>
+        <translation>El segundo objeto no es válido</translation>
     </message>
 </context>
 <context>
@@ -8740,7 +8739,7 @@ Do you want to replace it?</source>
         <translation>&amp;Añadir punto</translation>
     </message>
     <message>
-        <source>Add polyline&apos;s node</source>
+        <source>Add polyline's node</source>
         <translation>Añadir punto en Polilínea</translation>
     </message>
     <message>
@@ -8761,10 +8760,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
-        <translation>seleccionar la Polilínea para añadir puntos</translation>
+        <translation>Seleccionar Polilínea para añadir puntos</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Especifique los puntos a añadir</translation>
     </message>
     <message>
@@ -8783,7 +8782,7 @@ Do you want to replace it?</source>
         <translation>&amp;Añadir punto</translation>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
+        <source>Append polyline's node</source>
         <translation>Añadir punto a Polilínea</translation>
     </message>
     <message>
@@ -8826,7 +8825,7 @@ Do you want to replace it?</source>
         <translation>&amp;Borrar punto</translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
+        <source>Delete polyline's node</source>
         <translation>Borrar punto en Polilínea</translation>
     </message>
     <message>
@@ -8850,7 +8849,7 @@ Do you want to replace it?</source>
         <translation>Especifique Polilínea para borrar punto</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Especifique punto a borrar</translation>
     </message>
     <message>
@@ -8974,7 +8973,7 @@ Do you want to replace it?</source>
         <translation>Recor&amp;tar segmentos</translation>
     </message>
     <message>
-        <source>Trim polyline&apos;s segments</source>
+        <source>Trim polyline's segments</source>
         <translation>Recortar segmentos en Polilínea</translation>
     </message>
     <message>
@@ -8995,7 +8994,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify polyline to trim</source>
-        <translation>Seleccionar la Polilínea a recortar</translation>
+        <translation>Seleccionar la polilínea a recortar</translation>
     </message>
     <message>
         <source>Specify first segment</source>
