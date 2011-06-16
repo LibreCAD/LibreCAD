@@ -177,6 +177,7 @@ HEADERS = \
     src/lib/engine/rs_units.h \
     src/lib/engine/rs_utility.h \
     src/lib/engine/rs_valuelist.h \
+    src/lib/engine/rs_variable.h \
     src/lib/engine/rs_variabledict.h \
     src/lib/engine/rs_vector.h \
     src/lib/fileio/rs_fileio.h \

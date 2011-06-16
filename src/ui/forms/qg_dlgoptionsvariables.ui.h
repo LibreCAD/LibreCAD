@@ -58,34 +58,36 @@ void QG_DlgOptionsVariables::updateVariables() {
         r[i] = i;
     }
     tabVariables->removeRows(r);
-    RS_DictIterator<RS_Variable> it(graphic->getVariableDict());
-    for (; it.current(); ++it) {
+    QHash<QString, RS_Variable>vars = graphic->getVariableDict();
+    QHash<QString, RS_Variable>::iterator it = vars.begin();
+    while (it != vars.end()) {
         tabVariables->insertRows(tabVariables->numRows(), 1);
         
-        tabVariables->setText(tabVariables->numRows()-1, 0, it.currentKey());
-        tabVariables->setText(tabVariables->numRows()-1, 1, QString("%1").arg(it.current()->getCode()));
+        tabVariables->setText(tabVariables->numRows()-1, 0, it.key());
+        tabVariables->setText(tabVariables->numRows()-1, 1, QString("%1").arg(it.value().getCode()));
         QString str = "";
-        switch (it.current()->getType()) {
+        switch (it.value().getType()) {
             case RS2::VariableVoid:
                 break;
             case RS2::VariableInt:
-                str = QString("%1").arg(it.current()->getInt());
+                str = QString("%1").arg(it.value().getInt());
                 break;
             case RS2::VariableDouble:
-                str = QString("%1").arg(it.current()->getDouble());
+                str = QString("%1").arg(it.value().getDouble());
                 break;
             case RS2::VariableString:
-                str = QString("%1").arg(it.current()->getString());
+                str = QString("%1").arg(it.value().getString());
                 break;
             case RS2::VariableVector:
                 str = QString("%1/%2")
-                      .arg(it.current()->getVector().x)
-                      .arg(it.current()->getVector().y);
-                if (RS_FilterDXF::isVariableTwoDimensional(it.currentKey())==false) {
-                    str+= QString("/%1").arg(it.current()->getVector().z);
+                      .arg(it.value().getVector().x)
+                      .arg(it.value().getVector().y);
+                if (RS_FilterDXF::isVariableTwoDimensional(it.key())==false) {
+                    str+= QString("/%1").arg(it.value().getVector().z);
                 }
                 break;
         }
         tabVariables->setText(tabVariables->numRows()-1, 2, str);
+        ++it;
     }
 }

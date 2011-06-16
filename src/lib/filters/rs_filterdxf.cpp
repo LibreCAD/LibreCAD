@@ -1396,41 +1396,43 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const RS_String& file, RS2::FormatT
  * Writes all known variable settings to the DXF file.
  */
 void RS_FilterDXF::writeVariables(DL_WriterA& dw) {
-    RS_DictIterator<RS_Variable> it(graphic->getVariableDict());
-    for (; it.current(); ++it) {
+    QHash<QString, RS_Variable>vars = graphic->getVariableDict();
+    QHash<QString, RS_Variable>::iterator it = vars.begin();
+    while (it != vars.end()) {
         // exclude variables that are not known to DXF 12:
-        if (!DL_Dxf::checkVariable(it.currentKey().latin1(), dxf.getVersion())) {
+        if (!DL_Dxf::checkVariable(it.key().toLatin1(), dxf.getVersion())) {
             continue;
         }
 
-        if (it.currentKey()!="$ACADVER" && it.currentKey()!="$HANDSEED") {
+        if (it.key()!="$ACADVER" && it.key()!="$HANDSEED") {
 
-            dw.dxfString(9, (const char*) it.currentKey());
-            switch (it.current()->getType()) {
+            dw.dxfString(9, it.key().toLatin1());
+            switch (it.value().getType()) {
             case RS2::VariableVoid:
                 break;
             case RS2::VariableInt:
-                dw.dxfInt(it.current()->getCode(), it.current()->getInt());
+                dw.dxfInt(it.value().getCode(), it.value().getInt());
                 break;
             case RS2::VariableDouble:
-                dw.dxfReal(it.current()->getCode(), it.current()->getDouble());
+                dw.dxfReal(it.value().getCode(), it.value().getDouble());
                 break;
             case RS2::VariableString:
-                dw.dxfString(it.current()->getCode(),
-                             (const char*) it.current()->getString());
+                dw.dxfString(it.value().getCode(),
+                             it.value().getString().toLatin1());
                 break;
             case RS2::VariableVector:
-                dw.dxfReal(it.current()->getCode(),
-                           it.current()->getVector().x);
-                dw.dxfReal(it.current()->getCode()+10,
-                           it.current()->getVector().y);
-                if (isVariableTwoDimensional(it.currentKey())==false) {
-                    dw.dxfReal(it.current()->getCode()+20,
-                               it.current()->getVector().z);
+                dw.dxfReal(it.value().getCode(),
+                           it.value().getVector().x);
+                dw.dxfReal(it.value().getCode()+10,
+                           it.value().getVector().y);
+                if ( isVariableTwoDimensional(it.key()) == false) {
+                    dw.dxfReal(it.value().getCode()+20,
+                               it.value().getVector().z);
                 }
                 break;
             }
         }
+        ++it;
     }
     dw.sectionEnd();
 }
