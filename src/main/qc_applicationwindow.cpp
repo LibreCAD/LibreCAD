@@ -2920,7 +2920,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
                        tr("Please donate to LibreCAD to help maintain the sourcecode and it's website.") +
                        "<br>" +
                        "<br>" +
-                       "<a href=\"http://www.librecad.org/donate.html\" alt=\"Donate to LibreCAD\">" +
+                       "<a href=\"http://librecad.org/donate.html\" alt=\"Donate to LibreCAD\">" +
                        "<img src=':/main/donate.png' />" +
                        "</a></center>"
                        );
