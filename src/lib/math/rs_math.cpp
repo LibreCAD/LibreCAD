@@ -255,7 +255,7 @@ bool RS_Math::cmpDouble(double v1, double v2, double tol) {
  * Evaluates a mathematical expression and returns the result.
  * If an error occured, the given default value 'def' will be returned.
  */
-double RS_Math::eval(const RS_String& expr, double def) {
+double RS_Math::eval(const QString& expr, double def) {
 
     bool ok;
     double res = RS_Math::eval(expr, &ok);
@@ -284,14 +284,14 @@ double RS_Math::eval(const RS_String& expr, double def) {
  * @param prec Precision e.g. a precision of 1 would mean that a 
  *     value of 2.12030 will be converted to "2.1". 2.000 is always just "2").
  */
-RS_String RS_Math::doubleToString(double value, double prec) {
+QString RS_Math::doubleToString(double value, double prec) {
 	if (prec<1.0e-12) {
 		std::cerr << "RS_Math::doubleToString: invalid precision\n";
 		return "";
 	}
 
-    RS_String ret;
-    RS_String exaStr;
+    QString ret;
+    QString exaStr;
     int dotPos;
     int num = RS_Math::round(value / prec);
 
@@ -317,8 +317,8 @@ RS_String RS_Math::doubleToString(double value, double prec) {
  * @param value The double value
  * @param prec Precision
  */
-RS_String RS_Math::doubleToString(double value, int prec) {
-    RS_String valStr;
+QString RS_Math::doubleToString(double value, int prec) {
+    QString valStr;
 
     valStr.setNum(value, 'f', prec);
 
@@ -342,7 +342,7 @@ RS_String RS_Math::doubleToString(double value, int prec) {
  * Performs some testing for the math class.
  */
 void RS_Math::test() {
-    RS_String s;
+    QString s;
     double v;
 
     std::cout << "RS_Math::test: doubleToString:\n";
