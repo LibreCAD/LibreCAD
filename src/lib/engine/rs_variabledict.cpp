@@ -182,7 +182,7 @@ RS_Vector RS_VariableDict::getVector(const QString& key,
 QString RS_VariableDict::getString(const QString& key,
         const QString& def) {
 
-    RS_String ret;
+    QString ret;
 
 	RS_DEBUG->print("RS_VariableDict::getString: 001");
         RS_DEBUG->print("RS_VariableDict::getString: key: '%s'", key.toLatin1().data());
@@ -271,7 +271,7 @@ void RS_VariableDict::addBlockNotification() {
  * TODO: Listeners are notified after the block was removed from 
  * the list but before it gets deleted.
  */
-void RS_VariableDict::remove(const RS_String& key) {
+void RS_VariableDict::remove(const QString& key) {
     RS_DEBUG->print("RS_VariableDict::removeVariable()");
 
     // here the block is removed from the list but not deleted
