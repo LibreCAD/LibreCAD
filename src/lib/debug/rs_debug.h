@@ -32,10 +32,7 @@
 #include <sys/_size_t.h>
 #endif
 
-#include <iostream>
-#include <stdio.h>
-
-#include "rs_string.h"
+#include <QString>
 
 #define RS_DEBUG RS_Debug::instance()
 
@@ -79,7 +76,7 @@ public:
     RS_DebugLevel getLevel();
     void print(RS_DebugLevel level, const char* format ...);
     void print(const char* format ...);
-    void printUnicode(const RS_String& text);
+    void printUnicode(const QString& text);
     void timestamp();
     void setStream(FILE* s) {
         stream = s;
