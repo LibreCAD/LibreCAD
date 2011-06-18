@@ -111,7 +111,7 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionDrawLineParallel::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {
         trigger();

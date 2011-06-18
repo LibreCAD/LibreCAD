@@ -84,7 +84,7 @@ void RS_ActionInfoInside::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionInfoInside::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {
         pt = snapPoint(e);

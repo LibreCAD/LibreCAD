@@ -110,10 +110,10 @@ void RS_ActionDrawCircleCR::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionDrawCircleCR::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
     }

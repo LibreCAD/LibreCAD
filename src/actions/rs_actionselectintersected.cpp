@@ -107,7 +107,7 @@ void RS_ActionSelectIntersected::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionSelectIntersected::mousePressEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetPoint1:
             v1 = snapPoint(e);
@@ -127,12 +127,12 @@ void RS_ActionSelectIntersected::mousePressEvent(RS_MouseEvent* e) {
 
 void RS_ActionSelectIntersected::mouseReleaseEvent(RS_MouseEvent* e) {
     RS_DEBUG->print("RS_ActionSelectIntersected::mouseReleaseEvent()");
-    if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    if (e->button()==Qt::RightButton) {
         if (getStatus()==SetPoint2) {
             deletePreview();
         }
         init(getStatus()-1);
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    } else if (e->button()==Qt::LeftButton) {
         if (getStatus()==SetPoint2) {
             v2 = snapPoint(e);
             trigger();
