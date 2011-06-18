@@ -30,6 +30,7 @@
 #include <qcombobox.h>
 
 #include "rs_layerlist.h"
+#include "rs_string.h"
 
 /**
  * A combobox for choosing a layer.

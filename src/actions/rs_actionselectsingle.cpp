@@ -67,7 +67,7 @@ void RS_ActionSelectSingle::keyPressEvent(RS_KeyEvent* e) {
 
 
 void RS_ActionSelectSingle::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {
         en = catchEntity(e);

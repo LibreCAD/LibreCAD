@@ -29,10 +29,9 @@
 #define RS_UNDOLISTITEM_H
 
 #include <iostream>
+#include <QList>
 
-#include "rs.h"
 #include "rs_entity.h"
-#include "rs_ptrlist.h"
 #include "rs_undoable.h"
 
 /**
@@ -55,14 +54,13 @@ public:
      */
     RS_UndoCycle(/*RS2::UndoType type*/) {
         //this->type = type;
-        undoables.setAutoDelete(false);
     }
 
     /**
      * Adds an Undoable to this Undo Cycle. Every Cycle can contain one or
      * more Undoables.
      */
-    void addUndoable(const RS_Undoable* u) {
+    void addUndoable(RS_Undoable* u) {
         undoables.append(u);
     }
 
@@ -70,25 +68,11 @@ public:
      * Removes an undoable from the list.
      */
     void removeUndoable(RS_Undoable* u) {
-        undoables.remove(u);
-    }
-
-    /**
-     * Iteration through undoable elements in this item.
-     */
-    RS_Undoable* getFirstUndoable() {
-        return undoables.first();
-    }
-
-    /**
-     * Iteration through undoable elements in this item.
-     */
-    RS_Undoable* getNextUndoable() {
-        return undoables.next();
+        undoables.removeOne(u);
     }
 
     friend std::ostream& operator << (std::ostream& os,
-                                      RS_UndoCycle& i) {
+                                      RS_UndoCycle& uc) {
         os << " Undo item: " << "\n";
         //os << "   Type: ";
         /*switch (i.type) {
@@ -100,15 +84,15 @@ public:
             break;
     }*/
         os << "   Undoable ids: ";
-        for (RS_Undoable* u=i.getFirstUndoable();
-                u!=NULL; u=i.getNextUndoable()) {
-
+        for (int i = 0; i < uc.undoables.size(); ++i) {
+            RS_Undoable *u = uc.undoables.at(i);
             if (u->undoRtti()==RS2::UndoableEntity) {
                 RS_Entity* e = (RS_Entity*)u;
                 os << e->getId() << (u->isUndone() ? "*" : "") << " ";
             } else {
                 os << "|";
             }
+
         }
 
         return os;
@@ -120,7 +104,7 @@ private:
     //! Undo type:
     //RS2::UndoType type;
     //! List of entity id's that were affected by this action
-    RS_PtrList<RS_Undoable> undoables;
+    QList<RS_Undoable *> undoables;
 };
 
 #endif

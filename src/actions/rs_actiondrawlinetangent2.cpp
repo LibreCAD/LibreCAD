@@ -136,7 +136,7 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(RS_MouseEvent* e) {
 
 void RS_ActionDrawLineTangent2::mouseReleaseEvent(RS_MouseEvent* e) {
 
-    if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
     } else {

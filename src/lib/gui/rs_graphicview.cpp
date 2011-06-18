@@ -332,7 +332,7 @@ void RS_GraphicView::mousePressEvent(RS_MouseEvent* e) {
 void RS_GraphicView::mouseReleaseEvent(RS_MouseEvent* e) {
 	RS_DEBUG->print("RS_GraphicView::mouseReleaseEvent");
     if (eventHandler!=NULL) {
-        if (RS2::qtToRsButtonState(e->button())!=RS2::RightButton || 
+        if (e->button()!=Qt::RightButton ||
 			eventHandler->hasAction()) {
 
             eventHandler->mouseReleaseEvent(e);

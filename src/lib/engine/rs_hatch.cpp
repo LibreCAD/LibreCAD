@@ -77,7 +77,7 @@ bool RS_Hatch::validate() {
     
 RS_Entity* RS_Hatch::clone() {
     RS_Hatch* t = new RS_Hatch(*this);
-	t->entities.setAutoDelete(entities.autoDelete());
+    t->setOwner(isOwner());
     t->initId();
     t->detach();
 	t->hatch = NULL;

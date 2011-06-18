@@ -28,13 +28,10 @@
 #ifndef RS_SYSTEM_H
 #define RS_SYSTEM_H
 
-#include <iostream>
+#include <QDir>
+#include <QList>
 
 #include "rs_debug.h"
-#include "rs_dir.h"
-#include "rs_string.h"
-#include "rs_stringlist.h"
-#include <QList>
 #include "rs_locale.h"
 
 #define RS_SYSTEM RS_System::instance()
@@ -70,8 +67,8 @@ public:
         return uniqueInstance;
     }
 
-    void init(const RS_String& appName, const RS_String& appVersion, 
-	          const RS_String& appDirName, const RS_String& appDir="");
+    void init(const QString& appName, const QString& appVersion,
+                  const QString& appDirName, const QString& appDir="");
 	void initLanguageList();
         void initAllLanguagesList();
 
@@ -81,61 +78,61 @@ public:
     /**
      * @return Users home directory.
      */
-    RS_String getHomeDir() {
-        return RS_Dir::homePath();
+    QString getHomeDir() {
+        return QDir::homePath();
     }
 
     /**
      * @return Current directory.
      */
-    RS_String getCurrentDir() {
-        return RS_Dir::currentDirPath();
+    QString getCurrentDir() {
+        return QDir::currentPath();
     }
 
 	/**
 	 * @return Application directory.
 	 */
-	RS_String getAppDir() {
+        QString getAppDir() {
 		return appDir;
 	}
 
     /**
      * @return A list of absolute paths to all font files found.
      */
-    RS_StringList getFontList() {
-        RS_StringList ret = getFileList("fonts", "cxf");
+    QStringList getFontList() {
+        QStringList ret = getFileList("fonts", "cxf");
 		return ret;
     }
 	
     /**
      * @return A list of absolute paths to all hatch pattern files found.
      */
-    RS_StringList getPatternList() {
-        RS_StringList ret = getFileList("patterns", "dxf");
+    QStringList getPatternList() {
+        QStringList ret = getFileList("patterns", "dxf");
 		return ret;
     }
 
     /**
      * @return A list of absolute paths to all script files found.
      */
-    RS_StringList getScriptList() {
-        RS_StringList ret = getFileList("scripts/qsa", "qs");
+    QStringList getScriptList() {
+        QStringList ret = getFileList("scripts/qsa", "qs");
 		return ret;
     }
 	
     /**
      * @return A list of absolute paths to all machine configuration files found.
      */
-    RS_StringList getMachineList() {
-        RS_StringList ret = getFileList("machines", "cxm");
+    QStringList getMachineList() {
+        QStringList ret = getFileList("machines", "cxm");
 		return ret;
     }
 	
     /**
      * @return Absolute path to the documentation.
      */
-    RS_String getDocPath() {
-        RS_StringList lst = getDirectoryList("doc");
+    QString getDocPath() {
+        QStringList lst = getDirectoryList("doc");
 
         if( !(lst.isEmpty()) ){
             return lst.first();
@@ -145,32 +142,32 @@ public:
 	/**
 	 * @return The application name.
 	 */
-	RS_String getAppName() {
+        QString getAppName() {
 		return appName;
 	}
 
 	/**
 	 * @return The application version.
 	 */
-	RS_String getAppVersion() {
+        QString getAppVersion() {
 		return appVersion;
 	}
 
-    RS_StringList getFileList(const RS_String& subDirectory,
-                              const RS_String& fileExtension);
+    QStringList getFileList(const QString& subDirectory,
+                              const QString& fileExtension);
 							  
-    RS_StringList getDirectoryList(const RS_String& subDirectory);
+    QStringList getDirectoryList(const QString& subDirectory);
 							  
-	RS_StringList getLanguageList() {
+    QStringList getLanguageList() {
 		return languageList;
 	}
 	
-	static RS_String languageToSymbol(const RS_String& lang);
-	static RS_String symbolToLanguage(const RS_String& symb);
+        static QString languageToSymbol(const QString& lang);
+        static QString symbolToLanguage(const QString& symb);
 
-	static RS_String getEncoding(const RS_String& str);
+        static QString getEncoding(const QString& str);
 
-	void loadTranslation(const RS_String& lang, const RS_String& langCmd);
+        void loadTranslation(const QString& lang, const QString& langCmd);
 
     static bool test();
 
@@ -184,14 +181,14 @@ public:
 protected:
     static RS_System* uniqueInstance;
 
-    RS_String appName;
-    RS_String appVersion;
-    RS_String appDirName;
-    RS_String appDir;
+    QString appName;
+    QString appVersion;
+    QString appDirName;
+    QString appDir;
 	
 	//! List of available translations
 
-    RS_StringList languageList;
+    QStringList languageList;
     bool initialized;
     QList<RS_Locale* > *allKnownLocales;
 

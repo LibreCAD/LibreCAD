@@ -97,7 +97,7 @@ void RS_ActionPolylineTrim::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionPolylineTrim::mouseReleaseEvent(RS_MouseEvent* e) {
-	if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+        if (e->button()==Qt::LeftButton) {
 		RS_Vector cPoint;
 		switch (getStatus()) {
 		case ChooseEntity:
@@ -160,7 +160,7 @@ void RS_ActionPolylineTrim::mouseReleaseEvent(RS_MouseEvent* e) {
 		default:
 			break;
 		}
-	} else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+        } else if (e->button()==Qt::RightButton) {
 		deleteSnapper();
 		if (delEntity!=NULL) {
 			delEntity->setHighlighted(false);

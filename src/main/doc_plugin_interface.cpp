@@ -26,6 +26,7 @@
 
 #include "doc_plugin_interface.h"
 #include "rs_text.h"
+#include "rs_layer.h"
 
 Doc_plugin_interface::Doc_plugin_interface(RS_Graphic *d)
 {

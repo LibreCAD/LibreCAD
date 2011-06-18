@@ -29,10 +29,11 @@
 #define RS_BLOCKLIST_H
 
 
-#include "rs_block.h"
-#include "rs_blocklistlistener.h"
-#include "rs_entity.h"
-#include "rs_ptrlist.h"
+#include <QList>
+#include <QString>
+
+class RS_Block;
+class RS_BlockListListener;
 
 /**
  * List of blocks.
@@ -50,18 +51,18 @@ public:
     /**
      * @return Number of blocks available.
      */
-    uint count() {
+    int count() {
         return blocks.count();
     }
 
     /**
      * @return Block at given position or NULL if i is out of range.
      */
-    RS_Block* at(uint i) {
+    RS_Block* at(int i) {
         return blocks.at(i);
     }
 
-    void activate(const RS_String& name);
+    void activate(const QString& name);
     void activate(RS_Block* block);
     //! @return The active block of NULL if no block is activated.
     RS_Block* getActive() {
@@ -71,11 +72,11 @@ public:
     virtual bool add(RS_Block* block, bool notify=true);
     virtual void addNotification();
     virtual void remove(RS_Block* block);
-    virtual bool rename(RS_Block* block, const RS_String& name);
+    virtual bool rename(RS_Block* block, const QString& name);
     //virtual void editBlock(RS_Block* block, const RS_Block& source);
-    RS_Block* find(const RS_String& name);
-    RS_String newName(const RS_String& suggestion = "");
-    void toggle(const RS_String& name);
+    RS_Block* find(const QString& name);
+    QString newName(const QString& suggestion = "");
+    void toggle(const QString& name);
     void toggle(RS_Block* block);
     void freezeAll(bool freeze);
 
@@ -118,9 +119,9 @@ private:
     //! Is the list owning the blocks?
     bool owner;
     //! Blocks in the graphic
-    RS_PtrList<RS_Block> blocks;
+    QList<RS_Block*> blocks;
     //! List of registered BlockListListeners
-    RS_PtrList<RS_BlockListListener> blockListListeners;
+    QList<RS_BlockListListener*> blockListListeners;
     //! Currently active block
     RS_Block* activeBlock;
     /** Flag set if the layer list was modified and not yet saved. */
