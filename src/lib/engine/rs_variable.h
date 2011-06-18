@@ -30,9 +30,7 @@
 
 
 #include "rs.h"
-#include "rs_string.h"
 #include "rs_vector.h"
-#include "rs_debug.h"
 
 /**
  * A variable of type int, double, string or vector.
@@ -44,7 +42,7 @@
 class RS_Variable {
 public:
 	typedef struct {
-		RS_String s;
+                QString s;
 		int i;
 		double d;
 		RS_Vector v;
@@ -58,7 +56,7 @@ public:
 		setVector(v);
 		code = c;
 	}
-    RS_Variable(const RS_String& v, int c) {
+    RS_Variable(const QString& v, int c) {
 		setString(v);
 		code = c;
 	}
@@ -72,7 +70,7 @@ public:
 	}
     virtual ~RS_Variable() {}
 
-	void setString(const RS_String& str) {
+        void setString(const QString& str) {
 		contents.s = str;
 		type = RS2::VariableString;
 	}
@@ -89,7 +87,7 @@ public:
 		type = RS2::VariableVector;
 	}
 
-	RS_String getString() {
+        QString getString() {
 		return contents.s;
 	}
 	int getInt() {

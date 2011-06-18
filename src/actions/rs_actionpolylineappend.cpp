@@ -81,7 +81,7 @@ void RS_ActionPolylineAppend::trigger() {
 
 
 void RS_ActionPolylineAppend::mouseReleaseEvent(RS_MouseEvent* e) {
-	if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+        if (e->button()==Qt::LeftButton) {
 		if (getStatus()==SetStartpoint) {
 			originalPolyline = (RS_Polyline*)catchEntity(e);
 			if (originalPolyline==NULL) {
@@ -111,7 +111,7 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(RS_MouseEvent* e) {
 		}
 		RS_CoordinateEvent ce(snapPoint(e));
 		coordinateEvent(&ce);
-	} else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+        } else if (e->button()==Qt::RightButton) {
 		if (getStatus()==SetNextPoint) {
 			trigger();
 		}

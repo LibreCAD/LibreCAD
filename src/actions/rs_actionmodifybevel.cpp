@@ -111,7 +111,7 @@ void RS_ActionModifyBevel::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionModifyBevel::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetEntity1:
             if (entity1!=NULL && entity1->isAtomic()) {
@@ -129,7 +129,7 @@ void RS_ActionModifyBevel::mouseReleaseEvent(RS_MouseEvent* e) {
         default:
             break;
         }
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
     }

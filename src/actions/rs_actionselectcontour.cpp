@@ -70,7 +70,7 @@ void RS_ActionSelectContour::trigger() {
 
 
 void RS_ActionSelectContour::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {
         en = catchEntity(e);
