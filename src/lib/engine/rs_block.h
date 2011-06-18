@@ -28,7 +28,6 @@
 #ifndef RS_BLOCK_H
 #define RS_BLOCK_H
 
-//#include "rs_blocklist.h"
 #include "rs_document.h"
 
 /**
@@ -38,7 +37,7 @@ class RS_BlockData {
 public:
     RS_BlockData() {}
 
-    RS_BlockData(const RS_String& name,
+    RS_BlockData(const QString& name,
 	           const RS_Vector& basePoint,
 			   bool frozen) {
 
@@ -55,7 +54,7 @@ public:
     /**
      * Block name. Acts as an id.
      */
-	RS_String name;
+        QString name;
 	/*
      * Base point of the Block. Usually 0/0 since blocks can be moved around 
      * using the insertion point of Insert entities.
@@ -104,7 +103,7 @@ public:
     /**
      * @return Name of this block (the name is an Id for this block).
      */
-    RS_String getName() const {
+    QString getName() const {
         return data.name;
     }
 
@@ -133,18 +132,18 @@ public:
     /**
      * Reimplementation from RS_Document. Does nothing.
      */
-    virtual bool saveAs(const RS_String& filename, RS2::FormatType type);
+    virtual bool saveAs(const QString& filename, RS2::FormatType type);
 
     /**
      * Reimplementation from RS_Document. Does nothing.
      */
-    virtual bool open(const RS_String& , RS2::FormatType) {
+    virtual bool open(const QString& , RS2::FormatType) {
         // do nothing
         return false;
     }
 
     friend std::ostream& operator << (std::ostream& os, const RS_Block& b) {
-        os << " name: " << b.getName().latin1() << "\n";
+        os << " name: " << b.getName().toLatin1().data() << "\n";
         os << " entities: " << (RS_EntityContainer&)b << "\n";
         return os;
     }
@@ -153,7 +152,7 @@ public:
 	 * sets a new name for the block. Only called by blocklist to
 	 * assure that block names stay unique.
 	 */
-    void setName(const RS_String& n) {
+    void setName(const QString& n) {
         data.name = n;
     }
     

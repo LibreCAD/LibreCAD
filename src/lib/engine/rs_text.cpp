@@ -25,6 +25,7 @@
 **********************************************************************/
 
 
+#include "rs_font.h"
 #include "rs_text.h"
 
 #include "rs_fontlist.h"
