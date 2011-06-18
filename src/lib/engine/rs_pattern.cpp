@@ -31,6 +31,7 @@
 #include "rs_fileinfo.h"
 #include "rs_system.h"
 #include "rs_fileio.h"
+#include "rs_layer.h"
 
 
 /**

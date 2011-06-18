@@ -197,7 +197,7 @@ void RS_ActionDefault::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionDefault::mousePressEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case Neutral:
             v1 = graphicView->toGraph(e->x(), e->y());
@@ -248,7 +248,7 @@ void RS_ActionDefault::mousePressEvent(RS_MouseEvent* e) {
 void RS_ActionDefault::mouseReleaseEvent(RS_MouseEvent* e) {
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
 
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         v2 = graphicView->toGraph(e->x(), e->y());
         switch (getStatus()) {
         case Dragging: {
@@ -299,7 +299,7 @@ void RS_ActionDefault::mouseReleaseEvent(RS_MouseEvent* e) {
             break;
 
         }
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         switch (getStatus()) {
 		case SetCorner2:
 		case Moving:

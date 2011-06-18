@@ -28,10 +28,9 @@
 #ifndef RS_COLOR_H
 #define RS_COLOR_H
 
-#include <qcolor.h>
+#include <QColor>
 
 #include "rs_flags.h"
-
 
 //! Color defined by layer not entity
 //#define C_BY_LAYER     0x00000001
@@ -85,7 +84,7 @@ public:
     }
 
     friend std::ostream& operator << (std::ostream& os, const RS_Color& c) {
-        os << " color: " << c.name().latin1()
+        os << " color: " << c.name().toLatin1().data()
         << " flags: " << (c.getFlag(RS2::FlagByLayer) ? "RS2::FlagByLayer " : "")
         << (c.getFlag(RS2::FlagByBlock) ? "RS2::FlagByBlock " : "");
         return os;

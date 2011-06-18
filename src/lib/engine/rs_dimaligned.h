@@ -86,7 +86,7 @@ public:
 
     virtual RS_Entity* clone() {
         RS_DimAligned* d = new RS_DimAligned(*this);
-		d->entities.setAutoDelete(entities.autoDelete());
+        d->setOwner(isOwner());
         d->initId();
         d->detach();
         return d;

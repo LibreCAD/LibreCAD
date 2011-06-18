@@ -29,6 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 #include "rs_line.h"
+#include "rs_ptrlist.h"
 
 #include <qaction.h>
 

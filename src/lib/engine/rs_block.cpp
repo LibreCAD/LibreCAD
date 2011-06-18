@@ -49,7 +49,7 @@ RS_Block::~RS_Block() {}
 
 RS_Entity* RS_Block::clone() {
     RS_Block* blk = new RS_Block(*this);
-	blk->entities.setAutoDelete(entities.autoDelete());
+    blk->setOwner(isOwner());
     blk->detach();
     blk->initId();
     return blk;
@@ -88,7 +88,7 @@ bool RS_Block::save(bool isAutoSave) {
 }
 
 
-bool RS_Block::saveAs(const RS_String& filename, RS2::FormatType type) {
+bool RS_Block::saveAs(const QString& filename, RS2::FormatType type) {
     RS_Graphic* g = getGraphic();
     if (g!=NULL) {
         return g->saveAs(filename, type);
