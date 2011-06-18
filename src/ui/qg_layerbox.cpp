@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include "qg_layerbox.h"
+#include "rs_layer.h"
 
 //#include <qpainter.h>
 

@@ -242,7 +242,7 @@ void RS_ActionPolylineSegment::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionPolylineSegment::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case ChooseEntity:
             targetEntity = catchEntity(e);
@@ -264,7 +264,7 @@ void RS_ActionPolylineSegment::mouseReleaseEvent(RS_MouseEvent* e) {
         default:
             break;
         }
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         deleteSnapper();
         if (targetEntity!=NULL) {
             targetEntity->setHighlighted(false);
@@ -275,7 +275,7 @@ void RS_ActionPolylineSegment::mouseReleaseEvent(RS_MouseEvent* e) {
         }
         init(getStatus()-1);
     }
-/*    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+/*    if (e->button())==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
     } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {

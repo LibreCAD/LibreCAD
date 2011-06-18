@@ -147,7 +147,7 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionDrawArcTangential::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
 
             // set base entity:
@@ -181,7 +181,7 @@ void RS_ActionDrawArcTangential::mouseReleaseEvent(RS_MouseEvent* e) {
             }
             break;
         }
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
     }
