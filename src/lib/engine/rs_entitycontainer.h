@@ -34,7 +34,6 @@
 #include "rs_entity.h"
 #include "rs_line.h"
 #include "rs_point.h"
-#include "rs_ptrlist.h"
 
 /**
  * Class representing a tree of entities.
@@ -89,19 +88,18 @@ public:
 
     virtual void addEntity(RS_Entity* entity);
     virtual void insertEntity(int index, RS_Entity* entity);
-    virtual void replaceEntity(int index, RS_Entity* entity);
+//RLZ unused    virtual void replaceEntity(int index, RS_Entity* entity);
     virtual bool removeEntity(RS_Entity* entity);
     virtual RS_Entity* firstEntity(RS2::ResolveLevel level=RS2::ResolveNone);
     virtual RS_Entity* lastEntity(RS2::ResolveLevel level=RS2::ResolveNone);
     virtual RS_Entity* nextEntity(RS2::ResolveLevel level=RS2::ResolveNone);
     virtual RS_Entity* prevEntity(RS2::ResolveLevel level=RS2::ResolveNone);
-	virtual RS_Entity* entityAt(uint index);
-	virtual RS_Entity* currentEntity();
+        virtual RS_Entity* entityAt(int index);
 	virtual int entityAt();
 	virtual int findEntity(RS_Entity* entity);
     virtual void clear();
 
-	RS_PtrListIterator<RS_Entity> createIterator();
+    QListIterator<RS_Entity*> createIterator();
 
     //virtual unsigned long int count() {
 	//	return count(false);
@@ -182,12 +180,12 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec);
 
-	bool isOwner() {return entities.autoDelete();}
-	void setOwner(bool owner) {return entities.setAutoDelete(owner);}
+    bool isOwner() {return autoDelete;}
+    void setOwner(bool owner) {autoDelete=owner;}
 protected:
 
     /** entities in the container */
-    RS_PtrList<RS_Entity> entities;
+    QList<RS_Entity *> entities;
 
     /** sub container used only temporarly for iteration. */
     RS_EntityContainer* subContainer;
@@ -197,8 +195,10 @@ protected:
      * are added or removed. 
      */
     static bool autoUpdateBorders;
-}
-;
 
+private:
+    int entIdx;
+    bool autoDelete;
+};
 
 #endif

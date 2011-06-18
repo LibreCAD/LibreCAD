@@ -117,7 +117,7 @@ public:
 
     virtual RS_Entity* clone() {
         RS_Insert* i = new RS_Insert(*this);
-		i->entities.setAutoDelete(entities.autoDelete());
+        i->setOwner(isOwner());
         i->initId();
         i->detach();
         return i;

@@ -115,7 +115,7 @@ void RS_ActionDrawLineHorVert::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionDrawLineHorVert::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         RS_Vector mouse = snapPoint(e);
 
         switch (getStatus()) {
@@ -133,7 +133,7 @@ void RS_ActionDrawLineHorVert::mouseReleaseEvent(RS_MouseEvent* e) {
         default:
             break;
         }
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
     }

@@ -27,15 +27,10 @@
 
 #include "rs_entitycontainer.h"
 
-//#include <values.h>
-
 #include "rs_debug.h"
 #include "rs_dimension.h"
-#include "rs_math.h"
 #include "rs_layer.h"
 #include "rs_line.h"
-#include "rs_polyline.h"
-#include "rs_text.h"
 #include "rs_insert.h"
 #include "rs_spline.h"
 #include "rs_information.h"
@@ -52,11 +47,12 @@ RS_EntityContainer::RS_EntityContainer(RS_EntityContainer* parent,
                                        bool owner)
         : RS_Entity(parent) {
 
-    entities.setAutoDelete(owner);
-	RS_DEBUG->print("RS_EntityContainer::RS_EntityContainer: "
+    autoDelete=owner;
+        RS_DEBUG->print("RS_EntityContainer::RS_EntityContainer: "
 		"owner: %d", (int)owner);
     subContainer = NULL;
     //autoUpdateBorders = true;
+    entIdx = -1;
 }
 
 
@@ -83,13 +79,13 @@ RS_EntityContainer::~RS_EntityContainer() {
 
 RS_Entity* RS_EntityContainer::clone() {
 	RS_DEBUG->print("RS_EntityContainer::clone: ori autoDel: %d", 
-		entities.autoDelete());
+                autoDelete);
 
     RS_EntityContainer* ec = new RS_EntityContainer(*this);
-	ec->entities.setAutoDelete(entities.autoDelete());
+        ec->setOwner(autoDelete);
 	
 	RS_DEBUG->print("RS_EntityContainer::clone: clone autoDel: %d", 
-		ec->entities.autoDelete());
+                ec->isOwner());
 
     ec->detach();
     ec->initId();
@@ -104,11 +100,11 @@ RS_Entity* RS_EntityContainer::clone() {
  * This is called after cloning entity containers.
  */
 void RS_EntityContainer::detach() {
-    RS_PtrList<RS_Entity> tmp;
-    bool autoDel = entities.autoDelete();
+    QList<RS_Entity*> tmp;
+    bool autoDel = isOwner();
 	RS_DEBUG->print("RS_EntityContainer::detach: autoDel: %d", 
 		(int)autoDel);
-    entities.setAutoDelete(false);
+    setOwner(false);
 
     // make deep copies of all entities:
     for (RS_Entity* e=firstEntity();
@@ -121,13 +117,11 @@ void RS_EntityContainer::detach() {
 
     // clear shared pointers:
     entities.clear();
-    entities.setAutoDelete(autoDel);
+    setOwner(autoDel);
 
     // point to new deep copies:
-    for (RS_Entity* e=tmp.first();
-            e!=NULL;
-            e=tmp.next()) {
-
+    for (int i = 0; i < tmp.size(); ++i) {
+        RS_Entity* e = tmp.at(i);
         entities.append(e);
         e->reparent(this);
     }
@@ -372,7 +366,10 @@ void RS_EntityContainer::insertEntity(int index, RS_Entity* entity) {
  * Replaces the entity at the given index with the given entity
  * and updates the borders of this entity-container if autoUpdateBorders is true.
  */
+/*RLZ unused function
 void RS_EntityContainer::replaceEntity(int index, RS_Entity* entity) {
+//RLZ TODO: is needed to delete the old entity? not documented in Q3PtrList
+//    investigate in qt3support code if reactivate this function.
     if (entity==NULL) {
         return;
     }
@@ -382,7 +379,7 @@ void RS_EntityContainer::replaceEntity(int index, RS_Entity* entity) {
     if (autoUpdateBorders) {
         adjustBorders(entity);
     }
-}
+}RLZ*/
 
 
 
@@ -391,7 +388,13 @@ void RS_EntityContainer::replaceEntity(int index, RS_Entity* entity) {
  * this entity-container if autoUpdateBorders is true.
  */
 bool RS_EntityContainer::removeEntity(RS_Entity* entity) {
-    bool ret = entities.remove(entity);
+//RLZ TODO: in Q3PtrList if 'entity' is NULL remove the current item-> at.(entIdx)
+//    and sets 'entIdx' in next() or last() if 'entity' is the last item in the list.
+//    in LibreCAD is never called with NULL
+    bool ret = entities.removeOne(entity);
+    if (autoDelete && ret) {
+        delete entity;
+    }
     if (autoUpdateBorders) {
         calculateBorders();
     }
@@ -404,7 +407,11 @@ bool RS_EntityContainer::removeEntity(RS_Entity* entity) {
  * Erases all entities in this container and resets the borders..
  */
 void RS_EntityContainer::clear() {
-    entities.clear();
+    if (autoDelete) {
+        while (!entities.isEmpty())
+            delete entities.takeFirst();
+    } else
+        entities.clear();
     resetBorders();
 }
 
@@ -584,10 +591,9 @@ void RS_EntityContainer::updateDimensions() {
     //        e!=NULL;
     //        e=nextEntity(RS2::ResolveNone)) {
 
-    RS_PtrListIterator<RS_Entity> it = createIterator();
     RS_Entity* e;
-    while ( (e = it.current()) != NULL ) {
-        ++it;
+    for (int i = 0; i < entities.size(); ++i) {
+        e = entities.at(i);
         if (RS_Information::isDimension(e->rtti())) {
             // update and reposition label:
             ((RS_Dimension*)e)->update(true);
@@ -611,10 +617,9 @@ void RS_EntityContainer::updateInserts() {
     //for (RS_Entity* e=firstEntity(RS2::ResolveNone);
     //        e!=NULL;
     //        e=nextEntity(RS2::ResolveNone)) {
-    RS_PtrListIterator<RS_Entity> it = createIterator();
     RS_Entity* e;
-    while ( (e = it.current()) != NULL ) {
-        ++it;
+    for (int i = 0; i < entities.size(); ++i) {
+        e = entities.at(i);
         //// Only update our own inserts and not inserts of inserts
         if (e->rtti()==RS2::EntityInsert  /*&& e->getParent()==this*/) {
             ((RS_Insert*)e)->update();
@@ -640,11 +645,9 @@ void RS_EntityContainer::renameInserts(const RS_String& oldName,
     //        e!=NULL;
     //        e=nextEntity(RS2::ResolveNone)) {
 
-    RS_PtrListIterator<RS_Entity> it = createIterator();
     RS_Entity* e;
-    while ( (e = it.current()) != NULL ) {
-        ++it;
-
+    for (int j = 0; j < entities.size(); ++j) {
+        e = entities.at(j);
         if (e->rtti()==RS2::EntityInsert) {
             RS_Insert* i = ((RS_Insert*)e);
             if (i->getName()==oldName) {
@@ -671,10 +674,9 @@ void RS_EntityContainer::updateSplines() {
     //for (RS_Entity* e=firstEntity(RS2::ResolveNone);
     //        e!=NULL;
     //        e=nextEntity(RS2::ResolveNone)) {
-    RS_PtrListIterator<RS_Entity> it = createIterator();
     RS_Entity* e;
-    while ( (e = it.current()) != NULL ) {
-        ++it;
+    for (int i = 0; i < entities.size(); ++i) {
+        e = entities.at(i);
         //// Only update our own inserts and not inserts of inserts
         if (e->rtti()==RS2::EntitySpline  /*&& e->getParent()==this*/) {
             ((RS_Spline*)e)->update();
@@ -694,11 +696,8 @@ void RS_EntityContainer::update() {
     //for (RS_Entity* e=firstEntity(RS2::ResolveNone);
     //        e!=NULL;
     //        e=nextEntity(RS2::ResolveNone)) {
-    RS_PtrListIterator<RS_Entity> it = createIterator();
-    RS_Entity* e;
-    while ( (e = it.current()) != NULL ) {
-        ++it;
-        e->update();
+    for (int i = 0; i < entities.size(); ++i) {
+        entities.at(i)->update();
     }
 }
 
@@ -709,6 +708,12 @@ void RS_EntityContainer::update() {
  * @param level 
  */
 RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
+//check if the entities list is empty, if not set entIdx pointing in first entity
+    if (entities.isEmpty()) {
+        entIdx = -1;
+        return NULL;
+    } else
+        entIdx = 0;
     switch (level) {
     case RS2::ResolveNone:
         return entities.first();
@@ -760,6 +765,12 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
  *              \li \p 2 all Entity Containers are resolved
  */
 RS_Entity* RS_EntityContainer::lastEntity(RS2::ResolveLevel level) {
+//check if the entities list is empty, if not set entIdx pointing in last entity
+    if (entities.isEmpty()) {
+        entIdx = -1;
+        return NULL;
+    } else
+        entIdx = entities.size()-1;
     switch (level) {
     case RS2::ResolveNone:
         return entities.last();
@@ -798,9 +809,15 @@ RS_Entity* RS_EntityContainer::lastEntity(RS2::ResolveLevel level) {
  * returned by \p next() was the last entity in the container.
  */
 RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
+
+//set entIdx pointing in next entity and check if is out of range
+    ++entIdx;
+//assuming that empty list return size == 0
+    if (entIdx >= entities.size())
+        return NULL;
     switch (level) {
     case RS2::ResolveNone:
-        return entities.next();
+        return entities.at(entIdx);
         break;
 
     case RS2::ResolveAllButInserts: {
@@ -810,10 +827,10 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
                 if (e!=NULL) {
                     return e;
                 } else {
-                    e = entities.next();
+                    e = entities.at(entIdx);
                 }
             } else {
-                e = entities.next();
+                e = entities.at(entIdx);
             }
             if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
                 subContainer = (RS_EntityContainer*)e;
@@ -835,10 +852,10 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
                 if (e!=NULL) {
                     return e;
                 } else {
-                    e = entities.next();
+                    e = entities.at(entIdx);
                 }
             } else {
-                e = entities.next();
+                e = entities.at(entIdx);
             }
             if (e!=NULL && e->isContainer()) {
                 subContainer = (RS_EntityContainer*)e;
@@ -863,10 +880,18 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
  * returned by \p prev() was the first entity in the container.
  */
 RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
+//set entIdx pointing in prev entity and check if is out of range
+    if (entities.isEmpty()) {
+        entIdx = -1;
+        return NULL;
+    } else
+        --entIdx;
+    if (entIdx < 0)
+        return NULL;
     switch (level) {
 
     case RS2::ResolveNone:
-        return entities.prev();
+        return entities.at(entIdx);
         break;
     
 	case RS2::ResolveAllButInserts: {
@@ -876,10 +901,10 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
                 if (e!=NULL) {
                     return e;
                 } else {
-                    e = entities.prev();
+                    e = entities.at(entIdx);
                 }
             } else {
-                e = entities.prev();
+                e = entities.at(entIdx);
             }
             if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
                 subContainer = (RS_EntityContainer*)e;
@@ -900,10 +925,10 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
                 if (e!=NULL) {
                     return e;
                 } else {
-                    e = entities.prev();
+                    e = entities.at(entIdx);
                 }
             } else {
-                e = entities.prev();
+                e = entities.at(entIdx);
             }
             if (e!=NULL && e->isContainer()) {
                 subContainer = (RS_EntityContainer*)e;
@@ -925,8 +950,11 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
 /**
  * @return Entity at the given index or NULL if the index is out of range.
  */
-RS_Entity* RS_EntityContainer::entityAt(uint index) {
-    return entities.at(index);
+RS_Entity* RS_EntityContainer::entityAt(int index) {
+    if (entities.size() > index && index >= 0)
+        return entities.at(index);
+    else
+        return NULL;
 }
 
 
@@ -935,7 +963,7 @@ RS_Entity* RS_EntityContainer::entityAt(uint index) {
  * @return Current index.
  */
 int RS_EntityContainer::entityAt() {
-    return entities.at();
+    return entIdx;
 }
 
 
@@ -943,24 +971,17 @@ int RS_EntityContainer::entityAt() {
  * Finds the given entity and makes it the current entity if found.
  */
 int RS_EntityContainer::findEntity(RS_Entity* entity) {
-    return entities.find(entity);
+    entIdx = entities.indexOf(entity);
+    return entIdx;
 }
 
-
-
-/**
- * @return The current entity.
- */
-RS_Entity* RS_EntityContainer::currentEntity() {
-    return entities.current();
-}
 
 
 /**
  * Returns the copy to a new iterator for traversing the entities.
  */
-RS_PtrListIterator<RS_Entity> RS_EntityContainer::createIterator() {
-    return RS_PtrListIterator<RS_Entity>(entities);
+QListIterator<RS_Entity*> RS_EntityContainer::createIterator() {
+    return QListIterator<RS_Entity*>(entities);
 }
 
 

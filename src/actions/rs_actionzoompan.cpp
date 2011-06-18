@@ -80,8 +80,8 @@ void RS_ActionZoomPan::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionZoomPan::mousePressEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::MidButton ||
-            RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::MiddleButton ||
+            e->button()==Qt::LeftButton) {
         //v1 = snapPoint(e);
         x1 = e->x();
         y1 = e->y();
@@ -92,9 +92,9 @@ void RS_ActionZoomPan::mousePressEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionZoomPan::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::MidButton) {
+    } else if (e->button()==Qt::MiddleButton) {
         init(-1);
     } else {
         setStatus(0);
