@@ -28,8 +28,10 @@
 #ifndef RS_UNDO_H
 #define RS_UNDO_H
 
-#include "rs_undocycle.h"
-#include "rs_ptrlist.h"
+#include <QList>
+
+class RS_UndoCycle;
+class RS_Undoable;
 
 /**
  * Undo / redo functionality. The internal undo list consists of
@@ -41,7 +43,7 @@
 class RS_Undo {
 public:
     RS_Undo();
-    virtual ~RS_Undo() {}
+    virtual ~RS_Undo();
 
     void addUndoCycle(RS_UndoCycle* i);
 
@@ -71,7 +73,7 @@ public:
 
 protected:
     //! List of undo list items. every item is something that can be undone.
-    RS_PtrList<RS_UndoCycle> undoList;
+    QList<RS_UndoCycle*> undoList;
 
     /**
      * Index that points to the current position in the undo list.

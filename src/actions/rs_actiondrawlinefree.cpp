@@ -91,7 +91,7 @@ void RS_ActionDrawLineFree::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionDrawLineFree::mousePressEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         vertex = snapPoint(e);
         polyline = new RS_Polyline(container,
                                    RS_PolylineData(vertex, vertex, 0));
@@ -105,10 +105,10 @@ void RS_ActionDrawLineFree::mousePressEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionDrawLineFree::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         vertex = RS_Vector(false);
         trigger();
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         if (polyline!=NULL) {
             delete polyline;
             polyline = NULL;
