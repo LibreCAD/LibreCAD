@@ -9,11 +9,11 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="744.09448819"
-   height="1052.3622047"
+   width="99.999725"
+   height="100.00037"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.0 r9654"
+   inkscape:version="0.48.1 r9760"
    sodipodi:docname="Icon_Librecad.svg">
   <title
      id="title3808">LibreCAD Icon</title>
@@ -37,16 +37,20 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="6.1060241"
-     inkscape:cx="282.85714"
-     inkscape:cy="564.28571"
+     inkscape:cx="53.295482"
+     inkscape:cy="49.04802"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1680"
-     inkscape:window-height="942"
+     inkscape:window-width="1440"
+     inkscape:window-height="876"
      inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0" />
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -95,7 +99,8 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-226.69563,-436.90297)">
     <rect
        height="100.00001"
        width="99.999428"
@@ -111,13 +116,13 @@
        inkscape:connector-curvature="0" />
     <g
        id="g3010"
-       transform="translate(-95.351883,-39.277969)">
+       transform="translate(-95.35188,-39.277969)">
       <polygon
          transform="matrix(5.7120336,0,0,5.7120336,322.04724,476.18085)"
          style="fill:#4d4d4d"
          id="_471970800"
          class="fil2"
-         points="4.20177,7.70289 17.5069,7.70289 17.5069,9.80372 4.20177,9.80372 4.20177,10.8542 0.000103387,10.8542 0.000103387,6.65257 4.20177,6.65257 " />
+         points="0.000103387,6.65257 4.20177,6.65257 4.20177,7.70289 17.5069,7.70289 17.5069,9.80372 4.20177,9.80372 4.20177,10.8542 0.000103387,10.8542 " />
       <g
          id="g3004">
         <rect
