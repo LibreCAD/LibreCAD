@@ -28,12 +28,8 @@
 #ifndef RS_ENTITY_H
 #define RS_ENTITY_H
 
-//#include <values.h>
+#include <QMultiHash>
 
-#include "rs_dict.h"
-
-#include "rs.h"
-#include "rs_layer.h"
 #include "rs_math.h"
 #include "rs_pen.h"
 #include "rs_string.h"
@@ -54,6 +50,7 @@ class RS_Painter;
 class RS_Point;
 class RS_Polyline;
 class RS_Text;
+class RS_Layer;
 
 
 
@@ -499,8 +496,8 @@ public:
 
 	double getStyleFactor(RS_GraphicView* view);
 	
-	RS_String* getUserDefVar(RS_String key);
-	RS_StringList getAllKeys();
+        RS_String getUserDefVar(RS_String key);
+        QList<RS_String> getAllKeys();
 	void setUserDefVar(RS_String key, RS_String val);
 	void delUserDefVar(RS_String key);
 
@@ -530,7 +527,7 @@ protected:
 	bool updateEnabled;
 
 private:
-	RS_Dict<RS_String> varList;
+        QMultiHash<RS_String, RS_String> varList;
 };
 
 #endif

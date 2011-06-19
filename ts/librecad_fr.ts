@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr_FR">
+<TS version="2.0" language="fr">
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
@@ -269,7 +269,7 @@ Vérifiez les permissions SVP.</translation>
     </message>
     <message>
         <source>Version: %1 %2</source>
-        <translation>Version : %1 %2</translation>
+        <translation type="obsolete">Version : %1 %2</translation>
     </message>
     <message>
         <source>Modules: %1</source>
@@ -345,7 +345,7 @@ Sauvegarde automatique désactivée.</translation>
     </message>
     <message>
         <source>SVN Revision: %1</source>
-        <translation>Version SVN : %1</translation>
+        <translation type="obsolete">Version SVN : %1</translation>
     </message>
     <message>
         <source>Help</source>
@@ -381,6 +381,18 @@ Sauvegarde automatique désactivée.</translation>
     </message>
     <message>
         <source>Main Website : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version: %1</source>
+        <translation type="unfinished">Version : %1</translation>
+    </message>
+    <message>
+        <source>SCM Revision: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

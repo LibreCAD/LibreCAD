@@ -83,7 +83,7 @@ public:
 
     virtual RS_Entity* clone() {
         RS_Polyline* p = new RS_Polyline(*this);
-		p->entities.setAutoDelete(entities.autoDelete());
+        p->setOwner(isOwner());
         p->initId();
         p->detach();
         return p;

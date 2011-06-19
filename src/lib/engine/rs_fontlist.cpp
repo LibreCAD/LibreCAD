@@ -25,12 +25,11 @@
 **********************************************************************/
 
 
+#include <QHash>
 #include "rs_fontlist.h"
-
-#include "rs_fileinfo.h"
-#include "rs_stringlist.h"
+#include "rs_debug.h"
+#include "rs_font.h"
 #include "rs_system.h"
-#include "rs_dict.h"
 
 RS_FontList* RS_FontList::uniqueInstance = NULL;
 
@@ -40,8 +39,6 @@ RS_FontList* RS_FontList::uniqueInstance = NULL;
  * Default constructor.
  */
 RS_FontList::RS_FontList() {
-    fonts.setAutoDelete(true);
-    //fontListListeners.setAutoDelete(false);
 }
 
 
@@ -53,22 +50,21 @@ RS_FontList::RS_FontList() {
 void RS_FontList::init() {
     RS_DEBUG->print("RS_FontList::initFonts");
 
-    RS_StringList list = RS_SYSTEM->getFontList();
-    RS_Dict<char> added; //used to remeber added fonts (avoid duplication)
+    QStringList list = RS_SYSTEM->getFontList();
+    QHash<QString, int> added; //used to remember added fonts (avoid duplication)
     RS_Font* font;
 
-    for ( RS_StringList::Iterator it = list.begin();
-            it != list.end(); ++it ) {
-        RS_DEBUG->print("font: %s:", (*it).latin1());
+    for (int i = 0; i < list.size(); ++i) {
+        RS_DEBUG->print("font: %s:", list.at(i).toLatin1().data());
 
-        RS_FileInfo fi(*it);
-        if (!added[fi.baseName()]) {
+        QFileInfo fi( list.at(i) );
+        if ( !added.contains(fi.baseName()) ) {
             font = new RS_Font(fi.baseName());
             fonts.append(font);
-            added.insert(fi.baseName(), (char*)1);
+            added.insert(fi.baseName(), 1);
         }
 
-        RS_DEBUG->print("base: %s", fi.baseName().latin1());
+        RS_DEBUG->print("base: %s", fi.baseName().toLatin1().data());
     }
 }
 
@@ -78,21 +74,22 @@ void RS_FontList::init() {
  * Removes all fonts in the fontlist.
  */
 void RS_FontList::clearFonts() {
-    fonts.clear();
+    while (!fonts.isEmpty())
+        delete fonts.takeFirst();
 }
 
 
 
 /**
  * Removes a font from the list.
- * Listeners are notified after the font was removed from 
- * the list but before it gets deleted.
+ * The font was removed from the list and is deleted.
  */
 void RS_FontList::removeFont(RS_Font* font) {
     RS_DEBUG->print("RS_FontList::removeFont()");
 
-    // here the font is removed from the list but not deleted
-    fonts.remove(font);
+    int i = fonts.indexOf(font);
+    if (i != -1)
+        delete fonts.takeAt(i);
 
     //for (uint i=0; i<fontListListeners.count(); ++i) {
     //    RS_FontListListener* l = fontListListeners.at(i);
@@ -107,25 +104,24 @@ void RS_FontList::removeFont(RS_Font* font) {
  * \p NULL if no such font was found. The font will be loaded into
  * memory if it's not already.
  */
-RS_Font* RS_FontList::requestFont(const RS_String& name) {
-    RS_DEBUG->print("RS_FontList::requestFont %s",  name.latin1());
+RS_Font* RS_FontList::requestFont(const QString& name) {
+    RS_DEBUG->print("RS_FontList::requestFont %s",  name.toLatin1().data());
 
-    RS_String name2 = name.lower();
+    QString name2 = name.toLower();
     RS_Font* foundFont = NULL;
 
-    // LibreCAD 1 compatibility:
+    // QCAD 1 compatibility:
     if (name2.contains('#') && name2.contains('_')) {
-        name2 = name2.left(name2.find('_'));
+        name2 = name2.left(name2.indexOf('_'));
     } else if (name2.contains('#')) {
-        name2 = name2.left(name2.find('#'));
+        name2 = name2.left(name2.indexOf('#'));
     }
 
-    RS_DEBUG->print("name2: %s", name2.latin1());
+    RS_DEBUG->print("name2: %s", name2.toLatin1().data());
 
     // Search our list of available fonts:
-    for (RS_Font* f=fonts.first();
-            f!=NULL;
-            f=fonts.next()) {
+    for (int i = 0; i < fonts.size(); ++i) {
+        RS_Font* f = fonts.at(i);
 
         if (f->getFileName()==name2) {
             // Make sure this font is loaded into memory:
@@ -150,9 +146,8 @@ RS_Font* RS_FontList::requestFont(const RS_String& name) {
 std::ostream& operator << (std::ostream& os, RS_FontList& l) {
 
     os << "Fontlist: \n";
-    for (RS_Font* f=l.firstFont();
-            f!=NULL;
-            f=l.nextFont()) {
+    for (int i = 0; i < l.fonts.size(); ++i) {
+        RS_Font* f = l.fonts.at(i);
 
         os << *f << "\n";
     }

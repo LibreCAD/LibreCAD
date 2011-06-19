@@ -84,7 +84,7 @@ public:
 
     virtual RS_Entity* clone() {
         RS_DimDiametric* d = new RS_DimDiametric(*this);
-		d->entities.setAutoDelete(entities.autoDelete());
+        d->setOwner(isOwner());
         d->initId();
         d->detach();
         return d;

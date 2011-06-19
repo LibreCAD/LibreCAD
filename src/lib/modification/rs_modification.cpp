@@ -34,6 +34,7 @@
 #include "rs_insert.h"
 #include "rs_polyline.h"
 #include "rs_text.h"
+#include "rs_layer.h"
 
 
 
@@ -2180,14 +2181,12 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
     for (RS_Entity* e=container->firstEntity();
             e!=NULL;
             e=container->nextEntity()) {
-        //for (int i=0; i<container->count(); ++i) {
-        //    RS_Entity* e = container->entityAt(i);
-
         if (e!=NULL &&
                 e->isVisible() &&
-                !e->isLocked() &&
-                (e->isInWindow(firstCorner, secondCorner) ||
-                 e->hasEndpointsWithinWindow(firstCorner, secondCorner))) {
+                !e->isLocked() ) {
+//            &&
+//                (e->isInWindow(firstCorner, secondCorner) ||
+//                 e->hasEndpointsWithinWindow(firstCorner, secondCorner))) {
 
             RS_Entity* ec = e->clone();
             ec->stretch(firstCorner, secondCorner, offset);

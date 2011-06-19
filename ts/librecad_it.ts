@@ -325,7 +325,7 @@ Controlla i permessi.</translation>
     </message>
     <message>
         <source>Version: %1 %2</source>
-        <translation>Versione: %1 %2</translation>
+        <translation type="obsolete">Versione: %1 %2</translation>
     </message>
     <message>
         <source>Modules: %1</source>
@@ -397,10 +397,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SVN Revision: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -434,6 +430,18 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Main Website : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version: %1</source>
+        <translation type="unfinished">Versione: %1</translation>
+    </message>
+    <message>
+        <source>SCM Revision: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

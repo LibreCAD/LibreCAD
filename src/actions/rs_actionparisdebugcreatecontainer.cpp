@@ -28,8 +28,6 @@
 
 #include "rs_actionparisdebugcreatecontainer.h"
 
-#include "rs_ptrlist.h"
-
 /**
  * Constructor.
  */
@@ -47,11 +45,11 @@ RS_ActionPARISDebugCreateContainer::RS_ActionPARISDebugCreateContainer(
 	}
 
     RS_EntityContainer* con = new RS_EntityContainer(theDoc, true);
-    RS_PtrListIterator<RS_Entity> it = theDoc->createIterator();
+    QListIterator<RS_Entity*> it = theDoc->createIterator();
     RS_Entity* e;
 
-    while ( (e = it.current()) != 0) {
-        ++it;
+    while (it.hasNext()) {
+        e = it.next();
         if (e->isSelected()) {
             con->addEntity(e);
             e->setParent(con);
