@@ -113,7 +113,7 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetEntity:
             entity = catchEntity(e, RS2::ResolveAll);
@@ -131,7 +131,7 @@ void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(RS_MouseEvent* e) {
         default:
             break;
         }
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         deletePreview();
         if (entity!=NULL) {
             entity->setHighlighted(false);

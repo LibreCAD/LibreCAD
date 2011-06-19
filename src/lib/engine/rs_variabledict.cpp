@@ -26,13 +26,12 @@
 
 
 #include "rs_variabledict.h"
-
+#include "rs_debug.h"
 
 /**
  * Constructor.
  */
 RS_VariableDict::RS_VariableDict() {
-    variables.setAutoDelete(true);
 }
 
 
@@ -73,8 +72,8 @@ void RS_VariableDict::clear() {
  * Adds a variable to the variable dictionary. If a variable with the 
  * same name already exists, is will be overwritten.
  */
-void RS_VariableDict::add(const RS_String& key,
-                                  const RS_String& value, int code) {
+void RS_VariableDict::add(const QString& key,
+                                  const QString& value, int code) {
     RS_DEBUG->print("RS_VariableDict::addVariable()");
 
     if (key.isEmpty()) {
@@ -84,7 +83,7 @@ void RS_VariableDict::add(const RS_String& key,
         return;
     }
 
-    variables.replace(key, new RS_Variable(value, code));
+    variables.insert(key, RS_Variable(value, code));
 }
 
 
@@ -93,7 +92,7 @@ void RS_VariableDict::add(const RS_String& key,
  * Adds a variable to the variable dictionary. If a variable with the 
  * same name already exists, is will be overwritten.
  */
-void RS_VariableDict::add(const RS_String& key, int value, int code) {
+void RS_VariableDict::add(const QString& key, int value, int code) {
     RS_DEBUG->print("RS_VariableDict::addVariable()");
 
     if (key.isEmpty()) {
@@ -103,7 +102,7 @@ void RS_VariableDict::add(const RS_String& key, int value, int code) {
         return;
     }
 
-    variables.replace(key, new RS_Variable(value, code));
+    variables.insert(key, RS_Variable(value, code));
 }
 
 
@@ -112,7 +111,7 @@ void RS_VariableDict::add(const RS_String& key, int value, int code) {
  * Adds a variable to the variable dictionary. If a variable with the 
  * same name already exists, is will be overwritten.
  */
-void RS_VariableDict::add(const RS_String& key, double value, int code) {
+void RS_VariableDict::add(const QString& key, double value, int code) {
     RS_DEBUG->print("RS_VariableDict::addVariable()");
 
     if (key.isEmpty()) {
@@ -122,7 +121,7 @@ void RS_VariableDict::add(const RS_String& key, double value, int code) {
         return;
     }
 
-    variables.replace(key, new RS_Variable(value, code));
+    variables.insert(key, RS_Variable(value, code));
 }
 
 
@@ -131,7 +130,7 @@ void RS_VariableDict::add(const RS_String& key, double value, int code) {
  * Adds a variable to the variable dictionary. If a variable with the 
  * same name already exists, is will be overwritten.
  */
-void RS_VariableDict::add(const RS_String& key,
+void RS_VariableDict::add(const QString& key,
                                   const RS_Vector& value, int code) {
     RS_DEBUG->print("RS_VariableDict::addVariable()");
 
@@ -142,7 +141,7 @@ void RS_VariableDict::add(const RS_String& key,
         return;
     }
 
-    variables.replace(key, new RS_Variable(value, code));
+    variables.insert(key, RS_Variable(value, code));
 }
 
 
@@ -156,16 +155,15 @@ void RS_VariableDict::add(const RS_String& key,
  * @return The value for the given variable or the given default value
  * if the variable couldn't be found.
  */
-RS_Vector RS_VariableDict::getVector(const RS_String& key,
+RS_Vector RS_VariableDict::getVector(const QString& key,
         const RS_Vector& def) {
 
     RS_Vector ret;
-    RS_Variable* ptr = variables.find(key);
-
-    if (ptr==NULL || ptr->getType()!=RS2::VariableVector) {
-        ret = def;
+    QHash<QString, RS_Variable>::iterator i = variables.find(key);
+     if (i != variables.end() || i.value().getType()==RS2::VariableVector) {
+        ret = i.value().getVector();
     } else {
-        ret = ptr->getVector();
+        ret = def;
     }
     return ret;
 }
@@ -181,26 +179,26 @@ RS_Vector RS_VariableDict::getVector(const RS_String& key,
  * @return The value for the given variable or the given default value
  * if the variable couldn't be found.
  */
-RS_String RS_VariableDict::getString(const RS_String& key,
-        const RS_String& def) {
+QString RS_VariableDict::getString(const QString& key,
+        const QString& def) {
 
-    RS_String ret;
+    QString ret;
 
 	RS_DEBUG->print("RS_VariableDict::getString: 001");
-	RS_DEBUG->print("RS_VariableDict::getString: key: '%s'", key.latin1());
+        RS_DEBUG->print("RS_VariableDict::getString: key: '%s'", key.toLatin1().data());
 	
-    RS_Variable* ptr = variables.find(key);
-	RS_DEBUG->print("RS_VariableDict::getString: 002");
+    QHash<QString, RS_Variable>::iterator i = variables.find(key);
+        RS_DEBUG->print("RS_VariableDict::getString: 002");
 
-    if (ptr==NULL) {
+    if (i == variables.end()) {
 		RS_DEBUG->print("RS_VariableDict::getString: 003");
         ret = def;
-	} else if (ptr->getType()!=RS2::VariableString) {
+        } else if (i.value().getType() != RS2::VariableString) {
 		RS_DEBUG->print("RS_VariableDict::getString: 004");
 		ret = def;
     } else {
 		RS_DEBUG->print("RS_VariableDict::getString: 005");
-        ret = ptr->getString();
+        ret = i.value().getString();
     }
 	RS_DEBUG->print("RS_VariableDict::getString: 006");
 
@@ -218,16 +216,15 @@ RS_String RS_VariableDict::getString(const RS_String& key,
  * @return The value for the given variable or the given default value
  * if the variable couldn't be found.
  */
-int RS_VariableDict::getInt(const RS_String& key,
+int RS_VariableDict::getInt(const QString& key,
                                     int def) {
 
     int ret;
-    RS_Variable* ptr = variables.find(key);
-
-    if (ptr==NULL || ptr->getType()!=RS2::VariableInt) {
-        ret = def;
+    QHash<QString, RS_Variable>::iterator i = variables.find(key);
+     if (i != variables.end() || i.value().getType()==RS2::VariableInt) {
+        ret = i.value().getInt();
     } else {
-        ret = ptr->getInt();
+        ret = def;
     }
     return ret;
 }
@@ -243,16 +240,15 @@ int RS_VariableDict::getInt(const RS_String& key,
  * @return The value for the given variable or the given default value
  * if the variable couldn't be found.
  */
-double RS_VariableDict::getDouble(const RS_String& key,
+double RS_VariableDict::getDouble(const QString& key,
         double def) {
 
     double ret;
-    RS_Variable* ptr = variables.find(key);
-
-    if (ptr==NULL || ptr->getType()!=RS2::VariableDouble) {
-        ret = def;
+    QHash<QString, RS_Variable>::iterator i = variables.find(key);
+     if (i != variables.end() || i.value().getType()==RS2::VariableDouble) {
+        ret = i.value().getDouble();
     } else {
-        ret = ptr->getDouble();
+        ret = def;
     }
     return ret;
 }
@@ -275,7 +271,7 @@ void RS_VariableDict::addBlockNotification() {
  * TODO: Listeners are notified after the block was removed from 
  * the list but before it gets deleted.
  */
-void RS_VariableDict::remove(const RS_String& key) {
+void RS_VariableDict::remove(const QString& key) {
     RS_DEBUG->print("RS_VariableDict::removeVariable()");
 
     // here the block is removed from the list but not deleted
@@ -291,28 +287,27 @@ void RS_VariableDict::remove(const RS_String& key) {
 std::ostream& operator << (std::ostream& os, RS_VariableDict& d) {
 
     os << "Variables: \n";
-    RS_DictIterator<RS_Variable> it(d.variables);
-    for( ; it.current(); ++it ) {
-		// RVT_PORT changed it.currentKey() to it.currentKey().ascii()
-        os << it.currentKey().ascii() << ": ";
-        switch (it.current()->getType()) {
+    QHash<QString, RS_Variable>::iterator it = d.variables.begin();
+    while (it != d.variables.end()) {
+        os << it.key().toLatin1().data() << ": ";
+        switch (it.value().getType()) {
         case RS2::VariableVoid:
             os << "void\n";
             break;
         case RS2::VariableInt:
-            os << "int " << it.current()->getInt() << "\n";
+            os << "int " << it.value().getInt() << "\n";
             break;
         case RS2::VariableDouble:
-            os << "double " << it.current()->getDouble() << "\n";
+            os << "double " << it.value().getDouble() << "\n";
             break;
         case RS2::VariableVector:
-            os << "vector " << it.current()->getVector() << "\n";
+            os << "vector " << it.value().getVector() << "\n";
             break;
         case RS2::VariableString:
-			// RVT_PORT
-            os << "string " << it.current()->getString().ascii() << "\n";
+            os << "string " << it.value().getString().toLatin1().data() << "\n";
             break;
         }
+        ++it;
     }
     os << std::endl;
 

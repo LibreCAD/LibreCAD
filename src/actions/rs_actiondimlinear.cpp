@@ -64,7 +64,7 @@ QAction* RS_ActionDimLinear::createGUIAction(RS2::ActionType type, QObject* /*pa
     case RS2::ActionDimLinear:
 		// tr("Linear")
 		action = new QAction(tr("&Linear"),  NULL);
-		action->setIcon(QIcon(":/extui/dimaligned.png"));
+                action->setIcon(QIcon(":/extui/dimlinear.png"));
         //action->zetStatusTip(tr("Linear Dimension"));
         break;
 
@@ -184,10 +184,10 @@ void RS_ActionDimLinear::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionDimLinear::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
     }

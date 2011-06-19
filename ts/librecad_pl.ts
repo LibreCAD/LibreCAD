@@ -308,7 +308,7 @@ Proszę sprawdzić prawa do zapisu.</translation>
     </message>
     <message>
         <source>Version: %1 %2</source>
-        <translation>Wersja: %1 %2</translation>
+        <translation type="obsolete">Wersja: %1 %2</translation>
     </message>
     <message>
         <source>Modules: %1</source>
@@ -386,7 +386,7 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>SVN Revision: %1</source>
-        <translation>Rewizja SVN: %1</translation>
+        <translation type="obsolete">Rewizja SVN: %1</translation>
     </message>
     <message>
         <source>Help</source>
@@ -422,6 +422,18 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>Main Website : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version: %1</source>
+        <translation type="unfinished">Wersja: %1</translation>
+    </message>
+    <message>
+        <source>SCM Revision: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1926,7 +1938,7 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">Za&amp;kończ</translation>
+        <translation>Za&amp;kończ</translation>
     </message>
     <message>
         <source>CTRL-G</source>

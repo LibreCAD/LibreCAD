@@ -30,6 +30,7 @@
 #include "rs_graphic.h"
 #include "rs_insert.h"
 #include "rs_dialogfactory.h"
+#include "rs_ptrlist.h"
 
 
 

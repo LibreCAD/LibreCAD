@@ -30,6 +30,7 @@
 #include "rs_polyline.h"
 #include "rs_entity.h"
 #include "rs_graphic.h"
+#include "rs_layer.h"
 
 
 

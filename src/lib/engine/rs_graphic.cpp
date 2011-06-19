@@ -34,6 +34,8 @@
 #include "rs_math.h"
 #include "rs_units.h"
 #include "rs_settings.h"
+#include "rs_layer.h"
+#include "rs_block.h"
 
 
 /**

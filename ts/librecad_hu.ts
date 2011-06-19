@@ -323,7 +323,7 @@ nem menthető. Ellenőrizze a jogokat.</translation>
     </message>
     <message>
         <source>Version: %1 %2</source>
-        <translation>Verzió: %1 %2</translation>
+        <translation type="obsolete">Verzió: %1 %2</translation>
     </message>
     <message>
         <source>Modules: %1</source>
@@ -395,10 +395,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SVN Revision: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -432,6 +428,18 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Main Website : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version: %1</source>
+        <translation type="unfinished">Verzió: %1</translation>
+    </message>
+    <message>
+        <source>SCM Revision: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1972,7 +1980,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Kilépés</translation>
+        <translation>&amp;Kilépés</translation>
     </message>
     <message>
         <source>CTRL-G</source>

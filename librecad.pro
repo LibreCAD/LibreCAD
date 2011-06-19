@@ -5,7 +5,7 @@ DEFINES += QC_APPKEY="\"/LibreCAD\""
 DEFINES += QC_APPNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYKEY="\"LibreCAD\""
-DEFINES += QC_VERSION="\"1.0.0beta5\""
+DEFINES += QC_VERSION="\"1.0.0rc1\""
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 
 
@@ -24,8 +24,8 @@ unix {
     # Get SVN revision number
     # SVNREVISION = $$system(svn info -R | grep -o \"Revision: [0-9]*\" | sed -e \"s/Revision: //\" | head -n1)
     # Temporary disabled getting SCM version
-    SVNREVISION="Git Version"
-    DEFINES += QC_SVNREVISION=\"$$SVNREVISION\"
+    SCMREVISION=$$system(git describe --tags)
+    DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
     macx { 
         CONFIG += x86 x86_64
         TARGET = LibreCAD
@@ -50,7 +50,7 @@ win32 {
     CONFIG += release
     QMAKE_CFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
-    DEFINES += QC_SVNREVISION=\"\"
+    DEFINES += QC_SCMREVISION=\"\"
     TARGET = LibreCAD
     DEFINES += QC_APPDIR="\"LibreCAD\""
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
@@ -177,6 +177,7 @@ HEADERS = \
     src/lib/engine/rs_units.h \
     src/lib/engine/rs_utility.h \
     src/lib/engine/rs_valuelist.h \
+    src/lib/engine/rs_variable.h \
     src/lib/engine/rs_variabledict.h \
     src/lib/engine/rs_vector.h \
     src/lib/fileio/rs_fileio.h \
