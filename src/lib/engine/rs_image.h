@@ -28,9 +28,8 @@
 #ifndef RS_IMAGE_H
 #define RS_IMAGE_H
 
+#include <QImage>
 #include "rs_atomicentity.h"
-
-#include "rs_img.h"
 
 /**
  * Holds the data that defines a line.
@@ -240,8 +239,8 @@ public:
 
 protected:
     RS_ImageData data;
-	RS_Img img;
-	//RS_Img** img;
+        QImage img;
+        //QImage** img;
 	//int nx;
 	//int ny;
 };

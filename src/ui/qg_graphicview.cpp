@@ -46,7 +46,6 @@
 #include "rs_actionzoomscroll.h"
 #include "rs_actionmodifydelete.h"
 #include "rs_actionselectsingle.h"
-#include "rs_fileinfo.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
 #include "rs_system.h"
