@@ -2889,8 +2889,23 @@ void QC_ApplicationWindow::slotHelpAbout() {
 
     QStringList modules;
 
-    QString modulesString;
+    /**
+      * Show all plugin that has been loaded
+      */
+    RS_StringList lst = RS_SYSTEM->getDirectoryList("plugins");
+    for (int i = 0; i < lst.size(); ++i) {
+        QDir pluginsDir(lst.at(i));
+        foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
+            QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
+            QObject *plugin = pluginLoader.instance();
+            if (plugin!=NULL && pluginLoader.isLoaded()) {
+                QC_PluginInterface *pluginInterface = qobject_cast<QC_PluginInterface *>(plugin);
+                    modules.append(pluginInterface->name());
+            }
+        }
+    }
 
+    QString modulesString;
     if (modules.empty()==false) {
         modulesString = modules.join(", ");
     } else {
