@@ -30,7 +30,6 @@
 
 #include <iostream>
 
-#include "rs_file.h"
 #include "rs_regexp.h"
 #include "rs_font.h"
 #include "rs_information.h"
