@@ -29,9 +29,9 @@
 #define RS_FILTERDXF1_H
 
 #include <fstream>
+#include <QFile>
 
 #include "rs_filterinterface.h"
-#include "rs_file.h"
 
 /**
  * This format filter class can import and export old DXF files
@@ -122,7 +122,7 @@ protected:
     bool    dosFile;          // File is in DOS-format
     int       numElements;
     RS_String name;
-    RS_File  file;
+    QFile  file;
 }
 ;
 
