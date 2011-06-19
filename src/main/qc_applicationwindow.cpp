@@ -227,7 +227,7 @@ void QC_ApplicationWindow::execPlug() {
     QC_MDIWindow* w = getMDIWindow();
     RS_Graphic* currdoc = static_cast<RS_Graphic*>(w->getDocument());
 //create document interface instance
-    Doc_plugin_interface pligundoc(currdoc);
+    Doc_plugin_interface pligundoc(currdoc, w->getGraphicView(), this);
 //execute plugin
     plugin->execComm(&pligundoc, this);
 //TODO call update view

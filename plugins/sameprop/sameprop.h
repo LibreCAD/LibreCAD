@@ -1,5 +1,5 @@
 /*****************************************************************************/
-/*  sample.h - plugin example for LibreCAD                                   */
+/*  test.h - Change the properties to be the same of first selected          */
 /*                                                                           */
 /*  Copyright (C) 2011 Rallaz, rallazz@gmail.com                             */
 /*                                                                           */
@@ -10,14 +10,12 @@
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.    */
 /*****************************************************************************/
 
-#ifndef SAMPLE_H
-#define SAMPLE_H
+#ifndef SAMEPROP_H
+#define SAMEPROP_H
 
 #include "qc_plugininterface.h"
-#include <QDialog>
-class QLineEdit;
 
-class LC_Sample : public QObject, QC_PluginInterface
+class LC_SameProp : public QObject, QC_PluginInterface
 {
     Q_OBJECT
      Q_INTERFACES(QC_PluginInterface)
@@ -27,35 +25,6 @@ class LC_Sample : public QObject, QC_PluginInterface
     virtual QString name() const;
     virtual void execComm(Document_Interface *doc,
                                        QWidget *parent);
-};
-
-class lc_Sampledlg : public QDialog
-{
-    Q_OBJECT
-
-public:
-    explicit lc_Sampledlg(QWidget *parent = 0);
-    ~lc_Sampledlg();
-
-public slots:
-//    void procesAction(QStringList *commandList);
-    void procesAction(Document_Interface *doc);
-    void checkAccept();
-
-protected:
-    void closeEvent(QCloseEvent *event);
-
-private:
-    void readSettings();
-    void writeSettings();
-    bool failGUI(QString *msg);
-
-private:
-    QString errmsg;
-    QLineEdit *startxedit;
-    QLineEdit *startyedit;
-    QLineEdit *endxedit;
-    QLineEdit *endyedit;
 };
 
 #endif // SAMPLE_H
