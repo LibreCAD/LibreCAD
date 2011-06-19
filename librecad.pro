@@ -132,7 +132,6 @@ HEADERS = \
     src/lib/engine/rs_dimension.h \
     src/lib/engine/rs_dimlinear.h \
     src/lib/engine/rs_dimradial.h \
-    src/lib/engine/rs_dir.h \
     src/lib/engine/rs_document.h \
     src/lib/engine/rs_ellipse.h \
     src/lib/engine/rs_entity.h \
@@ -159,7 +158,6 @@ HEADERS = \
     src/lib/engine/rs_point.h \
     src/lib/engine/rs_polyline.h \
     src/lib/engine/rs_ptrlist.h \
-    src/lib/engine/rs_regexp.h \
     src/lib/engine/rs_settings.h \
     src/lib/engine/rs_solid.h \
     src/lib/engine/rs_spline.h \

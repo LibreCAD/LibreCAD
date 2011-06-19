@@ -33,7 +33,6 @@
 #include "rs_color.h"
 #include "rs_fontchar.h"
 #include "rs_math.h"
-#include "rs_regexp.h"
 #include "rs_string.h"
 #include "rs_system.h"
 #include "rs_textstream.h"
@@ -159,8 +158,8 @@ bool RS_Font::loadFont() {
             RS_Char ch;
 
             // read unicode:
-            RS_RegExp regexp("[0-9A-Fa-f]{4,4}");
-            regexp.search(line);
+            QRegExp regexp("[0-9A-Fa-f]{4,4}");
+            regexp.indexIn(line);
             RS_String cap = regexp.cap();
             if (!cap.isNull()) {
                 int uCode = cap.toInt(NULL, 16);
