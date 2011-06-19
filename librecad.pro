@@ -209,7 +209,10 @@ HEADERS = \
     src/lib/scripting/rs_scriptlist.h \ 
     src/main/doc_plugin_interface.h \
     src/plugins/document_interface.h \
-    src/plugins/qc_plugininterface.h
+    src/plugins/qc_plugininterface.h \
+    src/plugins/intern/qc_actiongetpoint.h \
+    src/plugins/intern/qc_actiongetselect.h \
+    src/plugins/intern/qc_actiongetent.h
 
 SOURCES = dxflib/src/dl_dxf.cpp \
     dxflib/src/dl_writer_ascii.cpp \
@@ -286,7 +289,10 @@ SOURCES = dxflib/src/dl_dxf.cpp \
     src/lib/scripting/rs_python_wrappers.cpp \
     src/lib/scripting/rs_script.cpp \
     src/lib/scripting/rs_scriptlist.cpp \
-    src/main/doc_plugin_interface.cpp
+    src/main/doc_plugin_interface.cpp \
+    src/plugins/intern/qc_actiongetpoint.cpp \
+    src/plugins/intern/qc_actiongetselect.cpp \
+    src/plugins/intern/qc_actiongetent.cpp
 
 # ################################################################################
 # Command
