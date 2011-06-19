@@ -26,7 +26,6 @@
 
 #include "rs_scriptlist.h"
 
-#include "rs_fileinfo.h"
 #include "rs_stringlist.h"
 #include "rs_system.h"
 
@@ -59,12 +58,12 @@ void RS_ScriptList::init() {
             it != list.end(); ++it ) {
         RS_DEBUG->print("script: %s:", (*it).latin1());
 
-        RS_FileInfo fi(*it);
-        script = new RS_Script(fi.baseName(), fi.absFilePath());
+        QFileInfo fi(*it);
+        script = new RS_Script(fi.baseName(), fi.absoluteFilePath());
         scripts.append(script);
 
-        RS_DEBUG->print("base: %s", fi.baseName().latin1());
-        RS_DEBUG->print("path: %s", fi.absFilePath().latin1());
+        RS_DEBUG->print("base: %s", fi.baseName().toLatin1().data());
+        RS_DEBUG->print("path: %s", fi.absoluteFilePath().toLatin1().data());
     }
 
     //RS_Script* f = new RS_Script("normal");

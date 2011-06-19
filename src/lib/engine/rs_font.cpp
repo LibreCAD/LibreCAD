@@ -28,18 +28,11 @@
 #include "rs_font.h"
 
 #include <iostream>
-//#include <values.h>
+#include <QTextStream>
+#include <QTextCodec>
 
-#include "rs_color.h"
-#include "rs_file.h"
-#include "rs_fileinfo.h"
 #include "rs_fontchar.h"
-#include "rs_math.h"
-#include "rs_regexp.h"
-#include "rs_string.h"
 #include "rs_system.h"
-#include "rs_textstream.h"
-
 
 /**
  * Constructor.
@@ -47,7 +40,7 @@
  * @param owner true if the font owns the letters (blocks). Otherwise 
  *              the letters will be deleted when the font is deleted.
  */
-RS_Font::RS_Font(const RS_String& fileName, bool owner)
+RS_Font::RS_Font(const QString& fileName, bool owner)
         :	letterList(owner) {
     this->fileName = fileName;
 	encoding = "";
@@ -72,17 +65,17 @@ bool RS_Font::loadFont() {
         return true;
     }
 
-    RS_String path;
+    QString path;
 
     // Search for the appropriate font if we have only the name of the font:
-    if (!fileName.lower().contains(".cxf")) {
-        RS_StringList fonts = RS_SYSTEM->getFontList();
-        RS_FileInfo file;
-        for (RS_StringList::Iterator it = fonts.begin();
+    if (!fileName.toLower().contains(".cxf")) {
+        QStringList fonts = RS_SYSTEM->getFontList();
+        QFileInfo file;
+        for (QStringList::Iterator it = fonts.begin();
                 it!=fonts.end();
                 it++) {
 
-            if (RS_FileInfo(*it).baseName().lower()==fileName.lower()) {
+            if (QFileInfo(*it).baseName().toLower()==fileName.toLower()) {
                 path = *it;
                 break;
             }
@@ -102,20 +95,20 @@ bool RS_Font::loadFont() {
     }
 
     // Open cxf file:
-    RS_File f(path);
+    QFile f(path);
     if (!f.open(QIODevice::ReadOnly)) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
 			"RS_Font::loadFont: Cannot open font file: %s", 
-			path.latin1());
+                        path.toLatin1().data());
         return false;
     } else {
         RS_DEBUG->print("RS_Font::loadFont: "
 			"Successfully opened font file: %s", 
-			path.latin1());
+                        path.toLatin1().data());
     }
 
-    RS_TextStream ts(&f);
-    RS_String line;
+    QTextStream ts(&f);
+    QString line;
 
     // Read line by line until we find a new letter:
     while (!ts.atEnd()) {
@@ -126,30 +119,30 @@ bool RS_Font::loadFont() {
 
         // Read font settings:
         if (line.at(0)=='#') {
-            RS_StringList lst =
-                RS_StringList::split(':', line.right(line.length()-1));
-            RS_StringList::Iterator it3 = lst.begin();
+            QStringList lst =
+                ( line.right(line.length()-1) ).split(':', QString::SkipEmptyParts);
+            QStringList::Iterator it3 = lst.begin();
 
 			// RVT_PORT sometimes it happens that the size is < 2
 			if (lst.size()<2) 
 				continue;
 			
-            RS_String identifier = (*it3).stripWhiteSpace();
+            QString identifier = (*it3).trimmed();
             it3++;
-            RS_String value = (*it3).stripWhiteSpace();
+            QString value = (*it3).trimmed();
 
-            if (identifier.lower()=="letterspacing") {
+            if (identifier.toLower()=="letterspacing") {
                 letterSpacing = value.toDouble();
-            } else if (identifier.lower()=="wordspacing") {
+            } else if (identifier.toLower()=="wordspacing") {
                 wordSpacing = value.toDouble();
-            } else if (identifier.lower()=="linespacingfactor") {
+            } else if (identifier.toLower()=="linespacingfactor") {
                 lineSpacingFactor = value.toDouble();
-            } else if (identifier.lower()=="author") {
+            } else if (identifier.toLower()=="author") {
                 authors.append(value);
-            } else if (identifier.lower()=="name") {
+            } else if (identifier.toLower()=="name") {
                	names.append(value);
-            } else if (identifier.lower()=="encoding") {
-				ts.setCodec(RS_TextCodec::codecForName(value));
+            } else if (identifier.toLower()=="encoding") {
+                                ts.setCodec(QTextCodec::codecForName(value.toLatin1()));
 				encoding = value;
             }
         }
@@ -158,22 +151,22 @@ bool RS_Font::loadFont() {
         else if (line.at(0)=='[') {
 
             // uniode character:
-            RS_Char ch;
+            QChar ch;
 
             // read unicode:
-            RS_RegExp regexp("[0-9A-Fa-f]{4,4}");
-            regexp.search(line);
-            RS_String cap = regexp.cap();
+            QRegExp regexp("[0-9A-Fa-f]{4,4}");
+            regexp.indexIn(line);
+            QString cap = regexp.cap();
             if (!cap.isNull()) {
                 int uCode = cap.toInt(NULL, 16);
-                ch = RS_Char(uCode);
+                ch = QChar(uCode);
             }
 
             // read UTF8 (LibreCAD 1 compatibility)
-            else if (line.find(']')>=3) {
-                int i = line.find(']');
-                RS_String mid = line.mid(1, i-1);
-                ch = RS_String::fromUtf8(mid.latin1()).at(0);
+            else if (line.indexOf(']')>=3) {
+                int i = line.indexOf(']');
+                QString mid = line.mid(1, i-1);
+                ch = QString::fromUtf8(mid.toLatin1()).at(0);
             }
 
             // read normal ascii character:
@@ -186,9 +179,9 @@ bool RS_Font::loadFont() {
                 new RS_FontChar(NULL, ch, RS_Vector(0.0, 0.0));
 				
             // Read entities of this letter:
-            RS_String coordsStr;
-            RS_StringList coords;
-            RS_StringList::Iterator it2;
+            QString coordsStr;
+            QStringList coords;
+            QStringList::Iterator it2;
             do {
                 line = ts.readLine();
 
@@ -197,7 +190,8 @@ bool RS_Font::loadFont() {
 				}
 				
                 coordsStr = line.right(line.length()-2);
-                coords = RS_StringList::split(',', coordsStr);
+//                coords = QStringList::split(',', coordsStr);
+                coords = coordsStr.split(',', QString::SkipEmptyParts);
                 it2 = coords.begin();
 
                 // Line:
@@ -250,7 +244,7 @@ bool RS_Font::loadFont() {
  * Dumps the fonts data to stdout.
  */
 std::ostream& operator << (std::ostream& os, const RS_Font& f) {
-    os << " Font file name: " << f.getFileName().latin1() << "\n";
+    os << " Font file name: " << f.getFileName().toLatin1().data() << "\n";
     //<< (RS_BlockList&)f << "\n";
     return os;
 }

@@ -29,7 +29,6 @@
 #define RS_PAINTER_H
 
 #include "rs_color.h"
-#include "rs_img.h"
 #include "rs_math.h"
 #include "rs_pen.h"
 #include "rs_vector.h"
@@ -92,7 +91,7 @@ public:
                              double angle,
                              double angle1, double angle2,
                              bool reversed) = 0;
-	virtual void drawImg(RS_Img& img, const RS_Vector& pos, 
+        virtual void drawImg(QImage& img, const RS_Vector& pos,
 			double angle, const RS_Vector& factor,
 			int sx, int sy, int sw, int sh) = 0;
 

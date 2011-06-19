@@ -74,8 +74,8 @@ void RS_Image::update() {
     RS_DEBUG->print("RS_Image::update");
 
     // the whole image:
-    //RS_Img image = RS_Img(data.file);
-    img = RS_Img(data.file);
+    //QImage image = QImage(data.file);
+    img = QImage(data.file);
     if (!img.isNull()) {
         data.size = RS_Vector(img.width(), img.height());
     }
@@ -88,11 +88,11 @@ void RS_Image::update() {
     ny = image.height()/100;
 
     // create small images:
-    img = new RS_Img*[nx];
-    RS_Pixmap pm;
+    img = new QImage*[nx];
+    QPixmap pm;
     int w,h;
     for (int x = 0; x<nx; ++x) {
-    	img[x] = new RS_Img[ny];
+        img[x] = new QImage[ny];
     	for (int y = 0; y<ny; ++y) {
     		if (x<nx-1) {
     			w = 100;
@@ -108,7 +108,7 @@ void RS_Image::update() {
     			h = image.height()%100;
     		}
 
-    		pm = RS_Pixmap(w, h);
+                pm = QPixmap(w, h);
     		RS_PainterQt painter(&pm);
     		painter.drawImage(-x*100, -y*100, image);
     		img[x][y] = pm.convertToImage();
