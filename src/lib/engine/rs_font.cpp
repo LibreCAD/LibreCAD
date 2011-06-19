@@ -32,7 +32,6 @@
 
 #include "rs_color.h"
 #include "rs_file.h"
-#include "rs_fileinfo.h"
 #include "rs_fontchar.h"
 #include "rs_math.h"
 #include "rs_regexp.h"
@@ -77,12 +76,12 @@ bool RS_Font::loadFont() {
     // Search for the appropriate font if we have only the name of the font:
     if (!fileName.lower().contains(".cxf")) {
         RS_StringList fonts = RS_SYSTEM->getFontList();
-        RS_FileInfo file;
+        QFileInfo file;
         for (RS_StringList::Iterator it = fonts.begin();
                 it!=fonts.end();
                 it++) {
 
-            if (RS_FileInfo(*it).baseName().lower()==fileName.lower()) {
+            if (QFileInfo(*it).baseName().toLower()==fileName.toLower()) {
                 path = *it;
                 break;
             }
