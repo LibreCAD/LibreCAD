@@ -476,7 +476,7 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
 /**
  * Draws image.
  */
-void RS_PainterQt::drawImg(RS_Img& img, const RS_Vector& pos,
+void RS_PainterQt::drawImg(QImage& img, const RS_Vector& pos,
                            double angle, const RS_Vector& factor,
                            int sx, int sy, int sw, int sh) {
     save();
