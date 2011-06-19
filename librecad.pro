@@ -126,20 +126,16 @@ HEADERS = \
     src/lib/engine/rs_circle.h \
     src/lib/engine/rs_color.h \
     src/lib/engine/rs_constructionline.h \
-    src/lib/engine/rs_datetime.h \
     src/lib/engine/rs_dimaligned.h \
     src/lib/engine/rs_dimangular.h \
     src/lib/engine/rs_dimdiametric.h \
     src/lib/engine/rs_dimension.h \
     src/lib/engine/rs_dimlinear.h \
     src/lib/engine/rs_dimradial.h \
-    src/lib/engine/rs_dir.h \
     src/lib/engine/rs_document.h \
     src/lib/engine/rs_ellipse.h \
     src/lib/engine/rs_entity.h \
     src/lib/engine/rs_entitycontainer.h \
-    src/lib/engine/rs_file.h \
-    src/lib/engine/rs_fileinfo.h \
     src/lib/engine/rs_flags.h \
     src/lib/engine/rs_font.h \
     src/lib/engine/rs_fontchar.h \
@@ -147,7 +143,6 @@ HEADERS = \
     src/lib/engine/rs_graphic.h \
     src/lib/engine/rs_hatch.h \
     src/lib/engine/rs_insert.h \
-    src/lib/engine/rs_img.h \
     src/lib/engine/rs_image.h \
     src/lib/engine/rs_layer.h \
     src/lib/engine/rs_layerlist.h \
@@ -162,7 +157,6 @@ HEADERS = \
     src/lib/engine/rs_point.h \
     src/lib/engine/rs_polyline.h \
     src/lib/engine/rs_ptrlist.h \
-    src/lib/engine/rs_regexp.h \
     src/lib/engine/rs_settings.h \
     src/lib/engine/rs_solid.h \
     src/lib/engine/rs_spline.h \
@@ -261,7 +255,6 @@ SOURCES = dxflib/src/dl_dxf.cpp \
     src/lib/engine/rs_settings.cpp \
     src/lib/engine/rs_solid.cpp \
     src/lib/engine/rs_spline.cpp \
-    src/lib/engine/rs_string.cpp \
     src/lib/engine/rs_system.cpp \
     src/lib/engine/rs_text.cpp \
     src/lib/engine/rs_undo.cpp \

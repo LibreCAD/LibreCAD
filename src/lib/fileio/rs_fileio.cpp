@@ -24,11 +24,11 @@
 **
 **********************************************************************/
 
+#include <QFileInfo>
 #include "rs_fileio.h"
 #include "rs_filtercxf.h"
 #include "rs_filterdxf.h"
 #include "rs_filterdxf1.h"
-#include "rs_fileinfo.h"
 #include "rs_textstream.h"
 
 
@@ -107,7 +107,7 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const RS_String& file,
 
 	if (type==RS2::FormatUnknown) {
     	RS_String extension;
-    	extension = RS_FileInfo(file).extension(false).lower();
+        extension = QFileInfo(file).suffix().toLower();
 
 		if (extension=="dxf") {
 			type = RS2::FormatDXF;
@@ -133,14 +133,14 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const RS_String& file,
  */
 RS2::FormatType RS_FileIO::detectFormat(const RS_String& file) {
     RS2::FormatType type = RS2::FormatUnknown;
-    RS_FileInfo f(file);
+    QFileInfo fi(file);
 
-    RS_String ext = f.extension(false).lower();
+    RS_String ext = fi.suffix().toLower();
     if (ext=="cxf") {
         type = RS2::FormatCXF;
     } else if (ext=="dxf") {
         type = RS2::FormatDXF1;
-        RS_File f(file);
+        QFile f(file);
 
         if (!f.open(QIODevice::ReadOnly)) {
             // Error opening file:
