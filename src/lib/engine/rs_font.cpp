@@ -31,7 +31,6 @@
 //#include <values.h>
 
 #include "rs_color.h"
-#include "rs_file.h"
 #include "rs_fontchar.h"
 #include "rs_math.h"
 #include "rs_regexp.h"
@@ -101,7 +100,7 @@ bool RS_Font::loadFont() {
     }
 
     // Open cxf file:
-    RS_File f(path);
+    QFile f(path);
     if (!f.open(QIODevice::ReadOnly)) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
 			"RS_Font::loadFont: Cannot open font file: %s", 

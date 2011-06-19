@@ -126,7 +126,6 @@ HEADERS = \
     src/lib/engine/rs_circle.h \
     src/lib/engine/rs_color.h \
     src/lib/engine/rs_constructionline.h \
-    src/lib/engine/rs_datetime.h \
     src/lib/engine/rs_dimaligned.h \
     src/lib/engine/rs_dimangular.h \
     src/lib/engine/rs_dimdiametric.h \
@@ -138,7 +137,6 @@ HEADERS = \
     src/lib/engine/rs_ellipse.h \
     src/lib/engine/rs_entity.h \
     src/lib/engine/rs_entitycontainer.h \
-    src/lib/engine/rs_file.h \
     src/lib/engine/rs_flags.h \
     src/lib/engine/rs_font.h \
     src/lib/engine/rs_fontchar.h \

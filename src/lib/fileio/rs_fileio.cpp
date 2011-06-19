@@ -140,7 +140,7 @@ RS2::FormatType RS_FileIO::detectFormat(const RS_String& file) {
         type = RS2::FormatCXF;
     } else if (ext=="dxf") {
         type = RS2::FormatDXF1;
-        RS_File f(file);
+        QFile f(file);
 
         if (!f.open(QIODevice::ReadOnly)) {
             // Error opening file:
