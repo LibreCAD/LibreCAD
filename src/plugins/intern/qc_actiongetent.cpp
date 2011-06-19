@@ -67,7 +67,7 @@ void QC_ActionGetEnt::trigger() {
 }
 
 void QC_ActionGetEnt::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {
         en = catchEntity(e);

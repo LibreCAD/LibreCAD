@@ -69,7 +69,7 @@ void QC_ActionGetSelect::init(int status) {
 
 
 void QC_ActionGetSelect::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    if (e->button()==Qt::RightButton) {
         RS_DIALOGFACTORY->updateMouseWidget("", "");
         completed = true;
     }
