@@ -7,12 +7,15 @@
 QT       += gui
 TEMPLATE = lib
 CONFIG += plugin
-VERSION = 1.0.0
-PLUGIN_NAME=asciifile
+VERSION = 1.0.1
+PLUGIN_NAME=sameprop
 
-SOURCES += asciifile.cpp
-HEADERS += asciifile.h
+SOURCES += sameprop.cpp
 
+HEADERS += sameprop.h
+
+
+# DLLDESTDIR = ../../unix/resources/plugins/
 win32 {
     Debug {
         DLLDESTDIR = ../../debug/resources/plugins
@@ -31,7 +34,6 @@ unix {
 	TARGET = ../../unix/resources/plugins/$$PLUGIN_NAME
     }
 }
-
 INCLUDEPATH    += ../../src/plugins
 
 # Store intermedia stuff somewhere else
@@ -43,3 +45,4 @@ UI_DIR = ../intermediate/ui
 UI_HERADERS_DIR = ../intermediate/ui
 UI_SOURCES_DIR = ../intermediate/ui
 
+#DEFINES += sample_LIBRARY
