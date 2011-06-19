@@ -17,11 +17,13 @@ HEADERS += sample.h
 
 # DLLDESTDIR = ../../unix/resources/plugins/
 win32 {
-    debug {
-        TARGET = ../../debug/resources/plugins/$$PLUGIN_NAME
+    Debug {
+        DLLDESTDIR = ../../debug/resources/plugins
+        TARGET = $$PLUGIN_NAME
 
     } else {
-        TARGET = ../../release/resources/plugins/$$PLUGIN_NAME
+        DLLDESTDIR = ../../release/resources/plugins
+        TARGET = $$PLUGIN_NAME
     }
 }
 unix {
