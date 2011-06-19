@@ -11,6 +11,7 @@ QT += gui
 
 SUBDIRS     = \
         asciifile \
+        align \
         sample
 
 
