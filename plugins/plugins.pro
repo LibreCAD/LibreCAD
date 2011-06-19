@@ -13,6 +13,7 @@ SUBDIRS     = \
         asciifile \
         align \
         list \
+        sameprop \
         sample
 
 
