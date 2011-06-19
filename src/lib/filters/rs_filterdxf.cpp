@@ -38,7 +38,6 @@
 #include "rs_dimdiametric.h"
 #include "rs_dimlinear.h"
 #include "rs_dimradial.h"
-#include "rs_fileinfo.h"
 #include "rs_hatch.h"
 #include "rs_image.h"
 #include "rs_leader.h"
@@ -1009,8 +1008,8 @@ void RS_FilterDXF::linkImage(const DL_ImageDefData& data) {
 
     int handle = RS_String(data.ref.c_str()).toInt(NULL, 16);
     RS_String sfile(QString::fromUtf8(data.file.c_str()));
-    RS_FileInfo fiDxf(file);
-    RS_FileInfo fiBitmap(sfile);
+    QFileInfo fiDxf(file);
+    QFileInfo fiBitmap(sfile);
 
     // try to find the image file:
 
@@ -1019,14 +1018,14 @@ void RS_FilterDXF::linkImage(const DL_ImageDefData& data) {
         RS_DEBUG->print("File %s doesn't exist.",
                         (const char*)QFile::encodeName(sfile));
         // try relative path:
-        RS_String f1 = fiDxf.dirPath(true) + "/" + sfile;
-        if (RS_FileInfo(f1).exists()) {
+        RS_String f1 = fiDxf.absolutePath() + "/" + sfile;
+        if (QFileInfo(f1).exists()) {
             sfile = f1;
         } else {
             RS_DEBUG->print("File %s doesn't exist.", (const char*)QFile::encodeName(f1));
             // try drawing path:
-            RS_String f2 = fiDxf.dirPath(true) + "/" + fiBitmap.fileName();
-            if (RS_FileInfo(f2).exists()) {
+            RS_String f2 = fiDxf.absolutePath() + "/" + fiBitmap.fileName();
+            if (QFileInfo(f2).exists()) {
                 sfile = f2;
             } else {
                 RS_DEBUG->print("File %s doesn't exist.", (const char*)QFile::encodeName(f2));
@@ -1174,8 +1173,8 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const RS_String& file, RS2::FormatT
     // check if we can write to that directory:
 #ifndef Q_OS_WIN
 
-    RS_String path = RS_FileInfo(file).dirPath(true);
-    if (RS_FileInfo(path).isWritable()==false) {
+    QString path = QFileInfo(file).absolutePath();
+    if (QFileInfo(path).isWritable()==false) {
         RS_DEBUG->print("RS_FilterDXF::fileExport: can't write file: "
                         "no permission");
         return false;
@@ -1382,7 +1381,7 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const RS_String& file, RS2::FormatT
     delete dw;
 
     // check if file was actually written (strange world of windoze xp):
-    if (RS_FileInfo(file).exists()==false) {
+    if (QFileInfo(file).exists()==false) {
         RS_DEBUG->print("RS_FilterDXF::fileExport: file could not be written");
         return false;
     }
