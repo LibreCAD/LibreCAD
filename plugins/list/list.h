@@ -1,5 +1,5 @@
 /*****************************************************************************/
-/*  sample.h - plugin example for LibreCAD                                   */
+/*  list.h - List selected entities                                          */
 /*                                                                           */
 /*  Copyright (C) 2011 Rallaz, rallazz@gmail.com                             */
 /*                                                                           */
@@ -10,14 +10,17 @@
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.    */
 /*****************************************************************************/
 
-#ifndef SAMPLE_H
-#define SAMPLE_H
+#ifndef LIST_H
+#define LIST_H
 
-#include "qc_plugininterface.h"
 #include <QDialog>
-class QLineEdit;
+#include "qc_plugininterface.h"
+#include <QTextEdit>
 
-class LC_Sample : public QObject, QC_PluginInterface
+//class QTextEdit;
+class Plug_Entity;
+
+class LC_List : public QObject, QC_PluginInterface
 {
     Q_OBJECT
      Q_INTERFACES(QC_PluginInterface)
@@ -27,35 +30,40 @@ class LC_Sample : public QObject, QC_PluginInterface
     virtual QString name() const;
     virtual void execComm(Document_Interface *doc,
                                        QWidget *parent);
+
+private:
+    QString getStrData(Plug_Entity *ent);
+
 };
 
-class lc_Sampledlg : public QDialog
+class lc_Listdlg : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit lc_Sampledlg(QWidget *parent = 0);
-    ~lc_Sampledlg();
+    explicit lc_Listdlg(QWidget *parent = 0);
+    ~lc_Listdlg();
+    void setText(QString text);
 
 public slots:
 //    void procesAction(QStringList *commandList);
-    void procesAction(Document_Interface *doc);
-    void checkAccept();
+//    void procesAction(Document_Interface *doc);
+//    void checkAccept();
 
 protected:
-    void closeEvent(QCloseEvent *event);
+//    void closeEvent(QCloseEvent *event);
 
 private:
-    void readSettings();
-    void writeSettings();
-    bool failGUI(QString *msg);
+//    void readSettings();
+//    void writeSettings();
+//    bool failGUI(QString *msg);
 
 private:
-    QString errmsg;
-    QLineEdit *startxedit;
-    QLineEdit *startyedit;
-    QLineEdit *endxedit;
-    QLineEdit *endyedit;
+//    QString errmsg;
+//    QLineEdit *startxedit;
+//    QLineEdit *startyedit;
+//    QLineEdit *endxedit;
+    QTextEdit edit;
 };
 
-#endif // SAMPLE_H
+#endif // LIST_H
