@@ -29,11 +29,8 @@
 #define RS_FONT_H
 
 #include <iostream>
-
+#include <QStringList>
 #include "rs_blocklist.h"
-#include "rs_string.h"
-#include "rs_stringlist.h"
-
 
 /**
  * Class for representing a font. This is implemented as a RS_Graphic
@@ -44,26 +41,26 @@
  */
 class RS_Font {
 public:
-    RS_Font(const RS_String& name, bool owner=true);
+    RS_Font(const QString& name, bool owner=true);
     //RS_Font(const char* name);
 
     /** @return the fileName of this font. */
-    RS_String getFileName() const {
+    QString getFileName() const {
         return fileName;
     }
 	
     /** @return the encoding of this font. */
-    RS_String getEncoding() const {
+    QString getEncoding() const {
         return encoding;
     }
 	
     /** @return the alternative names of this font. */
-    const RS_StringList& getNames() const {
+    const QStringList& getNames() const {
         return names;
     }
 	
     /** @return the author(s) of this font. */
-    const RS_StringList& getAuthors() const {
+    const QStringList& getAuthors() const {
         return authors;
     }
 
@@ -88,7 +85,7 @@ public:
 	RS_BlockList* getLetterList() {
 		return &letterList;
 	}
-    RS_Block* findLetter(const RS_String& name) {
+    RS_Block* findLetter(const QString& name) {
 		return letterList.find(name);
 	}
     uint countLetters() {
@@ -107,16 +104,16 @@ private:
 	RS_BlockList letterList;
 
     //! Font file name
-    RS_String fileName;
+    QString fileName;
 	
     //! Font encoding (see docu for QTextCodec)
-    RS_String encoding;
+    QString encoding;
 
 	//! Font names
-	RS_StringList names;
+        QStringList names;
 	
 	//! Authors
-	RS_StringList authors;
+        QStringList authors;
 
     //! Is this font currently loaded into memory?
     bool loaded;
