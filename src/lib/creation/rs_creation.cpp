@@ -25,10 +25,10 @@
 **********************************************************************/
 
 
+#include <QFileInfo>
 #include "rs_creation.h"
 
 #include "rs_information.h"
-#include "rs_fileinfo.h"
 #include "rs_graphic.h"
 #include "rs_constructionline.h"
 #include "rs_graphicview.h"
@@ -1238,7 +1238,7 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
     //g.rotate(data.angle);
 
     RS_String s;
-    s = RS_FileInfo(data.file).baseName(true);
+    s = QFileInfo(data.file).completeBaseName();
 
     RS_Modification m(*container, graphicView);
     m.paste(
