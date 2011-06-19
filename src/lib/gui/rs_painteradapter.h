@@ -67,7 +67,7 @@ public:
                              double,
                              double, double,
                              bool ) {}
-	virtual void drawImg(RS_Img& , const RS_Vector&, 
+        virtual void drawImg(QImage& , const RS_Vector&,
 			double, const RS_Vector&,
 			int, int, int, int) {}
 

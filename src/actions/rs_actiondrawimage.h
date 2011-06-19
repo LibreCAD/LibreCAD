@@ -106,7 +106,7 @@ public:
 
 protected:
 	RS_ImageData data;
-	RS_Img img;
+        QImage img;
 	
 	/** Last status before entering option. */
 	Status lastStatus;
