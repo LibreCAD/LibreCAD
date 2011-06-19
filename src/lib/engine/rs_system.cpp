@@ -515,28 +515,18 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     // Individual directories:
     RS_SETTINGS->beginGroup("/Paths");
     if (subDirectory=="fonts") {
-/*RLZ        dirList += QStringList::split(RS_RegExp("[;]"),
-                                        RS_SETTINGS->readEntry("/Fonts", ""));*/
         dirList += (RS_SETTINGS->readEntry("/Fonts", "")).split(QRegExp("[;]"),
                                                         QString::SkipEmptyParts);
     } else if (subDirectory=="patterns") {
-/*RLZ        dirList += QStringList::split(QRegExp("[;]"),
-                                        RS_SETTINGS->readEntry("/Patterns", ""));*/
         dirList += (RS_SETTINGS->readEntry("/Patterns", "")).split(QRegExp("[;]"),
                                                         QString::SkipEmptyParts);
     } else if (subDirectory.startsWith("scripts")) {
-/*RLZ        dirList += QStringList::split(QRegExp("[;]"),
-                                        RS_SETTINGS->readEntry("/Scripts", ""));*/
         dirList += (RS_SETTINGS->readEntry("/Scripts", "")).split(QRegExp("[;]"),
                                                         QString::SkipEmptyParts);
     } else if (subDirectory.startsWith("library")) {
-/*RLZ        dirList += QStringList::split(QRegExp("[;]"),
-                                        RS_SETTINGS->readEntry("/Library", ""));*/
         dirList += (RS_SETTINGS->readEntry("/Library", "")).split(QRegExp("[;]"),
                                                         QString::SkipEmptyParts);
     } else if (subDirectory.startsWith("po")) {
-/*RLZ        dirList += QStringList::split(QRegExp("[;]"),
-                                        RS_SETTINGS->readEntry("/Translations", ""));*/
         dirList += (RS_SETTINGS->readEntry("/Translations", "")).split(QRegExp("[;]"),
                                                         QString::SkipEmptyParts);
     }
