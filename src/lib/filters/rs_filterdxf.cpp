@@ -41,7 +41,6 @@
 #include "rs_hatch.h"
 #include "rs_image.h"
 #include "rs_leader.h"
-#include "rs_regexp.h"
 #include "rs_system.h"
 
 #include <qtextcodec.h>
@@ -2962,28 +2961,28 @@ RS_String RS_FilterDXF::toNativeString(const char* data, const QString& encoding
 
 
     // Line feed:
-    res = res.replace(RS_RegExp("\\\\P"), "\n");
+    res = res.replace(QRegExp("\\\\P"), "\n");
     // Space:
-    res = res.replace(RS_RegExp("\\\\~"), " ");
+    res = res.replace(QRegExp("\\\\~"), " ");
     // diameter:
-    res = res.replace(RS_RegExp("%%c"), QChar(0x2205));
+    res = res.replace(QRegExp("%%c"), QChar(0x2205));
     // degree:
-    res = res.replace(RS_RegExp("%%d"), QChar(0x00B0));
+    res = res.replace(QRegExp("%%d"), QChar(0x00B0));
     // plus/minus
-    res = res.replace(RS_RegExp("%%p"), QChar(0x00B1));
+    res = res.replace(QRegExp("%%p"), QChar(0x00B1));
 
     // Unicode characters:
     RS_String cap = "";
     int uCode = 0;
     bool ok = false;
     do {
-        RS_RegExp regexp("\\\\U\\+[0-9A-Fa-f]{4,4}");
-        regexp.search(res);
+        QRegExp regexp("\\\\U\\+[0-9A-Fa-f]{4,4}");
+        regexp.indexIn(res);
         cap = regexp.cap();
         if (!cap.isNull()) {
             uCode = cap.right(4).toInt(&ok, 16);
             // workaround for Qt 3.0.x:
-            res.replace(RS_RegExp("\\\\U\\+" + cap.right(4)), QChar(uCode));
+            res.replace(QRegExp("\\\\U\\+" + cap.right(4)), QChar(uCode));
             // for Qt 3.1:
             //res.replace(cap, QChar(uCode));
         }
@@ -2995,13 +2994,13 @@ RS_String RS_FilterDXF::toNativeString(const char* data, const QString& encoding
     uCode = 0;
     ok = false;
     do {
-        RS_RegExp regexp("%%[0-9]{3,3}");
-        regexp.search(res);
+        QRegExp regexp("%%[0-9]{3,3}");
+        regexp.indexIn(res);
         cap = regexp.cap();
         if (!cap.isNull()) {
             uCode = cap.right(3).toInt(&ok, 10);
             // workaround for Qt 3.0.x:
-            res.replace(RS_RegExp("%%" + cap.right(3)), QChar(uCode));
+            res.replace(QRegExp("%%" + cap.right(3)), QChar(uCode));
             // for Qt 3.1:
             //res.replace(cap, QChar(uCode));
         }
@@ -3009,7 +3008,7 @@ RS_String RS_FilterDXF::toNativeString(const char* data, const QString& encoding
     while (!cap.isNull());
 
     // Ignore font tags:
-    res = res.replace(RS_RegExp("\\\\f[0-9A-Za-z| ]{0,};"), "");
+    res = res.replace(QRegExp("\\\\f[0-9A-Za-z| ]{0,};"), "");
 
     // Ignore {}
     res = res.replace("\\{", "#curly#");

@@ -29,7 +29,6 @@
 
 #include "rs_actioninterface.h"
 #include "rs_coordinateevent.h"
-#include "rs_regexp.h"
 //Added by qt3to4:
 #include <QEvent>
 
@@ -238,7 +237,6 @@ void RS_EventHandler::keyReleaseEvent(RS_KeyEvent* e) {
 void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
 	RS_DEBUG->print("RS_EventHandler::commandEvent");
 
-    //RS_RegExp rex;
     RS_String cmd = e->getCommand();
 
     if (coordinateInputEnabled) {
