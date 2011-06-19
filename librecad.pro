@@ -139,7 +139,6 @@ HEADERS = \
     src/lib/engine/rs_entity.h \
     src/lib/engine/rs_entitycontainer.h \
     src/lib/engine/rs_file.h \
-    src/lib/engine/rs_fileinfo.h \
     src/lib/engine/rs_flags.h \
     src/lib/engine/rs_font.h \
     src/lib/engine/rs_fontchar.h \
