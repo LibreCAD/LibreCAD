@@ -28,18 +28,14 @@
 #ifndef RS_LAYER_H
 #define RS_LAYER_H
 
-#include <stddef.h>
-
 #ifdef __hpux
 #include <sys/_size_t.h>
 #endif
 
 #include <iostream>
+#include <QString>
 
-#include "rs_flags.h"
 #include "rs_pen.h"
-#include "rs_string.h"
-
 
 
 /**
@@ -49,7 +45,7 @@ class RS_LayerData {
 public:
     RS_LayerData() {}
 
-    RS_LayerData(const RS_String& name,
+    RS_LayerData(const QString& name,
 	             const RS_Pen& pen,
 				 bool frozen,
 				 bool locked) {
@@ -60,7 +56,7 @@ public:
     }
 
     //! Layer name
-    RS_String name;
+    QString name;
 
     //! default pen for this layer
     RS_Pen pen;
@@ -84,7 +80,7 @@ public:
  */
 class RS_Layer {
 public:
-    explicit RS_Layer(const RS_String& name);
+    explicit RS_Layer(const QString& name);
     //RS_Layer(const char* name);
 	
     RS_Layer* clone() {
@@ -92,12 +88,12 @@ public:
 	}
 
     /** sets a new name for this layer. */
-    void setName(const RS_String& name) {
+    void setName(const QString& name) {
         data.name = name;
     }
 
     /** @return the name of this layer. */
-    RS_String getName() const {
+    QString getName() const {
         return data.name;
     }
 
