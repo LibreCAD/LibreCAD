@@ -74,9 +74,9 @@ void QG_FontBox::init() {
 /**
  * Sets the currently selected width item to the given width.
  */
-void QG_FontBox::setFont(const RS_String& fName) {
+void QG_FontBox::setFont(const QString& fName) {
 
-    RS_DEBUG->print("QG_FontBox::setFont %s\n", fName.latin1());
+    RS_DEBUG->print("QG_FontBox::setFont %s\n", fName.toLatin1().data());
 
     setCurrentText(fName);
 
@@ -97,7 +97,7 @@ void QG_FontBox::slotFontChanged(int index) {
 
     if (currentFont!=NULL) {
         RS_DEBUG->print("Current font is (%d): %s\n",
-                        index, currentFont->getFileName().latin1());
+                        index, currentFont->getFileName().toLatin1().data());
     }
 
     emit fontChanged(currentFont);

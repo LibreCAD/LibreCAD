@@ -27,17 +27,10 @@
 
 #include "rs_layer.h"
 
-#include <iostream>
-
-#include "rs_color.h"
-
-#include "rs_math.h"
-
-
 /**
  * Constructor.
  */
-RS_Layer::RS_Layer(const RS_String& name) {
+RS_Layer::RS_Layer(const QString& name) {
     setName(name);
 
     data.pen.setLineType(RS2::SolidLine);
@@ -52,7 +45,7 @@ RS_Layer::RS_Layer(const RS_String& name) {
  * Dumps the layers data to stdout.
  */
 std::ostream& operator << (std::ostream& os, const RS_Layer& l) {
-    os << " name: " << l.getName().latin1()
+    os << " name: " << l.getName().toLatin1().data()
     << " pen: " << l.getPen()
 	<< " frozen: " << (int)l.isFrozen()
 	<< " address: " << &l
