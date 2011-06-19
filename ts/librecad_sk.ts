@@ -321,7 +321,7 @@ Prosím skontrolujte prístupové práva.</translation>
     </message>
     <message>
         <source>Version: %1 %2</source>
-        <translation>Verzia: %1 %2</translation>
+        <translation type="obsolete">Verzia: %1 %2</translation>
     </message>
     <message>
         <source>Modules: %1</source>
@@ -393,10 +393,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SVN Revision: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -430,6 +426,18 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Main Website : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version: %1</source>
+        <translation type="unfinished">Verzia: %1</translation>
+    </message>
+    <message>
+        <source>SCM Revision: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -974,7 +982,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Koniec</translation>
+        <translation>&amp;Koniec</translation>
     </message>
     <message>
         <source>CTRL-G</source>

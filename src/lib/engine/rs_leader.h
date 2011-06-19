@@ -69,7 +69,7 @@ public:
 
     virtual RS_Entity* clone() {
         RS_Leader* p = new RS_Leader(*this);
-		p->entities.setAutoDelete(entities.autoDelete());
+        p->setOwner(isOwner());
         p->initId();
         p->detach();
         return p;

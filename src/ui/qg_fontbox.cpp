@@ -54,11 +54,9 @@ QG_FontBox::~QG_FontBox() {}
 void QG_FontBox::init() {
     QStringList fonts;
 
-    for (RS_Font* f = RS_FONTLIST->firstFont();
-            f!=NULL;
-            f = RS_FONTLIST->nextFont()) {
-
-        fonts.append(f->getFileName());
+    QListIterator<RS_Font *> i = RS_FONTLIST->getIteretor();
+    while (i.hasNext()) {
+        fonts.append( i.next()->getFileName() );
     }
 
     fonts.sort();

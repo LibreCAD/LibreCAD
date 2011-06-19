@@ -66,7 +66,7 @@ void RS_ActionSetRelativeZero::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionSetRelativeZero::mouseReleaseEvent(RS_MouseEvent* e) {
-    if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {
         RS_CoordinateEvent ce(snapPoint(e));

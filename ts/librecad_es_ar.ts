@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="es_AR">
 <context>
     <name></name>
     <message>
@@ -320,7 +320,7 @@ Compruebe los permisos.</translation>
     </message>
     <message>
         <source>Version: %1 %2</source>
-        <translation>Versión: %1 %2</translation>
+        <translation type="obsolete">Versión: %1 %2</translation>
     </message>
     <message>
         <source>Date: %1</source>
@@ -388,10 +388,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SVN Revision: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -425,6 +421,18 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Main Website : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version: %1</source>
+        <translation type="unfinished">Versión: %1</translation>
+    </message>
+    <message>
+        <source>SCM Revision: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

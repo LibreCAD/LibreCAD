@@ -28,12 +28,9 @@
 #ifndef RS_VARIABLEDICT_H
 #define RS_VARIABLEDICT_H
 
-
-#include "rs_variabledict.h"
+#include <QHash>
 #include "rs_variable.h"
-#include "rs_dict.h"
-#include "rs_string.h"
-#include "rs_debug.h"
+class RS_Vector;
 
 /**
  * Dictionary of variables. The variables are stored as key / value
@@ -54,19 +51,19 @@ public:
         return variables.count();
     }
 
-    void add(const RS_String& key, const RS_Vector& value, int code);
-    void add(const RS_String& key, const RS_String& value, int code);
-    void add(const RS_String& key, int value, int code);
-    void add(const RS_String& key, double value, int code);
+    void add(const QString& key, const RS_Vector& value, int code);
+    void add(const QString& key, const QString& value, int code);
+    void add(const QString& key, int value, int code);
+    void add(const QString& key, double value, int code);
 
-    RS_Vector getVector(const RS_String& key, const RS_Vector& def);
-    RS_String getString(const RS_String& key, const RS_String& def);
-    int getInt(const RS_String& key, int def);
-    double getDouble(const RS_String& key, double def);
+    RS_Vector getVector(const QString& key, const RS_Vector& def);
+    QString getString(const QString& key, const QString& def);
+    int getInt(const QString& key, int def);
+    double getDouble(const QString& key, double def);
 
-    virtual void remove(const RS_String& key);
+    virtual void remove(const QString& key);
 
-	RS_Dict<RS_Variable>& getVariableDict() {
+        QHash<QString, RS_Variable>& getVariableDict() {
 		return variables;
 	}
 
@@ -76,7 +73,7 @@ public:
 
 private:
     //! Variables for the graphic
-    RS_Dict<RS_Variable> variables;
+    QHash<QString, RS_Variable> variables;
 }
 ;
 

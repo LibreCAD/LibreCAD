@@ -25,16 +25,15 @@
 **********************************************************************/
 
 
+#include "rs_debug.h"
 #include "rs_layerlist.h"
-
-
+#include "rs_layer.h"
+#include "rs_layerlistlistener.h"
 
 /**
  * Default constructor.
  */
 RS_LayerList::RS_LayerList() {
-    layers.setAutoDelete(false);
-    layerListListeners.setAutoDelete(false);
     activeLayer = NULL;
 	setModified(false);
 }
@@ -56,8 +55,9 @@ void RS_LayerList::clear() {
  * 
  * @param notify Notify listeners.
  */
-void RS_LayerList::activate(const RS_String& name, bool notify) {
-    RS_DEBUG->print("RS_LayerList::activate: %s, notify: %d begin", name.latin1(), notify);
+void RS_LayerList::activate(const QString& name, bool notify) {
+    RS_DEBUG->print("RS_LayerList::activate: %s, notify: %d begin",
+                                    name.toLatin1().data(), notify);
 
     activate(find(name), notify);
     /*
@@ -68,7 +68,7 @@ void RS_LayerList::activate(const RS_String& name, bool notify) {
 }
     */
 
-    RS_DEBUG->print("RS_LayerList::activate: %s end", name.latin1());
+    RS_DEBUG->print("RS_LayerList::activate: %s end", name.toLatin1().data());
 }
 
 
@@ -91,7 +91,7 @@ void RS_LayerList::activate(RS_Layer* layer, bool notify) {
     activeLayer = layer;
 
     if (notify) {
-       for (uint i=0; i<layerListListeners.count(); ++i) {
+       for (int i=0; i<layerListListeners.size(); ++i) {
            RS_LayerListListener* l = layerListListeners.at(i);
 
            l->layerActivated(activeLayer);
@@ -125,7 +125,7 @@ void RS_LayerList::add(RS_Layer* layer) {
         layers.append(layer);
 
         // notify listeners
-        for (uint i=0; i<layerListListeners.count(); ++i) {
+        for (int i=0; i<layerListListeners.size(); ++i) {
             RS_LayerListListener* l = layerListListeners.at(i);
             l->layerAdded(layer);
         }
@@ -162,9 +162,9 @@ void RS_LayerList::remove(RS_Layer* layer) {
     }
 
     // here the layer is removed from the list but not deleted
-    layers.remove(layer);
+    layers.removeOne(layer);
 
-    for (uint i=0; i<layerListListeners.count(); ++i) {
+    for (int i=0; i<layerListListeners.size(); ++i) {
         RS_LayerListListener* l = layerListListeners.at(i);
         l->layerRemoved(layer);
     }
@@ -194,7 +194,7 @@ void RS_LayerList::edit(RS_Layer* layer, const RS_Layer& source) {
 
     *layer = source;
 
-    for (uint i=0; i<layerListListeners.count(); ++i) {
+    for (int i=0; i<layerListListeners.size(); ++i) {
         RS_LayerListListener* l = layerListListeners.at(i);
 
         l->layerEdited(layer);
@@ -209,17 +209,16 @@ void RS_LayerList::edit(RS_Layer* layer, const RS_Layer& source) {
  * @return Pointer to the layer with the given name or
  * \p NULL if no such layer was found.
  */
-RS_Layer* RS_LayerList::find(const RS_String& name) {
+RS_Layer* RS_LayerList::find(const QString& name) {
     //RS_DEBUG->print("RS_LayerList::find begin");
 
     RS_Layer* ret = NULL;
 
-    for (RS_Layer* l=layers.first();
-            l!=NULL;
-            l=layers.next()) {
-
+    for (int i=0; i<layers.size(); ++i) {
+        RS_Layer* l = layers.at(i);
         if (l->getName()==name) {
             ret = l;
+            break;
         }
     }
 
@@ -234,21 +233,18 @@ RS_Layer* RS_LayerList::find(const RS_String& name) {
  * @return Index of the given layer in the layer list or -1 if the layer
  * was not found.
  */
-int RS_LayerList::getIndex(const RS_String& name) {
+int RS_LayerList::getIndex(const QString& name) {
     //RS_DEBUG->print("RS_LayerList::find begin");
 
     int ret = -1;
-	int i = 0;
 
-    for (RS_Layer* l=layers.first();
-            l!=NULL;
-            l=layers.next()) {
+    for (int i=0; i<layers.size(); i++) {
+        RS_Layer* l = layers.at(i);
 
         if (l->getName()==name) {
             ret = i;
-			break;
+            break;
         }
-		i++;
     }
 
     //RS_DEBUG->print("RS_LayerList::find end");
@@ -263,24 +259,7 @@ int RS_LayerList::getIndex(const RS_String& name) {
  */
 int RS_LayerList::getIndex(RS_Layer* layer) {
     //RS_DEBUG->print("RS_LayerList::find begin");
-
-    int ret = -1;
-	int i = 0;
-
-    for (RS_Layer* l=layers.first();
-            l!=NULL;
-            l=layers.next()) {
-
-        if (l==layer) {
-            ret = i;
-			break;
-        }
-		i++;
-    }
-
-    //RS_DEBUG->print("RS_LayerList::find end");
-
-    return ret;
+    return layers.indexOf(layer);
 }
 
 
@@ -288,7 +267,7 @@ int RS_LayerList::getIndex(RS_Layer* layer) {
  * Switches on / off the given layer. 
  * Listeners are notified.
  */
-void RS_LayerList::toggle(const RS_String& name) {
+void RS_LayerList::toggle(const QString& name) {
     toggle(find(name));
 }
 
@@ -306,7 +285,7 @@ void RS_LayerList::toggle(RS_Layer* layer) {
     layer->toggle();
 
     // Notify listeners:
-    for (uint i=0; i<layerListListeners.count(); ++i) {
+    for (int i=0; i<layerListListeners.size(); ++i) {
         RS_LayerListListener* l = layerListListeners.at(i);
         l->layerToggled(layer);
     }
@@ -326,7 +305,7 @@ void RS_LayerList::toggleLock(RS_Layer* layer) {
     layer->toggleLock();
 
     // Notify listeners:
-    for (uint i=0; i<layerListListeners.count(); ++i) {
+    for (int i=0; i<layerListListeners.size(); ++i) {
         RS_LayerListListener* l = layerListListeners.at(i);
         l->layerToggled(layer);
     }
@@ -345,7 +324,7 @@ void RS_LayerList::freezeAll(bool freeze) {
         at(l)->freeze(freeze);
     }
 
-    for (uint i=0; i<layerListListeners.count(); ++i) {
+    for (int i=0; i<layerListListeners.size(); ++i) {
         RS_LayerListListener* l = layerListListeners.at(i);
         l->layerToggled(NULL);
     }
@@ -369,7 +348,7 @@ void RS_LayerList::addListener(RS_LayerListListener* listener) {
  * removes a LayerListListener from the list of listeners. 
  */
 void RS_LayerList::removeListener(RS_LayerListListener* listener) {
-    layerListListeners.remove(listener);
+    layerListListeners.removeOne(listener);
 }
 
 
