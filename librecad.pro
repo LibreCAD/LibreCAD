@@ -143,7 +143,6 @@ HEADERS = \
     src/lib/engine/rs_graphic.h \
     src/lib/engine/rs_hatch.h \
     src/lib/engine/rs_insert.h \
-    src/lib/engine/rs_img.h \
     src/lib/engine/rs_image.h \
     src/lib/engine/rs_layer.h \
     src/lib/engine/rs_layerlist.h \
@@ -256,7 +255,6 @@ SOURCES = dxflib/src/dl_dxf.cpp \
     src/lib/engine/rs_settings.cpp \
     src/lib/engine/rs_solid.cpp \
     src/lib/engine/rs_spline.cpp \
-    src/lib/engine/rs_string.cpp \
     src/lib/engine/rs_system.cpp \
     src/lib/engine/rs_text.cpp \
     src/lib/engine/rs_undo.cpp \
