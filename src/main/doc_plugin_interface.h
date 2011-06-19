@@ -31,22 +31,77 @@
 #include "document_interface.h"
 #include "rs_graphic.h"
 
+class convLTW
+{
+public:
+    convLTW();
+    QString lt2str(enum RS2::LineType lt);
+    QString lw2str(enum RS2::LineWidth lw);
+    enum RS2::LineType str2lt(QString s);
+    enum RS2::LineWidth str2lw(QString w);
+private:
+    QHash<RS2::LineType, QString> lType;
+    QHash<RS2::LineWidth, QString> lWidth;
+};
+
+class Plugin_Entity
+{
+public:
+    Plugin_Entity(RS_Entity* ent);
+    Plugin_Entity(RS_EntityContainer* parent, enum DPI::ETYPE type);
+    virtual ~Plugin_Entity();
+    bool isValid(){if (entity) return true; else return false;}
+    RS_Entity* getEnt() {return entity;}
+    virtual void getData(QHash<int, QVariant> *data);
+    virtual void updateData(QHash<int, QVariant> *data);
+
+    virtual void move(QPointF offset);
+    virtual void rotate(QPointF center, double angle);
+    virtual void scale(QPointF center, QPointF factor);
+private:
+    RS_Entity* entity;
+    bool hasContainer;
+};
+
 class Doc_plugin_interface : public Document_Interface
 
 {
 public:
-    Doc_plugin_interface(RS_Graphic *d);
+    Doc_plugin_interface(RS_Graphic *d, RS_GraphicView* gv, QWidget* parent);
 //    ~Doc_plugin_interface(){};
     void addPoint(QPointF *start);
     void addLine(QPointF *start, QPointF *end);
     void addText(QString txt, QString sty, QPointF *start,
             double height, double angle, DPI::HAlign ha,  DPI::VAlign va);
 
+    void addCircle(QPointF *start, qreal radius);
+    void addArc(QPointF *start, qreal radius, qreal a1, qreal a2);
+    void addEllipse(QPointF *start, QPointF *end, qreal ratio, qreal a1, qreal a2);
+    void addImage(int handle, QPointF *start, QPointF *uvr, QPointF *vvr,
+                  int w, int h, QString name, int br, int con, int fade);
+    void addEntity(Plug_Entity *handle);
+    Plug_Entity *newEntity( enum DPI::ETYPE type);
+    void removeEntity(Plug_Entity *ent);
+
     void setLayer(QString name);
     QString getCurrentLayer();
 
+    bool getPoint(QPointF *point, const QString& mesage, QPointF *base);
+    Plug_Entity *getEnt(const QString& mesage);
+    bool getSelect(QList<Plug_Entity *> *sel, const QString& mesage);
+
+    bool getInt(int *num, const QString& mesage, const QString& title);
+    bool getReal(qreal *num, const QString& mesage, const QString& title);
+    bool getString(QString *txt, const QString& mesage, const QString& title);
+
 private:
     RS_Graphic *doc;
+    RS_GraphicView *gView;
+    QWidget* main;
 };
 
+/*void addArc(QPointF *start);			->Without start
+void addCircle(QPointF *start);			->Without start
+more...
+*/
 #endif // DOC_PLUGIN_INTERFACE_H
