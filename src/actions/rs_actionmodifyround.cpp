@@ -150,7 +150,7 @@ void RS_ActionModifyRound::mouseReleaseEvent(RS_MouseEvent* e) {
     RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
     RS_Entity* se = catchEntity(e, RS2::ResolveAll);
 
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetEntity1:
             entity1 = se;
@@ -174,7 +174,7 @@ void RS_ActionModifyRound::mouseReleaseEvent(RS_MouseEvent* e) {
         default:
             break;
         }
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
     }

@@ -29,6 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 #include "rs_leader.h"
+#include "rs_ptrlist.h"
 
 /**
  * This action class can handle user events to draw 

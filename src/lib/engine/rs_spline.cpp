@@ -54,7 +54,7 @@ RS_Spline::~RS_Spline() {}
 
 RS_Entity* RS_Spline::clone() {
     RS_Spline* l = new RS_Spline(*this);
-	l->entities.setAutoDelete(entities.autoDelete());
+    l->setOwner(isOwner());
     l->initId();
     l->detach();
     return l;

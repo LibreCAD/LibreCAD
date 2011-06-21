@@ -2,8 +2,8 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2011 Rallaz (rallazz@gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
 ** This program is free software; you can redistribute it and/or modify
@@ -24,12 +24,51 @@
 **
 **********************************************************************/
 
+#ifndef QC_ACTIONGETSELECT_H
+#define QC_ACTIONGETSELECT_H
 
-#ifndef RS_FILE_H
-#define RS_FILE_H
+#include "rs_previewactioninterface.h"
+#include "rs_modification.h"
+#include "document_interface.h"
 
-#include <qfile.h>
 
-#define RS_File QFile
+/**
+ * This action class can handle user events to select entities from plugin.
+ *
+ * @author  Rallaz
+ */
+class QC_ActionGetSelect : public RS_ActionInterface {
+	Q_OBJECT
+public:
+    /**
+     * Action States.
+     */
+    enum Status {
+        Select
+    };
+
+public:
+    QC_ActionGetSelect(RS_EntityContainer& container,
+                        RS_GraphicView& graphicView);
+    ~QC_ActionGetSelect() {}
+
+
+    virtual void init(int status=0);
+	
+    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+	
+    virtual void updateMouseButtonHints();
+    virtual void updateMouseCursor();
+    virtual void updateToolBar();
+
+    void setMesage(QString msg);
+    bool isCompleted(){return completed;}
+    void getSelected(QList<Plug_Entity *> *se);
+
+private:
+    bool completed;
+    QString mesage;
+
+};
 
 #endif

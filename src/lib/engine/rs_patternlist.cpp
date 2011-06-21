@@ -27,7 +27,6 @@
 
 #include "rs_patternlist.h"
 
-#include "rs_fileinfo.h"
 #include "rs_stringlist.h"
 #include "rs_system.h"
 
@@ -61,8 +60,8 @@ void RS_PatternList::init() {
             it != list.end(); ++it) {
         RS_DEBUG->print("pattern: %s:", (*it).latin1());
 
-        RS_FileInfo fi(*it);
-        pattern = new RS_Pattern(fi.baseName().lower());
+        QFileInfo fi(*it);
+        pattern = new RS_Pattern(fi.baseName().toLower());
         patterns.append(pattern);
 
         RS_DEBUG->print("base: %s", pattern->getFileName().latin1());

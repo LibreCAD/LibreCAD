@@ -5,7 +5,7 @@ DEFINES += QC_APPKEY="\"/LibreCAD\""
 DEFINES += QC_APPNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYKEY="\"LibreCAD\""
-DEFINES += QC_VERSION="\"1.0.0beta5\""
+DEFINES += QC_VERSION="\"1.0.0rc1\""
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 
 
@@ -126,20 +126,16 @@ HEADERS = \
     src/lib/engine/rs_circle.h \
     src/lib/engine/rs_color.h \
     src/lib/engine/rs_constructionline.h \
-    src/lib/engine/rs_datetime.h \
     src/lib/engine/rs_dimaligned.h \
     src/lib/engine/rs_dimangular.h \
     src/lib/engine/rs_dimdiametric.h \
     src/lib/engine/rs_dimension.h \
     src/lib/engine/rs_dimlinear.h \
     src/lib/engine/rs_dimradial.h \
-    src/lib/engine/rs_dir.h \
     src/lib/engine/rs_document.h \
     src/lib/engine/rs_ellipse.h \
     src/lib/engine/rs_entity.h \
     src/lib/engine/rs_entitycontainer.h \
-    src/lib/engine/rs_file.h \
-    src/lib/engine/rs_fileinfo.h \
     src/lib/engine/rs_flags.h \
     src/lib/engine/rs_font.h \
     src/lib/engine/rs_fontchar.h \
@@ -147,7 +143,6 @@ HEADERS = \
     src/lib/engine/rs_graphic.h \
     src/lib/engine/rs_hatch.h \
     src/lib/engine/rs_insert.h \
-    src/lib/engine/rs_img.h \
     src/lib/engine/rs_image.h \
     src/lib/engine/rs_layer.h \
     src/lib/engine/rs_layerlist.h \
@@ -162,7 +157,6 @@ HEADERS = \
     src/lib/engine/rs_point.h \
     src/lib/engine/rs_polyline.h \
     src/lib/engine/rs_ptrlist.h \
-    src/lib/engine/rs_regexp.h \
     src/lib/engine/rs_settings.h \
     src/lib/engine/rs_solid.h \
     src/lib/engine/rs_spline.h \
@@ -177,6 +171,7 @@ HEADERS = \
     src/lib/engine/rs_units.h \
     src/lib/engine/rs_utility.h \
     src/lib/engine/rs_valuelist.h \
+    src/lib/engine/rs_variable.h \
     src/lib/engine/rs_variabledict.h \
     src/lib/engine/rs_vector.h \
     src/lib/fileio/rs_fileio.h \
@@ -214,7 +209,10 @@ HEADERS = \
     src/lib/scripting/rs_scriptlist.h \ 
     src/main/doc_plugin_interface.h \
     src/plugins/document_interface.h \
-    src/plugins/qc_plugininterface.h
+    src/plugins/qc_plugininterface.h \
+    src/plugins/intern/qc_actiongetpoint.h \
+    src/plugins/intern/qc_actiongetselect.h \
+    src/plugins/intern/qc_actiongetent.h
 
 SOURCES = dxflib/src/dl_dxf.cpp \
     dxflib/src/dl_writer_ascii.cpp \
@@ -260,7 +258,6 @@ SOURCES = dxflib/src/dl_dxf.cpp \
     src/lib/engine/rs_settings.cpp \
     src/lib/engine/rs_solid.cpp \
     src/lib/engine/rs_spline.cpp \
-    src/lib/engine/rs_string.cpp \
     src/lib/engine/rs_system.cpp \
     src/lib/engine/rs_text.cpp \
     src/lib/engine/rs_undo.cpp \
@@ -292,7 +289,10 @@ SOURCES = dxflib/src/dl_dxf.cpp \
     src/lib/scripting/rs_python_wrappers.cpp \
     src/lib/scripting/rs_script.cpp \
     src/lib/scripting/rs_scriptlist.cpp \
-    src/main/doc_plugin_interface.cpp
+    src/main/doc_plugin_interface.cpp \
+    src/plugins/intern/qc_actiongetpoint.cpp \
+    src/plugins/intern/qc_actiongetselect.cpp \
+    src/plugins/intern/qc_actiongetent.cpp
 
 # ################################################################################
 # Command

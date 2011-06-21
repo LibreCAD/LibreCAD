@@ -136,7 +136,7 @@ void RS_ActionDimAngular::mouseMoveEvent(RS_MouseEvent* e) {
 
 void RS_ActionDimAngular::mouseReleaseEvent(RS_MouseEvent* e) {
 
-    if (RS2::qtToRsButtonState(e->button())==RS2::LeftButton) {
+    if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetLine1: {
                 RS_Entity* en = catchEntity(e, RS2::ResolveAll);
@@ -190,7 +190,7 @@ void RS_ActionDimAngular::mouseReleaseEvent(RS_MouseEvent* e) {
             }
             break;
         }
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
     }
