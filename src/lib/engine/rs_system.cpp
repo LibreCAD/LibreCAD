@@ -24,17 +24,16 @@
 **
 **********************************************************************/
 
+#include <QMap>
 #include <qapplication.h>
-#include <qtextcodec.h>
+#include <QTextCodec>
 #include <QTranslator>
+#include <QDesktopServices>
+#include <QFileInfo>
 #include "rs_settings.h"
 #include "rs_system.h"
-#include "rs_regexp.h"
 #include "rs_translator.h"
-#include "rs_fileinfo.h"
-#include "rs_locale.h"
 #include "rs.h"
-#include <QDesktopServices>
 
 RS_System* RS_System::uniqueInstance = NULL;
 
@@ -49,19 +48,19 @@ RS_System* RS_System::uniqueInstance = NULL;
  * @param appDir Absolute application directory (e.g. /opt/qcad)
  *                 defaults to current directory.
  */
-void RS_System::init(const RS_String& appName, const RS_String& appVersion,
-                     const RS_String& appDirName, const RS_String& appDir) {
+void RS_System::init(const QString& appName, const QString& appVersion,
+                     const QString& appDirName, const QString& appDir) {
     this->appName = appName;
     this->appVersion = appVersion;
     this->appDirName = appDirName;
     if (appDir=="") {
-        this->appDir = RS_Dir::currentDirPath();
+        this->appDir = QDir::currentPath();
     } else {
         this->appDir = appDir;
     }
 
-    RS_DEBUG->print("RS_System::init: System %s initialized.", appName.latin1());
-    RS_DEBUG->print("RS_System::init: App dir: %s", appDir.latin1());
+    RS_DEBUG->print("RS_System::init: System %s initialized.", appName.toLatin1().data());
+    RS_DEBUG->print("RS_System::init: App dir: %s", appDir.toLatin1().data());
     initialized = true;
 
     initAllLanguagesList();
@@ -75,27 +74,28 @@ void RS_System::init(const RS_String& appName, const RS_String& appVersion,
  */
 void RS_System::initLanguageList() {
     RS_DEBUG->print("RS_System::initLanguageList");
-    RS_StringList lst = getFileList("qm", "qm");
+    QStringList lst = getFileList("qm", "qm");
 
     RS_SETTINGS->beginGroup("/Paths");
-    lst += RS_StringList::split(";",
-                                RS_SETTINGS->readEntry("/Translations", ""));
+/*RLZ    lst += QStringList::split(";",
+                                RS_SETTINGS->readEntry("/Translations", ""));*/
+    lst += (RS_SETTINGS->readEntry("/Translations", "")).split(";", QString::SkipEmptyParts);
     RS_SETTINGS->endGroup();
 
-    for (RS_StringList::Iterator it = lst.begin();
+    for (QStringList::Iterator it = lst.begin();
             it!=lst.end();
             ++it) {
 
         RS_DEBUG->print("RS_System::initLanguageList: qm file: %s",
-                        (*it).latin1());
+                        (*it).toLatin1().data());
 
-        int i1 = (*it).find('_');
-        int i2 = (*it).find('.', i1);
-        RS_String l = (*it).mid(i1+1, i2-i1-1);
+        int i1 = (*it).indexOf('_');
+        int i2 = (*it).indexOf('.', i1);
+        QString l = (*it).mid(i1+1, i2-i1-1);
 
-        if (languageList.find(l)==languageList.end()) {
+        if ( !(languageList.contains(l)) ) {
             RS_DEBUG->print("RS_System::initLanguageList: append language: %s",
-                            l.latin1());
+                            l.toLatin1().data());
             languageList.append(l);
         }
     }
@@ -358,20 +358,21 @@ void RS_System::initAllLanguagesList() {
 /**
  * Loads a different translation for the application GUI.
  */
-void RS_System::loadTranslation(const RS_String& lang, const RS_String& langCmd) {
-    static RS_Translator* tQt = NULL;
+void RS_System::loadTranslation(const QString& lang, const QString& langCmd) {
+//unused    static RS_Translator* tQt = NULL;
     static RS_Translator* tLibreCAD = NULL;
 
-    RS_String langFile;
+    QString langFile;
 
     // search in various directories for translations
-    RS_StringList lst = getDirectoryList("qm");
+    QStringList lst = getDirectoryList("qm");
 
     RS_SETTINGS->beginGroup("/Paths");
-    lst += RS_StringList::split(";", RS_SETTINGS->readEntry("/Translations", ""));
+//RLZ    lst += QStringList::split(";", RS_SETTINGS->readEntry("/Translations", ""));
+    lst += (RS_SETTINGS->readEntry("/Translations", "")).split(";", QString::SkipEmptyParts);
     RS_SETTINGS->endGroup();
 
-    for (RS_StringList::Iterator it = lst.begin();
+    for (QStringList::Iterator it = lst.begin();
             it!=lst.end();
             ++it) {
 
@@ -423,33 +424,34 @@ bool RS_System::createPaths(const QString& directory) {
  *
  * @return List of the absolute paths of the files found.
  */
-RS_StringList RS_System::getFileList(const RS_String& subDirectory,
-                                     const RS_String& fileExtension) {
+QStringList RS_System::getFileList(const QString& subDirectory,
+                                     const QString& fileExtension) {
 
     checkInit();
 
-        RS_DEBUG->print("RS_System::getFileList: subdirectory %s ", subDirectory.latin1());
-        RS_DEBUG->print("RS_System::getFileList: appDirName %s ", appDirName.latin1());
-        RS_DEBUG->print("RS_System::getFileList: getCurrentDir %s ", getCurrentDir().latin1());
+        RS_DEBUG->print("RS_System::getFileList: subdirectory %s ", subDirectory.toLatin1().data());
+        RS_DEBUG->print("RS_System::getFileList: appDirName %s ", appDirName.toLatin1().data());
+        RS_DEBUG->print("RS_System::getFileList: getCurrentDir %s ", getCurrentDir().toLatin1().data());
 
 
-    RS_StringList dirList = getDirectoryList(subDirectory);
+    QStringList dirList = getDirectoryList(subDirectory);
 
-    RS_StringList fileList;
-    RS_String path;
-    RS_Dir dir;
+    QStringList fileList;
+    QString path;
+    QDir dir;
 
-    for (RS_StringList::Iterator it = dirList.begin();
+    for (QStringList::Iterator it = dirList.begin();
             it!=dirList.end();
             ++it ) {
 
         //path = RS_String(*it) + "/" + subDirectory;
-        path = RS_String(*it);
-        dir = RS_Dir(path);
+        path = QString(*it);
+        dir = QDir(path);
 
         if (dir.exists() && dir.isReadable()) {
-            RS_StringList files = dir.entryList("*." + fileExtension);
-            for (RS_StringList::Iterator it2 = files.begin();
+//RLZ            QStringList files = dir.entryList("*." + fileExtension);
+            QStringList files = dir.entryList( QStringList("*." + fileExtension) );
+            for (QStringList::Iterator it2 = files.begin();
                     it2!=files.end();
                     it2++) {
 
@@ -467,8 +469,8 @@ RS_StringList RS_System::getFileList(const RS_String& subDirectory,
  * @return List of all directories in subdirectory 'subDirectory' in
  * all possible QCad directories.
  */
-RS_StringList RS_System::getDirectoryList(const RS_String& _subDirectory) {
-    RS_StringList dirList;
+QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
+    QStringList dirList;
 
     QString subDirectory=QDir::fromNativeSeparators(_subDirectory);
 
@@ -513,32 +515,32 @@ RS_StringList RS_System::getDirectoryList(const RS_String& _subDirectory) {
     // Individual directories:
     RS_SETTINGS->beginGroup("/Paths");
     if (subDirectory=="fonts") {
-        dirList += RS_StringList::split(RS_RegExp("[;]"),
-                                        RS_SETTINGS->readEntry("/Fonts", ""));
+        dirList += (RS_SETTINGS->readEntry("/Fonts", "")).split(QRegExp("[;]"),
+                                                        QString::SkipEmptyParts);
     } else if (subDirectory=="patterns") {
-        dirList += RS_StringList::split(RS_RegExp("[;]"),
-                                        RS_SETTINGS->readEntry("/Patterns", ""));
+        dirList += (RS_SETTINGS->readEntry("/Patterns", "")).split(QRegExp("[;]"),
+                                                        QString::SkipEmptyParts);
     } else if (subDirectory.startsWith("scripts")) {
-        dirList += RS_StringList::split(RS_RegExp("[;]"),
-                                        RS_SETTINGS->readEntry("/Scripts", ""));
+        dirList += (RS_SETTINGS->readEntry("/Scripts", "")).split(QRegExp("[;]"),
+                                                        QString::SkipEmptyParts);
     } else if (subDirectory.startsWith("library")) {
-        dirList += RS_StringList::split(RS_RegExp("[;]"),
-                                        RS_SETTINGS->readEntry("/Library", ""));
+        dirList += (RS_SETTINGS->readEntry("/Library", "")).split(QRegExp("[;]"),
+                                                        QString::SkipEmptyParts);
     } else if (subDirectory.startsWith("po")) {
-        dirList += RS_StringList::split(RS_RegExp("[;]"),
-                                        RS_SETTINGS->readEntry("/Translations", ""));
+        dirList += (RS_SETTINGS->readEntry("/Translations", "")).split(QRegExp("[;]"),
+                                                        QString::SkipEmptyParts);
     }
     RS_SETTINGS->endGroup();
 
-    RS_StringList ret;
+    QStringList ret;
 
     RS_DEBUG->print("RS_System::getDirectoryList: Paths:");
-    for (RS_StringList::Iterator it = dirList.begin();
+    for (QStringList::Iterator it = dirList.begin();
             it!=dirList.end(); ++it ) {
 
-        if (RS_FileInfo(*it).isDir()) {
+        if (QFileInfo(*it).isDir()) {
             ret += (*it);
-            RS_DEBUG->print(*it);
+            RS_DEBUG->print( (*it).toLatin1() );
         }
     }
 
@@ -551,12 +553,12 @@ RS_StringList RS_System::getDirectoryList(const RS_String& _subDirectory) {
  * Converts a language string to a symbol (e.g. Deutsch or German to 'de').
  * Languages taken from RFC3066
  */
-RS_String RS_System::languageToSymbol(const RS_String& lang) {
-    RS_String l = lang.lower();
+QString RS_System::languageToSymbol(const QString& lang) {
+    QString l = lang.toLower();
 
     RS_Locale *locale;
     foreach (locale, *RS_SYSTEM->allKnownLocales) {
-        if (locale->getName().lower()==l) {
+        if (locale->getName().toLower()==l) {
             return locale->getCanonical();
         }
     }
@@ -570,13 +572,13 @@ RS_String RS_System::languageToSymbol(const RS_String& lang) {
  * Converst a language two-letter-code into a readable string
  * (e.g. 'de' to Deutsch)
  */
-RS_String RS_System::symbolToLanguage(const RS_String& symb) {
-    RS_String l = symb.lower();
+QString RS_System::symbolToLanguage(const QString& symb) {
+    QString l = symb.toLower();
 
     RS_Locale *locale;
     foreach (locale, *RS_SYSTEM->allKnownLocales) {
-        QString canon=locale->getCanonical().lower();
-        if (canon==l || canon==l+"_"+l.upper() || canon.mid(0,2)==l) {
+        QString canon=locale->getCanonical().toLower();
+        if (canon==l || canon==l+"_"+l.toUpper() || canon.mid(0,2)==l) {
             return locale->getName();
         }
     }
@@ -588,8 +590,8 @@ RS_String RS_System::symbolToLanguage(const RS_String& symb) {
 /**
  * Tries to convert the given encoding string to an encoding Qt knows.
  */
-RS_String RS_System::getEncoding(const RS_String& str) {
-    RS_String l=str.lower();
+QString RS_System::getEncoding(const QString& str) {
+    QString l=str.toLower();
 
     if (l=="latin1" || l=="ansi_1252" || l=="iso-8859-1" ||
             l=="cp819" || l=="csiso" || l=="ibm819" || l=="iso_8859-1" ||

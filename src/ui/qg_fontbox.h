@@ -46,7 +46,7 @@ public:
     RS_Font* getFont() {
         return currentFont;
     }
-    void setFont(const RS_String& fName);
+    void setFont(const QString& fName);
 
     void init();
 

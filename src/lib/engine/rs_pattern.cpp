@@ -28,9 +28,9 @@
 #include "rs_pattern.h"
 
 #include "rs_stringlist.h"
-#include "rs_fileinfo.h"
 #include "rs_system.h"
 #include "rs_fileio.h"
+#include "rs_layer.h"
 
 
 /**
@@ -88,12 +88,12 @@ bool RS_Pattern::loadPattern() {
     // Search for the appropriate pattern if we have only the name of the pattern:
     if (!fileName.lower().contains(".dxf")) {
         RS_StringList patterns = RS_SYSTEM->getPatternList();
-        RS_FileInfo file;
+        QFileInfo file;
         for (RS_StringList::Iterator it = patterns.begin();
                 it!=patterns.end();
                 it++) {
 
-            if (RS_FileInfo(*it).baseName().lower()==fileName.lower()) {
+            if (QFileInfo(*it).baseName().toLower()==fileName.toLower()) {
                 path = *it;
 				RS_DEBUG->print("Pattern found: %s", path.latin1());
                 break;

@@ -29,9 +29,8 @@
 #define RS_FONTLIST_H
 
 
-#include "rs_font.h"
-#include "rs_entity.h"
-#include "rs_ptrlist.h"
+#include <QList>
+class RS_Font;
 
 #define RS_FONTLIST RS_FontList::instance()
 
@@ -65,17 +64,11 @@ public:
         return fonts.count();
     }
     virtual void removeFont(RS_Font* font);
-    RS_Font* requestFont(const RS_String& name);
-    //! @return First font of the list.
-    RS_Font* firstFont() {
-        return fonts.first();
-    }
-    /** 
-	 * @return Next font from the list after
-     * calling firstFont() or nextFont().
-     */
-    RS_Font* nextFont() {
-        return fonts.next();
+    RS_Font* requestFont(const QString& name);
+
+    //! @return a const iterator for the font list.
+    QListIterator<RS_Font *> getIteretor(){
+        return QListIterator<RS_Font *>(fonts);
     }
 
     friend std::ostream& operator << (std::ostream& os, RS_FontList& l);
@@ -85,8 +78,7 @@ protected:
 
 private:
     //! fonts in the graphic
-    RS_PtrList<RS_Font> fonts;
-}
-;
+    QList<RS_Font *> fonts;
+};
 
 #endif

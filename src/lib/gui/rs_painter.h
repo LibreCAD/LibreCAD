@@ -29,7 +29,6 @@
 #define RS_PAINTER_H
 
 #include "rs_color.h"
-#include "rs_img.h"
 #include "rs_math.h"
 #include "rs_pen.h"
 #include "rs_vector.h"
@@ -92,14 +91,14 @@ public:
                              double angle,
                              double angle1, double angle2,
                              bool reversed) = 0;
-	virtual void drawImg(RS_Img& img, const RS_Vector& pos, 
+        virtual void drawImg(QImage& img, const RS_Vector& pos,
 			double angle, const RS_Vector& factor,
 			int sx, int sy, int sw, int sh) = 0;
 
     virtual void drawTextH(int x1, int y1, int x2, int y2,
-                           const RS_String& text) = 0;
+                           const QString& text) = 0;
     virtual void drawTextV(int x1, int y1, int x2, int y2,
-                           const RS_String& text) = 0;
+                           const QString& text) = 0;
 
     virtual void fillRect(int x1, int y1, int w, int h, const RS_Color& col) = 0;
 	virtual void fillRect ( const QRectF & rectangle, const RS_Color & color ) = 0;

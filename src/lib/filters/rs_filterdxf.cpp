@@ -38,11 +38,9 @@
 #include "rs_dimdiametric.h"
 #include "rs_dimlinear.h"
 #include "rs_dimradial.h"
-#include "rs_fileinfo.h"
 #include "rs_hatch.h"
 #include "rs_image.h"
 #include "rs_leader.h"
-#include "rs_regexp.h"
 #include "rs_system.h"
 
 #include <qtextcodec.h>
@@ -1009,8 +1007,8 @@ void RS_FilterDXF::linkImage(const DL_ImageDefData& data) {
 
     int handle = RS_String(data.ref.c_str()).toInt(NULL, 16);
     RS_String sfile(QString::fromUtf8(data.file.c_str()));
-    RS_FileInfo fiDxf(file);
-    RS_FileInfo fiBitmap(sfile);
+    QFileInfo fiDxf(file);
+    QFileInfo fiBitmap(sfile);
 
     // try to find the image file:
 
@@ -1019,14 +1017,14 @@ void RS_FilterDXF::linkImage(const DL_ImageDefData& data) {
         RS_DEBUG->print("File %s doesn't exist.",
                         (const char*)QFile::encodeName(sfile));
         // try relative path:
-        RS_String f1 = fiDxf.dirPath(true) + "/" + sfile;
-        if (RS_FileInfo(f1).exists()) {
+        RS_String f1 = fiDxf.absolutePath() + "/" + sfile;
+        if (QFileInfo(f1).exists()) {
             sfile = f1;
         } else {
             RS_DEBUG->print("File %s doesn't exist.", (const char*)QFile::encodeName(f1));
             // try drawing path:
-            RS_String f2 = fiDxf.dirPath(true) + "/" + fiBitmap.fileName();
-            if (RS_FileInfo(f2).exists()) {
+            RS_String f2 = fiDxf.absolutePath() + "/" + fiBitmap.fileName();
+            if (QFileInfo(f2).exists()) {
                 sfile = f2;
             } else {
                 RS_DEBUG->print("File %s doesn't exist.", (const char*)QFile::encodeName(f2));
@@ -1174,8 +1172,8 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const RS_String& file, RS2::FormatT
     // check if we can write to that directory:
 #ifndef Q_OS_WIN
 
-    RS_String path = RS_FileInfo(file).dirPath(true);
-    if (RS_FileInfo(path).isWritable()==false) {
+    QString path = QFileInfo(file).absolutePath();
+    if (QFileInfo(path).isWritable()==false) {
         RS_DEBUG->print("RS_FilterDXF::fileExport: can't write file: "
                         "no permission");
         return false;
@@ -1382,7 +1380,7 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const RS_String& file, RS2::FormatT
     delete dw;
 
     // check if file was actually written (strange world of windoze xp):
-    if (RS_FileInfo(file).exists()==false) {
+    if (QFileInfo(file).exists()==false) {
         RS_DEBUG->print("RS_FilterDXF::fileExport: file could not be written");
         return false;
     }
@@ -1396,41 +1394,43 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const RS_String& file, RS2::FormatT
  * Writes all known variable settings to the DXF file.
  */
 void RS_FilterDXF::writeVariables(DL_WriterA& dw) {
-    RS_DictIterator<RS_Variable> it(graphic->getVariableDict());
-    for (; it.current(); ++it) {
+    QHash<QString, RS_Variable>vars = graphic->getVariableDict();
+    QHash<QString, RS_Variable>::iterator it = vars.begin();
+    while (it != vars.end()) {
         // exclude variables that are not known to DXF 12:
-        if (!DL_Dxf::checkVariable(it.currentKey().latin1(), dxf.getVersion())) {
+        if (!DL_Dxf::checkVariable(it.key().toLatin1(), dxf.getVersion())) {
             continue;
         }
 
-        if (it.currentKey()!="$ACADVER" && it.currentKey()!="$HANDSEED") {
+        if (it.key()!="$ACADVER" && it.key()!="$HANDSEED") {
 
-            dw.dxfString(9, (const char*) it.currentKey());
-            switch (it.current()->getType()) {
+            dw.dxfString(9, it.key().toLatin1());
+            switch (it.value().getType()) {
             case RS2::VariableVoid:
                 break;
             case RS2::VariableInt:
-                dw.dxfInt(it.current()->getCode(), it.current()->getInt());
+                dw.dxfInt(it.value().getCode(), it.value().getInt());
                 break;
             case RS2::VariableDouble:
-                dw.dxfReal(it.current()->getCode(), it.current()->getDouble());
+                dw.dxfReal(it.value().getCode(), it.value().getDouble());
                 break;
             case RS2::VariableString:
-                dw.dxfString(it.current()->getCode(),
-                             (const char*) it.current()->getString());
+                dw.dxfString(it.value().getCode(),
+                             it.value().getString().toLatin1());
                 break;
             case RS2::VariableVector:
-                dw.dxfReal(it.current()->getCode(),
-                           it.current()->getVector().x);
-                dw.dxfReal(it.current()->getCode()+10,
-                           it.current()->getVector().y);
-                if (isVariableTwoDimensional(it.currentKey())==false) {
-                    dw.dxfReal(it.current()->getCode()+20,
-                               it.current()->getVector().z);
+                dw.dxfReal(it.value().getCode(),
+                           it.value().getVector().x);
+                dw.dxfReal(it.value().getCode()+10,
+                           it.value().getVector().y);
+                if ( isVariableTwoDimensional(it.key()) == false) {
+                    dw.dxfReal(it.value().getCode()+20,
+                               it.value().getVector().z);
                 }
                 break;
             }
         }
+        ++it;
     }
     dw.sectionEnd();
 }
@@ -2961,28 +2961,28 @@ RS_String RS_FilterDXF::toNativeString(const char* data, const QString& encoding
 
 
     // Line feed:
-    res = res.replace(RS_RegExp("\\\\P"), "\n");
+    res = res.replace(QRegExp("\\\\P"), "\n");
     // Space:
-    res = res.replace(RS_RegExp("\\\\~"), " ");
+    res = res.replace(QRegExp("\\\\~"), " ");
     // diameter:
-    res = res.replace(RS_RegExp("%%c"), QChar(0x2205));
+    res = res.replace(QRegExp("%%c"), QChar(0x2205));
     // degree:
-    res = res.replace(RS_RegExp("%%d"), QChar(0x00B0));
+    res = res.replace(QRegExp("%%d"), QChar(0x00B0));
     // plus/minus
-    res = res.replace(RS_RegExp("%%p"), QChar(0x00B1));
+    res = res.replace(QRegExp("%%p"), QChar(0x00B1));
 
     // Unicode characters:
     RS_String cap = "";
     int uCode = 0;
     bool ok = false;
     do {
-        RS_RegExp regexp("\\\\U\\+[0-9A-Fa-f]{4,4}");
-        regexp.search(res);
+        QRegExp regexp("\\\\U\\+[0-9A-Fa-f]{4,4}");
+        regexp.indexIn(res);
         cap = regexp.cap();
         if (!cap.isNull()) {
             uCode = cap.right(4).toInt(&ok, 16);
             // workaround for Qt 3.0.x:
-            res.replace(RS_RegExp("\\\\U\\+" + cap.right(4)), QChar(uCode));
+            res.replace(QRegExp("\\\\U\\+" + cap.right(4)), QChar(uCode));
             // for Qt 3.1:
             //res.replace(cap, QChar(uCode));
         }
@@ -2994,13 +2994,13 @@ RS_String RS_FilterDXF::toNativeString(const char* data, const QString& encoding
     uCode = 0;
     ok = false;
     do {
-        RS_RegExp regexp("%%[0-9]{3,3}");
-        regexp.search(res);
+        QRegExp regexp("%%[0-9]{3,3}");
+        regexp.indexIn(res);
         cap = regexp.cap();
         if (!cap.isNull()) {
             uCode = cap.right(3).toInt(&ok, 10);
             // workaround for Qt 3.0.x:
-            res.replace(RS_RegExp("%%" + cap.right(3)), QChar(uCode));
+            res.replace(QRegExp("%%" + cap.right(3)), QChar(uCode));
             // for Qt 3.1:
             //res.replace(cap, QChar(uCode));
         }
@@ -3008,7 +3008,7 @@ RS_String RS_FilterDXF::toNativeString(const char* data, const QString& encoding
     while (!cap.isNull());
 
     // Ignore font tags:
-    res = res.replace(RS_RegExp("\\\\f[0-9A-Za-z| ]{0,};"), "");
+    res = res.replace(QRegExp("\\\\f[0-9A-Za-z| ]{0,};"), "");
 
     // Ignore {}
     res = res.replace("\\{", "#curly#");
