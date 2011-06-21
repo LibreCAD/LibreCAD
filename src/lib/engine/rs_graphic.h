@@ -37,6 +37,7 @@
 #include "rs_camdata.h"
 #endif
 
+class RS_VariableDict;
 //class RS_CamData;
 
 
@@ -211,7 +212,7 @@ public:
 		variableDict.remove(key);
 	}
 
-	RS_Dict<RS_Variable>& getVariableDict() {
+        QHash<QString, RS_Variable>& getVariableDict() {
 		return variableDict.getVariableDict();
 	}
 
