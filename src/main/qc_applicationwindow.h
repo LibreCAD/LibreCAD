@@ -409,7 +409,7 @@ private:
 //Plugin support
 private:
     void loadPlugins();
-    QMenu *findMenu(QStringList *treemenu);
+    QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
     QC_PluginInterface *pluginInterface;
     QMenu* pluginMenu;
 public slots:
