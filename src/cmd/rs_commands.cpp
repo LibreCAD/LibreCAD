@@ -26,9 +26,6 @@
 
 #include "rs_commands.h"
 
-#include <iostream>
-
-#include "rs_translator.h"
 #include "rs_dialogfactory.h"
 
 RS_Commands* RS_Commands::uniqueInstance = NULL;
@@ -38,148 +35,145 @@ RS_Commands* RS_Commands::uniqueInstance = NULL;
  * Constructor. Initiates main command dictionary.
  */
 RS_Commands::RS_Commands() {
-	mainCommands.setAutoDelete(true);
-	shortCommands.setAutoDelete(true);
-
 	// draw:
-	mainCommands.insert(tr("point"), new RS2::ActionType(RS2::ActionDrawPoint));
-	shortCommands.insert(tr("po"), new RS2::ActionType(RS2::ActionDrawPoint));
+        mainCommands.insert(tr("point"), RS2::ActionDrawPoint);
+        shortCommands.insert(tr("po"), RS2::ActionDrawPoint);
 	
-        mainCommands.insert(tr("line"), new RS2::ActionType(RS2::ActionDrawLine));
-	shortCommands.insert(tr("ln"), new RS2::ActionType(RS2::ActionDrawLine));
-	shortCommands.insert(tr("l"), new RS2::ActionType(RS2::ActionDrawLine));
+        mainCommands.insert(tr("line"), RS2::ActionDrawLine);
+        shortCommands.insert(tr("ln"), RS2::ActionDrawLine);
+        shortCommands.insert(tr("l"), RS2::ActionDrawLine);
 	
-	mainCommands.insert(tr("polyline"), new RS2::ActionType(RS2::ActionDrawPolyline));
+        mainCommands.insert(tr("polyline"), RS2::ActionDrawPolyline);
 
-    mainCommands.insert(tr("offset"), new RS2::ActionType(RS2::ActionDrawLineParallel));
-	shortCommands.insert(tr("o", "offset"), new RS2::ActionType(RS2::ActionDrawLineParallel));
-    mainCommands.insert(tr("parallel"), new RS2::ActionType(RS2::ActionDrawLineParallel));
-	shortCommands.insert(tr("par", "parallel"), new RS2::ActionType(RS2::ActionDrawLineParallel));
+    mainCommands.insert(tr("offset"), RS2::ActionDrawLineParallel);
+        shortCommands.insert(tr("o", "offset"), RS2::ActionDrawLineParallel);
+    mainCommands.insert(tr("parallel"), RS2::ActionDrawLineParallel);
+        shortCommands.insert(tr("par", "parallel"), RS2::ActionDrawLineParallel);
 
-	mainCommands.insert(tr("arc"), new RS2::ActionType(RS2::ActionDrawArc3P));
-	shortCommands.insert(tr("a"), new RS2::ActionType(RS2::ActionDrawArc3P));
+        mainCommands.insert(tr("arc"), RS2::ActionDrawArc3P);
+        shortCommands.insert(tr("a"), RS2::ActionDrawArc3P);
 	
-	mainCommands.insert(tr("circle"), new RS2::ActionType(RS2::ActionDrawCircle));
-	shortCommands.insert(tr("ci"), new RS2::ActionType(RS2::ActionDrawCircle));
+        mainCommands.insert(tr("circle"), RS2::ActionDrawCircle);
+        shortCommands.insert(tr("ci"), RS2::ActionDrawCircle);
 	
-	mainCommands.insert(tr("rectangle"), new RS2::ActionType(RS2::ActionDrawLineRectangle));
-	shortCommands.insert(tr("rec"), new RS2::ActionType(RS2::ActionDrawLineRectangle));
-	shortCommands.insert(tr("rectang"), new RS2::ActionType(RS2::ActionDrawLineRectangle));
+        mainCommands.insert(tr("rectangle"), RS2::ActionDrawLineRectangle);
+        shortCommands.insert(tr("rec"), RS2::ActionDrawLineRectangle);
+        shortCommands.insert(tr("rectang"), RS2::ActionDrawLineRectangle);
 	
-	mainCommands.insert(tr("polyline"), new RS2::ActionType(RS2::ActionDrawPolyline));
+        mainCommands.insert(tr("polyline"), RS2::ActionDrawPolyline);
 	
-	mainCommands.insert(tr("text"), new RS2::ActionType(RS2::ActionDrawText));
+        mainCommands.insert(tr("text"), RS2::ActionDrawText);
 
 	// zoom:
-	mainCommands.insert(tr("regen"), new RS2::ActionType(RS2::ActionZoomRedraw));
-	shortCommands.insert(tr("rg", "zoom - redraw"), new RS2::ActionType(RS2::ActionZoomRedraw));
-	shortCommands.insert(tr("zr", "zoom - redraw"), new RS2::ActionType(RS2::ActionZoomRedraw));
+        mainCommands.insert(tr("regen"), RS2::ActionZoomRedraw);
+        shortCommands.insert(tr("rg", "zoom - redraw"), RS2::ActionZoomRedraw);
+        shortCommands.insert(tr("zr", "zoom - redraw"), RS2::ActionZoomRedraw);
 	
-	mainCommands.insert(tr("zw", "zoom - window"), new RS2::ActionType(RS2::ActionZoomWindow));
+        mainCommands.insert(tr("zw", "zoom - window"), RS2::ActionZoomWindow);
 	
-	mainCommands.insert(tr("za", "zoom - auto"), new RS2::ActionType(RS2::ActionZoomAuto));
+        mainCommands.insert(tr("za", "zoom - auto"), RS2::ActionZoomAuto);
 	
-	mainCommands.insert(tr("zp", "zoom - pan"), new RS2::ActionType(RS2::ActionZoomPan));
+        mainCommands.insert(tr("zp", "zoom - pan"), RS2::ActionZoomPan);
 	
-	mainCommands.insert(tr("zv", "zoom - previous"), new RS2::ActionType(RS2::ActionZoomPrevious));
+        mainCommands.insert(tr("zv", "zoom - previous"), RS2::ActionZoomPrevious);
 
 	// edit:
-        mainCommands.insert(tr("kill"), new RS2::ActionType(RS2::ActionEditKillAllActions));
-        shortCommands.insert(tr("k"), new RS2::ActionType(RS2::ActionEditKillAllActions));
+        mainCommands.insert(tr("kill"), RS2::ActionEditKillAllActions);
+        shortCommands.insert(tr("k"), RS2::ActionEditKillAllActions);
 
-        mainCommands.insert(tr("undo"), new RS2::ActionType(RS2::ActionEditUndo));
-	shortCommands.insert(tr("u", "undo"), new RS2::ActionType(RS2::ActionEditUndo));
+        mainCommands.insert(tr("undo"), RS2::ActionEditUndo);
+        shortCommands.insert(tr("u", "undo"), RS2::ActionEditUndo);
 	
-        mainCommands.insert(tr("redo"), new RS2::ActionType(RS2::ActionEditRedo));
-        shortCommands.insert(tr("r"), new RS2::ActionType(RS2::ActionEditRedo));
+        mainCommands.insert(tr("redo"), RS2::ActionEditRedo);
+        shortCommands.insert(tr("r"), RS2::ActionEditRedo);
 
     // dimensions:
-    mainCommands.insert(tr("da", "dimension - aligned"), new RS2::ActionType(RS2::ActionDimAligned));
-    shortCommands.insert(tr("da"), new RS2::ActionType(RS2::ActionDimAligned));
+    mainCommands.insert(tr("da", "dimension - aligned"), RS2::ActionDimAligned);
+    shortCommands.insert(tr("da"), RS2::ActionDimAligned);
     
-    mainCommands.insert(tr("dh", "dimension - horizontal"), new RS2::ActionType(RS2::ActionDimLinearHor));
-    shortCommands.insert(tr("dh"), new RS2::ActionType(RS2::ActionDimLinearHor));
+    mainCommands.insert(tr("dh", "dimension - horizontal"), RS2::ActionDimLinearHor);
+    shortCommands.insert(tr("dh"), RS2::ActionDimLinearHor);
     
-    mainCommands.insert(tr("dr", "dimension - linear"), new RS2::ActionType(RS2::ActionDimLinear));
-    shortCommands.insert(tr("dr"), new RS2::ActionType(RS2::ActionDimLinear));
+    mainCommands.insert(tr("dr", "dimension - linear"), RS2::ActionDimLinear);
+    shortCommands.insert(tr("dr"), RS2::ActionDimLinear);
 
-    mainCommands.insert(tr("dv", "dimension - vertical"), new RS2::ActionType(RS2::ActionDimLinearVer));
-    shortCommands.insert(tr("dv"), new RS2::ActionType(RS2::ActionDimLinearVer));
+    mainCommands.insert(tr("dv", "dimension - vertical"), RS2::ActionDimLinearVer);
+    shortCommands.insert(tr("dv"), RS2::ActionDimLinearVer);
 
-    mainCommands.insert(tr("ld", "dimension - leader"), new RS2::ActionType(RS2::ActionDimLeader));
-    shortCommands.insert(tr("ld"), new RS2::ActionType(RS2::ActionDimLeader));
+    mainCommands.insert(tr("ld", "dimension - leader"), RS2::ActionDimLeader);
+    shortCommands.insert(tr("ld"), RS2::ActionDimLeader);
 
 	// tools:
-	mainCommands.insert(tr("dimregen"), new RS2::ActionType(RS2::ActionToolRegenerateDimensions));
+        mainCommands.insert(tr("dimregen"), RS2::ActionToolRegenerateDimensions);
 
     // modify:
-    mainCommands.insert(tr("tm", "modify - multi trim (extend)"), new RS2::ActionType(RS2::ActionModifyTrim2));
-    shortCommands.insert(tr("tm"), new RS2::ActionType(RS2::ActionModifyTrim2));
+    mainCommands.insert(tr("tm", "modify - multi trim (extend)"), RS2::ActionModifyTrim2);
+    shortCommands.insert(tr("tm"), RS2::ActionModifyTrim2);
 
-    mainCommands.insert(tr("xt", "modify - trim (extend)"), new RS2::ActionType(RS2::ActionModifyTrim));
-    shortCommands.insert(tr("xt"), new RS2::ActionType(RS2::ActionModifyTrim));
+    mainCommands.insert(tr("xt", "modify - trim (extend)"), RS2::ActionModifyTrim);
+    shortCommands.insert(tr("xt"), RS2::ActionModifyTrim);
 
-    mainCommands.insert(tr("rm", "modify - trim"), new RS2::ActionType(RS2::ActionModifyTrim));
-    shortCommands.insert(tr("rm"), new RS2::ActionType(RS2::ActionModifyTrim));
+    mainCommands.insert(tr("rm", "modify - trim"), RS2::ActionModifyTrim);
+    shortCommands.insert(tr("rm"), RS2::ActionModifyTrim);
 
-    mainCommands.insert(tr("mv", "modify - move"), new RS2::ActionType(RS2::ActionModifyMove));
-    shortCommands.insert(tr("mv"), new RS2::ActionType(RS2::ActionModifyMove));
+    mainCommands.insert(tr("mv", "modify - move"), RS2::ActionModifyMove);
+    shortCommands.insert(tr("mv"), RS2::ActionModifyMove);
 
-    mainCommands.insert(tr("ch", "modify - bevel (chamfer)"), new RS2::ActionType(RS2::ActionModifyBevel));
-    shortCommands.insert(tr("ch"), new RS2::ActionType(RS2::ActionModifyBevel));
+    mainCommands.insert(tr("ch", "modify - bevel (chamfer)"), RS2::ActionModifyBevel);
+    shortCommands.insert(tr("ch"), RS2::ActionModifyBevel);
 
-    mainCommands.insert(tr("mi", "modify - mirror"), new RS2::ActionType(RS2::ActionModifyMirror));
-    shortCommands.insert(tr("mi"), new RS2::ActionType(RS2::ActionModifyMirror));
+    mainCommands.insert(tr("mi", "modify - mirror"), RS2::ActionModifyMirror);
+    shortCommands.insert(tr("mi"), RS2::ActionModifyMirror);
 
-    mainCommands.insert(tr("ro", "modify - rotate"), new RS2::ActionType(RS2::ActionModifyRotate));
-    shortCommands.insert(tr("ro"), new RS2::ActionType(RS2::ActionModifyRotate));
+    mainCommands.insert(tr("ro", "modify - rotate"), RS2::ActionModifyRotate);
+    shortCommands.insert(tr("ro"), RS2::ActionModifyRotate);
 
-    mainCommands.insert(tr("sz", "modify - scale"), new RS2::ActionType(RS2::ActionModifyMove));
-    shortCommands.insert(tr("sz"), new RS2::ActionType(RS2::ActionModifyMove));
+    mainCommands.insert(tr("sz", "modify - scale"), RS2::ActionModifyMove);
+    shortCommands.insert(tr("sz"), RS2::ActionModifyMove);
 
-    mainCommands.insert(tr("ss", "modify - stretch"), new RS2::ActionType(RS2::ActionModifyStretch));
-    shortCommands.insert(tr("ss"), new RS2::ActionType(RS2::ActionModifyStretch));
+    mainCommands.insert(tr("ss", "modify - stretch"), RS2::ActionModifyStretch);
+    shortCommands.insert(tr("ss"), RS2::ActionModifyStretch);
 
-    mainCommands.insert(tr("er", "modify - delete (erase)"), new RS2::ActionType(RS2::ActionModifyDelete));
-    shortCommands.insert(tr("er"), new RS2::ActionType(RS2::ActionModifyDelete));
+    mainCommands.insert(tr("er", "modify - delete (erase)"), RS2::ActionModifyDelete);
+    shortCommands.insert(tr("er"), RS2::ActionModifyDelete);
 
-    mainCommands.insert(tr("oo", "modify - undo (oops)"), new RS2::ActionType(RS2::ActionEditUndo));
-    shortCommands.insert(tr("oo"), new RS2::ActionType(RS2::ActionEditUndo));
+    mainCommands.insert(tr("oo", "modify - undo (oops)"), RS2::ActionEditUndo);
+    shortCommands.insert(tr("oo"), RS2::ActionEditUndo);
 
-    mainCommands.insert(tr("uu", "modify - redo"), new RS2::ActionType(RS2::ActionEditRedo));
-    shortCommands.insert(tr("uu"), new RS2::ActionType(RS2::ActionEditRedo));
+    mainCommands.insert(tr("uu", "modify - redo"), RS2::ActionEditRedo);
+    shortCommands.insert(tr("uu"), RS2::ActionEditRedo);
 
-    mainCommands.insert(tr("xp", "modify - explode"), new RS2::ActionType(RS2::ActionBlocksExplode));
-    shortCommands.insert(tr("xp"), new RS2::ActionType(RS2::ActionBlocksExplode));
+    mainCommands.insert(tr("xp", "modify - explode"), RS2::ActionBlocksExplode);
+    shortCommands.insert(tr("xp"), RS2::ActionBlocksExplode);
 
     // snap:
-    mainCommands.insert(tr("os", "snap - none"), new RS2::ActionType(RS2::ActionSnapFree));
-    shortCommands.insert(tr("os"), new RS2::ActionType(RS2::ActionSnapFree));
+    mainCommands.insert(tr("os", "snap - none"), RS2::ActionSnapFree);
+    shortCommands.insert(tr("os"), RS2::ActionSnapFree);
 
-    mainCommands.insert(tr("sg", "snap - grid"), new RS2::ActionType(RS2::ActionSnapGrid));
-    shortCommands.insert(tr("sg"), new RS2::ActionType(RS2::ActionSnapGrid));
+    mainCommands.insert(tr("sg", "snap - grid"), RS2::ActionSnapGrid);
+    shortCommands.insert(tr("sg"), RS2::ActionSnapGrid);
 
-    mainCommands.insert(tr("se", "snap - end"), new RS2::ActionType(RS2::ActionSnapEndpoint));
-    shortCommands.insert(tr("se"), new RS2::ActionType(RS2::ActionSnapEndpoint));
+    mainCommands.insert(tr("se", "snap - end"), RS2::ActionSnapEndpoint);
+    shortCommands.insert(tr("se"), RS2::ActionSnapEndpoint);
 
-    mainCommands.insert(tr("si", "snap - intersection"), new RS2::ActionType(RS2::ActionSnapIntersection));
-    shortCommands.insert(tr("si"), new RS2::ActionType(RS2::ActionSnapIntersection));
+    mainCommands.insert(tr("si", "snap - intersection"), RS2::ActionSnapIntersection);
+    shortCommands.insert(tr("si"), RS2::ActionSnapIntersection);
 
-    mainCommands.insert(tr("sn", "snap - center"), new RS2::ActionType(RS2::ActionSnapCenter));
-    shortCommands.insert(tr("sn"), new RS2::ActionType(RS2::ActionSnapCenter));
+    mainCommands.insert(tr("sn", "snap - center"), RS2::ActionSnapCenter);
+    shortCommands.insert(tr("sn"), RS2::ActionSnapCenter);
 
-    mainCommands.insert(tr("sm", "snap - middle"), new RS2::ActionType(RS2::ActionSnapMiddle));
-    shortCommands.insert(tr("sm"), new RS2::ActionType(RS2::ActionSnapMiddle));
+    mainCommands.insert(tr("sm", "snap - middle"), RS2::ActionSnapMiddle);
+    shortCommands.insert(tr("sm"), RS2::ActionSnapMiddle);
 
-    mainCommands.insert(tr("sn", "snap - nearest"), new RS2::ActionType(RS2::ActionSnapMiddle));
-    shortCommands.insert(tr("sn"), new RS2::ActionType(RS2::ActionSnapMiddle));
+    mainCommands.insert(tr("sn", "snap - nearest"), RS2::ActionSnapMiddle);
+    shortCommands.insert(tr("sn"), RS2::ActionSnapMiddle);
 
-    mainCommands.insert(tr("np", "snap - nearest point"), new RS2::ActionType(RS2::ActionSnapOnEntity));
-    shortCommands.insert(tr("np"), new RS2::ActionType(RS2::ActionSnapOnEntity));
+    mainCommands.insert(tr("np", "snap - nearest point"), RS2::ActionSnapOnEntity);
+    shortCommands.insert(tr("np"), RS2::ActionSnapOnEntity);
 
     // selection:
-    mainCommands.insert(tr("tn", "Deselect all"), new RS2::ActionType(RS2::ActionDeselectAll));
-    shortCommands.insert(tr("tn"), new RS2::ActionType(RS2::ActionDeselectAll));
+    mainCommands.insert(tr("tn", "Deselect all"), RS2::ActionDeselectAll);
+    shortCommands.insert(tr("tn"), RS2::ActionDeselectAll);
 }
 
 	
@@ -187,15 +181,15 @@ RS_Commands::RS_Commands() {
 /**
  * Tries to complete the given command (e.g. when tab is pressed).
  */
-RS_StringList RS_Commands::complete(const RS_String& cmd) {
-	RS_DictIterator<RS2::ActionType> it(mainCommands);
-	RS_StringList ret;
-    for (; it.current(); ++it) {
-        //cout << it.currentKey() << ": " << it.current()->text() << endl;
-		if (it.currentKey().startsWith(cmd)) {
-			ret << it.currentKey();
-		}
-	}
+QStringList RS_Commands::complete(const QString& cmd) {
+    QStringList ret;
+    QHash<QString, RS2::ActionType>::const_iterator it = mainCommands.constBegin();
+    while (it != mainCommands.constEnd()) {
+        if (it.key().startsWith(cmd)) {
+            ret << it.key();
+        }
+        ++it;
+    }
 	ret.sort();
 
 	return ret;
@@ -213,27 +207,25 @@ RS_StringList RS_Commands::complete(const RS_String& cmd) {
  *
  * @return The translated command.
  */
-RS2::ActionType RS_Commands::cmdToAction(const RS_String& cmd) {
-    RS_String c = cmd.lower();
-    RS_String full = cmd;          // full command defaults to given command
+RS2::ActionType RS_Commands::cmdToAction(const QString& cmd) {
+    QString c = cmd.lower();
+    QString full = cmd;          // full command defaults to given command
     RS2::ActionType ret = RS2::ActionNone;
 
-	// find command:
-	RS2::ActionType* retPtr = mainCommands[cmd];
-	if (retPtr!=NULL) {
-		ret = *retPtr;
-	}
-	else {
-		retPtr = shortCommands[cmd];
-		if (retPtr!=NULL) {
-			ret = *retPtr;
-		}
+        // find command:
+//	RS2::ActionType* retPtr = mainCommands.value(cmd);
+        if ( mainCommands.contains(cmd) ) {
+                ret = mainCommands.value(cmd);
+        } else
+        if ( shortCommands.contains(cmd) ) {
+                ret = shortCommands.value(cmd);
 	}
 
-	// find full command to confirm to user:
-	RS_DictIterator<RS2::ActionType> it(mainCommands);
-    for (; it.current(); ++it) {
-		if (*it.current()==ret) {
+        // find full command to confirm to user:  //RLZ todo estoy aqui
+
+        QHash<QString, RS2::ActionType>::const_iterator it = mainCommands.constBegin();
+        while (it != mainCommands.constEnd()) {
+                if (it.value()==ret) {
 			if (RS_DialogFactory::instance()!=NULL) {
 				//if (RS_DIALOGFACTORY!=NULL) {
 					RS_DEBUG->print("RS_Commands::cmdToAction: "
@@ -250,10 +242,11 @@ RS2::ActionType RS_Commands::cmdToAction(const RS_String& cmd) {
 				RS_DEBUG->print("RS_Commands::cmdToAction: dialog "
 				  "factory instance is NULL");
 			}
-			break;
-		}
-	}
-	
+                        break;
+                }
+            ++it;
+        }
+
 	return ret;
 }
 
@@ -263,8 +256,8 @@ RS2::ActionType RS_Commands::cmdToAction(const RS_String& cmd) {
  * Gets the action for the given keycode. A keycode is a sequence
  * of key-strokes that is entered like hotkeys.
  */
-RS2::ActionType RS_Commands::keycodeToAction(const RS_String& code) {
-    RS_String c = code.lower();
+RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
+    QString c = code.lower();
     RS2::ActionType ret = RS2::ActionNone;
 
     // draw:
@@ -392,7 +385,7 @@ RS2::ActionType RS_Commands::keycodeToAction(const RS_String& code) {
 /**
  * @return translated command for the given English command.
  */
-RS_String RS_Commands::command(const RS_String& cmd) {
+QString RS_Commands::command(const QString& cmd) {
     if (cmd=="angle") {
         return tr("angle");
     } else if (cmd=="close") {
@@ -446,10 +439,10 @@ RS_String RS_Commands::command(const RS_String& cmd) {
  * @param action The action which wants to know.
  * @param str The string typically entered by the user.
  */
-bool RS_Commands::checkCommand(const RS_String& cmd, const RS_String& str,
+bool RS_Commands::checkCommand(const QString& cmd, const QString& str,
                                RS2::ActionType /*action*/) {
 
-    RS_String strl = str.lower();
+    QString strl = str.toLower();
 
     if (cmd=="angle") {
         if (strl==tr("angle") || strl==tr("ang", "angle") ||
@@ -564,7 +557,7 @@ bool RS_Commands::checkCommand(const RS_String& cmd, const RS_String& str,
 /**
  * @return the local translation for "Commands available:".
  */
-RS_String RS_Commands::msgAvailableCommands() {
+QString RS_Commands::msgAvailableCommands() {
     return tr("Available commands:");
 }
 
