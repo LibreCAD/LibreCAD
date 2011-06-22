@@ -29,7 +29,6 @@
 #include "rs_snapper.h"
 #include "rs_information.h"
 
-
 RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(RS_EntityContainer& container,
 		RS_GraphicView& graphicView)
 		:RS_PreviewActionInterface("Create Equidistant Polylines",
@@ -60,7 +59,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
 	}
 
 	RS_Vector offset(false);
-	RS_PtrList<RS_Entity*> addList;
+        QList<RS_Entity*> addList;
 
 	if (document!=NULL) {
 		document->startUndoCycle();
