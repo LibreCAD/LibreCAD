@@ -1023,7 +1023,7 @@ public:
 		case Executive:
 			ret = QPrinter::Executive;
 			break;
-        case A0:
+                case A0:
 			ret = QPrinter::A0;
 			break;
 		case A1:
