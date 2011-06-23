@@ -25,12 +25,8 @@
 **********************************************************************/
 
 #include <QFileInfo>
+#include <QTextStream>
 #include "rs_fileio.h"
-#include "rs_filtercxf.h"
-#include "rs_filterdxf.h"
-#include "rs_filterdxf1.h"
-#include "rs_textstream.h"
-
 
 RS_FileIO* RS_FileIO::uniqueInstance = NULL;
 
@@ -43,10 +39,10 @@ RS_FileIO* RS_FileIO::uniqueInstance = NULL;
  *        it can also be a polyline, text, ...
  * @param file Path and name of the file to import.
  */
-bool RS_FileIO::fileImport(RS_Graphic& graphic, const RS_String& file, 
+bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
 		RS2::FormatType type) {
 
-    RS_DEBUG->print("Trying to import file '%s'...", file.latin1());
+    RS_DEBUG->print("Trying to import file '%s'...", file.toLatin1().data());
 
     RS_FilterInterface* filter = NULL;
 
@@ -85,7 +81,7 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const RS_String& file,
 	else {
 		RS_DEBUG->print(RS_Debug::D_WARNING,
 			"RS_FileIO::fileImport: failed to import file: %s", 
-			file.latin1());
+                        file.toLatin1().data());
 	}
 	
 	return false;
@@ -99,14 +95,14 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const RS_String& file,
  *
  * @param file Path and name of the file to import.
  */
-bool RS_FileIO::fileExport(RS_Graphic& graphic, const RS_String& file,
+bool RS_FileIO::fileExport(RS_Graphic& graphic, const QString& file,
 		RS2::FormatType type) {
 
     RS_DEBUG->print("RS_FileIO::fileExport");
     //RS_DEBUG->print("Trying to export file '%s'...", file.latin1());
 
 	if (type==RS2::FormatUnknown) {
-    	RS_String extension;
+        QString extension;
         extension = QFileInfo(file).suffix().toLower();
 
 		if (extension=="dxf") {
@@ -131,11 +127,11 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const RS_String& file,
 /**
  * Detects and returns the file format of the given file.
  */
-RS2::FormatType RS_FileIO::detectFormat(const RS_String& file) {
+RS2::FormatType RS_FileIO::detectFormat(const QString& file) {
     RS2::FormatType type = RS2::FormatUnknown;
     QFileInfo fi(file);
 
-    RS_String ext = fi.suffix().toLower();
+    QString ext = fi.suffix().toLower();
     if (ext=="cxf") {
         type = RS2::FormatCXF;
     } else if (ext=="dxf") {
@@ -145,15 +141,15 @@ RS2::FormatType RS_FileIO::detectFormat(const RS_String& file) {
         if (!f.open(QIODevice::ReadOnly)) {
             // Error opening file:
             RS_DEBUG->print(RS_Debug::D_WARNING,
-				"RS_FileIO::detectFormat: Cannot open file: %s", file.latin1());
+                                "RS_FileIO::detectFormat: Cannot open file: %s", file.toLatin1().data());
             type = RS2::FormatUnknown;
         } else {
             RS_DEBUG->print("RS_FileIO::detectFormat: "
 				"Successfully opened DXF file: %s",
-                file.latin1());
+                file.toLatin1().data());
 
-            RS_TextStream ts(&f);
-            RS_String line;
+            QTextStream ts(&f);
+            QString line;
             int c=0;
             while (!ts.atEnd() && ++c<100) {
                 line = ts.readLine();

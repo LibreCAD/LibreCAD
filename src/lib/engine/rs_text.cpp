@@ -31,7 +31,6 @@
 #include "rs_fontlist.h"
 #include "rs_insert.h"
 
-
 /**
  * Constructor.
  */
@@ -50,7 +49,7 @@ RS_Text::RS_Text(RS_EntityContainer* parent,
  * Sets a new text. The entities representing the 
  * text are updated.
  */
-void RS_Text::setText(const RS_String& t) {
+void RS_Text::setText(const QString& t) {
     data.text = t;
 
     // handle some special flags embedded in the text:
@@ -230,8 +229,8 @@ void RS_Text::update() {
                     break;
 
                 case 'S': {
-                        RS_String up;
-                        RS_String dw;
+                        QString up;
+                        QString dw;
                         //letterPos += letterSpace;
 
                         // get upper string:
@@ -315,7 +314,7 @@ void RS_Text::update() {
 					RS_DEBUG->print("RS_Text::update: insert a "
 					  "letter at pos: %f/%f", letterPos.x, letterPos.y);
 
-                    RS_InsertData d(RS_String(data.text.at(i)),
+                    RS_InsertData d(QString(data.text.at(i)),
                                     letterPos,
                                     RS_Vector(1.0, 1.0),
                                     0.0,

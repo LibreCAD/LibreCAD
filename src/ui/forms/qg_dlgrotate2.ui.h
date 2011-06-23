@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+#include "rs_math.h"
+
 void QG_DlgRotate2::init() {
     RS_SETTINGS->beginGroup("/Modify");
     copies = RS_SETTINGS->readEntry("/Rotate2Copies", "10");

@@ -27,12 +27,12 @@
 #ifndef RS_FILEIO_H
 #define RS_FILEIO_H
 
-#include "rs_entitycontainer.h"
+#include <QList>
 #include "rs_filterinterface.h"
-#include "rs_ptrlist.h"
 
 #define RS_FILEIO RS_FileIO::instance()
 
+//RLZ: TODO destructor for clear filterList
 /**
  * API Class for importing files. 
  *
@@ -63,7 +63,7 @@ public:
     /**
      * @return List of registered filters.
      */
-	RS_PtrList<RS_FilterInterface> getFilterList() {
+        QList<RS_FilterInterface*> getFilterList() {
 		return filterList;
 	}
 
@@ -71,13 +71,11 @@ public:
 	 * @return Filter which can import the given file type.
 	 */
 	RS_FilterInterface* getImportFilter(RS2::FormatType t) {
-		for (RS_FilterInterface* f=filterList.first(); 
-			f!=NULL; f=filterList.next()) {
-		
-			if (f->canImport(t)) {
-				return f;
-			}
-		}
+                for (int i = 0; i < filterList.size(); ++i) {
+                    if (filterList.at(i)->canImport(t)) {
+                                return filterList.at(i);
+                        }
+                }
 
 		return NULL;
 	}
@@ -86,28 +84,26 @@ public:
 	 * @return Filter which can export the given file type.
 	 */
 	RS_FilterInterface* getExportFilter(RS2::FormatType t) {
-		for (RS_FilterInterface* f=filterList.first(); 
-			f!=NULL; f=filterList.next()) {
-		
-			if (f->canExport(t)) {
-				return f;
-			}
-		}
+                for (int i = 0; i < filterList.size(); ++i) {
+                    if (filterList.at(i)->canExport(t)) {
+                                return filterList.at(i);
+                        }
+                }
 
 		return NULL;
 	}
 
-    bool fileImport(RS_Graphic& graphic, const RS_String& file, 
+    bool fileImport(RS_Graphic& graphic, const QString& file,
 		RS2::FormatType type = RS2::FormatUnknown);
 		
-    bool fileExport(RS_Graphic& graphic, const RS_String& file,
+    bool fileExport(RS_Graphic& graphic, const QString& file,
 		RS2::FormatType type = RS2::FormatUnknown);
 
-	RS2::FormatType detectFormat(const RS_String& file);
+        RS2::FormatType detectFormat(const QString& file);
 
 protected:
     static RS_FileIO* uniqueInstance;
-    RS_PtrList<RS_FilterInterface> filterList;
+    QList<RS_FilterInterface*> filterList;
 }
 ;
 
