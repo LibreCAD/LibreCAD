@@ -33,13 +33,10 @@
 #include "rs_block.h"
 #include "rs_color.h"
 #include "rs_dimension.h"
-#include "rs_hatch.h"
 #include "rs_insert.h"
-#include "rs_layer.h"
 #include "rs_layer.h"
 #include "rs_leader.h"
 #include "rs_polyline.h"
-#include "rs_spline.h"
 #include "rs_solid.h"
 #include "rs_text.h"
 #include "rs_image.h"
@@ -47,7 +44,8 @@
 #include "dl_creationinterface.h"
 #include "dl_dxf.h"
 
-
+class RS_Spline;
+class RS_Hatch;
 class DL_WriterA;
 
 /**

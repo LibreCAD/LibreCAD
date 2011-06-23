@@ -41,7 +41,10 @@
 #include "rs_hatch.h"
 #include "rs_image.h"
 #include "rs_leader.h"
+#include "rs_spline.h"
 #include "rs_system.h"
+
+#include "rs_valuelist.h"
 
 #include <qtextcodec.h>
 
