@@ -27,12 +27,16 @@
 #ifndef RS_MODIFICATION_H
 #define RS_MODIFICATION_H
 
-#include "rs_entitycontainer.h"
-#include "rs_graphicview.h"
-#include "rs_line.h"
-#include "rs_ptrlist.h"
-
-
+#include "rs_vector.h"
+#include "rs_pen.h"
+class RS_AtomicEntity;
+class RS_Entity;
+class RS_EntityContainer;
+class RS_Text;
+class RS_Polyline;
+class RS_Document;
+class RS_Graphic;
+class RS_GraphicView;
 
 /**
  * Holds the data needed for move modifications.
@@ -157,7 +161,7 @@ public:
  */
 class RS_AttributesData {
 public:
-	RS_String layer;
+        QString layer;
 	RS_Pen pen;
 	bool changeLayer;
 	bool changeColor;
@@ -175,7 +179,7 @@ public:
 		double factor,
 		double angle,
 		bool asInsert,
-		const RS_String& blockName) {
+                const QString& blockName) {
 
 		this->insertionPoint = insertionPoint;
 		this->factor = factor;
@@ -193,7 +197,7 @@ public:
 	//! Paste as an insert rather than individual entities.
 	bool asInsert;
 	//! Name of the block to create or an empty string to assign a new auto name.
-	RS_String blockName;
+        QString blockName;
 };
 
 
@@ -256,7 +260,7 @@ public:
 
 	bool explode();
 	bool explodeTextIntoLetters();
-	bool explodeTextIntoLetters(RS_Text* text, RS_PtrList<RS_Entity>& addList);
+        bool explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& addList);
     bool moveRef(RS_MoveRefData& data);
 
     bool splitPolyline(RS_Polyline& polyline,
@@ -277,7 +281,7 @@ public:
 
 private:
     void deselectOriginals(bool remove);
-    void addNewEntities(RS_PtrList<RS_Entity>& addList);
+    void addNewEntities(QList<RS_Entity*>& addList);
 
 protected:
     RS_EntityContainer* container;

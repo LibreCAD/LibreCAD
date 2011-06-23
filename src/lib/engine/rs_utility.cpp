@@ -32,8 +32,8 @@
  * Converts a double to a string cutting away unnecessary 0's.
  * e.g. 2.70000  -> 2.7
  */
-RS_String RS_Utility::doubleToString(double value, int precision) {
-    RS_String ret;
+QString RS_Utility::doubleToString(double value, int precision) {
+    QString ret;
 
     ret.setNum(value, 'f', precision);
 
