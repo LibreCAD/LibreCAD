@@ -164,7 +164,6 @@ HEADERS = \
     src/lib/engine/rs_stringlist.h \
     src/lib/engine/rs_system.h \
     src/lib/engine/rs_text.h \
-    src/lib/engine/rs_textstream.h \
     src/lib/engine/rs_undo.h \
     src/lib/engine/rs_undoable.h \
     src/lib/engine/rs_undocycle.h \
@@ -958,6 +957,7 @@ TRANSLATIONS = ts/librecad_cs.ts \
     ts/librecad_pt.ts \
     ts/librecad_ru.ts \
     ts/librecad_sk.ts \
+    ts/librecad_sv.ts \
     ts/librecad_tr.ts \
     ts/librecad_uk.ts \
     ts/librecad_zh_cn.ts \

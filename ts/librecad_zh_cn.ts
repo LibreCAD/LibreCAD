@@ -2,6 +2,45 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="zh_CN">
 <context>
+    <name>QC_ActionGetEnt</name>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="37"/>
+        <source>Select object:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="44"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetPoint</name>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="38"/>
+        <source>Specify a point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="127"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetSelect</name>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="38"/>
+        <source>Select objects:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="45"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+</context>
+<context>
     <name>QC_ApplicationWindow</name>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="188"/>
@@ -41,7 +80,7 @@
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="664"/>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>工具栏(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="693"/>
@@ -341,24 +380,24 @@ Auto-save disabled.</source>
         <translation>退出程序...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2897"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2912"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2901"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2916"/>
         <source>About...</source>
         <translation>关于...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2904"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2919"/>
         <source>Version: %1</source>
-        <translation type="unfinished">版本: %1</translation>
+        <translation>版本: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2906"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2921"/>
         <source>SCM Revision: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>SCM 版本: %1</translation>
     </message>
     <message>
         <source>Version: %1 %2</source>
@@ -369,46 +408,46 @@ Auto-save disabled.</source>
         <translation type="obsolete">SVN修订: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2908"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2923"/>
         <source>Compiled on: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>编译时间: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2910"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2925"/>
         <source>Program Icons Supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation>程序图标提供者</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2911"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2926"/>
         <source>Splash and Logo supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation>启动界面及标识提供者</translation>
     </message>
     <message>
         <source>Date: %1</source>
         <translation type="obsolete">日期: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2913"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2928"/>
         <source>Modules: %1</source>
         <translation>模块: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2915"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2930"/>
         <source>Main Website : </source>
-        <translation type="unfinished"></translation>
+        <translation>主页: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2920"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2935"/>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation type="unfinished"></translation>
+        <translation>请捐助LibreCAD项目以帮助维护源码和网站.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2955"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2970"/>
         <source>Help</source>
         <translation>帮助</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2968"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2983"/>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation>错误,无法自文件系统找到帮助文件.</translation>
     </message>
@@ -4439,7 +4478,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
 <context>
     <name>QG_LayerBox</name>
     <message>
-        <location filename="../src/ui/qg_layerbox.cpp" line="69"/>
+        <location filename="../src/ui/qg_layerbox.cpp" line="70"/>
         <source>- Unchanged -</source>
         <translation>- 无变化 -</translation>
     </message>
@@ -5515,7 +5554,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/main/main.cpp" line="214"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>加载...</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
@@ -5623,6 +5662,28 @@ Do you want to replace it?</source>
         <location filename="../src/ui/qg_filedialog.cpp" line="189"/>
         <source>Open Drawing</source>
         <translation>打开图纸</translation>
+    </message>
+    <message>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="674"/>
+        <source>enter an integer number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="678"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="695"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="712"/>
+        <source>LibreCAD query</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="691"/>
+        <source>enter a number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="708"/>
+        <source>enter text</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5749,7 +5810,7 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksRemove</name>
     <message>
-        <location filename="../src/actions/rs_actionblocksremove.cpp" line="43"/>
+        <location filename="../src/actions/rs_actionblocksremove.cpp" line="44"/>
         <source>&amp;Remove Block</source>
         <translation>删除图块(&amp;R)</translation>
     </message>
