@@ -1557,7 +1557,7 @@ std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec) {
     //<< RS_Units::unit2string (ec.unit) << "\n";
     if (ec.getLayer()!=NULL) {
         os << tab << "Layer[" << id << "]: "
-        << ec.getLayer()->getName().latin1() << "\n";
+        << ec.getLayer()->getName().toLatin1().data() << "\n";
     } else {
         os << tab << "Layer[" << id << "]: <NULL>\n";
     }
