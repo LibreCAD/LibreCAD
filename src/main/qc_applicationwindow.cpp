@@ -37,6 +37,8 @@
 
 #include <fstream>
 
+#include <QPrinter>
+#include <QPRintDialog>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTimer>
@@ -2522,41 +2524,43 @@ void QC_ApplicationWindow::slotFilePrint() {
     }
 
     statusBar()->showMessage(tr("Printing..."));
-    QPrinter* printer;
-    printer = new QPrinter(QPrinter::HighResolution);
+    QPrinter printer;
+
+    printer.setResolution(QPrinter::HighResolution);
     bool landscape = false;
-    printer->setPageSize(RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape)));
+    printer.setPaperSize(RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape)));
     if (landscape) {
-        printer->setOrientation(QPrinter::Landscape);
+        printer.setOrientation(QPrinter::Landscape);
     } else {
-        printer->setOrientation(QPrinter::Portrait);
+        printer.setOrientation(QPrinter::Portrait);
     }
 
     RS_SETTINGS->beginGroup("/Print");
-    printer->setOutputFileName(RS_SETTINGS->readEntry("/FileName", ""));
-    printer->setColorMode((QPrinter::ColorMode)RS_SETTINGS->readNumEntry("/ColorMode", (int)QPrinter::Color));
-    printer->setOutputToFile((bool)RS_SETTINGS->readNumEntry("/PrintToFile",
+    printer.setOutputFileName(RS_SETTINGS->readEntry("/FileName", ""));
+    printer.setColorMode((QPrinter::ColorMode)RS_SETTINGS->readNumEntry("/ColorMode", (int)QPrinter::Color));
+    printer.setOutputToFile((bool)RS_SETTINGS->readNumEntry("/PrintToFile",
                              0));
     RS_SETTINGS->endGroup();
 
     // printer setup:
-    if (printer->setup(this)) {
-        //printer->setOutputToFile(true);
-        //printer->setOutputFileName(outputFile);
+    QPrintDialog printDialog(&printer, this);
+    if (printDialog.exec() == QDialog::Accepted) {
+        //printer.setOutputToFile(true);
+        //printer.setOutputFileName(outputFile);
 
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-        printer->setFullPage(true);
+        printer.setFullPage(true);
 
-        RS_PainterQt* painter = new RS_PainterQt(printer);
+        RS_PainterQt* painter = new RS_PainterQt(&printer);
         painter->setDrawingMode(w->getGraphicView()->getDrawingMode());
 
-        RS_StaticGraphicView gv(printer->width(), printer->height(), painter);
+        RS_StaticGraphicView gv(printer.width(), printer.height(), painter);
         gv.setPrinting(true);
         gv.setBorders(0,0,0,0);
 
-        double fx = (double)printer->width() / printer->widthMM()
+        double fx = (double)printer.width() / printer.widthMM()
                     * RS_Units::getFactorToMM(graphic->getUnit());
-        double fy = (double)printer->height() / printer->heightMM()
+        double fy = (double)printer.height() / printer.heightMM()
                     * RS_Units::getFactorToMM(graphic->getUnit());
 
         double f = (fx+fy)/2;
@@ -2575,14 +2579,12 @@ void QC_ApplicationWindow::slotFilePrint() {
         painter->end();
 
         RS_SETTINGS->beginGroup("/Print");
-        RS_SETTINGS->writeEntry("/PrintToFile", (int)printer->outputToFile());
-        RS_SETTINGS->writeEntry("/ColorMode", (int)printer->colorMode());
-        RS_SETTINGS->writeEntry("/FileName", printer->outputFileName());
+        RS_SETTINGS->writeEntry("/PrintToFile", (int)printer.outputToFile());
+        RS_SETTINGS->writeEntry("/ColorMode", (int)printer.colorMode());
+        RS_SETTINGS->writeEntry("/FileName", printer.outputFileName());
         RS_SETTINGS->endGroup();
         QApplication::restoreOverrideCursor();
     }
-
-    delete printer;
 
     statusBar()->showMessage(tr("Printing complete"), 2000);
 }
