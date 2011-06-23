@@ -32,6 +32,39 @@
     </message>
 </context>
 <context>
+    <name>QC_ActionGetEnt</name>
+    <message>
+        <source>Select object:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetPoint</name>
+    <message>
+        <source>Specify a point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetSelect</name>
+    <message>
+        <source>Select objects:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+</context>
+<context>
     <name>QC_ApplicationWindow</name>
     <message>
         <source>&amp;File</source>
@@ -6656,6 +6689,22 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>enter an integer number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LibreCAD query</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>enter a number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>enter text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -2,6 +2,45 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="id_ID">
 <context>
+    <name>QC_ActionGetEnt</name>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="37"/>
+        <source>Select object:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="44"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Batal</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetPoint</name>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="38"/>
+        <source>Specify a point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="127"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Batal</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetSelect</name>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="38"/>
+        <source>Select objects:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="45"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Batal</translation>
+    </message>
+</context>
+<context>
     <name>QC_ApplicationWindow</name>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="188"/>
@@ -334,22 +373,22 @@ Auto-save disabled.</source>
         <translation>Menutup aplikasi...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2897"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2912"/>
         <source>None</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2901"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2916"/>
         <source>About...</source>
         <translation>Tentang...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2904"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2919"/>
         <source>Version: %1</source>
         <translation type="unfinished">Versi: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2906"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2921"/>
         <source>SCM Revision: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -358,17 +397,17 @@ Auto-save disabled.</source>
         <translation type="obsolete">Versi: %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2908"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2923"/>
         <source>Compiled on: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2910"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2925"/>
         <source>Program Icons Supplied by</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2911"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2926"/>
         <source>Splash and Logo supplied by</source>
         <translation type="unfinished"></translation>
     </message>
@@ -377,27 +416,27 @@ Auto-save disabled.</source>
         <translation type="obsolete">Tanggal: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2913"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2928"/>
         <source>Modules: %1</source>
         <translation>Modul: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2915"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2930"/>
         <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2920"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2935"/>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2955"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2970"/>
         <source>Help</source>
         <translation>Bantuan</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2968"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2983"/>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4422,7 +4461,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
 <context>
     <name>QG_LayerBox</name>
     <message>
-        <location filename="../src/ui/qg_layerbox.cpp" line="69"/>
+        <location filename="../src/ui/qg_layerbox.cpp" line="70"/>
         <source>- Unchanged -</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5602,6 +5641,28 @@ Do you want to replace it?</source>
         <source>Open Drawing</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="674"/>
+        <source>enter an integer number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="678"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="695"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="712"/>
+        <source>LibreCAD query</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="691"/>
+        <source>enter a number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="708"/>
+        <source>enter text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -5727,7 +5788,7 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksRemove</name>
     <message>
-        <location filename="../src/actions/rs_actionblocksremove.cpp" line="43"/>
+        <location filename="../src/actions/rs_actionblocksremove.cpp" line="44"/>
         <source>&amp;Remove Block</source>
         <translation type="unfinished"></translation>
     </message>

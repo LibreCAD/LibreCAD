@@ -28,13 +28,8 @@
 #ifndef RS_SETTINGS_H
 #define RS_SETTINGS_H
 
-#include <iostream>
-#include <qglobal.h>
-
-#include <qsettings.h>
-
-#include "rs_string.h"
-#include "rs_dict.h"
+#include <QHash>
+#include <QSettings>
 
 #define RS_SETTINGS RS_Settings::instance()
 
@@ -67,38 +62,38 @@ public:
      * @param companyKey Company Key
      * @param appKey Application key
      */
-    void init(const RS_String& companyKey, const RS_String& appKey);
+    void init(const QString& companyKey, const QString& appKey);
 
-    void beginGroup(const RS_String& group);
+    void beginGroup(const QString& group);
     void endGroup();
 
-    bool writeEntry(const RS_String& key, int value);
-    bool writeEntry(const RS_String& key, double value);
-    bool writeEntry(const RS_String& key, const QVariant& value);
-    bool writeEntry(const RS_String& key, const QString& value);
-    RS_String readEntry(const RS_String& key,
-                        const RS_String& def = RS_String::null,
+    bool writeEntry(const QString& key, int value);
+    bool writeEntry(const QString& key, double value);
+    bool writeEntry(const QString& key, const QVariant& value);
+    bool writeEntry(const QString& key, const QString& value);
+    QString readEntry(const QString& key,
+                        const QString& def = QString::null,
                         bool* ok = 0);
-    QByteArray readByteArrayEntry(const RS_String& key,
-                        const RS_String& def = RS_String::null,
+    QByteArray readByteArrayEntry(const QString& key,
+                        const QString& def = QString::null,
                         bool* ok = 0);
-    int readNumEntry(const RS_String& key, int def=0, bool* ok=0);
+    int readNumEntry(const QString& key, int def=0, bool* ok=0);
 	
 
 public:
     ~RS_Settings();
 
 private:
-	QVariant readEntryCache(const RS_String& key);
-	void addToCache(const RS_String& key, const QVariant& value);
+        QVariant readEntryCache(const QString& key);
+        void addToCache(const QString& key, const QVariant& value);
 
 protected:
     static RS_Settings* uniqueInstance;
 
-	RS_Dict<QVariant> cache;
-    RS_String companyKey;
-    RS_String appKey;
-    RS_String group;
+    QHash<QString, QVariant*> cache;
+    QString companyKey;
+    QString appKey;
+    QString group;
     bool initialized;
 };
 

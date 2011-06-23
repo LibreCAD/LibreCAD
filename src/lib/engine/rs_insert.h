@@ -30,8 +30,7 @@
 
 #include "rs_entitycontainer.h"
 
-#include "rs_block.h"
-#include "rs_graphic.h"
+class RS_BlockList;
 
 /**
  * Holds the data that defines an insert.
@@ -61,7 +60,7 @@ public:
      *    often the case since you might want to adjust attributes
      *    after creating an insert entity.
      */
-    RS_InsertData(const RS_String& name,
+    RS_InsertData(const QString& name,
                   RS_Vector insertionPoint,
                   RS_Vector scaleFactor,
                   double angle,
@@ -84,11 +83,11 @@ public:
 
     friend std::ostream& operator << (std::ostream& os,
                                       const RS_InsertData& d) {
-        os << "(" << d.name.latin1() << ")";
+        os << "(" << d.name.toLatin1().data() << ")";
         return os;
     }
 
-    RS_String name;
+    QString name;
     RS_Vector insertionPoint;
     RS_Vector scaleFactor;
     double angle;
@@ -145,11 +144,11 @@ public:
 
     virtual void update();
 
-    RS_String getName() const {
+    QString getName() const {
         return data.name;
     }
 
-	void setName(const RS_String& newName) {
+        void setName(const QString& newName) {
 		data.name = newName;
 		update();
 	}

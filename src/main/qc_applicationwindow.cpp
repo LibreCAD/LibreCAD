@@ -168,18 +168,28 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     //setFocusPolicy(WheelFocus);
 }
 
+/**
+  * Find a menu entry in the current menu list. This function will try to recursivly find the menu
+  * searchMenu for example foo/bar
+  * thisMenuList list of Widgets
+  * currentEntry only used internally dueing recursion
+  * returns 0 when no menu was found
+  */
+QMenu *QC_ApplicationWindow::findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry) {
+    if (searchMenu==currentEntry)
+        return ( QMenu *)thisMenuList.at(0)->parent();
 
-QMenu *QC_ApplicationWindow::findMenu(QStringList *treemenu) {
-    QMenu *atMenu = 0;
-    //find menu
-    if (!treemenu->isEmpty()) {
-        atMenu = menuBar()->findChild<QMenu *>(treemenu->takeFirst());
+    QList<QObject*>::const_iterator i=thisMenuList.begin();
+    while (i != thisMenuList.end()) {
+        if ((*i)->inherits ("QMenu")) {
+            QMenu *ii=(QMenu*)*i;
+            if (QMenu *foundMenu=findMenu(searchMenu, ii->children(), currentEntry+"/"+ii->objectName().replace("&", ""))) {
+                return foundMenu;
+            }
+        }
+        i++;
     }
-    //find submenus
-    while (!treemenu->isEmpty()) {
-        atMenu = atMenu->findChild<QMenu *>(treemenu->takeFirst());
-    }
-    return atMenu;
+    return 0;
 }
 
 /**
@@ -187,7 +197,6 @@ QMenu *QC_ApplicationWindow::findMenu(QStringList *treemenu) {
  */
 void QC_ApplicationWindow::loadPlugins() {
 
-    QMenu* pluginMenu = new QMenu(tr("&Plugins"));
     RS_StringList lst = RS_SYSTEM->getDirectoryList("plugins");
 
     for (int i = 0; i < lst.size(); ++i) {
@@ -200,12 +209,29 @@ void QC_ApplicationWindow::loadPlugins() {
                 if (pluginInterface) {
                     QAction *actpl = new QAction(pluginInterface->name(), plugin);
                     connect(actpl, SIGNAL(triggered()), this, SLOT(execPlug()));
-                    QStringList treemenu = pluginInterface->menu().split('/', QString::SkipEmptyParts);
-                    QMenu *atMenu = findMenu(&treemenu);
-                    if (atMenu)
+                    QMenu *atMenu = findMenu("/"+pluginInterface->menu(), menuBar()->children(), "");
+                    if (atMenu) {
                         atMenu->addAction(actpl);
-                    else
-                        pluginMenu->addAction(actpl);
+                    } else {
+                        QStringList treemenu = pluginInterface->menu().split('/', QString::SkipEmptyParts);
+                        QString currentLevel="";
+                        QMenu *parentMenu=0;
+                        do {
+                            QString menuName=treemenu.at(0); treemenu.removeFirst();
+                            currentLevel=currentLevel+"/"+menuName;
+                            atMenu = findMenu(currentLevel, menuBar()->children(), "");
+                            if (atMenu==0) {
+                                if (parentMenu==0) {
+                                    parentMenu=menuBar()->addMenu(menuName);
+                                } else {
+                                    parentMenu=parentMenu->addMenu(menuName);
+                                }
+                                parentMenu->setName(menuName);
+                            }
+                        } while(treemenu.size()>0);
+                        parentMenu->addAction(actpl);
+                    }
+
                 }
             } else {
                 QMessageBox::information(this, "Info", pluginLoader.errorString());
@@ -213,10 +239,6 @@ void QC_ApplicationWindow::loadPlugins() {
             }
         }
     }
-    if (pluginMenu->actions().isEmpty())
-        delete (pluginMenu);
-    else
-        menuBar()->addMenu(pluginMenu);
 }
 
 /**
