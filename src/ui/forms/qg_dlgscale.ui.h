@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+#include "rs_math.h"
+
 void QG_DlgScale::init() {
     RS_SETTINGS->beginGroup("/Modify");
     copies = RS_SETTINGS->readEntry("/ScaleCopies", "10");

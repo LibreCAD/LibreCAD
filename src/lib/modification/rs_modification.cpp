@@ -26,12 +26,14 @@
 
 #include "rs_modification.h"
 
+#include "rs_graphicview.h"
 #include "rs_clipboard.h"
 #include "rs_creation.h"
-#include "rs_entity.h"
+//#include "rs_entity.h"
 #include "rs_graphic.h"
 #include "rs_information.h"
 #include "rs_insert.h"
+#include "rs_block.h"
 #include "rs_polyline.h"
 #include "rs_text.h"
 #include "rs_layer.h"
@@ -107,8 +109,7 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data) {
         return false;
     }
 
-    RS_PtrList<RS_Entity> addList;
-    addList.setAutoDelete(false);
+    QList<RS_Entity*> addList;
 
     if (document!=NULL) {
         document->startUndoCycle();
@@ -912,7 +913,7 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
 
 RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
         RS_AtomicEntity& segment, const RS_Vector& node1, const RS_Vector& node2) {
-
+    Q_UNUSED(segment);
     RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween");
 
     if (container==NULL) {
@@ -1394,8 +1395,7 @@ bool RS_Modification::move(RS_MoveData& data) {
         return false;
     }
 
-    RS_PtrList<RS_Entity> addList;
-    addList.setAutoDelete(false);
+    QList<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
@@ -1457,8 +1457,7 @@ bool RS_Modification::rotate(RS_RotateData& data) {
         return false;
     }
 
-    RS_PtrList<RS_Entity> addList;
-    addList.setAutoDelete(false);
+    QList<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
@@ -1519,8 +1518,7 @@ bool RS_Modification::scale(RS_ScaleData& data) {
         return false;
     }
 
-    RS_PtrList<RS_Entity> addList;
-    addList.setAutoDelete(false);
+    QList<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
@@ -1580,8 +1578,7 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
         return false;
     }
 
-    RS_PtrList<RS_Entity> addList;
-    addList.setAutoDelete(false);
+    QList<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
@@ -1641,8 +1638,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
         return false;
     }
 
-    RS_PtrList<RS_Entity> addList;
-    addList.setAutoDelete(false);
+    QList<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
@@ -1707,8 +1703,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
         return false;
     }
 
-    RS_PtrList<RS_Entity> addList;
-    addList.setAutoDelete(false);
+    QList<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
@@ -1821,14 +1816,14 @@ void RS_Modification::deselectOriginals(bool remove
  *
  * @param addList Entities to add.
  */
-void RS_Modification::addNewEntities(RS_PtrList<RS_Entity>& addList) {
-    for (RS_Entity* e=addList.first();
-            e!=NULL;
-            e=addList.next()) {
-        if (e!=NULL) {
-            container->addEntity(e);
+void RS_Modification::addNewEntities(QList<RS_Entity*>& addList) {
+    for (int i = 0; i < addList.size(); ++i) {
+/*        if (addList.at(i) == "Jane")
+            cout << "Found Jane at position " << i << endl;*/
+        if (addList.at(i) != NULL) {
+            container->addEntity(addList.at(i));
             if (document!=NULL && handleUndo) {
-                document->addUndoable(e);
+                document->addUndoable(addList.at(i));
             }
             //if (graphicView!=NULL) {
             //    graphicView->drawEntity(e);
@@ -2170,8 +2165,7 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
         return false;
     }
 
-    RS_PtrList<RS_Entity> addList;
-    addList.setAutoDelete(false);
+    QList<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
@@ -2722,8 +2716,7 @@ bool RS_Modification::explode() {
         return false;
     }
 
-    RS_PtrList<RS_Entity> addList;
-    addList.setAutoDelete(false);
+    QList<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
@@ -2833,8 +2826,7 @@ bool RS_Modification::explodeTextIntoLetters() {
         return false;
     }
 
-    RS_PtrList<RS_Entity> addList;
-    addList.setAutoDelete(false);
+    QList<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
@@ -2870,7 +2862,7 @@ bool RS_Modification::explodeTextIntoLetters() {
 
 
 
-bool RS_Modification::explodeTextIntoLetters(RS_Text* text, RS_PtrList<RS_Entity>& addList) {
+bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& addList) {
 
     if (text==NULL) {
         return false;
@@ -2946,8 +2938,7 @@ bool RS_Modification::moveRef(RS_MoveRefData& data) {
         return false;
     }
 
-    RS_PtrList<RS_Entity> addList;
-    addList.setAutoDelete(false);
+    QList<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
