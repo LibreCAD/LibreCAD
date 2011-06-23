@@ -46,7 +46,7 @@ public:
                 const RS_Vector& uVector,
 				const RS_Vector& vVector,
 				const RS_Vector& size,
-				const RS_String& file,
+                                const QString& file,
 				int brightness,
 				int contrast,
 				int fade) {
@@ -79,7 +79,7 @@ public:
 	/** Image size in pixel. */
 	RS_Vector size;
 	/** Path to image file. */
-	RS_String file;
+        QString file;
 	/** Brightness (0..100, default: 50). */
 	int brightness;
 	/** Contrast (0..100, default: 50). */
@@ -127,12 +127,12 @@ public:
     }
 
 	/** @return File name of the image. */
-	RS_String getFile() const {
+        QString getFile() const {
 		return data.file;
 	}
 	
 	/** Sets the file name of the image.  */
-	void setFile(const RS_String& file) {
+        void setFile(const QString& file) {
 		data.file = file;
 	}
 

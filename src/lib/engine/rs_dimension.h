@@ -62,8 +62,8 @@ public:
                      RS2::HAlign halign,
                      RS2::TextLineSpacingStyle lineSpacingStyle,
                      double lineSpacingFactor,
-                     RS_String text,
-                     RS_String style,
+                     QString text,
+                     QString style,
                      double angle) {
         this->definitionPoint = definitionPoint;
         this->middleOfText = middleOfText;
@@ -107,9 +107,9 @@ public:
     * or "<>" for the actual measurement or " " (one blank space) 
     * for supressing the text. 
     */
-    RS_String text;
+    QString text;
     /** Dimension style name */
-    RS_String style;
+    QString style;
     /** Rotation angle of dimension text away from default orientation */
     double angle;
 };
@@ -135,14 +135,14 @@ public:
 	RS_Vector getNearestRef(const RS_Vector& coord, double* dist);
 	RS_Vector getNearestSelectedRef(const RS_Vector& coord, double* dist);
 
-    RS_String getLabel(bool resolve=true);
-	void setLabel(const RS_String& l);
+    QString getLabel(bool resolve=true);
+        void setLabel(const QString& l);
 
     /**
      * Needs to be implemented by the dimension class to return the
      * measurement of the dimension (e.g. 10.5 or 15'14").
      */
-    virtual RS_String getMeasuredLabel() = 0;
+    virtual QString getMeasuredLabel() = 0;
 
     /**
      * Must be overwritten by implementing dimension entity class
@@ -177,11 +177,11 @@ public:
         return data.lineSpacingFactor;
     }
 
-    RS_String getText() {
+    QString getText() {
         return data.text;
     }
 
-    RS_String getStyle() {
+    QString getStyle() {
         return data.style;
     }
 
@@ -195,7 +195,7 @@ public:
     double getDimensionLineGap();
     double getTextHeight();
 	
-	double getGraphicVariable(const RS_String& key, double defMM, int code);
+        double getGraphicVariable(const QString& key, double defMM, int code);
 
 	virtual double getLength() {
 		return -1.0;
