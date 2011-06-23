@@ -32,7 +32,6 @@
 #include <QFileInfo>
 #include "rs_settings.h"
 #include "rs_system.h"
-#include "rs_translator.h"
 #include "rs.h"
 
 RS_System* RS_System::uniqueInstance = NULL;
@@ -360,7 +359,7 @@ void RS_System::initAllLanguagesList() {
  */
 void RS_System::loadTranslation(const QString& lang, const QString& langCmd) {
 //unused    static RS_Translator* tQt = NULL;
-    static RS_Translator* tLibreCAD = NULL;
+    static QTranslator* tLibreCAD = NULL;
 
     QString langFile;
 
