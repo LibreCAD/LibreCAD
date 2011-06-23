@@ -27,9 +27,8 @@
 #ifndef RS_INFOAREA_H
 #define RS_INFOAREA_H
 
+#include <QVector>
 #include "rs_vector.h"
-#include "rs_valuevector.h"
-
 
 
 /**
@@ -61,7 +60,7 @@ public:
 private:
 	double calcSubArea(const RS_Vector& p1, const RS_Vector& p2);
 
-	RS_ValueVector<RS_Vector> thePoints;
+        QVector<RS_Vector> thePoints;
 	double baseY;
 	double area;
 	double circumference;

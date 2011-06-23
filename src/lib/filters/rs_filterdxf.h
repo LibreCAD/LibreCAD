@@ -32,7 +32,6 @@
 
 #include "rs_block.h"
 #include "rs_color.h"
-#include "rs_dict.h"
 #include "rs_dimension.h"
 #include "rs_hatch.h"
 #include "rs_insert.h"
