@@ -114,7 +114,7 @@ public:
 	
     virtual RS_VectorSolutions getRefPoints();
 
-    virtual RS_String getMeasuredLabel();
+    virtual QString getMeasuredLabel();
 
     virtual void update(bool autoText=false);
 

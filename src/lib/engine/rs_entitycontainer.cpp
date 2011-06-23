@@ -637,8 +637,8 @@ void RS_EntityContainer::updateInserts() {
  * Renames all inserts with name 'oldName' to 'newName'. This is
  *   called after a block was rename to update the inserts.
  */
-void RS_EntityContainer::renameInserts(const RS_String& oldName,
-                                       const RS_String& newName) {
+void RS_EntityContainer::renameInserts(const QString& oldName,
+                                       const QString& newName) {
     RS_DEBUG->print("RS_EntityContainer::renameInserts()");
 
     //for (RS_Entity* e=firstEntity(RS2::ResolveNone);

@@ -60,7 +60,7 @@ RS_VectorSolutions RS_DimLinear::getRefPoints() {
  * @return Automatically created label for the default 
  * measurement of this dimension.
  */
-RS_String RS_DimLinear::getMeasuredLabel() {
+QString RS_DimLinear::getMeasuredLabel() {
     // direction of dimension line
     RS_Vector dirDim;
     dirDim.setPolar(100.0, edata.angle);
@@ -78,7 +78,7 @@ RS_String RS_DimLinear::getMeasuredLabel() {
 
 	RS_Graphic* graphic = getGraphic();
 
-    RS_String ret;
+    QString ret;
 	if (graphic!=NULL) {
 		ret = RS_Units::formatLinear(dist, graphic->getUnit(), 
 			graphic->getLinearFormat(), graphic->getLinearPrecision());
