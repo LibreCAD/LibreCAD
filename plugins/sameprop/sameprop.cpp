@@ -21,9 +21,9 @@ QString LC_SameProp::name() const
      return (tr("Same properties"));
  }
 
-QString LC_SameProp::menu() const
+QList<PluginMenuLocation> LC_SameProp::menu() const
  {
-     return ("Modify");
+    return QList<PluginMenuLocation>() << PluginMenuLocation("Modify", tr("Same properties"));
  }
 
 void LC_SameProp::execComm(Document_Interface *doc,
