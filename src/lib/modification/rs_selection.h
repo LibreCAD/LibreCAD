@@ -29,6 +29,7 @@
 
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
+#include "rs_string.h"
 
 
 
