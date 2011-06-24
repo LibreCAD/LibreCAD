@@ -26,9 +26,9 @@ QString LC_Sample::name() const
      return (tr("Sample plugin"));
  }
 
-QString LC_Sample::menu() const
+QList<PluginMenuLocation> LC_Sample::menu() const
  {
-     return ("Help");
+    return QList<PluginMenuLocation>() << PluginMenuLocation("Help", tr("Sample plugin"));
  }
 
 void LC_Sample::execComm(Document_Interface *doc,
