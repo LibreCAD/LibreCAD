@@ -31,6 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 #include "rs_graphic.h"
+#include "rs_valuelist.h"
 
 
 /**
@@ -80,14 +81,10 @@ void RS_Spline::calculateBorders() {
 
 RS_VectorSolutions RS_Spline::getRefPoints() {
 
-    RS_VectorSolutions ret(data.controlPoints.count());
+    RS_VectorSolutions ret(data.controlPoints.size());
 
-    int i=0;
-    RS_ValueList<RS_Vector>::iterator it;
-    for (it = data.controlPoints.begin();
-            it!=data.controlPoints.end(); ++it, ++i) {
-
-        ret.set(i, (*it));
+    for (int i = 0; i < data.controlPoints.size(); ++i) {
+        ret.set(i, data.controlPoints.at(i));
     }
 
     return ret;
@@ -127,18 +124,18 @@ void RS_Spline::update() {
         return;
     }
 
-    if (data.controlPoints.count()<(uint)data.degree+1) {
+    if (data.controlPoints.size() < data.degree+1) {
         RS_DEBUG->print("RS_Spline::update: not enough control points");
         return;
     }
 
     resetBorders();
 
-    RS_ValueList<RS_Vector> tControlPoints = data.controlPoints;
+    QList<RS_Vector> tControlPoints = data.controlPoints;
 
     if (data.closed) {
         for (int i=0; i<data.degree; ++i) {
-            tControlPoints.append(data.controlPoints[i]);
+            tControlPoints.append(data.controlPoints.at(i));
         }
     }
 
@@ -153,11 +150,10 @@ void RS_Spline::update() {
     double* h = new double[npts+1];
     double* p = new double[p1*3+1];
 
-    RS_ValueList<RS_Vector>::iterator it;
     i = 1;
-    for (it = tControlPoints.begin(); it!=tControlPoints.end(); ++it) {
-        b[i] = (*it).x;
-        b[i+1] = (*it).y;
+    for (int it = 0; it < tControlPoints.size(); ++it) {
+        b[i] = tControlPoints.at(it).x;
+        b[i+1] = tControlPoints.at(it).y;
         b[i+2] = 0.0;
 
         RS_DEBUG->print("RS_Spline::update: b[%d]: %f/%f", i, b[i], b[i+1]);
@@ -207,12 +203,12 @@ RS_Vector RS_Spline::getNearestEndpoint(const RS_Vector& coord,
     double d;
     RS_Vector ret(false);
 
-    for (uint i=0; i<data.controlPoints.count(); i++) {
-        d = data.controlPoints[i].distanceTo(coord);
+    for (int i=0; i<data.controlPoints.count(); i++) {
+        d = (data.controlPoints.at(i)).distanceTo(coord);
 
         if (d<minDist) {
             minDist = d;
-            ret = data.controlPoints[i];
+            ret = data.controlPoints.at(i);
         }
     }
     if (dist!=NULL) {
@@ -269,11 +265,8 @@ RS_Vector RS_Spline::getNearestDist(double /*distance*/,
 
 
 void RS_Spline::move(RS_Vector offset) {
-    RS_ValueList<RS_Vector>::iterator it;
-    for (it = data.controlPoints.begin();
-            it!=data.controlPoints.end(); ++it) {
-
-        (*it).move(offset);
+    for (int i = 0; i < data.controlPoints.size(); ++i) {
+        data.controlPoints[i].move(offset);
     }
 
     update();
@@ -282,11 +275,8 @@ void RS_Spline::move(RS_Vector offset) {
 
 
 void RS_Spline::rotate(RS_Vector center, double angle) {
-    RS_ValueList<RS_Vector>::iterator it;
-    for (it = data.controlPoints.begin();
-            it!=data.controlPoints.end(); ++it) {
-
-        (*it).rotate(center, angle);
+    for (int i = 0; i < data.controlPoints.size(); ++i) {
+        (data.controlPoints[i] ).rotate(center, angle);
     }
 
     update();
@@ -295,11 +285,8 @@ void RS_Spline::rotate(RS_Vector center, double angle) {
 
 
 void RS_Spline::scale(RS_Vector center, RS_Vector factor) {
-    RS_ValueList<RS_Vector>::iterator it;
-    for (it = data.controlPoints.begin();
-            it!=data.controlPoints.end(); ++it) {
-
-        (*it).scale(center, factor);
+    for (int i = 0; i < data.controlPoints.size(); ++i) {
+        (data.controlPoints[i] ).scale(center, factor);
     }
 
     update();
@@ -308,11 +295,8 @@ void RS_Spline::scale(RS_Vector center, RS_Vector factor) {
 
 
 void RS_Spline::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
-    RS_ValueList<RS_Vector>::iterator it;
-    for (it = data.controlPoints.begin();
-            it!=data.controlPoints.end(); ++it) {
-
-        (*it).mirror(axisPoint1, axisPoint2);
+    for (int i = 0; i < data.controlPoints.size(); ++i) {
+        (data.controlPoints[i] ).mirror(axisPoint1, axisPoint2);
     }
 
     update();
@@ -321,12 +305,10 @@ void RS_Spline::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
 
 
 void RS_Spline::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-    RS_ValueList<RS_Vector>::iterator it;
-    for (it = data.controlPoints.begin();
-            it!=data.controlPoints.end(); ++it) {
+    for (int i = 0; i < data.controlPoints.size(); ++i) {
 
-        if (ref.distanceTo(*it)<1.0e-4) {
-            (*it).move(offset);
+        if (ref.distanceTo(data.controlPoints.at(i))<1.0e-4) {
+            data.controlPoints[i].move(offset);
         }
     }
 
@@ -437,7 +419,7 @@ void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view) {
 /**
  * @return The reference points of the spline.
  */
-RS_ValueList<RS_Vector> RS_Spline::getControlPoints() {
+QList<RS_Vector> RS_Spline::getControlPoints() {
     return data.controlPoints;
 }
 
@@ -456,7 +438,7 @@ void RS_Spline::addControlPoint(const RS_Vector& v) {
  * Removes the control point that was last added.
  */
 void RS_Spline::removeLastControlPoint() {
-    data.controlPoints.pop_back();
+    data.controlPoints.pop_back(); //RLZ toy aqui
 }
 
 
