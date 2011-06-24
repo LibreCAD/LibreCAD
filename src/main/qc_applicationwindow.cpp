@@ -210,6 +210,7 @@ void QC_ApplicationWindow::loadPlugins() {
 
                     foreach (PluginMenuLocation loc,  pluginInterface->menu()) {
                         QAction *actpl = new QAction(loc.menuEntryActionName, plugin);
+                        actpl->setData(loc.menuEntryActionName);
                         connect(actpl, SIGNAL(triggered()), this, SLOT(execPlug()));
                         QMenu *atMenu = findMenu("/"+loc.menuEntryPoint, menuBar()->children(), "");
                         if (atMenu) {
@@ -255,7 +256,7 @@ void QC_ApplicationWindow::execPlug() {
 //create document interface instance
     Doc_plugin_interface pligundoc(currdoc, w->getGraphicView(), this);
 //execute plugin
-    plugin->execComm(&pligundoc, this);
+    plugin->execComm(&pligundoc, this, action->data().toString());
 //TODO call update view
 w->getGraphicView()->redraw();
 }

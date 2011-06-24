@@ -38,7 +38,7 @@ QString AsciiFile::name() const
  }
 
 void AsciiFile::execComm(Document_Interface *doc,
-                             QWidget *parent)
+                             QWidget *parent, QString cmd)
 {
     dibPunto pdt(parent);
     int result = pdt.exec();
