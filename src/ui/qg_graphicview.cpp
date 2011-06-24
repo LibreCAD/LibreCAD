@@ -323,7 +323,11 @@ void QG_GraphicView::emulateMouseMoveEvent() {
 
 void QG_GraphicView::mousePressEvent(QMouseEvent* e) {
     // pan zoom with middle mouse button
+#if QT_VERSION < 0x040700
+    if (e->button()==Qt::MidButton /*|| (e->state()==Qt::LeftButton|Qt::AltButton)*/) {
+#else
     if (e->button()==Qt::MiddleButton /*|| (e->state()==Qt::LeftButton|Qt::AltButton)*/) {
+#endif
         setCurrentAction(new RS_ActionZoomPan(*container, *this));
     }
 
