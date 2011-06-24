@@ -207,31 +207,33 @@ void QC_ApplicationWindow::loadPlugins() {
             if (plugin) {
                 QC_PluginInterface *pluginInterface = qobject_cast<QC_PluginInterface *>(plugin);
                 if (pluginInterface) {
-                    QAction *actpl = new QAction(pluginInterface->name(), plugin);
-                    connect(actpl, SIGNAL(triggered()), this, SLOT(execPlug()));
-                    QMenu *atMenu = findMenu("/"+pluginInterface->menu(), menuBar()->children(), "");
-                    if (atMenu) {
-                        atMenu->addAction(actpl);
-                    } else {
-                        QStringList treemenu = pluginInterface->menu().split('/', QString::SkipEmptyParts);
-                        QString currentLevel="";
-                        QMenu *parentMenu=0;
-                        do {
-                            QString menuName=treemenu.at(0); treemenu.removeFirst();
-                            currentLevel=currentLevel+"/"+menuName;
-                            atMenu = findMenu(currentLevel, menuBar()->children(), "");
-                            if (atMenu==0) {
-                                if (parentMenu==0) {
-                                    parentMenu=menuBar()->addMenu(menuName);
-                                } else {
-                                    parentMenu=parentMenu->addMenu(menuName);
-                                }
-                                parentMenu->setName(menuName);
-                            }
-                        } while(treemenu.size()>0);
-                        parentMenu->addAction(actpl);
-                    }
 
+                    foreach (PluginMenuLocation loc,  pluginInterface->menu()) {
+                        QAction *actpl = new QAction(loc.menuEntryActionName, plugin);
+                        connect(actpl, SIGNAL(triggered()), this, SLOT(execPlug()));
+                        QMenu *atMenu = findMenu("/"+loc.menuEntryPoint, menuBar()->children(), "");
+                        if (atMenu) {
+                            atMenu->addAction(actpl);
+                        } else {
+                            QStringList treemenu = loc.menuEntryPoint.split('/', QString::SkipEmptyParts);
+                            QString currentLevel="";
+                            QMenu *parentMenu=0;
+                            do {
+                                QString menuName=treemenu.at(0); treemenu.removeFirst();
+                                currentLevel=currentLevel+"/"+menuName;
+                                atMenu = findMenu(currentLevel, menuBar()->children(), "");
+                                if (atMenu==0) {
+                                    if (parentMenu==0) {
+                                        parentMenu=menuBar()->addMenu(menuName);
+                                    } else {
+                                        parentMenu=parentMenu->addMenu(menuName);
+                                    }
+                                    parentMenu->setName(menuName);
+                                }
+                            } while(treemenu.size()>0);
+                            parentMenu->addAction(actpl);
+                        }
+                    }
                 }
             } else {
                 QMessageBox::information(this, "Info", pluginLoader.errorString());
@@ -340,6 +342,7 @@ void QC_ApplicationWindow::slotRunScript() {
  * Runs the script with the given name.
  */
 void QC_ApplicationWindow::slotRunScript(const QString& name) {
+    Q_UNUSED(name);
 #ifdef RS_SCRIPTING
 	RS_DEBUG->print("QC_ApplicationWindow::slotRunScript");
 

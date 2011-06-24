@@ -27,9 +27,9 @@
 #include "document_interface.h"
 #include "asciifile.h"
 
-QString AsciiFile::menu() const
+QList<PluginMenuLocation> AsciiFile::menu() const
  {
-     return ("File/Import");
+     return QList<PluginMenuLocation>() << PluginMenuLocation("File/Import", tr("Read ascii points"));
  }
 
 QString AsciiFile::name() const
