@@ -45,6 +45,7 @@
 #include "rs_system.h"
 
 #include "rs_valuelist.h"
+#include "rs_stringlist.h"
 
 #include <qtextcodec.h>
 
