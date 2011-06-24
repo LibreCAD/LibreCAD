@@ -345,7 +345,7 @@ public:
     RS_Grid* getGrid() {
         return grid;
     }
-	virtual void updateGridStatusWidget(const RS_String& /*text*/) {}
+        virtual void updateGridStatusWidget(const QString& /*text*/) {}
 
     void setDefaultSnapMode(RS2::SnapMode sm);
     RS2::SnapMode getDefaultSnapMode() {

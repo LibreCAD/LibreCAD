@@ -32,8 +32,8 @@
 
 #include "rs_math.h"
 #include "rs_pen.h"
-#include "rs_string.h"
-#include "rs_stringlist.h"
+/*#include "rs_string.h"
+#include "rs_stringlist.h"*/
 #include "rs_undoable.h"
 #include "rs_vector.h"
 
@@ -150,7 +150,7 @@ public:
     RS_Entity* getBlockOrInsert();
     RS_Document* getDocument();
 
-    void setLayer(const RS_String& name);
+    void setLayer(const QString& name);
     void setLayer(RS_Layer* l);
     void setLayerToActive();
     RS_Layer* getLayer(bool resolve = true) const;
@@ -263,14 +263,14 @@ public:
         return maxV-minV;
     }
 
-    void addGraphicVariable(const RS_String& key, double val, int code);
-    void addGraphicVariable(const RS_String& key, int val, int code);
-    void addGraphicVariable(const RS_String& key, const RS_String& val, int code);
+    void addGraphicVariable(const QString& key, double val, int code);
+    void addGraphicVariable(const QString& key, int val, int code);
+    void addGraphicVariable(const QString& key, const QString& val, int code);
 	
-    double getGraphicVariableDouble(const RS_String& key, double def);
-    int getGraphicVariableInt(const RS_String& key, int def);
-    RS_String getGraphicVariableString(const RS_String& key,
-                                       const RS_String& def);
+    double getGraphicVariableDouble(const QString& key, double def);
+    int getGraphicVariableInt(const QString& key, int def);
+    QString getGraphicVariableString(const QString& key,
+                                       const QString& def);
 
 	RS2::Unit getGraphicUnit();
 
@@ -496,10 +496,10 @@ public:
 
 	double getStyleFactor(RS_GraphicView* view);
 	
-        RS_String getUserDefVar(RS_String key);
-        QList<RS_String> getAllKeys();
-	void setUserDefVar(RS_String key, RS_String val);
-	void delUserDefVar(RS_String key);
+        QString getUserDefVar(QString key);
+        QList<QString> getAllKeys();
+        void setUserDefVar(QString key, QString val);
+        void delUserDefVar(QString key);
 
     friend std::ostream& operator << (std::ostream& os, RS_Entity& e);
 
@@ -527,7 +527,7 @@ protected:
 	bool updateEnabled;
 
 private:
-        QMultiHash<RS_String, RS_String> varList;
+        QMultiHash<QString, QString> varList;
 };
 
 #endif
