@@ -30,7 +30,7 @@ QList<PluginMenuLocation> LC_List::menu() const
  }
 
 void LC_List::execComm(Document_Interface *doc,
-                             QWidget *parent)
+                             QWidget *parent, QString cmd)
 {
     Q_UNUSED(parent);
     QList<Plug_Entity *> obj;

@@ -24,7 +24,7 @@ class LC_Align : public QObject, QC_PluginInterface
     virtual QList<PluginMenuLocation> menu() const;
     virtual QString name() const;
     virtual void execComm(Document_Interface *doc,
-                                       QWidget *parent);
+                                       QWidget *parent, QString cmd);
 };
 
 #endif // ALIGN_H
