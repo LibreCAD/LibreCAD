@@ -27,7 +27,7 @@ QList<PluginMenuLocation> LC_SameProp::menu() const
  }
 
 void LC_SameProp::execComm(Document_Interface *doc,
-                             QWidget *parent)
+                             QWidget *parent, QString cmd)
 {
     Q_UNUSED(parent);
     QHash<int, QVariant> data, moddata;
