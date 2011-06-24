@@ -28,8 +28,8 @@
 #ifndef RS_SPLINE_H
 #define RS_SPLINE_H
 
+#include <QList>
 #include "rs_entitycontainer.h"
-#include "rs_valuelist.h"
 
 /**
  * Holds the data that defines a line.
@@ -59,7 +59,7 @@ public:
 	/** Closed flag. */
 	bool closed;
 	/** Control points of the spline. */
-    RS_ValueList<RS_Vector> controlPoints;
+    QList<RS_Vector> controlPoints;
 };
 
 
@@ -216,7 +216,7 @@ public:
 	virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);
-	RS_ValueList<RS_Vector> getControlPoints();
+        QList<RS_Vector> getControlPoints();
 
     friend std::ostream& operator << (std::ostream& os, const RS_Spline& l);
 

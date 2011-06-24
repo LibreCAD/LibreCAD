@@ -109,7 +109,7 @@ public:
         return edata;
     }
 
-    virtual RS_String getMeasuredLabel();
+    virtual QString getMeasuredLabel();
     double getAngle();
     RS_Vector getCenter();
 	bool getAngles(double& ang1, double& ang2, bool& reversed,

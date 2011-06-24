@@ -71,7 +71,7 @@ RS_VectorSolutions RS_DimAligned::getRefPoints() {
  * @return Automatically creted label for the default 
  * measurement of this dimension.
  */
-RS_String RS_DimAligned::getMeasuredLabel() {
+QString RS_DimAligned::getMeasuredLabel() {
     double dist = edata.extensionPoint1.distanceTo(edata.extensionPoint2);
 
 	RS_Graphic* graphic = getGraphic();

@@ -71,8 +71,8 @@ public:
 
     virtual void newDoc();
     virtual bool save(bool isAutoSave = false);
-    virtual bool saveAs(const RS_String& filename, RS2::FormatType type);
-    virtual bool open(const RS_String& filename, RS2::FormatType type);
+    virtual bool saveAs(const QString& filename, RS2::FormatType type);
+    virtual bool open(const QString& filename, RS2::FormatType type);
 	
 	// Wrappers for Layer functions:
     void clearLayers() {
@@ -84,7 +84,7 @@ public:
     RS_Layer* layerAt(uint i) {
         return layerList.at(i);
     }
-    void activateLayer(const RS_String& name) {
+    void activateLayer(const QString& name) {
 		layerList.activate(name);
 	}
     void activateLayer(RS_Layer* layer) {
@@ -100,10 +100,10 @@ public:
     virtual void editLayer(RS_Layer* layer, const RS_Layer& source) {
 		layerList.edit(layer, source);
 	}
-    RS_Layer* findLayer(const RS_String& name) {
+    RS_Layer* findLayer(const QString& name) {
 		return layerList.find(name);
 	}
-    void toggleLayer(const RS_String& name) {
+    void toggleLayer(const QString& name) {
 		layerList.toggle(name);
 	}
     void toggleLayer(RS_Layer* layer) {
@@ -134,7 +134,7 @@ public:
     RS_Block* blockAt(uint i) {
         return blockList.at(i);
     }
-    void activateBlock(const RS_String& name) {
+    void activateBlock(const QString& name) {
 		blockList.activate(name);
 	}
     void activateBlock(RS_Block* block) {
@@ -152,13 +152,13 @@ public:
     virtual void removeBlock(RS_Block* block) {
 		blockList.remove(block);
 	}
-    RS_Block* findBlock(const RS_String& name) {
+    RS_Block* findBlock(const QString& name) {
 		return blockList.find(name);
 	}
-    RS_String newBlockName() {
+    QString newBlockName() {
 		return blockList.newName();
 	}
-    void toggleBlock(const RS_String& name) {
+    void toggleBlock(const QString& name) {
 		blockList.toggle(name);
 	}
     void toggleBlock(RS_Block* block) {
@@ -182,33 +182,33 @@ public:
 		return variableDict.count();
     }
 
-    void addVariable(const RS_String& key, const RS_Vector& value, int code) {
+    void addVariable(const QString& key, const RS_Vector& value, int code) {
 		variableDict.add(key, value, code);
 	}
-    void addVariable(const RS_String& key, const RS_String& value, int code) {
+    void addVariable(const QString& key, const QString& value, int code) {
 		variableDict.add(key, value, code);
 	}
-    void addVariable(const RS_String& key, int value, int code) {
+    void addVariable(const QString& key, int value, int code) {
 		variableDict.add(key, value, code);
 	}
-    void addVariable(const RS_String& key, double value, int code) {
+    void addVariable(const QString& key, double value, int code) {
 		variableDict.add(key, value, code);
 	}
 
-    RS_Vector getVariableVector(const RS_String& key, const RS_Vector& def) {
+    RS_Vector getVariableVector(const QString& key, const RS_Vector& def) {
 		return variableDict.getVector(key, def);
 	}
-    RS_String getVariableString(const RS_String& key, const RS_String& def) {
+    QString getVariableString(const QString& key, const QString& def) {
 		return variableDict.getString(key, def);
 	}
-    int getVariableInt(const RS_String& key, int def) {
+    int getVariableInt(const QString& key, int def) {
 		return variableDict.getInt(key, def);
 	}
-    double getVariableDouble(const RS_String& key, double def) {
+    double getVariableDouble(const QString& key, double def) {
 		return variableDict.getDouble(key, def);
 	}
 
-    void removeVariable(const RS_String& key) {
+    void removeVariable(const QString& key) {
 		variableDict.remove(key);
 	}
 
