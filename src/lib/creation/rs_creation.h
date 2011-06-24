@@ -33,6 +33,7 @@
 #include "rs_polyline.h"
 #include "rs_insert.h"
 #include "rs_image.h"
+#include "rs_block.h"
 
 
 /**
