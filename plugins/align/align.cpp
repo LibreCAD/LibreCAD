@@ -26,7 +26,7 @@ QList<PluginMenuLocation> LC_Align::menu() const
  }
 
 void LC_Align::execComm(Document_Interface *doc,
-                             QWidget *parent)
+                             QWidget *parent, QString cmd)
 {
     Q_UNUSED(parent);
     QPointF base1, base2, target1, target2;

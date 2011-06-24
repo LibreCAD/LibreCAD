@@ -32,7 +32,7 @@ QList<PluginMenuLocation> LC_Sample::menu() const
  }
 
 void LC_Sample::execComm(Document_Interface *doc,
-                             QWidget *parent)
+                             QWidget *parent, QString cmd)
 {
     Q_UNUSED(doc);
     lc_Sampledlg pdt(parent);
