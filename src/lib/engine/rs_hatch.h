@@ -30,6 +30,7 @@
 
 #include "rs_entity.h"
 #include "rs_entitycontainer.h"
+#include "rs_string.h"
 
 /**
  * Holds the data that defines a hatch entity.

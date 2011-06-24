@@ -30,7 +30,6 @@
 #include "rs_block.h"
 #include "rs_graphic.h"
 
-
 /**
  * @param parent The graphic this block belongs to.
  */
@@ -60,7 +59,7 @@ RS_Insert::~RS_Insert() {}
 void RS_Insert::update() {
 
 	RS_DEBUG->print("RS_Insert::update");
-	RS_DEBUG->print("RS_Insert::update: name: %s", data.name.latin1());
+        RS_DEBUG->print("RS_Insert::update: name: %s", data.name.toLatin1().data());
 	RS_DEBUG->print("RS_Insert::update: insertionPoint: %f/%f", 
 		data.insertionPoint.x, data.insertionPoint.y);
 
