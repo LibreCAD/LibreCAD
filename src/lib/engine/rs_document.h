@@ -54,8 +54,8 @@ public:
 
     virtual void newDoc() = 0;
     virtual bool save(bool isAutoSave = false) = 0;
-    virtual bool saveAs(const RS_String &filename, RS2::FormatType type) = 0;
-    virtual bool open(const RS_String &filename, RS2::FormatType type) = 0;
+    virtual bool saveAs(const QString &filename, RS2::FormatType type) = 0;
+    virtual bool open(const QString &filename, RS2::FormatType type) = 0;
 	
 
     /**
@@ -93,21 +93,21 @@ public:
      * @return File name of the document currently loaded.
      * Note, that the default file name is empty.
      */
-    RS_String getFilename() const {
+    QString getFilename() const {
         return filename;
     }
 	
     /**
      * @return Auto-save file name of the document currently loaded.
      */
-    RS_String getAutoSaveFilename() const {
+    QString getAutoSaveFilename() const {
         return autosaveFilename;
     }
 	
     /**
      * Sets file name for the document currently loaded.
      */
-    void setFilename(const RS_String& fn) {
+    void setFilename(const QString& fn) {
         filename = fn;
     }
 
@@ -142,9 +142,9 @@ protected:
     /** Active pen. */
     RS_Pen activePen;
     /** File name of the document or empty for a new document. */
-    RS_String filename;
+    QString filename;
 	/** Auto-save file name of document. */
-	RS_String autosaveFilename;
+        QString autosaveFilename;
 	/** Format type */
 	RS2::FormatType formatType;
 };

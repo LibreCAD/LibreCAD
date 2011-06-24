@@ -50,14 +50,14 @@ RS_DimRadial::RS_DimRadial(RS_EntityContainer* parent,
  * @return Automatically created label for the default 
  * measurement of this dimension.
  */
-RS_String RS_DimRadial::getMeasuredLabel() {
+QString RS_DimRadial::getMeasuredLabel() {
 
     // Definitive dimension line:
     double dist = data.definitionPoint.distanceTo(edata.definitionPoint);
 
     RS_Graphic* graphic = getGraphic();
 
-    RS_String ret;
+    QString ret;
     if (graphic!=NULL) {
         ret = RS_Units::formatLinear(dist, graphic->getUnit(),
                                      graphic->getLinearFormat(), graphic->getLinearPrecision());
