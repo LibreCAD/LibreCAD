@@ -29,6 +29,7 @@
 
 #include "rs_graphicview.h"
 #include "rs_layerlistlistener.h"
+#include "rs_string.h"
 
 /**
  * This is an implementation of a graphic viewer with a fixed size
