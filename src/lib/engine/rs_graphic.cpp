@@ -134,7 +134,7 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
         endUndoCycle();
 
         // remove all entities in blocks that are on that layer:
-        for (uint bi=0; bi<blockList.count(); bi++) {
+        for (int bi=0; bi<blockList.count(); bi++) {
             RS_Block* blk = blockList.at(bi);
 
             if (blk!=NULL) {
@@ -204,7 +204,7 @@ bool RS_Graphic::save(bool isAutoSave) {
 		} else {
 			actualName = new QString(filename);
 		}
-	    RS_DEBUG->print("  file: %s", actualName->latin1());
+            RS_DEBUG->print("  file: %s", actualName->toLatin1().data());
 		RS_DEBUG->print("  format: %d", (int)actualType);
 		RS_DEBUG->print("  export...");
 		ret = RS_FILEIO->fileExport(*this, *actualName, actualType);
@@ -218,7 +218,7 @@ bool RS_Graphic::save(bool isAutoSave) {
 			QFile f(autosaveFilename);
 			if (f.exists()) {
 				RS_DEBUG->print("  removing old autosave file %s",
-								autosaveFilename.latin1());
+                                                        autosaveFilename.toLatin1().data());
 				f.remove();
 			}
 		}
@@ -243,7 +243,7 @@ bool RS_Graphic::saveAs(const RS_String &filename, RS2::FormatType type) {
 	QFileInfo finfo(filename);
 	// Construct new autosave filename by prepending # to the filename
 	// part, using the same directory as the destination file.
-	this->autosaveFilename = finfo.dirPath() + "/#" + finfo.fileName();
+        this->autosaveFilename = finfo.path() + "/#" + finfo.fileName();
 	this->formatType = type;
 
     bool ret = save();
@@ -253,7 +253,7 @@ bool RS_Graphic::saveAs(const RS_String &filename, RS2::FormatType type) {
 		QFile f(*oldAutosaveName);
 		if (f.exists()) {
 			RS_DEBUG->print("removing old autosave file %s",
-							oldAutosaveName->latin1());
+                                                oldAutosaveName->toLatin1().data());
 			f.remove();
 		}
 	}
@@ -269,7 +269,7 @@ bool RS_Graphic::saveAs(const RS_String &filename, RS2::FormatType type) {
  * Loads the given fils into this graphic.
  */
 bool RS_Graphic::open(const RS_String &filename, RS2::FormatType type) {
-    RS_DEBUG->print("RS_Graphic::open(%s)", filename.latin1());
+    RS_DEBUG->print("RS_Graphic::open(%s)", filename.toLatin1().data());
 
 	bool ret = false;
 
@@ -277,7 +277,7 @@ bool RS_Graphic::open(const RS_String &filename, RS2::FormatType type) {
 	QFileInfo finfo(filename);
 	// Construct new autosave filename by prepending # to the filename
 	// part, using the same directory as the destination file.
-	this->autosaveFilename = finfo.dirPath() + "/#" + finfo.fileName();
+        this->autosaveFilename = finfo.path() + "/#" + finfo.fileName();
 
     // clean all:
     newDoc();
@@ -292,7 +292,7 @@ bool RS_Graphic::open(const RS_String &filename, RS2::FormatType type) {
     //cout << *((RS_Graphic*)graphic);
     //calculateBorders();
 	
-    RS_DEBUG->print("RS_Graphic::open(%s): OK", filename.latin1());
+    RS_DEBUG->print("RS_Graphic::open(%s): OK", filename.toLatin1().data());
 
     return ret;
 }
