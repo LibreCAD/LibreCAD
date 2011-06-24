@@ -23,7 +23,7 @@ class LC_Sample : public QObject, QC_PluginInterface
      Q_INTERFACES(QC_PluginInterface)
 
  public:
-    virtual QString menu() const;
+    virtual QList<PluginMenuLocation> menu() const;
     virtual QString name() const;
     virtual void execComm(Document_Interface *doc,
                                        QWidget *parent);
