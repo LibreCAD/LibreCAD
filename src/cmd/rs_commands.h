@@ -28,12 +28,9 @@
 #ifndef RS_COMMANDS_H
 #define RS_COMMANDS_H
 
-#include <qobject.h>
+#include <QMultiHash>
 
 #include "rs.h"
-#include "rs_dict.h"
-#include "rs_string.h"
-#include "rs_stringlist.h"
 
 #define RS_COMMANDS RS_Commands::instance()
 
@@ -59,24 +56,24 @@ public:
         return uniqueInstance;
     }
 
-	RS_StringList complete(const RS_String& cmd);
-    RS2::ActionType cmdToAction(const RS_String& cmd);
-    RS2::ActionType keycodeToAction(const RS_String& code);
+        QStringList complete(const QString& cmd);
+    RS2::ActionType cmdToAction(const QString& cmd);
+    RS2::ActionType keycodeToAction(const QString& code);
 
-    static RS_String command(const RS_String& cmd);
+    static QString command(const QString& cmd);
 
-    static bool checkCommand(const RS_String& cmd, const RS_String& str,
+    static bool checkCommand(const QString& cmd, const QString& str,
                              RS2::ActionType action=RS2::ActionNone);
 
-	static RS_String msgAvailableCommands();
+        static QString msgAvailableCommands();
 
 protected:
     static RS_Commands* uniqueInstance;
 
 private:
 	RS_Commands();
-	RS_Dict<RS2::ActionType> mainCommands;
-	RS_Dict<RS2::ActionType> shortCommands;
+        QMultiHash<QString, RS2::ActionType> mainCommands;
+        QMultiHash<QString, RS2::ActionType> shortCommands;
 };
 
 #endif

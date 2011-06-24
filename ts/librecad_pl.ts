@@ -2,6 +2,39 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="pl">
 <context>
+    <name>QC_ActionGetEnt</name>
+    <message>
+        <source>Select object:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Anuluj</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetPoint</name>
+    <message>
+        <source>Specify a point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Anuluj</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetSelect</name>
+    <message>
+        <source>Select objects:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Anuluj</translation>
+    </message>
+</context>
+<context>
     <name>QC_ApplicationWindow</name>
     <message>
         <source>&amp;File</source>
@@ -398,15 +431,15 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>&amp;Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Wtyczki</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importuj</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Paski narzędzi</translation>
     </message>
     <message>
         <source>Compiled on: %1</source>
@@ -414,19 +447,19 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>Program Icons Supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikony dostarczone przez</translation>
     </message>
     <message>
         <source>Splash and Logo supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation>Splash i logo dostarczył</translation>
     </message>
     <message>
         <source>Main Website : </source>
-        <translation type="unfinished"></translation>
+        <translation>Strona główna:</translation>
     </message>
     <message>
         <source>Version: %1</source>
-        <translation type="unfinished">Wersja: %1</translation>
+        <translation>Wersja: %1</translation>
     </message>
     <message>
         <source>SCM Revision: %1</source>
@@ -434,7 +467,7 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosimy o dotację, która umożliwi rozwój programu LibreCAD i strony internetowej. </translation>
     </message>
 </context>
 <context>
@@ -1950,7 +1983,7 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>&amp;back</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;wstecz</translation>
     </message>
 </context>
 <context>
@@ -6066,6 +6099,22 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>Loading...</source>
+        <translation>Ładuję...</translation>
+    </message>
+    <message>
+        <source>enter an integer number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LibreCAD query</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>enter a number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>enter text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
