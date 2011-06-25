@@ -38,7 +38,7 @@
 #include <fstream>
 
 #include <QPrinter>
-#include <QPRintDialog>
+#include <QPrintDialog>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTimer>
