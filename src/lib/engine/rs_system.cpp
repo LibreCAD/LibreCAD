@@ -335,7 +335,7 @@ void RS_System::initAllLanguagesList() {
     LNG("tk"   ,RS2::locLeftToRight, "Turkmen")
     LNG("tw"   ,RS2::locLeftToRight, "Twi")
     LNG("ug"   ,RS2::locLeftToRight, "Uighur")
-    LNG("uk_UA",RS2::locLeftToRight, "Ukrainian")
+    LNG("uk",RS2::locLeftToRight, "Ukrainian")
     LNG("ur"   ,RS2::locLeftToRight, "Urdu")
     LNG("ur_IN",RS2::locLeftToRight, "Urdu (India)")
     LNG("ur_PK",RS2::locLeftToRight, "Urdu (Pakistan)")
