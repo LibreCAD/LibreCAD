@@ -117,6 +117,9 @@ void RS_System::initAllLanguagesList() {
     if (allKnownLocales==NULL) {
         allKnownLocales=new QList<RS_Locale* >();
     }
+
+    // RVT uk_AU renamed to uk so that we don't have to change the pootle server
+    //
     allKnownLocales->clear();
     RS_Locale *locale;
     LNG("ab"   ,RS2::locLeftToRight, "Abkhazian")
@@ -334,7 +337,7 @@ void RS_System::initAllLanguagesList() {
     LNG("tk"   ,RS2::locLeftToRight, "Turkmen")
     LNG("tw"   ,RS2::locLeftToRight, "Twi")
     LNG("ug"   ,RS2::locLeftToRight, "Uighur")
-    LNG("uk_UA",RS2::locLeftToRight, "Ukrainian")
+    LNG("uk",RS2::locLeftToRight, "Ukrainian")
     LNG("ur"   ,RS2::locLeftToRight, "Urdu")
     LNG("ur_IN",RS2::locLeftToRight, "Urdu (India)")
     LNG("ur_PK",RS2::locLeftToRight, "Urdu (Pakistan)")
