@@ -37,10 +37,6 @@
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;Plugins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Running script &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
