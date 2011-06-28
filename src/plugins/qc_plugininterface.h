@@ -30,6 +30,19 @@
 #include <QtPlugin>
 
 class Document_Interface;
+
+class PluginMenuLocation
+{
+    public:
+    PluginMenuLocation(QString menuEntryPoint, QString menuEntryActionName) {
+        this->menuEntryActionName=menuEntryActionName;
+        this->menuEntryPoint=menuEntryPoint;
+    }
+
+    QString menuEntryPoint;
+    QString menuEntryActionName;
+};
+
 /**
  * Interface for create plugins.
  *
@@ -40,8 +53,8 @@ class QC_PluginInterface
 public:
     virtual ~QC_PluginInterface() {}
     virtual QString name() const = 0;
-    virtual QString menu() const = 0;
-    virtual void execComm(Document_Interface *doc, QWidget *parent) = 0;
+    virtual QList<PluginMenuLocation> menu() const = 0;
+    virtual void execComm(Document_Interface *doc, QWidget *parent, QString cmd) = 0;
 
 };
 

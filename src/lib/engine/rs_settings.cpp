@@ -27,8 +27,6 @@
 // RVT_PORT changed QSettings s(QSettings::Ini) to QSettings s("./qcad.ini", QSettings::IniFormat);
 
 #include "rs_settings.h"
-#include "rs_debug.h"
-#include <iostream>
 
 RS_Settings* RS_Settings::uniqueInstance = NULL;
 
@@ -38,7 +36,6 @@ RS_Settings::RS_Settings() {
     companyKey = "";
     appKey = "";
     group = "";
-    cache.setAutoDelete(true);
 }
 
 /**
@@ -49,8 +46,8 @@ RS_Settings::RS_Settings() {
  * @param appKey String that identifies the application. Must start
  *        with a "/". E.g. "/LibreCAD"
  */
-void RS_Settings::init(const RS_String& companyKey,
-                       const RS_String& appKey) {
+void RS_Settings::init(const QString& companyKey,
+                       const QString& appKey) {
 
     group = "";
 	
@@ -66,11 +63,17 @@ void RS_Settings::init(const RS_String& companyKey,
 /**
  * Destructor
  */
-RS_Settings::~RS_Settings() {}
+RS_Settings::~RS_Settings() {
+    while (!cache.isEmpty()) {
+        QVariant *value = *cache.begin();
+        cache.erase(cache.begin());
+        delete value;
+    }
+}
 
 
 
-void RS_Settings::beginGroup(const RS_String& group) {
+void RS_Settings::beginGroup(const QString& group) {
     this->group = group;
 }
 
@@ -78,19 +81,19 @@ void RS_Settings::endGroup() {
     this->group = "";
 }
 
-bool RS_Settings::writeEntry(const RS_String& key, int value) {
+bool RS_Settings::writeEntry(const QString& key, int value) {
     return writeEntry(key, QVariant(value));
 }
 
-bool RS_Settings::writeEntry(const RS_String& key,const QString& value) {
+bool RS_Settings::writeEntry(const QString& key,const QString& value) {
     return writeEntry(key, QVariant(value));
 }
 
-bool RS_Settings::writeEntry(const RS_String& key, double value) {
+bool RS_Settings::writeEntry(const QString& key, double value) {
     return writeEntry(key, QVariant(value));
 }
 
-bool RS_Settings::writeEntry(const RS_String& key, const QVariant& value) {
+bool RS_Settings::writeEntry(const QString& key, const QVariant& value) {
 	QSettings s(companyKey, appKey);
     // RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 
@@ -102,8 +105,8 @@ bool RS_Settings::writeEntry(const RS_String& key, const QVariant& value) {
     return true;
 }
 
-RS_String RS_Settings::readEntry(const RS_String& key,
-                                 const RS_String& def,
+QString RS_Settings::readEntry(const QString& key,
+                                 const QString& def,
                                  bool* ok) {
 	
     // lookup:
@@ -126,8 +129,8 @@ RS_String RS_Settings::readEntry(const RS_String& key,
 
 }
 
-QByteArray RS_Settings::readByteArrayEntry(const RS_String& key,
-                    const RS_String& def,
+QByteArray RS_Settings::readByteArrayEntry(const QString& key,
+                    const QString& def,
                     bool* ok) {
     QVariant ret = readEntryCache(key);
     if (!ret.isValid()) {
@@ -148,7 +151,7 @@ QByteArray RS_Settings::readByteArrayEntry(const RS_String& key,
 
 }
 
-int RS_Settings::readNumEntry(const RS_String& key, int def, bool* ok) {
+int RS_Settings::readNumEntry(const QString& key, int def, bool* ok) {
 
     // lookup:
     QVariant ret = readEntryCache(key);
@@ -166,17 +169,16 @@ int RS_Settings::readNumEntry(const RS_String& key, int def, bool* ok) {
 }
 
 
-QVariant RS_Settings::readEntryCache(const RS_String& key) {
-	QVariant* s = cache.find(key);
-	if (s==NULL) {
-		return QVariant();
-	}
-	else {
-		return *s;
-	}
+QVariant RS_Settings::readEntryCache(const QString& key) {
+       QVariant *s = cache.value(key);
+        if (s == NULL)
+            return QVariant();
+        else
+            return *s;
 }
 
 
-void RS_Settings::addToCache(const RS_String& key, const QVariant& value) {
-	cache.replace(key, new QVariant(value));
+void RS_Settings::addToCache(const QString& key, const QVariant& value) {
+        delete cache.take(key);
+        cache.insert(key, new QVariant(value));
 }

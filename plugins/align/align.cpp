@@ -20,13 +20,13 @@ QString LC_Align::name() const
      return (tr("Align"));
  }
 
-QString LC_Align::menu() const
+QList<PluginMenuLocation> LC_Align::menu() const
  {
-     return ("Modify");
+    return QList<PluginMenuLocation>() << PluginMenuLocation("Modify", tr("Align"));
  }
 
 void LC_Align::execComm(Document_Interface *doc,
-                             QWidget *parent)
+                             QWidget *parent, QString cmd)
 {
     Q_UNUSED(parent);
     QPointF base1, base2, target1, target2;
