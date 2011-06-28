@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="es">
 <context>
-    <name></name>
+    <name/>
     <message>
         <source>Loading..</source>
         <translation type="obsolete">Cargando...</translation>
@@ -31,33 +30,33 @@
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar objeto:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
-        <translation type="unfinished"></translation>
+        <translation>Indique un punto</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>QC_ActionGetSelect</name>
     <message>
         <source>Select objects:</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar objetos:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -328,8 +327,8 @@ Date: %1</source>
         <translation type="obsolete">Controles de Simulación</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Bloque &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Bloque '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -386,12 +385,12 @@ Ahora puede guardar su trabajo.</translation>
         <translation>&amp;Spline</translation>
     </message>
     <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation>Corriendo script &apos;%1&apos;</translation>
+        <source>Running script '%1'</source>
+        <translation>Corriendo script '%1'</translation>
     </message>
     <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation>Insertando bloque &apos;%1&apos;</translation>
+        <source>Inserting block '%1'</source>
+        <translation>Insertando bloque '%1'</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -432,7 +431,7 @@ Guardado automático desactivado.</translation>
         <translation>Ayuda</translation>
     </message>
     <message>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
         <translation>Se encontraron problemas al buscar archivos de ayuda en el sistema.</translation>
     </message>
     <message>
@@ -472,7 +471,7 @@ Guardado automático desactivado.</translation>
         <translation>Revisión SCM: %1</translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it's website.</source>
         <translation>Por favor done a LibreCAD para ayudar a mantener el codigo fuente y el sitio web.</translation>
     </message>
 </context>
@@ -2061,8 +2060,8 @@ Guardado automático desactivado.</translation>
         <translation>Renombrando Bloque</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>No se pudo nombrar el bloque. El bloque &quot;%1&quot; ya existe.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>No se pudo nombrar el bloque. El bloque "%1" ya existe.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -2386,27 +2385,27 @@ en otra ventana</translation>
         <translation>Principal</translation>
     </message>
     <message>
-        <source>Show menu &quot;Lines&quot;</source>
+        <source>Show menu "Lines"</source>
         <translation>Mostrar menú Líneas</translation>
     </message>
     <message>
-        <source>Show menu &quot;Arcs&quot;</source>
+        <source>Show menu "Arcs"</source>
         <translation>Mostrar menú Arcos</translation>
     </message>
     <message>
-        <source>Show menu &quot;Circles&quot;</source>
+        <source>Show menu "Circles"</source>
         <translation>Mostrar menú Círculos</translation>
     </message>
     <message>
-        <source>Show menu &quot;Points&quot;</source>
-        <translation type="obsolete">&quot;Puntos&quot;</translation>
+        <source>Show menu "Points"</source>
+        <translation type="obsolete">"Puntos"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Measure&quot;</source>
+        <source>Show menu "Measure"</source>
         <translation>Mostrar menú Medir</translation>
     </message>
     <message>
-        <source>Show menu &quot;Ellipses&quot;</source>
+        <source>Show menu "Ellipses"</source>
         <translation>Mostrar menú Elipses</translation>
     </message>
     <message>
@@ -2414,19 +2413,19 @@ en otra ventana</translation>
         <translation>Sombreado / Relleno solido</translation>
     </message>
     <message>
-        <source>Show menu &quot;Edit&quot;</source>
+        <source>Show menu "Edit"</source>
         <translation>Mostrar menú Edición</translation>
     </message>
     <message>
-        <source>Show menu &quot;Dimensions&quot;</source>
+        <source>Show menu "Dimensions"</source>
         <translation>Mostrar menú Acotar</translation>
     </message>
     <message>
         <source>Texts</source>
-        <translation>Insertar Texto</translation>
+        <translation>Textos</translation>
     </message>
     <message>
-        <source>Show menu &quot;Select&quot;</source>
+        <source>Show menu "Select"</source>
         <translation>Mostrar menú Selección</translation>
     </message>
     <message>
@@ -3213,12 +3212,12 @@ en otra ventana</translation>
         <translation>Bienvenido</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Bienvenidos a LibreCAD&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Bienvenidos a LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Por favor seleccione la unidad a utilizar en sus nuevos dibujos y el idioma preferido.&lt;br&gt;
@@ -3587,7 +3586,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
         <translation>Gradianes</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Unidades topográficas</translation>
     </message>
     <message>
@@ -3595,8 +3594,8 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
         <translation>Opciones</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Para mediciones de &quot;Ingenieria&quot; y &quot;Arquitectónicas&quot;, la unidad debe ser la Pulgada.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>Para mediciones de "Ingenieria" y "Arquitectónicas", la unidad debe ser la Pulgada.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -5888,12 +5887,12 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
         <translation>Eliminar Capa</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation>La capa &quot;%1&quot; y todos sus objetos serán eliminados.</translation>
+        <source>Layer "%1" and all entities on it will be removed.</source>
+        <translation>La capa "%1" y todos sus objetos serán eliminados.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>La capa &quot;%1&quot; no podrá ser eliminada.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>La capa "%1" no podrá ser eliminada.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -5904,16 +5903,16 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
         <translation>Eliminar Bloque</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>El bloque &quot;%1&quot; y todos sus objetos serán eliminados.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>El bloque "%1" y todos sus objetos serán eliminados.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Propiedades de capa</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Ya existe una capa &quot;%1&quot;. Por favor especifique otro nombre.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Ya existe una capa "%1". Por favor especifique otro nombre.</translation>
     </message>
 </context>
 <context>
@@ -6114,19 +6113,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>enter an integer number</source>
-        <translation type="unfinished"></translation>
+        <translation>introduzca un entero</translation>
     </message>
     <message>
         <source>LibreCAD query</source>
-        <translation type="unfinished"></translation>
+        <translation>Pregunta de LibreCAD</translation>
     </message>
     <message>
         <source>enter a number</source>
-        <translation type="unfinished"></translation>
+        <translation>introduzca un numero</translation>
     </message>
     <message>
         <source>enter text</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduzca un texto</translation>
     </message>
 </context>
 <context>
@@ -6274,8 +6273,8 @@ Do you want to replace it?</source>
         <translation>Espacio entre filas:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -6956,8 +6955,8 @@ Do you want to replace it?</source>
         <translation>Factor:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -7292,8 +7291,8 @@ Do you want to replace it?</source>
         <translation>Expresión no válida</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -8142,12 +8141,12 @@ Do you want to replace it?</source>
         <translation>Factor:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>No se puede abrir el archivo &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>No se puede abrir el archivo '%1'</translation>
     </message>
 </context>
 <context>
@@ -8789,7 +8788,7 @@ Do you want to replace it?</source>
         <translation>&amp;Añadir punto</translation>
     </message>
     <message>
-        <source>Add polyline&apos;s node</source>
+        <source>Add polyline's node</source>
         <translation>Añadir punto en Polilínea</translation>
     </message>
     <message>
@@ -8810,10 +8809,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
-        <translation>Seleccionar Polilínea para añadir puntos</translation>
+        <translation>Seleccionar polilínea para añadir puntos</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Especifique los puntos a añadir</translation>
     </message>
     <message>
@@ -8832,8 +8831,8 @@ Do you want to replace it?</source>
         <translation>&amp;Añadir punto</translation>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
-        <translation>Añadir punto a Polilínea</translation>
+        <source>Append polyline's node</source>
+        <translation>Añadir punto a polilínea</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -8841,7 +8840,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>El objeto debe ser una Polilínea.</translation>
+        <translation>El objeto debe ser una polilínea.</translation>
     </message>
     <message>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
@@ -8875,8 +8874,8 @@ Do you want to replace it?</source>
         <translation>&amp;Borrar punto</translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
-        <translation>Borrar punto en Polilínea</translation>
+        <source>Delete polyline's node</source>
+        <translation>Borrar punto en polilínea</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -8884,7 +8883,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>El objeto debe ser una Polilínea.</translation>
+        <translation>El objeto debe ser una polilínea.</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
@@ -8896,10 +8895,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify polyline to delete node</source>
-        <translation>Especifique Polilínea para borrar punto</translation>
+        <translation>Especifique polilínea para borrar punto</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Especifique punto a borrar</translation>
     </message>
     <message>
@@ -8927,7 +8926,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>El objeto debe ser una Polilínea.</translation>
+        <translation>El objeto debe ser una polilínea.</translation>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
@@ -8943,7 +8942,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
-        <translation>Especificar Polilínea a borrar entre dos puntos</translation>
+        <translation>Especificar polilínea a borrar entre dos puntos</translation>
     </message>
     <message>
         <source>Specify first node</source>
@@ -8974,11 +8973,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>El objeto debe ser una Polilínea.</translation>
+        <translation>El objeto debe ser una polilínea.</translation>
     </message>
     <message>
         <source>Choose the original polyline</source>
-        <translation>Seleccionar la Polilínea origen</translation>
+        <translation>Seleccionar la polilínea origen</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9005,7 +9004,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>Seleccionar uno de los segmentos de origen de la Polilínea</translation>
+        <translation>Seleccionar uno de los segmentos de la polilínea origen</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9023,8 +9022,8 @@ Do you want to replace it?</source>
         <translation>Recor&amp;tar segmentos</translation>
     </message>
     <message>
-        <source>Trim polyline&apos;s segments</source>
-        <translation>Recortar segmentos en Polilínea</translation>
+        <source>Trim polyline's segments</source>
+        <translation>Recortar segmentos de polilínea</translation>
     </message>
     <message>
         <source>No Entity found.</source>
