@@ -43,233 +43,232 @@
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="188"/>
         <source>&amp;Plugins</source>
-        <translation>&amp;Lisäosat</translation>
+        <translation type="obsolete">&amp;Lisäosat</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="329"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="357"/>
         <source>Running script &apos;%1&apos;</source>
         <translation>Suoritetaan skriptiä ’%1’</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="371"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="399"/>
         <source>Inserting block &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="493"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="521"/>
         <source>&amp;File</source>
         <translation>&amp;Tiedosto</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="513"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="541"/>
         <source>Import</source>
         <translation>Tuo</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="540"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="568"/>
         <source>&amp;Edit</source>
         <translation>&amp;Muokkaa</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="596"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="624"/>
         <source>&amp;View</source>
         <translation>&amp;Näytä</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="664"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="692"/>
         <source>&amp;Toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="693"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="721"/>
         <source>Focus on &amp;Command Line</source>
         <translation>&amp;Tarkenna komentoriville</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="695"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="723"/>
         <source>CTRL+M</source>
         <translation>CTRL + M</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="707"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="735"/>
         <source>&amp;Select</source>
         <translation>&amp;Valitse</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="744"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="772"/>
         <source>&amp;Draw</source>
         <translation>&amp;Piirrä</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="748"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="776"/>
         <source>&amp;Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="755"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="783"/>
         <source>&amp;Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="827"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="855"/>
         <source>&amp;Arc</source>
         <translation>&amp;Arkki</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="840"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="868"/>
         <source>&amp;Circle</source>
         <translation>&amp;Ympyrä</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="859"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="887"/>
         <source>&amp;Ellipse</source>
         <translation>&amp;Ellipsi</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="871"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="899"/>
         <source>&amp;Spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="878"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="906"/>
         <source>&amp;Polyline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="922"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="924"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="950"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="952"/>
         <source>&amp;Dimension</source>
         <translation>&amp;Ulottuvuus</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="954"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="982"/>
         <source>&amp;Modify</source>
         <translation>&amp;Muokkaa</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1037"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1065"/>
         <source>&amp;Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1100"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1128"/>
         <source>&amp;Info</source>
         <translation type="unfinished">&amp;Info</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1124"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1152"/>
         <source>&amp;Layer</source>
         <translation type="unfinished">&amp;Taso</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1151"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1179"/>
         <source>&amp;Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1195"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1223"/>
         <source>&amp;Scripts</source>
         <translation>&amp;Skriptit</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1208"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1236"/>
         <source>&amp;CAM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1221"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1249"/>
         <source>About</source>
         <translation>Tietoa ohjelmasta</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1228"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1256"/>
         <source>&amp;Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1273"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1301"/>
         <source>Insert Image</source>
         <translation>Lisää kuva</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1333"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1361"/>
         <source>&amp;Window</source>
         <translation>&amp;Ikkuna</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1341"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1369"/>
         <source>&amp;Help</source>
         <translation>&amp;Ohje</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1349"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1377"/>
         <source>De&amp;bugging</source>
         <translation>&amp;Virheenetsintä</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1557"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1585"/>
         <source>Layer List</source>
         <translation>Tasolista</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1578"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1606"/>
         <source>Block List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1627"/>
         <source>Library Browser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1625"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1653"/>
         <source>Command line</source>
         <translation>Komentorivi</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1839"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1867"/>
         <source>&amp;Cascade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1841"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1869"/>
         <source>&amp;Tile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1843"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1871"/>
         <source>Tile &amp;Horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2003"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2031"/>
         <source>Creating new file...</source>
         <translation>Luodaan uutta tiedostoa...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2013"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2041"/>
         <source>Block &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2015"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2043"/>
         <source>unnamed document %1</source>
         <translation>nimetön dokumentti %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2055"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2083"/>
         <source>New Drawing created.</source>
         <translation>Uusi piirros luotu.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2089"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2117"/>
         <source>Opening recent file...</source>
         <translation>Avaa viimeaikainen tiedosto</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2130"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2158"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -278,29 +277,29 @@ Please check the permissions.</source>
 Tiedoston oikeudet saattavat olla väärin. </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2164"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2192"/>
         <source>Loaded document: </source>
         <translation>Dokumentti avattu: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2168"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2196"/>
         <source>Opening aborted</source>
         <translation>Avaaminen keskeytetty</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2182"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2210"/>
         <source>Saving drawing...</source>
         <translation>Tallennetaan piirrosta...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2194"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2244"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2222"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2272"/>
         <source>Saved drawing: %1</source>
         <translation>Piirros %1 tallennettu.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2199"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2236"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2227"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2264"/>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
@@ -309,22 +308,22 @@ Please check the permissions.</source>
 Ei voitu tallentaa. Tiedoston oikeudet voivat olla väärin.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2216"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2244"/>
         <source>Saving drawing under new filename...</source>
         <translation>Tallennetaan piirrosta toisella tiedostonimellä...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2257"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2285"/>
         <source>Auto-saving drawing...</source>
         <translation>Automaattitallennetaan piirrosta...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2266"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2294"/>
         <source>Auto-saved drawing</source>
         <translation>Piirros automaattitallennettu</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2271"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2299"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -335,107 +334,107 @@ Ei voitu automaattitallentaa. Tiedoston oikeudet voivat olla väärin.
 Automaattitallennus otettu pois käytöstä.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2288"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2316"/>
         <source>Exporting drawing...</source>
         <translation>Viedään piirrosta....</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2361"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2389"/>
         <source>Exported: %1</source>
         <translation>Viedään: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2401"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2429"/>
         <source>Exporting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2456"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2484"/>
         <source>Export complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2458"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2486"/>
         <source>Export failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2524"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2552"/>
         <source>Printing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2587"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2615"/>
         <source>Printing complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2636"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2664"/>
         <source>Print preview for %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2695"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2723"/>
         <source>Exiting application...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2912"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2940"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2916"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2944"/>
         <source>About...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2919"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2947"/>
         <source>Version: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2921"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2949"/>
         <source>SCM Revision: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2923"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2951"/>
         <source>Compiled on: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2925"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2953"/>
         <source>Program Icons Supplied by</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2926"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2954"/>
         <source>Splash and Logo supplied by</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2928"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2956"/>
         <source>Modules: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2930"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2958"/>
         <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2935"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2963"/>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2970"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2998"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2983"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3011"/>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5351,10 +5350,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2129"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2198"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2235"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2270"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2157"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2226"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2263"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2298"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="150"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
@@ -6983,33 +6982,33 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="265"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="264"/>
         <source>Specify first control point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="266"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="265"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="281"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="280"/>
         <source>Specify next control point or [%1]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="282"/>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="286"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="281"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="285"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="285"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="284"/>
         <source>Specify next control point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="368"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="367"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8196,32 +8195,32 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
-        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="42"/>
+        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="41"/>
         <source>Create &amp;Equidistant Polylines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="44"/>
+        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="43"/>
         <source>Create Equidistant Polylines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="198"/>
+        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="197"/>
         <source>No Entity found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="202"/>
+        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="201"/>
         <source>Entity must be a polyline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="256"/>
+        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="255"/>
         <source>Choose the original polyline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="257"/>
+        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="256"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8587,940 +8586,940 @@ Do you want to replace it?</source>
 <context>
     <name>RS_Commands</name>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="45"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="39"/>
         <source>point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="46"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="40"/>
         <source>po</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="48"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="42"/>
         <source>line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="49"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="43"/>
         <source>ln</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="50"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="44"/>
         <source>l</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="52"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="69"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="46"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="63"/>
         <source>polyline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="54"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="48"/>
         <source>offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="55"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="49"/>
         <source>o</source>
         <comment>offset</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="56"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="50"/>
         <source>parallel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="57"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="51"/>
         <source>par</source>
         <comment>parallel</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="59"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="53"/>
         <source>arc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="60"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="54"/>
         <source>a</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="62"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="56"/>
         <source>circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="63"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="57"/>
         <source>ci</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="65"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="59"/>
         <source>rectangle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="66"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="60"/>
         <source>rec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="67"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="61"/>
         <source>rectang</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="71"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="423"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="539"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="65"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="416"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="532"/>
         <source>text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="74"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>regen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="75"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="69"/>
         <source>rg</source>
         <comment>zoom - redraw</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="76"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="70"/>
         <source>zr</source>
         <comment>zoom - redraw</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="78"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="313"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="72"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="306"/>
         <source>zw</source>
         <comment>zoom - window</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="80"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="315"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="74"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="308"/>
         <source>za</source>
         <comment>zoom - auto</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="82"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="321"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="76"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="314"/>
         <source>zp</source>
         <comment>zoom - pan</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="84"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="323"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="78"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>zv</source>
         <comment>zoom - previous</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="87"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="81"/>
         <source>kill</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="88"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="82"/>
         <source>k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="90"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="429"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="549"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="84"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="422"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="542"/>
         <source>undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="91"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="550"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="85"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="543"/>
         <source>u</source>
         <comment>undo</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="93"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="87"/>
         <source>redo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="94"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="88"/>
         <source>r</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="97"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="298"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="91"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="291"/>
         <source>da</source>
         <comment>dimension - aligned</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="98"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="92"/>
         <source>da</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="100"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="300"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="94"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="293"/>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="101"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="95"/>
         <source>dh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="103"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="304"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="97"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="297"/>
         <source>dr</source>
         <comment>dimension - linear</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="104"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="98"/>
         <source>dr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="106"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="302"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="100"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="295"/>
         <source>dv</source>
         <comment>dimension - vertical</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="107"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="101"/>
         <source>dv</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="109"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="306"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="103"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="299"/>
         <source>ld</source>
         <comment>dimension - leader</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="110"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="104"/>
         <source>ld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="113"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="107"/>
         <source>dimregen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="116"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="361"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="110"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="354"/>
         <source>tm</source>
         <comment>modify - multi trim (extend)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="117"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="111"/>
         <source>tm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="119"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="363"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="113"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="356"/>
         <source>xt</source>
         <comment>modify - trim (extend)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="120"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="114"/>
         <source>xt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="122"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="365"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="116"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="358"/>
         <source>rm</source>
         <comment>modify - trim</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="123"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="117"/>
         <source>rm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="125"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="367"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="119"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="360"/>
         <source>mv</source>
         <comment>modify - move</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="126"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="120"/>
         <source>mv</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="128"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="359"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="122"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="352"/>
         <source>ch</source>
         <comment>modify - bevel (chamfer)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="129"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="123"/>
         <source>ch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="131"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="369"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="125"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="362"/>
         <source>mi</source>
         <comment>modify - mirror</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="132"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="126"/>
         <source>mi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="134"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="371"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="128"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="364"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="135"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="129"/>
         <source>ro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="137"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="373"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="131"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="366"/>
         <source>sz</source>
         <comment>modify - scale</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="138"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="132"/>
         <source>sz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="140"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="375"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="134"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="368"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="141"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="135"/>
         <source>ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="143"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="377"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="137"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="370"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="144"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="138"/>
         <source>er</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="146"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="379"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="140"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="372"/>
         <source>oo</source>
         <comment>modify - undo (oops)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="147"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="141"/>
         <source>oo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="149"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="381"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="143"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="374"/>
         <source>uu</source>
         <comment>modify - redo</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="150"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="144"/>
         <source>uu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="152"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="383"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="146"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="376"/>
         <source>xp</source>
         <comment>modify - explode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="153"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="147"/>
         <source>xp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="156"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="328"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="150"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="321"/>
         <source>os</source>
         <comment>snap - none</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="157"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="151"/>
         <source>os</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="159"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="330"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="153"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="323"/>
         <source>sg</source>
         <comment>snap - grid</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="160"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="154"/>
         <source>sg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="162"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="332"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="156"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="325"/>
         <source>se</source>
         <comment>snap - end</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="163"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="157"/>
         <source>se</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="165"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="334"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="159"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="327"/>
         <source>si</source>
         <comment>snap - intersection</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="166"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="160"/>
         <source>si</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="168"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="336"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="162"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="329"/>
         <source>sn</source>
         <comment>snap - center</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/cmd/rs_commands.cpp" line="163"/>
         <location filename="../src/cmd/rs_commands.cpp" line="169"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="175"/>
         <source>sn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="171"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="338"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="165"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="331"/>
         <source>sm</source>
         <comment>snap - middle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="172"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="166"/>
         <source>sm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="174"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="340"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="168"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="333"/>
         <source>sn</source>
         <comment>snap - nearest</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="177"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="342"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="171"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="335"/>
         <source>np</source>
         <comment>snap - nearest point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="178"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="172"/>
         <source>np</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="181"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="354"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="175"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="347"/>
         <source>tn</source>
         <comment>Deselect all</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="182"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="176"/>
         <source>tn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="244"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="236"/>
         <source>Command: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="271"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="264"/>
         <source>po</source>
         <comment>point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="273"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="266"/>
         <source>li</source>
         <comment>line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="275"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="268"/>
         <source>pa</source>
         <comment>parallel</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="277"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="270"/>
         <source>re</source>
         <comment>rectangle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="279"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="272"/>
         <source>rp</source>
         <comment>regular polygon</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="281"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="274"/>
         <source>ci</source>
         <comment>circle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="283"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="276"/>
         <source>c2</source>
         <comment>2 point circle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="285"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="278"/>
         <source>c3</source>
         <comment>3 point circle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="287"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="280"/>
         <source>ar</source>
         <comment>arc</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="289"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="282"/>
         <source>a3</source>
         <comment>3 point arc</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="291"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="284"/>
         <source>ep</source>
         <comment>ellipse</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="293"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="286"/>
         <source>tx</source>
         <comment>text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="293"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="286"/>
         <source>mt</source>
         <comment>text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="311"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="304"/>
         <source>rd</source>
         <comment>redraw</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="317"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>zi</source>
         <comment>zoom - in</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="319"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="312"/>
         <source>zo</source>
         <comment>zoom - out</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="347"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="340"/>
         <source>fr*</source>
         <comment>layers - freeze all</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="349"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="342"/>
         <source>th*</source>
         <comment>layers - defreeze all</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="384"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="377"/>
         <source>ex</source>
         <comment>modify - explode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="397"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="455"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="390"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="448"/>
         <source>angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="399"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="470"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="392"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="463"/>
         <source>close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="401"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="394"/>
         <source>chord length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="403"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="475"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="396"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="468"/>
         <source>columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="405"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="398"/>
         <source>columnspacing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="407"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="486"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="400"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="479"/>
         <source>factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="409"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="402"/>
         <source>length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="411"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="404"/>
         <source>length1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="413"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="406"/>
         <source>length2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="415"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="513"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="408"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="506"/>
         <source>number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="417"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="519"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="410"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="512"/>
         <source>radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="419"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="530"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="412"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="523"/>
         <source>rows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="421"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="414"/>
         <source>rowspacing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="425"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="544"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="418"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="537"/>
         <source>through</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="427"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="420"/>
         <source>trim</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="431"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="554"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="424"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="547"/>
         <source>back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="455"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="448"/>
         <source>ang</source>
         <comment>angle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="456"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="449"/>
         <source>a</source>
         <comment>angle</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="460"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="453"/>
         <source>center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="460"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="453"/>
         <source>cen</source>
         <comment>center</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="461"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="454"/>
         <source>c</source>
         <comment>center</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="465"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="458"/>
         <source>length</source>
         <comment>chord length</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="466"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="459"/>
         <source>l</source>
         <comment>chord length</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="471"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="464"/>
         <source>c</source>
         <comment>close</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="475"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="468"/>
         <source>cols</source>
         <comment>columns</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="476"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="469"/>
         <source>c</source>
         <comment>columns</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="480"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="473"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="481"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="474"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="482"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="475"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="486"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="479"/>
         <source>fact</source>
         <comment>factor</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="487"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="480"/>
         <source>f</source>
         <comment>factor</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="491"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="484"/>
         <source>help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="491"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="484"/>
         <source>?</source>
         <comment>help</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="495"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="488"/>
         <source>length</source>
         <comment>length</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="496"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="489"/>
         <source>len</source>
         <comment>length</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="497"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="490"/>
         <source>l</source>
         <comment>length</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="501"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="494"/>
         <source>length1</source>
         <comment>length1</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="502"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="495"/>
         <source>len1</source>
         <comment>length1</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="503"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="496"/>
         <source>l1</source>
         <comment>length1</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="507"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="500"/>
         <source>length2</source>
         <comment>length2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="508"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="501"/>
         <source>len2</source>
         <comment>length2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="509"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="502"/>
         <source>l2</source>
         <comment>length2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="514"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="507"/>
         <source>num</source>
         <comment>number</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="515"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="508"/>
         <source>n</source>
         <comment>number</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="520"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="513"/>
         <source>r</source>
         <comment>radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="524"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="517"/>
         <source>reversed</source>
         <comment>reversed arc</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="525"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="518"/>
         <source>rev</source>
         <comment>reversed arc</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="526"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="519"/>
         <source>r</source>
         <comment>reversed arc</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="530"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="523"/>
         <source>r</source>
         <comment>rows</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="534"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="527"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="535"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="528"/>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="540"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="533"/>
         <source>t</source>
         <comment>text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="545"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="538"/>
         <source>t</source>
         <comment>through</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="555"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="548"/>
         <source>b</source>
         <comment>back</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="568"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="561"/>
         <source>Available commands:</source>
         <translation type="unfinished"></translation>
     </message>

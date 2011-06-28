@@ -390,7 +390,7 @@ Sauvegarde automatique désactivée.</translation>
     </message>
     <message>
         <source>&amp;Plugins</source>
-        <translation>&amp;Greffons</translation>
+        <translation type="obsolete">&amp;Greffons</translation>
     </message>
     <message>
         <source>Import</source>

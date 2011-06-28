@@ -308,10 +308,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Plugins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
