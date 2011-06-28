@@ -31,11 +31,13 @@ void QG_DimensionLabelEditor::setLabel(const QString& l) {
     
     label = l;
     
-    if (label.at(0)==QChar(0x2205) || label.at(0)==QChar(0xF8)) {
-        hasDiameter = true;
-        bDiameter->setOn(true);
+    if ( !label.isEmpty()) {
+        if (label.at(0)==QChar(0x2205) || label.at(0)==QChar(0xF8)) {
+            hasDiameter = true;
+            bDiameter->setOn(true);
+        }
     }
-    
+
     i0 = l.find("\\S");
     if (i0>=0) {
         i1a = l.find("^ ", i0);

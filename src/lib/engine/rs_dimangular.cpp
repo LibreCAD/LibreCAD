@@ -56,8 +56,8 @@ RS_DimAngular::RS_DimAngular(RS_EntityContainer* parent,
  * @return Automatically created label for the default 
  * measurement of this dimension.
  */
-RS_String RS_DimAngular::getMeasuredLabel() {
-    RS_String ret;
+QString RS_DimAngular::getMeasuredLabel() {
+    QString ret;
 
 	int dimaunit = getGraphicVariableInt("$DIMAUNIT", 0);
 	int dimadec = getGraphicVariableInt("$DIMADEC", 0);

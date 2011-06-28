@@ -53,7 +53,7 @@ RS_DimDiametric::RS_DimDiametric(RS_EntityContainer* parent,
  * @return Automatically created label for the default 
  * measurement of this dimension.
  */
-RS_String RS_DimDiametric::getMeasuredLabel() {
+QString RS_DimDiametric::getMeasuredLabel() {
 
     // Definitive dimension line:
     double dist = data.definitionPoint.distanceTo(edata.definitionPoint);
