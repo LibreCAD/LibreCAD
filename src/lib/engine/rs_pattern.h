@@ -29,6 +29,7 @@
 #define RS_PATTERN_H
 
 #include "rs_entitycontainer.h"
+#include "rs_string.h"
 
 class RS_PatternList;
 

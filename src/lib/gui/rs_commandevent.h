@@ -38,7 +38,7 @@ public:
 	 *
 	 * @param cmd the command that was triggered.
 	 */
-    RS_CommandEvent(const RS_String& cmd) {
+    RS_CommandEvent(const QString& cmd) {
         this->cmd = cmd;
 		accepted = false;
     }
@@ -47,7 +47,7 @@ public:
 	 * @return the command that was triggered, usually by
 	 * the user.
 	 */
-    RS_String getCommand() {
+    QString getCommand() {
         return cmd;
     }
 
@@ -66,7 +66,7 @@ public:
 	}
  
 protected:
-    RS_String cmd;
+    QString cmd;
 	bool accepted;
 };
 

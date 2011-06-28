@@ -850,7 +850,7 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
     if (e.layer==NULL) {
         os << " layer: NULL ";
     } else {
-        os << " layer: " << e.layer->getName().latin1() << " ";
+        os << " layer: " << e.layer->getName().toLatin1().data() << " ";
         os << " layer address: " << e.layer << " ";
     }
 

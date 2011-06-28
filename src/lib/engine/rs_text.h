@@ -28,7 +28,6 @@
 #ifndef RS_TEXT_H
 #define RS_TEXT_H
 
-#include "rs_entity.h"
 #include "rs_entitycontainer.h"
 
 /**
@@ -69,8 +68,8 @@ public:
                 RS2::TextDrawingDirection drawingDirection,
                 RS2::TextLineSpacingStyle lineSpacingStyle,
                 double lineSpacingFactor,
-                const RS_String& text,
-                const RS_String& style,
+                const QString& text,
+                const QString& style,
                 double angle,
                 RS2::UpdateMode updateMode = RS2::Update) {
         this->insertionPoint = insertionPoint;
@@ -90,7 +89,7 @@ public:
     friend class RS_Text;
 
     friend std::ostream& operator << (std::ostream& os, const RS_TextData& td) {
-        os << "(" << td.text.latin1() << ")";
+        os << "(" << td.text.toLatin1().data() << ")";
         return os;
     }
 
@@ -112,9 +111,9 @@ public:
     /** Line spacing factor */
     double lineSpacingFactor;
     /** Text string */
-    RS_String text;
+    QString text;
     /** Text style name */
-    RS_String style;
+    QString style;
     /** Rotation angle */
     double angle;
     /** Update mode */
@@ -199,14 +198,14 @@ public:
     double getLineSpacingFactor() {
         return data.lineSpacingFactor;
     }
-    void setText(const RS_String& t);
-    RS_String getText() {
+    void setText(const QString& t);
+    QString getText() {
         return data.text;
     }
-    void setStyle(const RS_String& s) {
+    void setStyle(const QString& s) {
         data.style = s;
     }
-    RS_String getStyle() {
+    QString getStyle() {
         return data.style;
     }
 	void setAngle(double a) {

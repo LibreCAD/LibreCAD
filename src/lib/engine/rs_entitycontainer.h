@@ -126,8 +126,8 @@ public:
     virtual void updateInserts();
     virtual void updateSplines();
     virtual void update();
-	virtual void renameInserts(const RS_String& oldName, 
-		const RS_String& newName);
+        virtual void renameInserts(const QString& oldName,
+                const QString& newName);
 
 
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
