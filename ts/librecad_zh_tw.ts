@@ -43,234 +43,233 @@
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="188"/>
         <source>&amp;Plugins</source>
-        <translation>外掛程式(&amp;P)</translation>
+        <translation type="obsolete">外掛程式(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="329"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="357"/>
         <source>Running script &apos;%1&apos;</source>
         <translation>執行腳本 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="371"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="399"/>
         <source>Inserting block &apos;%1&apos;</source>
         <translation>插入圖塊 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="493"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="521"/>
         <source>&amp;File</source>
         <translation>檔案(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="513"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="541"/>
         <source>Import</source>
         <translation>匯入</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="540"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="568"/>
         <source>&amp;Edit</source>
         <translation>編輯(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="596"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="624"/>
         <source>&amp;View</source>
         <translation>檢視(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="664"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="692"/>
         <source>&amp;Toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="693"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="721"/>
         <source>Focus on &amp;Command Line</source>
         <translation>進入指令列(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="695"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="723"/>
         <source>CTRL+M</source>
         <translation>CTRL+M</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="707"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="735"/>
         <source>&amp;Select</source>
         <translation>選取(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="744"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="772"/>
         <source>&amp;Draw</source>
         <translation>繪圖(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="748"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="776"/>
         <source>&amp;Point</source>
         <translatorcomment>點(&amp;P)</translatorcomment>
         <translation>點(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="755"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="783"/>
         <source>&amp;Line</source>
         <translation>線(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="827"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="855"/>
         <source>&amp;Arc</source>
         <translation>弧(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="840"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="868"/>
         <source>&amp;Circle</source>
         <translation>圓(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="859"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="887"/>
         <source>&amp;Ellipse</source>
         <translation>橢圓(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="871"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="899"/>
         <source>&amp;Spline</source>
         <translation>雲形線(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="878"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="906"/>
         <source>&amp;Polyline</source>
         <translation>聚合線(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="922"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="924"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="950"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="952"/>
         <source>&amp;Dimension</source>
         <translation>標註(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="954"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="982"/>
         <source>&amp;Modify</source>
         <translation>修改(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1037"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1065"/>
         <source>&amp;Snap</source>
         <translation>貼齊(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1100"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1128"/>
         <source>&amp;Info</source>
         <translation>資訊(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1124"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1152"/>
         <source>&amp;Layer</source>
         <translation>圖層(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1151"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1179"/>
         <source>&amp;Block</source>
         <translation>圖塊(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1195"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1223"/>
         <source>&amp;Scripts</source>
         <translation>腳本(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1208"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1236"/>
         <source>&amp;CAM</source>
         <translation>&amp;CAM</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1221"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1249"/>
         <source>About</source>
         <translation>關於</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1228"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1256"/>
         <source>&amp;Manual</source>
         <translation>手冊(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1273"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1301"/>
         <source>Insert Image</source>
         <translation>插入影像</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1333"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1361"/>
         <source>&amp;Window</source>
         <translation>視窗(&amp;W)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1341"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1369"/>
         <source>&amp;Help</source>
         <translation>說明(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1349"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1377"/>
         <source>De&amp;bugging</source>
         <translation>除錯(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1557"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1585"/>
         <source>Layer List</source>
         <translation>圖層清單</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1578"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1606"/>
         <source>Block List</source>
         <translation>圖塊清單</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1627"/>
         <source>Library Browser</source>
         <translation>資料庫瀏覽器</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1625"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1653"/>
         <source>Command line</source>
         <translation>指令列</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1839"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1867"/>
         <source>&amp;Cascade</source>
         <translation>重疊顯示(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1841"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1869"/>
         <source>&amp;Tile</source>
         <translation>並排(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1843"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1871"/>
         <source>Tile &amp;Horizontally</source>
         <translation>水平並排(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2003"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2031"/>
         <source>Creating new file...</source>
         <translation>新建圖檔...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2013"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2041"/>
         <source>Block &apos;%1&apos;</source>
         <translation>圖塊 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2015"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2043"/>
         <source>unnamed document %1</source>
         <translation>未命名文件 %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2055"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2083"/>
         <source>New Drawing created.</source>
         <translation>新繪圖已建立。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2089"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2117"/>
         <source>Opening recent file...</source>
         <translation>開啟最近的檔案...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2130"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2158"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -279,29 +278,29 @@ Please check the permissions.</source>
 請檢查檔案權限。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2164"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2192"/>
         <source>Loaded document: </source>
         <translation>載入的文件：</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2168"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2196"/>
         <source>Opening aborted</source>
         <translation>已中止開啟</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2182"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2210"/>
         <source>Saving drawing...</source>
         <translation>繪圖儲存中...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2194"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2244"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2222"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2272"/>
         <source>Saved drawing: %1</source>
         <translation>已儲存繪圖: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2199"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2236"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2227"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2264"/>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
@@ -310,22 +309,22 @@ Please check the permissions.</source>
 請檢查檔案權限。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2216"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2244"/>
         <source>Saving drawing under new filename...</source>
         <translation>以新檔名儲存繪圖...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2257"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2285"/>
         <source>Auto-saving drawing...</source>
         <translation>繪圖自動儲存中...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2266"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2294"/>
         <source>Auto-saved drawing</source>
         <translation>繪圖已自動儲存</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2271"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2299"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -336,67 +335,67 @@ Auto-save disabled.</source>
 無法自動儲存。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2288"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2316"/>
         <source>Exporting drawing...</source>
         <translation>正在匯出繪圖...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2361"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2389"/>
         <source>Exported: %1</source>
         <translation>已匯出: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2401"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2429"/>
         <source>Exporting...</source>
         <translation>匯出...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2456"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2484"/>
         <source>Export complete</source>
         <translation>匯出完成</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2458"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2486"/>
         <source>Export failed!</source>
         <translation>匯出失敗！</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2524"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2552"/>
         <source>Printing...</source>
         <translation>列印...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2587"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2615"/>
         <source>Printing complete</source>
         <translation>列印完成</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2636"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2664"/>
         <source>Print preview for %1</source>
         <translation>預覽列印 %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2695"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2723"/>
         <source>Exiting application...</source>
         <translation>退出程式...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2912"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2940"/>
         <source>None</source>
         <translation>無</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2916"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2944"/>
         <source>About...</source>
         <translation>關於...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2919"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2947"/>
         <source>Version: %1</source>
         <translation type="unfinished">版本: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2921"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2949"/>
         <source>SCM Revision: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -409,17 +408,17 @@ Auto-save disabled.</source>
         <translation type="obsolete">SVN 修訂: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2923"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2951"/>
         <source>Compiled on: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2925"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2953"/>
         <source>Program Icons Supplied by</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2926"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2954"/>
         <source>Splash and Logo supplied by</source>
         <translation type="unfinished"></translation>
     </message>
@@ -428,27 +427,27 @@ Auto-save disabled.</source>
         <translation type="obsolete">日期: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2928"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2956"/>
         <source>Modules: %1</source>
         <translation>模組: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2930"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2958"/>
         <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2935"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2963"/>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2970"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2998"/>
         <source>Help</source>
         <translation>求助</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2983"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3011"/>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation>報錯，我在檔案系統上無法找到說明文件。</translation>
     </message>
@@ -5370,10 +5369,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2129"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2198"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2235"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2270"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2157"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2226"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2263"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2298"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="150"/>
         <source>Warning</source>
         <translation>警告</translation>
@@ -7007,33 +7006,33 @@ Do you want to replace it?</source>
         <translation>雲形線(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="265"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="264"/>
         <source>Specify first control point</source>
         <translation>指定第一個控制點</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="266"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="265"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="281"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="280"/>
         <source>Specify next control point or [%1]</source>
         <translation>指定下一個控制點或 [%1]</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="282"/>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="286"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="281"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="285"/>
         <source>Back</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="285"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="284"/>
         <source>Specify next control point</source>
         <translation>指定下一個控制點</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawspline.cpp" line="368"/>
+        <location filename="../src/actions/rs_actiondrawspline.cpp" line="367"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>無法復原: 物件定義值不足。</translation>
     </message>
@@ -8220,32 +8219,32 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
-        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="42"/>
+        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="41"/>
         <source>Create &amp;Equidistant Polylines</source>
         <translation>創建等距的聚合線</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="44"/>
+        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="43"/>
         <source>Create Equidistant Polylines</source>
         <translation>創建等距的聚合線</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="198"/>
+        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="197"/>
         <source>No Entity found.</source>
         <translation>找不到物件。</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="202"/>
+        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="201"/>
         <source>Entity must be a polyline.</source>
         <translation>物件必須是聚合線。</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="256"/>
+        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="255"/>
         <source>Choose the original polyline</source>
         <translation>選擇原聚合線</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="257"/>
+        <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="256"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -8611,944 +8610,944 @@ Do you want to replace it?</source>
 <context>
     <name>RS_Commands</name>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="45"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="39"/>
         <source>point</source>
         <translation>點</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="46"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="40"/>
         <source>po</source>
         <translation>po</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="48"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="42"/>
         <source>line</source>
         <translation>線</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="49"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="43"/>
         <source>ln</source>
         <translation>ln</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="50"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="44"/>
         <source>l</source>
         <translation>l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="52"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="69"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="46"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="63"/>
         <source>polyline</source>
         <translation>聚合線</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="54"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="48"/>
         <source>offset</source>
         <translation>偏移複製</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="55"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="49"/>
         <source>o</source>
         <comment>offset</comment>
         <translation>o</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="56"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="50"/>
         <source>parallel</source>
         <translation>平行</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="57"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="51"/>
         <source>par</source>
         <comment>parallel</comment>
         <translation>par</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="59"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="53"/>
         <source>arc</source>
         <translation>弧</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="60"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="54"/>
         <source>a</source>
         <translation>a</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="62"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="56"/>
         <source>circle</source>
         <translatorcomment>圓~~沿用自AutoCAD，更簡短。</translatorcomment>
         <translation>圓</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="63"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="57"/>
         <source>ci</source>
         <translation>ci</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="65"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="59"/>
         <source>rectangle</source>
         <translation>矩形</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="66"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="60"/>
         <source>rec</source>
         <translation>rec</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="67"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="61"/>
         <source>rectang</source>
         <translation>矩形</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="71"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="423"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="539"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="65"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="416"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="532"/>
         <source>text</source>
         <translation>文字</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="74"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>regen</source>
         <translatorcomment>重生~~沿用自AutoCAD</translatorcomment>
         <translation>重生</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="75"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="69"/>
         <source>rg</source>
         <comment>zoom - redraw</comment>
         <translation>rg</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="76"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="70"/>
         <source>zr</source>
         <comment>zoom - redraw</comment>
         <translation>zr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="78"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="313"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="72"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="306"/>
         <source>zw</source>
         <comment>zoom - window</comment>
         <translation>zw</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="80"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="315"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="74"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="308"/>
         <source>za</source>
         <comment>zoom - auto</comment>
         <translation>za</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="82"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="321"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="76"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="314"/>
         <source>zp</source>
         <comment>zoom - pan</comment>
         <translation>zp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="84"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="323"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="78"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>zv</source>
         <comment>zoom - previous</comment>
         <translation>zv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="87"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="81"/>
         <source>kill</source>
         <translation>kill</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="88"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="82"/>
         <source>k</source>
         <translation>k</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="90"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="429"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="549"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="84"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="422"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="542"/>
         <source>undo</source>
         <translation>復原</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="91"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="550"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="85"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="543"/>
         <source>u</source>
         <comment>undo</comment>
         <translation>u</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="93"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="87"/>
         <source>redo</source>
         <translatorcomment>重作~~沿用自AutoCAD中文版</translatorcomment>
         <translation>重作</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="94"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="88"/>
         <source>r</source>
         <translation>r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="97"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="298"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="91"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="291"/>
         <source>da</source>
         <comment>dimension - aligned</comment>
         <translation>da</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="98"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="92"/>
         <source>da</source>
         <translation>da</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="100"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="300"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="94"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="293"/>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
         <translation>dh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="101"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="95"/>
         <source>dh</source>
         <translation>dh</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="103"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="304"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="97"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="297"/>
         <source>dr</source>
         <comment>dimension - linear</comment>
         <translation>dr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="104"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="98"/>
         <source>dr</source>
         <translation>dr</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="106"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="302"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="100"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="295"/>
         <source>dv</source>
         <comment>dimension - vertical</comment>
         <translation>dv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="107"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="101"/>
         <source>dv</source>
         <translation>dv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="109"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="306"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="103"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="299"/>
         <source>ld</source>
         <comment>dimension - leader</comment>
         <translation>ld</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="110"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="104"/>
         <source>ld</source>
         <translation>ld</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="113"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="107"/>
         <source>dimregen</source>
         <translation>dimregen</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="116"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="361"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="110"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="354"/>
         <source>tm</source>
         <comment>modify - multi trim (extend)</comment>
         <translation>tm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="117"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="111"/>
         <source>tm</source>
         <translation>tm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="119"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="363"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="113"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="356"/>
         <source>xt</source>
         <comment>modify - trim (extend)</comment>
         <translation>xt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="120"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="114"/>
         <source>xt</source>
         <translation>xt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="122"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="365"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="116"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="358"/>
         <source>rm</source>
         <comment>modify - trim</comment>
         <translation>rm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="123"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="117"/>
         <source>rm</source>
         <translation>rm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="125"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="367"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="119"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="360"/>
         <source>mv</source>
         <comment>modify - move</comment>
         <translation>mv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="126"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="120"/>
         <source>mv</source>
         <translation>mv</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="128"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="359"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="122"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="352"/>
         <source>ch</source>
         <comment>modify - bevel (chamfer)</comment>
         <translation>ch</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="129"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="123"/>
         <source>ch</source>
         <translation>ch</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="131"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="369"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="125"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="362"/>
         <source>mi</source>
         <comment>modify - mirror</comment>
         <translation>mi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="132"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="126"/>
         <source>mi</source>
         <translation>mi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="134"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="371"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="128"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="364"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
         <translation>ro</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="135"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="129"/>
         <source>ro</source>
         <translation>ro</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="137"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="373"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="131"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="366"/>
         <source>sz</source>
         <comment>modify - scale</comment>
         <translation>sz</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="138"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="132"/>
         <source>sz</source>
         <translation>sz</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="140"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="375"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="134"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="368"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
         <translation>ss</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="141"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="135"/>
         <source>ss</source>
         <translation>ss</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="143"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="377"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="137"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="370"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
         <translation>er</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="144"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="138"/>
         <source>er</source>
         <translation>er</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="146"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="379"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="140"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="372"/>
         <source>oo</source>
         <comment>modify - undo (oops)</comment>
         <translation>oo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="147"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="141"/>
         <source>oo</source>
         <translation>oo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="149"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="381"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="143"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="374"/>
         <source>uu</source>
         <comment>modify - redo</comment>
         <translation>uu</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="150"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="144"/>
         <source>uu</source>
         <translation>uu</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="152"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="383"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="146"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="376"/>
         <source>xp</source>
         <comment>modify - explode</comment>
         <translation>xp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="153"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="147"/>
         <source>xp</source>
         <translation>xp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="156"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="328"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="150"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="321"/>
         <source>os</source>
         <comment>snap - none</comment>
         <translation>os</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="157"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="151"/>
         <source>os</source>
         <translation>os</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="159"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="330"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="153"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="323"/>
         <source>sg</source>
         <comment>snap - grid</comment>
         <translation>sg</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="160"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="154"/>
         <source>sg</source>
         <translation>sg</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="162"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="332"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="156"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="325"/>
         <source>se</source>
         <comment>snap - end</comment>
         <translation>se</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="163"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="157"/>
         <source>se</source>
         <translation>se</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="165"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="334"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="159"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="327"/>
         <source>si</source>
         <comment>snap - intersection</comment>
         <translation>si</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="166"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="160"/>
         <source>si</source>
         <translation>si</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="168"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="336"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="162"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="329"/>
         <source>sn</source>
         <comment>snap - center</comment>
         <translation>sn</translation>
     </message>
     <message>
+        <location filename="../src/cmd/rs_commands.cpp" line="163"/>
         <location filename="../src/cmd/rs_commands.cpp" line="169"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="175"/>
         <source>sn</source>
         <translation>sn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="171"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="338"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="165"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="331"/>
         <source>sm</source>
         <comment>snap - middle</comment>
         <translation>sm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="172"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="166"/>
         <source>sm</source>
         <translation>sm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="174"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="340"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="168"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="333"/>
         <source>sn</source>
         <comment>snap - nearest</comment>
         <translation>sn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="177"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="342"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="171"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="335"/>
         <source>np</source>
         <comment>snap - nearest point</comment>
         <translation>np</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="178"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="172"/>
         <source>np</source>
         <translation>np</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="181"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="354"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="175"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="347"/>
         <source>tn</source>
         <comment>Deselect all</comment>
         <translation>tn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="182"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="176"/>
         <source>tn</source>
         <translation>tn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="244"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="236"/>
         <source>Command: %1</source>
         <translation>指令: %1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="271"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="264"/>
         <source>po</source>
         <comment>point</comment>
         <translation>po</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="273"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="266"/>
         <source>li</source>
         <comment>line</comment>
         <translation>li</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="275"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="268"/>
         <source>pa</source>
         <comment>parallel</comment>
         <translation>pa</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="277"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="270"/>
         <source>re</source>
         <comment>rectangle</comment>
         <translation>re</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="279"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="272"/>
         <source>rp</source>
         <comment>regular polygon</comment>
         <translation>rp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="281"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="274"/>
         <source>ci</source>
         <comment>circle</comment>
         <translation>ci</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="283"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="276"/>
         <source>c2</source>
         <comment>2 point circle</comment>
         <translation>c2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="285"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="278"/>
         <source>c3</source>
         <comment>3 point circle</comment>
         <translation>c3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="287"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="280"/>
         <source>ar</source>
         <comment>arc</comment>
         <translation>ar</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="289"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="282"/>
         <source>a3</source>
         <comment>3 point arc</comment>
         <translation>a3</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="291"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="284"/>
         <source>ep</source>
         <comment>ellipse</comment>
         <translation>ep</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="293"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="286"/>
         <source>tx</source>
         <comment>text</comment>
         <translation>tx</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="293"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="286"/>
         <source>mt</source>
         <comment>text</comment>
         <translation>mt</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="311"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="304"/>
         <source>rd</source>
         <comment>redraw</comment>
         <translation>rd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="317"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>zi</source>
         <comment>zoom - in</comment>
         <translation>zi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="319"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="312"/>
         <source>zo</source>
         <comment>zoom - out</comment>
         <translation>zo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="347"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="340"/>
         <source>fr*</source>
         <comment>layers - freeze all</comment>
         <translation>fr*</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="349"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="342"/>
         <source>th*</source>
         <comment>layers - defreeze all</comment>
         <translation>th*</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="384"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="377"/>
         <source>ex</source>
         <comment>modify - explode</comment>
         <translation>ex</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="397"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="455"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="390"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="448"/>
         <source>angle</source>
         <translation>角度</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="399"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="470"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="392"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="463"/>
         <source>close</source>
         <translation>關閉</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="401"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="394"/>
         <source>chord length</source>
         <translation>弦長</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="403"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="475"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="396"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="468"/>
         <source>columns</source>
         <translation>欄</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="405"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="398"/>
         <source>columnspacing</source>
         <translatorcomment>欄寬~~沿用Excel稱呼</translatorcomment>
         <translation>欄寬</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="407"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="486"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="400"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="479"/>
         <source>factor</source>
         <translation>係數</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="409"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="402"/>
         <source>length</source>
         <translation>長度</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="411"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="404"/>
         <source>length1</source>
         <translation>長度1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="413"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="406"/>
         <source>length2</source>
         <translation>長度2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="415"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="513"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="408"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="506"/>
         <source>number</source>
         <translation>數字</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="417"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="519"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="410"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="512"/>
         <source>radius</source>
         <translation>半徑</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="419"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="530"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="412"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="523"/>
         <source>rows</source>
         <translation>列</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="421"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="414"/>
         <source>rowspacing</source>
         <translation>列高</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="425"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="544"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="418"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="537"/>
         <source>through</source>
         <translation>通過</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="427"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="420"/>
         <source>trim</source>
         <translation>修剪</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="431"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="554"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="424"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="547"/>
         <source>back</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="455"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="448"/>
         <source>ang</source>
         <comment>angle</comment>
         <translation>ang</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="456"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="449"/>
         <source>a</source>
         <comment>angle</comment>
         <translation>a</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="460"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="453"/>
         <source>center</source>
         <translation>中心</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="460"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="453"/>
         <source>cen</source>
         <comment>center</comment>
         <translation>cen</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="461"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="454"/>
         <source>c</source>
         <comment>center</comment>
         <translation>c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="465"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="458"/>
         <source>length</source>
         <comment>chord length</comment>
         <translation>長度</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="466"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="459"/>
         <source>l</source>
         <comment>chord length</comment>
         <translation>l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="471"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="464"/>
         <source>c</source>
         <comment>close</comment>
         <translation>c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="475"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="468"/>
         <source>cols</source>
         <comment>columns</comment>
         <translation>cols</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="476"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="469"/>
         <source>c</source>
         <comment>columns</comment>
         <translation>c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="480"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="473"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation>欄寬</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="481"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="474"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation>欄寬</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="482"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="475"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
         <translation>cs</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="486"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="479"/>
         <source>fact</source>
         <comment>factor</comment>
         <translation>fact</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="487"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="480"/>
         <source>f</source>
         <comment>factor</comment>
         <translation>f</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="491"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="484"/>
         <source>help</source>
         <translation>說明</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="491"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="484"/>
         <source>?</source>
         <comment>help</comment>
         <translation>?</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="495"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="488"/>
         <source>length</source>
         <comment>length</comment>
         <translation>長度</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="496"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="489"/>
         <source>len</source>
         <comment>length</comment>
         <translation>len</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="497"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="490"/>
         <source>l</source>
         <comment>length</comment>
         <translation>l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="501"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="494"/>
         <source>length1</source>
         <comment>length1</comment>
         <translation>長度1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="502"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="495"/>
         <source>len1</source>
         <comment>length1</comment>
         <translation>len1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="503"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="496"/>
         <source>l1</source>
         <comment>length1</comment>
         <translation>l1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="507"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="500"/>
         <source>length2</source>
         <comment>length2</comment>
         <translation>長度2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="508"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="501"/>
         <source>len2</source>
         <comment>length2</comment>
         <translation>len2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="509"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="502"/>
         <source>l2</source>
         <comment>length2</comment>
         <translation>l2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="514"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="507"/>
         <source>num</source>
         <comment>number</comment>
         <translation>num</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="515"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="508"/>
         <source>n</source>
         <comment>number</comment>
         <translation>n</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="520"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="513"/>
         <source>r</source>
         <comment>radius</comment>
         <translation>r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="524"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="517"/>
         <source>reversed</source>
         <comment>reversed arc</comment>
         <translation>反轉</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="525"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="518"/>
         <source>rev</source>
         <comment>reversed arc</comment>
         <translation>rev</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="526"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="519"/>
         <source>r</source>
         <comment>reversed arc</comment>
         <translation>r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="530"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="523"/>
         <source>r</source>
         <comment>rows</comment>
         <translation>r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="534"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="527"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
         <translation>列高</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="535"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="528"/>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
         <translation>rs</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="540"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="533"/>
         <source>t</source>
         <comment>text</comment>
         <translation>t</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="545"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="538"/>
         <source>t</source>
         <comment>through</comment>
         <translation>t</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="555"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="548"/>
         <source>b</source>
         <comment>back</comment>
         <translation>b</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="568"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="561"/>
         <source>Available commands:</source>
         <translation>可用的指令：</translation>
     </message>
