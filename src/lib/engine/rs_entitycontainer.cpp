@@ -420,7 +420,7 @@ void RS_EntityContainer::clear() {
  * Counts all entities (branches of the tree). 
  */
 unsigned long int RS_EntityContainer::count() {
-    return entities.count();
+    return entities.size();
 }
 
 
@@ -708,20 +708,22 @@ void RS_EntityContainer::update() {
  * @param level 
  */
 RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
-//check if the entities list is empty, if not set entIdx pointing in first entity
-    if (entities.isEmpty()) {
-        entIdx = -1;
-        return NULL;
-    } else
-        entIdx = 0;
+    RS_Entity* e = NULL;
+    entIdx = -1;
     switch (level) {
     case RS2::ResolveNone:
-        return entities.first();
+        if (!entities.isEmpty()) {
+            entIdx = 0;
+            return entities.first();
+        }
         break;
 
     case RS2::ResolveAllButInserts: {
             subContainer=NULL;
-            RS_Entity* e = entities.first();
+            if (!entities.isEmpty()) {
+                entIdx = 0;
+                e = entities.first();
+            }
             if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
                 subContainer = (RS_EntityContainer*)e;
                 e = ((RS_EntityContainer*)e)->firstEntity(level);
@@ -737,7 +739,10 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
 
     case RS2::ResolveAll: {
             subContainer=NULL;
-            RS_Entity* e = entities.first();
+            if (!entities.isEmpty()) {
+                entIdx = 0;
+                e = entities.first();
+            }
             if (e!=NULL && e->isContainer()) {
                 subContainer = (RS_EntityContainer*)e;
                 e = ((RS_EntityContainer*)e)->firstEntity(level);
@@ -765,19 +770,17 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
  *              \li \p 2 all Entity Containers are resolved
  */
 RS_Entity* RS_EntityContainer::lastEntity(RS2::ResolveLevel level) {
-//check if the entities list is empty, if not set entIdx pointing in last entity
-    if (entities.isEmpty()) {
-        entIdx = -1;
-        return NULL;
-    } else
-        entIdx = entities.size()-1;
+    RS_Entity* e = NULL;
+    entIdx = entities.size()-1;
     switch (level) {
     case RS2::ResolveNone:
-        return entities.last();
+        if (!entities.isEmpty())
+            return entities.last();
         break;
 
     case RS2::ResolveAllButInserts: {
-            RS_Entity* e = entities.last();
+            if (!entities.isEmpty())
+                e = entities.last();
             subContainer = NULL;
             if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
                 subContainer = (RS_EntityContainer*)e;
@@ -788,7 +791,8 @@ RS_Entity* RS_EntityContainer::lastEntity(RS2::ResolveLevel level) {
         break;
 
     case RS2::ResolveAll: {
-            RS_Entity* e = entities.last();
+            if (!entities.isEmpty())
+                e = entities.last();
             subContainer = NULL;
             if (e!=NULL && e->isContainer()) {
                 subContainer = (RS_EntityContainer*)e;
@@ -803,7 +807,6 @@ RS_Entity* RS_EntityContainer::lastEntity(RS2::ResolveLevel level) {
 }
 
 
-
 /**
  * Returns the next entity or container or \p NULL if the last entity 
  * returned by \p next() was the last entity in the container.
@@ -812,12 +815,10 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
 
 //set entIdx pointing in next entity and check if is out of range
     ++entIdx;
-//assuming that empty list return size == 0
-    if (entIdx >= entities.size())
-        return NULL;
     switch (level) {
     case RS2::ResolveNone:
-        return entities.at(entIdx);
+        if ( entIdx < entities.size() )
+            return entities.at(entIdx);
         break;
 
     case RS2::ResolveAllButInserts: {
@@ -827,10 +828,12 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
                 if (e!=NULL) {
                     return e;
                 } else {
-                    e = entities.at(entIdx);
+                    if ( entIdx < entities.size() )
+                        e = entities.at(entIdx);
                 }
             } else {
-                e = entities.at(entIdx);
+                if ( entIdx < entities.size() )
+                    e = entities.at(entIdx);
             }
             if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
                 subContainer = (RS_EntityContainer*)e;
@@ -852,10 +855,12 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
                 if (e!=NULL) {
                     return e;
                 } else {
-                    e = entities.at(entIdx);
+                    if ( entIdx < entities.size() )
+                        e = entities.at(entIdx);
                 }
             } else {
-                e = entities.at(entIdx);
+                if ( entIdx < entities.size() )
+                    e = entities.at(entIdx);
             }
             if (e!=NULL && e->isContainer()) {
                 subContainer = (RS_EntityContainer*)e;
@@ -881,17 +886,12 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
  */
 RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
 //set entIdx pointing in prev entity and check if is out of range
-    if (entities.isEmpty()) {
-        entIdx = -1;
-        return NULL;
-    } else
-        --entIdx;
-    if (entIdx < 0)
-        return NULL;
+    --entIdx;
     switch (level) {
 
     case RS2::ResolveNone:
-        return entities.at(entIdx);
+        if (entIdx >= 0)
+            return entities.at(entIdx);
         break;
     
 	case RS2::ResolveAllButInserts: {
@@ -901,10 +901,12 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
                 if (e!=NULL) {
                     return e;
                 } else {
-                    e = entities.at(entIdx);
+                    if (entIdx >= 0)
+                        e = entities.at(entIdx);
                 }
             } else {
-                e = entities.at(entIdx);
+                if (entIdx >= 0)
+                    e = entities.at(entIdx);
             }
             if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
                 subContainer = (RS_EntityContainer*)e;
@@ -925,10 +927,12 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
                 if (e!=NULL) {
                     return e;
                 } else {
-                    e = entities.at(entIdx);
+                    if (entIdx >= 0)
+                        e = entities.at(entIdx);
                 }
             } else {
-                e = entities.at(entIdx);
+                if (entIdx >= 0)
+                    e = entities.at(entIdx);
             }
             if (e!=NULL && e->isContainer()) {
                 subContainer = (RS_EntityContainer*)e;
@@ -962,9 +966,10 @@ RS_Entity* RS_EntityContainer::entityAt(int index) {
 /**
  * @return Current index.
  */
+/*RLZ unused
 int RS_EntityContainer::entityAt() {
     return entIdx;
-}
+} RLZ unused*/
 
 
 /**
