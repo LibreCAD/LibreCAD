@@ -54,11 +54,9 @@ QG_PatternBox::~QG_PatternBox() {}
 void QG_PatternBox::init() {
     QStringList patterns;
 
-    for (RS_Pattern* f = RS_PATTERNLIST->firstPattern();
-            f!=NULL;
-            f = RS_PATTERNLIST->nextPattern()) {
-
-        patterns.append(f->getFileName());
+    QListIterator<RS_Pattern *> f = RS_PATTERNLIST->getIteretor();
+    while (f.hasNext()) {
+        patterns.append( f.next()->getFileName() );
     }
 
     patterns.sort();
@@ -76,9 +74,9 @@ void QG_PatternBox::init() {
 /**
  * Sets the currently selected width item to the given width.
  */
-void QG_PatternBox::setPattern(const RS_String& pName) {
+void QG_PatternBox::setPattern(const QString& pName) {
 
-    RS_DEBUG->print("QG_PatternBox::setPattern %s\n", pName.latin1());
+    RS_DEBUG->print("QG_PatternBox::setPattern %s\n", pName.toLatin1().data());
 
     setCurrentText(pName);
 
@@ -99,7 +97,7 @@ void QG_PatternBox::slotPatternChanged(int index) {
 
     if (currentPattern!=NULL) {
         RS_DEBUG->print("Current pattern is (%d): %s\n",
-                        index, currentPattern->getFileName().latin1());
+                        index, currentPattern->getFileName().toLatin1().data());
     }
 
     emit patternChanged(currentPattern);

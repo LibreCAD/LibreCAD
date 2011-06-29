@@ -35,6 +35,7 @@
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
 
+#include "rs_ptrlist.h"
 #include <q3ptrvector.h>
 #include <qpolygon.h>
 
