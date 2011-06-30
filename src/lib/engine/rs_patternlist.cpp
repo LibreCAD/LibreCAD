@@ -87,7 +87,7 @@ void RS_PatternList::removePattern(RS_Pattern* pattern) {
     RS_DEBUG->print("RS_PatternList::removePattern()");
 
     // here the pattern is removed from the list but not deleted
-    patterns.remove(pattern);
+    patterns.removeOne(pattern);
 
     //for (uint i=0; i<patternListListeners.count(); ++i) {
     //    RS_PatternListListener* l = patternListListeners.at(i);
