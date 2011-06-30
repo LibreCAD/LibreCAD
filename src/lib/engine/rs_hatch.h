@@ -60,7 +60,7 @@ public:
 	}
 
     friend std::ostream& operator << (std::ostream& os, const RS_HatchData& td) {
-        os << "(" << td.pattern.latin1() << ")";
+        os << "(" << td.pattern.toLatin1().data() << ")";
         return os;
     }
 
