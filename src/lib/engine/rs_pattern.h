@@ -29,7 +29,6 @@
 #define RS_PATTERN_H
 
 #include "rs_entitycontainer.h"
-#include "rs_string.h"
 
 class RS_PatternList;
 
@@ -41,19 +40,19 @@ class RS_PatternList;
  */
 class RS_Pattern : public RS_EntityContainer {
 public:
-    RS_Pattern(const RS_String& fileName);
+    RS_Pattern(const QString& fileName);
     virtual ~RS_Pattern();
 
     virtual bool loadPattern();
 	
     /** @return the fileName of this pattern. */
-    RS_String getFileName() const {
+    QString getFileName() const {
         return fileName;
     }
 
 protected:
     //! Pattern file name
-    RS_String fileName;
+    QString fileName;
 
     //! Is this pattern currently loaded into memory?
     bool loaded;
