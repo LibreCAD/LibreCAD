@@ -24,13 +24,13 @@ QString LC_List::name() const
      return (tr("List entities"));
  }
 
-QString LC_List::menu() const
+QList<PluginMenuLocation> LC_List::menu() const
  {
-     return ("Info");
+    return QList<PluginMenuLocation>() << PluginMenuLocation("Info", tr("List entities"));
  }
 
 void LC_List::execComm(Document_Interface *doc,
-                             QWidget *parent)
+                             QWidget *parent, QString cmd)
 {
     Q_UNUSED(parent);
     QList<Plug_Entity *> obj;
