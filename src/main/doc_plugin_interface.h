@@ -69,6 +69,7 @@ class Doc_plugin_interface : public Document_Interface
 public:
     Doc_plugin_interface(RS_Graphic *d, RS_GraphicView* gv, QWidget* parent);
 //    ~Doc_plugin_interface(){};
+    void updateView();
     void addPoint(QPointF *start);
     void addLine(QPointF *start, QPointF *end);
     void addText(QString txt, QString sty, QPointF *start,
@@ -85,6 +86,8 @@ public:
 
     void setLayer(QString name);
     QString getCurrentLayer();
+    QStringList getAllLayer();
+    bool deleteLayer(QString name);
 
     bool getPoint(QPointF *point, const QString& mesage, QPointF *base);
     Plug_Entity *getEnt(const QString& mesage);
