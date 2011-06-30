@@ -26,7 +26,6 @@
 
 #include "rs_scriptlist.h"
 
-#include "rs_stringlist.h"
 #include "rs_system.h"
 
 RS_ScriptList* RS_ScriptList::uniqueInstance = NULL;
@@ -35,7 +34,6 @@ RS_ScriptList* RS_ScriptList::uniqueInstance = NULL;
  * Default constructor.
  */
 RS_ScriptList::RS_ScriptList() {
-    scripts.setAutoDelete(true);
     //init();
     //scriptListListeners.setAutoDelete(false);
     //activeScript = NULL;
@@ -50,13 +48,13 @@ void RS_ScriptList::init() {
 
     RS_DEBUG->print("RS_ScriptList::initScripts");
 
-    scripts.clear();
-    RS_StringList list = RS_SYSTEM->getScriptList();
+    clearScripts();
+    QStringList list = RS_SYSTEM->getScriptList();
     RS_Script* script;
 
-    for ( RS_StringList::Iterator it = list.begin();
+    for ( QStringList::Iterator it = list.begin();
             it != list.end(); ++it ) {
-        RS_DEBUG->print("script: %s:", (*it).latin1());
+        RS_DEBUG->print("script: %s:", (*it).toLatin1().data());
 
         QFileInfo fi(*it);
         script = new RS_Script(fi.baseName(), fi.absoluteFilePath());
@@ -75,7 +73,8 @@ void RS_ScriptList::init() {
  * Removes all scripts in the scriptlist.
  */
 void RS_ScriptList::clearScripts() {
-    scripts.clear();
+    while (!scripts.isEmpty())
+        delete scripts.takeFirst();
 }
 
 
@@ -89,7 +88,7 @@ void RS_ScriptList::removeScript(RS_Script* script) {
     RS_DEBUG->print("RS_ScriptList::removeScript()");
 
     // here the script is removed from the list but not deleted
-    scripts.remove(script);
+    scripts.removeOne(script);
 
     //for (uint i=0; i<scriptListListeners.count(); ++i) {
     //    RS_ScriptListListener* l = scriptListListeners.at(i);
@@ -112,21 +111,19 @@ void RS_ScriptList::removeScript(RS_Script* script) {
  * \p NULL if no such script was found. The script will be loaded into
  * memory if it's not already.
  */
-RS_Script* RS_ScriptList::requestScript(const RS_String& name) {
-    RS_DEBUG->print("RS_ScriptList::requestScript %s",  name.latin1());
+RS_Script* RS_ScriptList::requestScript(const QString& name) {
+    RS_DEBUG->print("RS_ScriptList::requestScript %s",  name.toLatin1().data());
 
-    RS_String name2 = name.lower();
+    QString name2 = name.toLower();
     RS_Script* foundScript = NULL;
 
-    RS_DEBUG->print("name2: %s", name2.latin1());
+    RS_DEBUG->print("name2: %s", name2.toLatin1().data());
 
     // Search our list of available scripts:
-    for (RS_Script* s=scripts.first();
-            s!=NULL;
-            s=scripts.next()) {
+    for (int i = 0; i < scripts.size(); ++i) {
 
-        if (s->getName()==name2) {
-            foundScript = s;
+        if (scripts.at(i)->getName()==name2) {
+            foundScript = scripts.at(i);
             break;
         }
     }
