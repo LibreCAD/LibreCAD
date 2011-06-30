@@ -172,6 +172,11 @@ class Document_Interface
 {
 public:
     virtual ~Document_Interface() {}
+    //! Force to update the graphic view.
+    /*! Force to update the graphic view.
+    */
+    virtual void updateView() = 0;
+
     //! Add point entity to current document.
     /*! Add point entity to current document with current attributes.
     *  \param start point coordinate.
@@ -259,6 +264,18 @@ public:
     *  \return The name of the current layer.
     */
     virtual QString getCurrentLayer() = 0;
+
+    //! Gets the layers list in current document.
+    /*! Gets the list of manes of all layers in current document.
+    *  \return A list with the name of all layers in document.
+    */
+    virtual QStringList getAllLayer() = 0;
+
+    //! Delete a layer in current document.
+    /*! Delete the layer "name" in current document if it exist.
+    *  \return The name of the current layer.
+    */
+    virtual bool deleteLayer(QString name) = 0;
 
 
     //! Gets a point.
