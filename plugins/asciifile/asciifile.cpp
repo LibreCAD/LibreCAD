@@ -27,9 +27,9 @@
 #include "document_interface.h"
 #include "asciifile.h"
 
-QString AsciiFile::menu() const
+QList<PluginMenuLocation> AsciiFile::menu() const
  {
-     return ("File/Import");
+     return QList<PluginMenuLocation>() << PluginMenuLocation("File/Import", tr("Read ascii points"));
  }
 
 QString AsciiFile::name() const
@@ -38,7 +38,7 @@ QString AsciiFile::name() const
  }
 
 void AsciiFile::execComm(Document_Interface *doc,
-                             QWidget *parent)
+                             QWidget *parent, QString cmd)
 {
     dibPunto pdt(parent);
     int result = pdt.exec();
