@@ -29,7 +29,6 @@
 
 #include <stdio.h>
 
-#include "rs_application.h"
 #include "rs_actioninterface.h"
 #include "rs_block.h"
 #include "rs_eventhandler.h"

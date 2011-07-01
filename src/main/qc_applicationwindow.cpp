@@ -46,7 +46,6 @@
 //Plugin support
 #include <QPluginLoader>
 
-#include "rs_application.h"
 #include "rs_actionprintpreview.h"
 #include "rs_dimaligned.h"
 #include "rs_dimlinear.h"
@@ -2135,8 +2134,8 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName,
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: creating new doc window");
         // Create new document window:
         QC_MDIWindow* w = slotFileNew();
-        // RVT_PORT RS_APP->processEvents(1000);
-        RS_APP->processEvents(QEventLoop::AllEvents, 1000);
+        // RVT_PORT qApp->processEvents(1000);
+        qApp->processEvents(QEventLoop::AllEvents, 1000);
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: linking layer list");
         // link the layer widget to the new document:
@@ -2148,7 +2147,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName,
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: open file");
         
-        RS_APP->processEvents(QEventLoop::AllEvents, 1000);
+        qApp->processEvents(QEventLoop::AllEvents, 1000);
 
         // open the file in the new view:
         if (w->slotFileOpen(fileName, type)==false) {
@@ -3852,7 +3851,7 @@ void QC_ApplicationWindow::slotTestUnicode() {
 
         int col;
         int row;
-        RS_Char uCode;       // e.g. 65 (or 'A')
+        QChar uCode;       // e.g. 65 (or 'A')
         RS_String strCode;   // unicde as string e.g. '[0041] A'
 
         graphic->setAutoUpdateBorders(false);
@@ -3862,7 +3861,7 @@ void QC_ApplicationWindow::slotTestUnicode() {
             for (row=0x0; row<=0xF; row++) {
                 //printf("  row: %X\n", row);
 
-                uCode = RS_Char(col+row);
+                uCode = QChar(col+row);
                 //printf("  code: %X\n", uCode.unicode());
 
                 strCode.setNum(uCode.unicode(), 16);

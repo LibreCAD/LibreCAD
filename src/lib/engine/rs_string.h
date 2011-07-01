@@ -36,6 +36,5 @@
 #define XSTR(x)  STR(x)
 
 #define RS_String QString
-#define RS_Char QChar
 
 #endif
