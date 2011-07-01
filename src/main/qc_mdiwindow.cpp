@@ -30,8 +30,6 @@
 //Added by qt3to4:
 #include <QCloseEvent>
 
-#include "rs_application.h"
-
 #include "qg_exitdialog.h"
 #include "qg_filedialog.h"
 
@@ -295,8 +293,8 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
         document->newDoc();
 
 		// cosmetics..
-		// RVT_PORT RS_APP->processEvents(1000);
-		RS_APP->processEvents(QEventLoop::AllEvents, 1000);
+                // RVT_PORT qApp->processEvents(1000);
+                qApp->processEvents(QEventLoop::AllEvents, 1000);
 		
         ret = document->open(fileName, type);
 

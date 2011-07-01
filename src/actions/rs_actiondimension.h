@@ -66,7 +66,7 @@ public:
         }
 
         if (diameter==true) {
-            l = RS_Char(0x2205) + l;
+            l = QChar(0x2205) + l;
         }
 
         if (!tol1.isEmpty() || !tol2.isEmpty()) {
