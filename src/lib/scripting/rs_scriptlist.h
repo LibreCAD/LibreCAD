@@ -28,8 +28,8 @@
 #define RS_SCRIPTLIST_H
 
 
+#include<QList>
 #include "rs_script.h"
-#include "rs_ptrlist.h"
 
 #define RS_SCRIPTLIST RS_ScriptList::instance()
 
@@ -56,7 +56,7 @@ public:
         return uniqueInstance;
     }
 
-    virtual ~RS_ScriptList() {}
+    virtual ~RS_ScriptList() {clearScripts();}
 
     void init();
 
@@ -71,18 +71,12 @@ public:
     //virtual void addScript(RS_Script* script);
     virtual void removeScript(RS_Script* script);
     //virtual void editScript(RS_Script* script, const RS_Script& source);
-    RS_Script* requestScript(const RS_String& name);
+    RS_Script* requestScript(const QString& name);
     //RS_Script* loadScript(const RS_String& name);
     //void toggleScript(const RS_String& name);
-    //! @return First script of the list.
-    RS_Script* firstScript() {
-        return scripts.first();
-    }
-    /** @return Next script from the list after
-     * calling firstScript() or nextScript().
-     */
-    RS_Script* nextScript() {
-        return scripts.next();
+    //! @return a const iterator for the font list.
+    QListIterator<RS_Script *> getIteretor(){
+        return QListIterator<RS_Script *>(scripts);
     }
 
     //void addScriptListListener(RS_ScriptListListener* listener);
@@ -94,7 +88,7 @@ protected:
 
 private:
     //! all scripts available
-    RS_PtrList<RS_Script> scripts;
+    QList<RS_Script*> scripts;
     //! List of registered ScriptListListeners
     //RS_PtrList<RS_ScriptListListener> scriptListListeners;
     //! Currently active script

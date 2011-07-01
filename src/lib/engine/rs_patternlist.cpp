@@ -27,7 +27,6 @@
 
 #include "rs_patternlist.h"
 
-#include "rs_stringlist.h"
 #include "rs_system.h"
 
 RS_PatternList* RS_PatternList::uniqueInstance = NULL;
@@ -38,7 +37,6 @@ RS_PatternList* RS_PatternList::uniqueInstance = NULL;
  * Default constructor.
  */
 RS_PatternList::RS_PatternList() {
-    patterns.setAutoDelete(true);
     //patternListListeners.setAutoDelete(false);
 }
 
@@ -51,20 +49,20 @@ RS_PatternList::RS_PatternList() {
 void RS_PatternList::init() {
     RS_DEBUG->print("RS_PatternList::initPatterns");
 
-    RS_StringList list = RS_SYSTEM->getPatternList();
+    QStringList list = RS_SYSTEM->getPatternList();
     RS_Pattern* pattern;
 
 	patterns.clear();
 
-    for (RS_StringList::Iterator it = list.begin();
+    for (QStringList::Iterator it = list.begin();
             it != list.end(); ++it) {
-        RS_DEBUG->print("pattern: %s:", (*it).latin1());
+        RS_DEBUG->print("pattern: %s:", (*it).toLatin1().data());
 
         QFileInfo fi(*it);
         pattern = new RS_Pattern(fi.baseName().toLower());
         patterns.append(pattern);
 
-        RS_DEBUG->print("base: %s", pattern->getFileName().latin1());
+        RS_DEBUG->print("base: %s", pattern->getFileName().toLatin1().data());
     }
 }
 
@@ -74,7 +72,8 @@ void RS_PatternList::init() {
  * Removes all patterns in the patternlist.
  */
 void RS_PatternList::clearPatterns() {
-    patterns.clear();
+    while (!patterns.isEmpty())
+        delete patterns.takeFirst();
 }
 
 
@@ -88,7 +87,7 @@ void RS_PatternList::removePattern(RS_Pattern* pattern) {
     RS_DEBUG->print("RS_PatternList::removePattern()");
 
     // here the pattern is removed from the list but not deleted
-    patterns.remove(pattern);
+    patterns.removeOne(pattern);
 
     //for (uint i=0; i<patternListListeners.count(); ++i) {
     //    RS_PatternListListener* l = patternListListeners.at(i);
@@ -103,18 +102,17 @@ void RS_PatternList::removePattern(RS_Pattern* pattern) {
  * \p NULL if no such pattern was found. The pattern will be loaded into
  * memory if it's not already.
  */
-RS_Pattern* RS_PatternList::requestPattern(const RS_String& name) {
-    RS_DEBUG->print("RS_PatternList::requestPattern %s", name.latin1());
+RS_Pattern* RS_PatternList::requestPattern(const QString& name) {
+    RS_DEBUG->print("RS_PatternList::requestPattern %s", name.toLatin1().data());
 
-    RS_String name2 = name.lower();
+    QString name2 = name.toLower();
     RS_Pattern* foundPattern = NULL;
 
-    RS_DEBUG->print("name2: %s", name2.latin1());
+    RS_DEBUG->print("name2: %s", name2.toLatin1().data());
 
     // Search our list of available patterns:
-    for (RS_Pattern* p=patterns.first();
-            p!=NULL;
-            p=patterns.next()) {
+    for (int i = 0; i < patterns.size(); ++i) {
+        RS_Pattern* p = patterns.at(i);
 
         if (p->getFileName()==name2) {
             // Make sure this pattern is loaded into memory:
@@ -132,13 +130,12 @@ RS_Pattern* RS_PatternList::requestPattern(const RS_String& name) {
 }
 
 	
-bool RS_PatternList::contains(const RS_String& name) {
-    RS_String name2 = name.lower();
+bool RS_PatternList::contains(const QString& name) {
+    QString name2 = name.toLower();
 
     // Search our list of available patterns:
-    for (RS_Pattern* p=patterns.first();
-            p!=NULL;
-            p=patterns.next()) {
+    for (int i = 0; i < patterns.size(); ++i) {
+        RS_Pattern* p = patterns.at(i);
 
         if (p->getFileName()==name2) {
 			return true;
@@ -155,9 +152,8 @@ bool RS_PatternList::contains(const RS_String& name) {
 std::ostream& operator << (std::ostream& os, RS_PatternList& l) {
 
     os << "Patternlist: \n";
-    for (RS_Pattern* p=l.firstPattern();
-            p!=NULL;
-            p=l.nextPattern()) {
+    for (int i = 0; i < l.patterns.size(); ++i) {
+        RS_Pattern* p = l.patterns.at(i);
 
         os << *p << "\n";
     }
