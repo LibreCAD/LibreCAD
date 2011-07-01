@@ -27,7 +27,6 @@
 
 #include "rs_pattern.h"
 
-#include "rs_stringlist.h"
 #include "rs_system.h"
 #include "rs_fileio.h"
 #include "rs_layer.h"
@@ -38,7 +37,7 @@
  *
  * @param fileName File name of a DXF file defining the pattern
  */
-RS_Pattern::RS_Pattern(const RS_String& fileName)
+RS_Pattern::RS_Pattern(const QString& fileName)
         : RS_EntityContainer(NULL) {
 
     RS_DEBUG->print("RS_Pattern::RS_Pattern() ");
@@ -83,19 +82,19 @@ bool RS_Pattern::loadPattern() {
 
 	RS_DEBUG->print("RS_Pattern::loadPattern");
 
-    RS_String path;
+    QString path;
 
     // Search for the appropriate pattern if we have only the name of the pattern:
-    if (!fileName.lower().contains(".dxf")) {
-        RS_StringList patterns = RS_SYSTEM->getPatternList();
+    if (!fileName.toLower().contains(".dxf")) {
+        QStringList patterns = RS_SYSTEM->getPatternList();
         QFileInfo file;
-        for (RS_StringList::Iterator it = patterns.begin();
+        for (QStringList::Iterator it = patterns.begin();
                 it!=patterns.end();
                 it++) {
 
             if (QFileInfo(*it).baseName().toLower()==fileName.toLower()) {
                 path = *it;
-				RS_DEBUG->print("Pattern found: %s", path.latin1());
+                                RS_DEBUG->print("Pattern found: %s", path.toLatin1().data());
                 break;
             }
         }
@@ -108,7 +107,7 @@ bool RS_Pattern::loadPattern() {
 
     // No pattern paths found:
     if (path.isEmpty()) {
-        RS_DEBUG->print("No pattern \"%s\"available.", fileName.latin1());
+        RS_DEBUG->print("No pattern \"%s\"available.", fileName.toLatin1().data());
         return false;
     }
 
