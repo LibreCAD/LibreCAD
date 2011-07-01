@@ -27,9 +27,6 @@
 #include "rs_actionblocksinsert.h"
 
 #include "rs_creation.h"
-#include "rs_commands.h"
-#include "rs_modification.h"
-
 
 /**
  * Constructor.
@@ -100,7 +97,7 @@ void RS_ActionBlocksInsert::trigger() {
 }
 
 
-void RS_ActionBlocksInsert::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionBlocksInsert::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case SetTargetPoint:
         data.insertionPoint = snapPoint(e);
@@ -124,7 +121,7 @@ void RS_ActionBlocksInsert::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionBlocksInsert::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionBlocksInsert::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -147,7 +144,7 @@ void RS_ActionBlocksInsert::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
@@ -269,8 +266,8 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionBlocksInsert::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionBlocksInsert::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetTargetPoint:
