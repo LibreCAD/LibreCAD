@@ -25,17 +25,7 @@
 **********************************************************************/
 
 
-#include <stdio.h>
-#include <q3paintdevicemetrics.h>
-#include <qpolygon.h>
-
 #include "rs_painterqt.h"
-
-#include "rs_math.h"
-#include "rs_application.h"
-#include "rs_color.h"
-#include <qpen.h>
-//#include "rs_settings.h"
 
 /**
  * Constructor.
@@ -552,14 +542,12 @@ void RS_PainterQt::erase() {
 
 
 int RS_PainterQt::getWidth() {
-    Q3PaintDeviceMetrics m(device());
-    return m.width();
+    return device()->width();
 }
 
 
 int RS_PainterQt::getHeight() {
-    Q3PaintDeviceMetrics m(device());
-    return m.height();
+    return device()->height();
 }
 
 RS_Pen RS_PainterQt::getPen() {
