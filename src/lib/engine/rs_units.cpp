@@ -27,8 +27,7 @@
 
 #include "rs_units.h"
 
-#include <stdio.h>
-#include <qobject.h>
+#include <QObject>
 
 #include "rs_math.h"
 #include "rs_debug.h"
@@ -90,8 +89,8 @@ RS2::Unit RS_Units::dxfint2unit(int dxfint) {
 /**
  * @return a short string representing the given unit (e.g. "mm")
  */
-RS_String RS_Units::unitToSign(RS2::Unit u) {
-    RS_String ret = "";
+QString RS_Units::unitToSign(RS2::Unit u) {
+    QString ret = "";
 
     switch (u) {
     case RS2::None:
@@ -172,72 +171,72 @@ RS_String RS_Units::unitToSign(RS2::Unit u) {
  * @return a string representing the given unit (e.g. "Millimeter").
  *      translated if @a t is true (the default).
  */
-RS_String RS_Units::unitToString(RS2::Unit u, bool t) {
-    RS_String ret = "";
+QString RS_Units::unitToString(RS2::Unit u, bool t) {
+    QString ret = "";
 
     switch (u) {
     case RS2::None:
-        ret = t ? QObject::tr("None") : RS_String("None");
+        ret = t ? QObject::tr("None") : QString("None");
         break;
     case RS2::Inch:
-        ret = t ? QObject::tr("Inch") : RS_String("Inch");
+        ret = t ? QObject::tr("Inch") : QString("Inch");
         break;
     case RS2::Foot:
-        ret = t ? QObject::tr("Foot") : RS_String("Foot");
+        ret = t ? QObject::tr("Foot") : QString("Foot");
         break;
     case RS2::Mile:
-        ret = t ? QObject::tr("Mile") : RS_String("Mile");
+        ret = t ? QObject::tr("Mile") : QString("Mile");
         break;
     case RS2::Millimeter:
-        ret = t ? QObject::tr("Millimeter") : RS_String("Millimeter");
+        ret = t ? QObject::tr("Millimeter") : QString("Millimeter");
         break;
     case RS2::Centimeter:
-        ret = t ? QObject::tr("Centimeter") : RS_String("Centimeter");
+        ret = t ? QObject::tr("Centimeter") : QString("Centimeter");
         break;
     case RS2::Meter:
-        ret = t ? QObject::tr("Meter") : RS_String("Meter");
+        ret = t ? QObject::tr("Meter") : QString("Meter");
         break;
     case RS2::Kilometer:
-        ret = t ? QObject::tr("Kilometer") : RS_String("Kilometer");
+        ret = t ? QObject::tr("Kilometer") : QString("Kilometer");
         break;
     case RS2::Microinch:
-        ret = t ? QObject::tr("Microinch") : RS_String("Microinch");
+        ret = t ? QObject::tr("Microinch") : QString("Microinch");
         break;
     case RS2::Mil:
-        ret = t ? QObject::tr("Mil") : RS_String("Mil");
+        ret = t ? QObject::tr("Mil") : QString("Mil");
         break;
     case RS2::Yard:
-        ret = t ? QObject::tr("Yard") : RS_String("Yard");
+        ret = t ? QObject::tr("Yard") : QString("Yard");
         break;
     case RS2::Angstrom:
-        ret = t ? QObject::tr("Angstrom") : RS_String("Angstrom");
+        ret = t ? QObject::tr("Angstrom") : QString("Angstrom");
         break;
     case RS2::Nanometer:
-        ret = t ? QObject::tr("Nanometer") : RS_String("Nanometer");
+        ret = t ? QObject::tr("Nanometer") : QString("Nanometer");
         break;
     case RS2::Micron:
-        ret = t ? QObject::tr("Micron") : RS_String("Micron");
+        ret = t ? QObject::tr("Micron") : QString("Micron");
         break;
     case RS2::Decimeter:
-        ret = t ? QObject::tr("Decimeter") : RS_String("Decimeter");
+        ret = t ? QObject::tr("Decimeter") : QString("Decimeter");
         break;
     case RS2::Decameter:
-        ret = t ? QObject::tr("Decameter") : RS_String("Decameter");
+        ret = t ? QObject::tr("Decameter") : QString("Decameter");
         break;
     case RS2::Hectometer:
-        ret = t ? QObject::tr("Hectometer") : RS_String("Hectometer");
+        ret = t ? QObject::tr("Hectometer") : QString("Hectometer");
         break;
     case RS2::Gigameter:
-        ret = t ? QObject::tr("Gigameter") : RS_String("Gigameter");
+        ret = t ? QObject::tr("Gigameter") : QString("Gigameter");
         break;
     case RS2::Astro:
-        ret = t ? QObject::tr("Astro") : RS_String("Astro");
+        ret = t ? QObject::tr("Astro") : QString("Astro");
         break;
     case RS2::Lightyear:
-        ret = t ? QObject::tr("Lightyear") : RS_String("Lightyear");
+        ret = t ? QObject::tr("Lightyear") : QString("Lightyear");
         break;
     case RS2::Parsec:
-        ret = t ? QObject::tr("Parsec") : RS_String("Parsec");
+        ret = t ? QObject::tr("Parsec") : QString("Parsec");
         break;
 
     default:
@@ -253,7 +252,7 @@ RS_String RS_Units::unitToString(RS2::Unit u, bool t) {
 /**
  * Converts a string into a unit enum.
  */
-RS2::Unit RS_Units::stringToUnit(const RS_String& u) {
+RS2::Unit RS_Units::stringToUnit(const QString& u) {
     RS2::Unit ret = RS2::None;
 
     if (u=="None") {
@@ -446,10 +445,10 @@ RS_Vector RS_Units::convert(const RS_Vector val, RS2::Unit src, RS2::Unit dest) 
  * @param prec Precisision of the value (e.g. 0.001 or 1/128 = 0.0078125)
  & @param showUnit Append unit to the value.
  */
-RS_String RS_Units::formatLinear(double length, RS2::Unit unit,
+QString RS_Units::formatLinear(double length, RS2::Unit unit,
                                  RS2::LinearFormat format,
                                  int prec, bool showUnit) {
-    RS_String ret;
+    QString ret;
 
     // unit appended to value (e.g. 'mm'):
     /*RS_String unitString = "";
@@ -498,20 +497,18 @@ RS_String RS_Units::formatLinear(double length, RS2::Unit unit,
  * @param prec Precisision of the value (e.g. 0.001 or 1/128 = 0.0078125)
  & @param showUnit Append unit to the value.
  */
-RS_String RS_Units::formatScientific(double length, RS2::Unit unit,
+QString RS_Units::formatScientific(double length, RS2::Unit unit,
                                      int prec, bool showUnit) {
 
-    RS_String ret;
+    QString ret;
 
     // unit appended to value (e.g. 'mm'):
-    RS_String unitString = "";
+    QString unitString = "";
     if (showUnit) {
         unitString = unitToSign(unit);
     }
 
-    char format[128];
-    sprintf(format, "%%.%dE%%s", prec);
-    ret.sprintf(format, length, (const char*)unitString.local8Bit());
+    ret = QString("%1%2").arg(length,0,'E', prec).arg(unitString);
 
     return ret;
 }
@@ -525,13 +522,13 @@ RS_String RS_Units::formatScientific(double length, RS2::Unit unit,
  * @param prec Precisision of the value (e.g. 0.001)
  & @param showUnit Append unit to the value.
  */
-RS_String RS_Units::formatDecimal(double length, RS2::Unit unit,
+QString RS_Units::formatDecimal(double length, RS2::Unit unit,
                                   int prec, bool showUnit) {
 
-    RS_String ret;
+    QString ret;
 
     // unit appended to value (e.g. 'mm'):
-    RS_String unitString = "";
+    QString unitString = "";
     if (showUnit) {
         unitString = unitToSign(unit);
     }
@@ -553,15 +550,15 @@ RS_String RS_Units::formatDecimal(double length, RS2::Unit unit,
  * @param prec Precisision of the value (e.g. 0.001 or 1/128 = 0.0078125)
  & @param showUnit Append unit to the value.
  */
-RS_String RS_Units::formatEngineering(double length, RS2::Unit /*unit*/,
+QString RS_Units::formatEngineering(double length, RS2::Unit /*unit*/,
                                       int prec, bool /*showUnit*/) {
-    RS_String ret;
+    QString ret;
 
     bool sign = (length<0.0);
     int feet = (int)floor(fabs(length)/12);
     double inches = fabs(length) - feet*12;
 
-    RS_String sInches = RS_Math::doubleToString(inches, prec);
+    QString sInches = RS_Math::doubleToString(inches, prec);
 
     if (sInches=="12") {
         feet++;
@@ -569,9 +566,9 @@ RS_String RS_Units::formatEngineering(double length, RS2::Unit /*unit*/,
     }
 
     if (feet!=0) {
-        ret.sprintf("%d'-%s\"", feet, (const char*)sInches.local8Bit());
+        ret = QString("%1'-%2\"").arg(feet).arg(sInches);
     } else {
-        ret.sprintf("%s\"", (const char*)sInches.local8Bit());
+        ret = QString("%1\"").arg(sInches);
     }
 
     if (sign) {
@@ -590,15 +587,15 @@ RS_String RS_Units::formatEngineering(double length, RS2::Unit /*unit*/,
  * @param prec Precisision of the value (e.g. 0.001 or 1/128 = 0.0078125)
  & @param showUnit Append unit to the value.
  */
-RS_String RS_Units::formatArchitectural(double length, RS2::Unit /*unit*/,
+QString RS_Units::formatArchitectural(double length, RS2::Unit /*unit*/,
                                         int prec, bool showUnit) {
-    RS_String ret;
+    QString ret;
     bool neg = (length<0.0);
 
     int feet = (int)floor(fabs(length)/12);
     double inches = fabs(length) - feet*12;
 
-    RS_String sInches = formatFractional(inches, RS2::Inch, prec, showUnit);
+    QString sInches = formatFractional(inches, RS2::Inch, prec, showUnit);
 
     if (sInches=="12") {
         feet++;
@@ -606,9 +603,9 @@ RS_String RS_Units::formatArchitectural(double length, RS2::Unit /*unit*/,
     }
 
     if (neg) {
-        ret.sprintf("-%d'-%s\"", feet, (const char*)sInches.local8Bit());
+        ret = QString("-%1'-%2\"").arg(feet).arg(sInches);
     } else {
-        ret.sprintf("%d'-%s\"", feet, (const char*)sInches.local8Bit());
+        ret = QString("%1'-%2\"").arg(feet).arg(sInches);
     }
 
     return ret;
@@ -624,17 +621,17 @@ RS_String RS_Units::formatArchitectural(double length, RS2::Unit /*unit*/,
  * @param prec Precisision of the value (e.g. 0.001 or 1/128 = 0.0078125)
  & @param showUnit Append unit to the value.
  */
-RS_String RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
+QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
                                      int prec, bool /*showUnit*/) {
 
-    RS_String ret;
+    QString ret;
 
     int num;            // number of complete inches (num' 7/128")
     int nominator;      // number of fractions (nominator/128)
     int denominator;    // (4/denominator)
 
     // sign:
-    RS_String neg = "";
+    QString neg = "";
     if(length < 0) {
         neg = "-";
         length = fabs(length);
@@ -667,19 +664,13 @@ RS_String RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
     }
 
     if( num!=0 && nominator!=0 ) {
-        ret.sprintf("%s%d %d/%d",
-                    (const char*)neg.local8Bit(), num,
-                    nominator, denominator);
+        ret = QString("%1%2 %3/%4").arg(neg).arg(num).arg(nominator).arg(denominator);
     } else if(nominator!=0) {
-        ret.sprintf("%s%d/%d",
-                    (const char*)neg.local8Bit(),
-                    nominator, denominator);
+        ret = QString("%1%2/%3").arg(neg).arg(nominator).arg(denominator);
     } else if(num!=0) {
-        ret.sprintf("%s%d",
-                    (const char*)neg.local8Bit(),
-                    num);
+        ret = QString("%1%2").arg(neg).arg(num);
     } else {
-        ret.sprintf("0");
+        ret = "0";
     }
 
     return ret;
@@ -698,10 +689,10 @@ RS_String RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
  *
  * @ret String with the formatted angle.
  */
-RS_String RS_Units::formatAngle(double angle, RS2::AngleFormat format,
+QString RS_Units::formatAngle(double angle, RS2::AngleFormat format,
                                 int prec) {
 
-    RS_String ret;
+    QString ret;
     double value;
 
     switch (format) {
@@ -738,7 +729,7 @@ RS_String RS_Units::formatAngle(double angle, RS2::AngleFormat format,
     case RS2::DegreesMinutesSeconds: {
             int vDegrees, vMinutes;
             double vSeconds;
-            RS_String degrees, minutes, seconds;
+            QString degrees, minutes, seconds;
 
             vDegrees = (int)floor(value);
             vMinutes = (int)floor((value - vDegrees) * 60.0);
@@ -963,8 +954,8 @@ RS2::PaperFormat RS_Units::paperSizeToFormat(const RS_Vector s) {
 /**
  * Converts a paper format to a string (e.g. for a combobox).
  */
-RS_String RS_Units::paperFormatToString(RS2::PaperFormat p) {
-    RS_String ret = "";
+QString RS_Units::paperFormatToString(RS2::PaperFormat p) {
+    QString ret = "";
 
     switch (p) {
     case RS2::Custom:
@@ -1110,8 +1101,8 @@ RS_String RS_Units::paperFormatToString(RS2::PaperFormat p) {
 /**
  * Converts a string to a paper format.
  */
-RS2::PaperFormat RS_Units::stringToPaperFormat(const RS_String& p) {
-    RS_String ls = p.lower();
+RS2::PaperFormat RS_Units::stringToPaperFormat(const QString& p) {
+    QString ls = p.toLower();
     RS2::PaperFormat ret = RS2::Custom;
 
     if (p=="custom") {
@@ -1212,7 +1203,7 @@ RS2::PaperFormat RS_Units::stringToPaperFormat(const RS_String& p) {
  * Performs some testing for the math class.
  */
 void RS_Units::test() {
-    RS_String s;
+    QString s;
     double v;
 
     /*
@@ -1316,7 +1307,7 @@ void RS_Units::test() {
             s = RS_Units::formatLinear(v, RS2::Inch, RS2::Architectural,
                                        prec, true);
 			// RVT_PORT changed  << s to s.ascii()
-            std::cout << "prec: " << prec << " v: " << v << " s: " << s.ascii() << "\n";
+            std::cout << "prec: " << prec << " v: " << v << " s: " << s.toAscii().data() << "\n";
         }
     }
 
