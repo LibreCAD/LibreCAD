@@ -28,10 +28,8 @@
 #ifndef RS_PAINTERQT_H
 #define RS_PAINTERQT_H
 
-#include <qpainter.h>
+#include <QPainter>
 
-#include "rs_color.h"
-#include "rs_graphicview.h"
 #include "rs_painter.h"
 
 /**
