@@ -451,7 +451,7 @@ QString RS_Units::formatLinear(double length, RS2::Unit unit,
     QString ret;
 
     // unit appended to value (e.g. 'mm'):
-    /*RS_String unitString = "";
+    /*QString unitString = "";
     if (showUnit) {
         unitString = unitToSign(unit);
 }*/

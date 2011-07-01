@@ -76,7 +76,7 @@ public:
 	}*/
 
     // Import:
-    virtual bool fileImport(RS_Graphic& g, const RS_String& file, RS2::FormatType /*type*/);
+    virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/);
 
     // Methods from DL_CreationInterface:
     virtual void addLayer(const DL_LayerData& data);
@@ -133,7 +133,7 @@ public:
     virtual void setVariableDouble(const char* key, double value, int code);
 
     // Export:
-    virtual bool fileExport(RS_Graphic& g, const RS_String& file, RS2::FormatType type);
+    virtual bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type);
 
     void writeVariables(DL_WriterA& dw);
     void writeLayer(DL_WriterA& dw, RS_Layer* l);
@@ -169,8 +169,8 @@ public:
     void setEntityAttributes(RS_Entity* entity, const DL_Attributes& attrib);
     DL_Attributes getEntityAttributes(RS_Entity* entity);
 
-    static RS_String toDxfString(const RS_String& string);
-    static RS_String toNativeString(const char* data, const QString& encoding);
+    static QString toDxfString(const QString& string);
+    static QString toNativeString(const char* data, const QString& encoding);
     QString getDXFEncoding();
 
 public:
@@ -179,9 +179,9 @@ public:
     static RS_Color numberToColor(int num, bool comp=false);
     static int colorToNumber(const RS_Color& col);
 
-    static RS2::LineType nameToLineType(const RS_String& name);
-    static RS_String lineTypeToName(RS2::LineType lineType);
-    //static RS_String lineTypeToDescription(RS2::LineType lineType);
+    static RS2::LineType nameToLineType(const QString& name);
+    static QString lineTypeToName(RS2::LineType lineType);
+    //static QString lineTypeToDescription(RS2::LineType lineType);
 
     static RS2::LineWidth numberToWidth(int num);
     static int widthToNumber(RS2::LineWidth width);
@@ -192,15 +192,15 @@ public:
 	static RS2::Unit numberToUnit(int num);
 	static int unitToNumber(RS2::Unit unit);
 	
-	static bool isVariableTwoDimensional(const RS_String& var);
+        static bool isVariableTwoDimensional(const QString& var);
 
 private:
     /** Pointer to the graphic we currently operate on. */
     RS_Graphic* graphic;
 	/** File name. Used to find out the full path of images. */
-	RS_String file;
+        QString file;
     /** string for concatinating text parts of MTEXT entities. */
-    RS_String mtext;
+    QString mtext;
     /** Pointer to current polyline entity we're adding vertices to. */
     RS_Polyline* polyline;
     /** Pointer to current spline entity we're adding control points to. */

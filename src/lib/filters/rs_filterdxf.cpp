@@ -93,7 +93,7 @@ RS_FilterDXF::~RS_FilterDXF() {
  * will be created or the graphics from which the entities are
  * taken to be stored in a file.
  */
-bool RS_FilterDXF::fileImport(RS_Graphic& g, const RS_String& file, RS2::FormatType /*type*/) {
+bool RS_FilterDXF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) {
     RS_DEBUG->print("RS_FilterDXF::fileImport");
     //RS_DEBUG->timestamp();
 
@@ -200,15 +200,15 @@ void RS_FilterDXF::addBlock(const DL_BlockData& data) {
 
 
     // Prevent special blocks (paper_space, model_space) from being added:
-    if (RS_String(QString::fromUtf8(data.name.c_str())).lower()!="*paper_space0" &&
-            RS_String(QString::fromUtf8(data.name.c_str())).lower()!="*paper_space" &&
-            RS_String(QString::fromUtf8(data.name.c_str())).lower()!="*model_space" &&
-            RS_String(QString::fromUtf8(data.name.c_str())).lower()!="$paper_space0" &&
-            RS_String(QString::fromUtf8(data.name.c_str())).lower()!="$paper_space" &&
-            RS_String(QString::fromUtf8(data.name.c_str())).lower()!="$model_space") {
+    if (QString(QString::fromUtf8(data.name.c_str())).lower()!="*paper_space0" &&
+            QString(QString::fromUtf8(data.name.c_str())).lower()!="*paper_space" &&
+            QString(QString::fromUtf8(data.name.c_str())).lower()!="*model_space" &&
+            QString(QString::fromUtf8(data.name.c_str())).lower()!="$paper_space0" &&
+            QString(QString::fromUtf8(data.name.c_str())).lower()!="$paper_space" &&
+            QString(QString::fromUtf8(data.name.c_str())).lower()!="$model_space") {
 
 #ifndef RS_NO_COMPLEX_ENTITIES
-        if (RS_String(QString::fromUtf8(QString::fromUtf8(data.name.c_str()))).startsWith("__CE")) {
+        if (QString(QString::fromUtf8(QString::fromUtf8(data.name.c_str()))).startsWith("__CE")) {
             RS_EntityContainer* ec = new RS_EntityContainer();
             ec->setLayer("0");
             currentContainer = ec;
@@ -433,7 +433,7 @@ void RS_FilterDXF::addInsert(const DL_InsertData& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addInsert");
 
-    if (RS_String(data.name.c_str()).left(3)=="A$C") {
+    if (QString(data.name.c_str()).left(3)=="A$C") {
         return;
     }
 
@@ -482,7 +482,7 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
     RS2::HAlign halign;
     RS2::TextDrawingDirection dir;
     RS2::TextLineSpacingStyle lss;
-    RS_String sty = QString::fromUtf8(data.style.c_str());
+    QString sty = QString::fromUtf8(data.style.c_str());
     sty=sty.lower();
 
     if (data.attachmentPoint<=3) {
@@ -521,7 +521,7 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
     // use default style for the drawing:
     if (sty.isEmpty()) {
         // japanese, cyrillic:
-        RS_String codepage = variables.getString("$DWGCODEPAGE", "ANSI_1252");
+        QString codepage = variables.getString("$DWGCODEPAGE", "ANSI_1252");
         if (codepage=="ANSI_932" || codepage=="ANSI_1251") {
             sty = "Unicode";
         } else {
@@ -656,9 +656,9 @@ RS_DimensionData RS_FilterDXF::convDimensionData(
     RS2::VAlign valign;
     RS2::HAlign halign;
     RS2::TextLineSpacingStyle lss;
-    RS_String sty = QString::fromUtf8(data.style.c_str());
+    QString sty = QString::fromUtf8(data.style.c_str());
 
-    RS_String t; //= data.text;
+    QString t; //= data.text;
 
     // middlepoint of text can be 0/0 which is considered to be invalid (!):
     //  0/0 because older QCad versions save the middle of the text as 0/0
@@ -897,7 +897,7 @@ void RS_FilterDXF::addHatch(const DL_HatchData& data) {
                          RS_HatchData(data.solid,
                                       data.scale,
                                       data.angle,
-                                      RS_String(QString::fromUtf8(data.pattern.c_str()))));
+                                      QString(QString::fromUtf8(data.pattern.c_str()))));
     setEntityAttributes(hatch, attributes);
 
     currentContainer->addEntity(hatch);
@@ -988,10 +988,10 @@ void RS_FilterDXF::addImage(const DL_ImageData& data) {
     RS_Image* image =
         new RS_Image(
             currentContainer,
-            RS_ImageData(RS_String(data.ref.c_str()).toInt(NULL, 16),
+            RS_ImageData(QString(data.ref.c_str()).toInt(NULL, 16),
                          ip, uv, vv,
                          size,
-                         RS_String(""),
+                         QString(""),
                          data.brightness,
                          data.contrast,
                          data.fade));
@@ -1008,8 +1008,8 @@ void RS_FilterDXF::addImage(const DL_ImageData& data) {
 void RS_FilterDXF::linkImage(const DL_ImageDefData& data) {
     RS_DEBUG->print("RS_FilterDXF::linkImage");
 
-    int handle = RS_String(data.ref.c_str()).toInt(NULL, 16);
-    RS_String sfile(QString::fromUtf8(data.file.c_str()));
+    int handle = QString(data.ref.c_str()).toInt(NULL, 16);
+    QString sfile(QString::fromUtf8(data.file.c_str()));
     QFileInfo fiDxf(file);
     QFileInfo fiBitmap(sfile);
 
@@ -1020,13 +1020,13 @@ void RS_FilterDXF::linkImage(const DL_ImageDefData& data) {
         RS_DEBUG->print("File %s doesn't exist.",
                         (const char*)QFile::encodeName(sfile));
         // try relative path:
-        RS_String f1 = fiDxf.absolutePath() + "/" + sfile;
+        QString f1 = fiDxf.absolutePath() + "/" + sfile;
         if (QFileInfo(f1).exists()) {
             sfile = f1;
         } else {
             RS_DEBUG->print("File %s doesn't exist.", (const char*)QFile::encodeName(f1));
             // try drawing path:
-            RS_String f2 = fiDxf.absolutePath() + "/" + fiBitmap.fileName();
+            QString f2 = fiDxf.absolutePath() + "/" + fiBitmap.fileName();
             if (QFileInfo(f2).exists()) {
                 sfile = f2;
             } else {
@@ -1101,7 +1101,7 @@ void RS_FilterDXF::setVariableVector(const char* key,
 
     // update document's variable list:
     if (currentContainer->rtti()==RS2::EntityGraphic) {
-        ((RS_Graphic*)currentContainer)->addVariable(RS_String(key),
+        ((RS_Graphic*)currentContainer)->addVariable(QString(key),
                 RS_Vector(v1, v2, v3), code);
     }
 }
@@ -1116,12 +1116,12 @@ void RS_FilterDXF::setVariableString(const char* key,
     RS_DEBUG->print("RS_FilterDXF::setVariableString");
 
     // update local DXF variable list:
-    variables.add(RS_String(key), RS_String(value), code);
+    variables.add(QString(key), QString(value), code);
 
     // update document's variable list:
     if (currentContainer->rtti()==RS2::EntityGraphic) {
-        ((RS_Graphic*)currentContainer)->addVariable(RS_String(key),
-                RS_String(value), code);
+        ((RS_Graphic*)currentContainer)->addVariable(QString(key),
+                QString(value), code);
     }
 }
 
@@ -1135,7 +1135,7 @@ void RS_FilterDXF::setVariableInt(const char* key, int value, int code) {
 
     // update document's variable list:
     if (currentContainer->rtti()==RS2::EntityGraphic) {
-        ((RS_Graphic*)currentContainer)->addVariable(RS_String(key),
+        ((RS_Graphic*)currentContainer)->addVariable(QString(key),
                 value, code);
     }
 }
@@ -1150,7 +1150,7 @@ void RS_FilterDXF::setVariableDouble(const char* key, double value, int code) {
 
     // update document's variable list:
     if (currentContainer->rtti()==RS2::EntityGraphic) {
-        ((RS_Graphic*)currentContainer)->addVariable(RS_String(key),
+        ((RS_Graphic*)currentContainer)->addVariable(QString(key),
                 value, code);
     }
 
@@ -1164,7 +1164,7 @@ void RS_FilterDXF::setVariableDouble(const char* key, double value, int code) {
  *
  * @param file Full path to the DXF file that will be written.
  */
-bool RS_FilterDXF::fileExport(RS_Graphic& g, const RS_String& file, RS2::FormatType type) {
+bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type) {
 
     RS_DEBUG->print("RS_FilterDXF::fileExport: exporting file '%s'...",
                     (const char*)QFile::encodeName(file));
@@ -2265,7 +2265,7 @@ void RS_FilterDXF::writeImage(DL_WriterA& dw, RS_Image* i,
 
 void RS_FilterDXF::writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
                                         const DL_Attributes& /*attrib*/) {
-    RS_String blkName;
+    QString blkName;
     blkName = "__CE";
 
     // Creating an unique ID from the element ID
@@ -2401,7 +2401,7 @@ DL_Attributes RS_FilterDXF::getEntityAttributes(RS_Entity* entity) {
 
     // Layer:
     RS_Layer* layer = entity->getLayer();
-    RS_String layerName;
+    QString layerName;
     if (layer!=NULL) {
         layerName = layer->getName();
     } else {
@@ -2415,7 +2415,7 @@ DL_Attributes RS_FilterDXF::getEntityAttributes(RS_Entity* entity) {
     //printf("Color is: %s -> %d\n", pen.getColor().name().latin1(), color);
 
     // Linetype:
-    RS_String lineType = lineTypeToName(pen.getLineType());
+    QString lineType = lineTypeToName(pen.getLineType());
 
     // Width:
     int width = widthToNumber(pen.getWidth());
@@ -2599,9 +2599,9 @@ void RS_FilterDXF::addComment(const char*) {
  * Converts a line type name (e.g. "CONTINUOUS") into a RS2::LineType
  * object.
  */
-RS2::LineType RS_FilterDXF::nameToLineType(const RS_String& name) {
+RS2::LineType RS_FilterDXF::nameToLineType(const QString& name) {
 
-    RS_String uName = name.upper();
+    QString uName = name.upper();
 
     // Standard linetypes for QCad II / AutoCAD
     if (uName.isEmpty() || uName=="BYLAYER") {
@@ -2684,7 +2684,7 @@ RS2::LineType RS_FilterDXF::nameToLineType(const RS_String& name) {
 /**
  * Converts a RS_LineType into a name for a line type.
  */
-RS_String RS_FilterDXF::lineTypeToName(RS2::LineType lineType) {
+QString RS_FilterDXF::lineTypeToName(RS2::LineType lineType) {
 
     // Standard linetypes for QCad II / AutoCAD
     switch (lineType) {
@@ -2772,7 +2772,7 @@ RS_String RS_FilterDXF::lineTypeToName(RS2::LineType lineType) {
 /**
  * Converts a RS_LineType into a name for a line type.
  */
-/*RS_String RS_FilterDXF::lineTypeToDescription(RS2::LineType lineType) {
+/*QString RS_FilterDXF::lineTypeToDescription(RS2::LineType lineType) {
  
     // Standard linetypes for QCad II / AutoCAD
     switch (lineType) {
@@ -2901,8 +2901,8 @@ int RS_FilterDXF::widthToNumber(RS2::LineWidth width) {
  * - %%%d for a degree sign
  * - %%%p for a plus/minus sign
  */
-RS_String RS_FilterDXF::toDxfString(const RS_String& string) {
-    RS_String res = "";
+QString RS_FilterDXF::toDxfString(const QString& string) {
+    QString res = "";
 
     for (uint i=0; i<string.length(); ++i) {
         int c = string.at(i).unicode();
@@ -2928,12 +2928,12 @@ RS_String RS_FilterDXF::toDxfString(const RS_String& string) {
             break;
         default:
             if (c>127) {
-                RS_String hex;
-                hex = RS_String("%1").arg(c, 4, 16);
+                QString hex;
+                hex = QString("%1").arg(c, 4, 16);
 
                 hex = hex.replace(' ', '0');
 
-                res+=RS_String("\\U+%1").arg(hex);
+                res+=QString("\\U+%1").arg(hex);
             } else {
                 res+=string.at(i);
             }
@@ -2949,8 +2949,8 @@ RS_String RS_FilterDXF::toDxfString(const RS_String& string) {
 /**
  * Converts a DXF encoded string into a native Unicode string.
  */
-RS_String RS_FilterDXF::toNativeString(const char* data, const QString& encoding) {
-    RS_String res = QString(data);
+QString RS_FilterDXF::toNativeString(const char* data, const QString& encoding) {
+    QString res = QString(data);
 
     // If the given string doesn't contain any unicode characters, we pass the string
     // Through a textcoder, if that is possible, to convert the string to unicode
@@ -2975,7 +2975,7 @@ RS_String RS_FilterDXF::toNativeString(const char* data, const QString& encoding
     res = res.replace(QRegExp("%%p"), QChar(0x00B1));
 
     // Unicode characters:
-    RS_String cap = "";
+    QString cap = "";
     int uCode = 0;
     bool ok = false;
     do {
@@ -3250,7 +3250,7 @@ int RS_FilterDXF::unitToNumber(RS2::Unit unit) {
 /**
  * Checks if the given variable is two-dimensional (e.g. $LIMMIN).
  */
-bool RS_FilterDXF::isVariableTwoDimensional(const RS_String& var) {
+bool RS_FilterDXF::isVariableTwoDimensional(const QString& var) {
     if (var=="$LIMMIN" ||
             var=="$LIMMAX" ||
             var=="$PLIMMIN" ||
