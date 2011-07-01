@@ -116,7 +116,6 @@ HEADERS = \
     src/lib/creation/rs_creation.h \
     src/lib/debug/rs_debug.h \
     src/lib/engine/rs.h \
-    src/lib/engine/rs_application.h \
     src/lib/engine/rs_arc.h \
     src/lib/engine/rs_atomicentity.h \
     src/lib/engine/rs_block.h \
@@ -169,7 +168,6 @@ HEADERS = \
     src/lib/engine/rs_undocycle.h \
     src/lib/engine/rs_units.h \
     src/lib/engine/rs_utility.h \
-    src/lib/engine/rs_valuelist.h \
     src/lib/engine/rs_variable.h \
     src/lib/engine/rs_variabledict.h \
     src/lib/engine/rs_vector.h \

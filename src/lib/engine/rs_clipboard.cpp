@@ -52,7 +52,7 @@ void RS_Clipboard::addBlock(RS_Block* b) {
 }
 
 
-bool RS_Clipboard::hasBlock(const RS_String& name) {
+bool RS_Clipboard::hasBlock(const QString& name) {
 	return (graphic.findBlock(name)!=NULL);
 }
 
@@ -66,7 +66,7 @@ void RS_Clipboard::addLayer(RS_Layer* l) {
 
 
 
-bool RS_Clipboard::hasLayer(const RS_String& name) {
+bool RS_Clipboard::hasLayer(const QString& name) {
 	return (graphic.findLayer(name)!=NULL);
 }
 

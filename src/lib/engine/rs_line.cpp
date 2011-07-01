@@ -576,8 +576,8 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
  * @return Unique String that identifies this entity
  */
 #ifdef RVT_CAM
-RS_String RS_Line::getCamId() {
-	return RS_String("%1/%2/%3/%4").arg(data.startpoint.x).arg(data.startpoint.y).arg(data.endpoint.x).arg(data.endpoint.y);	
+QString RS_Line::getCamId() {
+        return QString("%1/%2/%3/%4").arg(data.startpoint.x).arg(data.startpoint.y).arg(data.endpoint.x).arg(data.endpoint.y);
 }
 #endif
 

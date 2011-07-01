@@ -29,7 +29,6 @@
 #define RS_UNITS_H
 
 #include "rs.h"
-#include "rs_string.h"
 #include "rs_vector.h"
 
 /**

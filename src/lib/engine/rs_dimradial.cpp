@@ -62,7 +62,7 @@ QString RS_DimRadial::getMeasuredLabel() {
         ret = RS_Units::formatLinear(dist, graphic->getUnit(),
                                      graphic->getLinearFormat(), graphic->getLinearPrecision());
     } else {
-        ret = RS_String("%1").arg(dist);
+        ret = QString("%1").arg(dist);
     }
 
     return ret;

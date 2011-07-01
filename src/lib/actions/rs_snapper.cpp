@@ -33,7 +33,6 @@
 #include "rs_graphicview.h"
 #include "rs_grid.h"
 #include "rs_information.h"
-#include "rs_mouseevent.h"
 #include "rs_painter.h"
 #include "rs_settings.h"
 #include "rs_overlayline.h"

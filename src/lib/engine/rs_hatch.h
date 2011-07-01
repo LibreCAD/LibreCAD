@@ -30,7 +30,6 @@
 
 #include "rs_entity.h"
 #include "rs_entitycontainer.h"
-#include "rs_string.h"
 
 /**
  * Holds the data that defines a hatch entity.
@@ -50,7 +49,7 @@ public:
     RS_HatchData(bool solid,
 	             double scale,
 				 double angle,
-	             const RS_String& pattern) {
+                     const QString& pattern) {
 		this->solid = solid;
 		this->scale = scale;
 		this->angle = angle;
@@ -68,7 +67,7 @@ public:
 	bool solid;
 	double scale;
 	double angle;
-	RS_String pattern;
+        QString pattern;
 };
 
 
@@ -121,10 +120,10 @@ public:
 		data.solid = solid;
 	}
 
-	RS_String getPattern() {
+        QString getPattern() {
 		return data.pattern;
 	}
-	void setPattern(const RS_String& pattern) {
+        void setPattern(const QString& pattern) {
 		data.pattern = pattern;
 	}
 	
