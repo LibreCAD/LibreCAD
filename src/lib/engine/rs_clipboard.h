@@ -63,7 +63,7 @@ public:
 	void clear();
 
 	void addBlock(RS_Block* b);
-	bool hasBlock(const RS_String& name);
+        bool hasBlock(const QString& name);
 	int  countBlocks() {
 		return graphic.countBlocks();
 	}
@@ -72,7 +72,7 @@ public:
 	}
 	
 	void addLayer(RS_Layer* l);
-	bool hasLayer(const RS_String& name);
+        bool hasLayer(const QString& name);
 	int  countLayers() {
 		return graphic.countLayers();
 	}

@@ -53,7 +53,7 @@ RS_DimAligned::RS_DimAligned(RS_EntityContainer* parent,
  * Sets a new text. The entities representing the 
  * text are updated.
  */
-//void RS_DimAligned::setText(const RS_String& t) {
+//void RS_DimAligned::setText(const QString& t) {
 //    data.text = t;
 //    update();
 //}
@@ -76,13 +76,13 @@ QString RS_DimAligned::getMeasuredLabel() {
 
 	RS_Graphic* graphic = getGraphic();
 
-    RS_String ret;
+    QString ret;
 	if (graphic!=NULL) {
 		ret = RS_Units::formatLinear(dist, graphic->getUnit(), 
 			graphic->getLinearFormat(), graphic->getLinearPrecision());
 	}
 	else {
-    	ret = RS_String("%1").arg(dist);
+        ret = QString("%1").arg(dist);
 	}
     return ret;
 }

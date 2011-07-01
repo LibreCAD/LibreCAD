@@ -47,7 +47,7 @@ void RS_VariableDict::clear() {
  * Activates the given block.
  * Listeners are notified.
  */
-//void RS_VariableDict::activateBlock(const RS_String& name) {
+//void RS_VariableDict::activateBlock(const QString& name) {
 //	activateBlock(findBlock(name));
 //}
 

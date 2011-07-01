@@ -50,7 +50,7 @@ RS_SimplePython* RS_SimplePython::instance() {
 /**
  * Launches the given script.
  */
-int RS_SimplePython::launch(const RS_String& script) {
+int RS_SimplePython::launch(const QString& script) {
     long answer;
     PyObject *modname, *mod, *mdict, *func, *rslt;
     //Py_SetProgramName(argv[0]);

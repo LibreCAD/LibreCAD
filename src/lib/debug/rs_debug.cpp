@@ -48,7 +48,7 @@ RS_Debug* RS_Debug::instance() {
         QString nowStr;
 		nowStr = now.toString("yyyyMMdd_hhmmss");
 
-		//RS_String fName = RS_String("%1/debug_%2.log")
+                //QString fName = QString("%1/debug_%2.log")
 		//	.arg(RS_SYSTEM->getHomeDir())
 		//	.arg(nowStr);
                 QString fName = QString("debug_%1.log")
