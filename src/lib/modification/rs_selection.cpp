@@ -309,7 +309,7 @@ void RS_Selection::selectLayer(RS_Entity* e) {
         return;
     }
 
-    RS_String layerName = layer->getName();
+    QString layerName = layer->getName();
 	selectLayer(layerName, select);
 }
 
@@ -318,7 +318,7 @@ void RS_Selection::selectLayer(RS_Entity* e) {
 /**
  * Selects all entities on the given layer.
  */
-void RS_Selection::selectLayer(const RS_String& layerName, bool select) {
+void RS_Selection::selectLayer(const QString& layerName, bool select) {
 
     for (RS_Entity* en=container->firstEntity(); en!=NULL;
             en=container->nextEntity()) {

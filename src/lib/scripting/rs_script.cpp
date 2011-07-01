@@ -34,7 +34,7 @@
 /**
  * Constructor.
  */
-RS_Script::RS_Script(const RS_String& name, const RS_String& /*path*/) {
+RS_Script::RS_Script(const QString& name, const QString& /*path*/) {
     this->name = name;
 }
 
