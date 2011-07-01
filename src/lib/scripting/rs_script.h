@@ -29,11 +29,10 @@
 
 #include <iostream>
 
-#include "rs_string.h"
 
 
 /**
- * Class for representing a script. This is implemented as a RS_String
+ * Class for representing a script. This is implemented as a QString
  * containing the script name.
  *
  * OBSOLETE
@@ -42,25 +41,25 @@
  */
 class RS_Script {
 public:
-    RS_Script(const RS_String& name, const RS_String& path);
+    RS_Script(const QString& name, const QString& path);
     //RS_Script(const char* name);
 
     /** @return the name of this script. */
-    RS_String getName() const {
+    QString getName() const {
         return name;
     }
 
     /** @return the full path and file name of this script. */
-    RS_String getPath() const {
+    QString getPath() const {
         return path;
     }
 
 private:
     //! Script name
-    RS_String name;
+    QString name;
 
     //! Full path to script
-    RS_String path;
+    QString path;
 };
 
 #endif

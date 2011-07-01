@@ -45,7 +45,7 @@ public:
      * @param basePoint Base point (offset) of the letter (usually 0/0).
      */
     RS_FontChar(RS_EntityContainer* parent,
-                const RS_String& name,
+                const QString& name,
                 RS_Vector basePoint)
             : RS_Block(parent, RS_BlockData(name, basePoint, false)) {}
 
