@@ -73,12 +73,12 @@ public:
     RS_String getName();
 
     virtual void init(int status=0);
-    virtual void mouseMoveEvent(RS_MouseEvent*);
-    virtual void mousePressEvent(RS_MouseEvent*);
+    virtual void mouseMoveEvent(QMouseEvent*);
+    virtual void mousePressEvent(QMouseEvent*);
 
-    virtual void mouseReleaseEvent(RS_MouseEvent*);
-    virtual void keyPressEvent(RS_KeyEvent* e);
-    virtual void keyReleaseEvent(RS_KeyEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent*);
+    virtual void keyPressEvent(QKeyEvent* e);
+    virtual void keyReleaseEvent(QKeyEvent* e);
     virtual void coordinateEvent(RS_CoordinateEvent*);
     virtual void commandEvent(RS_CommandEvent*);
     virtual RS_StringList getAvailableCommands();

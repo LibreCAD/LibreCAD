@@ -446,7 +446,7 @@ QStringList RS_System::getFileList(const QString& subDirectory,
             it!=dirList.end();
             ++it ) {
 
-        //path = RS_String(*it) + "/" + subDirectory;
+        //path = QString(*it) + "/" + subDirectory;
         path = QString(*it);
         dir = QDir(path);
 

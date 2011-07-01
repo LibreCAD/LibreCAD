@@ -58,7 +58,7 @@ RS_FilterCXF::RS_FilterCXF() : RS_FilterInterface() {
  * will be created or the graphics from which the entities are
  * taken to be stored in a file.
  */
-bool RS_FilterCXF::fileImport(RS_Graphic& g, const RS_String& file, RS2::FormatType /*type*/) {
+bool RS_FilterCXF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) {
     RS_DEBUG->print("CXF Filter: importing file '%s'...", file.latin1());
 
     //this->graphic = &g;
@@ -89,15 +89,15 @@ bool RS_FilterCXF::fileImport(RS_Graphic& g, const RS_String& file, RS2::FormatT
     for (uint i=0; i<font.countLetters(); ++i) {
         RS_Block* ch = font.letterAt(i);
 
-        RS_String uCode;
+        QString uCode;
         uCode.setNum(ch->getName().at(0).unicode(), 16);
         while (uCode.length()<4) {
             uCode="0"+uCode;
         }
         //ch->setName("[" + uCode + "] " + ch->getName());
-        //letterList->rename(ch, RS_String("[%1]").arg(ch->getName()));
+        //letterList->rename(ch, QString("[%1]").arg(ch->getName()));
         letterList->rename(ch,
-                           RS_String("[%1] %2").arg(uCode).arg(ch->getName().at(0)));
+                           QString("[%1] %2").arg(uCode).arg(ch->getName().at(0)));
 
         g.addBlock(ch, false);
         ch->reparent(&g);
@@ -116,7 +116,7 @@ bool RS_FilterCXF::fileImport(RS_Graphic& g, const RS_String& file, RS2::FormatT
  *
  * @param file Full path to the CXF file that will be written.
  */
-bool RS_FilterCXF::fileExport(RS_Graphic& g, const RS_String& file, RS2::FormatType /*type*/) {
+bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) {
 
     RS_DEBUG->print("CXF Filter: exporting file '%s'...", file.latin1());
 
@@ -142,7 +142,7 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const RS_String& file, RS2::FormatT
                 (const char*)RS_SYSTEM->getAppVersion().local8Bit());
 
         RS_DEBUG->print("001");
-        RS_String ns = g.getVariableString("Names", "");
+        QString ns = g.getVariableString("Names", "");
         if (!ns.isEmpty()) {
             RS_StringList names = RS_StringList::split(',', ns);
             RS_DEBUG->print("002");
@@ -154,7 +154,7 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const RS_String& file, RS2::FormatT
 
         RS_DEBUG->print("003");
 
-        RS_String es = g.getVariableString("Encoding", "");
+        QString es = g.getVariableString("Encoding", "");
         if (!es.isEmpty()) {
             fprintf(fp, "# Encoding:          %s\n",
                     (const char*)es.local8Bit());
@@ -169,19 +169,19 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const RS_String& file, RS2::FormatT
         fprintf(fp, "# LineSpacingFactor: %f\n",
                 g.getVariableDouble("LineSpacingFactor", 1.0));
 
-        RS_String sa = g.getVariableString("Authors", "");
+        QString sa = g.getVariableString("Authors", "");
         RS_DEBUG->print("authors: %s", (const char*)sa.local8Bit());
         if (!sa.isEmpty()) {
             RS_StringList authors = RS_StringList::split(',', sa);
             RS_DEBUG->print("006");
             RS_DEBUG->print("count: %d", authors.count());
 
-            RS_String a;
+            QString a;
             for (RS_StringList::Iterator it2 = authors.begin();
                     it2!=authors.end(); ++it2) {
 
                 RS_DEBUG->print("006a");
-                a = RS_String(*it2);
+                a = QString(*it2);
                 RS_DEBUG->print("006b");
                 RS_DEBUG->print("string is: %s", a.ascii());
                 RS_DEBUG->print("006b0");

@@ -214,7 +214,7 @@ public:
     virtual void calculateBorders();
 
 #ifdef RVT_CAM
-    virtual RS_String getCamId();
+    virtual QString getCamId();
 #endif
 	
 protected:
