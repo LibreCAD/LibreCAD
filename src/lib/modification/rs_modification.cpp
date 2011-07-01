@@ -435,7 +435,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
 
     // add entities to this host (graphic or a new block)
     RS_EntityContainer* host = container;
-    RS_String blockName;
+    QString blockName;
 
     // create new block:
     if (graphic!=NULL) {
@@ -464,7 +464,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
 
         if (e!=NULL) {
 
-            RS_String layerName = "0";
+            QString layerName = "0";
             RS_Layer* layer = e->getLayer();
             if (layer!=NULL) {
                 layerName = layer->getName();

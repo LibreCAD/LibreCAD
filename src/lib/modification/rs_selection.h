@@ -29,7 +29,6 @@
 
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
-#include "rs_string.h"
 
 
 
@@ -65,8 +64,8 @@ public:
     void selectContour(RS_Entity* e);
 	
     void selectLayer(RS_Entity* e);
-    void selectLayer(const RS_String& layerName, bool select=true);
-    void deselectLayer(RS_String& layerName) {
+    void selectLayer(const QString& layerName, bool select=true);
+    void deselectLayer(QString& layerName) {
 		selectLayer(layerName, false);
 	}
 

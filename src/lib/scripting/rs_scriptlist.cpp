@@ -138,7 +138,7 @@ RS_Script* RS_ScriptList::requestScript(const QString& name) {
  * @return Pointer to the script with the given name or
  * \p NULL if no such script was found.
  */
-//RS_Script* RS_ScriptList::loadScript(const RS_String& name) {
+//RS_Script* RS_ScriptList::loadScript(const QString& name) {
 //}
 
 

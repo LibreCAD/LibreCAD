@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+#include "rs_string.h"
+
 void QG_CoordinateWidget::init() {
     lCoord1->setText("");
     lCoord2->setText("");

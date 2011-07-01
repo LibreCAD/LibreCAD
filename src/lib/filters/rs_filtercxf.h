@@ -57,9 +57,9 @@ public:
 		return (t==RS2::FormatCXF);
 	}*/
 
-    virtual bool fileImport(RS_Graphic& g, const RS_String& file, RS2::FormatType /*type*/);
+    virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/);
 
-    virtual bool fileExport(RS_Graphic& g, const RS_String& file, RS2::FormatType /*type*/);
+    virtual bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/);
 
     void stream(std::ofstream& fs, double value);
 };

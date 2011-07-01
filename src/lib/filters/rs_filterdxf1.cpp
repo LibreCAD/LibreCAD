@@ -64,7 +64,7 @@ RS_FilterDXF1::RS_FilterDXF1()
  * will be created or the graphics from which the entities are
  * taken to be stored in a file.
  */
-bool RS_FilterDXF1::fileImport(RS_Graphic& g, const RS_String& file, RS2::FormatType /*type*/) {
+bool RS_FilterDXF1::fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) {
     RS_DEBUG->print("DXF1 Filter: importing file '%s'...", file.latin1());
 
 	this->graphic = &g;
@@ -93,8 +93,8 @@ bool RS_FilterDXF1::readFromBuffer() {
     RS_DEBUG->print( "\nDXF: Read from buffer" );
 
     bool      ret;                    // returned value
-    RS_String   dxfLine;                // A line in the dxf file
-    RS_String   dxfCode;                // A Code in the dxf file as string
+    QString   dxfLine;                // A line in the dxf file
+    QString   dxfCode;                // A Code in the dxf file as string
     int       code=-1;                // Dxf-code as number
     double    vx1=0.0, vy1=0.0;       // Start point
     double    vx2=0.0, vy2=0.0;       // End point
@@ -105,7 +105,7 @@ bool RS_FilterDXF1::readFromBuffer() {
     //           vpx=0.0, vpy=0.0;       // First Polyline point
     //double    ax=0.0, ay=0.0;         // Current coordinate
     //bool      plClose=false;          // Polyline closed-flag
-    RS_String lastLayer;              // Last used layer name (test adding only
+    QString lastLayer;              // Last used layer name (test adding only
     //   if the new layer!=lastLayer)
     //int       currentLayerNum=0;      // Current layer number
     RS_Layer* currentLayer=0;         // Pointer to current layer
@@ -884,14 +884,14 @@ bool RS_FilterDXF1::readFromBuffer() {
                 // -----
                 else if(dxfLine=="TEXT") {
 
-                    RS_String vtext;          // the text
+                    QString vtext;          // the text
                     char  vtextStyle[256];  // text style (normal_ro, cursive_ri, normal_st, ...)
                     double vheight=10.0;     // text height
                     double vtextAng=0.0;     // text angle
                     //double vradius=0.0;      // text radius
                     //double vletterspace=2.0; // Text letter space
                     //double vwordspace=6.0;   // Text wordspace
-                    RS_String vfont;         // font "normal", "cursive", ...
+                    QString vfont;         // font "normal", "cursive", ...
                     RS2::HAlign vhalign=RS2::HAlignLeft;
                     // alignment (0=left, 1=center, 2=right)
                     //int   vattachement=7;   // 1=top left, 2, 3, 4, 5, 6, 7, 8, 9=bottom right
@@ -1076,7 +1076,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                     double v15=0.0, v25=0.0;
                     double v16=0.0, v26=0.0;
                     double v40=0.0, v50=0.0;
-                    RS_String dimText;
+                    QString dimText;
                     do {
                         dxfCode=getBufLine();
                         if(dxfCode.size()) {
@@ -1416,7 +1416,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                 // ---------
                 /*
                       else if(dxfLine=="HATCH") {
-                        RS_String patternName="45";
+                        QString patternName="45";
                         double patternScale=1.0;
                         //int numPaths=1;
                         //int numEdges=1;
@@ -1642,12 +1642,12 @@ void RS_FilterDXF1::dos2unix() {
 // return:  -Null-string: end of buffer
 //          -String which is the next line in buffer
 //
-RS_String RS_FilterDXF1::getBufLine() {
+QString RS_FilterDXF1::getBufLine() {
     char *ret;
-    RS_String str;
+    QString str;
 
     if (fBufP >= (int)fSize)
-        return RS_String::null;
+        return QString::null;
 
     ret = &fBuf[fBufP];
 
@@ -1656,7 +1656,7 @@ RS_String RS_FilterDXF1::getBufLine() {
         while (++fBufP < (int)fSize && fBuf[fBufP] == '\0')
             ;
         if (fBufP >= (int)fSize)
-            return RS_String::null;
+            return QString::null;
         ret = &fBuf[fBufP];
 }*/
 
@@ -1664,7 +1664,7 @@ RS_String RS_FilterDXF1::getBufLine() {
     while (fBufP < (int)fSize && fBuf[fBufP++] != '\0')
         ;
 
-    str = RS_String::fromLocal8Bit(ret).stripWhiteSpace();
+    str = QString::fromLocal8Bit(ret).stripWhiteSpace();
 
     if (str.isNull()) {
         return "";
@@ -1725,7 +1725,7 @@ void RS_FilterDXF1::copyBufFrom(const char* _buf) {
 //         false: end of buffer
 //
 bool RS_FilterDXF1::gotoBufLine(char* _lstr) {
-    RS_String l;
+    QString l;
     do {
         l=getBufLine();
     } while(!l.isNull() && l!=_lstr);
@@ -1744,7 +1744,7 @@ bool RS_FilterDXF1::gotoBufLine(char* _lstr) {
 //
 //
 bool RS_FilterDXF1::gotoBufLineString(char* _lstr) {
-    RS_String l;
+    QString l;
     do {
         l=getBufLine();
     } while(!l.isNull() && l.contains(_lstr));
@@ -1859,7 +1859,7 @@ bool RS_FilterDXF1::readFileInBuffer(int _bNum) {
 
 // Decode a DXF string to the C-convention (special character \P is a \n)
 //
-void RS_FilterDXF1::strDecodeDxfString(RS_String& str) {
+void RS_FilterDXF1::strDecodeDxfString(QString& str) {
     if (str.isEmpty())
         return;
     str.replace(QRegExp("%%c"), QChar(0xF8)); // Diameter

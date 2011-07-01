@@ -60,13 +60,13 @@ QString RS_DimDiametric::getMeasuredLabel() {
 
 	RS_Graphic* graphic = getGraphic();
 
-    RS_String ret;
+    QString ret;
 	if (graphic!=NULL) {
 		ret = RS_Units::formatLinear(dist, graphic->getUnit(), 
 			graphic->getLinearFormat(), graphic->getLinearPrecision());
 	}
 	else {
-    	ret = RS_String("%1").arg(dist);
+        ret = QString("%1").arg(dist);
 	}
 
     return ret;
