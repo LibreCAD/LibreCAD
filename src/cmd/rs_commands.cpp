@@ -27,7 +27,7 @@
 #include "rs_commands.h"
 
 #include "rs_dialogfactory.h"
-
+#include"../../../undefs.h"
 RS_Commands* RS_Commands::uniqueInstance = NULL;
 
 
@@ -208,7 +208,7 @@ QStringList RS_Commands::complete(const QString& cmd) {
  * @return The translated command.
  */
 RS2::ActionType RS_Commands::cmdToAction(const QString& cmd) {
-    QString c = cmd.lower();
+    QString c = cmd.toLower();
     QString full = cmd;          // full command defaults to given command
     RS2::ActionType ret = RS2::ActionNone;
 
@@ -257,7 +257,7 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd) {
  * of key-strokes that is entered like hotkeys.
  */
 RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
-    QString c = code.lower();
+    QString c = code.toLower();
     RS2::ActionType ret = RS2::ActionNone;
 
     // draw:
@@ -425,7 +425,7 @@ QString RS_Commands::command(const QString& cmd) {
     }
 
     RS_DEBUG->print(RS_Debug::D_WARNING,
-		"RS_Commands::command: command '%s' unknown", cmd.latin1());
+                "RS_Commands::command: command '%s' unknown", cmd.toLatin1().data());
     return "";
 }
 
