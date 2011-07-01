@@ -44,7 +44,6 @@
 #include "rs_spline.h"
 #include "rs_system.h"
 
-#include "rs_valuelist.h"
 #include "rs_stringlist.h"
 
 #include <qtextcodec.h>
@@ -1754,8 +1753,8 @@ void RS_FilterDXF::writeSpline(DL_WriterA& dw,
         attrib);
 
     // write spline knots:
-    RS_ValueList<RS_Vector> cp = s->getControlPoints();
-    RS_ValueList<RS_Vector>::iterator it;
+    QList<RS_Vector> cp = s->getControlPoints();
+    QList<RS_Vector>::iterator it;
 
     int k = s->getDegree()+1;
     DL_KnotData kd;
