@@ -56,7 +56,7 @@ RS_Pattern::RS_Pattern(const QString& fileName)
  * @param name Pattern name.
  *
  */
-/*RS_Pattern::RS_Pattern(const RS_String& fileName, const RS_String& name)
+/*RS_Pattern::RS_Pattern(const QString& fileName, const QString& name)
         : RS_EntityContainer(NULL) {
 	this->fileName = fileName;
 	this->name = name;

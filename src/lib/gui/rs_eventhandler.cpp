@@ -28,9 +28,6 @@
 #include "rs_eventhandler.h"
 
 #include "rs_actioninterface.h"
-#include "rs_coordinateevent.h"
-//Added by qt3to4:
-#include <QEvent>
 
 /**
  * Constructor.
@@ -74,8 +71,8 @@ RS_EventHandler::~RS_EventHandler() {
  * Go back in current action.
  */
 void RS_EventHandler::back() {
-    RS_MouseEvent e(QEvent::MouseButtonRelease, QPoint(0,0),
-                    Qt::RightButton, Qt::RightButton);
+    QMouseEvent e(QEvent::MouseButtonRelease, QPoint(0,0),
+                    Qt::RightButton, Qt::RightButton,Qt::NoModifier);
     mouseReleaseEvent(&e);
 }
 
@@ -85,7 +82,7 @@ void RS_EventHandler::back() {
  * Go enter pressed event for current action.
  */
 void RS_EventHandler::enter() {
-    RS_KeyEvent e(QEvent::KeyPress, Qt::Key_Enter, '\n', 0);
+    QKeyEvent e(QEvent::KeyPress, Qt::Key_Enter, 0);
     keyPressEvent(&e);
 }
 
@@ -93,7 +90,7 @@ void RS_EventHandler::enter() {
 /**
  * Called by RS_GraphicView 
  */
-void RS_EventHandler::mousePressEvent(RS_MouseEvent* e) {
+void RS_EventHandler::mousePressEvent(QMouseEvent* e) {
     if (actionIndex>=0 && currentActions[actionIndex]!=NULL) {
         currentActions[actionIndex]->mousePressEvent(e);
         e->accept();
@@ -113,12 +110,12 @@ void RS_EventHandler::mousePressEvent(RS_MouseEvent* e) {
 /**
  * Called by RS_GraphicView 
  */
-void RS_EventHandler::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
 
     if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
             !currentActions[actionIndex]->isFinished()) {
         RS_DEBUG->print("call action %s",
-                        currentActions[actionIndex]->getName().latin1());
+                        currentActions[actionIndex]->getName().toLatin1().data());
 
         currentActions[actionIndex]->mouseReleaseEvent(e);
 
@@ -139,7 +136,7 @@ void RS_EventHandler::mouseReleaseEvent(RS_MouseEvent* e) {
 /**
  * Called by RS_GraphicView 
  */
-void RS_EventHandler::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_EventHandler::mouseMoveEvent(QMouseEvent* e) {
     if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
             !currentActions[actionIndex]->isFinished()) {
         currentActions[actionIndex]->mouseMoveEvent(e);
@@ -193,7 +190,7 @@ void RS_EventHandler::mouseEnterEvent() {
 /**
  * Called by RS_GraphicView 
  */
-void RS_EventHandler::keyPressEvent(RS_KeyEvent* e) {
+void RS_EventHandler::keyPressEvent(QKeyEvent* e) {
     if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
             !currentActions[actionIndex]->isFinished()) {
         currentActions[actionIndex]->keyPressEvent(e);
@@ -214,7 +211,7 @@ void RS_EventHandler::keyPressEvent(RS_KeyEvent* e) {
 /**
  * Called by RS_GraphicView 
  */
-void RS_EventHandler::keyReleaseEvent(RS_KeyEvent* e) {
+void RS_EventHandler::keyReleaseEvent(QKeyEvent* e) {
     if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
             !currentActions[actionIndex]->isFinished()) {
         currentActions[actionIndex]->keyReleaseEvent(e);
@@ -237,7 +234,7 @@ void RS_EventHandler::keyReleaseEvent(RS_KeyEvent* e) {
 void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
 	RS_DEBUG->print("RS_EventHandler::commandEvent");
 
-    RS_String cmd = e->getCommand();
+    QString cmd = e->getCommand();
 
     if (coordinateInputEnabled) {
         if (!e->isAccepted()) {
@@ -245,7 +242,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
             if (cmd.contains(',') && cmd.at(0)!='@') {
                 if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
                         !currentActions[actionIndex]->isFinished()) {
-                    int commaPos = cmd.find(',');
+                    int commaPos = cmd.indexOf(',');
 	                RS_DEBUG->print("RS_EventHandler::commandEvent: 001");
                     bool ok1, ok2;
 	                RS_DEBUG->print("RS_EventHandler::commandEvent: 002");
@@ -275,7 +272,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
             if (cmd.contains(',') && cmd.at(0)=='@') {
                 if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
                         !currentActions[actionIndex]->isFinished()) {
-                    int commaPos = cmd.find(',');
+                    int commaPos = cmd.indexOf(',');
                     bool ok1, ok2;
                     double x = RS_Math::eval(cmd.mid(1, commaPos-1), &ok1);
                     double y = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
@@ -300,7 +297,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
             if (cmd.contains('<') && cmd.at(0)!='@') {
                 if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
                         !currentActions[actionIndex]->isFinished()) {
-                    int commaPos = cmd.find('<');
+                    int commaPos = cmd.indexOf('<');
                     bool ok1, ok2;
                     double r = RS_Math::eval(cmd.left(commaPos), &ok1);
                     double a = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
@@ -326,7 +323,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
             if (cmd.contains('<') && cmd.at(0)=='@') {
                 if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
                         !currentActions[actionIndex]->isFinished()) {
-                    int commaPos = cmd.find('<');
+                    int commaPos = cmd.indexOf('<');
                     bool ok1, ok2;
                     double r = RS_Math::eval(cmd.mid(1, commaPos-1), &ok1);
                     double a = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
@@ -471,7 +468,7 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     // Set current action:
     currentActions[actionIndex] = action;
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: current action is: %s",
-                    currentActions[actionIndex]->getName().latin1());
+                    currentActions[actionIndex]->getName().toLatin1().data());
 
     // Initialisation of our new action:
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: init current action");
@@ -652,7 +649,7 @@ void RS_EventHandler::debugActions() {
         }
         if (currentActions[c]!=NULL) {
             RS_DEBUG->print("Action %03d: %s [%s]",
-                            c, currentActions[c]->getName().latin1(),
+                            c, currentActions[c]->getName().toLatin1().data(),
                             currentActions[c]->isFinished() ? "finished" : "active");
         } else {
             RS_DEBUG->print("Action %03d: NULL", c);

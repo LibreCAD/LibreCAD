@@ -49,6 +49,7 @@
 #include "rs_layerlistlistener.h"
 #include "rs_blocklistlistener.h"
 #include "rs_painter.h"
+#include "rs_string.h"
 
 #include "qg_scrollbar.h"
 
@@ -79,7 +80,7 @@ public:
     virtual void adjustZoomControls();
     virtual void setBackground(const RS_Color& bg);
     virtual void setMouseCursor(RS2::CursorType c);
-	virtual void updateGridStatusWidget(const RS_String& text);
+        virtual void updateGridStatusWidget(const QString& text);
 
 		virtual	QPixmap* getPixmapForView(QPixmap *pm);
 		

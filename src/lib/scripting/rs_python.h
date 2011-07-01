@@ -57,7 +57,7 @@ public:
         return graphic;
     }
 
-    int launch(const RS_String& script);
+    int launch(const QString& script);
 
 private:
     static RS_Python* uniqueInstance;

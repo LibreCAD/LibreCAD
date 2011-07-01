@@ -28,16 +28,9 @@
 #ifndef RS_EVENTHANDLER_H
 #define RS_EVENTHANDLER_H
 
-#include "rs_actioninterface.h"
-//#include "rs_actiondrawpoint.h"
-
-#include "rs_event.h"
-#include "rs_keyevent.h"
-#include "rs_mouseevent.h"
+#include "rs_graphicview.h"
 
 #define RS_MAXACTIONS 16
-
-class RS_ActionInterface;
 
 /**
  * The event handler owns and manages all actions that are currently 
@@ -52,14 +45,14 @@ public:
     void back();
     void enter();
 
-    void mousePressEvent(RS_MouseEvent *e);
-    void mouseReleaseEvent(RS_MouseEvent *e);
-    void mouseMoveEvent(RS_MouseEvent *e);
+    void mousePressEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
     void mouseLeaveEvent();
     void mouseEnterEvent();
 
-    void keyPressEvent(RS_KeyEvent* e);
-    void keyReleaseEvent(RS_KeyEvent* e);
+    void keyPressEvent(QKeyEvent* e);
+    void keyReleaseEvent(QKeyEvent* e);
 
 	void commandEvent(RS_CommandEvent* e);
 	void enableCoordinateInput();
