@@ -30,6 +30,7 @@
 //Added by qt3to4:
 #include <QCloseEvent>
 
+#include "rs_graphic.h"
 #include "qg_exitdialog.h"
 #include "qg_filedialog.h"
 

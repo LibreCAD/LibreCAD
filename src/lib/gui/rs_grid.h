@@ -76,8 +76,8 @@ public:
 	/**
 	 * @return Grid info for status widget.
 	 */
-	RS_String getInfo() {
-		return RS_String("%1 / %2").arg(spacing).arg(metaSpacing);
+        QString getInfo() {
+                return QString("%1 / %2").arg(spacing).arg(metaSpacing);
 	}
 
 	/**
