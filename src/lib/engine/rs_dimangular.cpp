@@ -69,7 +69,7 @@ QString RS_DimAngular::getMeasuredLabel() {
     /*
         ret = QString("%1%2")
           .arg(RS_Math::rad2deg(getAngle()))
-          .arg(RS_Char(0xB0));
+          .arg(QChar(0xB0));
 	*/
     return ret;
 }

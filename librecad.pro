@@ -116,7 +116,6 @@ HEADERS = \
     src/lib/creation/rs_creation.h \
     src/lib/debug/rs_debug.h \
     src/lib/engine/rs.h \
-    src/lib/engine/rs_application.h \
     src/lib/engine/rs_arc.h \
     src/lib/engine/rs_atomicentity.h \
     src/lib/engine/rs_block.h \
