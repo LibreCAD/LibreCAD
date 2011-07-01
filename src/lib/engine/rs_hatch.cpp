@@ -28,15 +28,12 @@
 #include "rs_hatch.h"
 
 #include "rs_graphicview.h"
-#include "rs_graphic.h"
 #include "rs_information.h"
 #include "rs_painter.h"
-#include "rs_painterqt.h"
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
 
-#include <q3ptrvector.h>
-#include <qpolygon.h>
+#include <QPolygon>
 
 /**
  * Constructor.
@@ -290,8 +287,7 @@ void RS_Hatch::update() {
         }
 
         // getting all intersections of this pattern line with the contour:
-        RS_PtrList<RS_Vector> is;
-        is.setAutoDelete(true);
+        QList<RS_Vector*> is;
         is.append(new RS_Vector(startPoint));
 
         for (RS_Entity* loop=firstEntity(); loop!=NULL;
@@ -321,18 +317,19 @@ void RS_Hatch::update() {
         // sort the intersection points into is2:
         RS_Vector sp = startPoint;
         double sa = center.angleTo(sp);
-        RS_PtrList<RS_Vector> is2;
-        is2.setAutoDelete(true);
+        QList<RS_Vector*> is2;
         bool done;
         double minDist;
         double dist = 0.0;
         RS_Vector* av;
+        RS_Vector *v;
         RS_Vector last = RS_Vector(false);
         do {
             done = true;
             minDist = RS_MAXDOUBLE;
             av = NULL;
-            for (RS_Vector* v = is.first(); v!=NULL; v = is.next()) {
+            for (int i = 0; i < is.size(); ++i) {
+                v = is.at(i);
                 if (line!=NULL) {
                     dist = sp.distanceTo(*v);
                 } else if (arc!=NULL || circle!=NULL) {
@@ -366,16 +363,16 @@ void RS_Hatch::update() {
                     is2.append(new RS_Vector(*av));
                     last = *av;
                 }
-                is.remove(av);
+                is.removeOne(av);
                 av = NULL;
             }
         } while(!done);
 
         // add small cut lines / arcs to tmp2:
-        for (RS_Vector* v1 = is2.first(); v1!=NULL;) {
-            RS_Vector* v2 = is2.next();
+            for (int i = 1; i < is2.size(); ++i) {
+                RS_Vector *v1 = is2.at(i-1);
+                RS_Vector *v2 = is2.at(i);
 
-            if (v1!=NULL && v2!=NULL) {
                 if (line!=NULL) {
                     tmp2.addEntity(new RS_Line(&tmp2,
                                                RS_LineData(*v1, *v2)));
@@ -387,10 +384,12 @@ void RS_Hatch::update() {
                                                          center.angleTo(*v2),
                                                          reversed)));
                 }
-            }
-
-            v1 = v2;
         }
+
+        while (!is.isEmpty())
+            delete is.takeFirst();
+        while (!is2.isEmpty())
+            delete is2.takeFirst();
     }
 
     // updating hatch / adding entities that are inside
