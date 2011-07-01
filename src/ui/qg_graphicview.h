@@ -49,6 +49,7 @@
 #include "rs_layerlistlistener.h"
 #include "rs_blocklistlistener.h"
 #include "rs_painter.h"
+#include "rs_string.h"
 
 #include "qg_scrollbar.h"
 
