@@ -28,6 +28,7 @@
 #define RS_SCRIPT_H
 
 #include <iostream>
+#include <QString>
 
 
 
