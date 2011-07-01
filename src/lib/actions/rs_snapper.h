@@ -31,13 +31,13 @@
 #include "rs_entitycontainer.h"
 
 #include "rs.h"
-#include "rs_mouseevent.h"
 #include "rs_coordinateevent.h"
 
 class RS_Entity;
 class RS_GraphicView;
 class RS_Vector;
 class RS_Preview;
+class QMouseEvent;
 
 /**
  * This class is used for snapping functions in a graphic view. 
@@ -86,7 +86,7 @@ public:
 		snapRange = r;
 	}
 
-    RS_Vector snapPoint(RS_MouseEvent* e);
+    RS_Vector snapPoint(QMouseEvent* e);
 
     RS_Vector snapFree(RS_Vector coord);
     RS_Vector snapEndpoint(RS_Vector coord);
@@ -106,7 +106,7 @@ public:
     //RS_Entity* catchLeafEntity(RS_MouseEvent* e);
     RS_Entity* catchEntity(const RS_Vector& pos,
                            RS2::ResolveLevel level=RS2::ResolveNone);
-    RS_Entity* catchEntity(RS_MouseEvent* e,
+    RS_Entity* catchEntity(QMouseEvent* e,
                            RS2::ResolveLevel level=RS2::ResolveNone);
 
     /**
