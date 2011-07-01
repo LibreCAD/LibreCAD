@@ -44,7 +44,7 @@ public:
     virtual RS_Document* getDocument() = 0;
 
 	virtual void createNewDocument(
-		const RS_String& fileName = RS_String::null, RS_Document* doc=NULL) = 0;
+                const QString& fileName = QString::null, RS_Document* doc=NULL) = 0;
 
 };
 

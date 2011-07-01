@@ -67,8 +67,8 @@ public:
 
     virtual void trigger();
 
-    virtual void keyPressEvent(RS_KeyEvent* e);
-    virtual void keyReleaseEvent(RS_KeyEvent* e);
+    virtual void keyPressEvent(QKeyEvent* e);
+    virtual void keyReleaseEvent(QKeyEvent* e);
 
     virtual void mouseMoveEvent(RS_MouseEvent* e);
     virtual void mousePressEvent(RS_MouseEvent* e);

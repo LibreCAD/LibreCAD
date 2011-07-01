@@ -316,7 +316,7 @@ void RS_GraphicView::enter() {
  * Called by the actual GUI class which implements the RS_GraphicView 
  * interface to notify LibreCAD about mouse events.
  */
-void RS_GraphicView::mousePressEvent(RS_MouseEvent* e) {
+void RS_GraphicView::mousePressEvent(QMouseEvent* e) {
     if (eventHandler!=NULL) {
         eventHandler->mousePressEvent(e);
     }
@@ -328,7 +328,7 @@ void RS_GraphicView::mousePressEvent(RS_MouseEvent* e) {
  * Called by the actual GUI class which implements the RS_GraphicView
  * interface to notify LibreCAD about mouse events.
  */
-void RS_GraphicView::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_GraphicView::mouseReleaseEvent(QMouseEvent* e) {
 	RS_DEBUG->print("RS_GraphicView::mouseReleaseEvent");
     if (eventHandler!=NULL) {
         if (e->button()!=Qt::RightButton ||
@@ -352,7 +352,7 @@ void RS_GraphicView::mouseReleaseEvent(RS_MouseEvent* e) {
  * Called by the actual GUI class which implements the RS_GraphicView
  * interface to notify LibreCAD about mouse events.
  */
-void RS_GraphicView::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_GraphicView::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_GraphicView::mouseMoveEvent begin");
 
     RS_Graphic* graphic = NULL;
@@ -418,7 +418,7 @@ void RS_GraphicView::mouseEnterEvent() {
  * Called by the actual GUI class which implements the RS_GraphicView
  * interface to notify LibreCAD about key events.
  */
-void RS_GraphicView::keyPressEvent(RS_KeyEvent* e) {
+void RS_GraphicView::keyPressEvent(QKeyEvent* e) {
     if (eventHandler!=NULL) {
         eventHandler->keyPressEvent(e);
     }
@@ -430,7 +430,7 @@ void RS_GraphicView::keyPressEvent(RS_KeyEvent* e) {
  * Called by the actual GUI class which implements the RS_GraphicView
  * interface to notify LibreCAD about key events.
  */
-void RS_GraphicView::keyReleaseEvent(RS_KeyEvent* e) {
+void RS_GraphicView::keyReleaseEvent(QKeyEvent* e) {
     if (eventHandler!=NULL) {
         eventHandler->keyReleaseEvent(e);
     }
@@ -1448,7 +1448,7 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
 
     // draw grid info:
     //painter->setPen(Qt::white);
-    RS_String info = grid->getInfo();
+    QString info = grid->getInfo();
     //info = RS_String("%1 / %2")
     //       .arg(grid->getSpacing())
     //       .arg(grid->getMetaSpacing());
