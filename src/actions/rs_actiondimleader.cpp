@@ -25,8 +25,8 @@
 **********************************************************************/
 
 #include "rs_actiondimleader.h"
-#include "rs_snapper.h"
 
+#include "rs_leader.h"
 
 
 RS_ActionDimLeader::RS_ActionDimLeader(RS_EntityContainer& container,
@@ -76,8 +76,10 @@ void RS_ActionDimLeader::trigger() {
         leader->setLayerToActive();
         leader->setPenToActive();
 
-        for (RS_Vector* v=points.first(); v!=NULL; v=points.next()) {
-            leader->addVertex(*v);
+        for (int i = 0; i < points.size(); ++i) {
+            leader->addVertex(points.at(i));
+/*RLZ        for (RS_Vector* v=points.first(); v!=NULL; v=points.next()) {
+            leader->addVertex(*v);*/
         }
 
         container->addEntity(leader);
@@ -102,26 +104,33 @@ void RS_ActionDimLeader::trigger() {
 
 
 
-void RS_ActionDimLeader::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDimLeader::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-    if (getStatus()==SetEndpoint && points.last()!=NULL) {
+//RLZ    if (getStatus()==SetEndpoint && points.last()!=NULL) {
+    if (getStatus()==SetEndpoint && !points.isEmpty()) {
         deletePreview();
 
         // fill in lines that were already set:
         RS_Vector last(false);
-        for (RS_Vector* v=points.first(); v!=NULL; v=points.next()) {
+        for (int i = 0; i < points.size(); ++i) {
+/*        for (RS_Vector* v=points.first(); v!=NULL; v=points.next()) {*/
+            RS_Vector v = points.at(i);
             if (last.valid) {
                 preview->addEntity(new RS_Line(preview,
-                                               RS_LineData(last, *v)));
+//RLZ                                               RS_LineData(last, *v)));
+                                               RS_LineData(last, v)));
             }
-            last = *v;
+//RLZ            last = *v;
+            last = v;
         }
 
-        RS_Vector p = *points.last();
-        preview->addEntity(new RS_Line(preview,
+        if ( !points.isEmpty() ) {
+            RS_Vector p = points.last();
+            preview->addEntity(new RS_Line(preview,
                                        RS_LineData(p, mouse)));
+        }
         drawPreview();
     }
 
@@ -130,7 +139,7 @@ void RS_ActionDimLeader::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDimLeader::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDimLeader::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -148,7 +157,7 @@ void RS_ActionDimLeader::mouseReleaseEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDimLeader::keyPressEvent(RS_KeyEvent* e) {
+void RS_ActionDimLeader::keyPressEvent(QKeyEvent* e) {
     if (getStatus()==SetEndpoint && e->key()==Qt::Key_Enter) {
         trigger();
         reset();
@@ -169,7 +178,8 @@ void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent* e) {
     case SetStartpoint:
         //data.startpoint = mouse;
         points.clear();
-        points.append(new RS_Vector(mouse));
+//RLZ        points.append(new RS_Vector(mouse));
+        points.append(mouse);
         //start = data.startpoint;
         setStatus(SetEndpoint);
         graphicView->moveRelativeZero(mouse);
@@ -177,7 +187,8 @@ void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent* e) {
 
     case SetEndpoint:
         //data.endpoint = mouse;
-        points.append(new RS_Vector(mouse));
+//RLZ        points.append(new RS_Vector(mouse));
+        points.append(mouse);
         //trigger();
         //data.startpoint = data.endpoint;
         graphicView->moveRelativeZero(mouse);
@@ -191,7 +202,7 @@ void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDimLeader::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         if (RS_DIALOGFACTORY!=NULL) {
@@ -212,8 +223,8 @@ void RS_ActionDimLeader::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDimLeader::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDimLeader::getAvailableCommands() {
+    QStringList cmd;
 
     return cmd;
 }
