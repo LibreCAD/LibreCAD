@@ -28,7 +28,6 @@
 #define RS_ACTIONSELECTWINDOW_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_vector.h"
 
 
 /**
@@ -70,12 +69,12 @@ public:
     virtual void keyPressEvent(QKeyEvent* e);
     virtual void keyReleaseEvent(QKeyEvent* e);
 
-    virtual void mouseMoveEvent(RS_MouseEvent* e);
-    virtual void mousePressEvent(RS_MouseEvent* e);
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+    virtual void mousePressEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
 
     virtual void commandEvent(RS_CommandEvent* e);
-    virtual RS_StringList getAvailableCommands();
+    virtual QStringList getAvailableCommands();
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
