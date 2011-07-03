@@ -25,8 +25,6 @@
 **********************************************************************/
 
 #include "rs_actiondrawpolyline.h"
-#include "rs_actioneditundo.h"
-#include "rs_snapper.h"
 
 
 
@@ -36,8 +34,8 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
                            container, graphicView) {
     Reversed=1;
     reset();
-    history.setAutoDelete(true);
-    bHistory.setAutoDelete(true);
+//RLZ    history.setAutoDelete(true);
+//RLZ    bHistory.setAutoDelete(true);
 }
 
 
@@ -107,7 +105,7 @@ void RS_ActionDrawPolyline::trigger() {
 
 
 
-void RS_ActionDrawPolyline::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -132,7 +130,7 @@ void RS_ActionDrawPolyline::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawPolyline::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawPolyline::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -245,9 +243,11 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
         //printf ("SetStartpoint\n");
 	point = mouse;
         history.clear();
-        history.append(new RS_Vector(mouse));
+//RLZ        history.append(new RS_Vector(mouse));
+        history.append(mouse);
         bHistory.clear();
-        bHistory.append(new double(0.0));
+//RLZ        bHistory.append(new double(0.0));
+        bHistory.append(0.0);
         start = point;
         setStatus(SetNextPoint);
         graphicView->moveRelativeZero(mouse);
@@ -257,8 +257,10 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
     case SetNextPoint:
     	graphicView->moveRelativeZero(mouse);
         point = mouse;
-        history.append(new RS_Vector(mouse));
-        bHistory.append(new double(bulge));
+/*RLZ        history.append(new RS_Vector(mouse));
+        bHistory.append(new double(bulge));*/
+        history.append(mouse);
+        bHistory.append(bulge);
 		if (polyline==NULL) {
 			//printf("polyline==NULL\n");
 			polyline = new RS_Polyline(container, data);
@@ -293,7 +295,7 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     switch (getStatus()) {
     case SetStartpoint:
@@ -325,17 +327,17 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawPolyline::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawPolyline::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetStartpoint:
         break;
     case SetNextPoint:
-        if (history.count()>=2) {
+        if (history.size()>=2) {
             cmd += command("undo");
         }
-        if (history.count()>=3) {
+        if (history.size()>=3) {
             cmd += command("close");
         }
         break;
@@ -355,17 +357,17 @@ void RS_ActionDrawPolyline::updateMouseButtonHints() {
                                             tr("Cancel"));
         break;
     case SetNextPoint: {
-            RS_String msg = "";
+            QString msg = "";
 
-            if (history.count()>=3) {
+            if (history.size()>=3) {
                 msg += RS_COMMANDS->command("close");
                 msg += "/";
             }
-            if (history.count()>=2) {
+            if (history.size()>=2) {
                 msg += RS_COMMANDS->command("undo");
             }
 
-            if (history.count()>=2) {
+            if (history.size()>=2) {
                 RS_DIALOGFACTORY->updateMouseWidget(
                     tr("Specify next point or [%1]").arg(msg),
                     tr("Back"));
@@ -412,7 +414,7 @@ void RS_ActionDrawPolyline::updateToolBar() {
 }
 
 void RS_ActionDrawPolyline::close() {
-    if (history.count()>2 && start.valid) {
+    if (history.size()>2 && start.valid) {
         //data.endpoint = start;
         //trigger();
 		if (polyline!=NULL) {
@@ -432,8 +434,8 @@ void RS_ActionDrawPolyline::close() {
 }
 
 void RS_ActionDrawPolyline::undo() {
-    if (history.count()>1) {
-        if (history.count()>2){
+    if (history.size()>1) {
+        if (history.size()>2){
 	history.removeLast();
         bHistory.removeLast();
         deletePreview();
@@ -441,7 +443,8 @@ void RS_ActionDrawPolyline::undo() {
         //graphicView->setCurrentAction(
         //    new RS_ActionEditUndo(true, *container, *graphicView));
 		//if (history.last()!=NULL) {
-        	point = *history.last();
+//RLZ        	point = *history.last();
+                point = history.last();
 		//}
 		if (polyline!=NULL) {
 			polyline->removeLastVertex();
