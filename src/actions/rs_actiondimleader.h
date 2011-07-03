@@ -28,8 +28,8 @@
 #define RS_ACTIONDIMLEADER_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_leader.h"
-#include "rs_ptrlist.h"
+
+class RS_Leader;
 
 /**
  * This action class can handle user events to draw 
@@ -64,13 +64,13 @@ public:
     virtual void init(int status=0);
     virtual void trigger();
 	
-    virtual void mouseMoveEvent(RS_MouseEvent* e);
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
-    virtual void keyPressEvent(RS_KeyEvent*);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
+    virtual void keyPressEvent(QKeyEvent*);
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
-	virtual RS_StringList getAvailableCommands();
+        virtual QStringList getAvailableCommands();
 	
 	virtual void showOptions();
 	virtual void hideOptions();
@@ -87,7 +87,7 @@ protected:
 	/**
 	 * Points set so far.
 	 */
-	RS_PtrList<RS_Vector> points;
+        QList<RS_Vector> points;
 
 };
 

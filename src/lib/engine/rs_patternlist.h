@@ -85,7 +85,7 @@ private:
     //! patterns in the graphic
     QList<RS_Pattern*> patterns;
     //! List of registered PatternListListeners
-    //RS_PtrList<RS_PatternListListener> patternListListeners;
+    //QList<RS_PatternListListener> patternListListeners;
 }
 ;
 
