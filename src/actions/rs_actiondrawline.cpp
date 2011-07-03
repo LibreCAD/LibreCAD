@@ -36,7 +36,6 @@ RS_ActionDrawLine::RS_ActionDrawLine(RS_EntityContainer& container,
 
 	RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine");
     reset();
-//RLZ    history.setAutoDelete(true);
 	RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine: OK");
 }
 
@@ -143,7 +142,6 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
     case SetStartpoint:
         data.startpoint = mouse;
         history.clear();
-//RLZ        history.append(new RS_Vector(mouse));
         history.append(mouse);
         start = data.startpoint;
         setStatus(SetEndpoint);
@@ -153,7 +151,6 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
 
     case SetEndpoint:
         data.endpoint = mouse;
-//RLZ        history.append(new RS_Vector(mouse));
         history.append(mouse);
         trigger();
         data.startpoint = data.endpoint;
@@ -293,7 +290,6 @@ void RS_ActionDrawLine::updateToolBar() {
 }
 
 void RS_ActionDrawLine::close() {
-//RLZ    if (history.count()>2 && start.valid) {
     if (history.size()>2 && start.valid) {
         data.endpoint = start;
         trigger();
@@ -307,7 +303,6 @@ void RS_ActionDrawLine::close() {
 }
 
 void RS_ActionDrawLine::undo() {
-//    if (history.count()>1) {
     if (history.size()>1) {
         history.removeLast();
         deletePreview();

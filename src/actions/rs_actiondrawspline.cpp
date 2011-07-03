@@ -34,9 +34,7 @@ RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
                            container, graphicView) {
 
     reset();
-//RLZ    history.setAutoDelete(true);
     data = RS_SplineData(3, false);
-    //bHistory.setAutoDelete(true);
 }
 
 
@@ -156,7 +154,6 @@ void RS_ActionDrawSpline::coordinateEvent(RS_CoordinateEvent* e) {
 		//data.startpoint = mouse;
         //point = mouse;
         history.clear();
-//RLZ        history.append(new RS_Vector(mouse));
         history.append(mouse);
 		if (spline==NULL) {
 			spline = new RS_Spline(container, data);
@@ -173,7 +170,6 @@ void RS_ActionDrawSpline::coordinateEvent(RS_CoordinateEvent* e) {
     case SetNextPoint:
     	graphicView->moveRelativeZero(mouse);
         //point = mouse;
-//RLZ        history.append(new RS_Vector(mouse));
         history.append(mouse);
         //bHistory.append(new double(0.0));
 		if (spline!=NULL) {
@@ -350,15 +346,11 @@ void RS_ActionDrawSpline::undo() {
         deletePreview();
         //graphicView->setCurrentAction(
         //    new RS_ActionEditUndo(true, *container, *graphicView));
-//RLZ		if (history.last()!=NULL) {
                 if (!history.isEmpty()) {
         	//point = *history.last();
 		}
 		if (spline!=NULL) {
 			spline->removeLastControlPoint();
-/*RLZ			RS_Vector* v = history.last();
-			if (v!=NULL) {
-                        graphicView->moveRelativeZero(*v);*/
                         if (!history.isEmpty()) {
                             RS_Vector v = history.last();
                             graphicView->moveRelativeZero(v);
