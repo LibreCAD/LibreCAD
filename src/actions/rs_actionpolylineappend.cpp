@@ -131,10 +131,8 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
 	switch (getStatus()) {
 	case SetStartpoint:
 		history.clear();
-//RLZ		history.append(new RS_Vector(point));
                 history.append(point);
 		bHistory.clear();
-//RLZ		bHistory.append(new double(0.0));
                 bHistory.append(0.0);
 		start = point;
 		setStatus(SetNextPoint);
@@ -145,8 +143,6 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
 	case SetNextPoint:
 		graphicView->moveRelativeZero(mouse);
 		point = mouse;
-/*RLZ		history.append(new RS_Vector(mouse));
-                bHistory.append(new double(0.0));*/
                 history.append(mouse);
                 bHistory.append(0.0);
                 if (polyline==NULL) {

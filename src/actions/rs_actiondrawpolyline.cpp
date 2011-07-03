@@ -34,8 +34,6 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
                            container, graphicView) {
     Reversed=1;
     reset();
-//RLZ    history.setAutoDelete(true);
-//RLZ    bHistory.setAutoDelete(true);
 }
 
 
@@ -243,10 +241,8 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
         //printf ("SetStartpoint\n");
 	point = mouse;
         history.clear();
-//RLZ        history.append(new RS_Vector(mouse));
         history.append(mouse);
         bHistory.clear();
-//RLZ        bHistory.append(new double(0.0));
         bHistory.append(0.0);
         start = point;
         setStatus(SetNextPoint);
@@ -257,8 +253,6 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
     case SetNextPoint:
     	graphicView->moveRelativeZero(mouse);
         point = mouse;
-/*RLZ        history.append(new RS_Vector(mouse));
-        bHistory.append(new double(bulge));*/
         history.append(mouse);
         bHistory.append(bulge);
 		if (polyline==NULL) {
@@ -443,7 +437,6 @@ void RS_ActionDrawPolyline::undo() {
         //graphicView->setCurrentAction(
         //    new RS_ActionEditUndo(true, *container, *graphicView));
 		//if (history.last()!=NULL) {
-//RLZ        	point = *history.last();
                 point = history.last();
 		//}
 		if (polyline!=NULL) {
