@@ -805,7 +805,7 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
 
     // remove double intersections:
     /*
-       RS_PtrList<RS_Vector> is2;
+       QList<RS_Vector> is2;
        bool done;
     RS_Vector* av;
        do {

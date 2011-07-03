@@ -26,12 +26,7 @@
 
 #include "rs_actionblocksremove.h"
 
-#include "rs_block.h"
-#include "rs_graphic.h"
 #include "rs_insert.h"
-#include "rs_dialogfactory.h"
-#include "rs_ptrlist.h"
-
 
 
 RS_ActionBlocksRemove::RS_ActionBlocksRemove(RS_EntityContainer& container,
@@ -55,19 +50,18 @@ void RS_ActionBlocksRemove::trigger() {
             RS_DIALOGFACTORY->requestBlockRemovalDialog(graphic->getBlockList());
 
         // list of containers that might refer to the block via inserts:
-        RS_PtrList<RS_EntityContainer> containerList;
+        QList<RS_EntityContainer*> containerList;
         containerList.append(graphic);
         RS_BlockList* blkLst = graphic->getBlockList();
-        for (uint bi=0; bi<blkLst->count(); bi++) {
+        for (int bi=0; bi<blkLst->count(); bi++) {
             containerList.append(blkLst->at(bi));
         }
         
         if (block!=NULL) {
             
-            for (RS_EntityContainer* cont = containerList.first();
-                cont!=NULL;
-                cont=containerList.next()) {
+            for (int i = 0; i < containerList.size(); ++i) {
         
+                RS_EntityContainer* cont = containerList.at(i);
                 // remove all inserts from the graphic:
                 bool done;
                 do {
