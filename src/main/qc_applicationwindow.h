@@ -410,8 +410,7 @@ private:
 private:
     void loadPlugins();
     QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
-    QC_PluginInterface *pluginInterface;
-    QMenu* pluginMenu;
+    QList<QC_PluginInterface*> loadedPlugins;
 public slots:
     void execPlug();
 
