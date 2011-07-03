@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2011 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2011 Rallaz (rallazz@gmail.com)
 **
 **
@@ -31,17 +31,29 @@
 
 class Document_Interface;
 
+/**
+  * Menu locations for Plugins
+  */
 class PluginMenuLocation
 {
     public:
-    PluginMenuLocation(QString menuEntryPoint, QString menuEntryActionName) {
-        this->menuEntryActionName=menuEntryActionName;
-        this->menuEntryPoint=menuEntryPoint;
-    }
+        PluginMenuLocation(QString menuEntryPoint, QString menuEntryActionName) {
+            this->menuEntryActionName=menuEntryActionName;
+            this->menuEntryPoint=menuEntryPoint;
+        }
 
     QString menuEntryPoint;
     QString menuEntryActionName;
 };
+
+class PluginCapabilities {
+    public:
+        QList<PluginMenuLocation> menuEntryPoints;
+        QList<int> paintEventPriorities;    // if set, this plugin will get it's paintEvent function called
+                                        // lower numbers are drawn first
+
+};
+
 
 /**
  * Interface for create plugins.
@@ -53,7 +65,7 @@ class QC_PluginInterface
 public:
     virtual ~QC_PluginInterface() {}
     virtual QString name() const = 0;
-    virtual QList<PluginMenuLocation> menu() const = 0;
+    virtual PluginCapabilities getCapabilities() const = 0;
     virtual void execComm(Document_Interface *doc, QWidget *parent, QString cmd) = 0;
 
 };

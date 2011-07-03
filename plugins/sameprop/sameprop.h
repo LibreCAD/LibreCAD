@@ -21,7 +21,7 @@ class LC_SameProp : public QObject, QC_PluginInterface
      Q_INTERFACES(QC_PluginInterface)
 
  public:
-    virtual QList<PluginMenuLocation> menu() const;
+    virtual PluginCapabilities getCapabilities() const;
     virtual QString name() const;
     virtual void execComm(Document_Interface *doc,
                                        QWidget *parent, QString cmd);
