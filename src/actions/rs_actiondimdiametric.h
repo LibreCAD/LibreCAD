@@ -61,12 +61,12 @@ public:
     virtual void trigger();
 	void preparePreview();
 	
-    virtual void mouseMoveEvent(RS_MouseEvent* e);
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
-	virtual RS_StringList getAvailableCommands();
+        virtual QStringList getAvailableCommands();
 
     virtual void hideOptions();
     virtual void showOptions();

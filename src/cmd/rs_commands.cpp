@@ -27,7 +27,7 @@
 #include "rs_commands.h"
 
 #include "rs_dialogfactory.h"
-#include"../../../undefs.h"
+
 RS_Commands* RS_Commands::uniqueInstance = NULL;
 
 
@@ -221,7 +221,7 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd) {
                 ret = shortCommands.value(cmd);
 	}
 
-        // find full command to confirm to user:  //RLZ todo estoy aqui
+        // find full command to confirm to user:
 
         QHash<QString, RS2::ActionType>::const_iterator it = mainCommands.constBegin();
         while (it != mainCommands.constEnd()) {

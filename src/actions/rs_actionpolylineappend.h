@@ -26,9 +26,6 @@
 #ifndef RS_ACTIONPOLYLINEAPPEND_H
 #define RS_ACTIONPOLYLINEAPPEND_H
 
-//#include "rs_previewactioninterface.h"
-//#include "rs_modification.h"
-//#include "rs_polyline.h"
 #include "rs_actiondrawpolyline.h"
 
 /**
@@ -64,7 +61,7 @@ public:
 	virtual void trigger();
 	
 //	virtual void mouseMoveEvent(RS_MouseEvent* e);
-	virtual void mouseReleaseEvent(RS_MouseEvent* e);
+        virtual void mouseReleaseEvent(QMouseEvent* e);
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
 //  virtual void commandEvent(RS_CommandEvent* e);
@@ -104,12 +101,12 @@ private:
 	/**
 	 * Point history (for undo)
 	 */
-//	RS_PtrList<RS_Vector*> history;
+//	QList<RS_Vector> history;
 	
 	/**
 	 * Bulge history (for undo)
 	 */
-//	RS_PtrList<double*> bHistory;
+//	QList<double> bHistory;
 
 };
 

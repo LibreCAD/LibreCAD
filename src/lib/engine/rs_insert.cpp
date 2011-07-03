@@ -88,7 +88,7 @@ void RS_Insert::update() {
 	
     RS_Pen tmpPen;
 
-	/*RS_PtrListIterator<RS_Entity> it = createIterator();
+        /*QListIterator<RS_Entity> it = createIterator();
     RS_Entity* e;
     while ( (e = it.current()) != NULL ) {
         ++it;*/
