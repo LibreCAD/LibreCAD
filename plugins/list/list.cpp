@@ -24,10 +24,13 @@ QString LC_List::name() const
      return (tr("List entities"));
  }
 
-QList<PluginMenuLocation> LC_List::menu() const
- {
-    return QList<PluginMenuLocation>() << PluginMenuLocation("Info", tr("List entities"));
- }
+PluginCapabilities LC_List::getCapabilities() const
+{
+    PluginCapabilities pluginCapabilities;
+    pluginCapabilities.menuEntryPoints
+            << PluginMenuLocation("Info", tr("List entities"));
+    return pluginCapabilities;
+}
 
 void LC_List::execComm(Document_Interface *doc,
                              QWidget *parent, QString cmd)
