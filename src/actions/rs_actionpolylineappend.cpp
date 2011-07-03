@@ -25,7 +25,6 @@
 **********************************************************************/
 
 #include "rs_actionpolylineappend.h"
-#include "rs_snapper.h"
 
 
 
@@ -80,7 +79,7 @@ void RS_ActionPolylineAppend::trigger() {
 }
 
 
-void RS_ActionPolylineAppend::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
         if (e->button()==Qt::LeftButton) {
 		if (getStatus()==SetStartpoint) {
 			originalPolyline = (RS_Polyline*)catchEntity(e);
@@ -132,9 +131,11 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
 	switch (getStatus()) {
 	case SetStartpoint:
 		history.clear();
-		history.append(new RS_Vector(point));
+//RLZ		history.append(new RS_Vector(point));
+                history.append(point);
 		bHistory.clear();
-		bHistory.append(new double(0.0));
+//RLZ		bHistory.append(new double(0.0));
+                bHistory.append(0.0);
 		start = point;
 		setStatus(SetNextPoint);
 		graphicView->moveRelativeZero(point);
@@ -144,9 +145,11 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
 	case SetNextPoint:
 		graphicView->moveRelativeZero(mouse);
 		point = mouse;
-		history.append(new RS_Vector(mouse));
-		bHistory.append(new double(0.0));
-		if (polyline==NULL) {
+/*RLZ		history.append(new RS_Vector(mouse));
+                bHistory.append(new double(0.0));*/
+                history.append(mouse);
+                bHistory.append(0.0);
+                if (polyline==NULL) {
 			polyline = new RS_Polyline(container, data);
 			polyline->addVertex(start, 0.0, prepend);
 		}
@@ -182,17 +185,17 @@ void RS_ActionPolylineAppend::updateMouseButtonHints() {
 						tr("Cancel"));
 		break;
 	case SetNextPoint: {
-			RS_String msg = "";
+                        QString msg = "";
 
-			if (history.count()>=3) {
+                        if (history.size()>=3) {
 				msg += RS_COMMANDS->command("close");
 				msg += "/";
 			}
-			if (history.count()>=2) {
+                        if (history.size()>=2) {
 				msg += RS_COMMANDS->command("undo");
 			}
 
-			if (history.count()>=2) {
+                        if (history.size()>=2) {
 				RS_DIALOGFACTORY->updateMouseWidget(
 					tr("Specify next point or [%1]").arg(msg),
 					tr("Back"));
