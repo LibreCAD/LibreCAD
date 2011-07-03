@@ -27,10 +27,13 @@
 #include "document_interface.h"
 #include "asciifile.h"
 
-QList<PluginMenuLocation> AsciiFile::menu() const
- {
-     return QList<PluginMenuLocation>() << PluginMenuLocation("File/Import", tr("Read ascii points"));
- }
+PluginCapabilities AsciiFile::getCapabilities() const
+{
+    PluginCapabilities pluginCapabilities;
+    pluginCapabilities.menuEntryPoints
+            << PluginMenuLocation("File/Import", tr("Read ascii points"));
+    return pluginCapabilities;
+}
 
 QString AsciiFile::name() const
  {

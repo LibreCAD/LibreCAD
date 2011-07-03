@@ -208,7 +208,8 @@ void QC_ApplicationWindow::loadPlugins() {
                 QC_PluginInterface *pluginInterface = qobject_cast<QC_PluginInterface *>(plugin);
                 if (pluginInterface) {
                     loadedPlugins.append(pluginInterface);
-                    foreach (PluginMenuLocation loc,  pluginInterface->menu()) {
+                    PluginCapabilities pluginCapabilities=pluginInterface->getCapabilities();
+                    foreach (PluginMenuLocation loc,  pluginCapabilities.menuEntryPoints) {
                         QAction *actpl = new QAction(loc.menuEntryActionName, plugin);
                         actpl->setData(loc.menuEntryActionName);
                         connect(actpl, SIGNAL(triggered()), this, SLOT(execPlug()));

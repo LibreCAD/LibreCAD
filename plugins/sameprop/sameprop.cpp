@@ -21,10 +21,13 @@ QString LC_SameProp::name() const
      return (tr("Same properties"));
  }
 
-QList<PluginMenuLocation> LC_SameProp::menu() const
- {
-    return QList<PluginMenuLocation>() << PluginMenuLocation("Modify", tr("Same properties"));
- }
+PluginCapabilities LC_SameProp::getCapabilities() const
+{
+    PluginCapabilities pluginCapabilities;
+    pluginCapabilities.menuEntryPoints
+            << PluginMenuLocation("Modify", tr("Same properties"));
+    return pluginCapabilities;
+}
 
 void LC_SameProp::execComm(Document_Interface *doc,
                              QWidget *parent, QString cmd)
