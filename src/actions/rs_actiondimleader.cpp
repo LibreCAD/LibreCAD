@@ -78,8 +78,6 @@ void RS_ActionDimLeader::trigger() {
 
         for (int i = 0; i < points.size(); ++i) {
             leader->addVertex(points.at(i));
-/*RLZ        for (RS_Vector* v=points.first(); v!=NULL; v=points.next()) {
-            leader->addVertex(*v);*/
         }
 
         container->addEntity(leader);
@@ -108,21 +106,17 @@ void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDimLeader::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-//RLZ    if (getStatus()==SetEndpoint && points.last()!=NULL) {
     if (getStatus()==SetEndpoint && !points.isEmpty()) {
         deletePreview();
 
         // fill in lines that were already set:
         RS_Vector last(false);
         for (int i = 0; i < points.size(); ++i) {
-/*        for (RS_Vector* v=points.first(); v!=NULL; v=points.next()) {*/
             RS_Vector v = points.at(i);
             if (last.valid) {
                 preview->addEntity(new RS_Line(preview,
-//RLZ                                               RS_LineData(last, *v)));
                                                RS_LineData(last, v)));
             }
-//RLZ            last = *v;
             last = v;
         }
 
@@ -178,7 +172,6 @@ void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent* e) {
     case SetStartpoint:
         //data.startpoint = mouse;
         points.clear();
-//RLZ        points.append(new RS_Vector(mouse));
         points.append(mouse);
         //start = data.startpoint;
         setStatus(SetEndpoint);
@@ -187,7 +180,6 @@ void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent* e) {
 
     case SetEndpoint:
         //data.endpoint = mouse;
-//RLZ        points.append(new RS_Vector(mouse));
         points.append(mouse);
         //trigger();
         //data.startpoint = data.endpoint;

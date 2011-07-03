@@ -25,8 +25,6 @@
 **********************************************************************/
 
 #include "rs_actiondrawspline.h"
-#include "rs_actioneditundo.h"
-#include "rs_snapper.h"
 
 
 
@@ -36,7 +34,7 @@ RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
                            container, graphicView) {
 
     reset();
-    history.setAutoDelete(true);
+//RLZ    history.setAutoDelete(true);
     data = RS_SplineData(3, false);
     //bHistory.setAutoDelete(true);
 }
@@ -107,7 +105,7 @@ void RS_ActionDrawSpline::trigger() {
 
 
 
-void RS_ActionDrawSpline::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawSpline::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawSpline::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -131,7 +129,7 @@ void RS_ActionDrawSpline::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawSpline::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawSpline::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -158,7 +156,8 @@ void RS_ActionDrawSpline::coordinateEvent(RS_CoordinateEvent* e) {
 		//data.startpoint = mouse;
         //point = mouse;
         history.clear();
-        history.append(new RS_Vector(mouse));
+//RLZ        history.append(new RS_Vector(mouse));
+        history.append(mouse);
 		if (spline==NULL) {
 			spline = new RS_Spline(container, data);
 			spline->addControlPoint(mouse);
@@ -174,7 +173,8 @@ void RS_ActionDrawSpline::coordinateEvent(RS_CoordinateEvent* e) {
     case SetNextPoint:
     	graphicView->moveRelativeZero(mouse);
         //point = mouse;
-        history.append(new RS_Vector(mouse));
+//RLZ        history.append(new RS_Vector(mouse));
+        history.append(mouse);
         //bHistory.append(new double(0.0));
 		if (spline!=NULL) {
 			//graphicView->deleteEntity(spline);
@@ -203,7 +203,7 @@ void RS_ActionDrawSpline::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawSpline::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     switch (getStatus()) {
     case SetStartpoint:
@@ -235,17 +235,17 @@ void RS_ActionDrawSpline::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawSpline::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawSpline::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetStartpoint:
         break;
     case SetNextPoint:
-        if (history.count()>=2) {
+        if (history.size()>=2) {
             cmd += command("undo");
         }
-        if (history.count()>=3) {
+        if (history.size()>=3) {
             cmd += command("close");
         }
         break;
@@ -265,17 +265,17 @@ void RS_ActionDrawSpline::updateMouseButtonHints() {
                                             tr("Cancel"));
         break;
     case SetNextPoint: {
-            RS_String msg = "";
+            QString msg = "";
 
-            if (history.count()>=3) {
+            if (history.size()>=3) {
                 msg += RS_COMMANDS->command("close");
                 msg += "/";
             }
-            if (history.count()>=2) {
+            if (history.size()>=2) {
                 msg += RS_COMMANDS->command("undo");
             }
 
-            if (history.count()>=2) {
+            if (history.size()>=2) {
                 RS_DIALOGFACTORY->updateMouseWidget(
                     tr("Specify next control point or [%1]").arg(msg),
                     tr("Back"));
@@ -344,21 +344,25 @@ void RS_ActionDrawSpline::close() {
 */
 
 void RS_ActionDrawSpline::undo() {
-    if (history.count()>1) {
+    if (history.size()>1) {
         history.removeLast();
         //bHistory.removeLast();
         deletePreview();
         //graphicView->setCurrentAction(
         //    new RS_ActionEditUndo(true, *container, *graphicView));
-		if (history.last()!=NULL) {
+//RLZ		if (history.last()!=NULL) {
+                if (!history.isEmpty()) {
         	//point = *history.last();
 		}
 		if (spline!=NULL) {
 			spline->removeLastControlPoint();
-			RS_Vector* v = history.last();
+/*RLZ			RS_Vector* v = history.last();
 			if (v!=NULL) {
-	        	graphicView->moveRelativeZero(*v);
-			}
+                        graphicView->moveRelativeZero(*v);*/
+                        if (!history.isEmpty()) {
+                            RS_Vector v = history.last();
+                            graphicView->moveRelativeZero(v);
+                        }
 			graphicView->redraw(RS2::RedrawDrawing); 
 
 		}
