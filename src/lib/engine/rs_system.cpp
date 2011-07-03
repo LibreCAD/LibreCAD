@@ -76,8 +76,6 @@ void RS_System::initLanguageList() {
     QStringList lst = getFileList("qm", "qm");
 
     RS_SETTINGS->beginGroup("/Paths");
-/*RLZ    lst += QStringList::split(";",
-                                RS_SETTINGS->readEntry("/Translations", ""));*/
     lst += (RS_SETTINGS->readEntry("/Translations", "")).split(";", QString::SkipEmptyParts);
     RS_SETTINGS->endGroup();
 
@@ -370,7 +368,6 @@ void RS_System::loadTranslation(const QString& lang, const QString& langCmd) {
     QStringList lst = getDirectoryList("qm");
 
     RS_SETTINGS->beginGroup("/Paths");
-//RLZ    lst += QStringList::split(";", RS_SETTINGS->readEntry("/Translations", ""));
     lst += (RS_SETTINGS->readEntry("/Translations", "")).split(";", QString::SkipEmptyParts);
     RS_SETTINGS->endGroup();
 
@@ -451,7 +448,6 @@ QStringList RS_System::getFileList(const QString& subDirectory,
         dir = QDir(path);
 
         if (dir.exists() && dir.isReadable()) {
-//RLZ            QStringList files = dir.entryList("*." + fileExtension);
             QStringList files = dir.entryList( QStringList("*." + fileExtension) );
             for (QStringList::Iterator it2 = files.begin();
                     it2!=files.end();
