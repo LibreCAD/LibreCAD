@@ -362,7 +362,7 @@ public:
     bool isGridOn();
 
     RS_Vector toGui(RS_Vector v);
-    double toGuiX(double x, bool* visible=NULL);
+    double toGuiX(double x);
     double toGuiY(double y);
     double toGuiDX(double d);
     double toGuiDY(double d);
