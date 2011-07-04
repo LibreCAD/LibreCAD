@@ -81,6 +81,7 @@
 #include "rs_actioninfodist2.h"
 #include "rs_actioninfoinside.h"
 #include "rs_actioninfototallength.h"
+#include "rs_actioninfoarea.h"
 #include "rs_actionlayersadd.h"
 #include "rs_actionlayersedit.h"
 #include "rs_actionlayersfreezeall.h"
@@ -1063,9 +1064,15 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
         break;
 		
     case RS2::ActionInfoTotalLength:
-		action = RS_ActionInfoTotalLength::createGUIAction(id, mw);
+                action = RS_ActionInfoTotalLength::createGUIAction(id, mw);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotInfoTotalLength()));
+        break;
+
+    case RS2::ActionInfoArea:
+            action = RS_ActionInfoArea::createGUIAction(id, mw);
+        connect(action, SIGNAL(activated()),
+                obj, SLOT(slotInfoArea()));
         break;
 
         // Layer actions:
