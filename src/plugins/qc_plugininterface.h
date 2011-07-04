@@ -67,6 +67,7 @@ public:
     virtual QString name() const = 0;
     virtual PluginCapabilities getCapabilities() const = 0;
     virtual void execComm(Document_Interface *doc, QWidget *parent, QString cmd) = 0;
+//    virtual void paintEvent(Document_Interface *doc) = 0;
 
 };
 

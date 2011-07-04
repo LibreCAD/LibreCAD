@@ -131,17 +131,6 @@
 #include "rs_actionpolylinedelbetween.h"
 #include "rs_actionpolylinetrim.h"
 
-#ifdef RS_CAM
-#include "rs_actioncamexportauto.h"
-#include "rs_actioncamreorder.h"
-#endif
-
-#ifdef RVT_CAM
-#include "rvt_actioncammakeprofile.h"
-#endif
-
-
-
 /**
  * Constructor.
  *
@@ -1217,32 +1206,6 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotScriptRun()));
 		break;
-
-		// CAM actions:
-		//
-#ifdef RS_CAM
-    case RS2::ActionCamExportAuto:
-		action = RS_ActionCamExportAuto::createGUIAction(id, mw);
-        connect(action, SIGNAL(activated()),
-                obj, SLOT(slotCamExportAuto()));
-        break;
-		
-    case RS2::ActionCamReorder:
-		action = RS_ActionCamReorder::createGUIAction(id, mw);
-        connect(action, SIGNAL(activated()),
-                obj, SLOT(slotCamReorder()));
-        break;
-#endif
-
-#ifdef RVT_CAM
-    case RS2::ActionCamMakeProfile:
-		action = RVT_ActionCamMakeProfile::createGUIAction(id, mw);
-        connect(action, SIGNAL(activated()),
-                obj, SLOT(slotCamMakeProfile()));
-        break;
-
-
-#endif
 
     default:
         RS_DEBUG->print(RS_Debug::D_WARNING,
