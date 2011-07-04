@@ -45,9 +45,6 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
         : RS_Document(parent),
         layerList(),
 blockList(true)
-#ifdef RS_CAM
-, camData()
-#endif
 {
 
     RS_SETTINGS->beginGroup("/Defaults");

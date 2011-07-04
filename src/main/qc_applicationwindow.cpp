@@ -1233,14 +1233,6 @@ void QC_ApplicationWindow::initActions() {
     scriptRun = 0;
 #endif
 
-#ifdef RVT_CAM
-    menu = menuBar()->addMenu(tr("&CAM"));
-    menu->setName("CAM");
-
-    action = actionFactory.createAction(RS2::ActionCamMakeProfile, actionHandler);
-    action->addTo(menu);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-#endif
 
     // Help menu:
     //
@@ -1975,29 +1967,6 @@ void QC_ApplicationWindow::slotTileVertical() {
        }
     */
 }
-
-
-
-/**
- * CAM
- */
-/*
-#ifdef RS_CAM
-void QC_ApplicationWindow::slotCamExportAuto() {
-    printf("CAM export..\n");
-    
-    RS_Document* d = getDocument();
-    if (d!=NULL) {
-        RS_Graphic* graphic = (RS_Graphic*)d;
- 
-        RS_CamDialog dlg(graphic, this);
-        dlg.exec();
-    }
-}
-#endif
-*/
-
-
 
 /**
  * Called when something changed in the pen tool bar 
