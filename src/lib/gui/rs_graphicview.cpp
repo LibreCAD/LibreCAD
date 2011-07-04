@@ -44,6 +44,7 @@
 #include "rs_settings.h"
 #include "rs_solid.h"
 #include "rs_entitycontainer.h"
+#include "rs_dialogfactory.h"
 
 
 

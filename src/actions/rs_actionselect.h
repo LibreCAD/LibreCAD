@@ -45,7 +45,7 @@ public:
 
     void init(int status);
     //virtual void keyPressEvent(RS_KeyEvent* e);
-    void mouseReleaseEvent(RS_MouseEvent* e);
+    void mouseReleaseEvent(QMouseEvent* e);
     void updateToolBar();
 
 private:

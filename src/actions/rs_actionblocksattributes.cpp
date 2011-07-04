@@ -56,7 +56,7 @@ void RS_ActionBlocksAttributes::trigger() {
         RS_Block* block = graphic->getActiveBlock();
         RS_BlockList* blockList = graphic->getBlockList();
         if (blockList!=NULL && block!=NULL) {
-            RS_String oldName = block->getName();
+            QString oldName = block->getName();
 
             RS_BlockData d;
             d = RS_DIALOGFACTORY->requestBlockAttributesDialog(
