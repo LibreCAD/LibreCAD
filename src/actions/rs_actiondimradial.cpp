@@ -26,10 +26,6 @@
 
 #include "rs_actiondimradial.h"
 
-#include "rs_creation.h"
-#include "rs_snapper.h"
-#include "rs_dialogfactory.h"
-
 
 
 RS_ActionDimRadial::RS_ActionDimRadial(
@@ -114,7 +110,7 @@ void RS_ActionDimRadial::preparePreview() {
 
 
 
-void RS_ActionDimRadial::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDimRadial::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDimRadial::mouseMoveEvent begin");
 
     //RS_Vector mouse(graphicView->toGraphX(e->x()),
@@ -149,7 +145,7 @@ void RS_ActionDimRadial::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDimRadial::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDimRadial::mouseReleaseEvent(QMouseEvent* e) {
 
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
@@ -214,7 +210,7 @@ void RS_ActionDimRadial::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDimRadial::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
@@ -257,8 +253,8 @@ void RS_ActionDimRadial::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDimRadial::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDimRadial::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetEntity:

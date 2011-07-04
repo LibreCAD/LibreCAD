@@ -239,16 +239,6 @@ public:
     virtual bool requestModifyEntityDialog(RS_Entity* entity);
     virtual bool requestTextDialog(RS_Text* text);
     virtual bool requestHatchDialog(RS_Hatch* hatch);
-	
-#ifdef RS_CAM
-    virtual bool requestCamOptionsDialog(RS_Graphic& graphic);
-#endif
-
-#ifdef RVT_CAM
-    virtual bool requestCamProfileDialog(RVT_CAMProfileData& data);
-#endif
-
-
     virtual void requestOptionsGeneralDialog();
     virtual void requestOptionsDrawingDialog(RS_Graphic& graphic);
 

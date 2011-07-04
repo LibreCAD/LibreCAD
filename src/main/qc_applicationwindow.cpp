@@ -196,6 +196,7 @@ QMenu *QC_ApplicationWindow::findMenu(const QString &searchMenu, const QObjectLi
  */
 void QC_ApplicationWindow::loadPlugins() {
 
+    loadedPlugins.clear();
     RS_StringList lst = RS_SYSTEM->getDirectoryList("plugins");
 
     for (int i = 0; i < lst.size(); ++i) {
@@ -206,8 +207,9 @@ void QC_ApplicationWindow::loadPlugins() {
             if (plugin) {
                 QC_PluginInterface *pluginInterface = qobject_cast<QC_PluginInterface *>(plugin);
                 if (pluginInterface) {
-
-                    foreach (PluginMenuLocation loc,  pluginInterface->menu()) {
+                    loadedPlugins.append(pluginInterface);
+                    PluginCapabilities pluginCapabilities=pluginInterface->getCapabilities();
+                    foreach (PluginMenuLocation loc,  pluginCapabilities.menuEntryPoints) {
                         QAction *actpl = new QAction(loc.menuEntryActionName, plugin);
                         actpl->setData(loc.menuEntryActionName);
                         connect(actpl, SIGNAL(triggered()), this, SLOT(execPlug()));
@@ -1235,14 +1237,6 @@ void QC_ApplicationWindow::initActions() {
     scriptRun = 0;
 #endif
 
-#ifdef RVT_CAM
-    menu = menuBar()->addMenu(tr("&CAM"));
-    menu->setName("CAM");
-
-    action = actionFactory.createAction(RS2::ActionCamMakeProfile, actionHandler);
-    action->addTo(menu);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-#endif
 
     // Help menu:
     //
@@ -1977,29 +1971,6 @@ void QC_ApplicationWindow::slotTileVertical() {
        }
     */
 }
-
-
-
-/**
- * CAM
- */
-/*
-#ifdef RS_CAM
-void QC_ApplicationWindow::slotCamExportAuto() {
-    printf("CAM export..\n");
-    
-    RS_Document* d = getDocument();
-    if (d!=NULL) {
-        RS_Graphic* graphic = (RS_Graphic*)d;
- 
-        RS_CamDialog dlg(graphic, this);
-        dlg.exec();
-    }
-}
-#endif
-*/
-
-
 
 /**
  * Called when something changed in the pen tool bar 
@@ -2923,24 +2894,12 @@ void QC_ApplicationWindow::slotHelpAbout() {
     /**
       * Show all plugin that has been loaded
       */
-    RS_StringList lst = RS_SYSTEM->getDirectoryList("plugins");
-    for (int i = 0; i < lst.size(); ++i) {
-        QDir pluginsDir(lst.at(i));
-        foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
-            QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
-            QObject *plugin = pluginLoader.instance();
-            if (plugin!=NULL && pluginLoader.isLoaded()) {
-                QC_PluginInterface *pluginInterface = qobject_cast<QC_PluginInterface *>(plugin);
-                    modules.append(pluginInterface->name());
-            }
-        }
-    }
+    foreach (QC_PluginInterface *pluginInterface, loadedPlugins)
+        modules.append(pluginInterface->name());
 
-    QString modulesString;
-    if (modules.empty()==false) {
+    QString modulesString=tr("None");
+    if (!modules.empty()) {
         modulesString = modules.join(", ");
-    } else {
-        modulesString = tr("None");
     }
 
     QMessageBox box(this);

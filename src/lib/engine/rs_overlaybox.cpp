@@ -71,16 +71,6 @@ void RS_OverlayBox::draw(RS_Painter* painter, RS_GraphicView* view, double patte
 
 }
 
-
-/**
- * @return Unique String that identifies this entity
- */
-#ifdef RVT_CAM
-QString RS_OverlayBox::getCamId() {
-        return QString("%1/%2/%3/%4").arg(data.startpoint.x).arg(data.startpoint.y).arg(data.endpoint.x).arg(data.endpoint.y);
-}
-#endif
-
 /**
  * Dumps the point's data to stdout.
  */

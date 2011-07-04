@@ -26,10 +26,6 @@
 
 #include "rs_actiondimdiametric.h"
 
-#include "rs_creation.h"
-#include "rs_snapper.h"
-#include "rs_dialogfactory.h"
-
 
 
 RS_ActionDimDiametric::RS_ActionDimDiametric(
@@ -118,7 +114,7 @@ void RS_ActionDimDiametric::preparePreview() {
 
 
 
-void RS_ActionDimDiametric::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDimDiametric::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDimDiametric::mouseMoveEvent begin");
 
     RS_Vector mouse(graphicView->toGraphX(e->x()),
@@ -152,7 +148,7 @@ void RS_ActionDimDiametric::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDimDiametric::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDimDiametric::mouseReleaseEvent(QMouseEvent* e) {
 
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
@@ -220,7 +216,7 @@ void RS_ActionDimDiametric::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDimDiametric::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
@@ -263,8 +259,8 @@ void RS_ActionDimDiametric::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDimDiametric::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDimDiametric::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetEntity:

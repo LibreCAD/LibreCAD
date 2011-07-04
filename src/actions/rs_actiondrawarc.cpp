@@ -26,10 +26,6 @@
 
 #include "rs_actiondrawarc.h"
 
-#include "rs_commands.h"
-#include "rs_snapper.h"
-#include "rs_dialogfactory.h"
-
 
 
 RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
@@ -107,7 +103,7 @@ void RS_ActionDrawArc::trigger() {
 
 
 
-void RS_ActionDrawArc::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawArc::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -178,7 +174,7 @@ void RS_ActionDrawArc::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawArc::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawArc::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -242,7 +238,7 @@ void RS_ActionDrawArc::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (RS_COMMANDS->checkCommand("help", c)) {
         if (RS_DIALOGFACTORY!=NULL) {
@@ -354,8 +350,8 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawArc::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawArc::getAvailableCommands() {
+    QStringList cmd;
     cmd += RS_COMMANDS->command("reversed");
     return cmd;
 }
