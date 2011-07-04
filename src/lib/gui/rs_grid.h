@@ -30,7 +30,6 @@
 
 #include "rs_graphicview.h"
 #include "rs_vector.h"
-#include "rs_string.h"
 
 /**
  * This class represents a grid. Grids can be drawn on graphic

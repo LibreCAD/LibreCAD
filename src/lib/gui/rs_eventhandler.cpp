@@ -28,6 +28,7 @@
 #include "rs_eventhandler.h"
 
 #include "rs_actioninterface.h"
+#include "rs_dialogfactory.h"
 
 /**
  * Constructor.
