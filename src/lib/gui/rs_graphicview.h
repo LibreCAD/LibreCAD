@@ -30,37 +30,15 @@
 
 #include "rs_entitycontainer.h"
 
-#include <stdarg.h>
 #include <QMap>
 #include <QKeyEvent>
 
-#include "rs.h"
-#include "rs_blocklist.h"
-#include "rs_color.h"
-#include "rs_linetypepattern.h"
-#include "rs_commandevent.h"
 
 class RS_ActionInterface;
-//class RS_DimensionData;
-//class RS_DimLinearData;
 class RS_EventHandler;
 class RS_Grid;
-class RS_Insert;
-class RS_Painter;
-class RS_Solid;
-class RS_Text;
-class RS_Hatch;
-class RS_Painter;
-class RS_EntityContainer;
-//class RS_MirrorData;
-//class RS_MoveData;
-//class RS_MoveRotateData;
-//class RS_Rotate2Data;
-//class RS_RotateData;
-//class RS_ScaleData;
-//class RS_BevelData;
-//class RS_RoundData;
-
+class RS_CommandEvent;
+class RS_LineTypePattern;
 
 
 /**
