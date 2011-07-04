@@ -29,6 +29,7 @@
 
 #include "rs_actioninterface.h"
 #include "rs_dialogfactory.h"
+#include "rs_commandevent.h"
 
 /**
  * Constructor.
