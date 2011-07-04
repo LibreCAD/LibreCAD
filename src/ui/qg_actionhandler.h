@@ -215,15 +215,8 @@ public slots:
     void slotBlocksInsert();
     void slotBlocksToggleView();
     void slotBlocksCreate();
-    void slotBlocksExplode();
-	
+    void slotBlocksExplode();	
     void slotOptionsDrawing();
-	
-	void slotCamExportAuto();
-	void slotCamReorder();
-
-        void slotCamMakeProfile();
-
     void slotFocusNormal();
 
     void setActionSnapFree(QAction* a) {

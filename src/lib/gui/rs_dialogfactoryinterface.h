@@ -62,9 +62,6 @@ class RS_ScaleData;
 class RS_Solid;
 class RS_Text;
 class RS_Vector;
-#ifdef RVT_CAM
-class RVT_CAMProfileData;
-#endif
 
 /**
  * Interface for objects that can create and show dialogs.
@@ -358,14 +355,6 @@ public:
 	 * @param graphic Graphic document.
      */
     virtual void requestOptionsDrawingDialog(RS_Graphic& graphic) = 0;
-	
-#ifdef RS_CAM
-    virtual bool requestCamOptionsDialog(RS_Graphic& graphic) = 0;
-#endif
-
-#ifdef RVT_CAM
-    virtual bool requestCamProfileDialog(RVT_CAMProfileData& data) = 0;
-#endif
 
     /**
      * This virtual method must be overwritten if the graphic view has
