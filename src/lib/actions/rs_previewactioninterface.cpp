@@ -27,6 +27,7 @@
 
 #include "rs_previewactioninterface.h"
 
+#include "rs_graphicview.h"
 
 /**
  * Constructor.

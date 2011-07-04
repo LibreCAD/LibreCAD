@@ -29,7 +29,6 @@
 #define RS_DIALOGFACTORYINTERFACE_H
 
 #include "rs.h"
-#include "rs_string.h"
 
 class RS_ActionInterface;
 class RS_ArcData;
@@ -83,14 +82,14 @@ public:
      * This virtual method must be overwritten and must provide
      * a message dialog.
      */
-    virtual void requestWarningDialog(const RS_String& warning) = 0;
+    virtual void requestWarningDialog(const QString& warning) = 0;
 
 	/**
 	 * This virtual method must be overwritten and must create a new
 	 * window for the given document or for a new document isf no document
 	 * is given.
 	 */
-    virtual RS_GraphicView* requestNewDocument(const RS_String& fileName = RS_String::null, 
+    virtual RS_GraphicView* requestNewDocument(const QString& fileName = QString::null,
 			RS_Document* doc=NULL) = 0;
 
     /**
@@ -211,7 +210,7 @@ public:
      *         which contains the file name or an empty string if
      *         the user cancels the dialog.
      */
-    virtual RS_String requestImageOpenDialog() = 0;
+    virtual QString requestImageOpenDialog() = 0;
 	
     /**
      * This virtual method must be overwritten and must present
@@ -379,8 +378,8 @@ public:
      * @param left Help text for the left mouse button.
      * @param right Help text for the right mouse button.
      */
-    virtual void updateMouseWidget(const RS_String& left,
-                                   const RS_String& right) = 0;
+    virtual void updateMouseWidget(const QString& left,
+                                   const QString& right) = 0;
 								   
     /**
      * This virtual method must be overwritten if the graphic view has
@@ -402,7 +401,7 @@ public:
      *
      * @param message The message for the user.
      */
-    virtual void commandMessage(const RS_String& message) = 0;
+    virtual void commandMessage(const QString& message) = 0;
 
 
 	virtual bool isAdapter() = 0;

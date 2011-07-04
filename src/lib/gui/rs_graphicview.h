@@ -31,14 +31,13 @@
 #include "rs_entitycontainer.h"
 
 #include <stdarg.h>
-#include <qmap.h>
+#include <QMap>
+#include <QKeyEvent>
 
 #include "rs.h"
 #include "rs_blocklist.h"
 #include "rs_color.h"
-#include "rs_keyevent.h"
 #include "rs_linetypepattern.h"
-#include "rs_mouseevent.h"
 #include "rs_commandevent.h"
 
 class RS_ActionInterface;
@@ -293,13 +292,13 @@ public:
     void back();
     void enter();
 
-    void mousePressEvent(RS_MouseEvent* e);
-    void mouseReleaseEvent(RS_MouseEvent* e);
-    void mouseMoveEvent(RS_MouseEvent* e);
+    void mousePressEvent(QMouseEvent* e);
+    void mouseReleaseEvent(QMouseEvent* e);
+    void mouseMoveEvent(QMouseEvent* e);
     void mouseLeaveEvent();
     void mouseEnterEvent();
-    void keyPressEvent(RS_KeyEvent* e);
-    void keyReleaseEvent(RS_KeyEvent* e);
+    void keyPressEvent(QKeyEvent* e);
+    void keyReleaseEvent(QKeyEvent* e);
 	void commandEvent(RS_CommandEvent* e);
 	void enableCoordinateInput();
 	void disableCoordinateInput();

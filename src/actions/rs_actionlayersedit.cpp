@@ -27,6 +27,7 @@
 #include "rs_actionlayersedit.h"
 
 #include "rs_graphic.h"
+#include "rs_layer.h"
 
 
 
