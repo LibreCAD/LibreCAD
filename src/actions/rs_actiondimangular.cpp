@@ -26,10 +26,8 @@
 
 #include "rs_actiondimangular.h"
 
-#include "rs_creation.h"
+
 #include "rs_information.h"
-#include "rs_snapper.h"
-#include "rs_dialogfactory.h"
 
 
 
@@ -98,7 +96,7 @@ void RS_ActionDimAngular::trigger() {
 
 
 
-void RS_ActionDimAngular::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDimAngular::mouseMoveEvent begin");
 
     RS_Vector mouse(graphicView->toGraphX(e->x()),
@@ -134,7 +132,7 @@ void RS_ActionDimAngular::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDimAngular::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e) {
 
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
@@ -219,7 +217,7 @@ void RS_ActionDimAngular::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDimAngular::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
@@ -246,8 +244,8 @@ void RS_ActionDimAngular::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDimAngular::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDimAngular::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetLine1:

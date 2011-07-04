@@ -26,10 +26,13 @@ QString LC_Sample::name() const
      return (tr("Sample plugin"));
  }
 
-QList<PluginMenuLocation> LC_Sample::menu() const
- {
-    return QList<PluginMenuLocation>() << PluginMenuLocation("Help", tr("Sample plugin"));
- }
+PluginCapabilities LC_Sample::getCapabilities() const
+{
+    PluginCapabilities pluginCapabilities;
+    pluginCapabilities.menuEntryPoints
+            << PluginMenuLocation("Help", tr("Sample plugin"));
+    return pluginCapabilities;
+}
 
 void LC_Sample::execComm(Document_Interface *doc,
                              QWidget *parent, QString cmd)

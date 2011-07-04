@@ -97,15 +97,6 @@ public:
     unsigned long int getId() const {
         return id;
     }
-
-    /**
-     *  * @return Unique String that identifies this entity
-     */
-#ifdef RVT_CAM
-    virtual QString getCamId() {
-        return 0;
-    }
-#endif
 	
     /**
      * This method must be overwritten in subclasses and return the 

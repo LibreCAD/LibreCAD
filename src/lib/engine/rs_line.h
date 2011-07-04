@@ -213,10 +213,6 @@ public:
 
     virtual void calculateBorders();
 
-#ifdef RVT_CAM
-    virtual QString getCamId();
-#endif
-	
 protected:
     RS_LineData data;
     //RS_Vector startpoint;

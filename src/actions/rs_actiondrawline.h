@@ -28,10 +28,6 @@
 #define RS_ACTIONDRAWLINE_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_line.h"
-#include "rs_ptrlist.h"
-
-#include <qaction.h>
 
 
 /**
@@ -67,12 +63,12 @@ public:
     virtual void init(int status=0);
     virtual void trigger();
 	
-    virtual void mouseMoveEvent(RS_MouseEvent* e);
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
-	virtual RS_StringList getAvailableCommands();
+        virtual QStringList getAvailableCommands();
 	
 	virtual void showOptions();
 	virtual void hideOptions();
@@ -97,7 +93,7 @@ protected:
 	/**
 	 * Point history (for undo)
 	 */
-	RS_PtrList<RS_Vector> history;
+        QList<RS_Vector> history;
 	
 };
 

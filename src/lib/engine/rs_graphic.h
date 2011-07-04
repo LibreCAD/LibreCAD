@@ -33,13 +33,8 @@
 #include "rs_variabledict.h"
 #include "rs_document.h"
 #include "rs_units.h"
-#ifdef RS_CAM
-#include "rs_camdata.h"
-#endif
 
 class RS_VariableDict;
-//class RS_CamData;
-
 
 /**
  * A graphic document which can contain entities layers and blocks.
@@ -273,24 +268,12 @@ public:
 		blockList.setModified(m);
 	}
 
-#ifdef RS_CAM
-	RS_CamData& getCamData() {
-		return camData;
-	}
-	void setCamData(const RS_CamData& d) {
-		camData = d;
-	}
-#endif
-
     friend std::ostream& operator << (std::ostream& os, RS_Graphic& g);
 
 private:
 	RS_LayerList layerList;
 	RS_BlockList blockList;
 	RS_VariableDict variableDict;
-#ifdef RS_CAM
-	RS_CamData camData;
-#endif
 };
 
 
