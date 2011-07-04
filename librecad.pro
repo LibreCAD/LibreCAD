@@ -189,7 +189,6 @@ HEADERS = \
     src/lib/gui/rs_mainwindowinterface.h \
     src/lib/gui/rs_mouseevent.h \
     src/lib/gui/rs_painter.h \
-    src/lib/gui/rs_painteradapter.h \
     src/lib/gui/rs_painterqt.h \
     src/lib/gui/rs_staticgraphicview.h \
     src/lib/information/rs_locale.h \
