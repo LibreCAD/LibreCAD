@@ -90,7 +90,7 @@ private:
     //! all scripts available
     QList<RS_Script*> scripts;
     //! List of registered ScriptListListeners
-    //RS_PtrList<RS_ScriptListListener> scriptListListeners;
+    //QList<RS_ScriptListListener> scriptListListeners;
     //! Currently active script
     //RS_Script* activeScript;
 }

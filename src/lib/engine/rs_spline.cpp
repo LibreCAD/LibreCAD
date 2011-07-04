@@ -436,7 +436,7 @@ void RS_Spline::addControlPoint(const RS_Vector& v) {
  * Removes the control point that was last added.
  */
 void RS_Spline::removeLastControlPoint() {
-    data.controlPoints.pop_back(); //RLZ toy aqui
+    data.controlPoints.pop_back();
 }
 
 

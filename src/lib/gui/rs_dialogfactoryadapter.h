@@ -34,9 +34,6 @@
 
 class RS_BlockList;
 class RS_LayerList;
-#ifdef RVT_CAM
-class RVT_CAMProfileData;
-#endif
 
 /**
  * Adapter for dialog factory interface.
@@ -85,12 +82,6 @@ public:
     virtual bool requestHatchDialog(RS_Hatch* ) { return false; }
     virtual void requestOptionsGeneralDialog() {}
     virtual void requestOptionsDrawingDialog(RS_Graphic& ) {}
-#ifdef RS_CAM
-    virtual bool requestCamOptionsDialog(RS_Graphic& ) { printf("fake\n"); return false; }
-#endif
-#ifdef RVT_CAM
-    virtual bool requestCamProfileDialog(RVT_CAMProfileData&  ) { return false; }
-#endif
     virtual void updateCoordinateWidget(const RS_Vector& ,
 										const RS_Vector& ,
 										bool =false) {}

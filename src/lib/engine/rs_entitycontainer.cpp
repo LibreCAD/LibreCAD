@@ -1003,7 +1003,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
     RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
 
-    //RS_PtrListIterator<RS_Entity> it = createIterator();
+    //QListIterator<RS_Entity> it = createIterator();
     //RS_Entity* en;
     //while ( (en = it.current()) != NULL ) {
     //    ++it;

@@ -25,9 +25,8 @@
 **********************************************************************/
 
 #include "rs_actiondimlinear.h"
-#include "rs_snapper.h"
+
 #include "rs_constructionline.h"
-#include "rs_dialogfactory.h"
 
 /**
  * Constructor.
@@ -144,7 +143,7 @@ void RS_ActionDimLinear::preparePreview() {
 
 
 
-void RS_ActionDimLinear::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDimLinear::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDimLinear::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -183,7 +182,7 @@ void RS_ActionDimLinear::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDimLinear::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDimLinear::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -230,7 +229,7 @@ void RS_ActionDimLinear::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDimLinear::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         if (RS_DIALOGFACTORY!=NULL) {
@@ -283,8 +282,8 @@ void RS_ActionDimLinear::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDimLinear::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDimLinear::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetExtPoint1:

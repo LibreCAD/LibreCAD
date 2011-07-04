@@ -91,17 +91,7 @@
 #include "qg_splineoptions.h"
 #include "qg_textoptions.h"
 #include "qg_trimamountoptions.h"
-
 #include "qg_polylineoptions.h"
-
-#ifdef RS_CAM
-#include "rs_camdialog.h"
-#endif
-
-#ifdef RVT_CAM
-#include "rvt_cammakeprofiledialog.h"
-#endif
-
 #include "qg_layerwidget.h"
 #include "qg_mainwindowinterface.h"
 
@@ -1647,41 +1637,6 @@ bool QG_DialogFactory::requestHatchDialog(RS_Hatch* hatch) {
 
     return false;
 }
-
-
-
-/**
- * Shows a dialog for CAM options.
- */
-#ifdef RS_CAM
-bool QG_DialogFactory::requestCamOptionsDialog(RS_Graphic& graphic) {
-	RS_DEBUG->print("QG_DialogFactory::requestCamOptionsDialog");
-	RS_CamDialog dlg(graphic, parent);
-	RS_DEBUG->print("QG_DialogFactory::requestCamOptionsDialog: exec");
-	if (dlg.exec()) {
-		RS_DEBUG->print("QG_DialogFactory::requestCamOptionsDialog: OK");
-		return true;
-	}
-    RS_DEBUG->print("QG_DialogFactory::requestCamOptionsDialog: Cancel");
-	return false;
-}
-#endif
-
-#ifdef RVT_CAM
-bool QG_DialogFactory::requestCamProfileDialog(RVT_CAMProfileData& data) {
-	RS_DEBUG->print("QG_DialogFactory::requestCamProfileDialog");
-        RVT_CamMakeProfileDialog dlg(parent);
-	dlg.setData(&data);
-	RS_DEBUG->print("QG_DialogFactory::requestCamProfileDialog: exec");
-	if (dlg.exec()) {
-		dlg.updateData();
-		RS_DEBUG->print("QG_DialogFactory::requestCamOptionsDialog: OK");
-		return true;
-	}
-    RS_DEBUG->print("QG_DialogFactory::requestCamProfileDialog: Cancel");
-	return false;
-}
-#endif
 
 /**
  * Shows dialog for general application options.

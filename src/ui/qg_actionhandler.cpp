@@ -133,16 +133,6 @@
 #include "rs_actionpolylinedel.h"
 #include "rs_actionpolylinedelbetween.h"
 #include "rs_actionpolylinetrim.h"
-
-#ifdef RS_CAM
-#include "rs_actioncamexportauto.h"
-#include "rs_actioncamreorder.h"
-#endif
-
-#ifdef RVT_CAM
-#include "rvt_actioncammakeprofile.h"
-#endif
-
 #include "rs_selection.h"
 
 #include "qg_mainwindowinterface.h"
@@ -754,23 +744,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionOptionsDrawing:
         a = new RS_ActionOptionsDrawing(*doc, *gv);
         break;
-
-		// cam:
-		//
-#ifdef RS_CAM
-    case RS2::ActionCamExportAuto:
-        a = new RS_ActionCamExportAuto(*doc, *gv);
-        break;
-    case RS2::ActionCamReorder:
-        a = new RS_ActionCamReorder(*doc, *gv);
-        break;
-#endif
-
-#ifdef RVT_CAM
-    case RS2::ActionCamMakeProfile:
-        a = new RVT_ActionCamMakeProfile(*doc, *gv);
-        break;
-#endif
     default:
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "QG_ActionHandler::setCurrentAction():"
@@ -1674,22 +1647,6 @@ void QG_ActionHandler::slotOptionsDrawing() {
     setCurrentAction(RS2::ActionOptionsDrawing);
 }
 
-void QG_ActionHandler::slotCamExportAuto() {
-#ifdef RS_CAM
-    setCurrentAction(RS2::ActionCamExportAuto);
-#endif
-}
-
-void QG_ActionHandler::slotCamReorder() {
-#ifdef RS_CAM
-    setCurrentAction(RS2::ActionCamReorder);
-#endif
-}
-void QG_ActionHandler::slotCamMakeProfile() {
-#ifdef RVT_CAM
-    setCurrentAction(RS2::ActionCamMakeProfile);
-#endif
-}
 void QG_ActionHandler::slotFocusNormal() {
     //QG_GraphicView* gv = mainWindow->getGraphicView();
     //if (gv!=NULL) {

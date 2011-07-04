@@ -155,7 +155,6 @@ HEADERS = \
     src/lib/engine/rs_pen.h \
     src/lib/engine/rs_point.h \
     src/lib/engine/rs_polyline.h \
-    src/lib/engine/rs_ptrlist.h \
     src/lib/engine/rs_settings.h \
     src/lib/engine/rs_solid.h \
     src/lib/engine/rs_spline.h \
