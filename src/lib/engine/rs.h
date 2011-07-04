@@ -107,8 +107,7 @@ public:
         FormatDXF1,          /**< QCad 1 compatibility DXF format. */
         FormatDXF,           /**< DXF format. 2000. */
         FormatDXF12,         /**< DXF format. R12. */
-        FormatCXF,           /**< CAM Expert Font format. */
-		FormatCAM            /**< CAM Expert CAM format (NC, CNC, D, ..) */
+        FormatCXF           /**< CAM Expert Font format. */
     };
 
     /**
@@ -349,10 +348,6 @@ public:
 
 #ifndef RS_NO_COMPLEX_ENTITIES
 		ActionPARISDebugCreateContainer,
-#endif
-
-#ifdef RVT_CAM
-		ActionCamMakeProfile,
 #endif
 
         /** Needed to loop through all actions */
