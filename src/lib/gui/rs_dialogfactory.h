@@ -28,10 +28,9 @@
 #ifndef RS_DIALOGFACTORY_H
 #define RS_DIALOGFACTORY_H
 
-#include "rs_dialogfactoryinterface.h"
 #include "rs_dialogfactoryadapter.h"
-#include "rs_debug.h"
 
+class RS_DialogFactoryInterface;
 
 #define RS_DIALOGFACTORY RS_DialogFactory::instance()->getFactoryObject()
 
@@ -51,7 +50,7 @@ public:
 	void setFactoryObject(RS_DialogFactoryInterface* fo);
 	RS_DialogFactoryInterface* getFactoryObject();
 
-	void commandMessage(const RS_String& m);
+        void commandMessage(const QString& m);
 
 private:
 	RS_DialogFactoryInterface* factoryObject;

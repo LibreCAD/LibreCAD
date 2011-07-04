@@ -27,6 +27,9 @@
 
 #include "rs_actioninterface.h"
 
+#include "rs_graphicview.h"
+#include "rs_commands.h"
+
 /**
  * Constructor.
  *
@@ -90,7 +93,7 @@ RS2::ActionType RS_ActionInterface::rtti()  {
 /**
  * @return name of this action
  */
-RS_String RS_ActionInterface::getName() {
+QString RS_ActionInterface::getName() {
     return name;
 }
 
@@ -120,7 +123,7 @@ void RS_ActionInterface::init(int status) {
  * This function can be overwritten by the implementing action.
  * The default implementation keeps track of the mouse position.
  */
-void RS_ActionInterface::mouseMoveEvent(RS_MouseEvent*) {}
+void RS_ActionInterface::mouseMoveEvent(QMouseEvent*) {}
 
 /**
  * Called when the left mouse button is pressed and this is the 
@@ -128,7 +131,7 @@ void RS_ActionInterface::mouseMoveEvent(RS_MouseEvent*) {}
  * This function can be overwritten by the implementing action.
  * The default implementation does nothing.
  */
-void RS_ActionInterface::mousePressEvent(RS_MouseEvent*) {}
+void RS_ActionInterface::mousePressEvent(QMouseEvent*) {}
 
 /**
  * Called when the left mouse button is released and this is 
@@ -136,14 +139,14 @@ void RS_ActionInterface::mousePressEvent(RS_MouseEvent*) {}
  * This function can be overwritten by the implementing action.
  * The default implementation does nothing.
  */
-void RS_ActionInterface::mouseReleaseEvent(RS_MouseEvent*) {}
+void RS_ActionInterface::mouseReleaseEvent(QMouseEvent*) {}
 
 /**
  * Called when a key is pressed and this is the current action.
  * This function can be overwritten by the implementing action.
  * The default implementation does nothing.
  */
-void RS_ActionInterface::keyPressEvent(RS_KeyEvent* e) {
+void RS_ActionInterface::keyPressEvent(QKeyEvent* e) {
     e->ignore();
 }
 
@@ -152,7 +155,7 @@ void RS_ActionInterface::keyPressEvent(RS_KeyEvent* e) {
  * This function can be overwritten by the implementing action.
  * The default implementation does nothing.
  */
-void RS_ActionInterface::keyReleaseEvent(RS_KeyEvent* e) {
+void RS_ActionInterface::keyReleaseEvent(QKeyEvent* e) {
     e->ignore();
 }
 
@@ -176,8 +179,8 @@ void RS_ActionInterface::commandEvent(RS_CommandEvent*) {
  * Must be implemented to return the currently available commands
  *  for the command line.
  */
-RS_StringList RS_ActionInterface::getAvailableCommands() {
-    RS_StringList l;
+QStringList RS_ActionInterface::getAvailableCommands() {
+    QStringList l;
     return l;
 }
 
@@ -306,7 +309,7 @@ void RS_ActionInterface::showOptions() {
 /**
  * Calls checkCommand() from the RS_COMMANDS module.
  */
-bool RS_ActionInterface::checkCommand(const RS_String& cmd, const RS_String& str,
+bool RS_ActionInterface::checkCommand(const QString& cmd, const QString& str,
                                       RS2::ActionType action) {
     return RS_COMMANDS->checkCommand(cmd, str, action);
 }
@@ -314,14 +317,14 @@ bool RS_ActionInterface::checkCommand(const RS_String& cmd, const RS_String& str
 /**
  * Calls command() from the RS_COMMANDS module.
  */
-RS_String RS_ActionInterface::command(const RS_String& cmd) {
+QString RS_ActionInterface::command(const QString& cmd) {
     return RS_COMMANDS->command(cmd);
 }
 
 /**
  * Calls msgAvailableCommands() from the RS_COMMANDS module.
  */
-RS_String RS_ActionInterface::msgAvailableCommands() {
+QString RS_ActionInterface::msgAvailableCommands() {
     return RS_COMMANDS->msgAvailableCommands();
 }
 

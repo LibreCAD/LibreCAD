@@ -32,6 +32,7 @@
 
 #include "rs_dialogfactoryinterface.h"
 #include "rs_vector.h"
+#include "rs_string.h"
 #include "rs_debug.h"
 
 /*
