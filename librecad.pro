@@ -180,7 +180,6 @@ HEADERS = \
     src/lib/gui/rs_dialogfactory.h \
     src/lib/gui/rs_dialogfactoryinterface.h \
     src/lib/gui/rs_dialogfactoryadapter.h \
-    src/lib/gui/rs_event.h \
     src/lib/gui/rs_eventhandler.h \
     src/lib/gui/rs_graphicview.h \
     src/lib/gui/rs_grid.h \
@@ -572,7 +571,6 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/qg_mainwindowinterface.h \
     src/ui/qg_patternbox.h \
     src/ui/qg_pentoolbar.h \
-    src/ui/qg_qt2rs.h \
     src/ui/qg_recentfiles.h \
     src/ui/qg_scrollbar.h \
     src/ui/qg_widthbox.h \

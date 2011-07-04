@@ -55,7 +55,6 @@
 #include "qg_cadtoolbar.h"
 
 #include "qg_dialogfactory.h"
-#include "qg_qt2rs.h"
 
 
 #define QG_SCROLLMARGIN 400

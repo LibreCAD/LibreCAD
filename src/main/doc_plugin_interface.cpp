@@ -28,6 +28,7 @@
 #include <QEventLoop>
 #include <QList>
 #include <QInputDialog>
+#include "rs_graphicview.h"
 #include "rs_actioninterface.h"
 #include "rs_actionselect.h"
 #include "rs_text.h"

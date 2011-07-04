@@ -31,9 +31,8 @@
 #include "rs_entitycontainer.h"
 
 class RS_Entity;
-class RS_GraphicView;
 class RS_Vector;
-class RS_MouseEvent;
+
 
 /**
  * This class supports previewing. The RS_Snapper class uses
