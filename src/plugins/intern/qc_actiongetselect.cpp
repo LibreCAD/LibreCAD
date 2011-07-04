@@ -26,6 +26,8 @@
 
 #include "doc_plugin_interface.h"
 #include "qc_actiongetselect.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_actionselectsingle.h"
 
 #include "rs_snapper.h"
@@ -68,7 +70,7 @@ void QC_ActionGetSelect::init(int status) {
 
 
 
-void QC_ActionGetSelect::mouseReleaseEvent(RS_MouseEvent* e) {
+void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         RS_DIALOGFACTORY->updateMouseWidget("", "");
         completed = true;

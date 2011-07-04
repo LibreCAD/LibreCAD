@@ -49,8 +49,8 @@ public:
 	}
 
     virtual void trigger();
-    virtual void keyPressEvent(RS_KeyEvent* e);
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+    virtual void keyPressEvent(QKeyEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseCursor();
 
 private:

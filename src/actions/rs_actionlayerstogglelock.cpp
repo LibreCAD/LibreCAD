@@ -27,7 +27,7 @@
 #include "rs_actionlayerstogglelock.h"
 
 #include "rs_graphic.h"
-
+#include "rs_layer.h"
 
 
 RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(

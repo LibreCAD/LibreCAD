@@ -30,7 +30,6 @@
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
-#include "rs_mouseevent.h"
 #include "rs_settings.h"
 
 
