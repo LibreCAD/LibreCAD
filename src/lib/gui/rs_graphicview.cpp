@@ -1544,15 +1544,7 @@ RS_Vector RS_GraphicView::toGui(RS_Vector v) {
  * @param visible Pointer to a boolean which will contain true
  * after the call if the coordinate is within the visible range.
  */
-double RS_GraphicView::toGuiX(double x, bool* visible) {
-    if (visible!=NULL) {
-        double res = x*factor.x+offsetX;
-        if (res>0.0 && res<getWidth()) {
-            *visible = true;
-        } else {
-            *visible = false;
-        }
-    }
+double RS_GraphicView::toGuiX(double x) {
     return x*factor.x + offsetX;
 }
 
