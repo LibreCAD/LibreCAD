@@ -1147,6 +1147,10 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionInfoArea,
+                                        actionHandler);
+    action->addTo(menu);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Layer actions:
     //
