@@ -26,7 +26,11 @@
 
 #include "rs_actionmodifytrimamount.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
+#include "rs_modification.h"
 
 
 RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(
@@ -76,7 +80,7 @@ void RS_ActionModifyTrimAmount::trigger() {
 
 
 
-void RS_ActionModifyTrimAmount::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent* e) {
 
     trimCoord = graphicView->toGraph(e->x(), e->y());
     trimEntity = catchEntity(e);
@@ -113,7 +117,7 @@ void RS_ActionModifyTrimAmount::mouseReleaseEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionModifyTrimAmount::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
@@ -142,8 +146,8 @@ void RS_ActionModifyTrimAmount::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionModifyTrimAmount::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionModifyTrimAmount::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case ChooseTrimEntity:

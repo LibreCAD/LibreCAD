@@ -28,7 +28,6 @@
 #define RS_ACTIONMODIFYEXPLODETEXT_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_insert.h"
 
 /**
  * This action class can handle user events for exploding blocks and
