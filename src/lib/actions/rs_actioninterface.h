@@ -39,6 +39,7 @@
 #include "rs_graphicview.h" //RLZ removeme
 #include "rs_graphic.h" //RLZ removeme
 #include "rs_commands.h" //RLZ removeme
+#include "rs_commandevent.h" //RLZ removeme
 #include <QAction> //RLZ removeme
 
 class RS_CommandEvent;
