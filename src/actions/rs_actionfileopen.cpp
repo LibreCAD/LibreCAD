@@ -26,7 +26,7 @@
 
 #include "rs_actionfileopen.h"
 
-#include "rs_graphic.h"
+#include <QAction>
 
 
 
