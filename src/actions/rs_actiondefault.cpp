@@ -26,6 +26,9 @@
 
 #include "rs_actiondefault.h"
 
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 #include "rs_modification.h"
 #include "rs_selection.h"
 #include "rs_overlaybox.h"
