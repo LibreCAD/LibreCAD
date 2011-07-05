@@ -26,6 +26,7 @@
 
 #include "rs_actionblocksattributes.h"
 
+#include <QAction>
 #include "rs_graphic.h"
 #include "rs_dialogfactory.h"
 
@@ -64,7 +65,7 @@ void RS_ActionBlocksAttributes::trigger() {
 
             if (d.isValid()) {
 
-                RS_String newName = d.name;
+                QString newName = d.name;
                 blockList->rename(block, newName);
 
                 // update the name of all inserts:

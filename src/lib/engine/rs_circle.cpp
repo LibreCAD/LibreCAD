@@ -33,6 +33,7 @@
 #include "rs_information.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
+#include "rs_linetypepattern.h"
 
 
 
