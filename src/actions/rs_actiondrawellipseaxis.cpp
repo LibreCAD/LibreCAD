@@ -25,7 +25,11 @@
 **********************************************************************/
 
 #include "rs_actiondrawellipseaxis.h"
-#include "rs_snapper.h"
+
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 
 /**
  * Constructor.
@@ -125,7 +129,7 @@ void RS_ActionDrawEllipseAxis::trigger() {
 
 
 
-void RS_ActionDrawEllipseAxis::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawEllipseAxis::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -215,7 +219,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawEllipseAxis::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawEllipseAxis::mouseReleaseEvent(QMouseEvent* e) {
     // Proceed to next status
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
@@ -289,7 +293,7 @@ void RS_ActionDrawEllipseAxis::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         if (RS_DIALOGFACTORY!=NULL) {
@@ -353,8 +357,8 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawEllipseAxis::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawEllipseAxis::getAvailableCommands() {
+    QStringList cmd;
     return cmd;
 }
 

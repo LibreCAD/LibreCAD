@@ -26,6 +26,11 @@
 
 #include "rs_actiondrawarc.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commands.h"
+#include "rs_commandevent.h"
 
 
 RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
