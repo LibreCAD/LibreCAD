@@ -25,7 +25,11 @@
 **********************************************************************/
 
 #include "rs_actiondrawlineangle.h"
-#include "rs_snapper.h"
+
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 
 
 
@@ -114,7 +118,7 @@ void RS_ActionDrawLineAngle::trigger() {
 
 
 
-void RS_ActionDrawLineAngle::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent begin");
 
     if (getStatus()==SetPos) {
@@ -131,7 +135,7 @@ void RS_ActionDrawLineAngle::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawLineAngle::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineAngle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         if (getStatus()==SetPos) {
             RS_CoordinateEvent ce(snapPoint(e));
@@ -184,7 +188,7 @@ void RS_ActionDrawLineAngle::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawLineAngle::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
@@ -236,8 +240,8 @@ void RS_ActionDrawLineAngle::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawLineAngle::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawLineAngle::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetPos:
