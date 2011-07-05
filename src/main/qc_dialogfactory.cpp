@@ -27,7 +27,7 @@
 #include "qc_dialogfactory.h"
 
 #include "qc_applicationwindow.h"
-
+#include "rs_blocklist.h"
 
 
 /**

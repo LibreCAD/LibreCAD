@@ -188,7 +188,7 @@ public:
      *         which contains the file name or an empty string if
      *         the user cancels the dialog.
      */
-    //virtual RS_String requestFileSaveAsDialog() = 0;
+    //virtual QString requestFileSaveAsDialog() = 0;
 
     /**
      * This virtual method must be overwritten and must provide
@@ -199,7 +199,7 @@ public:
      *         which contains the file name or an empty string if
      *         the user cancels the dialog.
      */
-    //virtual RS_String requestFileOpenDialog() = 0;
+    //virtual QString requestFileOpenDialog() = 0;
 	
     /**
      * This virtual method must be overwritten and must provide
