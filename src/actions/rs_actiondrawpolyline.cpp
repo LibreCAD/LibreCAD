@@ -26,6 +26,11 @@
 
 #include "rs_actiondrawpolyline.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commands.h"
+#include "rs_commandevent.h"
 
 
 RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
