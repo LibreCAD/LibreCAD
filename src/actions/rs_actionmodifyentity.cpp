@@ -26,7 +26,9 @@
 
 #include "rs_actionmodifyentity.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 
 
@@ -79,7 +81,7 @@ void RS_ActionModifyEntity::trigger() {
 
 
 
-void RS_ActionModifyEntity::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionModifyEntity::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {

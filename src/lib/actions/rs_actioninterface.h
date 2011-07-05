@@ -31,7 +31,6 @@
 #include <QKeyEvent>
 
 #include "rs_snapper.h"
-#include "rs_string.h" //RLZ removeme
 #include "rs_stringlist.h" //RLZ removeme
 #include "rs_mouseevent.h" //RLZ removeme
 #include "rs_keyevent.h" //RLZ removeme

@@ -26,7 +26,10 @@
 
 #include "rs_actionmodifybevel.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 #include "rs_information.h"
 
 
@@ -82,7 +85,7 @@ void RS_ActionModifyBevel::trigger() {
 
 
 
-void RS_ActionModifyBevel::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent begin");
 
     RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
@@ -110,7 +113,7 @@ void RS_ActionModifyBevel::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionModifyBevel::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionModifyBevel::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetEntity1:
@@ -138,7 +141,7 @@ void RS_ActionModifyBevel::mouseReleaseEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
@@ -213,8 +216,8 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionModifyBevel::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionModifyBevel::getAvailableCommands() {
+    QStringList cmd;
     switch (getStatus()) {
     case SetEntity1:
     case SetEntity2:
