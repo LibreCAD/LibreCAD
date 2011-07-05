@@ -26,10 +26,10 @@
 
 #include "rs_actionlibraryinsert.h"
 
-#include "rs_creation.h"
-#include "rs_commands.h"
-#include "rs_modification.h"
-
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 
 
 /**
@@ -71,7 +71,7 @@ void RS_ActionLibraryInsert::init(int status) {
 
 
 
-void RS_ActionLibraryInsert::setFile(const RS_String& file) {
+void RS_ActionLibraryInsert::setFile(const QString& file) {
     data.file = file;
 
     if (!prev.open(file, RS2::FormatUnknown)) {
@@ -108,7 +108,7 @@ void RS_ActionLibraryInsert::trigger() {
 }
 
 
-void RS_ActionLibraryInsert::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case SetTargetPoint:
         data.insertionPoint = snapPoint(e);
@@ -141,7 +141,7 @@ void RS_ActionLibraryInsert::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionLibraryInsert::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionLibraryInsert::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -164,7 +164,7 @@ void RS_ActionLibraryInsert::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionLibraryInsert::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
@@ -218,8 +218,8 @@ void RS_ActionLibraryInsert::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionLibraryInsert::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionLibraryInsert::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetTargetPoint:
