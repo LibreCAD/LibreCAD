@@ -26,7 +26,10 @@
 
 #include "rs_actionmodifytrim.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_modification.h"
 
 
 /**
@@ -105,7 +108,7 @@ void RS_ActionModifyTrim::trigger() {
 
 
 
-void RS_ActionModifyTrim::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent begin");
 
     RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
@@ -131,7 +134,7 @@ void RS_ActionModifyTrim::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionModifyTrim::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionModifyTrim::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
 
         RS_Vector mouse = graphicView->toGraph(e->x(), e->y());

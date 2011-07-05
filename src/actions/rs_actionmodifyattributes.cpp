@@ -26,9 +26,11 @@
 
 #include "rs_actionmodifyattributes.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_graphic.h"
 #include "rs_modification.h"
-#include "rs_snapper.h"
-
 
 
 RS_ActionModifyAttributes::RS_ActionModifyAttributes(
