@@ -26,7 +26,9 @@
 
 #include "rs_actionmodifydeletefree.h"
 
-#include "rs_point.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_polyline.h"
 #include "rs_modification.h"
 
@@ -107,7 +109,7 @@ void RS_ActionModifyDeleteFree::trigger() {
 
 
 
-void RS_ActionModifyDeleteFree::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionModifyDeleteFree::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {
