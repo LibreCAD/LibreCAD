@@ -27,14 +27,7 @@
 #ifndef QG_ACTIONHANDLER_H
 #define QG_ACTIONHANDLER_H
 
-#include <qaction.h>
-#include <q3mainwindow.h>
-#include <qobject.h>
-
-#include "rs_document.h"
-#include <QStringList>
-
-#include "qg_graphicview.h"
+#include "rs_actioninterface.h"
 
 class QG_MainWindowInterface;
 class QG_CadToolBarSnap;
