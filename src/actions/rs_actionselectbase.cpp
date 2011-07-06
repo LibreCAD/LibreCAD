@@ -26,6 +26,7 @@
 
 #include "rs_actionselectbase.h"
 
+#include "rs_graphicview.h"
 
 
 RS_ActionSelectBase::RS_ActionSelectBase(const char* name,
@@ -40,7 +41,7 @@ RS_ActionSelectBase::RS_ActionSelectBase(const char* name,
  * Default behaviour of this method is triggering the predecesing
  * action and finishing this one when the enter key is pressed.
  */
-void RS_ActionSelectBase::keyReleaseEvent(RS_KeyEvent* e) {
+void RS_ActionSelectBase::keyReleaseEvent(QKeyEvent* e) {
     if (e->key()==Qt::Key_Return && predecessor!=NULL) {
         finish();
     }

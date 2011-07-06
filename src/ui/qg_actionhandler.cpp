@@ -26,6 +26,8 @@
 
 #include "qg_actionhandler.h"
 
+#include "rs_dialogfactory.h"
+#include "rs_commandevent.h"
 #include "rs_commands.h"
 
 #include "rs_actionblocksadd.h"

@@ -26,6 +26,10 @@
 
 #include "rs_actionpolylineappend.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commands.h"
 
 
 RS_ActionPolylineAppend::RS_ActionPolylineAppend(RS_EntityContainer& container,
