@@ -1844,14 +1844,7 @@ void QC_ApplicationWindow::slotWindowActivated(QWidget*) {
     } 
 
     // Disable/Enable menu and toolbar items
-if (m!=NULL) {
-    if (m->getDocument()!=NULL) {
-    emit windowsChanged(true);
-    } else {
-    emit windowsChanged(false);
-    }
-}
-//RLZ    emit windowsChanged(m!=NULL && m->getDocument()!=NULL);
+    emit windowsChanged(m!=NULL && m->getDocument()!=NULL);
 //    emit windowsChanged(true);
     RS_DEBUG->print("RVT_PORT emit windowsChanged(true);");
 
