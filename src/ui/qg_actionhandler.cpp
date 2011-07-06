@@ -766,13 +766,13 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 /**
  * @return Available commands of the application or the current action.
  */
-RS_StringList QG_ActionHandler::getAvailableCommands() {
+QStringList QG_ActionHandler::getAvailableCommands() {
     RS_ActionInterface* currentAction = getCurrentAction();
 
     if (currentAction!=NULL) {
         return currentAction->getAvailableCommands();
     } else {
-        RS_StringList cmd;
+        QStringList cmd;
         cmd += "line";
         cmd += "rectangle";
         return cmd;
