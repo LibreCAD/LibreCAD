@@ -110,7 +110,7 @@ void QG_LayerBox::setLayer(RS_Layer& layer) {
 /**
  * Sets the layer shown in the combobox to the given layer.
  */
-void QG_LayerBox::setLayer(RS_String& layer) {
+void QG_LayerBox::setLayer(QString& layer) {
 
     //if (layer.getName()=="ByBlock" && showByBlock) {
     //    setCurrentItem(0);

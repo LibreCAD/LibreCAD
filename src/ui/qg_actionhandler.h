@@ -32,7 +32,7 @@
 #include <qobject.h>
 
 #include "rs_document.h"
-#include "rs_stringlist.h"
+#include <QStringList>
 
 #include "qg_graphicview.h"
 
@@ -58,7 +58,7 @@ public:
 	
 	bool keycode(const QString& code);
 	bool command(const QString& cmd);
-	RS_StringList getAvailableCommands();
+        QStringList getAvailableCommands();
 
 public slots:
     /*void slotFileNew();*/

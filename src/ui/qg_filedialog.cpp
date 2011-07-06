@@ -31,7 +31,6 @@
 #include <qfiledialog.h>
 #include <qmessagebox.h>
 
-#include "rs_string.h"
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "rs_graphic.h"
@@ -47,14 +46,14 @@
  * @return File name with path and extension to determine the file type
  *         or an empty string if the dialog was cancelled.
  */
-RS_String QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
+QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     // read default settings:
     RS_SETTINGS->beginGroup("/Paths");
-    RS_String defDir = RS_SETTINGS->readEntry("/Save",
+    QString defDir = RS_SETTINGS->readEntry("/Save",
                                               RS_SYSTEM->getHomeDir());
-    RS_String defFilter = RS_SETTINGS->readEntry("/SaveFilter",
+    QString defFilter = RS_SETTINGS->readEntry("/SaveFilter",
                                                  "Drawing Exchange DXF 2000 (*.dxf)");
-    //RS_String defFilter = "Drawing Exchange (*.dxf)";
+    //QString defFilter = "Drawing Exchange (*.dxf)";
     RS_SETTINGS->endGroup();
 
     // prepare file save as dialog:
@@ -62,7 +61,7 @@ RS_String QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type)
     QStringList filters;
     bool done = false;
     bool cancel = false;
-    RS_String fn = "";
+    QString fn = "";
 
     filters.append("Drawing Exchange DXF 2000 (*.dxf)");
     filters.append("Drawing Exchange DXF R12 (*.dxf)");
@@ -151,30 +150,30 @@ RS_String QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type)
  * @return File name with path and extension to determine the file type
  *         or an empty string if the dialog was cancelled.
  */
-RS_String QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
+QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
     RS_DEBUG->print("QG_FileDialog::getOpenFileName");
 
     // read default settings:
     RS_SETTINGS->beginGroup("/Paths");
-    RS_String defDir = RS_SETTINGS->readEntry("/Open",
+    QString defDir = RS_SETTINGS->readEntry("/Open",
                                               RS_SYSTEM->getHomeDir());
-    //RS_String defFilter = RS_SETTINGS->readEntry("/OpenFilter",
+    //QString defFilter = RS_SETTINGS->readEntry("/OpenFilter",
     //                      "Drawing Exchange (*.dxf *.DXF)");
-    RS_String defFilter = "Drawing Exchange (*.dxf *.DXF)";
+    QString defFilter = "Drawing Exchange (*.dxf *.DXF)";
     RS_SETTINGS->endGroup();
 
     RS_DEBUG->print("defDir: %s", defDir.latin1());
     RS_DEBUG->print("defFilter: %s", defFilter.latin1());
 
-    RS_String fDxf(QObject::tr("Drawing Exchange %1").arg("(*.dxf *.DXF)"));
-    RS_String fDxf1(QObject::tr("QCad 1.x file %1").arg("(*.dxf *.DXF)"));
-    RS_String fCxf(QObject::tr("Font %1").arg("(*.cxf)"));
+    QString fDxf(QObject::tr("Drawing Exchange %1").arg("(*.dxf *.DXF)"));
+    QString fDxf1(QObject::tr("QCad 1.x file %1").arg("(*.dxf *.DXF)"));
+    QString fCxf(QObject::tr("Font %1").arg("(*.cxf)"));
 
     RS_DEBUG->print("fDxf: %s", fDxf.latin1());
     RS_DEBUG->print("fDxf1: %s", fDxf1.latin1());
     RS_DEBUG->print("fCxf: %s", fCxf.latin1());
 
-    RS_String fn = "";
+    QString fn = "";
     bool cancel = false;
 
     QFileDialog* fileDlg = new QFileDialog(parent, "File Dialog");

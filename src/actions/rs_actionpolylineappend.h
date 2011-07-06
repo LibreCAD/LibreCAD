@@ -60,7 +60,7 @@ public:
 	
 	virtual void trigger();
 	
-//	virtual void mouseMoveEvent(RS_MouseEvent* e);
+//	virtual void mouseMoveEvent(QMouseEvent* e);
         virtual void mouseReleaseEvent(QMouseEvent* e);
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
