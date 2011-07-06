@@ -26,9 +26,11 @@
 
 #include "rs_actionblockscreate.h"
 
+#include <QAction>
 #include "rs_creation.h"
-#include "rs_insert.h"
-#include "rs_modification.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_graphic.h"
 
 /**
  * Constructor.
@@ -100,7 +102,7 @@ void RS_ActionBlocksCreate::trigger() {
 }
 
 
-void RS_ActionBlocksCreate::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionBlocksCreate::mouseMoveEvent(QMouseEvent* e) {
     snapPoint(e);
 
     switch (getStatus()) {
@@ -124,7 +126,7 @@ void RS_ActionBlocksCreate::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionBlocksCreate::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionBlocksCreate::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);

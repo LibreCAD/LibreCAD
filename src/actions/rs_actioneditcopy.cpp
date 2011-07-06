@@ -25,6 +25,10 @@
 **********************************************************************/
 
 #include "rs_actioneditcopy.h"
+
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_modification.h"
 
 /**
@@ -96,13 +100,13 @@ void RS_ActionEditCopy::trigger() {
 }
 
 
-void RS_ActionEditCopy::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionEditCopy::mouseMoveEvent(QMouseEvent* e) {
     snapPoint(e);
 }
 
 
 
-void RS_ActionEditCopy::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionEditCopy::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);

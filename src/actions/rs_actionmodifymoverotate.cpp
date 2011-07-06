@@ -26,7 +26,10 @@
 
 #include "rs_actionmodifymoverotate.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 
 
 
@@ -65,7 +68,7 @@ void RS_ActionModifyMoveRotate::trigger() {
 
 
 
-void RS_ActionModifyMoveRotate::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionModifyMoveRotate::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyMoveRotate::mouseMoveEvent begin");
 
     if (getStatus()==SetReferencePoint ||
@@ -100,7 +103,7 @@ void RS_ActionModifyMoveRotate::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionModifyMoveRotate::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionModifyMoveRotate::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -143,7 +146,7 @@ void RS_ActionModifyMoveRotate::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionModifyMoveRotate::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
@@ -179,8 +182,8 @@ void RS_ActionModifyMoveRotate::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionModifyMoveRotate::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionModifyMoveRotate::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetReferencePoint:

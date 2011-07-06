@@ -1440,7 +1440,7 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
     // draw grid info:
     //painter->setPen(Qt::white);
     QString info = grid->getInfo();
-    //info = RS_String("%1 / %2")
+    //info = QString("%1 / %2")
     //       .arg(grid->getSpacing())
     //       .arg(grid->getMetaSpacing());
 
