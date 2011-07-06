@@ -26,8 +26,10 @@
 
 #include "rs_actiondrawlinetangent2.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_creation.h"
-#include "rs_snapper.h"
 
 
 
@@ -84,7 +86,7 @@ void RS_ActionDrawLineTangent2::trigger() {
 
 
 
-void RS_ActionDrawLineTangent2::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineTangent2::mouseMoveEvent begin");
 
     RS_Vector mouse(graphicView->toGraphX(e->x()),
@@ -134,7 +136,7 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawLineTangent2::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e) {
 
     if (e->button()==Qt::RightButton) {
         deletePreview();

@@ -28,7 +28,6 @@
 #define RS_ACTIONMODIFYSTRETCH_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
 
 
 /**
@@ -60,8 +59,8 @@ public:
     virtual void trigger();
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void mouseMoveEvent(RS_MouseEvent* e);
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();

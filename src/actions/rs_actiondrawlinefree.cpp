@@ -25,8 +25,10 @@
 **********************************************************************/
 
 #include "rs_actiondrawlinefree.h"
-#include "rs_snapper.h"
-#include "rs_point.h"
+
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 
 
@@ -71,7 +73,7 @@ void RS_ActionDrawLineFree::trigger() {
 
 
 
-void RS_ActionDrawLineFree::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
     if (vertex.valid && polyline!=NULL) {
         RS_Vector v = snapPoint(e);
         RS_Entity* ent = polyline->addVertex(v);
@@ -90,7 +92,7 @@ void RS_ActionDrawLineFree::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawLineFree::mousePressEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineFree::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         vertex = snapPoint(e);
         polyline = new RS_Polyline(container,
@@ -104,7 +106,7 @@ void RS_ActionDrawLineFree::mousePressEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawLineFree::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineFree::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         vertex = RS_Vector(false);
         trigger();

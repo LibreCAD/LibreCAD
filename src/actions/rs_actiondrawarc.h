@@ -97,9 +97,9 @@ protected:
 	/**
 	 * Commands
 	 */
-	/*RS_String cmdReversed;
-	RS_String cmdReversed2;
-	RS_String cmdReversed3;
+        /*QString cmdReversed;
+        QString cmdReversed2;
+        QString cmdReversed3;
 	*/
 };
 

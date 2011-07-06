@@ -26,8 +26,10 @@
 
 #include "rs_actiondrawtext.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_commandevent.h"
 
 
 
@@ -140,7 +142,7 @@ void RS_ActionDrawText::preparePreview() {
 }
 
 
-void RS_ActionDrawText::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawText::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent begin");
 
     if (getStatus()==SetPos) {
@@ -164,7 +166,7 @@ void RS_ActionDrawText::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawText::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawText::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -201,7 +203,7 @@ void RS_ActionDrawText::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawText::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         if (RS_DIALOGFACTORY!=NULL) {
@@ -237,8 +239,8 @@ void RS_ActionDrawText::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawText::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawText::getAvailableCommands() {
+    QStringList cmd;
     if (getStatus()==SetPos) {
         cmd += command("text");
     }
@@ -308,14 +310,14 @@ void RS_ActionDrawText::updateToolBar() {
 
 
 
-void RS_ActionDrawText::setText(const RS_String& t) {
+void RS_ActionDrawText::setText(const QString& t) {
     data.text = t;
     textChanged = true;
 }
 
 
 
-RS_String RS_ActionDrawText::getText() {
+QString RS_ActionDrawText::getText() {
     return data.text;
 }
 

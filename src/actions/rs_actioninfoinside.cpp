@@ -25,8 +25,11 @@
 **********************************************************************/
 
 #include "rs_actioninfoinside.h"
+
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_information.h"
-#include "rs_snapper.h"
 
 
 
@@ -73,7 +76,7 @@ void RS_ActionInfoInside::trigger() {
 
 
 
-void RS_ActionInfoInside::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionInfoInside::mouseMoveEvent(QMouseEvent* /*e*/) {
     //RS_Vector mouse = snapPoint(e);
     //bool onContour = false;
     /*if (RS_Information::isPointInsideContour(mouse, contour, &onContour)) {
@@ -83,7 +86,7 @@ void RS_ActionInfoInside::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionInfoInside::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionInfoInside::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {

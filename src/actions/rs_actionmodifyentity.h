@@ -45,7 +45,7 @@ public:
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
     virtual void trigger();
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseCursor();
 
 private:

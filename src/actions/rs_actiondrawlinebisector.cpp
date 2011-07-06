@@ -26,8 +26,11 @@
 
 #include "rs_actiondrawlinebisector.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 #include "rs_creation.h"
-#include "rs_snapper.h"
 
 
 
@@ -97,7 +100,7 @@ void RS_ActionDrawLineBisector::trigger() {
 
 
 
-void RS_ActionDrawLineBisector::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineBisector::mouseMoveEvent begin");
 
     RS_Vector mouse = RS_Vector(graphicView->toGraphX(e->x()),
@@ -136,7 +139,7 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawLineBisector::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineBisector::mouseReleaseEvent(QMouseEvent* e) {
 
     if (e->button()==Qt::RightButton) {
         deletePreview();
@@ -169,7 +172,7 @@ void RS_ActionDrawLineBisector::mouseReleaseEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionDrawLineBisector::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
@@ -224,8 +227,8 @@ void RS_ActionDrawLineBisector::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawLineBisector::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawLineBisector::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetLine1:
