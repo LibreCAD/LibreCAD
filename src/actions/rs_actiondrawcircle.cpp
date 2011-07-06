@@ -26,7 +26,10 @@
 
 #include "rs_actiondrawcircle.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 
 
 
@@ -94,7 +97,7 @@ void RS_ActionDrawCircle::trigger() {
 
 
 
-void RS_ActionDrawCircle::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawCircle::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -119,7 +122,7 @@ void RS_ActionDrawCircle::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawCircle::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawCircle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -162,7 +165,7 @@ void RS_ActionDrawCircle::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         if (RS_DIALOGFACTORY!=NULL) {
@@ -197,8 +200,8 @@ void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawCircle::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawCircle::getAvailableCommands() {
+    QStringList cmd;
     return cmd;
 }
 

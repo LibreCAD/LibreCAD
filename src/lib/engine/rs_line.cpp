@@ -31,6 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 #include "rs_graphic.h"
+#include "rs_linetypepattern.h"
 
 /**
  * Constructor.
