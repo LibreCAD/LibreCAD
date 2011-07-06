@@ -54,6 +54,7 @@
 
 #include "qg_cadtoolbar.h"
 
+#include "rs_dialogfactory.h"
 #include "qg_dialogfactory.h"
 
 
@@ -313,7 +314,7 @@ void QG_GraphicView::resizeEvent(QResizeEvent* /*e*/) {
 
 
 void QG_GraphicView::emulateMouseMoveEvent() {
-    RS_MouseEvent e(QEvent::MouseMove, QPoint(mx, my),
+    QMouseEvent e(QEvent::MouseMove, QPoint(mx, my),
                     Qt::NoButton, Qt::NoButton);
     //mouseMoveEvent(&e);
 }

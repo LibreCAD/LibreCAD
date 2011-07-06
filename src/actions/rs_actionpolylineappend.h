@@ -65,7 +65,7 @@ public:
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
 //  virtual void commandEvent(RS_CommandEvent* e);
-//	virtual RS_StringList getAvailableCommands();
+//	virtual QStringList getAvailableCommands();
 
 //	virtual void showOptions();
 //	virtual void hideOptions();

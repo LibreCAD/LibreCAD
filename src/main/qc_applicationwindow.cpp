@@ -72,6 +72,7 @@
 #include "qg_selectionwidget.h"
 #include "qg_mousewidget.h"
 
+#include "rs_dialogfactory.h"
 #include "qc_dialogfactory.h"
 #include "main.h"
 #include "doc_plugin_interface.h"
@@ -1843,7 +1844,14 @@ void QC_ApplicationWindow::slotWindowActivated(QWidget*) {
     } 
 
     // Disable/Enable menu and toolbar items
-    emit windowsChanged(m!=NULL && m->getDocument()!=NULL);
+if (m!=NULL) {
+    if (m->getDocument()!=NULL) {
+    emit windowsChanged(true);
+    } else {
+    emit windowsChanged(false);
+    }
+}
+//RLZ    emit windowsChanged(m!=NULL && m->getDocument()!=NULL);
 //    emit windowsChanged(true);
     RS_DEBUG->print("RVT_PORT emit windowsChanged(true);");
 
