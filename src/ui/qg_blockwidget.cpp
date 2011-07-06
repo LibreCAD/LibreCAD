@@ -29,6 +29,8 @@
 #include <QToolTip>
 #include <QToolButton>
 #include <QMenu>
+#include <QBoxLayout>
+#include <QLabel>
 
 /**
  * Constructor.
