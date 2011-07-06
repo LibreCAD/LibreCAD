@@ -30,7 +30,6 @@
 #include <qcombobox.h>
 
 #include "rs_layerlist.h"
-#include "rs_string.h"
 
 /**
  * A combobox for choosing a layer.
@@ -46,7 +45,7 @@ public:
         return currentLayer;
     }
     void setLayer(RS_Layer& layer);
-    void setLayer(RS_String& layer);
+    void setLayer(QString& layer);
 
     void init(RS_LayerList& layerList, bool showByBlock, bool showUnchanged);
 
