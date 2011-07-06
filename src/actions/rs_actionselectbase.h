@@ -43,7 +43,7 @@ public:
                         RS_GraphicView& graphicView);
     ~RS_ActionSelectBase() {}
 
-    virtual void keyReleaseEvent(RS_KeyEvent* e);
+    virtual void keyReleaseEvent(QKeyEvent* e);
     virtual void updateMouseCursor();
 };
 
