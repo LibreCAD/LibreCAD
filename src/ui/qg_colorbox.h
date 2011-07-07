@@ -27,7 +27,7 @@
 #ifndef QG_COLORBOX_H
 #define QG_COLORBOX_H
 
-#include <qcombobox.h>
+#include <QComboBox>
 
 #include "rs_color.h"
 

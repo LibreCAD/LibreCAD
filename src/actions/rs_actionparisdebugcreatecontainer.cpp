@@ -28,6 +28,8 @@
 
 #include "rs_actionparisdebugcreatecontainer.h"
 
+#include "rs_document.h"
+
 /**
  * Constructor.
  */

@@ -26,7 +26,8 @@
 
 #include "rs_actionselect.h"
 
-#include "rs_snapper.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_actionselectsingle.h"
 
 
@@ -48,7 +49,7 @@ void RS_ActionSelect::init(int status) {
 
 
 
-void RS_ActionSelect::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     }

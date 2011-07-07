@@ -26,8 +26,10 @@
 
 #include "rs_actionsnapintersectionmanual.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_information.h"
-#include "rs_snapper.h"
 
 
 /**
@@ -89,7 +91,7 @@ void RS_ActionSnapIntersectionManual::trigger() {
 
 
 
-void RS_ActionSnapIntersectionManual::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionSnapIntersectionManual::mouseMoveEvent begin");
 
     RS_Entity* se = catchEntity(e);
@@ -139,7 +141,7 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionSnapIntersectionManual::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionSnapIntersectionManual::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
 
         RS_Vector mouse = graphicView->toGraph(e->x(), e->y());

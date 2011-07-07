@@ -26,9 +26,9 @@
 
 #include "rs_actionzoomwindow.h"
 
-#include "rs.h"
-#include "rs_snapper.h"
-#include "rs_point.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 
 /**
@@ -88,7 +88,7 @@ void RS_ActionZoomWindow::trigger() {
 
 
 
-void RS_ActionZoomWindow::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionZoomWindow::mouseMoveEvent(QMouseEvent* e) {
     if (getStatus()==1 && v1.valid) {
         v2 = snapPoint(e);
         deletePreview();
@@ -110,7 +110,7 @@ void RS_ActionZoomWindow::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionZoomWindow::mousePressEvent(RS_MouseEvent* e) {
+void RS_ActionZoomWindow::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case 0:
@@ -129,7 +129,7 @@ void RS_ActionZoomWindow::mousePressEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionZoomWindow::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionZoomWindow::mouseReleaseEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionZoomWindow::mouseReleaseEvent()");
 
     if (e->button()==Qt::RightButton) {

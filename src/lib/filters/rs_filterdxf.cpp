@@ -44,7 +44,7 @@
 #include "rs_spline.h"
 #include "rs_system.h"
 
-#include "rs_stringlist.h"
+#include <QStringList>
 
 #include <qtextcodec.h>
 
@@ -1341,7 +1341,7 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         dxf.writeObjects(*dw);
 
         // IMAGEDEF's from images in entities and images in blocks
-        RS_StringList written;
+        QStringList written;
         for (uint i=0; i<graphic->countBlocks(); ++i) {
             RS_Block* block = graphic->blockAt(i);
             for (RS_Entity* e=block->firstEntity(RS2::ResolveAll);
