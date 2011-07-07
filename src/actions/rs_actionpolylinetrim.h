@@ -27,7 +27,6 @@
 #define RS_ACTIONPOLYLINETRIM_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
 
 /**
  * This action class can handle user events to move entities.
@@ -57,8 +56,8 @@ public:
 	
     virtual void trigger();
 	
-    virtual void mouseMoveEvent(RS_MouseEvent* e);
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();

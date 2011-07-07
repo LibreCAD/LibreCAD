@@ -26,6 +26,8 @@
 
 #include "rs_actionselectlayer.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
 #include "rs_selection.h"
 
 
@@ -60,7 +62,7 @@ void RS_ActionSelectLayer::trigger() {
 
 
 
-void RS_ActionSelectLayer::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionSelectLayer::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {

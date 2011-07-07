@@ -26,7 +26,8 @@
 
 #include "rs_actionselectsingle.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
 #include "rs_selection.h"
 
 
@@ -59,14 +60,14 @@ void RS_ActionSelectSingle::trigger() {
 }
 
 
-void RS_ActionSelectSingle::keyPressEvent(RS_KeyEvent* e) {
+void RS_ActionSelectSingle::keyPressEvent(QKeyEvent* e) {
     if (e->key()==Qt::Key_Enter) {
         finish();
     }
 }
 
 
-void RS_ActionSelectSingle::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {

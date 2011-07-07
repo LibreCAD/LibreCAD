@@ -26,6 +26,8 @@
 
 #include "rs_actionzoomauto.h"
 
+#include <QAction>
+#include "rs_graphicview.h"
 
 /**
  * Constructor.
