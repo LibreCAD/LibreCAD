@@ -26,6 +26,11 @@
 
 #include "rs_actionprintpreview.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_graphic.h"
+
 /**
  * Constructor.
  */
@@ -67,7 +72,7 @@ void RS_ActionPrintPreview::trigger() {}
 
 
 
-void RS_ActionPrintPreview::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
 	switch (getStatus()) {
 	case Moving:
 		v2 = graphicView->toGraph(e->x(), e->y());
@@ -89,7 +94,7 @@ void RS_ActionPrintPreview::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionPrintPreview::mousePressEvent(RS_MouseEvent* e) {
+void RS_ActionPrintPreview::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case Neutral:
@@ -104,7 +109,7 @@ void RS_ActionPrintPreview::mousePressEvent(RS_MouseEvent* e) {
 }
 
 
-void RS_ActionPrintPreview::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionPrintPreview::mouseReleaseEvent(QMouseEvent* e) {
 	switch (getStatus()) {
 	case Moving:
 		setStatus(Neutral);
@@ -127,8 +132,8 @@ void RS_ActionPrintPreview::commandEvent(RS_CommandEvent* ) {}
 
 
 
-RS_StringList RS_ActionPrintPreview::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionPrintPreview::getAvailableCommands() {
+    QStringList cmd;
     return cmd;
 }
 

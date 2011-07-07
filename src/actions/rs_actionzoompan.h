@@ -46,9 +46,9 @@ public:
 
     virtual void init(int status=0);
     virtual void trigger();
-    virtual void mouseMoveEvent(RS_MouseEvent* e);
-    virtual void mousePressEvent(RS_MouseEvent* e);
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+    virtual void mousePressEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseCursor();
 
 protected:

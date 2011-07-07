@@ -26,8 +26,9 @@
 
 #include "rs_actionselectintersected.h"
 
-#include "rs.h"
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_selection.h"
 
 
@@ -93,7 +94,7 @@ void RS_ActionSelectIntersected::trigger() {
 
 
 
-void RS_ActionSelectIntersected::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionSelectIntersected::mouseMoveEvent(QMouseEvent* e) {
     if (getStatus()==SetPoint2 && v1.valid) {
         v2 = snapPoint(e);
         deletePreview();
@@ -106,7 +107,7 @@ void RS_ActionSelectIntersected::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionSelectIntersected::mousePressEvent(RS_MouseEvent* e) {
+void RS_ActionSelectIntersected::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetPoint1:
@@ -125,7 +126,7 @@ void RS_ActionSelectIntersected::mousePressEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionSelectIntersected::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionSelectIntersected::mouseReleaseEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionSelectIntersected::mouseReleaseEvent()");
     if (e->button()==Qt::RightButton) {
         if (getStatus()==SetPoint2) {

@@ -158,8 +158,6 @@ HEADERS = \
     src/lib/engine/rs_settings.h \
     src/lib/engine/rs_solid.h \
     src/lib/engine/rs_spline.h \
-    src/lib/engine/rs_string.h \
-    src/lib/engine/rs_stringlist.h \
     src/lib/engine/rs_system.h \
     src/lib/engine/rs_text.h \
     src/lib/engine/rs_undo.h \
@@ -183,10 +181,8 @@ HEADERS = \
     src/lib/gui/rs_eventhandler.h \
     src/lib/gui/rs_graphicview.h \
     src/lib/gui/rs_grid.h \
-    src/lib/gui/rs_keyevent.h \
     src/lib/gui/rs_linetypepattern.h \
     src/lib/gui/rs_mainwindowinterface.h \
-    src/lib/gui/rs_mouseevent.h \
     src/lib/gui/rs_painter.h \
     src/lib/gui/rs_painterqt.h \
     src/lib/gui/rs_staticgraphicview.h \

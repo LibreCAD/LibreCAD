@@ -31,15 +31,6 @@
 #include <QKeyEvent>
 
 #include "rs_snapper.h"
-#include "rs_stringlist.h" //RLZ removeme
-#include "rs_mouseevent.h" //RLZ removeme
-#include "rs_keyevent.h" //RLZ removeme
-#include "rs_dialogfactory.h" //RLZ removeme
-#include "rs_graphicview.h" //RLZ removeme
-#include "rs_graphic.h" //RLZ removeme
-#include "rs_commands.h" //RLZ removeme
-#include "rs_commandevent.h" //RLZ removeme
-#include <QAction> //RLZ removeme
 
 class RS_CommandEvent;
 
