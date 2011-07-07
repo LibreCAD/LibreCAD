@@ -34,7 +34,7 @@
 #include "rs_utility.h"
 #include "rs_system.h"
 #include "rs_block.h"
-#include "rs_stringlist.h"
+#include <QStringList>
 
 
 /**
@@ -144,9 +144,9 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         RS_DEBUG->print("001");
         QString ns = g.getVariableString("Names", "");
         if (!ns.isEmpty()) {
-            RS_StringList names = RS_StringList::split(',', ns);
+            QStringList names = QStringList::split(',', ns);
             RS_DEBUG->print("002");
-            for (RS_StringList::Iterator it = names.begin(); it!=names.end(); ++it) {
+            for (QStringList::Iterator it = names.begin(); it!=names.end(); ++it) {
                 fprintf(fp, "# Name:              %s\n",
                         (const char*)((*it).local8Bit()));
             }
@@ -172,12 +172,12 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         QString sa = g.getVariableString("Authors", "");
         RS_DEBUG->print("authors: %s", (const char*)sa.local8Bit());
         if (!sa.isEmpty()) {
-            RS_StringList authors = RS_StringList::split(',', sa);
+            QStringList authors = QStringList::split(',', sa);
             RS_DEBUG->print("006");
             RS_DEBUG->print("count: %d", authors.count());
 
             QString a;
-            for (RS_StringList::Iterator it2 = authors.begin();
+            for (QStringList::Iterator it2 = authors.begin();
                     it2!=authors.end(); ++it2) {
 
                 RS_DEBUG->print("006a");

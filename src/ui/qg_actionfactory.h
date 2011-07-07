@@ -27,13 +27,9 @@
 #ifndef QG_ACTIONFACTORY_H
 #define QG_ACTIONFACTORY_H
 
-#include <qaction.h>
-#include <qobject.h>
-
-#include "rs.h"
+#include <QAction>
 
 #include "qg_actionhandler.h"
-#include "qg_mainwindowinterface.h"
 
 /**
  * This class can store recent files in a list.

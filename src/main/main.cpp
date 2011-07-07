@@ -107,9 +107,9 @@ int main(int argc, char** argv) {
         // parse command line arguments that might not need a launched program:
         QStringList fileList = handleArgs(argc, argv);
 
-        RS_String lang;
-        RS_String langCmd;
-        RS_String unit;
+        QString lang;
+        QString langCmd;
+        QString unit;
 
         RS_SETTINGS->beginGroup("/Defaults");
 #ifndef QC_PREDEFINED_UNIT

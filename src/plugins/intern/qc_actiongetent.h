@@ -58,13 +58,13 @@ public:
 
 /*    virtual void init(int status=0);
 	
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
 	
     virtual void updateMouseCursor();
     virtual void updateToolBar();*/
 
     virtual void trigger();
-//    virtual void keyPressEvent(RS_KeyEvent* e);
+//    virtual void keyPressEvent(QKeyEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseCursor();
 

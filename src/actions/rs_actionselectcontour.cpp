@@ -26,8 +26,11 @@
 
 #include "rs_actionselectcontour.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_selection.h"
-#include "rs_snapper.h"
+#include "rs_selection.h"
 
 
 
@@ -69,7 +72,7 @@ void RS_ActionSelectContour::trigger() {
 
 
 
-void RS_ActionSelectContour::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionSelectContour::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {

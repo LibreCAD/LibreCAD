@@ -27,11 +27,9 @@
 #ifndef QG_FONTBOX_H
 #define QG_FONTBOX_H
 
-#include <qcombobox.h>
+#include <QComboBox>
 
-#include "rs.h"
-#include "rs_font.h"
-#include "rs_fontlist.h"
+class RS_Font;
 
 /**
  * A combobox for choosing a font name.
@@ -40,7 +38,7 @@ class QG_FontBox: public QComboBox {
     Q_OBJECT
 
 public:
-    QG_FontBox(QWidget* parent=0, const char* name=0);
+    QG_FontBox(QWidget* parent=0);
     virtual ~QG_FontBox();
 
     RS_Font* getFont() {

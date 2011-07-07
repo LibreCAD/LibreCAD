@@ -25,17 +25,17 @@
 **********************************************************************/
 
 #include "qg_layerbox.h"
-#include "rs_layer.h"
 
-//#include <qpainter.h>
+#include "rs_layer.h"
+#include "rs_layerlist.h"
 
 
 /**
  * Default Constructor. You must call init manually before using 
  * this class.
  */
-QG_LayerBox::QG_LayerBox(QWidget* parent, const char* name)
-        : QComboBox(parent, name) {
+QG_LayerBox::QG_LayerBox(QWidget* parent)
+        : QComboBox(parent) {
 
     showByBlock = false;
 	showUnchanged = false;
@@ -67,22 +67,22 @@ void QG_LayerBox::init(RS_LayerList& layerList,
     this->layerList = &layerList;
 
     if (showUnchanged) {
-        insertItem(tr("- Unchanged -"));
+        addItem(tr("- Unchanged -"));
 	}
 
     for (uint i=0; i<layerList.count(); ++i) {
         RS_Layer* lay = layerList.at(i);
         if (lay!=NULL && (lay->getName()!="ByBlock" || showByBlock)) {
-            insertItem(lay->getName());
+            addItem(lay->getName());
         }
     }
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotLayerChanged(int)));
 
-    setCurrentItem(0);
+    setCurrentIndex(0);
 
-    slotLayerChanged(currentItem());
+    slotLayerChanged(currentIndex());
 }
 
 
@@ -97,11 +97,12 @@ void QG_LayerBox::setLayer(RS_Layer& layer) {
     //    setCurrentItem(0);
     //} else {
 
-    setCurrentText(layer.getName());
+    int i = findText(layer.getName());
+    setCurrentIndex(i);
     //}
 
     //if (currentItem()!=7+(int)showByBlock*2) {
-    slotLayerChanged(currentItem());
+    slotLayerChanged(currentIndex());
     //}
 }
 
@@ -110,16 +111,17 @@ void QG_LayerBox::setLayer(RS_Layer& layer) {
 /**
  * Sets the layer shown in the combobox to the given layer.
  */
-void QG_LayerBox::setLayer(RS_String& layer) {
+void QG_LayerBox::setLayer(QString& layer) {
 
     //if (layer.getName()=="ByBlock" && showByBlock) {
     //    setCurrentItem(0);
     //} else {
-    setCurrentText(layer);
+    int i = findText(layer);
+    setCurrentIndex(i);
     //}
 
     //if (currentItem()!=7+(int)showByBlock*2) {
-    slotLayerChanged(currentItem());
+    slotLayerChanged(currentIndex());
     //}
 }
 
@@ -141,7 +143,7 @@ void QG_LayerBox::slotLayerChanged(int index) {
 		unchanged = false;
 	}
 
-    currentLayer = layerList->find(text(index));
+    currentLayer = layerList->find(itemText(index));
 
     //printf("Current color is (%d): %s\n",
     //       index, currentLayer.name().latin1());

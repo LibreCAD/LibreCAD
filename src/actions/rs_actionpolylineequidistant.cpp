@@ -25,8 +25,11 @@
 **********************************************************************/
 
 #include "rs_actionpolylineequidistant.h"
+
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_polyline.h"
-#include "rs_snapper.h"
 #include "rs_information.h"
 
 RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(RS_EntityContainer& container,
@@ -172,7 +175,7 @@ void RS_ActionPolylineEquidistant::trigger() {
 
 
 
-void RS_ActionPolylineEquidistant::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent* e) {
 	RS_DEBUG->print("RS_ActionPolylineEquidistant::mouseMoveEvent begin");
 
 	switch (getStatus()) {
@@ -188,7 +191,7 @@ void RS_ActionPolylineEquidistant::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionPolylineEquidistant::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionPolylineEquidistant::mouseReleaseEvent(QMouseEvent* e) {
         if (e->button()==Qt::LeftButton) {
 		switch (getStatus()) {
 		case ChooseEntity:
