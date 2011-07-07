@@ -27,9 +27,10 @@
 #ifndef QG_LAYERBOX_H
 #define QG_LAYERBOX_H
 
-#include <qcombobox.h>
+#include <QComboBox>
 
-#include "rs_layerlist.h"
+class RS_Layer;
+class RS_LayerList;
 
 /**
  * A combobox for choosing a layer.
@@ -38,7 +39,7 @@ class QG_LayerBox: public QComboBox {
     Q_OBJECT
 
 public:
-    QG_LayerBox(QWidget* parent=0, const char* name=0);
+    QG_LayerBox(QWidget* parent=0);
     virtual ~QG_LayerBox();
 
     RS_Layer* getLayer() {
