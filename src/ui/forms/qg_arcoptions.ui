@@ -25,14 +25,20 @@
   <property name="windowTitle">
    <string>Arc Options</string>
   </property>
-  <widget class="Q3ButtonGroup" name="buttonGroup1">
+  <widget class="QGroupBox" name="buttonGroup1">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>78</width>
-     <height>19</height>
+     <width>76</width>
+     <height>23</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
    </property>
    <property name="title">
     <string/>
@@ -40,7 +46,7 @@
    <property name="flat">
     <bool>true</bool>
    </property>
-   <property name="lineWidth">
+   <property name="lineWidth" stdset="0">
     <number>0</number>
    </property>
    <widget class="QRadioButton" name="rbNeg">
@@ -79,7 +85,7 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset resource="../../res/extui/extui.qrc">
+     <iconset resource="../../../res/extui/extui.qrc">
       <normaloff>:/extui/dirneg.png</normaloff>:/extui/dirneg.png</iconset>
     </property>
     <property name="checked">
@@ -111,24 +117,6 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Q3ButtonGroup</class>
-   <extends>Q3GroupBox</extends>
-   <header>Qt3Support/Q3ButtonGroup</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
- <includes>
-  <include location="local">rs_arc.h</include>
-  <include location="local">rs_actiondrawarc.h</include>
- </includes>
  <resources>
   <include location="../../../res/extui/extui.qrc"/>
  </resources>
