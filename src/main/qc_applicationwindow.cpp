@@ -3995,7 +3995,8 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
     QTime now = QTime::currentTime();
     bool actionProcessed=false;
     doubleCharacters << e->key();
-    doubleCharacters=doubleCharacters.mid(doubleCharacters.size()-2,2);
+    if (doubleCharacters.size()>2)
+        doubleCharacters=doubleCharacters.mid(doubleCharacters.size()-2,2);
     if (ts.msecsTo(now)<2000) {
 
         QString code="";
