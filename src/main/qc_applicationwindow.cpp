@@ -38,7 +38,7 @@
 #include <fstream>
 
 #include <QPrinter>
-#include <QPrintDialog>
+#include <QPRintDialog>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTimer>
@@ -2633,8 +2633,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
 				workspace->addWindow(w);
 				w->setWindowState(Qt::WindowMaximized);
                 parent->addChildWindow(w);
-                //connect(w, SIGNAL(signalClosing()),
-                //        this, SLOT(slotFileClosing()));
+                connect(w, SIGNAL(signalClosing()),
+                         this, SLOT(slotFileClose()));
 
                 w->setCaption(tr("Print preview for %1").arg(parent->caption()));
                 w->setIcon(qPixmapFromMimeSource("document.png"));
@@ -2899,7 +2899,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
         modules.append(pluginInterface->name());
 
     QString modulesString=tr("None");
-    if (!modules.empty()) {
+    if (modules.empty()==false) {
         modulesString = modules.join(", ");
     }
 
@@ -3996,7 +3996,8 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
     QTime now = QTime::currentTime();
     bool actionProcessed=false;
     doubleCharacters << e->key();
-    doubleCharacters=doubleCharacters.mid(doubleCharacters.size()-2,2);
+    if (doubleCharacters.size()>2)
+        doubleCharacters=doubleCharacters.mid(doubleCharacters.size()-2,2);
     if (ts.msecsTo(now)<2000) {
 
         QString code="";
