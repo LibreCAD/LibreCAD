@@ -25,8 +25,9 @@
 **********************************************************************/
 
 #include "rs_actionzoompan.h"
-#include "rs_snapper.h"
-#include "rs_point.h"
+
+#include <QAction>
+#include "rs_graphicview.h"
 
 
 RS_ActionZoomPan::RS_ActionZoomPan(RS_EntityContainer& container,
@@ -67,7 +68,7 @@ void RS_ActionZoomPan::trigger() {
 
 
 
-void RS_ActionZoomPan::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionZoomPan::mouseMoveEvent(QMouseEvent* e) {
     //v2 = snapPoint(e);
     x2 = e->x();
     y2 = e->y();
@@ -79,7 +80,7 @@ void RS_ActionZoomPan::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionZoomPan::mousePressEvent(RS_MouseEvent* e) {
+void RS_ActionZoomPan::mousePressEvent(QMouseEvent* e) {
 #if QT_VERSION < 0x040700
     if (e->button()==Qt::MidButton ||
 #else
@@ -95,7 +96,7 @@ void RS_ActionZoomPan::mousePressEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionZoomPan::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionZoomPan::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
 #if QT_VERSION < 0x040700

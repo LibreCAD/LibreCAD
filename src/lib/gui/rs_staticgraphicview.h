@@ -28,8 +28,7 @@
 #define RS_STATICGRAPHICVIEW_H
 
 #include "rs_graphicview.h"
-#include "rs_layerlistlistener.h"
-#include "rs_string.h"
+//#include "rs_layerlistlistener.h"
 
 /**
  * This is an implementation of a graphic viewer with a fixed size
@@ -48,7 +47,7 @@ public:
     virtual void setMouseCursor(RS2::CursorType ) {}
 
     virtual void emulateMouseMoveEvent() {}
-	virtual void updateGridStatusWidget(const RS_String& ) {}
+        virtual void updateGridStatusWidget(const QString& ) {}
 
     void paint();
 

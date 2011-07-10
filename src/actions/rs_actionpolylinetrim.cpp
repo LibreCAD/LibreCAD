@@ -25,8 +25,12 @@
 **********************************************************************/
 
 #include "rs_actionpolylinetrim.h"
+
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_modification.h"
 #include "rs_polyline.h"
-#include "rs_snapper.h"
 
 
 
@@ -75,7 +79,7 @@ void RS_ActionPolylineTrim::trigger() {
 
 
 
-void RS_ActionPolylineTrim::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent* e) {
 	RS_DEBUG->print("RS_ActionPolylineTrim::mouseMoveEvent begin");
 
 	switch (getStatus()) {
@@ -96,7 +100,7 @@ void RS_ActionPolylineTrim::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionPolylineTrim::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionPolylineTrim::mouseReleaseEvent(QMouseEvent* e) {
         if (e->button()==Qt::LeftButton) {
 		RS_Vector cPoint;
 		switch (getStatus()) {

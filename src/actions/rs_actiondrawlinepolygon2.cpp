@@ -26,8 +26,11 @@
 
 #include "rs_actiondrawlinepolygon2.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 #include "rs_creation.h"
-#include "rs_snapper.h"
 
 
 
@@ -67,7 +70,7 @@ void RS_ActionDrawLinePolygon2::trigger() {
 
 
 
-void RS_ActionDrawLinePolygon2::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLinePolygon2::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLinePolygon2::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -95,7 +98,7 @@ void RS_ActionDrawLinePolygon2::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawLinePolygon2::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLinePolygon2::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -180,7 +183,7 @@ void RS_ActionDrawLinePolygon2::hideOptions() {
 
 
 void RS_ActionDrawLinePolygon2::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         if (RS_DIALOGFACTORY!=NULL) {
@@ -231,8 +234,8 @@ void RS_ActionDrawLinePolygon2::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawLinePolygon2::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawLinePolygon2::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetCorner1:

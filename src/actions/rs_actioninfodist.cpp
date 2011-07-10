@@ -26,8 +26,9 @@
 
 #include "rs_actioninfodist.h"
 
-#include "rs_snapper.h"
-
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 
 RS_ActionInfoDist::RS_ActionInfoDist(RS_EntityContainer& container,
@@ -66,7 +67,7 @@ void RS_ActionInfoDist::trigger() {
 
 
 
-void RS_ActionInfoDist::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionInfoDist::mouseMoveEvent begin");
 
     if (getStatus()==SetPoint1 ||
@@ -101,7 +102,7 @@ void RS_ActionInfoDist::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionInfoDist::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionInfoDist::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);

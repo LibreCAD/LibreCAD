@@ -27,11 +27,7 @@
 #ifndef QG_COMMANDEDIT_H
 #define QG_COMMANDEDIT_H
 
-#include <qlineedit.h>
-#include <qstringlist.h>
-//Added by qt3to4:
-#include <QFocusEvent>
-#include <QEvent>
+#include <QLineEdit>
 #include <QKeyEvent>
 
 /**
@@ -42,7 +38,7 @@ class QG_CommandEdit: public QLineEdit {
     Q_OBJECT
 
 public:
-    QG_CommandEdit(QWidget* parent=0, const char* name=0);
+    QG_CommandEdit(QWidget* parent=0);
     virtual ~QG_CommandEdit();
 
 protected:

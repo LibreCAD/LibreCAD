@@ -28,7 +28,6 @@
 #define RS_ACTIONMODIFYTRIMAMOUNT_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
 
 
 /**
@@ -62,11 +61,11 @@ public:
 	
     virtual void trigger();
 
-    //virtual void mouseMoveEvent(RS_MouseEvent* e);
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+    //virtual void mouseMoveEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
 	
     virtual void commandEvent(RS_CommandEvent* e);
-	virtual RS_StringList getAvailableCommands();
+        virtual QStringList getAvailableCommands();
 
     virtual void hideOptions();
     virtual void showOptions();
@@ -91,9 +90,9 @@ private:
 	 * Commands
 	 */
 	/*
-	RS_String cmdDistance;
-	RS_String cmdDistance2;
-	RS_String cmdDistance3;
+        QString cmdDistance;
+        QString cmdDistance2;
+        QString cmdDistance3;
 	*/
 };
 

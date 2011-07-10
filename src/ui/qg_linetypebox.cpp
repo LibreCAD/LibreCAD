@@ -25,15 +25,15 @@
 **********************************************************************/
 
 #include "qg_linetypebox.h"
-#include <qpixmap.h>
+
 #include "rs_debug.h"
 
 /**
  * Default Constructor. You must call init manually if you choose
  * to use this constructor.
  */
-QG_LineTypeBox::QG_LineTypeBox(QWidget* parent, const char* name)
-        : QComboBox(parent, name) {
+QG_LineTypeBox::QG_LineTypeBox(QWidget* parent)
+        : QComboBox(parent) {
 
     showByLayer = false;
 	showUnchanged = false;
@@ -48,8 +48,9 @@ QG_LineTypeBox::QG_LineTypeBox(QWidget* parent, const char* name)
  */
 QG_LineTypeBox::QG_LineTypeBox(bool showByLayer, bool showUnchanged, 
 		QWidget* parent, const char* name)
-        : QComboBox(parent, name) {
-	unchanged = false;
+        : QComboBox(parent) {
+    setObjectName(name);
+    unchanged = false;
     init(showByLayer, showUnchanged);
 }
 
@@ -71,39 +72,39 @@ void QG_LineTypeBox::init(bool showByLayer, bool showUnchanged) {
 	this->showUnchanged = showUnchanged;
 
     if (showUnchanged) {
-        insertItem(QPixmap(":ui/linetype00.png"), tr("- Unchanged -"));
+        addItem(QIcon(":ui/linetype00.png"), tr("- Unchanged -"));
 	}
 
     if (showByLayer) {
-        insertItem(QPixmap(":ui/linetype00.png"), tr("By Layer"));
-        insertItem(QPixmap(":ui/linetype00.png"), tr("By Block"));
+        addItem(QIcon(":ui/linetype00.png"), tr("By Layer"));
+        addItem(QIcon(":ui/linetype00.png"), tr("By Block"));
     }
-    insertItem(QPixmap(":ui/linetype00.png"), tr("No Pen"));
-    insertItem(QPixmap(":ui/linetype01.png"), tr("Continuous"));
-    insertItem(QPixmap(":ui/linetype02.png"), tr("Dot"));
-    insertItem(QPixmap(":ui/linetype02.png"), tr("Dot (small)"));
-    insertItem(QPixmap(":ui/linetype02.png"), tr("Dot (large)"));
-    insertItem(QPixmap(":ui/linetype03.png"), tr("Dash"));
-    insertItem(QPixmap(":ui/linetype03.png"), tr("Dash (small)"));
-    insertItem(QPixmap(":ui/linetype03.png"), tr("Dash (large)"));
-    insertItem(QPixmap(":ui/linetype04.png"), tr("Dash Dot"));
-    insertItem(QPixmap(":ui/linetype04.png"), tr("Dash Dot (small)"));
-    insertItem(QPixmap(":ui/linetype04.png"), tr("Dash Dot (large)"));
-    insertItem(QPixmap(":ui/linetype05.png"), tr("Divide"));
-    insertItem(QPixmap(":ui/linetype05.png"), tr("Divide (small)"));
-    insertItem(QPixmap(":ui/linetype05.png"), tr("Divide (large)"));
-    insertItem(QPixmap(":ui/linetype06.png"), tr("Center"));
-    insertItem(QPixmap(":ui/linetype06.png"), tr("Center (small)"));
-    insertItem(QPixmap(":ui/linetype06.png"), tr("Center (large)"));
-    insertItem(QPixmap(":ui/linetype07.png"), tr("Border"));
-    insertItem(QPixmap(":ui/linetype07.png"), tr("Border (small)"));
-    insertItem(QPixmap(":ui/linetype07.png"), tr("Border (large)"));
+    addItem(QIcon(":ui/linetype00.png"), tr("No Pen"));
+    addItem(QIcon(":ui/linetype01.png"), tr("Continuous"));
+    addItem(QIcon(":ui/linetype02.png"), tr("Dot"));
+    addItem(QIcon(":ui/linetype02.png"), tr("Dot (small)"));
+    addItem(QIcon(":ui/linetype02.png"), tr("Dot (large)"));
+    addItem(QIcon(":ui/linetype03.png"), tr("Dash"));
+    addItem(QIcon(":ui/linetype03.png"), tr("Dash (small)"));
+    addItem(QIcon(":ui/linetype03.png"), tr("Dash (large)"));
+    addItem(QIcon(":ui/linetype04.png"), tr("Dash Dot"));
+    addItem(QIcon(":ui/linetype04.png"), tr("Dash Dot (small)"));
+    addItem(QIcon(":ui/linetype04.png"), tr("Dash Dot (large)"));
+    addItem(QIcon(":ui/linetype05.png"), tr("Divide"));
+    addItem(QIcon(":ui/linetype05.png"), tr("Divide (small)"));
+    addItem(QIcon(":ui/linetype05.png"), tr("Divide (large)"));
+    addItem(QIcon(":ui/linetype06.png"), tr("Center"));
+    addItem(QIcon(":ui/linetype06.png"), tr("Center (small)"));
+    addItem(QIcon(":ui/linetype06.png"), tr("Center (large)"));
+    addItem(QIcon(":ui/linetype07.png"), tr("Border"));
+    addItem(QIcon(":ui/linetype07.png"), tr("Border (small)"));
+    addItem(QIcon(":ui/linetype07.png"), tr("Border (large)"));
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotLineTypeChanged(int)));
 
-    setCurrentItem(0);
-    slotLineTypeChanged(currentItem());
+    setCurrentIndex(0);
+    slotLineTypeChanged(currentIndex());
 }
 
 /**
@@ -118,7 +119,7 @@ void QG_LineTypeBox::setLineType(RS2::LineType t) {
     switch (t) {
     case RS2::LineByLayer:
         if (showByLayer) {
-            setCurrentItem(0 + (int)showUnchanged);
+            setCurrentIndex(0 + (int)showUnchanged);
         } else {
         	RS_DEBUG->print(RS_Debug::D_WARNING,
             	"QG_LineTypeBox::setLineType: "
@@ -127,7 +128,7 @@ void QG_LineTypeBox::setLineType(RS2::LineType t) {
         break;
     case RS2::LineByBlock:
         if (showByLayer) {
-            setCurrentItem(1 + (int)showUnchanged);
+            setCurrentIndex(1 + (int)showUnchanged);
         } else {
         	RS_DEBUG->print(RS_Debug::D_WARNING,
             	"QG_LineTypeBox::setLineType: "
@@ -136,74 +137,74 @@ void QG_LineTypeBox::setLineType(RS2::LineType t) {
         break;
 		
 	case RS2::SolidLine:
-		setCurrentItem(1 + offset);
+                setCurrentIndex(1 + offset);
 		break;
 
 	case RS2::DotLine:
-		setCurrentItem(2 + offset);
+                setCurrentIndex(2 + offset);
 		break;
 	case RS2::DotLine2:
-		setCurrentItem(3 + offset);
+                setCurrentIndex(3 + offset);
 		break;
 	case RS2::DotLineX2:
-		setCurrentItem(4 + offset);
+                setCurrentIndex(4 + offset);
 		break;
 
 	case RS2::DashLine:
-		setCurrentItem(5 + offset);
+                setCurrentIndex(5 + offset);
 		break;
 	case RS2::DashLine2:
-		setCurrentItem(6 + offset);
+                setCurrentIndex(6 + offset);
 		break;
 	case RS2::DashLineX2:
-		setCurrentItem(7 + offset);
+                setCurrentIndex(7 + offset);
 		break;
 	
 	case RS2::DashDotLine:
-		setCurrentItem(8 + offset);
+                setCurrentIndex(8 + offset);
 		break;
 	case RS2::DashDotLine2:
-		setCurrentItem(9 + offset);
+                setCurrentIndex(9 + offset);
 		break;
 	case RS2::DashDotLineX2:
-		setCurrentItem(10 + offset);
+                setCurrentIndex(10 + offset);
 		break;
 	
 	case RS2::DivideLine:
-		setCurrentItem(11 + offset);
+                setCurrentIndex(11 + offset);
 		break;
 	case RS2::DivideLine2:
-		setCurrentItem(12 + offset);
+                setCurrentIndex(12 + offset);
 		break;
 	case RS2::DivideLineX2:
-		setCurrentItem(13 + offset);
+                setCurrentIndex(13 + offset);
 		break;
 	
 	case RS2::CenterLine:
-		setCurrentItem(14 + offset);
+                setCurrentIndex(14 + offset);
 		break;
 	case RS2::CenterLine2:
-		setCurrentItem(15 + offset);
+                setCurrentIndex(15 + offset);
 		break;
 	case RS2::CenterLineX2:
-		setCurrentItem(16 + offset);
+                setCurrentIndex(16 + offset);
 		break;
 	
 	case RS2::BorderLine:
-		setCurrentItem(17 + offset);
+                setCurrentIndex(17 + offset);
 		break;
 	case RS2::BorderLine2:
-		setCurrentItem(18 + offset);
+                setCurrentIndex(18 + offset);
 		break;
 	case RS2::BorderLineX2:
-		setCurrentItem(19 + offset);
+                setCurrentIndex(19 + offset);
 		break;
 	
     default:
         break;
     }
 
-    slotLineTypeChanged(currentItem());
+    slotLineTypeChanged(currentIndex());
 }
 
 /**
@@ -236,10 +237,11 @@ void QG_LineTypeBox::setLayerLineType(RS2::LineType t) {
             break;
         }
 
-        changeItem(pixmap, tr("By Layer"), 0);
+        setItemIcon(0, QIcon(pixmap));
+        setItemText(0, tr("By Layer"));
 
         // needed for the first time a layer is added:
-        slotLineTypeChanged(currentItem());
+        slotLineTypeChanged(currentIndex());
     }
 }
 
@@ -289,5 +291,6 @@ void QG_LineTypeBox::slotLineTypeChanged(int index) {
 
     emit lineTypeChanged(currentLineType);
 }
+
 
 

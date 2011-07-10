@@ -25,7 +25,11 @@
 **********************************************************************/
 
 #include "rs_actiondrawcircle2p.h"
-#include "rs_snapper.h"
+
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 
 
 
@@ -112,7 +116,7 @@ void RS_ActionDrawCircle2P::preparePreview() {
 }
 
 
-void RS_ActionDrawCircle2P::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
     case SetPoint1:
@@ -137,7 +141,7 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawCircle2P::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawCircle2P::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -177,7 +181,7 @@ void RS_ActionDrawCircle2P::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawCircle2P::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         if (RS_DIALOGFACTORY!=NULL) {
@@ -191,8 +195,8 @@ void RS_ActionDrawCircle2P::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawCircle2P::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawCircle2P::getAvailableCommands() {
+    QStringList cmd;
     return cmd;
 }
 

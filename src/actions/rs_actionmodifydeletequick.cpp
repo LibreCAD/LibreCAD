@@ -26,9 +26,9 @@
 
 #include "rs_actionmodifydeletequick.h"
 
-#include "rs_actionselectsingle.h"
-#include "rs_snapper.h"
-#include "rs_point.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 
 
@@ -83,7 +83,7 @@ void RS_ActionModifyDeleteQuick::trigger() {
 
 
 
-void RS_ActionModifyDeleteQuick::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionModifyDeleteQuick::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {

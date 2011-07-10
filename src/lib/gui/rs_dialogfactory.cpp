@@ -89,7 +89,7 @@ RS_DialogFactoryInterface* RS_DialogFactory::getFactoryObject() {
 
 
 
-void RS_DialogFactory::commandMessage(const RS_String& m) {
+void RS_DialogFactory::commandMessage(const QString& m) {
 	RS_DEBUG->print("RS_DialogFactory::commandMessage");
 
     if (factoryObject!=NULL) {

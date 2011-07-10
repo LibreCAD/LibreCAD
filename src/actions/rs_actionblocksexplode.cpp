@@ -26,6 +26,7 @@
 
 #include "rs_actionblocksexplode.h"
 
+#include <QAction>
 #include "rs_modification.h"
 
 /**

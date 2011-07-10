@@ -26,8 +26,11 @@
 
 #include "rs_actionmodifyround.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 #include "rs_information.h"
-#include "rs_snapper.h"
 
 
 RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
@@ -91,7 +94,7 @@ void RS_ActionModifyRound::trigger() {
 
 
 
-void RS_ActionModifyRound::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyRound::mouseMoveEvent begin");
 
     RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
@@ -146,7 +149,7 @@ void RS_ActionModifyRound::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionModifyRound::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionModifyRound::mouseReleaseEvent(QMouseEvent* e) {
     RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
     RS_Entity* se = catchEntity(e, RS2::ResolveAll);
 
@@ -183,7 +186,7 @@ void RS_ActionModifyRound::mouseReleaseEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         if (RS_DIALOGFACTORY!=NULL) {
@@ -249,8 +252,8 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionModifyRound::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionModifyRound::getAvailableCommands() {
+    QStringList cmd;
     switch (getStatus()) {
     case SetEntity1:
     case SetEntity2:

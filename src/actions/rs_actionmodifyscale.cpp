@@ -26,7 +26,9 @@
 
 #include "rs_actionmodifyscale.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 
 
@@ -63,7 +65,7 @@ void RS_ActionModifyScale::trigger() {
 
 
 
-void RS_ActionModifyScale::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionModifyScale::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyScale::mouseMoveEvent begin");
 
     if (getStatus()==SetReferencePoint) {
@@ -84,7 +86,7 @@ void RS_ActionModifyScale::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionModifyScale::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionModifyScale::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_Vector mouse = snapPoint(e);
 

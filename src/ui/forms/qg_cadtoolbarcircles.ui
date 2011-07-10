@@ -155,9 +155,6 @@
   <tabstop>bCircle3P</tabstop>
   <tabstop>bCircleParallel</tabstop>
  </tabstops>
- <includes>
-  <include location="local">qg_actionhandler.h</include>
- </includes>
  <resources>
   <include location="../../../res/extui/extui.qrc"/>
  </resources>

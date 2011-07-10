@@ -26,15 +26,15 @@
 #ifndef QG_ARCTANGENTIALOPTIONS_H
 #define QG_ARCTANGENTIALOPTIONS_H
 
-#include "rs_actiondrawarctangential.h"
 #include "ui_qg_arctangentialoptions.h"
+#include "rs_actiondrawarctangential.h"
 
 class QG_ArcTangentialOptions : public QWidget, public Ui::QG_ArcTangentialOptions
 {
     Q_OBJECT
 
 public:
-    QG_ArcTangentialOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_ArcTangentialOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_ArcTangentialOptions();
 
 public slots:

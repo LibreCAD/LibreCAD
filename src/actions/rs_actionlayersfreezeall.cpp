@@ -26,6 +26,7 @@
 
 #include "rs_actionlayersfreezeall.h"
 
+#include <QAction>
 #include "rs_graphic.h"
 
 

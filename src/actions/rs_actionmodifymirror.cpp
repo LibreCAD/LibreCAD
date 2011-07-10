@@ -26,7 +26,9 @@
 
 #include "rs_actionmodifymirror.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 
 
@@ -64,7 +66,7 @@ void RS_ActionModifyMirror::trigger() {
 
 
 
-void RS_ActionModifyMirror::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionModifyMirror::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyMirror::mouseMoveEvent begin");
 
     if (getStatus()==SetAxisPoint1 ||
@@ -102,7 +104,7 @@ void RS_ActionModifyMirror::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionModifyMirror::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionModifyMirror::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);

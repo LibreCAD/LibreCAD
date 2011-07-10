@@ -28,12 +28,8 @@
 #include "rs_snapper.h"
 
 #include "rs_dialogfactory.h"
-#include "rs_entitycontainer.h"
-#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_grid.h"
-#include "rs_information.h"
-#include "rs_painter.h"
 #include "rs_settings.h"
 #include "rs_overlayline.h"
 
@@ -90,7 +86,7 @@ void RS_Snapper::finish() {
  * @param e A mouse event.
  * @return The coordinates of the point or an invalid vector.
  */
-RS_Vector RS_Snapper::snapPoint(RS_MouseEvent* e) {
+RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
 	RS_DEBUG->print("RS_Snapper::snapPoint");
 
     snapSpot = RS_Vector(false);
@@ -421,7 +417,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos,
  *        container
  * @return Pointer to the entity or NULL.
  */
-RS_Entity* RS_Snapper::catchEntity(RS_MouseEvent* e,
+RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e,
                                    RS2::ResolveLevel level) {
 
     return catchEntity(

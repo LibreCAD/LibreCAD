@@ -283,7 +283,7 @@ public:
 
 
 
-	//virtual QToolBar* createToolBar(const RS_String& name);
+        //virtual QToolBar* createToolBar(const QString& name);
 	//virtual void addToolBarButton(QToolBar* tb);
 	
     /**
