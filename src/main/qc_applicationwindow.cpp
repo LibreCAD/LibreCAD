@@ -2632,8 +2632,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
 				workspace->addWindow(w);
 				w->setWindowState(Qt::WindowMaximized);
                 parent->addChildWindow(w);
-                //connect(w, SIGNAL(signalClosing()),
-                //        this, SLOT(slotFileClosing()));
+                connect(w, SIGNAL(signalClosing()),
+                         this, SLOT(slotFileClose()));
 
                 w->setCaption(tr("Print preview for %1").arg(parent->caption()));
                 w->setIcon(qPixmapFromMimeSource("document.png"));
