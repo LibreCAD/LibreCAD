@@ -36,7 +36,7 @@ class QG_CadToolBarCircles : public QWidget, public Ui::QG_CadToolBarCircles
     Q_OBJECT
 
 public:
-    QG_CadToolBarCircles(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_CadToolBarCircles(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_CadToolBarCircles();
 
 public slots:

@@ -571,6 +571,7 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/qg_scrollbar.h \
     src/ui/qg_widthbox.h \
     src/ui/forms/qg_arcoptions.h \
+    src/ui/forms/qg_arctangentialoptions.h \
     src/ui/forms/qg_beveloptions.h \
     src/ui/forms/qg_blockdialog.h \
     src/ui/forms/qg_cadtoolbar.h \
@@ -590,7 +591,6 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_cadtoolbararcs.h \
     src/ui/forms/qg_circleoptions.h \
     src/ui/forms/qg_coordinatewidget.h \
-    src/ui/forms/qg_arctangentialoptions.h \
     src/ui/forms/qg_dimensionlabeleditor.h \
     src/ui/forms/qg_dimlinearoptions.h \
     src/ui/forms/qg_dimoptions.h \
@@ -642,24 +642,6 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_textoptions.h \
     src/ui/forms/qg_trimamountoptions.h \
     src/ui/forms/qg_widgetpen.h \
-    src/ui/forms/qg_arcoptions.ui.h \
-    src/ui/forms/qg_arctangentialoptions.ui.h \
-    src/ui/forms/qg_beveloptions.ui.h \
-    src/ui/forms/qg_blockdialog.ui.h \
-    src/ui/forms/qg_cadtoolbar.ui.h \
-    src/ui/forms/qg_cadtoolbararcs.ui.h \
-    src/ui/forms/qg_cadtoolbarcircles.ui.h \
-    src/ui/forms/qg_cadtoolbardim.ui.h \
-    src/ui/forms/qg_cadtoolbarellipses.ui.h \
-    src/ui/forms/qg_cadtoolbarinfo.ui.h \
-    src/ui/forms/qg_cadtoolbarlines.ui.h \
-    src/ui/forms/qg_cadtoolbarmain.ui.h \
-    src/ui/forms/qg_cadtoolbarmodify.ui.h \
-    src/ui/forms/qg_cadtoolbarpoints.ui.h \
-    src/ui/forms/qg_cadtoolbarpolylines.ui.h \
-    src/ui/forms/qg_cadtoolbarselect.ui.h \
-    src/ui/forms/qg_cadtoolbarsnap.ui.h \
-    src/ui/forms/qg_cadtoolbarsplines.ui.h \
     src/ui/forms/qg_circleoptions.ui.h \
     src/ui/forms/qg_commandwidget.ui.h \
     src/ui/forms/qg_coordinatewidget.ui.h \
