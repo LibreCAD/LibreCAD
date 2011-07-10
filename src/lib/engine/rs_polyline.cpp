@@ -258,6 +258,7 @@ void RS_Polyline::endPolyline() {
             //data.endpoint = data.startpoint;
         }
     }
+    calculateBorders();
 }
 	
 	
@@ -294,7 +295,7 @@ void RS_Polyline::updateEndpoints() {
 	if (e2!=NULL && e2->isAtomic()) {
 		RS_Vector v = ((RS_AtomicEntity*)e2)->getEndpoint();
 		setEndpoint(v);
-	}
+    }
 }
 
 
