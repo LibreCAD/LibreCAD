@@ -2949,16 +2949,14 @@ RS_String RS_FilterDXF::toDxfString(const RS_String& string) {
 RS_String RS_FilterDXF::toNativeString(const char* data, const QString& encoding) {
     RS_String res = QString(data);
 
-    // If the given string doesn't contain any unicode characters, we pass the string
-    // Through a textcoder, if that is possible, to convert the string to unicode
-    // We try to use the DWGCODEPAGE if it's available, else we just return the string and assume it's latin1
+    /*	- If the given string doesn't contain any unicode characters, we pass
+     *	  the string through a textcoder.
+     *	--------------------------------------------------------------------- */
     if (!res.contains("\\U+")) {
         QTextCodec *codec = QTextCodec::codecForName(encoding);
         if (codec)
             res = codec->toUnicode(data);
-        return res;
     }
-
 
     // Line feed:
     res = res.replace(RS_RegExp("\\\\P"), "\n");
