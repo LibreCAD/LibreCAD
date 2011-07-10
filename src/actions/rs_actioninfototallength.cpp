@@ -26,11 +26,8 @@
 
 #include "rs_actioninfototallength.h"
 
-#include "rs_actionselectsingle.h"
-#include "rs_modification.h"
-#include "rs_snapper.h"
-#include "rs_point.h"
-
+#include <QAction>
+#include "rs_dialogfactory.h"
 
 
 RS_ActionInfoTotalLength::RS_ActionInfoTotalLength(RS_EntityContainer& container,

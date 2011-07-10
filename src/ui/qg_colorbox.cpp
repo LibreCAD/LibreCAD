@@ -35,8 +35,10 @@
  * to use this constructor.
  */
 QG_ColorBox::QG_ColorBox(QWidget* parent, const char* name)
-        : QComboBox(false, parent, name) {
+        : QComboBox(parent) {
 
+    setObjectName(name);
+    setEditable ( false );
     showByLayer = false;
     showUnchanged = false;
 	unchanged = false;
@@ -50,9 +52,11 @@ QG_ColorBox::QG_ColorBox(QWidget* parent, const char* name)
  */
 QG_ColorBox::QG_ColorBox(bool showByLayer, bool showUnchanged, 
 	QWidget* parent, const char* name)
-        : QComboBox(parent, name) {
+        : QComboBox(parent) {
 	
-	unchanged = false;
+    setObjectName(name);
+    setEditable ( false );
+    unchanged = false;
     init(showByLayer, showUnchanged);
 }
 
@@ -74,37 +78,37 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     this->showUnchanged = showUnchanged;
 
     if (showUnchanged) {
-                insertItem(QPixmap(":/ui/color00.png"), tr("Unchanged"));
+                addItem(QIcon(":/ui/color00.png"), tr("Unchanged"));
 	}
     if (showByLayer) {
-        insertItem(QPixmap(":/ui/color00.png"), tr("By Layer"));
-        insertItem(QPixmap(":/ui/color00.png"), tr("By Block"));
+        addItem(QIcon(":/ui/color00.png"), tr("By Layer"));
+        addItem(QIcon(":/ui/color00.png"), tr("By Block"));
     }
 
-    insertItem(QPixmap(":/ui/color01.png"), tr("Red"));
-    insertItem(QPixmap(":/ui/color02.png"), tr("Yellow"));
-    insertItem(QPixmap(":/ui/color03.png"), tr("Green"));
-    insertItem(QPixmap(":/ui/color04.png"), tr("Cyan"));
-    insertItem(QPixmap(":/ui/color05.png"), tr("Blue"));
-    insertItem(QPixmap(":/ui/color06.png"), tr("Magenta"));
-    insertItem(QPixmap(":/ui/color07.png"), tr("Black / White"));
-    insertItem(QPixmap(":/ui/color08.png"), tr("Gray"));
-    insertItem(QPixmap(":/ui/color09.png"), tr("Light Gray"));
-    insertItem(QPixmap(":/ui/colorxx.png"), tr("Others.."));
+    addItem(QIcon(":/ui/color01.png"), tr("Red"));
+    addItem(QIcon(":/ui/color02.png"), tr("Yellow"));
+    addItem(QIcon(":/ui/color03.png"), tr("Green"));
+    addItem(QIcon(":/ui/color04.png"), tr("Cyan"));
+    addItem(QIcon(":/ui/color05.png"), tr("Blue"));
+    addItem(QIcon(":/ui/color06.png"), tr("Magenta"));
+    addItem(QIcon(":/ui/color07.png"), tr("Black / White"));
+    addItem(QIcon(":/ui/color08.png"), tr("Gray"));
+    addItem(QIcon(":/ui/color09.png"), tr("Light Gray"));
+    addItem(QIcon(":/ui/colorxx.png"), tr("Others.."));
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotColorChanged(int)));
 
 	if (showUnchanged) {
-        setCurrentItem(0);
+        setCurrentIndex(0);
 	}
     else if (showByLayer) {
-        setCurrentItem(0);
+        setCurrentIndex(0);
     } else {
-        setCurrentItem(6);
+        setCurrentIndex(6);
     }
 
-    slotColorChanged(currentItem());
+    slotColorChanged(currentIndex());
 }
 
 /**
@@ -114,33 +118,33 @@ void QG_ColorBox::setColor(const RS_Color& color) {
     currentColor = color;
 	
     if (color.isByLayer() && showByLayer) {
-        setCurrentItem(0);
+        setCurrentIndex(0);
     } else if (color.isByBlock() && showByLayer) {
-        setCurrentItem(1);
+        setCurrentIndex(1);
     } else if (color==QColor(Qt::red)) {
-        setCurrentItem(0+(int)showByLayer*2 + (int)showUnchanged);
+        setCurrentIndex(0+(int)showByLayer*2 + (int)showUnchanged);
     } else if (color==QColor(Qt::yellow)) {
-        setCurrentItem(1+(int)showByLayer*2 + (int)showUnchanged);
+        setCurrentIndex(1+(int)showByLayer*2 + (int)showUnchanged);
     } else if (color==QColor(Qt::green)) {
-        setCurrentItem(2+(int)showByLayer*2 + (int)showUnchanged);
+        setCurrentIndex(2+(int)showByLayer*2 + (int)showUnchanged);
     } else if (color==QColor(Qt::cyan)) {
-        setCurrentItem(3+(int)showByLayer*2 + (int)showUnchanged);
+        setCurrentIndex(3+(int)showByLayer*2 + (int)showUnchanged);
     } else if (color==QColor(Qt::blue)) {
-        setCurrentItem(4+(int)showByLayer*2 + (int)showUnchanged);
+        setCurrentIndex(4+(int)showByLayer*2 + (int)showUnchanged);
     } else if (color==QColor(Qt::magenta)) {
-        setCurrentItem(5+(int)showByLayer*2 + (int)showUnchanged);
+        setCurrentIndex(5+(int)showByLayer*2 + (int)showUnchanged);
     } else if (color==QColor(Qt::white) || color==QColor(Qt::black)) {
-        setCurrentItem(6+(int)showByLayer*2 + (int)showUnchanged);
+        setCurrentIndex(6+(int)showByLayer*2 + (int)showUnchanged);
     } else if (color==QColor(127,127,127)) {
-        setCurrentItem(7+(int)showByLayer*2 + (int)showUnchanged);
+        setCurrentIndex(7+(int)showByLayer*2 + (int)showUnchanged);
     } else if (color==QColor(191,191,191)) {
-        setCurrentItem(8+(int)showByLayer*2 + (int)showUnchanged);
+        setCurrentIndex(8+(int)showByLayer*2 + (int)showUnchanged);
     } else {
-        setCurrentItem(9+(int)showByLayer*2 + (int)showUnchanged);
+        setCurrentIndex(9+(int)showByLayer*2 + (int)showUnchanged);
     }
 
-    if (currentItem()!=9+(int)showByLayer*2 + (int)showUnchanged) {
-        slotColorChanged(currentItem());
+    if (currentIndex()!=9+(int)showByLayer*2 + (int)showUnchanged) {
+        slotColorChanged(currentIndex());
     }
 }
 
@@ -164,11 +168,12 @@ void QG_ColorBox::setLayerColor(const RS_Color& color) {
             painter.end();
         }
 
-        changeItem(pixmap, tr("By Layer"), 0);
+        setItemIcon(0, QIcon(pixmap));
+        setItemText(0, tr("By Layer"));
 
         // needed for the first time a layer is added:
-        if (currentItem()!=9) {
-            slotColorChanged(currentItem());
+        if (currentIndex()!=9) {
+            slotColorChanged(currentIndex());
         }
     }
 }

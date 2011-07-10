@@ -26,8 +26,9 @@
 
 #include "rs_actionsetrelativezero.h"
 
-#include "rs_snapper.h"
-#include "rs_point.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 
 
@@ -59,13 +60,13 @@ void RS_ActionSetRelativeZero::trigger() {
 
 
 
-void RS_ActionSetRelativeZero::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionSetRelativeZero::mouseMoveEvent(QMouseEvent* e) {
     snapPoint(e);
 }
 
 
 
-void RS_ActionSetRelativeZero::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionSetRelativeZero::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {

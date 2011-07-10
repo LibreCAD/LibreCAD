@@ -70,9 +70,9 @@ RS_Graphic* currentGraphic() { return RS_PYTHON->getGraphic(); }
        creation of new documents, ... */
 
 /* To/From Python string conversion logic for string management */
-namespace RS_String_Python_Conversions {
+namespace QString_Python_Conversions {
     namespace {
-        struct RS_String_to_python_str
+        struct QString_to_python_str
         {
             static PyObject* convert(QString const& s)
             {
@@ -80,9 +80,9 @@ namespace RS_String_Python_Conversions {
             }
         };
 
-        struct RS_String_from_python_str
+        struct QString_from_python_str
         {
-            RS_String_from_python_str()
+            QString_from_python_str()
             {
                 boost::python::converter::registry::push_back(
                     &convertible,
@@ -116,9 +116,9 @@ namespace RS_String_Python_Conversions {
             using namespace boost::python;
 
             boost::python::to_python_converter<
-                QString, RS_String_to_python_str>();
+                QString, QString_to_python_str>();
 
-            RS_String_from_python_str();
+            QString_from_python_str();
         }
     }
 }
@@ -163,7 +163,7 @@ void (RS_Entity::*RS_Entity_setLayer_layer)(RS_Layer*) = &RS_Entity::setLayer;
 BOOST_PYTHON_MODULE(librecad)
 {
     /* Initialization code */
-    RS_String_Python_Conversions::registerConversions();
+    QString_Python_Conversions::registerConversions();
     
     /* Unbound functions */
     

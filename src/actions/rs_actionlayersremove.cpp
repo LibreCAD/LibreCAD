@@ -26,6 +26,8 @@
 
 #include "rs_actionlayersremove.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
 #include "rs_graphic.h"
 
 

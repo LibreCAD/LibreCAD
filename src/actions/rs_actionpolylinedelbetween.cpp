@@ -25,9 +25,12 @@
 **********************************************************************/
 
 #include "rs_actionpolylinedelbetween.h"
-#include "rs_polyline.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_modification.h"
+#include "rs_polyline.h"
 
 
 
@@ -77,7 +80,7 @@ void RS_ActionPolylineDelBetween::trigger() {
 
 
 
-void RS_ActionPolylineDelBetween::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
 	RS_DEBUG->print("RS_ActionPolylineDelBetween::mouseMoveEvent begin");
 
 	switch (getStatus()) {
@@ -100,7 +103,7 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionPolylineDelBetween::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionPolylineDelBetween::mouseReleaseEvent(QMouseEvent* e) {
         if (e->button()==Qt::LeftButton) {
 		switch (getStatus()) {
 		case ChooseSegment:

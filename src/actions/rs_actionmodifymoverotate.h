@@ -65,12 +65,12 @@ public:
 	
     virtual void trigger();
 	
-    virtual void mouseMoveEvent(RS_MouseEvent* e);
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
-	virtual RS_StringList getAvailableCommands();
+        virtual QStringList getAvailableCommands();
 
     virtual void hideOptions();
     virtual void showOptions();
@@ -95,9 +95,9 @@ private:
 	/**
 	 * Commands
 	 */
-	RS_String cmdAngle;
-	RS_String cmdAngle2;
-	RS_String cmdAngle3;
+        QString cmdAngle;
+        QString cmdAngle2;
+        QString cmdAngle3;
 };
 
 #endif
