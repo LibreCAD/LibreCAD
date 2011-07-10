@@ -25,15 +25,14 @@
 **********************************************************************/
 #include "qg_cadtoolbarellipses.h"
 
-#include <qvariant.h>
 #include "qg_cadtoolbar.h"
-#include "qg_cadtoolbarellipses.ui.h"
+
 /*
  *  Constructs a QG_CadToolBarEllipses as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBarEllipses::QG_CadToolBarEllipses(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_CadToolBarEllipses::QG_CadToolBarEllipses(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
@@ -57,3 +56,46 @@ void QG_CadToolBarEllipses::languageChange()
     retranslateUi(this);
 }
 
+void QG_CadToolBarEllipses::init() {
+    actionHandler = NULL;
+    cadToolBar = NULL;
+}
+
+void QG_CadToolBarEllipses::mousePressEvent(QMouseEvent* e) {
+    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
+        cadToolBar->back();
+        e->accept();
+    }
+}
+
+void QG_CadToolBarEllipses::contextMenuEvent(QContextMenuEvent *e) {
+    e->accept();
+}
+
+void QG_CadToolBarEllipses::setCadToolBar(QG_CadToolBar* tb) {
+    cadToolBar = tb;
+    if (tb!=NULL) {
+        actionHandler = tb->getActionHandler();
+    } else {
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                        "QG_CadToolBarEllipses::setCadToolBar(): No valid toolbar set.");
+    }
+}
+
+void QG_CadToolBarEllipses::drawEllipseAxis() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawEllipseAxis();
+    }
+}
+
+void QG_CadToolBarEllipses::drawEllipseArcAxis() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawEllipseArcAxis();
+    }
+}
+
+void QG_CadToolBarEllipses::back() {
+    if (cadToolBar!=NULL) {
+        cadToolBar->back();
+    }
+}

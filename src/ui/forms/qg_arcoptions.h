@@ -26,15 +26,15 @@
 #ifndef QG_ARCOPTIONS_H
 #define QG_ARCOPTIONS_H
 
-#include "rs_actiondrawarc.h"
 #include "ui_qg_arcoptions.h"
+#include "rs_actiondrawarc.h"
 
 class QG_ArcOptions : public QWidget, public Ui::QG_ArcOptions
 {
     Q_OBJECT
 
 public:
-    QG_ArcOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_ArcOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_ArcOptions();
 
 public slots:

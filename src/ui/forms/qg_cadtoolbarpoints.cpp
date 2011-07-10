@@ -25,15 +25,14 @@
 **********************************************************************/
 #include "qg_cadtoolbarpoints.h"
 
-#include <qvariant.h>
 #include "qg_cadtoolbar.h"
-#include "qg_cadtoolbarpoints.ui.h"
+
 /*
  *  Constructs a QG_CadToolBarPoints as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBarPoints::QG_CadToolBarPoints(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_CadToolBarPoints::QG_CadToolBarPoints(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
@@ -57,3 +56,40 @@ void QG_CadToolBarPoints::languageChange()
     retranslateUi(this);
 }
 
+void QG_CadToolBarPoints::init() {
+    actionHandler = NULL;
+    cadToolBar = NULL;
+}
+
+void QG_CadToolBarPoints::mousePressEvent(QMouseEvent* e) {
+    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
+        cadToolBar->back();
+        e->accept();
+    }
+}
+
+void QG_CadToolBarPoints::contextMenuEvent(QContextMenuEvent *e) {
+    e->accept();
+}
+
+void QG_CadToolBarPoints::setCadToolBar(QG_CadToolBar* tb) {
+    cadToolBar = tb;
+    if (tb!=NULL) {
+        actionHandler = tb->getActionHandler();
+    } else {
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                        "QG_CadToolBarPoints::setCadToolBar(): No valid toolbar set.");
+    }
+}
+
+void QG_CadToolBarPoints::drawPoint() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawPoint();
+    }
+}
+
+void QG_CadToolBarPoints::back() {
+    if (cadToolBar!=NULL) {
+        cadToolBar->back();
+    }
+}
