@@ -36,7 +36,7 @@ class QG_CadToolBarDim : public QWidget, public Ui::QG_CadToolBarDim
     Q_OBJECT
 
 public:
-    QG_CadToolBarDim(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_CadToolBarDim(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_CadToolBarDim();
 
 public slots:
