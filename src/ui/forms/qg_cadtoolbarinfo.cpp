@@ -25,15 +25,14 @@
 **********************************************************************/
 #include "qg_cadtoolbarinfo.h"
 
-#include <qvariant.h>
 #include "qg_cadtoolbar.h"
-#include "qg_cadtoolbarinfo.ui.h"
+
 /*
  *  Constructs a QG_CadToolBarInfo as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBarInfo::QG_CadToolBarInfo(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_CadToolBarInfo::QG_CadToolBarInfo(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
@@ -57,3 +56,64 @@ void QG_CadToolBarInfo::languageChange()
     retranslateUi(this);
 }
 
+void QG_CadToolBarInfo::init() {
+    actionHandler = NULL;
+    cadToolBar = NULL;
+}
+
+void QG_CadToolBarInfo::mousePressEvent(QMouseEvent* e) {
+    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
+        cadToolBar->back();
+        e->accept();
+    }
+}
+
+void QG_CadToolBarInfo::contextMenuEvent(QContextMenuEvent *e) {
+    e->accept();
+}
+
+void QG_CadToolBarInfo::setCadToolBar(QG_CadToolBar* tb) {
+    cadToolBar = tb;
+    if (tb!=NULL) {
+        actionHandler = tb->getActionHandler();
+    } else {
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                        "QG_CadToolBarInfo::setCadToolBar(): No valid toolbar set.");
+    }
+}
+
+void QG_CadToolBarInfo::infoDist() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotInfoDist();
+    }
+}
+
+void QG_CadToolBarInfo::infoDist2() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotInfoDist2();
+    }
+}
+
+void QG_CadToolBarInfo::infoAngle() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotInfoAngle();
+    }
+}
+
+void QG_CadToolBarInfo::infoTotalLength() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotInfoTotalLength();
+    }
+}
+
+void QG_CadToolBarInfo::infoArea() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotInfoArea();
+    }
+}
+
+void QG_CadToolBarInfo::back() {
+    if (cadToolBar!=NULL) {
+        cadToolBar->back();
+    }
+}

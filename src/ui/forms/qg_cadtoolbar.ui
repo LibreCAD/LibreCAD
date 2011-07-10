@@ -32,20 +32,4 @@
     </property>
   </widget>
   <layoutdefault spacing="6" margin="11"/>
-  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
-  <includes>
-    <include location="local">qg_cadtoolbararcs.h</include>
-    <include location="local">qg_cadtoolbarcircles.h</include>
-    <include location="local">qg_cadtoolbarmodify.h</include>
-    <include location="local">qg_cadtoolbarellipses.h</include>
-    <include location="local">qg_cadtoolbarlines.h</include>
-    <include location="local">qg_cadtoolbarpoints.h</include>
-    <include location="local">qg_cadtoolbardim.h</include>
-    <include location="local">qg_cadtoolbarsnap.h</include>
-    <include location="local">qg_cadtoolbarselect.h</include>
-    <include location="local">qg_cadtoolbarmain.h</include>
-    <include location="local">qg_cadtoolbarinfo.h</include>
-    <include location="local">qg_cadtoolbarsplines.h</include>
-    <include location="local">qg_cadtoolbarpolylines.h</include>
-  </includes>
 </ui>
