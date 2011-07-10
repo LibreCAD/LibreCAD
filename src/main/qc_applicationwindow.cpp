@@ -1433,11 +1433,13 @@ void QC_ApplicationWindow::initToolBar() {
 
     // CAD toolbar left:
     QToolBar* t = new QToolBar("CAD Tools", this);
-	t->setMinimumSize(59,250);
+    t->setMinimumSize(56,336);
 	QSizePolicy policy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding); 
 	t->setSizePolicy(policy);
 	t->setObjectName ( "CADTB" );
-   // t->setFixedExtentWidth(59);
+    t->setFixedWidth(56);
+    t->setFloatable(false);
+    t->setAllowedAreas(Qt::LeftToolBarArea | Qt::RightToolBarArea);
    // t->setVerticallyStretchable(true);
 	addToolBar(Qt::LeftToolBarArea, t); 
 
@@ -2633,8 +2635,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
 				workspace->addWindow(w);
 				w->setWindowState(Qt::WindowMaximized);
                 parent->addChildWindow(w);
-                //connect(w, SIGNAL(signalClosing()),
-                //        this, SLOT(slotFileClosing()));
+                connect(w, SIGNAL(signalClosing()),
+                         this, SLOT(slotFileClose()));
 
                 w->setCaption(tr("Print preview for %1").arg(parent->caption()));
                 w->setIcon(qPixmapFromMimeSource("document.png"));
