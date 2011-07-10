@@ -68,11 +68,10 @@ protected:
      * Links factory to a widget that can host tool options.
      */
     virtual void setOptionWidget(QToolBar* ow) {
-		RS_DEBUG->print("QG_DialogFactory::setOptionWidget");
+        RS_DEBUG->print("QG_DialogFactory::setOptionWidget");
         optionWidget = ow;
-		RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");
+        RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");
     }
-
 public:
     /**
      * Links this dialog factory to a coordinate widget.
