@@ -28,6 +28,7 @@
 
 class QG_ActionHandler;
 
+#include "rs_actioninterface.h"
 #include "qg_cadtoolbararcs.h"
 #include "qg_cadtoolbarcircles.h"
 #include "qg_cadtoolbardim.h"
