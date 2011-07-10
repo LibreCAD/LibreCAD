@@ -38,7 +38,7 @@
 #include <fstream>
 
 #include <QPrinter>
-#include <QPrintDialog>
+#include <QPRintDialog>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTimer>
@@ -2898,7 +2898,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
         modules.append(pluginInterface->name());
 
     QString modulesString=tr("None");
-    if (!modules.empty()) {
+    if (modules.empty()==false) {
         modulesString = modules.join(", ");
     }
 
@@ -3995,7 +3995,8 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
     QTime now = QTime::currentTime();
     bool actionProcessed=false;
     doubleCharacters << e->key();
-    doubleCharacters=doubleCharacters.mid(doubleCharacters.size()-2,2);
+    if (doubleCharacters.size()>2)
+        doubleCharacters=doubleCharacters.mid(doubleCharacters.size()-1,2);
     if (ts.msecsTo(now)<2000) {
 
         QString code="";

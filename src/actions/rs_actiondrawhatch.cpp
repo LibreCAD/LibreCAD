@@ -126,11 +126,13 @@ void RS_ActionDrawHatch::trigger() {
         if (e->isSelected()) {
             e->setSelected(false);
 			// entity is part of a complex entity (spline, polyline, ..):
-			if (e->getParent()!=NULL && 
-			    (e->getParent()->rtti()==RS2::EntitySpline ||
-				 e->getParent()->rtti()==RS2::EntityPolyline)) {
-				e->getParent()->setSelected(false);
-			}
+            if (e->getParent()!=NULL &&
+// RVT - Don't de-delect the parent EntityPolyline, this is messing up the getFirst and getNext iterators
+//			    (e->getParent()->rtti()==RS2::EntitySpline ||
+//				 e->getParent()->rtti()==RS2::EntityPolyline)) {
+                (e->getParent()->rtti()==RS2::EntitySpline)) {
+                e->getParent()->setSelected(false);
+            }
             RS_Entity* cp = e->clone();
             cp->setPen(RS_Pen(RS2::FlagInvalid));
             cp->reparent(loop);
