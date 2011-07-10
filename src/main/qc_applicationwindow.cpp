@@ -38,7 +38,7 @@
 #include <fstream>
 
 #include <QPrinter>
-#include <QPrintDialog>
+#include <QPRintDialog>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTimer>
@@ -2898,7 +2898,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
         modules.append(pluginInterface->name());
 
     QString modulesString=tr("None");
-    if (!modules.empty()) {
+    if (modules.empty()==false) {
         modulesString = modules.join(", ");
     }
 
