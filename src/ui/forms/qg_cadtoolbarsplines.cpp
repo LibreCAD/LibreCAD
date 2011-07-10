@@ -25,15 +25,14 @@
 **********************************************************************/
 #include "qg_cadtoolbarsplines.h"
 
-#include <qvariant.h>
 #include "qg_cadtoolbar.h"
-#include "qg_cadtoolbarsplines.ui.h"
+
 /*
  *  Constructs a QG_CadToolBarSplines as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBarSplines::QG_CadToolBarSplines(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_CadToolBarSplines::QG_CadToolBarSplines(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
@@ -57,3 +56,40 @@ void QG_CadToolBarSplines::languageChange()
     retranslateUi(this);
 }
 
+void QG_CadToolBarSplines::init() {
+    actionHandler = NULL;
+    cadToolBar = NULL;
+}
+
+void QG_CadToolBarSplines::mousePressEvent(QMouseEvent* e) {
+    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
+        cadToolBar->back();
+        e->accept();
+    }
+}
+
+void QG_CadToolBarSplines::contextMenuEvent(QContextMenuEvent *e) {
+    e->accept();
+}
+
+void QG_CadToolBarSplines::setCadToolBar(QG_CadToolBar* tb) {
+    cadToolBar = tb;
+    if (tb!=NULL) {
+        actionHandler = tb->getActionHandler();
+    } else {
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                        "QG_CadToolBarSplines::setCadToolBar(): No valid toolbar set.");
+    }
+}
+
+void QG_CadToolBarSplines::drawSpline() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawSpline();
+    }
+}
+
+void QG_CadToolBarSplines::back() {
+    if (cadToolBar!=NULL) {
+        cadToolBar->back();
+    }
+}

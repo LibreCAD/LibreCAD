@@ -36,7 +36,7 @@ class QG_CadToolBarEllipses : public QWidget, public Ui::QG_CadToolBarEllipses
     Q_OBJECT
 
 public:
-    QG_CadToolBarEllipses(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_CadToolBarEllipses(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_CadToolBarEllipses();
 
 public slots:

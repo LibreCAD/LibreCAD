@@ -27,6 +27,8 @@
 #define QG_CADTOOLBARSELECT_H
 
 class QG_CadToolBar;
+class QG_ActionHandler;
+class RS_ActionInterface;
 
 #include "ui_qg_cadtoolbarselect.h"
 
@@ -35,7 +37,7 @@ class QG_CadToolBarSelect : public QWidget, public Ui::QG_CadToolBarSelect
     Q_OBJECT
 
 public:
-    QG_CadToolBarSelect(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_CadToolBarSelect(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_CadToolBarSelect();
 
 public slots:

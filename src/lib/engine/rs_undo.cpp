@@ -102,6 +102,8 @@ void RS_Undo::startUndoCycle() {
             do {
                 if (!( l->undoables.isEmpty()) )
                     u = l->undoables.first();
+                else
+                   u = NULL;
                 if (u!=NULL) {
                     // Remove the pointer from _all_ cycles:
                                         for (int i = 0; i < undoList.size(); ++i) {

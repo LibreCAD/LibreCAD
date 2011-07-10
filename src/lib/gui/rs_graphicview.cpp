@@ -27,23 +27,14 @@
 
 #include "rs_graphicview.h"
 
-#include <stdio.h>
-
-#include "rs_actioninterface.h"
-#include "rs_block.h"
+#include "rs_linetypepattern.h"
 #include "rs_eventhandler.h"
 #include "rs_graphic.h"
 #include "rs_grid.h"
-#include "rs_insert.h"
-#include "rs_keyevent.h"
-#include "rs_layer.h"
-#include "rs_line.h"
-#include "rs_mouseevent.h"
 #include "rs_painter.h"
 #include "rs_text.h"
 #include "rs_settings.h"
-#include "rs_solid.h"
-#include "rs_entitycontainer.h"
+#include "rs_dialogfactory.h"
 
 
 
@@ -1449,7 +1440,7 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
     // draw grid info:
     //painter->setPen(Qt::white);
     QString info = grid->getInfo();
-    //info = RS_String("%1 / %2")
+    //info = QString("%1 / %2")
     //       .arg(grid->getSpacing())
     //       .arg(grid->getMetaSpacing());
 

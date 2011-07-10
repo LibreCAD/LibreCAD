@@ -26,9 +26,11 @@
 
 #include "rs_actiondrawimage.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 #include "rs_creation.h"
-#include "rs_commands.h"
-#include "rs_modification.h"
 
 /**
  * Constructor.
@@ -103,7 +105,7 @@ void RS_ActionDrawImage::trigger() {
 }
 
 
-void RS_ActionDrawImage::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case SetTargetPoint:
         data.insertionPoint = snapPoint(e);
@@ -143,7 +145,7 @@ void RS_ActionDrawImage::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawImage::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawImage::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -167,7 +169,7 @@ void RS_ActionDrawImage::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
@@ -221,8 +223,8 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawImage::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawImage::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetTargetPoint:

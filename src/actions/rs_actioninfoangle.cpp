@@ -26,9 +26,10 @@
 
 #include "rs_actioninfoangle.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_information.h"
-#include "rs_snapper.h"
-
 
 
 RS_ActionInfoAngle::RS_ActionInfoAngle(RS_EntityContainer& container,
@@ -85,7 +86,7 @@ void RS_ActionInfoAngle::trigger() {
 
 
 
-void RS_ActionInfoAngle::mouseMoveEvent(RS_MouseEvent* /*e*/) {
+void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent* /*e*/) {
     RS_DEBUG->print("RS_ActionInfoAngle::mouseMoveEvent begin");
 
     switch (getStatus()) {
@@ -104,7 +105,7 @@ void RS_ActionInfoAngle::mouseMoveEvent(RS_MouseEvent* /*e*/) {
 
 
 
-void RS_ActionInfoAngle::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionInfoAngle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
 
         RS_Vector mouse(graphicView->toGraphX(e->x()),
