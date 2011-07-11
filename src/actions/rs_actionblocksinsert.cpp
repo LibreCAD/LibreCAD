@@ -26,6 +26,11 @@
 
 #include "rs_actionblocksinsert.h"
 
+#include <QAction>
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_dialogfactory.h"
+#include "rs_commandevent.h"
 #include "rs_creation.h"
 
 /**

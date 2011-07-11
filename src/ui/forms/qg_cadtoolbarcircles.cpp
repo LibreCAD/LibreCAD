@@ -25,15 +25,14 @@
 **********************************************************************/
 #include "qg_cadtoolbarcircles.h"
 
-#include <qvariant.h>
 #include "qg_cadtoolbar.h"
-#include "qg_cadtoolbarcircles.ui.h"
+
 /*
  *  Constructs a QG_CadToolBarCircles as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBarCircles::QG_CadToolBarCircles(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_CadToolBarCircles::QG_CadToolBarCircles(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
@@ -57,3 +56,64 @@ void QG_CadToolBarCircles::languageChange()
     retranslateUi(this);
 }
 
+void QG_CadToolBarCircles::init() {
+    actionHandler = NULL;
+    cadToolBar = NULL;
+}
+
+void QG_CadToolBarCircles::mousePressEvent(QMouseEvent* e) {
+    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
+        cadToolBar->back();
+        e->accept();
+    }
+}
+
+void QG_CadToolBarCircles::contextMenuEvent(QContextMenuEvent *e) {
+    e->accept();
+}
+
+void QG_CadToolBarCircles::setCadToolBar(QG_CadToolBar* tb) {
+    cadToolBar = tb;
+    if (tb!=NULL) {
+        actionHandler = tb->getActionHandler();
+    } else {
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                        "QG_CadToolBarCircles::setCadToolBar(): No valid toolbar set.");
+    }
+}
+
+void QG_CadToolBarCircles::drawCircle() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawCircle();
+    }
+}
+
+void QG_CadToolBarCircles::drawCircleCR() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawCircleCR();
+    }
+}
+
+void QG_CadToolBarCircles::drawCircle2P() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawCircle2P();
+    }
+}
+
+void QG_CadToolBarCircles::drawCircle3P() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawCircle3P();
+    }
+}
+
+void QG_CadToolBarCircles::drawCircleParallel() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawCircleParallel();
+    }
+}
+
+void QG_CadToolBarCircles::back() {
+    if (cadToolBar!=NULL) {
+        cadToolBar->back();
+    }
+}

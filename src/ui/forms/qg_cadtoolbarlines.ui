@@ -347,9 +347,6 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <includes>
-  <include location="local">qg_actionhandler.h</include>
- </includes>
  <resources>
   <include location="../../../res/extui/extui.qrc"/>
  </resources>

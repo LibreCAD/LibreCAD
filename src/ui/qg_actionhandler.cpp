@@ -26,6 +26,8 @@
 
 #include "qg_actionhandler.h"
 
+#include "rs_dialogfactory.h"
+#include "rs_commandevent.h"
 #include "rs_commands.h"
 
 #include "rs_actionblocksadd.h"
@@ -764,13 +766,13 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 /**
  * @return Available commands of the application or the current action.
  */
-RS_StringList QG_ActionHandler::getAvailableCommands() {
+QStringList QG_ActionHandler::getAvailableCommands() {
     RS_ActionInterface* currentAction = getCurrentAction();
 
     if (currentAction!=NULL) {
         return currentAction->getAvailableCommands();
     } else {
-        RS_StringList cmd;
+        QStringList cmd;
         cmd += "line";
         cmd += "rectangle";
         return cmd;

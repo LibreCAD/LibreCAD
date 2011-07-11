@@ -26,7 +26,10 @@
 
 #include "rs_actionmodifycut.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_modification.h"
 
 
 RS_ActionModifyCut::RS_ActionModifyCut(RS_EntityContainer& container,
@@ -76,7 +79,7 @@ void RS_ActionModifyCut::trigger() {
 
 
 
-void RS_ActionModifyCut::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionModifyCut::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyCut::mouseMoveEvent begin");
 
     switch (getStatus()) {
@@ -95,7 +98,7 @@ void RS_ActionModifyCut::mouseMoveEvent(RS_MouseEvent* e) {
 }
 
 
-void RS_ActionModifyCut::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionModifyCut::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case ChooseCutEntity:

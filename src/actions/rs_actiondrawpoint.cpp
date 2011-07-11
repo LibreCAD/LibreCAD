@@ -25,7 +25,11 @@
 **********************************************************************/
 
 #include "rs_actiondrawpoint.h"
-#include "rs_snapper.h"
+
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 #include "rs_point.h"
 
 
@@ -64,13 +68,13 @@ void RS_ActionDrawPoint::trigger() {
 
 
 
-void RS_ActionDrawPoint::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawPoint::mouseMoveEvent(QMouseEvent* e) {
     snapPoint(e);
 }
 
 
 
-void RS_ActionDrawPoint::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawPoint::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -95,7 +99,7 @@ void RS_ActionDrawPoint::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawPoint::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         if (RS_DIALOGFACTORY!=NULL) {
@@ -108,8 +112,8 @@ void RS_ActionDrawPoint::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawPoint::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawPoint::getAvailableCommands() {
+    QStringList cmd;
     return cmd;
 }
 

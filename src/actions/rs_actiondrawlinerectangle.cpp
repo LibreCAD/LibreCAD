@@ -25,7 +25,11 @@
 **********************************************************************/
 
 #include "rs_actiondrawlinerectangle.h"
-#include "rs_snapper.h"
+
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 
 
 
@@ -98,7 +102,7 @@ void RS_ActionDrawLineRectangle::trigger() {
 
 
 
-void RS_ActionDrawLineRectangle::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineRectangle::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -118,7 +122,7 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(RS_MouseEvent* e) {
 }
 
 
-void RS_ActionDrawLineRectangle::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineRectangle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -166,7 +170,7 @@ void RS_ActionDrawLineRectangle::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawLineRectangle::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         if (RS_DIALOGFACTORY!=NULL) {
@@ -179,8 +183,8 @@ void RS_ActionDrawLineRectangle::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawLineRectangle::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawLineRectangle::getAvailableCommands() {
+    QStringList cmd;
     return cmd;
 }
 
