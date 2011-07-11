@@ -27,7 +27,7 @@
 #ifndef QG_LINETYPEBOX_H
 #define QG_LINETYPEBOX_H
 
-#include <qcombobox.h>
+#include <QComboBox>
 
 #include "rs.h"
 
@@ -38,7 +38,7 @@ class QG_LineTypeBox: public QComboBox {
     Q_OBJECT
 
 public:
-    QG_LineTypeBox(QWidget* parent=0, const char* name=0);
+    QG_LineTypeBox(QWidget* parent=0);
     QG_LineTypeBox(bool showByLayer, bool showUnchanged, 
 		QWidget* parent=0, const char* name=0);
     virtual ~QG_LineTypeBox();

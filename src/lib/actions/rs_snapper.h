@@ -103,7 +103,7 @@ public:
     RS_Vector restrictVertical(RS_Vector coord);
 
     //RS_Entity* catchLeafEntity(const RS_Vector& pos);
-    //RS_Entity* catchLeafEntity(RS_MouseEvent* e);
+    //RS_Entity* catchLeafEntity(QMouseEvent* e);
     RS_Entity* catchEntity(const RS_Vector& pos,
                            RS2::ResolveLevel level=RS2::ResolveNone);
     RS_Entity* catchEntity(QMouseEvent* e,

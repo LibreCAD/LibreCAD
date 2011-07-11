@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include "rs_string.h"
 
 void QG_CoordinateWidget::init() {
     lCoord1->setText("");
@@ -139,16 +138,16 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
         }
     
         // abs / rel coordinates:
-        RS_String absX = RS_Units::formatLinear(x,
+        QString absX = RS_Units::formatLinear(x,
                                                graphic->getUnit(),
                                                format, prec);
-        RS_String absY = RS_Units::formatLinear(y,
+        QString absY = RS_Units::formatLinear(y,
                                                graphic->getUnit(),
                                                format, prec);
-        RS_String relX = RS_Units::formatLinear(rx,
+        QString relX = RS_Units::formatLinear(rx,
                                                graphic->getUnit(),
                                                format, prec);
-        RS_String relY = RS_Units::formatLinear(ry,
+        QString relY = RS_Units::formatLinear(ry,
                                                graphic->getUnit(),
                                                format, prec);
         

@@ -26,10 +26,8 @@
 
 #include "rs_actiondimaligned.h"
 
-#include "rs_snapper.h"
-#include "rs_constructionline.h"
 #include "rs_dialogfactory.h"
-
+#include "rs_graphicview.h"
 
 
 RS_ActionDimension::RS_ActionDimension(const char* name,

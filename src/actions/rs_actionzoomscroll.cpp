@@ -26,6 +26,7 @@
 
 #include "rs_actionzoomscroll.h"
 
+#include "rs_graphicview.h"
 
 
 RS_ActionZoomScroll::RS_ActionZoomScroll(RS2::Direction direction,

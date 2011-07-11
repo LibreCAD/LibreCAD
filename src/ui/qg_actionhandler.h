@@ -27,14 +27,7 @@
 #ifndef QG_ACTIONHANDLER_H
 #define QG_ACTIONHANDLER_H
 
-#include <qaction.h>
-#include <q3mainwindow.h>
-#include <qobject.h>
-
-#include "rs_document.h"
-#include "rs_stringlist.h"
-
-#include "qg_graphicview.h"
+#include "rs_actioninterface.h"
 
 class QG_MainWindowInterface;
 class QG_CadToolBarSnap;
@@ -58,7 +51,7 @@ public:
 	
 	bool keycode(const QString& code);
 	bool command(const QString& cmd);
-	RS_StringList getAvailableCommands();
+        QStringList getAvailableCommands();
 
 public slots:
     /*void slotFileNew();*/

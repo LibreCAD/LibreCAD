@@ -27,10 +27,10 @@
 #ifndef QG_LAYERBOX_H
 #define QG_LAYERBOX_H
 
-#include <qcombobox.h>
+#include <QComboBox>
 
-#include "rs_layerlist.h"
-#include "rs_string.h"
+class RS_Layer;
+class RS_LayerList;
 
 /**
  * A combobox for choosing a layer.
@@ -39,14 +39,14 @@ class QG_LayerBox: public QComboBox {
     Q_OBJECT
 
 public:
-    QG_LayerBox(QWidget* parent=0, const char* name=0);
+    QG_LayerBox(QWidget* parent=0);
     virtual ~QG_LayerBox();
 
     RS_Layer* getLayer() {
         return currentLayer;
     }
     void setLayer(RS_Layer& layer);
-    void setLayer(RS_String& layer);
+    void setLayer(QString& layer);
 
     void init(RS_LayerList& layerList, bool showByBlock, bool showUnchanged);
 

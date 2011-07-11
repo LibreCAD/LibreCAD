@@ -25,7 +25,13 @@
 **********************************************************************/
 
 #include "rs_actiondrawline.h"
+
+#include <QAction>
 #include "rs_actioneditundo.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commands.h"
+#include "rs_commandevent.h"
 
 
 

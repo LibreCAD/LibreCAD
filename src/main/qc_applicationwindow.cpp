@@ -72,6 +72,7 @@
 #include "qg_selectionwidget.h"
 #include "qg_mousewidget.h"
 
+#include "rs_dialogfactory.h"
 #include "qc_dialogfactory.h"
 #include "main.h"
 #include "doc_plugin_interface.h"
@@ -197,7 +198,7 @@ QMenu *QC_ApplicationWindow::findMenu(const QString &searchMenu, const QObjectLi
 void QC_ApplicationWindow::loadPlugins() {
 
     loadedPlugins.clear();
-    RS_StringList lst = RS_SYSTEM->getDirectoryList("plugins");
+    QStringList lst = RS_SYSTEM->getDirectoryList("plugins");
 
     for (int i = 0; i < lst.size(); ++i) {
         QDir pluginsDir(lst.at(i));
@@ -1664,7 +1665,7 @@ void QC_ApplicationWindow::initView() {
  * Implementation from QG_MainWindowInterface.
  * Can be called from scripts to add individual GUI elements.
  */
-/*QToolBar* QC_ApplicationWindow::createToolBar(const RS_String& name) {
+/*QToolBar* QC_ApplicationWindow::createToolBar(const QString& name) {
     QToolBar* tb = new QToolBar(name, this);
 	tb->setLabel(name);
 	return tb;
@@ -2297,8 +2298,8 @@ void QC_ApplicationWindow::slotFileExport() {
 
         // read default settings:
         RS_SETTINGS->beginGroup("/Paths");
-        RS_String defDir = RS_SETTINGS->readEntry("/ExportImage", RS_SYSTEM->getHomeDir());
-        RS_String defFilter = RS_SETTINGS->readEntry("/ExportImageFilter",
+        QString defDir = RS_SETTINGS->readEntry("/ExportImage", RS_SYSTEM->getHomeDir());
+        QString defFilter = RS_SETTINGS->readEntry("/ExportImageFilter",
                                                      QString("%1 (*.%2)").arg(QG_DialogFactory::extToFormat("png")).arg("png"));
         RS_SETTINGS->endGroup();
 
@@ -3018,7 +3019,7 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
             << "<td>UND:" << e->isUndone() << "</td>"
             << "<td>SEL:" << e->isSelected() << "</td>"
             << "<td>TMP:" << e->getFlag(RS2::FlagTemp) << "</td>";
-            RS_String lay = "NULL";
+            QString lay = "NULL";
             if (e->getLayer()!=NULL) {
                 lay = e->getLayer()->getName();
             }
@@ -3306,8 +3307,8 @@ void QC_ApplicationWindow::slotTestDrawFreehand() {
            int posx = (random()%600);
            int posy = (random()%400);
 
-           //RS_MouseEvent rsm1(posx, posy, LEFT);
-        RS_MouseEvent rsm1(QEvent::MouseButtonPress, 
+           //QMouseEvent rsm1(posx, posy, LEFT);
+        QMouseEvent rsm1(QEvent::MouseButtonPress,
                            QPoint(posx,posy), 
                            RS2::LeftButton,
                            RS2::LeftButton);
@@ -3326,9 +3327,9 @@ void QC_ApplicationWindow::slotTestDrawFreehand() {
                posx+=speedx;
                posy+=speedy;
 
-               //RS_MouseEvent rsm2(posx, posy, LEFT);
+               //QMouseEvent rsm2(posx, posy, LEFT);
             
-            RS_MouseEvent rsm2(QEvent::MouseMove, 
+            QMouseEvent rsm2(QEvent::MouseMove,
                            QPoint(posx,posy), 
                            RS2::LeftButton,
                            RS2::LeftButton);
@@ -3817,7 +3818,7 @@ void QC_ApplicationWindow::slotTestUnicode() {
         int col;
         int row;
         QChar uCode;       // e.g. 65 (or 'A')
-        RS_String strCode;   // unicde as string e.g. '[0041] A'
+        QString strCode;   // unicde as string e.g. '[0041] A'
 
         graphic->setAutoUpdateBorders(false);
 

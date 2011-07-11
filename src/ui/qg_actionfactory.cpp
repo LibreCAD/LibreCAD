@@ -245,7 +245,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
 
     case RS2::ActionFilePrintPreview:
 		action = RS_ActionPrintPreview::createGUIAction(id, mw);
-		action->setToggleAction(true);
+                action->setCheckable(true);
         connect(action, SIGNAL(toggled(bool)),
                 obj, SLOT(slotFilePrintPreview(bool)));
         break;

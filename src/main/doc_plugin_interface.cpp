@@ -28,6 +28,7 @@
 #include <QEventLoop>
 #include <QList>
 #include <QInputDialog>
+#include "rs_graphicview.h"
 #include "rs_actioninterface.h"
 #include "rs_actionselect.h"
 #include "rs_text.h"
@@ -562,7 +563,7 @@ void Doc_plugin_interface::addImage(int handle, QPointF *start, QPointF *uvr, QP
     RS_Image* image =
         new RS_Image(
             doc,
-            RS_ImageData(handle /*RS_String(data.ref.c_str()).toInt(NULL, 16)*/,
+            RS_ImageData(handle /*QString(data.ref.c_str()).toInt(NULL, 16)*/,
                          ip, uv, vv,
                          size,
                          name,

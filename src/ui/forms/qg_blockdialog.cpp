@@ -25,9 +25,8 @@
 **********************************************************************/
 #include "qg_blockdialog.h"
 
-#include <qvariant.h>
-#include <qmessagebox.h>
-#include "qg_blockdialog.ui.h"
+#include <QMessageBox>
+
 /*
  *  Constructs a QG_BlockDialog as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -35,9 +34,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_BlockDialog::QG_BlockDialog(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_BlockDialog::QG_BlockDialog(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
 }
@@ -59,3 +59,54 @@ void QG_BlockDialog::languageChange()
     retranslateUi(this);
 }
 
+void QG_BlockDialog::setBlockList(RS_BlockList* l) {
+        RS_DEBUG->print("QG_BlockDialog::setBlockList");
+
+    blockList = l;
+    if (blockList!=NULL) {
+        RS_Block* block = blockList->getActive();
+        if (block!=NULL) {
+            leName->setText(block->getName());
+        } else {
+            RS_DEBUG->print(RS_Debug::D_ERROR,
+                                "QG_BlockDialog::setBlockList: No block active.");
+        }
+    }
+}
+
+RS_BlockData QG_BlockDialog::getBlockData() {
+    /*if (blockList!=NULL) {
+      RS_Block* block = blockList->getActive();
+        if (block!=NULL) {
+           return blockList->rename(block, leName->text().latin1());
+        }
+}
+
+    return false;*/
+
+    return RS_BlockData(leName->text(), RS_Vector(0.0,0.0), false);
+}
+
+void QG_BlockDialog::validate() {
+    QString name = leName->text();
+
+    if (!name.isEmpty()) {
+        if (blockList!=NULL && blockList->find(name)==NULL) {
+            accept();
+        } else {
+            QMessageBox::warning( this, tr("Renaming Block"),
+                                  tr("Could not name block. A block named \"%1\" "
+                                     "already exists.").arg(leName->text()),
+                                  QMessageBox::Ok,
+                                  Qt::NoButton);
+        }
+    }
+    //else {
+    //reject();
+    //}
+}
+
+void QG_BlockDialog::cancel() {
+    leName->setText("");
+    reject();
+}
