@@ -28,22 +28,11 @@
 #ifndef RS_ACTIONINTERFACE_H
 #define RS_ACTIONINTERFACE_H
 
-#include <qobject.h>
-#include <qaction.h>
+#include <QKeyEvent>
 
-#include "rs_entitycontainer.h"
-#include "rs_commandevent.h"
-#include "rs_event.h"
-#include "rs_graphic.h"
-#include "rs_graphicview.h"
-#include "rs_mouseevent.h"
 #include "rs_snapper.h"
-#include "rs_string.h"
-#include "rs_preview.h"
-#include "rs_dialogfactory.h"
-#include "rs_stringlist.h"
 
-#include "rs_commands.h"
+class RS_CommandEvent;
 
 //template<class T> T* instantiate(RS_EntityContainer& container, RS_GraphicView& graphicView) {
 //	return new T(container, graphicView);
@@ -70,7 +59,7 @@ public:
 	
     virtual RS2::ActionType rtti();
 
-    RS_String getName();
+    QString getName();
 
     virtual void init(int status=0);
     virtual void mouseMoveEvent(QMouseEvent*);
@@ -81,7 +70,7 @@ public:
     virtual void keyReleaseEvent(QKeyEvent* e);
     virtual void coordinateEvent(RS_CoordinateEvent*);
     virtual void commandEvent(RS_CommandEvent*);
-    virtual RS_StringList getAvailableCommands();
+    virtual QStringList getAvailableCommands();
     virtual void setStatus(int status);
     virtual int getStatus();
     virtual void trigger();
@@ -96,10 +85,10 @@ public:
     virtual void resume();
     virtual void hideOptions();
     virtual void showOptions();
-    bool checkCommand(const RS_String& cmd, const RS_String& str,
+    bool checkCommand(const QString& cmd, const QString& str,
                              RS2::ActionType action=RS2::ActionNone);
-	RS_String command(const RS_String& cmd);
-	RS_String msgAvailableCommands();
+        QString command(const QString& cmd);
+        QString msgAvailableCommands();
 
 private:
     /**
@@ -115,7 +104,7 @@ private:
 
 protected:
     /** Action name. Used internally for debugging */
-    RS_String name;
+    QString name;
 
     /**
      * This flag is set when the action has terminated and 
@@ -147,24 +136,24 @@ protected:
     /**
      * String prepended to the help text for currently available commands.
      */
-    //static RS_String msgAvailableCommands;
+    //static QString msgAvailableCommands;
 
     /**
      * Command used for showing help for every action.
      */
-    //static RS_String cmdHelp;
+    //static QString cmdHelp;
 	
     /**
      * Command for answering yes to a question.
      */
-    //static RS_String cmdYes;
-    //static RS_String cmdYes2;
+    //static QString cmdYes;
+    //static QString cmdYes2;
 	
      /**
      * Command for answering no to a question.
      */
-    //static RS_String cmdNo;
-    //static RS_String cmdNo2;
+    //static QString cmdNo;
+    //static QString cmdNo2;
 };
 
 

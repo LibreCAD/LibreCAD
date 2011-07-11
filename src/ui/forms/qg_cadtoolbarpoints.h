@@ -27,6 +27,7 @@
 #define QG_CADTOOLBARPOINTS_H
 
 class QG_CadToolBar;
+class QG_ActionHandler;
 
 #include "ui_qg_cadtoolbarpoints.h"
 
@@ -35,7 +36,7 @@ class QG_CadToolBarPoints : public QWidget, public Ui::QG_CadToolBarPoints
     Q_OBJECT
 
 public:
-    QG_CadToolBarPoints(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_CadToolBarPoints(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_CadToolBarPoints();
 
 public slots:

@@ -26,7 +26,10 @@
 
 #include "rs_actionmodifystretch.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_modification.h"
 
 
 
@@ -73,7 +76,7 @@ void RS_ActionModifyStretch::trigger() {
 
 
 
-void RS_ActionModifyStretch::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyStretch::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -138,7 +141,7 @@ void RS_ActionModifyStretch::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionModifyStretch::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionModifyStretch::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);

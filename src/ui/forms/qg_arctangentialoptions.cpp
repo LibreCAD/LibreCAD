@@ -25,15 +25,14 @@
 **********************************************************************/
 #include "qg_arctangentialoptions.h"
 
-#include <qvariant.h>
 #include "rs_settings.h"
-#include "qg_arctangentialoptions.ui.h"
+
 /*
  *  Constructs a QG_ArcTangentialOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_ArcTangentialOptions::QG_ArcTangentialOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_ArcTangentialOptions::QG_ArcTangentialOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
@@ -57,3 +56,53 @@ void QG_ArcTangentialOptions::languageChange()
     retranslateUi(this);
 }
 
+void QG_ArcTangentialOptions::destroy() {
+    RS_SETTINGS->beginGroup("/Draw");
+    RS_SETTINGS->writeEntry("/ArcTangentialRadius", leRadius->text());
+    RS_SETTINGS->endGroup();
+}
+
+void QG_ArcTangentialOptions::setAction(RS_ActionInterface* a, bool update) {
+    if (a!=NULL && a->rtti()==RS2::ActionDrawArcTangential) {
+        action = (RS_ActionDrawArcTangential*)a;
+
+        QString sr;
+        if (update) {
+            sr = QString("%1").arg(action->getRadius());
+        } else {
+            RS_SETTINGS->beginGroup("/Draw");
+            sr = RS_SETTINGS->readEntry("/ArcTangentialRadius", "1.0");
+            RS_SETTINGS->endGroup();
+            action->setRadius(sr.toDouble());
+        }
+        leRadius->setText(sr);
+    } else {
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                        "QG_ArcTangentialOptions::setAction: wrong action type");
+        action = NULL;
+    }
+
+}
+
+
+/*void QG_ArcTangentialOptions::init() {
+    data = NULL;
+    RS_SETTINGS->beginGroup("/Draw");
+    bool reversed = RS_SETTINGS->readNumEntry("/ArcReversed", 0);
+    RS_SETTINGS->endGroup();
+
+    rbNeg->setChecked(reversed);
+}*/
+
+
+
+/*void QG_ArcTangentialOptions::setData(RS_ArcData* d) {
+    data = d;
+    updateDirection(false);
+}*/
+
+void QG_ArcTangentialOptions::updateRadius(const QString& s) {
+    if (action!=NULL) {
+        action->setRadius(RS_Math::eval(s));
+    }
+}

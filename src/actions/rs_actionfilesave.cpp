@@ -26,8 +26,8 @@
 
 #include "rs_actionfilesave.h"
 
+#include <QAction>
 #include "rs_graphic.h"
-
 
 
 RS_ActionFileSave::RS_ActionFileSave(RS_EntityContainer& container,

@@ -26,8 +26,9 @@
 
 #include "rs_actionselectwindow.h"
 
-#include "rs.h"
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_selection.h"
 #include "rs_overlaybox.h"
 
@@ -92,7 +93,7 @@ void RS_ActionSelectWindow::trigger() {
 
 
 
-void RS_ActionSelectWindow::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
     if (getStatus()==SetCorner2 && v1.valid) {
         v2 = snapPoint(e);
         deletePreview();
@@ -126,7 +127,7 @@ void RS_ActionSelectWindow::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionSelectWindow::mousePressEvent(RS_MouseEvent* e) {
+void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetCorner1:
@@ -145,7 +146,7 @@ void RS_ActionSelectWindow::mousePressEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionSelectWindow::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionSelectWindow::mouseReleaseEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionSelectWindow::mouseReleaseEvent()");
 
     if (e->button()==Qt::LeftButton) {

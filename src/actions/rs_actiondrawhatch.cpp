@@ -26,7 +26,8 @@
 
 #include "rs_actiondrawhatch.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
 
@@ -166,7 +167,7 @@ void RS_ActionDrawHatch::trigger() {
 
 
 
-void RS_ActionDrawHatch::mouseMoveEvent(RS_MouseEvent*) {
+void RS_ActionDrawHatch::mouseMoveEvent(QMouseEvent*) {
     RS_DEBUG->print("RS_ActionDrawHatch::mouseMoveEvent begin");
 
     /*if (getStatus()==SetPos) {
@@ -188,7 +189,7 @@ void RS_ActionDrawHatch::mouseMoveEvent(RS_MouseEvent*) {
 
 
 
-void RS_ActionDrawHatch::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawHatch::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_Vector mouse = snapPoint(e);
 

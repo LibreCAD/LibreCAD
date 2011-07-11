@@ -26,7 +26,7 @@
 
 #include "rs_actionfileopen.h"
 
-#include "rs_graphic.h"
+#include <QAction>
 
 
 
@@ -54,7 +54,7 @@ void RS_ActionFileOpen::trigger() {
     // Not supported currently
     RS_DEBUG->print("RS_ActionFileOpen::trigger");
 
-    RS_String fileName; //= RS_DIALOGFACTORY->requestFileOpenDialog();
+    QString fileName; //= RS_DIALOGFACTORY->requestFileOpenDialog();
     if (graphic!=NULL && !fileName.isEmpty()) {
         graphic->open(fileName, );
 }

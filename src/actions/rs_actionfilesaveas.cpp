@@ -26,6 +26,7 @@
 
 #include "rs_actionfilesaveas.h"
 
+#include <QAction>
 #include "rs_graphic.h"
 
 RS_ActionFileSaveAs::RS_ActionFileSaveAs(RS_EntityContainer& container,
@@ -52,7 +53,7 @@ QAction* RS_ActionFileSaveAs::createGUIAction(RS2::ActionType /*type*/, QObject*
 void RS_ActionFileSaveAs::trigger() {
     RS_DEBUG->print("RS_ActionFileSaveAs::trigger");
 
-    RS_String fileName; // = RS_DIALOGFACTORY->requestFileSaveAsDialog();
+    QString fileName; // = RS_DIALOGFACTORY->requestFileSaveAsDialog();
     if (graphic!=NULL && !fileName.isEmpty()) {
         graphic->saveAs(fileName, RS2::FormatUnknown);
     }

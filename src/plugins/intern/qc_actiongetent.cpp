@@ -26,6 +26,7 @@
 
 #include "doc_plugin_interface.h"
 #include "qc_actiongetent.h"
+#include "rs_dialogfactory.h"
 #include "rs_selection.h"
 #include "rs_snapper.h"
 
@@ -66,7 +67,7 @@ void QC_ActionGetEnt::trigger() {
     }
 }
 
-void QC_ActionGetEnt::mouseReleaseEvent(RS_MouseEvent* e) {
+void QC_ActionGetEnt::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {

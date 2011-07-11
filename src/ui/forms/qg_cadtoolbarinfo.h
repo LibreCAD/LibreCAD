@@ -36,7 +36,7 @@ class QG_CadToolBarInfo : public QWidget, public Ui::QG_CadToolBarInfo
     Q_OBJECT
 
 public:
-    QG_CadToolBarInfo(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_CadToolBarInfo(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_CadToolBarInfo();
 
 public slots:

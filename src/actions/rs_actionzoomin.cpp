@@ -26,6 +26,9 @@
 
 #include "rs_actionzoomin.h"
 
+#include <QAction>
+#include "rs_graphicview.h"
+
 
 /**
  * Default constructor.

@@ -26,7 +26,9 @@
 
 #include "rs_actionmodifymove.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 
 
@@ -62,7 +64,7 @@ void RS_ActionModifyMove::trigger() {
 
 
 
-void RS_ActionModifyMove::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyMove::mouseMoveEvent begin");
 
     if (getStatus()==SetReferencePoint ||
@@ -95,7 +97,7 @@ void RS_ActionModifyMove::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionModifyMove::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);

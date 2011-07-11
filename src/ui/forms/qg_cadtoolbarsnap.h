@@ -36,7 +36,7 @@ class QG_CadToolBarSnap : public QWidget, public Ui::QG_CadToolBarSnap
     Q_OBJECT
 
 public:
-    QG_CadToolBarSnap(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_CadToolBarSnap(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_CadToolBarSnap();
 
 public slots:
