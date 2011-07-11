@@ -378,7 +378,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
         // Editing actions:
         //
     case RS2::ActionEditKillAllActions:
-        action = new QAction(tr("&back"), mw);
+        action = new QAction(tr("&Selection pointer"), mw);
 #if QT_VERSION >= 0x040600
         action->setIcon(QIcon::fromTheme("go-previous-view", QIcon(":/actions/back.png")));
 #else
