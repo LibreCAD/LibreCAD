@@ -75,7 +75,7 @@
             </layout>
           </item>
           <item>
-            <widget class="Q3ButtonGroup" name="buttonGroup8">
+            <widget class="QGroupBox" name="buttonGroup8">
               <property name="title">
                 <string>Geometry</string>
               </property>

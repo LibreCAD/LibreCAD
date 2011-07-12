@@ -27,13 +27,14 @@
 #define QG_DLGHATCH_H
 
 #include "ui_qg_dlghatch.h"
+#include "rs_hatch.h"
 
 class QG_DlgHatch : public QDialog, public Ui::QG_DlgHatch
 {
     Q_OBJECT
 
 public:
-    QG_DlgHatch(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgHatch(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgHatch();
 
 public slots:

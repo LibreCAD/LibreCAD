@@ -81,7 +81,7 @@
                 <widget class="QG_DimensionLabelEditor" name="wLabel"/>
               </item>
               <item>
-                <widget class="Q3ButtonGroup" name="bgGeometry">
+                <widget class="QGroupBox" name="bgGeometry">
                   <property name="title">
                     <string>Geometry</string>
                   </property>
