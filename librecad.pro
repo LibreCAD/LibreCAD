@@ -642,11 +642,6 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_textoptions.h \
     src/ui/forms/qg_trimamountoptions.h \
     src/ui/forms/qg_widgetpen.h \
-    src/ui/forms/qg_dlgarc.ui.h \
-    src/ui/forms/qg_dlgattributes.ui.h \
-    src/ui/forms/qg_dlgcircle.ui.h \
-    src/ui/forms/qg_dlgdimension.ui.h \
-    src/ui/forms/qg_dlgdimlinear.ui.h \
     src/ui/forms/qg_dlgellipse.ui.h \
     src/ui/forms/qg_dlghatch.ui.h \
     src/ui/forms/qg_dlgimageoptions.ui.h \
