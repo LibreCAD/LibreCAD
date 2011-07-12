@@ -27,13 +27,14 @@
 #define QG_DLGATTRIBUTES_H
 
 #include "ui_qg_dlgattributes.h"
+#include "rs_modification.h"
 
 class QG_DlgAttributes : public QDialog, public Ui::QG_DlgAttributes
 {
     Q_OBJECT
 
 public:
-    QG_DlgAttributes(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgAttributes(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgAttributes();
 
 public slots:
