@@ -25,15 +25,12 @@
 **********************************************************************/
 #include "qg_dimensionlabeleditor.h"
 
-#include <qvariant.h>
-#include <iostream>
-#include "qg_dimensionlabeleditor.ui.h"
 /*
  *  Constructs a QG_DimensionLabelEditor as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_DimensionLabelEditor::QG_DimensionLabelEditor(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_DimensionLabelEditor::QG_DimensionLabelEditor(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
@@ -56,3 +53,62 @@ void QG_DimensionLabelEditor::languageChange()
     retranslateUi(this);
 }
 
+void QG_DimensionLabelEditor::setLabel(const QString& l) {
+    int i0, i1a, i1b, i2;
+    QString label, tol1, tol2;
+    bool hasDiameter = false;
+
+    label = l;
+
+    if ( !label.isEmpty()) {
+        if (label.at(0)==QChar(0x2205) || label.at(0)==QChar(0xF8)) {
+            hasDiameter = true;
+            bDiameter->setChecked(true);
+        }
+    }
+
+    i0 = l.indexOf("\\S");
+    if (i0>=0) {
+        i1a = l.indexOf("^ ", i0);
+        i1b = i1a+1;
+        if (i1a<0) {
+            i1a = i1b = l.indexOf('^', i0);
+        }
+        if (i1a>=0) {
+            i2 = l.indexOf(';', i1b);
+            label = l.mid(0, i0);
+            tol1 = l.mid(i0+2, i1a-i0-2);
+            tol2 = l.mid(i1b+1, i2-i1b-1);
+        }
+    }
+
+    leLabel->setText(label.mid(hasDiameter));
+    leTol1->setText(tol1);
+    leTol2->setText(tol2);
+}
+
+QString QG_DimensionLabelEditor::getLabel() {
+    QString l = leLabel->text();
+
+    // diameter:
+    if (bDiameter->isChecked()) {
+        if (l.isEmpty()) {
+            l = QString("%1<>").arg(QChar(0x2205));
+        }
+        else {
+            l = QChar(0x2205) + l;
+        }
+    }
+
+    if (leTol1->text().isEmpty() && leTol2->text().isEmpty()) {
+        return l;
+    }
+    else {
+        return l + "\\S" + leTol1->text() +
+            "^ " + leTol2->text() + ";";
+    }
+}
+
+void QG_DimensionLabelEditor::insertSign(const QString& s) {
+    leLabel->insert(s.left(1));
+}
