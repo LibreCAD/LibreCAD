@@ -1433,7 +1433,7 @@ void QC_ApplicationWindow::initToolBar() {
 
     // CAD toolbar left:
     QToolBar* t = new QToolBar("CAD Tools", this);
-    t->setMinimumSize(56,336);
+    t->setMinimumSize(56,400);
 	QSizePolicy policy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding); 
 	t->setSizePolicy(policy);
 	t->setObjectName ( "CADTB" );
