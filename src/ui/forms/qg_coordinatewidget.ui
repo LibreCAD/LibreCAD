@@ -152,11 +152,4 @@
     </layout>
   </widget>
   <layoutdefault spacing="6" margin="11"/>
-  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
-  <includes>
-    <include location="local">rs_vector.h</include>
-    <include location="local">rs_math.h</include>
-    <include location="local">rs_graphic.h</include>
-    <include location="local">rs_math.h</include>
-  </includes>
 </ui>

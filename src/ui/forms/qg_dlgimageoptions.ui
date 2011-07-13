@@ -21,7 +21,7 @@
     </property>
     <layout class="QVBoxLayout">
       <item>
-        <widget class="Q3ButtonGroup" name="bgSize">
+        <widget class="QGroupBox" name="bgSize">
           <property name="title">
             <string>Bitmap Size</string>
           </property>
@@ -198,7 +198,7 @@
         </widget>
       </item>
       <item>
-        <widget class="Q3ButtonGroup" name="bgBackground">
+        <widget class="QGroupBox" name="bgBackground">
           <property name="title">
             <string>Background</string>
           </property>
@@ -297,7 +297,6 @@
     </layout>
   </widget>
   <layoutdefault spacing="6" margin="11"/>
-  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
   <tabstops>
     <tabstop>leWidth</tabstop>
     <tabstop>leHeight</tabstop>
@@ -306,9 +305,6 @@
     <tabstop>bOK</tabstop>
     <tabstop>bCancel</tabstop>
   </tabstops>
-  <includes>
-    <include location="local">rs_vector.h</include>
-  </includes>
   <connections>
     <connection>
       <sender>bOK</sender>

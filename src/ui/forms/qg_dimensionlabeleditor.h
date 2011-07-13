@@ -33,7 +33,7 @@ class QG_DimensionLabelEditor : public QWidget, public Ui::QG_DimensionLabelEdit
     Q_OBJECT
 
 public:
-    QG_DimensionLabelEditor(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_DimensionLabelEditor(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_DimensionLabelEditor();
 
     virtual QString getLabel();

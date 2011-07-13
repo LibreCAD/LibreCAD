@@ -25,12 +25,8 @@
 **********************************************************************/
 #include "qg_dlgdimension.h"
 
-#include <qvariant.h>
-#include <qmessagebox.h>
-#include "qg_widgetpen.h"
-#include "qg_layerbox.h"
-#include "qg_dimensionlabeleditor.h"
-#include "qg_dlgdimension.ui.h"
+#include "rs_graphic.h"
+
 /*
  *  Constructs a QG_DlgDimension as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -38,9 +34,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgDimension::QG_DlgDimension(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgDimension::QG_DlgDimension(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
 }
@@ -60,5 +57,24 @@ QG_DlgDimension::~QG_DlgDimension()
 void QG_DlgDimension::languageChange()
 {
     retranslateUi(this);
+}
+
+void QG_DlgDimension::setDim(RS_Dimension& d) {
+    dim = &d;
+    wPen->setPen(dim->getPen(false), true, false, "Pen");
+    RS_Graphic* graphic = dim->getGraphic();
+    if (graphic!=NULL) {
+        cbLayer->init(*(graphic->getLayerList()), false, false);
+    }
+    RS_Layer* lay = dim->getLayer(false);
+    if (lay!=NULL) {
+        cbLayer->setLayer(*lay);
+    }
+
+    wLabel->setLabel(dim->getLabel(false));
+}
+
+void QG_DlgDimension::updateDim() {
+    dim->setLabel(wLabel->getLabel());
 }
 
