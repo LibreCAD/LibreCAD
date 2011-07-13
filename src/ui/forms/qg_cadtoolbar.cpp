@@ -25,11 +25,6 @@
 **********************************************************************/
 #include "qg_cadtoolbar.h"
 
-/*#include <qvariant.h>
-#include "qg_cadtoolbar.ui.h"
-#include <QMouseEvent>
-#include <QContextMenuEvent>*/
-
 /*
  *  Constructs a QG_CadToolBar as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -234,6 +229,7 @@ void QG_CadToolBar::showToolBar(int id) {
     }
     currentTb = newTb;
     if (currentTb!=NULL) {
+        currentTb->move(0,20);
         currentTb->show();
     }
 }
