@@ -27,13 +27,14 @@
 #define QG_DLGDIMLINEAR_H
 
 #include "ui_qg_dlgdimlinear.h"
+#include "rs_dimlinear.h"
 
 class QG_DlgDimLinear : public QDialog, public Ui::QG_DlgDimLinear
 {
     Q_OBJECT
 
 public:
-    QG_DlgDimLinear(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgDimLinear(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgDimLinear();
 
 public slots:

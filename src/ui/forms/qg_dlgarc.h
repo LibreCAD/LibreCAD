@@ -35,7 +35,7 @@ class QG_DlgArc : public QDialog, public Ui::QG_DlgArc
     Q_OBJECT
 
 public:
-    QG_DlgArc(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgArc(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgArc();
 
 public slots:

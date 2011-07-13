@@ -27,13 +27,14 @@
 #define QG_IMAGEOPTIONSDIALOG_H
 
 #include "ui_qg_dlgimageoptions.h"
+#include "rs_vector.h"
 
 class QG_ImageOptionsDialog : public QDialog, public Ui::QG_ImageOptionsDialog
 {
     Q_OBJECT
 
 public:
-    QG_ImageOptionsDialog(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_ImageOptionsDialog(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_ImageOptionsDialog();
 
     virtual QSize getSize();

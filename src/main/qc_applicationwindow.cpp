@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <Q3MimeSourceFactory>
 #include <QStatusBar>
 #include <QMenuBar>
 #include <QDockWidget>
