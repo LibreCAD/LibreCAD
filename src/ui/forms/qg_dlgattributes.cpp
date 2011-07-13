@@ -25,12 +25,12 @@
 **********************************************************************/
 #include "qg_dlgattributes.h"
 
-#include <qvariant.h>
+/*#include <qvariant.h>
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "qg_widgetpen.h"
-#include "qg_layerbox.h"
-#include "qg_dlgattributes.ui.h"
+#include "qg_layerbox.h"*/
+
 /*
  *  Constructs a QG_DlgAttributes as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -38,9 +38,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgAttributes::QG_DlgAttributes(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgAttributes::QG_DlgAttributes(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
 }
@@ -60,5 +61,33 @@ QG_DlgAttributes::~QG_DlgAttributes()
 void QG_DlgAttributes::languageChange()
 {
     retranslateUi(this);
+}
+
+void QG_DlgAttributes::setData(RS_AttributesData* data, RS_LayerList& layerList) {
+    this->data = data;
+
+    //pen = line->getPen();
+    wPen->setPen(data->pen, true, true, "Pen");
+
+    //RS_Graphic* graphic = line->getGraphic();
+    //if (graphic!=NULL) {
+        cbLayer->init(layerList, false, true);
+    //}
+    //cbLayer->setLayer(data->layer);
+    //RS_Layer* lay = line->getLayer(false);
+    //if (lay!=NULL) {
+    //    cbLayer->setLayer(*lay);
+    //}
+}
+
+void QG_DlgAttributes::updateData() {
+    data->pen = wPen->getPen();
+    data->layer = cbLayer->currentText();
+
+    data->changeColor = !wPen->isColorUnchanged();
+    data->changeLineType = !wPen->isLineTypeUnchanged();
+    data->changeWidth = !wPen->isWidthUnchanged();
+
+    data->changeLayer = !cbLayer->isUnchanged();
 }
 

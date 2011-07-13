@@ -25,13 +25,10 @@
 **********************************************************************/
 #include "qg_dlgcircle.h"
 
-#include <qvariant.h>
+
 #include "rs_circle.h"
 #include "rs_graphic.h"
-#include "rs_layer.h"
-#include "qg_widgetpen.h"
-#include "qg_layerbox.h"
-#include "qg_dlgcircle.ui.h"
+
 /*
  *  Constructs a QG_DlgCircle as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -39,9 +36,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgCircle::QG_DlgCircle(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgCircle::QG_DlgCircle(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
 }
@@ -61,5 +59,35 @@ QG_DlgCircle::~QG_DlgCircle()
 void QG_DlgCircle::languageChange()
 {
     retranslateUi(this);
+}
+
+void QG_DlgCircle::setCircle(RS_Circle& c) {
+    circle = &c;
+    //pen = circle->getPen();
+    wPen->setPen(circle->getPen(false), true, false, "Pen");
+    RS_Graphic* graphic = circle->getGraphic();
+    if (graphic!=NULL) {
+        cbLayer->init(*(graphic->getLayerList()), false, false);
+    }
+    RS_Layer* lay = circle->getLayer(false);
+    if (lay!=NULL) {
+        cbLayer->setLayer(*lay);
+    }
+    QString s;
+    s.setNum(circle->getCenter().x);
+    leCenterX->setText(s);
+    s.setNum(circle->getCenter().y);
+    leCenterY->setText(s);
+    s.setNum(circle->getRadius());
+    leRadius->setText(s);
+}
+
+void QG_DlgCircle::updateCircle() {
+    circle->setCenter(RS_Vector(RS_Math::eval(leCenterX->text()),
+                                  RS_Math::eval(leCenterY->text())));
+    circle->setRadius(RS_Math::eval(leRadius->text()));
+    circle->setPen(wPen->getPen());
+    circle->setLayer(cbLayer->currentText());
+    circle->calculateBorders();
 }
 

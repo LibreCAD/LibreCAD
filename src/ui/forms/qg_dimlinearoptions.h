@@ -27,13 +27,14 @@
 #define QG_DIMLINEAROPTIONS_H
 
 #include "ui_qg_dimlinearoptions.h"
+#include "rs_actiondimlinear.h"
 
 class QG_DimLinearOptions : public QWidget, public Ui::QG_DimLinearOptions
 {
     Q_OBJECT
 
 public:
-    QG_DimLinearOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_DimLinearOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_DimLinearOptions();
 
 public slots:
