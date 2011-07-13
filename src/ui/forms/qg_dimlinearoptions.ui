@@ -153,11 +153,6 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <includes>
-  <include location="local">rs_dimlinear.h</include>
-  <include location="local">rs_actiondimlinear.h</include>
-  <include location="local">rs_settings.h</include>
- </includes>
  <resources>
   <include location="../../../res/extui/extui.qrc"/>
  </resources>

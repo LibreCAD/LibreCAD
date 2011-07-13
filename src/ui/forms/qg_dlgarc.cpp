@@ -25,13 +25,9 @@
 **********************************************************************/
 #include "qg_dlgarc.h"
 
-#include <qvariant.h>
 #include "rs_arc.h"
 #include "rs_graphic.h"
-#include "rs_layer.h"
-#include "qg_widgetpen.h"
-#include "qg_layerbox.h"
-#include "qg_dlgarc.ui.h"
+
 /*
  *  Constructs a QG_DlgArc as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -39,9 +35,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgArc::QG_DlgArc(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgArc::QG_DlgArc(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
 }
@@ -61,5 +58,44 @@ QG_DlgArc::~QG_DlgArc()
 void QG_DlgArc::languageChange()
 {
     retranslateUi(this);
+}
+
+void QG_DlgArc::setArc(RS_Arc& a) {
+    arc = &a;
+    //pen = arc->getPen();
+    wPen->setPen(arc->getPen(false), true, false, "Pen");
+    RS_Graphic* graphic = arc->getGraphic();
+    if (graphic!=NULL) {
+        cbLayer->init(*(graphic->getLayerList()), false, false);
+    }
+    RS_Layer* lay = arc->getLayer(false);
+    if (lay!=NULL) {
+        cbLayer->setLayer(*lay);
+    }
+    QString s;
+    s.setNum(arc->getCenter().x);
+    leCenterX->setText(s);
+    s.setNum(arc->getCenter().y);
+    leCenterY->setText(s);
+    s.setNum(arc->getRadius());
+    leRadius->setText(s);
+    s.setNum(RS_Math::rad2deg(arc->getAngle1()));
+    leAngle1->setText(s);
+    s.setNum(RS_Math::rad2deg(arc->getAngle2()));
+    leAngle2->setText(s);
+    cbReversed->setChecked(arc->isReversed());
+}
+
+void QG_DlgArc::updateArc() {
+    arc->setCenter(RS_Vector(RS_Math::eval(leCenterX->text()),
+                                  RS_Math::eval(leCenterY->text())));
+    arc->setRadius(RS_Math::eval(leRadius->text()));
+    arc->setAngle1(RS_Math::deg2rad(RS_Math::eval(leAngle1->text())));
+    arc->setAngle2(RS_Math::deg2rad(RS_Math::eval(leAngle2->text())));
+    arc->setReversed(cbReversed->isChecked());
+    arc->setPen(wPen->getPen());
+    arc->setLayer(cbLayer->currentText());
+    arc->calculateEndpoints();
+    arc->calculateBorders();
 }
 

@@ -25,12 +25,8 @@
 **********************************************************************/
 #include "qg_dlgdimlinear.h"
 
-#include <qvariant.h>
-#include <qmessagebox.h>
-#include "qg_widgetpen.h"
-#include "qg_layerbox.h"
-#include "qg_dimensionlabeleditor.h"
-#include "qg_dlgdimlinear.ui.h"
+#include "rs_graphic.h"
+
 /*
  *  Constructs a QG_DlgDimLinear as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -38,9 +34,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgDimLinear::QG_DlgDimLinear(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgDimLinear::QG_DlgDimLinear(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
 }
@@ -60,5 +57,26 @@ QG_DlgDimLinear::~QG_DlgDimLinear()
 void QG_DlgDimLinear::languageChange()
 {
     retranslateUi(this);
+}
+
+void QG_DlgDimLinear::setDim(RS_DimLinear& d) {
+    dim = &d;
+    wPen->setPen(dim->getPen(false), true, false, "Pen");
+    RS_Graphic* graphic = dim->getGraphic();
+    if (graphic!=NULL) {
+        cbLayer->init(*(graphic->getLayerList()), false, false);
+    }
+    RS_Layer* lay = dim->getLayer(false);
+    if (lay!=NULL) {
+        cbLayer->setLayer(*lay);
+    }
+
+    wLabel->setLabel(dim->getLabel(false));
+    leAngle->setText(QString("%1").arg(RS_Math::rad2deg(dim->getAngle())));
+}
+
+void QG_DlgDimLinear::updateDim() {
+    dim->setLabel(wLabel->getLabel());
+    dim->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text(), 0.0)));
 }
 

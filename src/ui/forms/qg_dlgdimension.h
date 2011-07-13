@@ -27,13 +27,14 @@
 #define QG_DLGDIMENSION_H
 
 #include "ui_qg_dlgdimension.h"
+#include "rs_dimension.h"
 
 class QG_DlgDimension : public QDialog, public Ui::QG_DlgDimension
 {
     Q_OBJECT
 
 public:
-    QG_DlgDimension(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgDimension(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgDimension();
 
 public slots:
