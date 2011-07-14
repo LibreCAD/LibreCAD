@@ -38,7 +38,7 @@
     <name>QC_ApplicationWindow</name>
     <message>
         <source>&amp;CAM</source>
-        <translation>&amp;CAM</translation>
+        <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
@@ -548,8 +548,8 @@ Auto-save disabled.</source>
         <translation type="unfinished">&amp;Encerre</translation>
     </message>
     <message>
-        <source>&amp;back</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Selection pointer</source>
+        <translation type="unfinished">&amp;Ponteiro de Seleção</translation>
     </message>
 </context>
 <context>
@@ -1103,15 +1103,7 @@ in a separate window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Move</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Move and Rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotate around two centers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1136,6 +1128,14 @@ in a separate window</source>
     </message>
     <message>
         <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

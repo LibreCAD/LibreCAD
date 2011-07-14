@@ -313,7 +313,7 @@ Lütfen dosya izinlerine bakın.</translation>
     </message>
     <message>
         <source>&amp;CAM</source>
-        <translation>&amp;CAM</translation>
+        <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
         <source>Simulation Controls</source>
@@ -727,7 +727,7 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;back</source>
+        <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1249,7 +1249,7 @@ için açar</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Taşı</translation>
+        <translation type="obsolete">Taşı</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -1257,7 +1257,7 @@ için açar</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
-        <translation>İki merkezle döndür</translation>
+        <translation type="obsolete">İki merkezle döndür</translation>
     </message>
     <message>
         <source>Trim / Extend two</source>
@@ -1274,6 +1274,14 @@ için açar</translation>
     <message>
         <source>Edit Text</source>
         <translation>Metni Düzenle</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished">Taşı / Kopyala</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="unfinished">İkili Döndür</translation>
     </message>
 </context>
 <context>

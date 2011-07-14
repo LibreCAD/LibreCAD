@@ -377,7 +377,7 @@ nicht speichern. Bitte prüfen Sie die Berechtigung.</translation>
     </message>
     <message>
         <source>&amp;CAM</source>
-        <translation>&amp;CAM</translation>
+        <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
         <source>Simulation Controls</source>
@@ -2208,7 +2208,7 @@ wirklich schliessen?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;back</source>
+        <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2713,7 +2713,7 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Verschieben</translation>
+        <translation type="obsolete">Verschieben</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -2761,7 +2761,7 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
-        <translation>Objekte um zwei Zentren rotieren</translation>
+        <translation type="obsolete">Objekte um zwei Zentren rotieren</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
@@ -2786,6 +2786,14 @@ Fenster editieren</translation>
     <message>
         <source>Edit Text</source>
         <translation>Text editieren</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished">Verschieben / Kopieren</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="unfinished">Rotieren Zwei</translation>
     </message>
 </context>
 <context>

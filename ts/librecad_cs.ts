@@ -342,7 +342,7 @@ Zkontrolujte prosím přístupová práva.</translation>
     </message>
     <message>
         <source>&amp;CAM</source>
-        <translation>&amp;CAM</translation>
+        <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
         <source>Simulation Controls</source>
@@ -1994,7 +1994,7 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;back</source>
+        <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2475,7 +2475,7 @@ v jiném okně</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Posun</translation>
+        <translation type="obsolete">Posun</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -2519,7 +2519,7 @@ v jiném okně</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
-        <translation>Otočit okolo dvou středů</translation>
+        <translation type="obsolete">Otočit okolo dvou středů</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
@@ -2544,6 +2544,14 @@ v jiném okně</translation>
     <message>
         <source>Edit Text</source>
         <translation>Upravit text</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished">Pousnout / Kopírovat</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
