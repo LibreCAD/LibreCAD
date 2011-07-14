@@ -297,7 +297,7 @@ Możesz teraz jedynie zapisać swoją pracę.</translation>
     </message>
     <message>
         <source>&amp;CAM</source>
-        <translation>&amp;CAM</translation>
+        <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -1983,7 +1983,11 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>&amp;back</source>
-        <translation>&amp;wstecz</translation>
+        <translation type="obsolete">&amp;wstecz</translation>
+    </message>
+    <message>
+        <source>&amp;Selection pointer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2463,7 +2467,7 @@ w oddzielnym oknie</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Przesuń</translation>
+        <translation type="obsolete">Przesuń</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -2507,7 +2511,7 @@ w oddzielnym oknie</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
-        <translation>Obracaj dookoła dwóch środków</translation>
+        <translation type="obsolete">Obracaj dookoła dwóch środków</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
@@ -2532,6 +2536,14 @@ w oddzielnym oknie</translation>
     <message>
         <source>Edit Text</source>
         <translation>Edytuj tekst</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished">Przesuń / kopiuj</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="unfinished">Obróć dwa</translation>
     </message>
 </context>
 <context>

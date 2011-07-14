@@ -126,7 +126,7 @@
     </message>
     <message>
         <source>&amp;CAM</source>
-        <translation>&amp;CAM</translation>
+        <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
         <source>About</source>
@@ -1868,7 +1868,11 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;back</source>
-        <translation>&amp;назад</translation>
+        <translation type="obsolete">&amp;назад</translation>
+    </message>
+    <message>
+        <source>&amp;Selection pointer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2349,7 +2353,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Move</source>
-        <translation>Зрушення</translation>
+        <translation type="obsolete">Зрушення</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -2393,7 +2397,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Rotate around two centers</source>
-        <translation>Обертати навколо двох центрів</translation>
+        <translation type="obsolete">Обертати навколо двох центрів</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
@@ -2418,6 +2422,14 @@ in a separate window</source>
     <message>
         <source>Edit Text</source>
         <translation>Редагувати текст</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="unfinished">Обертати навколо двох</translation>
     </message>
 </context>
 <context>

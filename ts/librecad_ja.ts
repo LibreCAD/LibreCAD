@@ -133,10 +133,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;CAM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
@@ -631,11 +627,11 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;back</source>
+        <source>Restrict&amp;Vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Restrict&amp;Vertically</source>
+        <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1111,7 +1107,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Move</source>
-        <translation>移動</translation>
+        <translation type="obsolete">移動</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -1151,7 +1147,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Rotate around two centers</source>
-        <translation>２中心点の回りを回転</translation>
+        <translation type="obsolete">２中心点の回りを回転</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
@@ -1184,6 +1180,14 @@ in a separate window</source>
     <message>
         <source>Send To Back</source>
         <translation type="obsolete">背後へ移動</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished">移動／複写</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="unfinished">二点で回転</translation>
     </message>
 </context>
 <context>
