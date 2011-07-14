@@ -27,7 +27,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="Q3ButtonGroup" name="bgLabel">
+    <widget class="QGroupBox" name="bgLabel">
      <property name="title">
       <string>Dimension Label:</string>
      </property>
@@ -182,20 +182,6 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Q3ButtonGroup</class>
-   <extends>Q3GroupBox</extends>
-   <header>Qt3Support/Q3ButtonGroup</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="../../../res/extui/extui.qrc"/>
  </resources>

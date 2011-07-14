@@ -26,8 +26,8 @@
 
 #include "qg_fontbox.h"
 
-#include <qpixmap.h>
-#include <qstringlist.h>
+#include "rs_font.h"
+#include "rs_fontlist.h"
 
 #include "rs_debug.h"
 
@@ -36,8 +36,8 @@
  * Default Constructor. You must call init manually if you choose
  * to use this constructor.
  */
-QG_FontBox::QG_FontBox(QWidget* parent, const char* name)
-        : QComboBox(parent, name) {}
+QG_FontBox::QG_FontBox(QWidget* parent)
+        : QComboBox(parent) {}
 
 
 
@@ -60,13 +60,13 @@ void QG_FontBox::init() {
     }
 
     fonts.sort();
-    insertStringList(fonts);
+    addItems(fonts);
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotFontChanged(int)));
 
-    setCurrentItem(0);
-    slotFontChanged(currentItem());
+    setCurrentIndex(0);
+    slotFontChanged(currentIndex());
 }
 
 
@@ -78,9 +78,9 @@ void QG_FontBox::setFont(const QString& fName) {
 
     RS_DEBUG->print("QG_FontBox::setFont %s\n", fName.toLatin1().data());
 
-    setCurrentText(fName);
+    setItemText(currentIndex(),fName);
 
-    slotFontChanged(currentItem());
+    slotFontChanged(currentIndex());
 }
 
 

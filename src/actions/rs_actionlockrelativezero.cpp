@@ -26,8 +26,8 @@
 
 #include "rs_actionlockrelativezero.h"
 
-#include "rs_snapper.h"
-#include "rs_point.h"
+#include <QAction>
+#include "rs_graphicview.h"
 
 
 

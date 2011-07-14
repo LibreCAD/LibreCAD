@@ -26,6 +26,7 @@
 
 #include "rs_actionzoomautoy.h"
 
+#include "rs_graphicview.h"
 
 
 RS_ActionZoomAutoY::RS_ActionZoomAutoY(RS_EntityContainer& container,

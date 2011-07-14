@@ -193,7 +193,7 @@ protected:
     /**
      * Block name. Acts as an id.
      */
-    //RS_String name;
+    //QString name;
 	//! Block data
 	RS_BlockData data;
 };

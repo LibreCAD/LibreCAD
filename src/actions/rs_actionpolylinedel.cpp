@@ -25,9 +25,12 @@
 **********************************************************************/
 
 #include "rs_actionpolylinedel.h"
-#include "rs_polyline.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_modification.h"
+#include "rs_polyline.h"
 
 
 
@@ -76,7 +79,7 @@ void RS_ActionPolylineDel::trigger() {
 
 
 
-void RS_ActionPolylineDel::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionPolylineDel::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionPolylineDel::mouseMoveEvent begin");
 
 
@@ -97,7 +100,7 @@ void RS_ActionPolylineDel::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionPolylineDel::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionPolylineDel::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
 		switch (getStatus()) {
 		case ChooseEntity:

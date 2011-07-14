@@ -26,8 +26,11 @@
 
 #include "rs_actionpolylineadd.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_modification.h"
 #include "rs_polyline.h"
-#include "rs_snapper.h"
 
 
 
@@ -77,7 +80,7 @@ void RS_ActionPolylineAdd::trigger() {
 
 
 
-void RS_ActionPolylineAdd::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent* e) {
 	RS_DEBUG->print("RS_ActionPolylineAdd::mouseMoveEvent begin");
 
 	switch (getStatus()) {
@@ -95,7 +98,7 @@ void RS_ActionPolylineAdd::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionPolylineAdd::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionPolylineAdd::mouseReleaseEvent(QMouseEvent* e) {
         if (e->button()==Qt::LeftButton) {
 		switch (getStatus()) {
 		case ChooseSegment:

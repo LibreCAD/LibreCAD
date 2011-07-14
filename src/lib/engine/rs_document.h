@@ -31,7 +31,6 @@
 #include "rs_layerlist.h"
 #include "rs_entitycontainer.h"
 #include "rs_undo.h"
-#include "rs_string.h"
 
 class RS_BlockList;
 

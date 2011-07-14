@@ -26,6 +26,7 @@
 
 #include "rs_actionblocksedit.h"
 
+#include <QAction>
 #include "rs_graphic.h"
 #include "rs_dialogfactory.h"
 

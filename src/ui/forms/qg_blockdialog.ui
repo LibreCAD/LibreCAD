@@ -127,12 +127,6 @@
     </layout>
   </widget>
   <layoutdefault spacing="6" margin="11"/>
-  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
-  <includes>
-    <include location="local">rs_blocklist.h</include>
-    <include location="local">rs.h</include>
-    <include location="local">rs_block.h</include>
-  </includes>
   <connections>
     <connection>
       <sender>bCancel</sender>

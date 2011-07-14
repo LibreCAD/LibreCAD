@@ -28,6 +28,7 @@
 #include <QEventLoop>
 #include <QList>
 #include <QInputDialog>
+#include "rs_graphicview.h"
 #include "rs_actioninterface.h"
 #include "rs_actionselect.h"
 #include "rs_text.h"
@@ -468,6 +469,11 @@ Doc_plugin_interface::Doc_plugin_interface(RS_Graphic *d, RS_GraphicView* gv, QW
     main = parent;
 }
 
+void Doc_plugin_interface::updateView(){
+    doc->setSelected(false);
+    gView->redraw();
+}
+
 void Doc_plugin_interface::addPoint(QPointF *start){
 
     RS_Vector v1(start->x(), start->y());
@@ -557,7 +563,7 @@ void Doc_plugin_interface::addImage(int handle, QPointF *start, QPointF *uvr, QP
     RS_Image* image =
         new RS_Image(
             doc,
-            RS_ImageData(handle /*RS_String(data.ref.c_str()).toInt(NULL, 16)*/,
+            RS_ImageData(handle /*QString(data.ref.c_str()).toInt(NULL, 16)*/,
                          ip, uv, vv,
                          size,
                          name,
@@ -604,6 +610,24 @@ void Doc_plugin_interface::setLayer(QString name){
 
 QString Doc_plugin_interface::getCurrentLayer(){
     return doc->getActiveLayer()->getName();
+}
+
+QStringList Doc_plugin_interface::getAllLayer(){
+    QStringList listName;
+    RS_LayerList* listLay = doc->getLayerList();
+    for (unsigned int i = 0; i < listLay->count(); ++i) {
+         listName << listLay->at(i)->getName();
+     }
+    return listName;
+}
+
+bool Doc_plugin_interface::deleteLayer(QString name){
+    RS_Layer* layer = doc->findLayer(name);
+    if (layer != NULL) {
+        doc->removeLayer(layer);
+        return true;
+    }
+    return false;
 }
 
 bool Doc_plugin_interface::getPoint(QPointF *point, const QString& mesage, QPointF *base){

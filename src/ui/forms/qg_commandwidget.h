@@ -27,6 +27,7 @@
 #define QG_COMMANDWIDGET_H
 
 #include "ui_qg_commandwidget.h"
+class QG_ActionHandler;
 
 class QG_CommandWidget : public QWidget, public Ui::QG_CommandWidget
 {

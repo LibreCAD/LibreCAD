@@ -50,7 +50,7 @@ public:
     virtual QG_ActionHandler* getActionHandler() = 0;
 	virtual void setFocus2() = 0;
 
-	//virtual QToolBar* createToolBar(const RS_String& name) = 0;
+        //virtual QToolBar* createToolBar(const QString& name) = 0;
 	//virtual void addToolBarButton(QToolBar* tb) = 0;
 };
 

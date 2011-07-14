@@ -26,7 +26,9 @@
 
 #include "rs_actionmodifyrotate2.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 
 
@@ -66,7 +68,7 @@ void RS_ActionModifyRotate2::trigger() {
 
 
 
-void RS_ActionModifyRotate2::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionModifyRotate2::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyRotate2::mouseMoveEvent begin");
 
     if (getStatus()==SetReferencePoint1 ||
@@ -102,7 +104,7 @@ void RS_ActionModifyRotate2::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionModifyRotate2::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionModifyRotate2::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -147,8 +149,8 @@ void RS_ActionModifyRotate2::commandEvent(RS_CommandEvent* /*e*/) {
 
 
 
-RS_StringList RS_ActionModifyRotate2::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionModifyRotate2::getAvailableCommands() {
+    QStringList cmd;
     return cmd;
 }
 

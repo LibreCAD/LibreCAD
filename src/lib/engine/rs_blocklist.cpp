@@ -304,7 +304,7 @@ void RS_BlockList::freezeAll(bool freeze) {
  * Listeners are notified.
  */
 /*
-void RS_BlockList::toggleBlock(const RS_String& name) {
+void RS_BlockList::toggleBlock(const QString& name) {
 	RS_Block* block = findBlock(name);
 	block->toggle();
 	

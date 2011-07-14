@@ -26,8 +26,9 @@
 
 #include "rs_actioninfodist2.h"
 
-#include "rs_snapper.h"
-
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 
 RS_ActionInfoDist2::RS_ActionInfoDist2(RS_EntityContainer& container,
@@ -64,7 +65,7 @@ void RS_ActionInfoDist2::trigger() {
 
 
 
-void RS_ActionInfoDist2::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent begin");
 
     switch (getStatus()) {
@@ -87,7 +88,7 @@ void RS_ActionInfoDist2::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionInfoDist2::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionInfoDist2::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
 
         switch (getStatus()) {
