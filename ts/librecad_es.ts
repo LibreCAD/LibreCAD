@@ -305,7 +305,7 @@ Date: %1</source>
     </message>
     <message>
         <source>&amp;CAM</source>
-        <translation>&amp;CAM</translation>
+        <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
         <source>&amp;About %1</source>
@@ -1990,7 +1990,11 @@ Guardado automático desactivado.</translation>
     </message>
     <message>
         <source>&amp;back</source>
-        <translation>&amp;atrás</translation>
+        <translation type="obsolete">&amp;atrás</translation>
+    </message>
+    <message>
+        <source>&amp;Selection pointer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2470,7 +2474,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Desplazar</translation>
+        <translation type="obsolete">Desplazar</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -2510,7 +2514,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
-        <translation>Girar alrededor de dos centros</translation>
+        <translation type="obsolete">Girar alrededor de dos centros</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
@@ -2535,6 +2539,14 @@ en otra ventana</translation>
     <message>
         <source>Edit Text</source>
         <translation>Editar Texto</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished">Mover / Copiar</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
