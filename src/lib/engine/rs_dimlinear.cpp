@@ -84,7 +84,7 @@ QString RS_DimLinear::getMeasuredLabel() {
 			graphic->getLinearFormat(), graphic->getLinearPrecision());
 	}
 	else {
-    	ret = RS_String("%1").arg(dist);
+        ret = QString("%1").arg(dist);
 	}
 
     return ret;

@@ -25,7 +25,10 @@
 **********************************************************************/
 
 #include "rs_actiondrawlinehorvert.h"
-#include "rs_snapper.h"
+
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 
 
@@ -92,7 +95,7 @@ void RS_ActionDrawLineHorVert::trigger() {
 
 
 
-void RS_ActionDrawLineHorVert::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -114,7 +117,7 @@ void RS_ActionDrawLineHorVert::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawLineHorVert::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineHorVert::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_Vector mouse = snapPoint(e);
 

@@ -45,9 +45,6 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
         : RS_Document(parent),
         layerList(),
 blockList(true)
-#ifdef RS_CAM
-, camData()
-#endif
 {
 
     RS_SETTINGS->beginGroup("/Defaults");
@@ -192,7 +189,7 @@ bool RS_Graphic::save(bool isAutoSave) {
 	    RS_DEBUG->print("  autsave and not modified => not saved");
 		ret = true;
 	} else {
-		const RS_String *actualName;
+                const QString *actualName;
 		RS2::FormatType actualType;
 
 		actualType = formatType;
@@ -234,12 +231,12 @@ bool RS_Graphic::save(bool isAutoSave) {
 /**
  * Saves this graphic with the given filename and current settings.
  */
-bool RS_Graphic::saveAs(const RS_String &filename, RS2::FormatType type) {
+bool RS_Graphic::saveAs(const QString &filename, RS2::FormatType type) {
 
     RS_DEBUG->print("RS_Graphic::saveAs");
 
     this->filename = filename;
-	RS_String *oldAutosaveName = new RS_String(autosaveFilename);
+        QString *oldAutosaveName = new QString(autosaveFilename);
 	QFileInfo finfo(filename);
 	// Construct new autosave filename by prepending # to the filename
 	// part, using the same directory as the destination file.
@@ -268,7 +265,7 @@ bool RS_Graphic::saveAs(const RS_String &filename, RS2::FormatType type) {
 /**
  * Loads the given fils into this graphic.
  */
-bool RS_Graphic::open(const RS_String &filename, RS2::FormatType type) {
+bool RS_Graphic::open(const QString &filename, RS2::FormatType type) {
     RS_DEBUG->print("RS_Graphic::open(%s)", filename.toLatin1().data());
 
 	bool ret = false;

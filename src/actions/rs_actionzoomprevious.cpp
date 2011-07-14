@@ -26,6 +26,9 @@
 
 #include "rs_actionzoomprevious.h"
 
+#include <QAction>
+#include "rs_graphicview.h"
+
 
 /**
  * Constructor.

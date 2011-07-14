@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <Q3MimeSourceFactory>
 #include <QStatusBar>
 #include <QMenuBar>
 #include <QDockWidget>
@@ -46,7 +47,6 @@
 //Plugin support
 #include <QPluginLoader>
 
-#include "rs_application.h"
 #include "rs_actionprintpreview.h"
 #include "rs_dimaligned.h"
 #include "rs_dimlinear.h"
@@ -73,6 +73,7 @@
 #include "qg_selectionwidget.h"
 #include "qg_mousewidget.h"
 
+#include "rs_dialogfactory.h"
 #include "qc_dialogfactory.h"
 #include "main.h"
 #include "doc_plugin_interface.h"
@@ -197,7 +198,8 @@ QMenu *QC_ApplicationWindow::findMenu(const QString &searchMenu, const QObjectLi
  */
 void QC_ApplicationWindow::loadPlugins() {
 
-    RS_StringList lst = RS_SYSTEM->getDirectoryList("plugins");
+    loadedPlugins.clear();
+    QStringList lst = RS_SYSTEM->getDirectoryList("plugins");
 
     for (int i = 0; i < lst.size(); ++i) {
         QDir pluginsDir(lst.at(i));
@@ -207,8 +209,9 @@ void QC_ApplicationWindow::loadPlugins() {
             if (plugin) {
                 QC_PluginInterface *pluginInterface = qobject_cast<QC_PluginInterface *>(plugin);
                 if (pluginInterface) {
-
-                    foreach (PluginMenuLocation loc,  pluginInterface->menu()) {
+                    loadedPlugins.append(pluginInterface);
+                    PluginCapabilities pluginCapabilities=pluginInterface->getCapabilities();
+                    foreach (PluginMenuLocation loc,  pluginCapabilities.menuEntryPoints) {
                         QAction *actpl = new QAction(loc.menuEntryActionName, plugin);
                         actpl->setData(loc.menuEntryActionName);
                         connect(actpl, SIGNAL(triggered()), this, SLOT(execPlug()));
@@ -1146,6 +1149,10 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionInfoArea,
+                                        actionHandler);
+    action->addTo(menu);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Layer actions:
     //
@@ -1232,14 +1239,6 @@ void QC_ApplicationWindow::initActions() {
     scriptRun = 0;
 #endif
 
-#ifdef RVT_CAM
-    menu = menuBar()->addMenu(tr("&CAM"));
-    menu->setName("CAM");
-
-    action = actionFactory.createAction(RS2::ActionCamMakeProfile, actionHandler);
-    action->addTo(menu);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-#endif
 
     // Help menu:
     //
@@ -1435,11 +1434,13 @@ void QC_ApplicationWindow::initToolBar() {
 
     // CAD toolbar left:
     QToolBar* t = new QToolBar("CAD Tools", this);
-	t->setMinimumSize(59,250);
+    t->setMinimumSize(56,400);
 	QSizePolicy policy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding); 
 	t->setSizePolicy(policy);
 	t->setObjectName ( "CADTB" );
-   // t->setFixedExtentWidth(59);
+    t->setFixedWidth(56);
+    t->setFloatable(false);
+    t->setAllowedAreas(Qt::LeftToolBarArea | Qt::RightToolBarArea);
    // t->setVerticallyStretchable(true);
 	addToolBar(Qt::LeftToolBarArea, t); 
 
@@ -1665,7 +1666,7 @@ void QC_ApplicationWindow::initView() {
  * Implementation from QG_MainWindowInterface.
  * Can be called from scripts to add individual GUI elements.
  */
-/*QToolBar* QC_ApplicationWindow::createToolBar(const RS_String& name) {
+/*QToolBar* QC_ApplicationWindow::createToolBar(const QString& name) {
     QToolBar* tb = new QToolBar(name, this);
 	tb->setLabel(name);
 	return tb;
@@ -1975,29 +1976,6 @@ void QC_ApplicationWindow::slotTileVertical() {
     */
 }
 
-
-
-/**
- * CAM
- */
-/*
-#ifdef RS_CAM
-void QC_ApplicationWindow::slotCamExportAuto() {
-    printf("CAM export..\n");
-    
-    RS_Document* d = getDocument();
-    if (d!=NULL) {
-        RS_Graphic* graphic = (RS_Graphic*)d;
- 
-        RS_CamDialog dlg(graphic, this);
-        dlg.exec();
-    }
-}
-#endif
-*/
-
-
-
 /**
  * Called when something changed in the pen tool bar 
  * (e.g. color, width, style).
@@ -2135,8 +2113,8 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName,
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: creating new doc window");
         // Create new document window:
         QC_MDIWindow* w = slotFileNew();
-        // RVT_PORT RS_APP->processEvents(1000);
-        RS_APP->processEvents(QEventLoop::AllEvents, 1000);
+        // RVT_PORT qApp->processEvents(1000);
+        qApp->processEvents(QEventLoop::AllEvents, 1000);
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: linking layer list");
         // link the layer widget to the new document:
@@ -2148,7 +2126,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName,
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: open file");
         
-        RS_APP->processEvents(QEventLoop::AllEvents, 1000);
+        qApp->processEvents(QEventLoop::AllEvents, 1000);
 
         // open the file in the new view:
         if (w->slotFileOpen(fileName, type)==false) {
@@ -2321,8 +2299,8 @@ void QC_ApplicationWindow::slotFileExport() {
 
         // read default settings:
         RS_SETTINGS->beginGroup("/Paths");
-        RS_String defDir = RS_SETTINGS->readEntry("/ExportImage", RS_SYSTEM->getHomeDir());
-        RS_String defFilter = RS_SETTINGS->readEntry("/ExportImageFilter",
+        QString defDir = RS_SETTINGS->readEntry("/ExportImage", RS_SYSTEM->getHomeDir());
+        QString defFilter = RS_SETTINGS->readEntry("/ExportImageFilter",
                                                      QString("%1 (*.%2)").arg(QG_DialogFactory::extToFormat("png")).arg("png"));
         RS_SETTINGS->endGroup();
 
@@ -2658,8 +2636,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
 				workspace->addWindow(w);
 				w->setWindowState(Qt::WindowMaximized);
                 parent->addChildWindow(w);
-                //connect(w, SIGNAL(signalClosing()),
-                //        this, SLOT(slotFileClosing()));
+                connect(w, SIGNAL(signalClosing()),
+                         this, SLOT(slotFileClose()));
 
                 w->setCaption(tr("Print preview for %1").arg(parent->caption()));
                 w->setIcon(qPixmapFromMimeSource("document.png"));
@@ -2920,24 +2898,12 @@ void QC_ApplicationWindow::slotHelpAbout() {
     /**
       * Show all plugin that has been loaded
       */
-    RS_StringList lst = RS_SYSTEM->getDirectoryList("plugins");
-    for (int i = 0; i < lst.size(); ++i) {
-        QDir pluginsDir(lst.at(i));
-        foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
-            QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
-            QObject *plugin = pluginLoader.instance();
-            if (plugin!=NULL && pluginLoader.isLoaded()) {
-                QC_PluginInterface *pluginInterface = qobject_cast<QC_PluginInterface *>(plugin);
-                    modules.append(pluginInterface->name());
-            }
-        }
-    }
+    foreach (QC_PluginInterface *pluginInterface, loadedPlugins)
+        modules.append(pluginInterface->name());
 
-    QString modulesString;
+    QString modulesString=tr("None");
     if (modules.empty()==false) {
         modulesString = modules.join(", ");
-    } else {
-        modulesString = tr("None");
     }
 
     QMessageBox box(this);
@@ -3054,7 +3020,7 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
             << "<td>UND:" << e->isUndone() << "</td>"
             << "<td>SEL:" << e->isSelected() << "</td>"
             << "<td>TMP:" << e->getFlag(RS2::FlagTemp) << "</td>";
-            RS_String lay = "NULL";
+            QString lay = "NULL";
             if (e->getLayer()!=NULL) {
                 lay = e->getLayer()->getName();
             }
@@ -3342,8 +3308,8 @@ void QC_ApplicationWindow::slotTestDrawFreehand() {
            int posx = (random()%600);
            int posy = (random()%400);
 
-           //RS_MouseEvent rsm1(posx, posy, LEFT);
-        RS_MouseEvent rsm1(QEvent::MouseButtonPress, 
+           //QMouseEvent rsm1(posx, posy, LEFT);
+        QMouseEvent rsm1(QEvent::MouseButtonPress,
                            QPoint(posx,posy), 
                            RS2::LeftButton,
                            RS2::LeftButton);
@@ -3362,9 +3328,9 @@ void QC_ApplicationWindow::slotTestDrawFreehand() {
                posx+=speedx;
                posy+=speedy;
 
-               //RS_MouseEvent rsm2(posx, posy, LEFT);
+               //QMouseEvent rsm2(posx, posy, LEFT);
             
-            RS_MouseEvent rsm2(QEvent::MouseMove, 
+            QMouseEvent rsm2(QEvent::MouseMove,
                            QPoint(posx,posy), 
                            RS2::LeftButton,
                            RS2::LeftButton);
@@ -3852,8 +3818,8 @@ void QC_ApplicationWindow::slotTestUnicode() {
 
         int col;
         int row;
-        RS_Char uCode;       // e.g. 65 (or 'A')
-        RS_String strCode;   // unicde as string e.g. '[0041] A'
+        QChar uCode;       // e.g. 65 (or 'A')
+        QString strCode;   // unicde as string e.g. '[0041] A'
 
         graphic->setAutoUpdateBorders(false);
 
@@ -3862,7 +3828,7 @@ void QC_ApplicationWindow::slotTestUnicode() {
             for (row=0x0; row<=0xF; row++) {
                 //printf("  row: %X\n", row);
 
-                uCode = RS_Char(col+row);
+                uCode = QChar(col+row);
                 //printf("  code: %X\n", uCode.unicode());
 
                 strCode.setNum(uCode.unicode(), 16);
@@ -4033,7 +3999,8 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
     QTime now = QTime::currentTime();
     bool actionProcessed=false;
     doubleCharacters << e->key();
-    doubleCharacters=doubleCharacters.mid(doubleCharacters.size()-2,2);
+    if (doubleCharacters.size()>2)
+        doubleCharacters=doubleCharacters.mid(doubleCharacters.size()-2,2);
     if (ts.msecsTo(now)<2000) {
 
         QString code="";

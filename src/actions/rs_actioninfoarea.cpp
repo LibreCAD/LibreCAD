@@ -26,7 +26,9 @@
 
 #include "rs_actioninfoarea.h"
 
-#include "rs_snapper.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 
 
@@ -42,6 +44,7 @@ QAction* RS_ActionInfoArea::createGUIAction(RS2::ActionType /*type*/, QObject* /
                                   QKeySequence(), NULL); */
     QAction* action = new QAction(tr("Polygonal Area"), NULL);
     //action->zetStatusTip(tr("Measures the area of a polygon"));
+    action->setIcon(QIcon(":/extui/infoarea.png"));
     return action;
 }
 
@@ -85,7 +88,7 @@ void RS_ActionInfoArea::trigger() {
 
 
 
-void RS_ActionInfoArea::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
     //RS_DEBUG->print("RS_ActionInfoArea::mouseMoveEvent begin");
 
     if (getStatus()==SetFirstPoint ||
@@ -136,7 +139,7 @@ void RS_ActionInfoArea::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionInfoArea::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionInfoArea::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);

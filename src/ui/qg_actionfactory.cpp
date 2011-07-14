@@ -81,6 +81,7 @@
 #include "rs_actioninfodist2.h"
 #include "rs_actioninfoinside.h"
 #include "rs_actioninfototallength.h"
+#include "rs_actioninfoarea.h"
 #include "rs_actionlayersadd.h"
 #include "rs_actionlayersedit.h"
 #include "rs_actionlayersfreezeall.h"
@@ -130,17 +131,6 @@
 #include "rs_actionpolylinedel.h"
 #include "rs_actionpolylinedelbetween.h"
 #include "rs_actionpolylinetrim.h"
-
-#ifdef RS_CAM
-#include "rs_actioncamexportauto.h"
-#include "rs_actioncamreorder.h"
-#endif
-
-#ifdef RVT_CAM
-#include "rvt_actioncammakeprofile.h"
-#endif
-
-
 
 /**
  * Constructor.
@@ -255,7 +245,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
 
     case RS2::ActionFilePrintPreview:
 		action = RS_ActionPrintPreview::createGUIAction(id, mw);
-		action->setToggleAction(true);
+                action->setCheckable(true);
         connect(action, SIGNAL(toggled(bool)),
                 obj, SLOT(slotFilePrintPreview(bool)));
         break;
@@ -378,7 +368,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
         // Editing actions:
         //
     case RS2::ActionEditKillAllActions:
-        action = new QAction(tr("&back"), mw);
+        action = new QAction(tr("&Selection pointer"), mw);
 #if QT_VERSION >= 0x040600
         action->setIcon(QIcon::fromTheme("go-previous-view", QIcon(":/actions/back.png")));
 #else
@@ -1063,9 +1053,15 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
         break;
 		
     case RS2::ActionInfoTotalLength:
-		action = RS_ActionInfoTotalLength::createGUIAction(id, mw);
+                action = RS_ActionInfoTotalLength::createGUIAction(id, mw);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotInfoTotalLength()));
+        break;
+
+    case RS2::ActionInfoArea:
+            action = RS_ActionInfoArea::createGUIAction(id, mw);
+        connect(action, SIGNAL(activated()),
+                obj, SLOT(slotInfoArea()));
         break;
 
         // Layer actions:
@@ -1217,32 +1213,6 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotScriptRun()));
 		break;
-
-		// CAM actions:
-		//
-#ifdef RS_CAM
-    case RS2::ActionCamExportAuto:
-		action = RS_ActionCamExportAuto::createGUIAction(id, mw);
-        connect(action, SIGNAL(activated()),
-                obj, SLOT(slotCamExportAuto()));
-        break;
-		
-    case RS2::ActionCamReorder:
-		action = RS_ActionCamReorder::createGUIAction(id, mw);
-        connect(action, SIGNAL(activated()),
-                obj, SLOT(slotCamReorder()));
-        break;
-#endif
-
-#ifdef RVT_CAM
-    case RS2::ActionCamMakeProfile:
-		action = RVT_ActionCamMakeProfile::createGUIAction(id, mw);
-        connect(action, SIGNAL(activated()),
-                obj, SLOT(slotCamMakeProfile()));
-        break;
-
-
-#endif
 
     default:
         RS_DEBUG->print(RS_Debug::D_WARNING,

@@ -63,12 +63,12 @@ RS_Vector RS_Dimension::getNearestSelectedRef(const RS_Vector& coord,
  *      label if appropriate.
  * @see getMeasuredLabel
  */
-RS_String RS_Dimension::getLabel(bool resolve) {
+QString RS_Dimension::getLabel(bool resolve) {
 	if (!resolve) {
 		return data.text;
 	}
 
-    RS_String ret="";
+    QString ret="";
 
     // One space suppresses the text:
     if (data.text==" ") {
@@ -83,7 +83,7 @@ RS_String RS_Dimension::getLabel(bool resolve) {
     // Others print the text (<> is replaced by the measurement)
     else {
         ret = data.text;
-        ret = ret.replace(RS_String("<>"), getMeasuredLabel());
+        ret = ret.replace(QString("<>"), getMeasuredLabel());
     }
 
     return ret;
@@ -93,7 +93,7 @@ RS_String RS_Dimension::getLabel(bool resolve) {
 /**
  * Sets a new text for the label.
  */
-void RS_Dimension::setLabel(const RS_String& l) {
+void RS_Dimension::setLabel(const QString& l) {
 	data.text = l;
 }
 
@@ -276,7 +276,7 @@ double RS_Dimension::getTextHeight() {
  * If the variable is not found it is added with the given default
  * value converted to the local unit.
  */
-double RS_Dimension::getGraphicVariable(const RS_String& key, double defMM,
+double RS_Dimension::getGraphicVariable(const QString& key, double defMM,
                                         int code) {
 
     double v = getGraphicVariableDouble(key, RS_MINDOUBLE);

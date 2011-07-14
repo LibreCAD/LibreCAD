@@ -116,7 +116,6 @@ HEADERS = \
     src/lib/creation/rs_creation.h \
     src/lib/debug/rs_debug.h \
     src/lib/engine/rs.h \
-    src/lib/engine/rs_application.h \
     src/lib/engine/rs_arc.h \
     src/lib/engine/rs_atomicentity.h \
     src/lib/engine/rs_block.h \
@@ -156,12 +155,9 @@ HEADERS = \
     src/lib/engine/rs_pen.h \
     src/lib/engine/rs_point.h \
     src/lib/engine/rs_polyline.h \
-    src/lib/engine/rs_ptrlist.h \
     src/lib/engine/rs_settings.h \
     src/lib/engine/rs_solid.h \
     src/lib/engine/rs_spline.h \
-    src/lib/engine/rs_string.h \
-    src/lib/engine/rs_stringlist.h \
     src/lib/engine/rs_system.h \
     src/lib/engine/rs_text.h \
     src/lib/engine/rs_undo.h \
@@ -169,7 +165,6 @@ HEADERS = \
     src/lib/engine/rs_undocycle.h \
     src/lib/engine/rs_units.h \
     src/lib/engine/rs_utility.h \
-    src/lib/engine/rs_valuelist.h \
     src/lib/engine/rs_variable.h \
     src/lib/engine/rs_variabledict.h \
     src/lib/engine/rs_vector.h \
@@ -183,16 +178,12 @@ HEADERS = \
     src/lib/gui/rs_dialogfactory.h \
     src/lib/gui/rs_dialogfactoryinterface.h \
     src/lib/gui/rs_dialogfactoryadapter.h \
-    src/lib/gui/rs_event.h \
     src/lib/gui/rs_eventhandler.h \
     src/lib/gui/rs_graphicview.h \
     src/lib/gui/rs_grid.h \
-    src/lib/gui/rs_keyevent.h \
     src/lib/gui/rs_linetypepattern.h \
     src/lib/gui/rs_mainwindowinterface.h \
-    src/lib/gui/rs_mouseevent.h \
     src/lib/gui/rs_painter.h \
-    src/lib/gui/rs_painteradapter.h \
     src/lib/gui/rs_painterqt.h \
     src/lib/gui/rs_staticgraphicview.h \
     src/lib/information/rs_locale.h \
@@ -576,11 +567,11 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/qg_mainwindowinterface.h \
     src/ui/qg_patternbox.h \
     src/ui/qg_pentoolbar.h \
-    src/ui/qg_qt2rs.h \
     src/ui/qg_recentfiles.h \
     src/ui/qg_scrollbar.h \
     src/ui/qg_widthbox.h \
     src/ui/forms/qg_arcoptions.h \
+    src/ui/forms/qg_arctangentialoptions.h \
     src/ui/forms/qg_beveloptions.h \
     src/ui/forms/qg_blockdialog.h \
     src/ui/forms/qg_cadtoolbar.h \
@@ -600,7 +591,6 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_cadtoolbararcs.h \
     src/ui/forms/qg_circleoptions.h \
     src/ui/forms/qg_coordinatewidget.h \
-    src/ui/forms/qg_arctangentialoptions.h \
     src/ui/forms/qg_dimensionlabeleditor.h \
     src/ui/forms/qg_dimlinearoptions.h \
     src/ui/forms/qg_dimoptions.h \
@@ -652,38 +642,6 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_textoptions.h \
     src/ui/forms/qg_trimamountoptions.h \
     src/ui/forms/qg_widgetpen.h \
-    src/ui/forms/qg_arcoptions.ui.h \
-    src/ui/forms/qg_arctangentialoptions.ui.h \
-    src/ui/forms/qg_beveloptions.ui.h \
-    src/ui/forms/qg_blockdialog.ui.h \
-    src/ui/forms/qg_cadtoolbar.ui.h \
-    src/ui/forms/qg_cadtoolbararcs.ui.h \
-    src/ui/forms/qg_cadtoolbarcircles.ui.h \
-    src/ui/forms/qg_cadtoolbardim.ui.h \
-    src/ui/forms/qg_cadtoolbarellipses.ui.h \
-    src/ui/forms/qg_cadtoolbarinfo.ui.h \
-    src/ui/forms/qg_cadtoolbarlines.ui.h \
-    src/ui/forms/qg_cadtoolbarmain.ui.h \
-    src/ui/forms/qg_cadtoolbarmodify.ui.h \
-    src/ui/forms/qg_cadtoolbarpoints.ui.h \
-    src/ui/forms/qg_cadtoolbarpolylines.ui.h \
-    src/ui/forms/qg_cadtoolbarselect.ui.h \
-    src/ui/forms/qg_cadtoolbarsnap.ui.h \
-    src/ui/forms/qg_cadtoolbarsplines.ui.h \
-    src/ui/forms/qg_circleoptions.ui.h \
-    src/ui/forms/qg_commandwidget.ui.h \
-    src/ui/forms/qg_coordinatewidget.ui.h \
-    src/ui/forms/qg_dimensionlabeleditor.ui.h \
-    src/ui/forms/qg_dimlinearoptions.ui.h \
-    src/ui/forms/qg_dimoptions.ui.h \
-    src/ui/forms/qg_dlgarc.ui.h \
-    src/ui/forms/qg_dlgattributes.ui.h \
-    src/ui/forms/qg_dlgcircle.ui.h \
-    src/ui/forms/qg_dlgdimension.ui.h \
-    src/ui/forms/qg_dlgdimlinear.ui.h \
-    src/ui/forms/qg_dlgellipse.ui.h \
-    src/ui/forms/qg_dlghatch.ui.h \
-    src/ui/forms/qg_dlgimageoptions.ui.h \
     src/ui/forms/qg_dlginitial.ui.h \
     src/ui/forms/qg_dlginsert.ui.h \
     src/ui/forms/qg_dlgline.ui.h \

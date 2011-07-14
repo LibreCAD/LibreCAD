@@ -26,9 +26,10 @@
 
 #include "rs_actiondefault.h"
 
-#include "rs.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
 #include "rs_modification.h"
-#include "rs_snapper.h"
 #include "rs_selection.h"
 #include "rs_overlaybox.h"
 
@@ -80,21 +81,21 @@ void RS_ActionDefault::trigger() {
 
 }
 
-void RS_ActionDefault::keyPressEvent(RS_KeyEvent* e) {
+void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {
 	if (e->key()==Qt::Key_Shift) {
 		restrBak = snapRes;
 		setSnapRestriction(RS2::RestrictOrthogonal);
 	}
 }
 
-void RS_ActionDefault::keyReleaseEvent(RS_KeyEvent* e) {
+void RS_ActionDefault::keyReleaseEvent(QKeyEvent* e) {
 	if (e->key()==Qt::Key_Shift) {
 		setSnapRestriction(restrBak);
 	}
 }
 
 
-void RS_ActionDefault::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
     RS_Vector mouse = graphicView->toGraph(RS_Vector(e->x(), e->y()));
     RS_Vector relMouse = mouse - graphicView->getRelativeZero();
@@ -196,7 +197,7 @@ void RS_ActionDefault::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDefault::mousePressEvent(RS_MouseEvent* e) {
+void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case Neutral:
@@ -245,7 +246,7 @@ void RS_ActionDefault::mousePressEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDefault::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
 
     if (e->button()==Qt::LeftButton) {
@@ -321,7 +322,7 @@ void RS_ActionDefault::mouseReleaseEvent(RS_MouseEvent* e) {
 
 
 void RS_ActionDefault::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     // if the current action can't deal with the command,
     //   it might be intended to launch a new command
@@ -337,8 +338,8 @@ void RS_ActionDefault::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDefault::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDefault::getAvailableCommands() {
+    QStringList cmd;
 
     //cmd += "line";
     //cmd += "rectangle";

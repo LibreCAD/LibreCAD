@@ -53,12 +53,12 @@ public:
     virtual void updateMouseCursor();
     virtual void updateToolBar();
 
-    RS_String getText() {
+    QString getText() {
 		if (!data.text.isEmpty()) {
 			return data.text;
 		}
 	
-        RS_String l = label;
+        QString l = label;
 
         if (l.isEmpty() &&
             (diameter==true || !tol1.isEmpty() || !tol2.isEmpty())) {
@@ -66,37 +66,37 @@ public:
         }
 
         if (diameter==true) {
-            l = RS_Char(0x2205) + l;
+            l = QChar(0x2205) + l;
         }
 
         if (!tol1.isEmpty() || !tol2.isEmpty()) {
-            l += RS_String("\\S%1\\%2;").arg(tol1).arg(tol2);
+            l += QString("\\S%1\\%2;").arg(tol1).arg(tol2);
         }
 
         return l;
     }
 	
-    void setText(const RS_String& t) {
+    void setText(const QString& t) {
         data.text = t;
 	}
 
-	RS_String getLabel() {
+        QString getLabel() {
 		return label;
 	}
-    void setLabel(const RS_String& t) {
+    void setLabel(const QString& t) {
         //data.text = t;
         label = t;
     }
-	RS_String getTol1() {
+        QString getTol1() {
 		return tol1;
 	}
-    void setTol1(const RS_String& t) {
+    void setTol1(const QString& t) {
         tol1 = t;
     }
-	RS_String getTol2() {
+        QString getTol2() {
 		return tol2;
 	}
-    void setTol2(const RS_String& t) {
+    void setTol2(const QString& t) {
         tol2 = t;
     }
 	bool getDiameter() {
@@ -120,9 +120,9 @@ protected:
      */
     RS_DimensionData data;
 
-    RS_String label;
-    RS_String tol1;
-    RS_String tol2;
+    QString label;
+    QString tol1;
+    QString tol2;
     bool diameter;
 
 
@@ -130,8 +130,8 @@ protected:
      * Commands.
      */
     /*
-      RS_String cmdText;
-      RS_String cmdText2;
+      QString cmdText;
+      QString cmdText2;
     */
 };
 

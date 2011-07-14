@@ -33,6 +33,8 @@
 # define QC_DEBUGGING false
 #endif
 
+#define STR(x)   #x
+#define XSTR(x)  STR(x)
 
 QStringList handleArgs(int argc, char** argv);
 

@@ -25,15 +25,15 @@
 **********************************************************************/
 #include "qg_cadtoolbararcs.h"
 
-#include <qvariant.h>
+
 #include "qg_cadtoolbar.h"
-#include "qg_cadtoolbararcs.ui.h"
+
 /*
  *  Constructs a QG_CadToolBarArcs as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBarArcs::QG_CadToolBarArcs(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_CadToolBarArcs::QG_CadToolBarArcs(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
@@ -57,3 +57,60 @@ void QG_CadToolBarArcs::languageChange()
     retranslateUi(this);
 }
 
+#include <QContextMenuEvent>
+
+void QG_CadToolBarArcs::init() {
+    actionHandler = NULL;
+    cadToolBar = NULL;
+}
+
+/*void QG_CadToolBarArcs::mousePressEvent(QMouseEvent* e) {
+    if (e->button()==RightButton && cadToolBar!=NULL) {
+        cadToolBar->back();
+        e->accept();
+    }
+}*/
+
+void QG_CadToolBarArcs::contextMenuEvent(QContextMenuEvent *e) {
+    e->accept();
+}
+
+void QG_CadToolBarArcs::setCadToolBar(QG_CadToolBar* tb) {
+    cadToolBar = tb;
+    if (tb!=NULL) {
+        actionHandler = tb->getActionHandler();
+    } else {
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                        "QG_CadToolBarArcs::setCadToolBar(): No valid toolbar set.");
+    }
+}
+
+void QG_CadToolBarArcs::drawArc() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawArc();
+    }
+}
+
+void QG_CadToolBarArcs::drawArc3P() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawArc3P();
+    }
+}
+
+void QG_CadToolBarArcs::drawArcParallel() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawArcParallel();
+    }
+}
+
+void QG_CadToolBarArcs::drawArcTangential() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawArcTangential();
+    }
+}
+
+void QG_CadToolBarArcs::back() {
+    if (cadToolBar!=NULL) {
+        cadToolBar->back();
+    }
+}

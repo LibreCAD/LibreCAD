@@ -58,13 +58,13 @@ public:
 
     virtual void trigger();
 	
-    virtual void mouseMoveEvent(RS_MouseEvent* e);
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
-	virtual RS_StringList getAvailableCommands();
+        virtual QStringList getAvailableCommands();
 	
     virtual void hideOptions();
     virtual void showOptions();
@@ -97,13 +97,13 @@ private:
 	 * Commands
 	 */
 	/*
-	RS_String cmdDistance;
-	RS_String cmdDistance2;
-	RS_String cmdDistance3;
+        QString cmdDistance;
+        QString cmdDistance2;
+        QString cmdDistance3;
 	
-	RS_String cmdNumber;
-	RS_String cmdNumber2;
-	RS_String cmdNumber3;
+        QString cmdNumber;
+        QString cmdNumber2;
+        QString cmdNumber3;
 	*/
 };
 

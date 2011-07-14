@@ -25,6 +25,9 @@
 **********************************************************************/
 
 #include "rs_actionselectinvert.h"
+
+#include <QAction>
+#include "rs_dialogfactory.h"
 #include "rs_selection.h"
 
 RS_ActionSelectInvert::RS_ActionSelectInvert(RS_EntityContainer& container,

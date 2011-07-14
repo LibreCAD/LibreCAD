@@ -31,7 +31,6 @@
 
 #include "rs_pattern.h"
 #include "rs_entity.h"
-#include "rs_ptrlist.h"
 
 #define RS_PATTERNLIST RS_PatternList::instance()
 
@@ -56,7 +55,7 @@ public:
         return uniqueInstance;
     }
 
-    virtual ~RS_PatternList() {}
+    virtual ~RS_PatternList() {clearPatterns();}
 
     void init();
 
@@ -65,20 +64,13 @@ public:
         return patterns.count();
     }
     virtual void removePattern(RS_Pattern* pattern);
-    RS_Pattern* requestPattern(const RS_String& name);
-    //! @return First pattern of the list.
-    RS_Pattern* firstPattern() {
-        return patterns.first();
-    }
-    /** 
-	 * @return Next pattern from the list after
-     * calling firstPattern() or nextPattern().
-     */
-    RS_Pattern* nextPattern() {
-        return patterns.next();
+    RS_Pattern* requestPattern(const QString& name);
+    //! @return a const iterator for the pattern list.
+    QListIterator<RS_Pattern *> getIteretor(){
+        return QListIterator<RS_Pattern *>(patterns);
     }
 
-	bool contains(const RS_String& name);
+        bool contains(const QString& name);
 
     //void addPatternListListener(RS_PatternListListener* listener);
 
@@ -91,9 +83,9 @@ protected:
 
 private:
     //! patterns in the graphic
-    RS_PtrList<RS_Pattern> patterns;
+    QList<RS_Pattern*> patterns;
     //! List of registered PatternListListeners
-    //RS_PtrList<RS_PatternListListener> patternListListeners;
+    //QList<RS_PatternListListener> patternListListeners;
 }
 ;
 

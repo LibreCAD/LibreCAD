@@ -79,7 +79,7 @@ public:
     virtual void adjustZoomControls();
     virtual void setBackground(const RS_Color& bg);
     virtual void setMouseCursor(RS2::CursorType c);
-	virtual void updateGridStatusWidget(const RS_String& text);
+        virtual void updateGridStatusWidget(const QString& text);
 
 		virtual	QPixmap* getPixmapForView(QPixmap *pm);
 		

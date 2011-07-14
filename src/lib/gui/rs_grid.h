@@ -30,7 +30,6 @@
 
 #include "rs_graphicview.h"
 #include "rs_vector.h"
-#include "rs_string.h"
 
 /**
  * This class represents a grid. Grids can be drawn on graphic
@@ -76,8 +75,8 @@ public:
 	/**
 	 * @return Grid info for status widget.
 	 */
-	RS_String getInfo() {
-		return RS_String("%1 / %2").arg(spacing).arg(metaSpacing);
+        QString getInfo() {
+                return QString("%1 / %2").arg(spacing).arg(metaSpacing);
 	}
 
 	/**
