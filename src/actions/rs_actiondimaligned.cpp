@@ -26,9 +26,11 @@
 
 #include "rs_actiondimaligned.h"
 
-#include "rs_snapper.h"
-#include "rs_constructionline.h"
+#include <QAction>
 #include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commandevent.h"
+#include "rs_constructionline.h"
 
 
 
@@ -114,7 +116,7 @@ void RS_ActionDimAligned::preparePreview() {
 
 
 
-void RS_ActionDimAligned::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDimAligned::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDimAligned::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -158,7 +160,7 @@ void RS_ActionDimAligned::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDimAligned::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDimAligned::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -205,7 +207,7 @@ void RS_ActionDimAligned::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDimAligned::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         if (RS_DIALOGFACTORY!=NULL) {
@@ -238,8 +240,8 @@ void RS_ActionDimAligned::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDimAligned::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDimAligned::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetExtPoint1:

@@ -67,12 +67,12 @@ public:
     virtual void init(int status=0);
     virtual void trigger();
 	
-    virtual void mouseMoveEvent(RS_MouseEvent* e);
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
 
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
-	virtual RS_StringList getAvailableCommands();
+        virtual QStringList getAvailableCommands();
 	
     virtual void hideOptions();
     virtual void showOptions();
@@ -97,9 +97,9 @@ protected:
 	/**
 	 * Commands
 	 */
-	/*RS_String cmdReversed;
-	RS_String cmdReversed2;
-	RS_String cmdReversed3;
+        /*QString cmdReversed;
+        QString cmdReversed2;
+        QString cmdReversed3;
 	*/
 };
 

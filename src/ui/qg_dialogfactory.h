@@ -68,11 +68,10 @@ protected:
      * Links factory to a widget that can host tool options.
      */
     virtual void setOptionWidget(QToolBar* ow) {
-		RS_DEBUG->print("QG_DialogFactory::setOptionWidget");
+        RS_DEBUG->print("QG_DialogFactory::setOptionWidget");
         optionWidget = ow;
-		RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");
+        RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");
     }
-
 public:
     /**
      * Links this dialog factory to a coordinate widget.
@@ -131,9 +130,9 @@ public:
     }
 
 
-    virtual void requestWarningDialog(const RS_String& warning);
+    virtual void requestWarningDialog(const QString& warning);
 	
-    virtual RS_GraphicView* requestNewDocument(const RS_String& fileName = RS_String::null, 
+    virtual RS_GraphicView* requestNewDocument(const QString& fileName = QString::null,
 			RS_Document* doc=NULL);
 
     virtual RS_Layer* requestNewLayerDialog(
@@ -152,10 +151,10 @@ public:
         RS_BlockList* /*blockList*/) {}
     virtual void closeEditBlockWindow(
         RS_Block* /*blockList*/) {}
-    //virtual RS_String requestFileSaveAsDialog();
-    //virtual RS_String requestFileOpenDialog();
+    //virtual QString requestFileSaveAsDialog();
+    //virtual QString requestFileOpenDialog();
 	
-    virtual RS_String requestImageOpenDialog();
+    virtual QString requestImageOpenDialog();
 
 
     virtual void requestOptions(RS_ActionInterface* action,
@@ -239,16 +238,6 @@ public:
     virtual bool requestModifyEntityDialog(RS_Entity* entity);
     virtual bool requestTextDialog(RS_Text* text);
     virtual bool requestHatchDialog(RS_Hatch* hatch);
-	
-#ifdef RS_CAM
-    virtual bool requestCamOptionsDialog(RS_Graphic& graphic);
-#endif
-
-#ifdef RVT_CAM
-    virtual bool requestCamProfileDialog(RVT_CAMProfileData& data);
-#endif
-
-
     virtual void requestOptionsGeneralDialog();
     virtual void requestOptionsDrawingDialog(RS_Graphic& graphic);
 
@@ -256,11 +245,11 @@ public:
 
     virtual void updateCoordinateWidget(const RS_Vector& abs,
                                         const RS_Vector& rel,
-										bool updateFormat=false);
-    virtual void updateMouseWidget(const RS_String& left,
-                                   const RS_String& right);
+                                        bool updateFormat=false);
+    virtual void updateMouseWidget(const QString& left,
+                                   const QString& right);
     virtual void updateSelectionWidget(int num);
-    virtual void commandMessage(const RS_String& message);
+    virtual void commandMessage(const QString& message);
 	virtual bool isAdapter() { return false; }
 
 	static QString extToFormat(const QString& ext);

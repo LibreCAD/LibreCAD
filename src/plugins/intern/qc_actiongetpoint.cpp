@@ -27,6 +27,8 @@
 #include "qc_actiongetpoint.h"
 
 #include "rs_snapper.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 
 
@@ -52,7 +54,7 @@ void QC_ActionGetPoint::trigger() {
 }
 
 
-void QC_ActionGetPoint::mouseMoveEvent(RS_MouseEvent* e) {
+void QC_ActionGetPoint::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent begin");
     if (getStatus()==SetReferencePoint ||
             getStatus()==SetTargetPoint) {
@@ -87,7 +89,7 @@ void QC_ActionGetPoint::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void QC_ActionGetPoint::mouseReleaseEvent(RS_MouseEvent* e) {
+void QC_ActionGetPoint::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);

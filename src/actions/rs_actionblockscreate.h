@@ -28,7 +28,6 @@
 #define RS_ACTIONBLOCKSCREATE_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_insert.h"
 
 /**
  * This action class can handle user events for creating blocks from 
@@ -62,12 +61,12 @@ public:
 
     virtual void trigger();
 
-    virtual void mouseMoveEvent(RS_MouseEvent* e);
-    virtual void mouseReleaseEvent(RS_MouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
 
     virtual void coordinateEvent(RS_CoordinateEvent* e);
     //virtual void commandEvent(RS_CommandEvent* e);
-	//virtual RS_StringList getAvailableCommands();
+        //virtual QStringList getAvailableCommands();
 
 	//virtual void showOptions();
 	//virtual void hideOptions();

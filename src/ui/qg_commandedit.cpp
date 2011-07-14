@@ -25,21 +25,14 @@
 **********************************************************************/
 
 #include "qg_commandedit.h"
-//Added by qt3to4:
-#include <QFocusEvent>
-#include <QKeyEvent>
-#include <QEvent>
-
-
-#include "rs_debug.h"
 
 
 /**
  * Default Constructor. You must call init manually if you choose
  * to use this constructor.
  */
-QG_CommandEdit::QG_CommandEdit(QWidget* parent, const char* name)
-        : QLineEdit(parent, name) {}
+QG_CommandEdit::QG_CommandEdit(QWidget* parent)
+        : QLineEdit(parent) {}
 
 
 

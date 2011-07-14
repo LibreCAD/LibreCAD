@@ -27,6 +27,7 @@
 #define QG_CADTOOLBARPOLYLINES_H
 
 class QG_CadToolBar;
+class QG_ActionHandler;
 
 #include "ui_qg_cadtoolbarpolylines.h"
 
@@ -35,7 +36,7 @@ class QG_CadToolBarPolylines : public QWidget, public Ui::QG_CadToolBarPolylines
     Q_OBJECT
 
 public:
-    QG_CadToolBarPolylines(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_CadToolBarPolylines(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_CadToolBarPolylines();
 
 public slots:

@@ -30,38 +30,15 @@
 
 #include "rs_entitycontainer.h"
 
-#include <stdarg.h>
-#include <qmap.h>
+#include <QMap>
+#include <QKeyEvent>
 
-#include "rs.h"
-#include "rs_blocklist.h"
-#include "rs_color.h"
-#include "rs_keyevent.h"
-#include "rs_linetypepattern.h"
-#include "rs_mouseevent.h"
-#include "rs_commandevent.h"
 
 class RS_ActionInterface;
-//class RS_DimensionData;
-//class RS_DimLinearData;
 class RS_EventHandler;
 class RS_Grid;
-class RS_Insert;
-class RS_Painter;
-class RS_Solid;
-class RS_Text;
-class RS_Hatch;
-class RS_Painter;
-class RS_EntityContainer;
-//class RS_MirrorData;
-//class RS_MoveData;
-//class RS_MoveRotateData;
-//class RS_Rotate2Data;
-//class RS_RotateData;
-//class RS_ScaleData;
-//class RS_BevelData;
-//class RS_RoundData;
-
+class RS_CommandEvent;
+class RS_LineTypePattern;
 
 
 /**
@@ -293,13 +270,13 @@ public:
     void back();
     void enter();
 
-    void mousePressEvent(RS_MouseEvent* e);
-    void mouseReleaseEvent(RS_MouseEvent* e);
-    void mouseMoveEvent(RS_MouseEvent* e);
+    void mousePressEvent(QMouseEvent* e);
+    void mouseReleaseEvent(QMouseEvent* e);
+    void mouseMoveEvent(QMouseEvent* e);
     void mouseLeaveEvent();
     void mouseEnterEvent();
-    void keyPressEvent(RS_KeyEvent* e);
-    void keyReleaseEvent(RS_KeyEvent* e);
+    void keyPressEvent(QKeyEvent* e);
+    void keyReleaseEvent(QKeyEvent* e);
 	void commandEvent(RS_CommandEvent* e);
 	void enableCoordinateInput();
 	void disableCoordinateInput();
@@ -362,7 +339,7 @@ public:
     bool isGridOn();
 
     RS_Vector toGui(RS_Vector v);
-    double toGuiX(double x, bool* visible=NULL);
+    double toGuiX(double x);
     double toGuiY(double y);
     double toGuiDX(double d);
     double toGuiDY(double d);

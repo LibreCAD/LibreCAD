@@ -27,6 +27,7 @@
 #define QG_CADTOOLBARSPLINES_H
 
 class QG_CadToolBar;
+class QG_ActionHandler;
 
 #include "ui_qg_cadtoolbarsplines.h"
 
@@ -35,7 +36,7 @@ class QG_CadToolBarSplines : public QWidget, public Ui::QG_CadToolBarSplines
     Q_OBJECT
 
 public:
-    QG_CadToolBarSplines(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_CadToolBarSplines(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_CadToolBarSplines();
 
 public slots:

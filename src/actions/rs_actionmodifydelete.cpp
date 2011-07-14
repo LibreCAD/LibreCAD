@@ -26,10 +26,10 @@
 
 #include "rs_actionmodifydelete.h"
 
-#include "rs_actionselectsingle.h"
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_modification.h"
-#include "rs_snapper.h"
-#include "rs_point.h"
 
 
 

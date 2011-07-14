@@ -103,16 +103,13 @@ int main(int argc, char** argv) {
         RS_FILEIO->registerFilter(new RS_FilterCXF());
         RS_FILEIO->registerFilter(new RS_FilterDXF());
         RS_FILEIO->registerFilter(new RS_FilterDXF1());
-#ifdef RS_OPT_CAM
-        RS_FILEIO->registerFilter(new RS_FilterCAM());
-#endif
 
         // parse command line arguments that might not need a launched program:
         QStringList fileList = handleArgs(argc, argv);
 
-        RS_String lang;
-        RS_String langCmd;
-        RS_String unit;
+        QString lang;
+        QString langCmd;
+        QString unit;
 
         RS_SETTINGS->beginGroup("/Defaults");
 #ifndef QC_PREDEFINED_UNIT
@@ -296,57 +293,7 @@ QStringList handleArgs(int argc, char** argv) {
                 else if (QString(argv[i])=="--exit") {
                         doexit = true;
                 }
-#ifdef RS_CAM
-                else if (QString(argv[i])=="--convert") {
-                        ++i;
-                        if (i<argc) {
-                                machine = QString(argv[i]);
-                        }
-                        else {
-                        RS_DEBUG->print(RS_Debug::D_WARNING,
-                                        "No machine configuration given after --convert. "
-                                    "Aborting..");
-                                exit(1);
-                        }
-                        ++i;
-                        if (i<argc) {
-                                input = QString(argv[i]);
-                        }
-                        else {
-                        RS_DEBUG->print(RS_Debug::D_WARNING,
-                                        "No input given after --convert. "
-                                    "Aborting..");
-                                exit(1);
-                        }
-                        ++i;
-                        if (i<argc) {
-                                output = QString(argv[i]);
-                        }
-                        else {
-                        RS_DEBUG->print(RS_Debug::D_WARNING,
-                                        "No output given after --convert. "
-                                    "Aborting..");
-                                exit(1);
-                        }
-                }
-#endif
         }
-
-#ifdef RS_CAM
-        // auto cam convert
-        if (machine.isEmpty()==false && input.isEmpty()==false &&
-                output.isEmpty()==false) {
-
-                RS_FilterCAM fc;
-                RS_Graphic gr;
-                RS_FILEIO->fileImport(gr, input, RS2::FormatUnknown);
-                RS_CamDialog dlg(gr, NULL);
-                dlg.activateMachineGenerator(machine);
-                dlg.externalOK();
-                fc.sort(gr);
-                fc.fileExport(gr, output, RS2::FormatCAM);
-        }
-#endif
 
         if (doexit) {
                 exit(0);

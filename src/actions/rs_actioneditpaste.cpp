@@ -26,6 +26,9 @@
 
 #include "rs_actioneditpaste.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_clipboard.h"
 #include "rs_modification.h"
 
@@ -79,7 +82,7 @@ void RS_ActionEditPaste::trigger() {
 }
 
 
-void RS_ActionEditPaste::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case SetTargetPoint:
         targetPoint = snapPoint(e);
@@ -104,7 +107,7 @@ void RS_ActionEditPaste::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionEditPaste::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionEditPaste::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);

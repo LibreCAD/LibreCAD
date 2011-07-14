@@ -40,7 +40,7 @@
  * Data needed to insert library items.
  */
 struct RS_LibraryInsertData {
-	RS_String file;
+        QString file;
 	RS_Vector insertionPoint;
 	double factor;
 	double angle;

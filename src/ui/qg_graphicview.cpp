@@ -54,8 +54,8 @@
 
 #include "qg_cadtoolbar.h"
 
+#include "rs_dialogfactory.h"
 #include "qg_dialogfactory.h"
-#include "qg_qt2rs.h"
 
 
 #define QG_SCROLLMARGIN 400
@@ -283,7 +283,7 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
 /**
  * Sets the text for the grid status widget in the left bottom corner.
  */
-void QG_GraphicView::updateGridStatusWidget(const RS_String& text) {
+void QG_GraphicView::updateGridStatusWidget(const QString& text) {
     gridStatus->setText(text);
 }
 
@@ -314,7 +314,7 @@ void QG_GraphicView::resizeEvent(QResizeEvent* /*e*/) {
 
 
 void QG_GraphicView::emulateMouseMoveEvent() {
-    RS_MouseEvent e(QEvent::MouseMove, QPoint(mx, my),
+    QMouseEvent e(QEvent::MouseMove, QPoint(mx, my),
                     Qt::NoButton, Qt::NoButton);
     //mouseMoveEvent(&e);
 }
@@ -354,7 +354,7 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* e) {
 
 void QG_GraphicView::mouseMoveEvent(QMouseEvent* e) {
     //RS_DEBUG->print("QG_GraphicView::mouseMoveEvent begin");
-    //RS_MouseEvent rsm = QG_Qt2Rs::mouseEvent(e);
+    //QMouseEvent rsm = QG_Qt2Rs::mouseEvent(e);
 
     RS_GraphicView::mouseMoveEvent(e);
     QWidget::mouseMoveEvent(e);

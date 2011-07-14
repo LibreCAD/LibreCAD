@@ -30,13 +30,8 @@
 
 #include "rs_dialogfactoryinterface.h"
 #include "rs_block.h"
-#include "rs_layer.h"
 
 class RS_BlockList;
-class RS_LayerList;
-#ifdef RVT_CAM
-class RVT_CAMProfileData;
-#endif
 
 /**
  * Adapter for dialog factory interface.
@@ -47,8 +42,8 @@ public:
     RS_DialogFactoryAdapter() {}
     virtual ~RS_DialogFactoryAdapter() {}
     virtual void requestPreviousMenu() {}
-    virtual void requestWarningDialog(const RS_String& ) {}
-    virtual RS_GraphicView* requestNewDocument(const RS_String& = RS_String::null, 
+    virtual void requestWarningDialog(const QString& ) {}
+    virtual RS_GraphicView* requestNewDocument(const QString& = QString::null,
 			RS_Document* =NULL) { return NULL; }
     virtual RS_Layer* requestNewLayerDialog(
         RS_LayerList* = NULL) { return NULL; }
@@ -65,7 +60,7 @@ public:
     virtual void requestEditBlockWindow(
         RS_BlockList* ) {}
 	virtual void closeEditBlockWindow(RS_Block* ) {}
-    virtual RS_String requestImageOpenDialog() { return ""; }
+    virtual QString requestImageOpenDialog() { return ""; }
     virtual void requestOptions(RS_ActionInterface* , 
 		bool , bool = false) {}
     virtual void requestSnapDistOptions(double& , bool ) {}
@@ -85,19 +80,13 @@ public:
     virtual bool requestHatchDialog(RS_Hatch* ) { return false; }
     virtual void requestOptionsGeneralDialog() {}
     virtual void requestOptionsDrawingDialog(RS_Graphic& ) {}
-#ifdef RS_CAM
-    virtual bool requestCamOptionsDialog(RS_Graphic& ) { printf("fake\n"); return false; }
-#endif
-#ifdef RVT_CAM
-    virtual bool requestCamProfileDialog(RVT_CAMProfileData&  ) { return false; }
-#endif
     virtual void updateCoordinateWidget(const RS_Vector& ,
 										const RS_Vector& ,
 										bool =false) {}
-    virtual void updateMouseWidget(const RS_String& ,
-                                   const RS_String& ) {}
+    virtual void updateMouseWidget(const QString& ,
+                                   const QString& ) {}
     virtual void updateSelectionWidget(int ) {}
-    virtual void commandMessage(const RS_String& ) {}
+    virtual void commandMessage(const QString& ) {}
 	virtual bool isAdapter() { return true; }
 };
 

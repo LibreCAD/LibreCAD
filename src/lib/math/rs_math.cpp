@@ -274,7 +274,7 @@ double RS_Math::eval(const QString& expr, double def) {
  * Evaluates a mathematical expression and returns the result.
  * If an error occured, ok will be set to false (if ok isn't NULL).
  */
-//double RS_Math::eval(const RS_String& expr, bool* ok);
+//double RS_Math::eval(const QString& expr, bool* ok);
 
 
 /**

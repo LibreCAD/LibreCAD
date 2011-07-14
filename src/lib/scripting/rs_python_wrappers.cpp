@@ -70,24 +70,24 @@ RS_Graphic* currentGraphic() { return RS_PYTHON->getGraphic(); }
        creation of new documents, ... */
 
 /* To/From Python string conversion logic for string management */
-namespace RS_String_Python_Conversions {
+namespace QString_Python_Conversions {
     namespace {
-        struct RS_String_to_python_str
+        struct QString_to_python_str
         {
-            static PyObject* convert(RS_String const& s)
+            static PyObject* convert(QString const& s)
             {
                 return boost::python::incref(boost::python::object((const char*)s).ptr());
             }
         };
 
-        struct RS_String_from_python_str
+        struct QString_from_python_str
         {
-            RS_String_from_python_str()
+            QString_from_python_str()
             {
                 boost::python::converter::registry::push_back(
                     &convertible,
                     &construct,
-                    boost::python::type_id<RS_String>());
+                    boost::python::type_id<QString>());
             }
 
             static void* convertible(PyObject* obj_ptr)
@@ -104,9 +104,9 @@ namespace RS_String_Python_Conversions {
                 if (!value)
                     boost::python::throw_error_already_set();
                 void* storage = (
-                    (boost::python::converter::rvalue_from_python_storage<RS_String>*)
+                    (boost::python::converter::rvalue_from_python_storage<QString>*)
                     data)->storage.bytes;
-                new (storage) RS_String(value);
+                new (storage) QString(value);
                 data->convertible = storage;
             }
         };
@@ -116,9 +116,9 @@ namespace RS_String_Python_Conversions {
             using namespace boost::python;
 
             boost::python::to_python_converter<
-                RS_String, RS_String_to_python_str>();
+                QString, QString_to_python_str>();
 
-            RS_String_from_python_str();
+            QString_from_python_str();
         }
     }
 }
@@ -147,13 +147,13 @@ ADDVERTEX_FUNCTION(RS_EntityContainer_addPoint, RS_Point)
 ADDVERTEX_FUNCTION(RS_EntityContainer_addPolyline, RS_Polyline)
 
 /* Overloaded functions helpers */
-void (RS_LayerList::*RS_LayerList_activate_string)(const RS_String&) = &RS_LayerList::activate;
+void (RS_LayerList::*RS_LayerList_activate_string)(const QString&) = &RS_LayerList::activate;
 void (RS_LayerList::*RS_LayerList_activate_layer)(RS_Layer*) = &RS_LayerList::activate;
-void (RS_LayerList::*RS_LayerList_toggle_string)(const RS_String&) = &RS_LayerList::toggle;
-void (RS_LayerList::*RS_LayerList_toggle_layer)(const RS_String&) = &RS_LayerList::toggle;
-void (RS_Graphic::*RS_Graphic_toggleLayer_string)(const RS_String&) = &RS_Graphic::toggleLayer;
+void (RS_LayerList::*RS_LayerList_toggle_string)(const QString&) = &RS_LayerList::toggle;
+void (RS_LayerList::*RS_LayerList_toggle_layer)(const QString&) = &RS_LayerList::toggle;
+void (RS_Graphic::*RS_Graphic_toggleLayer_string)(const QString&) = &RS_Graphic::toggleLayer;
 void (RS_Graphic::*RS_Graphic_toggleLayer_layer)(RS_Layer*) = &RS_Graphic::toggleLayer;
-void (RS_Entity::*RS_Entity_setLayer_string)(const RS_String&) = &RS_Entity::setLayer;
+void (RS_Entity::*RS_Entity_setLayer_string)(const QString&) = &RS_Entity::setLayer;
 void (RS_Entity::*RS_Entity_setLayer_layer)(RS_Layer*) = &RS_Entity::setLayer;
 
 /**
@@ -163,7 +163,7 @@ void (RS_Entity::*RS_Entity_setLayer_layer)(RS_Layer*) = &RS_Entity::setLayer;
 BOOST_PYTHON_MODULE(librecad)
 {
     /* Initialization code */
-    RS_String_Python_Conversions::registerConversions();
+    QString_Python_Conversions::registerConversions();
     
     /* Unbound functions */
     
@@ -352,13 +352,13 @@ BOOST_PYTHON_MODULE(librecad)
     ;
 
     class_<RS_LayerData>("LayerData")
-        .def(init<const RS_String&, const RS_Pen&, bool>())
+        .def(init<const QString&, const RS_Pen&, bool>())
 	.def_readwrite("name", &RS_LayerData::name)
 	.def_readwrite("pen", &RS_LayerData::pen)
 	.def_readwrite("frozen", &RS_LayerData::frozen)
     ;
 
-    class_<RS_Layer, std::auto_ptr<RS_Layer> >("Layer", init<const RS_String&>())
+    class_<RS_Layer, std::auto_ptr<RS_Layer> >("Layer", init<const QString&>())
         .add_property("name", &RS_Layer::getName, &RS_Layer::setName)
 	.add_property("pen", &RS_Layer::getPen, &RS_Layer::setPen)
 	.add_property("frozen", &RS_Layer::isFrozen, &RS_Layer::freeze)
@@ -466,7 +466,7 @@ BOOST_PYTHON_MODULE(librecad)
     ;
 
     class_<RS_BlockData>("BlockData")
-        .def(init<RS_String&, const RS_Vector&, bool>())
+        .def(init<QString&, const RS_Vector&, bool>())
 	.add_property("valid", &RS_BlockData::isValid)
 	.def_readwrite("name", &RS_BlockData::name)
 	.def_readwrite("basePoint", &RS_BlockData::basePoint)
@@ -489,7 +489,7 @@ BOOST_PYTHON_MODULE(librecad)
     ;
 
     class_<RS_ImageData>("ImageData")
-        .def(init<int, const RS_Vector&, const RS_Vector&, const RS_Vector&, const RS_Vector&, const RS_String&, int, int, int>())
+        .def(init<int, const RS_Vector&, const RS_Vector&, const RS_Vector&, const RS_Vector&, const QString&, int, int, int>())
 	.def_readwrite("handle", &RS_ImageData::handle)
 	.def_readwrite("insertionPoint", &RS_ImageData::insertionPoint)
 	.def_readwrite("uVector", &RS_ImageData::uVector)

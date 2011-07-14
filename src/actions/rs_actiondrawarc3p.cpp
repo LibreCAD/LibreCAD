@@ -26,10 +26,12 @@
 
 #include "rs_actiondrawarc3p.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_actiondrawarc.h"
 #include "rs_commands.h"
-#include "rs_snapper.h"
-#include "rs_dialogfactory.h"
+#include "rs_commandevent.h"
 
 
 
@@ -114,7 +116,7 @@ void RS_ActionDrawArc3P::preparePreview() {
 }
 
 
-void RS_ActionDrawArc3P::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
 
     switch (getStatus()) {
@@ -152,7 +154,7 @@ void RS_ActionDrawArc3P::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawArc3P::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawArc3P::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -196,7 +198,7 @@ void RS_ActionDrawArc3P::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawArc3P::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
@@ -213,8 +215,8 @@ void RS_ActionDrawArc3P::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawArc3P::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawArc3P::getAvailableCommands() {
+    QStringList cmd;
     return cmd;
 }
 

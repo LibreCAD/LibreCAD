@@ -31,8 +31,6 @@
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 #include "rs_graphic.h"
-#include "rs_valuelist.h"
-
 
 /**
  * Constructor.
@@ -67,7 +65,7 @@ void RS_Spline::calculateBorders() {
     /*minV = RS_Vector::minimum(data.startpoint, data.endpoint);
     maxV = RS_Vector::maximum(data.startpoint, data.endpoint);
 
-    RS_ValueList<RS_Vector>::iterator it;
+    QList<RS_Vector>::iterator it;
     for (it = data.controlPoints.begin(); 
     it!=data.controlPoints.end(); ++it) {
 
@@ -358,7 +356,7 @@ void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view) {
    / *
       if (data.controlPoints.count()>0) {
           RS_Vector prev(false);
-          RS_ValueList<RS_Vector>::iterator it;
+          QList<RS_Vector>::iterator it;
           for (it = data.controlPoints.begin(); it!=data.controlPoints.end(); ++it) {
               if (prev.valid) {
                   painter->drawLine(view->toGui(prev),
@@ -380,7 +378,7 @@ void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view) {
    double* h = new double[npts+1];
    double* p = new double[p1*3+1];
  
-   RS_ValueList<RS_Vector>::iterator it;
+   QList<RS_Vector>::iterator it;
    i = 1;
    for (it = data.controlPoints.begin(); it!=data.controlPoints.end(); ++it) {
        b[i] = (*it).x;
@@ -438,7 +436,7 @@ void RS_Spline::addControlPoint(const RS_Vector& v) {
  * Removes the control point that was last added.
  */
 void RS_Spline::removeLastControlPoint() {
-    data.controlPoints.pop_back(); //RLZ toy aqui
+    data.controlPoints.pop_back();
 }
 
 

@@ -67,7 +67,7 @@ RS_Python* RS_Python::instance() {
 /**
  * Launches the given script.
  */
-int RS_Python::launch(const RS_String& script) {
+int RS_Python::launch(const QString& script) {
     PyObject *modname, *mod, *mdict, *func, *rslt;
     //Py_SetProgramName(argv[0]);
 

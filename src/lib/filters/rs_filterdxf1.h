@@ -62,9 +62,9 @@ public:
 		return false;
 	}*/
 
-    virtual bool fileImport(RS_Graphic& g, const RS_String& file, RS2::FormatType /*type*/);
+    virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/);
 
-    virtual bool fileExport(RS_Graphic& /*g*/, const RS_String& /*file*/, 
+    virtual bool fileExport(RS_Graphic& /*g*/, const QString& /*file*/,
 		RS2::FormatType /*type*/) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "Exporting of QCad 1.x file not implemented");
@@ -83,7 +83,7 @@ public:
     void    delBuffer();
     void    dos2unix();
 
-    RS_String getBufLine();
+    QString getBufLine();
     char*   getBufLineCh();
     char*   getBuf() {
         return fBuf;
@@ -109,7 +109,7 @@ public:
     bool    readFileInBuffer(char* _name, int _bNum=-1);
     bool    readFileInBuffer(int _bNum=-1);
 
-    void     strDecodeDxfString(RS_String& str);
+    void     strDecodeDxfString(QString& str);
     bool     mtCompFloat(double _v1, double _v2, double _tol=1.0e-6);
 
 protected:
@@ -121,7 +121,7 @@ protected:
     uint    fSize;            // Filesize
     bool    dosFile;          // File is in DOS-format
     int       numElements;
-    RS_String name;
+    QString name;
     QFile  file;
 }
 ;

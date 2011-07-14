@@ -461,7 +461,7 @@ RS_Document* RS_Entity::getDocument() {
  * @param key Variable name (e.g. "$DIMASZ")
  * @param val Default value
  */
-void RS_Entity::addGraphicVariable(const RS_String& key, double val, int code) {
+void RS_Entity::addGraphicVariable(const QString& key, double val, int code) {
     RS_Graphic* graphic = getGraphic();
     if (graphic!=NULL) {
         graphic->addVariable(key, val, code);
@@ -476,7 +476,7 @@ void RS_Entity::addGraphicVariable(const RS_String& key, double val, int code) {
  * @param key Variable name (e.g. "$DIMASZ")
  * @param val Default value
  */
-void RS_Entity::addGraphicVariable(const RS_String& key, int val, int code) {
+void RS_Entity::addGraphicVariable(const QString& key, int val, int code) {
     RS_Graphic* graphic = getGraphic();
     if (graphic!=NULL) {
         graphic->addVariable(key, val, code);
@@ -491,8 +491,8 @@ void RS_Entity::addGraphicVariable(const RS_String& key, int val, int code) {
  * @param key Variable name (e.g. "$DIMASZ")
  * @param val Default value
  */
-void RS_Entity::addGraphicVariable(const RS_String& key,
-                                   const RS_String& val, int code) {
+void RS_Entity::addGraphicVariable(const QString& key,
+                                   const QString& val, int code) {
     RS_Graphic* graphic = getGraphic();
     if (graphic!=NULL) {
         graphic->addVariable(key, val, code);
@@ -510,7 +510,7 @@ void RS_Entity::addGraphicVariable(const RS_String& key,
  * @return value of variable or default value if the given variable
  *    doesn't exist.
  */
-double RS_Entity::getGraphicVariableDouble(const RS_String& key, double def) {
+double RS_Entity::getGraphicVariableDouble(const QString& key, double def) {
     RS_Graphic* graphic = getGraphic();
     double ret=def;
     if (graphic!=NULL) {
@@ -530,7 +530,7 @@ double RS_Entity::getGraphicVariableDouble(const RS_String& key, double def) {
  * @return value of variable or default value if the given variable
  *    doesn't exist.
  */
-int RS_Entity::getGraphicVariableInt(const RS_String& key, int def) {
+int RS_Entity::getGraphicVariableInt(const QString& key, int def) {
     RS_Graphic* graphic = getGraphic();
     int ret=def;
     if (graphic!=NULL) {
@@ -550,10 +550,10 @@ int RS_Entity::getGraphicVariableInt(const RS_String& key, int def) {
  * @return value of variable or default value if the given variable
  *    doesn't exist.
  */
-RS_String RS_Entity::getGraphicVariableString(const RS_String& key,
-        const RS_String&  def) {
+QString RS_Entity::getGraphicVariableString(const QString& key,
+        const QString&  def) {
     RS_Graphic* graphic = getGraphic();
-    RS_String ret=def;
+    QString ret=def;
     if (graphic!=NULL) {
         ret = graphic->getVariableString(key, def);
     }
@@ -611,7 +611,7 @@ RS_Layer* RS_Entity::getLayer(bool resolve) const {
 /**
  * Sets the layer of this entity to the layer with the given name 
  */
-void RS_Entity::setLayer(const RS_String& name) {
+void RS_Entity::setLayer(const QString& name) {
     RS_Graphic* graphic = getGraphic();
     if (graphic!=NULL) {
         layer = graphic->findLayer(name);
@@ -797,7 +797,7 @@ double RS_Entity::getStyleFactor(RS_GraphicView* view) {
 /**
  * @return User defined variable connected to this entity or NULL if not found.
  */
-RS_String RS_Entity::getUserDefVar(RS_String key) {
+QString RS_Entity::getUserDefVar(QString key) {
     return varList.value(key, NULL);
 }
 
@@ -805,7 +805,7 @@ RS_String RS_Entity::getUserDefVar(RS_String key) {
 /**
  * Add a user defined variable to this entity.
  */
-void RS_Entity::setUserDefVar(RS_String key, RS_String val) {
+void RS_Entity::setUserDefVar(QString key, QString val) {
     varList.insert(key, val);
 }
 
@@ -814,7 +814,7 @@ void RS_Entity::setUserDefVar(RS_String key, RS_String val) {
 /**
  * Deletes the given user defined variable.
  */
-void RS_Entity::delUserDefVar(RS_String key) {
+void RS_Entity::delUserDefVar(QString key) {
     varList.remove(key);
 }
 
@@ -823,7 +823,7 @@ void RS_Entity::delUserDefVar(RS_String key) {
 /**
  * @return A list of all keys connected to this entity.
  */
-QList<RS_String> RS_Entity::getAllKeys() {
+QList<QString> RS_Entity::getAllKeys() {
     return varList.keys();
 }
 

@@ -28,7 +28,6 @@
 #define RS_ACTIONEDITUNDO_H
 
 #include "rs_actioninterface.h"
-#include "rs_undo.h"
 
 /**
  * This action class can handle user events for undo / redo.

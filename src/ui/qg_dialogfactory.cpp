@@ -91,17 +91,7 @@
 #include "qg_splineoptions.h"
 #include "qg_textoptions.h"
 #include "qg_trimamountoptions.h"
-
 #include "qg_polylineoptions.h"
-
-#ifdef RS_CAM
-#include "rs_camdialog.h"
-#endif
-
-#ifdef RVT_CAM
-#include "rvt_cammakeprofiledialog.h"
-#endif
-
 #include "qg_layerwidget.h"
 #include "qg_mainwindowinterface.h"
 
@@ -146,7 +136,7 @@ QG_DialogFactory::~QG_DialogFactory() {
 /**
  * Shows a message dialog.
  */
-void QG_DialogFactory::requestWarningDialog(const RS_String& warning) {
+void QG_DialogFactory::requestWarningDialog(const QString& warning) {
     QMessageBox::information(parent, QMessageBox::tr("Warning"),
                              warning,
                              QMessageBox::Ok);
@@ -157,7 +147,7 @@ void QG_DialogFactory::requestWarningDialog(const RS_String& warning) {
 /**
  * Requests a new document from the main window.
  */
-RS_GraphicView* QG_DialogFactory::requestNewDocument(const RS_String& fileName, RS_Document* doc) {
+RS_GraphicView* QG_DialogFactory::requestNewDocument(const QString& fileName, RS_Document* doc) {
 	if (mainWindow!=NULL) {
 		mainWindow->createNewDocument(fileName, doc);
 		return mainWindow->getGraphicView();
@@ -430,12 +420,12 @@ RS_Block* QG_DialogFactory::requestBlockRemovalDialog(RS_BlockList* blockList) {
  *         or an empty string if the dialog was cancelled.
  */
 /*
-RS_String QG_DialogFactory::requestFileSaveAsDialog() {
+QString QG_DialogFactory::requestFileSaveAsDialog() {
     // read default settings:
     RS_SETTINGS->beginGroup("/Paths");
-    RS_String defDir = RS_SETTINGS->readEntry("/Save",
+    QString defDir = RS_SETTINGS->readEntry("/Save",
                        RS_SYSTEM->getHomeDir());
-    RS_String defFilter = RS_SETTINGS->readEntry("/SaveFilter",
+    QString defFilter = RS_SETTINGS->readEntry("/SaveFilter",
                           "Drawing Exchange (*.dxf)");
     RS_SETTINGS->endGroup();
  
@@ -444,7 +434,7 @@ RS_String QG_DialogFactory::requestFileSaveAsDialog() {
     QStringList filters;
     bool done = false;
     bool cancel = false;
-    RS_String fn = "";
+    QString fn = "";
  
     filters.append("Drawing Exchange (*.dxf)");
     filters.append("Font (*.cxf)");
@@ -522,14 +512,14 @@ RS_String QG_DialogFactory::requestFileSaveAsDialog() {
  * @return File name with path and extension to determine the file type
  *         or an empty string if the dialog was cancelled.
  */
-RS_String QG_DialogFactory::requestImageOpenDialog() {
-    RS_String fn = "";
+QString QG_DialogFactory::requestImageOpenDialog() {
+    QString fn = "";
 
     // read default settings:
     RS_SETTINGS->beginGroup("/Paths");
-    RS_String defDir = RS_SETTINGS->readEntry("/OpenImage",
+    QString defDir = RS_SETTINGS->readEntry("/OpenImage",
                        RS_SYSTEM->getHomeDir());
-    RS_String defFilter = RS_SETTINGS->readEntry("/ImageFilter",
+    QString defFilter = RS_SETTINGS->readEntry("/ImageFilter",
                           "Portable Network Graphic (*.png)");
     RS_SETTINGS->endGroup();
 
@@ -1648,41 +1638,6 @@ bool QG_DialogFactory::requestHatchDialog(RS_Hatch* hatch) {
     return false;
 }
 
-
-
-/**
- * Shows a dialog for CAM options.
- */
-#ifdef RS_CAM
-bool QG_DialogFactory::requestCamOptionsDialog(RS_Graphic& graphic) {
-	RS_DEBUG->print("QG_DialogFactory::requestCamOptionsDialog");
-	RS_CamDialog dlg(graphic, parent);
-	RS_DEBUG->print("QG_DialogFactory::requestCamOptionsDialog: exec");
-	if (dlg.exec()) {
-		RS_DEBUG->print("QG_DialogFactory::requestCamOptionsDialog: OK");
-		return true;
-	}
-    RS_DEBUG->print("QG_DialogFactory::requestCamOptionsDialog: Cancel");
-	return false;
-}
-#endif
-
-#ifdef RVT_CAM
-bool QG_DialogFactory::requestCamProfileDialog(RVT_CAMProfileData& data) {
-	RS_DEBUG->print("QG_DialogFactory::requestCamProfileDialog");
-        RVT_CamMakeProfileDialog dlg(parent);
-	dlg.setData(&data);
-	RS_DEBUG->print("QG_DialogFactory::requestCamProfileDialog: exec");
-	if (dlg.exec()) {
-		dlg.updateData();
-		RS_DEBUG->print("QG_DialogFactory::requestCamOptionsDialog: OK");
-		return true;
-	}
-    RS_DEBUG->print("QG_DialogFactory::requestCamProfileDialog: Cancel");
-	return false;
-}
-#endif
-
 /**
  * Shows dialog for general application options.
  */
@@ -1729,8 +1684,8 @@ void QG_DialogFactory::updateCoordinateWidget(const RS_Vector& abs,
 /**
  * Called when an action has a mouse hint.
  */
-void QG_DialogFactory::updateMouseWidget(const RS_String& left,
-        const RS_String& right) {
+void QG_DialogFactory::updateMouseWidget(const QString& left,
+        const QString& right) {
     if (mouseWidget!=NULL) {
         mouseWidget->setHelp(left, right);
     }
@@ -1754,7 +1709,7 @@ void QG_DialogFactory::updateSelectionWidget(int num) {
 /**
  * Called when an action needs to communicate 'message' to the user.
  */
-void QG_DialogFactory::commandMessage(const RS_String& message) {
+void QG_DialogFactory::commandMessage(const QString& message) {
 	RS_DEBUG->print("QG_DialogFactory::commandMessage");
     if (commandWidget!=NULL) {
         commandWidget->appendHistory(message);

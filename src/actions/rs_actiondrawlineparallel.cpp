@@ -26,8 +26,12 @@
 
 #include "rs_actiondrawlineparallel.h"
 
+#include <QAction>
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_creation.h"
-#include "rs_snapper.h"
+#include "rs_commands.h"
+#include "rs_commandevent.h"
 #include "rs_actiondrawlineparallelthrough.h"
 
 
@@ -80,7 +84,7 @@ void RS_ActionDrawLineParallel::trigger() {
 
 
 
-void RS_ActionDrawLineParallel::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent begin");
 
     coord = RS_Vector(graphicView->toGraphX(e->x()),
@@ -110,7 +114,7 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawLineParallel::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLineParallel::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {
@@ -165,7 +169,7 @@ void RS_ActionDrawLineParallel::hideOptions() {
 
 
 void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent* e) {
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         if (RS_DIALOGFACTORY!=NULL) {
@@ -235,8 +239,8 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawLineParallel::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawLineParallel::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetEntity:

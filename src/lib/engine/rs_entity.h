@@ -32,8 +32,6 @@
 
 #include "rs_math.h"
 #include "rs_pen.h"
-/*#include "rs_string.h"
-#include "rs_stringlist.h"*/
 #include "rs_undoable.h"
 #include "rs_vector.h"
 
@@ -99,15 +97,6 @@ public:
     unsigned long int getId() const {
         return id;
     }
-
-    /**
-     *  * @return Unique String that identifies this entity
-     */
-#ifdef RVT_CAM
-    virtual RS_String getCamId() {
-        return 0;
-    }
-#endif
 	
     /**
      * This method must be overwritten in subclasses and return the 

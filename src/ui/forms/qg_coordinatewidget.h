@@ -27,6 +27,9 @@
 #define QG_COORDINATEWIDGET_H
 
 #include "ui_qg_coordinatewidget.h"
+#include "rs.h"
+class RS_Graphic;
+class RS_Vector;
 
 class QG_CoordinateWidget : public QWidget, public Ui::QG_CoordinateWidget
 {

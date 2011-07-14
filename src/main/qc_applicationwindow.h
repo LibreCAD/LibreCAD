@@ -257,10 +257,10 @@ public:
 	 * Creates a new document. Implementation from RS_MainWindowInterface.
 	 */
 	virtual void createNewDocument(
-		const RS_String& fileName = RS_String::null, RS_Document* doc=NULL) {
+                const QString& fileName = QString::null, RS_Document* doc=NULL) {
 		
 		slotFileNew(doc);
-		if (fileName!=RS_String::null && getDocument()!=NULL) {
+                if (fileName!=QString::null && getDocument()!=NULL) {
 			getDocument()->setFilename(fileName);
 		}
 	}
@@ -283,7 +283,7 @@ public:
 
 
 
-	//virtual QToolBar* createToolBar(const RS_String& name);
+        //virtual QToolBar* createToolBar(const QString& name);
 	//virtual void addToolBarButton(QToolBar* tb);
 	
     /**
@@ -410,8 +410,7 @@ private:
 private:
     void loadPlugins();
     QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
-    QC_PluginInterface *pluginInterface;
-    QMenu* pluginMenu;
+    QList<QC_PluginInterface*> loadedPlugins;
 public slots:
     void execPlug();
 

@@ -46,7 +46,7 @@ public:
     RS_Pattern* getPattern() {
         return currentPattern;
     }
-    void setPattern(const RS_String& pName);
+    void setPattern(const QString& pName);
 
     void init();
 

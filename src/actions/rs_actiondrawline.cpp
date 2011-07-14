@@ -25,8 +25,13 @@
 **********************************************************************/
 
 #include "rs_actiondrawline.h"
+
+#include <QAction>
 #include "rs_actioneditundo.h"
-#include "rs_snapper.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commands.h"
+#include "rs_commandevent.h"
 
 
 
@@ -37,7 +42,6 @@ RS_ActionDrawLine::RS_ActionDrawLine(RS_EntityContainer& container,
 
 	RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine");
     reset();
-    history.setAutoDelete(true);
 	RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine: OK");
 }
 
@@ -99,7 +103,7 @@ void RS_ActionDrawLine::trigger() {
 
 
 
-void RS_ActionDrawLine::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent begin");
 
     RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point");
@@ -119,7 +123,7 @@ void RS_ActionDrawLine::mouseMoveEvent(RS_MouseEvent* e) {
 
 
 
-void RS_ActionDrawLine::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_ActionDrawLine::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -144,7 +148,7 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
     case SetStartpoint:
         data.startpoint = mouse;
         history.clear();
-        history.append(new RS_Vector(mouse));
+        history.append(mouse);
         start = data.startpoint;
         setStatus(SetEndpoint);
         graphicView->moveRelativeZero(mouse);
@@ -153,7 +157,7 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
 
     case SetEndpoint:
         data.endpoint = mouse;
-        history.append(new RS_Vector(mouse));
+        history.append(mouse);
         trigger();
         data.startpoint = data.endpoint;
         updateMouseButtonHints();
@@ -170,7 +174,7 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
 
 void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
 	RS_DEBUG->print("RS_ActionDrawLine::commandEvent");
-    RS_String c = e->getCommand().lower();
+    QString c = e->getCommand().toLower();
 
     switch (getStatus()) {
     case SetStartpoint:
@@ -203,17 +207,17 @@ void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
 
 
 
-RS_StringList RS_ActionDrawLine::getAvailableCommands() {
-    RS_StringList cmd;
+QStringList RS_ActionDrawLine::getAvailableCommands() {
+    QStringList cmd;
 
     switch (getStatus()) {
     case SetStartpoint:
         break;
     case SetEndpoint:
-        if (history.count()>=2) {
+        if (history.size()>=2) {
             cmd += command("undo");
         }
-        if (history.count()>=3) {
+        if (history.size()>=3) {
             cmd += command("close");
         }
         break;
@@ -233,17 +237,17 @@ void RS_ActionDrawLine::updateMouseButtonHints() {
                                             tr("Cancel"));
         break;
     case SetEndpoint: {
-            RS_String msg = "";
+            QString msg = "";
 
-            if (history.count()>=3) {
+            if (history.size()>=3) {
                 msg += RS_COMMANDS->command("close");
                 msg += "/";
             }
-            if (history.count()>=2) {
+            if (history.size()>=2) {
                 msg += RS_COMMANDS->command("undo");
             }
 
-            if (history.count()>=2) {
+            if (history.size()>=2) {
                 RS_DIALOGFACTORY->updateMouseWidget(
                     tr("Specify next point or [%1]").arg(msg),
                     tr("Back"));
@@ -292,7 +296,7 @@ void RS_ActionDrawLine::updateToolBar() {
 }
 
 void RS_ActionDrawLine::close() {
-    if (history.count()>2 && start.valid) {
+    if (history.size()>2 && start.valid) {
         data.endpoint = start;
         trigger();
         setStatus(SetStartpoint);
@@ -305,12 +309,12 @@ void RS_ActionDrawLine::close() {
 }
 
 void RS_ActionDrawLine::undo() {
-    if (history.count()>1) {
+    if (history.size()>1) {
         history.removeLast();
         deletePreview();
         graphicView->setCurrentAction(
             new RS_ActionEditUndo(true, *container, *graphicView));
-        data.startpoint = *history.last();
+        data.startpoint = history.last();
         graphicView->moveRelativeZero(data.startpoint);
     } else {
         RS_DIALOGFACTORY->commandMessage(

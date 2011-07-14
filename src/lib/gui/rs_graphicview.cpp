@@ -27,24 +27,14 @@
 
 #include "rs_graphicview.h"
 
-#include <stdio.h>
-
-#include "rs_application.h"
-#include "rs_actioninterface.h"
-#include "rs_block.h"
+#include "rs_linetypepattern.h"
 #include "rs_eventhandler.h"
 #include "rs_graphic.h"
 #include "rs_grid.h"
-#include "rs_insert.h"
-#include "rs_keyevent.h"
-#include "rs_layer.h"
-#include "rs_line.h"
-#include "rs_mouseevent.h"
 #include "rs_painter.h"
 #include "rs_text.h"
 #include "rs_settings.h"
-#include "rs_solid.h"
-#include "rs_entitycontainer.h"
+#include "rs_dialogfactory.h"
 
 
 
@@ -317,7 +307,7 @@ void RS_GraphicView::enter() {
  * Called by the actual GUI class which implements the RS_GraphicView 
  * interface to notify LibreCAD about mouse events.
  */
-void RS_GraphicView::mousePressEvent(RS_MouseEvent* e) {
+void RS_GraphicView::mousePressEvent(QMouseEvent* e) {
     if (eventHandler!=NULL) {
         eventHandler->mousePressEvent(e);
     }
@@ -329,7 +319,7 @@ void RS_GraphicView::mousePressEvent(RS_MouseEvent* e) {
  * Called by the actual GUI class which implements the RS_GraphicView
  * interface to notify LibreCAD about mouse events.
  */
-void RS_GraphicView::mouseReleaseEvent(RS_MouseEvent* e) {
+void RS_GraphicView::mouseReleaseEvent(QMouseEvent* e) {
 	RS_DEBUG->print("RS_GraphicView::mouseReleaseEvent");
     if (eventHandler!=NULL) {
         if (e->button()!=Qt::RightButton ||
@@ -353,7 +343,7 @@ void RS_GraphicView::mouseReleaseEvent(RS_MouseEvent* e) {
  * Called by the actual GUI class which implements the RS_GraphicView
  * interface to notify LibreCAD about mouse events.
  */
-void RS_GraphicView::mouseMoveEvent(RS_MouseEvent* e) {
+void RS_GraphicView::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_GraphicView::mouseMoveEvent begin");
 
     RS_Graphic* graphic = NULL;
@@ -419,7 +409,7 @@ void RS_GraphicView::mouseEnterEvent() {
  * Called by the actual GUI class which implements the RS_GraphicView
  * interface to notify LibreCAD about key events.
  */
-void RS_GraphicView::keyPressEvent(RS_KeyEvent* e) {
+void RS_GraphicView::keyPressEvent(QKeyEvent* e) {
     if (eventHandler!=NULL) {
         eventHandler->keyPressEvent(e);
     }
@@ -431,7 +421,7 @@ void RS_GraphicView::keyPressEvent(RS_KeyEvent* e) {
  * Called by the actual GUI class which implements the RS_GraphicView
  * interface to notify LibreCAD about key events.
  */
-void RS_GraphicView::keyReleaseEvent(RS_KeyEvent* e) {
+void RS_GraphicView::keyReleaseEvent(QKeyEvent* e) {
     if (eventHandler!=NULL) {
         eventHandler->keyReleaseEvent(e);
     }
@@ -1449,8 +1439,8 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
 
     // draw grid info:
     //painter->setPen(Qt::white);
-    RS_String info = grid->getInfo();
-    //info = RS_String("%1 / %2")
+    QString info = grid->getInfo();
+    //info = QString("%1 / %2")
     //       .arg(grid->getSpacing())
     //       .arg(grid->getMetaSpacing());
 
@@ -1545,15 +1535,7 @@ RS_Vector RS_GraphicView::toGui(RS_Vector v) {
  * @param visible Pointer to a boolean which will contain true
  * after the call if the coordinate is within the visible range.
  */
-double RS_GraphicView::toGuiX(double x, bool* visible) {
-    if (visible!=NULL) {
-        double res = x*factor.x+offsetX;
-        if (res>0.0 && res<getWidth()) {
-            *visible = true;
-        } else {
-            *visible = false;
-        }
-    }
+double RS_GraphicView::toGuiX(double x) {
     return x*factor.x + offsetX;
 }
 
