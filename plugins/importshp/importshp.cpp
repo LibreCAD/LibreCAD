@@ -11,7 +11,6 @@
 /*****************************************************************************/
 
 #include <QtPlugin>
-#include <QRadioButton>
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QFileDialog>
@@ -37,46 +36,6 @@ QString ImportShp::name() const
 void ImportShp::execComm(Document_Interface *doc,
                              QWidget *parent, QString /*cmd*/)
 {
-/*    int num_ent, st;
-    double min_bound[4], max_bound[4];
-    SHPObject *sobject;
-    QPointF pt;*/
-
-/*    QString fileName = QFileDialog::getOpenFileName(parent, tr("Select SHP file"));
-    QFileInfo fi = QFileInfo(fileName);
-    QString fn = fi.canonicalFilePath ();
-    if (fn.isEmpty()) return;*/
-/*    SHPHandle sh = SHPOpen( fn.toLocal8Bit(), "rb" );
-    SHPGetInfo( sh, &num_ent, &st, min_bound, max_bound );
-    for( int i = 0; i < num_ent; i++ ) {
-        sobject = SHPReadObject( sh, i );
-        switch (sobject->nSHPType) {
-            case SHPT_NULL:
-                break;
-            case SHPT_POINT:
-            case SHPT_POINTZ: //3d point
-                pt.setX( *(sobject->padfX));
-                pt.setY(*(sobject->padfY));
-                doc->addPoint(&pt);
-                break;
-            case SHPT_ARC:
-            case SHPT_POLYGON:
-            case SHPT_MULTIPOINT:
-            case SHPT_ARCZ:
-            case SHPT_POLYGONZ:
-            case SHPT_MULTIPOINTZ:
-            case SHPT_POINTM:
-            case SHPT_ARCM:
-            case SHPT_POLYGONM:
-            case SHPT_MULTIPOINTM:
-            case SHPT_MULTIPATCH:
-            default:
-                break;
-        }
-    }
-
-    SHPClose( sh );*/
-
     dibSHP pdt(parent);
     int result = pdt.exec();
     if (result == QDialog::Accepted)
@@ -87,41 +46,6 @@ void ImportShp::execComm(Document_Interface *doc,
 /*****************************/
 dibSHP::dibSHP(QWidget *parent) :  QDialog(parent)
 {
-/*    int num_ent, st, num_field;
-    double min_bound[4], max_bound[4];
-    QStringList txtformats;
-    char pep[12];
-    SHPObject *sobject;
-    QPointF pt;*/
-
-/*    for( int i = 0; i < num_ent; i++ ) {
-        sobject = SHPReadObject( sh, i );
-        switch (sobject->nSHPType) {
-            case SHPT_NULL:
-                break;
-            case SHPT_POINT:
-            case SHPT_POINTZ: //3d point
-                pt.setX( *(sobject->padfX));
-                pt.setY(*(sobject->padfY));
-                doc->addPoint(&pt);
-                break;
-            case SHPT_ARC:
-            case SHPT_POLYGON:
-            case SHPT_MULTIPOINT:
-            case SHPT_ARCZ:
-            case SHPT_POLYGONZ:
-            case SHPT_MULTIPOINTZ:
-            case SHPT_POINTM:
-            case SHPT_ARCM:
-            case SHPT_POLYGONM:
-            case SHPT_MULTIPOINTM:
-            case SHPT_MULTIPATCH:
-            default:
-                break;
-        }
-    }
-    SHPClose( sh );*/
-
     QVBoxLayout *mainLayout = new QVBoxLayout;
 
     QPushButton *filebut = new QPushButton(tr("File..."));
@@ -141,7 +65,7 @@ dibSHP::dibSHP(QWidget *parent) :  QDialog(parent)
     mainLayout->addLayout(loformat);
 
     QGroupBox *laybox = new QGroupBox(tr("Layer"));
-    QRadioButton *radiolay1 = new QRadioButton(tr("Current"));
+    radiolay1 = new QRadioButton(tr("Current"));
     QRadioButton *radiolay2 = new QRadioButton(tr("From data:"));
     layerdata = new QComboBox();
     radiolay1->setChecked(true);
@@ -154,7 +78,7 @@ dibSHP::dibSHP(QWidget *parent) :  QDialog(parent)
     mainLayout->addWidget(laybox);
 
     QGroupBox *colbox = new QGroupBox(tr("Color"));
-    QRadioButton *radiocol1 = new QRadioButton(tr("Current"));
+    radiocol1 = new QRadioButton(tr("Current"));
     QRadioButton *radiocol2 = new QRadioButton(tr("From data:"));
     colordata = new QComboBox();
     radiocol1->setChecked(true);
@@ -167,7 +91,7 @@ dibSHP::dibSHP(QWidget *parent) :  QDialog(parent)
     mainLayout->addWidget(colbox);
 
     QGroupBox *ltypebox = new QGroupBox(tr("Line type"));
-    QRadioButton *radioltype1 = new QRadioButton(tr("Current"));
+    radioltype1 = new QRadioButton(tr("Current"));
     QRadioButton *radioltype2 = new QRadioButton(tr("From data:"));
     ltypedata = new QComboBox();
     radioltype1->setChecked(true);
@@ -180,7 +104,7 @@ dibSHP::dibSHP(QWidget *parent) :  QDialog(parent)
     mainLayout->addWidget(ltypebox);
 
     QGroupBox *lwidthbox = new QGroupBox(tr("Width"));
-    QRadioButton *radiolwidth1 = new QRadioButton(tr("Current"));
+    radiolwidth1 = new QRadioButton(tr("Current"));
     QRadioButton *radiolwidth2 = new QRadioButton(tr("From data:"));
     lwidthdata = new QComboBox();
     radiolwidth1->setChecked(true);
@@ -193,7 +117,7 @@ dibSHP::dibSHP(QWidget *parent) :  QDialog(parent)
     mainLayout->addWidget(lwidthbox);
 
     pointbox = new QGroupBox(tr("Point"));
-    QRadioButton *radiopoint1 = new QRadioButton(tr("as Point"));
+    radiopoint1 = new QRadioButton(tr("as Point"));
     QRadioButton *radiopoint2 = new QRadioButton(tr("as Label:"));
     pointdata = new QComboBox();
     radiopoint1->setChecked(true);
@@ -333,8 +257,51 @@ void dibSHP::procesFile(Document_Interface *doc)
     SHPGetInfo( sh, &num_ent, &st, min_bound, max_bound );
     DBFHandle dh = DBFOpen( file.toLocal8Bit(), "rb" );
 
+    if (radiolay1->isChecked())
+        layerF = -1;
+    else {
+        layerF = DBFGetFieldIndex( dh, (layerdata->currentText()).toLatin1().data() );
+        layerT = DBFGetFieldInfo( dh, layerF, NULL, NULL, NULL );
+    }
+    if (radiocol1->isChecked())
+        colorF = -1;
+    else {
+        colorF = DBFGetFieldIndex( dh, (colordata->currentText()).toLatin1().data() );
+        colorT = DBFGetFieldInfo( dh, colorF, NULL, NULL, NULL );
+    }
+    if (radioltype1->isChecked())
+        ltypeF = -1;
+    else {
+        ltypeF = DBFGetFieldIndex( dh, (ltypedata->currentText()).toLatin1().data() );
+        ltypeT = DBFGetFieldInfo( dh, ltypeF, NULL, NULL, NULL );
+    }
+    if (radiolwidth1->isChecked())
+        lwidthF = -1;
+    else {
+        lwidthF = DBFGetFieldIndex( dh, (lwidthdata->currentText()).toLatin1().data() );
+        lwidthT = DBFGetFieldInfo( dh, lwidthF, NULL, NULL, NULL );
+    }
+    if (radiopoint1->isChecked())
+        pointF = -1;
+    else {
+        pointF = DBFGetFieldIndex( dh, (pointdata->currentText()).toLatin1().data() );
+        pointT = DBFGetFieldInfo( dh, pointF, NULL, NULL, NULL );
+    }
+
     for( int i = 0; i < num_ent; i++ ) {
         sobject = SHPReadObject( sh, i );
+//read attributes
+/*        if (layerF >= 0)
+            readLayer(dh, i);
+        if (colorF >= 0)
+            readColor(dh, i);
+        if (ltypeF >= 0)
+            readLType(dh, i);
+        if (lwidthF >= 0)
+            readWidth(dh, i);
+        if (pointF >= 0)
+            readText(dh, i);*/
+
         switch (sobject->nSHPType) {
             case SHPT_NULL:
                 break;

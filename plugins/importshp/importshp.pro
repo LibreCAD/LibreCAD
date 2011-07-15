@@ -37,7 +37,7 @@ unix {
 }
 
 INCLUDEPATH    += ../../src/plugins \
-                  shapelib-1.3.0b2
+                  shapelib
 
 # Store intermedia stuff somewhere else
 OBJECTS_DIR = ../intermediate/obj
