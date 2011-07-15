@@ -18,6 +18,7 @@
 #include <QLineEdit>
 #include <QComboBox>
 #include <QDialog>
+#include <QRadioButton>
 #include "qc_plugininterface.h"
 #include "document_interface.h"
 
@@ -66,8 +67,15 @@ private:
     QComboBox *lwidthdata;
     QComboBox *pointdata;
     QGroupBox *pointbox;
+    QRadioButton *radiolay1;
+    QRadioButton *radiocol1;
+    QRadioButton *radioltype1;
+    QRadioButton *radiolwidth1;
+    QRadioButton *radiopoint1;
     QLabel *formattype;
 
+    int layerF, colorF, ltypeF, lwidthF, pointF;
+    int layerT, colorT, ltypeT, lwidthT, pointT;
 //    QList<pointData*> dataList;
 
     Document_Interface *currDoc;
