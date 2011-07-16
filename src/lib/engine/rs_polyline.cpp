@@ -447,6 +447,10 @@ void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view,
 	
 	// draw first entity and set correct pen:
     RS_Entity* e = firstEntity(RS2::ResolveNone);
+    // We get the pen from the entitycontainer and apply it to the
+    // first line so that subsequent line are draw in the right color
+    RS_Pen p=this->getPen(true);
+    e->setPen(p);
     view->drawEntity(painter, e);
 
 	// draw subsequent entities with same pen:
