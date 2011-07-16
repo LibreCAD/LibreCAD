@@ -102,6 +102,7 @@ RS_String QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type)
                 }
             }
 
+#if !defined (_WIN32) && !defined (__APPLE__)
             // overwrite warning:
             if(QFileInfo(fn).exists()) {
                 int choice =
@@ -122,6 +123,11 @@ RS_String QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type)
             } else {
                 done = true;
             }
+#else
+            done = true;
+#endif
+
+
         } else {
             done = true;
             cancel = true;
