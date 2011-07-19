@@ -17,8 +17,15 @@
 #include <QSettings>
 #include <QMessageBox>
 
-#include "shapefil.h"
 #include "importshp.h"
+
+/*TODO
+    complete readAttributes
+    void readPolyline(DBFHandle dh, int i);
+    void readPolylineC(DBFHandle dh, int i);
+    void readMultiPolyline(DBFHandle dh, int i);
+    SHPT_MULTIPOINT
+*/
 
 PluginCapabilities ImportShp::getCapabilities() const
 {
@@ -235,8 +242,6 @@ void dibSHP::procesFile(Document_Interface *doc)
 {
     int num_ent, st;
     double min_bound[4], max_bound[4];
-    SHPObject *sobject;
-    QPointF pt;
 
     currDoc = doc;
 
@@ -257,9 +262,10 @@ void dibSHP::procesFile(Document_Interface *doc)
     SHPGetInfo( sh, &num_ent, &st, min_bound, max_bound );
     DBFHandle dh = DBFOpen( file.toLocal8Bit(), "rb" );
 
-    if (radiolay1->isChecked())
+    if (radiolay1->isChecked()) {
         layerF = -1;
-    else {
+        attdata.layer = currDoc->getCurrentLayer();
+    } else {
         layerF = DBFGetFieldIndex( dh, (layerdata->currentText()).toLatin1().data() );
         layerT = DBFGetFieldInfo( dh, layerF, NULL, NULL, NULL );
     }
@@ -288,48 +294,94 @@ void dibSHP::procesFile(Document_Interface *doc)
         pointT = DBFGetFieldInfo( dh, pointF, NULL, NULL, NULL );
     }
 
+    currlayer =currDoc->getCurrentLayer();
     for( int i = 0; i < num_ent; i++ ) {
+        sobject= NULL;
         sobject = SHPReadObject( sh, i );
-//read attributes
-/*        if (layerF >= 0)
-            readLayer(dh, i);
-        if (colorF >= 0)
-            readColor(dh, i);
-        if (ltypeF >= 0)
-            readLType(dh, i);
-        if (lwidthF >= 0)
-            readWidth(dh, i);
-        if (pointF >= 0)
-            readText(dh, i);*/
-
-        switch (sobject->nSHPType) {
+        if (sobject) {
+            switch (sobject->nSHPType) {
             case SHPT_NULL:
                 break;
             case SHPT_POINT:
+            case SHPT_POINTM: //2d point with measure
             case SHPT_POINTZ: //3d point
-                pt.setX( *(sobject->padfX));
-                pt.setY(*(sobject->padfY));
-                currDoc->addPoint(&pt);
+                readPoint(dh, i);
+                break;
+            case SHPT_MULTIPOINT:
+            case SHPT_MULTIPOINTM:
+            case SHPT_MULTIPOINTZ:
                 break;
             case SHPT_ARC:
-            case SHPT_POLYGON:
-            case SHPT_MULTIPOINT:
-            case SHPT_ARCZ:
-            case SHPT_POLYGONZ:
-            case SHPT_MULTIPOINTZ:
-            case SHPT_POINTM:
             case SHPT_ARCM:
+            case SHPT_ARCZ:
+                readPolyline(dh, i);
+                break;
+            case SHPT_POLYGON:
             case SHPT_POLYGONM:
-            case SHPT_MULTIPOINTM:
+            case SHPT_POLYGONZ:
+                readPolylineC(dh, i);
             case SHPT_MULTIPATCH:
+                readMultiPolyline(dh, i);
             default:
                 break;
+            }
+            SHPDestroyObject(sobject);
         }
     }
 
     SHPClose( sh );
     DBFClose( dh );
+    currDoc->setLayer(currlayer);
+}
 
+void dibSHP::readPoint(DBFHandle dh, int i){
+    Plug_Entity *ent =NULL;
+    QHash<int, QVariant> data;
+    if (pointF < 0) {
+        ent = currDoc->newEntity(DPI::POINT);
+        ent->getData(&data);
+    } else {
+        ent = currDoc->newEntity(DPI::TEXT);
+        ent->getData(&data);
+        data.insert(DPI::TEXTCONTENT, DBFReadStringAttribute( dh, i, pointF ) );
+    }
+    data.insert(DPI::STARTX, *(sobject->padfX));
+    data.insert(DPI::STARTY, *(sobject->padfY));
+    readAttributes(dh, i);
+    data.insert(DPI::LAYER, attdata.layer);
+    ent->updateData(&data);
+    currDoc->addEntity(ent);
+}
+
+void dibSHP::readPolyline(DBFHandle dh, int i){
+    Plug_Entity *ent =NULL;
+    QHash<int, QVariant> data;
+    ent = currDoc->newEntity(DPI::POLYLINE);
+/*    data.insert(DPI::STARTX, *(sobject->padfX));
+    data.insert(DPI::STARTY, *(sobject->padfY));*/
+    readAttributes(dh, i);
+    data.insert(DPI::LAYER, attdata.layer);
+    ent->updateData(&data);
+    currDoc->addEntity(ent);
+}
+
+void dibSHP::readPolylineC(DBFHandle dh, int i){
+}
+
+void dibSHP::readMultiPolyline(DBFHandle dh, int i){
+}
+
+void dibSHP::readAttributes(DBFHandle dh, int i){
+    if (layerF >= 0) {
+        attdata.layer = DBFReadStringAttribute( dh, i, layerF );
+        currDoc->setLayer(attdata.layer);
+    }
+/*    if (colorF >= 0)
+        readColor(dh, i);
+    if (ltypeF >= 0)
+        readLType(dh, i);
+    if (lwidthF >= 0)
+        readWidth(dh, i);*/
 }
 
 dibSHP::~dibSHP()
