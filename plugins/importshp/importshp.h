@@ -21,8 +21,7 @@
 #include <QRadioButton>
 #include "qc_plugininterface.h"
 #include "document_interface.h"
-
-class pointData;
+#include "shapefil.h"
 
 class ImportShp : public QObject, QC_PluginInterface
 {
@@ -40,6 +39,25 @@ class ImportShp : public QObject, QC_PluginInterface
     enum txtposition {N, S, E, O, NE, SE, SO, NO};
 }*/
 
+/***********/
+
+class AttribData
+{
+public:
+    AttribData(){
+        layer = "0";
+        color = Qt::black;
+        lineType = "BYLAYER";
+        width = "BYLAYER";
+    }
+    QString layer;
+    QString lineType;
+    QString width;
+    QColor color;
+};
+
+/***********/
+
 class dibSHP : public QDialog
 {
     Q_OBJECT
@@ -47,7 +65,6 @@ class dibSHP : public QDialog
 public:
     explicit dibSHP(QWidget *parent = 0);
     ~dibSHP();
-//    void SetupUI(QWidget *parent);
     void procesFile(Document_Interface *doc);
 
 public slots:
@@ -58,6 +75,13 @@ public slots:
 private:
     void readSettings();
     void writeSettings();
+
+    void readPoint(DBFHandle dh, int i);
+    void readPolyline(DBFHandle dh, int i);
+    void readPolylineC(DBFHandle dh, int i);
+    void readMultiPolyline(DBFHandle dh, int i);
+//    void readText(SHPHandle sh, DBFHandle dh, int i, Plug_Entity *ent);
+    void readAttributes(DBFHandle dh, int i);
 
 private:
     QLineEdit *fileedit;
@@ -76,21 +100,12 @@ private:
 
     int layerF, colorF, ltypeF, lwidthF, pointF;
     int layerT, colorT, ltypeT, lwidthT, pointT;
-//    QList<pointData*> dataList;
+    AttribData attdata;
+    SHPObject *sobject;
+    QString currlayer;
 
     Document_Interface *currDoc;
 
 };
 
-/***********/
-class pointData
-{
-public:
-    QString number;
-    QString x;
-    QString y;
-    QString z;
-    QString code;
-};
-/***********/
 #endif // IMPORTSHP_H
