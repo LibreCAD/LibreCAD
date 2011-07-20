@@ -421,6 +421,7 @@ void RS_ActionDrawPolyline::close() {
 			RS_CoordinateEvent e(polyline->getStartpoint());
 			coordinateEvent(&e);
 		}
+        polyline->setClosed(true);
 		trigger();
         setStatus(SetStartpoint);
         graphicView->moveRelativeZero(start);
