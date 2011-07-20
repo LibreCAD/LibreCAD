@@ -477,11 +477,17 @@ void QC_ApplicationWindow::initMDI() {
 }
 
 
+/*	*
+ *	Description:	Initializes all QActions of the application.
+ *	Author(s):		..., Claude Sylvain
+ *	Created:
+ *	Last modified:	16 July 2011
+ *	Parameters:		void
+ *	Returns:			void
+ *	*/
 
-/**
- * Initializes all QActions of the application.
- */
-void QC_ApplicationWindow::initActions() {
+void QC_ApplicationWindow::initActions(void)
+{
     RS_DEBUG->print("QC_ApplicationWindow::initActions()");
 
     QG_ActionFactory actionFactory(actionHandler, this);
@@ -1075,6 +1081,7 @@ void QC_ApplicationWindow::initActions() {
                                         actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action->setChecked(true);
     action = actionFactory.createAction(RS2::ActionRestrictOrthogonal,
                                         actionHandler);
     action->addTo(menu);
