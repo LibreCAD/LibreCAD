@@ -239,7 +239,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>No Restriction</string>
+    <string>Restrict Nothing</string>
    </property>
    <property name="text">
     <string/>
@@ -262,7 +262,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Orthogonal Restriction</string>
+    <string>Restrict Orthogonally</string>
    </property>
    <property name="text">
     <string/>
@@ -285,7 +285,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Horizontal Restriction</string>
+    <string>Restrict Horizontally</string>
    </property>
    <property name="text">
     <string/>
@@ -308,7 +308,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Vertical Restriction</string>
+    <string>Restrict Vertically</string>
    </property>
    <property name="text">
     <string/>
