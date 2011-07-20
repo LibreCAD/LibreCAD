@@ -14,6 +14,7 @@ SUBDIRS     = \
         align \
         list \
         sameprop \
+        importshp \
         sample
 
 
