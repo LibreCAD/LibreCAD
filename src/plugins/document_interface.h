@@ -75,8 +75,9 @@ namespace DPI {
 
     enum EDATA {
         ETYPE=0,        /*!< enum: entity type */
-        EID=5,          /*!< qulonglong: entity identifier */
+        TEXTCONTENT=1,  /*!< QString: text string */
         BLKNAME=2,      /*!< QString: block name */
+        EID=5,          /*!< qulonglong: entity identifier */
         LTYPE=6,        /*!< QString: line type */
         TXTSTYLE=7,     /*!< QString: text style */
         LAYER=8,        /*!< QString: layer */
@@ -96,11 +97,23 @@ namespace DPI {
         STARTANGLE=50,  /*!< double: arc start angle or rotation angle for insert and text */
         ENDANGLE=51,    /*!< double: arc end angle */
         COLOR=62,       /*!< QColor: entity color */
+        CLOSEPOLY=70,   /*!< int: closed polyline 0=open, 1=closed */
         TXTALIGNH=72,   /*!< enum: horizontal alignment for text */
         TXTALIGNV=73    /*!< enum: vertical alignment for text */
     };
 
 }
+
+class Plug_VertexData
+{
+public:
+    Plug_VertexData(QPointF p, double b){
+        point = p;
+        bulge = b;
+    }
+    QPointF point;
+    double bulge;
+};
 
 //! Wrapper for acces entities from plugins.
  /*!
@@ -127,13 +140,27 @@ public:
     */
     virtual void getData(QHash<int, QVariant> *data) = 0;
 
-
     //! Update the entity data.
     /*!
     * The data is a QHash with the EDATA keys relevant to the type of entity
     *  \param data pointer to a QHash<int, QVariant> with the entity data.
     */
     virtual void updateData(QHash<int, QVariant> *data) = 0;
+
+    //! Obtain the polyline list of vertex.
+    /*!
+    * The data is a QList to store a Plug_VertexData for heach vertex form the polyline
+    *  \param data pointer to a QList<Plug_VertexData> to store the vertex list.
+    */
+    virtual void getPolylineData(QList<Plug_VertexData> *data) = 0;
+
+    //! Update the polyline list of vertex.
+    /*!
+    * The data is a QList of Plug_VertexData with the coordinates of each vertex to the
+    * polyline the cuurent vertex are removed and replaced for the new list.
+    *  \param data pointer to a QList<Plug_VertexData> with the coordinates vertex's.
+    */
+    virtual void updatePolylineData(QList<Plug_VertexData> *data) = 0;
 
     //! Move the entity.
     /*!
