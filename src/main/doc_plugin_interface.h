@@ -54,6 +54,8 @@ public:
     RS_Entity* getEnt() {return entity;}
     virtual void getData(QHash<int, QVariant> *data);
     virtual void updateData(QHash<int, QVariant> *data);
+    virtual void getPolylineData(QList<Plug_VertexData> *data);
+    virtual void updatePolylineData(QList<Plug_VertexData> *data);
 
     virtual void move(QPointF offset);
     virtual void rotate(QPointF center, double angle);
