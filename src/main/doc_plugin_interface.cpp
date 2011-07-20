@@ -35,6 +35,7 @@
 #include "rs_layer.h"
 #include "rs_image.h"
 #include "rs_insert.h"
+#include "rs_polyline.h"
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetselect.h"
 #include "intern/qc_actiongetent.h"
@@ -152,11 +153,11 @@ Plugin_Entity::Plugin_Entity(RS_EntityContainer* parent, enum DPI::ETYPE type){
         break;
 /*    case DPI::INSERT:
         entity = new RS_Insert();
-        break;
+        break;*/
     case DPI::POLYLINE:
-        entity = new RS_Polyline();
+        entity = new RS_Polyline(parent, RS_PolylineData());
         break;
-    case DPI::SPLINE:
+/*    case DPI::SPLINE:
         entity = new RS_Spline();
         break;
     case DPI::HATCH:
@@ -276,6 +277,7 @@ void Plugin_Entity::getData(QHash<int, QVariant> *data){
         data->insert(DPI::STARTY, d.insertionPoint.y );
         data->insert(DPI::STARTANGLE, d.angle );
         data->insert(DPI::HEIGHT, d.height );
+        data->insert(DPI::TEXTCONTENT, d.text );
         break;}
     case RS2::EntityHatch:
         data->insert(DPI::ETYPE, DPI::HATCH);
@@ -285,6 +287,7 @@ void Plugin_Entity::getData(QHash<int, QVariant> *data){
         break;
     case RS2::EntityPolyline:
         data->insert(DPI::ETYPE, DPI::POLYLINE);
+        data->insert(DPI::CLOSEPOLY, static_cast<RS_Polyline*>(entity)->isClosed() );
         break;
     case RS2::EntityVertex:
         data->insert(DPI::ETYPE, DPI::UNKNOWN);
@@ -422,6 +425,18 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
     case RS2::EntityInsert: {
         break;}
     case RS2::EntityText: {
+        RS_Text *txt = static_cast<RS_Text*>(entity);
+        vec = txt->getInsertionPoint();
+        if (hash.contains(DPI::STARTX)) {
+            vec.x = (hash.take(DPI::STARTX)).toDouble() - vec.x;
+        }
+        if (hash.contains(DPI::STARTY)) {
+            vec.y = (hash.take(DPI::STARTY)).toDouble() - vec.y;
+        }
+        txt->move(vec);
+        if (hash.contains(DPI::TEXTCONTENT)) {
+            txt->setText( (hash.take(DPI::TEXTCONTENT)).toString() );
+        }
         break;}
     case RS2::EntityHatch:
         break;
@@ -447,15 +462,68 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
     default:
         break;
     }
+    entity->update();
 }
 
+void Plugin_Entity::getPolylineData(QList<Plug_VertexData> *data){
+    if (entity == NULL) return;
+    RS2::EntityType et = entity->rtti();
+    if (et != RS2::EntityPolyline) return;
+    RS_Polyline *l = static_cast<RS_Polyline*>(entity);
+
+    RS_Entity* nextEntity = 0;
+    RS_AtomicEntity* ae = NULL;
+    RS_Entity* v = l->firstEntity(RS2::ResolveNone);
+    double bulge=0.0;
+//bad polyline without vertex
+    if (v == NULL) return;
+
+//First polyline vertex
+    if (v->rtti() == RS2::EntityArc) {
+        bulge = ((RS_Arc*)v)->getBulge();
+    }
+    ae = (RS_AtomicEntity*)v;
+    data->append(Plug_VertexData(QPointF(ae->getStartpoint().x,
+                                         ae->getStartpoint().y),bulge));
+
+    for (v=l->firstEntity(RS2::ResolveNone); v!=NULL; v=nextEntity) {
+        nextEntity = l->nextEntity(RS2::ResolveNone);
+        bulge = 0.0;
+        if (!v->isAtomic()) {
+            continue;
+        }
+        ae = (RS_AtomicEntity*)v;
+
+        if (nextEntity!=NULL) {
+            if (nextEntity->rtti()==RS2::EntityArc) {
+                bulge = ((RS_Arc*)nextEntity)->getBulge();
+            }
+        }
+
+        if (l->isClosed()==false || nextEntity!=NULL) {
+            data->append(Plug_VertexData(QPointF(ae->getEndpoint().x,
+                                         ae->getEndpoint().y),bulge));
+        }
+    }
+
+}
+
+void Plugin_Entity::updatePolylineData(QList<Plug_VertexData> *data){
+    if (entity == NULL) return;
+    RS2::EntityType et = entity->rtti();
+    if (et != RS2::EntityPolyline) return;
+    if (data->size()<2) return; //At least two vertex
+
+}
 
 void Plugin_Entity::move(QPointF offset){
     entity->move( RS_Vector(offset.x(), offset.y()) );
 }
+
 void Plugin_Entity::rotate(QPointF center, double angle){
     entity->rotate( RS_Vector(center.x(), center.y()) , angle);
 }
+
 void Plugin_Entity::scale(QPointF center, QPointF factor){
     entity->scale( RS_Vector(center.x(), center.y()),
                 RS_Vector(factor.x(), factor.y()) );
@@ -580,6 +648,7 @@ void Doc_plugin_interface::addEntity(Plug_Entity *handle){
     if (ent != NULL)
         doc->addEntity(ent);
 }
+
 Plug_Entity *Doc_plugin_interface::newEntity( enum DPI::ETYPE type){
     Plugin_Entity *e = new Plugin_Entity(doc, type);
     if( !(e->isValid()) ) {
