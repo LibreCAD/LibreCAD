@@ -270,7 +270,11 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, RS_Graphic& g);
 
+
 private:
+
+	bool BackupDrawingFile(const QString &filename);
+
 	RS_LayerList layerList;
 	RS_BlockList blockList;
 	RS_VariableDict variableDict;
