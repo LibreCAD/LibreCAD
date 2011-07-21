@@ -122,6 +122,7 @@ void QG_DlgOptionsGeneral::init() {
     cbUnit->setCurrentText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit) ));
     // Auto save timer
     cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
+    cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)?true:false);
     RS_SETTINGS->endGroup();
 
     restartNeeded = false;
@@ -175,6 +176,7 @@ void QG_DlgOptionsGeneral::ok() {
     RS_SETTINGS->writeEntry("/Unit",
         RS_Units::unitToString( RS_Units::stringToUnit( cbUnit->currentText() ), false/*untr.*/) );
     RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value() );
+    RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked()?1:0 );
     RS_SETTINGS->endGroup();
 
     if (restartNeeded==true) {
@@ -184,5 +186,4 @@ void QG_DlgOptionsGeneral::ok() {
                               Qt::NoButton);
     }
     accept();
-    //return true;
 }
