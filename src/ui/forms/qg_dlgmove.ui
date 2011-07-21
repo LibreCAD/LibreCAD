@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Moving Options</string>
+   <string>Move/Copy Options</string>
   </property>
   <layout class="QGridLayout">
    <item row="0" column="0" rowspan="3">
