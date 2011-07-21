@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>643</width>
+    <width>645</width>
     <height>404</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="Widget9">
       <attribute name="title">
@@ -737,7 +737,7 @@
          </layout>
         </widget>
        </item>
-       <item row="0" column="2">
+       <item row="0" column="1">
         <spacer name="spacer11_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -753,7 +753,20 @@
          </property>
         </spacer>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="0">
         <widget class="QGroupBox" name="groupBox">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -770,52 +783,43 @@
          <property name="title">
           <string>Program Defaults</string>
          </property>
-         <widget class="QSpinBox" name="cbAutoSaveTime">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>30</y>
-            <width>51</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="toolTip">
-           <string>Time between automatc saving of thedocument in minutes.</string>
-          </property>
-          <property name="minimum">
-           <number>1</number>
-          </property>
-          <property name="maximum">
-           <number>60</number>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>38</y>
-            <width>111</width>
-            <height>10</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Auto save time:</string>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Auto save time:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="cbAutoSaveTime">
+              <property name="toolTip">
+               <string>Time between automatc saving of thedocument in minutes.</string>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>60</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbAutoBackup">
+            <property name="toolTip">
+             <string>When set, LibreCAD will automatically generate a backup of your current drawing.</string>
+            </property>
+            <property name="text">
+             <string>Auto backup</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
-       </item>
-       <item row="3" column="0">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
