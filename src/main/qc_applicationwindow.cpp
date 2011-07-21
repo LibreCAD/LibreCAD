@@ -1815,7 +1815,6 @@ void QC_ApplicationWindow::slotWindowActivated(QWidget*) {
     QC_MDIWindow* m = getMDIWindow();
 
     if (m!=NULL && m->getDocument()!=NULL) {
-		m->setWindowState(Qt::WindowMaximized);
 
         RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated: "
 			"document: %d", m->getDocument()->getId());
@@ -1825,9 +1824,7 @@ void QC_ApplicationWindow::slotWindowActivated(QWidget*) {
         layerWidget->setLayerList(m->getDocument()->getLayerList(),
                                   showByBlock);
 
-
         coordinateWidget->setGraphic(m->getGraphic());
-
 
         // Only graphics show blocks. (blocks don't)
         if (m->getDocument()->rtti()==RS2::EntityGraphic) {
