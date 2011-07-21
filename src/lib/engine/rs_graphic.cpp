@@ -176,86 +176,300 @@ void RS_Graphic::newDoc() {
 
 
 
-/**
- * Saves this graphic with the current filename and settings.
+/*
+ * Description:	Create/update the drawing backup file, if necessary.
+ * Author(s):		Claude Sylvain
+ * Created:			13 July 2011
+ * Last modified:
+ *
+ * Parameters:		const QString &filename:
+ * 						Name of the drawing file to backup.
+ *
+ * Returns:			bool:
+ * 						false	: Operation failed.
+ * 						true	: Operation successfull.
  */
-bool RS_Graphic::save(bool isAutoSave) {
 
-	bool ret = false;
+bool RS_Graphic::BackupDrawingFile(const QString &filename)
+{
+	static const char	*msg_err	=
+	  	"RS_Graphic::BackupDrawingFile: Can't create object!";
 
-	
-    RS_DEBUG->print("RS_Graphic::save");
-	if (isAutoSave && !isModified()) {
-	    RS_DEBUG->print("  autsave and not modified => not saved");
-		ret = true;
-	} else {
-                const QString *actualName;
-		RS2::FormatType actualType;
+	bool	ret	= false;		/*	Operation failed, by default. */
 
-		actualType = formatType;
-		if (isAutoSave) {
-			actualName = new QString(autosaveFilename);
-			if (formatType == RS2::FormatUnknown) {
-				actualType = RS2::FormatDXF;
+
+	/*	- Create backup only if drawing file name exist.
+	 *	- Remark: Not really necessary to check if the drawing file
+	 *	  name have been defined.
+	 *	----------------------------------------------------------- */
+	if (filename.length() > 0)
+	{
+		/*	Built Backup File Name.
+		 *	*/
+		QString	*qs_backup_fn	= new QString(filename + '~');
+
+		/*	Create "Drawing File" object.
+		 *	*/
+		QFile	*qf_df = new QFile(filename);
+
+		/*	If able to create the objects, process...
+		 *	----------------------------------------- */
+		if ((qs_backup_fn != NULL) && (qf_df != NULL))
+		{
+			/*	Create backup file only if drawing file already exist.
+			 *	------------------------------------------------------ */
+			if (qf_df->exists() == true)
+			{
+				/*	Create "Drawing File Backup" object.
+				 *	*/
+				QFile	*qf_dfb	= new QFile(*qs_backup_fn);
+
+				/*	If able to create the object, process...
+				 *	---------------------------------------- */
+				if (qf_dfb != NULL)
+				{
+					/*	If a backup file already exist, remove it!
+					 *	------------------------------------------ */
+					if (qf_dfb->exists() == true)
+						qf_dfb->remove();
+
+					qf_df->copy(*qs_backup_fn);	/*	Create backup file. */
+					ret	= true;						/*	Operation successfull. */
+					delete qf_dfb;
+				}
+				/*	Can't create object.
+				 *	-------------------- */
+				else
+				{
+                    RS_DEBUG->print("%s", msg_err);
+				}
 			}
-		} else {
-			actualName = new QString(filename);
-		}
-            RS_DEBUG->print("  file: %s", actualName->toLatin1().data());
-		RS_DEBUG->print("  format: %d", (int)actualType);
-		RS_DEBUG->print("  export...");
-		ret = RS_FILEIO->fileExport(*this, *actualName, actualType);
-		delete actualName;
 
-		if (ret && !isAutoSave) {
-		    setModified(false);
-			layerList.setModified(false);
-			blockList.setModified(false);
-			// Remove old autosave file
-			QFile f(autosaveFilename);
-			if (f.exists()) {
-				RS_DEBUG->print("  removing old autosave file %s",
-                                                        autosaveFilename.toLatin1().data());
-				f.remove();
-			}
 		}
+		/*	Can't create object(s).
+		 *	----------------------- */
+		else
+		{
+            RS_DEBUG->print("%s", msg_err);
+		}
+
+		delete qs_backup_fn;
+		delete qf_df;
 	}
 
-    RS_DEBUG->print("RS_Graphic::save ok");
-
-    return ret;
+	return ret;
 }
 
 
 
-/**
- * Saves this graphic with the given filename and current settings.
+/*
+ *	Description:	Saves this graphic with the current filename and settings.
+ *	Author(s):		..., Claude Sylvain
+ * Last modified:	13 July 2011
+ *	Parameters:
+ *
+ *	Returns:			bool:
+ *							false:	Operation failed.
+ *							true:		Operation successfull.
+ *
+ * Notes:			- If this is not an AutoSave, backup the drawing file
+ * 					  (if necessary).
+ * 					- Drawing is saved only when it has been modified.
+ * 					  This prevent lost of backup file when file
+ * 					  is saved more than one time without being modified.
  */
-bool RS_Graphic::saveAs(const QString &filename, RS2::FormatType type) {
 
-    RS_DEBUG->print("RS_Graphic::saveAs");
+bool RS_Graphic::save(bool isAutoSave)
+{
+	bool ret	= false;
 
-    this->filename = filename;
-        QString *oldAutosaveName = new QString(autosaveFilename);
-	QFileInfo finfo(filename);
-	// Construct new autosave filename by prepending # to the filename
-	// part, using the same directory as the destination file.
-        this->autosaveFilename = finfo.path() + "/#" + finfo.fileName();
-	this->formatType = type;
+	RS_DEBUG->print("RS_Graphic::save: Entering...");
 
-    bool ret = save();
+	/*	- Save drawing file only if it has been modifed.
+	 *	- Notes: Potentially dangerous in case of an internal
+	 *	  coding error that make LibreCAD not aware of modification
+	 *	  when some kind of drawing modification is done.
+	 *	----------------------------------------------------------- */	  
+	if (isModified() == true)
+	{
+		const QString		*actualName;
+		RS2::FormatType	actualType;
 
-	if (ret) {
-		// save was successful, remove old autosave file
-		QFile f(*oldAutosaveName);
-		if (f.exists()) {
-			RS_DEBUG->print("removing old autosave file %s",
-                                                oldAutosaveName->toLatin1().data());
-			f.remove();
+		actualType	= formatType;
+
+		if (isAutoSave == true)
+		{
+			actualName = new QString(autosaveFilename);
+
+			if (formatType == RS2::FormatUnknown)
+				actualType = RS2::FormatDXF;
 		}
+		//	- This is not an AutoSave operation.  This is a manual
+		//	  save operation.  So, ...
+		//		- Set working file name to the drawing file name.
+		//		- Backup drawing file (if necessary).
+		//	------------------------------------------------------
+		else
+		{
+			actualName = new QString(filename);
+            if (RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)!=0)
+                BackupDrawingFile(filename);
+		}
+
+		/*	Save drawing file if able to created associated object.
+		 *	------------------------------------------------------- */
+		if (actualName != NULL)
+		{
+			RS_DEBUG->print("RS_Graphic::save: File: %s", actualName->toLatin1().data());
+			RS_DEBUG->print("RS_Graphic::save: Format: %d", (int) actualType);
+			RS_DEBUG->print("RS_Graphic::save: Export...");
+
+			ret = RS_FILEIO->fileExport(*this, *actualName, actualType);
+			delete actualName;
+		}
+		else
+		{
+			RS_DEBUG->print("RS_Graphic::save: Can't create object!");
+			RS_DEBUG->print("RS_Graphic::save: File not saved!");
+		}
+
+		/*	Remove AutoSave file after user has successfully saved file.
+		 *	------------------------------------------------------------ */
+		if (ret && !isAutoSave)
+		{
+			/*	Autosave file object.
+			 *	*/
+			QFile	*qf_file	= new QFile(autosaveFilename);
+
+			/*	Tell that drawing file is no more modified.
+			 *	------------------------------------------- */
+			setModified(false);
+			layerList.setModified(false);
+			blockList.setModified(false);
+
+			/*	- Remove autosave file, if able to create associated object,
+			 *	  and if autosave file exist.
+			 *	------------------------------------------------------------ */
+			if (qf_file != NULL)
+			{
+				if (qf_file->exists())
+				{
+					RS_DEBUG->print(	"RS_Graphic::save: Removing old autosave file %s",
+											autosaveFilename.toLatin1().data());
+					qf_file->remove();
+				}
+
+				delete qf_file;
+			}
+			else
+			{
+				RS_DEBUG->print("RS_Graphic::save: Can't create object!");
+				RS_DEBUG->print("RS_Graphic::save: Autosave file not removed");
+			}
+		}
+
+		RS_DEBUG->print("RS_Graphic::save: Done!");
+	}
+	else
+	{
+		RS_DEBUG->print("RS_Graphic::save: File not modified, not saved");
+		ret = true;
+	}
+
+	RS_DEBUG->print("RS_Graphic::save: Exiting...");
+
+	return ret;
+}
+
+
+
+/*
+ *	Description:	- Saves this graphic with the given filename and current
+ *						  settings.
+ *
+ *	Author(s):		..., Claude Sylvain
+ *	Created:			?
+ *	Last modified:	13 July 2011
+ *	Parameters:
+ *
+ *	Returns:			bool:
+ *							false:	Operation failed.
+ *							true:		Operation successfull.
+ *
+ * Notes:			Backup the drawing file (if necessary).
+ */
+
+bool RS_Graphic::saveAs(const QString &filename, RS2::FormatType type)
+{
+	bool	ret	= false;		/*	Set to "failed" by default. */
+
+	/*	- Check/memorize if file name we want to use as new file
+	 *	  name is the same as the actual file name.
+	 *	*/
+	bool	fn_is_same	= filename == this->filename;
+
+	RS_DEBUG->print("RS_Graphic::saveAs: Entering...");
+
+	this->filename = filename;
+
+	QString		*oldAutosaveName	= new QString(autosaveFilename);
+	QFileInfo	*finfo				= new QFileInfo(filename);
+
+	/*	Go further more only if able to create some objects.
+	 *	---------------------------------------------------- */
+	if ((oldAutosaveName != NULL) && (finfo != NULL))
+	{
+		// Construct new autosave filename by prepending # to the filename
+		// part, using the same directory as the destination file.
+		//
+		this->autosaveFilename = finfo->path() + "/#" + finfo->fileName();
+
+		this->formatType	= type;
+
+		/*	- When drawing is saved using a different name than the actual
+		 *	  drawing file name, make LibreCAD think that drawing file
+		 *	  has been modified, to make sure the drawing file saved.
+		 *	*/
+		if (!fn_is_same)
+			setModified(true);
+
+		ret	= save();		//	Save file.
+
+		if (ret)
+		{
+			// Save was successful, remove old autosave file.
+			//
+
+			QFile	*qf_file	= new QFile(*oldAutosaveName);
+
+			if (qf_file != NULL)
+			{
+				if (qf_file->exists())
+				{
+					RS_DEBUG->print(	"RS_Graphic::saveAs: Removing old autosave file %s",
+							oldAutosaveName->toLatin1().data());
+					qf_file->remove();
+				}
+
+				delete qf_file;
+			}
+			else
+			{
+				RS_DEBUG->print("RS_Graphic::saveAs: Can't create object!");
+				RS_DEBUG->print("RS_Graphic::saveAs: Old autosave file not removed!");
+			}
+		}
+	}
+	else
+	{
+		RS_DEBUG->print("RS_Graphic::saveAs: Can't create object!");
+		RS_DEBUG->print("RS_Graphic::saveAs: File not saved!");
 	}
 
 	delete oldAutosaveName;
+	delete finfo;
+
+	RS_DEBUG->print("RS_Graphic::saveAs: Exiting...");
 
 	return ret;
 }

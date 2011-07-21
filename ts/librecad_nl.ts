@@ -35,33 +35,33 @@
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies object</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop</translation>
     </message>
 </context>
 <context>
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies een punt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop</translation>
     </message>
 </context>
 <context>
     <name>QC_ActionGetSelect</name>
     <message>
         <source>Select objects:</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer objecten</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop</translation>
     </message>
 </context>
 <context>
@@ -342,7 +342,7 @@ Controleer de toegangsrechten.</translation>
     </message>
     <message>
         <source>&amp;CAM</source>
-        <translation>&amp;CAM</translation>
+        <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
         <source>Simulation Controls</source>
@@ -447,35 +447,35 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gereedschappen</translation>
     </message>
     <message>
         <source>Compiled on: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gecompileerd op: %1</translation>
     </message>
     <message>
         <source>Program Icons Supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation>Programma icoonen Geleverd door</translation>
     </message>
     <message>
         <source>Splash and Logo supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation>Splash en Logo Geleverd door</translation>
     </message>
     <message>
         <source>Main Website : </source>
-        <translation type="unfinished"></translation>
+        <translation>LibreCAD Website</translation>
     </message>
     <message>
         <source>Version: %1</source>
-        <translation type="unfinished">Versie: %1</translation>
+        <translation>Versie: %1</translation>
     </message>
     <message>
         <source>SCM Revision: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>SCM revisie: %1</translation>
     </message>
     <message>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ondersteun LibreCAD financieel voor het onderhoud van sourcecode en website. </translation>
     </message>
 </context>
 <context>
@@ -1987,6 +1987,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;back</source>
+        <translation type="obsolete">&amp;terug</translation>
+    </message>
+    <message>
+        <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2467,7 +2471,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Verplaats</translation>
+        <translation type="obsolete">Verplaats</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -2511,7 +2515,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
-        <translation>Roteer om twee centers</translation>
+        <translation type="obsolete">Roteer om twee centers</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
@@ -2536,6 +2540,14 @@ in een separate Venster</translation>
     <message>
         <source>Edit Text</source>
         <translation>Bewerk Tekst</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished">Verplaats / Copieer</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="unfinished">Roteer Twee</translation>
     </message>
 </context>
 <context>
@@ -6107,23 +6119,23 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden....</translation>
     </message>
     <message>
         <source>enter an integer number</source>
-        <translation type="unfinished"></translation>
+        <translation>Vul een geheel getal in</translation>
     </message>
     <message>
         <source>LibreCAD query</source>
-        <translation type="unfinished"></translation>
+        <translation>LibreCAD query</translation>
     </message>
     <message>
         <source>enter a number</source>
-        <translation type="unfinished"></translation>
+        <translation>voer een getal in</translation>
     </message>
     <message>
         <source>enter text</source>
-        <translation type="unfinished"></translation>
+        <translation>voer tekst in</translation>
     </message>
 </context>
 <context>
@@ -10238,20 +10250,20 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>kill</source>
-        <translation type="unfinished"></translation>
+        <translation>verwijder</translation>
     </message>
     <message>
         <source>k</source>
-        <translation type="unfinished"></translation>
+        <translation>k</translation>
     </message>
     <message>
         <source>back</source>
-        <translation type="unfinished"></translation>
+        <translation>terug</translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation type="unfinished"></translation>
+        <translation>b</translation>
     </message>
 </context>
 </TS>

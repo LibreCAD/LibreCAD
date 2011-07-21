@@ -161,9 +161,22 @@ QString LC_List::getStrData(Plug_Entity *ent) {
     case DPI::INSERT:
         return QString("INSERT: ").append(str);
         break;
-    case DPI::POLYLINE:
+    case DPI::POLYLINE: {
+        if (data.value(DPI::CLOSEPOLY).toInt() == 0 )
+            str.append( QString("     Opened\n") );
+        else
+            str.append( QString("     Closed\n") );
+        str.append( QString("     Vertex:\n"));
+        QList<Plug_VertexData> vl;
+        ent->getPolylineData(&vl);
+        for (int i = 0; i < vl.size(); ++i) {
+            str.append( QString("     in point: X=%1 Y=%2\n").arg(
+                           vl.at(i).point.x()).arg(vl.at(i).point.y()) );
+            if (vl.at(i).bulge != 0)
+            str.append( QString("     curvature: %1\n").arg( vl.at(i).bulge) );
+        }
         return QString("POLYLINE: ").append(str);
-        break;
+        break; }
     case DPI::IMAGE:
         return QString("IMAGE: ").append(str);
         break;

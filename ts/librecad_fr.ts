@@ -290,7 +290,7 @@ Vérifiez les permissions SVP.</translation>
     </message>
     <message>
         <source>&amp;CAM</source>
-        <translation>&amp;CAM</translation>
+        <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
         <source>Simulation Controls</source>
@@ -717,7 +717,11 @@ Sauvegarde automatique désactivée.</translation>
     </message>
     <message>
         <source>&amp;back</source>
-        <translation>&amp;retour</translation>
+        <translation type="obsolete">&amp;retour</translation>
+    </message>
+    <message>
+        <source>&amp;Selection pointer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1200,7 +1204,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Move</source>
-        <translation>Déplacer</translation>
+        <translation type="obsolete">Déplacer</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -1240,7 +1244,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Rotate around two centers</source>
-        <translation>Tourne outour de 2 centres</translation>
+        <translation type="obsolete">Tourne outour de 2 centres</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
@@ -1265,6 +1269,14 @@ in a separate window</source>
     <message>
         <source>Edit Text</source>
         <translation>Editer Texte</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished">Déplacer / Copier</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="unfinished">Double Rotation</translation>
     </message>
 </context>
 <context>
