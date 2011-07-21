@@ -245,10 +245,6 @@ Please check the permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;CAM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
@@ -463,7 +459,7 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;back</source>
+        <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -938,10 +934,6 @@ in a separate window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Move</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Move and Rotate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -967,10 +959,6 @@ in a separate window</source>
     </message>
     <message>
         <source>Trim / Extend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotate around two centers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1003,6 +991,14 @@ in a separate window</source>
     </message>
     <message>
         <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

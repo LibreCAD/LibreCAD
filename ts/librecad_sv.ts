@@ -285,10 +285,6 @@ Kontrollera rättigheterna.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;CAM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>None</source>
         <translation>Ingen</translation>
     </message>
@@ -546,11 +542,11 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;back</source>
+        <source>Restrict&amp;Vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Restrict&amp;Vertically</source>
+        <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1026,7 +1022,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Move</source>
-        <translation>Flytta</translation>
+        <translation type="obsolete">Flytta</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -1065,10 +1061,6 @@ in a separate window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rotate around two centers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Edit Entity Attributes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1091,6 +1083,14 @@ in a separate window</source>
     <message>
         <source>Edit Text</source>
         <translation>Redigera text</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
