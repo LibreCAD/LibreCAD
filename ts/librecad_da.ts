@@ -342,7 +342,7 @@ Check venligst filretighederne.</translation>
     </message>
     <message>
         <source>&amp;CAM</source>
-        <translation>&amp;CAM</translation>
+        <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
         <source>Simulation Controls</source>
@@ -1030,7 +1030,7 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;back</source>
+        <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1511,7 +1511,7 @@ i et nyt vindue</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Flyt</translation>
+        <translation type="obsolete">Flyt</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -1543,7 +1543,7 @@ i et nyt vindue</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
-        <translation>Drej omkring to centre</translation>
+        <translation type="obsolete">Drej omkring to centre</translation>
     </message>
     <message>
         <source>Explode</source>
@@ -1576,6 +1576,14 @@ i et nyt vindue</translation>
     <message>
         <source>Edit Text</source>
         <translation>Rediger Tekst</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished">Flyt / kopier</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="unfinished">Drej to</translation>
     </message>
 </context>
 <context>

@@ -344,7 +344,7 @@ nem menthető. Ellenőrizze a jogokat.</translation>
     </message>
     <message>
         <source>&amp;CAM</source>
-        <translation>&amp;CAM</translation>
+        <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
         <source>Simulation Controls</source>
@@ -2020,7 +2020,7 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;back</source>
+        <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2517,7 +2517,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Move</source>
-        <translation>Mozgatás</translation>
+        <translation type="obsolete">Mozgatás</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -2553,7 +2553,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Rotate around two centers</source>
-        <translation>Forgatás két középpont körül</translation>
+        <translation type="obsolete">Forgatás két középpont körül</translation>
     </message>
     <message>
         <source>Explode</source>
@@ -2586,6 +2586,14 @@ in a separate window</source>
     <message>
         <source>Edit Text</source>
         <translation>Szöveg szerkesztése</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished">Mozgat / Másol</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="unfinished">Többszörös forgatás</translation>
     </message>
 </context>
 <context>

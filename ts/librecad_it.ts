@@ -346,7 +346,7 @@ Controlla i permessi.</translation>
     </message>
     <message>
         <source>&amp;CAM</source>
-        <translation>&amp;CAM</translation>
+        <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
         <source>Simulation Controls</source>
@@ -1991,7 +1991,7 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;back</source>
+        <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2481,7 +2481,7 @@ in una finestra separata</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Sposta</translation>
+        <translation type="obsolete">Sposta</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -2525,7 +2525,7 @@ in una finestra separata</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
-        <translation>Ruota Attorno a Due Centri</translation>
+        <translation type="obsolete">Ruota Attorno a Due Centri</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
@@ -2550,6 +2550,14 @@ in una finestra separata</translation>
     <message>
         <source>Edit Text</source>
         <translation>Raccorda di un valore</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="unfinished">Sposta / Copia</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="unfinished">Doppia Rotazione</translation>
     </message>
 </context>
 <context>
