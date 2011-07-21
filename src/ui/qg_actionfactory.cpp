@@ -152,15 +152,31 @@ QG_ActionFactory::~QG_ActionFactory() {}
 
 
 
-/**
- * Creates a new action object and links it to the appropriate slot(s).
+/* *
+ *	Description:	- Creates a new action object and links it to the
+ *						  appropriate slot(s).
  *
- * @param id ID of the action to create (see rs.h).
- * @param obj Object which the action will connect its signal to.
+ * Author(s):		..., Claude Sylvain
+ * Created:
+ * Last modified:	16 July 2011
  *
- * @return Pointer to the action object or NULL if the action is unknown.
- */
-QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObject* obj2) {
+ *	Parameters:		RS2::ActionType id:
+ *							ID of the action to create (see rs.h).
+ *
+ *						QObject* obj:
+ *							Object which the action will connect its signal to.
+ *
+ *						QObject* obj2:
+ *							...
+ *
+ *	Returns:			QAction*:
+ *							- Pointer to the action object or NULL if the action
+ *							  is unknown.
+ *	*/
+
+QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
+	  													QObject* obj2)
+{
     // assert that action handler is not invalid:
     if (actionHandler==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -1003,7 +1019,7 @@ QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObjec
 
     case RS2::ActionRestrictVertical:
 		// tr("Restrict Vertically")
-		action = new QAction(tr("Restrict&Vertically"), mw);
+		action = new QAction(tr("Restrict &Vertically"), mw);
 		//action->zetStatusTip(tr("Restrict snapping vertically"));
         actionHandler->setActionRestrictVertical(action);
 		action->setCheckable(true);
