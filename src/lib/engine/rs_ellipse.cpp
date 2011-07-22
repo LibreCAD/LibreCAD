@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -38,7 +38,7 @@
  */
 RS_Ellipse::RS_Ellipse(RS_EntityContainer* parent,
                        const RS_EllipseData& d)
-        :RS_AtomicEntity(parent), data(d) {
+    :RS_AtomicEntity(parent), data(d) {
 
     //calculateEndpoints();
     calculateBorders();
@@ -48,18 +48,18 @@ RS_Ellipse::RS_Ellipse(RS_EntityContainer* parent,
 /**
  * Recalculates the endpoints using the angles and the radius.
  */
- /*
+/*
 void RS_Ellipse::calculateEndpoints() {
-    double angle = data.majorP.angle();
-    double radius1 = getMajorRadius();
-    double radius2 = getMinorRadius();
+   double angle = data.majorP.angle();
+   double radius1 = getMajorRadius();
+   double radius2 = getMinorRadius();
 
-    startpoint.set(data.center.x + cos(data.angle1) * radius1,
-                   data.center.y + sin(data.angle1) * radius2);
-    startpoint.rotate(data.center, angle);
-    endpoint.set(data.center.x + cos(data.angle2) * radius1,
-                 data.center.y + sin(data.angle2) * radius2);
-    endpoint.rotate(data.center, angle);
+   startpoint.set(data.center.x + cos(data.angle1) * radius1,
+                  data.center.y + sin(data.angle1) * radius2);
+   startpoint.rotate(data.center, angle);
+   endpoint.set(data.center.x + cos(data.angle2) * radius1,
+                data.center.y + sin(data.angle2) * radius2);
+   endpoint.rotate(data.center, angle);
 }
 */
 
@@ -70,15 +70,15 @@ void RS_Ellipse::calculateEndpoints() {
  * @todo Fix that - the algorithm used is really bad / slow.
  */
 void RS_Ellipse::calculateBorders() {
-	RS_DEBUG->print("RS_Ellipse::calculateBorders");
+    RS_DEBUG->print("RS_Ellipse::calculateBorders");
 
     double radius1 = getMajorRadius();
     double radius2 = getMinorRadius();
     double angle = getAngle();
     double a1 = ((!isReversed()) ? data.angle1 : data.angle2);
     double a2 = ((!isReversed()) ? data.angle2 : data.angle1);
-	RS_Vector startpoint = getStartpoint();
-	RS_Vector endpoint = getEndpoint();
+    RS_Vector startpoint = getStartpoint();
+    RS_Vector endpoint = getEndpoint();
 
     double minX = std::min(startpoint.x, endpoint.x);
     double minY = std::min(startpoint.y, endpoint.y);
@@ -87,25 +87,61 @@ void RS_Ellipse::calculateBorders() {
 
     // kind of a brute force. TODO: exact calculation
     RS_Vector vp;
-	double a = a1;
-	do {
-        vp.set(data.center.x + radius1 * cos(a),
-               data.center.y + radius2 * sin(a));
-        vp.rotate(data.center, angle);
+//    double a = a1;
 
-        minX = std::min(minX, vp.x);
-        minY = std::min(minY, vp.y);
-        maxX = std::max(maxX, vp.x);
-        maxY = std::max(maxY, vp.y);
+//    do {
+//        vp.set(data.center.x + radius1 * cos(a),
+//               data.center.y + radius2 * sin(a));
+//        vp.rotate(data.center, angle);
+//
+//        minX = std::min(minX, vp.x);
+//        minY = std::min(minY, vp.y);
+//        maxX = std::max(maxX, vp.x);
+//        maxY = std::max(maxY, vp.y);
+//
+//        a += 0.03;
+//    } while (RS_Math::isAngleBetween(RS_Math::correctAngle(a), a1, a2, false) &&
+//             a<4*M_PI);
+//    std::cout<<"a1="<<a1<<"\ta2="<<a2<<std::endl<<"Old algorithm:\nminX="<<minX<<"\tmaxX="<<maxX<<"\nminY="<<minY<<"\tmaxY="<<maxY<<std::endl;
 
-		a += 0.03;
-    } while (RS_Math::isAngleBetween(RS_Math::correctAngle(a), a1, a2, false) && 
-			a<4*M_PI);
+    // Exact algorithm, based on rotation:
+    // ( r1*cos(a), r2*sin(a)) rotated by angle to 
+    // (r1*cos(a)*cos(angle)-r2*sin(a)*sin(angle),r1*cos(a)*sin(angle)+r2*sin(a)*cos(angle))
+    // both coordinates can be further reorganized to the form rr*cos(a+ theta),
+    // with rr and theta angle defined by the coordinates given above
+    double amin,delta_a;
+    vp.set(radius1*cos(angle),radius2*sin(angle));
+    
+    amin=fmod(2*M_PI+a1+vp.angle(),2*M_PI); // to the range of 0 to 2*M_PI
+    delta_a=fmod(4*M_PI+a2-a1,2*M_PI);
+
+    if( (amin<=M_PI && delta_a >= M_PI - amin) || (amin > M_PI && delta_a >= 3*M_PI - amin))
+        minX= data.center.x-vp.magnitude();
+//    else
+//       minX=data.center.x +vp.magnitude()*std::min(cos(amin),cos(amin+delta_a));
+    if( delta_a >= 2*M_PI - amin )
+        maxX= data.center.x+vp.magnitude();
+//    else
+//       maxX= data.center.x+vp.magnitude()*std::max(cos(amin),cos(amin+delta_a));
+
+        vp.set(radius1*sin(angle),-1*radius2*cos(angle));
+    amin=fmod(2*M_PI+a1+vp.angle(),2*M_PI); // to the range of 0 to 2*M_PI
+    delta_a=fmod(4*M_PI+a2-a1,2*M_PI);
+    if( (amin<=M_PI &&delta_a >= M_PI - amin) || (amin > M_PI && delta_a >= 3*M_PI - amin))
+        minY= data.center.y-vp.magnitude();
+//    else
+//        minY=data.center.y +vp.magnitude()*std::min(cos(amin),cos(amin+delta_a));
+    if( delta_a >= 2*M_PI - amin )
+        maxY= data.center.y+vp.magnitude();
+//    else
+//        maxY= data.center.y+vp.magnitude()*std::max(cos(amin),cos(amin+delta_a));
+
+//std::cout<<"New algorithm:\nminX="<<minX<<"\tmaxX="<<maxX<<"\nminY="<<minY<<"\tmaxY="<<maxY<<std::endl;
 
 
     minV.set(minX, minY);
     maxV.set(maxX, maxY);
-	RS_DEBUG->print("RS_Ellipse::calculateBorders: OK");
+    RS_DEBUG->print("RS_Ellipse::calculateBorders: OK");
 }
 
 
@@ -120,8 +156,8 @@ RS_VectorSolutions RS_Ellipse::getRefPoints() {
 RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist) {
     double dist1, dist2;
     RS_Vector nearerPoint;
-	RS_Vector startpoint = getStartpoint();
-	RS_Vector endpoint = getEndpoint();
+    RS_Vector startpoint = getStartpoint();
+    RS_Vector endpoint = getEndpoint();
 
     dist1 = startpoint.distanceTo(coord);
     dist2 = endpoint.distanceTo(coord);
@@ -145,11 +181,11 @@ RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist) {
 
 RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         bool onEntity, double* dist, RS_Entity** entity) {
-	
+
     RS_DEBUG->print("RS_Ellipse::getNearestPointOnEntity");
-    
+
     RS_Vector ret(false);
-    
+
     if (entity!=NULL) {
         *entity = this;
     }
@@ -166,7 +202,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     int riIFinal = 0;
     double rdX = 0.0;
     double rdY = 0.0;
-    double dDistance; 
+    double dDistance;
     bool swap = false;
     bool majorSwap = false;
 
@@ -184,59 +220,59 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         dV*=-1.0;
         swap = true;
     }
-    
-    // initial guess 
-    double dT = dB*(dV - dB); 
-    
+
+    // initial guess
+    double dT = dB*(dV - dB);
+
     // Newton s method
-    int i; 
-    for (i = 0; i < iMax; i++) { 
+    int i;
+    for (i = 0; i < iMax; i++) {
         RS_DEBUG->print("RS_Ellipse::getNearestPointOnEntity: i: %d", i);
-        double dTpASqr = dT + dA*dA; 
-        double dTpBSqr = dT + dB*dB; 
-        double dInvTpASqr = 1.0/dTpASqr; 
-        double dInvTpBSqr = 1.0/dTpBSqr; 
-        double dXDivA = dA*dU*dInvTpASqr; 
-        double dYDivB = dB*dV*dInvTpBSqr; 
-        double dXDivASqr = dXDivA*dXDivA; 
-        double dYDivBSqr = dYDivB*dYDivB; 
-        double dF = dXDivASqr + dYDivBSqr - 1.0; 
+        double dTpASqr = dT + dA*dA;
+        double dTpBSqr = dT + dB*dB;
+        double dInvTpASqr = 1.0/dTpASqr;
+        double dInvTpBSqr = 1.0/dTpBSqr;
+        double dXDivA = dA*dU*dInvTpASqr;
+        double dYDivB = dB*dV*dInvTpBSqr;
+        double dXDivASqr = dXDivA*dXDivA;
+        double dYDivBSqr = dYDivB*dYDivB;
+        double dF = dXDivASqr + dYDivBSqr - 1.0;
         RS_DEBUG->print("RS_Ellipse::getNearestPointOnEntity: dF: %f", dF);
-        if ( fabs(dF) < dEpsilon ) { 
+        if ( fabs(dF) < dEpsilon ) {
             // F(t0) is close enough to zero, terminate the iteration:
             rdX = dXDivA*dA;
-            rdY = dYDivB*dB; 
-            riIFinal = i; 
+            rdY = dYDivB*dB;
+            riIFinal = i;
             RS_DEBUG->print("RS_Ellipse::getNearestPointOnEntity: rdX,rdY 1: %f,%f", rdX, rdY);
-            break; 
-        } 
-        double dFDer = 2.0*(dXDivASqr*dInvTpASqr + dYDivBSqr*dInvTpBSqr); 
-        double dRatio = dF/dFDer; 
+            break;
+        }
+        double dFDer = 2.0*(dXDivASqr*dInvTpASqr + dYDivBSqr*dInvTpBSqr);
+        double dRatio = dF/dFDer;
         RS_DEBUG->print("RS_Ellipse::getNearestPointOnEntity: dRatio: %f", dRatio);
-        if ( fabs(dRatio) < dEpsilon ) { 
+        if ( fabs(dRatio) < dEpsilon ) {
             // t1-t0 is close enough to zero, terminate the iteration:
-            rdX = dXDivA*dA; 
-            rdY = dYDivB*dB; 
-            riIFinal = i; 
+            rdX = dXDivA*dA;
+            rdY = dYDivB*dB;
+            riIFinal = i;
             RS_DEBUG->print("RS_Ellipse::getNearestPointOnEntity: rdX,rdY 2: %f,%f", rdX, rdY);
-            break; 
-        } 
-        dT += dRatio; 
-    } 
-    if ( i == iMax ) { 
+            break;
+        }
+        dT += dRatio;
+    }
+    if ( i == iMax ) {
         // failed to converge:
         RS_DEBUG->print("RS_Ellipse::getNearestPointOnEntity: failed");
         dDistance = RS_MAXDOUBLE;
-    } 
+    }
     else {
         double dDelta0 = rdX - dU;
-        double dDelta1 = rdY - dV; 
-        dDistance = sqrt(dDelta0*dDelta0 + dDelta1*dDelta1); 
+        double dDelta1 = rdY - dV;
+        dDistance = sqrt(dDelta0*dDelta0 + dDelta1*dDelta1);
         ret = RS_Vector(rdX, rdY);
         RS_DEBUG->print("RS_Ellipse::getNearestPointOnEntity: rdX,rdY 2: %f,%f", rdX, rdY);
         RS_DEBUG->print("RS_Ellipse::getNearestPointOnEntity: ret: %f,%f", ret.x, ret.y);
     }
-    
+
     if (dist!=NULL) {
         if (ret.valid) {
             *dist = dDistance;
@@ -244,7 +280,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
             *dist = RS_MAXDOUBLE;
         }
     }
-   
+
     if (ret.valid) {
         if (swap) {
             ret.y*=-1.0;
@@ -255,7 +291,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
             ret.y = dum;
         }
         ret = (ret.rotate(ang) + data.center);
-        
+
         if (onEntity) {
             double a1 = data.center.angleTo(getStartpoint());
             double a2 = data.center.angleTo(getEndpoint());
@@ -265,7 +301,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
             }
         }
     }
-    
+
     return ret;
 }
 
@@ -278,7 +314,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
  * @retval false otherwise
  */
 bool RS_Ellipse::isPointOnEntity(const RS_Vector& coord,
-                                double tolerance) {
+                                 double tolerance) {
     double dist = getDistanceToPoint(coord, NULL, RS2::ResolveNone);
     return (dist<=tolerance);
 }
@@ -356,52 +392,52 @@ void RS_Ellipse::rotate(RS_Vector center, double angle) {
 
 
 void RS_Ellipse::moveStartpoint(const RS_Vector& pos) {
-	data.angle1 = getEllipseAngle(pos);
-	//data.angle1 = data.center.angleTo(pos);
-	//calculateEndpoints();
-	calculateBorders();
+    data.angle1 = getEllipseAngle(pos);
+    //data.angle1 = data.center.angleTo(pos);
+    //calculateEndpoints();
+    calculateBorders();
 }
 
 
 
 void RS_Ellipse::moveEndpoint(const RS_Vector& pos) {
-	data.angle2 = getEllipseAngle(pos);
-	//data.angle2 = data.center.angleTo(pos);
-	//calculateEndpoints();
-	calculateBorders();
+    data.angle2 = getEllipseAngle(pos);
+    //data.angle2 = data.center.angleTo(pos);
+    //calculateEndpoints();
+    calculateBorders();
 }
 
 
-RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& coord, 
-		const RS_Vector& trimPoint) {
-	
-	double angEl = getEllipseAngle(trimPoint);
-	double angM = getEllipseAngle(coord);
+RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& coord,
+                                     const RS_Vector& trimPoint) {
 
-	if (RS_Math::getAngleDifference(angM, angEl)>M_PI) {
-		//if (data.reversed) {
-		//	return RS2::EndingEnd;
-		//}
-		//else {
-			return RS2::EndingStart;
-		//}
-	}
-	else {
-		//if (data.reversed) {
-		//	return RS2::EndingStart;
-		//}
-		//else {
-			return RS2::EndingEnd;
-		//}
-	}
+    double angEl = getEllipseAngle(trimPoint);
+    double angM = getEllipseAngle(coord);
+
+    if (RS_Math::getAngleDifference(angM, angEl)>M_PI) {
+        //if (data.reversed) {
+        //	return RS2::EndingEnd;
+        //}
+        //else {
+        return RS2::EndingStart;
+        //}
+    }
+    else {
+        //if (data.reversed) {
+        //	return RS2::EndingStart;
+        //}
+        //else {
+        return RS2::EndingEnd;
+        //}
+    }
 }
 
 double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) {
-	RS_Vector m = pos;
-	m.rotate(data.center, -data.majorP.angle());
-	RS_Vector v = m-data.center;
-	v.scale(RS_Vector(1.0, 1.0/data.ratio));
-	return v.angle(); 
+    RS_Vector m = pos;
+    m.rotate(data.center, -data.majorP.angle());
+    RS_Vector v = m-data.center;
+    v.scale(RS_Vector(1.0, 1.0/data.ratio));
+    return v.angle();
 }
 
 
@@ -445,9 +481,9 @@ void RS_Ellipse::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
 
 
 void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-	RS_Vector startpoint = getStartpoint();
-	RS_Vector endpoint = getEndpoint();
-	
+    RS_Vector startpoint = getStartpoint();
+    RS_Vector endpoint = getEndpoint();
+
     if (ref.distanceTo(startpoint)<1.0e-4) {
         moveStartpoint(startpoint+offset);
     }
@@ -475,17 +511,17 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patter
                              getAngle1(), getAngle2(),
                              isReversed());
     } else {
-    	double styleFactor = getStyleFactor(view);
-		if (styleFactor<0.0) {
-        	painter->drawEllipse(view->toGui(getCenter()),
-                             getMajorRadius() * view->getFactor().x,
-                             getMinorRadius() * view->getFactor().x,
-                             getAngle(),
-                             getAngle1(), getAngle2(),
-                             isReversed());
-			return;
-		}
-		
+        double styleFactor = getStyleFactor(view);
+        if (styleFactor<0.0) {
+            painter->drawEllipse(view->toGui(getCenter()),
+                                 getMajorRadius() * view->getFactor().x,
+                                 getMinorRadius() * view->getFactor().x,
+                                 getAngle(),
+                                 getAngle1(), getAngle2(),
+                                 isReversed());
+            return;
+        }
+
         // Pattern:
         RS_LineTypePattern* pat;
         if (isSelected()) {
