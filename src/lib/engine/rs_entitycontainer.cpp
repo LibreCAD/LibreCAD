@@ -853,6 +853,7 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
             if (subContainer!=NULL) {
                 e = subContainer->nextEntity(level);
                 if (e!=NULL) {
+                    --entIdx; //return a sub-entity, index not advanced
                     return e;
                 } else {
                     if ( entIdx < entities.size() )
@@ -925,6 +926,7 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
             if (subContainer!=NULL) {
                 e = subContainer->prevEntity(level);
                 if (e!=NULL) {
+                    ++entIdx; //return a sub-entity, index not advanced
                     return e;
                 } else {
                     if (entIdx >= 0)
