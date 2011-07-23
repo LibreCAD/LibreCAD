@@ -140,6 +140,9 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WFlags f)
     //setFocusPolicy(WheelFocus);
 	
     setFocusPolicy(Qt::NoFocus);
+
+    // See https://sourceforge.net/tracker/?func=detail&aid=3289298&group_id=342582&atid=1433844 (Left-mouse drag shrinks window)
+    setAttribute(Qt::WA_NoMousePropagation);
 }
 
 
