@@ -109,26 +109,29 @@ void RS_Vector::setPolar(double radius, double angle) {
  * @return The angle from zero to this vector (in rad).
  */
 double RS_Vector::angle() const {
-    double ret = 0.0;
-    double m = magnitude();
-
-    if (m>1.0e-6) {
-		double dp = dotP(*this, RS_Vector(1.0, 0.0));
-		RS_DEBUG->print("RS_Vector::angle: dp/m: %f/%f", dp, m);
-		if (dp/m>=1.0) {
-			ret = 0.0;
-		}
-		else if (dp/m<-1.0) {
-			ret = M_PI;
-		}
-		else {
-        	ret = acos( dp / m);
-		}
-        if (y<0.0) {
-            ret = 2*M_PI - ret;
-        }
-    }
-    return ret;
+        return fmod(2*M_PI+atan2(y,x),2*M_PI);
+//    double ret = 0.0;
+//    double m = magnitude();
+//
+//    if (m>1.0e-6) {
+//		double dp = dotP(*this, RS_Vector(1.0, 0.0));
+//		RS_DEBUG->print("RS_Vector::angle: dp/m: %f/%f", dp, m);
+//		if (dp/m>=1.0) {
+//			ret = 0.0;
+//		}
+//		else if (dp/m<-1.0) {
+//			ret = M_PI;
+//		}
+//		else {
+//        	ret = acos( dp / m);
+//		}
+//        if (y<0.0) {
+//            ret = 2*M_PI - ret;
+//        }
+//    }
+//    //std::cout<<"New angle="<<fmod(2*M_PI+atan2(y,x),2*M_PI)<<"\tatan2("<<y<<','<<x<<")"<<atan2(y,x)<<std::endl;
+//
+//    return ret;
 }
 
 
