@@ -105,13 +105,14 @@ void RS_Ellipse::calculateBorders() {
 //    std::cout<<"a1="<<a1<<"\ta2="<<a2<<std::endl<<"Old algorithm:\nminX="<<minX<<"\tmaxX="<<maxX<<"\nminY="<<minY<<"\tmaxY="<<maxY<<std::endl;
 
     // Exact algorithm, based on rotation:
-    // ( r1*cos(a), r2*sin(a)) rotated by angle to 
+    // ( r1*cos(a), r2*sin(a)) rotated by angle to
     // (r1*cos(a)*cos(angle)-r2*sin(a)*sin(angle),r1*cos(a)*sin(angle)+r2*sin(a)*cos(angle))
     // both coordinates can be further reorganized to the form rr*cos(a+ theta),
     // with rr and theta angle defined by the coordinates given above
     double amin,delta_a;
+//      x range
     vp.set(radius1*cos(angle),radius2*sin(angle));
-    
+
     amin=fmod(2*M_PI+a1+vp.angle(),2*M_PI); // to the range of 0 to 2*M_PI
     delta_a=fmod(4*M_PI+a2-a1,2*M_PI);
 
@@ -123,10 +124,9 @@ void RS_Ellipse::calculateBorders() {
         maxX= data.center.x+vp.magnitude();
 //    else
 //       maxX= data.center.x+vp.magnitude()*std::max(cos(amin),cos(amin+delta_a));
-
-        vp.set(radius1*sin(angle),-1*radius2*cos(angle));
+//      y range
+    vp.set(radius1*sin(angle),-1*radius2*cos(angle));
     amin=fmod(2*M_PI+a1+vp.angle(),2*M_PI); // to the range of 0 to 2*M_PI
-    delta_a=fmod(4*M_PI+a2-a1,2*M_PI);
     if( (amin<=M_PI &&delta_a >= M_PI - amin) || (amin > M_PI && delta_a >= 3*M_PI - amin))
         minY= data.center.y-vp.magnitude();
 //    else
