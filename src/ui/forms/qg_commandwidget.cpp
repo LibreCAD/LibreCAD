@@ -93,7 +93,7 @@ void QG_CommandWidget::appendHistory(const QString& msg) {
 
 void QG_CommandWidget::trigger() {
     QString cmd = leCommand->text();
-
+    bool isAction=false;
     if (cmd=="") {
         cmd="\n";
     } else {
@@ -101,7 +101,11 @@ void QG_CommandWidget::trigger() {
     }
 
     if (actionHandler!=NULL) {
-        actionHandler->command(cmd);
+        isAction=actionHandler->command(cmd);
+    }
+
+    if (!isAction && cmd!="\n") {
+       appendHistory(tr("Unkown command: %1").arg(cmd));
     }
 
     leCommand->setText("");
