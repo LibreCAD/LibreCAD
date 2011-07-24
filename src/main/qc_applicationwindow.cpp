@@ -2413,25 +2413,25 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 
     bool ret = false;
     QPixmap* buffer = new QPixmap(size);
-    RS_PainterQt* painter = new RS_PainterQt(buffer);
+    RS_PainterQt painter(buffer);
 
     // black background:
     if (black) {
-        painter->setBackgroundColor(RS_Color(0,0,0));
+        painter.setBackgroundColor(RS_Color(0,0,0));
     }
     // white background:
     else {
-        painter->setBackgroundColor(RS_Color(255,255,255));
+        painter.setBackgroundColor(RS_Color(255,255,255));
     }
 
     // black/white:
     if (bw) {
-        painter->setDrawingMode(RS2::ModeBW);
+        painter.setDrawingMode(RS2::ModeBW);
     }
 
-    painter->eraseRect(0,0, size.width(), size.height());
+    painter.eraseRect(0,0, size.width(), size.height());
 
-    RS_StaticGraphicView gv(size.width(), size.height(), painter);
+    RS_StaticGraphicView gv(size.width(), size.height(), &painter);
     if (black) {
         gv.setBackground(RS_Color(0,0,0));
     } else {
@@ -2441,7 +2441,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     gv.zoomAuto(false);
     for (RS_Entity* e=graphic->firstEntity(RS2::ResolveAll);
             e!=NULL; e=graphic->nextEntity(RS2::ResolveAll)) {
-        gv.drawEntity(painter, e);
+        gv.drawEntity(&painter, e);
     }
 
     // RVT_PORT QImageIO iio;
@@ -2459,7 +2459,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     QApplication::restoreOverrideCursor();
 
     // GraphicView deletes painter
-    painter->end();
+    painter.end();
     delete buffer;
 
     if (ret) {
@@ -2559,10 +2559,10 @@ void QC_ApplicationWindow::slotFilePrint() {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         printer.setFullPage(true);
 
-        RS_PainterQt* painter = new RS_PainterQt(&printer);
-        painter->setDrawingMode(w->getGraphicView()->getDrawingMode());
+        RS_PainterQt painter(&printer);
+        painter.setDrawingMode(w->getGraphicView()->getDrawingMode());
 
-        RS_StaticGraphicView gv(printer.width(), printer.height(), painter);
+        RS_StaticGraphicView gv(printer.width(), printer.height(), &painter);
         gv.setPrinting(true);
         gv.setBorders(0,0,0,0);
 
@@ -2581,10 +2581,10 @@ void QC_ApplicationWindow::slotFilePrint() {
 
         gv.setContainer(graphic);
 
-        gv.drawEntity(painter, graphic, true);
+        gv.drawEntity(&painter, graphic, true);
 
         // GraphicView deletes painter
-        painter->end();
+        painter.end();
 
         RS_SETTINGS->beginGroup("/Print");
         RS_SETTINGS->writeEntry("/PrintToFile", (int)printer.outputToFile());
