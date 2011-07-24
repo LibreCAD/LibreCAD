@@ -338,11 +338,23 @@ void RS_GraphicView::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 
+/*	*
+ *	Function name:
+ *
+ *	Description:		- Called by the actual GUI class which implements the
+ *							  RS_GraphicView interface to notify LibreCAD about
+ *							  mouse events.
+ *
+ *	Author(s):			..., Claude Sylvain	
+ *	Created:				?	
+ *	Last modified:		23 July 2011
+ *
+ *	Parameters:			QMouseEvent* e:
+ *								...
+ *
+ *	Returns:				void
+ *	*/
 
-/**
- * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify LibreCAD about mouse events.
- */
 void RS_GraphicView::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_GraphicView::mouseMoveEvent begin");
 
@@ -367,13 +379,14 @@ void RS_GraphicView::mouseMoveEvent(QMouseEvent* e) {
 
     RS_DEBUG->print("RS_GraphicView::mouseMoveEvent 003");
 
-    if (eventHandler==NULL || !eventHandler->hasAction() && graphic!=NULL) {
-        RS_Vector mouse = toGraph(RS_Vector(mx, my));
-        RS_Vector relMouse = mouse - getRelativeZero();
+    if (	((eventHandler == NULL) || !eventHandler->hasAction()) &&
+			(graphic != NULL))
+	 {
+        RS_Vector	mouse		= toGraph(RS_Vector(mx, my));
+        RS_Vector	relMouse	= mouse - getRelativeZero();
 
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY!=NULL)
             RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
-        }
     }
 
     RS_DEBUG->print("RS_GraphicView::mouseMoveEvent end");
@@ -696,12 +709,19 @@ void RS_GraphicView::restoreView() {
 }
 
 
-
-/**
- * performs autozoom in y only
+/*	*
+ *	Function name:
+ *	Description:		Performs autozoom in Y axis only.
+ *	Author(s):			..., Claude Sylvain	
+ *	Created:				?	
+ *	Last modified:		23 July 2011
  *
- * @param axis include axis in zoom
- */
+ *	Parameters:			bool axis:
+ *								Axis in zoom.
+ *
+ *	Returns:				void
+ *	*/
+
 void RS_GraphicView::zoomAutoY(bool axis) {
     if (container!=NULL) {
         double visibleHeight = 0.0;
@@ -718,8 +738,10 @@ void RS_GraphicView::zoomAutoY(bool axis) {
                 double x1, x2;
                 x1 = toGuiX(l->getStartpoint().x);
                 x2 = toGuiX(l->getEndpoint().x);
-                if (x1>0.0 && x1<(double)getWidth() ||
-                        x2>0.0 && x2<(double)getWidth()) {
+
+                if (	((x1 > 0.0) && (x1 < (double) getWidth())) ||
+                     ((x2 > 0.0) && (x2 < (double) getWidth())))
+					 {
                     minY = std::min(minY, l->getStartpoint().y);
                     minY = std::min(minY, l->getEndpoint().y);
                     maxY = std::max(maxY, l->getStartpoint().y);
@@ -989,11 +1011,30 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 
 }
 
-void RS_GraphicView::drawLayer2(RS_Painter *painter) {
-    // drawing entities:
-    drawEntity(painter, container);
-	drawAbsoluteZero(painter);
+
+/*	*
+ *	Function name:
+ *	Description: 		Do the drawing, step 2/3.
+ *	Author(s):			..., Claude Sylvain	
+ *	Created:				?	
+ *	Last modified:		23 July 2011
+ *
+ *	Parameters:			RS_Painter *painter:
+ *								...
+ *
+ *	Returns:				void
+ *	*/
+
+void RS_GraphicView::drawLayer2(RS_Painter *painter)
+{
+	drawEntity(painter, container);	//	Draw all entities.
+
+	//	If not in print preview, draw the absolute zero reference.
+	//	----------------------------------------------------------
+	if (!isPrintPreview())
+		drawAbsoluteZero(painter);
 }
+
 
 void RS_GraphicView::drawLayer3(RS_Painter *painter) {
     // drawing zero points:
