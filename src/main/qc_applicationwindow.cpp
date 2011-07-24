@@ -2559,10 +2559,10 @@ void QC_ApplicationWindow::slotFilePrint() {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         printer.setFullPage(true);
 
-        RS_PainterQt* painter = new RS_PainterQt(&printer);
-        painter->setDrawingMode(w->getGraphicView()->getDrawingMode());
+        RS_PainterQt painter(&printer);
+        painter.setDrawingMode(w->getGraphicView()->getDrawingMode());
 
-        RS_StaticGraphicView gv(printer.width(), printer.height(), painter);
+        RS_StaticGraphicView gv(printer.width(), printer.height(), &painter);
         gv.setPrinting(true);
         gv.setBorders(0,0,0,0);
 
@@ -2581,10 +2581,10 @@ void QC_ApplicationWindow::slotFilePrint() {
 
         gv.setContainer(graphic);
 
-        gv.drawEntity(painter, graphic, true);
+        gv.drawEntity(&painter, graphic, true);
 
         // GraphicView deletes painter
-        painter->end();
+        painter.end();
 
         RS_SETTINGS->beginGroup("/Print");
         RS_SETTINGS->writeEntry("/PrintToFile", (int)printer.outputToFile());
