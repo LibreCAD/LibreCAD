@@ -316,11 +316,11 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     pngPath = iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
 
     QPixmap* buffer = new QPixmap(128,128);
-    RS_PainterQt* painter = new RS_PainterQt(buffer);
-    painter->setBackgroundColor(RS_Color(255,255,255));
-    painter->eraseRect(0,0, 128,128);
+    RS_PainterQt painter(buffer);
+    painter.setBackgroundColor(RS_Color(255,255,255));
+    painter.eraseRect(0,0, 128,128);
 
-    RS_StaticGraphicView gv(128,128, painter);
+    RS_StaticGraphicView gv(128,128, &painter);
     RS_Graphic graphic;
     if (graphic.open(dxfPath, RS2::FormatUnknown)) {
         for (RS_Entity* e=graphic.firstEntity(RS2::ResolveAll);
@@ -336,7 +336,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
 
         for (RS_Entity* e=graphic.firstEntity(RS2::ResolveAll);
                 e!=NULL; e=graphic.nextEntity(RS2::ResolveAll)) {
-            gv.drawEntity(painter, e);
+            gv.drawEntity(&painter, e);
         }
 
         QImageWriter iio;
@@ -359,7 +359,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     }
 
     // GraphicView deletes painter
-    painter->end();
+    painter.end();
     delete buffer;
 
     return pngPath;
