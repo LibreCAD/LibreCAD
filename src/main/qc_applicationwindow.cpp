@@ -2920,7 +2920,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
 #endif
                        tr("Compiled on: %1").arg(__DATE__) + "<br>" +
                        "Portions (c) 2011 by R. van Twisk" + "<br>" +
-                       tr("Program Icons Supplied by") +"<br>&nbsp;&nbsp;&nbsp;Pablo: " + "<a href=\"http://www.librecad.com.ar/\">LibreCAD Argentinie</a>" + "<br/>" +
+                       tr("Program Icons Supplied by") +"<br>&nbsp;&nbsp;&nbsp;Pablo: LibreCAD Argentine<br/>" +
                        tr("Splash and Logo supplied by") + "<br>&nbsp;&nbsp;&nbsp;Diego " + "<a href=\"http://daltom.2082studio.com/\">Daltom Designer</a>" + "<br/>" +
                        "<br />" +
                        tr("Modules: %1").arg(modulesString) + "<br>" +
