@@ -25,7 +25,7 @@
      <property name="currentIndex">
       <number>2</number>
      </property>
-     <widget class="QWidget" name="Widget9">
+     <widget class="QWidget" name="tab_1">
       <attribute name="title">
        <string>&amp;Appearance</string>
       </attribute>
@@ -585,7 +585,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tab_2">
       <attribute name="title">
        <string>&amp;Paths</string>
       </attribute>
@@ -689,7 +689,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tab_3">
       <attribute name="title">
        <string>&amp;Defaults</string>
       </attribute>
@@ -732,7 +732,11 @@
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="cbUnit"/>
+           <widget class="QComboBox" name="cbUnit">
+            <property name="toolTip">
+             <string>Drawing unit.</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -796,7 +800,7 @@
             <item>
              <widget class="QSpinBox" name="cbAutoSaveTime">
               <property name="toolTip">
-               <string>Time between automatc saving of thedocument in minutes.</string>
+               <string>Time between automatic saving of the document in minutes.</string>
               </property>
               <property name="minimum">
                <number>1</number>
