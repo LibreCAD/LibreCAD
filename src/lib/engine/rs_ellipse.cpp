@@ -338,16 +338,12 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
 RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
                                        double* dist) {
     //std::cout<<"angle1="<<data.angle1<<"\tdata.angle2="<<data.angle2<<std::endl;
-        double a;
-        RS_Vector vp;
-        vp.setPolar(data.angle1);
-        vp.scale(1.0,data.ratio);
-        a=vp.angle();
-        vp.setPolar(data.angle2);
-        vp.scale(1.0,data.ratio);
-        a=0.5*(a+vp.angle());
-
+    double a =0.5*(data.angle1 + data.angle2);
+    if( data.reversed ^ data.angle1>data.angle2 ) { // condition to adjust one angle by 2*M_PI, therefore, adjust middle by M_PI
+            a += M_PI;
+    }
     //std::cout<<"middle="<<a<<std::endl;
+    RS_Vector vp;
     vp.set(getMajorRadius()*cos(a),getMinorRadius()*sin(a));
     vp.rotate(getAngle());
     vp.move(data.center);
