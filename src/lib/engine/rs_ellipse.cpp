@@ -338,13 +338,26 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
 RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
                                        double* dist) {
     //std::cout<<"angle1="<<data.angle1<<"\tdata.angle2="<<data.angle2<<std::endl;
-    double a =0.5*(data.angle1 + data.angle2);
-    if( data.reversed ^ data.angle1>data.angle2 ) { // condition to adjust one angle by 2*M_PI, therefore, adjust middle by M_PI
-            a += M_PI;
+    if ( fmod( fabs( data.angle1 - data.angle2),2*M_PI) < 1e-6) { // no middle point for whole ellipse
+        if (dist!=NULL) {
+        *dist = RS_MAXDOUBLE;
     }
-    //std::cout<<"middle="<<a<<std::endl;
-    RS_Vector vp;
-    vp.set(getMajorRadius()*cos(a),getMinorRadius()*sin(a));
+    return RS_Vector(false);
+
+    }
+        double amin,amax;
+        RS_Vector vp;
+        vp.setPolar(1.0,data.angle1);
+        vp.scale(RS_Vector(1.0,data.ratio));
+        amin=vp.angle();
+        vp.setPolar(1.0,data.angle2);
+        vp.scale(RS_Vector(1.0,data.ratio));
+        amax=vp.angle();
+        amin=0.5*(amin+amax);
+        if (data.reversed ^ amin > amax) amin += M_PI; // condition to adjust one end by 2*M_PI, therefore, the middle point by M_PI
+
+    //std::cout<<"middle="<<amin<<std::endl;
+    vp.set(getMajorRadius()*cos(amin),getMinorRadius()*sin(amin));
     vp.rotate(getAngle());
     vp.move(data.center);
     if (dist!=NULL) {
