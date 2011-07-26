@@ -142,10 +142,9 @@ bool RS_Math::isAngleBetween(double a,
 
 /**
  * Corrects the given angle to the range of 0-2*Pi.
- * if angle is less than -4*M_PI, the fmod() way returns a negative value
  */
 double RS_Math::correctAngle(double a) {
-        return fmod(4*M_PI + a, 2*M_PI);
+        return M_PI+remainder(a-M_PI, 2*M_PI);
 //    while (a>2*M_PI)
 //        a-=2*M_PI;
 //    while (a<0)

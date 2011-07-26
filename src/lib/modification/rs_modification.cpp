@@ -1917,16 +1917,20 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     } else if (trimEntity->rtti()==RS2::EntityEllipse) {
         // convert a circle into a trimmable arc
         RS_Ellipse* c = (RS_Ellipse*)trimEntity;
-        double am = c->getCenter().angleTo(trimCoord);
+        double am = c->getEllipseAngle(trimCoord);
         RS_EllipseData d=c->getData();
         trimmed1 = new RS_Ellipse(trimEntity->getParent(), d);
         c=(RS_Ellipse*) & trimmed1;
         if(c->isReversed()) {
-            c->setAngle1(am+M_PI/2);
-            c->setAngle2(am-M_PI/2);
+                std::cout<<"Reversed\nangle1="<<double(c->getAngle1())<<"\tangle2="<<double(c->getAngle2())<<std::endl;
+                std::cout<<"am="<<am<<std::endl;
+            if( RS_Math::correctAngle(c->getAngle1()-am)>= M_PI/2) c->setAngle1(RS_Math::correctAngle(am+M_PI/2));
+            if( RS_Math::correctAngle(am- c->getAngle2())>= M_PI/2) c->setAngle2(RS_Math::correctAngle(am-M_PI/2));
         } else {
-            c->setAngle1(am-M_PI/2);
-            c->setAngle2(am+M_PI/2);
+                std::cout<<"Reversed\nangle1="<<double(c->getAngle1())<<"\tangle2="<<double(c->getAngle2())<<std::endl;
+                std::cout<<"am="<<am<<std::endl;
+            if( RS_Math::correctAngle(c->getAngle2()-am)>= M_PI/2) c->setAngle2(RS_Math::correctAngle(am+M_PI/2));
+            if( RS_Math::correctAngle(am- c->getAngle1())>= M_PI/2)c->setAngle1(RS_Math::correctAngle(am-M_PI/2));
         }
     } else
     {
