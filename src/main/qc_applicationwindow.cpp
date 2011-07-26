@@ -2532,9 +2532,13 @@ void QC_ApplicationWindow::slotFilePrint() {
     }
 
     statusBar()->showMessage(tr("Printing..."));
-    QPrinter printer;
+    QPrinter printer(QPrinter::PrinterResolution);
 
-    printer.setResolution(QPrinter::HighResolution);
+    // Try to set the printer to teh highest resolution
+    QList<int> res=printer.supportedResolutions ();
+    if (res.size()>0)
+        printer.setResolution(res.last());
+
     bool landscape = false;
     printer.setPaperSize(RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape)));
     if (landscape) {
