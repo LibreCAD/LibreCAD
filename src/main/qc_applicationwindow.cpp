@@ -2532,7 +2532,7 @@ void QC_ApplicationWindow::slotFilePrint() {
     }
 
     statusBar()->showMessage(tr("Printing..."));
-    QPrinter printer(QPrinter::PrinterResolution);
+    QPrinter printer(QPrinter::HighResolution);
 
     // Try to set the printer to teh highest resolution
     QList<int> res=printer.supportedResolutions ();
@@ -2575,7 +2575,7 @@ void QC_ApplicationWindow::slotFilePrint() {
         double fy = (double)printer.height() / printer.heightMM()
                     * RS_Units::getFactorToMM(graphic->getUnit());
 
-        double f = (fx+fy)/2;
+        double f = (fx+fy)/2.0;
 
         double scale = graphic->getPaperScale();
 
