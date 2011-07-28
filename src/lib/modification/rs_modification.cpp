@@ -7,7 +7,7 @@
 **
 **
 ** This program is free software; you can redistribute it and/or modify
-** it under the terms of the GNU General Public License as published by 
+** it under the terms of the GNU General Public License as published by
 ** the Free Software Foundation; either version 2 of the License, or
 ** (at your option) any later version.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -100,7 +100,7 @@ void RS_Modification::remove
 
 
 /**
- * Changes the attributes of all selected 
+ * Changes the attributes of all selected
  */
 bool RS_Modification::changeAttributes(RS_AttributesData& data) {
     if (container==NULL) {
@@ -163,7 +163,7 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data) {
     }
 
     if (graphicView!=NULL) {
-		graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     }
 
     return true;
@@ -539,10 +539,10 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
  * @param v1 1st cutting point.
  * @param e2 2nd entity on which the first cutting point is.
  * @param v2 2nd cutting point.
- * @param polyline1 Pointer to a polyline pointer which will hold the 
+ * @param polyline1 Pointer to a polyline pointer which will hold the
  *        1st resulting new polyline. Pass NULL if you don't
  *        need those pointers.
- * @param polyline2 Pointer to a polyline pointer which will hold the 
+ * @param polyline2 Pointer to a polyline pointer which will hold the
  *        2nd resulting new polyline. Pass NULL if you don't
  *        need those pointers.
  *
@@ -642,7 +642,7 @@ bool RS_Modification::splitPolyline(RS_Polyline& polyline,
 
 /**
  * Adds a node to the given polyline. The new node is placed between
- * the start and end point of the given segment. 
+ * the start and end point of the given segment.
  *
  * @param node The position of the new node.
  *
@@ -758,7 +758,7 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
 
 
 /**
- * Deletes a node from a polyline. 
+ * Deletes a node from a polyline.
  *
  * @param node The node to delete.
  *
@@ -905,8 +905,8 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
 /**
  * Deletes all nodes between the two given nodes (exclusive).
  *
- * @param node1 First limiting node. 
- * @param node2 Second limiting node. 
+ * @param node1 First limiting node.
+ * @param node2 Second limiting node.
  *
  * @return Pointer to the new polyline or NULL.
  */
@@ -976,8 +976,8 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
         if (startpointInvolved) {
             if (e->isAtomic()) {
                 RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
-            	length1+=ae->getLength();
-			}
+                length1+=ae->getLength();
+            }
             e = polyline.nextEntity();
         }
         for (; e!=NULL; e=polyline.nextEntity()) {
@@ -1067,9 +1067,9 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
                                 ae->getEndpoint().x, ae->getEndpoint().y);
                 removing = false;
                 done = true;
-				if (first==false) {
-                	nextIsStraight = true;
-				}
+                if (first==false) {
+                    nextIsStraight = true;
+                }
             }
 
             // normal node (not deleted):
@@ -1439,7 +1439,7 @@ bool RS_Modification::move(RS_MoveData& data) {
     }
 
     if (graphicView!=NULL) {
-		graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     }
     return true;
 }
@@ -1499,7 +1499,7 @@ bool RS_Modification::rotate(RS_RotateData& data) {
         document->endUndoCycle();
     }
     if (graphicView!=NULL) {
-            graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     }
 
     return true;
@@ -1560,7 +1560,7 @@ bool RS_Modification::scale(RS_ScaleData& data) {
     }
 
     if (graphicView!=NULL) {
-           graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     }
     return true;
 }
@@ -1621,7 +1621,7 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
     }
 
     if (graphicView!=NULL) {
-            graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     }
     return true;
 }
@@ -1686,7 +1686,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
     }
 
     if (graphicView!=NULL) {
-            graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     }
     return true;
 }
@@ -1747,7 +1747,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
         document->endUndoCycle();
     }
     if (graphicView!=NULL) {
-            graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     }
 
     return true;
@@ -1811,15 +1811,15 @@ void RS_Modification::deselectOriginals(bool remove
 
 
 /**
- * Adds the given entities to the container and draws the entities if 
+ * Adds the given entities to the container and draws the entities if
  * there's a graphic view available.
  *
  * @param addList Entities to add.
  */
 void RS_Modification::addNewEntities(QList<RS_Entity*>& addList) {
     for (int i = 0; i < addList.size(); ++i) {
-/*        if (addList.at(i) == "Jane")
-            cout << "Found Jane at position " << i << endl;*/
+        /*        if (addList.at(i) == "Jane")
+                    cout << "Found Jane at position " << i << endl;*/
         if (addList.at(i) != NULL) {
             container->addEntity(addList.at(i));
             if (document!=NULL && handleUndo) {
@@ -1838,7 +1838,7 @@ void RS_Modification::addNewEntities(QList<RS_Entity*>& addList) {
  * Trims or extends the given trimEntity to the intersection point of the
  * trimEntity and the limitEntity.
  *
- * @param trimCoord Coordinate which defines which endpoint of the 
+ * @param trimCoord Coordinate which defines which endpoint of the
  *   trim entity to trim.
  * @param trimEntity Entity which will be trimmed.
  * @param limitCoord Coordinate which defines the intersection to which the
@@ -1914,7 +1914,26 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
                      RS_Math::correctAngle(am-M_PI/2),
                      RS_Math::correctAngle(am+M_PI/2), false);
         trimmed1 = new RS_Arc(trimEntity->getParent(), d);
-    } else {
+    } else if (trimEntity->rtti()==RS2::EntityEllipse) {
+        // convert a circle into a trimmable arc
+        RS_Ellipse* c = (RS_Ellipse*)trimEntity;
+        double am = c->getEllipseAngle(trimCoord);
+        RS_EllipseData d=c->getData();
+        trimmed1 = new RS_Ellipse(trimEntity->getParent(), d);
+        c=(RS_Ellipse*) & trimmed1;
+        if(c->isReversed()) {
+                std::cout<<"Reversed\nangle1="<<double(c->getAngle1())<<"\tangle2="<<double(c->getAngle2())<<std::endl;
+                std::cout<<"am="<<am<<std::endl;
+            if( RS_Math::correctAngle(c->getAngle1()-am)>= M_PI/2) c->setAngle1(RS_Math::correctAngle(am+M_PI/2));
+            if( RS_Math::correctAngle(am- c->getAngle2())>= M_PI/2) c->setAngle2(RS_Math::correctAngle(am-M_PI/2));
+        } else {
+                std::cout<<"Reversed\nangle1="<<double(c->getAngle1())<<"\tangle2="<<double(c->getAngle2())<<std::endl;
+                std::cout<<"am="<<am<<std::endl;
+            if( RS_Math::correctAngle(c->getAngle2()-am)>= M_PI/2) c->setAngle2(RS_Math::correctAngle(am+M_PI/2));
+            if( RS_Math::correctAngle(am- c->getAngle1())>= M_PI/2)c->setAngle1(RS_Math::correctAngle(am-M_PI/2));
+        }
+    } else
+    {
         trimmed1 = (RS_AtomicEntity*)trimEntity->clone();
         trimmed1->setHighlighted(false);
     }
@@ -1949,13 +1968,13 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     switch (ending) {
     case RS2::EndingStart:
         trimmed1->trimStartpoint(is);
-        if (trimEntity->rtti()==RS2::EntityCircle) {
+        if (trimEntity->rtti()==RS2::EntityCircle || trimEntity->rtti()==RS2::EntityEllipse ) {
             trimmed1->trimEndpoint(is2);
         }
         break;
     case RS2::EndingEnd:
         trimmed1->trimEndpoint(is);
-        if (trimEntity->rtti()==RS2::EntityCircle) {
+        if (trimEntity->rtti()==RS2::EntityCircle || trimEntity->rtti()==RS2::EntityEllipse ) {
             trimmed1->trimStartpoint(is2);
         }
         break;
@@ -2016,7 +2035,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
 /**
  * Trims or extends the given trimEntity by the given amount.
  *
- * @param trimCoord Coordinate which defines which endpoint of the 
+ * @param trimCoord Coordinate which defines which endpoint of the
  *   trim entity to trim.
  * @param trimEntity Entity which will be trimmed.
  * @param dist Amount to trim by.
@@ -2197,7 +2216,7 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
     }
 
     if (graphicView!=NULL) {
-            graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     }
     return true;
 }
@@ -2218,7 +2237,7 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
                             RS_BevelData& data) {
 
     RS_DEBUG->print("RS_Modification::bevel");
-    
+
     if (entity1==NULL || entity2==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::bevel: At least one entity is NULL");
@@ -2260,9 +2279,9 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
 
         //baseContainer = entity1->getParent();
         isPolyline = true;
-		isClosedPolyline = ((RS_Polyline*)entity1)->isClosed();
+        isClosedPolyline = ((RS_Polyline*)entity1)->isClosed();
     }
-        
+
     RS_DEBUG->print("RS_Modification::bevel: getting intersection");
 
     RS_VectorSolutions sol =
@@ -2276,60 +2295,60 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
     RS_AtomicEntity* trimmed2 = NULL;
 
     //if (data.trim || isPolyline) {
-        if (isPolyline) {
-            trimmed1 = entity1;
-            trimmed2 = entity2;
-        } else {
-            trimmed1 = (RS_AtomicEntity*)entity1->clone();
-            trimmed2 = (RS_AtomicEntity*)entity2->clone();
-        }
+    if (isPolyline) {
+        trimmed1 = entity1;
+        trimmed2 = entity2;
+    } else {
+        trimmed1 = (RS_AtomicEntity*)entity1->clone();
+        trimmed2 = (RS_AtomicEntity*)entity2->clone();
+    }
 
-        // remove trim entity (on screen):
-        if (data.trim==true || isPolyline) {
-            if (graphicView!=NULL) {
-                if (isPolyline) {
-                    graphicView->deleteEntity(baseContainer);
-                } else {
-                    graphicView->deleteEntity(entity1);
-                    graphicView->deleteEntity(entity2);
-                }
+    // remove trim entity (on screen):
+    if (data.trim==true || isPolyline) {
+        if (graphicView!=NULL) {
+            if (isPolyline) {
+                graphicView->deleteEntity(baseContainer);
+            } else {
+                graphicView->deleteEntity(entity1);
+                graphicView->deleteEntity(entity2);
             }
         }
+    }
 
-        // trim entities to intersection
-        RS_DEBUG->print("RS_Modification::bevel: trim entities to intersection 01");
-        bool start1 = false;
-        RS_Vector is = sol.getClosest(coord2);
-        RS2::Ending ending1 = trimmed1->getTrimPoint(coord1, is);
-        switch (ending1) {
-        case RS2::EndingStart:
-            trimmed1->trimStartpoint(is);
-            start1 = true;
-            break;
-        case RS2::EndingEnd:
-            trimmed1->trimEndpoint(is);
-            start1 = false;
-            break;
-        default:
-            break;
-        }
+    // trim entities to intersection
+    RS_DEBUG->print("RS_Modification::bevel: trim entities to intersection 01");
+    bool start1 = false;
+    RS_Vector is = sol.getClosest(coord2);
+    RS2::Ending ending1 = trimmed1->getTrimPoint(coord1, is);
+    switch (ending1) {
+    case RS2::EndingStart:
+        trimmed1->trimStartpoint(is);
+        start1 = true;
+        break;
+    case RS2::EndingEnd:
+        trimmed1->trimEndpoint(is);
+        start1 = false;
+        break;
+    default:
+        break;
+    }
 
-        RS_DEBUG->print("RS_Modification::bevel: trim entities to intersection 02");
-        bool start2 = false;
-        is = sol.getClosest(coord1);
-        RS2::Ending ending2 = trimmed2->getTrimPoint(coord2, is);
-        switch (ending2) {
-        case RS2::EndingStart:
-            trimmed2->trimStartpoint(is);
-            start2 = true;
-            break;
-        case RS2::EndingEnd:
-            trimmed2->trimEndpoint(is);
-            start2 = false;
-            break;
-        default:
-            break;
-        }
+    RS_DEBUG->print("RS_Modification::bevel: trim entities to intersection 02");
+    bool start2 = false;
+    is = sol.getClosest(coord1);
+    RS2::Ending ending2 = trimmed2->getTrimPoint(coord2, is);
+    switch (ending2) {
+    case RS2::EndingStart:
+        trimmed2->trimStartpoint(is);
+        start2 = true;
+        break;
+    case RS2::EndingEnd:
+        trimmed2->trimEndpoint(is);
+        start2 = false;
+        break;
+    default:
+        break;
+    }
     //}
 
 
@@ -2390,20 +2409,20 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
         bevel->setSelected(baseContainer->isSelected());
         bevel->setLayer(baseContainer->getLayer());
         bevel->setPen(baseContainer->getPen());
-		
-		bool insertAfter1 = false;
-		if (!isClosedPolyline) {
-			insertAfter1 = (idx1<idx2);
-		}
-		else {
-			insertAfter1 = ((idx1<idx2 && idx1!=0) || 
-				(idx2==0 && idx1==(int)baseContainer->count()-1));
-		}
+
+        bool insertAfter1 = false;
+        if (!isClosedPolyline) {
+            insertAfter1 = (idx1<idx2);
+        }
+        else {
+            insertAfter1 = ((idx1<idx2 && idx1!=0) ||
+                            (idx2==0 && idx1==(int)baseContainer->count()-1));
+        }
 
         // insert bevel at the right position:
-        //if ((idx1<idx2 && idx1!=0) || 
-		//	(idx2==0 && idx1==(int)baseContainer->count()-1)) {
-		if (insertAfter1) {
+        //if ((idx1<idx2 && idx1!=0) ||
+        //	(idx2==0 && idx1==(int)baseContainer->count()-1)) {
+        if (insertAfter1) {
             if (trimmed1->getEndpoint().distanceTo(bevel->getStartpoint())>1.0e-4) {
                 bevel->reverse();
             }
@@ -2427,7 +2446,7 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
             graphicView->drawEntity(bevel);
         }
     }
-    
+
     RS_DEBUG->print("RS_Modification::bevel: handling undo");
 
     if (document!=NULL && handleUndo) {
@@ -2493,13 +2512,13 @@ bool RS_Modification::round(const RS_Vector& coord,
     }
 
     // find out whether we're rounding within a polyline:
-    if (entity1->getParent()!=NULL && 
-		entity1->getParent()->rtti()==RS2::EntityPolyline) {
+    if (entity1->getParent()!=NULL &&
+            entity1->getParent()->rtti()==RS2::EntityPolyline) {
 
         if (entity1->getParent()!=entity2->getParent()) {
             RS_DEBUG->print(RS_Debug::D_WARNING,
                             "RS_Modification::round: entities not in "
-							"the same polyline");
+                            "the same polyline");
             if (document!=NULL && handleUndo) {
                 document->endUndoCycle();
             }
@@ -2523,7 +2542,7 @@ bool RS_Modification::round(const RS_Vector& coord,
         entity2 = (RS_AtomicEntity*)baseContainer->entityAt(entity2->getParent()->findEntity(entity2));
 
         isPolyline = true;
-		isClosedPolyline = ((RS_Polyline*)entity1)->isClosed();
+        isClosedPolyline = ((RS_Polyline*)entity1)->isClosed();
     }
 
     // create 2 tmp parallels
@@ -2633,24 +2652,24 @@ bool RS_Modification::round(const RS_Vector& coord,
         arc->setLayer(baseContainer->getLayer());
         arc->setPen(baseContainer->getPen());
 
-		RS_DEBUG->print("RS_Modification::round: idx1<idx2: %d", (int)(idx1<idx2));
-		RS_DEBUG->print("RS_Modification::round: idx1!=0: %d", (int)(idx1!=0));
-		RS_DEBUG->print("RS_Modification::round: idx2==0: %d", (int)(idx2==0));
-		RS_DEBUG->print("RS_Modification::round: idx1==(int)baseContainer->count()-1: %d", 
-			(int)(idx1==(int)baseContainer->count()-1));
+        RS_DEBUG->print("RS_Modification::round: idx1<idx2: %d", (int)(idx1<idx2));
+        RS_DEBUG->print("RS_Modification::round: idx1!=0: %d", (int)(idx1!=0));
+        RS_DEBUG->print("RS_Modification::round: idx2==0: %d", (int)(idx2==0));
+        RS_DEBUG->print("RS_Modification::round: idx1==(int)baseContainer->count()-1: %d",
+                        (int)(idx1==(int)baseContainer->count()-1));
 
-		bool insertAfter1 = false;
-		if (!isClosedPolyline) {
-			insertAfter1 = (idx1<idx2);
-		}
-		else {
-			insertAfter1 = ((idx1<idx2 && idx1!=0) || 
-				(idx2==0 && idx1==(int)baseContainer->count()-1));
-		}
+        bool insertAfter1 = false;
+        if (!isClosedPolyline) {
+            insertAfter1 = (idx1<idx2);
+        }
+        else {
+            insertAfter1 = ((idx1<idx2 && idx1!=0) ||
+                            (idx2==0 && idx1==(int)baseContainer->count()-1));
+        }
 
         // insert rounding at the right position:
-        //if ((idx1<idx2 && idx1!=0) || 
-		//	(idx2==0 && idx1==(int)baseContainer->count()-1)) {
+        //if ((idx1<idx2 && idx1!=0) ||
+        //	(idx2==0 && idx1==(int)baseContainer->count()-1)) {
         //if (idx1<idx2) {
         if (insertAfter1) {
             if (trimmed1->getEndpoint().distanceTo(arc->getStartpoint())>1.0e-4) {
@@ -2810,7 +2829,7 @@ bool RS_Modification::explode() {
     }
 
     if (graphicView!=NULL) {
-            graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     }
 
     return true;
@@ -2854,7 +2873,7 @@ bool RS_Modification::explodeTextIntoLetters() {
     }
 
     if (graphicView!=NULL) {
-            graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     }
 
     return true;
@@ -2901,17 +2920,17 @@ bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& a
                     RS_Insert* letter = (RS_Insert*)e3;
 
                     RS_Text* tl = new RS_Text(
-                                      container,
-                                      RS_TextData(letter->getInsertionPoint(),
-                                                  text->getHeight(),
-                                                  100.0,
-                                                  RS2::VAlignBottom, RS2::HAlignLeft,
-                                                  RS2::LeftToRight, RS2::Exact,
-                                                  1.0,
-                                                  letter->getName(),
-                                                  text->getStyle(),
-                                                  letter->getAngle(),
-                                                  RS2::Update));
+                        container,
+                        RS_TextData(letter->getInsertionPoint(),
+                                    text->getHeight(),
+                                    100.0,
+                                    RS2::VAlignBottom, RS2::HAlignLeft,
+                                    RS2::LeftToRight, RS2::Exact,
+                                    1.0,
+                                    letter->getName(),
+                                    text->getStyle(),
+                                    letter->getAngle(),
+                                    RS2::Update));
 
                     tl->setLayer(text->getLayer());
                     tl->setPen(text->getPen());
@@ -2966,7 +2985,7 @@ bool RS_Modification::moveRef(RS_MoveRefData& data) {
     }
 
     if (graphicView!=NULL) {
-            graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     }
     return true;
 }

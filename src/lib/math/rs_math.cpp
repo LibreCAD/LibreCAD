@@ -144,11 +144,12 @@ bool RS_Math::isAngleBetween(double a,
  * Corrects the given angle to the range of 0-2*Pi.
  */
 double RS_Math::correctAngle(double a) {
-    while (a>2*M_PI)
-        a-=2*M_PI;
-    while (a<0)
-        a+=2*M_PI;
-    return a;
+        return M_PI+remainder(a-M_PI, 2*M_PI);
+//    while (a>2*M_PI)
+//        a-=2*M_PI;
+//    while (a<0)
+//        a+=2*M_PI;
+//    return a;
 }
 
 

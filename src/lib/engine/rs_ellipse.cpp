@@ -113,8 +113,8 @@ void RS_Ellipse::calculateBorders() {
 //      x range
     vp.set(radius1*cos(angle),radius2*sin(angle));
 
-    amin=fmod(2*M_PI+a1+vp.angle(),2*M_PI); // to the range of 0 to 2*M_PI
-    delta_a=fmod(4*M_PI+a2-a1,2*M_PI);
+    amin=RS_Math::correctAngle(a1+vp.angle()); // to the range of 0 to 2*M_PI
+    delta_a=RS_Math::correctAngle(a2-a1);
 
     if( (amin<=M_PI && delta_a >= M_PI - amin) || (amin > M_PI && delta_a >= 3*M_PI - amin))
         minX= data.center.x-vp.magnitude();
@@ -126,7 +126,7 @@ void RS_Ellipse::calculateBorders() {
 //       maxX= data.center.x+vp.magnitude()*std::max(cos(amin),cos(amin+delta_a));
 //      y range
     vp.set(radius1*sin(angle),-1*radius2*cos(angle));
-    amin=fmod(2*M_PI+a1+vp.angle(),2*M_PI); // to the range of 0 to 2*M_PI
+    amin=RS_Math::correctAngle(a1+vp.angle()); // to the range of 0 to 2*M_PI
     if( (amin<=M_PI &&delta_a >= M_PI - amin) || (amin > M_PI && delta_a >= 3*M_PI - amin))
         minY= data.center.y-vp.magnitude();
 //    else
@@ -332,14 +332,38 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
 
 
 /**
- * @todo Implement this.
+ * a naive implementation of middle point
+ * to accurately locate the middle point from arc length is possible by using elliptic integral to find the total arc length, then, using elliptic function to find the half length point
  */
-RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& /*coord*/,
+RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
                                        double* dist) {
-    if (dist!=NULL) {
-        *dist = RS_MAXDOUBLE;
+    //std::cout<<"angle1="<<data.angle1<<"\tdata.angle2="<<data.angle2<<std::endl;
+    if ( RS_Math::correctAngle( fabs( data.angle1 - data.angle2)) < 1e-6 && (data.reversed ^ (data.angle1 < data.angle2) ) ) { // no middle point for whole ellipse
+        if (dist!=NULL) {
+            *dist = RS_MAXDOUBLE;
+        }
+        return RS_Vector(false);
+
     }
-    return RS_Vector(false);
+    double amin,amax;
+    RS_Vector vp;
+    vp.setPolar(1.0,data.angle1);
+    vp.scale(RS_Vector(1.0,data.ratio));
+    amin=vp.angle();
+    vp.setPolar(1.0,data.angle2);
+    vp.scale(RS_Vector(1.0,data.ratio));
+    amax=vp.angle();
+    amin=0.5*(amin+amax);
+    if (data.reversed ^ amin > amax) amin += M_PI; // condition to adjust one end by 2*M_PI, therefore, the middle point by M_PI
+
+    //std::cout<<"middle="<<amin<<std::endl;
+    vp.set(getMajorRadius()*cos(amin),getMinorRadius()*sin(amin));
+    vp.rotate(getAngle());
+    vp.move(data.center);
+    if (dist!=NULL) {
+        *dist = coord.distanceTo(vp);
+    }
+    return vp;
 }
 
 
@@ -433,11 +457,10 @@ RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& coord,
 }
 
 double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) {
-    RS_Vector m = pos;
-    m.rotate(data.center, -data.majorP.angle());
-    RS_Vector v = m-data.center;
-    v.scale(RS_Vector(1.0, 1.0/data.ratio));
-    return v.angle();
+    RS_Vector m = pos-data.center;
+    m.rotate(-data.majorP.angle());
+    m.scale(RS_Vector(data.ratio, 1.0));
+    return m.angle();
 }
 
 
