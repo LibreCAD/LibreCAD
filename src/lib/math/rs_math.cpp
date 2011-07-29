@@ -116,27 +116,34 @@ bool RS_Math::isAngleBetween(double a,
                              double a1, double a2,
                              bool reversed) {
 
-    bool ret = false;
+//    bool ret = false;
 
     if (reversed) {
         double tmp = a1;
         a1 = a2;
         a2 = tmp;
     }
-
-    if(a1>=a2-1.0e-12) {
-        if(a>=a1-1.0e-12 || a<=a2+1.0e-12) {
-            ret = true;
-        }
+    if ( correctAngle(a2 -a1) >= correctAngle(a - a1) + 1.0e-12 && 
+        correctAngle(a - a1) >= 1.0e-12 ) {
+            return true;
     } else {
-        if(a>=a1-1.0e-12 && a<=a2+1.0e-12) {
-            ret = true;
-        }
+            return false;
     }
+}
+
+//    if(a1>=a2-1.0e-12) {
+//        if(a>=a1-1.0e-12 || a<=a2+1.0e-12) {
+//            ret = true;
+//        }
+//    } else {
+//        if(a>=a1-1.0e-12 && a<=a2+1.0e-12) {
+//            ret = true;
+//        }
+//    }
     //RS_DEBUG->print("angle %f is %sbetween %f and %f",
     //                a, ret ? "" : "not ", a1, a2);
-    return ret;
-}
+//    return ret;
+//}
 
 
 
@@ -144,12 +151,14 @@ bool RS_Math::isAngleBetween(double a,
  * Corrects the given angle to the range of 0-2*Pi.
  */
 double RS_Math::correctAngle(double a) {
-    while (a>2*M_PI)
-        a-=2*M_PI;
-    while (a<0)
-        a+=2*M_PI;
-    return a;
+        return M_PI + remainder(a - M_PI, 2*M_PI);
 }
+//    while (a>2*M_PI)
+//        a-=2*M_PI;
+//    while (a<0)
+//        a+=2*M_PI;
+//    return a;
+//}
 
 
 
@@ -159,11 +168,12 @@ double RS_Math::correctAngle(double a) {
  */
 double RS_Math::getAngleDifference(double a1, double a2) {
     double ret;
+    ret=M_PI + remainder(a2 -a1 -M_PI, 2*M_PI);
 
-    if (a1>=a2) {
-        a2+=2*M_PI;
-    }
-    ret = a2-a1;
+//    if (a1>=a2) {
+//        a2+=2*M_PI;
+//    }
+//    ret = a2-a1;
 
     if (ret>=2*M_PI) {
         ret=0.0;
