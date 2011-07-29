@@ -50,6 +50,7 @@ void RS_Painter::createArc(QPolygon& pa,
         aStep=1.0;
     }
 
+    aStep=aStep/2.0;
     //if (aStep<0.05) {
     //    aStep = 0.05;
     //}
