@@ -1914,7 +1914,11 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
                      RS_Math::correctAngle(am-M_PI/2),
                      RS_Math::correctAngle(am+M_PI/2), false);
         trimmed1 = new RS_Arc(trimEntity->getParent(), d);
+    } else
+    if (trimEntity->rtti()==RS2::EntityEllipse) {
     } else {
+    
+    {
         trimmed1 = (RS_AtomicEntity*)trimEntity->clone();
         trimmed1->setHighlighted(false);
     }
