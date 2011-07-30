@@ -339,21 +339,21 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
                                        double* dist) {
     if ( RS_Math::getAngleDifference(data.angle1,data.angle2) < 1e-10) { // no middle point for whole ellipse
         if (dist!=NULL) {
-        *dist = RS_MAXDOUBLE;
-    }
-    return RS_Vector(false);
+            *dist = RS_MAXDOUBLE;
+        }
+        return RS_Vector(false);
 
     }
-        double amin,amax;
-        RS_Vector vp;
-        vp.setPolar(1.0,data.angle1);
-        vp.scale(RS_Vector(1.0,data.ratio));
-        amin=vp.angle();
-        vp.setPolar(1.0,data.angle2);
-        vp.scale(RS_Vector(1.0,data.ratio));
-        amax=vp.angle();
-        amin=0.5*(amin+amax);
-        if (data.reversed ^ (amin > amax ) ) amin += M_PI; // condition to adjust one end by 2*M_PI, therefore, the middle point by M_PI
+    double amin,amax;
+    RS_Vector vp;
+    vp.setPolar(1.0,data.angle1);
+    vp.scale(RS_Vector(1.0,data.ratio));
+    amin=vp.angle();
+    vp.setPolar(1.0,data.angle2);
+    vp.scale(RS_Vector(1.0,data.ratio));
+    amax=vp.angle();
+    amin=0.5*(amin+amax);
+    if (data.reversed ^ (amin > amax ) ) amin += M_PI; // condition to adjust one end by 2*M_PI, therefore, the middle point by M_PI
     vp.set(getMajorRadius()*cos(amin),getMinorRadius()*sin(amin));
     vp.rotate(getAngle());
     vp.move(data.center);
