@@ -7,7 +7,7 @@
 **
 **
 ** This program is free software; you can redistribute it and/or modify
-** it under the terms of the GNU General Public License as published by 
+** it under the terms of the GNU General Public License as published by
 ** the Free Software Foundation; either version 2 of the License, or
 ** (at your option) any later version.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -30,7 +30,7 @@
 
 
 /**
- * Rounds the given double to the next int. 
+ * Rounds the given double to the next int.
  */
 int RS_Math::round(double v) {
     return (v-floor(v)<0.5 ? (int)floor(v) : (int)ceil(v));
@@ -43,19 +43,19 @@ int RS_Math::round(double v) {
  * Save pow function
  */
 double RS_Math::pow(double x, double y) {
-	errno = 0;
-	double ret = ::pow(x, y);
-	if (errno==EDOM) {
+    errno = 0;
+    double ret = ::pow(x, y);
+    if (errno==EDOM) {
         RS_DEBUG->print(RS_Debug::D_ERROR,
-			"RS_Math::pow: EDOM in pow");
-		ret = 0.0;
-	}
-	else if (errno==ERANGE) {
+                        "RS_Math::pow: EDOM in pow");
+        ret = 0.0;
+    }
+    else if (errno==ERANGE) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-			"RS_Math::pow: ERANGE in pow");
-		ret = 0.0;
-	}
-	return ret;
+                        "RS_Math::pow: ERANGE in pow");
+        ret = 0.0;
+    }
+    return ret;
 }
 
 
@@ -105,7 +105,7 @@ int RS_Math::findGCD(int a, int b) {
 
 
 /**
- * Tests if angle a is between a1 and a2. a, a1 and a2 must be in the 
+ * Tests if angle a is between a1 and a2. a, a1 and a2 must be in the
  * range between 0 and 2*PI.
  * All angles in rad.
  *
@@ -123,11 +123,11 @@ bool RS_Math::isAngleBetween(double a,
         a1 = a2;
         a2 = tmp;
     }
-    if ( correctAngle(a2 -a1) >= correctAngle(a - a1) + 1.0e-12 && 
-        correctAngle(a - a1) >= 1.0e-12 ) {
-            return true;
+    if ( correctAngle(a2 -a1) >= correctAngle(a - a1) + 1.0e-12 &&
+            correctAngle(a - a1) >= 1.0e-12 ) {
+        return true;
     } else {
-            return false;
+        return false;
     }
 }
 
@@ -140,8 +140,8 @@ bool RS_Math::isAngleBetween(double a,
 //            ret = true;
 //        }
 //    }
-    //RS_DEBUG->print("angle %f is %sbetween %f and %f",
-    //                a, ret ? "" : "not ", a1, a2);
+//RS_DEBUG->print("angle %f is %sbetween %f and %f",
+//                a, ret ? "" : "not ", a1, a2);
 //    return ret;
 //}
 
@@ -151,7 +151,7 @@ bool RS_Math::isAngleBetween(double a,
  * Corrects the given angle to the range of 0-2*Pi.
  */
 double RS_Math::correctAngle(double a) {
-        return M_PI + remainder(a - M_PI, 2*M_PI);
+    return M_PI + remainder(a - M_PI, 2*M_PI);
 }
 //    while (a>2*M_PI)
 //        a-=2*M_PI;
@@ -190,7 +190,7 @@ double RS_Math::getAngleDifference(double a1, double a2) {
 * @param readable true: make angle readable, false: unreadable
 * @param corrected Will point to true if the given angle was
 *   corrected, false otherwise.
-* 
+*
  * @return The given angle or the given angle+PI, depending which on
  * is readable from the bottom or right.
  */
@@ -219,7 +219,7 @@ double RS_Math::makeAngleReadable(double angle, bool readable,
 
 
 /**
- * @return true: if the given angle is in a range that is readable 
+ * @return true: if the given angle is in a range that is readable
  * for texts created with that angle.
  */
 bool RS_Math::isAngleReadable(double angle) {
@@ -238,17 +238,17 @@ bool RS_Math::isAngleReadable(double angle) {
  * @retval true The two angles point in the same direction.
  */
 bool RS_Math::isSameDirection(double dir1, double dir2, double tol) {
-	double diff = fabs(dir1-dir2);
-	if (diff<tol || diff>2*M_PI-tol) {
-		//std::cout << "RS_Math::isSameDirection: " << dir1 << " and " << dir2 
-		//	<< " point in the same direction" << "\n";
-		return true;
-	}
-	else {
-		//std::cout << "RS_Math::isSameDirection: " << dir1 << " and " << dir2 
-		//	<< " don't point in the same direction" << "\n";
-		return false;
-	}
+    double diff = fabs(dir1-dir2);
+    if (diff<tol || diff>2*M_PI-tol) {
+        //std::cout << "RS_Math::isSameDirection: " << dir1 << " and " << dir2
+        //	<< " point in the same direction" << "\n";
+        return true;
+    }
+    else {
+        //std::cout << "RS_Math::isSameDirection: " << dir1 << " and " << dir2
+        //	<< " don't point in the same direction" << "\n";
+        return false;
+    }
 }
 
 
@@ -291,14 +291,14 @@ double RS_Math::eval(const QString& expr, double def) {
  * Converts a double into a string which is as short as possible
  *
  * @param value The double value
- * @param prec Precision e.g. a precision of 1 would mean that a 
+ * @param prec Precision e.g. a precision of 1 would mean that a
  *     value of 2.12030 will be converted to "2.1". 2.000 is always just "2").
  */
 QString RS_Math::doubleToString(double value, double prec) {
-	if (prec<1.0e-12) {
-		std::cerr << "RS_Math::doubleToString: invalid precision\n";
-		return "";
-	}
+    if (prec<1.0e-12) {
+        std::cerr << "RS_Math::doubleToString: invalid precision\n";
+        return "";
+    }
 
     QString ret;
     QString exaStr;
