@@ -1916,9 +1916,52 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
         trimmed1 = new RS_Arc(trimEntity->getParent(), d);
     } else
     if (trimEntity->rtti()==RS2::EntityEllipse) {
-    } else {
-    
-    {
+        // convert an ellipse into a trimmable arc
+        RS_Ellipse* c = (RS_Ellipse*)trimEntity;
+        RS_EllipseData d(c->getCenter(),
+                        c->getMajorP(),
+                        c->getRatio(),
+                        c->getAngle1(),
+                        c->getAngle2(),
+                        c->isReversed()
+                        );
+        trimmed1 = new RS_Ellipse(trimEntity->getParent(), d);
+        c=(RS_Ellipse*) trimmed1;
+        bool tReversed=c->isReversed();
+        if(tReversed){
+                double dtmp=c->getAngle1();
+                c->setAngle1(c->getAngle2());
+                c->setAngle2(dtmp);
+                c->setReversed(false);
+        }
+        int imax=sol.getNumber();
+        double iangles[imax];
+        unsigned short int i=0,j=0;
+        while(i<imax){
+                if(sol.get(i).valid) {
+                        if(RS_Math::isAngleBetween(c->getEllipseAngle(sol.get(i)),c->getAngle1(),c->getAngle2(),false))
+                        iangles[j++]=c->getEllipseAngle(sol.get(i));
+                }
+                i++;
+        }
+        if(j==2) {
+                if( *iangles > iangles[1] ) {
+                        double dtmp=*iangles;
+                        *iangles=iangles[1];
+                        iangles[1]=*iangles;
+                }
+                c->setAngle1(*iangles);
+                c->setAngle2(iangles[1]);
+        }
+        if(tReversed){
+                double dtmp=c->getAngle1();
+                c->setAngle1(c->getAngle2());
+                c->setAngle2(dtmp);
+                c->setReversed(true);
+        }
+
+
+    } else { 
         trimmed1 = (RS_AtomicEntity*)trimEntity->clone();
         trimmed1->setHighlighted(false);
     }
