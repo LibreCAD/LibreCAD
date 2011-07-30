@@ -1043,12 +1043,29 @@ void RS_GraphicView::drawLayer3(RS_Painter *painter) {
 		drawOverlay(painter);
     }	
 }
-/**
- * Sets the pen of the painter object to the suitable pen for the given
- * entity.
- */
-void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity* e) {
 
+
+/*	*
+ *	Function name:
+ *
+ *	Description:	- Sets the pen of the painter object to the suitable pen
+ *						  for the given entity.
+ *
+ *	Author(s):		..., Claude Sylvain
+ *	Created:			?
+ *	Last modified:	24 July 2011
+ *
+ *	Parameters:		RS_Painter *painter:
+ *							...
+ *
+ *						RS_Entity *e:
+ *							...
+ *
+ *	Returns:			void
+ */
+
+void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
+{
     if (draftMode) {
         painter->setPen(RS_Pen(foreground,
 							   RS2::Width00, RS2::SolidLine));
@@ -1062,26 +1079,21 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity* e) {
             w = 0;
         }
 
-        // scale pen width:
-        if (!draftMode) {
-            double uf = 1.0;  // unit factor
-            double wf = 1.0;  // width factor
-            RS_Graphic* graphic = container->getGraphic();
-            if (graphic!=NULL) {
-                uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
-                if ((isPrinting() || isPrintPreview()) &&
-                        graphic->getPaperScale()>1.0e-6) {
+		// Scale pen width.
+		//	----------------
+		if (!draftMode)
+		{
+			double uf = 1.0;	//	Unit factor.
 
-                    wf = 1.0/graphic->getPaperScale();
-                }
-            }
+			RS_Graphic* graphic = container->getGraphic();
 
-            pen.setScreenWidth(toGuiDX(w/100.0*uf*wf));
-        } else {
-            //pen.setWidth(RS2::Width00);
-            pen.setScreenWidth(0);
-        }
+			if (graphic != NULL)
+				uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
 
+				pen.setScreenWidth(toGuiDX(w / 100.0 * uf));
+		}
+		else
+			pen.setScreenWidth(0);
 
         // prevent drawing with 1-width which is slow:
         if (RS_Math::round(pen.getScreenWidth())==1) {
@@ -1111,6 +1123,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity* e) {
 
         painter->setPen(pen);
 }
+
 
 /**
  * Draws an entity. Might be recusively called e.g. for polylines.
