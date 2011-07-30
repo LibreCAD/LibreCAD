@@ -1958,8 +1958,6 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
             c->setAngle2(dtmp);
             c->setReversed(true);
         }
-
-
     } else {
         trimmed1 = (RS_AtomicEntity*)trimEntity->clone();
         trimmed1->setHighlighted(false);
