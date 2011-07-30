@@ -337,8 +337,7 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
  */
 RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
                                        double* dist) {
-    //std::cout<<"angle1="<<data.angle1<<"\tdata.angle2="<<data.angle2<<std::endl;
-    if ( fmod( fabs( data.angle1 - data.angle2),2*M_PI) < 1e-6) { // no middle point for whole ellipse
+    if ( RS_Math::getAngleDifference(data.angle1,data.angle2) < 1e-10) { // no middle point for whole ellipse
         if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;
     }
@@ -354,15 +353,14 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
         vp.scale(RS_Vector(1.0,data.ratio));
         amax=vp.angle();
         amin=0.5*(amin+amax);
-        if (data.reversed ^ amin > amax) amin += M_PI; // condition to adjust one end by 2*M_PI, therefore, the middle point by M_PI
-
-    //std::cout<<"middle="<<amin<<std::endl;
+        if (data.reversed ^ (amin > amax ) ) amin += M_PI; // condition to adjust one end by 2*M_PI, therefore, the middle point by M_PI
     vp.set(getMajorRadius()*cos(amin),getMinorRadius()*sin(amin));
     vp.rotate(getAngle());
     vp.move(data.center);
     if (dist!=NULL) {
         *dist = coord.distanceTo(vp);
     }
+    RS_DEBUG->print("RS_Ellipse::getNearestMiddle: angle1=%g, angle2=%g, middle=%g\n",data.angle1,data.angle2,amin);
     return vp;
 }
 
