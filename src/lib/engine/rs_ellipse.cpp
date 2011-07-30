@@ -337,7 +337,7 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
  */
 RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
                                        double* dist) {
-    if ( RS_Math::getAngleDifference(data.angle1,data.angle2) < 1e-10) { // no middle point for whole ellipse
+    if ( RS_Math::isSameDirection(data.angle1,data.angle2, 1e-12) ) { // no middle point for whole ellipse
         if (dist!=NULL) {
             *dist = RS_MAXDOUBLE;
         }
