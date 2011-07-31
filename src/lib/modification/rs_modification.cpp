@@ -1926,40 +1926,40 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
                         );
         trimmed1 = new RS_Ellipse(trimEntity->getParent(), d);
         c=(RS_Ellipse*) trimmed1;
-        if(RS_Math::isSameDirection(c->getAngle1(),c->getAngle2(),1e-12)) {
-            bool tReversed=c->isReversed();
-            if(tReversed) {
-                double dtmp=c->getAngle1();
-                c->setAngle1(c->getAngle2());
-                c->setAngle2(dtmp);
-                c->setReversed(false);
-            }
-            int imax=sol.getNumber();
-            double iangles[imax];
-            unsigned short int i=0,j=0;
-            while(i<imax) {
-                if(sol.get(i).valid) {
-                    if(RS_Math::isAngleBetween(c->getEllipseAngle(sol.get(i)),c->getAngle1(),c->getAngle2(),false))
-                        iangles[j++]=c->getEllipseAngle(sol.get(i));
-                }
-                i++;
-            }
-            if(j==2) {
-                if( *iangles > iangles[1] ) {
-                    double dtmp=*iangles;
-                    *iangles=iangles[1];
-                    iangles[1]=*iangles;
-                }
-                c->setAngle1(*iangles);
-                c->setAngle2(iangles[1]);
-            }
-            if(tReversed) {
-                double dtmp=c->getAngle1();
-                c->setAngle1(c->getAngle2());
-                c->setAngle2(dtmp);
-                c->setReversed(true);
-            }
-        }
+//        if(RS_Math::isSameDirection(c->getAngle1(),c->getAngle2(),1e-12)) {
+//            bool tReversed=c->isReversed();
+//            if(tReversed) {
+//                double dtmp=c->getAngle1();
+//                c->setAngle1(c->getAngle2());
+//                c->setAngle2(dtmp);
+//                c->setReversed(false);
+//            }
+//            int imax=sol.getNumber();
+//            double iangles[imax];
+//            unsigned short int i=0,j=0;
+//            while(i<imax) {
+//                if(sol.get(i).valid) {
+//                    if(RS_Math::isAngleBetween(c->getEllipseAngle(sol.get(i)),c->getAngle1(),c->getAngle2(),false))
+//                        iangles[j++]=c->getEllipseAngle(sol.get(i));
+//                }
+//                i++;
+//            }
+//            if(j==2) {
+//                if( *iangles > iangles[1] ) {
+//                    double dtmp=iangles[0];
+//                    iangles[0]=iangles[1];
+//                    iangles[1]=dtmp;
+//                }
+//                c->setAngle1(*iangles);
+//                c->setAngle2(iangles[1]);
+//            }
+//            if(tReversed) {
+//                double dtmp=c->getAngle1();
+//                c->setAngle1(c->getAngle2());
+//                c->setAngle2(dtmp);
+//                c->setReversed(true);
+//            }
+//        }
     } else {
         trimmed1 = (RS_AtomicEntity*)trimEntity->clone();
         trimmed1->setHighlighted(false);
@@ -1991,6 +1991,60 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
 
     //RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
     RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
+        if (trimEntity->rtti()==RS2::EntityEllipse) {//special for ellipse arc
+                        RS_Ellipse* c = (RS_Ellipse*)trimmed1;
+                        double am=c->getEllipseAngle(trimCoord);
+                double ia=c->getEllipseAngle(is);
+                double ia2=c->getEllipseAngle(is2);
+        if(RS_Math::isSameDirection(c->getAngle1(),c->getAngle2(),1e-12)) {
+                if( RS_Math::isAngleBetween(am,ia,ia2,c->isReversed())) {
+                                c->setAngle1(ia);
+                                c->setAngle2(ia2);
+                                } else {
+                                c->setAngle1(ia2);
+                                c->setAngle2(ia);
+                                }
+        
+        }else{
+                double dia=fabs(remainder(ia-am,2*M_PI));
+                double dia2=fabs(remainder(ia2-am,2*M_PI));
+                double ai_min=(dia<dia2)? dia:dia2;
+                double da1=fabs(remainder(c->getAngle1()-am,2*M_PI));
+                double da2=fabs(remainder(c->getAngle2()-am,2*M_PI));
+                double da_min=(da1<da2)? da1:da2;
+                if( da_min < ai_min ){
+                        std::cout<<"1\tia="<<ia<<"\t ia2="<<ia2<<" angle1="<<c->getAngle1()<<" angle2="<<c->getAngle2()<<" am="<<am<<std::endl;
+                        if( ((da1 < da2) && (RS_Math::isAngleBetween(ia2,ia,c->getAngle1(),c->isReversed()))) || 
+                         ((da1 > da2) && (RS_Math::isAngleBetween(ia2,c->getAngle2(),ia,c->isReversed()))) 
+                                        ) {
+                                std::cout<<"11:swap(is,is2)\n";
+                                RS_Math::swap(is,is2);
+                        }
+                } else{
+                        std::cout<<"2\tia="<<ia<<"\t ia2="<<ia2<<" angle1="<<c->getAngle1()<<" angle2="<<c->getAngle2()<<" am="<<am<<std::endl;
+                        if( dia > dia2) {
+                                std::cout<<"21:swap(is,is2)\n";
+                                RS_Math::swap(is,is2);
+                                RS_Math::swap(ia,ia2);
+                        }
+                        if(RS_Math::isAngleBetween(ia,c->getAngle1(),c->getAngle2(),c->isReversed())){
+                                if(RS_Math::isAngleBetween(am,c->getAngle1(),ia,c->isReversed())){
+                                std::cout<<"221:setAngle2(ia)\n";
+                                        c->setAngle2(ia);
+                                } else{
+                                std::cout<<"222:setAngle1(ia)\n";
+                                        c->setAngle1(ia);
+                                }
+                                
+                        }
+
+
+                }
+
+                }
+                
+                        std::cout<<"3\tia="<<ia<<"\t ia2="<<ia2<<" angle1="<<c->getAngle1()<<" angle2="<<c->getAngle2()<<" am="<<am<<std::endl;
+        }
 
     switch (ending) {
     case RS2::EndingStart:
