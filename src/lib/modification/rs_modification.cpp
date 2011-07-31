@@ -1990,19 +1990,28 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     RS_DEBUG->print("RS_Modification::trim: is2: %f/%f", is2.x, is2.y);
 
     //RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
-    RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
         if (trimEntity->rtti()==RS2::EntityEllipse) {//special for ellipse arc
                         RS_Ellipse* c = (RS_Ellipse*)trimmed1;
                         double am=c->getEllipseAngle(trimCoord);
                 double ia=c->getEllipseAngle(is);
                 double ia2=c->getEllipseAngle(is2);
-        if(RS_Math::isSameDirection(c->getAngle1(),c->getAngle2(),1e-12)) {
+                if(ia>ia2){
+                        RS_Math::swap(ia,ia2);
+                        RS_Math::swap(is,is2);
+                }
+                std::cout<<"1("<<ia<<","<<ia2<<")\n";
+        if(RS_Math::isSameDirection(c->getAngle1(),c->getAngle2(),RS_TOLERANCE_ANGLE)) {
+                //whole ellipse
+                std::cout<<"11("<<ia<<","<<ia2<<")\n";
                 if( RS_Math::isAngleBetween(am,ia,ia2,c->isReversed())) {
+                std::cout<<"111("<<ia<<","<<ia2<<")\n";
                                 c->setAngle1(ia);
                                 c->setAngle2(ia2);
                                 } else {
                                 c->setAngle1(ia2);
                                 c->setAngle2(ia);
+                        RS_Math::swap(is,is2);
+                std::cout<<"112("<<ia<<","<<ia2<<")\n";
                                 }
         
         }else{
@@ -2013,26 +2022,22 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
                 double da2=fabs(remainder(c->getAngle2()-am,2*M_PI));
                 double da_min=(da1<da2)? da1:da2;
                 if( da_min < ai_min ){
-                        std::cout<<"1\tia="<<ia<<"\t ia2="<<ia2<<" angle1="<<c->getAngle1()<<" angle2="<<c->getAngle2()<<" am="<<am<<std::endl;
+                        //trimming one end of arc
                         if( ((da1 < da2) && (RS_Math::isAngleBetween(ia2,ia,c->getAngle1(),c->isReversed()))) || 
                          ((da1 > da2) && (RS_Math::isAngleBetween(ia2,c->getAngle2(),ia,c->isReversed()))) 
                                         ) {
-                                std::cout<<"11:swap(is,is2)\n";
                                 RS_Math::swap(is,is2);
                         }
                 } else{
-                        std::cout<<"2\tia="<<ia<<"\t ia2="<<ia2<<" angle1="<<c->getAngle1()<<" angle2="<<c->getAngle2()<<" am="<<am<<std::endl;
+                        //choose intersection as new end
                         if( dia > dia2) {
-                                std::cout<<"21:swap(is,is2)\n";
                                 RS_Math::swap(is,is2);
                                 RS_Math::swap(ia,ia2);
                         }
                         if(RS_Math::isAngleBetween(ia,c->getAngle1(),c->getAngle2(),c->isReversed())){
                                 if(RS_Math::isAngleBetween(am,c->getAngle1(),ia,c->isReversed())){
-                                std::cout<<"221:setAngle2(ia)\n";
                                         c->setAngle2(ia);
                                 } else{
-                                std::cout<<"222:setAngle1(ia)\n";
                                         c->setAngle1(ia);
                                 }
                                 
@@ -2043,8 +2048,8 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
 
                 }
                 
-                        std::cout<<"3\tia="<<ia<<"\t ia2="<<ia2<<" angle1="<<c->getAngle1()<<" angle2="<<c->getAngle2()<<" am="<<am<<std::endl;
         }
+    RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
 
     switch (ending) {
     case RS2::EndingStart:
