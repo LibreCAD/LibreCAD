@@ -81,12 +81,6 @@ public:
     static double eval(const QString& expr, double def=0.0);
 
     static bool cmpDouble(double v1, double v2, double tol=0.001);
-    template <class T>
-    static void swap( T &a, T &b) {
-        const T ttmp=a;
-        a=b;
-        b=ttmp;
-    };
   	
     /**
      * Evaluates a mathematical expression and returns the result.
@@ -139,7 +133,6 @@ public:
     static QString doubleToString(double value, int prec);
 
     static void test();
-//swap of two variables
 };
 
 #endif
