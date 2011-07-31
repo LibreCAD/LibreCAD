@@ -436,9 +436,9 @@ RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& coord,
     //double angEl = getEllipseAngle(trimPoint);
     double angM = getEllipseAngle(coord);
     if (RS_Math::getAngleDifference(angM, data.angle1) > RS_Math::getAngleDifference(data.angle2,angM)) {
-            return RS2::EndingStart;
+        return RS2::EndingStart;
     } else {
-            return RS2::EndingEnd;
+        return RS2::EndingEnd;
     }
 //
 //
