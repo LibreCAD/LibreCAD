@@ -33,7 +33,8 @@
  * Rounds the given double to the next int.
  */
 int RS_Math::round(double v) {
-    return (v-floor(v)<0.5 ? (int)floor(v) : (int)ceil(v));
+    return (int) lrint(v);
+    //return (v-floor(v)<0.5 ? (int)floor(v) : (int)ceil(v));
 }
 
 
