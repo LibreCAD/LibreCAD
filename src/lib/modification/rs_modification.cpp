@@ -1926,9 +1926,8 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
                         );
         trimmed1 = new RS_Ellipse(trimEntity->getParent(), d);
         c=(RS_Ellipse*) trimmed1;
-        double am = c->getEllipseAngle(trimCoord);        
-        //if(RS_Math::isSameDirection(c->getAngle1(),c->getAngle2(),RS_TOLERANCE_ANGLE)) { 
-        bool tReversed=c->isReversed();
+        if(RS_Math::isSameDirection(c->getAngle1(),c->getAngle2(),1e-12)) {
+            bool tReversed=c->isReversed();
             if(tReversed) {
                 double dtmp=c->getAngle1();
                 c->setAngle1(c->getAngle2());
@@ -1945,25 +1944,14 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
                 }
                 i++;
             }
-            switch (j) {
-                    case 2: //2 intersections
-                            if(iangles[1]<iangles[0]) RS_Math::swap(iangles[0],iangles[1]);
-                            if(RS_Math::isAngleBetween(am,iangles[0],iangles[1],false)) {
-                                c->setAngle1(iangles[0]);
-                                c->setAngle2(iangles[1]);
-                            } else {
-                                c->setAngle1(iangles[1]);
-                                c->setAngle2(iangles[0]);
-                            }
-                            break;
-                     case 1: //1 intersection
-                            if(RS_Math::isAngleBetween(am,c->getAngle1(),iangles[0],false)) {
-                                    c->setAngle2(iangles[0]);
-                            } else {
-                            c->setAngle1(iangles[0]);
-                            }
-                    default:
-                            break;
+            if(j==2) {
+                if( *iangles > iangles[1] ) {
+                    double dtmp=*iangles;
+                    *iangles=iangles[1];
+                    iangles[1]=*iangles;
+                }
+                c->setAngle1(*iangles);
+                c->setAngle2(iangles[1]);
             }
             if(tReversed) {
                 double dtmp=c->getAngle1();
@@ -1971,7 +1959,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
                 c->setAngle2(dtmp);
                 c->setReversed(true);
             }
-        //}
+        }
     } else {
         trimmed1 = (RS_AtomicEntity*)trimEntity->clone();
         trimmed1->setHighlighted(false);
@@ -2002,15 +1990,6 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     RS_DEBUG->print("RS_Modification::trim: is2: %f/%f", is2.x, is2.y);
 
     //RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
-        if (trimEntity->rtti()==RS2::EntityEllipse) {
-                RS_Ellipse* c=(RS_Ellipse*) trimmed1;
-                double ia0=c->getEllipseAngle(is);
-                double ia1=c->getEllipseAngle(is2);
-                            if( !(RS_Math::isAngleBetween(c->getAngle1(),ia0,ia1,false)
-                            && RS_Math::isAngleBetween(c->getAngle2(),ia0,ia1,false))) {
-                                    RS_Math::swap(is,is2);
-                            }
-        }
     RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
 
     switch (ending) {
@@ -2021,10 +2000,6 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
         }
         break;
     case RS2::EndingEnd:
-        if (trimEntity->rtti()==RS2::EntityEllipse) {
-        trimmed1->trimEndpoint(is2);
-        break;
-        }
         trimmed1->trimEndpoint(is);
         if (trimEntity->rtti()==RS2::EntityCircle) {
             trimmed1->trimStartpoint(is2);
