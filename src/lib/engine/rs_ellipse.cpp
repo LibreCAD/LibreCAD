@@ -337,7 +337,7 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
  */
 RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
                                        double* dist) {
-    if ( RS_Math::isSameDirection(data.angle1,data.angle2, 1e-12) ) { // no middle point for whole ellipse
+    if ( RS_Math::isSameDirection(data.angle1,data.angle2, RS_TOLERANCE_ANGLE) ) { // no middle point for whole ellipse
         if (dist!=NULL) {
             *dist = RS_MAXDOUBLE;
         }
@@ -433,25 +433,31 @@ void RS_Ellipse::moveEndpoint(const RS_Vector& pos) {
 RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& coord,
                                      const RS_Vector& trimPoint) {
 
-    double angEl = getEllipseAngle(trimPoint);
+    //double angEl = getEllipseAngle(trimPoint);
     double angM = getEllipseAngle(coord);
-
-    if (RS_Math::getAngleDifference(angM, angEl)>M_PI) {
-        //if (data.reversed) {
-        //	return RS2::EndingEnd;
-        //}
-        //else {
+    if (RS_Math::getAngleDifference(angM, data.angle1) > RS_Math::getAngleDifference(data.angle2,angM)) {
         return RS2::EndingStart;
-        //}
-    }
-    else {
-        //if (data.reversed) {
-        //	return RS2::EndingStart;
-        //}
-        //else {
+    } else {
         return RS2::EndingEnd;
-        //}
     }
+//
+//
+//    if (RS_Math::getAngleDifference(angM, angEl)>M_PI) {
+//        //if (data.reversed) {
+//        //	return RS2::EndingEnd;
+//        //}
+//        //else {
+//        return RS2::EndingStart;
+//        //}
+//    }
+//    else {
+//        //if (data.reversed) {
+//        //	return RS2::EndingStart;
+//        //}
+//        //else {
+//        return RS2::EndingEnd;
+//        //}
+//    }
 }
 
 double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) {
