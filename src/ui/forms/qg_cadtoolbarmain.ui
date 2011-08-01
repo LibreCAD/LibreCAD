@@ -155,7 +155,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Texts</string>
+    <string>Text</string>
    </property>
    <property name="text">
     <string/>
@@ -195,7 +195,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Hatches / Solid Fills</string>
+    <string>Hatch</string>
    </property>
    <property name="text">
     <string/>
@@ -215,7 +215,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Raster Image</string>
+    <string>Image</string>
    </property>
    <property name="text">
     <string/>
@@ -235,7 +235,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Show menu &quot;Edit&quot;</string>
+    <string>Show menu &quot;Modify&quot;</string>
    </property>
    <property name="text">
     <string/>
@@ -315,7 +315,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Polylines</string>
+    <string>Show menu &quot;Polylines&quot;</string>
    </property>
    <property name="text">
     <string/>
