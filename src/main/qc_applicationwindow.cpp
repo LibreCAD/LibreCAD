@@ -2969,18 +2969,22 @@ void QC_ApplicationWindow::slotHelpManual() {
 
             helpEngine->setupData();
 
-            helpWindow = new QDockWidget(tr("Help"), this);
-            QSplitter *helpPanel = new QSplitter(Qt::Horizontal);
+            QHelpContentModel *contentModel = helpEngine->contentModel();
+            QHelpContentWidget *contentWidget = helpEngine->contentWidget();
             HelpBrowser *helpBrowser = new HelpBrowser(helpEngine);
 
-            helpPanel->insertWidget(0, helpEngine->contentWidget());
-            helpPanel->insertWidget(1, helpBrowser);
-            helpPanel->setStretchFactor(1, 1);
-            helpWindow->setWidget(helpPanel);
+            QSplitter* splitter = new QSplitter();
+            splitter->addWidget(contentWidget);
+            splitter->addWidget(helpBrowser);
+            contentWidget->setModel(contentModel);
 
-            addDockWidget(Qt::TopDockWidgetArea, helpWindow);
+            helpWindow = new QDockWidget(tr("Help"), this);
+            helpWindow->setWidget(splitter);
 
+            // Enable single clicking of the index
+            connect(helpEngine->contentWidget(), SIGNAL(clicked(QModelIndex)), helpEngine->contentWidget(), SLOT(showLink(QModelIndex)));
             connect(helpEngine->contentWidget(), SIGNAL(linkActivated(const QUrl &)), helpBrowser, SLOT(setSource(const QUrl &)));
+            addDockWidget(Qt::TopDockWidgetArea, helpWindow);
         } else {
             QMessageBox::information(this, "Helpfiles not found", tr("Bugger, I couldn't find the helpfiles on the filesystem."));
         }
