@@ -444,7 +444,7 @@ unsigned int RS_Math::cubicSolver(double * ce, double *roots)
         //u=(q<=0)?pow(-0.5*q+sqrt(discriminant),1./3):-pow(0.5*q+sqrt(discriminant),1./3);
         v=(-1./3)*p/u;
         //std::cout<<"u="<<u<<"\tv="<<v<<std::endl;
-        std::cout<<"u^3="<<u*u*u<<"\tv^3="<<v*v*v<<std::endl;
+        //std::cout<<"u^3="<<u*u*u<<"\tv^3="<<v*v*v<<std::endl;
         *roots=u+v - shift;
         return ret;
     }
