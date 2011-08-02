@@ -296,7 +296,7 @@ double RS_Math::eval(const QString& expr, double def) {
  *     value of 2.12030 will be converted to "2.1". 2.000 is always just "2").
  */
 QString RS_Math::doubleToString(double value, double prec) {
-    if (prec<RS_TOLERENCE) {
+    if (prec< RS_TOLERANCE ) {
         std::cerr << "RS_Math::doubleToString: invalid precision\n";
         return "";
     }
@@ -389,9 +389,9 @@ void RS_Math::test() {
 //quadratic, cubic, and quartic equation solver
 // ce[] contains coefficent of the cubic equation:
 // roots[] pointed to a list of real roots
-// there's no attempt to verify validity of the argument pointers
+// solvers assume arguments are valid, and there's no attempt to verify validity of the argument pointers
 //
-unsigned int quadraticSolver(double * ce,  double * roots)
+unsigned int RS_Math::quadraticSolver(double * ce,  double * roots)
 //quadratic solver for
 // x^2 + ce[0] x + ce[2] =0
 {
@@ -401,7 +401,8 @@ unsigned int quadraticSolver(double * ce,  double * roots)
     roots[1]= -ce[0] - roots[0];
     return 2;
 }
-unsigned int cubicSolver(double * ce, double *roots)
+
+unsigned int RS_Math::cubicSolver(double * ce, double *roots)
 //cubic equation solver
 // x^3 + ce[0] x^2 + ce[1] x + ce[2] = 0
 {
@@ -424,7 +425,7 @@ unsigned int cubicSolver(double * ce, double *roots)
     //	discriminant= q^2/4 + p^3/27
     //std::cout<<"p="<<p<<"\tq="<<q<<std::endl;
     double discriminant= (1./27)*p*p*p+(1./4)*q*q;
-    if ( fabs(p)< RS_TOLERENCE) {
+    if ( fabs(p)< RS_TOLERANCE ) {
         ret=1;
         *roots=(q>0)?-pow(q,(1./3)):pow(-q,(1./3));
         *roots -= shift;
@@ -448,12 +449,12 @@ unsigned int cubicSolver(double * ce, double *roots)
         return ret;
     }
     ret=3;
-    complex<double> u(q,0),rt[3];
-    u=pow(-0.5*u-sqrt(0.25*u*u+p*p*p/27),1./3);
-    rt[0]=u-p/(complex<double>(3)*u)-shift;
-    complex<double> w(-0.5,sqrt(3.)/2);
-    rt[1]=u*w-p/(complex<double>(3)*u*w)-shift;
-    rt[2]=u/w-p*w/(complex<double>(3)*u)-shift;
+    std::complex<double> u(q,0),rt[3];
+    u=std::pow(-0.5*u-sqrt(0.25*u*u+p*p*p/27),1./3);
+    rt[0]=u-p/(std::complex<double>(3)*u)-shift;
+    std::complex<double> w(-0.5,sqrt(3.)/2);
+    rt[1]=u*w-p/(std::complex<double>(3)*u*w)-shift;
+    rt[2]=u/w-p*w/(std::complex<double>(3)*u)-shift;
 //	std::cout<<"Roots:\n";
 //	std::cout<<rt[0]<<std::endl;
 //	std::cout<<rt[1]<<std::endl;
@@ -465,7 +466,7 @@ unsigned int cubicSolver(double * ce, double *roots)
     return ret;
 }
 
-unsigned int quarticSolver(double * ce, double *roots)
+unsigned int RS_Math::quarticSolver(double * ce, double *roots)
 //quartic solver
 // x^4 + ce[0] x^3 + ce[1] x^2 + ce[2] x + ce[3] = 0
 {
@@ -483,7 +484,7 @@ unsigned int quarticSolver(double * ce, double *roots)
     double q= ce[2] + ce[0]*((1./8)*a2 - 0.5*ce[1]);
     double r= ce[3] - shift*ce[2] + (ce[1] - 3.*shift2)*shift2;
     //std::cout<<"quarticSolver:: p="<<p<<"\tq="<<q<<"\tr="<<r<<std::endl;
-    if (fabs(q) <= RS_TOLERENCE) {// Biquadratic
+    if (fabs(q) <= RS_TOLERANCE) {// Biquadratic
         double discriminant= 0.25*p*p -r;
         if (discriminant < 0.) {
             return 0;
@@ -505,7 +506,7 @@ unsigned int quarticSolver(double * ce, double *roots)
         }
         return 0;
     }
-    if ( fabs(r)< RS_TOLERENCE ) { // root=0 and a cubic 
+    if ( fabs(r)< RS_TOLERANCE ) { // root=0 and a cubic 
         double cubic[3]= {0.,p,q};
         roots[0]=0.;
         ret=1+cubicSolver(cubic,roots+1);
