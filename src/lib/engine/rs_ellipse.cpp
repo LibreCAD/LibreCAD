@@ -181,7 +181,7 @@ RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist) {
 //implemented using an analytical aglorithm
 RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         bool onEntity, double* dist, RS_Entity** entity)
- {
+{
 
     RS_DEBUG->print("RS_Ellipse::getNearestPointOnEntity");
 
@@ -207,45 +207,45 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     unsigned int counts;
     //need to handle a=b
     if(a0 > RS_TOLERANCE*RS_TOLERANCE ) { // a != b , ellipse
-    ce[0]=-2.*twoax/twoa2b2;
-    ce[1]= (twoax*twoax+twoby*twoby)/a0-1.;
-    ce[2]= - ce[0];
-    ce[3]= -twoax*twoax/a0;
-    //std::cout<<"find cosine, variable c, solve(c^4 +("<<ce[0]<<")*c^3+("<<ce[1]<<")*c^2+("<<ce[2]<<")*c+("<<ce[3]<<")=0,c)\n";
-    unsigned int counts=RS_Math::quarticSolver(ce,roots);
+        ce[0]=-2.*twoax/twoa2b2;
+        ce[1]= (twoax*twoax+twoby*twoby)/a0-1.;
+        ce[2]= - ce[0];
+        ce[3]= -twoax*twoax/a0;
+        //std::cout<<"find cosine, variable c, solve(c^4 +("<<ce[0]<<")*c^3+("<<ce[1]<<")*c^2+("<<ce[2]<<")*c+("<<ce[3]<<")=0,c)\n";
+        unsigned int counts=RS_Math::quarticSolver(ce,roots);
     } else {//a=b, quadratic equation for circle
-	    counts=2;
-	    a0=twoby/twoax;
-	    roots[0]=sqrt(1./(1.+a0*a0));
-	    roots[1]=-roots[0];
+        counts=2;
+        a0=twoby/twoax;
+        roots[0]=sqrt(1./(1.+a0*a0));
+        roots[1]=-roots[0];
     }
     if(!counts) {
-	    //this should not happen
-	    std::cerr<<"RS_Math::RS_Ellipse::getNearestPointOnEntity() finds no root from quartic, this should not happen\n";
+        //this should not happen
+        std::cerr<<"RS_Math::RS_Ellipse::getNearestPointOnEntity() finds no root from quartic, this should not happen\n";
     }
 
     RS_Vector vp2(false);
     double dDistance(0.);
     //double ea;
-for(unsigned int i=0;i<counts;i++){
-	if ( fabs(roots[i])>1.) continue;
-	double s=twoby*roots[i]/(twoax-twoa2b2*roots[i]); //sine
-	if (fabs(s) > 1. ) continue;
-	double d2=twoa2b2*(1-2*roots[i]*roots[i])+twoax*roots[i]+twoby*s;
-	if (d2<0) continue; // fartherest
-	RS_Vector vp3;
-	vp3.set(a*roots[i],b*s);
-	double d=vp3.distanceTo(ret);
-	//std::cout<<"Found: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" minimum= "<<d<<std::endl;
-	if( vp2.valid && d>dDistance) continue;
-			vp2=vp3;
-			dDistance=d;
+    for(unsigned int i=0; i<counts; i++) {
+        if ( fabs(roots[i])>1.) continue;
+        double s=twoby*roots[i]/(twoax-twoa2b2*roots[i]); //sine
+        if (fabs(s) > 1. ) continue;
+        double d2=twoa2b2*(1-2*roots[i]*roots[i])+twoax*roots[i]+twoby*s;
+        if (d2<0) continue; // fartherest
+        RS_Vector vp3;
+        vp3.set(a*roots[i],b*s);
+        double d=vp3.distanceTo(ret);
+        //std::cout<<"Found: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" minimum= "<<d<<std::endl;
+        if( vp2.valid && d>dDistance) continue;
+        vp2=vp3;
+        dDistance=d;
 //			ea=atan2(roots[i],s);
-	}
-if( ! vp2.valid ) {
-	    //this should not happen
-	    std::cerr<<"RS_Math::RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
-}
+    }
+    if( ! vp2.valid ) {
+        //this should not happen
+        std::cerr<<"RS_Math::RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
+    }
     if (dist!=NULL) {
         if (ret.valid) {
             *dist = dDistance;
@@ -253,14 +253,14 @@ if( ! vp2.valid ) {
             *dist = RS_MAXDOUBLE;
         }
     }
-vp2.rotate(getAngle());
-vp2.move(getCenter());
-ret=vp2;
-        if (onEntity) {
-            if (!RS_Math::isAngleBetween(getEllipseAngle(ret), getAngle1(), getAngle2(), data.reversed)) {
-                ret = RS_Vector(false);
-            }
-	}
+    vp2.rotate(getAngle());
+    vp2.move(getCenter());
+    ret=vp2;
+    if (onEntity) {
+        if (!RS_Math::isAngleBetween(getEllipseAngle(ret), getAngle1(), getAngle2(), data.reversed)) {
+            ret = RS_Vector(false);
+        }
+    }
 
 //std::cout<<"New algorithm\nMinimum dist="<<dmin<<std::endl;
 //std::cout<<"Nearest point: "<<vp2<<std::endl;
