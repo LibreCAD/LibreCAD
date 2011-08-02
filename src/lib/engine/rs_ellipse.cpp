@@ -178,7 +178,7 @@ RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist) {
 }
 
 
-
+//implemented using exact aglorithm
 RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         bool onEntity, double* dist, RS_Entity** entity) {
 
@@ -189,8 +189,66 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     if (entity!=NULL) {
         *entity = this;
     }
-    double ang = getAngle();
+//    RS_Vector vp;
+//    vp.set(coord.x,coord.y);
+//    vp.move(-getCenter());
+//    vp.rotate(getAngle());
+//    double x=vp.x,y=vp.y;
+//    double a=getMajorRadius();
+//    double b=getMinorRadius();
+//    double twoa2b2=2*(a*a-b*b);
+//    double twoax=2*a*x;
+//    double twoby=2*b*y;
+//    double a0=twoa2b2*twoa2b2;
+//    double ce[4];
+//    //need to handle a=b
+//    ce[0]=-2.*twoax*twoa2b2/a0;
+//    ce[1]= (twoax*twoax+twoby*twoby-a0)/a0;
+//    ce[2]= 2.*twoax*twoa2b2/a0;
+//    ce[3]= -twoax*twoax/a0;
+//    double roots[4];
+//    unsigned int counts=RS_Math::quarticSolver(ce,roots);
+//    if(!counts) {
+//	    //this should not happen
+//	    std::cerr<<"RS_Math::RS_Ellipse::getNearestPointOnEntity() finds no root from quartic\n";
+//    }
+//
+//    RS_Vector vp2(false);
+//    double dmin,ea;
+//for(unsigned int i=0;i<counts;i++){
+//	if ( fabs(roots[i])>1.) continue;
+//	double s=twoby*roots[i]/(twoax-twoa2b2*roots[i]);
+//	if (fabs(s) > 1. ) continue;
+//	double d2=twoa2b2*(1-2*roots[i]*roots[i])+twoax*roots[i]+twoby*s;
+//	if (d2<0) continue; // fartherest
+//	RS_Vector vp3;
+//	vp3.set(a*roots[i],b*s);
+//	double d=vp3.distanceTo(vp);
+//	if( vp2.valid && d>dmin) continue;
+//			vp2=vp3;
+//			dmin=d;
+//			ea=atan2(roots[i],s);
+//
+//	}
+//ret=vp2;
+//
+//
+//        if (onEntity) {
+//            double a1 = data.center.angleTo(getStartpoint());
+//            double a2 = data.center.angleTo(getEndpoint());
+//            double a = data.center.angleTo(ret);
+//            if (!RS_Math::isAngleBetween(a, a1, a2, data.reversed)) {
+//                ret = RS_Vector(false);
+//            }
+//	}
+//
+//vp2.rotate(getAngle());
+//vp2.move(getCenter());
+//std::cout<<"New algorithm\nMinimum dist="<<dmin<<std::endl;
+//std::cout<<"Nearest point: "<<vp2<<std::endl;
+//
 
+double ang=getAngle();
     RS_Vector normalized = (coord - data.center).rotate(-ang);
 
     double dU = normalized.x;
@@ -291,6 +349,8 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
             ret.y = dum;
         }
         ret = (ret.rotate(ang) + data.center);
+	std::cout<<"Old algorithm\ndist="<<*dist<<std::endl;
+	std::cout<<"Closest point ="<<ret<<std::endl;
 
         if (onEntity) {
             double a1 = data.center.angleTo(getStartpoint());

@@ -56,6 +56,7 @@
 
 typedef unsigned int uint;
 
+
 /**
  * Math functions.
  */
@@ -82,6 +83,7 @@ public:
     static double eval(const QString& expr, double def=0.0);
 
     static bool cmpDouble(double v1, double v2, double tol=0.001);
+//swap of two variables
     template <class T>
     static void swap( T &a, T &b) {
         const T ttmp=a;
@@ -143,7 +145,6 @@ public:
     static QString doubleToString(double value, int prec);
 
     static void test();
-//swap of two variables
 };
 
 #endif
