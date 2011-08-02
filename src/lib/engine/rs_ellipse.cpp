@@ -204,7 +204,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     double a0=twoa2b2*twoa2b2;
     double ce[4];
     double roots[4];
-    unsigned int counts;
+    unsigned int counts=0;
     //need to handle a=b
     if(a0 > RS_TOLERANCE*RS_TOLERANCE ) { // a != b , ellipse
         ce[0]=-2.*twoax/twoa2b2;
@@ -212,7 +212,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         ce[2]= - ce[0];
         ce[3]= -twoax*twoax/a0;
         //std::cout<<"find cosine, variable c, solve(c^4 +("<<ce[0]<<")*c^3+("<<ce[1]<<")*c^2+("<<ce[2]<<")*c+("<<ce[3]<<")=0,c)\n";
-        unsigned int counts=RS_Math::quarticSolver(ce,roots);
+        counts=RS_Math::quarticSolver(ce,roots);
     } else {//a=b, quadratic equation for circle
         counts=2;
         a0=twoby/twoax;
