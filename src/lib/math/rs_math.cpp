@@ -556,8 +556,11 @@ unsigned int RS_Math::quarticSolver(double * ce, double *roots)
         ce2[1]=0.5*(p+croots[0])-0.5*q/sqrtz0;
         ret=quadraticSolver(ce2,roots+2);
         ret=4;
-    } else
+    } else {
 	    return 0;
+	    }
+        for(unsigned int i=0; i<ret; i++) roots[i] -= shift;
+        return ret;
 }
 
 
