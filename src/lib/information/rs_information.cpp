@@ -332,9 +332,20 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
             RS_Arc* arc2 = (RS_Arc*)te2;
 
             ret = getIntersectionArcArc(arc1, arc2);
-        } else {
+	    // ellipse / ellipse
+	    //
+        } else if (
+	te1->rtti()==RS2::EntityEllipse && te2->rtti()==RS2::EntityEllipse
+	) {
+            RS_Ellipse* ellipse1 = (RS_Ellipse*)te1;
+            RS_Ellipse* ellipse2 = (RS_Ellipse*)te2;
+	    std::cout<<"calling getIntersectionEllipseEllipse()\n";
+            ret = getIntersectionEllipseEllipse(ellipse1, ellipse2);
+
+	} else {
             RS_DEBUG->print("RS_Information::getIntersection:: Unsupported entity type.");
         }
+	
     }
 
 
@@ -554,6 +565,118 @@ RS_VectorSolutions RS_Information::getIntersectionArcArc(RS_Arc* e1,
 
     return ret;
 }
+
+RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1, RS_Ellipse* e2) {
+    RS_VectorSolutions ret;
+
+    if (e1==NULL || e2==NULL) {
+        return ret;
+    }
+    std::cout<<"getIntersectionEllipseEllipse::started\n";
+    //transform ellipse2 to ellipse1's coordinates
+    RS_Vector center2=e2->getCenter();
+    center2.move(- e1->getCenter());
+    center2.rotate(- e1->getAngle());
+    RS_Vector majorP2=e2->getMajorP();
+    majorP2.rotate(- e1->getAngle());
+    double a1=e1->getMajorRadius();
+    double b1=e1->getMinorRadius();
+    //ellipse1 equation:
+    //	x^2/(a1^2) + y^2/(b1^2) = 1
+    double x2=center2.x,y2=center2.y;
+    double a2=e2->getMajorRadius();
+    double b2=e2->getMinorRadius();
+    double t2=majorP2.angle();
+    //ellipse2 equation:
+    // ( (x - u) cos(t) - (y - v) sin(t))^2/a^2 + ( (x - u) sin(t) + (y-v) cos(t))^2/b^2 =1
+    // ( cos^2/a^2 + sin^2/b^2) x^2 +
+    // ( sin^2/a^2 + cos^2/b^2) y^2 + 
+    //  2 sin cos (1/b^2 - 1/a^2) x y +
+    //  ( ( 2 v sin cos - 2 u cos^2)/a^2 - ( 2v sin cos + 2 u sin^2)/b^2) x +
+    //  ( ( 2 u sin cos - 2 v sin^2)/a^2 - ( 2u sin cos + 2 v cos^2)/b^2) y +
+    //  (u cos - v sin)^2/a^2 + (u sin + v cos)^2/b^2 -1 =0
+    double cs=cos(t2),si=sin(t2);
+    double ucs=x2*cs,usi=x2*si,
+    	   vcs=y2*cs,vsi=y2*si;
+    double cs2=cs*cs,si2=1-cs2;
+    double tcssi=2.*cs*si;
+    double ia2=1./(a2*a2),ib2=1./(b2*b2);
+    double mc1=(ucs - vsi)*(ucs-vsi)*ia2+(vsi+vcs)*(vsi+vcs)*ib2 -1.;
+    double mb10= ( y2*tcssi - 2.*x2*cs2)*ia2 - ( y2*tcssi+2*x2*si2)*ib2; //x
+    double mb11= ( x2*tcssi - 2.*y2*si2)*ia2 - ( x2*tcssi+2*y2*cs2)*ib2; //y
+    double ma100= cs2*ia2 + si2*ib2; // x^2
+    double ma101= cs*si*(ib2 - ia2); // xy term is 2*ma101*x*y
+    double ma111= si2*ia2 + cs2*ib2; // y^2
+    double ma000= 1./(a1*a1),ma011=1./(b1*b1);
+    // construct the Bezout determinant
+    double v0=2.*ma000*ma101;
+    double v1=ma000*ma111-ma100*ma011;
+    double v2=ma000*mb10;
+    double v3=ma000*mb11;
+    double v4=ma000*mc1+ma100;
+    double v5=-2.*ma101*ma011;
+    double v6= 0.;
+    double v7= 2.*ma101;
+    double v8= ma011*mb10;
+    double v9= 0.;
+    double v10= mb10;
+    double u0 = v2*v10-v4*v4;
+    double u1 = v0*v10 + v2*v7-2.*v3*v4;
+    double u2 = v0*v7-v2*v8-v3*v3*v3-2.*v1*v4;
+    double u3 = -v0*v8+v2*v5-2.*v1*v3;
+    double u4 = v0*v5 - v1*v1;
+    double ce[4];
+    double roots[4];
+    unsigned int counts=0;
+    if ( fabs(u4) < RS_TOLERANCE) { // this should not happen
+    	ce[0]=u2/u3;
+	ce[1]=u1/u3;
+	ce[2]=u0/u3;
+	counts=RS_Math::cubicSolver(ce,roots);
+    } else {
+    	ce[0]=u3/u4;
+    	ce[1]=u2/u4;
+    	ce[2]=u1/u4;
+    	ce[3]=u0/u4;
+	counts=RS_Math::quarticSolver(ce,roots);
+    }
+	if (! counts ) { // no intersection found
+		return ret;
+	}
+	RS_VectorSolutions vs0(8);
+	unsigned int ivs0=0;
+	for(unsigned int i=0;i<counts;i++){
+		double y=roots[i];
+		double x=a1*sqrt(1-y*y*ma011);
+		for(unsigned int j=0;j<2;j++){
+			//check for ellipse2
+			if (
+			fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y-mc1)< RS_TOLERANCE
+			) {//found
+				vs0.set(ivs0++, RS_Vector(x,y));
+			}
+			x= -x;
+		}
+	}
+	std::cout<<"Found "<<ivs0<<" EllipseEllipse intersections\n";
+		ret.alloc(ivs0);
+		for(unsigned int i=0;i<ivs0;i++){
+			RS_Vector vp=vs0.get(i);
+			vp.rotate(e1->getAngle());
+			vp.move(e1->getCenter());
+			ret.set(i,vp);
+			}
+			return ret;
+
+
+
+
+
+
+
+}
+
+
 
 
 
