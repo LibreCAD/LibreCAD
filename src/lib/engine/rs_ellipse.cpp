@@ -75,8 +75,8 @@ void RS_Ellipse::calculateBorders() {
     double radius1 = getMajorRadius();
     double radius2 = getMinorRadius();
     double angle = getAngle();
-    double a1 = ((!isReversed()) ? data.angle1 : data.angle2);
-    double a2 = ((!isReversed()) ? data.angle2 : data.angle1);
+    //double a1 = ((!isReversed()) ? data.angle1 : data.angle2);
+    //double a2 = ((!isReversed()) ? data.angle2 : data.angle1);
     RS_Vector startpoint = getStartpoint();
     RS_Vector endpoint = getEndpoint();
 
@@ -85,8 +85,8 @@ void RS_Ellipse::calculateBorders() {
     double maxX = std::max(startpoint.x, endpoint.x);
     double maxY = std::max(startpoint.y, endpoint.y);
 
-    // kind of a brute force. TODO: exact calculation
     RS_Vector vp;
+    // kind of a brute force. TODO: exact calculation
 //    double a = a1;
 
 //    do {
@@ -109,35 +109,41 @@ void RS_Ellipse::calculateBorders() {
     // (r1*cos(a)*cos(angle)-r2*sin(a)*sin(angle),r1*cos(a)*sin(angle)+r2*sin(a)*cos(angle))
     // both coordinates can be further reorganized to the form rr*cos(a+ theta),
     // with rr and theta angle defined by the coordinates given above
-    double amin,delta_a;
+    double amin,amax;
 //      x range
     vp.set(radius1*cos(angle),radius2*sin(angle));
 
-    amin=fmod(2*M_PI+a1+vp.angle(),2*M_PI); // to the range of 0 to 2*M_PI
-    delta_a=fmod(4*M_PI+a2-a1,2*M_PI);
-
-    if( (amin<=M_PI && delta_a >= M_PI - amin) || (amin > M_PI && delta_a >= 3*M_PI - amin))
+    amin=RS_Math::correctAngle(getAngle1()+vp.angle()); // to the range of 0 to 2*M_PI
+    amax=RS_Math::correctAngle(getAngle2()+vp.angle()); // to the range of 0 to 2*M_PI
+	if( RS_Math::isAngleBetween(M_PI,amin,amax,isReversed()) || fabs(amax-amin) < RS_TOLERANCE){ 
+    //if( (amin<=M_PI && delta_a >= M_PI - amin) || (amin > M_PI && delta_a >= 3*M_PI - amin)) {
         minX= data.center.x-vp.magnitude();
+	}
 //    else
 //       minX=data.center.x +vp.magnitude()*std::min(cos(amin),cos(amin+delta_a));
-    if( delta_a >= 2*M_PI - amin )
+	if( RS_Math::isAngleBetween(2.*M_PI,amin,amax,isReversed()) || fabs(amax-amin) < RS_TOLERANCE){ 
+    //if( delta_a >= 2*M_PI - amin ) {
         maxX= data.center.x+vp.magnitude();
+	}
 //    else
 //       maxX= data.center.x+vp.magnitude()*std::max(cos(amin),cos(amin+delta_a));
 //      y range
     vp.set(radius1*sin(angle),-1*radius2*cos(angle));
-    amin=fmod(2*M_PI+a1+vp.angle(),2*M_PI); // to the range of 0 to 2*M_PI
-    if( (amin<=M_PI &&delta_a >= M_PI - amin) || (amin > M_PI && delta_a >= 3*M_PI - amin))
+    amin=RS_Math::correctAngle(getAngle1()+vp.angle()); // to the range of 0 to 2*M_PI
+    amax=RS_Math::correctAngle(getAngle2()+vp.angle()); // to the range of 0 to 2*M_PI
+	if( RS_Math::isAngleBetween(M_PI,amin,amax,isReversed()) || fabs(amax-amin) < RS_TOLERANCE){ 
+    //if( (amin<=M_PI &&delta_a >= M_PI - amin) || (amin > M_PI && delta_a >= 3*M_PI - amin)) {
         minY= data.center.y-vp.magnitude();
+	}
 //    else
 //        minY=data.center.y +vp.magnitude()*std::min(cos(amin),cos(amin+delta_a));
-    if( delta_a >= 2*M_PI - amin )
+	if( RS_Math::isAngleBetween(2.*M_PI,amin,amax,isReversed()) || fabs(amax-amin) < RS_TOLERANCE){ 
+    //if( delta_a >= 2*M_PI - amin ) {
         maxY= data.center.y+vp.magnitude();
+	}
 //    else
 //        maxY= data.center.y+vp.magnitude()*std::max(cos(amin),cos(amin+delta_a));
-
 //std::cout<<"New algorithm:\nminX="<<minX<<"\tmaxX="<<maxX<<"\nminY="<<minY<<"\tmaxY="<<maxY<<std::endl;
-
 
     minV.set(minX, minY);
     maxV.set(maxX, maxY);
@@ -229,7 +235,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     }
 
     RS_Vector vp2(false);
-    double dDistance(0.);
+    double dDistance(RS_MAXDOUBLE);
     //double ea;
     for(unsigned int i=0; i<counts; i++) {
         if ( fabs(roots[i])>1.) continue;
@@ -240,14 +246,17 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         RS_Vector vp3;
         vp3.set(a*roots[i],b*s);
         double d=vp3.distanceTo(ret);
-        //std::cout<<"Found: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" minimum= "<<d<<std::endl;
-        if( vp2.valid && d>dDistance) continue;
+        //std::cout<<"Checking: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" minimum= "<<d<<std::endl;
+        if( vp2.valid && d>dDistance) {
+		continue;
+		}
         vp2=vp3;
         dDistance=d;
 //			ea=atan2(roots[i],s);
     }
     if( ! vp2.valid ) {
         //this should not happen
+	std::cout<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<std::endl;
         std::cerr<<"RS_Math::RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
     }
     if (dist!=NULL) {
