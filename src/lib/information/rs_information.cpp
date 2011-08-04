@@ -218,11 +218,17 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
         return ret;
     }
 
-    // (only) one entity is an ellipse:
+    // one entity is an ellipse:
     if (e1->rtti()==RS2::EntityEllipse || e2->rtti()==RS2::EntityEllipse) {
         if (e2->rtti()==RS2::EntityEllipse) RS_Math::swap( e1, e2);
         if (e2->rtti()==RS2::EntityEllipse) {
             ret = getIntersectionEllipseEllipse((RS_Ellipse*)e1, (RS_Ellipse *) e2);
+        }
+        if (e2->rtti()==RS2::EntityCircle) {
+            ret = getIntersectionCircleEllipse((RS_Circle *)e2, (RS_Ellipse *) e1);
+        }
+        if (e2->rtti()==RS2::EntityArc) {
+            ret = getIntersectionArcEllipse((RS_Arc *)e2, (RS_Ellipse *) e1);
         }
         if (e2->rtti()==RS2::EntityLine) {
             RS_Ellipse* ellipse = (RS_Ellipse*)e1;
@@ -230,7 +236,7 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
             tol = 1.0e-1;
         }
 
-        // ellipse / arc, ellipse / ellipse: not supported:
+        // not supported:
         else {
             return ret;
         }
@@ -703,6 +709,42 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     }
     return ret;
 }
+
+//wrapper to do Circle-Ellipse and Arc-Ellipse using Ellipse-Ellipse intersection
+RS_VectorSolutions RS_Information::getIntersectionCircleEllipse(RS_Circle* c1,
+        RS_Ellipse* e1) {
+	RS_VectorSolutions ret;
+	   if (c1==NULL || e1==NULL) {
+        return ret;
+    }
+
+RS_EllipseData d(
+	c1->getCenter(),
+	RS_Vector(c1->getRadius(),0.),
+	1.0,
+	0.,
+	2.*M_PI,
+	false);
+RS_Ellipse * e2= new RS_Ellipse(c1->getParent(),d);
+return getIntersectionEllipseEllipse(e1,e2);
+	}
+
+RS_VectorSolutions RS_Information::getIntersectionArcEllipse(RS_Arc * a1,
+        RS_Ellipse* e1) {
+	RS_VectorSolutions ret;
+	   if (a1==NULL || e1==NULL) {
+        return ret;
+	}
+RS_EllipseData d(
+	a1->getCenter(),
+	RS_Vector(a1->getRadius(),0.),
+	1.0,
+	a1->getAngle1(),
+	a1->getAngle2(),
+	a1->isReversed());
+RS_Ellipse * e2= new RS_Ellipse(a1->getParent(),d);
+return getIntersectionEllipseEllipse(e1,e2);
+	}
 
 
 
