@@ -75,6 +75,10 @@ public:
 
     static RS_VectorSolutions getIntersectionEllipseEllipse(RS_Ellipse* e1,
             RS_Ellipse* e2);
+    static RS_VectorSolutions getIntersectionArcEllipse(RS_Arc* e1,
+            RS_Ellipse* e2);
+    static RS_VectorSolutions getIntersectionCircleEllipse(RS_Circle* e1,
+            RS_Ellipse* e2);
     
 	static RS_VectorSolutions getIntersectionLineEllipse(RS_Line* line,
             RS_Ellipse* ellipse);
