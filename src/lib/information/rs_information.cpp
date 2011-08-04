@@ -231,8 +231,7 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
             ret = getIntersectionArcEllipse((RS_Arc *)e2, (RS_Ellipse *) e1);
         }
         if (e2->rtti()==RS2::EntityLine) {
-            RS_Ellipse* ellipse = (RS_Ellipse*)e1;
-            ret = getIntersectionLineEllipse((RS_Line*)e2, ellipse);
+            ret = getIntersectionLineEllipse((RS_Line*)e2, (RS_Ellipse*) e1);
             tol = 1.0e-1;
         }
 
