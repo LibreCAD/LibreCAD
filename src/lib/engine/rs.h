@@ -107,7 +107,9 @@ public:
         FormatDXF1,          /**< QCad 1 compatibility DXF format. */
         FormatDXF,           /**< DXF format. 2000. */
         FormatDXF12,         /**< DXF format. R12. */
-        FormatCXF           /**< CAM Expert Font format. */
+        FormatCXF,           /**< CAM Expert Font format. */
+        FormatJWW,           /**< JWW Format type */
+        FormatJWC            /**< JWC Format type */
     };
 
     /**
