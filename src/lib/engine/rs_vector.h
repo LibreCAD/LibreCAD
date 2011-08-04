@@ -7,7 +7,7 @@
 **
 **
 ** This program is free software; you can redistribute it and/or modify
-** it under the terms of the GNU General Public License as published by 
+** it under the terms of the GNU General Public License as published by
 ** the Free Software Foundation; either version 2 of the License, or
 ** (at your option) any later version.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -29,6 +29,7 @@
 #define RS_VECTOR_H
 
 #include <iostream>
+#include <algorithm>
 
 #include "rs.h"
 
@@ -54,14 +55,14 @@ public:
     double magnitude() const;
     RS_Vector lerp(const RS_Vector& v, double t) const;
 
-	bool isInWindow(const RS_Vector& firstCorner, const RS_Vector& secondCorner);
+    bool isInWindow(const RS_Vector& firstCorner, const RS_Vector& secondCorner);
 
     RS_Vector move(RS_Vector offset);
     RS_Vector rotate(double ang);
     RS_Vector rotate(RS_Vector center, double ang);
     RS_Vector scale(RS_Vector factor);
     RS_Vector scale(RS_Vector center, RS_Vector factor);
-	RS_Vector mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
+    RS_Vector mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
 
     RS_Vector operator + (const RS_Vector& v) const;
     RS_Vector operator - (const RS_Vector& v) const;
@@ -110,29 +111,29 @@ public:
     RS_VectorSolutions(const RS_Vector& v1);
     RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2);
     RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
-	                   const RS_Vector& v3);
+                       const RS_Vector& v3);
     RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
                        const RS_Vector& v3, const RS_Vector& v4);
     RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
                        const RS_Vector& v3, const RS_Vector& v4,
-					   const RS_Vector& v5);
-    
-	~RS_VectorSolutions();
+                       const RS_Vector& v5);
 
-	void alloc(int num);
+    ~RS_VectorSolutions();
+
+    void alloc(int num);
     void clean();
     RS_Vector get(int i) const;
-	int getNumber() const;
-	bool hasValid() const;
-	void set(int i, const RS_Vector& v);
-	void setTangent(bool t);
+    int getNumber() const;
+    bool hasValid() const;
+    void set(int i, const RS_Vector& v);
+    void setTangent(bool t);
     bool isTangent() const;
-    RS_Vector getClosest(const RS_Vector& coord, 
-			double* dist=NULL, int* index=NULL) const;
+    RS_Vector getClosest(const RS_Vector& coord,
+                         double* dist=NULL, int* index=NULL) const;
     void rotate(RS_Vector center, double ang);
     void scale(RS_Vector center, RS_Vector factor);
 
-	RS_VectorSolutions operator = (const RS_VectorSolutions& s);
+    RS_VectorSolutions operator = (const RS_VectorSolutions& s);
 
     friend std::ostream& operator << (std::ostream& os,
                                       const RS_VectorSolutions& s);
