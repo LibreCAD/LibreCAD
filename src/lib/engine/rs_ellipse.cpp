@@ -525,11 +525,11 @@ void RS_Ellipse::moveEndpoint(const RS_Vector& pos) {
 }
 
 
-RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& coord,
+RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& trimCoord,
                                      const RS_Vector& trimPoint) {
 
     //double angEl = getEllipseAngle(trimPoint);
-    double angM = getEllipseAngle(coord);
+    double angM = getEllipseAngle(trimCoord);
     if (RS_Math::getAngleDifference(angM, data.angle1) > RS_Math::getAngleDifference(data.angle2,angM)) {
         return RS2::EndingStart;
     } else {
