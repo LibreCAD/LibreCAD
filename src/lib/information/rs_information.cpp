@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -65,22 +65,22 @@ bool RS_Information::isDimension(RS2::EntityType type) {
  * i.e. it is in a graphic or in a polyline.
  */
 bool RS_Information::isTrimmable(RS_Entity* e) {
-	if (e!=NULL) {
-		if (e->getParent()!=NULL) {
-			if (e->getParent()->rtti()==RS2::EntityPolyline) {
-				return true;
-			}
-			else if (e->getParent()->rtti()==RS2::EntityContainer ||
-			          e->getParent()->rtti()==RS2::EntityGraphic ||
-					  e->getParent()->rtti()==RS2::EntityBlock) {
+    if (e!=NULL) {
+        if (e->getParent()!=NULL) {
+            if (e->getParent()->rtti()==RS2::EntityPolyline) {
+                return true;
+            }
+            else if (e->getParent()->rtti()==RS2::EntityContainer ||
+                     e->getParent()->rtti()==RS2::EntityGraphic ||
+                     e->getParent()->rtti()==RS2::EntityBlock) {
 
-				// normal entity:
-				return true;
-			}
-		}
-	}
+                // normal entity:
+                return true;
+            }
+        }
+    }
 
-	return false;
+    return false;
 }
 
 
@@ -89,45 +89,45 @@ bool RS_Information::isTrimmable(RS_Entity* e) {
  * i.e. they are in a graphic or in the same polyline.
  */
 bool RS_Information::isTrimmable(RS_Entity* e1, RS_Entity* e2) {
-	if (e1!=NULL && e2!=NULL) {
-		if (e1->getParent()!=NULL && e2->getParent()!=NULL) {
-			if (e1->getParent()->rtti()==RS2::EntityPolyline &&
-			   e2->getParent()->rtti()==RS2::EntityPolyline &&
-			   e1->getParent()==e2->getParent()) {
+    if (e1!=NULL && e2!=NULL) {
+        if (e1->getParent()!=NULL && e2->getParent()!=NULL) {
+            if (e1->getParent()->rtti()==RS2::EntityPolyline &&
+                    e2->getParent()->rtti()==RS2::EntityPolyline &&
+                    e1->getParent()==e2->getParent()) {
 
-				// in the same polyline
-				RS_EntityContainer* pl = e1->getParent();
-				int idx1 = pl->findEntity(e1);
-				int idx2 = pl->findEntity(e2);
-				RS_DEBUG->print("RS_Information::isTrimmable: "
-					"idx1: %d, idx2: %d", idx1, idx2);
-				if (abs(idx1-idx2)==1 || abs(idx1-idx2)==pl->count()-1) {
-					// directly following entities
-					return true;
-				}
-				else {
-					// not directly following entities
-					return false;
-				}
-			}
-			else if ((e1->getParent()->rtti()==RS2::EntityContainer ||
-			          e1->getParent()->rtti()==RS2::EntityGraphic ||
-					  e1->getParent()->rtti()==RS2::EntityBlock) &&
-					 (e2->getParent()->rtti()==RS2::EntityContainer ||
-			          e2->getParent()->rtti()==RS2::EntityGraphic ||
-					  e2->getParent()->rtti()==RS2::EntityBlock)) {
+                // in the same polyline
+                RS_EntityContainer* pl = e1->getParent();
+                int idx1 = pl->findEntity(e1);
+                int idx2 = pl->findEntity(e2);
+                RS_DEBUG->print("RS_Information::isTrimmable: "
+                                "idx1: %d, idx2: %d", idx1, idx2);
+                if (abs(idx1-idx2)==1 || abs(idx1-idx2)==pl->count()-1) {
+                    // directly following entities
+                    return true;
+                }
+                else {
+                    // not directly following entities
+                    return false;
+                }
+            }
+            else if ((e1->getParent()->rtti()==RS2::EntityContainer ||
+                      e1->getParent()->rtti()==RS2::EntityGraphic ||
+                      e1->getParent()->rtti()==RS2::EntityBlock) &&
+                     (e2->getParent()->rtti()==RS2::EntityContainer ||
+                      e2->getParent()->rtti()==RS2::EntityGraphic ||
+                      e2->getParent()->rtti()==RS2::EntityBlock)) {
 
-				// normal entities:
-				return true;
-			}
-		}
-		else {
-			// independent entities with the same parent:
-			return (e1->getParent()==e2->getParent());
-		}
-	}
+                // normal entities:
+                return true;
+            }
+        }
+        else {
+            // independent entities with the same parent:
+            return (e1->getParent()==e2->getParent());
+        }
+    }
 
-	return false;
+    return false;
 }
 
 
@@ -137,7 +137,7 @@ bool RS_Information::isTrimmable(RS_Entity* e1, RS_Entity* e2) {
  * @param coord Coordinate (typically a mouse coordinate)
  *
  * @return the coordinate found or an invalid vector
- * if there are no elements at all in this graphics 
+ * if there are no elements at all in this graphics
  * container.
  */
 RS_Vector RS_Information::getNearestEndpoint(const RS_Vector& coord,
@@ -147,16 +147,16 @@ RS_Vector RS_Information::getNearestEndpoint(const RS_Vector& coord,
 
 
 /**
- * Gets the nearest point to the given coordinate which is on an entity. 
+ * Gets the nearest point to the given coordinate which is on an entity.
  *
  * @param coord Coordinate (typically a mouse coordinate)
- * @param dist Pointer to a double which will contain the 
+ * @param dist Pointer to a double which will contain the
  *        measured distance after return or NULL
  * @param entity Pointer to a pointer which will point to the
  *        entity on which the point is or NULL
  *
  * @return the coordinate found or an invalid vector
- * if there are no elements at all in this graphics 
+ * if there are no elements at all in this graphics
  * container.
  */
 RS_Vector RS_Information::getNearestPointOnEntity(const RS_Vector& coord,
@@ -172,11 +172,11 @@ RS_Vector RS_Information::getNearestPointOnEntity(const RS_Vector& coord,
  * Gets the nearest entity to the given coordinate.
  *
  * @param coord Coordinate (typically a mouse coordinate)
- * @param dist Pointer to a double which will contain the 
+ * @param dist Pointer to a double which will contain the
  *             masured distance after return
  * @param level Level of resolving entities.
  *
- * @return the entity found or NULL if there are no elements 
+ * @return the entity found or NULL if there are no elements
  * at all in this graphics container.
  */
 RS_Entity* RS_Information::getNearestEntity(const RS_Vector& coord,
@@ -204,35 +204,39 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
         RS_Entity* e2, bool onEntities) {
 
     RS_VectorSolutions ret;
-	double tol = 1.0e-4;
+    double tol = 1.0e-4;
 
     if (e1==NULL || e2==NULL) {
         return ret;
     }
 
     // unsupported entities / entity combinations:
-    if ((e1->rtti()==RS2::EntityEllipse && e2->rtti()==RS2::EntityEllipse) ||
-            e1->rtti()==RS2::EntityText || e2->rtti()==RS2::EntityText ||
-            isDimension(e1->rtti()) || isDimension(e2->rtti())) {
+    if (
+        e1->rtti()==RS2::EntityText || e2->rtti()==RS2::EntityText ||
+        isDimension(e1->rtti()) || isDimension(e2->rtti())) {
 
         return ret;
     }
 
-    // (only) one entity is an ellipse:
+    // one entity is an ellipse:
     if (e1->rtti()==RS2::EntityEllipse || e2->rtti()==RS2::EntityEllipse) {
+        if (e2->rtti()==RS2::EntityEllipse) RS_Math::swap( e1, e2);
         if (e2->rtti()==RS2::EntityEllipse) {
-            RS_Entity* tmp = e1;
-            e1 = e2;
-            e2 = tmp;
+            ret = getIntersectionEllipseEllipse((RS_Ellipse*)e1, (RS_Ellipse *) e2);
+        }
+        if (e2->rtti()==RS2::EntityCircle) {
+            ret = getIntersectionCircleEllipse((RS_Circle *)e2, (RS_Ellipse *) e1);
+        }
+        if (e2->rtti()==RS2::EntityArc) {
+            ret = getIntersectionArcEllipse((RS_Arc *)e2, (RS_Ellipse *) e1);
         }
         if (e2->rtti()==RS2::EntityLine) {
-            RS_Ellipse* ellipse = (RS_Ellipse*)e1;
-            ret = getIntersectionLineEllipse((RS_Line*)e2, ellipse);
-			tol = 1.0e-1;
-        } 
-		
-		// ellipse / arc, ellipse / ellipse: not supported:
-		else {
+            ret = getIntersectionLineEllipse((RS_Line*)e2, (RS_Ellipse*) e1);
+            tol = 1.0e-1;
+        }
+
+        // not supported:
+        else {
             return ret;
         }
     } else {
@@ -332,9 +336,12 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
             RS_Arc* arc2 = (RS_Arc*)te2;
 
             ret = getIntersectionArcArc(arc1, arc2);
+            // ellipse / ellipse
+            //
         } else {
             RS_DEBUG->print("RS_Information::getIntersection:: Unsupported entity type.");
         }
+
     }
 
 
@@ -555,6 +562,191 @@ RS_VectorSolutions RS_Information::getIntersectionArcArc(RS_Arc* e1,
     return ret;
 }
 
+RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1, RS_Ellipse* e2) {
+    RS_VectorSolutions ret;
+
+    if (e1==NULL || e2==NULL) {
+        return ret;
+    }
+    //transform ellipse2 to ellipse1's coordinates
+    RS_Vector center2=e2->getCenter();
+    center2.move( - e1->getCenter());
+    center2.rotate( - e1->getAngle());
+    RS_Vector majorP2=e2->getMajorP();
+    majorP2.rotate(- e1->getAngle());
+    double a1=e1->getMajorRadius();
+    double b1=e1->getMinorRadius();
+    //ellipse1 equation:
+    //	x^2/(a1^2) + y^2/(b1^2) - 1 =0
+    double x2=center2.x,y2=center2.y;
+    double a2=e2->getMajorRadius();
+    double b2=e2->getMinorRadius();
+    double t2= -majorP2.angle();
+    //ellipse2 equation:
+    // ( (x - u) cos(t) - (y - v) sin(t))^2/a^2 + ( (x - u) sin(t) + (y-v) cos(t))^2/b^2 =1
+    // ( cos^2/a^2 + sin^2/b^2) x^2 +
+    // ( sin^2/a^2 + cos^2/b^2) y^2 +
+    //  2 sin cos (1/b^2 - 1/a^2) x y +
+    //  ( ( 2 v sin cos - 2 u cos^2)/a^2 - ( 2v sin cos + 2 u sin^2)/b^2) x +
+    //  ( ( 2 u sin cos - 2 v sin^2)/a^2 - ( 2u sin cos + 2 v cos^2)/b^2) y +
+    //  (u cos - v sin)^2/a^2 + (u sin + v cos)^2/b^2 -1 =0
+    double cs=cos(t2),si=sin(t2);
+    double ucs=x2*cs,usi=x2*si,
+           vcs=y2*cs,vsi=y2*si;
+    double cs2=cs*cs,si2=1-cs2;
+    double tcssi=2.*cs*si;
+    double ia2=1./(a2*a2),ib2=1./(b2*b2);
+    //std::cout<<"e1: x^2/("<<a1<<")^2+y^2/("<<b1<<")^2-1 =0\n";
+    //std::cout<<"e2: ( (x-("<<x2<<"))*("<<cs<<")-(y-("<<y2<<"))*("<<si<<"))^2/"<<a2<<"^2+( ( x - ("<<x2<<"))*("<<si<<")+(y-("<<y2<<"))*("<<cs<<"))^2/"<<b2<<"^2 -1 =0\n";
+    double mc1=(ucs - vsi)*(ucs-vsi)*ia2+(usi+vcs)*(usi+vcs)*ib2 -1.;
+    double mb10= ( y2*tcssi - 2.*x2*cs2)*ia2 - ( y2*tcssi+2*x2*si2)*ib2; //x
+    double mb11= ( x2*tcssi - 2.*y2*si2)*ia2 - ( x2*tcssi+2*y2*cs2)*ib2; //y
+    double ma100= cs2*ia2 + si2*ib2; // x^2
+    double ma101= cs*si*(ib2 - ia2); // xy term is 2*ma101*x*y
+    double ma111= si2*ia2 + cs2*ib2; // y^2
+    double ma000= 1./(a1*a1),ma011=1./(b1*b1);
+    //std::cout<<"simplified e1: "<<ma000<<"*x^2 + "<<ma011<<"*y^2 -1 =0\n";
+    //std::cout<<"simplified e2: "<<ma100<<"*x^2 + 2*("<<ma101<<")*x*y + "<<ma111<<"*y^2 "<<" + ("<<mb10<<")*x + ("<<mb11<<")*y + ("<<mc1<<") =0\n";
+    // construct the Bezout determinant
+    double v0=2.*ma000*ma101;
+    double v2=ma000*mb10;
+    double v3=ma000*mb11;
+    double v4=ma000*mc1+ma100;
+    double v5= 2.*ma101*ma011;
+    double v6= ma000*ma111;
+    double v7= 2.*ma101;
+    double v8= 2.*ma011*mb10;
+    double v9= ma100*ma011;
+    double v10= mb10;
+    //double v1=ma000*ma111-ma100*ma011;
+    double v1= v6 - v9;
+    double u0 = v4*v4-v2*v10;
+    double u1 = 2.*(v3*v4-v0*v10);
+    double u2 = 2.*v4*v1+v3*v3+0.5*v2*v8-v0*v7;
+    double u3 = v0*v8+2.*v3*v1;
+    double u4 = v1*v1+v0*v5 ;
+    //std::cout<<"u0="<<u0<<"\tu1="<<u1<<"\tu2="<<u2<<"\tu3="<<u3<<"\tu4="<<u4<<std::endl;
+    double ce[4];
+    double roots[4];
+    unsigned int counts=0;
+    if ( fabs(u4) < 1.0e-75) { // this should not happen
+        if ( fabs(u3) < 1.0e-75) { // this should not happen
+            if ( fabs(u2) < 1.0e-75) { // this should not happen
+                counts=1;
+                roots[0]=-u0/u1;
+            } else {
+                ce[0]=u1/u2;
+                ce[1]=u0/u2;
+                //std::cout<<"ce[2]={ "<<ce[0]<<' '<<ce[1]<<" }\n";
+                counts=RS_Math::quadraticSolver(ce,roots);
+            }
+        } else {
+            ce[0]=u2/u3;
+            ce[1]=u1/u3;
+            ce[2]=u0/u3;
+            //std::cout<<"ce[3]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<" }\n";
+            counts=RS_Math::cubicSolver(ce,roots);
+        }
+    } else {
+        ce[0]=u3/u4;
+        ce[1]=u2/u4;
+        ce[2]=u1/u4;
+        ce[3]=u0/u4;
+        //std::cout<<"ce[4]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<" }\n";
+        counts=RS_Math::quarticSolver(ce,roots);
+    }
+//	std::cout<<"Equation for y: y^4";
+//        for(int i=3; i>=0; i--) {
+//		std::cout<<"+("<<ce[3-i]<<")";
+//	    if ( i ) {
+//		    std::cout<<"*y^"<<i;
+//	    }else {
+//		    std::cout<<" ==0\n";
+//	    }
+//    }
+
+    if (! counts ) { // no intersection found
+        return ret;
+    }
+//      std::cout<<"counts="<<counts<<": ";
+//	for(unsigned int i=0;i<counts;i++){
+//	std::cout<<roots[i]<<" ";
+//	}
+//	std::cout<<std::endl;
+    RS_VectorSolutions vs0(8);
+    unsigned int ivs0=0;
+    for(unsigned int i=0; i<counts; i++) {
+        double y=roots[i];
+        double xx=ma000*(1.0-y*y*ma011);
+        if (xx<0.) {
+            //std::cout<<"invalid roots["<<i<<"]= "<<roots[i]<<" x^2= "<<xx<<std::endl;
+            continue;
+        }
+        double x=a1*sqrt(1-y*y*ma011);
+        for(unsigned int j=0; j<2; j++) {
+            //check for ellipse2
+            RS_Vector vp4;
+            vp4.set(x,y);
+            vp4.rotate(e1->getAngle());
+            vp4.move(e1->getCenter());
+            //std::cout<<"Checking for "<<vp4<<" error="<<fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1) <<std::endl;
+            if (
+                fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)< RS_TOLERANCE
+            ) {//found
+                vs0.set(ivs0++, RS_Vector(x,y));
+            }
+            x= -x;
+        }
+    }
+    //std::cout<<"Found "<<ivs0<<" EllipseEllipse intersections\n";
+    ret.alloc(ivs0);
+    for(unsigned int i=0; i<ivs0; i++) {
+        RS_Vector vp=vs0.get(i);
+        vp.rotate(e1->getAngle());
+        vp.move(e1->getCenter());
+        ret.set(i,vp);
+    }
+    return ret;
+}
+
+//wrapper to do Circle-Ellipse and Arc-Ellipse using Ellipse-Ellipse intersection
+RS_VectorSolutions RS_Information::getIntersectionCircleEllipse(RS_Circle* c1,
+        RS_Ellipse* e1) {
+	RS_VectorSolutions ret;
+	   if (c1==NULL || e1==NULL) {
+        return ret;
+    }
+
+RS_EllipseData d(
+	c1->getCenter(),
+	RS_Vector(c1->getRadius(),0.),
+	1.0,
+	0.,
+	2.*M_PI,
+	false);
+RS_Ellipse * e2= new RS_Ellipse(c1->getParent(),d);
+return getIntersectionEllipseEllipse(e1,e2);
+	}
+
+RS_VectorSolutions RS_Information::getIntersectionArcEllipse(RS_Arc * a1,
+        RS_Ellipse* e1) {
+	RS_VectorSolutions ret;
+	   if (a1==NULL || e1==NULL) {
+        return ret;
+	}
+RS_EllipseData d(
+	a1->getCenter(),
+	RS_Vector(a1->getRadius(),0.),
+	1.0,
+	a1->getAngle1(),
+	a1->getAngle2(),
+	a1->isReversed());
+RS_Ellipse * e2= new RS_Ellipse(a1->getParent(),d);
+return getIntersectionEllipseEllipse(e1,e2);
+	}
+
+
+
 
 
 /**
@@ -603,30 +795,30 @@ RS_VectorSolutions RS_Information::getIntersectionLineEllipse(RS_Line* line,
                 RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: inside 1");
             }
         } else {*/
-            RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: intersection 1");
-            RS_Vector ret1(false);
-            RS_Vector ret2(false);
-            //if ( 0 <= t_a && t_a <= 1 ) { 
-                //RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: 0<=t_a<=1");
-                ret1 = a1.lerp(a2, t_a);
-                RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: ret1: %f/%f", ret1.x, ret1.y);
-            //}
-            //if ( 0 <= t_b && t_b <= 1 ) {
-                //RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: 0<=t_b<=1");
-                ret2 = a1.lerp(a2, t_b);
-                RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: ret2: %f/%f", ret2.x, ret2.y);
-            //}
-            if (ret1.valid && ret2.valid) {
-                ret = RS_VectorSolutions(ret1, ret2);
+        RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: intersection 1");
+        RS_Vector ret1(false);
+        RS_Vector ret2(false);
+        //if ( 0 <= t_a && t_a <= 1 ) {
+        //RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: 0<=t_a<=1");
+        ret1 = a1.lerp(a2, t_a);
+        RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: ret1: %f/%f", ret1.x, ret1.y);
+        //}
+        //if ( 0 <= t_b && t_b <= 1 ) {
+        //RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: 0<=t_b<=1");
+        ret2 = a1.lerp(a2, t_b);
+        RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: ret2: %f/%f", ret2.x, ret2.y);
+        //}
+        if (ret1.valid && ret2.valid) {
+            ret = RS_VectorSolutions(ret1, ret2);
+        }
+        else {
+            if (ret1.valid) {
+                ret = RS_VectorSolutions(ret1);
             }
-            else {
-                if (ret1.valid) {
-                    ret = RS_VectorSolutions(ret1);
-                }
-                if (ret2.valid) {
-                    ret = RS_VectorSolutions(ret2);
-                }
+            if (ret2.valid) {
+                ret = RS_VectorSolutions(ret2);
             }
+        }
         //}
     } else {
         double t = -b/a;
@@ -688,7 +880,7 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
 
     if (contour==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-			"RS_Information::isPointInsideContour: contour is NULL");
+                        "RS_Information::isPointInsideContour: contour is NULL");
         return false;
     }
 
@@ -830,4 +1022,4 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
 
     return ((counter%2)==1);
 }
-	
+
