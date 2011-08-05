@@ -243,18 +243,17 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     double dDistance(RS_MAXDOUBLE);
     //double ea;
     for(unsigned int i=0; i<counts; i++) {
-        if ( fabs(roots[i])>1.) continue;
+	//I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
+        //if ( fabs(roots[i])>1.) continue;
         double s=twoby*roots[i]/(twoax-twoa2b2*roots[i]); //sine
-        if (fabs(s) > 1. ) continue;
-        double d2=twoa2b2*(1-2*roots[i]*roots[i])+twoax*roots[i]+twoby*s;
+        //if (fabs(s) > 1. ) continue;
+        double d2=twoa2b2+(twoax-2.*roots[i]*twoa2b2)*roots[i]+twoby*s;
         if (d2<0) continue; // fartherest
         RS_Vector vp3;
         vp3.set(a*roots[i],b*s);
         double d=vp3.distanceTo(ret);
-        //std::cout<<"Checking: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" minimum= "<<d<<std::endl;
-        if( vp2.valid && d>dDistance) {
-            continue;
-        }
+        //std::cout<<i<<" Checking: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" ds2= "<<d<<" d="<<d2<<std::endl;
+        if( vp2.valid && d>dDistance) continue;
         vp2=vp3;
         dDistance=d;
 //			ea=atan2(roots[i],s);
@@ -262,7 +261,8 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     if( ! vp2.valid ) {
         //this should not happen
         std::cout<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<std::endl;
-        std::cerr<<"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
+        std::cout<<"(x,y)=( "<<x<<" , "<<y<<" ) a= "<<a<<" b= "<<b<<std::endl;
+        std::cout<<"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
     }
     if (dist!=NULL) {
         *dist = dDistance;
