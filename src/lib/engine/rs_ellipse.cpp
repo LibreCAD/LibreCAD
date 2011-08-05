@@ -190,13 +190,18 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
 {
 
     RS_DEBUG->print("RS_Ellipse::getNearestPointOnEntity");
-
     RS_Vector ret(false);
+
+    if( ! coord.valid ) {
+        if ( dist != NULL ) *dist=RS_MAXDOUBLE;
+        return ret;
+
+    }
 
     if (entity!=NULL) {
         *entity = this;
     }
-    ret.set(coord.x,coord.y);
+    ret=coord;
     ret.move(-getCenter());
     ret.rotate(-getAngle());
     double x=ret.x,y=ret.y;
@@ -257,14 +262,10 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     if( ! vp2.valid ) {
         //this should not happen
         std::cout<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<std::endl;
-        std::cerr<<"RS_Math::RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
+        std::cerr<<"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
     }
     if (dist!=NULL) {
-        if (ret.valid) {
-            *dist = dDistance;
-        } else {
-            *dist = RS_MAXDOUBLE;
-        }
+        *dist = dDistance;
     }
     vp2.rotate(getAngle());
     vp2.move(getCenter());
