@@ -190,13 +190,18 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
 {
 
     RS_DEBUG->print("RS_Ellipse::getNearestPointOnEntity");
-
     RS_Vector ret(false);
+
+    if( ! coord.valid ) {
+        if ( dist != NULL ) *dist=RS_MAXDOUBLE;
+        return ret;
+
+    }
 
     if (entity!=NULL) {
         *entity = this;
     }
-    ret.set(coord.x,coord.y);
+    ret=coord;
     ret.move(-getCenter());
     ret.rotate(-getAngle());
     double x=ret.x,y=ret.y;
@@ -238,18 +243,17 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     double dDistance(RS_MAXDOUBLE);
     //double ea;
     for(unsigned int i=0; i<counts; i++) {
-        if ( fabs(roots[i])>1.) continue;
+	//I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
+        //if ( fabs(roots[i])>1.) continue;
         double s=twoby*roots[i]/(twoax-twoa2b2*roots[i]); //sine
-        if (fabs(s) > 1. ) continue;
-        double d2=twoa2b2*(1-2*roots[i]*roots[i])+twoax*roots[i]+twoby*s;
+        //if (fabs(s) > 1. ) continue;
+        double d2=twoa2b2+(twoax-2.*roots[i]*twoa2b2)*roots[i]+twoby*s;
         if (d2<0) continue; // fartherest
         RS_Vector vp3;
         vp3.set(a*roots[i],b*s);
         double d=vp3.distanceTo(ret);
-        //std::cout<<"Checking: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" minimum= "<<d<<std::endl;
-        if( vp2.valid && d>dDistance) {
-            continue;
-        }
+        //std::cout<<i<<" Checking: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" ds2= "<<d<<" d="<<d2<<std::endl;
+        if( vp2.valid && d>dDistance) continue;
         vp2=vp3;
         dDistance=d;
 //			ea=atan2(roots[i],s);
@@ -257,14 +261,11 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     if( ! vp2.valid ) {
         //this should not happen
         std::cout<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<std::endl;
-        std::cerr<<"RS_Math::RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
+        std::cout<<"(x,y)=( "<<x<<" , "<<y<<" ) a= "<<a<<" b= "<<b<<std::endl;
+        std::cout<<"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
     }
     if (dist!=NULL) {
-        if (ret.valid) {
-            *dist = dDistance;
-        } else {
-            *dist = RS_MAXDOUBLE;
-        }
+        *dist = dDistance;
     }
     vp2.rotate(getAngle());
     vp2.move(getCenter());
@@ -525,11 +526,11 @@ void RS_Ellipse::moveEndpoint(const RS_Vector& pos) {
 }
 
 
-RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& coord,
+RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& trimCoord,
                                      const RS_Vector& trimPoint) {
 
     //double angEl = getEllipseAngle(trimPoint);
-    double angM = getEllipseAngle(coord);
+    double angM = getEllipseAngle(trimCoord);
     if (RS_Math::getAngleDifference(angM, data.angle1) > RS_Math::getAngleDifference(data.angle2,angM)) {
         return RS2::EndingStart;
     } else {
