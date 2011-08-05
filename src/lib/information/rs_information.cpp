@@ -612,18 +612,18 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     double v2=ma000*mb10;
     double v3=ma000*mb11;
     double v4=ma000*mc1+ma100;
-    double v5= 2.*ma101*ma011;
+    //double v5= 2.*ma101*ma011;
     //double v6= ma000*ma111;
-    double v7= 2.*ma101;
+    //double v7= 2.*ma101;
     double v8= 2.*ma011*mb10;
     //double v9= ma100*ma011;
     double v1=ma000*ma111-ma100*ma011;
     //double v1= v6 - v9;
     double u0 = v4*v4-v2*mb10;
     double u1 = 2.*(v3*v4-v0*mb10);
-    double u2 = 2.*v4*v1+v3*v3+0.5*v2*v8-v0*v7;
+    double u2 = 2.*(v4*v1-ma101*v0)+v3*v3+0.5*v2*v8;
     double u3 = v0*v8+2.*v3*v1;
-    double u4 = v1*v1+v0*v5 ;
+    double u4 = v1*v1+2.*ma101*ma011*v0;
     //std::cout<<"u0="<<u0<<"\tu1="<<u1<<"\tu2="<<u2<<"\tu3="<<u3<<"\tu4="<<u4<<std::endl;
     double ce[4];
     double roots[4];
@@ -676,11 +676,11 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     unsigned int ivs0=0;
     for(unsigned int i=0; i<counts; i++) {
         double y=roots[i];
-	//double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
-	double x=-((v1*y+v3)*y+v4 )/(v0*y+v2);
-	//std::cout<<"eq1="<<ma000*x*x+ma011*y*y-1.<<std::endl;
+        //double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
+        double x=-((v1*y+v3)*y+v4 )/(v0*y+v2);
+        //std::cout<<"eq1="<<ma000*x*x+ma011*y*y-1.<<std::endl;
         //std::cout<<"eq2="<<ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1<<std::endl;
-                vs0.set(ivs0++, RS_Vector(x,y));
+        vs0.set(ivs0++, RS_Vector(x,y));
 //            if (
 //                fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)< RS_TOLERANCE
 //            ) {//found
@@ -701,38 +701,38 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
 //wrapper to do Circle-Ellipse and Arc-Ellipse using Ellipse-Ellipse intersection
 RS_VectorSolutions RS_Information::getIntersectionCircleEllipse(RS_Circle* c1,
         RS_Ellipse* e1) {
-	RS_VectorSolutions ret;
-	   if (c1==NULL || e1==NULL) {
+    RS_VectorSolutions ret;
+    if (c1==NULL || e1==NULL) {
         return ret;
     }
 
-RS_EllipseData d(
-	c1->getCenter(),
-	RS_Vector(c1->getRadius(),0.),
-	1.0,
-	0.,
-	2.*M_PI,
-	false);
-RS_Ellipse * e2= new RS_Ellipse(c1->getParent(),d);
-return getIntersectionEllipseEllipse(e1,e2);
-	}
+    RS_EllipseData d(
+        c1->getCenter(),
+        RS_Vector(c1->getRadius(),0.),
+        1.0,
+        0.,
+        2.*M_PI,
+        false);
+    RS_Ellipse * e2= new RS_Ellipse(c1->getParent(),d);
+    return getIntersectionEllipseEllipse(e1,e2);
+}
 
 RS_VectorSolutions RS_Information::getIntersectionArcEllipse(RS_Arc * a1,
         RS_Ellipse* e1) {
-	RS_VectorSolutions ret;
-	   if (a1==NULL || e1==NULL) {
+    RS_VectorSolutions ret;
+    if (a1==NULL || e1==NULL) {
         return ret;
-	}
-RS_EllipseData d(
-	a1->getCenter(),
-	RS_Vector(a1->getRadius(),0.),
-	1.0,
-	a1->getAngle1(),
-	a1->getAngle2(),
-	a1->isReversed());
-RS_Ellipse * e2= new RS_Ellipse(a1->getParent(),d);
-return getIntersectionEllipseEllipse(e1,e2);
-	}
+    }
+    RS_EllipseData d(
+        a1->getCenter(),
+        RS_Vector(a1->getRadius(),0.),
+        1.0,
+        a1->getAngle1(),
+        a1->getAngle2(),
+        a1->isReversed());
+    RS_Ellipse * e2= new RS_Ellipse(a1->getParent(),d);
+    return getIntersectionEllipseEllipse(e1,e2);
+}
 
 
 
