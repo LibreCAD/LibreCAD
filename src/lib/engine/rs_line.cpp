@@ -441,7 +441,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
     }
 
     if (getPen().getLineType()==RS2::SolidLine ||
-            isSelected() ||
+            ! isSelected() ||
             view->getDrawingMode()==RS2::ModePreview) {
 
         painter->drawLine(view->toGui(getStartpoint()),
