@@ -613,15 +613,14 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     double v3=ma000*mb11;
     double v4=ma000*mc1+ma100;
     double v5= 2.*ma101*ma011;
-    double v6= ma000*ma111;
+    //double v6= ma000*ma111;
     double v7= 2.*ma101;
     double v8= 2.*ma011*mb10;
-    double v9= ma100*ma011;
-    double v10= mb10;
-    //double v1=ma000*ma111-ma100*ma011;
-    double v1= v6 - v9;
-    double u0 = v4*v4-v2*v10;
-    double u1 = 2.*(v3*v4-v0*v10);
+    //double v9= ma100*ma011;
+    double v1=ma000*ma111-ma100*ma011;
+    //double v1= v6 - v9;
+    double u0 = v4*v4-v2*mb10;
+    double u1 = 2.*(v3*v4-v0*mb10);
     double u2 = 2.*v4*v1+v3*v3+0.5*v2*v8-v0*v7;
     double u3 = v0*v8+2.*v3*v1;
     double u4 = v1*v1+v0*v5 ;
@@ -673,32 +672,22 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
 //	std::cout<<roots[i]<<" ";
 //	}
 //	std::cout<<std::endl;
-    RS_VectorSolutions vs0(8);
+    RS_VectorSolutions vs0(counts);
     unsigned int ivs0=0;
     for(unsigned int i=0; i<counts; i++) {
         double y=roots[i];
-        double xx=ma000*(1.0-y*y*ma011);
-        if (xx<0.) {
-            //std::cout<<"invalid roots["<<i<<"]= "<<roots[i]<<" x^2= "<<xx<<std::endl;
-            continue;
-        }
-        double x=a1*sqrt(1-y*y*ma011);
-        for(unsigned int j=0; j<2; j++) {
-            //check for ellipse2
-            RS_Vector vp4;
-            vp4.set(x,y);
-            vp4.rotate(e1->getAngle());
-            vp4.move(e1->getCenter());
-            //std::cout<<"Checking for "<<vp4<<" error="<<fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1) <<std::endl;
-            if (
-                fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)< RS_TOLERANCE
-            ) {//found
+	//double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
+	double x=-((v1*y+v3)*y+v4 )/(v0*y+v2);
+	//std::cout<<"eq1="<<ma000*x*x+ma011*y*y-1.<<std::endl;
+        //std::cout<<"eq2="<<ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1<<std::endl;
                 vs0.set(ivs0++, RS_Vector(x,y));
-            }
-            x= -x;
-        }
+//            if (
+//                fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)< RS_TOLERANCE
+//            ) {//found
+//                vs0.set(ivs0++, RS_Vector(x,y));
+//            }
     }
-    //std::cout<<"Found "<<ivs0<<" EllipseEllipse intersections\n";
+//    std::cout<<"counts= "<<counts<<"\tFound "<<ivs0<<" EllipseEllipse intersections\n";
     ret.alloc(ivs0);
     for(unsigned int i=0; i<ivs0; i++) {
         RS_Vector vp=vs0.get(i);
