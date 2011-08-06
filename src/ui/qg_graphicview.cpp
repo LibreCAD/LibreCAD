@@ -756,7 +756,7 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
 	PixmapLayer2=getPixmapForView(PixmapLayer2);
 	PixmapLayer3=getPixmapForView(PixmapLayer3);
 
-	// Draw Layer 1
+    // Draw Layer 1
 	if (redrawMethod & RS2::RedrawGrid) {
 		PixmapLayer1->fill(background);
 		RS_PainterQt painter1(PixmapLayer1);
@@ -774,8 +774,11 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
 		RS_PainterQt painter2(PixmapLayer2);
 		painter2.setDrawingMode(drawingMode);
 		setDraftMode(draftMode);
-		drawLayer2((RS_Painter*)&painter2);
-		setDraftMode(false);
+        painter2.setDrawSelectedOnly(false);
+        drawLayer2((RS_Painter*)&painter2);
+        painter2.setDrawSelectedOnly(true);
+        drawLayer2((RS_Painter*)&painter2);
+        setDraftMode(false);
 		painter2.end();
 	}
 	

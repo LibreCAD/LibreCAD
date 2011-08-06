@@ -423,7 +423,7 @@ public:
 	void setDraftMode(bool dm) {
 		draftMode=dm;
 	}
-	
+
 	virtual RS_EntityContainer* getOverlayContainer(RS2::OverlayGraphics position);
 	
 protected:
