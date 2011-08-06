@@ -243,7 +243,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     double dDistance(RS_MAXDOUBLE);
     //double ea;
     for(unsigned int i=0; i<counts; i++) {
-	//I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
+        //I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
         //if ( fabs(roots[i])>1.) continue;
         double s=twoby*roots[i]/(twoax-twoa2b2*roots[i]); //sine
         //if (fabs(s) > 1. ) continue;
@@ -624,7 +624,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patter
 
 
     if (getPen().getLineType()==RS2::SolidLine ||
-            isSelected() ||
+            ! isSelected() ||
             view->getDrawingMode()==RS2::ModePreview) {
 
         painter->drawEllipse(view->toGui(getCenter()),
