@@ -756,7 +756,7 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
 	PixmapLayer2=getPixmapForView(PixmapLayer2);
 	PixmapLayer3=getPixmapForView(PixmapLayer3);
 
-	// Draw Layer 1
+    // Draw Layer 1
 	if (redrawMethod & RS2::RedrawGrid) {
 		PixmapLayer1->fill(background);
 		RS_PainterQt painter1(PixmapLayer1);
@@ -774,18 +774,21 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
 		RS_PainterQt painter2(PixmapLayer2);
 		painter2.setDrawingMode(drawingMode);
 		setDraftMode(draftMode);
-		drawLayer2((RS_Painter*)&painter2);
-		setDraftMode(false);
+        painter2.setDrawSelectedOnly(false);
+        drawLayer2((RS_Painter*)&painter2);
+        painter2.setDrawSelectedOnly(true);
+        drawLayer2((RS_Painter*)&painter2);
+        setDraftMode(false);
 		painter2.end();
 	}
 	
-	if (redrawMethod & RS2::RedrawOverlay) {
-		PixmapLayer3->fill(Qt::transparent);
-		RS_PainterQt painter3(PixmapLayer3);
-		drawLayer3((RS_Painter*)&painter3);
-		painter3.end();
-	} 
-		
+    if (redrawMethod & RS2::RedrawOverlay) {
+        PixmapLayer3->fill(Qt::transparent);
+        RS_PainterQt painter3(PixmapLayer3);
+        drawLayer3((RS_Painter*)&painter3);
+        painter3.end();
+    }
+
 	// Finally paint the layers back on the screen, bitblk to the rescue!
 	RS_PainterQt wPainter(this);
 	//wPainter.setCompositionMode(QPainter::CompositionMode_Screen);
