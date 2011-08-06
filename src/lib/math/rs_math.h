@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -32,7 +32,8 @@
 #define _MT
 #endif
 
-#include <math.h>
+#include <cmath>
+#include <complex>
 #include <errno.h>
 
 // RVT port abs issue on latest compiler?
@@ -55,13 +56,14 @@
 
 typedef unsigned int uint;
 
+
 /**
  * Math functions.
  */
 class RS_Math {
 public:
     static int round(double v);
-	static double pow(double x, double y);
+    static double pow(double x, double y);
 
     //static double abs(double v);
     //static int abs(int v);
@@ -81,18 +83,22 @@ public:
     static double eval(const QString& expr, double def=0.0);
 
     static bool cmpDouble(double v1, double v2, double tol=0.001);
+//swap of two variables
     template <class T>
     static void swap( T &a, T &b) {
         const T ttmp=a;
         a=b;
         b=ttmp;
     };
-  	
+    static unsigned int quadraticSolver(double * ce, double * roots);
+    static unsigned int cubicSolver(double * ce, double * roots);
+    static unsigned int quarticSolver(double * ce, double * roots);
+
     /**
      * Evaluates a mathematical expression and returns the result.
      * If an error occured, ok will be set to false (if ok isn't NULL).
      */
-	// Keep that in the header file for dynamic inclusion/exclusion.
+    // Keep that in the header file for dynamic inclusion/exclusion.
     static double eval(const QString& expr, bool* ok) {
         if (expr.isEmpty()) {
             if (ok!=NULL) {
@@ -104,20 +110,20 @@ public:
         FunctionParser fp;
         fp.AddConstant("pi", M_PI);
 
-		// replace '14 3/4' with '14+3/4'
-                QString s = expr;
-		bool done;
-		do {
-			done = true;
-                        int i = s.indexOf(QRegExp("[0-9]* [0-9]*/[0-9]*"));
-			if (i!=-1) {
-                                int i2 = s.indexOf(' ', i);
-				if (i2!=-1) {
-					s.replace(i2, 1, "+");
-					done = false;
-				}
-			}
-		} while (!done);
+        // replace '14 3/4' with '14+3/4'
+        QString s = expr;
+        bool done;
+        do {
+            done = true;
+            int i = s.indexOf(QRegExp("[0-9]* [0-9]*/[0-9]*"));
+            if (i!=-1) {
+                int i2 = s.indexOf(' ', i);
+                if (i2!=-1) {
+                    s.replace(i2, 1, "+");
+                    done = false;
+                }
+            }
+        } while (!done);
 
         int ret = fp.Parse(s.toLatin1().data(), "", true);
 
@@ -139,7 +145,6 @@ public:
     static QString doubleToString(double value, int prec);
 
     static void test();
-//swap of two variables
 };
 
 #endif
