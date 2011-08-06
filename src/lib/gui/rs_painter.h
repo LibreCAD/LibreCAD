@@ -60,6 +60,16 @@ public:
         drawingMode = m;
     }
 
+    // When set to true, only entities that are selected will be drawn
+    void setDrawSelectedOnly(bool dso) {
+        drawSelectedEntities=dso;
+    }
+
+    // When true, only selected items will be draw
+    bool shouldDrawSelected() {
+        return drawSelectedEntities;
+    }
+
     /**
      * @return Current drawing mode.
      */
@@ -143,6 +153,11 @@ protected:
      * A fixed offset added to all entities drawn (useful for previews).
      */
     RS_Vector offset;
+
+    // When set to true, only selected entities should be drawn
+    bool drawSelectedEntities;
+
+
 };
 
 #endif
