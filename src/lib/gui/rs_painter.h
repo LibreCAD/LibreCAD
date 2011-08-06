@@ -50,6 +50,7 @@ public:
     RS_Painter() {
         drawingMode = RS2::ModeFull;
         offset = RS_Vector(0.0,0.0);
+        drawSelectedEntities=false;
     }
     virtual ~RS_Painter() {}
 
@@ -58,6 +59,16 @@ public:
      */
     void setDrawingMode(RS2::DrawingMode m) {
         drawingMode = m;
+    }
+
+    // When set to true, only entities that are selected will be drawn
+    void setDrawSelectedOnly(bool dso) {
+        drawSelectedEntities=dso;
+    }
+
+    // When true, only selected items will be draw
+    bool shouldDrawSelected() {
+        return drawSelectedEntities;
     }
 
     /**
@@ -143,6 +154,11 @@ protected:
      * A fixed offset added to all entities drawn (useful for previews).
      */
     RS_Vector offset;
+
+    // When set to true, only selected entities should be drawn
+    bool drawSelectedEntities;
+
+
 };
 
 #endif
