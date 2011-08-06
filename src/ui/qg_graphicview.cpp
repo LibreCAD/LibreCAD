@@ -782,13 +782,13 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
 		painter2.end();
 	}
 	
-	if (redrawMethod & RS2::RedrawOverlay) {
-		PixmapLayer3->fill(Qt::transparent);
-		RS_PainterQt painter3(PixmapLayer3);
-		drawLayer3((RS_Painter*)&painter3);
-		painter3.end();
-	} 
-		
+    if (redrawMethod & RS2::RedrawOverlay) {
+        PixmapLayer3->fill(Qt::transparent);
+        RS_PainterQt painter3(PixmapLayer3);
+        drawLayer3((RS_Painter*)&painter3);
+        painter3.end();
+    }
+
 	// Finally paint the layers back on the screen, bitblk to the rescue!
 	RS_PainterQt wPainter(this);
 	//wPainter.setCompositionMode(QPainter::CompositionMode_Screen);
