@@ -1240,8 +1240,13 @@ void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e, double p
     if (e==NULL) {
         return;
     }
-	
+
+    if (!e->isContainer() && (e->isSelected()!=painter->shouldDrawSelected())) {
+        return;
+    }
+
     e->draw(painter, this, patternOffset);
+
 }
 
 /**

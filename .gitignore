@@ -6,6 +6,9 @@ Info.plist
 # Unix generated directories (except Apple)
 unix/
 
+#Doxygen
+html/
+
 # All platforms generated directories and files
 *.qm
 intermediate/
