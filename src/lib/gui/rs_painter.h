@@ -50,6 +50,7 @@ public:
     RS_Painter() {
         drawingMode = RS2::ModeFull;
         offset = RS_Vector(0.0,0.0);
+        drawSelectedEntities=false;
     }
     virtual ~RS_Painter() {}
 
