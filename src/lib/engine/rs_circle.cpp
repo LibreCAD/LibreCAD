@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -42,7 +42,7 @@
  */
 RS_Circle::RS_Circle(RS_EntityContainer* parent,
                      const RS_CircleData& d)
-        :RS_AtomicEntity(parent), data(d) {
+    :RS_AtomicEntity(parent), data(d) {
     calculateBorders();
 }
 
@@ -69,7 +69,7 @@ double RS_Circle::getAngleLength() const {
  * @return Length of the circle which is the circumference.
  */
 double RS_Circle::getLength() {
-	return 2*M_PI*data.radius;
+    return 2*M_PI*data.radius;
 }
 
 
@@ -167,13 +167,13 @@ bool RS_Circle::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
 
 
 RS_VectorSolutions RS_Circle::getRefPoints() {
-	RS_Vector v1(data.radius, 0.0);
-	RS_Vector v2(0.0, data.radius);
-	
-	RS_VectorSolutions ret(data.center, 
-		data.center+v1, data.center+v2,
-		data.center-v1, data.center-v2);
-	return ret;
+    RS_Vector v1(data.radius, 0.0);
+    RS_Vector v2(0.0, data.radius);
+
+    RS_VectorSolutions ret(data.center,
+                           data.center+v1, data.center+v2,
+                           data.center-v1, data.center-v2);
+    return ret;
 }
 
 
@@ -241,7 +241,7 @@ RS_Vector RS_Circle::getNearestDist(double /*distance*/,
 }
 
 RS_Vector RS_Circle::getNearestDist(double /*distance*/,
-                                  bool /*startp*/) {
+                                    bool /*startp*/) {
 
     return RS_Vector(false);
 }
@@ -291,13 +291,13 @@ void RS_Circle::scale(RS_Vector center, RS_Vector factor) {
 
 
 void RS_Circle::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
-	data.center.mirror(axisPoint1, axisPoint2);
+    data.center.mirror(axisPoint1, axisPoint2);
     calculateBorders();
 }
 
 
-void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, 
-	double /*patternOffset*/) {
+void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view,
+                     double /*patternOffset*/) {
 
     if (painter==NULL || view==NULL) {
         return;
@@ -306,7 +306,7 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view,
 
     // simple style-less lines
     if (getPen().getLineType()==RS2::SolidLine ||
-            isSelected() ||
+            ! isSelected() ||
             view->getDrawingMode()==RS2::ModePreview) {
 
         painter->drawArc(view->toGui(getCenter()),
@@ -314,15 +314,15 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view,
                          0.0, 2*M_PI,
                          false);
     } else {
-		double styleFactor = getStyleFactor(view);
-		if (styleFactor<0.0) {
-        	painter->drawArc(view->toGui(getCenter()),
-                         getRadius() * view->getFactor().x,
-                         0.0, 2*M_PI,
-                         false);
-			return;
-		}
-		
+        double styleFactor = getStyleFactor(view);
+        if (styleFactor<0.0) {
+            painter->drawArc(view->toGui(getCenter()),
+                             getRadius() * view->getFactor().x,
+                             0.0, 2*M_PI,
+                             false);
+            return;
+        }
+
         // Pattern:
         RS_LineTypePattern* pat;
         if (isSelected()) {
@@ -335,9 +335,9 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view,
             return;
         }
 
-		if (getRadius()<1.0e-6) {
-			return;
-		}
+        if (getRadius()<1.0e-6) {
+            return;
+        }
 
         // Pen to draw pattern is always solid:
         RS_Pen pen = painter->getPen();
@@ -396,18 +396,18 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view,
 
 
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-	RS_Vector v1(data.radius, 0.0);
-	RS_Vector v2(0.0, data.radius);
-	
+    RS_Vector v1(data.radius, 0.0);
+    RS_Vector v2(0.0, data.radius);
+
     if (ref.distanceTo(data.center + v1)<1.0e-4) {
-		data.radius = data.center.distanceTo(data.center + v1 + offset);
+        data.radius = data.center.distanceTo(data.center + v1 + offset);
     } else if (ref.distanceTo(data.center + v2)<1.0e-4) {
-		data.radius = data.center.distanceTo(data.center + v2 + offset);
+        data.radius = data.center.distanceTo(data.center + v2 + offset);
     } else if (ref.distanceTo(data.center - v1)<1.0e-4) {
-		data.radius = data.center.distanceTo(data.center - v1 + offset);
+        data.radius = data.center.distanceTo(data.center - v1 + offset);
     } else if (ref.distanceTo(data.center - v2)<1.0e-4) {
-		data.radius = data.center.distanceTo(data.center - v2 + offset);
-	} 
+        data.radius = data.center.distanceTo(data.center - v2 + offset);
+    }
 }
 
 
