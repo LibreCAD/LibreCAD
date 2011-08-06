@@ -27,6 +27,7 @@
 
 #include "qg_actionhandler.h"
 #include "rs_commands.h"
+#include "rs_commandevent.h"
 
 /*
  *  Constructs a QG_CommandWidget as a child of 'parent', with the
@@ -104,8 +105,8 @@ void QG_CommandWidget::trigger() {
         isAction=actionHandler->command(cmd);
     }
 
-    if (!isAction && cmd!="\n") {
-       appendHistory(tr("Unkown command: %1").arg(cmd));
+    if (!isAction && cmd!="\n" && !(cmd.contains(',') || cmd.at(0)=='@')) {
+       appendHistory(tr("Unknown command: %1").arg(cmd));
     }
 
     leCommand->setText("");
