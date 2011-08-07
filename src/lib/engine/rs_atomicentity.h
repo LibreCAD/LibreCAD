@@ -175,13 +175,24 @@ public:
 	
     /**
      * Implementation must return which ending of the entity will
-     * be trimmed if 'coord' is the coordinate chosen to indicate the
+     * be trimmed if 'trimCoord' is the coordinate chosen to indicate the
      * trim entity and 'trimPoint' is the point to which the entity will
      * be trimmed.
      */
-    virtual RS2::Ending getTrimPoint(const RS_Vector& /*coord*/,
+    virtual RS2::Ending getTrimPoint(const RS_Vector& /*trimCoord*/,
                                      const RS_Vector& /*trimPoint*/) {
         return RS2::EndingNone;
+    }
+
+    /**
+     * Implementation must trim the entity in the case of multiple 
+     * intersections and return the trimPoint
+     * trimCoord indicts the trigger trim position
+     * trimSol contains intersections
+     * */
+    virtual RS_Vector prepareTrim(const RS_Vector& /*trimCoord*/,
+                                     const RS_VectorSolutions& /*trimSol*/) {
+        return RS_Vector(false);
     }
 
     virtual void reverse() { }
