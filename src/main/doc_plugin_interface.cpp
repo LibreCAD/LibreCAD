@@ -513,6 +513,20 @@ void Plugin_Entity::updatePolylineData(QList<Plug_VertexData> *data){
     RS2::EntityType et = entity->rtti();
     if (et != RS2::EntityPolyline) return;
     if (data->size()<2) return; //At least two vertex
+    RS_Vector vec(false);
+    RS_Polyline *pl = static_cast<RS_Polyline*>(entity);
+//    vec.x = data->at(0).point.x();
+//    vec.y = data->at(0).point.y();
+    pl->clear();
+    pl->setEndpoint(vec);
+    pl->setStartpoint(vec);
+    vec.valid = true;
+    for (int i = 0; i < data->size(); ++i) {
+        vec.x = data->at(i).point.x();
+        vec.y = data->at(i).point.y();
+        pl->addVertex(vec, data->at(i).bulge );
+    }
+
 
 }
 
