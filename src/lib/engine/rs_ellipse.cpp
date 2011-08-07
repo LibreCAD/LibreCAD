@@ -237,6 +237,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         std::cout<<"2::find cosine, variable c, solve(c^4 +("<<ce[0]<<")*c^3+("<<ce[1]<<")*c^2+("<<ce[2]<<")*c+("<<ce[3]<<")=0,c)\n";
         std::cout<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<std::endl;
         std::cerr<<"RS_Math::RS_Ellipse::getNearestPointOnEntity() finds no root from quartic, this should not happen\n";
+        return RS_Vector(false);
     }
 
     RS_Vector vp2(false);
@@ -541,6 +542,8 @@ RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& trimCoord,
 RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
                                   const RS_VectorSolutions& trimSol) {
 //special trimming for ellipse arc
+    if( ! trimSol.getNumber() ) return (RS_Vector(false));
+    if( trimSol.getNumber() == 1 ) return (trimSol.get(0));
     double am=getEllipseAngle(trimCoord);
     double ias[trimSol.getNumber()];
     double ia,ia2;
@@ -567,8 +570,8 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
         is2=trimSol.get(ii);
         break;
     }
-    if(RS_Math::isSameDirection(getAngle1(),getAngle2(),RS_TOLERANCE_ANGLE) 
-    ||  RS_Math::isSameDirection(ia2,ia,RS_TOLERANCE) ) {
+    if(RS_Math::isSameDirection(getAngle1(),getAngle2(),RS_TOLERANCE_ANGLE)
+            ||  RS_Math::isSameDirection(ia2,ia,RS_TOLERANCE) ) {
         //whole ellipse
         if( !RS_Math::isAngleBetween(am,ia,ia2,isReversed())) {
             RS_Math::swap(ia,ia2);
