@@ -1908,11 +1908,11 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     if (trimEntity->rtti()==RS2::EntityCircle) {
         // convert a circle into a trimmable arc
         RS_Circle* c = (RS_Circle*)trimEntity;
-        double am = c->getCenter().angleTo(trimCoord);
         RS_ArcData d(c->getCenter(),
                      c->getRadius(),
-                     RS_Math::correctAngle(am-M_PI/2),
-                     RS_Math::correctAngle(am+M_PI/2), false);
+                     0.,
+                     2*M_PI,
+		     false);
         trimmed1 = new RS_Arc(trimEntity->getParent(), d);
     } else {
         trimmed1 = (RS_AtomicEntity*)trimEntity->clone();
@@ -1947,6 +1947,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     if (
         trimEntity->rtti()==RS2::EntityEllipse
         || trimEntity->rtti()==RS2::EntityArc
+        || trimEntity->rtti()==RS2::EntityCircle
         || trimEntity->rtti()==RS2::EntityLine
     ) {
         is = trimmed1->prepareTrim(trimCoord, sol);
