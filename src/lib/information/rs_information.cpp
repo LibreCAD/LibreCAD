@@ -573,7 +573,8 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
         ( e1->getMajorP() - e2 ->getMajorP()).magnitude() < RS_TOLERANCE &&
         fabs(e1->getMajorRadius() - e2 ->getMajorRadius()) < RS_TOLERANCE &&
         fabs(e1->getMinorRadius() - e2 ->getMinorRadius()) < RS_TOLERANCE
-    ) { // the same ellipse, do not do overlap return ret;
+    ) { // the same ellipse, do not do overlap
+        return ret;
     }
 
     //transform ellipse2 to ellipse1's coordinates
