@@ -590,7 +590,7 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
         double da_min=std::min(da1,da2);
         if( da_min < ai_min ) {
             //trimming one end of arc
-            bool irev= RS_Math::isAngleBetween(ia2,am,ia, false) ;
+            bool irev= RS_Math::isAngleBetween(am,ia2,ia, isReversed()) ;
             if ( RS_Math::isAngleBetween(ia,getAngle1(),getAngle2(), isReversed()) &&
                     RS_Math::isAngleBetween(ia2,getAngle1(),getAngle2(), isReversed()) ) { //
                 if(irev) {
@@ -607,7 +607,7 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
                     ((da1 > da2) && (RS_Math::isAngleBetween(ia2,getAngle2(),ia,isReversed())))
               ) {
                 RS_Math::swap(is,is2);
-                std::cout<<"reset: angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" is="<<getEllipseAngle(is)<<" ia2="<<ia2<<std::endl;
+                //std::cout<<"reset: angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" is="<<getEllipseAngle(is)<<" ia2="<<ia2<<std::endl;
             }
         } else {
             //choose intersection as new end
