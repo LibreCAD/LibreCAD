@@ -1945,10 +1945,11 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
 
     //RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
     if (
-    trimEntity->rtti()==RS2::EntityEllipse
-    || trimEntity->rtti()==RS2::EntityLine
+        trimEntity->rtti()==RS2::EntityEllipse
+        || trimEntity->rtti()==RS2::EntityArc
+        || trimEntity->rtti()==RS2::EntityLine
     ) {
-    	is = trimmed1->prepareTrim(trimCoord, sol);
+        is = trimmed1->prepareTrim(trimCoord, sol);
     }
     RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
 
