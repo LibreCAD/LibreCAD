@@ -1944,85 +1944,11 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     RS_DEBUG->print("RS_Modification::trim: is2: %f/%f", is2.x, is2.y);
 
     //RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
-    if (trimEntity->rtti()==RS2::EntityEllipse) {//special for ellipse arc
-        RS_Ellipse* c = (RS_Ellipse*)trimmed1;
-        double am=c->getEllipseAngle(trimCoord);
-        double ias[sol.getNumber()];
-        double ia,ia2;
-        for(int ii=0; ii<sol.getNumber(); ii++) { //find closest according ellipse angle
-            ias[ii]=c->getEllipseAngle(sol.get(ii));
-            if( !ii ||  fabs( remainder( ias[ii] - am, 2*M_PI)) < fabs( remainder( ia -am, 2*M_PI)) ) {
-                ia = ias[ii];
-                is = sol.get(ii);
-            }
-        }
-        std::sort(ias,ias+sol.getNumber());
-        for(int ii=0; ii<sol.getNumber(); ii++) { //find segment to enclude trimCoord
-            if ( ! RS_Math::isSameDirection(ia,ias[ii],RS_TOLERANCE)) continue;
-            if( RS_Math::isAngleBetween(am,ias[(ii+sol.getNumber()-1)% sol.getNumber()],ia,false))  {
-                ia2=ias[(ii+sol.getNumber()-1)% sol.getNumber()];
-            } else {
-                ia2=ias[(ii+1)% sol.getNumber()];
-            }
-            break;
-        }
-        for(int ii=0; ii<sol.getNumber(); ii++) { //find segment to enclude trimCoord
-            if ( ! RS_Math::isSameDirection(ia2,c->getEllipseAngle(sol.get(ii)),RS_TOLERANCE)) continue;
-            is2=sol.get(ii);
-            break;
-        }
-        if(RS_Math::isSameDirection(c->getAngle1(),c->getAngle2(),RS_TOLERANCE_ANGLE)) {
-            //whole ellipse
-            if( !RS_Math::isAngleBetween(am,ia,ia2,c->isReversed())) {
-                RS_Math::swap(ia,ia2);
-                RS_Math::swap(is,is2);
-            }
-            c->setAngle1(ia);
-            c->setAngle2(ia2);
-            double da1=fabs(remainder(c->getAngle1()-am,2*M_PI));
-            double da2=fabs(remainder(c->getAngle2()-am,2*M_PI));
-            if(da2<da1) {
-                RS_Math::swap(is,is2);
-            }
-
-        } else {
-            double dia=fabs(remainder(ia-am,2*M_PI));
-            double dia2=fabs(remainder(ia2-am,2*M_PI));
-            double ai_min=(dia<dia2)? dia:dia2;
-            double da1=fabs(remainder(c->getAngle1()-am,2*M_PI));
-            double da2=fabs(remainder(c->getAngle2()-am,2*M_PI));
-            double da_min=(da1<da2)? da1:da2;
-            if( da_min < ai_min ) {
-                //trimming one end of arc
-                bool irev= RS_Math::isAngleBetween(ia2,am,ia, c->isReversed()) ^ c-> isReversed();
-                if ( RS_Math::isAngleBetween(ia,c->getAngle1(),ia2, irev ) &&
-                        RS_Math::isAngleBetween(ia,c->getAngle2(),ia2, irev) ) { //
-                    c->setAngle1(ia);
-                    c->setAngle2(ia2);
-                    double da1=fabs(remainder(c->getAngle1()-am,2*M_PI));
-                    double da2=fabs(remainder(c->getAngle2()-am,2*M_PI));
-                }
-                if( ((da1 < da2) && (RS_Math::isAngleBetween(ia2,ia,c->getAngle1(),c->isReversed()))) ||
-                        ((da1 > da2) && (RS_Math::isAngleBetween(ia2,c->getAngle2(),ia,c->isReversed())))
-                  ) {
-                    RS_Math::swap(is,is2);
-                    RS_Math::swap(ia,ia2);
-                }
-            } else {
-                //choose intersection as new end
-                if( dia > dia2) {
-                    RS_Math::swap(is,is2);
-                    RS_Math::swap(ia,ia2);
-                }
-                if(RS_Math::isAngleBetween(ia,c->getAngle1(),c->getAngle2(),c->isReversed())) {
-                    if(RS_Math::isAngleBetween(am,c->getAngle1(),ia,c->isReversed())) {
-                        c->setAngle2(ia);
-                    } else {
-                        c->setAngle1(ia);
-                    }
-                }
-            }
-        }
+    if (
+    trimEntity->rtti()==RS2::EntityEllipse
+    || trimEntity->rtti()==RS2::EntityLine
+    ) {
+    	is = trimmed1->prepareTrim(trimCoord, sol);
     }
     RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
 

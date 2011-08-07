@@ -126,8 +126,11 @@ public:
 	virtual void moveStartpoint(const RS_Vector& pos);
 	virtual void moveEndpoint(const RS_Vector& pos);
 
-	virtual RS2::Ending getTrimPoint(const RS_Vector& coord, 
+	virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord, 
 	          const RS_Vector& trimPoint);
+
+	virtual RS_Vector prepareTrim(const RS_Vector& trimCoord, 
+	          const RS_VectorSolutions& trimSol);
 
 	double getEllipseAngle(const RS_Vector& pos);
 
