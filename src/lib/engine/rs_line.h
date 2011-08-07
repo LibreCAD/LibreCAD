@@ -7,7 +7,7 @@
 **
 **
 ** This program is free software; you can redistribute it and/or modify
-** it under the terms of the GNU General Public License as published by 
+** it under the terms of the GNU General Public License as published by
 ** the Free Software Foundation; either version 2 of the License, or
 ** (at your option) any later version.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -52,8 +52,8 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const RS_LineData& ld) {
         os << "(" << ld.startpoint <<
-        "/" << ld.endpoint <<
-        ")";
+           "/" << ld.endpoint <<
+           ")";
         return os;
     }
 
@@ -101,7 +101,7 @@ public:
     RS_LineData getData() const {
         return data;
     }
-	
+
     virtual RS_VectorSolutions getRefPoints();
 
     /** @return Start point of the entity */
@@ -122,27 +122,27 @@ public:
         data.endpoint = e;
         calculateBorders();
     }
-	/** 
-	 * @return Direction 1. The angle at which the line starts at 
-	 * the startpoint. 
-	 */
-	double getDirection1() const {
-		return getAngle1();
-	}
-	/** 
-	 * @return Direction 2. The angle at which the line starts at 
-	 * the endpoint.
-	 */
-	double getDirection2() const {
-		return getAngle2();
-	}
-	virtual void moveStartpoint(const RS_Vector& pos);
-	virtual void moveEndpoint(const RS_Vector& pos);
-	virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord, 
-	          const RS_Vector& trimPoint);
-	virtual RS_Vector prepareTrim(const RS_Vector& trimCoord, 
-	          const RS_VectorSolutions& trimSol);
-	virtual void reverse();
+    /**
+     * @return Direction 1. The angle at which the line starts at
+     * the startpoint.
+     */
+    double getDirection1() const {
+        return getAngle1();
+    }
+    /**
+     * @return Direction 2. The angle at which the line starts at
+     * the endpoint.
+     */
+    double getDirection2() const {
+        return getAngle2();
+    }
+    virtual void moveStartpoint(const RS_Vector& pos);
+    virtual void moveEndpoint(const RS_Vector& pos);
+    virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
+                                     const RS_Vector& trimPoint);
+    virtual RS_Vector prepareTrim(const RS_Vector& trimCoord,
+                                  const RS_VectorSolutions& trimSol);
+    virtual void reverse();
     /** @return the center point of the line. */
     RS_Vector getMiddlepoint() {
         return (data.startpoint + data.endpoint)/2.0;
@@ -157,7 +157,7 @@ public:
         data.endpoint.y = val;
         calculateBorders();
     }
-	virtual bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2);
+    virtual bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2);
 
     /**
      * @return The length of the line.
@@ -198,7 +198,7 @@ public:
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
-									  double solidDist = RS_MAXDOUBLE);
+                                      double solidDist = RS_MAXDOUBLE);
 
     virtual void move(RS_Vector offset);
     virtual void rotate(RS_Vector center, double angle);
@@ -207,7 +207,7 @@ public:
     virtual void stretch(RS_Vector firstCorner,
                          RS_Vector secondCorner,
                          RS_Vector offset);
-	virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
+    virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);
 

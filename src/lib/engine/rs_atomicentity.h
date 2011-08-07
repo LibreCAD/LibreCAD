@@ -7,7 +7,7 @@
 **
 **
 ** This program is free software; you can redistribute it and/or modify
-** it under the terms of the GNU General Public License as published by 
+** it under the terms of the GNU General Public License as published by
 ** the Free Software Foundation; either version 2 of the License, or
 ** (at your option) any later version.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -50,7 +50,7 @@ public:
     virtual ~RS_AtomicEntity() {}
 
     /**
-     * @return false because entities made from subclasses are 
+     * @return false because entities made from subclasses are
      *  atomic entities.
      */
     virtual bool isContainer() const {
@@ -58,7 +58,7 @@ public:
     }
 
     /**
-     * @return true because entities made from subclasses are 
+     * @return true because entities made from subclasses are
      *  atomic entities.
      */
     virtual bool isAtomic() const {
@@ -71,7 +71,7 @@ public:
     virtual unsigned long int count() {
         return 1;
     }
-	
+
     /**
      * @return Always 1 for atomic entities.
      */
@@ -94,20 +94,20 @@ public:
     virtual RS_Vector getStartpoint() const {
         return RS_Vector(false);
     }
-	
-	/**
-	 * Implementation must return the angle in which direction the entity starts.
-	 */
-	virtual double getDirection1() const {
-		return 0.0;
-	}
-	
-	/**
-	 * Implementation must return the angle in which direction the entity starts the opposite way.
-	 */
-	virtual double getDirection2() const {
-		return 0.0;
-	}
+
+    /**
+     * Implementation must return the angle in which direction the entity starts.
+     */
+    virtual double getDirection1() const {
+        return 0.0;
+    }
+
+    /**
+     * Implementation must return the angle in which direction the entity starts the opposite way.
+     */
+    virtual double getDirection2() const {
+        return 0.0;
+    }
 
     /**
      * (De-)selects startpoint.
@@ -132,14 +132,14 @@ public:
     }
 
     /**
-     * @return True if the entities startpoint is selected. 
+     * @return True if the entities startpoint is selected.
      */
     bool isStartpointSelected() const {
         return getFlag(RS2::FlagSelected1);
     }
 
     /**
-     * @return True if the entities endpoint is selected. 
+     * @return True if the entities endpoint is selected.
      */
     bool isEndpointSelected() const {
         return getFlag(RS2::FlagSelected2);
@@ -156,23 +156,23 @@ public:
      * the given position.
      */
     virtual void moveEndpoint(const RS_Vector& /*pos*/) {}
-    
-	/**
+
+    /**
      * Implementation must trim the startpoint of the entity to
      * the given position.
      */
     virtual void trimStartpoint(const RS_Vector& pos) {
-		moveStartpoint(pos);
-	}
+        moveStartpoint(pos);
+    }
 
     /**
      * Implementation must trim the endpoint of the entity to
      * the given position.
      */
     virtual void trimEndpoint(const RS_Vector& pos) {
-		moveEndpoint(pos);
-	}
-	
+        moveEndpoint(pos);
+    }
+
     /**
      * Implementation must return which ending of the entity will
      * be trimmed if 'trimCoord' is the coordinate chosen to indicate the
@@ -185,23 +185,23 @@ public:
     }
 
     /**
-     * Implementation must trim the entity in the case of multiple 
+     * Implementation must trim the entity in the case of multiple
      * intersections and return the trimPoint
      * trimCoord indicts the trigger trim position
      * trimSol contains intersections
      * */
     virtual RS_Vector prepareTrim(const RS_Vector& /*trimCoord*/,
-                                     const RS_VectorSolutions& /*trimSol*/) {
+                                  const RS_VectorSolutions& /*trimSol*/) {
         return RS_Vector(false);
     }
 
     virtual void reverse() { }
 
-	virtual void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset) {
-	    if (isSelected()) {
-			moveRef(ref, offset);
-	    }
-	}
+    virtual void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset) {
+        if (isSelected()) {
+            moveRef(ref, offset);
+        }
+    }
 }
 ;
 
