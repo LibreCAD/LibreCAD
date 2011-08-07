@@ -1943,7 +1943,6 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     //RS_Vector is2 = sol.get(ind);
     RS_DEBUG->print("RS_Modification::trim: is2: %f/%f", is2.x, is2.y);
 
-    //RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
     if (trimEntity->rtti()==RS2::EntityEllipse) {//special for ellipse arc
         RS_Ellipse* c = (RS_Ellipse*)trimmed1;
         double am=c->getEllipseAngle(trimCoord);
@@ -1994,19 +1993,23 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
             double da_min=(da1<da2)? da1:da2;
             if( da_min < ai_min ) {
                 //trimming one end of arc
-                bool irev= RS_Math::isAngleBetween(ia2,am,ia, c->isReversed()) ^ c-> isReversed();
-                if ( RS_Math::isAngleBetween(ia,c->getAngle1(),ia2, irev ) &&
-                        RS_Math::isAngleBetween(ia,c->getAngle2(),ia2, irev) ) { //
-                    c->setAngle1(ia);
-                    c->setAngle2(ia2);
-                    double da1=fabs(remainder(c->getAngle1()-am,2*M_PI));
-                    double da2=fabs(remainder(c->getAngle2()-am,2*M_PI));
+                bool irev= RS_Math::isAngleBetween(ia2,am,ia, false) ;
+                if ( RS_Math::isAngleBetween(ia,c->getAngle1(),c->getAngle2(), c->isReversed()) &&
+                        RS_Math::isAngleBetween(ia2,c->getAngle1(),c->getAngle2(), c->isReversed()) ) { //
+                    if(irev) {
+                        c->setAngle2(ia);
+                        c->setAngle1(ia2);
+                    } else {
+                        c->setAngle1(ia);
+                        c->setAngle2(ia2);
+                    }
+                    da1=fabs(remainder(c->getAngle1()-am,2*M_PI));
+                    da2=fabs(remainder(c->getAngle2()-am,2*M_PI));
                 }
                 if( ((da1 < da2) && (RS_Math::isAngleBetween(ia2,ia,c->getAngle1(),c->isReversed()))) ||
                         ((da1 > da2) && (RS_Math::isAngleBetween(ia2,c->getAngle2(),ia,c->isReversed())))
                   ) {
                     RS_Math::swap(is,is2);
-                    RS_Math::swap(ia,ia2);
                 }
             } else {
                 //choose intersection as new end
