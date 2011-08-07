@@ -310,24 +310,33 @@ void RS_Line::moveEndpoint(const RS_Vector& pos) {
 
 
 
-RS2::Ending RS_Line::getTrimPoint(const RS_Vector& coord,
+RS_Vector RS_Line::prepareTrim(const RS_Vector& trimCoord,
+                                  const RS_VectorSolutions& trimSol) {
+//prepare trimming for multiple intersections
+RS_Vector is(false);
+if ( ! trimSol.getNumber()) return(is);
+if ( trimSol.getNumber() == 1 ) return(trimSol.get(0));
+double dmin;
+RS_Vector startP=getStartpoint();
+RS_Vector endP=getEndpoint();
+for(int i=0;i<trimSol.getNumber();i++){
+        double dist=trimCoord.distanceTo(trimSol.get(i));
+        if( !i || dmin > dist) {
+                dmin=dist;
+                is=trimSol.get(i);
+        }
+}
+return is;
+}
+
+RS2::Ending RS_Line::getTrimPoint(const RS_Vector& trimCoord,
                                   const RS_Vector& trimPoint) {
-
-    double angEl = getAngle1();
-    double angM = trimPoint.angleTo(coord);
-    double angDif = angEl-angM;
-
-    if (angDif<0.0) {
-        angDif*=-1.0;
-    }
-    if (angDif>M_PI) {
-        angDif=2*M_PI-angDif;
-    }
-
-    if (angDif<M_PI/2.0) {
-        return RS2::EndingStart;
-    } else {
+RS_Vector vp1=getStartpoint() - trimCoord;
+RS_Vector vp2=trimPoint - trimCoord;
+if ( RS_Vector::dotP(vp1,vp2) < 0 ) {
         return RS2::EndingEnd;
+    } else {
+        return RS2::EndingStart;
     }
 }
 

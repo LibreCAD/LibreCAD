@@ -555,6 +555,89 @@ RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& trimCoord,
 //        //}
 //    }
 }
+RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
+                                     const RS_VectorSolutions& trimSol) {
+//special trimming for ellipse arc
+        double am=getEllipseAngle(trimCoord);
+        double ias[trimSol.getNumber()];
+        double ia,ia2;
+	RS_Vector is,is2;
+        for(int ii=0; ii<trimSol.getNumber(); ii++) { //find closest according ellipse angle
+            ias[ii]=getEllipseAngle(trimSol.get(ii));
+            if( !ii ||  fabs( remainder( ias[ii] - am, 2*M_PI)) < fabs( remainder( ia -am, 2*M_PI)) ) {
+                ia = ias[ii];
+                is = trimSol.get(ii);
+            }
+        }
+        std::sort(ias,ias+trimSol.getNumber());
+        for(int ii=0; ii<trimSol.getNumber(); ii++) { //find segment to enclude trimCoord
+            if ( ! RS_Math::isSameDirection(ia,ias[ii],RS_TOLERANCE)) continue;
+            if( RS_Math::isAngleBetween(am,ias[(ii+trimSol.getNumber()-1)% trimSol.getNumber()],ia,false))  {
+                ia2=ias[(ii+trimSol.getNumber()-1)% trimSol.getNumber()];
+            } else {
+                ia2=ias[(ii+1)% trimSol.getNumber()];
+            }
+            break;
+        }
+        for(int ii=0; ii<trimSol.getNumber(); ii++) { //find segment to enclude trimCoord
+            if ( ! RS_Math::isSameDirection(ia2,getEllipseAngle(trimSol.get(ii)),RS_TOLERANCE)) continue;
+            is2=trimSol.get(ii);
+            break;
+        }
+        if(RS_Math::isSameDirection(getAngle1(),getAngle2(),RS_TOLERANCE_ANGLE)) {
+            //whole ellipse
+            if( !RS_Math::isAngleBetween(am,ia,ia2,isReversed())) {
+                RS_Math::swap(ia,ia2);
+                RS_Math::swap(is,is2);
+            }
+            setAngle1(ia);
+            setAngle2(ia2);
+            double da1=fabs(remainder(getAngle1()-am,2*M_PI));
+            double da2=fabs(remainder(getAngle2()-am,2*M_PI));
+            if(da2<da1) {
+                RS_Math::swap(is,is2);
+            }
+
+        } else {
+            double dia=fabs(remainder(ia-am,2*M_PI));
+            double dia2=fabs(remainder(ia2-am,2*M_PI));
+            double ai_min=(dia<dia2)? dia:dia2;
+            double da1=fabs(remainder(getAngle1()-am,2*M_PI));
+            double da2=fabs(remainder(getAngle2()-am,2*M_PI));
+            double da_min=(da1<da2)? da1:da2;
+            if( da_min < ai_min ) {
+                //trimming one end of arc
+                bool irev= RS_Math::isAngleBetween(ia2,am,ia, isReversed()) ^  isReversed();
+                if ( RS_Math::isAngleBetween(ia,getAngle1(),ia2, irev ) &&
+                        RS_Math::isAngleBetween(ia,getAngle2(),ia2, irev) ) { //
+                    setAngle1(ia);
+                    setAngle2(ia2);
+                    double da1=fabs(remainder(getAngle1()-am,2*M_PI));
+                    double da2=fabs(remainder(getAngle2()-am,2*M_PI));
+                }
+                if( ((da1 < da2) && (RS_Math::isAngleBetween(ia2,ia,getAngle1(),isReversed()))) ||
+                        ((da1 > da2) && (RS_Math::isAngleBetween(ia2,getAngle2(),ia,isReversed())))
+                  ) {
+                    RS_Math::swap(is,is2);
+                    RS_Math::swap(ia,ia2);
+                }
+            } else {
+                //choose intersection as new end
+                if( dia > dia2) {
+                    RS_Math::swap(is,is2);
+                    RS_Math::swap(ia,ia2);
+                }
+                if(RS_Math::isAngleBetween(ia,getAngle1(),getAngle2(),isReversed())) {
+                    if(RS_Math::isAngleBetween(am,getAngle1(),ia,isReversed())) {
+                        setAngle2(ia);
+                    } else {
+                        setAngle1(ia);
+                    }
+                }
+            }
+        }
+    return is;
+}
 
 double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) {
     RS_Vector m = pos-data.center;
