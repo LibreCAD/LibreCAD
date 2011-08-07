@@ -568,6 +568,15 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     if (e1==NULL || e2==NULL) {
         return ret;
     }
+    if (
+        (e1->getCenter() - e2 -> getCenter() ).magnitude() < RS_TOLERANCE &&
+        ( e1->getMajorP() - e2 ->getMajorP()).magnitude() < RS_TOLERANCE &&
+        fabs(e1->getMajorRadius() - e2 ->getMajorRadius()) < RS_TOLERANCE &&
+        fabs(e1->getMinorRadius() - e2 ->getMinorRadius()) < RS_TOLERANCE
+    ) { // the same ellipse, do not do overlap
+        return ret;
+    }
+
     //transform ellipse2 to ellipse1's coordinates
     RS_Vector center2=e2->getCenter();
     center2.move( - e1->getCenter());
