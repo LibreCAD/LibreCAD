@@ -7,7 +7,7 @@
 **
 **
 ** This program is free software; you can redistribute it and/or modify
-** it under the terms of the GNU General Public License as published by 
+** it under the terms of the GNU General Public License as published by
 ** the Free Software Foundation; either version 2 of the License, or
 ** (at your option) any later version.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -39,7 +39,7 @@
  */
 RS_Arc::RS_Arc(RS_EntityContainer* parent,
                const RS_ArcData& d)
-        : RS_AtomicEntity(parent), data(d) {
+    : RS_AtomicEntity(parent), data(d) {
     calculateEndpoints();
     calculateBorders();
 }
@@ -109,7 +109,7 @@ bool RS_Arc::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
 /**
  * Creates an arc from its startpoint, endpoint, start direction (angle)
  * and radius.
- * 
+ *
  * @retval true Successfully created arc
  * @retval false Cannot creats arc (radius to small or endpoint to far away)
  */
@@ -182,7 +182,7 @@ bool RS_Arc::createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& end
     calculateEndpoints();
     calculateBorders();
 
-	return true;
+    return true;
 }
 
 
@@ -445,16 +445,16 @@ double RS_Arc::getDistanceToPoint(const RS_Vector& coord,
 void RS_Arc::moveStartpoint(const RS_Vector& pos) {
     // polyline arcs: move point not angle:
     //if (parent!=NULL && parent->rtti()==RS2::EntityPolyline) {
-		double bulge = getBulge();
-		createFrom2PBulge(pos, getEndpoint(), bulge);
+    double bulge = getBulge();
+    createFrom2PBulge(pos, getEndpoint(), bulge);
     //}
 
-	// normal arc: move angle1
-	/*else {
+    // normal arc: move angle1
+    /*else {
     	data.angle1 = data.center.angleTo(pos);
     	calculateEndpoints();
     	calculateBorders();
-	}*/
+    }*/
 }
 
 
@@ -462,32 +462,32 @@ void RS_Arc::moveStartpoint(const RS_Vector& pos) {
 void RS_Arc::moveEndpoint(const RS_Vector& pos) {
     // polyline arcs: move point not angle:
     //if (parent!=NULL && parent->rtti()==RS2::EntityPolyline) {
-		double bulge = getBulge();
-		createFrom2PBulge(getStartpoint(), pos, bulge);
+    double bulge = getBulge();
+    createFrom2PBulge(getStartpoint(), pos, bulge);
     //}
 
-	// normal arc: move angle1
-	/*else {
+    // normal arc: move angle1
+    /*else {
     	data.angle2 = data.center.angleTo(pos);
-	    calculateEndpoints();
+        calculateEndpoints();
     	calculateBorders();
-	}*/
+    }*/
 }
 
 
 
 void RS_Arc::trimStartpoint(const RS_Vector& pos) {
-    	data.angle1 = data.center.angleTo(pos);
-    	calculateEndpoints();
-    	calculateBorders();
+    data.angle1 = data.center.angleTo(pos);
+    calculateEndpoints();
+    calculateBorders();
 }
 
 
 
 void RS_Arc::trimEndpoint(const RS_Vector& pos) {
-    	data.angle2 = data.center.angleTo(pos);
-	    calculateEndpoints();
-    	calculateBorders();
+    data.angle2 = data.center.angleTo(pos);
+    calculateEndpoints();
+    calculateBorders();
 }
 
 
@@ -603,24 +603,24 @@ void RS_Arc::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 
 
 void RS_Arc::stretch(RS_Vector firstCorner,
-                      RS_Vector secondCorner,
-                      RS_Vector offset) {
+                     RS_Vector secondCorner,
+                     RS_Vector offset) {
 
     if (getMin().isInWindow(firstCorner, secondCorner) &&
             getMax().isInWindow(firstCorner, secondCorner)) {
 
         move(offset);
     }
-	else {
-	    if (getStartpoint().isInWindow(firstCorner,
-    	                               secondCorner)) {
-        	moveStartpoint(getStartpoint() + offset);
-	    }
-	    if (getEndpoint().isInWindow(firstCorner,
-	                                 secondCorner)) {
-	        moveEndpoint(getEndpoint() + offset);
-	    }
-	}
+    else {
+        if (getStartpoint().isInWindow(firstCorner,
+                                       secondCorner)) {
+            moveStartpoint(getStartpoint() + offset);
+        }
+        if (getEndpoint().isInWindow(firstCorner,
+                                     secondCorner)) {
+            moveEndpoint(getEndpoint() + offset);
+        }
+    }
 }
 
 
@@ -636,7 +636,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 
     // simple style-less lines
     if (getPen().getLineType()==RS2::SolidLine ||
-            isSelected() ||
+            ! isSelected() ||
             view->getDrawingMode()==RS2::ModePreview) {
 
         painter->drawArc(view->toGui(getCenter()),
@@ -645,13 +645,13 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
                          isReversed());
     } else {
         double styleFactor = getStyleFactor(view);
-		if (styleFactor<0.0) {
-        	painter->drawArc(view->toGui(getCenter()),
-                         getRadius() * view->getFactor().x,
-                         getAngle1(), getAngle2(),
-                         isReversed());
-			return;
-		}
+        if (styleFactor<0.0) {
+            painter->drawArc(view->toGui(getCenter()),
+                             getRadius() * view->getFactor().x,
+                             getAngle1(), getAngle2(),
+                             isReversed());
+            return;
+        }
 
         // Pattern:
         RS_LineTypePattern* pat;
@@ -736,7 +736,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 
 
 /**
- * @return Middle point of the entity. 
+ * @return Middle point of the entity.
  */
 RS_Vector RS_Arc::getMiddlepoint() const {
     double a;
@@ -760,7 +760,7 @@ RS_Vector RS_Arc::getMiddlepoint() const {
  */
 double RS_Arc::getAngleLength() const {
     double ret = 0.0;
-    
+
     if (isReversed()) {
         if (data.angle1<data.angle2) {
             ret = data.angle1+2*M_PI-data.angle2;
@@ -779,7 +779,7 @@ double RS_Arc::getAngleLength() const {
     if (fabs(ret)<1.0e-6) {
         ret = 2*M_PI;
     }
-    
+
     return ret;
 }
 
