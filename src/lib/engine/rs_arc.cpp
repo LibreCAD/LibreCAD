@@ -510,7 +510,7 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
     double ias[trimSol.getNumber()];
     double ia,ia2;
     RS_Vector is,is2;
-    for(int ii=0; ii<trimSol.getNumber(); ii++) { //find closest according ellipse angle
+    for(int ii=0; ii<trimSol.getNumber(); ii++) { //find closest according arc angle
         ias[ii]=data.center.angleTo(trimSol.get(ii));
         if( !ii ||  fabs( remainder( ias[ii] - am, 2*M_PI)) < fabs( remainder( ia -am, 2*M_PI)) ) {
             ia = ias[ii];
@@ -528,13 +528,15 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
         break;
     }
     for(int ii=0; ii<trimSol.getNumber(); ii++) { //find segment to enclude trimCoord
-        if ( ! RS_Math::isSameDirection(ia2,data.center.angleTo(trimSol.get(ii)),RS_TOLERANCE)) continue;
+        if ( ! RS_Math::isSameDirection(ia2,data.center.angleTo(trimSol.get(ii)),RS_TOLERANCE) ||  RS_Math::isSameDirection(ia2,ia,RS_TOLERANCE) ) continue;
         is2=trimSol.get(ii);
         break;
     }
+            std::cout<<"arc: angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" ia="<<ia<<" ia2="<<ia2<<std::endl;
     if(RS_Math::isSameDirection(getAngle1(),getAngle2(),RS_TOLERANCE_ANGLE)) {
-        //whole circle
-        if( !RS_Math::isAngleBetween(am,ia,ia2,isReversed())) {
+        //whole circle is not reversed
+            std::cout<<"circle: angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" ia="<<ia<<" ia2="<<ia2<<std::endl;
+        if( !RS_Math::isAngleBetween(am,ia,ia2,false) ) {
             RS_Math::swap(ia,ia2);
             RS_Math::swap(is,is2);
         }
@@ -556,7 +558,7 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
         if( da_min < ai_min ) {
             //trimming one end of arc
             bool irev= RS_Math::isAngleBetween(am,ia2,ia, isReversed()) ;
-            std::cout<<"angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" ia="<<ia<<" ia2="<<ia2<<" irev="<<irev<<std::endl;
+            //std::cout<<"angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" ia="<<ia<<" ia2="<<ia2<<" irev="<<irev<<std::endl;
             if ( RS_Math::isAngleBetween(ia,getAngle1(),getAngle2(), isReversed()) &&
                     RS_Math::isAngleBetween(ia2,getAngle1(),getAngle2(), isReversed()) ) { //
                 if(irev) {

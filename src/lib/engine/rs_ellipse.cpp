@@ -567,7 +567,8 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
         is2=trimSol.get(ii);
         break;
     }
-    if(RS_Math::isSameDirection(getAngle1(),getAngle2(),RS_TOLERANCE_ANGLE)) {
+    if(RS_Math::isSameDirection(getAngle1(),getAngle2(),RS_TOLERANCE_ANGLE) 
+    ||  RS_Math::isSameDirection(ia2,ia,RS_TOLERANCE) ) {
         //whole ellipse
         if( !RS_Math::isAngleBetween(am,ia,ia2,isReversed())) {
             RS_Math::swap(ia,ia2);
