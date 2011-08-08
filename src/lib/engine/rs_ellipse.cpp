@@ -542,7 +542,7 @@ RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& trimCoord,
 RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
                                   const RS_VectorSolutions& trimSol) {
 //special trimming for ellipse arc
-    if( ! trimSol.getNumber() ) return (RS_Vector(false));
+    if( ! trimSol.hasValid() ) return (RS_Vector(false));
     if( trimSol.getNumber() == 1 ) return (trimSol.get(0));
     double am=getEllipseAngle(trimCoord);
     double ias[trimSol.getNumber()];

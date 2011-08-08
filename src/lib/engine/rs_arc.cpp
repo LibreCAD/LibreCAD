@@ -506,7 +506,7 @@ RS2::Ending RS_Arc::getTrimPoint(const RS_Vector& trimCoord,
 RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
                               const RS_VectorSolutions& trimSol) {
 //special trimming for ellipse arc
-    if( ! trimSol.getNumber() ) return (RS_Vector(false));
+    if( ! trimSol.hasValid() ) return (RS_Vector(false));
     if( trimSol.getNumber() == 1 ) return (trimSol.get(0));
     double am=data.center.angleTo(trimCoord);
     double ias[trimSol.getNumber()];
@@ -531,29 +531,24 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
         }
         break;
     }
-    for(int ii=0; ii<trimSol.getNumber(); ii++) { //find segment to enclude trimCoord
-        if ( ! RS_Math::isSameDirection(ia2,data.center.angleTo(trimSol.get(ii)),RS_TOLERANCE) ||  RS_Math::isSameDirection(ia2,ia,RS_TOLERANCE) ) continue;
-        is2=trimSol.get(ii);
-        break;
+    if( RS_Math::isSameDirection(ia2,ia,RS_TOLERANCE) ) {
+        is2=is;
+    } else {
+        for(int ii=0; ii<trimSol.getNumber(); ii++) { //find segment to enclude trimCoord
+            if ( ! RS_Math::isSameDirection(ia2,data.center.angleTo(trimSol.get(ii)),RS_TOLERANCE) ) continue;
+            is2=trimSol.get(ii);
+            break;
+        }
     }
-    //std::cout<<"arc: angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" ia="<<ia<<" ia2="<<ia2<<std::endl;
     if(RS_Math::isSameDirection(getAngle1(),getAngle2(),RS_TOLERANCE_ANGLE)) {
-        //whole circle is not reversed
-        //std::cout<<"circle: angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" ia="<<ia<<" ia2="<<ia2<<std::endl;
-        if( !RS_Math::isAngleBetween(am,ia,ia2,false) ) {
-            RS_Math::swap(ia,ia2);
-            RS_Math::swap(is,is2);
+        //whole circle
+        if( RS_Math::isAngleBetween(am,ia,ia2,isReversed()) ) {
+            setAngle1(ia);
+            setAngle2(ia2);
+        } else {
+            setAngle2(ia);
+            setAngle1(ia2);
         }
-        setAngle1(ia);
-        setAngle2(ia2);
-        std::cout<<"circle setting: angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" ia="<<ia<<" ia2="<<ia2<<std::endl;
-        double da1=fabs(remainder(getAngle1()-am,2*M_PI));
-        double da2=fabs(remainder(getAngle2()-am,2*M_PI));
-        if(da2<da1) {
-            RS_Math::swap(ia,ia2);
-            RS_Math::swap(is,is2);
-        }
-        std::cout<<"circle IS: angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" isa="<<data.center.angleTo(is)<<" ia2="<<ia2<<std::endl;
     } else {
         double dia=fabs(remainder(ia-am,2*M_PI));
         double dia2=fabs(remainder(ia2-am,2*M_PI));
