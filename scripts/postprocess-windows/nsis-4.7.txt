@@ -85,17 +85,25 @@ Section "Install Section" SecInstall
 
   SetOutPath "$INSTDIR"
   File /r "..\..\release\*.*"
+  File "C:\QtSDK\mingw\bin\libgcc_s_dw2-1.dll"
+  File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\bin\mingwm10.dll"
   File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\lib\QtCore4.dll"
   File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\lib\Qt3Support4.dll"
   File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\lib\QtCore4.dll"
   File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\lib\QtGui4.dll"
   File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\lib\QtXml4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\lib\Qthelp4.dll"
+  File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\lib\QtHelp4.dll"
   File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\lib\QtSql4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\lib\QtCLucene4.dll"
+  File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\lib\QtClucene4.dll"
   File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\lib\QtNetwork4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\bin\mingwm10.dll"
-  File "C:\QtSDK\mingw\bin\libgcc_s_dw2-1.dll"
+  SetOutPath "$INSTDIR\sqldrivers"
+  File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\plugins\sqldrivers\qsqlite4.dll"
+  SetOutPath "$INSTDIR\imageformats"
+  File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\plugins\imageformats\qgif4.dll"
+  File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\plugins\imageformats\qjpeg4.dll"
+  File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\plugins\imageformats\qtiff4.dll"
+  File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\plugins\imageformats\qmng4.dll"
+  File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\plugins\imageformats\qsvg4.dll"
 
   ;Store installation folder
   WriteRegStr HKCU "Software\LibreCAD" "" $INSTDIR
@@ -110,6 +118,9 @@ Section "Install Section" SecInstall
   createDirectory "$SMPROGRAMS\LibreCAD\"
   createShortCut "$SMPROGRAMS\LibreCAD\LibreCAD.lnk" "$INSTDIR\LibreCAD.exe"
   createShortCut "$SMPROGRAMS\LibreCAD\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
+
+  ; Open Donate URL
+  Exec "rundll32 url.dll,FileProtocolHandler http://librecad.org/donate.html"
 
 SectionEnd
 
@@ -135,3 +146,4 @@ Section "Uninstall"
   DeleteRegKey /ifempty HKCU "Software\LibreCAD"
 
 SectionEnd
+
