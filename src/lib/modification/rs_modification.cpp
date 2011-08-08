@@ -1904,7 +1904,6 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     RS_AtomicEntity* trimmed1 = NULL;
     RS_AtomicEntity* trimmed2 = NULL;
 
-    // remove trim entity from view:
     if (trimEntity->rtti()==RS2::EntityCircle) {
         // convert a circle into a trimmable arc
         RS_Circle* c = (RS_Circle*)trimEntity;
@@ -1912,12 +1911,39 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
                      c->getRadius(),
                      0.,
                      2*M_PI,
-		     false);
+                     false);
         trimmed1 = new RS_Arc(trimEntity->getParent(), d);
     } else {
         trimmed1 = (RS_AtomicEntity*)trimEntity->clone();
         trimmed1->setHighlighted(false);
     }
+
+    // trim trim entity
+    int ind = 0;
+    RS_Vector is, is2;
+
+    //RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
+    if (
+        trimEntity->rtti()==RS2::EntityEllipse
+        || trimEntity->rtti()==RS2::EntityArc
+        || trimEntity->rtti()==RS2::EntityCircle
+        || trimEntity->rtti()==RS2::EntityLine
+    ) {
+        is = trimmed1->prepareTrim(trimCoord, sol);
+    } else {
+        is = sol.getClosest(limitCoord, NULL, &ind);
+        //sol.getClosest(limitCoord, NULL, &ind);
+        RS_DEBUG->print("RS_Modification::trim: limitCoord: %f/%f", limitCoord.x, limitCoord.y);
+        RS_DEBUG->print("RS_Modification::trim: sol.get(0): %f/%f", sol.get(0).x, sol.get(0).y);
+        RS_DEBUG->print("RS_Modification::trim: sol.get(1): %f/%f", sol.get(1).x, sol.get(1).y);
+        RS_DEBUG->print("RS_Modification::trim: ind: %d", ind);
+        is2 = sol.get(ind==0 ? 1 : 0);
+        //RS_Vector is2 = sol.get(ind);
+        RS_DEBUG->print("RS_Modification::trim: is2: %f/%f", is2.x, is2.y);
+
+    }
+
+    // remove trim entity from view:
     if (graphicView!=NULL) {
         graphicView->deleteEntity(trimEntity);
     }
@@ -1931,41 +1957,13 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
         }
     }
 
-    // trim trim entity
-    int ind = 0;
-    RS_Vector is = sol.getClosest(limitCoord, NULL, &ind);
-    //sol.getClosest(limitCoord, NULL, &ind);
-    RS_DEBUG->print("RS_Modification::trim: limitCoord: %f/%f", limitCoord.x, limitCoord.y);
-    RS_DEBUG->print("RS_Modification::trim: sol.get(0): %f/%f", sol.get(0).x, sol.get(0).y);
-    RS_DEBUG->print("RS_Modification::trim: sol.get(1): %f/%f", sol.get(1).x, sol.get(1).y);
-    RS_DEBUG->print("RS_Modification::trim: ind: %d", ind);
-    RS_Vector is2 = sol.get(ind==0 ? 1 : 0);
-    //RS_Vector is2 = sol.get(ind);
-    RS_DEBUG->print("RS_Modification::trim: is2: %f/%f", is2.x, is2.y);
-
-    //RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
-    if (
-        trimEntity->rtti()==RS2::EntityEllipse
-        || trimEntity->rtti()==RS2::EntityArc
-        || trimEntity->rtti()==RS2::EntityCircle
-        || trimEntity->rtti()==RS2::EntityLine
-    ) {
-        is = trimmed1->prepareTrim(trimCoord, sol);
-    }
     RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
-
     switch (ending) {
     case RS2::EndingStart:
         trimmed1->trimStartpoint(is);
-        if (trimEntity->rtti()==RS2::EntityCircle) {
-            trimmed1->trimEndpoint(is2);
-        }
         break;
     case RS2::EndingEnd:
         trimmed1->trimEndpoint(is);
-        if (trimEntity->rtti()==RS2::EntityCircle) {
-            trimmed1->trimStartpoint(is2);
-        }
         break;
     default:
         break;

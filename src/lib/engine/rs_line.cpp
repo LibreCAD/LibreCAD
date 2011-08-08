@@ -313,7 +313,7 @@ void RS_Line::moveEndpoint(const RS_Vector& pos) {
 RS_Vector RS_Line::prepareTrim(const RS_Vector& trimCoord,
                                const RS_VectorSolutions& trimSol) {
 //prepare trimming for multiple intersections
-    if ( ! trimSol.getNumber()) return(RS_Vector(false));
+    if ( ! trimSol.hasValid()) return(RS_Vector(false));
     if ( trimSol.getNumber() == 1 ) return(trimSol.get(0));
     return trimSol.getClosest(trimCoord,NULL,0);
 }
