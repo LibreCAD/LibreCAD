@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -38,7 +38,7 @@
  */
 RS_Line::RS_Line(RS_EntityContainer* parent,
                  const RS_LineData& d)
-        :RS_AtomicEntity(parent), data(d) {
+    :RS_AtomicEntity(parent), data(d) {
     calculateBorders();
 }
 
@@ -68,8 +68,8 @@ void RS_Line::calculateBorders() {
 
 
 RS_VectorSolutions RS_Line::getRefPoints() {
-	RS_VectorSolutions ret(data.startpoint, data.endpoint);
-	return ret;
+    RS_VectorSolutions ret(data.startpoint, data.endpoint);
+    return ret;
 }
 
 
@@ -200,16 +200,16 @@ RS_Vector RS_Line::getNearestDist(double distance,
 
     RS_Vector dv;
     dv.setPolar(distance, a1);
-	RS_Vector ret;
+    RS_Vector ret;
 
-	if (startp) {
-    	ret = data.startpoint + dv;
-	}
-	else {
-    	ret = data.endpoint - dv;
-	}
+    if (startp) {
+        ret = data.startpoint + dv;
+    }
+    else {
+        ret = data.endpoint - dv;
+    }
 
-	return ret;
+    return ret;
 
 }
 
@@ -240,7 +240,7 @@ RS_Vector RS_Line::getNearestDist(double distance,
 double RS_Line::getDistanceToPoint(const RS_Vector& coord,
                                    RS_Entity** entity,
                                    RS2::ResolveLevel /*level*/,
-								   double /*solidDist*/) {
+                                   double /*solidDist*/) {
 
     RS_DEBUG->print("RS_Line::getDistanceToPoint");
 
@@ -351,47 +351,61 @@ bool RS_Line::hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2) {
 
 
 void RS_Line::move(RS_Vector offset) {
-	RS_DEBUG->print("RS_Line::move1: sp: %f/%f, ep: %f/%f", 
-		data.startpoint.x, data.startpoint.y,
-		data.endpoint.x, data.endpoint.y);
-		
-	RS_DEBUG->print("RS_Line::move1: offset: %f/%f", offset.x, offset.y);
-	
+    RS_DEBUG->print("RS_Line::move1: sp: %f/%f, ep: %f/%f",
+                    data.startpoint.x, data.startpoint.y,
+                    data.endpoint.x, data.endpoint.y);
+
+    RS_DEBUG->print("RS_Line::move1: offset: %f/%f", offset.x, offset.y);
+
     data.startpoint.move(offset);
     data.endpoint.move(offset);
     calculateBorders();
-	RS_DEBUG->print("RS_Line::move2: sp: %f/%f, ep: %f/%f", 
-		data.startpoint.x, data.startpoint.y,
-		data.endpoint.x, data.endpoint.y);
+    RS_DEBUG->print("RS_Line::move2: sp: %f/%f, ep: %f/%f",
+                    data.startpoint.x, data.startpoint.y,
+                    data.endpoint.x, data.endpoint.y);
+}
+
+void RS_Line::rotate(double angle) {
+    RS_DEBUG->print("RS_Line::rotate");
+    RS_DEBUG->print("RS_Line::rotate1: sp: %f/%f, ep: %f/%f",
+                    data.startpoint.x, data.startpoint.y,
+                    data.endpoint.x, data.endpoint.y);
+    data.startpoint.rotate(angle);
+    data.endpoint.rotate(angle);
+    RS_DEBUG->print("RS_Line::rotate2: sp: %f/%f, ep: %f/%f",
+                    data.startpoint.x, data.startpoint.y,
+                    data.endpoint.x, data.endpoint.y);
+    calculateBorders();
+    RS_DEBUG->print("RS_Line::rotate: OK");
 }
 
 
 
 void RS_Line::rotate(RS_Vector center, double angle) {
-	RS_DEBUG->print("RS_Line::rotate");
-	RS_DEBUG->print("RS_Line::rotate1: sp: %f/%f, ep: %f/%f", 
-		data.startpoint.x, data.startpoint.y,
-		data.endpoint.x, data.endpoint.y);
+    RS_DEBUG->print("RS_Line::rotate");
+    RS_DEBUG->print("RS_Line::rotate1: sp: %f/%f, ep: %f/%f",
+                    data.startpoint.x, data.startpoint.y,
+                    data.endpoint.x, data.endpoint.y);
     data.startpoint.rotate(center, angle);
     data.endpoint.rotate(center, angle);
-	RS_DEBUG->print("RS_Line::rotate2: sp: %f/%f, ep: %f/%f", 
-		data.startpoint.x, data.startpoint.y,
-		data.endpoint.x, data.endpoint.y);
+    RS_DEBUG->print("RS_Line::rotate2: sp: %f/%f, ep: %f/%f",
+                    data.startpoint.x, data.startpoint.y,
+                    data.endpoint.x, data.endpoint.y);
     calculateBorders();
-	RS_DEBUG->print("RS_Line::rotate: OK");
+    RS_DEBUG->print("RS_Line::rotate: OK");
 }
 
 
 
 void RS_Line::scale(RS_Vector center, RS_Vector factor) {
-	RS_DEBUG->print("RS_Line::scale1: sp: %f/%f, ep: %f/%f", 
-		data.startpoint.x, data.startpoint.y,
-		data.endpoint.x, data.endpoint.y);
+    RS_DEBUG->print("RS_Line::scale1: sp: %f/%f, ep: %f/%f",
+                    data.startpoint.x, data.startpoint.y,
+                    data.endpoint.x, data.endpoint.y);
     data.startpoint.scale(center, factor);
     data.endpoint.scale(center, factor);
-	RS_DEBUG->print("RS_Line::scale2: sp: %f/%f, ep: %f/%f", 
-		data.startpoint.x, data.startpoint.y,
-		data.endpoint.x, data.endpoint.y);
+    RS_DEBUG->print("RS_Line::scale2: sp: %f/%f, ep: %f/%f",
+                    data.startpoint.x, data.startpoint.y,
+                    data.endpoint.x, data.endpoint.y);
     calculateBorders();
 }
 
@@ -448,12 +462,12 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
                           view->toGui(getEndpoint()));
     } else {
         double styleFactor = getStyleFactor(view);
-		if (styleFactor<0.0) {
-        	painter->drawLine(view->toGui(getStartpoint()),
-                          view->toGui(getEndpoint()));
-			return;
-		}
-		
+        if (styleFactor<0.0) {
+            painter->drawLine(view->toGui(getStartpoint()),
+                              view->toGui(getEndpoint()));
+            return;
+        }
+
         // Pattern:
         RS_LineTypePattern* pat;
         if (isSelected()) {
@@ -463,7 +477,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
         }
         if (pat==NULL) {
             RS_DEBUG->print(RS_Debug::D_WARNING,
-				"RS_Line::draw: Invalid line pattern");
+                            "RS_Line::draw: Invalid line pattern");
             return;
         }
 
@@ -473,15 +487,15 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
         pen.setLineType(RS2::SolidLine);
         painter->setPen(pen);
 
-		// index counter
+        // index counter
         int i;
 
-		// line data:
+        // line data:
         double length = getLength();
         double angle = getAngle1();
-		
-		// pattern segment length:
-		double patternSegmentLength = 0.0;
+
+        // pattern segment length:
+        double patternSegmentLength = 0.0;
 
         // create pattern:
         RS_Vector* dp = new RS_Vector[pat->num];
@@ -490,75 +504,75 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
             dp[i] = RS_Vector(cos(angle) * fabs(pat->pattern[i] * styleFactor),
                               sin(angle) * fabs(pat->pattern[i] * styleFactor));
 
-			patternSegmentLength += fabs(pat->pattern[i] * styleFactor);
+            patternSegmentLength += fabs(pat->pattern[i] * styleFactor);
         }
 
-		// handle pattern offset:
-		int m;
-		if (patternOffset<0.0) {
-			m = (int)ceil(patternOffset / patternSegmentLength);
-		}
-		else {
-			m = (int)floor(patternOffset / patternSegmentLength);
-		}
-		
-		patternOffset -= (m*patternSegmentLength);
-		//if (patternOffset<0.0) {
-		//	patternOffset+=patternSegmentLength;
-		//}
-		//RS_DEBUG->print("pattern. offset: %f", patternOffset);
-		RS_Vector patternOffsetVec;
-		patternOffsetVec.setPolar(patternOffset, angle);
-		
+        // handle pattern offset:
+        int m;
+        if (patternOffset<0.0) {
+            m = (int)ceil(patternOffset / patternSegmentLength);
+        }
+        else {
+            m = (int)floor(patternOffset / patternSegmentLength);
+        }
+
+        patternOffset -= (m*patternSegmentLength);
+        //if (patternOffset<0.0) {
+        //	patternOffset+=patternSegmentLength;
+        //}
+        //RS_DEBUG->print("pattern. offset: %f", patternOffset);
+        RS_Vector patternOffsetVec;
+        patternOffsetVec.setPolar(patternOffset, angle);
+
         double tot=patternOffset;
         i=0;
         bool done = false;
-		bool cutStartpoint, cutEndpoint, drop;
+        bool cutStartpoint, cutEndpoint, drop;
         RS_Vector curP=getStartpoint()+patternOffsetVec;
 
         do {
-			cutStartpoint = false;
-			cutEndpoint = false;
-			drop = false;
-			
-			// line segment (otherwise space segment)
-            if (pat->pattern[i]>0.0) {
-				// drop the whole pattern segment line:
-				if (tot+pat->pattern[i]*styleFactor < 0.0) {
-					drop = true;
-				}
-				else {
-					// trim startpoint of pattern segment line to line startpoint
-					if (tot < 0.0) {
-						cutStartpoint = true;
-					}
-					// trim endpoint of pattern segment line to line endpoint
-					if (tot+pat->pattern[i]*styleFactor > length) {
-						cutEndpoint = true;
-					}
-				}
+            cutStartpoint = false;
+            cutEndpoint = false;
+            drop = false;
 
-				if (drop) {
-					// do nothing
-				}
-				else {
-					RS_Vector p1 = curP;
-					RS_Vector p2 = curP + dp[i];
-					
-					if (cutStartpoint) {
-						p1 = getStartpoint();
-					}
-					if (cutEndpoint) {
-						p2 = getEndpoint();
-					}
-					
-	                painter->drawLine(view->toGui(p1),
+            // line segment (otherwise space segment)
+            if (pat->pattern[i]>0.0) {
+                // drop the whole pattern segment line:
+                if (tot+pat->pattern[i]*styleFactor < 0.0) {
+                    drop = true;
+                }
+                else {
+                    // trim startpoint of pattern segment line to line startpoint
+                    if (tot < 0.0) {
+                        cutStartpoint = true;
+                    }
+                    // trim endpoint of pattern segment line to line endpoint
+                    if (tot+pat->pattern[i]*styleFactor > length) {
+                        cutEndpoint = true;
+                    }
+                }
+
+                if (drop) {
+                    // do nothing
+                }
+                else {
+                    RS_Vector p1 = curP;
+                    RS_Vector p2 = curP + dp[i];
+
+                    if (cutStartpoint) {
+                        p1 = getStartpoint();
+                    }
+                    if (cutEndpoint) {
+                        p2 = getEndpoint();
+                    }
+
+                    painter->drawLine(view->toGui(p1),
                                       view->toGui(p2));
-				}
+                }
             }
             curP+=dp[i];
             tot+=fabs(pat->pattern[i]*styleFactor);
-			//RS_DEBUG->print("pattern. tot: %f", tot);
+            //RS_DEBUG->print("pattern. tot: %f", tot);
             done=tot>length;
 
             i++;
