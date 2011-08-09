@@ -485,7 +485,7 @@ unsigned int RS_Math::quarticSolver(double * ce, double *roots)
     double q= ce[2] + ce[0]*((1./8)*a2 - 0.5*ce[1]);
     double r= ce[3] - shift*ce[2] + (ce[1] - 3.*shift2)*shift2;
     //std::cout<<"quartic_solver:: p="<<p<<"\tq="<<q<<"\tr="<<r<<std::endl;
-    if (fabs(q) <= 1.0e-75) {// Biquadratic equations
+    if (fabs(q) <= RS_TOLERANCE) {// Biquadratic equations
         double discriminant= 0.25*p*p -r;
         if (discriminant < 0.) {
             return 0;

@@ -130,6 +130,8 @@ public:
     bool isTangent() const;
     RS_Vector getClosest(const RS_Vector& coord,
                          double* dist=NULL, int* index=NULL) const;
+    double getClosestDistance(const RS_Vector& coord,
+                              int counts);
     void rotate(RS_Vector center, double ang);
     void scale(RS_Vector center, RS_Vector factor);
 
