@@ -614,8 +614,8 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     double ma101= cs*si*(ib2 - ia2); // xy term is 2*ma101*x*y
     double ma111= si2*ia2 + cs2*ib2; // y^2
     double ma000= 1./(a1*a1),ma011=1./(b1*b1);
-    //std::cout<<"simplified e1: "<<ma000<<"*x^2 + "<<ma011<<"*y^2 -1 =0\n";
-    //std::cout<<"simplified e2: "<<ma100<<"*x^2 + 2*("<<ma101<<")*x*y + "<<ma111<<"*y^2 "<<" + ("<<mb10<<")*x + ("<<mb11<<")*y + ("<<mc1<<") =0\n";
+    std::cout<<"simplified e1: "<<ma000<<"*x^2 + "<<ma011<<"*y^2 -1 =0\n";
+    std::cout<<"simplified e2: "<<ma100<<"*x^2 + 2*("<<ma101<<")*x*y + "<<ma111<<"*y^2 "<<" + ("<<mb10<<")*x + ("<<mb11<<")*y + ("<<mc1<<") =0\n";
     // construct the Bezout determinant
     double v0=2.*ma000*ma101;
     double v2=ma000*mb10;
@@ -634,6 +634,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     double u3 = v0*v8+2.*v3*v1;
     double u4 = v1*v1+2.*ma101*ma011*v0;
     //std::cout<<"u0="<<u0<<"\tu1="<<u1<<"\tu2="<<u2<<"\tu3="<<u3<<"\tu4="<<u4<<std::endl;
+    //std::cout<<"("<<u4<<")*x^4+("<<u3<<")*x^3+("<<u2<<")*x^2+("<<u1<<")*x+("<<u0<<")=0\n";
     double ce[4];
     double roots[4];
     unsigned int counts=0;
@@ -681,21 +682,36 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
 //	std::cout<<roots[i]<<" ";
 //	}
 //	std::cout<<std::endl;
-    RS_VectorSolutions vs0(counts);
+    RS_VectorSolutions vs0(8);
     unsigned int ivs0=0;
     for(unsigned int i=0; i<counts; i++) {
         double y=roots[i];
         //double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
-        double x=-((v1*y+v3)*y+v4 )/(v0*y+v2);
+        double x,d=v0*y+v2;
+        if( fabs(d)>RS_TOLERANCE) {
+            x=-((v1*y+v3)*y+v4 )/d;
+            if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
+                vs0.set(ivs0++, RS_Vector(x,y));
+        } else {
+            x=a1*sqrt(1-y*y*ma011);
+            if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
+                vs0.set(ivs0++, RS_Vector(x,y));
+            x=-x;
+            if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
+                vs0.set(ivs0++, RS_Vector(x,y));
+        }
         //std::cout<<"eq1="<<ma000*x*x+ma011*y*y-1.<<std::endl;
         //std::cout<<"eq2="<<ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1<<std::endl;
-        vs0.set(ivs0++, RS_Vector(x,y));
 //            if (
 //                fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)< RS_TOLERANCE
 //            ) {//found
 //                vs0.set(ivs0++, RS_Vector(x,y));
 //            }
     }
+//    for(unsigned int j=0; j<vs0.getNumber(); j++) {
+//        std::cout<<" ( "<<vs0.get(j).x<<" , "<<vs0.get(j).y<<" ) ";
+//    }
+//    std::cout<<std::endl;
 //    std::cout<<"counts= "<<counts<<"\tFound "<<ivs0<<" EllipseEllipse intersections\n";
     ret.alloc(ivs0);
     for(unsigned int i=0; i<ivs0; i++) {
