@@ -132,7 +132,9 @@ public:
                          double* dist=NULL, int* index=NULL) const;
     double getClosestDistance(const RS_Vector& coord,
                               int counts);
+    void rotate(double ang);
     void rotate(RS_Vector center, double ang);
+    void move(RS_Vector vp);
     void scale(RS_Vector center, RS_Vector factor);
 
     RS_VectorSolutions operator = (const RS_VectorSolutions& s);

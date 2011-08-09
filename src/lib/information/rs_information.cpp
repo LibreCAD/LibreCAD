@@ -577,20 +577,47 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
         return ret;
     }
 
+    RS_Ellipse *e01= ( RS_Ellipse *) e1->clone();
+    if( e01->getMajorRadius() < e01->getMinorRadius() ) e01->switchMajorMinor();
+    RS_Ellipse *e02= ( RS_Ellipse *) e2->clone();
+    if( e02->getMajorRadius() < e02->getMinorRadius() ) e02->switchMajorMinor();
     //transform ellipse2 to ellipse1's coordinates
-    RS_Vector center2=e2->getCenter();
-    center2.move( - e1->getCenter());
-    center2.rotate( - e1->getAngle());
-    RS_Vector majorP2=e2->getMajorP();
-    majorP2.rotate(- e1->getAngle());
-    double a1=e1->getMajorRadius();
-    double b1=e1->getMinorRadius();
-    //ellipse1 equation:
+    RS_Vector shiftc1=- e01->getCenter();
+    double shifta1=-e01->getAngle();
+    e02->move(shiftc1);
+    e02->rotate(shifta1);
+    RS_Vector majorP2=e02->getMajorP();
+    double a1=e01->getMajorRadius();
+    double b1=e01->getMinorRadius();
+    double x2=e02->getCenter().x,
+           y2=e02->getCenter().y;
+    double a2=e02->getMajorRadius();
+    double b2=e02->getMinorRadius();
+
+    if( e01->getMinorRadius() < RS_TOLERANCE || e01 -> getRatio()< RS_TOLERANCE) {
+        // treate e01 as a line
+        RS_LineData ldata0(RS_Vector(-a1,0.),RS_Vector(a1,0.));
+        RS_Line *l0=new RS_Line(e1->getParent(),ldata0);
+        ret= getIntersectionLineEllipse(l0, e02);
+        ret.rotate(-shifta1);
+        ret.move(-shiftc1);
+        return ret;
+    }
+    if( e02->getMinorRadius() < RS_TOLERANCE || e02 -> getRatio()< RS_TOLERANCE) {
+        // treate e02 as a line
+        RS_LineData ldata0(RS_Vector(-a2,0.),RS_Vector(a2,0.));
+        RS_Line *l0=new RS_Line(e1->getParent(),ldata0);
+        l0->rotate(RS_Vector(0.,0.),e02->getAngle());
+        l0->move(e02->getCenter());
+        ret= getIntersectionLineEllipse(l0, e01);
+        ret.rotate(-shifta1);
+        ret.move(-shiftc1);
+        return ret;
+    }
+
+    //ellipse01 equation:
     //	x^2/(a1^2) + y^2/(b1^2) - 1 =0
-    double x2=center2.x,y2=center2.y;
-    double a2=e2->getMajorRadius();
-    double b2=e2->getMinorRadius();
-    double t2= -majorP2.angle();
+    double t2= - e02->getAngle();
     //ellipse2 equation:
     // ( (x - u) cos(t) - (y - v) sin(t))^2/a^2 + ( (x - u) sin(t) + (y-v) cos(t))^2/b^2 =1
     // ( cos^2/a^2 + sin^2/b^2) x^2 +
@@ -599,14 +626,15 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     //  ( ( 2 v sin cos - 2 u cos^2)/a^2 - ( 2v sin cos + 2 u sin^2)/b^2) x +
     //  ( ( 2 u sin cos - 2 v sin^2)/a^2 - ( 2u sin cos + 2 v cos^2)/b^2) y +
     //  (u cos - v sin)^2/a^2 + (u sin + v cos)^2/b^2 -1 =0
+    // detect whether any ellipse radius is zero
     double cs=cos(t2),si=sin(t2);
     double ucs=x2*cs,usi=x2*si,
            vcs=y2*cs,vsi=y2*si;
     double cs2=cs*cs,si2=1-cs2;
     double tcssi=2.*cs*si;
     double ia2=1./(a2*a2),ib2=1./(b2*b2);
-    //std::cout<<"e1: x^2/("<<a1<<")^2+y^2/("<<b1<<")^2-1 =0\n";
-    //std::cout<<"e2: ( (x-("<<x2<<"))*("<<cs<<")-(y-("<<y2<<"))*("<<si<<"))^2/"<<a2<<"^2+( ( x - ("<<x2<<"))*("<<si<<")+(y-("<<y2<<"))*("<<cs<<"))^2/"<<b2<<"^2 -1 =0\n";
+//    std::cout<<"e1: x^2/("<<a1<<")^2+y^2/("<<b1<<")^2-1 =0\n";
+//    std::cout<<"e2: ( (x-("<<x2<<"))*("<<cs<<")-(y-("<<y2<<"))*("<<si<<"))^2/"<<a2<<"^2+( ( x - ("<<x2<<"))*("<<si<<")+(y-("<<y2<<"))*("<<cs<<"))^2/"<<b2<<"^2 -1 =0\n";
     double mc1=(ucs - vsi)*(ucs-vsi)*ia2+(usi+vcs)*(usi+vcs)*ib2 -1.;
     double mb10= ( y2*tcssi - 2.*x2*cs2)*ia2 - ( y2*tcssi+2*x2*si2)*ib2; //x
     double mb11= ( x2*tcssi - 2.*y2*si2)*ia2 - ( x2*tcssi+2*y2*cs2)*ib2; //y
@@ -614,8 +642,8 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     double ma101= cs*si*(ib2 - ia2); // xy term is 2*ma101*x*y
     double ma111= si2*ia2 + cs2*ib2; // y^2
     double ma000= 1./(a1*a1),ma011=1./(b1*b1);
-    std::cout<<"simplified e1: "<<ma000<<"*x^2 + "<<ma011<<"*y^2 -1 =0\n";
-    std::cout<<"simplified e2: "<<ma100<<"*x^2 + 2*("<<ma101<<")*x*y + "<<ma111<<"*y^2 "<<" + ("<<mb10<<")*x + ("<<mb11<<")*y + ("<<mc1<<") =0\n";
+//    std::cout<<"simplified e1: "<<ma000<<"*x^2 + "<<ma011<<"*y^2 -1 =0\n";
+//    std::cout<<"simplified e2: "<<ma100<<"*x^2 + 2*("<<ma101<<")*x*y + "<<ma111<<"*y^2 "<<" + ("<<mb10<<")*x + ("<<mb11<<")*y + ("<<mc1<<") =0\n";
     // construct the Bezout determinant
     double v0=2.*ma000*ma101;
     double v2=ma000*mb10;
@@ -688,11 +716,12 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
         double y=roots[i];
         //double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
         double x,d=v0*y+v2;
-        if( fabs(d)>RS_TOLERANCE) {
+//        std::cout<<"d= "<<d<<std::endl;
+        if( fabs(d)>RS_TOLERANCE*sqrt(RS_TOLERANCE)) {//whether there's x^1 term in bezout determinant
             x=-((v1*y+v3)*y+v4 )/d;
             if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
                 vs0.set(ivs0++, RS_Vector(x,y));
-        } else {
+        } else { // no x^1 term, have to use x^2 term, then, have to check plus/minus sqrt
             x=a1*sqrt(1-y*y*ma011);
             if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
                 vs0.set(ivs0++, RS_Vector(x,y));
@@ -714,10 +743,10 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
 //    std::cout<<std::endl;
 //    std::cout<<"counts= "<<counts<<"\tFound "<<ivs0<<" EllipseEllipse intersections\n";
     ret.alloc(ivs0);
-    for(unsigned int i=0; i<ivs0; i++) {
+    for(unsigned i=0; i<ivs0; i++) {
         RS_Vector vp=vs0.get(i);
-        vp.rotate(e1->getAngle());
-        vp.move(e1->getCenter());
+        vp.rotate(-shifta1);
+        vp.move(-shiftc1);
         ret.set(i,vp);
     }
     return ret;

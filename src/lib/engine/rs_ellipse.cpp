@@ -66,8 +66,6 @@ void RS_Ellipse::calculateEndpoints() {
 
 /**
  * Calculates the boundary box of this ellipse.
- *
- * @todo Fix that - the algorithm used is really bad / slow.
  */
 void RS_Ellipse::calculateBorders() {
     RS_DEBUG->print("RS_Ellipse::calculateBorders");
@@ -183,6 +181,20 @@ RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist) {
     return nearerPoint;
 }
 
+bool RS_Ellipse::switchMajorMinor(void)
+//switch naming of major/minor, return true if success
+{
+    if (fabs(data.ratio) < RS_TOLERANCE) return false;
+    RS_Vector vp_start=getStartpoint();
+    RS_Vector vp_end=getStartpoint();
+    RS_Vector vp=getMajorP();
+    double a=getMinorRadius()/vp.magnitude();
+    setMajorP(RS_Vector(- a*vp.y, a*vp.x)); //direction pi/2 relative to old MajorP;
+    setRatio(1./data.ratio);
+    setAngle1(getEllipseAngle(vp_start));
+    setAngle2(getEllipseAngle(vp_end));
+    return true;
+}
 
 //implemented using an analytical aglorithm
 RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
@@ -252,7 +264,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         RS_Vector vp3;
         vp3.set(a*roots[i],b*s);
         double d=vp3.distanceTo(ret);
-        //std::cout<<i<<" Checking: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" ds2= "<<d<<" d="<<d2<<std::endl;
+//        std::cout<<i<<" Checking: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" ds2= "<<d<<" d="<<d2<<std::endl;
         if( vp2.valid && d>dDistance) continue;
         vp2=vp3;
         dDistance=d;
@@ -507,6 +519,12 @@ void RS_Ellipse::rotate(RS_Vector center, double angle) {
     calculateBorders();
 }
 
+void RS_Ellipse::rotate( double angle) {
+    data.center.rotate(angle);
+    data.majorP.rotate(angle);
+    //calculateEndpoints();
+    calculateBorders();
+}
 
 
 void RS_Ellipse::moveStartpoint(const RS_Vector& pos) {
