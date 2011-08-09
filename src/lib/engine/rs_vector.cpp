@@ -711,6 +711,18 @@ RS_Vector RS_VectorSolutions::getClosest(const RS_Vector& coord,
 
     return closestPoint;
 }
+double RS_VectorSolutions::getClosestDistance(const RS_Vector& coord,
+        int counts)
+{
+    double ret=RS_MAXDOUBLE;
+    int i=getNumber();
+    if (!i) return(ret);
+    for(int j=0; j<i; j++) {
+        double d=coord.distanceTo(get(j));
+        if(d<ret) ret=d;
+    }
+    return ret;
+}
 
 
 RS_VectorSolutions RS_VectorSolutions::operator = (const RS_VectorSolutions& s) {
