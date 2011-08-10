@@ -669,8 +669,12 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     if ( fabs(u4) < 1.0e-75) { // this should not happen
         if ( fabs(u3) < 1.0e-75) { // this should not happen
             if ( fabs(u2) < 1.0e-75) { // this should not happen
-                counts=1;
-                roots[0]=-u0/u1;
+                if( fabs(u1) > 1.0e-75) {
+                    counts=1;
+                    roots[0]=-u0/u1;
+                } else { // can not determine y. this means overlapped, but overlap should have been detected before, therefore return empty set
+                    return ret;
+                }
             } else {
                 ce[0]=u1/u2;
                 ce[1]=u0/u2;
