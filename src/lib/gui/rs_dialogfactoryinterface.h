@@ -380,6 +380,7 @@ public:
      */
     virtual void updateMouseWidget(const QString& left,
                                    const QString& right) = 0;
+    virtual void updateMouseWidget(void)=0;
 								   
     /**
      * This virtual method must be overwritten if the graphic view has
