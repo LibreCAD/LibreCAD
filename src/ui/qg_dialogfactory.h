@@ -248,6 +248,7 @@ public:
                                         bool updateFormat=false);
     virtual void updateMouseWidget(const QString& left,
                                    const QString& right);
+    virtual void updateMouseWidget(void);
     virtual void updateSelectionWidget(int num);
     virtual void commandMessage(const QString& message);
 	virtual bool isAdapter() { return false; }
@@ -272,6 +273,9 @@ protected:
     QG_CommandWidget* commandWidget;
     //! Pointer to the main app window
     QG_MainWindowInterface* mainWindow;
+private:
+    QString *leftHintCurrent, *rightHintCurrent;
+    QString *leftHintSaved, *rightHintSaved;
 };
 
 #endif
