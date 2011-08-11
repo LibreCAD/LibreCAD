@@ -97,7 +97,6 @@
 
 //QG_DialogFactory* QG_DialogFactory::uniqueInstance = NULL;
 
-
 /**
  * Constructor.
  *
@@ -117,6 +116,10 @@ QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
     cadToolBar = NULL;
     commandWidget = NULL;
     mainWindow = NULL;
+    leftHintCurrent=new QString("");
+    rightHintCurrent=new QString("");
+    leftHintSaved=new QString("");
+    rightHintSaved=new QString("");
 	RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory: OK");
 }
 
@@ -126,6 +129,10 @@ QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
  * Destructor
  */
 QG_DialogFactory::~QG_DialogFactory() {
+    delete leftHintCurrent;
+    delete rightHintCurrent;
+    delete leftHintSaved;
+    delete rightHintSaved;
     RS_DEBUG->print("QG_DialogFactory::~QG_DialogFactory");
     RS_DEBUG->print("QG_DialogFactory::~QG_DialogFactory: OK");
 }
@@ -1686,6 +1693,15 @@ void QG_DialogFactory::updateCoordinateWidget(const RS_Vector& abs,
  */
 void QG_DialogFactory::updateMouseWidget(const QString& left,
         const QString& right) {
+            if ( left != *leftHintCurrent || right != *rightHintCurrent ) {
+    if ( *leftHintSaved != *leftHintCurrent
+                    || *rightHintSaved != *rightHintCurrent ) {
+            *leftHintSaved=*leftHintCurrent;
+            *rightHintSaved=*rightHintCurrent;
+    }
+            *leftHintCurrent=left;
+            *rightHintCurrent=right;
+            }
     if (mouseWidget!=NULL) {
         mouseWidget->setHelp(left, right);
     }
@@ -1694,6 +1710,17 @@ void QG_DialogFactory::updateMouseWidget(const QString& left,
     }
 }
 
+/**
+ * Called to restore saved mouse hint.
+ */
+void QG_DialogFactory::updateMouseWidget(void) {
+    if (mouseWidget!=NULL) {
+        mouseWidget->setHelp(*leftHintSaved, *rightHintSaved);
+    }
+    if (commandWidget!=NULL) {
+        commandWidget->setCommand(*leftHintSaved);
+    }
+}
 
 
 /**

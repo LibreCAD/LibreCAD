@@ -85,6 +85,7 @@ public:
 										bool =false) {}
     virtual void updateMouseWidget(const QString& ,
                                    const QString& ) {}
+    virtual void updateMouseWidget(void) {}
     virtual void updateSelectionWidget(int ) {}
     virtual void commandMessage(const QString& ) {}
 	virtual bool isAdapter() { return true; }
