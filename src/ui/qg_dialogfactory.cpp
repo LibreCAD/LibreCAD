@@ -1693,20 +1693,21 @@ void QG_DialogFactory::updateCoordinateWidget(const RS_Vector& abs,
  */
 void QG_DialogFactory::updateMouseWidget(const QString& left,
         const QString& right) {
-            if ( left != *leftHintCurrent || right != *rightHintCurrent ) {
-    if ( *leftHintSaved != *leftHintCurrent
+	
+    if ( left != *leftHintCurrent || right != *rightHintCurrent ) {
+    	if ( *leftHintSaved != *leftHintCurrent
                     || *rightHintSaved != *rightHintCurrent ) {
             *leftHintSaved=*leftHintCurrent;
             *rightHintSaved=*rightHintCurrent;
-    }
-            *leftHintCurrent=left;
-            *rightHintCurrent=right;
-            }
-    if (mouseWidget!=NULL) {
-        mouseWidget->setHelp(left, right);
-    }
+	    }
+         *leftHintCurrent= left.isNull()? QString(""):left;
+         *rightHintCurrent=right.isNull()? QString(""):right;
+    	if (mouseWidget!=NULL) {
+	    mouseWidget->setHelp(*leftHintCurrent, *rightHintCurrent);
+	    }
+	 }
     if (commandWidget!=NULL) {
-        commandWidget->setCommand(left);
+        commandWidget->setCommand(*leftHintCurrent);
     }
 }
 
@@ -1714,10 +1715,12 @@ void QG_DialogFactory::updateMouseWidget(const QString& left,
  * Called to restore saved mouse hint.
  */
 void QG_DialogFactory::updateMouseWidget(void) {
-    if (mouseWidget!=NULL) {
+    if (mouseWidget==NULL) {
+   // || leftHintSaved->isNull() || rightHintSaved->isNull())) {
         mouseWidget->setHelp(*leftHintSaved, *rightHintSaved);
     }
-    if (commandWidget!=NULL) {
+    if (commandWidget==NULL) {
+    //|| leftHintSaved->isNull()) ) {
         commandWidget->setCommand(*leftHintSaved);
     }
 }
