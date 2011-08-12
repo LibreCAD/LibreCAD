@@ -75,7 +75,6 @@ void RS_Leader::update() {
     }
 	
 	if (isUndone()) {
-		setVisible(false);
 		return;
 	}
 
