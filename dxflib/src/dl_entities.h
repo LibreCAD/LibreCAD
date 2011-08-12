@@ -1272,6 +1272,7 @@ struct DL_HatchLoopData {
 
     /*! Number of edges in this loop. */
     int numEdges;
+    int pathType; //Boundary path type
 };
 
 
