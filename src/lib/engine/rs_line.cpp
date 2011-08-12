@@ -363,6 +363,20 @@ void RS_Line::move(RS_Vector offset) {
                     data.endpoint.x, data.endpoint.y);
 }
 
+void RS_Line::rotate(double angle) {
+    RS_DEBUG->print("RS_Line::rotate");
+    RS_DEBUG->print("RS_Line::rotate1: sp: %f/%f, ep: %f/%f",
+                    data.startpoint.x, data.startpoint.y,
+                    data.endpoint.x, data.endpoint.y);
+    data.startpoint.rotate(angle);
+    data.endpoint.rotate(angle);
+    RS_DEBUG->print("RS_Line::rotate2: sp: %f/%f, ep: %f/%f",
+                    data.startpoint.x, data.startpoint.y,
+                    data.endpoint.x, data.endpoint.y);
+    calculateBorders();
+    RS_DEBUG->print("RS_Line::rotate: OK");
+}
+
 
 
 void RS_Line::rotate(RS_Vector center, double angle) {
