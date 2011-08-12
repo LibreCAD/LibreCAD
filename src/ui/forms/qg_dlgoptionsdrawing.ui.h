@@ -300,7 +300,7 @@ void QG_DlgOptionsDrawing::validate() {
                         cbSplineSegs->currentText().latin1());
         
         // update all dimension and spline entities in the graphic to match the new settings:
-        graphic->updateDimensions();
+        graphic->updateDimensions(false);
         graphic->updateSplines();
         
         graphic->setModified(true);
