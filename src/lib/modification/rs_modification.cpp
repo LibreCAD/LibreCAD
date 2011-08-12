@@ -2262,13 +2262,14 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
                 e->isVisible() &&
                 !e->isLocked() ) {
 //            &&
-//                (e->isInWindow(firstCorner, secondCorner) ||
-//                 e->hasEndpointsWithinWindow(firstCorner, secondCorner))) {
+            if (  (e->isInWindow(firstCorner, secondCorner) ||
+                e->hasEndpointsWithinWindow(firstCorner, secondCorner))) {
 
-            RS_Entity* ec = e->clone();
-            ec->stretch(firstCorner, secondCorner, offset);
-            addList.append(ec);
-            e->setSelected(true);
+                RS_Entity* ec = e->clone();
+                ec->stretch(firstCorner, secondCorner, offset);
+                addList.append(ec);
+                e->setSelected(true);
+            }
         }
     }
 
