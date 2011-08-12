@@ -580,10 +580,12 @@ void RS_EntityContainer::forcedCalculateBorders() {
 
 
 /**
- * Updates all Dimension entities in this container and 
+ * Updates all Dimension entities in this container and / or
  * reposition their labels.
+ *
+ * @param autoText Automatically reposition the text label bool autoText=true
  */
-void RS_EntityContainer::updateDimensions() {
+void RS_EntityContainer::updateDimensions(bool autoText) {
 
     RS_DEBUG->print("RS_EntityContainer::updateDimensions()");
 
@@ -596,9 +598,9 @@ void RS_EntityContainer::updateDimensions() {
         e = entities.at(i);
         if (RS_Information::isDimension(e->rtti())) {
             // update and reposition label:
-            ((RS_Dimension*)e)->update(true);
+            ((RS_Dimension*)e)->update(autoText);
         } else if (e->isContainer()) {
-            ((RS_EntityContainer*)e)->updateDimensions();
+            ((RS_EntityContainer*)e)->updateDimensions(autoText);
         }
     }
 
