@@ -1715,11 +1715,11 @@ void QG_DialogFactory::updateMouseWidget(const QString& left,
  * Called to restore saved mouse hint.
  */
 void QG_DialogFactory::updateMouseWidget(void) {
-    if (mouseWidget==NULL) {
+    if (mouseWidget!=NULL) {
    // || leftHintSaved->isNull() || rightHintSaved->isNull())) {
         mouseWidget->setHelp(*leftHintSaved, *rightHintSaved);
     }
-    if (commandWidget==NULL) {
+    if (commandWidget!=NULL) {
     //|| leftHintSaved->isNull()) ) {
         commandWidget->setCommand(*leftHintSaved);
     }
