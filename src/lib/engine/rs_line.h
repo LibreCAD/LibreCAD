@@ -201,6 +201,7 @@ public:
                                       double solidDist = RS_MAXDOUBLE);
 
     virtual void move(RS_Vector offset);
+    virtual void rotate(double angle);
     virtual void rotate(RS_Vector center, double angle);
     virtual void scale(RS_Vector center, RS_Vector factor);
     virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
