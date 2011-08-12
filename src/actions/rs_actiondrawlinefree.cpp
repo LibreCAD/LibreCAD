@@ -66,10 +66,9 @@ void RS_ActionDrawLineFree::trigger() {
                         document->endUndoCycle();
                 }
 		graphicView->redraw(RS2::RedrawDrawing);
-            }
         RS_DEBUG->print("RS_ActionDrawLineFree::trigger():"
                         " polyline added: %d", polyline->getId());
-
+            }
         polyline = NULL;
     }
 }
