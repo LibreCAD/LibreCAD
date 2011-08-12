@@ -240,10 +240,12 @@ public:
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
                                       double solidDist = RS_MAXDOUBLE);
+    bool switchMajorMinor(void); //switch major minor axes to keep major the longer ellipse radius
     virtual bool isPointOnEntity(const RS_Vector& coord,
                                  double tolerance=RS_TOLERANCE);
 
     virtual void move(RS_Vector offset);
+    virtual void rotate(double angle);
     virtual void rotate(RS_Vector center, double angle);
     virtual void scale(RS_Vector center, RS_Vector factor);
     virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
