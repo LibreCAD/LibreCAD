@@ -1358,6 +1358,7 @@ bool DL_Dxf::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
             hatchLoopIndex++;
             hatchLoops[hatchLoopIndex]
             = DL_HatchLoopData(toInt(groupValue));
+            hatchLoops[hatchLoopIndex].pathType = toInt(values[92]);
 
             maxHatchEdges[hatchLoopIndex] = toInt(groupValue);
             hatchEdgeIndex[hatchLoopIndex] = -1;
@@ -1948,6 +1949,7 @@ void DL_Dxf::addHatch(DL_CreationInterface* creationInterface) {
 
     for (int l=0; l<maxHatchLoops; l++) {
         DL_HatchLoopData ld(maxHatchEdges[l]);
+        ld.pathType = hatchLoops[l].pathType;
         creationInterface->addHatchLoop(ld);
         for (int b=0; b<maxHatchEdges[l]; b++) {
             creationInterface->addHatchEdge(hatchEdges[l][b]);

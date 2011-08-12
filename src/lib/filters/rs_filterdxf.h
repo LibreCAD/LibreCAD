@@ -217,6 +217,7 @@ private:
 
     DL_Dxf dxf;
     RS_VariableDict variables;
+    bool omitHatchLoop;
 }
 ;
 

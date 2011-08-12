@@ -899,6 +899,7 @@ void RS_FilterDXF::addHatch(const DL_HatchData& data) {
                                       data.angle,
                                       QString(QString::fromUtf8(data.pattern.c_str()))));
     setEntityAttributes(hatch, attributes);
+    omitHatchLoop = false;
 
     currentContainer->addEntity(hatch);
 }
@@ -908,9 +909,13 @@ void RS_FilterDXF::addHatch(const DL_HatchData& data) {
 /**
  * Implementation of the method which handles hatch loops.
  */
-void RS_FilterDXF::addHatchLoop(const DL_HatchLoopData& /*data*/) {
+void RS_FilterDXF::addHatchLoop(const DL_HatchLoopData& data) {
     RS_DEBUG->print("RS_FilterDXF::addHatchLoop()");
-    if (hatch!=NULL) {
+    if ( (data.pathType & 32) == 32)
+        omitHatchLoop = true;
+    else
+        omitHatchLoop = false;
+    if (hatch!=NULL && !omitHatchLoop) {
         hatchLoop = new RS_EntityContainer(hatch);
         hatchLoop->setLayer(NULL);
         hatch->addEntity(hatchLoop);
@@ -925,7 +930,7 @@ void RS_FilterDXF::addHatchLoop(const DL_HatchLoopData& /*data*/) {
 void RS_FilterDXF::addHatchEdge(const DL_HatchEdgeData& data) {
     RS_DEBUG->print("RS_FilterDXF::addHatchEdge()");
 
-    if (hatchLoop!=NULL) {
+    if (hatchLoop!=NULL && !omitHatchLoop) {
         RS_Entity* e = NULL;
         switch (data.type) {
         case 1:
