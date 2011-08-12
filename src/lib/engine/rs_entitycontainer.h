@@ -122,7 +122,7 @@ public:
     virtual void adjustBorders(RS_Entity* entity);
     virtual void calculateBorders();
     virtual void forcedCalculateBorders();
-    virtual void updateDimensions();
+    virtual void updateDimensions( bool autoText=true);
     virtual void updateInserts();
     virtual void updateSplines();
     virtual void update();
