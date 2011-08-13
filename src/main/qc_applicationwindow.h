@@ -256,7 +256,7 @@ public:
 	/**
 	 * Creates a new document. Implementation from RS_MainWindowInterface.
 	 */
-	virtual void createNewDocument(
+    virtual void createNewDocument(
                 const QString& fileName = QString::null, RS_Document* doc=NULL) {
 		
 		slotFileNew(doc);
@@ -314,7 +314,11 @@ protected:
     void closeEvent(QCloseEvent*);
     virtual void mouseReleaseEvent(QMouseEvent* e);
 
+
 private:
+
+    QString format_filename_caption(const QString &qstring_in);
+
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
     QTimer *autosaveTimer;

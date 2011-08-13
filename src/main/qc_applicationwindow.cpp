@@ -94,6 +94,19 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 #include <QSplashScreen>
     extern QSplashScreen *splash;
 
+
+/*	- Window Title Bar Extra (character) Size.
+ *	- Notes: Extra characters appearing in the windows title bar
+ *	  are " - [", ... "]" (5), and sometimes "Print preview of " (17).
+ *	*/	
+#define WTB_EXTRA_SIZE			(5 + 17)
+
+/*	Window Title Bar Maximum Size.
+ *	Notes: On Windows XP, this is 79.
+ *	*/
+#define WTB_MAX_SIZE				79
+
+
 /**
  * Constructor. Initializes the app.
  */
@@ -2103,17 +2116,71 @@ void QC_ApplicationWindow::slotFileOpenRecent(int id) {
 }
 
 
+/*	*
+ *	Function name:
+ *
+ *	Description:	- Format a string that hold a file name path
+ *						  such a way that it can displayed on the
+ *						  windows title bar.
+ *						  
+ *	Author(s):		Claude Sylvain
+ *	Created:			30 July 2011
+ *	Last modified:
+ *
+ *	Parameters:		const QString &qstring_in:
+ *							String to format (in).
+ *
+ *						QString &qstring_out:
+ *							Formatted string (out).
+ *
+ *	Returns:			void
+ *	*/
 
-/**
- * Menu file -> open.
- */
-void QC_ApplicationWindow::slotFileOpen(const QString& fileName,
-                                        RS2::FormatType type) {
+QString QC_ApplicationWindow::
+    format_filename_caption(const QString &qstring_in)
+{
+	/*	Calculate Window Title Bar Available Space.
+	 *	*/
+    int	wtb_as = WTB_MAX_SIZE - ((int) strlen(XSTR(QC_APPNAME)) + WTB_EXTRA_SIZE);
 
+	/*	- If string to display to window title bar is too long, truncate
+	 *	  it from the left.
+	 *	---------------------------------------------------------------- */	  
+	if (qstring_in.length() > wtb_as)
+	{
+        return "..." + qstring_in.right(wtb_as - 3);
+	}
+	else
+        return qstring_in;
+}
+
+
+/*	*
+ *	Function name:
+ *	Description:
+ *	Author(s):		..., Claude Sylvain
+ *	Created:			?
+ *	Last modified:	30 July 2011
+ *
+ *	Parameters:		const QString& fileName:
+ *							...
+ *
+ *						RS2::FormatType type:
+ *							...
+ *
+ *	Returns:			void
+ *	Notes:			Menu file -> open.
+ *	*/
+
+void QC_ApplicationWindow::
+	slotFileOpen(const QString& fileName, RS2::FormatType type)
+{
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen(..)");
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-    if (!fileName.isEmpty()) {
+
+    if (!fileName.isEmpty())
+	 {
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: creating new doc window");
         // Create new document window:
         QC_MDIWindow* w = slotFileNew();
@@ -2158,8 +2225,11 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName,
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: OK");
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption");
-        // update caption:
-        w->setCaption(fileName);
+
+		/*	Format and set caption.
+		 *	----------------------- */	
+        w->setCaption(format_filename_caption(fileName));
+
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption: OK");
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update coordinate widget");
@@ -2174,13 +2244,16 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName,
         QString message=tr("Loaded document: ")+fileName;
         commandWidget->appendHistory(message);
         statusBar()->showMessage(message, 2000);
-    } else {
+
+    }
+	 else
+	 {
         statusBar()->showMessage(tr("Opening aborted"), 2000);
     }
+
     QApplication::restoreOverrideCursor();
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen(..) OK");
 }
-
 
 
 /**
@@ -2602,10 +2675,20 @@ void QC_ApplicationWindow::slotFilePrint() {
 }
 
 
+/*	*
+ *	Function name:
+ *	Description:
+ *	Author(s):		..., Claude Sylvain
+ *	Created:			?
+ *	Last modified:	30 July 2011
+ *
+ *	Parameters:		bool on:
+ *							...
+ *
+ *	Returns:			void
+ *	Notes:			Menu file -> print preview.
+ *	*/
 
-/**
- * Menu file -> print preview.
- */
 void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
     RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview()");
 
