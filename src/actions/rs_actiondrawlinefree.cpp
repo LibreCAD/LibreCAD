@@ -56,22 +56,29 @@ QAction* RS_ActionDrawLineFree::createGUIAction(RS2::ActionType /*type*/, QObjec
 
 void RS_ActionDrawLineFree::trigger() {
     if (polyline!=NULL) {
-        container->addEntity(polyline);
-
-        if (document) {
-            document->startUndoCycle();
-            document->addUndoable(polyline);
-            document->endUndoCycle();
-        }
-
+            polyline->endPolyline();
+            RS_VectorSolutions sol=polyline->getRefPoints();
+            if(sol.getNumber() > 2 ) {
+                container->addEntity(polyline);
+                if (document) {
+                        document->startUndoCycle();
+                        document->addUndoable(polyline);
+                        document->endUndoCycle();
+                }
 		graphicView->redraw(RS2::RedrawDrawing);
         RS_DEBUG->print("RS_ActionDrawLineFree::trigger():"
                         " polyline added: %d", polyline->getId());
+            } else {
+	    delete polyline;
+	    }
         polyline = NULL;
     }
 }
 
-
+/*
+ * 11 Aug 2011, Dongxu Li
+ * ToDo, show the line while drawing
+ */
 
 void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
     if (vertex.valid && polyline!=NULL) {
