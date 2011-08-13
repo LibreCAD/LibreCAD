@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -46,18 +46,18 @@ public:
         this->ratio = ratio;
         this->angle1 = angle1;
         this->angle2 = angle2;
-		this->reversed = reversed;
+        this->reversed = reversed;
     }
 
     friend class RS_Ellipse;
 
     friend std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
         os << "(" << ed.center <<
-        "/" << ed.majorP <<
-        " " << ed.ratio <<
-        " " << ed.angle1 <<
-        "," << ed.angle2 <<
-        ")";
+           "/" << ed.majorP <<
+           " " << ed.ratio <<
+           " " << ed.angle1 <<
+           "," << ed.angle2 <<
+           ")";
         return os;
     }
 
@@ -72,8 +72,8 @@ private:
     double angle1;
     //! End angle
     double angle2;
-	//! Reversed (cw) flag
-	bool reversed;
+    //! Reversed (cw) flag
+    bool reversed;
 };
 
 
@@ -102,53 +102,56 @@ public:
     }
 
 
-    /** 
-	 * @return Start point of the entity. 
-	 */
+    /**
+     * @return Start point of the entity.
+     */
     virtual RS_Vector getStartpoint() const {
-		RS_Vector p;
-    	p.set(data.center.x + cos(data.angle1) * getMajorRadius(),
+        RS_Vector p;
+        p.set(data.center.x + cos(data.angle1) * getMajorRadius(),
               data.center.y + sin(data.angle1) * getMinorRadius());
-    	p.rotate(data.center, getAngle());
+        p.rotate(data.center, getAngle());
         return p;
     }
-    /** 
-	 * @return End point of the entity. 
-	 */
+    /**
+     * @return End point of the entity.
+     */
     virtual RS_Vector getEndpoint() const {
-		RS_Vector p;
-    	p.set(data.center.x + cos(data.angle2) * getMajorRadius(),
+        RS_Vector p;
+        p.set(data.center.x + cos(data.angle2) * getMajorRadius(),
               data.center.y + sin(data.angle2) * getMinorRadius());
-    	p.rotate(data.center, getAngle());
+        p.rotate(data.center, getAngle());
         return p;
     }
-	
-	virtual void moveStartpoint(const RS_Vector& pos);
-	virtual void moveEndpoint(const RS_Vector& pos);
 
-	virtual RS2::Ending getTrimPoint(const RS_Vector& coord, 
-	          const RS_Vector& trimPoint);
+    virtual void moveStartpoint(const RS_Vector& pos);
+    virtual void moveEndpoint(const RS_Vector& pos);
 
-	double getEllipseAngle(const RS_Vector& pos);
+    virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
+                                     const RS_Vector& trimPoint);
+
+    virtual RS_Vector prepareTrim(const RS_Vector& trimCoord,
+                                  const RS_VectorSolutions& trimSol);
+
+    double getEllipseAngle(const RS_Vector& pos);
 
     /** @return Copy of data that defines the ellipse. **/
     RS_EllipseData getData() {
         return data;
     }
-	
-	virtual RS_VectorSolutions getRefPoints();
+
+    virtual RS_VectorSolutions getRefPoints();
 
     /**
-     * @retval true if the arc is reversed (clockwise), 
-     * @retval false otherwise 
+     * @retval true if the arc is reversed (clockwise),
+     * @retval false otherwise
      */
     bool isReversed() const {
         return data.reversed;
     }
-	/** sets the reversed status. */
-	void setReversed(bool r) {
-		data.reversed = r;
-	}
+    /** sets the reversed status. */
+    void setReversed(bool r) {
+        data.reversed = r;
+    }
 
     /** @return The rotation angle of this ellipse */
     double getAngle() const {
@@ -160,17 +163,17 @@ public:
         return data.angle1;
     }
     /** Sets new start angle. */
-	void setAngle1(double a1) {
-		data.angle1 = a1;
-	}
+    void setAngle1(double a1) {
+        data.angle1 = a1;
+    }
     /** @return The end angle of this arc */
     double getAngle2() {
         return data.angle2;
     }
     /** Sets new end angle. */
-	void setAngle2(double a2) {
-		data.angle2 = a2;
-	}
+    void setAngle2(double a2) {
+        data.angle2 = a2;
+    }
 
 
     /** @return The center point (x) of this arc */
@@ -178,27 +181,27 @@ public:
         return data.center;
     }
     /** Sets new center. */
-	void setCenter(const RS_Vector& c) {
-		data.center = c;
-	}
+    void setCenter(const RS_Vector& c) {
+        data.center = c;
+    }
 
     /** @return The endpoint of the major axis (relative to center). */
     RS_Vector getMajorP() {
         return data.majorP;
     }
     /** Sets new major point (relative to center). */
-	void setMajorP(const RS_Vector& p) {
-		data.majorP = p;
-	}
+    void setMajorP(const RS_Vector& p) {
+        data.majorP = p;
+    }
 
     /** @return The ratio of minor to major axis */
     double getRatio() {
         return data.ratio;
     }
     /** Sets new ratio. */
-	void setRatio(double r) {
-		data.ratio = r;
-	}
+    void setRatio(double r) {
+        data.ratio = r;
+    }
 
 
     /**
@@ -236,15 +239,17 @@ public:
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
-									  double solidDist = RS_MAXDOUBLE);
+                                      double solidDist = RS_MAXDOUBLE);
+    bool switchMajorMinor(void); //switch major minor axes to keep major the longer ellipse radius
     virtual bool isPointOnEntity(const RS_Vector& coord,
                                  double tolerance=RS_TOLERANCE);
 
     virtual void move(RS_Vector offset);
+    virtual void rotate(double angle);
     virtual void rotate(RS_Vector center, double angle);
     virtual void scale(RS_Vector center, RS_Vector factor);
     virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
-	virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
+    virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);
 
