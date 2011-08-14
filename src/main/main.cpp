@@ -44,7 +44,6 @@ QSplashScreen *splash;
 #include "rs_filtercxf.h"
 #include "rs_filterdxf.h"
 #include "rs_filterdxf1.h"
-#include "rs_filterjww.h"
 
 #include "qg_dlginitial.h"
 
@@ -103,7 +102,6 @@ int main(int argc, char** argv) {
 
         RS_FILEIO->registerFilter(new RS_FilterCXF());
         RS_FILEIO->registerFilter(new RS_FilterDXF());
-        RS_FILEIO->registerFilter(new RS_FilterJWW());
         RS_FILEIO->registerFilter(new RS_FilterDXF1());
 
         // parse command line arguments that might not need a launched program:
