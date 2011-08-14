@@ -63,7 +63,6 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     filters.append("Drawing Exchange DXF 2000 (*.dxf)");
     filters.append("Drawing Exchange DXF R12 (*.dxf)");
     filters.append("Font (*.cxf)");
-    filters.append("JWW (*.jww)");
 
     fileDlg->setFilters(filters);
     fileDlg->setFileMode(QFileDialog::AnyFile);
@@ -98,8 +97,6 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
                     *type = RS2::FormatCXF;
                 } else if (fileDlg->selectedFilter()=="Drawing Exchange DXF R12 (*.dxf)") {
                     *type = RS2::FormatDXF12;
-                } else if (fileDlg->selectedFilter()=="JWW (*.jww)") {
-                    *type = RS2::FormatJWW;
                 } else {
                     *type = RS2::FormatDXF;
                 }
@@ -178,12 +175,10 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
     QString fDxf(QObject::tr("Drawing Exchange %1").arg("(*.dxf *.DXF)"));
     QString fDxf1(QObject::tr("QCad 1.x file %1").arg("(*.dxf *.DXF)"));
     QString fCxf(QObject::tr("Font %1").arg("(*.cxf)"));
-    QString fJww(QObject::tr("Jww %1").arg("(*.jww)"));
 
     RS_DEBUG->print("fDxf: %s", fDxf.toLatin1().data());
     RS_DEBUG->print("fDxf1: %s", fDxf1.toLatin1().data());
     RS_DEBUG->print("fCxf: %s", fCxf.toLatin1().data());
-    RS_DEBUG->print("fJww: %s", fJww.toLatin1().data());
 
     QString fn = "";
     bool cancel = false;
@@ -194,7 +189,6 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
     filters.append(fDxf);
     filters.append(fDxf1);
     filters.append(fCxf);
-    filters.append(fJww);
 
     fileDlg->setFilters(filters);
     fileDlg->setFileMode(QFileDialog::ExistingFile);
@@ -223,8 +217,6 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
                 *type = RS2::FormatDXF;
             } else if (fileDlg->selectedFilter()==fCxf) {
                 *type = RS2::FormatCXF;
-            } else if (fileDlg->selectedFilter()==fJww) {
-                *type = RS2::FormatJWW;
             }
         }
         cancel = false;
