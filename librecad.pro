@@ -76,7 +76,6 @@ RESOURCES += res/extui/extui.qrc
 
 INCLUDEPATH += \
     dxflib/src \
-    jwwlib/src \
     fparser \
     src/cmd \
     src/lib/actions \
@@ -110,9 +109,6 @@ HEADERS = \
     dxflib/src/dl_extrusion.h \
     dxflib/src/dl_writer.h \
     dxflib/src/dl_writer_ascii.h \
-    jwwlib/src/dl_jww.h \
-    jwwlib/src/jwtype.h \
-    jwwlib/src/jwwdoc.h \
     fparser/fparser.hh \
     src/lib/actions/rs_actioninterface.h \
     src/lib/actions/rs_preview.h \
@@ -177,7 +173,6 @@ HEADERS = \
     src/lib/filters/rs_filtercxf.h \
     src/lib/filters/rs_filterdxf.h \
     src/lib/filters/rs_filterdxf1.h \
-    src/lib/filters/rs_filterjww.h \
     src/lib/filters/rs_filterinterface.h \
     src/lib/gui/rs_commandevent.h \
     src/lib/gui/rs_coordinateevent.h \
@@ -213,8 +208,6 @@ HEADERS = \
 SOURCES = \
     dxflib/src/dl_dxf.cpp \
     dxflib/src/dl_writer_ascii.cpp \
-    jwwlib/src/dl_jww.cpp \
-    jwwlib/src/jwwdoc.cpp \
     fparser/fparser.cc \
     src/lib/actions/rs_actioninterface.cpp \
     src/lib/actions/rs_preview.cpp \
@@ -269,7 +262,6 @@ SOURCES = \
     src/lib/filters/rs_filtercxf.cpp \
     src/lib/filters/rs_filterdxf.cpp \
     src/lib/filters/rs_filterdxf1.cpp \
-    src/lib/filters/rs_filterjww.cpp \
     src/lib/gui/rs_dialogfactory.cpp \
     src/lib/gui/rs_eventhandler.cpp \
     src/lib/gui/rs_graphicview.cpp \
