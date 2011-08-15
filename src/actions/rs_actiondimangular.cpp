@@ -108,9 +108,11 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e) {
 
     switch (getStatus()) {
     case SetLine1:
+        drawSnapper();
         break;
 
     case SetLine2:
+        drawSnapper();
         break;
 
     case SetPos:
@@ -133,8 +135,6 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e) {
 
     RS_DEBUG->print("RS_ActionDimAngular::mouseMoveEvent end");
 }
-
-
 
 void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e) {
 
