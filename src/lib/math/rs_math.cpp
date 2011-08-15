@@ -30,7 +30,7 @@
 
 
 /**
- * Rounds the given double to the next int.
+ * Rounds the given double to the closest int.
  */
 int RS_Math::round(double v) {
     return (int) lrint(v);
@@ -119,11 +119,7 @@ bool RS_Math::isAngleBetween(double a,
 
 //    bool ret = false;
 
-    if (reversed) {
-        double tmp = a1;
-        a1 = a2;
-        a2 = tmp;
-    }
+    if (reversed) swap(a1,a2); 
     if ( correctAngle(a2 -a1) >= correctAngle(a - a1) + RS_TOLERANCE_ANGLE &&
             correctAngle(a - a1) >= RS_TOLERANCE_ANGLE ) {
         return true;
