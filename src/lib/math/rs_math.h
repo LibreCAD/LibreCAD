@@ -86,7 +86,7 @@ public:
 //swap of two variables
     template <class T>
     static void swap( T &a, T &b) {
-        const T ttmp=a;
+        const T ttmp(a);
         a=b;
         b=ttmp;
     };
