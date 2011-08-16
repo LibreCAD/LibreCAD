@@ -104,35 +104,25 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
     if (entity!=NULL) {
         *entity = this;
     }
+    RS_Vector ret;
 
-    RS_Vector ae = data.endpoint-data.startpoint;
-    RS_Vector ea = data.startpoint-data.endpoint;
-    RS_Vector ap = coord-data.startpoint;
-    RS_Vector ep = coord-data.endpoint;
-
-    if (ae.magnitude()<1.0e-6 || ea.magnitude()<1.0e-6) {
-        if (dist!=NULL) {
-            *dist = RS_MAXDOUBLE;
-        }
-        return RS_Vector(false);
+    RS_Vector vpl = data.endpoint-data.startpoint;
+    double angle=vpl.angle();
+    double r=vpl.magnitude();
+    RS_Vector vpc=coord-data.startpoint;
+    vpc.rotate(-angle); // rotate to use the line direction as x-axis
+    if ( (vpc.x >= 0. && vpc.x <= r) || ! onEntity ) { //use the projection
+    	ret=RS_Vector(vpc.x,0.);
+	ret.rotate(angle);
+	ret += data.startpoint;
+    } else {// onEntity=true and projection not within range, only have to check the endpoints
+    	ret=getNearestEndpoint(coord,dist);
     }
 
-    // Orthogonal projection from both sides:
-    RS_Vector ba = ae * RS_Vector::dotP(ae, ap)
-                   / (ae.magnitude()*ae.magnitude());
-    RS_Vector be = ea * RS_Vector::dotP(ea, ep)
-                   / (ea.magnitude()*ea.magnitude());
-
-    // Check if the projection is within this line:
-    if (onEntity==true &&
-            (ba.magnitude()>ae.magnitude() || be.magnitude()>ea.magnitude())) {
-        return getNearestEndpoint(coord, dist);
-    } else {
-        if (dist!=NULL) {
-            *dist = coord.distanceTo(data.startpoint+ba);
-        }
-        return data.startpoint+ba;
-    }
+    if (dist!=NULL) {
+        *dist = ret.distanceTo(coord);
+	}
+    return ret;
 }
 
 
