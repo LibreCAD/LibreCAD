@@ -154,14 +154,11 @@ double RS_Vector::angleTo(const RS_Vector& v) const {
  * @return Magnitude (length) of the vector.
  */
 double RS_Vector::magnitude() const {
-    double ret = 0.0;
+    double ret(0.0);
     // Note that the z coordinate is also needed for 2d
     //   (due to definition of crossP())
-    if (!valid) {
-        ret = 0.0;
-    }
-    else {
-        ret = sqrt(RS_Math::pow(x,2) + RS_Math::pow(y,2) + RS_Math::pow(z,2));
+    if (valid) {
+        ret = sqrt(x*x + y*y + z*z);
     }
 
     return ret;
