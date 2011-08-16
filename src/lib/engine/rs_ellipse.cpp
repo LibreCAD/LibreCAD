@@ -249,7 +249,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         std::cout<<"2::find cosine, variable c, solve(c^4 +("<<ce[0]<<")*c^3+("<<ce[1]<<")*c^2+("<<ce[2]<<")*c+("<<ce[3]<<")=0,c)\n";
         std::cout<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<std::endl;
         std::cerr<<"RS_Math::RS_Ellipse::getNearestPointOnEntity() finds no root from quartic, this should not happen\n";
-        return RS_Vector(false);
+        return RS_Vector(coord); // better not to return invalid: return RS_Vector(false);
     }
 
     RS_Vector vp2(false);
@@ -286,6 +286,8 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     if (onEntity) {
         if (!RS_Math::isAngleBetween(getEllipseAngle(ret), getAngle1(), getAngle2(), data.reversed)) {
             ret = RS_Vector(false);
+        } else {
+                ret=getNearestEndpoint(coord,dist);
         }
     }
 
@@ -410,6 +412,9 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
 //    std::cout<<"Old algorithm\ndist="<<dDistance<<std::endl;
 //    if(ret.valid) std::cout<<"coord="<<ret<<std::endl;
 
+    if(! ret.valid) {
+            std::cout<<"RS_Ellipse::getNearestOnEntity() returns invalid by mistake. This should not happen!"<<std::endl;
+    }
     return ret;
 }
 
