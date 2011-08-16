@@ -284,10 +284,8 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     vp2.move(getCenter());
     ret=vp2;
     if (onEntity) {
-        if (!RS_Math::isAngleBetween(getEllipseAngle(ret), getAngle1(), getAngle2(), data.reversed)) {
-            ret = RS_Vector(false);
-        } else {
-                ret=getNearestEndpoint(coord,dist);
+        if (!RS_Math::isAngleBetween(getEllipseAngle(ret), getAngle1(), getAngle2(), data.reversed)) { // not on entity, use the nearest endpoint
+            ret=getNearestEndpoint(coord,dist);
         }
     }
 
@@ -413,7 +411,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
 //    if(ret.valid) std::cout<<"coord="<<ret<<std::endl;
 
     if(! ret.valid) {
-            std::cout<<"RS_Ellipse::getNearestOnEntity() returns invalid by mistake. This should not happen!"<<std::endl;
+        std::cout<<"RS_Ellipse::getNearestOnEntity() returns invalid by mistake. This should not happen!"<<std::endl;
     }
     return ret;
 }
