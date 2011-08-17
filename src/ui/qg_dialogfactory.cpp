@@ -1695,11 +1695,11 @@ void QG_DialogFactory::updateMouseWidget(const QString& left,
         const QString& right) {
 	
     if ( left != *leftHintCurrent || right != *rightHintCurrent ) {
-    	if ( *leftHintSaved != *leftHintCurrent
-                    || *rightHintSaved != *rightHintCurrent ) {
+    	//if ( *leftHintSaved != *leftHintCurrent
+        //            || *rightHintSaved != *rightHintCurrent ) {
             *leftHintSaved=*leftHintCurrent;
             *rightHintSaved=*rightHintCurrent;
-	    }
+	//   }
          *leftHintCurrent= left.isNull()? QString(""):left;
          *rightHintCurrent=right.isNull()? QString(""):right;
     	if (mouseWidget!=NULL) {
