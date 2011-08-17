@@ -206,7 +206,7 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
     RS_VectorSolutions ret;
     double tol = 1.0e-4;
 
-    if (e1==NULL || e2==NULL) {
+    if (e1==NULL || e2==NULL || e1->getId() == e2->getId() ) {
         return ret;
     }
 
@@ -301,6 +301,16 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
 
             RS_Line* line1 = (RS_Line*)te1;
             RS_Line* line2 = (RS_Line*)te2;
+	    RS_EntityContainer *pec1=line1->getParent();
+	    RS_EntityContainer *pec2=line2->getParent();
+	    if ( 
+	    pec1-> rtti() == RS2::EntitySpline &&
+	    pec1-> getId() == pec2->getId() && 
+	    abs(pec1->findEntity(line1) - pec2->findEntity(line2)) <= 1) {
+	    //do not calculate intersections from neighboring lines of a spline
+	    	return ret;
+	    }
+
 
             ret = getIntersectionLineLine(line1, line2);
         }
@@ -565,7 +575,7 @@ RS_VectorSolutions RS_Information::getIntersectionArcArc(RS_Arc* e1,
 RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1, RS_Ellipse* e2) {
     RS_VectorSolutions ret;
 
-    if (e1==NULL || e2==NULL) {
+    if (e1==NULL || e2==NULL ) {
         return ret;
     }
     if (
@@ -573,7 +583,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
         ( e1->getMajorP() - e2 ->getMajorP()).magnitude() < RS_TOLERANCE &&
         fabs(e1->getMajorRadius() - e2 ->getMajorRadius()) < RS_TOLERANCE &&
         fabs(e1->getMinorRadius() - e2 ->getMinorRadius()) < RS_TOLERANCE
-    ) { // the same ellipse, do not do overlap
+    ) { // overlapped ellipses, do not do overlap
         return ret;
     }
 
