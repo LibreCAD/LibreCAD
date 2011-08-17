@@ -253,7 +253,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     }
 
     RS_Vector vp2(false);
-    double d,d2,s,dDistance(RS_MAXDOUBLE);
+    double d(RS_MAXDOUBLE),d2,s,dDistance(RS_MAXDOUBLE);
     //double ea;
     for(unsigned int i=0; i<counts; i++) {
         //I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
@@ -549,7 +549,7 @@ void RS_Ellipse::moveEndpoint(const RS_Vector& pos) {
 
 
 RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& trimCoord,
-                                     const RS_Vector& trimPoint) {
+                                     const RS_Vector& /*trimPoint*/) {
 
     //double angEl = getEllipseAngle(trimPoint);
     double angM = getEllipseAngle(trimCoord);
@@ -567,7 +567,7 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
     if( trimSol.getNumber() == 1 ) return (trimSol.get(0));
     double am=getEllipseAngle(trimCoord);
     double ias[trimSol.getNumber()];
-    double ia,ia2;
+    double ia(0.),ia2(0.);
     RS_Vector is,is2;
     for(int ii=0; ii<trimSol.getNumber(); ii++) { //find closest according ellipse angle
         ias[ii]=getEllipseAngle(trimSol.get(ii));
