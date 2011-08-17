@@ -481,7 +481,9 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 
         //local (application) directory has priority over other dirs:
         if (!appDir.isEmpty() && appDir!="/" && appDir!=getHomeDir()) {
+		if( appDir != getCurrentDir() && subDirectory != QString("plugins")) {// 17 Aug, 2011, Dongxu Li, do not look for plugins in the current folder, we should install plugins to system or ~/.LibreCAD/plugins/
             dirList.append(appDir + "/" + subDirectory);
+	    }
         }
 
         // Ubuntu
