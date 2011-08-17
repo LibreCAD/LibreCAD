@@ -206,7 +206,10 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
     RS_VectorSolutions ret;
     double tol = 1.0e-4;
 
-    if (e1==NULL || e2==NULL || e1->getId() == e2->getId() ) {
+    if (e1==NULL || e2==NULL ) {
+        return ret;
+    }
+    if (e1->getId() == e2->getId()) {
         return ret;
     }
 
