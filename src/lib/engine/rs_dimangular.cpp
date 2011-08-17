@@ -87,18 +87,19 @@ double RS_DimAngular::getAngle() {
 	RS_Vector p2;
 
     getAngles(ang1, ang2, reversed, p1, p2);
-
-    if (!reversed) {
-        if (ang2<ang1) {
-            ang2+=2*M_PI;
-        }
-        return ang2-ang1;
-    } else {
-        if (ang1<ang2) {
-            ang1+=2*M_PI;
-        }
-        return ang1-ang2;
-    }
+    return reversed ? RS_Math::correctAngle(ang1 - ang2) :  RS_Math::correctAngle(ang2 - ang1);
+//
+//    if (!reversed) {
+//        if (ang2<ang1) {
+//            ang2+=2*M_PI;
+//        }
+//        return ang2-ang1;
+//    } else {
+//        if (ang1<ang2) {
+//            ang1+=2*M_PI;
+//        }
+//        return ang1-ang2;
+//    }
 }
 
 
@@ -130,57 +131,99 @@ RS_Vector RS_DimAngular::getCenter() {
 bool RS_DimAngular::getAngles(double& ang1, double& ang2, bool& reversed,
                               RS_Vector& p1, RS_Vector& p2) {
 
+RS_Vector vp0(edata.definitionPoint4 - getCenter());
+RS_Vector vp1(edata.definitionPoint2 - edata.definitionPoint1);
+RS_Vector vp2(data.definitionPoint - edata.definitionPoint3);
+// project p0 to to the basis of p1 and p2
+// p0 = a1 p1 + a2 p2
+// <p0.p1>= a1 |p1|^2 + a2 <p1.p2>
+// <p0,p2>= a1 <p1.p2> + a2 |p2|^2
+// a1 = ( |p2|^2 <p0.p1> - <p1.p2><p0.p2>) /( |p1|^2 |p2|^2 - <p1.p2>^2)
+// a2 = ( |p1|^2 <p0.p2> - <p1.p2><p0.p1>) /( |p1|^2 |p2|^2 - <p1.p2>^2)
+
+double rp1=vp1.magnitude();
+rp1 *= rp1;
+double rp2=vp2.magnitude();
+rp2 *= rp2;
+double p0p1=RS_Vector::dotP(vp0,vp1);
+double p0p2=RS_Vector::dotP(vp0,vp2);
+double p1p2=RS_Vector::dotP(vp1,vp2);
+double d= rp1*rp2 - p1p2*p1p2;
+double a1=d*(rp2*p0p1-p1p2*p0p2); // we only need the sign, so, use multiply instead of division to avoid divid by zero;
+if ( a1 >= 0. ) {
+            p1 = edata.definitionPoint2;
+} else {
+	    vp1 *= -1;
+            p1 = edata.definitionPoint1;
+}
+a1 = d*(rp1*p0p2-p1p2*p0p1);
+if ( a1 >= 0. ) {
+            p2 = data.definitionPoint;
+} else {
+	    vp2 *= -1;
+            p2 = edata.definitionPoint3;
+}
+
     RS_Vector center = getCenter();
     double ang = center.angleTo(edata.definitionPoint4);
-    bool done = false;
-
-    // find out the angles this dimension refers to:
-    for (int f1=0; f1<=1 && !done; ++f1) {
-        ang1 = RS_Math::correctAngle(
-                   edata.definitionPoint1.angleTo(edata.definitionPoint2) + f1*M_PI);
-        if (f1==0) {
-            p1 = edata.definitionPoint2;
-        } else {
-            p1 = edata.definitionPoint1;
-        }
-        for (int f2=0; f2<=1 && !done; ++f2) {
-            ang2 = RS_Math::correctAngle(
-                       edata.definitionPoint3.angleTo(data.definitionPoint) + f2*M_PI);
-            if (f2==0) {
-                p2 = data.definitionPoint;
-            } else {
-                p2 = edata.definitionPoint3;
-            }
-            for (int t=0; t<=1 && !done; ++t) {
-                reversed = (bool)t;
-
-                double angDiff;
-
-                if (!reversed) {
-                    if (ang2<ang1) {
-                        ang2+=2*M_PI;
-                    }
-                    angDiff = ang2-ang1;
-                } else {
-                    if (ang1<ang2) {
-                        ang1+=2*M_PI;
-                    }
-                    angDiff = ang1-ang2;
-                }
-
-                ang1 = RS_Math::correctAngle(ang1);
-                ang2 = RS_Math::correctAngle(ang2);
-
-                if (RS_Math::isAngleBetween(ang, ang1, ang2, reversed) &&
-                        angDiff<=M_PI) {
-                    done = true;
-                    break;
-                }
-            }
-        }
-    }
-
-    return done;
+if ( ! RS_Math::isAngleBetween(ang, vp1.angle(),vp2.angle(),false) ) {
+reversed = true;
+}
+ang1=vp1.angle();
+ang2=vp2.angle();
+return true;
+//
+//std::cout<<"RS_DimAngular::getAngles(): new algorithm, angle1= "<<vp1.angle()<<"\tangle2= "<<vp2.angle()<<"\treversed= "<<reversed<<std::endl;
+//    bool done = false;
+//
+//    // find out the angles this dimension refers to:
+//    for (int f1=0; f1<=1 && !done; ++f1) {
+//        ang1 = RS_Math::correctAngle(
+//                   edata.definitionPoint1.angleTo(edata.definitionPoint2) + f1*M_PI);
+//        if (f1==0) {
+//            p1 = edata.definitionPoint2;
+//        } else {
+//            p1 = edata.definitionPoint1;
+//        }
+//        for (int f2=0; f2<=1 && !done; ++f2) {
+//            ang2 = RS_Math::correctAngle(
+//                       edata.definitionPoint3.angleTo(data.definitionPoint) + f2*M_PI);
+//            if (f2==0) {
+//                p2 = data.definitionPoint;
+//            } else {
+//                p2 = edata.definitionPoint3;
+//            }
+//            for (int t=0; t<=1 && !done; ++t) {
+//                reversed = (bool)t;
+//
+//                double angDiff;
+//
+//                if (!reversed) {
+//                    if (ang2<ang1) {
+//                        ang2+=2*M_PI;
+//                    }
+//                    angDiff = ang2-ang1;
+//                } else {
+//                    if (ang1<ang2) {
+//                        ang1+=2*M_PI;
+//                    }
+//                    angDiff = ang1-ang2;
+//                }
+//
+//                ang1 = RS_Math::correctAngle(ang1);
+//                ang2 = RS_Math::correctAngle(ang2);
+//
+//                if (RS_Math::isAngleBetween(ang, ang1, ang2, reversed) &&
+//                        angDiff<=M_PI) {
+//                    done = true;
+//                    break;
+//                }
+//            }
+//        }
+//    }
+//std::cout<<"RS_DimAngular::getAngles(): old algorithm, ang1= "<<ang1<<"\tang2= "<<ang2<<"\treversed= "<<reversed<<std::endl;
+//
+//    return done;
 }
 
 
