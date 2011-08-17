@@ -159,28 +159,10 @@ double RS_ConstructionLine::getDistanceToPoint(const RS_Vector& coord,
         *entity = this;
     }
     double dist = RS_MAXDOUBLE;
-    RS_Vector ae = data.point2-data.point1;
-    RS_Vector ea = data.point1-data.point2;
-    RS_Vector ap = coord-data.point1;
-    RS_Vector ep = coord-data.point2;
-	
-	if (ae.magnitude()<1.0e-6 || ea.magnitude()<1.0e-6) {
-		return dist;
-	}
-
-    // Orthogonal projection from both sides:
-    RS_Vector ba = ae * RS_Vector::dotP(ae, ap) /
-                   RS_Math::pow(ae.magnitude(), 2);
-    RS_Vector be = ea * RS_Vector::dotP(ea, ep) /
-                   RS_Math::pow(ea.magnitude(), 2);
-
-    RS_DEBUG->print("ba: %f", ba.magnitude());
-    RS_DEBUG->print("ae: %f", ae.magnitude());
-
-    RS_Vector cp = RS_Vector::crossP(ap, ae);
-    dist = cp.magnitude() / ae.magnitude();
-
-    return dist;
+    RS_Vector se = data.point2-data.point1;
+    RS_Vector vpc= coord - data.point1;
+    vpc.rotate( - se.angle()); // rotate to use the line as x-axis, and projection is simply vpc.x now.
+    return ( vpc.x * vpc.x );
 }
 
 
