@@ -108,8 +108,8 @@ void RS_Entity::resetBorders() {
     double maxd = RS_MAXDOUBLE;
     double mind = RS_MINDOUBLE;
 
-    minV.set(maxd, maxd, maxd);
-    maxV.set(mind, mind, mind);
+    minV.set(maxd, maxd);
+    maxV.set(mind, mind);
 }
 
 
