@@ -100,9 +100,10 @@ bool RS_Circle::createFromCR(const RS_Vector& c, double r) {
  * @param p2 2nd point.
  */
 bool RS_Circle::createFrom2P(const RS_Vector& p1, const RS_Vector& p2) {
-    if (p1.distanceTo(p2)>RS_TOLERANCE) {
-        data.radius = p1.distanceTo(p2)/2.0;
-        data.center = p1 + (p2-p1)/2.0;
+        double r=0.5*p1.distanceTo(p2);
+    if (r>RS_TOLERANCE) {
+        data.radius = r;
+        data.center = (p1+p2)*0.5;
         return true;
     } else {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom2P(): "
@@ -122,48 +123,64 @@ bool RS_Circle::createFrom2P(const RS_Vector& p1, const RS_Vector& p2) {
  */
 bool RS_Circle::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
                              const RS_Vector& p3) {
-    if (p1.distanceTo(p2)>RS_TOLERANCE &&
-            p2.distanceTo(p3)>RS_TOLERANCE &&
-            p3.distanceTo(p1)>RS_TOLERANCE) {
-
-        // middle points between 3 points:
-        RS_Vector mp1, mp2;
-        RS_Vector dir1, dir2;
-        double a1, a2;
-
-        // intersection of two middle lines
-        mp1 = (p1 + p2)/2.0;
-        a1 = p1.angleTo(p2) + M_PI/2.0;
-        dir1.setPolar(100.0, a1);
-        mp2 = (p2 + p3)/2.0;
-        a2 = p2.angleTo(p3) + M_PI/2.0;
-        dir2.setPolar(100.0, a2);
-
-        RS_ConstructionLineData d1(mp1, mp1 + dir1);
-        RS_ConstructionLineData d2(mp2, mp2 + dir2);
-        RS_ConstructionLine midLine1(NULL, d1);
-        RS_ConstructionLine midLine2(NULL, d2);
-
-        RS_VectorSolutions sol =
-            RS_Information::getIntersection(&midLine1, &midLine2);
-
-        data.center = sol.get(0);
-        data.radius = data.center.distanceTo(p3);
-
-        if (sol.get(0).valid && data.radius<1.0e14 && data.radius>RS_TOLERANCE) {
-            return true;
-        } else {
-            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
-                            "Cannot create a circle with inf radius.");
-            return false;
-        }
-    } else {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
+        RS_Vector vra=p2 - p1;
+        RS_Vector vrb=p3 - p1;
+        double ra2=RS_Vector::dotP(vra,vra)*0.5;
+        double rb2=RS_Vector::dotP(vrb,vrb)*0.5;
+        double crossp=vra.x * vrb.y - vra.y * vrb.x;
+        if (fabs(crossp)< RS_TOLERANCE*RS_TOLERANCE) {
+                RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
                         "Cannot create a circle with radius 0.0.");
-        return false;
-    }
+                return false;
+        }
+        crossp=1./crossp;
+        data.center.set((ra2*vrb.y - rb2*vra.y)*crossp,(rb2*vra.x - ra2*vrb.x)*crossp);
+        data.radius=data.center.magnitude();
+        data.center += p1;
+        return true;
 }
-
+//
+//    if (p1.distanceTo(p2)>RS_TOLERANCE &&
+//            p2.distanceTo(p3)>RS_TOLERANCE &&
+//            p3.distanceTo(p1)>RS_TOLERANCE) {
+//
+//        // middle points between 3 points:
+//        RS_Vector mp1, mp2;
+//        RS_Vector dir1, dir2;
+//        double a1, a2;
+//
+//        // intersection of two middle lines
+//        mp1 = (p1 + p2)/2.0;
+//        a1 = p1.angleTo(p2) + M_PI/2.0;
+//        dir1.setPolar(100.0, a1);
+//        mp2 = (p2 + p3)/2.0;
+//        a2 = p2.angleTo(p3) + M_PI/2.0;
+//        dir2.setPolar(100.0, a2);
+//
+//        RS_ConstructionLineData d1(mp1, mp1 + dir1);
+//        RS_ConstructionLineData d2(mp2, mp2 + dir2);
+//        RS_ConstructionLine midLine1(NULL, d1);
+//        RS_ConstructionLine midLine2(NULL, d2);
+//
+//        RS_VectorSolutions sol =
+//            RS_Information::getIntersection(&midLine1, &midLine2);
+//
+//        data.center = sol.get(0);
+//        data.radius = data.center.distanceTo(p3);
+//
+//        if (sol.get(0).valid && data.radius<1.0e14 && data.radius>RS_TOLERANCE) {
+//            return true;
+//        } else {
+//            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
+//                            "Cannot create a circle with inf radius.");
+//            return false;
+//        }
+//    } else {
+//        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
+//                        "Cannot create a circle with radius 0.0.");
+//        return false;
+//    }
+//}
 
 
 RS_VectorSolutions RS_Circle::getRefPoints() {
@@ -256,8 +273,8 @@ double RS_Circle::getDistanceToPoint(const RS_Vector& coord,
     }
 
     // RVT Jan 6 2010, allow selections to mid point of circle
-    float dToEdge=fabs((coord-data.center).magnitude() - data.radius);
-    float dToCenter=data.center.distanceTo(coord);
+    double dToCenter=data.center.distanceTo(coord);
+    double dToEdge=fabs(dToCenter - data.radius);
 
     if (dToEdge<dToCenter) {
         return dToEdge;
