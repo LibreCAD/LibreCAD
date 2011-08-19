@@ -63,26 +63,24 @@ void QG_DlgScale::languageChange()
 }
 
 
-void QG_DlgScale::on_scaleFactorX_valueChanged(double arg1)
+void QG_DlgScale::on_leFactorX_textChanged(const QString& arg1)
 {
    scaleFactorX=arg1;
-   if(rbIsotropic->isChecked()) {
+   if(cbIsotropic->isChecked()) {
            scaleFactorY=scaleFactorX;
    }
-
 }
 
 
-void QG_DlgScale::on_scaleFactorY_valueChanged(double arg1)
+void QG_DlgScale::on_leFactorY_textChanged(const QString& arg1)
 {
     scaleFactorY=arg1;
-    if(rbIsotropic->isChecked()) {
-        scaleFactorX=scaleFactorY;
 }
 
-}
-
-void QG_DlgScale::on_rbIsotropic_toggled(bool checked)
+void QG_DlgScale::on_cbIsotropic_toggled(bool checked)
 {
-    scaleFactorY=scaleFactorX;
+    leFactorY->setReadOnly(checked); //cbIsotropic->isChecked());
+        if(checked) {
+                scaleFactorY=scaleFactorX;
+        }
 }
