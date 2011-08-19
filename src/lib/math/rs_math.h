@@ -64,6 +64,7 @@ class RS_Math {
 public:
     static int round(double v);
     static double pow(double x, double y);
+    static RS_Vector pow(RS_Vector x, double y);
 
     //static double abs(double v);
     //static int abs(int v);
