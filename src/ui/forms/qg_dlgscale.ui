@@ -119,64 +119,6 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>140</y>
-     <width>237</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="_2">
-    <item>
-     <widget class="QLabel" name="lFactor_5">
-      <property name="text">
-       <string>x</string>
-      </property>
-      <property name="wordWrap">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLineEdit" name="scaleFactorX">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="toolTip">
-       <string>Scale factor at the x direction</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="lFactor_4">
-      <property name="text">
-       <string>y</string>
-      </property>
-      <property name="wordWrap">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLineEdit" name="scaleFactorY">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="toolTip">
-       <string>Scale factor for the y direction</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="">
-   <property name="geometry">
-    <rect>
      <x>130</x>
      <y>240</y>
      <width>224</width>
@@ -245,7 +187,7 @@
     </size>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -266,12 +208,15 @@
      </widget>
     </item>
     <item>
-     <widget class="QCheckBox" name="isotropic">
+     <widget class="QCheckBox" name="rbIsotropic">
       <property name="toolTip">
-       <string>Scale by the same factor at both x- and y- direction</string>
+       <string>Scale by the same factor at both x- and y- directions</string>
       </property>
       <property name="text">
        <string>Isotropic Scaling</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -301,6 +246,85 @@
    </property>
    <property name="text">
     <string>Use current &amp;attributes</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lFactor_4">
+   <property name="geometry">
+    <rect>
+     <x>328</x>
+     <y>141</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>y</string>
+   </property>
+   <property name="wordWrap">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lFactor_5">
+   <property name="geometry">
+    <rect>
+     <x>181</x>
+     <y>141</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>x</string>
+   </property>
+   <property name="wordWrap">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QDoubleSpinBox" name="scaleFactorY">
+   <property name="geometry">
+    <rect>
+     <x>343</x>
+     <y>141</y>
+     <width>67</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Y scaling factor</string>
+   </property>
+   <property name="decimals">
+    <number>8</number>
+   </property>
+   <property name="minimum">
+    <double>0.000001000000000</double>
+   </property>
+   <property name="maximum">
+    <double>10000000.000000000000000</double>
+   </property>
+   <property name="value">
+    <double>1.000000000000000</double>
+   </property>
+  </widget>
+  <widget class="QDoubleSpinBox" name="scaleFactorX">
+   <property name="geometry">
+    <rect>
+     <x>196</x>
+     <y>141</y>
+     <width>67</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>X Scaling factor</string>
+   </property>
+   <property name="decimals">
+    <number>8</number>
+   </property>
+   <property name="minimum">
+    <double>0.000001000000000</double>
+   </property>
+   <property name="maximum">
+    <double>10000000.000000000000000</double>
    </property>
   </widget>
  </widget>
