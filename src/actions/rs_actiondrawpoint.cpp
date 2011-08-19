@@ -144,7 +144,9 @@ void RS_ActionDrawPoint::updateToolBar() {
         if (!isFinished()) {
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
         } else {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarPoints);
+            // No need to show the single item ToolBarPoints, show toolBarMain upon finished instead, bug# 3391635
+            //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarPoints);
+            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
         }
     }
 }
