@@ -1525,19 +1525,39 @@ bool RS_Modification::scale(RS_ScaleData& data) {
     }
 
     // Create new entites
-    for (int num=1;
-            num<=data.number || (data.number==0 && num<=1);
-            num++) {
+    //for (int num=1;
+    //        num<=data.number || (data.number==0 && num<=1);
+    //        num++) {
+
         for (RS_Entity* e=container->firstEntity();
                 e!=NULL;
                 e=container->nextEntity()) {
-            //for (uint i=0; i<container->count(); ++i) {
+          //for (uint i=0; i<container->count(); ++i) {
             //RS_Entity* e = container->entityAt(i);
             if (e!=NULL && e->isSelected()) {
                 RS_Entity* ec = e->clone();
                 ec->setSelected(false);
+                if ( ec->rtti() == RS2::RS_Circle ) {
+                if ( fabs(data.factor.x - data.factor.y) > RS_TOLERANCE ) {
+                        //non-isotropic scaling, replacing circle with ellipse
+                        RS_EllipseData d(ec->parent(),
+                                        ec->getCenter(),
+                                        RS_Vector(ec->getRadius(),0.),
+                                        1.0,
+                                        0.,
+                                        2.*M_PI,
+                                        false);
+                        RS_Entity *nec= new Ellipse(ec->getParent(),d);
+                        int index=container->findEntity(ec);
+                        container->removeEntity(ec);
+                        container->insertEntity(index,nec);
+                        ec=container->entityAt(index);
+                }
+                }
 
-                ec->scale(data.referencePoint, RS_Math::pow(data.factor, num));
+
+                //ec->scale(data.referencePoint, RS_Math::pow(data.factor, num));
+                ec->scale(data.referencePoint, data.factor);
                 if (data.useCurrentLayer) {
                     ec->setLayerToActive();
                 }
@@ -1550,7 +1570,7 @@ bool RS_Modification::scale(RS_ScaleData& data) {
                 addList.append(ec);
             }
         }
-    }
+    //}
 
     deselectOriginals(data.number==0);
     addNewEntities(addList);
