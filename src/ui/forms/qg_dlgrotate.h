@@ -43,6 +43,9 @@ public slots:
 protected slots:
     virtual void languageChange();
 
+private slots:
+    void on_leNumber_lostFocus();
+
 private:
     bool useCurrentAttributes;
     bool useCurrentLayer;
