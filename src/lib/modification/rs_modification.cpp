@@ -1518,28 +1518,18 @@ bool RS_Modification::scale(RS_ScaleData& data) {
         return false;
     }
 
-    QList<RS_Entity*> addList;
+    QList<RS_Entity*> selectedList,addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
     }
-
-    // Create new entites
-    for (int num=1;
-            num<=data.number || (data.number==0 && num<=1);
-            num++) {
-
-        for (RS_Entity* e=container->firstEntity();
-                e!=NULL;
-                e=container->nextEntity()) {
-          //for (uint i=0; i<container->count(); ++i) {
-            //RS_Entity* e = container->entityAt(i);
-            if (e!=NULL && e->isSelected()) {
-                RS_Entity* ec = e->clone();
-                ec->setSelected(false);
-                if ( ec->rtti() == RS2::EntityCircle ) {
-                if ( fabs(data.factor.x - data.factor.y) > RS_TOLERANCE ) {
-                        //non-isotropic scaling, replacing circle with ellipse
+                                        //non-isotropic scaling, replacing selected circles with ellipses
+        for (RS_Entity* ec=container->firstEntity();
+                ec!=NULL;
+                ec=container->nextEntity()) {
+                if (ec->isSelected() ) {
+                        if ( fabs(data.factor.x - data.factor.y) > RS_TOLERANCE 
+                                        && ec->rtti() == RS2::EntityCircle ) {
                         RS_Circle *c=(RS_Circle*) ec;
                         RS_EllipseData d(
                                         c->getCenter(),
@@ -1548,14 +1538,32 @@ bool RS_Modification::scale(RS_ScaleData& data) {
                                         0.,
                                         2.*M_PI,
                                         false);
-                        RS_Ellipse *nec= new RS_Ellipse(ec->getParent(),d);
-                        int index=container->findEntity(ec);
-                        container->removeEntity(ec);
-                        container->insertEntity(index,nec);
-                        ec=container->entityAt(index);
+                        ec= new RS_Ellipse(container,d);
+                        std::cout<<"created ellipse\n";
                 }
-                }
+                        selectedList.append(ec);
 
+        }
+        }
+
+
+    // Create new entites
+    for (int num=1;
+            num<=data.number || (data.number==0 && num<=1);
+            num++) {
+
+            for(QList<RS_Entity*>::iterator pe=selectedList.begin();
+                            pe != selectedList.end();
+                            pe++ ) {
+                    RS_Entity* e= *pe;
+        //for (RS_Entity* e=container->firstEntity();
+        //        e!=NULL;
+        //        e=container->nextEntity()) {
+          //for (uint i=0; i<container->count(); ++i) {
+            //RS_Entity* e = container->entityAt(i);
+            if (e!=NULL ) {
+                RS_Entity* ec = e->clone();
+                ec->setSelected(false);
 
                 ec->scale(data.referencePoint, RS_Math::pow(data.factor, num));
                 if (data.useCurrentLayer) {
