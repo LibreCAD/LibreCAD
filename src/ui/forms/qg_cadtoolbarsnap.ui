@@ -35,7 +35,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Back to main menu</string>
+    <string>Back to previous menu</string>
    </property>
    <property name="text">
     <string/>
