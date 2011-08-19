@@ -198,17 +198,7 @@
    </property>
    <layout class="QHBoxLayout">
     <item>
-     <widget class="QLabel" name="lFactor">
-      <property name="text">
-       <string>&amp;Factor (f):</string>
-      </property>
-      <property name="wordWrap">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="rbIsotropic">
+     <widget class="QCheckBox" name="cbIsotropic">
       <property name="toolTip">
        <string>Scale by the same factor at both x- and y- directions</string>
       </property>
@@ -248,84 +238,67 @@
     <string>Use current &amp;attributes</string>
    </property>
   </widget>
-  <widget class="QLabel" name="lFactor_4">
+  <widget class="QWidget" name="layoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>328</x>
-     <y>141</y>
-     <width>16</width>
-     <height>16</height>
+     <x>180</x>
+     <y>140</y>
+     <width>237</width>
+     <height>41</height>
     </rect>
    </property>
-   <property name="text">
-    <string>y</string>
-   </property>
-   <property name="wordWrap">
-    <bool>false</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lFactor_5">
-   <property name="geometry">
-    <rect>
-     <x>181</x>
-     <y>141</y>
-     <width>16</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>x</string>
-   </property>
-   <property name="wordWrap">
-    <bool>false</bool>
-   </property>
-  </widget>
-  <widget class="QDoubleSpinBox" name="scaleFactorY">
-   <property name="geometry">
-    <rect>
-     <x>343</x>
-     <y>141</y>
-     <width>67</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Y scaling factor</string>
-   </property>
-   <property name="decimals">
-    <number>8</number>
-   </property>
-   <property name="minimum">
-    <double>0.000001000000000</double>
-   </property>
-   <property name="maximum">
-    <double>10000000.000000000000000</double>
-   </property>
-   <property name="value">
-    <double>1.000000000000000</double>
-   </property>
-  </widget>
-  <widget class="QDoubleSpinBox" name="scaleFactorX">
-   <property name="geometry">
-    <rect>
-     <x>196</x>
-     <y>141</y>
-     <width>67</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>X Scaling factor</string>
-   </property>
-   <property name="decimals">
-    <number>8</number>
-   </property>
-   <property name="minimum">
-    <double>0.000001000000000</double>
-   </property>
-   <property name="maximum">
-    <double>10000000.000000000000000</double>
-   </property>
+   <layout class="QHBoxLayout" name="_2">
+    <item>
+     <widget class="QLabel" name="lFactor">
+      <property name="text">
+       <string>X</string>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="leFactorX">
+      <property name="text">
+       <string>1.0</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QLabel" name="lFactor_2">
+      <property name="text">
+       <string>Y</string>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="leFactorY">
+      <property name="text">
+       <string>1.0</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
