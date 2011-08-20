@@ -68,8 +68,10 @@ void QG_DlgScale::on_leFactorX_textChanged(const QString& arg1)
    scaleFactorX=arg1;
    if(cbIsotropic->isChecked()) {
            scaleFactorY=scaleFactorX;
-           leFactorY->setPlaceholderText(scaleFactorY);
-           leFactorY->setReadOnly(isotropic);
+           leFactorY->setEnabled(true);
+           leFactorY->setText(scaleFactorY);
+           leFactorY->setReadOnly(true);
+           leFactorY->setDisabled(true);
    }
 }
 
@@ -84,7 +86,12 @@ void QG_DlgScale::on_cbIsotropic_toggled(bool checked)
     leFactorY->setReadOnly(checked); //cbIsotropic->isChecked());
         if(checked) {
                 scaleFactorY=scaleFactorX;
-                leFactorY->setPlaceholderText(scaleFactorY);
-                leFactorY->setReadOnly(isotropic);
+           leFactorY->setText(scaleFactorY);
+           leFactorY->setReadOnly(true);
+           leFactorY->setDisabled(true);
+        } else {
+           leFactorY->setEnabled(true);
+           leFactorY->setReadOnly(false);
+           leFactorY->setText(scaleFactorY);
         }
 }
