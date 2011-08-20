@@ -59,7 +59,10 @@ double RS_Math::pow(double x, double y) {
     return ret;
 }
 
-
+/* pow of vector components */
+RS_Vector RS_Math::pow(RS_Vector vp, double y) {
+        return RS_Vector(pow(vp.x,y),pow(vp.y,y));
+}
 
 /**
  * Converts radians to degrees.

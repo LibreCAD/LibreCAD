@@ -35,29 +35,52 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgScale::QG_DlgScale(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
-{
-    setupUi(this);
 
-    init();
+QG_DlgScale::QG_DlgScale(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
+   : QDialog(parent, name, modal, fl)
+{
+   setupUi(this);
+
+   init();
 }
 
 /*
- *  Destroys the object and frees any allocated resources
- */
+*  Destroys the object and frees any allocated resources
+*/
 QG_DlgScale::~QG_DlgScale()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+   destroy();
+   // no need to delete child widgets, Qt does it all for us
 }
 
 /*
- *  Sets the strings of the subwidgets using the current
- *  language.
- */
+*  Sets the strings of the subwidgets using the current
+*  language.
+*/
 void QG_DlgScale::languageChange()
 {
-    retranslateUi(this);
+   retranslateUi(this);
 }
 
+
+void QG_DlgScale::on_leFactorX_textChanged(const QString& arg1)
+{
+   scaleFactorX=arg1;
+   if(cbIsotropic->isChecked()) {
+           scaleFactorY=scaleFactorX;
+   }
+}
+
+
+void QG_DlgScale::on_leFactorY_textChanged(const QString& arg1)
+{
+    scaleFactorY=arg1;
+}
+
+void QG_DlgScale::on_cbIsotropic_toggled(bool checked)
+{
+    leFactorY->setReadOnly(checked); //cbIsotropic->isChecked());
+        if(checked) {
+                scaleFactorY=scaleFactorX;
+        }
+}

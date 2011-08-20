@@ -660,10 +660,43 @@ double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) {
 }
 
 
-
+/* Dongxu Li's Version, 19 Aug 2011
+ * scale an ellipse
+ * original,
+ * x = a cos t cos (angle) - b sin t sin(angle)
+ * y = a cos t sin (angle) + b sin t cos(angle)
+ * scaled,
+ * x *= kx
+ * y *= ky
+ * find the maximum and minimum of x^2 + y^2,
+ * the eigen vactors and eigen values are worked out
+ */
 void RS_Ellipse::scale(RS_Vector center, RS_Vector factor) {
     data.center.scale(center, factor);
-    data.majorP.scale(factor);
+    RS_Vector vpStart=getStartpoint().scale(center,factor);
+    RS_Vector vpEnd=getEndpoint().scale(center,factor);;
+    double ct=cos(getAngle());
+    double ct2 = ct*ct; // cos^2 angle
+    double st=sin(getAngle());
+    double st2=1.0 - ct2; // sin^2 angle
+    double kx2= factor.x * factor.x;
+    double ky2= factor.y * factor.y;
+    double a=getMajorRadius();
+    double b=getMinorRadius();
+    double cA=0.5*a*a*(kx2*ct2+ky2*st2);
+    double cB=0.5*b*b*(kx2*st2+ky2*ct2);
+    double cC=a*b*ct*st*(ky2-kx2);
+    RS_Vector vp(cA-cB,cC);
+    double t=0.5*vp.angle();
+    setMajorP(
+    RS_Vector(factor.x*(a*ct*cos(t)-b*st*sin(t)),
+                    factor.y*(a*ct*sin(t)+b*st*cos(t)))
+    );
+    a=cA+cB;
+    setRatio( sqrt((a - vp.magnitude())/(a+vp.magnitude())) );
+    std::cout<<"ratio= "<<getRatio()<<std::endl;
+    setAngle1(getEllipseAngle(vpStart));
+    setAngle2(getEllipseAngle(vpEnd));
     //calculateEndpoints();
     calculateBorders();
 }
