@@ -694,7 +694,6 @@ void RS_Ellipse::scale(RS_Vector center, RS_Vector factor) {
     );
     a=cA+cB;
     setRatio( sqrt((a - vp.magnitude())/(a+vp.magnitude())) );
-    std::cout<<"ratio= "<<getRatio()<<std::endl;
     setAngle1(getEllipseAngle(vpStart));
     setAngle2(getEllipseAngle(vpEnd));
     //calculateEndpoints();
