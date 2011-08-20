@@ -1523,28 +1523,39 @@ bool RS_Modification::scale(RS_ScaleData& data) {
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
     }
-                                        //non-isotropic scaling, replacing selected circles with ellipses
-        for (RS_Entity* ec=container->firstEntity();
-                ec!=NULL;
-                ec=container->nextEntity()) {
-                if (ec->isSelected() ) {
-                        if ( fabs(data.factor.x - data.factor.y) > RS_TOLERANCE 
-                                        && ec->rtti() == RS2::EntityCircle ) {
-                        RS_Circle *c=(RS_Circle*) ec;
-                        RS_EllipseData d(
-                                        c->getCenter(),
-                                        RS_Vector(c->getRadius(),0.),
-                                        1.0,
-                                        0.,
-                                        2.*M_PI,
-                                        false);
-                        ec= new RS_Ellipse(container,d);
-                        std::cout<<"created ellipse\n";
-                }
-                        selectedList.append(ec);
+    for (RS_Entity* ec=container->firstEntity();
+            ec!=NULL;
+            ec=container->nextEntity()) {
+        if (ec->isSelected() ) {
+            if ( fabs(data.factor.x - data.factor.y) > RS_TOLERANCE ) {
+                    if ( ec->rtti() == RS2::EntityCircle ) {
+    //non-isotropic scaling, replacing selected circles with ellipses
+                RS_Circle *c=(RS_Circle*) ec;
+                RS_EllipseData d(
+                    c->getCenter(),
+                    RS_Vector(c->getRadius(),0.),
+                    1.0,
+                    0.,
+                    2.*M_PI,
+                    false);
+                ec= new RS_Ellipse(container,d);
+            } else if ( ec->rtti() == RS2::EntityArc ) {
+    //non-isotropic scaling, replacing selected arcs with ellipses
+                RS_Arc *c=(RS_Arc*) ec;
+                RS_EllipseData d(
+                    c->getCenter(),
+                    RS_Vector(c->getRadius(),0.),
+                    1.0,
+                    c->getAngle1(),
+                    c->getAngle2(),
+                    c->isReversed());
+                ec= new RS_Ellipse(container,d);
+            }
+            }
+            selectedList.append(ec);
 
         }
-        }
+    }
 
 
     // Create new entites
@@ -1552,14 +1563,14 @@ bool RS_Modification::scale(RS_ScaleData& data) {
             num<=data.number || (data.number==0 && num<=1);
             num++) {
 
-            for(QList<RS_Entity*>::iterator pe=selectedList.begin();
-                            pe != selectedList.end();
-                            pe++ ) {
-                    RS_Entity* e= *pe;
-        //for (RS_Entity* e=container->firstEntity();
-        //        e!=NULL;
-        //        e=container->nextEntity()) {
-          //for (uint i=0; i<container->count(); ++i) {
+        for(QList<RS_Entity*>::iterator pe=selectedList.begin();
+                pe != selectedList.end();
+                pe++ ) {
+            RS_Entity* e= *pe;
+            //for (RS_Entity* e=container->firstEntity();
+            //        e!=NULL;
+            //        e=container->nextEntity()) {
+            //for (uint i=0; i<container->count(); ++i) {
             //RS_Entity* e = container->entityAt(i);
             if (e!=NULL ) {
                 RS_Entity* ec = e->clone();
@@ -2214,7 +2225,7 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
                 !e->isLocked() ) {
 //            &&
             if (  (e->isInWindow(firstCorner, secondCorner) ||
-                e->hasEndpointsWithinWindow(firstCorner, secondCorner))) {
+                    e->hasEndpointsWithinWindow(firstCorner, secondCorner))) {
 
                 RS_Entity* ec = e->clone();
                 ec->stretch(firstCorner, secondCorner, offset);
