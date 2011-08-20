@@ -60,10 +60,14 @@ void QG_DlgScale::init() {
     leFactorX->setText(scaleFactorX);
     if (isotropic) {
             scaleFactorY=scaleFactorX;
-            leFactorY->setPlaceholderText(scaleFactorY);
-            leFactorY->setReadOnly(isotropic);
-    } else {
             leFactorY->setText(scaleFactorY);
+            leFactorY->setReadOnly(true);
+            leFactorY->setDisabled(true);
+    } else {
+            leFactorY->setEnabled(true);
+            leFactorY->setText(scaleFactorY);
+            leFactorY->setReadOnly(false);
+            //leFactorY->setDisabled(false);
     }
     cbCurrentAttributes->setChecked(useCurrentAttributes);
     cbCurrentLayer->setChecked(useCurrentLayer);
@@ -106,9 +110,15 @@ void QG_DlgScale::updateData() {
         data->number = leNumber->text().toInt();
     }
     scaleFactorX=leFactorX->text();
-    scaleFactorY=leFactorY->text();
     if(cbIsotropic->isChecked()) {
             scaleFactorY=scaleFactorX;
+            leFactorY->setText(scaleFactorY);
+            leFactorY->setReadOnly(true);
+            leFactorY->setDisabled(true);
+    } else {
+            //leFactorY->setEnabled(true);
+            //leFactorY->setReadOnly(false);
+            scaleFactorY=leFactorY->text();
     }
     data->factor = RS_Vector(scaleFactorX.toDouble(), scaleFactorY.toDouble());
     data->useCurrentAttributes = cbCurrentAttributes->isChecked();
