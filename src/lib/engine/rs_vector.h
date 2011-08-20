@@ -60,6 +60,7 @@ public:
 
     RS_Vector move(RS_Vector offset);
     RS_Vector rotate(double ang);
+    RS_Vector rotate(RS_Vector angleVector);
     RS_Vector rotate(RS_Vector center, double ang);
     RS_Vector scale(RS_Vector factor);
     RS_Vector scale(RS_Vector center, RS_Vector factor);
