@@ -43,10 +43,19 @@ public slots:
 protected slots:
     virtual void languageChange();
 
+private slots:
+
+    void on_cbIsotropic_toggled(bool checked);
+
+    void on_leFactorX_textChanged(const QString &arg1);
+    void on_leFactorY_textChanged(const QString &arg1);
+
 private:
-    QString factor;
+    QString scaleFactorX;
+    QString scaleFactorY;
     RS_ScaleData* data;
     QString copies;
+    bool isotropic;
     int numberMode;
     bool useCurrentLayer;
     bool useCurrentAttributes;
