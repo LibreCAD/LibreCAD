@@ -74,7 +74,7 @@ public:
     bool useCurrentAttributes;
     bool useCurrentLayer;
     RS_Vector referencePoint;
-    double factor;
+    RS_Vector factor;
 };
 
 
