@@ -51,6 +51,17 @@ RS_Vector::RS_Vector(double vx, double vy, double vz) {
     set(vx, vy, vz);
 }
 
+/**
+ * Constructor for a unit vector with given angle
+ */
+RS_Vector::RS_Vector(double angle) {
+    //RS_DEBUG->print("RS_Vector::RS_Vector");
+    x = cos(angle);
+    y = sin(angle);
+    z = 0.0;
+    valid = true;
+}
+
 
 /**
  * Constructor for a point with given coordinates in an array
@@ -231,6 +242,26 @@ RS_Vector RS_Vector::rotate(double ang) {
     y = sin(a) * r;
 
     RS_DEBUG->print("RS_Vector::rotate: x/y: %f/%f", x, y);
+
+    return *this;
+}
+
+/**
+ * Rotates this vector around 0/0 by the given vector
+ * if the vector is a unit, then, it's the same as rotating around 
+ * 0/0 by the angle of the vector
+ */
+RS_Vector RS_Vector::rotate(RS_Vector angleVector) {
+        if( angleVector.valid) {
+    RS_DEBUG->print("RS_Vector::rotate: rotating Vecotr: %g/%g", x,y);
+    RS_DEBUG->print("RS_Vector::rotate: rotating by Vecotr: %g/%g", angleVector.x,angleVector.y);
+    x = x * angleVector.x - y * angleVector.y;
+    y = x * angleVector.y + y * angleVector.x;
+
+    RS_DEBUG->print("RS_Vector::rotate: rotated x/y: %f/%f", x, y);
+        } else {
+    RS_DEBUG->print("RS_Vector::rotate: rotating by invalid RS_Vector");
+        }
 
     return *this;
 }
