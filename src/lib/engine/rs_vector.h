@@ -42,6 +42,7 @@ class RS_Vector {
 public:
     RS_Vector();
     RS_Vector(double vx, double vy, double vz=0.0);
+    RS_Vector(double angle);
     //RS_Vector(double v[]);
     explicit RS_Vector(bool valid);
     ~RS_Vector();
@@ -133,6 +134,7 @@ public:
     double getClosestDistance(const RS_Vector& coord,
                               int counts);
     void rotate(double ang);
+    void rotate(RS_Vector angleVector);
     void rotate(RS_Vector center, double ang);
     void move(RS_Vector vp);
     void scale(RS_Vector center, RS_Vector factor);

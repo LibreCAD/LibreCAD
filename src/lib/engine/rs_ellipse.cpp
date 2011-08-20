@@ -662,19 +662,23 @@ double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) {
 
 /* Dongxu Li's Version, 19 Aug 2011
  * scale an ellipse
- * original,
+ * Find the eigen vactors and eigen values by optimization
+ * original ellipse equation,
+ * x= a cos t
+ * y= b sin t
+ * rotated by angle,
+ *
  * x = a cos t cos (angle) - b sin t sin(angle)
  * y = a cos t sin (angle) + b sin t cos(angle)
- * scaled,
+ * scaled by ( kx, ky),
  * x *= kx
  * y *= ky
  * find the maximum and minimum of x^2 + y^2,
- * the eigen vactors and eigen values are worked out
  */
 void RS_Ellipse::scale(RS_Vector center, RS_Vector factor) {
     data.center.scale(center, factor);
-    RS_Vector vpStart=getStartpoint().scale(center,factor);
-    RS_Vector vpEnd=getEndpoint().scale(center,factor);;
+    RS_Vector vpStart=getStartpoint().scale(getCenter(),factor);
+    RS_Vector vpEnd=getEndpoint().scale(getCenter(),factor);;
     double ct=cos(getAngle());
     double ct2 = ct*ct; // cos^2 angle
     double st=sin(getAngle());
@@ -687,13 +691,10 @@ void RS_Ellipse::scale(RS_Vector center, RS_Vector factor) {
     double cB=0.5*b*b*(kx2*st2+ky2*ct2);
     double cC=a*b*ct*st*(ky2-kx2);
     RS_Vector vp(cA-cB,cC);
-    double t=0.5*vp.angle();
-    setMajorP(
-    RS_Vector(factor.x*(a*ct*cos(t)-b*st*sin(t)),
-                    factor.y*(a*ct*sin(t)+b*st*cos(t)))
-    );
+    setMajorP(RS_Vector(a,b).scale(RS_Vector(vp.angle())).rotate(RS_Vector(ct,st)).scale(factor));
     a=cA+cB;
-    setRatio( sqrt((a - vp.magnitude())/(a+vp.magnitude())) );
+    b=vp.magnitude();
+    setRatio( sqrt((a - b)/(a + b) ));
     setAngle1(getEllipseAngle(vpStart));
     setAngle2(getEllipseAngle(vpEnd));
     //calculateEndpoints();
