@@ -158,7 +158,7 @@ double RS_ConstructionLine::getDistanceToPoint(const RS_Vector& coord,
     if (entity!=NULL) {
         *entity = this;
     }
-    double dist = RS_MAXDOUBLE;
+    //double dist = RS_MAXDOUBLE;
     RS_Vector se = data.point2-data.point1;
     RS_Vector vpc= coord - data.point1;
     vpc.rotate( - se.angle()); // rotate to use the line as x-axis, and projection is simply vpc.x now.
