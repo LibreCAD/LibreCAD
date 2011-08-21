@@ -47,6 +47,7 @@ public:
     explicit RS_Vector(bool valid);
     ~RS_Vector();
 
+    void set(double angle); // set to unit vector by the direction of angle
     void set(double vx, double vy, double vz=0.0);
     void setPolar(double radius, double angle);
 

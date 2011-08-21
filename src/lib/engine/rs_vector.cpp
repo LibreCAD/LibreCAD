@@ -94,6 +94,17 @@ RS_Vector::~RS_Vector() {
 
 
 /**
+ * Sets to a unit vector by the direction angle
+ */
+void RS_Vector::set(double angle) {
+    x = cos(angle);
+    y = sin(angle);
+    z = 0.;
+    valid = true;
+}
+
+
+/**
  * Sets a new position for the vector.
  */
 void RS_Vector::set(double vx, double vy, double vz) {
