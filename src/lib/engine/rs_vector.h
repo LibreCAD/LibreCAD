@@ -63,6 +63,7 @@ public:
     RS_Vector rotate(double ang);
     RS_Vector rotate(RS_Vector angleVector);
     RS_Vector rotate(RS_Vector center, double ang);
+    RS_Vector scale(double factor);
     RS_Vector scale(RS_Vector factor);
     RS_Vector scale(RS_Vector center, RS_Vector factor);
     RS_Vector mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);

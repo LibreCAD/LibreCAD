@@ -454,25 +454,30 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
             *dist = RS_MAXDOUBLE;
         }
         return RS_Vector(false);
-
     }
-    double amin,amax;
-    RS_Vector vp;
-    vp.setPolar(1.0,data.angle1);
-    vp.scale(RS_Vector(1.0,data.ratio));
-    amin=vp.angle();
-    vp.setPolar(1.0,data.angle2);
-    vp.scale(RS_Vector(1.0,data.ratio));
-    amax=vp.angle();
-    amin=0.5*(amin+amax);
-    if (data.reversed ^ (amin > amax ) ) amin += M_PI; // condition to adjust one end by 2*M_PI, therefore, the middle point by M_PI
-    vp.set(getMajorRadius()*cos(amin),getMinorRadius()*sin(amin));
+    if ( getMajorRadius() < RS_TOLERANCE || getMinorRadius() < RS_TOLERANCE ) {
+            //zero radius, return the center
+            RS_Vector vp(getCenter());
+        if (dist!=NULL) {
+            *dist = vp.distanceTo(coord);
+        }
+        return vp;
+    }
+    double amin=getCenter().angleTo(getStartpoint());
+    double amax=getCenter().angleTo(getEndpoint());
+    double a=0.5*(amin+amax);
+    if (! RS_Math::isAngleBetween(a,amin,amax,isReversed() ) ) a += M_PI; // condition to adjust one end by 2*M_PI, therefore, the middle point by M_PI
+    RS_Vector vp(a);
+    RS_Vector vp2=vp;
+    vp2.scale(RS_Vector(1./getMajorRadius(),1./getMinorRadius()));
+    double r=1./sqrt(RS_Vector::dotP(vp2,vp2));
+    vp.scale(r);
     vp.rotate(getAngle());
-    vp.move(data.center);
+    vp.move(getCenter());
     if (dist!=NULL) {
         *dist = coord.distanceTo(vp);
     }
-    RS_DEBUG->print("RS_Ellipse::getNearestMiddle: angle1=%g, angle2=%g, middle=%g\n",data.angle1,data.angle2,amin);
+    RS_DEBUG->print("RS_Ellipse::getNearestMiddle: angle1=%g, angle2=%g, middle=%g\n",data.angle1,data.angle2,a);
     return vp;
 }
 

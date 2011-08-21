@@ -290,13 +290,20 @@ RS_Vector RS_Vector::rotate(RS_Vector center, double ang) {
 /**
  * Scales this vector by the given factors with 0/0 as center.
  */
+RS_Vector RS_Vector::scale(double factor) {
+    x *= factor;
+    y *= factor;
+    return *this;
+}
+
+/**
+ * Scales this vector by the given factors with 0/0 as center.
+ */
 RS_Vector RS_Vector::scale(RS_Vector factor) {
     x *= factor.x;
     y *= factor.y;
     return *this;
 }
-
-
 
 /**
  * Scales this vector by the given factors with the given center.
