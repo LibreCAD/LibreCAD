@@ -50,7 +50,7 @@ void QG_RecentFiles::add(const QString& filename) {
 	RS_DEBUG->print("QG_RecentFiles::add");
 	
     // is the file already in the list?
-    if (files.indexOf(filename) < 0) {
+    if (files.indexOf(filename) >= 0) {
         return;
     }
 
