@@ -123,8 +123,9 @@ bool RS_Math::isAngleBetween(double a,
 //    bool ret = false;
 
     if (reversed) swap(a1,a2); 
-    if ( correctAngle(a2 -a1) >= correctAngle(a - a1) + RS_TOLERANCE_ANGLE &&
-            correctAngle(a - a1) >= RS_TOLERANCE_ANGLE ) {
+    if ( ( correctAngle(a2 -a1) >= correctAngle(a - a1) + RS_TOLERANCE_ANGLE &&
+            correctAngle(a - a1) >= RS_TOLERANCE_ANGLE  ) || fabs( remainder(correctAngle(a2 - a1 ) , 2.*M_PI)) < RS_TOLERANCE_ANGLE) {
+            // the |a2-a1| % (2 pi)=0 means the whole angular range
         return true;
     } else {
         return false;
