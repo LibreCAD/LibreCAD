@@ -49,6 +49,7 @@ public slots:
     virtual void polylineDel();
     virtual void polylineDelBetween();
     virtual void polylineTrim();
+    virtual void polylineEquidistant();
     virtual void back();
 
 protected:
