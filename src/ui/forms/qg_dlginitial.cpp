@@ -25,8 +25,10 @@
 **********************************************************************/
 #include "qg_dlginitial.h"
 
-#include <qvariant.h>
-#include "qg_dlginitial.ui.h"
+#include "rs_system.h"
+#include "rs_settings.h"
+#include "rs_units.h"
+
 /*
  *  Constructs a QG_DlgInitial as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -34,9 +36,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgInitial::QG_DlgInitial(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgInitial::QG_DlgInitial(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
     init();
@@ -59,3 +62,47 @@ void QG_DlgInitial::languageChange()
     retranslateUi(this);
 }
 
+void QG_DlgInitial::init() {
+    // Fill combobox with languages:
+    QStringList languageList = RS_SYSTEM->getLanguageList();
+    for (QStringList::Iterator it = languageList.begin();
+        it!=languageList.end();
+        it++) {
+
+        QString l = RS_SYSTEM->symbolToLanguage(*it);
+        cbLanguage->addItem(l);
+        cbLanguageCmd->addItem(l);
+    }
+
+
+        // units:
+        for (int i=RS2::None; i<RS2::LastUnit; i++) {
+        cbUnit->addItem(RS_Units::unitToString((RS2::Unit)i));
+    }
+
+        cbUnit->setCurrentIndex( cbUnit->findText("Millimeter") );
+        cbLanguage->setCurrentIndex( cbLanguage->findText("English") );
+        cbLanguageCmd->setCurrentIndex( cbLanguageCmd->findText("English") );
+}
+
+void QG_DlgInitial::setText(const QString& t) {
+    lWelcome->setText(t);
+}
+
+void QG_DlgInitial::setPixmap(const QPixmap& p) {
+    lImage->setPixmap(p);
+}
+
+void QG_DlgInitial::ok() {
+    RS_SETTINGS->beginGroup("/Appearance");
+    RS_SETTINGS->writeEntry("/Language",
+                            RS_SYSTEM->languageToSymbol(cbLanguage->currentText()));
+    RS_SETTINGS->writeEntry("/LanguageCmd",
+                            RS_SYSTEM->languageToSymbol(cbLanguageCmd->currentText()));
+    RS_SETTINGS->endGroup();
+
+    RS_SETTINGS->beginGroup("/Defaults");
+    RS_SETTINGS->writeEntry("/Unit", cbUnit->currentText());
+    RS_SETTINGS->endGroup();
+    accept();
+}
