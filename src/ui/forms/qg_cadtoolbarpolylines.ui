@@ -85,6 +85,26 @@
      <normaloff>:/extui/polylinetrim.png</normaloff>:/extui/polylinetrim.png</iconset>
    </property>
   </widget>
+  <widget class="QToolButton" name="bPolylineEquidistant">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>104</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Polyline equidistant</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/polylineequidstant.png</normaloff>:/extui/polylineequidstant.png</iconset>
+   </property>
+  </widget>
   <widget class="QToolButton" name="bPolylineDelBetween">
    <property name="geometry">
     <rect>
@@ -272,6 +292,22 @@
    <signal>clicked()</signal>
    <receiver>QG_CadToolBarPolylines</receiver>
    <slot>polylineAppend()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bPolylineEquidistant</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarPolylines</receiver>
+   <slot>polylineEquidistant()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>20</x>

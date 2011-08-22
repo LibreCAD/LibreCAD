@@ -953,7 +953,12 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-	
+
+    action = actionFactory.createAction(RS2::ActionPolylineEquidistant,
+                                        actionHandler);
+    action->addTo(subMenu);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+
     // Text:
     action = actionFactory.createAction(RS2::ActionDrawText,
                                         actionHandler);

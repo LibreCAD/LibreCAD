@@ -132,6 +132,7 @@
 #include "rs_actionpolylinedel.h"
 #include "rs_actionpolylinedelbetween.h"
 #include "rs_actionpolylinetrim.h"
+#include "rs_actionpolylineequidistant.h"
 
 /**
  * Constructor.
@@ -701,6 +702,12 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
 		action = RS_ActionPolylineTrim::createGUIAction(id, mw);
         connect(action, SIGNAL(activated()),
                 obj, SLOT(slotPolylineTrim()));
+        break;
+
+        case RS2::ActionPolylineEquidistant:
+                action = RS_ActionPolylineEquidistant::createGUIAction(id, mw);
+        connect(action, SIGNAL(activated()),
+                obj, SLOT(slotPolylineEquidistant()));
         break;
 
     case RS2::ActionDrawText:
