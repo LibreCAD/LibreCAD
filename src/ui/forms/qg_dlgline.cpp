@@ -25,13 +25,10 @@
 **********************************************************************/
 #include "qg_dlgline.h"
 
-#include <qvariant.h>
+//#include <qvariant.h>
 #include "rs_line.h"
 #include "rs_graphic.h"
-#include "rs_layer.h"
-#include "qg_widgetpen.h"
-#include "qg_layerbox.h"
-#include "qg_dlgline.ui.h"
+
 /*
  *  Constructs a QG_DlgLine as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -39,9 +36,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgLine::QG_DlgLine(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgLine::QG_DlgLine(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
 }
@@ -61,5 +59,37 @@ QG_DlgLine::~QG_DlgLine()
 void QG_DlgLine::languageChange()
 {
     retranslateUi(this);
+}
+
+void QG_DlgLine::setLine(RS_Line& l) {
+    line = &l;
+    //pen = line->getPen();
+    wPen->setPen(line->getPen(false), true, false, "Pen");
+    RS_Graphic* graphic = line->getGraphic();
+    if (graphic!=NULL) {
+        cbLayer->init(*(graphic->getLayerList()), false, false);
+    }
+    RS_Layer* lay = line->getLayer(false);
+    if (lay!=NULL) {
+        cbLayer->setLayer(*lay);
+    }
+    QString s;
+    s.setNum(line->getStartpoint().x);
+    leStartX->setText(s);
+    s.setNum(line->getStartpoint().y);
+    leStartY->setText(s);
+    s.setNum(line->getEndpoint().x);
+    leEndX->setText(s);
+    s.setNum(line->getEndpoint().y);
+    leEndY->setText(s);
+}
+
+void QG_DlgLine::updateLine() {
+    line->setStartpoint(RS_Vector(RS_Math::eval(leStartX->text()),
+                                  RS_Math::eval(leStartY->text())));
+    line->setEndpoint(RS_Vector(RS_Math::eval(leEndX->text()),
+                                RS_Math::eval(leEndY->text())));
+    line->setPen(wPen->getPen());
+    line->setLayer(cbLayer->currentText());
 }
 

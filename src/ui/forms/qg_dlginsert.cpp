@@ -25,13 +25,9 @@
 **********************************************************************/
 #include "qg_dlginsert.h"
 
-#include <qvariant.h>
 #include "rs_insert.h"
 #include "rs_graphic.h"
-#include "rs_layer.h"
-#include "qg_widgetpen.h"
-#include "qg_layerbox.h"
-#include "qg_dlginsert.ui.h"
+
 /*
  *  Constructs a QG_DlgInsert as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -39,9 +35,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgInsert::QG_DlgInsert(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgInsert::QG_DlgInsert(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
 }
@@ -61,5 +58,50 @@ QG_DlgInsert::~QG_DlgInsert()
 void QG_DlgInsert::languageChange()
 {
     retranslateUi(this);
+}
+
+void QG_DlgInsert::setInsert(RS_Insert& i) {
+    insert = &i;
+    //pen = insert->getPen();
+    wPen->setPen(insert->getPen(false), true, false, "Pen");
+    RS_Graphic* graphic = insert->getGraphic();
+    if (graphic!=NULL) {
+        cbLayer->init(*(graphic->getLayerList()), false, false);
+    }
+    RS_Layer* lay = insert->getLayer(false);
+    if (lay!=NULL) {
+        cbLayer->setLayer(*lay);
+    }
+    QString s;
+    s.setNum(insert->getInsertionPoint().x);
+    leInsertionPointX->setText(s);
+    s.setNum(insert->getInsertionPoint().y);
+    leInsertionPointY->setText(s);
+    s.setNum(insert->getScale().x);
+    leScale->setText(s);
+    s.setNum(RS_Math::rad2deg(insert->getAngle()));
+    leAngle->setText(s);
+    s.setNum(insert->getRows());
+    leRows->setText(s);
+    s.setNum(insert->getCols());
+    leCols->setText(s);
+    s.setNum(insert->getSpacing().x);
+    leRowSpacing->setText(s);
+    s.setNum(insert->getSpacing().y);
+    leColSpacing->setText(s);
+}
+
+void QG_DlgInsert::updateInsert() {
+    insert->setInsertionPoint(RS_Vector(RS_Math::eval(leInsertionPointX->text()),
+                                  RS_Math::eval(leInsertionPointY->text())));
+    insert->setScale(RS_Vector(RS_Math::eval(leScale->text()),
+                                RS_Math::eval(leScale->text())));
+    insert->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
+    insert->setRows(RS_Math::round(RS_Math::eval(leRows->text())));
+    insert->setCols(RS_Math::round(RS_Math::eval(leCols->text())));
+    insert->setSpacing(RS_Vector(RS_Math::eval(leRowSpacing->text()),
+                                 RS_Math::eval(leColSpacing->text())));
+    insert->setPen(wPen->getPen());
+    insert->setLayer(cbLayer->currentText());
 }
 
