@@ -304,9 +304,13 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
 
             RS_Line* line1 = (RS_Line*)te1;
             RS_Line* line2 = (RS_Line*)te2;
-            RS_EntityContainer *pec1=line1->getParent();
-            RS_EntityContainer *pec2=line2->getParent();
-            if (pec1 != NULL && pec2 != NULL ) {
+            RS_Entity *pe1=line1->getParent();
+            RS_Entity *pe2=line2->getParent();
+            //std::cout<<"1 ok\n";
+            if (pe1 != NULL && pe2 == pe1 ) {
+                    if( pe1->isContainer()) {
+            RS_EntityContainer * pec1= (RS_EntityContainer*) pe1;
+            RS_EntityContainer * pec2= (RS_EntityContainer*) pe2;
                 if (
                     pec1-> rtti() == RS2::EntitySpline &&
                     pec1-> getId() == pec2->getId() &&
@@ -314,7 +318,9 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
                     //do not calculate intersections from neighboring lines of a spline
                     return ret;
                 }
+                    }
             }
+            
 
 
             ret = getIntersectionLineLine(line1, line2);
