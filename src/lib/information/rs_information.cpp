@@ -304,15 +304,17 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
 
             RS_Line* line1 = (RS_Line*)te1;
             RS_Line* line2 = (RS_Line*)te2;
-	    RS_EntityContainer *pec1=line1->getParent();
-	    RS_EntityContainer *pec2=line2->getParent();
-	    if ( 
-	    pec1-> rtti() == RS2::EntitySpline &&
-	    pec1-> getId() == pec2->getId() && 
-	    abs(pec1->findEntity(line1) - pec2->findEntity(line2)) <= 1) {
-	    //do not calculate intersections from neighboring lines of a spline
-	    	return ret;
-	    }
+            RS_EntityContainer *pec1=line1->getParent();
+            RS_EntityContainer *pec2=line2->getParent();
+            if (pec1 != NULL && pec2 != NULL ) {
+                if (
+                    pec1-> rtti() == RS2::EntitySpline &&
+                    pec1-> getId() == pec2->getId() &&
+                    abs(pec1->findEntity(line1) - pec2->findEntity(line2)) <= 1) {
+                    //do not calculate intersections from neighboring lines of a spline
+                    return ret;
+                }
+            }
 
 
             ret = getIntersectionLineLine(line1, line2);
