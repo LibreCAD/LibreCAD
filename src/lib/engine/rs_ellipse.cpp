@@ -464,9 +464,9 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     }
     double amin=getCenter().angleTo(getStartpoint());
     double amax=getCenter().angleTo(getEndpoint());
-    double a=0.5*(amin+amax);
+    double a=RS_Math::correctAngle(0.5*(amin+amax));
     if (! RS_Math::isAngleBetween(a,amin,amax,isReversed() ) ) a += M_PI; // condition to adjust one end by 2*M_PI, therefore, the middle point by M_PI
-    RS_Vector vp(a);
+    RS_Vector vp(a-getAngle());
     RS_Vector vp2=vp;
     vp2.scale(RS_Vector(1./getMajorRadius(),1./getMinorRadius()));
     double r=1./sqrt(RS_Vector::dotP(vp2,vp2));
