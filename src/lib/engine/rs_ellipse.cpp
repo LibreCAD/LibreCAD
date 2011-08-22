@@ -113,33 +113,32 @@ void RS_Ellipse::calculateBorders() {
 
     amin=RS_Math::correctAngle(getAngle1()+vp.angle()); // to the range of 0 to 2*M_PI
     amax=RS_Math::correctAngle(getAngle2()+vp.angle()); // to the range of 0 to 2*M_PI
-    if( RS_Math::isAngleBetween(M_PI,amin,amax,isReversed()) || fabs(amax-amin) < RS_TOLERANCE) {
+    if( RS_Math::isAngleBetween(M_PI,amin,amax,isReversed()) ) {
         //if( (amin<=M_PI && delta_a >= M_PI - amin) || (amin > M_PI && delta_a >= 3*M_PI - amin)) {
         minX= data.center.x-vp.magnitude();
     }
-//    else
+    //    else
+
 //       minX=data.center.x +vp.magnitude()*std::min(cos(amin),cos(amin+delta_a));
-    if( RS_Math::isAngleBetween(2.*M_PI,amin,amax,isReversed()) || fabs(amax-amin) < RS_TOLERANCE) {
+    if( RS_Math::isAngleBetween(2.*M_PI,amin,amax,isReversed()) ) {
         //if( delta_a >= 2*M_PI - amin ) {
         maxX= data.center.x+vp.magnitude();
-    }
-//    else
+    }//    else
 //       maxX= data.center.x+vp.magnitude()*std::max(cos(amin),cos(amin+delta_a));
 //      y range
-    vp.set(radius1*sin(angle),-1*radius2*cos(angle));
+    vp.set(radius1*sin(angle),-radius2*cos(angle));
     amin=RS_Math::correctAngle(getAngle1()+vp.angle()); // to the range of 0 to 2*M_PI
     amax=RS_Math::correctAngle(getAngle2()+vp.angle()); // to the range of 0 to 2*M_PI
-    if( RS_Math::isAngleBetween(M_PI,amin,amax,isReversed()) || fabs(amax-amin) < RS_TOLERANCE) {
+    if( RS_Math::isAngleBetween(M_PI,amin,amax,isReversed()) ) {
         //if( (amin<=M_PI &&delta_a >= M_PI - amin) || (amin > M_PI && delta_a >= 3*M_PI - amin)) {
         minY= data.center.y-vp.magnitude();
-    }
-//    else
+    }//    else
 //        minY=data.center.y +vp.magnitude()*std::min(cos(amin),cos(amin+delta_a));
-    if( RS_Math::isAngleBetween(2.*M_PI,amin,amax,isReversed()) || fabs(amax-amin) < RS_TOLERANCE) {
+    if( RS_Math::isAngleBetween(2.*M_PI,amin,amax,isReversed()) ) {
         //if( delta_a >= 2*M_PI - amin ) {
         maxY= data.center.y+vp.magnitude();
     }
-//    else
+    //    else
 //        maxY= data.center.y+vp.magnitude()*std::max(cos(amin),cos(amin+delta_a));
 //std::cout<<"New algorithm:\nminX="<<minX<<"\tmaxX="<<maxX<<"\nminY="<<minY<<"\tmaxY="<<maxY<<std::endl;
 
@@ -188,8 +187,7 @@ bool RS_Ellipse::switchMajorMinor(void)
     RS_Vector vp_start=getStartpoint();
     RS_Vector vp_end=getStartpoint();
     RS_Vector vp=getMajorP();
-    double a=getMinorRadius()/vp.magnitude();
-    setMajorP(RS_Vector(- a*vp.y, a*vp.x)); //direction pi/2 relative to old MajorP;
+    setMajorP(RS_Vector(- data.ratio*vp.y, data.ratio*vp.x)); //direction pi/2 relative to old MajorP;
     setRatio(1./data.ratio);
     setAngle1(getEllipseAngle(vp_start));
     setAngle2(getEllipseAngle(vp_end));
@@ -284,7 +282,8 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     vp2.move(getCenter());
     ret=vp2;
     if (onEntity) {
-        if (!RS_Math::isAngleBetween(getEllipseAngle(ret), getAngle1(), getAngle2(), data.reversed)) { // not on entity, use the nearest endpoint
+        if (!RS_Math::isAngleBetween(getEllipseAngle(ret), getAngle1(), getAngle2(), isReversed())) { // not on entity, use the nearest endpoint
+               //std::cout<<"not on ellipse, ( "<<getAngle1()<<" "<<getEllipseAngle(ret)<<" "<<getAngle2()<<" ) reversed= "<<isReversed()<<"\n";
             ret=getNearestEndpoint(coord,dist);
         }
     }
