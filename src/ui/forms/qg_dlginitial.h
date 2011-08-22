@@ -33,7 +33,7 @@ class QG_DlgInitial : public QDialog, public Ui::QG_DlgInitial
     Q_OBJECT
 
 public:
-    QG_DlgInitial(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgInitial(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgInitial();
 
 public slots:
