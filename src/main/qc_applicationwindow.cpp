@@ -936,6 +936,11 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+
+    action = actionFactory.createAction(RS2::ActionPolylineAppend,
+                                        actionHandler);
+    action->addTo(subMenu);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionPolylineDel,
                                         actionHandler);
     action->addTo(subMenu);
