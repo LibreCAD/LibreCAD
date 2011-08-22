@@ -170,12 +170,6 @@ You can changes these settings later in the Options Dialog of QCad.</string>
   <tabstop>cbLanguageCmd</tabstop>
   <tabstop>buttonOk</tabstop>
  </tabstops>
- <includes>
-  <include location="local">rs_system.h</include>
-  <include location="local">rs.h</include>
-  <include location="local">rs_settings.h</include>
-  <include location="local">rs_units.h</include>
- </includes>
  <resources>
   <include location="../../../res/extui/extui.qrc"/>
  </resources>
