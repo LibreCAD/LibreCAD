@@ -35,7 +35,7 @@ class QG_DlgInsert : public QDialog, public Ui::QG_DlgInsert
     Q_OBJECT
 
 public:
-    QG_DlgInsert(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgInsert(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgInsert();
 
 public slots:
