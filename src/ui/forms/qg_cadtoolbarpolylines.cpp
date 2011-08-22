@@ -118,6 +118,12 @@ void QG_CadToolBarPolylines::polylineTrim() {
     }
 }
 
+void QG_CadToolBarPolylines::polylineEquidistant() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotPolylineEquidistant();
+    }
+}
+
 void QG_CadToolBarPolylines::back() {
     if (cadToolBar!=NULL) {
         cadToolBar->back();
