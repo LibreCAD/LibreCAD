@@ -28,12 +28,14 @@
 
 #include "ui_qg_dlgmove.h"
 
+class RS_MoveData;
+
 class QG_DlgMove : public QDialog, public Ui::QG_DlgMove
 {
     Q_OBJECT
 
 public:
-    QG_DlgMove(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgMove(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgMove();
 
 public slots:

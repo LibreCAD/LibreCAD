@@ -33,7 +33,7 @@ class QG_ExitDialog : public QDialog, public Ui::QG_ExitDialog
     Q_OBJECT
 
 public:
-    QG_ExitDialog(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_ExitDialog(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_ExitDialog();
 
 public slots:

@@ -25,12 +25,13 @@
 **********************************************************************/
 #include "qg_dlgtext.h"
 
-#include <qvariant.h>
-#include "qg_fontbox.h"
-#include "rs_system.h"
+//#include "qg_fontbox.h"
 #include <qtextcodec.h>
 #include <QTextStream>
 #include <QFileDialog>
+#include "rs_system.h"
+#include "rs_settings.h"
+#include "rs_font.h"
 
 /*
  *  Constructs a QG_DlgText as a child of 'parent', with the
@@ -39,9 +40,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgText::QG_DlgText(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgText::QG_DlgText(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
     init();
@@ -77,8 +79,8 @@ void QG_DlgText::init() {
 
 void QG_DlgText::updateUniCharComboBox(int) {
     QString t = cbUniPage->currentText();
-    int i1 = t.find('-');
-    int i2 = t.find(']');
+    int i1 = t.indexOf('-');
+    int i2 = t.indexOf(']');
     int min = t.mid(1, i1-1).toInt(NULL, 16);
     int max = t.mid(i1+1, i2-i1-1).toInt(NULL, 16);
 
@@ -86,7 +88,7 @@ void QG_DlgText::updateUniCharComboBox(int) {
     for (int c=min; c<=max; c++) {
         char buf[5];
         sprintf(buf, "%04X", c);
-        cbUniChar->insertItem(QString("[%1] %2").arg(buf).arg(QChar(c)));
+        cbUniChar->addItem(QString("[%1] %2").arg(buf).arg(QChar(c)));
     }
 }
 
@@ -95,13 +97,13 @@ void QG_DlgText::destroy() {
         RS_SETTINGS->beginGroup("/Draw");
         RS_SETTINGS->writeEntry("/TextHeight", leHeight->text());
         RS_SETTINGS->writeEntry("/TextFont", cbFont->currentText());
-        RS_SETTINGS->writeEntry("/TextDefault", (int)cbDefault->isOn());
+        RS_SETTINGS->writeEntry("/TextDefault", (int)cbDefault->isChecked());
         RS_SETTINGS->writeEntry("/TextAlignment", getAlignment());
         //RS_SETTINGS->writeEntry("/TextLetterSpacing", leLetterSpacing->text());
         //RS_SETTINGS->writeEntry("/TextWordSpacing", leWordSpacing->text());
         RS_SETTINGS->writeEntry("/TextLineSpacingFactor",
                                 leLineSpacingFactor->text());
-        RS_SETTINGS->writeEntry("/TextString", teText->text());
+        RS_SETTINGS->writeEntry("/TextString", teText->toPlainText());
         //RS_SETTINGS->writeEntry("/TextShape", getShape());
         RS_SETTINGS->writeEntry("/TextAngle", leAngle->text());
         //RS_SETTINGS->writeEntry("/TextRadius", leRadius->text());
@@ -226,7 +228,7 @@ void QG_DlgText::updateText() {
             )
         );
 #else*/
-        text->setText(teText->text());
+        text->setText(teText->toPlainText());
 //#endif
         //text->setLetterSpacing(leLetterSpacing.toDouble());
         text->setLineSpacingFactor(leLineSpacingFactor->text().toDouble());
@@ -273,43 +275,43 @@ void QG_DlgText::setAlignmentBR() {
 }
 
 void QG_DlgText::setAlignment(int a) {
-    bTL->setOn(false);
-    bTC->setOn(false);
-    bTR->setOn(false);
-    bML->setOn(false);
-    bMC->setOn(false);
-    bMR->setOn(false);
-    bBL->setOn(false);
-    bBC->setOn(false);
-    bBR->setOn(false);
+    bTL->setChecked(false);
+    bTC->setChecked(false);
+    bTR->setChecked(false);
+    bML->setChecked(false);
+    bMC->setChecked(false);
+    bMR->setChecked(false);
+    bBL->setChecked(false);
+    bBC->setChecked(false);
+    bBR->setChecked(false);
 
     switch (a) {
     case 1:
-        bTL->setOn(true);
+        bTL->setChecked(true);
         break;
     case 2:
-        bTC->setOn(true);
+        bTC->setChecked(true);
         break;
     case 3:
-        bTR->setOn(true);
+        bTR->setChecked(true);
         break;
     case 4:
-        bML->setOn(true);
+        bML->setChecked(true);
         break;
     case 5:
-        bMC->setOn(true);
+        bMC->setChecked(true);
         break;
     case 6:
-        bMR->setOn(true);
+        bMR->setChecked(true);
         break;
     case 7:
-        bBL->setOn(true);
+        bBL->setChecked(true);
         break;
     case 8:
-        bBC->setOn(true);
+        bBC->setChecked(true);
         break;
     case 9:
-        bBR->setOn(true);
+        bBR->setChecked(true);
         break;
     default:
         break;
@@ -317,23 +319,23 @@ void QG_DlgText::setAlignment(int a) {
 }
 
 int QG_DlgText::getAlignment() {
-    if (bTL->isOn()) {
+    if (bTL->isChecked()) {
         return 1;
-    } else if (bTC->isOn()) {
+    } else if (bTC->isChecked()) {
         return 2;
-    } else if (bTR->isOn()) {
+    } else if (bTR->isChecked()) {
         return 3;
-    } else if (bML->isOn()) {
+    } else if (bML->isChecked()) {
         return 4;
-    } else if (bMC->isOn()) {
+    } else if (bMC->isChecked()) {
         return 5;
-    } else if (bMR->isOn()) {
+    } else if (bMR->isChecked()) {
         return 6;
-    } else if (bBL->isOn()) {
+    } else if (bBL->isChecked()) {
         return 7;
-    } else if (bBC->isOn()) {
+    } else if (bBC->isChecked()) {
         return 8;
-    } else if (bBR->isOn()) {
+    } else if (bBR->isChecked()) {
         return 9;
     }
 
@@ -341,7 +343,7 @@ int QG_DlgText::getAlignment() {
 }
 
 void QG_DlgText::setFont(const QString& f) {
-    cbFont->setCurrentText(f);
+    cbFont->setCurrentIndex( cbFont->findText(f) );
     font = cbFont->getFont();
     defaultChanged(false);
 }
@@ -383,8 +385,7 @@ void QG_DlgText::defaultChanged(bool) {
 }
 
 void QG_DlgText::loadText() {
-    QString fn = QFileDialog::getOpenFileName( QString::null, QString::null,
-                 this);
+    QString fn = QFileDialog::getOpenFileName( this, QString::null, QString::null);
     if (!fn.isEmpty()) {
         load(fn);
     }
@@ -397,19 +398,18 @@ void QG_DlgText::load(const QString& fn) {
     }
 
     QTextStream ts(&f);
-    teText->setText(ts.read());
+    teText->setText(ts.readAll());
 }
 
 void QG_DlgText::saveText() {
-    QString fn = QFileDialog::getSaveFileName(QString::null, QString::null,
-                 this);
+    QString fn = QFileDialog::getSaveFileName(this, QString::null, QString::null);
     if (!fn.isEmpty()) {
         save(fn);
     }
 }
 
 void QG_DlgText::save(const QString& fn) {
-    QString text = teText->text();
+    QString text = teText->toPlainText();
     QFile f(fn);
     if (f.open(QIODevice::WriteOnly)) {
         QTextStream t(&f);
@@ -420,23 +420,23 @@ void QG_DlgText::save(const QString& fn) {
 
 void QG_DlgText::insertSymbol(int) {
     QString str = cbSymbol->currentText();
-    int i=str.find('(');
+    int i=str.indexOf('(');
     if (i!=-1) {
-        teText->insert(QString("%1").arg(str.at(i+1)));
+        teText->textCursor().insertText(QString("%1").arg(str.at(i+1)));
     }
 }
 
 void QG_DlgText::updateUniCharButton(int) {
     QString t = cbUniChar->currentText();
-    int i1 = t.find(']');
+    int i1 = t.indexOf(']');
     int c = t.mid(1, i1-1).toInt(NULL, 16);
     bUnicode->setText(QString("%1").arg(QChar(c)));
 }
 
 void QG_DlgText::insertChar() {
     QString t = cbUniChar->currentText();
-    int i1 = t.find(']');
+    int i1 = t.indexOf(']');
     int c = t.mid(1, i1-1).toInt(NULL, 16);
-    teText->insert(QString("%1").arg(QChar(c)));
+    teText->textCursor().insertText( QString("%1").arg(QChar(c)) );
 }
 

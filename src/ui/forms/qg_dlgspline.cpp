@@ -39,9 +39,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgSpline::QG_DlgSpline(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgSpline::QG_DlgSpline(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
 }
@@ -78,7 +79,7 @@ void QG_DlgSpline::setSpline(RS_Spline& e) {
 	
     QString s;
     s.setNum(spline->getDegree());
-	cbDegree->setCurrentText(s);
+    cbDegree->setCurrentIndex( cbDegree->findText(s) );
 
     cbClosed->setChecked(spline->isClosed());
 }

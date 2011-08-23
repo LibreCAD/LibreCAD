@@ -25,10 +25,10 @@
 **********************************************************************/
 #include "qg_dlgoptionsvariables.h"
 
-#include <qvariant.h>
+/*#include <qvariant.h>
 #include <qmessagebox.h>
 #include "rs_units.h"
-#include "rs_filterdxf.h"
+#include "rs_filterdxf.h"*/
 
 /*
  *  Constructs a QG_DlgOptionsVariables as a child of 'parent', with the
@@ -37,9 +37,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgOptionsVariables::QG_DlgOptionsVariables(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgOptionsVariables::QG_DlgOptionsVariables(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
     init();

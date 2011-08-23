@@ -25,9 +25,8 @@
 **********************************************************************/
 #include "qg_dlgscale.h"
 
-#include <qvariant.h>
 #include "rs_settings.h"
-#include "rs_math.h"
+#include "rs_modification.h"
 
 /*
  *  Constructs a QG_DlgScale as a child of 'parent', with the
@@ -37,9 +36,10 @@
  *  true to construct a modal dialog.
  */
 
-QG_DlgScale::QG_DlgScale(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-   : QDialog(parent, name, modal, fl)
+QG_DlgScale::QG_DlgScale(QWidget* parent, bool modal, Qt::WindowFlags fl)
+   : QDialog(parent, fl)
 {
+   setModal(modal);
    setupUi(this);
 
    init();

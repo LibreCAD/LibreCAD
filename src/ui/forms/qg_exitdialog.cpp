@@ -25,11 +25,10 @@
 **********************************************************************/
 #include "qg_exitdialog.h"
 
-#include <qvariant.h>
 #include <qmessagebox.h>
-#include <q3accel.h>
+/*#include <q3accel.h>
 //Added by qt3to4:
-#include <q3mimefactory.h>
+#include <q3mimefactory.h>*/
 
 /*
  *  Constructs a QG_ExitDialog as a child of 'parent', with the
@@ -38,9 +37,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_ExitDialog::QG_ExitDialog(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_ExitDialog::QG_ExitDialog(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
     init();
@@ -79,11 +79,11 @@ void QG_ExitDialog::init()
     //set dlg icon
     QMessageBox mb("","",QMessageBox::Warning, QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
     // RVT_PORT l_icon->setPixmap( *mb.iconPixmap() );
-    bLeave->setIconSet(qPixmapFromMimeSource("fileclose.png"));
+    bLeave->setIcon(QIcon(":/actions/fileclose.png"));
     // RVT_PORT makeLetterAccell( bLeave );
-    bSave->setIconSet(qPixmapFromMimeSource("filesave2.png"));
+    bSave->setIcon(QIcon(":/actions/filesave2.png"));
      // RVT_PORT makeLetterAccell( bSave );
-    bSaveAs->setIconSet(qPixmapFromMimeSource("filesaveas.png"));
+    bSaveAs->setIcon(QIcon(":/actions/filesaveas.png"));
      // RVT_PORT makeLetterAccell( bSaveAs );
     // RVT_PORT  makeLetterAccell( bCancel );
 }
@@ -97,7 +97,7 @@ void QG_ExitDialog::setText(const QString& text) {
 }
 
 void QG_ExitDialog::setTitle(const QString& text) {
-    setCaption(text);
+    setWindowTitle(text);
 }
 
 void QG_ExitDialog::setForce(bool force) {
