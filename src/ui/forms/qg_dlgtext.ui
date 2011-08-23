@@ -22,7 +22,7 @@
      <item>
       <layout class="QVBoxLayout">
        <item>
-        <widget class="Q3ButtonGroup" name="bgFont">
+        <widget class="QGroupBox" name="bgFont">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -146,7 +146,7 @@
        <item>
         <layout class="QHBoxLayout">
          <item>
-          <widget class="Q3ButtonGroup" name="bgAlignment">
+          <widget class="QGroupBox" name="bgAlignment">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -422,7 +422,7 @@
           </widget>
          </item>
          <item>
-          <widget class="Q3ButtonGroup" name="bgShape">
+          <widget class="QGroupBox" name="bgShape">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -589,7 +589,7 @@
         </layout>
        </item>
        <item>
-        <widget class="Q3TextEdit" name="teText">
+        <widget class="QTextEdit" name="teText">
          <property name="linkUnderline" stdset="0">
           <bool>false</bool>
          </property>
@@ -602,7 +602,7 @@
    <item>
     <layout class="QHBoxLayout">
      <item>
-      <widget class="Q3ButtonGroup" name="buttonGroup7">
+      <widget class="QGroupBox" name="buttonGroup7">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -703,7 +703,7 @@
       </widget>
      </item>
      <item>
-      <widget class="Q3ButtonGroup" name="buttonGroup5">
+      <widget class="QGroupBox" name="buttonGroup5">
        <property name="title">
         <string>Insert Unicode</string>
        </property>
@@ -1381,45 +1381,11 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Q3Frame</class>
-   <extends>QFrame</extends>
-   <header>Qt3Support/Q3Frame</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Q3ButtonGroup</class>
-   <extends>Q3GroupBox</extends>
-   <header>Qt3Support/Q3ButtonGroup</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Q3TextEdit</class>
-   <extends>Q3Frame</extends>
-   <header>q3textedit.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>QG_FontBox</class>
    <extends>QWidget</extends>
    <header>qg_fontbox.h</header>
   </customwidget>
  </customwidgets>
- <includes>
-  <include location="local">rs_text.h</include>
-  <include location="local">rs_settings.h</include>
-  <include location="local">rs_font.h</include>
-  <include location="local">rs_math.h</include>
-  <include location="global">qfile.h</include>
-  <include location="global">q3filedialog.h</include>
-  <include location="local">rs_filterdxf.h</include>
-  <include location="local">qg_fontbox.h</include>
- </includes>
  <resources/>
  <connections>
   <connection>

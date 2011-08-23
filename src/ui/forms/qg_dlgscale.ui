@@ -25,7 +25,7 @@
   <property name="windowTitle">
    <string>Scaling Options</string>
   </property>
-  <widget class="Q3ButtonGroup" name="bgNumber">
+  <widget class="QGroupBox" name="bgNumber">
    <property name="geometry">
     <rect>
      <x>9</x>
@@ -187,7 +187,7 @@
     </size>
    </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="layoutWidget_1">
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -302,23 +302,6 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Q3ButtonGroup</class>
-   <extends>Q3GroupBox</extends>
-   <header>Qt3Support/Q3ButtonGroup</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
- <includes>
-  <include location="local">rs_modification.h</include>
- </includes>
  <resources>
   <include location="../../../res/extui/extui.qrc"/>
  </resources>

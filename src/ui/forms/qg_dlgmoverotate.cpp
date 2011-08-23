@@ -25,9 +25,9 @@
 **********************************************************************/
 #include "qg_dlgmoverotate.h"
 
-#include <qvariant.h>
 #include "rs_settings.h"
 #include "rs_math.h"
+#include "rs_modification.h"
 
 /*
  *  Constructs a QG_DlgMoveRotate as a child of 'parent', with the
@@ -36,9 +36,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgMoveRotate::QG_DlgMoveRotate(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgMoveRotate::QG_DlgMoveRotate(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
     init();

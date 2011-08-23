@@ -25,8 +25,8 @@
 **********************************************************************/
 #include "qg_dlgmove.h"
 
-#include <qvariant.h>
 #include "rs_settings.h"
+#include "rs_modification.h"
 
 /*
  *  Constructs a QG_DlgMove as a child of 'parent', with the
@@ -35,9 +35,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgMove::QG_DlgMove(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgMove::QG_DlgMove(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
     init();
