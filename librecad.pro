@@ -651,43 +651,7 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_splineoptions.h \
     src/ui/forms/qg_textoptions.h \
     src/ui/forms/qg_trimamountoptions.h \
-    src/ui/forms/qg_widgetpen.h \
-    src/ui/forms/qg_dlgmove.ui.h \
-    src/ui/forms/qg_dlgmoverotate.ui.h \
-    src/ui/forms/qg_dlgoptionsdrawing.ui.h \
-    src/ui/forms/qg_dlgoptionsgeneral.ui.h \
-    src/ui/forms/qg_dlgoptionsvariables.ui.h \
-    src/ui/forms/qg_dlgpoint.ui.h \
-    src/ui/forms/qg_dlgrotate.ui.h \
-    src/ui/forms/qg_dlgrotate2.ui.h \
-    src/ui/forms/qg_dlgscale.ui.h \
-    src/ui/forms/qg_dlgspline.ui.h \
-    src/ui/forms/qg_dlgtext.ui.h \
-    src/ui/forms/qg_exitdialog.ui.h \
-    src/ui/forms/qg_imageoptions.ui.h \
-    src/ui/forms/qg_insertoptions.ui.h \
-    src/ui/forms/qg_layerdialog.ui.h \
-    src/ui/forms/qg_libraryinsertoptions.ui.h \
-    src/ui/forms/qg_librarywidget.ui.h \
-    src/ui/forms/qg_lineangleoptions.ui.h \
-    src/ui/forms/qg_linebisectoroptions.ui.h \
-    src/ui/forms/qg_lineoptions.ui.h \
-    src/ui/forms/qg_lineparalleloptions.ui.h \
-    src/ui/forms/qg_lineparallelthroughoptions.ui.h \
-    src/ui/forms/qg_linepolygon2options.ui.h \
-    src/ui/forms/qg_linepolygonoptions.ui.h \
-    src/ui/forms/qg_linerelangleoptions.ui.h \
-    src/ui/forms/qg_mousewidget.ui.h \
-    src/ui/forms/qg_moverotateoptions.ui.h \
-    src/ui/forms/qg_polylineoptions.ui.h \
-    src/ui/forms/qg_printpreviewoptions.ui.h \
-    src/ui/forms/qg_roundoptions.ui.h \
-    src/ui/forms/qg_selectionwidget.ui.h \
-    src/ui/forms/qg_snapdistoptions.ui.h \
-    src/ui/forms/qg_splineoptions.ui.h \
-    src/ui/forms/qg_textoptions.ui.h \
-    src/ui/forms/qg_trimamountoptions.ui.h \
-    src/ui/forms/qg_widgetpen.ui.h
+    src/ui/forms/qg_widgetpen.h
 
 SOURCES += src/ui/qg_actionfactory.cpp \
     src/ui/qg_actionhandler.cpp \

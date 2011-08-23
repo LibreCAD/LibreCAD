@@ -26,7 +26,7 @@
 #include "qg_linepolygonoptions.h"
 
 #include <qvariant.h>
-#include "qg_linepolygonoptions.ui.h"
+
 /*
  *  Constructs a QG_LinePolygonOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -56,3 +56,35 @@ void QG_LinePolygonOptions::languageChange()
     retranslateUi(this);
 }
 
+void QG_LinePolygonOptions::destroy() {
+    RS_SETTINGS->beginGroup("/Draw");
+    RS_SETTINGS->writeEntry("/LinePolygonNumber", sbNumber->text());
+    RS_SETTINGS->endGroup();
+}
+
+void QG_LinePolygonOptions::setAction(RS_ActionInterface* a, bool update) {
+    if (a!=NULL && a->rtti()==RS2::ActionDrawLinePolygon) {
+        action = (RS_ActionDrawLinePolygon*)a;
+
+        QString sn;
+        if (update) {
+            sn = QString("%1").arg(action->getNumber());
+        } else {
+            RS_SETTINGS->beginGroup("/Draw");
+            sn = RS_SETTINGS->readEntry("/LinePolygonNumber", "3");
+            RS_SETTINGS->endGroup();
+        }
+        sbNumber->setValue(sn.toInt());
+    } else {
+        RS_DEBUG->print(RS_Debug::D_ERROR, 
+			"QG_LinePolygonOptions::setAction: wrong action type");
+        action = NULL;
+    }
+
+}
+
+void QG_LinePolygonOptions::updateNumber(int n) {
+    if (action!=NULL) {
+        action->setNumber(n);
+    }
+}

@@ -35,7 +35,7 @@ class QG_DlgPoint : public QDialog, public Ui::QG_DlgPoint
     Q_OBJECT
 
 public:
-    QG_DlgPoint(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgPoint(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgPoint();
 
 public slots:
