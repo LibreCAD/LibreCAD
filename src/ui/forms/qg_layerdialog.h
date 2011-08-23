@@ -28,12 +28,15 @@
 
 #include "ui_qg_layerdialog.h"
 
+class RS_Layer;
+class RS_LayerList;
+
 class QG_LayerDialog : public QDialog, public Ui::QG_LayerDialog
 {
     Q_OBJECT
 
 public:
-    QG_LayerDialog(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_LayerDialog(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_LayerDialog();
 
 public slots:

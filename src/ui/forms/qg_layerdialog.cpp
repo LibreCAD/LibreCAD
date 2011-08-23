@@ -25,9 +25,9 @@
 **********************************************************************/
 #include "qg_layerdialog.h"
 
-#include <qvariant.h>
 #include <qmessagebox.h>
-#include "qg_widgetpen.h"
+#include "rs_layer.h"
+#include "rs_layerlist.h"
 
 /*
  *  Constructs a QG_LayerDialog as a child of 'parent', with the
@@ -36,9 +36,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_LayerDialog::QG_LayerDialog(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_LayerDialog::QG_LayerDialog(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
     init();
@@ -73,21 +74,21 @@ void QG_LayerDialog::setLayer(RS_Layer* l) {
 }
 
 void QG_LayerDialog::updateLayer() {
-    layer->setName(leName->text().latin1());
+    layer->setName(leName->text().toLatin1().data());
     layer->setPen(wPen->getPen());
 }
 
 void QG_LayerDialog::validate() {
 	if (layerList != NULL && 
-		(editLayer == FALSE || layerName != leName->text().latin1())) {
-		RS_Layer* l = layerList->find(leName->text().latin1());
+                (editLayer == FALSE || layerName != leName->text().toLatin1().data())) {
+                RS_Layer* l = layerList->find(leName->text().toLatin1().data());
 		if (l != NULL) {
 			QMessageBox::information(parentWidget(),
 									 QMessageBox::tr("Layer Properties"),
 									 QMessageBox::tr("Layer with a name \"%1\" "
 													 "already exists. Please specify "
 													 "a different name.")
-									 .arg(leName->text().latin1()),
+                                                                         .arg(leName->text().toLatin1().data()),
 									 QMessageBox::Ok);
 			leName->setFocus();
 			leName->selectAll();
