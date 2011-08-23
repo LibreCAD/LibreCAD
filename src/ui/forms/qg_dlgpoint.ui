@@ -66,7 +66,7 @@
       </layout>
      </item>
      <item>
-      <widget class="Q3ButtonGroup" name="buttonGroup8">
+      <widget class="QGroupBox" name="buttonGroup8">
        <property name="title">
         <string>Geometry</string>
        </property>
@@ -193,18 +193,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Q3ButtonGroup</class>
-   <extends>Q3GroupBox</extends>
-   <header>Qt3Support/Q3ButtonGroup</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>QG_WidgetPen</class>
    <extends>QWidget</extends>
    <header>qg_widgetpen.h</header>
@@ -221,12 +209,6 @@
   <tabstop>bOk</tabstop>
   <tabstop>bCancel</tabstop>
  </tabstops>
- <includes>
-  <include location="local">rs_pen.h</include>
-  <include location="local">qg_widgetpen.h</include>
-  <include location="local">qg_layerbox.h</include>
-  <include location="local">qg_widgetpen.h</include>
- </includes>
  <resources>
   <include location="../../../res/extui/extui.qrc"/>
  </resources>
