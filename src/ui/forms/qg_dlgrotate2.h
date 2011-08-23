@@ -28,12 +28,14 @@
 
 #include "ui_qg_dlgrotate2.h"
 
+class RS_Rotate2Data;
+
 class QG_DlgRotate2 : public QDialog, public Ui::QG_DlgRotate2
 {
     Q_OBJECT
 
 public:
-    QG_DlgRotate2(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgRotate2(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgRotate2();
 
 public slots:

@@ -26,7 +26,7 @@
 #include "qg_snapdistoptions.h"
 
 #include <qvariant.h>
-#include "qg_snapdistoptions.ui.h"
+
 /*
  *  Constructs a QG_SnapDistOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -56,3 +56,24 @@ void QG_SnapDistOptions::languageChange()
     retranslateUi(this);
 }
 
+void QG_SnapDistOptions::destroy() {
+    RS_SETTINGS->beginGroup("/Snap");
+    RS_SETTINGS->writeEntry("/Distance", leDist->text());
+    RS_SETTINGS->endGroup();
+}
+
+void QG_SnapDistOptions::setDist(double* d) {
+    dist = d;
+
+    RS_SETTINGS->beginGroup("/Snap");
+    QString r = RS_SETTINGS->readEntry("/Distance", "1.0");
+    RS_SETTINGS->endGroup();
+
+    leDist->setText(r);
+}
+
+void QG_SnapDistOptions::updateDist(const QString& d) {
+    if (dist!=NULL) {
+        *dist = RS_Math::eval(d, 1.0);
+    }
+}

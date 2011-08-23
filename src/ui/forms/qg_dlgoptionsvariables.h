@@ -33,7 +33,7 @@ class QG_DlgOptionsVariables : public QDialog, public Ui::QG_DlgOptionsVariables
     Q_OBJECT
 
 public:
-    QG_DlgOptionsVariables(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgOptionsVariables(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgOptionsVariables();
 
 public slots:

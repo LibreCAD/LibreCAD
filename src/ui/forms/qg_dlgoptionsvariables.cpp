@@ -25,11 +25,11 @@
 **********************************************************************/
 #include "qg_dlgoptionsvariables.h"
 
-#include <qvariant.h>
+/*#include <qvariant.h>
 #include <qmessagebox.h>
 #include "rs_units.h"
-#include "rs_filterdxf.h"
-#include "qg_dlgoptionsvariables.ui.h"
+#include "rs_filterdxf.h"*/
+
 /*
  *  Constructs a QG_DlgOptionsVariables as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -37,9 +37,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgOptionsVariables::QG_DlgOptionsVariables(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgOptionsVariables::QG_DlgOptionsVariables(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
     init();
@@ -62,3 +63,70 @@ void QG_DlgOptionsVariables::languageChange()
     retranslateUi(this);
 }
 
+void QG_DlgOptionsVariables::init() {
+    graphic = NULL;
+
+    // variables
+    tabVariables->verticalHeader()->hide();
+    tabVariables->verticalHeader()->setFixedWidth(0);
+    tabVariables->setColumnReadOnly(0, true);
+    tabVariables->setColumnReadOnly(1, true);
+    tabVariables->setColumnReadOnly(2, true);
+}
+
+
+/**
+ * Sets the graphic and updates the GUI to match the drawing.
+ */
+void QG_DlgOptionsVariables::setGraphic(RS_Graphic* g) {
+    graphic = g;
+    updateVariables();
+}
+
+
+/**
+ * Updates the Variables tab from the graphic values.
+ */
+void QG_DlgOptionsVariables::updateVariables() {
+    if (graphic==NULL) {
+        return;
+    }
+    
+    QVector<int> r(tabVariables->numRows());
+    for (int i=0; i<tabVariables->numRows(); ++i) {
+        r[i] = i;
+    }
+    tabVariables->removeRows(r);
+    QHash<QString, RS_Variable>vars = graphic->getVariableDict();
+    QHash<QString, RS_Variable>::iterator it = vars.begin();
+    while (it != vars.end()) {
+        tabVariables->insertRows(tabVariables->numRows(), 1);
+        
+        tabVariables->setText(tabVariables->numRows()-1, 0, it.key());
+        tabVariables->setText(tabVariables->numRows()-1, 1, QString("%1").arg(it.value().getCode()));
+        QString str = "";
+        switch (it.value().getType()) {
+            case RS2::VariableVoid:
+                break;
+            case RS2::VariableInt:
+                str = QString("%1").arg(it.value().getInt());
+                break;
+            case RS2::VariableDouble:
+                str = QString("%1").arg(it.value().getDouble());
+                break;
+            case RS2::VariableString:
+                str = QString("%1").arg(it.value().getString());
+                break;
+            case RS2::VariableVector:
+                str = QString("%1/%2")
+                      .arg(it.value().getVector().x)
+                      .arg(it.value().getVector().y);
+                if (RS_FilterDXF::isVariableTwoDimensional(it.key())==false) {
+                    str+= QString("/%1").arg(it.value().getVector().z);
+                }
+                break;
+        }
+        tabVariables->setText(tabVariables->numRows()-1, 2, str);
+        ++it;
+    }
+}
