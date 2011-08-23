@@ -26,7 +26,7 @@
 #include "qg_moverotateoptions.h"
 
 #include <qvariant.h>
-#include "qg_moverotateoptions.ui.h"
+
 /*
  *  Constructs a QG_MoveRotateOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -38,6 +38,40 @@ QG_MoveRotateOptions::QG_MoveRotateOptions(QWidget* parent, const char* name, Qt
 
 }
 
+void QG_MoveRotateOptions::destroy() {
+    RS_SETTINGS->beginGroup("/Modify");
+    RS_SETTINGS->writeEntry("/MoveRotate", leAngle->text());
+    RS_SETTINGS->endGroup();
+}
+
+
+void QG_MoveRotateOptions::setAction(RS_ActionInterface* a, bool update) {
+    if (a!=NULL && a->rtti()==RS2::ActionModifyMoveRotate) {
+        action = (RS_ActionModifyMoveRotate*)a;
+
+        QString sa;
+        if (update) {
+            sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
+        } else {
+            RS_SETTINGS->beginGroup("/Modify");
+            sa = RS_SETTINGS->readEntry("/MoveRotate", "30");
+            RS_SETTINGS->endGroup();
+            action->setAngle(RS_Math::deg2rad(sa.toDouble()));
+        }
+        leAngle->setText(sa);
+    } else {
+        RS_DEBUG->print(RS_Debug::D_ERROR, 
+			"QG_CircleOptions::setAction: wrong action type");
+        action = NULL;
+    }
+
+}
+
+void QG_MoveRotateOptions::updateAngle(const QString& a) {
+    if (action!=NULL) {
+        action->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
+    }
+}
 /*
  *  Destroys the object and frees any allocated resources
  */

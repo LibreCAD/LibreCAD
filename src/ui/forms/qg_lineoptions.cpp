@@ -26,7 +26,7 @@
 #include "qg_lineoptions.h"
 
 #include <qvariant.h>
-#include "qg_lineoptions.ui.h"
+
 /*
  *  Constructs a QG_LineOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -55,3 +55,24 @@ void QG_LineOptions::languageChange()
     retranslateUi(this);
 }
 
+void QG_LineOptions::setAction(RS_ActionInterface* a) {
+    if (a!=NULL && a->rtti()==RS2::ActionDrawLine) {
+        action = (RS_ActionDrawLine*)a;
+    } else {
+        RS_DEBUG->print(RS_Debug::D_ERROR, 
+			"QG_LineOptions::setAction: wrong action type");
+        action = NULL;
+    }
+}
+
+void QG_LineOptions::close() {
+    if (action!=NULL) {
+        action->close();
+    }
+}
+
+void QG_LineOptions::undo() {
+    if (action!=NULL) {
+        action->undo();
+    }
+}

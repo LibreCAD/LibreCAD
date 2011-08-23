@@ -27,13 +27,14 @@
 #define QG_DLGTEXT_H
 
 #include "ui_qg_dlgtext.h"
+#include "rs_text.h"
 
 class QG_DlgText : public QDialog, public Ui::QG_DlgText
 {
     Q_OBJECT
 
 public:
-    QG_DlgText(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgText(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgText();
 
     virtual int getAlignment();
