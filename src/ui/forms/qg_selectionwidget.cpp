@@ -27,7 +27,7 @@
 
 #include <qvariant.h>
 #include "rs_settings.h"
-#include "qg_selectionwidget.ui.h"
+
 /*
  *  Constructs a QG_SelectionWidget as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -57,3 +57,26 @@ void QG_SelectionWidget::languageChange()
     retranslateUi(this);
 }
 
+void QG_SelectionWidget::init() {
+    lEntities->setText("0");
+    
+    int fsize;
+#ifdef __APPLE__
+    fsize = 9;
+#else
+    fsize = 7;
+#endif
+    
+    RS_SETTINGS->beginGroup("/Appearance");
+    fsize = RS_SETTINGS->readNumEntry("/StatusBarFontSize", fsize);
+    RS_SETTINGS->endGroup();
+    
+    lEntities->setFont(QFont("Helvetica", fsize));
+    lLabel->setFont(QFont("Helvetica", fsize));
+}
+
+void QG_SelectionWidget::setNumber(int n) {
+    QString str;
+    str.setNum(n);
+    lEntities->setText(str);
+}
