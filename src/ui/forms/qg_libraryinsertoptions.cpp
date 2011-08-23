@@ -25,14 +25,16 @@
 **********************************************************************/
 #include "qg_libraryinsertoptions.h"
 
-#include <qvariant.h>
+#include "rs_actioninterface.h"
+#include "rs_actionlibraryinsert.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_LibraryInsertOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_LibraryInsertOptions::QG_LibraryInsertOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_LibraryInsertOptions::QG_LibraryInsertOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
