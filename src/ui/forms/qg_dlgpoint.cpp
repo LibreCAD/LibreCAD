@@ -25,12 +25,8 @@
 **********************************************************************/
 #include "qg_dlgpoint.h"
 
-#include <qvariant.h>
 #include "rs_point.h"
 #include "rs_graphic.h"
-#include "rs_layer.h"
-#include "qg_widgetpen.h"
-#include "qg_layerbox.h"
 
 /*
  *  Constructs a QG_DlgPoint as a child of 'parent', with the
@@ -39,9 +35,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgPoint::QG_DlgPoint(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgPoint::QG_DlgPoint(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
 }

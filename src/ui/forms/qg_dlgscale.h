@@ -28,12 +28,14 @@
 
 #include "ui_qg_dlgscale.h"
 
+class RS_ScaleData;
+
 class QG_DlgScale : public QDialog, public Ui::QG_DlgScale
 {
     Q_OBJECT
 
 public:
-    QG_DlgScale(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgScale(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgScale();
 
 public slots:

@@ -67,7 +67,7 @@
     </layout>
    </item>
    <item row="0" column="0">
-    <widget class="Q3ButtonGroup" name="bgNumber">
+    <widget class="QGroupBox" name="bgNumber">
      <property name="title">
       <string>Number of copies</string>
      </property>
@@ -232,23 +232,6 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Q3ButtonGroup</class>
-   <extends>Q3GroupBox</extends>
-   <header>Qt3Support/Q3ButtonGroup</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
- <includes>
-  <include location="local">rs_modification.h</include>
- </includes>
  <resources>
   <include location="../../../res/extui/extui.qrc"/>
  </resources>
