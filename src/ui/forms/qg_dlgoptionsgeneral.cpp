@@ -83,8 +83,8 @@ void QG_DlgOptionsGeneral::init() {
         QString l = RS_SYSTEM->symbolToLanguage(*it);
 	if (l.isEmpty()==false) {
                 RS_DEBUG->print("QG_DlgOptionsGeneral::init: %s", l.toLatin1().data());
-        	cbLanguage->insertItem(l);
-        	cbLanguageCmd->insertItem(l);
+                cbLanguage->addItem(l);
+                cbLanguageCmd->addItem(l);
 	}
     }
 
@@ -96,10 +96,10 @@ void QG_DlgOptionsGeneral::init() {
     def_lang = QC_PREDEFINED_LOCALE;
 #endif
     QString lang = RS_SETTINGS->readEntry("/Language", def_lang);
-    cbLanguage->setCurrentText(RS_SYSTEM->symbolToLanguage(lang));
+    cbLanguage->setCurrentIndex( cbLanguage->findText(RS_SYSTEM->symbolToLanguage(lang)) );
 
     QString langCmd = RS_SETTINGS->readEntry("/LanguageCmd", def_lang);
-    cbLanguageCmd->setCurrentText(RS_SYSTEM->symbolToLanguage(langCmd));
+    cbLanguageCmd->setCurrentIndex( cbLanguageCmd->findText(RS_SYSTEM->symbolToLanguage(langCmd)) );
 
     // graphic view:
     // crosshairs:
@@ -110,28 +110,29 @@ void QG_DlgOptionsGeneral::init() {
     QString scaleGrid = RS_SETTINGS->readEntry("/ScaleGrid", "1");
     cbScaleGrid->setChecked(scaleGrid=="1");
     QString minGridSpacing = RS_SETTINGS->readEntry("/MinGridSpacing", "10");
-    cbMinGridSpacing->setCurrentText(minGridSpacing);
+    cbMinGridSpacing->setCurrentIndex( cbMinGridSpacing->findText(minGridSpacing) );
 
     // preview:
     QString maxPreview = RS_SETTINGS->readEntry("/MaxPreview", "100");
-    cbMaxPreview->setCurrentText(maxPreview);
-    
+    cbMaxPreview->setCurrentIndex( cbMaxPreview->findText(maxPreview) );
+
 
     // colors:
     QString backgroundColor = RS_SETTINGS->readEntry("/BackgroundColor", "Black");
-    cbBackgroundColor->setCurrentText(backgroundColor);
+    cbBackgroundColor->setCurrentIndex( cbBackgroundColor->findText(backgroundColor) );
     QString gridColor = RS_SETTINGS->readEntry("/GridColor", "Gray");
-    cbGridColor->setCurrentText(gridColor);
+    cbGridColor->setCurrentIndex( cbGridColor->findText(gridColor) );
     QString metaGridColor = RS_SETTINGS->readEntry("/MetaGridColor", "#404040");
-    cbMetaGridColor->setCurrentText(metaGridColor);
+
+    cbMetaGridColor->setCurrentIndex( cbMetaGridColor->findText(metaGridColor) );
     QString selectedColor = RS_SETTINGS->readEntry("/SelectedColor", "#a54747");
-    cbSelectedColor->setCurrentText(selectedColor);
+    cbSelectedColor->setCurrentIndex( cbSelectedColor->findText(selectedColor) );
     QString highlightedColor = RS_SETTINGS->readEntry("/HighlightedColor", "#739373");
-    cbHighlightedColor->setCurrentText(highlightedColor);
-    
+    cbHighlightedColor->setCurrentIndex( cbHighlightedColor->findText(highlightedColor) );
+
     // font size:
     QString sizeStatus = RS_SETTINGS->readEntry("/StatusBarFontSize", "9");
-    cbSizeStatus->setCurrentText(sizeStatus);
+    cbSizeStatus->setCurrentIndex( cbSizeStatus->findText(sizeStatus) );
 
     RS_SETTINGS->endGroup();
 
@@ -148,17 +149,17 @@ void QG_DlgOptionsGeneral::init() {
     // units:
     for (int i=RS2::None; i<RS2::LastUnit; i++) {
         if (i!=(int)RS2::None)
-            cbUnit->insertItem(RS_Units::unitToString((RS2::Unit)i));
+            cbUnit->addItem(RS_Units::unitToString((RS2::Unit)i));
     }
     // RVT_PORT cbUnit->listBox()->sort();
-    cbUnit->insertItem( RS_Units::unitToString(RS2::None), 0 );
+    cbUnit->insertItem( 0, RS_Units::unitToString(RS2::None) );
 
     QString def_unit = "Millimeter";
 #ifdef QC_PREDEFINED_UNIT
     def_unit = QC_PREDEFINED_UNIT;
 #endif
     RS_SETTINGS->beginGroup("/Defaults");
-    cbUnit->setCurrentText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit) ));
+    cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( (const char*)RS_SETTINGS->readEntry("/Unit", def_unit).data() )) );
     // Auto save timer
     cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
     cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)?true:false);
