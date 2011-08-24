@@ -25,14 +25,15 @@
 **********************************************************************/
 #include "qg_roundoptions.h"
 
-#include <qvariant.h>
+#include "rs_actionmodifyround.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_RoundOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_RoundOptions::QG_RoundOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_RoundOptions::QG_RoundOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 

@@ -25,14 +25,15 @@
 **********************************************************************/
 #include "qg_polylineoptions.h"
 
-#include <qvariant.h>
+#include "rs_actiondrawpolyline.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_PolylineOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_PolylineOptions::QG_PolylineOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_PolylineOptions::QG_PolylineOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
@@ -58,7 +59,7 @@ void QG_PolylineOptions::languageChange()
 
 void QG_PolylineOptions::destroy() {
     RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/PolylineMode",cbMode->currentItem());
+    RS_SETTINGS->writeEntry("/PolylineMode",cbMode->currentIndex());
     RS_SETTINGS->writeEntry("/PolylineRadius", leRadius->text());    
     RS_SETTINGS->writeEntry("/PolylineAngle", leAngle->text()); 
     RS_SETTINGS->writeEntry("/PolylineReversed", (int)rbNeg->isChecked());
@@ -91,7 +92,7 @@ void QG_PolylineOptions::setAction(RS_ActionInterface* a, bool update) {
         }
         leRadius->setText(sd1);
 	leAngle->setText(sd2);
-	cbMode->setCurrentItem(mode);
+        cbMode->setCurrentIndex(mode);
 	rbNeg->setChecked(reversed);
 	updateMode(mode);
     } else {
