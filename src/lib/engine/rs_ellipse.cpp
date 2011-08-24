@@ -426,6 +426,13 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
  */
 bool RS_Ellipse::isPointOnEntity(const RS_Vector& coord,
                                  double tolerance) {
+    if ( getCenter().distanceTo(coord) < tolerance ) {
+            if (getMajorRadius() < tolerance || getMinorRadius() < tolerance ) {
+                    return true;
+            } else {
+                    return false;
+            }
+    }
     double dist = getDistanceToPoint(coord, NULL, RS2::ResolveNone);
     return (dist<=tolerance);
 }
@@ -496,18 +503,12 @@ RS_Vector RS_Ellipse::getNearestDist(double /*distance*/,
 double RS_Ellipse::getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity,
                                       RS2::ResolveLevel, double /*solidDist*/) {
-    double dist = RS_MAXDOUBLE;
-    getNearestPointOnEntity(coord, true, &dist, entity);
+    double dToEntity = RS_MAXDOUBLE;
+    getNearestPointOnEntity(coord, true, &dToEntity, entity);
 
     // RVT 6 Jan 2011 : Add selection by center point
-    float dToCenter=data.center.distanceTo(coord);
-
-    if (dist<dToCenter) {
-        return dist;
-    } else {
-        return dToCenter;
-    }
-
+    double dToCenter=data.center.distanceTo(coord);
+    return std::min(dToEntity,dToCenter);
 }
 
 
