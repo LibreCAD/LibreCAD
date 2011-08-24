@@ -119,10 +119,7 @@
         <widget class="QLineEdit" name="leAngle"/>
       </item>
       <item>
-        <widget class="Q3ButtonGroup" name="buttonGroup1">
-          <property name="lineWidth">
-            <number>0</number>
-          </property>
+        <widget class="QGroupBox" name="buttonGroup1">
           <property name="title">
             <string/>
           </property>
@@ -201,11 +198,6 @@
       <data format="PNG" length="164">89504e470d0a1a0a0000000d494844520000000e0000000f0806000000d414fe740000006b494441542891bd924b0e80200c44a78d97a2f7cf782c5c61c8584275e1db11fad2af91c44c44742490b4f97da8a401ab3faf4823e35c8d57a44c36002549cbf67d58ce2791a4fd9b11903d66b4c541b8ee4739171377e0b9dc8a7cf7b893d5b4b7473e7a7e88155a44bf0011fe441424295e9a0000000049454e44ae426082</data>
     </image>
   </images>
-  <includes>
-    <include location="local">rs_line.h</include>
-    <include location="local">rs_settings.h</include>
-    <include location="local">rs_actiondrawpolyline.h</include>
-  </includes>
   <connections>
     <connection>
       <sender>bClose</sender>

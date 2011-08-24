@@ -28,12 +28,15 @@
 
 #include "ui_qg_splineoptions.h"
 
+class RS_ActionInterface;
+class RS_ActionDrawSpline;
+
 class QG_SplineOptions : public QWidget, public Ui::QG_SplineOptions
 {
     Q_OBJECT
 
 public:
-    QG_SplineOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_SplineOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_SplineOptions();
 
 public slots:

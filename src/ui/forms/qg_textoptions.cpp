@@ -25,17 +25,14 @@
 **********************************************************************/
 #include "qg_textoptions.h"
 
-#include <qvariant.h>
-#include <qtextcodec.h>
-#include "rs_system.h"
-#include "rs_filterdxf.h"
+#include "rs_actiondrawtext.h"
 
 /*
  *  Constructs a QG_TextOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_TextOptions::QG_TextOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_TextOptions::QG_TextOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 

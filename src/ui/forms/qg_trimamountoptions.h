@@ -28,12 +28,15 @@
 
 #include "ui_qg_trimamountoptions.h"
 
+class RS_ActionInterface;
+class RS_ActionModifyTrimAmount;
+
 class QG_TrimAmountOptions : public QWidget, public Ui::QG_TrimAmountOptions
 {
     Q_OBJECT
 
 public:
-    QG_TrimAmountOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_TrimAmountOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_TrimAmountOptions();
 
 public slots:

@@ -25,14 +25,16 @@
 **********************************************************************/
 #include "qg_lineangleoptions.h"
 
-#include <qvariant.h>
+#include "rs_actioninterface.h"
+#include "rs_actiondrawlineangle.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_LineAngleOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_LineAngleOptions::QG_LineAngleOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_LineAngleOptions::QG_LineAngleOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
@@ -90,7 +92,7 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
 
         leAngle->setText(sa);
         leLength->setText(sl);
-		cbSnapPoint->setCurrentItem(sp);
+                cbSnapPoint->setCurrentIndex(sp);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_LineAngleOptions::setAction: wrong action type");

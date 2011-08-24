@@ -28,12 +28,15 @@
 
 #include "ui_qg_imageoptions.h"
 
+class RS_ActionInterface;
+class RS_ActionDrawImage;
+
 class QG_ImageOptions : public QWidget, public Ui::QG_ImageOptions
 {
     Q_OBJECT
 
 public:
-    QG_ImageOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_ImageOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_ImageOptions();
 
 public slots:

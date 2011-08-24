@@ -28,12 +28,15 @@
 
 #include "ui_qg_lineoptions.h"
 
+class RS_ActionInterface;
+class RS_ActionDrawLine;
+
 class QG_LineOptions : public QWidget, public Ui::QG_LineOptions
 {
     Q_OBJECT
 
 public:
-    QG_LineOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_LineOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_LineOptions();
 
 public slots:

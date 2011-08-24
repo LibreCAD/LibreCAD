@@ -28,12 +28,15 @@
 
 #include "ui_qg_libraryinsertoptions.h"
 
+class RS_ActionInterface;
+class RS_ActionLibraryInsert;
+
 class QG_LibraryInsertOptions : public QWidget, public Ui::QG_LibraryInsertOptions
 {
     Q_OBJECT
 
 public:
-    QG_LibraryInsertOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_LibraryInsertOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_LibraryInsertOptions();
 
 public slots:
