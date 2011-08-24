@@ -25,14 +25,15 @@
 **********************************************************************/
 #include "qg_splineoptions.h"
 
-#include <qvariant.h>
+#include "rs_actiondrawspline.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_SplineOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_SplineOptions::QG_SplineOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_SplineOptions::QG_SplineOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
@@ -80,7 +81,7 @@ void QG_SplineOptions::setAction(RS_ActionInterface* a, bool update) {
             action->setDegree(degree);
             action->setClosed(closed);
         }
-        cbDegree->setCurrentText(QString("%1").arg(degree));
+        cbDegree->setCurrentIndex( cbDegree->findText(QString("%1").arg(degree)) );
         cbClosed->setChecked(closed);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
