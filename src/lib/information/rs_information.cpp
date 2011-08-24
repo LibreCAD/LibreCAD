@@ -301,20 +301,17 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
         //else
         if (te1->rtti()==RS2::EntityLine &&
                 te2->rtti()==RS2::EntityLine) {
-
-            RS_Line* line1 = (RS_Line*)te1;
-            RS_Line* line2 = (RS_Line*)te2;
-            RS_EntityContainer *pec1=line1->getParent();
-            RS_EntityContainer *pec2=line2->getParent();
-            if (pec1 != NULL && pec2 == pec1 ) {
-                if ( pec1-> rtti() == RS2::EntitySpline ) {
-                    if ( abs(pec1->findEntity(line1) - pec2->findEntity(line2)) <= 1 ) {
-                        //do not calculate intersections from neighboring lines of a spline
+            RS_Line * line1=(RS_Line*) te1;
+            RS_Line * line2=(RS_Line*) te2;
+            /* ToDo: 24 Aug 2011, Dongxu Li, if rtti() is not defined for the parent, the following check for splines may still cause segfault */
+            if ( line1->getParent() != NULL && line1->getParent() == line2->getParent()) {
+                if ( line1->getParent()->rtti()==RS2::EntitySpline ) {
+                    //do not calculate intersections from neighboring lines of a spline
+                    if ( abs(line1->getParent()->findEntity(line1) - line1->getParent()->findEntity(line2)) <= 1 ) {
                         return ret;
                     }
                 }
             }
-
 
             ret = getIntersectionLineLine(line1, line2);
         }
