@@ -25,14 +25,16 @@
 **********************************************************************/
 #include "qg_imageoptions.h"
 
-#include <qvariant.h>
+#include "rs_actioninterface.h"
+#include "rs_actiondrawimage.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_ImageOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_ImageOptions::QG_ImageOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_ImageOptions::QG_ImageOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 

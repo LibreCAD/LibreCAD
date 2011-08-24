@@ -28,12 +28,15 @@
 
 #include "ui_qg_insertoptions.h"
 
+class RS_ActionInterface;
+class RS_ActionBlocksInsert;
+
 class QG_InsertOptions : public QWidget, public Ui::QG_InsertOptions
 {
     Q_OBJECT
 
 public:
-    QG_InsertOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_InsertOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_InsertOptions();
 
 public slots:

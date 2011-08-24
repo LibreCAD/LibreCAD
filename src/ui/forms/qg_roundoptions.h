@@ -28,12 +28,15 @@
 
 #include "ui_qg_roundoptions.h"
 
+class RS_ActionInterface;
+class RS_ActionModifyRound;
+
 class QG_RoundOptions : public QWidget, public Ui::QG_RoundOptions
 {
     Q_OBJECT
 
 public:
-    QG_RoundOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_RoundOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_RoundOptions();
 
 public slots:
