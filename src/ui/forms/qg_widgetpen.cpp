@@ -34,8 +34,8 @@
  *  Constructs a QG_WidgetPen as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_WidgetPen::QG_WidgetPen(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_WidgetPen::QG_WidgetPen(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
