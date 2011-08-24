@@ -25,14 +25,14 @@
 **********************************************************************/
 #include "qg_printpreviewoptions.h"
 
-#include <qvariant.h>
+#include "rs_actionprintpreview.h"
 
 /*
  *  Constructs a QG_PrintPreviewOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_PrintPreviewOptions::QG_PrintPreviewOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_PrintPreviewOptions::QG_PrintPreviewOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
@@ -102,15 +102,15 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
         updateDisabled = true;
         RS2::Unit u = action->getUnit();
         if (u==RS2::Inch) {
-            cbScale->insertStringList(imperialScales);
+            cbScale->insertItems(0,imperialScales);
         } else {
-            cbScale->insertStringList(metricScales);
+            cbScale->insertItems(0,metricScales);
         }
         
         //if (update) {
         QString s;
         s.setNum(action->getScale());
-        cbScale->setCurrentText(s);
+        cbScale->setCurrentIndex( cbScale->findText(s) );
     //}
         
         updateDisabled = false;
@@ -173,7 +173,7 @@ void QG_PrintPreviewOptions::scale(const QString& s) {
     if (s.contains(':')) {
         bool ok1 = false;
         bool ok2 = false;
-        int i = s.find(':');
+        int i = s.indexOf(':');
         double n = s.left(i).toDouble(&ok1);
         double d = s.mid(i+1).toDouble(&ok2);
         if (ok1 && ok2 && d>1.0e-6 && n>0.0) {
@@ -181,7 +181,7 @@ void QG_PrintPreviewOptions::scale(const QString& s) {
         }
     } else if (s.contains('=')) {
         bool ok = false;
-        int i = s.find('=');
+        int i = s.indexOf('=');
         double d = s.mid(i+2, s.length()-i-3).toDouble(&ok);
         if (ok && d>1.0e-6) {
             action->setScale(1.0/d);

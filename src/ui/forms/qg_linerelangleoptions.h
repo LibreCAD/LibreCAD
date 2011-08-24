@@ -28,12 +28,15 @@
 
 #include "ui_qg_linerelangleoptions.h"
 
+class RS_ActionInterface;
+class RS_ActionDrawLineRelAngle;
+
 class QG_LineRelAngleOptions : public QWidget, public Ui::QG_LineRelAngleOptions
 {
     Q_OBJECT
 
 public:
-    QG_LineRelAngleOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_LineRelAngleOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_LineRelAngleOptions();
 
 public slots:

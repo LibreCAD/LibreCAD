@@ -28,12 +28,15 @@
 
 #include "ui_qg_textoptions.h"
 
+class RS_ActionInterface;
+class RS_ActionDrawText;
+
 class QG_TextOptions : public QWidget, public Ui::QG_TextOptions
 {
     Q_OBJECT
 
 public:
-    QG_TextOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_TextOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_TextOptions();
 
 public slots:

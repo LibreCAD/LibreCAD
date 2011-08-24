@@ -25,14 +25,15 @@
 **********************************************************************/
 #include "qg_linepolygonoptions.h"
 
-#include <qvariant.h>
+#include "rs_actiondrawlinepolygon.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_LinePolygonOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_LinePolygonOptions::QG_LinePolygonOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_LinePolygonOptions::QG_LinePolygonOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 

@@ -77,12 +77,6 @@
     </layout>
   </widget>
   <layoutdefault spacing="6" margin="11"/>
-  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
-  <includes>
-    <include location="local">rs_line.h</include>
-    <include location="local">rs_settings.h</include>
-    <include location="local">rs_actionmodifytrimamount.h</include>
-  </includes>
   <connections>
     <connection>
       <sender>leDist</sender>

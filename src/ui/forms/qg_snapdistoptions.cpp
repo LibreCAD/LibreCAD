@@ -31,8 +31,8 @@
  *  Constructs a QG_SnapDistOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_SnapDistOptions::QG_SnapDistOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_SnapDistOptions::QG_SnapDistOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
