@@ -662,9 +662,7 @@ void RS_Arc::scale(RS_Vector center, RS_Vector factor) {
 
     data.center.scale(center, factor);
     data.radius *= factor.x;
-    if (data.radius<0.0) {
-        data.radius*=-1.0;
-    }
+    data.radius = fabs( data.radius );
     calculateEndpoints();
     calculateBorders();
 }
@@ -673,24 +671,10 @@ void RS_Arc::scale(RS_Vector center, RS_Vector factor) {
 
 void RS_Arc::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
     data.center.mirror(axisPoint1, axisPoint2);
-    data.reversed = (!data.reversed);
-    /*
-    startpoint.mirror(axisPoint1, axisPoint2);
-    endpoint.mirror(axisPoint1, axisPoint2);
-
-    data.angle1 = data.center.angleTo(startpoint);
-    data.angle2 = data.center.angleTo(endpoint);
-    */
-
-    RS_Vector vec;
-    vec.setPolar(1.0, data.angle1);
-    vec.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
-    data.angle1 = vec.angle();
-
-    vec.setPolar(1.0, data.angle2);
-    vec.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
-    data.angle2 = vec.angle();
-
+    setReversed( ! isReversed() );
+    double a= (axisPoint2 - axisPoint1).angle()*2;
+    setAngle1(RS_Math::correctAngle(a - getAngle1()));
+    setAngle2(RS_Math::correctAngle(a - getAngle2()));
     calculateEndpoints();
     calculateBorders();
 }
@@ -865,22 +849,12 @@ RS_Vector RS_Arc::getMiddlepoint() const {
  * @return Angle length in rad.
  */
 double RS_Arc::getAngleLength() const {
-    double ret = 0.0;
+    double ret;
+    double a=getAngle1();
+    double b=getAngle2();
 
-    if (isReversed()) {
-        if (data.angle1<data.angle2) {
-            ret = data.angle1+2*M_PI-data.angle2;
-        } else {
-            ret = data.angle1-data.angle2;
-        }
-    } else {
-        if (data.angle2<data.angle1) {
-            ret = data.angle2+2*M_PI-data.angle1;
-        } else {
-            ret = data.angle2-data.angle1;
-        }
-    }
-
+    if (isReversed()) std::swap(a,b);
+    ret = RS_Math::correctAngle(b-a);
     // full circle:
     if (fabs(ret)<1.0e-6) {
         ret = 2*M_PI;
