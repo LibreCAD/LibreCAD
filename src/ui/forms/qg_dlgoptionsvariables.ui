@@ -124,17 +124,10 @@
     </layout>
   </widget>
   <layoutdefault spacing="6" margin="11"/>
-  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
   <tabstops>
     <tabstop>buttonOk</tabstop>
     <tabstop>buttonCancel</tabstop>
   </tabstops>
-  <includes>
-    <include location="local">rs_graphic.h</include>
-    <include location="local">rs_filterdxf.h</include>
-    <include location="local">rs_math.h</include>
-    <include location="local">rs_system.h</include>
-  </includes>
   <connections>
     <connection>
       <sender>buttonCancel</sender>

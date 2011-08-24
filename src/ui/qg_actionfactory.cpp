@@ -1193,7 +1193,7 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
         // Options actions:
         //
     case RS2::ActionOptionsGeneral:
-/* RVT_PORT        action = new QAction(tr("Application"), qPixmapFromMimeSource("configure.png"),
+/* RVT_PORT        action = new QAction(tr("Application"), QIcon(":/actions/configure.png"),
 #ifdef __APPLE__
 							 tr("&Preferences"),
 #else
