@@ -27,9 +27,9 @@
 #include "qg_dialogfactory.h"
 
 #include <qmessagebox.h>
-#include <q3filedialog.h>
+//#include <q3filedialog.h>
 //Added by qt3to4:
-#include <Q3StrList>
+//#include <Q3StrList>
 #include <QImageReader>
 
 #include "rs_patternlist.h"

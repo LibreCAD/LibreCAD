@@ -36,8 +36,8 @@
  * Default Constructor. You must call init manually if you choose
  * to use this constructor.
  */
-QG_PatternBox::QG_PatternBox(QWidget* parent, const char* name)
-        : QComboBox(parent, name) {
+QG_PatternBox::QG_PatternBox(QWidget* parent)
+        : QComboBox(parent) {
 }
 
 
@@ -60,13 +60,13 @@ void QG_PatternBox::init() {
     }
 
     patterns.sort();
-    insertStringList(patterns);
+    insertItems(0, patterns);
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotPatternChanged(int)));
 
-    setCurrentItem(0);
-    slotPatternChanged(currentItem());
+    setCurrentIndex(0);
+    slotPatternChanged(currentIndex());
 }
 
 
@@ -78,9 +78,9 @@ void QG_PatternBox::setPattern(const QString& pName) {
 
     RS_DEBUG->print("QG_PatternBox::setPattern %s\n", pName.toLatin1().data());
 
-    setCurrentText(pName);
+    setCurrentIndex(findText(pName));
 
-    slotPatternChanged(currentItem());
+    slotPatternChanged(currentIndex());
 }
 
 
