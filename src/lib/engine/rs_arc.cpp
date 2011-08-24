@@ -227,34 +227,17 @@ void RS_Arc::calculateBorders() {
 
     double a1 = !isReversed() ? data.angle1 : data.angle2;
     double a2 = !isReversed() ? data.angle2 : data.angle1;
-
-    // check for left limit:
-    if ((a1<M_PI && a2>M_PI) ||
-            (a1>a2-1.0e-12 && a2>M_PI) ||
-            (a1>a2-1.0e-12 && a1<M_PI) ) {
-
-        minX = std::min(data.center.x - data.radius, minX);
+    if ( RS_Math::isAngleBetween(0.5*M_PI,a1,a2,false) ) {
+        maxY = data.center.y + data.radius;
     }
-
-    // check for right limit:
-    if (a1 > a2-1.0e-12) {
-        maxX = std::max(data.center.x + data.radius, maxX);
+    if ( RS_Math::isAngleBetween(1.5*M_PI,a1,a2,false) ) {
+        minY = data.center.y - data.radius;
     }
-
-    // check for bottom limit:
-    if ((a1<(M_PI_2*3) && a2>(M_PI_2*3)) ||
-            (a1>a2-1.0e-12    && a2>(M_PI_2*3)) ||
-            (a1>a2-1.0e-12    && a1<(M_PI_2*3)) ) {
-
-        minY = std::min(data.center.y - data.radius, minY);
+    if ( RS_Math::isAngleBetween(M_PI,a1,a2,false) ) {
+        minX = data.center.x - data.radius;
     }
-
-    // check for top limit:
-    if ((a1<M_PI_2 && a2>M_PI_2) ||
-            (a1>a2-1.0e-12   && a2>M_PI_2) ||
-            (a1>a2-1.0e-12   && a1<M_PI_2) ) {
-
-        maxY = std::max(data.center.y + data.radius, maxY);
+    if ( RS_Math::isAngleBetween(0.,a1,a2,false) ) {
+        maxX = data.center.x + data.radius;
     }
 
     minV.set(minX, minY);
@@ -531,7 +514,7 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
     if( trimSol.getNumber() == 1 ) return (trimSol.get(0));
     double am=data.center.angleTo(trimCoord);
     double ias[trimSol.getNumber()];
-    double ia,ia2;
+    double ia(0.),ia2(0.);
     RS_Vector is,is2;
     for(int ii=0; ii<trimSol.getNumber(); ii++) { //find closest according arc angle
         ias[ii]=data.center.angleTo(trimSol.get(ii));
