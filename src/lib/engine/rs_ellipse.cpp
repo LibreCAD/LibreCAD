@@ -707,14 +707,25 @@ void RS_Ellipse::scale(RS_Vector center, RS_Vector factor) {
 
 
 /**
- * @todo deal with angles correctly
+ * mirror by the axis defined by axisPoint1 and axisPoint2
  */
 void RS_Ellipse::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
-    RS_Vector mp = data.center + data.majorP;
+    RS_Vector center=getCenter();
+    RS_Vector mp = center + getMajorP();
+    RS_Vector startpoint = getStartpoint();
+    RS_Vector endpoint = getEndpoint();
 
-    data.center.mirror(axisPoint1, axisPoint2);
+    center.mirror(axisPoint1, axisPoint2);
     mp.mirror(axisPoint1, axisPoint2);
+    startpoint.mirror(axisPoint1, axisPoint2);
+    endpoint.mirror(axisPoint1, axisPoint2);
 
+    setCenter(center);
+    setReversed(!isReversed());
+    setMajorP(mp - center);
+    setAngle1( getEllipseAngle(startpoint));
+    setAngle2( getEllipseAngle(endpoint));
+/*  old version
     data.majorP = mp - data.center;
 
     double a = axisPoint1.angleTo(axisPoint2);
@@ -729,7 +740,7 @@ void RS_Ellipse::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
     data.angle2 = vec.angle() - 2*a;
 
     data.reversed = (!data.reversed);
-
+*/
     //calculateEndpoints();
     calculateBorders();
 }
