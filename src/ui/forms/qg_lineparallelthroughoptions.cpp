@@ -25,14 +25,15 @@
 **********************************************************************/
 #include "qg_lineparallelthroughoptions.h"
 
-#include <qvariant.h>
+#include "rs_actiondrawlineparallelthrough.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_LineParallelThroughOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_LineParallelThroughOptions::QG_LineParallelThroughOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_LineParallelThroughOptions::QG_LineParallelThroughOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 

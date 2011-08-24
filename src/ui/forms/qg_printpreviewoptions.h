@@ -28,12 +28,15 @@
 
 #include "ui_qg_printpreviewoptions.h"
 
+class RS_ActionInterface;
+class RS_ActionPrintPreview;
+
 class QG_PrintPreviewOptions : public QWidget, public Ui::QG_PrintPreviewOptions
 {
     Q_OBJECT
 
 public:
-    QG_PrintPreviewOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_PrintPreviewOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_PrintPreviewOptions();
 
 public slots:

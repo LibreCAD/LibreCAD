@@ -28,12 +28,15 @@
 
 #include "ui_qg_polylineoptions.h"
 
+class RS_ActionInterface;
+class RS_ActionDrawPolyline;
+
 class QG_PolylineOptions : public QWidget, public Ui::QG_PolylineOptions
 {
     Q_OBJECT
 
 public:
-    QG_PolylineOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_PolylineOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_PolylineOptions();
 
 public slots:

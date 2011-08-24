@@ -33,8 +33,9 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+    : QWidget(parent, fl)
 {
+    setObjectName(name);
     setupUi(this);
 
     init();

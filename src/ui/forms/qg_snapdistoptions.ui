@@ -74,7 +74,6 @@
     </layout>
   </widget>
   <layoutdefault spacing="6" margin="11"/>
-  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
   <includes>
     <include location="local">rs_circle.h</include>
     <include location="local">rs_settings.h</include>

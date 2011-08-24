@@ -28,12 +28,15 @@
 
 #include "ui_qg_lineparallelthroughoptions.h"
 
+class RS_ActionInterface;
+class RS_ActionDrawLineParallelThrough;
+
 class QG_LineParallelThroughOptions : public QWidget, public Ui::QG_LineParallelThroughOptions
 {
     Q_OBJECT
 
 public:
-    QG_LineParallelThroughOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_LineParallelThroughOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_LineParallelThroughOptions();
 
 public slots:

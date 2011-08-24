@@ -27,13 +27,14 @@
 #define QG_WIDGETPEN_H
 
 #include "ui_qg_widgetpen.h"
+#include "rs_pen.h"
 
 class QG_WidgetPen : public QWidget, public Ui::QG_WidgetPen
 {
     Q_OBJECT
 
 public:
-    QG_WidgetPen(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_WidgetPen(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_WidgetPen();
 
     virtual bool isColorUnchanged();
