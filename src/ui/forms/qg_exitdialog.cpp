@@ -26,9 +26,6 @@
 #include "qg_exitdialog.h"
 
 #include <qmessagebox.h>
-/*#include <q3accel.h>
-//Added by qt3to4:
-#include <q3mimefactory.h>*/
 
 /*
  *  Constructs a QG_ExitDialog as a child of 'parent', with the

@@ -31,7 +31,7 @@
       </attribute>
       <layout class="QGridLayout">
        <item row="0" column="0">
-        <widget class="Q3ButtonGroup" name="bgLanguage">
+        <widget class="QGroupBox" name="bgLanguage">
          <property name="title">
           <string>Language</string>
          </property>
@@ -72,7 +72,7 @@
         </widget>
        </item>
        <item row="0" column="1" rowspan="2">
-        <widget class="Q3ButtonGroup" name="bgColors">
+        <widget class="QGroupBox" name="bgColors">
          <property name="title">
           <string>Colors</string>
          </property>
@@ -288,7 +288,7 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="Q3ButtonGroup" name="buttonGroup5_2">
+        <widget class="QGroupBox" name="buttonGroup5_2">
          <property name="title">
           <string>Fontsize</string>
          </property>
@@ -391,7 +391,7 @@
         </widget>
        </item>
        <item row="1" column="0" rowspan="2">
-        <widget class="Q3ButtonGroup" name="bgGraphicView">
+        <widget class="QGroupBox" name="bgGraphicView">
          <property name="title">
           <string>Graphic View</string>
          </property>
@@ -695,7 +695,7 @@
       </attribute>
       <layout class="QGridLayout">
        <item row="0" column="0">
-        <widget class="Q3ButtonGroup" name="buttonGroup5">
+        <widget class="QGroupBox" name="buttonGroup5">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
            <horstretch>0</horstretch>
@@ -881,21 +881,6 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
- <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Q3ButtonGroup</class>
-   <extends>Q3GroupBox</extends>
-   <header>Qt3Support/Q3ButtonGroup</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>cbLanguage</tabstop>
@@ -919,12 +904,6 @@
   <tabstop>lePathLibrary</tabstop>
   <tabstop>cbUnit</tabstop>
  </tabstops>
- <includes>
-  <include location="local">rs_settings.h</include>
-  <include location="local">rs_system.h</include>
-  <include location="local">rs.h</include>
-  <include location="local">rs_units.h</include>
- </includes>
  <resources/>
  <connections>
   <connection>
