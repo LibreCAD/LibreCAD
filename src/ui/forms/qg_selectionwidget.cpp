@@ -25,7 +25,6 @@
 **********************************************************************/
 #include "qg_selectionwidget.h"
 
-#include <qvariant.h>
 #include "rs_settings.h"
 
 /*
@@ -33,8 +32,9 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_SelectionWidget::QG_SelectionWidget(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+    : QWidget(parent, fl)
 {
+    setObjectName(name);
     setupUi(this);
 
     init();

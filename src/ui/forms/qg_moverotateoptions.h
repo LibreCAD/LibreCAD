@@ -28,12 +28,15 @@
 
 #include "ui_qg_moverotateoptions.h"
 
+class RS_ActionInterface;
+class RS_ActionModifyMoveRotate;
+
 class QG_MoveRotateOptions : public QWidget, public Ui::QG_MoveRotateOptions
 {
     Q_OBJECT
 
 public:
-    QG_MoveRotateOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_MoveRotateOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_MoveRotateOptions();
 
 public slots:

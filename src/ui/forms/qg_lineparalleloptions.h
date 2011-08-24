@@ -28,12 +28,15 @@
 
 #include "ui_qg_lineparalleloptions.h"
 
+class RS_ActionInterface;
+class RS_ActionDrawLineParallel;
+
 class QG_LineParallelOptions : public QWidget, public Ui::QG_LineParallelOptions
 {
     Q_OBJECT
 
 public:
-    QG_LineParallelOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_LineParallelOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_LineParallelOptions();
 
 public slots:

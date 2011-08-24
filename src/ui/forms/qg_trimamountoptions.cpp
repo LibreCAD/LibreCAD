@@ -25,14 +25,15 @@
 **********************************************************************/
 #include "qg_trimamountoptions.h"
 
-#include <qvariant.h>
+#include "rs_actionmodifytrimamount.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_TrimAmountOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_TrimAmountOptions::QG_TrimAmountOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_TrimAmountOptions::QG_TrimAmountOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
