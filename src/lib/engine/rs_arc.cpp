@@ -225,8 +225,8 @@ void RS_Arc::calculateBorders() {
     double maxX = std::max(startpoint.x, endpoint.x);
     double maxY = std::max(startpoint.y, endpoint.y);
 
-    double a1 = !isReversed() ? data.angle1 : data.angle2;
-    double a2 = !isReversed() ? data.angle2 : data.angle1;
+    double a1 = isReversed() ? data.angle2 : data.angle1;
+    double a2 = isReversed() ? data.angle1 : data.angle2;
     if ( RS_Math::isAngleBetween(0.5*M_PI,a1,a2,false) ) {
         maxY = data.center.y + data.radius;
     }
