@@ -28,12 +28,15 @@
 
 #include "ui_qg_linebisectoroptions.h"
 
+class RS_ActionInterface;
+class RS_ActionDrawLineBisector;
+
 class QG_LineBisectorOptions : public QWidget, public Ui::QG_LineBisectorOptions
 {
     Q_OBJECT
 
 public:
-    QG_LineBisectorOptions(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_LineBisectorOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_LineBisectorOptions();
 
 public slots:

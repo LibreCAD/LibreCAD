@@ -28,12 +28,15 @@
 
 #include "ui_qg_linepolygon2options.h"
 
+class RS_ActionInterface;
+class RS_ActionDrawLinePolygon2;
+
 class QG_LinePolygon2Options : public QWidget, public Ui::QG_LinePolygon2Options
 {
     Q_OBJECT
 
 public:
-    QG_LinePolygon2Options(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_LinePolygon2Options(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_LinePolygon2Options();
 
 public slots:

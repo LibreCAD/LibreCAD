@@ -33,7 +33,7 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="Q3ButtonGroup" name="bgPen">
+    <widget class="QGroupBox" name="bgPen">
      <property name="title">
       <string>Pen</string>
      </property>
@@ -135,18 +135,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Q3ButtonGroup</class>
-   <extends>Q3GroupBox</extends>
-   <header>Qt3Support/Q3ButtonGroup</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>QG_ColorBox</class>
    <extends>QWidget</extends>
    <header>qg_colorbox.h</header>
@@ -162,12 +150,6 @@
    <header>qg_linetypebox.h</header>
   </customwidget>
  </customwidgets>
- <includes>
-  <include location="local">rs_pen.h</include>
-  <include location="local">qg_linetypebox.h</include>
-  <include location="local">qg_colorbox.h</include>
-  <include location="local">qg_widthbox.h</include>
- </includes>
  <resources>
   <include location="../../../res/extui/extui.qrc"/>
  </resources>

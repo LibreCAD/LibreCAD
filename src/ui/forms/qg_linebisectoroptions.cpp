@@ -25,14 +25,15 @@
 **********************************************************************/
 #include "qg_linebisectoroptions.h"
 
-#include <qvariant.h>
+#include "rs_actiondrawlinebisector.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_LineBisectorOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_LineBisectorOptions::QG_LineBisectorOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_LineBisectorOptions::QG_LineBisectorOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
