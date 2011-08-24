@@ -25,20 +25,15 @@
 **********************************************************************/
 #include "qg_librarywidget.h"
 
-#include <qvariant.h>
-#include <iostream>
 #include "rs_system.h"
 #include "rs_painterqt.h"
 #include "rs_staticgraphicview.h"
-#include "rs_graphic.h"
 #include "rs_actionlibraryinsert.h"
-#include <qapplication.h>
 #include <QDateTime>
 #include <QImageWriter>
-//Added by qt3to4:
-#include <QPixmap>
-#include <QKeyEvent>
 #include <QDesktopServices>
+#include "qg_actionhandler.h"
+#include "qg_listviewitem.h"
 
 /*
  *  Constructs a QG_LibraryWidget as a child of 'parent', with the

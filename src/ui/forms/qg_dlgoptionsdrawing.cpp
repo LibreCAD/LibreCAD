@@ -25,9 +25,10 @@
 **********************************************************************/
 #include "qg_dlgoptionsdrawing.h"
 
-#include <qvariant.h>
 #include <qmessagebox.h>
-#include "rs_units.h"
+#include "rs_graphic.h"
+#include "rs_filterdxf.h"
+//#include "rs_units.h"
 
 /*
  *  Constructs a QG_DlgOptionsDrawing as a child of 'parent', with the
@@ -36,9 +37,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
     init();
@@ -333,7 +335,7 @@ void QG_DlgOptionsDrawing::validate() {
                              (int)RS_Math::eval(cbSplineSegs->currentText()), 70);
         
         RS_DEBUG->print("QG_DlgOptionsDrawing::validate: splinesegs is: %s",
-                        cbSplineSegs->currentText().latin1());
+                        cbSplineSegs->currentText().toLatin1().data());
         
         // update all dimension and spline entities in the graphic to match the new settings:
         graphic->updateDimensions(false);
