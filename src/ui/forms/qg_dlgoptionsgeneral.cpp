@@ -25,9 +25,11 @@
 **********************************************************************/
 #include "qg_dlgoptionsgeneral.h"
 
-#include <qvariant.h>
 #include <qmessagebox.h>
-#include <q3listbox.h>
+//#include <q3listbox.h>
+#include "rs_system.h"
+#include "rs_settings.h"
+#include "rs_units.h"
 
 /*
  *  Constructs a QG_DlgOptionsGeneral as a child of 'parent', with the
@@ -36,9 +38,10 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, name, modal, fl)
+QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::WindowFlags fl)
+    : QDialog(parent, fl)
 {
+    setModal(modal);
     setupUi(this);
 
     init();
@@ -75,11 +78,11 @@ void QG_DlgOptionsGeneral::init() {
             it++) {
 
 	RS_DEBUG->print("QG_DlgOptionsGeneral::init: adding %s to combobox",
-			(*it).latin1());
+                        (*it).toLatin1().data());
 
         QString l = RS_SYSTEM->symbolToLanguage(*it);
 	if (l.isEmpty()==false) {
-                RS_DEBUG->print("QG_DlgOptionsGeneral::init: %s", l.latin1());
+                RS_DEBUG->print("QG_DlgOptionsGeneral::init: %s", l.toLatin1().data());
         	cbLanguage->insertItem(l);
         	cbLanguageCmd->insertItem(l);
 	}

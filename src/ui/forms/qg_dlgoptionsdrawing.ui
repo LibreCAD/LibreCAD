@@ -25,13 +25,13 @@
      <property name="currentIndex">
       <number>1</number>
      </property>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tab1">
       <attribute name="title">
        <string>&amp;Paper</string>
       </attribute>
       <layout class="QVBoxLayout">
        <item>
-        <widget class="Q3ButtonGroup" name="buttonGroup3">
+        <widget class="QGroupBox" name="buttonGroup3">
          <property name="title">
           <string>Paper Format</string>
          </property>
@@ -166,13 +166,13 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tab2">
       <attribute name="title">
        <string>&amp;Units</string>
       </attribute>
       <layout class="QVBoxLayout">
        <item>
-        <widget class="Q3ButtonGroup" name="bgUnit">
+        <widget class="QGroupBox" name="bgUnit">
          <property name="title">
           <string>Main Unit</string>
          </property>
@@ -217,7 +217,7 @@
          <item>
           <layout class="QVBoxLayout">
            <item>
-            <widget class="Q3ButtonGroup" name="bgLength">
+            <widget class="QGroupBox" name="bgLength">
              <property name="title">
               <string>Length</string>
              </property>
@@ -290,7 +290,7 @@
             </widget>
            </item>
            <item>
-            <widget class="Q3ButtonGroup" name="bgLengthPreview">
+            <widget class="QGroupBox" name="bgLengthPreview">
              <property name="title">
               <string>Preview</string>
              </property>
@@ -313,7 +313,7 @@
          <item>
           <layout class="QVBoxLayout">
            <item>
-            <widget class="Q3ButtonGroup" name="bgAngle">
+            <widget class="QGroupBox" name="bgAngle">
              <property name="title">
               <string>Angle</string>
              </property>
@@ -386,7 +386,7 @@
             </widget>
            </item>
            <item>
-            <widget class="Q3ButtonGroup" name="bgAnglePreview">
+            <widget class="QGroupBox" name="bgAnglePreview">
              <property name="title">
               <string>Preview</string>
              </property>
@@ -410,13 +410,13 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tab3">
       <attribute name="title">
        <string>&amp;Grid</string>
       </attribute>
       <layout class="QVBoxLayout">
        <item>
-        <widget class="Q3ButtonGroup" name="bgGrid">
+        <widget class="QGroupBox" name="bgGrid">
          <property name="title">
           <string>Grid Settings</string>
          </property>
@@ -589,7 +589,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tab4">
       <attribute name="title">
        <string>&amp;Dimensions</string>
       </attribute>
@@ -854,7 +854,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tab5">
       <attribute name="title">
        <string>Splines</string>
       </attribute>
@@ -982,21 +982,6 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
- <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Q3ButtonGroup</class>
-   <extends>Q3GroupBox</extends>
-   <header>Qt3Support/Q3ButtonGroup</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>cbPaperFormat</tabstop>
@@ -1020,12 +1005,6 @@
   <tabstop>cbDimGap</tabstop>
   <tabstop>cbDimAsz</tabstop>
  </tabstops>
- <includes>
-  <include location="local">rs_graphic.h</include>
-  <include location="local">rs_filterdxf.h</include>
-  <include location="local">rs_math.h</include>
-  <include location="local">rs_system.h</include>
- </includes>
  <resources>
   <include location="../../../res/extui/extui.qrc"/>
  </resources>

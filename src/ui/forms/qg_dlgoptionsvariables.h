@@ -28,6 +28,8 @@
 
 #include "ui_qg_dlgoptionsvariables.h"
 
+class RS_Graphic;
+
 class QG_DlgOptionsVariables : public QDialog, public Ui::QG_DlgOptionsVariables
 {
     Q_OBJECT

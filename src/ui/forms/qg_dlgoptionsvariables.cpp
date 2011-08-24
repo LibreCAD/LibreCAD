@@ -27,8 +27,8 @@
 
 /*#include <qvariant.h>
 #include <qmessagebox.h>
-#include "rs_units.h"
-#include "rs_filterdxf.h"*/
+#include "rs_units.h"*/
+#include "rs_filterdxf.h"
 
 /*
  *  Constructs a QG_DlgOptionsVariables as a child of 'parent', with the
