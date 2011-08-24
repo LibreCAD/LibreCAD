@@ -40,7 +40,7 @@ class QG_PatternBox: public QComboBox {
     Q_OBJECT
 
 public:
-    QG_PatternBox(QWidget* parent=0, const char* name=0);
+    QG_PatternBox(QWidget* parent=0);
     virtual ~QG_PatternBox();
 
     RS_Pattern* getPattern() {
