@@ -28,6 +28,9 @@
 
 #include "ui_qg_librarywidget.h"
 
+class QG_ActionHandler;
+class QG_ListViewItem;
+
 class QG_LibraryWidget : public QWidget, public Ui::QG_LibraryWidget
 {
     Q_OBJECT
