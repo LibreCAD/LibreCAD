@@ -122,13 +122,6 @@
     </layout>
   </widget>
   <layoutdefault spacing="6" margin="11"/>
-  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
-  <includes>
-    <include location="local">qg_actionhandler.h</include>
-    <include location="global">qdir.h</include>
-    <include location="global">qmap.h</include>
-    <include location="local">qg_listviewitem.h</include>
-  </includes>
   <connections>
     <connection>
       <sender>lvDirectory</sender>
