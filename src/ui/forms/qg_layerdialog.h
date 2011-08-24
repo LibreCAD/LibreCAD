@@ -28,6 +28,9 @@
 
 #include "ui_qg_layerdialog.h"
 
+class RS_Layer;
+class RS_LayerList;
+
 class QG_LayerDialog : public QDialog, public Ui::QG_LayerDialog
 {
     Q_OBJECT

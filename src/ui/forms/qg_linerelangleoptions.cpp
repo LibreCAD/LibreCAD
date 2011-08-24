@@ -25,14 +25,15 @@
 **********************************************************************/
 #include "qg_linerelangleoptions.h"
 
-#include <qvariant.h>
+#include "rs_actiondrawlinerelangle.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_LineRelAngleOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_LineRelAngleOptions::QG_LineRelAngleOptions(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, name, fl)
+QG_LineRelAngleOptions::QG_LineRelAngleOptions(QWidget* parent, Qt::WindowFlags fl)
+    : QWidget(parent, fl)
 {
     setupUi(this);
 
