@@ -118,17 +118,43 @@ void QG_DlgOptionsGeneral::init() {
 
 
     // colors:
+    int idx;
     QString backgroundColor = RS_SETTINGS->readEntry("/BackgroundColor", "Black");
-    cbBackgroundColor->setCurrentIndex( cbBackgroundColor->findText(backgroundColor) );
+    idx = cbBackgroundColor->findText(backgroundColor);
+    //backgroundColor not present in combobox, prepend it
+    if( idx < 0) {
+        idx =0;
+        cbBackgroundColor->insertItem(idx, backgroundColor);
+    }
+    cbBackgroundColor->setCurrentIndex( idx );
     QString gridColor = RS_SETTINGS->readEntry("/GridColor", "Gray");
-    cbGridColor->setCurrentIndex( cbGridColor->findText(gridColor) );
+    idx = cbGridColor->findText(gridColor);
+    if( idx < 0) {
+        idx =0;
+        cbGridColor->insertItem(idx, gridColor);
+    }
+    cbGridColor->setCurrentIndex(idx);
     QString metaGridColor = RS_SETTINGS->readEntry("/MetaGridColor", "#404040");
-
-    cbMetaGridColor->setCurrentIndex( cbMetaGridColor->findText(metaGridColor) );
+    idx = cbMetaGridColor->findText(metaGridColor);
+    if( idx < 0) {
+        idx =0;
+        cbMetaGridColor->insertItem(idx, metaGridColor);
+    }
+    cbMetaGridColor->setCurrentIndex( idx );
     QString selectedColor = RS_SETTINGS->readEntry("/SelectedColor", "#a54747");
-    cbSelectedColor->setCurrentIndex( cbSelectedColor->findText(selectedColor) );
+    idx = cbSelectedColor->findText(selectedColor);
+    if( idx < 0) {
+        idx =0;
+        cbSelectedColor->insertItem(idx, selectedColor);
+    }
+    cbSelectedColor->setCurrentIndex( idx );
     QString highlightedColor = RS_SETTINGS->readEntry("/HighlightedColor", "#739373");
-    cbHighlightedColor->setCurrentIndex( cbHighlightedColor->findText(highlightedColor) );
+    idx = cbHighlightedColor->findText(highlightedColor);
+    if( idx < 0) {
+        idx =0;
+        cbHighlightedColor->insertItem(idx, highlightedColor);
+    }
+    cbHighlightedColor->setCurrentIndex( idx );
 
     // font size:
     QString sizeStatus = RS_SETTINGS->readEntry("/StatusBarFontSize", "9");
@@ -159,7 +185,7 @@ void QG_DlgOptionsGeneral::init() {
     def_unit = QC_PREDEFINED_UNIT;
 #endif
     RS_SETTINGS->beginGroup("/Defaults");
-    cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( (const char*)RS_SETTINGS->readEntry("/Unit", def_unit).data() )) );
+    cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit) )) );
     // Auto save timer
     cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
     cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)?true:false);
