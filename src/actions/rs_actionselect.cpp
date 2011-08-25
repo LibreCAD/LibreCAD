@@ -67,6 +67,15 @@ void RS_ActionSelect::updateToolBar() {
     }
 }
 
+void RS_ActionSelect::updateMouseButtonHints() {
+	switch(nextAction){
+		case RS2::ActionModifyScaleNoSelect:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Select entities to scale"), tr("Cancel"));
+		break;
+	default:
+		break;
+	}
+}
 
 
 // EOF
