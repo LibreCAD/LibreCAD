@@ -185,7 +185,8 @@ void QG_DlgOptionsGeneral::init() {
     def_unit = QC_PREDEFINED_UNIT;
 #endif
     RS_SETTINGS->beginGroup("/Defaults");
-    cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit) )) );
+//    cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit) )) );
+    cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit).toUtf8().data() )) );
     // Auto save timer
     cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
     cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)?true:false);

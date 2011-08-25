@@ -149,7 +149,7 @@ public:
                                      double* dist = NULL);
 
     virtual RS_Entity* addVertex(const RS_Vector& v, 
-		double bulge=0.0, bool prepend=false);
+                double bulge=0.0, bool prepend=false);
 	virtual void setNextBulge(double bulge) {
 		nextBulge = bulge;
 	}
