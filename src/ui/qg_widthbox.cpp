@@ -25,7 +25,6 @@
 **********************************************************************/
 
 #include "qg_widthbox.h"
-#include <qpixmap.h>
 #include "rs_debug.h"
 
 /**
@@ -33,8 +32,9 @@
  * to use this constructor.
  */
 QG_WidthBox::QG_WidthBox(QWidget* parent, const char* name)
-        : QComboBox(parent, name) {
+        : QComboBox(parent) {
 
+    setObjectName(name);
     showByLayer = false;
     showUnchanged = false;
     unchanged = false;
@@ -48,7 +48,8 @@ QG_WidthBox::QG_WidthBox(QWidget* parent, const char* name)
  */
 QG_WidthBox::QG_WidthBox(bool showByLayer, bool showUnchanged,
                          QWidget* parent, const char* name)
-        : QComboBox(parent, name) {
+        : QComboBox(parent) {
+    setObjectName(name);
     init(showByLayer, showUnchanged);
 }
 
@@ -70,43 +71,43 @@ void QG_WidthBox::init(bool showByLayer, bool showUnchanged) {
 	this->showUnchanged = showUnchanged;
 
     if (showUnchanged) {
-        insertItem(QPixmap(":ui/width00.png"), tr("- Unchanged -"));
+        addItem(QIcon(":ui/width00.png"), tr("- Unchanged -"));
     }
     if (showByLayer) {
-        insertItem(QPixmap(":ui/width00.png"), tr("By Layer"));
-        insertItem(QPixmap(":ui/width00.png"), tr("By Block"));
+        addItem(QIcon(":ui/width00.png"), tr("By Layer"));
+        addItem(QIcon(":ui/width00.png"), tr("By Block"));
     }
-    insertItem(QPixmap(":ui/width01.png"), tr("Default"));
-    insertItem(QPixmap(":ui/width01.png"), tr("0.00mm"));
-    insertItem(QPixmap(":ui/width01.png"), tr("0.05mm"));
-    insertItem(QPixmap(":ui/width01.png"), tr("0.09mm"));
-    insertItem(QPixmap(":ui/width01.png"), tr("0.13mm (ISO)"));
-    insertItem(QPixmap(":ui/width01.png"), tr("0.15mm"));
-    insertItem(QPixmap(":ui/width01.png"), tr("0.18mm (ISO)"));
-    insertItem(QPixmap(":ui/width01.png"), tr("0.20mm"));
-    insertItem(QPixmap(":ui/width01.png"), tr("0.25mm (ISO)"));
-    insertItem(QPixmap(":ui/width01.png"), tr("0.30mm"));
-    insertItem(QPixmap(":ui/width03.png"), tr("0.35mm (ISO)"));
-    insertItem(QPixmap(":ui/width03.png"), tr("0.40mm"));
-    insertItem(QPixmap(":ui/width04.png"), tr("0.50mm (ISO)"));
-    insertItem(QPixmap(":ui/width05.png"), tr("0.53mm"));
-    insertItem(QPixmap(":ui/width05.png"), tr("0.60mm"));
-    insertItem(QPixmap(":ui/width06.png"), tr("0.70mm (ISO)"));
-    insertItem(QPixmap(":ui/width07.png"), tr("0.80mm"));
-    insertItem(QPixmap(":ui/width08.png"), tr("0.90mm"));
-    insertItem(QPixmap(":ui/width09.png"), tr("1.00mm (ISO)"));
-    insertItem(QPixmap(":ui/width10.png"), tr("1.06mm"));
-    insertItem(QPixmap(":ui/width10.png"), tr("1.20mm"));
-    insertItem(QPixmap(":ui/width12.png"), tr("1.40mm (ISO)"));
-    insertItem(QPixmap(":ui/width12.png"), tr("1.58mm"));
-    insertItem(QPixmap(":ui/width12.png"), tr("2.00mm (ISO)"));
-    insertItem(QPixmap(":ui/width12.png"), tr("2.11mm"));
+    addItem(QIcon(":ui/width01.png"), tr("Default"));
+    addItem(QIcon(":ui/width01.png"), tr("0.00mm"));
+    addItem(QIcon(":ui/width01.png"), tr("0.05mm"));
+    addItem(QIcon(":ui/width01.png"), tr("0.09mm"));
+    addItem(QIcon(":ui/width01.png"), tr("0.13mm (ISO)"));
+    addItem(QIcon(":ui/width01.png"), tr("0.15mm"));
+    addItem(QIcon(":ui/width01.png"), tr("0.18mm (ISO)"));
+    addItem(QIcon(":ui/width01.png"), tr("0.20mm"));
+    addItem(QIcon(":ui/width01.png"), tr("0.25mm (ISO)"));
+    addItem(QIcon(":ui/width01.png"), tr("0.30mm"));
+    addItem(QIcon(":ui/width03.png"), tr("0.35mm (ISO)"));
+    addItem(QIcon(":ui/width03.png"), tr("0.40mm"));
+    addItem(QIcon(":ui/width04.png"), tr("0.50mm (ISO)"));
+    addItem(QIcon(":ui/width05.png"), tr("0.53mm"));
+    addItem(QIcon(":ui/width05.png"), tr("0.60mm"));
+    addItem(QIcon(":ui/width06.png"), tr("0.70mm (ISO)"));
+    addItem(QIcon(":ui/width07.png"), tr("0.80mm"));
+    addItem(QIcon(":ui/width08.png"), tr("0.90mm"));
+    addItem(QIcon(":ui/width09.png"), tr("1.00mm (ISO)"));
+    addItem(QIcon(":ui/width10.png"), tr("1.06mm"));
+    addItem(QIcon(":ui/width10.png"), tr("1.20mm"));
+    addItem(QIcon(":ui/width12.png"), tr("1.40mm (ISO)"));
+    addItem(QIcon(":ui/width12.png"), tr("1.58mm"));
+    addItem(QIcon(":ui/width12.png"), tr("2.00mm (ISO)"));
+    addItem(QIcon(":ui/width12.png"), tr("2.11mm"));
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotWidthChanged(int)));
 
-    setCurrentItem(0);
-    slotWidthChanged(currentItem());
+    setCurrentIndex(0);
+    slotWidthChanged(currentIndex());
 }
 
 /**
@@ -121,7 +122,7 @@ void QG_WidthBox::setWidth(RS2::LineWidth w) {
     switch (w) {
     case RS2::WidthByLayer:
         if (showByLayer) {
-            setCurrentItem(0 + (int)showUnchanged);
+            setCurrentIndex(0 + (int)showUnchanged);
         } else {
         	RS_DEBUG->print(RS_Debug::D_WARNING,
             	"QG_WidthBox::setWidth: Unsupported width.");
@@ -129,92 +130,92 @@ void QG_WidthBox::setWidth(RS2::LineWidth w) {
         break;
     case RS2::WidthByBlock:
         if (showByLayer) {
-            setCurrentItem(1 + (int)showUnchanged);
+            setCurrentIndex(1 + (int)showUnchanged);
         } else {
         	RS_DEBUG->print(RS_Debug::D_WARNING,
             	"QG_WidthBox::setWidth: Unsupported width.");
         }
         break;
     case RS2::WidthDefault:
-        setCurrentItem(0 + offset);
+        setCurrentIndex(0 + offset);
         break;
     case RS2::Width00:
-        setCurrentItem(1 + offset);
+        setCurrentIndex(1 + offset);
         break;
     case RS2::Width01:
-        setCurrentItem(2 + offset);
+        setCurrentIndex(2 + offset);
         break;
     case RS2::Width02:
-        setCurrentItem(3 + offset);
+        setCurrentIndex(3 + offset);
         break;
     case RS2::Width03:
-        setCurrentItem(4 + offset);
+        setCurrentIndex(4 + offset);
         break;
     case RS2::Width04:
-        setCurrentItem(5 + offset);
+        setCurrentIndex(5 + offset);
         break;
     case RS2::Width05:
-        setCurrentItem(6 + offset);
+        setCurrentIndex(6 + offset);
         break;
     case RS2::Width06:
-        setCurrentItem(7 + offset);
+        setCurrentIndex(7 + offset);
         break;
     case RS2::Width07:
-        setCurrentItem(8 + offset);
+        setCurrentIndex(8 + offset);
         break;
     case RS2::Width08:
-        setCurrentItem(9 + offset);
+        setCurrentIndex(9 + offset);
         break;
     case RS2::Width09:
-        setCurrentItem(10 + offset);
+        setCurrentIndex(10 + offset);
         break;
     case RS2::Width10:
-        setCurrentItem(11 + offset);
+        setCurrentIndex(11 + offset);
         break;
     case RS2::Width11:
-        setCurrentItem(12 + offset);
+        setCurrentIndex(12 + offset);
         break;
     case RS2::Width12:
-        setCurrentItem(13 + offset);
+        setCurrentIndex(13 + offset);
         break;
     case RS2::Width13:
-        setCurrentItem(14 + offset);
+        setCurrentIndex(14 + offset);
         break;
     case RS2::Width14:
-        setCurrentItem(15 + offset);
+        setCurrentIndex(15 + offset);
         break;
     case RS2::Width15:
-        setCurrentItem(16 + offset);
+        setCurrentIndex(16 + offset);
         break;
     case RS2::Width16:
-        setCurrentItem(17 + offset);
+        setCurrentIndex(17 + offset);
         break;
     case RS2::Width17:
-        setCurrentItem(18 + offset);
+        setCurrentIndex(18 + offset);
         break;
     case RS2::Width18:
-        setCurrentItem(19 + offset);
+        setCurrentIndex(19 + offset);
         break;
     case RS2::Width19:
-        setCurrentItem(20 + offset);
+        setCurrentIndex(20 + offset);
         break;
     case RS2::Width20:
-        setCurrentItem(21 + offset);
+        setCurrentIndex(21 + offset);
         break;
     case RS2::Width21:
-        setCurrentItem(22 + offset);
+        setCurrentIndex(22 + offset);
         break;
     case RS2::Width22:
-        setCurrentItem(23 + offset);
+        setCurrentIndex(23 + offset);
         break;
     case RS2::Width23:
-        setCurrentItem(24 + offset);
+        setCurrentIndex(24 + offset);
         break;
     default:
         break;
     }
 
-    slotWidthChanged(currentItem());
+    slotWidthChanged(currentIndex());
 }
 
 
@@ -224,7 +225,7 @@ void QG_WidthBox::setWidth(RS2::LineWidth w) {
  */
 void QG_WidthBox::setLayerWidth(RS2::LineWidth w) {
     if (showByLayer) {
-        QPixmap pixmap;
+        QIcon pixmap;
         switch(w) {
         default:
         case RS2::Width00:
@@ -280,10 +281,11 @@ void QG_WidthBox::setLayerWidth(RS2::LineWidth w) {
             break;
         }
 
-        changeItem(pixmap, tr("By Layer"), 0);
+        setItemIcon(0, pixmap);
+        setItemText(0, tr("By Layer"));
 
         // needed for the first time a layer is added:
-        slotWidthChanged(currentItem());
+        slotWidthChanged(currentIndex());
     }
 }
 
