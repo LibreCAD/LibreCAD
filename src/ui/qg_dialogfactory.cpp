@@ -27,6 +27,7 @@
 #include "qg_dialogfactory.h"
 
 #include <qmessagebox.h>
+#include <qfiledialog.h>
 //#include <q3filedialog.h>
 //Added by qt3to4:
 //#include <Q3StrList>
@@ -533,7 +534,8 @@ QString QG_DialogFactory::requestImageOpenDialog() {
 
     bool cancel = false;
 
-    Q3FileDialog fileDlg(NULL, "", true);
+    QFileDialog fileDlg(NULL, "");
+    fileDlg.setModal(true);
 
     // RVT_PORT
     //Q3StrList f = QImageReader::supportedImageFormats();
@@ -573,13 +575,15 @@ QString QG_DialogFactory::requestImageOpenDialog() {
     //filters.append("Font (*.cxf)");
 
     fileDlg.setFilters(filters);
-    fileDlg.setMode(Q3FileDialog::ExistingFile);
-    fileDlg.setCaption(QObject::tr("Open Image"));
-    fileDlg.setDir(defDir);
-    fileDlg.setSelectedFilter(defFilter);
+    fileDlg.setFileMode(QFileDialog::ExistingFile);
+    fileDlg.setWindowTitle(QObject::tr("Open Image"));
+    fileDlg.setDirectory(defDir);
+    fileDlg.selectFilter(defFilter);
 
     if (fileDlg.exec()==QDialog::Accepted) {
-        fn = fileDlg.selectedFile();
+//        fn = fileDlg.selectedFile();
+        QStringList sf = fileDlg.selectedFiles();
+        if (!sf.isEmpty()) fn = sf.first();
         cancel = false;
     } else {
         cancel = true;
@@ -588,7 +592,7 @@ QString QG_DialogFactory::requestImageOpenDialog() {
     // store new default settings:
     if (!cancel) {
         RS_SETTINGS->beginGroup("/Paths");
-        RS_SETTINGS->writeEntry("/OpenImage", QFileInfo(fn).dirPath(true));
+        RS_SETTINGS->writeEntry("/OpenImage", QFileInfo(fn).absolutePath());
         RS_SETTINGS->writeEntry("/ImageFilter", fileDlg.selectedFilter());
         RS_SETTINGS->endGroup();
     }
@@ -1769,7 +1773,7 @@ void QG_DialogFactory::commandMessage(const QString& message) {
  * @return Format description
  */
 QString QG_DialogFactory::extToFormat(const QString& ext) {
-    QString e = ext.lower();
+    QString e = ext.toLower();
 
     if (e=="bmp") {
         return QObject::tr("Windows Bitmap");
@@ -1793,7 +1797,7 @@ QString QG_DialogFactory::extToFormat(const QString& ext) {
         return QObject::tr("X Pixel Map");
     }
     else {
-        return ext.upper();
+        return ext.toUpper();
     }
 }
 
