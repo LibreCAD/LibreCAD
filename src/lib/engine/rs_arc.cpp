@@ -285,10 +285,12 @@ RS_Vector RS_Arc::getNearestPointOnEntity(const RS_Vector& coord,
     }
 
     double angle = (coord-data.center).angle();
-    if (onEntity==false || RS_Math::isAngleBetween(angle,
+    if ( ! onEntity || RS_Math::isAngleBetween(angle,
             data.angle1, data.angle2, isReversed())) {
         vec.setPolar(data.radius, angle);
         vec+=data.center;
+    } else {
+            vec=getNearestEndpoint(coord, dist);
     }
     if (dist!=NULL) {
         *dist = fabs((vec-data.center).magnitude()-data.radius);
@@ -326,7 +328,7 @@ RS_Vector RS_Arc::getNearestDist(double distance,
                                  const RS_Vector& coord,
                                  double* dist) {
 
-    if (data.radius<1.0e-6) {
+    if (data.radius<RS_TOLERANCE) {
         if (dist!=NULL) {
             *dist = RS_MAXDOUBLE;
         }
@@ -377,7 +379,7 @@ RS_Vector RS_Arc::getNearestDist(double distance,
 RS_Vector RS_Arc::getNearestDist(double distance,
                                  bool startp) {
 
-    if (data.radius<1.0e-6) {
+    if (data.radius<RS_TOLERANCE) {
         return RS_Vector(false);
     }
 
@@ -430,8 +432,8 @@ double RS_Arc::getDistanceToPoint(const RS_Vector& coord,
                                 isReversed())) {
 
         // RVT 6 Jan 2011 : Added selection by center point of arc
-        float dToEdge=fabs((coord-data.center).magnitude() - data.radius);
-        float dToCenter=data.center.distanceTo(coord);
+        double dToEdge=fabs((coord-data.center).magnitude() - data.radius);
+        double dToCenter=data.center.distanceTo(coord);
 
         if (dToEdge<dToCenter) {
             return dToEdge;
