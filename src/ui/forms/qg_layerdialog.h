@@ -36,7 +36,7 @@ class QG_LayerDialog : public QDialog, public Ui::QG_LayerDialog
     Q_OBJECT
 
 public:
-    QG_LayerDialog(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_LayerDialog(QWidget* parent = 0, QString name = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_LayerDialog();
 
 public slots:
