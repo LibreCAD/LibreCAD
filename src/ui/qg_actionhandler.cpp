@@ -793,7 +793,7 @@ QStringList QG_ActionHandler::getAvailableCommands() {
  *            running action.
  */
 bool QG_ActionHandler::keycode(const QString& code) {
-    QString c = code.lower();
+    QString c = code.toLower();
 
     // pass keycode on to running action:
     //RS_keycodeEvent e(cmd);
@@ -873,8 +873,8 @@ bool QG_ActionHandler::keycode(const QString& code) {
  *            running action.
  */
 bool QG_ActionHandler::command(const QString& cmd) {
-	RS_DEBUG->print("QG_ActionHandler::command: %s", cmd.latin1());
-    QString c = cmd.lower();
+        RS_DEBUG->print("QG_ActionHandler::command: %s", cmd.toLatin1().data());
+    QString c = cmd.toLower();
 
     if (c=="\n") {
         RS_GraphicView* gv = mainWindow->getGraphicView();

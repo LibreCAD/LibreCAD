@@ -38,6 +38,7 @@
 #include <QPixmap>
 #include <QKeyEvent>
 #include <Q3VBoxLayout>
+#include <q3listbox.h>
 
 /**
  * Constructor.
