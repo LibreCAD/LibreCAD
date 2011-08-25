@@ -28,8 +28,6 @@
 #define QG_LAYERWIDGET_H
 
 #include <qwidget.h>
-#include <q3listbox.h>
-//Added by qt3to4:
 #include <QPixmap>
 #include <QContextMenuEvent>
 #include <QKeyEvent>
@@ -39,7 +37,8 @@
 
 #include "qg_actionhandler.h"
 
-
+class Q3ListBox;
+class Q3ListBoxItem;
 
 /**
  * This is the Qt implementation of a widget which can view a 

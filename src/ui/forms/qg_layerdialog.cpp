@@ -36,7 +36,7 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_LayerDialog::QG_LayerDialog(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
+QG_LayerDialog::QG_LayerDialog(QWidget* parent, QString name, bool modal, Qt::WindowFlags fl)
     : QDialog(parent, fl)
 {
     setModal(modal);

@@ -32,11 +32,7 @@
 #include <qscrollbar.h>
 #include <qpixmap.h>
 #include <qlayout.h>
-#include <q3url.h>
-#include <q3filedialog.h>
-//Added by qt3to4:
 #include <QResizeEvent>
-#include <Q3GridLayout>
 #include <QWheelEvent>
 #include <QEvent>
 #include <QMouseEvent>
@@ -52,7 +48,7 @@
 
 #include "qg_scrollbar.h"
 
-
+class Q3GridLayout;
 
 /**
  * This is the Qt implementation of a widget which can view a 
@@ -63,7 +59,6 @@
  */
 class QG_GraphicView: public QWidget,
             public RS_GraphicView,
-			public Q3FilePreview,
             public RS_LayerListListener,
     public RS_BlockListListener {
     Q_OBJECT
@@ -111,7 +106,7 @@ protected:
     void paintEvent(QPaintEvent *);
     virtual void resizeEvent(QResizeEvent* e);
 
-	void previewUrl(const Q3Url &u);
+//RLZ	void previewUrl(const Q3Url &u);
 
 private slots:
     void slotHScrolled(int value);
