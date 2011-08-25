@@ -476,8 +476,7 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     RS_Vector vp(a-getAngle());
     RS_Vector vp2=vp;
     vp2.scale(RS_Vector(1./getMajorRadius(),1./getMinorRadius()));
-    double r=1./sqrt(RS_Vector::dotP(vp2,vp2));
-    vp.scale(r);
+    vp.scale(1./vp2.magnitude());
     vp.rotate(getAngle());
     vp.move(getCenter());
     if (dist!=NULL) {
