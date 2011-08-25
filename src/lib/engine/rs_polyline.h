@@ -139,8 +139,10 @@ public:
 			data.delFlag(RS2::FlagClosed);
 		}
 	}
-    
-	virtual RS_VectorSolutions getRefPoints();
+
+    void setClosed(bool cl, double bulge);//RLZ: rewrite this:
+
+    virtual RS_VectorSolutions getRefPoints();
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
                                      double* dist = NULL);
     virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
