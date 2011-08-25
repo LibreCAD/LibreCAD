@@ -65,6 +65,7 @@
 #include "qg_dlgoptionsdrawing.h"
 #include "qg_dlgoptionsgeneral.h"
 #include "qg_dlgpoint.h"
+#include "qg_dlgpolyline.h"
 #include "qg_dlgrotate.h"
 #include "qg_dlgrotate2.h"
 #include "qg_dlgscale.h"
@@ -1573,6 +1574,17 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
                 ((RS_Hatch*)entity)->update();
             }
         }
+        break;
+
+    case RS2::EntityPolyline: {
+//RLZ TODO: implement a QG_DlgPolyline dialog
+        QG_DlgPolyline dlg(parent);
+        dlg.setPolyline(*((RS_Polyline*)entity));
+        if (dlg.exec()) {
+            dlg.updatePolyline();
+            ret = true;
+        }
+    }
         break;
 
     default:
