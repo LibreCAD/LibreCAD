@@ -115,12 +115,12 @@
             </item>
             <item>
              <property name="text">
-              <string>#ffffff</string>
+              <string>#FFFFFF</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>#c0c0c0</string>
+              <string>#C0C0C0</string>
              </property>
             </item>
             <item>
@@ -137,12 +137,12 @@
             </property>
             <item>
              <property name="text">
-              <string>#c0c0c0</string>
+              <string>#C0C0C0</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>#ffffff</string>
+              <string>#FFFFFF</string>
              </property>
             </item>
             <item>
@@ -187,12 +187,12 @@
             </item>
             <item>
              <property name="text">
-              <string>#ffffff</string>
+              <string>#FFFFFF</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>#c0c0c0</string>
+              <string>#C0C0C0</string>
              </property>
             </item>
             <item>
@@ -222,7 +222,7 @@
             </property>
             <item>
              <property name="text">
-              <string>#a54747</string>
+              <string>#A54747</string>
              </property>
             </item>
            </widget>
