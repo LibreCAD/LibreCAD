@@ -2,8 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+** Copyright (C) 2011 Rallaz (rallazz@gmail.com)
 **
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -23,42 +22,31 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
+#ifndef QG_DLGSPOLYLINE_H
+#define QG_DLGSPOLYLINE_H
 
-#ifndef QG_PATTERNBOX_H
-#define QG_PATTERNBOX_H
+class RS_Polyline;
 
-#include <qcombobox.h>
+#include "ui_qg_dlgpolyline.h"
 
-#include "rs.h"
-#include "rs_pattern.h"
-#include "rs_patternlist.h"
-
-/**
- * A combobox for choosing a pattern name.
- */
-class QG_PatternBox: public QComboBox {
+class QG_DlgPolyline : public QDialog, public Ui::QG_DlgPolyline
+{
     Q_OBJECT
 
 public:
-    QG_PatternBox(QWidget* parent=0);
-    virtual ~QG_PatternBox();
+    QG_DlgPolyline(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    ~QG_DlgPolyline();
 
-    RS_Pattern* getPattern() {
-        return currentPattern;
-    }
-    void setPattern(const QString& pName);
+public slots:
+    virtual void setPolyline( RS_Polyline & e );
+    virtual void updatePolyline();
 
-    void init();
-
-private slots:
-    void slotPatternChanged(int index);
-
-signals:
-    void patternChanged(RS_Pattern* pattern);
+protected slots:
+    virtual void languageChange();
 
 private:
-    RS_Pattern* currentPattern;
+    RS_Polyline* polyline;
+
 };
 
-#endif
-
+#endif // QG_DLGSPOLYLINE_H

@@ -260,8 +260,18 @@ void RS_Polyline::endPolyline() {
     }
     calculateBorders();
 }
-	
-	
+
+//RLZ: rewrite this:
+void RS_Polyline::setClosed(bool cl, double bulge) {
+    Q_UNUSED(bulge);
+    setClosed(cl);
+    if (isClosed()) {
+        endPolyline();
+    } else {
+        removeLastVertex();
+    }
+}
+
 
 /**
  * @return The bulge of the closing entity.
