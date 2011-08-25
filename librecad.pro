@@ -622,6 +622,7 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_dlgoptionsgeneral.h \
     src/ui/forms/qg_dlgoptionsvariables.h \
     src/ui/forms/qg_dlgpoint.h \
+    src/ui/forms/qg_dlgpolyline.h \
     src/ui/forms/qg_dlgrotate.h \
     src/ui/forms/qg_dlgrotate2.h \
     src/ui/forms/qg_dlgscale.h \
@@ -712,6 +713,7 @@ SOURCES += src/ui/qg_actionfactory.cpp \
     src/ui/forms/qg_dlgoptionsgeneral.cpp \
     src/ui/forms/qg_dlgoptionsvariables.cpp \
     src/ui/forms/qg_dlgpoint.cpp \
+    src/ui/forms/qg_dlgpolyline.cpp \
     src/ui/forms/qg_dlgrotate.cpp \
     src/ui/forms/qg_dlgrotate2.cpp \
     src/ui/forms/qg_dlgscale.cpp \
@@ -785,6 +787,7 @@ FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_dlgoptionsgeneral.ui \
     src/ui/forms/qg_dlgoptionsvariables.ui \
     src/ui/forms/qg_dlgpoint.ui \
+    src/ui/forms/qg_dlgpolyline.ui \
     src/ui/forms/qg_dlgrotate.ui \
     src/ui/forms/qg_dlgrotate2.ui \
     src/ui/forms/qg_dlgscale.ui \
