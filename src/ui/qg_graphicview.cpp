@@ -57,6 +57,7 @@
 #include "rs_dialogfactory.h"
 #include "qg_dialogfactory.h"
 
+#include <q3url.h>
 
 #define QG_SCROLLMARGIN 400
 
@@ -806,7 +807,7 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
 /**
  * Previews the given url for the file open dialog.
  */
-void QG_GraphicView::previewUrl(const Q3Url &u) {
+//void QG_GraphicView::previewUrl(const Q3Url &u) {
 	//static RS_Graphic* gr = new RS_Graphic();
 	// TODO: Decide if previewurl is needed in qt4
 	/*
@@ -820,6 +821,6 @@ void QG_GraphicView::previewUrl(const Q3Url &u) {
 	
 	RS_DEBUG->print("QG_GraphicView::previewUrl: OK");
 	 */
-}
+//}
 
 
