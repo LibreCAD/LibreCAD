@@ -53,6 +53,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
                            const char* name, Qt::WindowFlags wflags)
         : QMainWindow(parent, name, wflags) {
 
+    setAttribute(Qt::WA_DeleteOnClose);
     owner = false;
 	forceClosing = false;
     initDoc(doc);

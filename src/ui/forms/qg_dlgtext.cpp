@@ -133,7 +133,9 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
     if (isNew) {
         RS_SETTINGS->beginGroup("/Draw");
         //default font depending on locale
-        QByteArray iso = RS_System::localeToISO( QTextCodec::locale() );
+        //default font depending on locale (RLZ-> check this: QLocale::system().name() returns "fr_FR")
+        QByteArray iso = RS_System::localeToISO( QLocale::system().name().toLocal8Bit() );
+//        QByteArray iso = RS_System::localeToISO( QTextCodec::locale() );
         if (iso=="ISO8859-1") {
              fon = RS_SETTINGS->readEntry("/TextFont", "normallatin1");
         } else if (iso=="ISO8859-2") {

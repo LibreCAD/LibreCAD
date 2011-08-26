@@ -67,16 +67,14 @@ void QG_DlgOptionsDrawing::init() {
 
     // precision list:
     QString s;
-    QString format;
     for (int i=0; i<=8; i++) {
-        format.sprintf("%%.0%df", i);
-        s.sprintf(format, 0.0);
+        s = QString("%1").arg(0.0,0,'f', i);
         listPrec1 << s;
     }
 
     // Main drawing unit:
     for (int i=RS2::None; i<RS2::LastUnit; i++) {
-        cbUnit->insertItem(RS_Units::unitToString((RS2::Unit)i));
+        cbUnit->addItem(RS_Units::unitToString((RS2::Unit)i));
     }
 
     // init units combobox:
@@ -86,7 +84,7 @@ void QG_DlgOptionsDrawing::init() {
     << tr("Engineering")
     << tr("Architectural")
     << tr("Fractional");
-    cbLengthFormat->insertStringList(unitList);
+    cbLengthFormat->insertItems(0, unitList);
 
     // init angle units combobox:
     QStringList aunitList;
@@ -95,11 +93,11 @@ void QG_DlgOptionsDrawing::init() {
     << tr("Gradians")
     << tr("Radians")
     << tr("Surveyor's units");
-    cbAngleFormat->insertStringList(aunitList);
+    cbAngleFormat->insertItems(0, aunitList);
 
     // Paper format:
     for (int i=RS2::Custom; i<=RS2::NPageSize; i++) {
-        cbPaperFormat->insertItem(RS_Units::paperFormatToString((RS2::PaperFormat)i));
+        cbPaperFormat->addItem(RS_Units::paperFormatToString((RS2::PaperFormat)i));
     }
     
     // Encodings:
@@ -148,7 +146,7 @@ void QG_DlgOptionsDrawing::init() {
     << "CP1258 "
     << "Apple Roman "
     << "TIS-620";
-    cbEncoding->insertStringList(encodingList);
+    cbEncoding->insertItems(0, encodingList);
     */
 }
 
@@ -165,32 +163,32 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
 
     // main drawing unit:
     int insunits = graphic->getVariableInt("$INSUNITS", 0);
-    cbUnit->setCurrentText(
-        RS_Units::unitToString(RS_FilterDXF::numberToUnit(insunits)));
+    cbUnit->setCurrentIndex( cbUnit->findText(
+            RS_Units::unitToString(RS_FilterDXF::numberToUnit(insunits))));
 
     // units / length format:
     int lunits = graphic->getVariableInt("$LUNITS", 2);
-    cbLengthFormat->setCurrentItem(lunits-1);
+    cbLengthFormat->setCurrentIndex(lunits-1);
 
     // units length precision:
     int luprec = graphic->getVariableInt("$LUPREC", 4);
     updateLengthPrecision();
-    cbLengthPrecision->setCurrentItem(luprec);
+    cbLengthPrecision->setCurrentIndex(luprec);
 
     // units / angle format:
     int aunits = graphic->getVariableInt("$AUNITS", 0);
-    cbAngleFormat->setCurrentItem(aunits);
+    cbAngleFormat->setCurrentIndex(aunits);
 
     // units angle precision:
     int auprec = graphic->getVariableInt("$AUPREC", 2);
     updateAnglePrecision();
-    cbAnglePrecision->setCurrentItem(auprec);
+    cbAnglePrecision->setCurrentIndex(auprec);
 
     // paper format:
     bool landscape;
     RS2::PaperFormat format = graphic->getPaperFormat(&landscape);
 	RS_DEBUG->print("QG_DlgOptionsDrawing::setGraphic: paper format is: %d", (int)format);
-    cbPaperFormat->setCurrentItem((int)format);
+    cbPaperFormat->setCurrentIndex((int)format);
 
     // paper orientation:
     if (landscape) {
@@ -204,47 +202,53 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
 
     RS_Vector spacing = graphic->getVariableVector("$GRIDUNIT",
                         RS_Vector(0.0,0.0));
-    cbXSpacing->setCurrentText(QString("%1").arg(spacing.x));
-    cbYSpacing->setCurrentText(QString("%1").arg(spacing.y));
+    cbXSpacing->setEditText( QString("%1").arg(spacing.x));
+    cbYSpacing->setEditText( QString("%1").arg(spacing.y));
 
     if (cbXSpacing->currentText()=="0") {
-        cbXSpacing->setCurrentText(tr("auto"));
+        cbXSpacing->setEditText(tr("auto"));
     }
     if (cbYSpacing->currentText()=="0") {
-        cbYSpacing->setCurrentText(tr("auto"));
+        cbYSpacing->setEditText(tr("auto"));
     }
 
     // dimension text height:
-    RS2::Unit unit = (RS2::Unit)cbUnit->currentItem();
+    RS2::Unit unit = (RS2::Unit)cbUnit->currentIndex();
 
     double dimtxt = graphic->getVariableDouble("$DIMTXT",
                     RS_Units::convert(2.5, RS2::Millimeter, unit));
-    cbDimTextHeight->setCurrentText(QString("%1").arg(dimtxt));
+//RLZ    cbDimTextHeight->setCurrentText(QString("%1").arg(dimtxt));
+    cbDimTextHeight->setEditText(QString("%1").arg(dimtxt));
 
     // dimension extension line extension:
     double dimexe = graphic->getVariableDouble("$DIMEXE",
                     RS_Units::convert(1.25, RS2::Millimeter, unit));
-    cbDimExe->setCurrentText(QString("%1").arg(dimexe));
+//RLZ    cbDimExe->setCurrentText(QString("%1").arg(dimexe));
+    cbDimExe->setEditText(QString("%1").arg(dimexe));
 
     // dimension extension line offset:
     double dimexo = graphic->getVariableDouble("$DIMEXO",
                     RS_Units::convert(0.625, RS2::Millimeter, unit));
-    cbDimExo->setCurrentText(QString("%1").arg(dimexo));
+//RLZ    cbDimExo->setCurrentText(QString("%1").arg(dimexo));
+    cbDimExo->setEditText(QString("%1").arg(dimexo));
 
     // dimension line gap:
     double dimgap = graphic->getVariableDouble("$DIMGAP",
                     RS_Units::convert(0.625, RS2::Millimeter, unit));
-    cbDimGap->setCurrentText(QString("%1").arg(dimgap));
+//RLZ    cbDimGap->setCurrentText(QString("%1").arg(dimgap));
+    cbDimGap->setEditText(QString("%1").arg(dimgap));
 
     // dimension arrow size:
     double dimasz = graphic->getVariableDouble("$DIMASZ",
                     RS_Units::convert(2.5, RS2::Millimeter, unit));
-    cbDimAsz->setCurrentText(QString("%1").arg(dimasz));
-    
+//RLZ    cbDimAsz->setCurrentText(QString("%1").arg(dimasz));
+    cbDimAsz->setEditText(QString("%1").arg(dimasz));
+
     // spline line segments per patch:
     int splinesegs = graphic->getVariableInt("$SPLINESEGS", 8);
-    cbSplineSegs->setCurrentText(QString("%1").arg(splinesegs));
-    
+//RLZ    cbSplineSegs->setCurrentText(QString("%1").arg(splinesegs));
+    cbSplineSegs->setEditText(QString("%1").arg(splinesegs));
+
     RS_DEBUG->print("QG_DlgOptionsDrawing::setGraphic: splinesegs is: %d",
                     splinesegs);
     
@@ -253,7 +257,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     QString encoding = graphic->getVariableString("$DWGCODEPAGE",
                                                   "ANSI_1252");
     encoding=RS_System::getEncoding(encoding);
-    cbEncoding->setCurrentText(encoding);
+    cbEncoding->setEditText(encoding);
     */
 
     updatePaperSize();
@@ -266,7 +270,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
  * Called when OK is clicked.
  */
 void QG_DlgOptionsDrawing::validate() {
-    RS2::LinearFormat f = (RS2::LinearFormat)cbLengthFormat->currentItem();
+    RS2::LinearFormat f = (RS2::LinearFormat)cbLengthFormat->currentIndex();
     if (f==RS2::Engineering || f==RS2::Architectural) {
         if (RS_Units::stringToUnit(cbUnit->currentText())!=RS2::Inch) {
             QMessageBox::warning( this, tr("Options"),
@@ -280,23 +284,23 @@ void QG_DlgOptionsDrawing::validate() {
 
     if (graphic!=NULL) {
         // units:
-        graphic->setUnit((RS2::Unit)cbUnit->currentItem());
+        graphic->setUnit((RS2::Unit)cbUnit->currentIndex());
 
-        graphic->addVariable("$LUNITS", cbLengthFormat->currentItem()+1, 70);
-        graphic->addVariable("$DIMLUNIT", cbLengthFormat->currentItem()+1, 70);
-        graphic->addVariable("$LUPREC", cbLengthPrecision->currentItem(), 70);
+        graphic->addVariable("$LUNITS", cbLengthFormat->currentIndex()+1, 70);
+        graphic->addVariable("$DIMLUNIT", cbLengthFormat->currentIndex()+1, 70);
+        graphic->addVariable("$LUPREC", cbLengthPrecision->currentIndex(), 70);
 
-        graphic->addVariable("$AUNITS", cbAngleFormat->currentItem(), 70);
-        graphic->addVariable("$DIMAUNIT", cbAngleFormat->currentItem(), 70);
-        graphic->addVariable("$AUPREC", cbAnglePrecision->currentItem(), 70);
-        graphic->addVariable("$DIMADEC", cbAnglePrecision->currentItem(), 70);
+        graphic->addVariable("$AUNITS", cbAngleFormat->currentIndex(), 70);
+        graphic->addVariable("$DIMAUNIT", cbAngleFormat->currentIndex(), 70);
+        graphic->addVariable("$AUPREC", cbAnglePrecision->currentIndex(), 70);
+        graphic->addVariable("$DIMADEC", cbAnglePrecision->currentIndex(), 70);
 
         // paper:
         graphic->setPaperFormat(
-            (RS2::PaperFormat)cbPaperFormat->currentItem(),
+            (RS2::PaperFormat)cbPaperFormat->currentIndex(),
             rbLandscape->isChecked());
 		// custom paper size:
-		if ((RS2::PaperFormat)cbPaperFormat->currentItem()==RS2::Custom) {
+                if ((RS2::PaperFormat)cbPaperFormat->currentIndex()==RS2::Custom) {
 			graphic->setPaperSize(
 				RS_Vector(RS_Math::eval(lePaperWidth->text()),
 				          RS_Math::eval(lePaperHeight->text())));
@@ -351,64 +355,64 @@ void QG_DlgOptionsDrawing::validate() {
  * Updates the length precision combobox
  */
 void QG_DlgOptionsDrawing::updateLengthPrecision() {
-    int index = cbLengthPrecision->currentItem();
+    int index = cbLengthPrecision->currentIndex();
     cbLengthPrecision->clear();
 
-    switch (cbLengthFormat->currentItem()) {
+    switch (cbLengthFormat->currentIndex()) {
         // scientific
     case 0:
-        cbLengthPrecision->insertItem("0E+01");
-        cbLengthPrecision->insertItem("0.0E+01");
-        cbLengthPrecision->insertItem("0.00E+01");
-        cbLengthPrecision->insertItem("0.000E+01");
-        cbLengthPrecision->insertItem("0.0000E+01");
-        cbLengthPrecision->insertItem("0.00000E+01");
-        cbLengthPrecision->insertItem("0.000000E+01");
-        cbLengthPrecision->insertItem("0.0000000E+01");
-        cbLengthPrecision->insertItem("0.00000000E+01");
+        cbLengthPrecision->addItem("0E+01");
+        cbLengthPrecision->addItem("0.0E+01");
+        cbLengthPrecision->addItem("0.00E+01");
+        cbLengthPrecision->addItem("0.000E+01");
+        cbLengthPrecision->addItem("0.0000E+01");
+        cbLengthPrecision->addItem("0.00000E+01");
+        cbLengthPrecision->addItem("0.000000E+01");
+        cbLengthPrecision->addItem("0.0000000E+01");
+        cbLengthPrecision->addItem("0.00000000E+01");
         break;
 
         // decimal
         //   (0, 0.1, 0.01, ...)
     case 1:
-        cbLengthPrecision->insertStringList(listPrec1);
+        cbLengthPrecision->insertItems(0, listPrec1);
         break;
 
         // architectural:
     case 3:
-        cbLengthPrecision->insertItem("0'-0\"");
-        cbLengthPrecision->insertItem("0'-0 1/2\"");
-        cbLengthPrecision->insertItem("0'-0 1/4\"");
-        cbLengthPrecision->insertItem("0'-0 1/8\"");
-        cbLengthPrecision->insertItem("0'-0 1/16\"");
-        cbLengthPrecision->insertItem("0'-0 1/32\"");
-        cbLengthPrecision->insertItem("0'-0 1/64\"");
-        cbLengthPrecision->insertItem("0'-0 1/128\"");
+        cbLengthPrecision->addItem("0'-0\"");
+        cbLengthPrecision->addItem("0'-0 1/2\"");
+        cbLengthPrecision->addItem("0'-0 1/4\"");
+        cbLengthPrecision->addItem("0'-0 1/8\"");
+        cbLengthPrecision->addItem("0'-0 1/16\"");
+        cbLengthPrecision->addItem("0'-0 1/32\"");
+        cbLengthPrecision->addItem("0'-0 1/64\"");
+        cbLengthPrecision->addItem("0'-0 1/128\"");
         break;
 
         // engineering:
     case 2:
-        cbLengthPrecision->insertItem("0'-0\"");
-        cbLengthPrecision->insertItem("0'-0.0\"");
-        cbLengthPrecision->insertItem("0'-0.00\"");
-        cbLengthPrecision->insertItem("0'-0.000\"");
-        cbLengthPrecision->insertItem("0'-0.0000\"");
-        cbLengthPrecision->insertItem("0'-0.00000\"");
-        cbLengthPrecision->insertItem("0'-0.000000\"");
-        cbLengthPrecision->insertItem("0'-0.0000000\"");
-        cbLengthPrecision->insertItem("0'-0.00000000\"");
+        cbLengthPrecision->addItem("0'-0\"");
+        cbLengthPrecision->addItem("0'-0.0\"");
+        cbLengthPrecision->addItem("0'-0.00\"");
+        cbLengthPrecision->addItem("0'-0.000\"");
+        cbLengthPrecision->addItem("0'-0.0000\"");
+        cbLengthPrecision->addItem("0'-0.00000\"");
+        cbLengthPrecision->addItem("0'-0.000000\"");
+        cbLengthPrecision->addItem("0'-0.0000000\"");
+        cbLengthPrecision->addItem("0'-0.00000000\"");
         break;
 
         // fractional
     case 4:
-        cbLengthPrecision->insertItem("0");
-        cbLengthPrecision->insertItem("0 1/2");
-        cbLengthPrecision->insertItem("0 1/4");
-        cbLengthPrecision->insertItem("0 1/8");
-        cbLengthPrecision->insertItem("0 1/16");
-        cbLengthPrecision->insertItem("0 1/32");
-        cbLengthPrecision->insertItem("0 1/64");
-        cbLengthPrecision->insertItem("0 1/128");
+        cbLengthPrecision->addItem("0");
+        cbLengthPrecision->addItem("0 1/2");
+        cbLengthPrecision->addItem("0 1/4");
+        cbLengthPrecision->addItem("0 1/8");
+        cbLengthPrecision->addItem("0 1/16");
+        cbLengthPrecision->addItem("0 1/32");
+        cbLengthPrecision->addItem("0 1/64");
+        cbLengthPrecision->addItem("0 1/128");
         break;
 
     default:
@@ -417,7 +421,7 @@ void QG_DlgOptionsDrawing::updateLengthPrecision() {
         break;
     }
 
-    cbLengthPrecision->setCurrentItem(index);
+    cbLengthPrecision->setCurrentIndex(index);
 }
 
 
@@ -426,68 +430,68 @@ void QG_DlgOptionsDrawing::updateLengthPrecision() {
  * Updates the angle precision combobox
  */
 void QG_DlgOptionsDrawing::updateAnglePrecision() {
-    int index = cbAnglePrecision->currentItem();
+    int index = cbAnglePrecision->currentIndex();
     cbAnglePrecision->clear();
 
-    switch (cbAngleFormat->currentItem()) {
+    switch (cbAngleFormat->currentIndex()) {
         // decimal degrees:
     case 0:
-        cbAnglePrecision->insertStringList(listPrec1);
+        cbAnglePrecision->insertItems(0, listPrec1);
         break;
 
         // deg/min/sec:
     case 1:
-        cbAnglePrecision->insertItem(QString("0%1").arg(QChar(0xB0)));
-        cbAnglePrecision->insertItem(QString("0%100'").arg(QChar(0xB0)));
-        cbAnglePrecision->insertItem(QString("0%100'00\"").arg(QChar(0xB0)));
-        cbAnglePrecision->insertItem(QString("0%100'00.0\"").arg(QChar(0xB0)));
-        cbAnglePrecision->insertItem(QString("0%100'00.00\"").arg(QChar(0xB0)));
-        cbAnglePrecision->insertItem(QString("0%100'00.000\"").arg(QChar(0xB0)));
-        cbAnglePrecision->insertItem(QString("0%100'00.0000\"").arg(QChar(0xB0)));
+        cbAnglePrecision->addItem(QString("0%1").arg(QChar(0xB0)));
+        cbAnglePrecision->addItem(QString("0%100'").arg(QChar(0xB0)));
+        cbAnglePrecision->addItem(QString("0%100'00\"").arg(QChar(0xB0)));
+        cbAnglePrecision->addItem(QString("0%100'00.0\"").arg(QChar(0xB0)));
+        cbAnglePrecision->addItem(QString("0%100'00.00\"").arg(QChar(0xB0)));
+        cbAnglePrecision->addItem(QString("0%100'00.000\"").arg(QChar(0xB0)));
+        cbAnglePrecision->addItem(QString("0%100'00.0000\"").arg(QChar(0xB0)));
         break;
 
         // gradians:
     case 2:
-        cbAnglePrecision->insertItem("0g");
-        cbAnglePrecision->insertItem("0.0g");
-        cbAnglePrecision->insertItem("0.00g");
-        cbAnglePrecision->insertItem("0.000g");
-        cbAnglePrecision->insertItem("0.0000g");
-        cbAnglePrecision->insertItem("0.00000g");
-        cbAnglePrecision->insertItem("0.000000g");
-        cbAnglePrecision->insertItem("0.0000000g");
-        cbAnglePrecision->insertItem("0.00000000g");
+        cbAnglePrecision->addItem("0g");
+        cbAnglePrecision->addItem("0.0g");
+        cbAnglePrecision->addItem("0.00g");
+        cbAnglePrecision->addItem("0.000g");
+        cbAnglePrecision->addItem("0.0000g");
+        cbAnglePrecision->addItem("0.00000g");
+        cbAnglePrecision->addItem("0.000000g");
+        cbAnglePrecision->addItem("0.0000000g");
+        cbAnglePrecision->addItem("0.00000000g");
         break;
 
         // radians:
     case 3:
-        cbAnglePrecision->insertItem("0r");
-        cbAnglePrecision->insertItem("0.0r");
-        cbAnglePrecision->insertItem("0.00r");
-        cbAnglePrecision->insertItem("0.000r");
-        cbAnglePrecision->insertItem("0.0000r");
-        cbAnglePrecision->insertItem("0.00000r");
-        cbAnglePrecision->insertItem("0.000000r");
-        cbAnglePrecision->insertItem("0.0000000r");
-        cbAnglePrecision->insertItem("0.00000000r");
+        cbAnglePrecision->addItem("0r");
+        cbAnglePrecision->addItem("0.0r");
+        cbAnglePrecision->addItem("0.00r");
+        cbAnglePrecision->addItem("0.000r");
+        cbAnglePrecision->addItem("0.0000r");
+        cbAnglePrecision->addItem("0.00000r");
+        cbAnglePrecision->addItem("0.000000r");
+        cbAnglePrecision->addItem("0.0000000r");
+        cbAnglePrecision->addItem("0.00000000r");
         break;
 
         // surveyor's units:
     case 4:
-        cbAnglePrecision->insertItem("N 0d E");
-        cbAnglePrecision->insertItem("N 0d00' E");
-        cbAnglePrecision->insertItem("N 0d00'00\" E");
-        cbAnglePrecision->insertItem("N 0d00'00.0\" E");
-        cbAnglePrecision->insertItem("N 0d00'00.00\" E");
-        cbAnglePrecision->insertItem("N 0d00'00.000\" E");
-        cbAnglePrecision->insertItem("N 0d00'00.0000\" E");
+        cbAnglePrecision->addItem("N 0d E");
+        cbAnglePrecision->addItem("N 0d00' E");
+        cbAnglePrecision->addItem("N 0d00'00\" E");
+        cbAnglePrecision->addItem("N 0d00'00.0\" E");
+        cbAnglePrecision->addItem("N 0d00'00.00\" E");
+        cbAnglePrecision->addItem("N 0d00'00.000\" E");
+        cbAnglePrecision->addItem("N 0d00'00.0000\" E");
         break;
 
     default:
         break;
     }
 
-    cbAnglePrecision->setCurrentItem(index);
+    cbAnglePrecision->setCurrentIndex(index);
 }
 
 /**
@@ -496,14 +500,14 @@ void QG_DlgOptionsDrawing::updateAnglePrecision() {
 void QG_DlgOptionsDrawing::updatePreview() {
     QString prev;
     prev = RS_Units::formatLinear(14.43112351,
-                                  (RS2::Unit)cbUnit->currentItem(),
-                                  (RS2::LinearFormat)(cbLengthFormat->currentItem()),
-                                  cbLengthPrecision->currentItem());
+                                  (RS2::Unit)cbUnit->currentIndex(),
+                                  (RS2::LinearFormat)(cbLengthFormat->currentIndex()),
+                                  cbLengthPrecision->currentIndex());
     lLinear->setText(prev);
 
     prev = RS_Units::formatAngle(0.5327714,
-                                 (RS2::AngleFormat)cbAngleFormat->currentItem(),
-                                 cbAnglePrecision->currentItem());
+                                 (RS2::AngleFormat)cbAngleFormat->currentIndex(),
+                                 cbAnglePrecision->currentIndex());
     lAngular->setText(prev);
 }
 
@@ -514,7 +518,7 @@ void QG_DlgOptionsDrawing::updatePreview() {
  * paper format changes.
  */
 void  QG_DlgOptionsDrawing::updatePaperSize() {
-    RS2::PaperFormat format = (RS2::PaperFormat)cbPaperFormat->currentItem();
+    RS2::PaperFormat format = (RS2::PaperFormat)cbPaperFormat->currentIndex();
 
 	if (format==RS2::Custom) {
 		RS_Vector s = graphic->getPaperSize();
@@ -529,7 +533,7 @@ void  QG_DlgOptionsDrawing::updatePaperSize() {
 	    lePaperHeight->setText(QString("%1").arg(s.y));
 	}
 
-    if (cbPaperFormat->currentItem()==0) {
+    if (cbPaperFormat->currentIndex()==0) {
         lePaperWidth->setEnabled(true);
         lePaperHeight->setEnabled(true);
     } else {
@@ -544,7 +548,7 @@ void  QG_DlgOptionsDrawing::updatePaperSize() {
  * Updates all unit labels that depend on the global unit.
  */
 void QG_DlgOptionsDrawing::updateUnitLabels() {
-    RS2::Unit u = (RS2::Unit)cbUnit->currentItem();
+    RS2::Unit u = (RS2::Unit)cbUnit->currentIndex();
     QString sign = RS_Units::unitToSign(u);
     lDimUnit1->setText(sign);
     lDimUnit2->setText(sign);

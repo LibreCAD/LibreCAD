@@ -85,7 +85,7 @@ int main(int argc, char** argv) {
 
         // for image mime resources from png files
         //  TODO: kinda dirty to call that explicitly
-        QINITIMAGES_LIBRECAD();
+//        QINITIMAGES_LIBRECAD();
 #ifdef RS_SCRIPTING
 //	qInitImages_librecad();
 #endif
@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
         }
 
         QFileInfo prgInfo( QFile::decodeName(argv[0]) );
-        QString prgDir(prgInfo.dirPath(true));
+        QString prgDir(prgInfo.absolutePath());
     RS_SETTINGS->init(XSTR(QC_COMPANYKEY), XSTR(QC_APPKEY));
     RS_SYSTEM->init(XSTR(QC_APPNAME), XSTR(QC_VERSION), XSTR(QC_APPDIR), prgDir);
 
@@ -184,7 +184,7 @@ int main(int argc, char** argv) {
 #ifdef QSPLASHSCREEN_H
         splash = new QSplashScreen(*pixmap);
         splash->show();
-        splash->message(QObject::tr("Loading.."),
+        splash->showMessage(QObject::tr("Loading.."),
                 Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
         RS_DEBUG->print("main: splashscreen: OK");
 #endif
@@ -200,7 +200,7 @@ int main(int argc, char** argv) {
         RS_DEBUG->print("main: creating main window..");
     QC_ApplicationWindow * appWin = new QC_ApplicationWindow();
         RS_DEBUG->print("main: setting caption");
-    appWin->setCaption(XSTR(QC_APPNAME));
+    appWin->setWindowTitle(XSTR(QC_APPNAME));
         RS_DEBUG->print("main: show main window");
     appWin->show();
         RS_DEBUG->print("main: set focus");
@@ -210,7 +210,7 @@ int main(int argc, char** argv) {
 #ifdef QSPLASHSCREEN_H
         if (splash) {
                 RS_DEBUG->print("main: updating splash..");
-                splash->message(QObject::tr("Loading..."),
+                splash->showMessage(QObject::tr("Loading..."),
                         Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
                 RS_DEBUG->print("main: processing events");
                 qApp->processEvents();
@@ -225,7 +225,7 @@ int main(int argc, char** argv) {
 
 #ifdef QSPLASHSCREEN_H
                         if (splash) {
-                                splash->message(QObject::tr("Loading File %1..")
+                                splash->showMessage(QObject::tr("Loading File %1..")
                                         .arg(QDir::convertSeparators(*it)),
                                 Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
                                 qApp->processEvents();
@@ -289,7 +289,7 @@ QStringList handleArgs(int argc, char** argv) {
         for (int i=1; i<argc; i++) {
                 if (QString(argv[i]).startsWith("-")==false) {
                         QString fname = QDir::convertSeparators(
-                                QFileInfo(QFile::decodeName(argv[i])).absFilePath() );
+                                QFileInfo(QFile::decodeName(argv[i])).absoluteFilePath() );
                         ret.append(fname);
                 }
                 else if (QString(argv[i])=="--exit") {

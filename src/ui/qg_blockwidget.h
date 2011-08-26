@@ -28,16 +28,12 @@
 #define QG_BLOCKWIDGET_H
 
 #include <qwidget.h>
-#include <q3listbox.h>
-//Added by qt3to4:
-#include <QKeyEvent>
-#include <QContextMenuEvent>
-#include <QPixmap>
 
-#include "rs_blocklist.h"
 #include "rs_blocklistlistener.h"
 
-#include "qg_actionhandler.h"
+class QG_ActionHandler;
+class Q3ListBox;
+class Q3ListBoxItem;
 
 /**
  * This is the Qt implementation of a widget which can view a 
