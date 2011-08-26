@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <Q3MimeSourceFactory>
 #include <QStatusBar>
 #include <QMenuBar>
 #include <QDockWidget>
@@ -82,7 +81,7 @@
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 
 #ifndef QC_APP_ICON
-# define QC_APP_ICON "librecad.png"
+# define QC_APP_ICON ":/main/librecad.png"
 #endif
 #ifndef QC_ABOUT_ICON
 # define QC_ABOUT_ICON ":/main/intro_librecad.png"
@@ -111,11 +110,12 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
  * Constructor. Initializes the app.
  */
 QC_ApplicationWindow::QC_ApplicationWindow()
-        : QMainWindow(0, "", Qt::WDestructiveClose),
+        : QMainWindow(0),
         QG_MainWindowInterface()
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
+    setAttribute(Qt::WA_DeleteOnClose);
     appWindow = this;
     helpEngine = NULL;
     helpWindow = NULL;
@@ -123,7 +123,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     workspace = NULL;
     
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
-     setIcon(qPixmapFromMimeSource(QC_APP_ICON));
+     setWindowIcon(QIcon(QC_APP_ICON));
 
 	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating action handler");
     actionHandler = new QG_ActionHandler(this);
@@ -166,7 +166,8 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     initMDI();
 
     // Activate autosave timer
-    autosaveTimer = new QTimer(this, "autosave");
+    autosaveTimer = new QTimer(this);
+    autosaveTimer->setObjectName("autosave");
     connect(autosaveTimer, SIGNAL(timeout()), this, SLOT(slotFileAutoSave()));
     RS_SETTINGS->beginGroup("/Defaults");
     autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000);
@@ -245,7 +246,7 @@ void QC_ApplicationWindow::loadPlugins() {
                                     } else {
                                         parentMenu=parentMenu->addMenu(menuName);
                                     }
-                                    parentMenu->setName(menuName);
+                                    parentMenu->setObjectName(menuName);
                                 }
                             } while(treemenu.size()>0);
                             parentMenu->addAction(actpl);
@@ -348,7 +349,7 @@ void QC_ApplicationWindow::slotRunScript() {
     if (s!=NULL) {
         QString script = ((QAction*)s)->text();
         RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: %s", 
-			script.latin1());
+                        script.toLatin1().data());
 		slotRunScript(script);
     }
 }
@@ -399,7 +400,7 @@ void QC_ApplicationWindow::slotInsertBlock() {
     if (s!=NULL) {
         QString block = ((QAction*)s)->text();
         RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: %s", 
-			block.latin1());
+                        block.toLatin1().data());
 		slotInsertBlock(block);
     }
 }
@@ -410,7 +411,7 @@ void QC_ApplicationWindow::slotInsertBlock() {
  * Called to insert blocks.
  */
 void QC_ApplicationWindow::slotInsertBlock(const QString& name) {
-	RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: '%s'", name.latin1());
+        RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: '%s'", name.toLatin1().data());
 
     statusBar()->showMessage(tr("Inserting block '%1'").arg(name), 2000);
 
@@ -441,7 +442,7 @@ void QC_ApplicationWindow::show() {
     if (splash) {
         splash->raise();
         qApp->processEvents();
-        splash->clear();
+        splash->clearMessage();
 # ifdef QC_DELAYED_SPLASH_SCREEN
         QTimer::singleShot(1000*2, this, SLOT(finishSplashScreen()));
 # else
@@ -541,46 +542,46 @@ void QC_ApplicationWindow::initActions(void)
     // File actions:
     //
     menu = menuBar()->addMenu(tr("&File"));
-    menu->setName("File");
+    menu->setObjectName("File");
     tb = fileToolBar;
-    tb->setCaption("File");
+    tb->setWindowTitle("File");
 
     action = actionFactory.createAction(RS2::ActionFileNew, this);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     action = actionFactory.createAction(RS2::ActionFileOpen, this);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     action = actionFactory.createAction(RS2::ActionFileSave, this);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionFileSaveAs, this);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionFileExport, this);
-    action->addTo(menu);
+    menu->addAction(action);
     subMenu = menu->addMenu(tr("Import"));
-    subMenu->setName("Import");
+    subMenu->setObjectName("Import");
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertSeparator();
+    menu->addSeparator();
     action = actionFactory.createAction(RS2::ActionFileClose, this);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertSeparator();
+    menu->addSeparator();
     action = actionFactory.createAction(RS2::ActionFilePrint, this);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionFilePrintPreview, this);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertSeparator();
+    menu->addSeparator();
     action = actionFactory.createAction(RS2::ActionFileQuit, this);
-    action->addTo(menu);
-    menu->insertSeparator();
+    menu->addAction(action);
+    menu->addSeparator();
     addToolBar(Qt::TopToolBarArea, tb); //tr("File");
 
     fileMenu = menu;
@@ -588,48 +589,48 @@ void QC_ApplicationWindow::initActions(void)
     // Editing actions:
     //
     menu = menuBar()->addMenu(tr("&Edit"));
-    menu->setName("Edit");
+    menu->setObjectName("Edit");
     tb = editToolBar;
-    tb->setCaption("Edit");
+    tb->setWindowTitle("Edit");
 
     action = actionFactory.createAction(RS2::ActionEditKillAllActions, actionHandler);
-    action->addTo(tb);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     tb->addSeparator();
 
     action = actionFactory.createAction(RS2::ActionEditUndo, actionHandler);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     action = actionFactory.createAction(RS2::ActionEditRedo, actionHandler);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     tb->addSeparator();
-    menu->insertSeparator();
+    menu->addSeparator();
 
     action = actionFactory.createAction(RS2::ActionEditCut, actionHandler);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionEditCopy, actionHandler);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionEditPaste, actionHandler);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
-    menu->insertSeparator();
+    menu->addSeparator();
 
     action = actionFactory.createAction(RS2::ActionOptionsGeneral, this);
-    action->addTo(menu);
+    menu->addAction(action);
     action = actionFactory.createAction(RS2::ActionOptionsDrawing, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     //addToolBar(tb, tr("Edit"));
@@ -644,14 +645,13 @@ void QC_ApplicationWindow::initActions(void)
     // Viewing / Zooming actions:
     //
     menu = menuBar()->addMenu(tr("&View"));
-    menu->setName("View");
-    menu->setCheckable(true);
+    menu->setObjectName("View");
     tb = zoomToolBar;
-    tb->setCaption("View");
+    tb->setWindowTitle("View");
 
     action = actionFactory.createAction(RS2::ActionViewGrid, this);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     action->setChecked(true);
     connect(this, SIGNAL(gridChanged(bool)), action, SLOT(setChecked(bool)));
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -661,8 +661,8 @@ void QC_ApplicationWindow::initActions(void)
     RS_SETTINGS->endGroup();
 
     action = actionFactory.createAction(RS2::ActionViewDraft, this);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     action->setChecked(draftMode);
     connect(this, SIGNAL(draftChanged(bool)), action, SLOT(setChecked(bool)));
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -677,64 +677,64 @@ void QC_ApplicationWindow::initActions(void)
 
 
     action = actionFactory.createAction(RS2::ActionZoomRedraw, actionHandler);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionZoomIn, actionHandler);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionZoomOut, actionHandler);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionZoomAuto, actionHandler);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionZoomPrevious, actionHandler);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionZoomWindow, actionHandler);
-    action->addTo(menu);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionZoomPan, actionHandler);
-	menu->addAction(action);
-    action->addTo(tb);
+    menu->addAction(action);
+    tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
-    menu->insertSeparator();
+    menu->addSeparator();
 
     action = actionFactory.createAction(RS2::ActionViewStatusBar, this);
     action->setChecked(true);
-    action->addTo(menu);
+    menu->addAction(action);
 
     subMenu= menu->addMenu(tr("&Toolbars"));
-    subMenu->setName("Toolbars");
+    subMenu->setObjectName("Toolbars");
 
     action = actionFactory.createAction(RS2::ActionViewLayerList, this, this->layerWidget->parentWidget());
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     action = actionFactory.createAction(RS2::ActionViewBlockList, this, this->blockWidget->parentWidget());
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     action = actionFactory.createAction(RS2::ActionViewLibrary, this, this->libraryWidget->parentWidget());
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     action = actionFactory.createAction(RS2::ActionViewCommandLine, this, this->commandWidget->parentWidget());
-    action->addTo(subMenu);
+    subMenu->addAction(action);
 
     subMenu->addSeparator();
 
     action = actionFactory.createAction(RS2::ActionViewPenToolbar, this, this->penToolBar);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     action = actionFactory.createAction(RS2::ActionViewOptionToolbar, this, this->optionWidget);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     //action = actionFactory.createAction(RS2::ActionViewCadToolbar, this, this->cadToolBar);
     //action->addTo(subMenu); // RVT CadToolbar is not a correct widget yet to beable to get toogled.
     action = actionFactory.createAction(RS2::ActionViewFileToolbar, this, this->fileToolBar);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     action = actionFactory.createAction(RS2::ActionViewEditToolbar, this, this->editToolBar);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
 
     // RVT_PORT menu->insertItem(tr("Vie&ws"), createDockWindowMenu(NoToolBars));
     // RVT_PORT menu->insertItem(tr("Tool&bars"), createDockWindowMenu(OnlyToolBars));
@@ -747,7 +747,7 @@ void QC_ApplicationWindow::initActions(void)
 		
     connect(action, SIGNAL(activated()),
             this, SLOT(slotFocusCommandLine()));
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     //addToolBar(tb, tr("View"));
 	addToolBar(Qt::TopToolBarArea, tb); //tr("View");
@@ -755,224 +755,224 @@ void QC_ApplicationWindow::initActions(void)
     // Selecting actions:
     //
     menu = menuBar()->addMenu(tr("&Select"));
-    menu->setName("Select");
+    menu->setObjectName("Select");
     action = actionFactory.createAction(RS2::ActionDeselectAll, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionSelectAll, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionSelectSingle, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionSelectContour, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDeselectWindow, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionSelectWindow, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionSelectInvert, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionSelectIntersected,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDeselectIntersected,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionSelectLayer, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Drawing actions:
     //
     menu = menuBar()->addMenu(tr("&Draw"));
-    menu->setName("Draw");
+    menu->setObjectName("Draw");
 
     // Points:
     subMenu= menu->addMenu(tr("&Point"));
-    subMenu->setName("Point");
+    subMenu->setObjectName("Point");
     action = actionFactory.createAction(RS2::ActionDrawPoint, actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Lines:
     subMenu= menu->addMenu(tr("&Line"));
-    subMenu->setName("Line");
+    subMenu->setObjectName("Line");
     action = actionFactory.createAction(RS2::ActionDrawLine,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawLineAngle,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawLineHorizontal,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawLineVertical,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawLineRectangle,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawLineParallel,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawLineParallelThrough,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawLineBisector,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawLineTangent1,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawLineTangent2,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawLineOrthogonal,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawLineRelAngle,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawLineFree,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     //action = actionFactory.createAction(RS2::ActionDrawLineHorVert,
     //                                    actionHandler);
     //action->addTo(subMenu);
     action = actionFactory.createAction(RS2::ActionDrawLinePolygon,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawLinePolygon2,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     action = actionFactory.createAction(RS2::ActionDrawPolyline,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Arcs:
     subMenu= menu->addMenu(tr("&Arc"));
-    subMenu->setName("Arc");
+    subMenu->setObjectName("Arc");
     action = actionFactory.createAction(RS2::ActionDrawArc, actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawArc3P, actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawArcParallel, actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Circles:
     subMenu= menu->addMenu(tr("&Circle"));
-    subMenu->setName("Circle");
+    subMenu->setObjectName("Circle");
     action = actionFactory.createAction(RS2::ActionDrawCircle, actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawCircleCR, actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawCircle2P, actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawCircle3P, actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawCircleParallel, actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Ellipses:
     subMenu= menu->addMenu(tr("&Ellipse"));
-    subMenu->setName("Ellipse");
+    subMenu->setObjectName("Ellipse");
     action = actionFactory.createAction(RS2::ActionDrawEllipseAxis,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawEllipseArcAxis,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Splines:
     subMenu= menu->addMenu(tr("&Spline"));
-    subMenu->setName("Spline");
+    subMenu->setObjectName("Spline");
     action = actionFactory.createAction(RS2::ActionDrawSpline, actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     
 	// Polylines:
     subMenu= menu->addMenu(tr("&Polyline"));
-    subMenu->setName("Polyline");
+    subMenu->setObjectName("Polyline");
     action = actionFactory.createAction(RS2::ActionDrawPolyline,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     action = actionFactory.createAction(RS2::ActionPolylineAdd,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     action = actionFactory.createAction(RS2::ActionPolylineAppend,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionPolylineDel,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionPolylineDelBetween,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionPolylineTrim,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     action = actionFactory.createAction(RS2::ActionPolylineEquidistant,
                                         actionHandler);
-    action->addTo(subMenu);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Text:
     action = actionFactory.createAction(RS2::ActionDrawText,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     // Hatch:
     action = actionFactory.createAction(RS2::ActionDrawHatch,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     // Image:
     action = actionFactory.createAction(RS2::ActionDrawImage,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Dimensioning actions:
@@ -983,268 +983,268 @@ void QC_ApplicationWindow::initActions(void)
 #else
     menu = menuBar()->addMenu(tr("&Dimension"));
 #endif
-    menu->setName("Dimension");
+    menu->setObjectName("Dimension");
     action = actionFactory.createAction(RS2::ActionDimAligned, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDimLinear, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDimLinearHor, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDimLinearVer, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDimRadial, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDimDiametric, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDimAngular, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDimLeader, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Modifying actions:
     //
     menu = menuBar()->addMenu(tr("&Modify"));
-    menu->setName("Modify");
+    menu->setObjectName("Modify");
     action = actionFactory.createAction(RS2::ActionModifyMove,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyRotate,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyScale,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyMirror,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyMoveRotate,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyRotate2,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyTrim,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyTrim2,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyTrimAmount,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyBevel,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyRound,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyCut,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyStretch,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyEntity,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyAttributes,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyDelete,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyDeleteQuick,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyExplodeText,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     //action = actionFactory.createAction(RS2::ActionModifyDeleteFree,
     //                                    actionHandler);
     //action->addTo(menu);
     action = actionFactory.createAction(RS2::ActionBlocksExplode, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Snapping actions:
     //
     menu = menuBar()->addMenu(tr("&Snap"));
-    menu->setName("Snap");
+    menu->setObjectName("Snap");
     action = actionFactory.createAction(RS2::ActionSnapFree, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action->setChecked(true);
     action = actionFactory.createAction(RS2::ActionSnapGrid, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionSnapEndpoint,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionSnapOnEntity,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionSnapCenter, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionSnapMiddle, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionSnapDist, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionSnapIntersection,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionSnapIntersectionManual,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertSeparator();
+    menu->addSeparator();
     action = actionFactory.createAction(RS2::ActionRestrictNothing,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action->setChecked(true);
     action = actionFactory.createAction(RS2::ActionRestrictOrthogonal,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionRestrictHorizontal,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionRestrictVertical,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertSeparator();
+    menu->addSeparator();
     action = actionFactory.createAction(RS2::ActionSetRelativeZero,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionLockRelativeZero,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Info actions:
     //
     menu = menuBar()->addMenu(tr("&Info"));
-    menu->setName("Info");
+    menu->setObjectName("Info");
     //action = actionFactory.createAction(RS2::ActionInfoInside,
     //                                    actionHandler);
     //action->addTo(menu);
     action = actionFactory.createAction(RS2::ActionInfoDist,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionInfoDist2,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionInfoAngle,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionInfoTotalLength,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionInfoArea,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Layer actions:
     //
     menu = menuBar()->addMenu(tr("&Layer"));
-    menu->setName("Layer");
+    menu->setObjectName("Layer");
     action = actionFactory.createAction(RS2::ActionLayersDefreezeAll,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionLayersFreezeAll,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionLayersAdd, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionLayersRemove,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionLayersEdit, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionLayersToggleView,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Block actions:
     //
     menu = menuBar()->addMenu(tr("&Block"));
-    menu->setName("Block");
+    menu->setObjectName("Block");
     action = actionFactory.createAction(RS2::ActionBlocksDefreezeAll,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionBlocksFreezeAll,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionBlocksAdd, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionBlocksRemove, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionBlocksAttributes,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionBlocksInsert,
                                         actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionBlocksEdit, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionBlocksCreate, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionBlocksExplode, actionHandler);
-    action->addTo(menu);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 	
 	QMainWindow::addToolBarBreak(Qt::TopToolBarArea);
@@ -1258,11 +1258,11 @@ void QC_ApplicationWindow::initActions(void)
     // Scripts menu:
     //
     scriptMenu = new QMenu(tr("&Scripts"));
-    scriptMenu->setName("Scripts");
+    scriptMenu->setObjectName("Scripts");
     scriptOpenIDE = actionFactory.createAction(RS2::ActionScriptOpenIDE, this);
     scriptOpenIDE->addTo(scriptMenu);
     scriptRun = actionFactory.createAction(RS2::ActionScriptRun, this);
-    scriptRun->addTo(scriptMenu);
+    scriptMenu->addAction(scriptRun);
 #else
     scriptMenu = 0;
     scriptOpenIDE = 0;
@@ -1273,16 +1273,15 @@ void QC_ApplicationWindow::initActions(void)
     // Help menu:
     //
     /*RVT_PORThelpAboutApp = new QAction(tr("About"), 
-							   qPixmapFromMimeSource(QC_APP_ICON16), 
-							   tr("&About %1").arg(QC_APPNAME), 0, this); */
-    helpAboutApp = new QAction(qPixmapFromMimeSource(QC_APP_ICON16), tr("About"), this);
+                                                           QC_APP_ICON16), tr("&About %1").arg(QC_APPNAME), 0, this); */
+    helpAboutApp = new QAction(QIcon(QC_APP_ICON16), tr("About"), this);
 
     //helpAboutApp->zetStatusTip(tr("About the application"));
     //helpAboutApp->setWhatsThis(tr("About\n\nAbout the application"));
     connect(helpAboutApp, SIGNAL(activated()),
             this, SLOT(slotHelpAbout()));
 
-    helpManual = new QAction(qPixmapFromMimeSource("contents.png"), tr("&Manual"), this);
+    helpManual = new QAction(QIcon(":/main/contents.png"), tr("&Manual"), this);
     //helpManual->zetStatusTip(tr("Launch the online manual"));
     connect(helpManual, SIGNAL(activated()),
             this, SLOT(slotHelpManual()));
@@ -1380,7 +1379,6 @@ void QC_ApplicationWindow::initMenuBar() {
 #ifdef RS_SCRIPTING
     menuBar()->addMenu(scriptMenu);
 #endif
-    //scriptMenu->setCheckable(true);
     //scriptOpenIDE->addTo(scriptMenu);
     //scriptRun->addTo(scriptMenu);
     //connect(scriptMenu, SIGNAL(aboutToShow()),
@@ -1388,36 +1386,35 @@ void QC_ApplicationWindow::initMenuBar() {
 
     // menuBar entry windowsMenu
     windowsMenu = menuBar()->addMenu(tr("&Window"));
-    windowsMenu->setName("Window");
-    windowsMenu->setCheckable(true);
+    windowsMenu->setObjectName("Window");
     connect(windowsMenu, SIGNAL(aboutToShow()),
             this, SLOT(slotWindowsMenuAboutToShow()));
 
-    menuBar()->insertSeparator();
+    menuBar()->addSeparator();
     // menuBar entry helpMenu
     helpMenu = menuBar()->addMenu(tr("&Help"));
-    helpMenu->setName("Help");
-    helpManual->addTo(helpMenu);
-    helpMenu->insertSeparator();
-    helpAboutApp->addTo(helpMenu);
+    helpMenu->setObjectName("Help");
+    helpMenu->addAction(helpManual);
+    helpMenu->addSeparator();
+    helpMenu->addAction(helpAboutApp);
 
     // menuBar entry test menu
     if (QC_DEBUGGING) {
         testMenu = menuBar()->addMenu(tr("De&bugging"));
-        testMenu->setName("Debugging");
-        testDumpEntities->addTo(testMenu);
-        testDumpUndo->addTo(testMenu);
-        testUpdateInserts->addTo(testMenu);
-        testDrawFreehand->addTo(testMenu);
-        testInsertBlock->addTo(testMenu);
-        testInsertText->addTo(testMenu);
-        testInsertImage->addTo(testMenu);
-        testInsertEllipse->addTo(testMenu);
-        testUnicode->addTo(testMenu);
-        testMath01->addTo(testMenu);
-        testResize640->addTo(testMenu);
-        testResize800->addTo(testMenu);
-        testResize1024->addTo(testMenu);
+        testMenu->setObjectName("Debugging");
+        testMenu->addAction(testDumpEntities);
+        testMenu->addAction(testDumpUndo);
+        testMenu->addAction(testUpdateInserts);
+        testMenu->addAction(testDrawFreehand);
+        testMenu->addAction(testInsertBlock);
+        testMenu->addAction(testInsertText);
+        testMenu->addAction(testInsertImage);
+        testMenu->addAction(testInsertEllipse);
+        testMenu->addAction(testUnicode);
+        testMenu->addAction(testMath01);
+        testMenu->addAction(testResize640);
+        testMenu->addAction(testResize800);
+        testMenu->addAction(testResize1024);
     }
 
     // menuBar configuration
@@ -1613,7 +1610,7 @@ void QC_ApplicationWindow::initView() {
     //dw->setFixedExtentHeight(400);
     //dw->setFixedHeight(400);
     // dw->setResizeEnabled(true);
-    dw->setCaption(tr("Layer List"));
+    dw->setWindowTitle(tr("Layer List"));
     // dw->setCloseMode(QDockWidget::Always);
     //dw->resize(120,workspace->height()/2);
     addDockWidget (Qt::RightDockWidgetArea, dw );
@@ -1634,7 +1631,7 @@ void QC_ApplicationWindow::initView() {
     //dw->boxLayout()->addWidget(blockWidget);
     dw->setWidget(blockWidget);
     // dw->setFixedExtentWidth(120);
-    dw->setCaption(tr("Block List"));
+    dw->setWindowTitle(tr("Block List"));
     // dw->setCloseMode(QDockWidget::Always);
     //dw->setFixedExtentHeight(400);
 	addDockWidget(Qt::RightDockWidgetArea, dw); 
@@ -1655,7 +1652,7 @@ void QC_ApplicationWindow::initView() {
     //dw->setHeight(400);
     dw->resize(240, 400);
     // dw->setResizeEnabled(true);
-    dw->setCaption(tr("Library Browser"));
+    dw->setWindowTitle(tr("Library Browser"));
     // dw->setCloseMode(QDockWidget::Always);
     addDockWidget(Qt::LeftDockWidgetArea , dw);
 
@@ -1681,7 +1678,7 @@ void QC_ApplicationWindow::initView() {
     dw->setWidget(commandWidget);
     //dw->setFixedExtentWidth(120);
     //dw->setFixedExtentHeight(45);
-    dw->setCaption(tr("Command line"));
+    dw->setWindowTitle(tr("Command line"));
     // dw->setCloseMode(QDockWidget::Always);
     commandDockWindow = dw;
 	addDockWidget(Qt::BottomDockWidgetArea, dw); 
@@ -1710,7 +1707,7 @@ void QC_ApplicationWindow::initView() {
 /*void QC_ApplicationWindow::addToolBarButton(QToolBar* tb) {
 	if (tb!=NULL) {
     	QAction* action = new QAction("Blah", 
-			QPixmap::fromMimeSource("zoomwindow.png"),
+                        QIcon(":/actions/zoomwindow.png"),
             "&Blah", QKeySequence(), NULL);
     	//action->zetStatusTip("Blah blah");
 		action->addTo(tb);
@@ -1903,10 +1900,10 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
         windowsMenu->setItemEnabled(tileId, false);
         windowsMenu->setItemEnabled(horTileId, false);
     }
-    windowsMenu->insertSeparator();
+    windowsMenu->addSeparator();
     QWidgetList windows = workspace->windowList();
     for (int i=0; i<int(windows.count()); ++i) {
-        int id = windowsMenu->insertItem(windows.at(i)->caption(),
+        int id = windowsMenu->insertItem(windows.at(i)->windowTitle(),
                                          this, SLOT(slotWindowsMenuActivated(int)));
         windowsMenu->setItemParameter(id, i);
         windowsMenu->setItemChecked(id, workspace->activeWindow()==windows.at(i));
@@ -1957,7 +1954,7 @@ void QC_ApplicationWindow::slotTileHorizontal() {
         } */
         int preferredHeight = window->minimumHeight()
                               + window->parentWidget()->baseSize().height();
-        int actHeight = QMAX(heightForEach, preferredHeight);
+        int actHeight = qMax(heightForEach, preferredHeight);
 
         //window->parentWidget()->resize(workspace->width(), actHeight);
         window->parentWidget()->setGeometry(0, y,
@@ -2036,18 +2033,17 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     statusBar()->showMessage(tr("Creating new file..."));
 
     RS_DEBUG->print("  creating MDI window");
-    QC_MDIWindow* w = new QC_MDIWindow(doc, workspace,
-                                       0, Qt::WDestructiveClose);
+    QC_MDIWindow* w = new QC_MDIWindow(doc, workspace, 0);
 	//w->setWindowState(WindowMaximized);
     connect(w, SIGNAL(signalClosing()),
             this, SLOT(slotFileClosing()));
 
     if (w->getDocument()->rtti()==RS2::EntityBlock) {
-        w->setCaption(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()));
+        w->setWindowTitle(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()));
     } else {
-        w->setCaption(tr("unnamed document %1").arg(id));
+        w->setWindowTitle(tr("unnamed document %1").arg(id));
     }
-    w->setIcon(qPixmapFromMimeSource("document.png"));
+    w->setWindowIcon(QIcon(":/main/document.png"));
 
     // only graphics offer block lists, blocks don't
     RS_DEBUG->print("  adding listeners");
@@ -2238,7 +2234,7 @@ void QC_ApplicationWindow::
 
 		/*	Format and set caption.
 		 *	----------------------- */	
-        w->setCaption(format_filename_caption(fileName));
+        w->setWindowTitle(format_filename_caption(fileName));
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption: OK");
 
@@ -2316,7 +2312,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
             if (!cancelled) {
             	name = w->getDocument()->getFilename();
             	recentFiles->add(name);
-            	w->setCaption(name);
+                w->setWindowTitle(name);
 		if (!autosaveTimer->isActive()) {
                     RS_SETTINGS->beginGroup("/Defaults");
                     autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000);
@@ -2347,7 +2343,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
 void QC_ApplicationWindow::slotFileAutoSave() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileAutoSave()");
 
-    statusBar()->message(tr("Auto-saving drawing..."));
+    statusBar()->showMessage(tr("Auto-saving drawing..."));
 
     QC_MDIWindow* w = getMDIWindow();
     QString name;
@@ -2356,7 +2352,7 @@ void QC_ApplicationWindow::slotFileAutoSave() {
 	if (w->slotFileSave(cancelled, true)) {
 	    // auto-save cannot be cancelled by user, so the
 	    // "cancelled" parameter is a dummy
-	    statusBar()->message(tr("Auto-saved drawing"), 2000);
+            statusBar()->showMessage(tr("Auto-saved drawing"), 2000);
 	} else {
 	    // error
 	    autosaveTimer->stop();
@@ -2395,7 +2391,7 @@ void QC_ApplicationWindow::slotFileExport() {
 
         QStringList filters;
         foreach (QString format, QImageWriter::supportedImageFormats()) {
-            format.lower();
+            format.toLower();
             QString st;
             if (format=="jpeg" || format=="tiff") {
                 // Don't add the aliases
@@ -2424,7 +2420,7 @@ void QC_ApplicationWindow::slotFileExport() {
         // store new default settings:
         if (!cancel) {
             RS_SETTINGS->beginGroup("/Paths");
-            RS_SETTINGS->writeEntry("/ExportImage", QFileInfo(fn).dirPath(true));
+            RS_SETTINGS->writeEntry("/ExportImage", QFileInfo(fn).absolutePath());
             RS_SETTINGS->writeEntry("/ExportImageFilter",
                                     fileDlg.selectedFilter());
             RS_SETTINGS->endGroup();
@@ -2432,16 +2428,16 @@ void QC_ApplicationWindow::slotFileExport() {
             // find out extension:
             QString filter = fileDlg.selectedFilter();
             QString format = "";
-            int i = filter.find("(*.");
+            int i = filter.indexOf("(*.");
             if (i!=-1) {
-                int i2 = filter.find(QRegExp("[) ]"), i);
+                int i2 = filter.indexOf(QRegExp("[) ]"), i);
                 format = filter.mid(i+3, i2-(i+3));
-                format = format.upper();
+                format = format.toUpper();
             }
 
             // append extension to file:
             if (!QFileInfo(fn).fileName().contains(".")) {
-                fn.append("." + format.lower());
+                fn.append("." + format.toLower());
             }
 
             // show options dialog:
@@ -2533,7 +2529,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     img = *buffer;
     // RVT_PORT iio.setImage(img);
     iio.setFileName(name);
-    iio.setFormat(format.ascii());
+    iio.setFormat(format.toAscii());
     // RVT_PORT if (iio.write()) {
 	if (iio.write(img)) {
         ret = true;
@@ -2563,7 +2559,7 @@ void QC_ApplicationWindow::slotFileClose() {
 
     QC_MDIWindow* m = getMDIWindow();
     if (m!=NULL) {
-        m->close(true);
+        m->close();
     }
    
    	/*
@@ -2732,16 +2728,15 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
             if (!parent->getGraphicView()->isPrintPreview()) {
                 RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): create");
 
-                QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), workspace,
-                                                   0, Qt::WDestructiveClose);
+                QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), workspace, 0);
 				workspace->addWindow(w);
 				w->setWindowState(Qt::WindowMaximized);
                 parent->addChildWindow(w);
                 connect(w, SIGNAL(signalClosing()),
                          this, SLOT(slotFileClose()));
 
-                w->setCaption(tr("Print preview for %1").arg(parent->caption()));
-                w->setIcon(qPixmapFromMimeSource("document.png"));
+                w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
+                w->setWindowIcon(QIcon(":/main/document.png"));
                 w->getGraphicView()->setPrintPreview(true);
                 w->getGraphicView()->setBackground(RS_Color(255,255,255));
                 w->getGraphicView()->setDefaultAction(
@@ -3008,7 +3003,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
     }
 
     QMessageBox box(this);
-    box.setCaption(tr("About..."));
+    box.setWindowTitle(tr("About..."));
     box.setText(       QString("<p><font size=\"2\">") +
                        "<h2>"+ XSTR(QC_APPNAME)+ "</h2>" +
                        tr("Version: %1").arg(XSTR(QC_VERSION)) + "<br>" +
@@ -3035,7 +3030,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
                        "</a></center>"
                        );
 
-    box.setIconPixmap( qPixmapFromMimeSource(QC_ABOUT_ICON) );
+    box.setIconPixmap( QPixmap(QC_ABOUT_ICON) );
     box.setMinimumSize(500,400);
     box.setBaseSize(500,400);
     box.setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
@@ -3053,9 +3048,9 @@ void QC_ApplicationWindow::slotHelpManual() {
 
     if (helpEngine==NULL) {
         RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
-                        RS_SYSTEM->getAppDir().latin1());
+                        RS_SYSTEM->getAppDir().toLatin1().data());
         RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
-                        RS_SYSTEM->getAppDir().latin1());
+                        RS_SYSTEM->getAppDir().toLatin1().data());
 
         if ((RS_SYSTEM->getDocPath().length()>0) && (QFile::exists(RS_SYSTEM->getDocPath()+ "/LibreCADdoc.qhc")==true)) {
             helpEngine = new QHelpEngine(RS_SYSTEM->getDocPath() + "/LibreCADdoc.qhc", this);
@@ -3130,7 +3125,7 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                 lay = e->getLayer()->getName();
             }
             dumpFile
-            << "<td>Layer: " << lay.ascii() << "</td>"
+            << "<td>Layer: " << lay.toAscii().data() << "</td>"
             << "<td>Width: " << (int)e->getPen(false).getWidth() << "</td>"
             << "<td>Parent: " << e->getParent()->getId() << "</td>"
             << "</tr></table>";
@@ -3241,10 +3236,10 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                     << d->getExtensionPoint2()
                     << "</td>"
                     << "<td>Text: "
-                    << d->getText().latin1()
+                    << d->getText().toLatin1().data()
                     << "</td>"
                     << "<td>Label: "
-                    << d->getLabel().latin1()
+                    << d->getLabel().toLatin1().data()
                     << "</td>"
                     << "</tr></table>";
                 }
@@ -3268,10 +3263,10 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                     << d->getExtensionPoint2()
                     << "</td>"
                     << "<td>Text: "
-                    << d->getText().ascii()
+                    << d->getText().toAscii().data()
                     << "</td>"
                     << "<td>Label: "
-                    << d->getLabel().ascii()
+                    << d->getLabel().toAscii().data()
                     << "</td>"
                     << "</tr></table>";
                 }
@@ -3301,7 +3296,7 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                     dumpFile
                     << "<tr>"
                     << "<td>Text:"
-                    << t->getText().latin1()
+                    << t->getText().toLatin1().data()
                     << "</td>"
                     << "<td>Height:"
                     << t->getHeight()
@@ -3319,7 +3314,7 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                     dumpFile
                     << "<tr>"
                     << "<td>Pattern:"
-                    << h->getPattern().latin1()
+                    << h->getPattern().toLatin1().data()
                     << "</td>"
                     << "<td>Scale:"
                     << h->getScale()
