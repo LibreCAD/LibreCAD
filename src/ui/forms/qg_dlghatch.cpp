@@ -75,7 +75,7 @@ void QG_DlgHatch::init() {
 }
 
 void QG_DlgHatch::polish() {
-    QDialog::polish();
+    QDialog::ensurePolished();
     gvPreview->zoomAuto();
 }
 
@@ -146,9 +146,9 @@ void QG_DlgHatch::updateHatch() {
 
 void QG_DlgHatch::setPattern(const QString& p) {
     if (!RS_PATTERNLIST->contains(p)) {
-        cbPattern->insertItem(p);
+        cbPattern->addItem(p);
     }
-    cbPattern->setCurrentText(p);
+    cbPattern->setCurrentIndex( cbPattern->findText(p) );
     pattern = cbPattern->getPattern();
 }
 
