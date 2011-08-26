@@ -302,7 +302,7 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
 
         if (ret) {
             //QString message=tr("Loaded document: ")+fileName;
-            //statusBar()->message(message, 2000);
+            //statusBar()->showMessage(message, 2000);
 
             RS_DEBUG->print("QC_MDIWindow::slotFileOpen: autoZoom");
             graphicView->zoomAuto(false);
@@ -312,7 +312,7 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
         }
     } else {
         RS_DEBUG->print("QC_MDIWindow::slotFileOpen: cancelled");
-        //statusBar()->message(tr("Opening aborted"), 2000);
+        //statusBar()->showMessage(tr("Opening aborted"), 2000);
     }
 
     RS_DEBUG->print("QC_MDIWindow::slotFileOpen: OK");
@@ -451,7 +451,7 @@ void QC_MDIWindow::slotFilePrint() {
 
     RS_DEBUG->print("QC_MDIWindow::slotFilePrint");
 
-    //statusBar()->message(tr("Printing..."));
+    //statusBar()->showMessage(tr("Printing..."));
     QPrinter printer;
     if (printer.setup(this)) {
         QPainter painter;
@@ -463,7 +463,7 @@ void QC_MDIWindow::slotFilePrint() {
         painter.end();
     };
 
-    //statusBar()->message(tr("Ready."));
+    //statusBar()->showMessage(tr("Ready."));
 }
 
 
