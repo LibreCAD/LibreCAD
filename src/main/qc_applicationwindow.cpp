@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <Q3MimeSourceFactory>
 #include <QStatusBar>
 #include <QMenuBar>
 #include <QDockWidget>
@@ -82,7 +81,7 @@
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 
 #ifndef QC_APP_ICON
-# define QC_APP_ICON "librecad.png"
+# define QC_APP_ICON ":/main/librecad.png"
 #endif
 #ifndef QC_ABOUT_ICON
 # define QC_ABOUT_ICON ":/main/intro_librecad.png"
@@ -111,11 +110,12 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
  * Constructor. Initializes the app.
  */
 QC_ApplicationWindow::QC_ApplicationWindow()
-        : QMainWindow(0, "", Qt::WDestructiveClose),
+        : QMainWindow(0),
         QG_MainWindowInterface()
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
+    setAttribute(Qt::WA_DeleteOnClose);
     appWindow = this;
     helpEngine = NULL;
     helpWindow = NULL;
@@ -123,7 +123,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     workspace = NULL;
     
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
-     setIcon(qPixmapFromMimeSource(QC_APP_ICON));
+     setWindowIcon(QIcon(QC_APP_ICON));
 
 	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating action handler");
     actionHandler = new QG_ActionHandler(this);
@@ -166,7 +166,8 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     initMDI();
 
     // Activate autosave timer
-    autosaveTimer = new QTimer(this, "autosave");
+    autosaveTimer = new QTimer(this);
+    autosaveTimer->setObjectName("autosave");
     connect(autosaveTimer, SIGNAL(timeout()), this, SLOT(slotFileAutoSave()));
     RS_SETTINGS->beginGroup("/Defaults");
     autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000);
@@ -245,7 +246,7 @@ void QC_ApplicationWindow::loadPlugins() {
                                     } else {
                                         parentMenu=parentMenu->addMenu(menuName);
                                     }
-                                    parentMenu->setName(menuName);
+                                    parentMenu->setObjectName(menuName);
                                 }
                             } while(treemenu.size()>0);
                             parentMenu->addAction(actpl);
@@ -348,7 +349,7 @@ void QC_ApplicationWindow::slotRunScript() {
     if (s!=NULL) {
         QString script = ((QAction*)s)->text();
         RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: %s", 
-			script.latin1());
+                        script.toLatin1().data());
 		slotRunScript(script);
     }
 }
@@ -399,7 +400,7 @@ void QC_ApplicationWindow::slotInsertBlock() {
     if (s!=NULL) {
         QString block = ((QAction*)s)->text();
         RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: %s", 
-			block.latin1());
+                        block.toLatin1().data());
 		slotInsertBlock(block);
     }
 }
@@ -410,7 +411,7 @@ void QC_ApplicationWindow::slotInsertBlock() {
  * Called to insert blocks.
  */
 void QC_ApplicationWindow::slotInsertBlock(const QString& name) {
-	RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: '%s'", name.latin1());
+        RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: '%s'", name.toLatin1().data());
 
     statusBar()->showMessage(tr("Inserting block '%1'").arg(name), 2000);
 
@@ -441,7 +442,7 @@ void QC_ApplicationWindow::show() {
     if (splash) {
         splash->raise();
         qApp->processEvents();
-        splash->clear();
+        splash->clearMessage();
 # ifdef QC_DELAYED_SPLASH_SCREEN
         QTimer::singleShot(1000*2, this, SLOT(finishSplashScreen()));
 # else
@@ -541,9 +542,9 @@ void QC_ApplicationWindow::initActions(void)
     // File actions:
     //
     menu = menuBar()->addMenu(tr("&File"));
-    menu->setName("File");
+    menu->setObjectName("File");
     tb = fileToolBar;
-    tb->setCaption("File");
+    tb->setWindowTitle("File");
 
     action = actionFactory.createAction(RS2::ActionFileNew, this);
     action->addTo(menu);
@@ -561,13 +562,13 @@ void QC_ApplicationWindow::initActions(void)
     action = actionFactory.createAction(RS2::ActionFileExport, this);
     action->addTo(menu);
     subMenu = menu->addMenu(tr("Import"));
-    subMenu->setName("Import");
+    subMenu->setObjectName("Import");
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertSeparator();
+    menu->addSeparator();
     action = actionFactory.createAction(RS2::ActionFileClose, this);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertSeparator();
+    menu->addSeparator();
     action = actionFactory.createAction(RS2::ActionFilePrint, this);
     action->addTo(menu);
     action->addTo(tb);
@@ -577,10 +578,10 @@ void QC_ApplicationWindow::initActions(void)
     action->addTo(tb);
     connect(this, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertSeparator();
+    menu->addSeparator();
     action = actionFactory.createAction(RS2::ActionFileQuit, this);
     action->addTo(menu);
-    menu->insertSeparator();
+    menu->addSeparator();
     addToolBar(Qt::TopToolBarArea, tb); //tr("File");
 
     fileMenu = menu;
@@ -588,9 +589,9 @@ void QC_ApplicationWindow::initActions(void)
     // Editing actions:
     //
     menu = menuBar()->addMenu(tr("&Edit"));
-    menu->setName("Edit");
+    menu->setObjectName("Edit");
     tb = editToolBar;
-    tb->setCaption("Edit");
+    tb->setWindowTitle("Edit");
 
     action = actionFactory.createAction(RS2::ActionEditKillAllActions, actionHandler);
     action->addTo(tb);
@@ -609,7 +610,7 @@ void QC_ApplicationWindow::initActions(void)
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     tb->addSeparator();
-    menu->insertSeparator();
+    menu->addSeparator();
 
     action = actionFactory.createAction(RS2::ActionEditCut, actionHandler);
     action->addTo(menu);
@@ -624,7 +625,7 @@ void QC_ApplicationWindow::initActions(void)
     action->addTo(tb);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
-    menu->insertSeparator();
+    menu->addSeparator();
 
     action = actionFactory.createAction(RS2::ActionOptionsGeneral, this);
     action->addTo(menu);
@@ -644,10 +645,9 @@ void QC_ApplicationWindow::initActions(void)
     // Viewing / Zooming actions:
     //
     menu = menuBar()->addMenu(tr("&View"));
-    menu->setName("View");
-    menu->setCheckable(true);
+    menu->setObjectName("View");
     tb = zoomToolBar;
-    tb->setCaption("View");
+    tb->setWindowTitle("View");
 
     action = actionFactory.createAction(RS2::ActionViewGrid, this);
     action->addTo(menu);
@@ -705,14 +705,14 @@ void QC_ApplicationWindow::initActions(void)
     action->addTo(tb);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
-    menu->insertSeparator();
+    menu->addSeparator();
 
     action = actionFactory.createAction(RS2::ActionViewStatusBar, this);
     action->setChecked(true);
     action->addTo(menu);
 
     subMenu= menu->addMenu(tr("&Toolbars"));
-    subMenu->setName("Toolbars");
+    subMenu->setObjectName("Toolbars");
 
     action = actionFactory.createAction(RS2::ActionViewLayerList, this, this->layerWidget->parentWidget());
     action->addTo(subMenu);
@@ -755,7 +755,7 @@ void QC_ApplicationWindow::initActions(void)
     // Selecting actions:
     //
     menu = menuBar()->addMenu(tr("&Select"));
-    menu->setName("Select");
+    menu->setObjectName("Select");
     action = actionFactory.createAction(RS2::ActionDeselectAll, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -792,18 +792,18 @@ void QC_ApplicationWindow::initActions(void)
     // Drawing actions:
     //
     menu = menuBar()->addMenu(tr("&Draw"));
-    menu->setName("Draw");
+    menu->setObjectName("Draw");
 
     // Points:
     subMenu= menu->addMenu(tr("&Point"));
-    subMenu->setName("Point");
+    subMenu->setObjectName("Point");
     action = actionFactory.createAction(RS2::ActionDrawPoint, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Lines:
     subMenu= menu->addMenu(tr("&Line"));
-    subMenu->setName("Line");
+    subMenu->setObjectName("Line");
     action = actionFactory.createAction(RS2::ActionDrawLine,
                                         actionHandler);
     action->addTo(subMenu);
@@ -875,7 +875,7 @@ void QC_ApplicationWindow::initActions(void)
 
     // Arcs:
     subMenu= menu->addMenu(tr("&Arc"));
-    subMenu->setName("Arc");
+    subMenu->setObjectName("Arc");
     action = actionFactory.createAction(RS2::ActionDrawArc, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -888,7 +888,7 @@ void QC_ApplicationWindow::initActions(void)
 
     // Circles:
     subMenu= menu->addMenu(tr("&Circle"));
-    subMenu->setName("Circle");
+    subMenu->setObjectName("Circle");
     action = actionFactory.createAction(RS2::ActionDrawCircle, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -907,7 +907,7 @@ void QC_ApplicationWindow::initActions(void)
 
     // Ellipses:
     subMenu= menu->addMenu(tr("&Ellipse"));
-    subMenu->setName("Ellipse");
+    subMenu->setObjectName("Ellipse");
     action = actionFactory.createAction(RS2::ActionDrawEllipseAxis,
                                         actionHandler);
     action->addTo(subMenu);
@@ -919,14 +919,14 @@ void QC_ApplicationWindow::initActions(void)
 
     // Splines:
     subMenu= menu->addMenu(tr("&Spline"));
-    subMenu->setName("Spline");
+    subMenu->setObjectName("Spline");
     action = actionFactory.createAction(RS2::ActionDrawSpline, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     
 	// Polylines:
     subMenu= menu->addMenu(tr("&Polyline"));
-    subMenu->setName("Polyline");
+    subMenu->setObjectName("Polyline");
     action = actionFactory.createAction(RS2::ActionDrawPolyline,
                                         actionHandler);
     action->addTo(subMenu);
@@ -983,7 +983,7 @@ void QC_ApplicationWindow::initActions(void)
 #else
     menu = menuBar()->addMenu(tr("&Dimension"));
 #endif
-    menu->setName("Dimension");
+    menu->setObjectName("Dimension");
     action = actionFactory.createAction(RS2::ActionDimAligned, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -1012,7 +1012,7 @@ void QC_ApplicationWindow::initActions(void)
     // Modifying actions:
     //
     menu = menuBar()->addMenu(tr("&Modify"));
-    menu->setName("Modify");
+    menu->setObjectName("Modify");
     action = actionFactory.createAction(RS2::ActionModifyMove,
                                         actionHandler);
     action->addTo(menu);
@@ -1095,7 +1095,7 @@ void QC_ApplicationWindow::initActions(void)
     // Snapping actions:
     //
     menu = menuBar()->addMenu(tr("&Snap"));
-    menu->setName("Snap");
+    menu->setObjectName("Snap");
     action = actionFactory.createAction(RS2::ActionSnapFree, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -1128,7 +1128,7 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertSeparator();
+    menu->addSeparator();
     action = actionFactory.createAction(RS2::ActionRestrictNothing,
                                         actionHandler);
     action->addTo(menu);
@@ -1146,7 +1146,7 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->insertSeparator();
+    menu->addSeparator();
     action = actionFactory.createAction(RS2::ActionSetRelativeZero,
                                         actionHandler);
     action->addTo(menu);
@@ -1159,7 +1159,7 @@ void QC_ApplicationWindow::initActions(void)
     // Info actions:
     //
     menu = menuBar()->addMenu(tr("&Info"));
-    menu->setName("Info");
+    menu->setObjectName("Info");
     //action = actionFactory.createAction(RS2::ActionInfoInside,
     //                                    actionHandler);
     //action->addTo(menu);
@@ -1187,7 +1187,7 @@ void QC_ApplicationWindow::initActions(void)
     // Layer actions:
     //
     menu = menuBar()->addMenu(tr("&Layer"));
-    menu->setName("Layer");
+    menu->setObjectName("Layer");
     action = actionFactory.createAction(RS2::ActionLayersDefreezeAll,
                                         actionHandler);
     action->addTo(menu);
@@ -1214,7 +1214,7 @@ void QC_ApplicationWindow::initActions(void)
     // Block actions:
     //
     menu = menuBar()->addMenu(tr("&Block"));
-    menu->setName("Block");
+    menu->setObjectName("Block");
     action = actionFactory.createAction(RS2::ActionBlocksDefreezeAll,
                                         actionHandler);
     action->addTo(menu);
@@ -1258,7 +1258,7 @@ void QC_ApplicationWindow::initActions(void)
     // Scripts menu:
     //
     scriptMenu = new QMenu(tr("&Scripts"));
-    scriptMenu->setName("Scripts");
+    scriptMenu->setObjectName("Scripts");
     scriptOpenIDE = actionFactory.createAction(RS2::ActionScriptOpenIDE, this);
     scriptOpenIDE->addTo(scriptMenu);
     scriptRun = actionFactory.createAction(RS2::ActionScriptRun, this);
@@ -1273,16 +1273,15 @@ void QC_ApplicationWindow::initActions(void)
     // Help menu:
     //
     /*RVT_PORThelpAboutApp = new QAction(tr("About"), 
-							   qPixmapFromMimeSource(QC_APP_ICON16), 
-							   tr("&About %1").arg(QC_APPNAME), 0, this); */
-    helpAboutApp = new QAction(qPixmapFromMimeSource(QC_APP_ICON16), tr("About"), this);
+                                                           QC_APP_ICON16), tr("&About %1").arg(QC_APPNAME), 0, this); */
+    helpAboutApp = new QAction(QIcon(QC_APP_ICON16), tr("About"), this);
 
     //helpAboutApp->zetStatusTip(tr("About the application"));
     //helpAboutApp->setWhatsThis(tr("About\n\nAbout the application"));
     connect(helpAboutApp, SIGNAL(activated()),
             this, SLOT(slotHelpAbout()));
 
-    helpManual = new QAction(qPixmapFromMimeSource("contents.png"), tr("&Manual"), this);
+    helpManual = new QAction(QIcon(":/main/contents.png"), tr("&Manual"), this);
     //helpManual->zetStatusTip(tr("Launch the online manual"));
     connect(helpManual, SIGNAL(activated()),
             this, SLOT(slotHelpManual()));
@@ -1380,7 +1379,6 @@ void QC_ApplicationWindow::initMenuBar() {
 #ifdef RS_SCRIPTING
     menuBar()->addMenu(scriptMenu);
 #endif
-    //scriptMenu->setCheckable(true);
     //scriptOpenIDE->addTo(scriptMenu);
     //scriptRun->addTo(scriptMenu);
     //connect(scriptMenu, SIGNAL(aboutToShow()),
@@ -1388,23 +1386,22 @@ void QC_ApplicationWindow::initMenuBar() {
 
     // menuBar entry windowsMenu
     windowsMenu = menuBar()->addMenu(tr("&Window"));
-    windowsMenu->setName("Window");
-    windowsMenu->setCheckable(true);
+    windowsMenu->setObjectName("Window");
     connect(windowsMenu, SIGNAL(aboutToShow()),
             this, SLOT(slotWindowsMenuAboutToShow()));
 
-    menuBar()->insertSeparator();
+    menuBar()->addSeparator();
     // menuBar entry helpMenu
     helpMenu = menuBar()->addMenu(tr("&Help"));
-    helpMenu->setName("Help");
+    helpMenu->setObjectName("Help");
     helpManual->addTo(helpMenu);
-    helpMenu->insertSeparator();
+    helpMenu->addSeparator();
     helpAboutApp->addTo(helpMenu);
 
     // menuBar entry test menu
     if (QC_DEBUGGING) {
         testMenu = menuBar()->addMenu(tr("De&bugging"));
-        testMenu->setName("Debugging");
+        testMenu->setObjectName("Debugging");
         testDumpEntities->addTo(testMenu);
         testDumpUndo->addTo(testMenu);
         testUpdateInserts->addTo(testMenu);
@@ -1613,7 +1610,7 @@ void QC_ApplicationWindow::initView() {
     //dw->setFixedExtentHeight(400);
     //dw->setFixedHeight(400);
     // dw->setResizeEnabled(true);
-    dw->setCaption(tr("Layer List"));
+    dw->setWindowTitle(tr("Layer List"));
     // dw->setCloseMode(QDockWidget::Always);
     //dw->resize(120,workspace->height()/2);
     addDockWidget (Qt::RightDockWidgetArea, dw );
@@ -1634,7 +1631,7 @@ void QC_ApplicationWindow::initView() {
     //dw->boxLayout()->addWidget(blockWidget);
     dw->setWidget(blockWidget);
     // dw->setFixedExtentWidth(120);
-    dw->setCaption(tr("Block List"));
+    dw->setWindowTitle(tr("Block List"));
     // dw->setCloseMode(QDockWidget::Always);
     //dw->setFixedExtentHeight(400);
 	addDockWidget(Qt::RightDockWidgetArea, dw); 
@@ -1655,7 +1652,7 @@ void QC_ApplicationWindow::initView() {
     //dw->setHeight(400);
     dw->resize(240, 400);
     // dw->setResizeEnabled(true);
-    dw->setCaption(tr("Library Browser"));
+    dw->setWindowTitle(tr("Library Browser"));
     // dw->setCloseMode(QDockWidget::Always);
     addDockWidget(Qt::LeftDockWidgetArea , dw);
 
@@ -1681,7 +1678,7 @@ void QC_ApplicationWindow::initView() {
     dw->setWidget(commandWidget);
     //dw->setFixedExtentWidth(120);
     //dw->setFixedExtentHeight(45);
-    dw->setCaption(tr("Command line"));
+    dw->setWindowTitle(tr("Command line"));
     // dw->setCloseMode(QDockWidget::Always);
     commandDockWindow = dw;
 	addDockWidget(Qt::BottomDockWidgetArea, dw); 
@@ -1710,7 +1707,7 @@ void QC_ApplicationWindow::initView() {
 /*void QC_ApplicationWindow::addToolBarButton(QToolBar* tb) {
 	if (tb!=NULL) {
     	QAction* action = new QAction("Blah", 
-			QPixmap::fromMimeSource("zoomwindow.png"),
+                        QIcon(":/actions/zoomwindow.png"),
             "&Blah", QKeySequence(), NULL);
     	//action->zetStatusTip("Blah blah");
 		action->addTo(tb);
@@ -1903,10 +1900,10 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
         windowsMenu->setItemEnabled(tileId, false);
         windowsMenu->setItemEnabled(horTileId, false);
     }
-    windowsMenu->insertSeparator();
+    windowsMenu->addSeparator();
     QWidgetList windows = workspace->windowList();
     for (int i=0; i<int(windows.count()); ++i) {
-        int id = windowsMenu->insertItem(windows.at(i)->caption(),
+        int id = windowsMenu->insertItem(windows.at(i)->windowTitle(),
                                          this, SLOT(slotWindowsMenuActivated(int)));
         windowsMenu->setItemParameter(id, i);
         windowsMenu->setItemChecked(id, workspace->activeWindow()==windows.at(i));
@@ -1957,7 +1954,7 @@ void QC_ApplicationWindow::slotTileHorizontal() {
         } */
         int preferredHeight = window->minimumHeight()
                               + window->parentWidget()->baseSize().height();
-        int actHeight = QMAX(heightForEach, preferredHeight);
+        int actHeight = qMax(heightForEach, preferredHeight);
 
         //window->parentWidget()->resize(workspace->width(), actHeight);
         window->parentWidget()->setGeometry(0, y,
@@ -2036,18 +2033,17 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     statusBar()->showMessage(tr("Creating new file..."));
 
     RS_DEBUG->print("  creating MDI window");
-    QC_MDIWindow* w = new QC_MDIWindow(doc, workspace,
-                                       0, Qt::WDestructiveClose);
+    QC_MDIWindow* w = new QC_MDIWindow(doc, workspace, 0);
 	//w->setWindowState(WindowMaximized);
     connect(w, SIGNAL(signalClosing()),
             this, SLOT(slotFileClosing()));
 
     if (w->getDocument()->rtti()==RS2::EntityBlock) {
-        w->setCaption(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()));
+        w->setWindowTitle(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()));
     } else {
-        w->setCaption(tr("unnamed document %1").arg(id));
+        w->setWindowTitle(tr("unnamed document %1").arg(id));
     }
-    w->setIcon(qPixmapFromMimeSource("document.png"));
+    w->setWindowIcon(QIcon(":/main/document.png"));
 
     // only graphics offer block lists, blocks don't
     RS_DEBUG->print("  adding listeners");
@@ -2238,7 +2234,7 @@ void QC_ApplicationWindow::
 
 		/*	Format and set caption.
 		 *	----------------------- */	
-        w->setCaption(format_filename_caption(fileName));
+        w->setWindowTitle(format_filename_caption(fileName));
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption: OK");
 
@@ -2316,7 +2312,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
             if (!cancelled) {
             	name = w->getDocument()->getFilename();
             	recentFiles->add(name);
-            	w->setCaption(name);
+                w->setWindowTitle(name);
 		if (!autosaveTimer->isActive()) {
                     RS_SETTINGS->beginGroup("/Defaults");
                     autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000);
@@ -2347,7 +2343,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
 void QC_ApplicationWindow::slotFileAutoSave() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileAutoSave()");
 
-    statusBar()->message(tr("Auto-saving drawing..."));
+    statusBar()->showMessage(tr("Auto-saving drawing..."));
 
     QC_MDIWindow* w = getMDIWindow();
     QString name;
@@ -2356,7 +2352,7 @@ void QC_ApplicationWindow::slotFileAutoSave() {
 	if (w->slotFileSave(cancelled, true)) {
 	    // auto-save cannot be cancelled by user, so the
 	    // "cancelled" parameter is a dummy
-	    statusBar()->message(tr("Auto-saved drawing"), 2000);
+            statusBar()->showMessage(tr("Auto-saved drawing"), 2000);
 	} else {
 	    // error
 	    autosaveTimer->stop();
@@ -2395,7 +2391,7 @@ void QC_ApplicationWindow::slotFileExport() {
 
         QStringList filters;
         foreach (QString format, QImageWriter::supportedImageFormats()) {
-            format.lower();
+            format.toLower();
             QString st;
             if (format=="jpeg" || format=="tiff") {
                 // Don't add the aliases
@@ -2424,7 +2420,7 @@ void QC_ApplicationWindow::slotFileExport() {
         // store new default settings:
         if (!cancel) {
             RS_SETTINGS->beginGroup("/Paths");
-            RS_SETTINGS->writeEntry("/ExportImage", QFileInfo(fn).dirPath(true));
+            RS_SETTINGS->writeEntry("/ExportImage", QFileInfo(fn).absolutePath());
             RS_SETTINGS->writeEntry("/ExportImageFilter",
                                     fileDlg.selectedFilter());
             RS_SETTINGS->endGroup();
@@ -2432,16 +2428,16 @@ void QC_ApplicationWindow::slotFileExport() {
             // find out extension:
             QString filter = fileDlg.selectedFilter();
             QString format = "";
-            int i = filter.find("(*.");
+            int i = filter.indexOf("(*.");
             if (i!=-1) {
-                int i2 = filter.find(QRegExp("[) ]"), i);
+                int i2 = filter.indexOf(QRegExp("[) ]"), i);
                 format = filter.mid(i+3, i2-(i+3));
-                format = format.upper();
+                format = format.toUpper();
             }
 
             // append extension to file:
             if (!QFileInfo(fn).fileName().contains(".")) {
-                fn.append("." + format.lower());
+                fn.append("." + format.toLower());
             }
 
             // show options dialog:
@@ -2533,7 +2529,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     img = *buffer;
     // RVT_PORT iio.setImage(img);
     iio.setFileName(name);
-    iio.setFormat(format.ascii());
+    iio.setFormat(format.toAscii());
     // RVT_PORT if (iio.write()) {
 	if (iio.write(img)) {
         ret = true;
@@ -2563,7 +2559,7 @@ void QC_ApplicationWindow::slotFileClose() {
 
     QC_MDIWindow* m = getMDIWindow();
     if (m!=NULL) {
-        m->close(true);
+        m->close();
     }
    
    	/*
@@ -2732,16 +2728,15 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
             if (!parent->getGraphicView()->isPrintPreview()) {
                 RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): create");
 
-                QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), workspace,
-                                                   0, Qt::WDestructiveClose);
+                QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), workspace, 0);
 				workspace->addWindow(w);
 				w->setWindowState(Qt::WindowMaximized);
                 parent->addChildWindow(w);
                 connect(w, SIGNAL(signalClosing()),
                          this, SLOT(slotFileClose()));
 
-                w->setCaption(tr("Print preview for %1").arg(parent->caption()));
-                w->setIcon(qPixmapFromMimeSource("document.png"));
+                w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
+                w->setWindowIcon(QIcon(":/main/document.png"));
                 w->getGraphicView()->setPrintPreview(true);
                 w->getGraphicView()->setBackground(RS_Color(255,255,255));
                 w->getGraphicView()->setDefaultAction(
@@ -3008,7 +3003,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
     }
 
     QMessageBox box(this);
-    box.setCaption(tr("About..."));
+    box.setWindowTitle(tr("About..."));
     box.setText(       QString("<p><font size=\"2\">") +
                        "<h2>"+ XSTR(QC_APPNAME)+ "</h2>" +
                        tr("Version: %1").arg(XSTR(QC_VERSION)) + "<br>" +
@@ -3035,7 +3030,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
                        "</a></center>"
                        );
 
-    box.setIconPixmap( qPixmapFromMimeSource(QC_ABOUT_ICON) );
+    box.setIconPixmap( QPixmap(QC_ABOUT_ICON) );
     box.setMinimumSize(500,400);
     box.setBaseSize(500,400);
     box.setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
@@ -3053,9 +3048,9 @@ void QC_ApplicationWindow::slotHelpManual() {
 
     if (helpEngine==NULL) {
         RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
-                        RS_SYSTEM->getAppDir().latin1());
+                        RS_SYSTEM->getAppDir().toLatin1().data());
         RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
-                        RS_SYSTEM->getAppDir().latin1());
+                        RS_SYSTEM->getAppDir().toLatin1().data());
 
         if ((RS_SYSTEM->getDocPath().length()>0) && (QFile::exists(RS_SYSTEM->getDocPath()+ "/LibreCADdoc.qhc")==true)) {
             helpEngine = new QHelpEngine(RS_SYSTEM->getDocPath() + "/LibreCADdoc.qhc", this);
@@ -3130,7 +3125,7 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                 lay = e->getLayer()->getName();
             }
             dumpFile
-            << "<td>Layer: " << lay.ascii() << "</td>"
+            << "<td>Layer: " << lay.toAscii().data() << "</td>"
             << "<td>Width: " << (int)e->getPen(false).getWidth() << "</td>"
             << "<td>Parent: " << e->getParent()->getId() << "</td>"
             << "</tr></table>";
@@ -3241,10 +3236,10 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                     << d->getExtensionPoint2()
                     << "</td>"
                     << "<td>Text: "
-                    << d->getText().latin1()
+                    << d->getText().toLatin1().data()
                     << "</td>"
                     << "<td>Label: "
-                    << d->getLabel().latin1()
+                    << d->getLabel().toLatin1().data()
                     << "</td>"
                     << "</tr></table>";
                 }
@@ -3268,10 +3263,10 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                     << d->getExtensionPoint2()
                     << "</td>"
                     << "<td>Text: "
-                    << d->getText().ascii()
+                    << d->getText().toAscii().data()
                     << "</td>"
                     << "<td>Label: "
-                    << d->getLabel().ascii()
+                    << d->getLabel().toAscii().data()
                     << "</td>"
                     << "</tr></table>";
                 }
@@ -3301,7 +3296,7 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                     dumpFile
                     << "<tr>"
                     << "<td>Text:"
-                    << t->getText().latin1()
+                    << t->getText().toLatin1().data()
                     << "</td>"
                     << "<td>Height:"
                     << t->getHeight()
@@ -3319,7 +3314,7 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                     dumpFile
                     << "<tr>"
                     << "<td>Pattern:"
-                    << h->getPattern().latin1()
+                    << h->getPattern().toLatin1().data()
                     << "</td>"
                     << "<td>Scale:"
                     << h->getScale()
