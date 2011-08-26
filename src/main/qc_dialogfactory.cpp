@@ -79,7 +79,8 @@ void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
 					RS_DEBUG->print(
 						"QC_DialogFactory::closeEditBlockWindow: closing mdi");
 					//m->closeMDI(true, false);
-					m->close(true);
+                                        m->setAttribute(Qt::WA_DeleteOnClose);//RLZ: to ensure the window is deleted
+                                        m->close();
 				}
 			}
 		}
