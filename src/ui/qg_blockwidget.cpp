@@ -31,6 +31,10 @@
 #include <QMenu>
 #include <QBoxLayout>
 #include <QLabel>
+#include "rs_blocklist.h"
+#include "qg_actionhandler.h"
+
+#include <Q3ListBox>
 
 /**
  * Constructor.
