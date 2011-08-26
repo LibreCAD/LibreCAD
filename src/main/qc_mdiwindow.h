@@ -54,7 +54,7 @@ public:
     QC_MDIWindow(RS_Document* doc,
                  QWidget* parent,
                  const char* name=NULL,
-                 Qt::WindowFlags wflags=Qt::WDestructiveClose);
+                 Qt::WindowFlags wflags=0);
     ~QC_MDIWindow();
 
     void initDoc(RS_Document* doc=NULL);
