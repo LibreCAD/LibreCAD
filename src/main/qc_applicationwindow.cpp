@@ -1889,24 +1889,25 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
     RS_DEBUG->print("QC_ApplicationWindow::slotWindowsMenuAboutToShow");
 
     windowsMenu->clear();
-    int cascadeId = windowsMenu->insertItem(tr("&Cascade"),
+    QAction *cascadeId = windowsMenu->addAction(tr("&Cascade"),
                                             workspace, SLOT(cascade()));
-    int tileId = windowsMenu->insertItem(tr("&Tile"),
+    QAction *tileId = windowsMenu->addAction(tr("&Tile"),
                                          this, SLOT(slotTileVertical()));
-    int horTileId = windowsMenu->insertItem(tr("Tile &Horizontally"),
+    QAction *horTileId = windowsMenu->addAction(tr("Tile &Horizontally"),
                                             this, SLOT(slotTileHorizontal()));
     if (workspace->windowList().isEmpty()) {
-        windowsMenu->setItemEnabled(cascadeId, false);
-        windowsMenu->setItemEnabled(tileId, false);
-        windowsMenu->setItemEnabled(horTileId, false);
+        cascadeId->setEnabled(false);
+        tileId->setEnabled(false);
+        horTileId->setEnabled(false);
     }
     windowsMenu->addSeparator();
     QWidgetList windows = workspace->windowList();
     for (int i=0; i<int(windows.count()); ++i) {
-        int id = windowsMenu->insertItem(windows.at(i)->windowTitle(),
-                                         this, SLOT(slotWindowsMenuActivated(int)));
-        windowsMenu->setItemParameter(id, i);
-        windowsMenu->setItemChecked(id, workspace->activeWindow()==windows.at(i));
+        QAction *id = windowsMenu->addAction(windows.at(i)->windowTitle(),
+                                         this, SLOT(slotWindowsMenuActivated(bool)));
+        id->setCheckable(true);
+        id->setData(i);
+        id->setChecked(workspace->activeWindow()==windows.at(i));
     }
 }
 
@@ -1916,10 +1917,11 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
  * Called when the user selects a document window from the
  * window list.
  */
-void QC_ApplicationWindow::slotWindowsMenuActivated(int id) {
+void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
     RS_DEBUG->print("QC_ApplicationWindow::slotWindowsMenuActivated");
 
-    QWidget* w = workspace->windowList().at(id);
+    int ii = ((QAction*)sender())->data().toInt();
+    QWidget* w = workspace->windowList().at(ii);
     if (w!=NULL) {
         w->showNormal();
         w->setFocus();
@@ -2411,7 +2413,9 @@ void QC_ApplicationWindow::slotFileExport() {
         fileDlg.setAcceptMode(QFileDialog::AcceptSave);
 
         if (fileDlg.exec()==QDialog::Accepted) {
-            fn = fileDlg.selectedFile();
+            QStringList files = fileDlg.selectedFiles();
+            if (!files.isEmpty())
+                fn = files[0];
             cancel = false;
         } else {
             cancel = true;
@@ -2496,11 +2500,13 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 
     // black background:
     if (black) {
-        painter.setBackgroundColor(RS_Color(0,0,0));
+//RLZ        painter.setBackgroundColor(RS_Color(0,0,0));
+        painter.setBackground(RS_Color(0,0,0));
     }
     // white background:
     else {
-        painter.setBackgroundColor(RS_Color(255,255,255));
+//RLZ        painter.setBackgroundColor(RS_Color(255,255,255));
+        painter.setBackground(RS_Color(255,255,255));
     }
 
     // black/white:
@@ -2525,8 +2531,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 
     // RVT_PORT QImageIO iio;
     QImageWriter iio;
-    QImage img;
-    img = *buffer;
+    QImage img = buffer->toImage();
     // RVT_PORT iio.setImage(img);
     iio.setFileName(name);
     iio.setFormat(format.toAscii());
