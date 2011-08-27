@@ -38,6 +38,7 @@
 #include <qcursor.h>
 #include <qpainter.h>
 #include <QMessageBox>
+#include <QPrintDialog>
 
 int QC_MDIWindow::idCounter = 0;
 
@@ -49,9 +50,8 @@ int QC_MDIWindow::idCounter = 0;
  * @param parent Parent widget. Usually a workspace.
  */
 QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
-                           QWidget* parent,
-                           const char* name, Qt::WindowFlags wflags)
-        : QMainWindow(parent, name, wflags) {
+                           QWidget* parent, Qt::WindowFlags wflags)
+        : QMainWindow(parent, wflags) {
 
     setAttribute(Qt::WA_DeleteOnClose);
     owner = false;
@@ -453,7 +453,8 @@ void QC_MDIWindow::slotFilePrint() {
 
     //statusBar()->showMessage(tr("Printing..."));
     QPrinter printer;
-    if (printer.setup(this)) {
+    QPrintDialog dialog(&printer, this);
+    if (dialog.exec()) {
         QPainter painter;
         painter.begin(&printer);
 
