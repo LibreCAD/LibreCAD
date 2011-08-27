@@ -53,7 +53,6 @@ class QC_MDIWindow: public QMainWindow {
 public:
     QC_MDIWindow(RS_Document* doc,
                  QWidget* parent,
-                 const char* name=NULL,
                  Qt::WindowFlags wflags=0);
     ~QC_MDIWindow();
 
