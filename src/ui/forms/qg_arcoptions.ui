@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>90</width>
+    <width>96</width>
     <height>22</height>
    </size>
   </property>
@@ -30,7 +30,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>76</width>
+     <width>86</width>
      <height>23</height>
     </rect>
    </property>
@@ -52,29 +52,9 @@
    <widget class="QRadioButton" name="rbNeg">
     <property name="geometry">
      <rect>
-      <x>38</x>
+      <x>44</x>
       <y>2</y>
-      <width>36</width>
-      <height>19</height>
-     </rect>
-    </property>
-    <property name="toolTip">
-     <string>Clockwise</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset resource="../../../res/extui/extui.qrc">
-      <normaloff>:/extui/dirpos.png</normaloff>:/extui/dirpos.png</iconset>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="rbPos">
-    <property name="geometry">
-     <rect>
-      <x>2</x>
-      <y>2</y>
-      <width>36</width>
+      <width>41</width>
       <height>19</height>
      </rect>
     </property>
@@ -88,6 +68,26 @@
      <iconset resource="../../../res/extui/extui.qrc">
       <normaloff>:/extui/dirneg.png</normaloff>:/extui/dirneg.png</iconset>
     </property>
+   </widget>
+   <widget class="QRadioButton" name="rbPos">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>2</y>
+      <width>41</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Clockwise</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../../../res/extui/extui.qrc">
+      <normaloff>:/extui/dirpos.png</normaloff>:/extui/dirpos.png</iconset>
+    </property>
     <property name="checked">
      <bool>true</bool>
     </property>
@@ -96,7 +96,7 @@
   <widget class="Line" name="sep1">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>88</x>
      <y>2</y>
      <width>6</width>
      <height>19</height>
