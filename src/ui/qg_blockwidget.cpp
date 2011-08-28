@@ -35,13 +35,14 @@
 #include "qg_actionhandler.h"
 
 #include <Q3ListBox>
+#include <QListView>
 
 /**
  * Constructor.
  */
 QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
                                const char* name, Qt::WFlags f)
-        : QWidget(parent, name, f),
+        : QWidget(parent, f),
         pxmVisible(":/ui/visibleblock.png"),
         pxmHidden(":/ui/hiddenblock.png"),
         pxmAdd(":/ui/blockadd.png"),
@@ -52,12 +53,14 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
         pxmDefreezeAll(":/ui/visibleblock.png"),
         pxmFreezeAll(":/ui/hiddenblock.png") {
 
+    setObjectName(name);
     actionHandler = ah;
     blockList = NULL;
-	lastBlock = NULL;
+    lastBlock = NULL;
 
     listBox = new Q3ListBox(this, "blockbox");
-    listBox->setDragSelect(false);
+//RLZ    listBox = new QListView(this);
+//RLZ    listBox->setDragSelect(false);
     listBox->setMultiSelection(false);
     listBox->setSmoothScrolling(true);
 	listBox->setFocusPolicy(Qt::NoFocus);
@@ -76,58 +79,58 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     QToolButton* but;
     // show all blocks:
     but = new QToolButton(this);
-    but->setPixmap(pxmDefreezeAll);
+    but->setIcon(pxmDefreezeAll);
     but->setMinimumSize(QSize(22,22));
-    QToolTip::add(but, tr("Show all blocks"));
+    but->setToolTip(tr("Show all blocks"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksDefreezeAll()));
     layButtons->addWidget(but);
     // hide all blocks:
     but = new QToolButton(this);
-    but->setPixmap(pxmFreezeAll);
+    but->setIcon(pxmFreezeAll);
     but->setMinimumSize(QSize(22,22));
-    QToolTip::add(but, tr("Hide all blocks"));
+    but->setToolTip(tr("Hide all blocks"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksFreezeAll()));
     layButtons->addWidget(but);
     // add block:
     but = new QToolButton(this);
-    but->setPixmap(pxmAdd);
+    but->setIcon(pxmAdd);
     but->setMinimumSize(QSize(22,22));
-    QToolTip::add(but, tr("Add a block"));
+    but->setToolTip(tr("Add a block"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksAdd()));
     layButtons->addWidget(but);
     // remove block:
     but = new QToolButton(this);
-    but->setPixmap(pxmRemove);
+    but->setIcon(pxmRemove);
     but->setMinimumSize(QSize(22,22));
-    QToolTip::add(but, tr("Remove the active block"));
+    but->setToolTip(tr("Remove the active block"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksRemove()));
     layButtons->addWidget(but);
     // edit attributes:
     but = new QToolButton(this);
-    but->setPixmap(pxmAttributes);
+    but->setIcon(pxmAttributes);
     but->setMinimumSize(QSize(22,22));
-    QToolTip::add(but, tr("Rename the active block"));
+    but->setToolTip(tr("Rename the active block"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksAttributes()));
     layButtons->addWidget(but);
     // edit block:
     but = new QToolButton(this);
-    but->setPixmap(pxmEdit);
+    but->setIcon(pxmEdit);
     but->setMinimumSize(QSize(22,22));
-    QToolTip::add(but, tr("Edit the active block\n"
+    but->setToolTip(tr("Edit the active block\n"
                           "in a separate window"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksEdit()));
     layButtons2->addWidget(but);
     // insert block:
     but = new QToolButton(this);
-    but->setPixmap(pxmInsert);
+    but->setIcon(pxmInsert);
     but->setMinimumSize(QSize(22,22));
-    QToolTip::add(but, tr("Insert the active block"));
+    but->setToolTip(tr("Insert the active block"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksInsert()));
     layButtons2->addWidget(but);
@@ -183,12 +186,14 @@ void QG_BlockWidget::update() {
         return;
     }
 
-    for (uint i=0; i<blockList->count(); ++i) {
+    for (int i=0; i<blockList->count(); ++i) {
         RS_Block* blk = blockList->at(i);
         if (!blk->isFrozen()) {
-            listBox->insertItem(pxmVisible, blk->getName());
+//RLZ            listBox->insertItem(pxmVisible, blk->getName());
+            listBox->insertItem(pxmVisible.pixmap(16), blk->getName());
         } else {
-            listBox->insertItem(pxmHidden, blk->getName());
+//RLZ            listBox->insertItem(pxmHidden, blk->getName());
+            listBox->insertItem(pxmHidden.pixmap(16), blk->getName());
         }
     }
 
@@ -263,7 +268,7 @@ void QG_BlockWidget::slotToggleView(QListBoxItem* item) {
  * Called when the user activates (highlights) a block.
  */
 void QG_BlockWidget::slotActivated(const QString& blockName) {
-    RS_DEBUG->print("QG_BlockWidget::slotActivated(): %s", blockName.latin1());
+    RS_DEBUG->print("QG_BlockWidget::slotActivated(): %s", blockName.toLatin1().data());
 
     if (blockList==NULL) {
         return;
@@ -306,27 +311,31 @@ void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
     //QListBoxItem* item = listBox->selectedItem();
     QMenu* contextMenu = new QMenu(this);
     QLabel* caption = new QLabel(tr("Block Menu"), this);
-    caption->setPaletteBackgroundColor(RS_Color(0,0,0));
-    caption->setPaletteForegroundColor(RS_Color(255,255,255));
+    QPalette palette;
+    palette.setColor(caption->backgroundRole(), RS_Color(0,0,0));
+    palette.setColor(caption->foregroundRole(), RS_Color(255,255,255));
+    caption->setPalette(palette);
+/*RLZ    caption->setPaletteBackgroundColor(RS_Color(0,0,0));
+    caption->setPaletteForegroundColor(RS_Color(255,255,255));*/
     caption->setAlignment( Qt::AlignCenter );
     // RVT_PORT contextMenu->insertItem( caption );
-    contextMenu->insertItem( tr("&Defreeze all Blocks"), actionHandler,
+    contextMenu->addAction( tr("&Defreeze all Blocks"), actionHandler,
                              SLOT(slotBlocksDefreezeAll()), 0);
-    contextMenu->insertItem( tr("&Freeze all Blocks"), actionHandler,
+    contextMenu->addAction( tr("&Freeze all Blocks"), actionHandler,
                              SLOT(slotBlocksFreezeAll()), 0);
-    contextMenu->insertItem( tr("&Add Block"), actionHandler,
+    contextMenu->addAction( tr("&Add Block"), actionHandler,
                              SLOT(slotBlocksAdd()), 0);
-    contextMenu->insertItem( tr("&Remove Block"), actionHandler,
+    contextMenu->addAction( tr("&Remove Block"), actionHandler,
                              SLOT(slotBlocksRemove()), 0);
-    contextMenu->insertItem( tr("&Rename Block"), actionHandler,
+    contextMenu->addAction( tr("&Rename Block"), actionHandler,
                              SLOT(slotBlocksAttributes()), 0);
-    contextMenu->insertItem( tr("&Edit Block"), actionHandler,
+    contextMenu->addAction( tr("&Edit Block"), actionHandler,
                              SLOT(slotBlocksEdit()), 0);
-    contextMenu->insertItem( tr("&Insert Block"), actionHandler,
+    contextMenu->addAction( tr("&Insert Block"), actionHandler,
                              SLOT(slotBlocksInsert()), 0);
-    contextMenu->insertItem( tr("&Toggle Visibility"), actionHandler,
+    contextMenu->addAction( tr("&Toggle Visibility"), actionHandler,
                              SLOT(slotBlocksToggleView()), 0);
-    contextMenu->insertItem( tr("&Create New Block"), actionHandler,
+    contextMenu->addAction( tr("&Create New Block"), actionHandler,
                              SLOT(slotBlocksCreate()), 0);
     contextMenu->exec(QCursor::pos());
     delete contextMenu;

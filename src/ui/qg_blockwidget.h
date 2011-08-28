@@ -27,13 +27,15 @@
 #ifndef QG_BLOCKWIDGET_H
 #define QG_BLOCKWIDGET_H
 
-#include <qwidget.h>
+#include <QWidget>
+#include <QIcon>
 
 #include "rs_blocklistlistener.h"
 
 class QG_ActionHandler;
-class Q3ListBox;
+class QListView;
 class Q3ListBoxItem;
+class Q3ListBox;
 
 /**
  * This is the Qt implementation of a widget which can view a 
@@ -88,17 +90,18 @@ protected:
 
 private:
     RS_BlockList* blockList;
+//RLZ    QListView* listBox;
     Q3ListBox* listBox;
 	RS_Block* lastBlock;
-    QPixmap pxmVisible;
-    QPixmap pxmHidden;
-    QPixmap pxmAdd;
-    QPixmap pxmRemove;
-    QPixmap pxmAttributes;
-    QPixmap pxmEdit;
-    QPixmap pxmInsert;
-    QPixmap pxmDefreezeAll;
-    QPixmap pxmFreezeAll;
+    QIcon pxmVisible;
+    QIcon pxmHidden;
+    QIcon pxmAdd;
+    QIcon pxmRemove;
+    QIcon pxmAttributes;
+    QIcon pxmEdit;
+    QIcon pxmInsert;
+    QIcon pxmDefreezeAll;
+    QIcon pxmFreezeAll;
     QG_ActionHandler* actionHandler;
 };
 
