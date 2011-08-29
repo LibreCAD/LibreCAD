@@ -72,7 +72,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     caption->setPaletteForegroundColor(white);
     */
 
-    QHBoxLayout* layButtons = new QHBoxLayout(NULL);
+    QHBoxLayout* layButtons = new QHBoxLayout();
     QToolButton* but;
     // show all layer:
     but = new QToolButton(this);
