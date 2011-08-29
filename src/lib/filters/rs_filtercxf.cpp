@@ -59,7 +59,7 @@ RS_FilterCXF::RS_FilterCXF() : RS_FilterInterface() {
  * taken to be stored in a file.
  */
 bool RS_FilterCXF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) {
-    RS_DEBUG->print("CXF Filter: importing file '%s'...", file.latin1());
+    RS_DEBUG->print("CXF Filter: importing file '%s'...", file.toLatin1().data());
 
     //this->graphic = &g;
     bool success = false;
@@ -71,7 +71,7 @@ bool RS_FilterCXF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
     if (success==false) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "Cannot open CXF file '%s'.", file.latin1());
+                        "Cannot open CXF file '%s'.", file.toLatin1().data());
 		return false;
     }
 
@@ -118,7 +118,7 @@ bool RS_FilterCXF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
  */
 bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) {
 
-    RS_DEBUG->print("CXF Filter: exporting file '%s'...", file.latin1());
+    RS_DEBUG->print("CXF Filter: exporting file '%s'...", file.toLatin1().data());
 
     // crashes under windoze xp:
     //std::ofstream fout;
