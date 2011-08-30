@@ -220,6 +220,14 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
 
         return ret;
     }
+    // a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
+    if ( e1 -> getMin().x > e2 -> getMax().x 
+      || e1 -> getMax().x < e2 -> getMin().x 
+      || e1 -> getMin().y > e2 -> getMax().y 
+      || e1 -> getMax().y < e2 -> getMin().y 
+      ) {
+            return ret;
+    }
 
     // one entity is an ellipse:
     if (e1->rtti()==RS2::EntityEllipse || e2->rtti()==RS2::EntityEllipse) {
