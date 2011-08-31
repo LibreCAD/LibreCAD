@@ -67,17 +67,19 @@ void RS_ActionModifyRotate::trigger() {
 
 void RS_ActionModifyRotate::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyRotate::mouseMoveEvent begin");
-
-    if (getStatus()==SetReferencePoint) {
         RS_Vector mouse = snapPoint(e);
-        switch (getStatus()) {
-        case SetReferencePoint:
-            referencePoint = mouse;
-            break;
+    switch (getStatus()) {
+           case setCenterPoint:
+        case setReferencePoint:
+                   break;
 
-        default:
-            break;
-        }
+            case setTargetPoint:
+                   data.angle=data.center.angleBetween(referencePoint, mouse);
+                   std::cout<<"data.angle= "<<data.angle<<std::endl;
+                deletePreview();
+                preview->addSelectionFrom(*container);
+                preview->rotate(data.center,data.angle);
+                drawPreview();
     }
 
     RS_DEBUG->print("RS_ActionModifyRotate::mouseMoveEvent end");
@@ -105,11 +107,20 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent* e) {
     RS_Vector pos = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetReferencePoint:
+    case setCenterPoint:
+        centerPoint = pos;
+        setStatus(setReferencePoint);
+        break;
+    case setReferencePoint:
         referencePoint = pos;
+        setStatus(setTargetPoint);
+        break;
+    case setTargetPoint:
+        targetPoint = pos;
         setStatus(ShowDialog);
         if (RS_DIALOGFACTORY->requestRotateDialog(data)) {
-            data.center = referencePoint;
+            data.center = centerPoint;
+            data.angle = data.center.angleBetween(referencePoint, targetPoint);
             trigger();
             finish();
         }
@@ -124,10 +135,18 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent* e) {
 
 void RS_ActionModifyRotate::updateMouseButtonHints() {
     switch (getStatus()) {
-    case SetReferencePoint:
+        case setCenterPoint:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify rotation center"),
+                                            tr("Back"));
+        break;
+
+    case setReferencePoint:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
                                             tr("Back"));
         break;
+        case setTargetPoint:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point to rotate to"),
+                                            tr("Back"));
     default:
         RS_DIALOGFACTORY->updateMouseWidget("", "");
         break;
@@ -144,11 +163,13 @@ void RS_ActionModifyRotate::updateMouseCursor() {
 
 void RS_ActionModifyRotate::updateToolBar() {
     switch (getStatus()) {
-    case SetReferencePoint:
+    case setCenterPoint:
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
         break;
-    default:
+    case ShowDialog:
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+        break;
+    default:
         break;
     }
 }
