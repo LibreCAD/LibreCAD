@@ -1457,7 +1457,7 @@ void RS_FilterDXF::writeLayer(DL_WriterA& dw, RS_Layer* l) {
         return;
     }
 
-    RS_DEBUG->print("RS_FilterDXF::writeLayer %s", l->getName().latin1());
+    RS_DEBUG->print("RS_FilterDXF::writeLayer %s", l->getName().toLatin1().data());
 
     dxf.writeLayer(
         dw,
@@ -1861,7 +1861,7 @@ void RS_FilterDXF::writeInsert(DL_WriterA& dw, RS_Insert* i,
                                const DL_Attributes& attrib) {
     dxf.writeInsert(
         dw,
-        DL_InsertData(i->getName().latin1(),
+                DL_InsertData(i->getName().toLatin1().data(),
                       i->getInsertionPoint().x,
                       i->getInsertionPoint().y,
                       0.0,
@@ -2295,7 +2295,7 @@ void RS_FilterDXF::writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
     dw.dxfHex(330, 1);
     dw.dxfString(100, "AcDbSymbolTableRecord");
     dw.dxfString(100, "AcDbBlockTableRecord");
-    dw.dxfString(  2, blkName.latin1());
+    dw.dxfString(  2, blkName.toLatin1().data());
     dw.dxfHex(340, 0);
     dw.dxfString(0, "ENDTAB");
 
@@ -2417,7 +2417,7 @@ DL_Attributes RS_FilterDXF::getEntityAttributes(RS_Entity* entity) {
 
     // Color:
     int color = colorToNumber(pen.getColor());
-    //printf("Color is: %s -> %d\n", pen.getColor().name().latin1(), color);
+    //printf("Color is: %s -> %d\n", pen.getColor().name().toLatin1().data(), color);
 
     // Linetype:
     QString lineType = lineTypeToName(pen.getLineType());
@@ -2425,10 +2425,10 @@ DL_Attributes RS_FilterDXF::getEntityAttributes(RS_Entity* entity) {
     // Width:
     int width = widthToNumber(pen.getWidth());
 
-    DL_Attributes attrib(layerName.latin1(),
+    DL_Attributes attrib(layerName.toLatin1().data(),
                          color,
                          width,
-                         lineType.latin1());
+                         lineType.toLatin1().data());
 
     return attrib;
 }
@@ -2442,7 +2442,7 @@ RS_Pen RS_FilterDXF::attributesToPen(const DL_Attributes& attrib) const {
 
     /*
     printf("converting Color %d to %s\n", 
-       attrib.getColor(), numberToColor(attrib.getColor()).name().latin1());
+       attrib.getColor(), numberToColor(attrib.getColor()).name().toLatin1().data());
     */
 
     RS_Pen pen(numberToColor(attrib.getColor()),
@@ -2541,7 +2541,7 @@ RS_Color RS_FilterDXF::numberToColor(int num, bool comp) {
  */
 int RS_FilterDXF::colorToNumber(const RS_Color& col) {
 
-    //printf("Searching color for %s\n", col.name().latin1());
+    //printf("Searching color for %s\n", col.name().toLatin1().data());
 
     // Special color BYBLOCK:
     if (col.getFlag(RS2::FlagByBlock)) {
