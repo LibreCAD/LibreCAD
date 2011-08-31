@@ -170,6 +170,17 @@ double RS_Vector::angleTo(const RS_Vector& v) const {
     }
 }
 
+/**
+ * @return The angle from between two vectors using the current vector as the center
+ */
+double RS_Vector::angleBetween(const RS_Vector& v1, const RS_Vector& v2) const {
+    if (!valid || !v1.valid || !v2.valid) {
+        return 0.0;
+    }
+    else {
+        return RS_Math::correctAngle((v2-(*this)).angle() - (v1-(*this)).angle());
+    }
+}
 
 
 /**

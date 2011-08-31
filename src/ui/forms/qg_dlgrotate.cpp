@@ -67,7 +67,12 @@ void QG_DlgRotate::init() {
     RS_SETTINGS->beginGroup("/Modify");
     copies = RS_SETTINGS->readEntry("/RotateCopies", "10");
     numberMode = RS_SETTINGS->readNumEntry("/RotateMode", 0);
+    if( fabs(data->angle) < RS_TOLERANCE ) { 
     angle = RS_SETTINGS->readEntry("/RotateAngle", "90.0");
+    } else {
+            angle.setNum(RS_Math::rad2deg(data->angle));
+            std::cout<<"angle is : "<<qPrintable(angle)<<std::endl;
+    }
     useCurrentLayer =
         (bool)RS_SETTINGS->readNumEntry("/RotateUseCurrentLayer", 0);
     useCurrentAttributes =
