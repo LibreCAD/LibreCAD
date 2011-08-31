@@ -43,7 +43,9 @@ public:
      * Action States.
      */
     enum Status {
-        SetReferencePoint,    /**< Setting the reference point. */
+        setCenterPoint,    /**< Setting the rotation center */
+        setReferencePoint,    /**< Setting the reference point. */
+        setTargetPoint,    /**< Setting the target to rotation to*/
         ShowDialog            /**< Showing the options dialog. */
     };
 
@@ -69,6 +71,7 @@ public:
 
 private:
     RS_RotateData data;
+    RS_Vector centerPoint;
     RS_Vector referencePoint;
     RS_Vector targetPoint;
 };
