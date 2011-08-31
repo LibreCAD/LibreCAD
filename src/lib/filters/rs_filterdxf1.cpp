@@ -65,7 +65,7 @@ RS_FilterDXF1::RS_FilterDXF1()
  * taken to be stored in a file.
  */
 bool RS_FilterDXF1::fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) {
-    RS_DEBUG->print("DXF1 Filter: importing file '%s'...", file.latin1());
+    RS_DEBUG->print("DXF1 Filter: importing file '%s'...", file.toLatin1().data());
 
 	this->graphic = &g;
 
