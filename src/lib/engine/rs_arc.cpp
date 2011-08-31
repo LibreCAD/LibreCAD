@@ -498,7 +498,7 @@ void RS_Arc::trimEndpoint(const RS_Vector& pos) {
 
 
 RS2::Ending RS_Arc::getTrimPoint(const RS_Vector& trimCoord,
-                                 const RS_Vector& trimPoint) {
+                                 const RS_Vector& /*trimPoint*/) {
 
     //double angEl = data.center.angleTo(trimPoint);
     double angM = data.center.angleTo(trimCoord);
