@@ -572,8 +572,8 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/qg_graphicview.h \
     src/ui/qg_layerbox.h \
     src/ui/qg_layerwidget.h \
+    src/ui/qg_librarywidget.h \
     src/ui/qg_linetypebox.h \
-    src/ui/qg_listviewitem.h \
     src/ui/qg_mainwindowinterface.h \
     src/ui/qg_patternbox.h \
     src/ui/qg_pentoolbar.h \
@@ -633,7 +633,6 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_insertoptions.h \
     src/ui/forms/qg_layerdialog.h \
     src/ui/forms/qg_libraryinsertoptions.h \
-    src/ui/forms/qg_librarywidget.h \
     src/ui/forms/qg_lineangleoptions.h \
     src/ui/forms/qg_linebisectoroptions.h \
     src/ui/forms/qg_lineoptions.h \
@@ -665,8 +664,8 @@ SOURCES += src/ui/qg_actionfactory.cpp \
     src/ui/qg_graphicview.cpp \
     src/ui/qg_layerbox.cpp \
     src/ui/qg_layerwidget.cpp \
+    src/ui/qg_librarywidget.cpp \
     src/ui/qg_linetypebox.cpp \
-    src/ui/qg_listviewitem.cpp \
     src/ui/qg_patternbox.cpp \
     src/ui/qg_pentoolbar.cpp \
     src/ui/qg_recentfiles.cpp \
@@ -724,7 +723,6 @@ SOURCES += src/ui/qg_actionfactory.cpp \
     src/ui/forms/qg_insertoptions.cpp \
     src/ui/forms/qg_layerdialog.cpp \
     src/ui/forms/qg_libraryinsertoptions.cpp \
-    src/ui/forms/qg_librarywidget.cpp \
     src/ui/forms/qg_lineangleoptions.cpp \
     src/ui/forms/qg_linebisectoroptions.cpp \
     src/ui/forms/qg_lineoptions.cpp \
@@ -798,7 +796,6 @@ FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_insertoptions.ui \
     src/ui/forms/qg_layerdialog.ui \
     src/ui/forms/qg_libraryinsertoptions.ui \
-    src/ui/forms/qg_librarywidget.ui \
     src/ui/forms/qg_lineangleoptions.ui \
     src/ui/forms/qg_linebisectoroptions.ui \
     src/ui/forms/qg_lineoptions.ui \
