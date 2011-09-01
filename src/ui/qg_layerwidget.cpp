@@ -26,18 +26,11 @@
 
 #include "qg_layerwidget.h"
 
-#include <qtoolbutton.h>
-#include <qcursor.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <q3popupmenu.h>
-#include <qtooltip.h>
-//Added by qt3to4:
-#include <Q3HBoxLayout>
-#include <QContextMenuEvent>
-#include <QPixmap>
-#include <QKeyEvent>
-#include <Q3VBoxLayout>
+#include <QToolButton>
+#include <QLabel>
+#include <QMenu>
+#include <QToolTip>
+#include <QVBoxLayout>
 #include <q3listbox.h>
 
 /**
@@ -45,7 +38,7 @@
  */
 QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
                                const char* name, Qt::WFlags f)
-        : QWidget(parent, name, f),
+        : QWidget(parent, f),
         pxmLayerStatus00(":ui/layerstatus_00.png"),
         pxmLayerStatus01(":ui/layerstatus_01.png"),
         pxmLayerStatus10(":ui/layerstatus_10.png"),
@@ -58,19 +51,20 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
         pxmDefreezeAll(":ui/visibleblock.png"),
         pxmFreezeAll(":ui/hiddenblock.png") {
 
+    setObjectName(name);
     actionHandler = ah;
     layerList = NULL;
     showByBlock = false;
 	lastLayer = NULL;
 
     listBox = new Q3ListBox(this, "layerbox");
-    listBox->setDragSelect(false);
+//RLZ    listBox->setDragSelect(false);
     listBox->setMultiSelection(false);
     listBox->setSmoothScrolling(true);
     listBox->setFocusPolicy(Qt::NoFocus);
     listBox->setMinimumHeight(140);
 
-    Q3VBoxLayout* lay = new Q3VBoxLayout(this, 0, -1, "lay");
+    QVBoxLayout* lay = new QVBoxLayout(this);
 
     /*QLabel* caption = new QLabel(tr("Layer List"), this, "lLayers");
     caption->setAlignment(Qt::AlignCenter);
@@ -78,45 +72,45 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     caption->setPaletteForegroundColor(white);
     */
 
-    Q3HBoxLayout* layButtons = new Q3HBoxLayout(NULL, 0, -1, "layButtons");
+    QHBoxLayout* layButtons = new QHBoxLayout();
     QToolButton* but;
     // show all layer:
     but = new QToolButton(this);
-    but->setPixmap(pxmDefreezeAll);
+    but->setIcon(pxmDefreezeAll);
     but->setMinimumSize(QSize(22,22));
-    QToolTip::add(but, tr("Show all layers"));
+    but->setToolTip(tr("Show all layers"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersDefreezeAll()));
     layButtons->addWidget(but);
     // hide all layer:
     but = new QToolButton(this);
-    but->setPixmap(pxmFreezeAll);
+    but->setIcon(pxmFreezeAll);
     but->setMinimumSize(QSize(22,22));
-    QToolTip::add(but, tr("Hide all layers"));
+    but->setToolTip(tr("Hide all layers"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersFreezeAll()));
     layButtons->addWidget(but);
     // add layer:
     but = new QToolButton(this);
-    but->setPixmap(pxmAdd);
+    but->setIcon(pxmAdd);
     but->setMinimumSize(QSize(22,22));
-    QToolTip::add(but, tr("Add a layer"));
+    but->setToolTip(tr("Add a layer"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersAdd()));
     layButtons->addWidget(but);
     // remove layer:
     but = new QToolButton(this);
-    but->setPixmap(pxmRemove);
+    but->setIcon(pxmRemove);
     but->setMinimumSize(QSize(22,22));
-    QToolTip::add(but, tr("Remove the current layer"));
+    but->setToolTip(tr("Remove the current layer"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersRemove()));
     layButtons->addWidget(but);
     // rename layer:
     but = new QToolButton(this);
-    but->setPixmap(pxmEdit);
+    but->setIcon(pxmEdit);
     but->setMinimumSize(QSize(22,22));
-    QToolTip::add(but, tr("Modify layer attributes / rename"));
+    but->setToolTip(tr("Modify layer attributes / rename"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersEdit()));
     layButtons->addWidget(but);
@@ -284,7 +278,7 @@ void QG_LayerWidget::highlightLayer(const QString& name) {
  * Called when the user activates (highlights) a layer.
  */
 void QG_LayerWidget::slotActivated(const QString& layerName) {
-    RS_DEBUG->print("QG_LayerWidget::slotActivated(): %s", layerName.latin1());
+    RS_DEBUG->print("QG_LayerWidget::slotActivated(): %s", layerName.toLatin1().data());
 
     if (layerList==NULL) {
         return;
@@ -332,23 +326,25 @@ void QG_LayerWidget::slotMouseButtonClicked(int /*button*/,
 void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
 
     if (actionHandler!=NULL) {
-        Q3PopupMenu* contextMenu = new Q3PopupMenu(this);
+        QMenu* contextMenu = new QMenu(this);
         QLabel* caption = new QLabel(tr("Layer Menu"), this);
-        caption->setPaletteBackgroundColor(RS_Color(0,0,0));
-        caption->setPaletteForegroundColor(RS_Color(255,255,255));
+        QPalette palette;
+        palette.setColor(caption->backgroundRole(), RS_Color(0,0,0));
+        palette.setColor(caption->foregroundRole(), RS_Color(255,255,255));
+        caption->setPalette(palette);
         caption->setAlignment( Qt::AlignCenter );
 // RVT_PORT        contextMenu->insertItem( caption );
-        contextMenu->insertItem( tr("&Defreeze all Layers"), actionHandler,
+        contextMenu->addAction( tr("&Defreeze all Layers"), actionHandler,
                                  SLOT(slotLayersDefreezeAll()), 0);
-        contextMenu->insertItem( tr("&Freeze all Layers"), actionHandler,
+        contextMenu->addAction( tr("&Freeze all Layers"), actionHandler,
                                  SLOT(slotLayersFreezeAll()), 0);
-        contextMenu->insertItem( tr("&Add Layer"), actionHandler,
+        contextMenu->addAction( tr("&Add Layer"), actionHandler,
                                  SLOT(slotLayersAdd()), 0);
-        contextMenu->insertItem( tr("&Remove Layer"), actionHandler,
+        contextMenu->addAction( tr("&Remove Layer"), actionHandler,
                                  SLOT(slotLayersRemove()), 0);
-        contextMenu->insertItem( tr("&Edit Layer"), actionHandler,
+        contextMenu->addAction( tr("&Edit Layer"), actionHandler,
                                  SLOT(slotLayersEdit()), 0);
-        contextMenu->insertItem( tr("&Toggle Visibility"), actionHandler,
+        contextMenu->addAction( tr("&Toggle Visibility"), actionHandler,
                                  SLOT(slotLayersToggleView()), 0);
         contextMenu->exec(QCursor::pos());
         delete contextMenu;

@@ -26,12 +26,17 @@
 #ifndef QG_LIBRARYWIDGET_H
 #define QG_LIBRARYWIDGET_H
 
-#include "ui_qg_librarywidget.h"
+#include <QWidget>
+#include <QModelIndex>
 
 class QG_ActionHandler;
-class QG_ListViewItem;
+class QStandardItemModel;
+class QStandardItem;
+class QTreeView;
+class QListView;
+class QPushButton;
 
-class QG_LibraryWidget : public QWidget, public Ui::QG_LibraryWidget
+class QG_LibraryWidget : public QWidget
 {
     Q_OBJECT
 
@@ -39,17 +44,21 @@ public:
     QG_LibraryWidget(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
     ~QG_LibraryWidget();
 
-    virtual QString getItemDir( Q3ListViewItem * item );
-    virtual QString getItemPath( Q3IconViewItem * item );
-    virtual QPixmap getPixmap( const QString & dir, const QString & dxfFile, const QString & dxfPath );
+    QPushButton *bInsert; //RLZ change bInsert to private
+private:
+    virtual QString getItemDir( QStandardItem * item );
+    virtual QString getItemPath( QStandardItem * item );
+    virtual QIcon getIcon( const QString & dir, const QString & dxfFile, const QString & dxfPath );
     virtual QString getPathToPixmap( const QString & dir, const QString & dxfFile, const QString & dxfPath );
 
 public slots:
     virtual void setActionHandler( QG_ActionHandler * ah );
     virtual void keyPressEvent( QKeyEvent * e );
     virtual void insert();
-    virtual void appendTree( QG_ListViewItem * item, QString directory );
-    virtual void updatePreview( Q3ListViewItem * item );
+    virtual void appendTree( QStandardItem * item, QString directory );
+    virtual void updatePreview( QModelIndex idx );
+    virtual void expandView( QModelIndex idx );
+    virtual void collapseView( QModelIndex idx );
 
 signals:
     void escape();
@@ -59,9 +68,10 @@ protected slots:
 
 private:
     QG_ActionHandler* actionHandler;
-
-    void init();
-
+    QStandardItemModel *dirModel;
+    QStandardItemModel *iconModel;
+    QTreeView *dirView;
+    QListView *ivPreview;
 };
 
 #endif // QG_LIBRARYWIDGET_H
