@@ -74,11 +74,11 @@ void RS_ActionModifyRotate::mouseMoveEvent(QMouseEvent* e) {
                    break;
 
             case setTargetPoint:
-                   data.angle=data.center.angleBetween(referencePoint, mouse);
+                   data.angle=centerPoint.angleBetween(referencePoint, mouse);
                    std::cout<<"data.angle= "<<data.angle<<std::endl;
                 deletePreview();
                 preview->addSelectionFrom(*container);
-                preview->rotate(data.center,data.angle);
+                preview->rotate(centerPoint,data.angle);
                 drawPreview();
     }
 
@@ -109,6 +109,7 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent* e) {
     switch (getStatus()) {
     case setCenterPoint:
         centerPoint = pos;
+        graphicView->moveRelativeZero(centerPoint);
         setStatus(setReferencePoint);
         break;
     case setReferencePoint:
@@ -118,9 +119,9 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent* e) {
     case setTargetPoint:
         targetPoint = pos;
         setStatus(ShowDialog);
-        if (RS_DIALOGFACTORY->requestRotateDialog(data)) {
             data.center = centerPoint;
             data.angle = data.center.angleBetween(referencePoint, targetPoint);
+        if (RS_DIALOGFACTORY->requestRotateDialog(data)) {
             trigger();
             finish();
         }
@@ -141,13 +142,16 @@ void RS_ActionModifyRotate::updateMouseButtonHints() {
         break;
 
     case setReferencePoint:
+	std::cout<<"setting mouse tip for setReferencePoint\n";
         RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
                                             tr("Back"));
         break;
         case setTargetPoint:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point to rotate to"),
                                             tr("Back"));
+					    break;
     default:
+	std::cout<<"setting mouse tip for others\n";
         RS_DIALOGFACTORY->updateMouseWidget("", "");
         break;
     }

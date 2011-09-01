@@ -67,10 +67,11 @@ void QG_DlgRotate::init() {
     RS_SETTINGS->beginGroup("/Modify");
     copies = RS_SETTINGS->readEntry("/RotateCopies", "10");
     numberMode = RS_SETTINGS->readNumEntry("/RotateMode", 0);
+    std::cout<<"data->angle= "<<data->angle<<std::endl;
     if( fabs(data->angle) < RS_TOLERANCE ) { 
     angle = RS_SETTINGS->readEntry("/RotateAngle", "90.0");
     } else {
-            angle.setNum(RS_Math::rad2deg(data->angle));
+            angle=QString::number(RS_Math::rad2deg(data->angle));
             std::cout<<"angle is : "<<qPrintable(angle)<<std::endl;
     }
     useCurrentLayer =
@@ -117,7 +118,7 @@ void QG_DlgRotate::destroy() {
     RS_SETTINGS->endGroup();
 }
 
-void QG_DlgRotate::setData(RS_RotateData* d) {
+void QG_DlgRotate::setData(const RS_RotateData& d) {
     data = d;
 }
 
@@ -130,6 +131,7 @@ void QG_DlgRotate::updateData() {
         data->number = leNumber->text().toInt();
     }
     data->angle = RS_Math::deg2rad(RS_Math::eval(leAngle->text()));
+    std::cout<<"final angle= "<<data->angle<<std::endl;
     data->useCurrentAttributes = cbCurrentAttributes->isChecked();
     data->useCurrentLayer = cbCurrentLayer->isChecked();
 }
