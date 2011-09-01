@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 #include "qg_dlgrotate.h"
@@ -67,13 +67,7 @@ void QG_DlgRotate::init() {
     RS_SETTINGS->beginGroup("/Modify");
     copies = RS_SETTINGS->readEntry("/RotateCopies", "10");
     numberMode = RS_SETTINGS->readNumEntry("/RotateMode", 0);
-    std::cout<<"data->angle= "<<data->angle<<std::endl;
-    if( fabs(data->angle) < RS_TOLERANCE ) { 
     angle = RS_SETTINGS->readEntry("/RotateAngle", "90.0");
-    } else {
-            angle=QString::number(RS_Math::rad2deg(data->angle));
-            std::cout<<"angle is : "<<qPrintable(angle)<<std::endl;
-    }
     useCurrentLayer =
         (bool)RS_SETTINGS->readNumEntry("/RotateUseCurrentLayer", 0);
     useCurrentAttributes =
@@ -118,8 +112,13 @@ void QG_DlgRotate::destroy() {
     RS_SETTINGS->endGroup();
 }
 
-void QG_DlgRotate::setData(const RS_RotateData& d) {
+void QG_DlgRotate::setData(RS_RotateData* d) {
     data = d;
+    if( fabs(data->angle) > RS_TOLERANCE ) {
+        angle=QString::number(RS_Math::rad2deg(data->angle));
+    }
+    leAngle->setText(angle);
+
 }
 
 void QG_DlgRotate::updateData() {
@@ -131,7 +130,6 @@ void QG_DlgRotate::updateData() {
         data->number = leNumber->text().toInt();
     }
     data->angle = RS_Math::deg2rad(RS_Math::eval(leAngle->text()));
-    std::cout<<"final angle= "<<data->angle<<std::endl;
     data->useCurrentAttributes = cbCurrentAttributes->isChecked();
     data->useCurrentLayer = cbCurrentLayer->isChecked();
 }
