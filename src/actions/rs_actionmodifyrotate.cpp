@@ -74,10 +74,10 @@ void RS_ActionModifyRotate::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case setTargetPoint:
-        data.angle=centerPoint.angleBetween(referencePoint, mouse);
+        if( ! mouse.valid ) return;
         deletePreview();
         preview->addSelectionFrom(*container);
-        preview->rotate(centerPoint,data.angle);
+        preview->rotate(data.center,RS_Math::correctAngle((mouse - data.center).angle() - data.angle));
         drawPreview();
     }
 
@@ -104,21 +104,36 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent* e) {
     }
 
     RS_Vector pos = e->getCoordinate();
-
+    if (! pos.valid ) {
+        return;
+    }
     switch (getStatus()) {
     case setCenterPoint:
-        centerPoint = pos;
-        graphicView->moveRelativeZero(centerPoint);
+        data.center = pos;
+        graphicView->moveRelativeZero(data.center);
         setStatus(setReferencePoint);
         break;
     case setReferencePoint:
-        referencePoint = pos;
-        setStatus(setTargetPoint);
+        pos -= data.center;
+        if ( RS_Vector::dotP(pos,pos) < RS_TOLERANCE ) {
+            data.angle = 0.;//angle not well defined, go direct to dialog
+            setStatus(ShowDialog);
+            if (RS_DIALOGFACTORY->requestRotateDialog(data)) {
+                trigger();
+                finish();
+            }
+        } else {
+            data.angle=pos.angle();
+            setStatus(setTargetPoint);
+        }
         break;
     case setTargetPoint:
-        targetPoint = pos;
-        data.center = centerPoint;
-        data.angle = data.center.angleBetween(referencePoint, targetPoint);
+        pos -= data.center;
+        if ( RS_Vector::dotP(pos,pos) < RS_TOLERANCE ) {
+            data.angle = 0.;//angle not well defined
+        } else {
+            data.angle = RS_Math::correctAngle(pos.angle() - data.angle);
+        }
         setStatus(ShowDialog);
         if (RS_DIALOGFACTORY->requestRotateDialog(data)) {
             trigger();

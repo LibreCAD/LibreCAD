@@ -172,13 +172,18 @@ double RS_Vector::angleTo(const RS_Vector& v) const {
 
 /**
  * @return The angle from between two vectors using the current vector as the center
+ * return 0, if the angle is not well defined
  */
 double RS_Vector::angleBetween(const RS_Vector& v1, const RS_Vector& v2) const {
     if (!valid || !v1.valid || !v2.valid) {
         return 0.0;
     }
     else {
-        return RS_Math::correctAngle((v2-(*this)).angle() - (v1-(*this)).angle());
+        RS_Vector vStart=v1- (*this);
+        RS_Vector vEnd=v2- (*this);
+        if( vStart.magnitude() < RS_TOLERANCE
+                || vEnd.magnitude() < RS_TOLERANCE) return 0.0;
+        return RS_Math::correctAngle(vEnd.angle() - vStart.angle());
     }
 }
 
@@ -270,20 +275,20 @@ RS_Vector RS_Vector::rotate(double ang) {
 
 /**
  * Rotates this vector around 0/0 by the given vector
- * if the vector is a unit, then, it's the same as rotating around 
+ * if the vector is a unit, then, it's the same as rotating around
  * 0/0 by the angle of the vector
  */
 RS_Vector RS_Vector::rotate(RS_Vector angleVector) {
-        if( angleVector.valid) {
-    RS_DEBUG->print("RS_Vector::rotate: rotating Vecotr: %g/%g", x,y);
-    RS_DEBUG->print("RS_Vector::rotate: rotating by Vecotr: %g/%g", angleVector.x,angleVector.y);
-    x = x * angleVector.x - y * angleVector.y;
-    y = x * angleVector.y + y * angleVector.x;
+    if( angleVector.valid) {
+        RS_DEBUG->print("RS_Vector::rotate: rotating Vecotr: %g/%g", x,y);
+        RS_DEBUG->print("RS_Vector::rotate: rotating by Vecotr: %g/%g", angleVector.x,angleVector.y);
+        x = x * angleVector.x - y * angleVector.y;
+        y = x * angleVector.y + y * angleVector.x;
 
-    RS_DEBUG->print("RS_Vector::rotate: rotated x/y: %f/%f", x, y);
-        } else {
-    RS_DEBUG->print("RS_Vector::rotate: rotating by invalid RS_Vector");
-        }
+        RS_DEBUG->print("RS_Vector::rotate: rotated x/y: %f/%f", x, y);
+    } else {
+        RS_DEBUG->print("RS_Vector::rotate: rotating by invalid RS_Vector");
+    }
 
     return *this;
 }
@@ -717,7 +722,7 @@ bool RS_VectorSolutions::isTangent() const {
  * Rotates all vectors around (0,0) by the given angle.
  */
 void RS_VectorSolutions::rotate(double ang) {
-        RS_Vector angleVector(ang);
+    RS_Vector angleVector(ang);
     for (int i=0; i<num; i++) {
         if (vector[i].valid) {
             vector[i].rotate(angleVector);
