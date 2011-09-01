@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>90</width>
+    <width>96</width>
     <height>22</height>
    </rect>
   </property>
@@ -59,7 +59,7 @@
      </rect>
     </property>
     <property name="toolTip">
-     <string>Counter Clockwise</string>
+     <string>Clockwise</string>
     </property>
     <property name="text">
      <string/>
@@ -79,7 +79,7 @@
      </rect>
     </property>
     <property name="toolTip">
-     <string>Clockwise</string>
+     <string>Counterclockwise</string>
     </property>
     <property name="text">
      <string/>
