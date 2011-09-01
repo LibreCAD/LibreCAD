@@ -30,7 +30,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>86</width>
+     <width>91</width>
      <height>23</height>
     </rect>
    </property>
@@ -52,10 +52,10 @@
    <widget class="QRadioButton" name="rbNeg">
     <property name="geometry">
      <rect>
-      <x>44</x>
-      <y>2</y>
-      <width>41</width>
-      <height>19</height>
+      <x>47</x>
+      <y>0</y>
+      <width>47</width>
+      <height>24</height>
      </rect>
     </property>
     <property name="toolTip">
@@ -68,14 +68,17 @@
      <iconset resource="../../../res/extui/extui.qrc">
       <normaloff>:/extui/dirneg.png</normaloff>:/extui/dirneg.png</iconset>
     </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QRadioButton" name="rbPos">
     <property name="geometry">
      <rect>
-      <x>2</x>
-      <y>2</y>
-      <width>41</width>
-      <height>19</height>
+      <x>0</x>
+      <y>0</y>
+      <width>47</width>
+      <height>24</height>
      </rect>
     </property>
     <property name="toolTip">
@@ -92,28 +95,28 @@
      <bool>true</bool>
     </property>
    </widget>
-  </widget>
-  <widget class="Line" name="sep1">
-   <property name="geometry">
-    <rect>
-     <x>88</x>
-     <y>2</y>
-     <width>6</width>
-     <height>19</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::VLine</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Sunken</enum>
-   </property>
+   <widget class="Line" name="sep1">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>0</y>
+      <width>16</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::VLine</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
