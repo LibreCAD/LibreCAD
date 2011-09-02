@@ -2,8 +2,8 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2011 Rallaz (rallazz@gmail.com)
 ** Copyright (C) 2010-2011 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -26,60 +26,124 @@
 
 #include "qg_blockwidget.h"
 
-#include <QToolTip>
+#include <QScrollBar>
+#include <QTableView>
+#include <QHeaderView>
 #include <QToolButton>
 #include <QMenu>
 #include <QBoxLayout>
 #include <QLabel>
 #include "rs_blocklist.h"
 #include "qg_actionhandler.h"
+//#include <QtAlgorithms>
 
-#include <Q3ListBox>
-#include <QListView>
+QG_BlockModel::QG_BlockModel(QObject * parent) : QAbstractTableModel(parent) {
+    blockVisible = QIcon(":/ui/visibleblock.png");
+    blockHidden = QIcon(":/ui/hiddenblock.png");
+}
 
-/**
+QG_BlockModel::~QG_BlockModel() {
+
+}
+
+int QG_BlockModel::rowCount ( const QModelIndex & /*parent*/ ) const {
+    return listBlock.size();
+}
+
+QModelIndex QG_BlockModel::parent ( const QModelIndex & /*index*/ ) const {
+    return QModelIndex();
+}
+
+QModelIndex QG_BlockModel::index ( int row, int column, const QModelIndex & /*parent*/ ) const {
+    if ( row >= listBlock.size() || row < 0)
+        return QModelIndex();
+    return createIndex ( row, column);
+}
+
+bool blockLessThan(const RS_Block *s1, const RS_Block *s2) {
+     return s1->getName() < s2->getName();
+}
+
+void QG_BlockModel::setBlockList(RS_BlockList* bl) {
+    listBlock.clear();
+    if (bl == NULL)
+        return;
+    for (int i=0; i<bl->count(); ++i) {
+        listBlock.append(bl->at(i));
+    }
+    qSort ( listBlock.begin(), listBlock.end(), blockLessThan );
+//called to force redraw
+    reset();
+}
+
+
+RS_Block *QG_BlockModel::getBlock( int row ){
+    if ( row >= listBlock.size() || row < 0)
+        return NULL;
+    return listBlock.at(row);
+}
+
+QModelIndex QG_BlockModel::getIndex (RS_Block * blk){
+    int row = listBlock.indexOf(blk);
+    if (row<0)
+        return QModelIndex();
+    return createIndex ( row, NAME);
+}
+
+QVariant QG_BlockModel::data ( const QModelIndex & index, int role ) const {
+    if (!index.isValid() || index.row() >= listBlock.size())
+        return QVariant();
+
+    RS_Block* blk = listBlock.at(index.row());
+
+    if (role ==Qt::DecorationRole && index.column() == VISIBLE) {
+        if (!blk->isFrozen()) {
+            return blockVisible;
+        } else {
+            return blockHidden;
+        }
+    }
+    if (role ==Qt::DisplayRole && index.column() == NAME) {
+        return blk->getName();
+    }
+//Other roles:
+    return QVariant();
+}
+
+ /**
  * Constructor.
  */
 QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
                                const char* name, Qt::WFlags f)
-        : QWidget(parent, f),
-        pxmVisible(":/ui/visibleblock.png"),
-        pxmHidden(":/ui/hiddenblock.png"),
-        pxmAdd(":/ui/blockadd.png"),
-        pxmRemove(":/ui/blockremove.png"),
-        pxmAttributes(":/ui/blockattributes.png"),
-        pxmEdit(":/ui/blockedit.png"),
-        pxmInsert(":/ui/blockinsert.png"),
-        pxmDefreezeAll(":/ui/visibleblock.png"),
-        pxmFreezeAll(":/ui/hiddenblock.png") {
+        : QWidget(parent, f) {
 
     setObjectName(name);
     actionHandler = ah;
     blockList = NULL;
     lastBlock = NULL;
 
-    listBox = new Q3ListBox(this, "blockbox");
-//RLZ    listBox = new QListView(this);
-//RLZ    listBox->setDragSelect(false);
-    listBox->setMultiSelection(false);
-    listBox->setSmoothScrolling(true);
-	listBox->setFocusPolicy(Qt::NoFocus);
+    blockModel = new QG_BlockModel;
+    blockView = new QTableView(this);
+    blockView->setModel (blockModel);
+    blockView->setShowGrid (false);
+    blockView->setSelectionMode(QAbstractItemView::SingleSelection);
+    blockView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    blockView->setFocusPolicy(Qt::NoFocus);
+    blockView->setColumnWidth(QG_BlockModel::VISIBLE, 20);
+    blockView->verticalHeader()->hide();
+    blockView->horizontalHeader()->setStretchLastSection(true);
+    blockView->horizontalHeader()->hide();
 
     QVBoxLayout* lay = new QVBoxLayout(this);
     lay->setSpacing ( 0 );
-    /*
-	QLabel* caption = new QLabel(tr("Block List"), this, "caption");
-    caption->setAlignment(Qt::AlignCenter);
-    caption->setPaletteBackgroundColor(black);
-    caption->setPaletteForegroundColor(white);
-	*/
+    lay->setContentsMargins(2, 2, 2, 2);
 
     QHBoxLayout* layButtons = new QHBoxLayout();
     QHBoxLayout* layButtons2 = new QHBoxLayout();
     QToolButton* but;
     // show all blocks:
     but = new QToolButton(this);
-    but->setIcon(pxmDefreezeAll);
+    but->setIcon(QIcon(":/ui/visibleblock.png"));
     but->setMinimumSize(QSize(22,22));
     but->setToolTip(tr("Show all blocks"));
     connect(but, SIGNAL(clicked()),
@@ -87,7 +151,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // hide all blocks:
     but = new QToolButton(this);
-    but->setIcon(pxmFreezeAll);
+    but->setIcon( QIcon(":/ui/hiddenblock.png") );
     but->setMinimumSize(QSize(22,22));
     but->setToolTip(tr("Hide all blocks"));
     connect(but, SIGNAL(clicked()),
@@ -95,7 +159,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // add block:
     but = new QToolButton(this);
-    but->setIcon(pxmAdd);
+    but->setIcon(QIcon(":/ui/blockadd.png"));
     but->setMinimumSize(QSize(22,22));
     but->setToolTip(tr("Add a block"));
     connect(but, SIGNAL(clicked()),
@@ -103,7 +167,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // remove block:
     but = new QToolButton(this);
-    but->setIcon(pxmRemove);
+    but->setIcon(QIcon(":/ui/blockremove.png"));
     but->setMinimumSize(QSize(22,22));
     but->setToolTip(tr("Remove the active block"));
     connect(but, SIGNAL(clicked()),
@@ -111,7 +175,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // edit attributes:
     but = new QToolButton(this);
-    but->setIcon(pxmAttributes);
+    but->setIcon(QIcon(":/ui/blockattributes.png"));
     but->setMinimumSize(QSize(22,22));
     but->setToolTip(tr("Rename the active block"));
     connect(but, SIGNAL(clicked()),
@@ -119,7 +183,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // edit block:
     but = new QToolButton(this);
-    but->setIcon(pxmEdit);
+    but->setIcon(QIcon(":/ui/blockedit.png"));
     but->setMinimumSize(QSize(22,22));
     but->setToolTip(tr("Edit the active block\n"
                           "in a separate window"));
@@ -128,41 +192,27 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons2->addWidget(but);
     // insert block:
     but = new QToolButton(this);
-    but->setIcon(pxmInsert);
+    but->setIcon(QIcon(":/ui/blockinsert.png"));
     but->setMinimumSize(QSize(22,22));
     but->setToolTip(tr("Insert the active block"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksInsert()));
     layButtons2->addWidget(but);
 
-    //lay->addWidget(caption);
     lay->addLayout(layButtons);
     lay->addLayout(layButtons2);
-    lay->addWidget(listBox);
+    lay->addWidget(blockView);
 
-    //connect(listBox, SIGNAL(doubleClicked(QListBoxItem*)),
-    //        actionHandler, SLOT(slotBlocksToggleView()));
-
-    connect(listBox, SIGNAL(highlighted(const QString&)),
-            this, SLOT(slotActivated(const QString&)));
-	
-	connect(listBox, SIGNAL(mouseButtonClicked(int, Q3ListBoxItem*, 
-		const QPoint&)),
-		this, SLOT(slotMouseButtonClicked(int, Q3ListBoxItem*, const QPoint&)));
-
-    //boxLayout()->addWidget(listBox);
+    connect(blockView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotActivated(QModelIndex)));
 }
-
-
 
 /**
  * Destructor
  */
 QG_BlockWidget::~QG_BlockWidget() {
-    delete listBox;
+    delete blockView;
+    delete blockModel;
 }
-
-
 
 /**
  * Updates the block box from the blocks in the graphic.
@@ -170,155 +220,87 @@ QG_BlockWidget::~QG_BlockWidget() {
 void QG_BlockWidget::update() {
     RS_DEBUG->print("QG_BlockWidget::update()");
 
-    int yPos = listBox->contentsY();
-    
-	RS_Block* activeBlock;
+    int yPos = blockView->verticalScrollBar()->value();
+    RS_Block* activeBlock;
+
     if (blockList!=NULL) {
         activeBlock = blockList->getActive();
     } else {
         activeBlock = NULL;
     }
 
-    listBox->clear();
+    blockModel->setBlockList(blockList);
 
     if (blockList==NULL) {
-		RS_DEBUG->print("QG_BlockWidget::update(): blockList is NULL");
+        RS_DEBUG->print("QG_BlockWidget::update(): blockList is NULL");
         return;
     }
 
-    for (int i=0; i<blockList->count(); ++i) {
-        RS_Block* blk = blockList->at(i);
-        if (!blk->isFrozen()) {
-//RLZ            listBox->insertItem(pxmVisible, blk->getName());
-            listBox->insertItem(pxmVisible.pixmap(16), blk->getName());
-        } else {
-//RLZ            listBox->insertItem(pxmHidden, blk->getName());
-            listBox->insertItem(pxmHidden.pixmap(16), blk->getName());
-        }
-    }
+    RS_Block* b = lastBlock;
+    activateBlock(activeBlock);
+    lastBlock = b;
+    blockView->resizeRowsToContents();
+    blockView->verticalScrollBar()->setValue(yPos);
 
-    listBox->sort();
-	
-	RS_Block* b = lastBlock;
-    highlightBlock(activeBlock);
-	lastBlock = b;
-    listBox->setContentsPos(0, yPos);
-
-    //highlightBlock(blockList->getActiveBlock());
-    //listBox->setContentsPos(0, yPos);
     RS_DEBUG->print("QG_BlockWidget::update() done");
 }
 
 
 
 /**
- * Highlights (activates) the given block and makes it 
- * the active block in the blocklist.
+ * Activates the given block and makes it the active
+ * block in the blocklist.
  */
-void QG_BlockWidget::highlightBlock(RS_Block* block) {
-    RS_DEBUG->print("QG_BlockWidget::highlightBlock()");
+void QG_BlockWidget::activateBlock(RS_Block* block) {
+    RS_DEBUG->print("QG_BlockWidget::activateBlock()");
 
-    if (block==NULL || listBox==NULL) {
+    if (block==NULL || blockList==NULL) {
         return;
     }
 
+    lastBlock = blockList->getActive();
     blockList->activate(block);
-    QString name = block->getName();
-
-    for (int i=0; i<(int)listBox->count(); ++i) {
-        if (listBox->text(i)==name) {
-            listBox->setCurrentItem(i);
-            break;
-        }
-    }
+    QModelIndex idx = blockModel->getIndex (block);
+    blockView->setCurrentIndex ( idx );
 }
-
-
-
-/**
- * Toggles the view of the given block. This is usually called when 
- * an item is double clicked.
- */
-/*
-void QG_BlockWidget::slotToggleView(QListBoxItem* item) {
-    RS_DEBUG->print("QG_BlockWidget::slotToggleView()");
- 
-    if (item==NULL || blockList==NULL) {
-        return;
-    }
- 
-    int index = listBox->index(item);
-    RS_Block* block = blockList->find(item->text());
- 
-    if (block!=NULL) {
-        blockList->toggleBlock(item->text());
-        if (!block->isFrozen()) {
-        	listBox->changeItem(pxmVisible, item->text(), index);
-        } else {
-            listBox->changeItem(*pxmHidden, item->text(), index);
-        }
- 
-    }
-}
-*/
-
-
 
 /**
  * Called when the user activates (highlights) a block.
  */
-void QG_BlockWidget::slotActivated(const QString& blockName) {
-    RS_DEBUG->print("QG_BlockWidget::slotActivated(): %s", blockName.toLatin1().data());
+void QG_BlockWidget::slotActivated(QModelIndex blockIdx) {
+    if (!blockIdx.isValid() || blockList==NULL)
+        return;
 
-    if (blockList==NULL) {
+    RS_Block * block = blockModel->getBlock( blockIdx.row() );
+    if (block == 0)
+        return;
+
+    if (blockIdx.column() == QG_BlockModel::VISIBLE) {
+        RS_Block* b = blockList->getActive();
+        blockList->activate(block);
+        actionHandler->slotBlocksToggleView();
+        activateBlock(b);
         return;
     }
 
-	lastBlock = blockList->getActive();
-
-    blockList->activate(blockName);
+    if (blockIdx.column() == QG_BlockModel::NAME) {
+        lastBlock = blockList->getActive();
+        blockList->activate(block);
+    }
 }
-
-
-
-/**
- * Called for every mouse click.
- */
-void QG_BlockWidget::slotMouseButtonClicked(int /*button*/, 
-    Q3ListBoxItem* item, const QPoint& pos) {
-
-	QPoint p = mapFromGlobal(pos);
-
-	RS_Block* b = lastBlock;
-
-	if (p.x()<23) {
-		actionHandler->slotBlocksToggleView();
-		highlightBlock(b);
-	}
-	else {
-		if (item!=NULL && blockList!=NULL) {
-			lastBlock = blockList->find(item->text());
-		}
-	}
-}
-
 
 /**
  * Shows a context menu for the block widget. Launched with a right click.
  */
 void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
 
-    //QListBoxItem* item = listBox->selectedItem();
     QMenu* contextMenu = new QMenu(this);
     QLabel* caption = new QLabel(tr("Block Menu"), this);
     QPalette palette;
     palette.setColor(caption->backgroundRole(), RS_Color(0,0,0));
     palette.setColor(caption->foregroundRole(), RS_Color(255,255,255));
     caption->setPalette(palette);
-/*RLZ    caption->setPaletteBackgroundColor(RS_Color(0,0,0));
-    caption->setPaletteForegroundColor(RS_Color(255,255,255));*/
     caption->setAlignment( Qt::AlignCenter );
-    // RVT_PORT contextMenu->insertItem( caption );
     contextMenu->addAction( tr("&Defreeze all Blocks"), actionHandler,
                              SLOT(slotBlocksDefreezeAll()), 0);
     contextMenu->addAction( tr("&Freeze all Blocks"), actionHandler,
