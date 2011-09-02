@@ -2,8 +2,8 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2011 Rallaz (rallazz@gmail.com)
 ** Copyright (C) 2010-2011 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -26,57 +26,135 @@
 
 #include "qg_layerwidget.h"
 
+#include <QScrollBar>
+#include <QTableView>
+#include <QHeaderView>
 #include <QToolButton>
-#include <QLabel>
 #include <QMenu>
-#include <QToolTip>
-#include <QVBoxLayout>
-#include <q3listbox.h>
+#include <QBoxLayout>
+#include <QLabel>
+#include "qg_actionhandler.h"
+
+QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
+    layerVisible = QIcon(":/ui/visibleblock.png");
+    layerHidden = QIcon(":/ui/hiddenblock.png");
+    layerDefreeze = QIcon(":/ui/unlokedlayer.png");
+    layerFreeze = QIcon(":/ui/lokedlayer.png");
+}
+
+QG_LayerModel::~QG_LayerModel() {
+
+}
+
+int QG_LayerModel::rowCount ( const QModelIndex & /*parent*/ ) const {
+    return listLayer.size();
+}
+
+QModelIndex QG_LayerModel::parent ( const QModelIndex & /*index*/ ) const {
+    return QModelIndex();
+}
+
+QModelIndex QG_LayerModel::index ( int row, int column, const QModelIndex & /*parent*/ ) const {
+    if ( row >= listLayer.size() || row < 0)
+        return QModelIndex();
+    return createIndex ( row, column);
+}
+
+bool layerLessThan(const RS_Layer *s1, const RS_Layer *s2) {
+     return s1->getName() < s2->getName();
+}
+
+void QG_LayerModel::setLayerList(RS_LayerList* ll) {
+    listLayer.clear();
+    if (ll == NULL)
+        return;
+    for (uint i=0; i < ll->count(); ++i) {
+        listLayer.append(ll->at(i));
+    }
+    qSort ( listLayer.begin(), listLayer.end(), layerLessThan );
+//called to force redraw
+    reset();
+}
+
+
+RS_Layer *QG_LayerModel::getLayer( int row ){
+    if ( row >= listLayer.size() || row < 0)
+        return NULL;
+    return listLayer.at(row);
+}
+
+QModelIndex QG_LayerModel::getIndex (RS_Layer * lay){
+    int row = listLayer.indexOf(lay);
+    if (row<0)
+        return QModelIndex();
+    return createIndex ( row, NAME);
+}
+
+QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
+    if (!index.isValid() || index.row() >= listLayer.size())
+        return QVariant();
+
+    RS_Layer* lay = listLayer.at(index.row());
+
+    if (role ==Qt::DecorationRole) {
+        if (index.column() == VISIBLE) {
+            if (!lay->isFrozen()) {
+                return layerVisible;
+            } else {
+                return layerHidden;
+            }
+        }
+        if (index.column() == LOCKED) {
+            if (!lay->isLocked()) {
+                return layerDefreeze;
+            } else {
+                return layerFreeze;
+            }
+        }
+    }
+    if (role ==Qt::DisplayRole && index.column() == NAME) {
+        return lay->getName();
+    }
+//Other roles:
+    return QVariant();
+}
 
 /**
  * Constructor.
  */
 QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
                                const char* name, Qt::WFlags f)
-        : QWidget(parent, f),
-        pxmLayerStatus00(":ui/layerstatus_00.png"),
-        pxmLayerStatus01(":ui/layerstatus_01.png"),
-        pxmLayerStatus10(":ui/layerstatus_10.png"),
-        pxmLayerStatus11(":ui/layerstatus_11.png"),
-        pxmVisible(":ui/visibleblock.png"),
-        pxmHidden(":ui/hiddenblock.png"),
-        pxmAdd(":ui/layeradd.png"),
-        pxmRemove(":ui/layerremove.png"),
-        pxmEdit(":ui/layeredit.png"),
-        pxmDefreezeAll(":ui/visibleblock.png"),
-        pxmFreezeAll(":ui/hiddenblock.png") {
+        : QWidget(parent, f) {
 
     setObjectName(name);
     actionHandler = ah;
     layerList = NULL;
     showByBlock = false;
-	lastLayer = NULL;
+    lastLayer = NULL;
 
-    listBox = new Q3ListBox(this, "layerbox");
-//RLZ    listBox->setDragSelect(false);
-    listBox->setMultiSelection(false);
-    listBox->setSmoothScrolling(true);
-    listBox->setFocusPolicy(Qt::NoFocus);
-    listBox->setMinimumHeight(140);
+    layerModel = new QG_LayerModel;
+    layerView = new QTableView(this);
+    layerView->setModel (layerModel);
+    layerView->setShowGrid (false);
+    layerView->setSelectionMode(QAbstractItemView::SingleSelection);
+    layerView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    layerView->setFocusPolicy(Qt::NoFocus);
+    layerView->setMinimumHeight(140);
+    layerView->setColumnWidth(QG_LayerModel::VISIBLE, 20);
+    layerView->setColumnWidth(QG_LayerModel::LOCKED, 20);
+    layerView->verticalHeader()->hide();
+    layerView->horizontalHeader()->setStretchLastSection(true);
+    layerView->horizontalHeader()->hide();
 
     QVBoxLayout* lay = new QVBoxLayout(this);
-
-    /*QLabel* caption = new QLabel(tr("Layer List"), this, "lLayers");
-    caption->setAlignment(Qt::AlignCenter);
-    caption->setPaletteBackgroundColor(black);
-    caption->setPaletteForegroundColor(white);
-    */
+    lay->setSpacing ( 0 );
+    lay->setContentsMargins(2, 2, 2, 2);
 
     QHBoxLayout* layButtons = new QHBoxLayout();
     QToolButton* but;
     // show all layer:
     but = new QToolButton(this);
-    but->setIcon(pxmDefreezeAll);
+    but->setIcon(QIcon(":ui/visiblelayer.png"));
     but->setMinimumSize(QSize(22,22));
     but->setToolTip(tr("Show all layers"));
     connect(but, SIGNAL(clicked()),
@@ -84,7 +162,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // hide all layer:
     but = new QToolButton(this);
-    but->setIcon(pxmFreezeAll);
+    but->setIcon(QIcon(":ui/hiddenlayer.png"));
     but->setMinimumSize(QSize(22,22));
     but->setToolTip(tr("Hide all layers"));
     connect(but, SIGNAL(clicked()),
@@ -92,7 +170,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // add layer:
     but = new QToolButton(this);
-    but->setIcon(pxmAdd);
+    but->setIcon(QIcon(":ui/layeradd.png"));
     but->setMinimumSize(QSize(22,22));
     but->setToolTip(tr("Add a layer"));
     connect(but, SIGNAL(clicked()),
@@ -100,7 +178,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // remove layer:
     but = new QToolButton(this);
-    but->setIcon(pxmRemove);
+    but->setIcon(QIcon(":ui/layerremove.png"));
     but->setMinimumSize(QSize(22,22));
     but->setToolTip(tr("Remove the current layer"));
     connect(but, SIGNAL(clicked()),
@@ -108,7 +186,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // rename layer:
     but = new QToolButton(this);
-    but->setIcon(pxmEdit);
+    but->setIcon(QIcon(":ui/layeredit.png"));
     but->setMinimumSize(QSize(22,22));
     but->setToolTip(tr("Modify layer attributes / rename"));
     connect(but, SIGNAL(clicked()),
@@ -117,17 +195,12 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
 
     //lay->addWidget(caption);
     lay->addLayout(layButtons);
-    lay->addWidget(listBox);
+    lay->addWidget(layerView);
 
-    connect(listBox, SIGNAL(highlighted(const QString&)),
-            this, SLOT(slotActivated(const QString&)));
+    connect(layerView, SIGNAL(clicked(QModelIndex)),
+            this, SLOT(slotActivated(QModelIndex)));
 
-    //connect(listBox, SIGNAL(doubleClicked(QListBoxItem*)),
-    //        actionHandler, SLOT(slotLayersToggleView()));
-
-    connect(listBox, SIGNAL(mouseButtonClicked(int, Q3ListBoxItem*, 
-        const QPoint&)),
-        this, SLOT(slotMouseButtonClicked(int, Q3ListBoxItem*, const QPoint&)));
+    connect(layerView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotActivated(QModelIndex)));
 }
 
 
@@ -136,9 +209,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
  * Destructor
  */
 QG_LayerWidget::~QG_LayerWidget() {
-    delete listBox;
-    //delete pxmVisible;
-    //delete pxmHidden;
+    delete layerView;
 }
 
 
@@ -164,7 +235,7 @@ void QG_LayerWidget::setLayerList(RS_LayerList* layerList, bool showByBlock) {
 void QG_LayerWidget::update() {
     RS_DEBUG->print("QG_LayerWidget::update() begin");
 
-    int yPos = listBox->contentsY();
+    int yPos = layerView->verticalScrollBar()->value();
 
     RS_Layer* activeLayer;
     if (layerList!=NULL) {
@@ -172,153 +243,79 @@ void QG_LayerWidget::update() {
     } else {
         activeLayer = NULL;
     }
-	
-    RS_DEBUG->print("QG_LayerWidget::update() clearing listBox");
 
-    listBox->clear();
+    layerModel->setLayerList(layerList);
 
     if (layerList==NULL) {
         RS_DEBUG->print("QG_LayerWidget::update() abort");
         return;
     }
 	
-    RS_DEBUG->print("QG_LayerWidget::update() filling in layers");
-
-    for (uint i=0; i<layerList->count(); ++i) {
-        RS_Layer* layer = layerList->at(i);
-
-        // hide layer "ByBlock"?
-        if (showByBlock || layer->getName()!="ByBlock") {
-            QPixmap* pm = NULL;
-            
-            if (!layer->isFrozen()) {
-                if (!layer->isLocked()) {
-                    pm = &pxmLayerStatus10;
-                }
-                else {
-                    pm = &pxmLayerStatus11;
-                }
-            } else {
-                if (!layer->isLocked()) {
-                    pm = &pxmLayerStatus00;
-                }
-                else {
-                    pm = &pxmLayerStatus01;
-                }
-            }
-
-            if (pm!=NULL) {
-                listBox->insertItem(*pm, layer->getName());
-            }
-        }
-    }
-	
-    RS_DEBUG->print("QG_LayerWidget::update() sorting");
-
-    listBox->sort();
-	
     RS_DEBUG->print("QG_LayerWidget::update() reactivating current layer");
 
-	RS_Layer* l = lastLayer;
-    highlightLayer(activeLayer);
-	lastLayer = l;
-    listBox->setContentsPos(0, yPos);
+    RS_Layer* l = lastLayer;
+    activateLayer(activeLayer);
+    lastLayer = l;
+    layerView->resizeRowsToContents();
+    layerView->verticalScrollBar()->setValue(yPos);
 
     RS_DEBUG->print("QG_LayerWidget::update() end");
 }
 
 
 /**
- * Highlights (activates) the given layer and makes it 
- * the active layer in the layerlist.
+ * Activates the given layer and makes it the active
+ * layer in the layerlist.
  */
-void QG_LayerWidget::highlightLayer(RS_Layer* layer) {
-    RS_DEBUG->print("QG_LayerWidget::highlightLayer() begin");
+void QG_LayerWidget::activateLayer(RS_Layer* layer) {
+    RS_DEBUG->print("QG_LayerWidget::activateLayer() begin");
 
     if (layer==NULL || layerList==NULL) {
-        RS_DEBUG->print("QG_LayerWidget::highlightLayer() abort");
         return;
     }
 
-    QString name = layer->getName();
-	highlightLayer(name);
+    layerList->activate(layer);
 
-    RS_DEBUG->print("QG_LayerWidget::highlightLayer() end");
+    layerList->activate(layer);
+    QModelIndex idx = layerModel->getIndex (layer);
+    layerView->setCurrentIndex ( idx );
+
+    RS_DEBUG->print("QG_LayerWidget::activateLayer() end");
 }
-
-
-
-/**
- * Highlights (activates) the given layer and makes it 
- * the active layer in the layerlist.
- */
-void QG_LayerWidget::highlightLayer(const QString& name) {
-    RS_DEBUG->print("QG_LayerWidget::highlightLayer(name) begin");
-
-    if (layerList==NULL) {
-        RS_DEBUG->print("QG_LayerWidget::highlightLayer(name) abort");
-        return;
-    }
-
-    layerList->activate(name);
-
-    for (int i=0; i<(int)listBox->count(); ++i) {
-        if (listBox->text(i)==name) {
-            listBox->setCurrentItem(i);
-            break;
-        }
-    }
-
-    RS_DEBUG->print("QG_LayerWidget::highlightLayer(name) end");
-}
-
-
 
 /**
  * Called when the user activates (highlights) a layer.
  */
-void QG_LayerWidget::slotActivated(const QString& layerName) {
-    RS_DEBUG->print("QG_LayerWidget::slotActivated(): %s", layerName.toLatin1().data());
-
-    if (layerList==NULL) {
+void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerName*/) {
+    if (!layerIdx.isValid() || layerList==NULL) {
         return;
     }
 
-	lastLayer = layerList->getActive();
-	
-    layerList->activate(layerName);
-}
+    RS_Layer * lay = layerModel->getLayer( layerIdx.row() );
+    if (lay == 0)
+        return;
 
+    if (layerIdx.column() == QG_LayerModel::NAME) {
+        lastLayer = layerList->getActive();
+        layerList->activate(lay);
+        lastLayer = layerList->getActive();
+        layerList->activate(lay);
+        return;
+    }
 
-/**
- * Called for every mouse click.
- */
-void QG_LayerWidget::slotMouseButtonClicked(int /*button*/, 
-   Q3ListBoxItem* item, const QPoint& pos) {
-   
-    RS_DEBUG->print("QG_LayerWidget::slotMouseButtonClicked()");
-
-    QPoint p = mapFromGlobal(pos);
-	
-	// only change state / no activation
-	RS_Layer* l = lastLayer;
-	
-    if (p.x()<23) {
+    RS_Layer* l = layerList->getActive();
+    layerList->activate(lay);
+    if (layerIdx.column() == QG_LayerModel::VISIBLE) {
         actionHandler->slotLayersToggleView();
-		highlightLayer(l);
     }
-    else if (p.x()<34) {
+    if (layerIdx.column() == QG_LayerModel::LOCKED) {
         actionHandler->slotLayersToggleLock();
-		highlightLayer(l);
     }
-	else {
-		if (item!=NULL && layerList!=NULL) {
-			lastLayer = layerList->find(item->text());
-		}
-	}
+    activateLayer(l);
+
+
+
 }
-
-
 
 /**
  * Shows a context menu for the layer widget. Launched with a right click.
@@ -333,7 +330,6 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
         palette.setColor(caption->foregroundRole(), RS_Color(255,255,255));
         caption->setPalette(palette);
         caption->setAlignment( Qt::AlignCenter );
-// RVT_PORT        contextMenu->insertItem( caption );
         contextMenu->addAction( tr("&Defreeze all Layers"), actionHandler,
                                  SLOT(slotLayersDefreezeAll()), 0);
         contextMenu->addAction( tr("&Freeze all Layers"), actionHandler,
