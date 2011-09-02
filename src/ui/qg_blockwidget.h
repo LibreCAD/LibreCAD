@@ -2,8 +2,8 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2011 Rallaz (rallazz@gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
 ** This program is free software; you can redistribute it and/or modify
@@ -29,13 +29,43 @@
 
 #include <QWidget>
 #include <QIcon>
+#include <QAbstractTableModel>
 
 #include "rs_blocklistlistener.h"
 
 class QG_ActionHandler;
-class QListView;
-class Q3ListBoxItem;
-class Q3ListBox;
+class QTableView;
+
+
+/**
+ * Implementation of a model to use in QG_BlockWidget
+ */
+class QG_BlockModel: public QAbstractTableModel {
+public:
+    enum {
+        VISIBLE,
+        NAME,
+        LAST
+    };
+    QG_BlockModel(QObject * parent = 0);
+    ~QG_BlockModel();
+    Qt::ItemFlags flags ( const QModelIndex & /*index*/ ) {
+            return Qt::ItemIsSelectable|Qt::ItemIsEnabled;}
+    int columnCount(const QModelIndex &/*parent*/) const {return LAST;}
+    int rowCount ( const QModelIndex & parent = QModelIndex() ) const;
+    QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
+    QModelIndex parent ( const QModelIndex & index ) const;
+    QModelIndex index ( int row, int column, const QModelIndex & parent = QModelIndex() ) const;
+    void setBlockList(RS_BlockList* bl);
+    RS_Block *getBlock( int row );
+    QModelIndex getIndex (RS_Block * blk);
+
+private:
+    QList<RS_Block*> listBlock;
+    QIcon blockVisible;
+    QIcon blockHidden;
+};
+
 
 /**
  * This is the Qt implementation of a widget which can view a 
@@ -59,9 +89,8 @@ public:
     }
 
     void update();
-    void highlightBlock(RS_Block* block);
+    void activateBlock(RS_Block* block);
 
-    //virtual void blockActivated(RS_Block *) {}
     virtual void blockAdded(RS_Block*) {
         update();
     }
@@ -79,10 +108,7 @@ signals:
 	void escape();
 
 public slots:
-    //void slotToggleView(QListBoxItem* item);
-    void slotActivated(const QString& blockName);
-	void slotMouseButtonClicked(int button, Q3ListBoxItem* item, 
-		const QPoint& pos);
+    void slotActivated(QModelIndex blockIdx);
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e);
@@ -90,18 +116,10 @@ protected:
 
 private:
     RS_BlockList* blockList;
-//RLZ    QListView* listBox;
-    Q3ListBox* listBox;
-	RS_Block* lastBlock;
-    QIcon pxmVisible;
-    QIcon pxmHidden;
-    QIcon pxmAdd;
-    QIcon pxmRemove;
-    QIcon pxmAttributes;
-    QIcon pxmEdit;
-    QIcon pxmInsert;
-    QIcon pxmDefreezeAll;
-    QIcon pxmFreezeAll;
+    QTableView* blockView;
+    QG_BlockModel *blockModel;
+    RS_Block* lastBlock;
+
     QG_ActionHandler* actionHandler;
 };
 
