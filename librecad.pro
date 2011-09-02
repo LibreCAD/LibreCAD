@@ -10,7 +10,7 @@ DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 
 
 # Add qt3support
-QT += qt3support
+#QT += qt3support
 CONFIG += qt \
     warn_on \
     link_prl \
@@ -535,30 +535,6 @@ SOURCES += src/actions/rs_actionblocksadd.cpp \
 
 RESOURCES += res/actions/actions.qrc
 
-IMAGES += res/actions/configure.png \
-    res/actions/editcopy2.png \
-    res/actions/editcut2.png \
-    res/actions/editpaste2.png \
-    res/actions/exit.png \
-    res/actions/fileclose.png \
-    res/actions/filenew.png \
-    res/actions/fileopen2.png \
-    res/actions/fileprint.png \
-    res/actions/fileprintpreview.png \
-    res/actions/filesave2.png \
-    res/actions/filesaveas.png \
-    res/actions/redo2.png \
-    res/actions/undo2.png \
-    res/actions/viewgrid.png \
-    res/actions/viewdraft.png \
-    res/actions/zoomauto.png \
-    res/actions/zoomin.png \
-    res/actions/zoomout.png \
-    res/actions/zoompan.png \
-    res/actions/zoomprevious.png \
-    res/actions/zoomredraw.png \
-    res/actions/zoomwindow.png
-
 # ################################################################################
 # UI
 HEADERS += src/ui/qg_actionfactory.h \
@@ -833,11 +809,6 @@ SOURCES += \
     src/main/helpbrowser.cpp \
     src/main/main.cpp
 
-IMAGES += res/main/contents.png \
-    res/main/document.png \
-    res/main/editclear.png \
-    res/main/librecad16.png \
-    res/main/librecad.png
 RESOURCES += res/main/main.qrc
 
 # ################################################################################
