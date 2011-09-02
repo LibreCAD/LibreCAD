@@ -91,7 +91,8 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     addItem(QIcon(":/ui/color04.png"), tr("Cyan"));
     addItem(QIcon(":/ui/color05.png"), tr("Blue"));
     addItem(QIcon(":/ui/color06.png"), tr("Magenta"));
-    addItem(QIcon(":/ui/color07.png"), tr("Black / White"));
+    QString blackWhite(tr("Black / White"));
+    addItem(QIcon(":/ui/color07.png"), blackWhite);
     addItem(QIcon(":/ui/color08.png"), tr("Gray"));
     addItem(QIcon(":/ui/color09.png"), tr("Light Gray"));
     addItem(QIcon(":/ui/colorxx.png"), tr("Others.."));
@@ -105,7 +106,7 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     else if (showByLayer) {
         setCurrentIndex(0);
     } else {
-        setCurrentIndex(6);
+        setCurrentIndex(findText(blackWhite));
     }
 
     slotColorChanged(currentIndex());
@@ -117,31 +118,35 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
 void QG_ColorBox::setColor(const RS_Color& color) {
     currentColor = color;
 	
+    RS_Color c0(color.stripFlags());
+int cIndex((int)showByLayer*2 + (int)showUnchanged);
+
     if (color.isByLayer() && showByLayer) {
-        setCurrentIndex(0);
+        cIndex=0;
     } else if (color.isByBlock() && showByLayer) {
-        setCurrentIndex(1);
-    } else if (color==QColor(Qt::red)) {
-        setCurrentIndex(0+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==QColor(Qt::yellow)) {
-        setCurrentIndex(1+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==QColor(Qt::green)) {
-        setCurrentIndex(2+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==QColor(Qt::cyan)) {
-        setCurrentIndex(3+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==QColor(Qt::blue)) {
-        setCurrentIndex(4+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==QColor(Qt::magenta)) {
-        setCurrentIndex(5+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==QColor(Qt::white) || color==QColor(Qt::black)) {
-        setCurrentIndex(6+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==QColor(127,127,127)) {
-        setCurrentIndex(7+(int)showByLayer*2 + (int)showUnchanged);
-    } else if (color==QColor(191,191,191)) {
-        setCurrentIndex(8+(int)showByLayer*2 + (int)showUnchanged);
+        cIndex=1;
+    } else if (c0==RS_Color(QColor(Qt::red))) {
+        cIndex += 0;
+    } else if (c0==RS_Color(QColor(Qt::yellow))) {
+        cIndex += 1;
+    } else if (c0==RS_Color(QColor(Qt::green))) {
+        cIndex += 2;
+    } else if (c0==RS_Color(QColor(Qt::cyan))) {
+        cIndex += 3;
+    } else if (c0==RS_Color(QColor(Qt::blue))) {
+        cIndex += 4;
+    } else if (c0==RS_Color(QColor(Qt::magenta))) {
+        cIndex += 5;
+    } else if (c0==RS_Color(QColor(Qt::white)) || c0==RS_Color(QColor(Qt::black))) {
+        cIndex += 6;
+    } else if (c0==RS_Color(QColor(127,127,127))) {
+        cIndex += 7;
+    } else if (c0==RS_Color(QColor(191,191,191))) {
+        cIndex += 8;
     } else {
-        setCurrentIndex(9+(int)showByLayer*2 + (int)showUnchanged);
+        cIndex += 9;
     }
+    setCurrentIndex(cIndex);
 
     if (currentIndex()!=9+(int)showByLayer*2 + (int)showUnchanged) {
         slotColorChanged(currentIndex());
