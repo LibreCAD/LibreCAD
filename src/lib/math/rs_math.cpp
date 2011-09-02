@@ -124,8 +124,9 @@ bool RS_Math::isAngleBetween(double a,
         a1 = a2;
         a2 = tmp;
     }
-    if ( correctAngle(a2 -a1) >= correctAngle(a - a1) + RS_TOLERANCE_ANGLE &&
-            correctAngle(a - a1) >= RS_TOLERANCE_ANGLE ) {
+    if ( ( correctAngle(a2 -a1) >= correctAngle(a - a1) + RS_TOLERANCE_ANGLE &&
+            correctAngle(a - a1) >= RS_TOLERANCE_ANGLE ) 
+                    || isSameDirection(a1,a2,RS_TOLERANCE_ANGLE) ) { //if a1 and a2 overlap, take the range as whole 2 pi
         return true;
     } else {
         return false;
