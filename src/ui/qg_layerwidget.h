@@ -2,8 +2,8 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2011 Rallaz (rallazz@gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
 ** This program is free software; you can redistribute it and/or modify
@@ -27,18 +27,48 @@
 #ifndef QG_LAYERWIDGET_H
 #define QG_LAYERWIDGET_H
 
-#include <qwidget.h>
-#include <QPixmap>
-#include <QContextMenuEvent>
-#include <QKeyEvent>
+#include <QWidget>
+#include <QIcon>
+#include <QAbstractTableModel>
 
-#include "rs_layerlist.h"
 #include "rs_layerlistlistener.h"
+#include "rs_layerlist.h"
 
-#include "qg_actionhandler.h"
+class QG_ActionHandler;
+class QTableView;
 
-class Q3ListBox;
-class Q3ListBoxItem;
+/**
+ * Implementation of a model to use in QG_LayerWidget
+ */
+class QG_LayerModel: public QAbstractTableModel {
+public:
+    enum {
+        VISIBLE,
+        LOCKED,
+        NAME,
+        LAST
+    };
+    QG_LayerModel(QObject * parent = 0);
+    ~QG_LayerModel();
+    Qt::ItemFlags flags ( const QModelIndex & /*index*/ ) {
+            return Qt::ItemIsSelectable|Qt::ItemIsEnabled;}
+    int columnCount(const QModelIndex &/*parent*/) const {return LAST;}
+    int rowCount ( const QModelIndex & parent = QModelIndex() ) const;
+    QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
+    QModelIndex parent ( const QModelIndex & index ) const;
+    QModelIndex index ( int row, int column, const QModelIndex & parent = QModelIndex() ) const;
+    void setLayerList(RS_LayerList* ll);
+    RS_Layer *getLayer( int row );
+    QModelIndex getIndex (RS_Layer * lay);
+
+private:
+    QList<RS_Layer*> listLayer;
+    QIcon layerVisible;
+    QIcon layerHidden;
+    QIcon layerDefreeze;
+    QIcon layerFreeze;
+};
+
 
 /**
  * This is the Qt implementation of a widget which can view a 
@@ -55,22 +85,21 @@ public:
     void setLayerList(RS_LayerList* layerList, bool showByBlock);
 
     void update();
-    void highlightLayer(RS_Layer* layer);
-    void highlightLayer(const QString& name);
+    void activateLayer(RS_Layer* layer);
 
     virtual void layerActivated(RS_Layer* layer) {
-        highlightLayer(layer);
+        activateLayer(layer);
     }
     virtual void layerAdded(RS_Layer* layer) {
         update();
-        highlightLayer(layer);
+        activateLayer(layer);
     }
     virtual void layerEdited(RS_Layer*) {
         update();
     }
-    virtual void layerRemoved(RS_Layer*) {
+   virtual void layerRemoved(RS_Layer*) {
         update();
-        highlightLayer(layerList->at(0));
+        activateLayer(layerList->at(0));
     }
     virtual void layerToggled(RS_Layer*) {
         update();
@@ -80,30 +109,18 @@ signals:
 	void escape();
 
 public slots:
-    void slotActivated(const QString& layerName);
-	void slotMouseButtonClicked(int button, Q3ListBoxItem* item, 
-		const QPoint& pos);
+    void slotActivated(QModelIndex layerIdx);
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e);
-	virtual void keyPressEvent(QKeyEvent* e);
+    virtual void keyPressEvent(QKeyEvent* e);
 
 private:
     RS_LayerList* layerList;
     bool showByBlock;
-    Q3ListBox* listBox;
-	RS_Layer* lastLayer;
-    QPixmap pxmLayerStatus00;
-    QPixmap pxmLayerStatus01;
-    QPixmap pxmLayerStatus10;
-    QPixmap pxmLayerStatus11;
-    QPixmap pxmVisible;
-    QPixmap pxmHidden;
-    QPixmap pxmAdd;
-    QPixmap pxmRemove;
-    QPixmap pxmEdit;
-    QPixmap pxmDefreezeAll;
-    QPixmap pxmFreezeAll;
+    QTableView* layerView;
+    QG_LayerModel *layerModel;
+    RS_Layer* lastLayer;
     QG_ActionHandler* actionHandler;
 };
 
