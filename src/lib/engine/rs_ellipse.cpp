@@ -570,17 +570,17 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
     if( ! trimSol.hasValid() ) return (RS_Vector(false));
     if( trimSol.getNumber() == 1 ) return (trimSol.get(0));
     double am=getEllipseAngle(trimCoord);
-    double ias[trimSol.getNumber()];
+    QList<double> ias;
     double ia(0.),ia2(0.);
     RS_Vector is,is2;
     for(int ii=0; ii<trimSol.getNumber(); ii++) { //find closest according ellipse angle
-        ias[ii]=getEllipseAngle(trimSol.get(ii));
+        ias.append(getEllipseAngle(trimSol.get(ii)));
         if( !ii ||  fabs( remainder( ias[ii] - am, 2*M_PI)) < fabs( remainder( ia -am, 2*M_PI)) ) {
             ia = ias[ii];
             is = trimSol.get(ii);
         }
     }
-    std::sort(ias,ias+trimSol.getNumber());
+    qSort(ias.begin(),ias.end());
     for(int ii=0; ii<trimSol.getNumber(); ii++) { //find segment to enclude trimCoord
         if ( ! RS_Math::isSameDirection(ia,ias[ii],RS_TOLERANCE)) continue;
         if( RS_Math::isAngleBetween(am,ias[(ii+trimSol.getNumber()-1)% trimSol.getNumber()],ia,false))  {

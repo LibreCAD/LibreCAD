@@ -29,7 +29,6 @@
 #define RS_VECTOR_H
 
 #include <iostream>
-#include <algorithm>
 
 #include "rs.h"
 
