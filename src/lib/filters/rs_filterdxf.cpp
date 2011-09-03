@@ -200,12 +200,12 @@ void RS_FilterDXF::addBlock(const DL_BlockData& data) {
 
 
     // Prevent special blocks (paper_space, model_space) from being added:
-    if (QString(QString::fromUtf8(data.name.c_str())).lower()!="*paper_space0" &&
-            QString(QString::fromUtf8(data.name.c_str())).lower()!="*paper_space" &&
-            QString(QString::fromUtf8(data.name.c_str())).lower()!="*model_space" &&
-            QString(QString::fromUtf8(data.name.c_str())).lower()!="$paper_space0" &&
-            QString(QString::fromUtf8(data.name.c_str())).lower()!="$paper_space" &&
-            QString(QString::fromUtf8(data.name.c_str())).lower()!="$model_space") {
+    if (QString(QString::fromUtf8(data.name.c_str())).toLower()!="*paper_space0" &&
+            QString(QString::fromUtf8(data.name.c_str())).toLower()!="*paper_space" &&
+            QString(QString::fromUtf8(data.name.c_str())).toLower()!="*model_space" &&
+            QString(QString::fromUtf8(data.name.c_str())).toLower()!="$paper_space0" &&
+            QString(QString::fromUtf8(data.name.c_str())).toLower()!="$paper_space" &&
+            QString(QString::fromUtf8(data.name.c_str())).toLower()!="$model_space") {
 
 #ifndef RS_NO_COMPLEX_ENTITIES
         if (QString(QString::fromUtf8(QString::fromUtf8(data.name.c_str()))).startsWith("__CE")) {
@@ -483,7 +483,7 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
     RS2::TextDrawingDirection dir;
     RS2::TextLineSpacingStyle lss;
     QString sty = QString::fromUtf8(data.style.c_str());
-    sty=sty.lower();
+    sty=sty.toLower();
 
     if (data.attachmentPoint<=3) {
         valign=RS2::VAlignTop;
