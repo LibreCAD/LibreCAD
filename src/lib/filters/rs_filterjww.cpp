@@ -525,7 +525,7 @@ void RS_FilterJWW::addMText(const DL_MTextData& data) {
 	}
 
     mtext+=data.text.c_str();
-    mtext = toNativeString(mtext, getDXFEncoding());
+    mtext = toNativeString((char*)mtext.data(), getDXFEncoding());
 
 	// use default style for the drawing:
 	if (sty.isEmpty()) {

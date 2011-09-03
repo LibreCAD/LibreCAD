@@ -516,7 +516,7 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
     }
 
     mtext+=data.text.c_str();
-    mtext = toNativeString(mtext, getDXFEncoding());
+    mtext = toNativeString((char*)mtext.data(), getDXFEncoding());
 
     // use default style for the drawing:
     if (sty.isEmpty()) {
@@ -1461,7 +1461,7 @@ void RS_FilterDXF::writeLayer(DL_WriterA& dw, RS_Layer* l) {
 
     dxf.writeLayer(
         dw,
-        DL_LayerData(toDxfString(l->getName()).toLocal8Bit().data(),  //RLZ: verify layername whit locales
+        DL_LayerData(toDxfString(l->getName()).toStdString(),  //RLZ: verify layername whit locales
                      l->isFrozen() + (l->isLocked()<<2)),
         DL_Attributes(std::string(""),
                       colorToNumber(l->getPen().getColor()),
