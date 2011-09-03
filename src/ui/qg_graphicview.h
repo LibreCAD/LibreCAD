@@ -27,28 +27,15 @@
 #ifndef QG_GRAPHICVIEW_H
 #define QG_GRAPHICVIEW_H
 
-#include <qwidget.h>
-#include <qlabel.h>
-#include <qscrollbar.h>
-#include <qpixmap.h>
-#include <qlayout.h>
-#include <QResizeEvent>
-#include <QWheelEvent>
-#include <QEvent>
-#include <QMouseEvent>
-#include <QTabletEvent>
-#include <QKeyEvent>
-#include <QPaintEvent>
-#include <QFocusEvent>
+#include <QWidget>
 
 #include "rs_graphicview.h"
 #include "rs_layerlistlistener.h"
 #include "rs_blocklistlistener.h"
-#include "rs_painter.h"
 
-#include "qg_scrollbar.h"
-
-class Q3GridLayout;
+class QGridLayout;
+class QLabel;
+class QG_ScrollBar;
 
 /**
  * This is the Qt implementation of a widget which can view a 
@@ -106,8 +93,6 @@ protected:
     void paintEvent(QPaintEvent *);
     virtual void resizeEvent(QResizeEvent* e);
 
-//RLZ	void previewUrl(const Q3Url &u);
-
 private slots:
     void slotHScrolled(int value);
     void slotVScrolled(int value);
@@ -118,9 +103,9 @@ protected:
     //! Vertical scrollbar.
     QG_ScrollBar* vScrollBar;
     //! Layout used to fit in the view and the scrollbars.
-    Q3GridLayout* layout;
+    QGridLayout* layout;
 	//! Label for grid spacing.
-	QLabel* gridStatus;
+    QLabel* gridStatus;
     //! CAD mouse cursor
     QCursor* curCad;
     //! Delete mouse cursor
