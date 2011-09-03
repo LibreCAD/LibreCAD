@@ -2961,7 +2961,7 @@ QString RS_FilterDXF::toNativeString(const char* data, const QString& encoding) 
      *	  the string through a textcoder.
      *	--------------------------------------------------------------------- */
     if (!res.contains("\\U+")) {
-        QTextCodec *codec = QTextCodec::codecForName(encoding);
+        QTextCodec *codec = QTextCodec::codecForName(encoding.toAscii());
         if (codec)
             res = codec->toUnicode(data);
     }
