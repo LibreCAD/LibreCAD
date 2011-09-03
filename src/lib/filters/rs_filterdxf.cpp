@@ -208,7 +208,7 @@ void RS_FilterDXF::addBlock(const DL_BlockData& data) {
             QString(QString::fromUtf8(data.name.c_str())).toLower()!="$model_space") {
 
 #ifndef RS_NO_COMPLEX_ENTITIES
-        if (QString(QString::fromUtf8(QString::fromUtf8(data.name.c_str()))).startsWith("__CE")) {
+        if (QString(QString::fromUtf8(data.name.c_str())).startsWith("__CE")) {
             RS_EntityContainer* ec = new RS_EntityContainer();
             ec->setLayer("0");
             currentContainer = ec;
@@ -1461,7 +1461,7 @@ void RS_FilterDXF::writeLayer(DL_WriterA& dw, RS_Layer* l) {
 
     dxf.writeLayer(
         dw,
-        DL_LayerData((const char*)toDxfString(l->getName()),
+        DL_LayerData(toDxfString(l->getName()).toLocal8Bit().data(),  //RLZ: verify layername whit locales
                      l->isFrozen() + (l->isLocked()<<2)),
         DL_Attributes(std::string(""),
                       colorToNumber(l->getPen().getColor()),
