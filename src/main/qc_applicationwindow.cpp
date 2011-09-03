@@ -63,6 +63,7 @@
 #include "qg_cadtoolbar.h"
 #include "qg_actionfactory.h"
 #include "qg_blockwidget.h"
+#include "qg_layerwidget.h"
 #include "qg_librarywidget.h"
 #include "qg_commandwidget.h"
 
