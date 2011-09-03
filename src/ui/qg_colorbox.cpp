@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -35,25 +35,25 @@
  * to use this constructor.
  */
 QG_ColorBox::QG_ColorBox(QWidget* parent, const char* name)
-        : QComboBox(parent) {
+    : QComboBox(parent) {
 
     setObjectName(name);
     setEditable ( false );
     showByLayer = false;
     showUnchanged = false;
-	unchanged = false;
+    unchanged = false;
 }
 
 /**
- * Constructor that calls init and provides a fully functional 
+ * Constructor that calls init and provides a fully functional
  * combobox for choosing colors.
  *
  * @param showByLayer true: Show attribute ByLayer, ByBlock.
  */
-QG_ColorBox::QG_ColorBox(bool showByLayer, bool showUnchanged, 
-	QWidget* parent, const char* name)
-        : QComboBox(parent) {
-	
+QG_ColorBox::QG_ColorBox(bool showByLayer, bool showUnchanged,
+                         QWidget* parent, const char* name)
+    : QComboBox(parent) {
+
     setObjectName(name);
     setEditable ( false );
     unchanged = false;
@@ -78,35 +78,45 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     this->showUnchanged = showUnchanged;
 
     if (showUnchanged) {
-                addItem(QIcon(":/ui/color00.png"), tr("Unchanged"));
-	}
+        addItem(QIcon(":/ui/color00.png"), tr("Unchanged"));
+    }
     if (showByLayer) {
         addItem(QIcon(":/ui/color00.png"), tr("By Layer"));
         addItem(QIcon(":/ui/color00.png"), tr("By Block"));
     }
-
-    addItem(QIcon(":/ui/color01.png"), tr("Red"));
-    addItem(QIcon(":/ui/color02.png"), tr("Yellow"));
-    addItem(QIcon(":/ui/color03.png"), tr("Green"));
-    addItem(QIcon(":/ui/color04.png"), tr("Cyan"));
-    addItem(QIcon(":/ui/color05.png"), tr("Blue"));
-    addItem(QIcon(":/ui/color06.png"), tr("Magenta"));
-    QString blackWhite(tr("Black / White"));
-    addItem(QIcon(":/ui/color07.png"), blackWhite);
-    addItem(QIcon(":/ui/color08.png"), tr("Gray"));
-    addItem(QIcon(":/ui/color09.png"), tr("Light Gray"));
+//static colors starts here
+    //addColor(QIcon(":/ui/color01.png"), red,Qt::red);
+    QString red(tr("Red"));
+    addColor(Qt::red,red);
+    colorIndexStart=findText(red); // keep the starting point of static colors
+    addColor(Qt::darkRed,tr("Dark Red"));
+    addColor(Qt::yellow,tr("Yellow"));
+    addColor(Qt::darkYellow,tr("Dark Yellow"));
+    addColor(Qt::green,tr("Green"));
+    addColor(Qt::darkGreen,tr("Dark Green"));
+    addColor(Qt::cyan,tr("Cyan"));
+    addColor(Qt::darkCyan,tr("Dark Cyan"));
+    addColor(Qt::blue,tr("Blue"));
+    addColor(Qt::darkBlue,tr("Dark Blue"));
+    addColor(Qt::magenta,tr("Magenta"));
+    addColor(Qt::darkMagenta,tr("Dark Magenta"));
+    addItem(QIcon(":/ui/color07.png"), tr("Black / White"),Qt::black);
+    //addColor(Qt::black,tr("Black"));
+    //addColor(Qt::white,tr("White"));
+    addColor(Qt::gray,tr("Gray"));
+    addColor(Qt::darkGray,tr("Dark Gray"));
+    addColor(Qt::lightGray,tr("Light Gray"));
+//static colors ends here
+    // last item is reserved for "Others.." to trigger color picker
     addItem(QIcon(":/ui/colorxx.png"), tr("Others.."));
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotColorChanged(int)));
 
-	if (showUnchanged) {
-        setCurrentIndex(0);
-	}
-    else if (showByLayer) {
+    if (showUnchanged || showByLayer ) {
         setCurrentIndex(0);
     } else {
-        setCurrentIndex(findText(blackWhite));
+        setCurrentIndex(findData(Qt::black)); //default to Qt::black
     }
 
     slotColorChanged(currentIndex());
@@ -117,38 +127,60 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
  */
 void QG_ColorBox::setColor(const RS_Color& color) {
     currentColor = color;
-	
-    RS_Color c0(color.stripFlags());
-int cIndex((int)showByLayer*2 + (int)showUnchanged);
+
+    int cIndex;
 
     if (color.isByLayer() && showByLayer) {
         cIndex=0;
     } else if (color.isByBlock() && showByLayer) {
         cIndex=1;
-    } else if (c0==RS_Color(QColor(Qt::red))) {
-        cIndex += 0;
-    } else if (c0==RS_Color(QColor(Qt::yellow))) {
-        cIndex += 1;
-    } else if (c0==RS_Color(QColor(Qt::green))) {
-        cIndex += 2;
-    } else if (c0==RS_Color(QColor(Qt::cyan))) {
-        cIndex += 3;
-    } else if (c0==RS_Color(QColor(Qt::blue))) {
-        cIndex += 4;
-    } else if (c0==RS_Color(QColor(Qt::magenta))) {
-        cIndex += 5;
-    } else if (c0==RS_Color(QColor(Qt::white)) || c0==RS_Color(QColor(Qt::black))) {
-        cIndex += 6;
-    } else if (c0==RS_Color(QColor(127,127,127))) {
-        cIndex += 7;
-    } else if (c0==RS_Color(QColor(191,191,191))) {
-        cIndex += 8;
     } else {
-        cIndex += 9;
+        cIndex=findData(color.toQColor());
+        if(cIndex == -1 ) {
+            cIndex=count() - 1; // the last item is "Others.."
+        } else {
+            if ( itemData(cIndex) == QVariant::Invalid) cIndex=count() - 1; // invalid input color, set to "Others..", setting to Black/White is another option
+        }
     }
     setCurrentIndex(cIndex);
 
-    if (currentIndex()!=9+(int)showByLayer*2 + (int)showUnchanged) {
+    if (currentIndex()!= count() -1 ) {
+        slotColorChanged(currentIndex());
+    }
+}
+
+/**
+ * generate icon from color, then add to color box
+ */
+void QG_ColorBox::addColor(Qt::GlobalColor color, QString text)
+{
+    QPixmap pixmap(":/ui/color00.png");
+    int w = pixmap.width();
+    int h = pixmap.height();
+    QPainter painter(&pixmap);
+    painter.fillRect(1, 1, w-2, h-2, color);
+    addItem(QIcon(pixmap),text,color);
+}
+
+/**
+ * Sets the color of the pixmap next to the "By Layer" item
+ * to the given color.
+ */
+void QG_ColorBox::setLayerColor(const RS_Color& color) {
+    if (! showByLayer ) return;
+    QPixmap pixmap;
+    pixmap = QPixmap(":/ui/color00.png");
+    int w = pixmap.width();
+    int h = pixmap.height();
+    QPainter painter(&pixmap);
+    painter.fillRect(1, 1, w-2, h-2, color);
+    painter.end();
+
+    setItemIcon(0, QIcon(pixmap));
+    setItemText(0, tr("By Layer"));
+
+    // needed for the first time a layer is added:
+    if (currentIndex()!= count() -1 ) {
         slotColorChanged(currentIndex());
     }
 }
@@ -156,52 +188,21 @@ int cIndex((int)showByLayer*2 + (int)showUnchanged);
 
 
 /**
- * Sets the color of the pixmap next to the "By Layer" item
- * to the given color.
- */
-void QG_ColorBox::setLayerColor(const RS_Color& color) {
-    if (showByLayer) {
-        QPixmap pixmap;
-        if (color==Qt::black || color==Qt::white) {
-            pixmap = QPixmap(":/ui/color07.png");
-        } else {
-            pixmap = QPixmap(":/ui/color00.png");
-            int w = pixmap.width();
-            int h = pixmap.height();
-            QPainter painter(&pixmap);
-            painter.fillRect(1, 1, w-2, h-2, color);
-            painter.end();
-        }
-
-        setItemIcon(0, QIcon(pixmap));
-        setItemText(0, tr("By Layer"));
-
-        // needed for the first time a layer is added:
-        if (currentIndex()!=9) {
-            slotColorChanged(currentIndex());
-        }
-    }
-}
-
-
-
-/**
- * Called when the color has changed. This method 
+ * Called when the color has changed. This method
  * sets the current color to the value chosen or even
  * offers a dialog to the user that allows him/ her to
  * choose an individual color.
  */
 void QG_ColorBox::slotColorChanged(int index) {
     currentColor.resetFlags();
-	
     if (showUnchanged) {
-		if (index==0) {
-			unchanged = true;
-		}
-		else {
-			unchanged = false;
-		}
-	}
+        if (index==0) {
+            unchanged = true;
+        }
+        else {
+            unchanged = false;
+        }
+    }
 
     if (showByLayer) {
         switch (index-(int)showUnchanged) {
@@ -215,40 +216,17 @@ void QG_ColorBox::slotColorChanged(int index) {
             break;
         }
     }
-
-    switch (index-(int)showByLayer*2-(int)showUnchanged) {
-    case 0:
-        currentColor.setRgb(255, 0, 0);
-        break;
-    case 1:
-        currentColor.setRgb(255, 255, 0);
-        break;
-    case 2:
-        currentColor.setRgb(0, 255, 0);
-        break;
-    case 3:
-        currentColor.setRgb(0, 255, 255);
-        break;
-    case 4:
-        currentColor.setRgb(0, 0, 255);
-        break;
-    case 5:
-        currentColor.setRgb(255, 0, 255);
-        break;
-    case 6:
-        currentColor.setRgb(0, 0, 0);
-        break;
-    case 7:
-        currentColor.setRgb(127, 127, 127);
-        break;
-    case 8:
-        currentColor.setRgb(191, 191, 191);
-        break;
-    case 9:
-        currentColor = QColorDialog::getColor(currentColor, this);
-        break;
-    default:
-        break;
+    if ( index >= colorIndexStart ) {
+        if(index < count() -1 ) {
+                QVariant q0=itemData(index);
+                if(q0 != QVariant::Invalid ) {
+            currentColor=itemData(index).value<QColor>();
+                } else {
+            currentColor=Qt::black; //default to black color
+                }
+        } else { // color picker for "Others.."
+            currentColor = QColorDialog::getColor(currentColor, this);
+        }
     }
 
     //printf("Current color is (%d): %s\n",

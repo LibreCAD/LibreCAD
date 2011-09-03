@@ -47,6 +47,7 @@ public:
         return currentColor;
     }
 
+    void addColor(Qt::GlobalColor color, QString text);
     void setColor(const RS_Color& color);
     void setLayerColor(const RS_Color& color);
 
@@ -64,6 +65,7 @@ signals:
 
 private:
     RS_Color currentColor;
+    int colorIndexStart;
     bool showByLayer;
 	bool showUnchanged;
 	bool unchanged;

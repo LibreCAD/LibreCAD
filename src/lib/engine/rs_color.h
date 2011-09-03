@@ -68,6 +68,11 @@ public:
         return getFlag(RS2::FlagByBlock);
     }
 
+    QColor toQColor(void) const {
+            QColor c0;
+            c0.setRgb(red(),green(),blue());
+            return c0;
+    }
 
     RS_Color& operator = (const RS_Color& c) {
         setRgb(c.red(), c.green(), c.blue());
