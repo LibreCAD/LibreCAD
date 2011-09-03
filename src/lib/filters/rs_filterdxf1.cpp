@@ -138,7 +138,7 @@ bool RS_FilterDXF1::readFromBuffer() {
             pen = RS_Pen(RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer);
 
             RS_DEBUG->print( "\ndxfLine: " );
-            RS_DEBUG->print( dxfLine );
+            RS_DEBUG->print( dxfLine.toLatin1().data() );
 
             // $-Setting in the header of DXF found
             // RVT_PORT changed all occurenses of if (dxfline && ....) to if (dxfline.size() ......)
@@ -420,10 +420,10 @@ bool RS_FilterDXF1::readFromBuffer() {
                         if( dxfCode.toInt()==10 ) {
 							dxfLine=getBufLine();
                             if (dxfLine.size()) {
-                                double x = atof(dxfLine);
+                                double x = atof(dxfLine.toLatin1().data());
 								dxfLine=getBufLine();
                                 if (dxfLine.size()) {
-                                    double y = atof(dxfLine);
+                                    double y = atof(dxfLine.toLatin1().data());
 
                                     graphic->addVariable("$GRIDUNIT", RS_Vector(x,y), 10);
                                 }
@@ -928,7 +928,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                 case  7:  
 								    // Text style (normal_ro#50.0, 
 									//    cursive_ri#20.0, normal_st)
-                                    qstrncpy(vtextStyle, getBufLine(), 249);
+                                    qstrncpy(vtextStyle, getBufLine().toLatin1().data(), 249);
 
                                     // get font typ:
                                     //
@@ -1664,7 +1664,7 @@ QString RS_FilterDXF1::getBufLine() {
     while (fBufP < (int)fSize && fBuf[fBufP++] != '\0')
         ;
 
-    str = QString::fromLocal8Bit(ret).stripWhiteSpace();
+    str = QString::fromLocal8Bit(ret).simplified();
 
     if (str.isNull()) {
         return "";
@@ -1817,7 +1817,7 @@ void RS_FilterDXF1::removeComment(char _fc, char _lc) {
 //         false: file not found
 //
 bool RS_FilterDXF1::readFileInBuffer(char* _name, int _bNum) {
-    file.setName(_name);
+    file.setFileName(_name);
     return readFileInBuffer(_bNum);
 }
 
@@ -1831,16 +1831,16 @@ bool RS_FilterDXF1::readFileInBuffer(char* _name, int _bNum) {
 //         false: file not found
 //
 bool RS_FilterDXF1::readFileInBuffer(int _bNum) {
-    fPointer = fopen(name, "rb");
+    fPointer = fopen(name.toLatin1().data(), "rb");//RLZ verify with locales
     if(fPointer!=NULL) {
-        if(file.open(QIODevice::ReadOnly, fPointer)) {
+        if(file.open(fPointer, QIODevice::ReadOnly)) {
             fSize=file.size();
             if(_bNum==-1)
                 _bNum=fSize;
 
             fBuf = new char[_bNum+16];
 
-            file.readBlock(fBuf, _bNum);
+            file.read(fBuf, _bNum);
             fBuf[_bNum] = '\0';
             file.close();
         }
