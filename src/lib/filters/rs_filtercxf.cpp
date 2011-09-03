@@ -124,10 +124,10 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
     //std::ofstream fout;
 
     RS_DEBUG->print("RS_FilterCXF::fileExport: open");
-    //fout.open((const char*)file.local8Bit());
+    //fout.open((const char*)file.toLocal8Bit());
     FILE* fp;
 
-    if ((fp = fopen((const char*)file.local8Bit(), "wt")) != NULL) {
+    if ((fp = fopen(file.toLocal8Bit(), "wt")) != NULL) {
 
         RS_DEBUG->print("RS_FilterCXF::fileExport: open: OK");
 
@@ -137,19 +137,19 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         fprintf(fp, "# Format:            QCad II Font\n");
 
         fprintf(fp, "# Creator:           %s\n",
-                (const char*)RS_SYSTEM->getAppName().local8Bit());
+                (const char*)RS_SYSTEM->getAppName().toLocal8Bit());
         fprintf(fp, "# Version:           %s\n",
-                (const char*)RS_SYSTEM->getAppVersion().local8Bit());
+                (const char*)RS_SYSTEM->getAppVersion().toLocal8Bit());
 
         RS_DEBUG->print("001");
         QString ns = g.getVariableString("Names", "");
         if (!ns.isEmpty()) {
             QStringList names = QStringList::split(',', ns);
             RS_DEBUG->print("002");
-            for (QStringList::Iterator it = names.begin(); it!=names.end(); ++it) {
+            for (int i = 0; i < names.size(); ++i) {
                 fprintf(fp, "# Name:              %s\n",
-                        (const char*)((*it).local8Bit()));
-            }
+                        names.at(i).toLocal8Bit().data() );
+             }
         }
 
         RS_DEBUG->print("003");
@@ -157,7 +157,7 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         QString es = g.getVariableString("Encoding", "");
         if (!es.isEmpty()) {
             fprintf(fp, "# Encoding:          %s\n",
-                    (const char*)es.local8Bit());
+                    es.toLocal8Bit().data());
         }
 
         RS_DEBUG->print("004a");
@@ -170,7 +170,7 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                 g.getVariableDouble("LineSpacingFactor", 1.0));
 
         QString sa = g.getVariableString("Authors", "");
-        RS_DEBUG->print("authors: %s", (const char*)sa.local8Bit());
+        RS_DEBUG->print("authors: %s", sa.toLocal8Bit().data());
         if (!sa.isEmpty()) {
             QStringList authors = QStringList::split(',', sa);
             RS_DEBUG->print("006");
@@ -206,10 +206,10 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
             if (blk!=NULL) {
                 RS_DEBUG->print("002");
                 RS_DEBUG->print("002a: %s",
-                                (const char*)(blk->getName().local8Bit()));
+                                (blk->getName().toLocal8Bit().data()));
 
                 fprintf(fp, "\n%s\n",
-                        (const char*)(blk->getName().local8Bit()));
+                        (blk->getName().toLocal8Bit().data()));
 
 
                 // iterate through entities of this letter:
@@ -279,6 +279,6 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
  * @param value A double value. e.g. 2.700000
  */
 void RS_FilterCXF::stream(std::ofstream& fs, double value) {
-    fs << (const char*)RS_Utility::doubleToString(value);
+    fs << RS_Utility::doubleToString(value).toLatin1().data();
 }
 

@@ -1278,7 +1278,7 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         for (uint i=0; i<graphic->countBlocks(); ++i) {
             RS_Block* blk = graphic->blockAt(i);
 			dxf.writeBlockRecord(*dw, 
-			    std::string((const char*)blk->getName().local8Bit()));
+                            std::string(blk->getName().toLocal8Bit()));
 			/*
 			// v2.0.4.9..:
             //writeBlock(*dw, blk);
@@ -1288,7 +1288,7 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
             dw->dxfHex(330, 1);
             dw->dxfString(100, "AcDbSymbolTableRecord");
             dw->dxfString(100, "AcDbBlockTableRecord");
-            dw->dxfString(  2, blk->getName().local8Bit());
+            dw->dxfString(  2, blk->getName().toLocal8Bit());
             dw->dxfHex(340, 0);
 			*/
         }
@@ -1467,7 +1467,7 @@ void RS_FilterDXF::writeLayer(DL_WriterA& dw, RS_Layer* l) {
                       colorToNumber(l->getPen().getColor()),
                       widthToNumber(l->getPen().getWidth()),
                       (const char*)lineTypeToName(
-                          l->getPen().getLineType()).local8Bit()));
+                          l->getPen().getLineType()).toLocal8Bit()));
 
     RS_DEBUG->print("RS_FilterDXF::writeLayer end");
 }
@@ -1480,7 +1480,7 @@ void RS_FilterDXF::writeLayer(DL_WriterA& dw, RS_Layer* l) {
 void RS_FilterDXF::writeLineType(DL_WriterA& dw, RS2::LineType t) {
     dxf.writeLineType(
         dw,
-        DL_LineTypeData((const char*)lineTypeToName(t).local8Bit(), 0));
+        DL_LineTypeData((const char*)lineTypeToName(t).toLocal8Bit(), 0));
 }
 
 
@@ -1506,10 +1506,10 @@ void RS_FilterDXF::writeBlock(DL_WriterA& dw, RS_Block* blk) {
         return;
     }
 
-    RS_DEBUG->print("writing block: %s", (const char*)blk->getName().local8Bit());
+    RS_DEBUG->print("writing block: %s", (const char*)blk->getName().toLocal8Bit());
 
     dxf.writeBlock(dw,
-                   DL_BlockData((const char*)blk->getName().local8Bit(), 0,
+                   DL_BlockData((const char*)blk->getName().toLocal8Bit(), 0,
                                 blk->getBasePoint().x,
                                 blk->getBasePoint().y,
                                 blk->getBasePoint().z));
@@ -1518,7 +1518,7 @@ void RS_FilterDXF::writeBlock(DL_WriterA& dw, RS_Block* blk) {
             e=blk->nextEntity(RS2::ResolveNone)) {
         writeEntity(dw, e);
     }
-    dxf.writeEndBlock(dw, (const char*)blk->getName().local8Bit());
+    dxf.writeEndBlock(dw, (const char*)blk->getName().toLocal8Bit());
 }
 
 
@@ -1909,8 +1909,8 @@ void RS_FilterDXF::writeText(DL_WriterA& dw, RS_Text* t,
                         0,
                         hJust, vJust,
                         (const char*)toDxfString(
-                            t->getText()).local8Bit(),
-                        (const char*)t->getStyle().local8Bit(),
+                            t->getText()).toLocal8Bit(),
+                        (const char*)t->getStyle().toLocal8Bit(),
                         t->getAngle()),
             attrib);
 
@@ -1943,8 +1943,8 @@ void RS_FilterDXF::writeText(DL_WriterA& dw, RS_Text* t,
                          t->getLineSpacingStyle(),
                          t->getLineSpacingFactor(),
                          (const char*)toDxfString(
-                             t->getText()).local8Bit(),
-                         (const char*)t->getStyle().local8Bit(),
+                             t->getText()).toLocal8Bit(),
+                         (const char*)t->getStyle().toLocal8Bit(),
                          t->getAngle()),
             attrib);
     }
@@ -2007,8 +2007,8 @@ void RS_FilterDXF::writeDimension(DL_WriterA& dw, RS_Dimension* d,
                              d->getLineSpacingStyle(),
                              d->getLineSpacingFactor(),
                              (const char*)toDxfString(
-                                 d->getText()).local8Bit(),
-                             (const char*)d->getStyle().local8Bit(),
+                                 d->getText()).toLocal8Bit(),
+                             (const char*)d->getStyle().toLocal8Bit(),
                              d->getAngle());
 
     if (d->rtti()==RS2::EntityDimAligned) {
@@ -2153,7 +2153,7 @@ void RS_FilterDXF::writeHatch(DL_WriterA& dw, RS_Hatch* h,
                           h->isSolid(),
                           h->getScale(),
                           h->getAngle(),
-                          (const char*)h->getPattern().local8Bit());
+                          (const char*)h->getPattern().toLocal8Bit());
         dxf.writeHatch1(dw, data, attrib);
 
         for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
@@ -2341,7 +2341,7 @@ void RS_FilterDXF::writeImageDef(DL_WriterA& dw, RS_Image* i) {
     dxf.writeImageDef(
         dw,
         i->getHandle(),
-        DL_ImageData((const char*)i->getFile().local8Bit(),
+        DL_ImageData((const char*)i->getFile().toLocal8Bit(),
                      i->getInsertionPoint().x,
                      i->getInsertionPoint().y,
                      0.0,
