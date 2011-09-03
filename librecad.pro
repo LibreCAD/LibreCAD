@@ -535,30 +535,6 @@ SOURCES += src/actions/rs_actionblocksadd.cpp \
 
 RESOURCES += res/actions/actions.qrc
 
-IMAGES += res/actions/configure.png \
-    res/actions/editcopy2.png \
-    res/actions/editcut2.png \
-    res/actions/editpaste2.png \
-    res/actions/exit.png \
-    res/actions/fileclose.png \
-    res/actions/filenew.png \
-    res/actions/fileopen2.png \
-    res/actions/fileprint.png \
-    res/actions/fileprintpreview.png \
-    res/actions/filesave2.png \
-    res/actions/filesaveas.png \
-    res/actions/redo2.png \
-    res/actions/undo2.png \
-    res/actions/viewgrid.png \
-    res/actions/viewdraft.png \
-    res/actions/zoomauto.png \
-    res/actions/zoomin.png \
-    res/actions/zoomout.png \
-    res/actions/zoompan.png \
-    res/actions/zoomprevious.png \
-    res/actions/zoomredraw.png \
-    res/actions/zoomwindow.png
-
 # ################################################################################
 # UI
 HEADERS += src/ui/qg_actionfactory.h \
@@ -620,7 +596,6 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_dlgmoverotate.h \
     src/ui/forms/qg_dlgoptionsdrawing.h \
     src/ui/forms/qg_dlgoptionsgeneral.h \
-    src/ui/forms/qg_dlgoptionsvariables.h \
     src/ui/forms/qg_dlgpoint.h \
     src/ui/forms/qg_dlgpolyline.h \
     src/ui/forms/qg_dlgrotate.h \
@@ -710,7 +685,6 @@ SOURCES += src/ui/qg_actionfactory.cpp \
     src/ui/forms/qg_dlgmoverotate.cpp \
     src/ui/forms/qg_dlgoptionsdrawing.cpp \
     src/ui/forms/qg_dlgoptionsgeneral.cpp \
-    src/ui/forms/qg_dlgoptionsvariables.cpp \
     src/ui/forms/qg_dlgpoint.cpp \
     src/ui/forms/qg_dlgpolyline.cpp \
     src/ui/forms/qg_dlgrotate.cpp \
@@ -783,7 +757,6 @@ FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_dlgmoverotate.ui \
     src/ui/forms/qg_dlgoptionsdrawing.ui \
     src/ui/forms/qg_dlgoptionsgeneral.ui \
-    src/ui/forms/qg_dlgoptionsvariables.ui \
     src/ui/forms/qg_dlgpoint.ui \
     src/ui/forms/qg_dlgpolyline.ui \
     src/ui/forms/qg_dlgrotate.ui \
@@ -836,11 +809,6 @@ SOURCES += \
     src/main/helpbrowser.cpp \
     src/main/main.cpp
 
-IMAGES += res/main/contents.png \
-    res/main/document.png \
-    res/main/editclear.png \
-    res/main/librecad16.png \
-    res/main/librecad.png
 RESOURCES += res/main/main.qrc
 
 # ################################################################################
