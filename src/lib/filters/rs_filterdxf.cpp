@@ -2606,7 +2606,7 @@ void RS_FilterDXF::addComment(const char*) {
  */
 RS2::LineType RS_FilterDXF::nameToLineType(const QString& name) {
 
-    QString uName = name.upper();
+    QString uName = name.toUpper();
 
     // Standard linetypes for QCad II / AutoCAD
     if (uName.isEmpty() || uName=="BYLAYER") {
