@@ -33,10 +33,8 @@
 
 #include "qc_graphicview.h"
 
-#include "qg_layerwidget.h"
 #include "qg_recentfiles.h"
 #include "qg_pentoolbar.h"
-//Added by qt3to4:
 #include <QCloseEvent>
 
 #include "rs_document.h"
