@@ -10,7 +10,7 @@ DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 
 
 # Add qt3support
-#QT += qt3support
+QT += qt3support
 CONFIG += qt \
     warn_on \
     link_prl \
