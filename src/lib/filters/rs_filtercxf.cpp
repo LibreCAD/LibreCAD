@@ -144,7 +144,7 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         RS_DEBUG->print("001");
         QString ns = g.getVariableString("Names", "");
         if (!ns.isEmpty()) {
-            QStringList names = QStringList::split(',', ns);
+            QStringList names = ns.split(',');
             RS_DEBUG->print("002");
             for (int i = 0; i < names.size(); ++i) {
                 fprintf(fp, "# Name:              %s\n",
@@ -172,7 +172,7 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         QString sa = g.getVariableString("Authors", "");
         RS_DEBUG->print("authors: %s", sa.toLocal8Bit().data());
         if (!sa.isEmpty()) {
-            QStringList authors = QStringList::split(',', sa);
+            QStringList authors = sa.split(',');
             RS_DEBUG->print("006");
             RS_DEBUG->print("count: %d", authors.count());
 
