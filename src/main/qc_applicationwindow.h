@@ -114,7 +114,7 @@ public slots:
     * opens a recent file document
     * @param id File Menu id of the file
     */
-    void slotFileOpenRecent(int id);
+    void slotFileOpenRecent();
     /**
      * opens the given file.
      */
@@ -375,6 +375,7 @@ private:
     QMenu* helpMenu;
     QMenu* testMenu;
 
+    QList <QAction*> recentFilesAction;
     /** the main toolbars */
     QToolBar* fileToolBar;
     QToolBar* editToolBar;
