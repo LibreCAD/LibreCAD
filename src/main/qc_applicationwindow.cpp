@@ -1521,6 +1521,15 @@ void QC_ApplicationWindow::initSettings() {
         }
     }
     RS_SETTINGS->endGroup();
+//    QList <QAction*> recentFilesAction;
+
+    for (int i = 0; i < recentFiles->getNumber(); ++i) {
+        recentFilesAction.insert(i, new QAction(this));
+        recentFilesAction[i]->setVisible(false);
+        connect(recentFilesAction[i], SIGNAL(triggered()),
+                this, SLOT(slotFileOpenRecent()));
+        fileMenu->addAction(recentFilesAction[i]);
+    }
     if (recentFiles->count()>0) {
         updateRecentFilesMenu();
     }
@@ -1724,7 +1733,18 @@ void QC_ApplicationWindow::updateRecentFilesMenu() {
     RS_DEBUG->print("QC_ApplicationWindow::updateRecentFilesMenu()");
 
     RS_DEBUG->print("Updating recent file menu...");
-    for (int i=0; i<recentFiles->getNumber(); ++i) {
+    int numRecentFiles = qMin(recentFiles->count(), recentFiles->getNumber());
+
+    for (int i = 0; i < numRecentFiles; ++i) {
+        QString text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(i));
+        recentFilesAction[i]->setText(text);
+        recentFilesAction[i]->setData(recentFiles->get(i));
+        recentFilesAction[i]->setVisible(true);
+    }
+    for (int j = numRecentFiles; j < recentFiles->getNumber(); ++j)
+        recentFilesAction[j]->setVisible(false);
+
+/*    for (int i=0; i<recentFiles->getNumber(); ++i) {
         QString label = QString( "&%1 %2" ).
                         arg(i+1).arg(recentFiles->get(i));
 
@@ -1737,7 +1757,7 @@ void QC_ApplicationWindow::updateRecentFilesMenu() {
                                  this, SLOT(slotFileOpenRecent(int)),
                                  0, i);
         }
-    }
+    }*/
 }
 
 
@@ -2115,13 +2135,17 @@ void QC_ApplicationWindow::slotFileOpen() {
  * Called when a recently opened file is chosen from the list in the
  * file menu.
  */
-void QC_ApplicationWindow::slotFileOpenRecent(int id) {
+void QC_ApplicationWindow::slotFileOpenRecent() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpenRecent()");
 
+    QAction *action = qobject_cast<QAction *>(sender());
+    if (action) {
+
     statusBar()->showMessage(tr("Opening recent file..."));
-    QString fileName = recentFiles->get(id);
+    QString fileName = action->data().toString();
 
     slotFileOpen(fileName, RS2::FormatUnknown);
+    }
 }
 
 
@@ -2635,8 +2659,9 @@ void QC_ApplicationWindow::slotFilePrint() {
     RS_SETTINGS->beginGroup("/Print");
     printer.setOutputFileName(RS_SETTINGS->readEntry("/FileName", ""));
     printer.setColorMode((QPrinter::ColorMode)RS_SETTINGS->readNumEntry("/ColorMode", (int)QPrinter::Color));
-    printer.setOutputToFile((bool)RS_SETTINGS->readNumEntry("/PrintToFile",
-                             0));
+//RLZ: No more needed, if setOutputFileName == "" then setOutputToFile is false
+/*    printer.setOutputToFile((bool)RS_SETTINGS->readNumEntry("/PrintToFile",
+                             0));*/
     RS_SETTINGS->endGroup();
 
     // printer setup:
@@ -2676,7 +2701,8 @@ void QC_ApplicationWindow::slotFilePrint() {
         painter.end();
 
         RS_SETTINGS->beginGroup("/Print");
-        RS_SETTINGS->writeEntry("/PrintToFile", (int)printer.outputToFile());
+        //RLZ: No more needed, if outputFileName == "" then PrintToFile is false
+//        RS_SETTINGS->writeEntry("/PrintToFile", (int)printer.outputToFile());
         RS_SETTINGS->writeEntry("/ColorMode", (int)printer.colorMode());
         RS_SETTINGS->writeEntry("/FileName", printer.outputFileName());
         RS_SETTINGS->endGroup();
