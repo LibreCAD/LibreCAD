@@ -131,7 +131,7 @@ void RS_ActionZoomPan::updateMouseButtonHints()
 
 void RS_ActionZoomPan::updateMouseCursor() {
 #ifndef __APPLE__
-        if(getStatus()) {
+        if(getStatus()==2) {
     graphicView->setMouseCursor(RS2::SizeAllCursor);
         }
 #endif
