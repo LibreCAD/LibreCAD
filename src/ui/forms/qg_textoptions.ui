@@ -54,7 +54,7 @@
         </widget>
       </item>
       <item>
-        <widget class="Q3TextEdit" name="teText">
+        <widget class="QTextEdit" name="teText">
           <property name="sizePolicy">
             <sizepolicy>
               <hsizetype>5</hsizetype>
@@ -75,11 +75,11 @@
               <height>22</height>
             </size>
           </property>
-          <property name="vScrollBarMode">
-            <enum>Q3ScrollView::AlwaysOff</enum>
+          <property name="verticalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOff</enum>
           </property>
-          <property name="hScrollBarMode">
-            <enum>Q3ScrollView::AlwaysOff</enum>
+          <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOff</enum>
           </property>
         </widget>
       </item>

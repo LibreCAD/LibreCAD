@@ -67,7 +67,7 @@
     </layout>
    </item>
    <item row="0" column="0">
-    <widget class="Q3ButtonGroup" name="bgNumber">
+    <widget class="QGroupBox" name="bgNumber">
      <property name="title">
       <string>Number of copies</string>
      </property>
