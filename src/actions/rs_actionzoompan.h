@@ -50,6 +50,7 @@ public:
     virtual void mousePressEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseCursor();
+    virtual void updateMouseButtonHints();
 
 protected:
     //RS_Vector v1;

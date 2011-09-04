@@ -28,7 +28,10 @@
 
 #include <QAction>
 #include "rs_graphicview.h"
-
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_commands.h"
+#include "rs_commandevent.h"
 
 RS_ActionZoomPan::RS_ActionZoomPan(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
@@ -52,6 +55,8 @@ void RS_ActionZoomPan::init(int status) {
     //v1 = v2 = RS_Vector(false);
     x1 = y1 = x2 = y2 = -1;
     //graphicView->saveView();
+    setStatus(1);
+    updateMouseButtonHints();
 }
 
 
@@ -61,9 +66,14 @@ void RS_ActionZoomPan::trigger() {
         graphicView->zoomPan(v2-v1);
         v1 = v2;
 }*/
+    if (getStatus() && (abs(x2-x1)>7 || abs(y2-y1)>7)) {
         graphicView->zoomPan(x2-x1, y2-y1);
         x1 = x2;
         y1 = y2;
+    }
+        if( !getStatus() ) {
+    finish();
+        }
 }
 
 
@@ -73,7 +83,7 @@ void RS_ActionZoomPan::mouseMoveEvent(QMouseEvent* e) {
     x2 = e->x();
     y2 = e->y();
     //if (getStatus()==1 && graphicView->toGuiDX((v2-v1).magnitude())>10) {
-    if (getStatus()==1 && (abs(x2-x1)>7 || abs(y2-y1)>7)) {
+    if (getStatus()==2 && (abs(x2-x1)>7 || abs(y2-y1)>7)) {
         trigger();
     }
 }
@@ -90,33 +100,40 @@ void RS_ActionZoomPan::mousePressEvent(QMouseEvent* e) {
         //v1 = snapPoint(e);
         x1 = e->x();
         y1 = e->y();
-        setStatus(1);
+        setStatus(2);
     }
 }
 
 
 
 void RS_ActionZoomPan::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
-#if QT_VERSION < 0x040700
-    } else if (e->button()==Qt::MidButton) {
-#else
-    } else if (e->button()==Qt::MiddleButton) {
-#endif
-        init(-1);
-    } else {
         setStatus(0);
-    }
-
+        trigger();
     //RS_DEBUG->print("RS_ActionZoomPan::mousePressEvent(): %f %f", v1.x, v1.y);
 }
 
+void RS_ActionZoomPan::updateMouseButtonHints()
+{
+    switch (getStatus()) {
+            case 1:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Click to pan zoom"),
+                                            tr("Cancel"));
+                break;
+            case 2:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Pan Zooming"),
+                                            tr("Cancel"));
+                break;
+           default:
+        RS_DIALOGFACTORY->updateMouseWidget();
+    }
+}
 
 
 void RS_ActionZoomPan::updateMouseCursor() {
 #ifndef __APPLE__
+        if(getStatus()) {
     graphicView->setMouseCursor(RS2::SizeAllCursor);
+        }
 #endif
 }
 
