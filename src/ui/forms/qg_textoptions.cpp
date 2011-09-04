@@ -99,7 +99,7 @@ void QG_TextOptions::updateText() {
             )
         );
 //#else*/
-       action->setText(teText->text());
+       action->setText(teText->toPlainText());
 //#endif
     }
 }
