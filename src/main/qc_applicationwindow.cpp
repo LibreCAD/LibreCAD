@@ -746,7 +746,7 @@ void QC_ApplicationWindow::initActions(void)
 	action->setShortcut(tr("CTRL+M"));
 	//action->zetStatusTip(tr("Focus on Command Line"));
 		
-    connect(action, SIGNAL(activated()),
+    connect(action, SIGNAL(triggered()),
             this, SLOT(slotFocusCommandLine()));
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -1279,92 +1279,92 @@ void QC_ApplicationWindow::initActions(void)
 
     //helpAboutApp->zetStatusTip(tr("About the application"));
     //helpAboutApp->setWhatsThis(tr("About\n\nAbout the application"));
-    connect(helpAboutApp, SIGNAL(activated()),
+    connect(helpAboutApp, SIGNAL(triggered()),
             this, SLOT(slotHelpAbout()));
 
     helpManual = new QAction(QIcon(":/main/contents.png"), tr("&Manual"), this);
     //helpManual->zetStatusTip(tr("Launch the online manual"));
-    connect(helpManual, SIGNAL(activated()),
+    connect(helpManual, SIGNAL(triggered()),
             this, SLOT(slotHelpManual()));
 
 /* RVT_PORT    testDumpEntities = new QAction("Dump Entities",
                                    "Dump &Entities", 0, this); */
     testDumpEntities = new QAction("Dump Entities", this);
-    connect(testDumpEntities, SIGNAL(activated()),
+    connect(testDumpEntities, SIGNAL(triggered()),
             this, SLOT(slotTestDumpEntities()));
     
 /* RVT_PORT	testDumpUndo = new QAction("Dump Undo Info",
 							   "Undo Info", 0, this); */
 	testDumpUndo = new QAction("Dump Undo Info", this);
-    connect(testDumpUndo, SIGNAL(activated()),
+    connect(testDumpUndo, SIGNAL(triggered()),
             this, SLOT(slotTestDumpUndo()));
 
 /* RVT_PORT    testUpdateInserts = new QAction("Update Inserts",
                                     "&Update Inserts", 0, this); */
     testUpdateInserts = new QAction("Update Inserts", this);
-    connect(testUpdateInserts, SIGNAL(activated()),
+    connect(testUpdateInserts, SIGNAL(triggered()),
             this, SLOT(slotTestUpdateInserts()));
 
 /* RVT_PORT    testDrawFreehand = new QAction("Draw Freehand",
 	 "Draw Freehand", 0, this); */
 	 testDrawFreehand = new QAction("Draw Freehand", this); 
-    connect(testDrawFreehand, SIGNAL(activated()),
+    connect(testDrawFreehand, SIGNAL(triggered()),
             this, SLOT(slotTestDrawFreehand()));
 
 /* RVT_PORT    testInsertBlock = new QAction("Insert Block",
                                   "Insert Block", 0, this); */
     testInsertBlock = new QAction("Insert Block", this);
 
-    connect(testInsertBlock, SIGNAL(activated()),
+    connect(testInsertBlock, SIGNAL(triggered()),
             this, SLOT(slotTestInsertBlock()));
 
 /* RVT_PORT    testInsertText = new QAction("Insert Text",
                                  "Insert Text", 0, this); */
     testInsertText = new QAction("Insert Text", this);
-    connect(testInsertText, SIGNAL(activated()),
+    connect(testInsertText, SIGNAL(triggered()),
             this, SLOT(slotTestInsertText()));
 
 /* RVT_PORT    testInsertImage = new QAction("Insert Image",
                                   "Insert Image", 0, this); */
 	// "Insert Image",
     testInsertImage = new QAction(tr("Insert Image"), this);
-    connect(testInsertImage, SIGNAL(activated()),
+    connect(testInsertImage, SIGNAL(triggered()),
             this, SLOT(slotTestInsertImage()));
 
 /* RVT_PORT    testUnicode = new QAction("Unicode",
                               "Unicode", 0, this); */
     testUnicode = new QAction("Unicode", this);
-    connect(testUnicode, SIGNAL(activated()),
+    connect(testUnicode, SIGNAL(triggered()),
             this, SLOT(slotTestUnicode()));
 
 /* RVT_PORT    testInsertEllipse = new QAction("Insert Ellipse",
                                     "Insert Ellipse", 0, this); */
     testInsertEllipse = new QAction("Insert Ellipse", this);
-    connect(testInsertEllipse, SIGNAL(activated()),
+    connect(testInsertEllipse, SIGNAL(triggered()),
             this, SLOT(slotTestInsertEllipse()));
 
 /*  RVT_PORT  testMath01 = new QAction("Math01",
                              "Math01", 0, this); */
     testMath01 = new QAction("Math01", this);
-    connect(testMath01, SIGNAL(activated()),
+    connect(testMath01, SIGNAL(triggered()),
             this, SLOT(slotTestMath01()));
 
 /* RVT_PORT    testResize640 = new QAction("Resize to 640x480",
                                 "Resize 1", 0, this); */
     testResize640 = new QAction("Resize to 640x480", this);
-    connect(testResize640, SIGNAL(activated()),
+    connect(testResize640, SIGNAL(triggered()),
             this, SLOT(slotTestResize640()));
 
 /* RVT_PORT    testResize800 = new QAction("Resize to 800x600",
                                 "Resize 2", 0, this); */
     testResize800 = new QAction("Resize to 800x600", this);
-    connect(testResize800, SIGNAL(activated()),
+    connect(testResize800, SIGNAL(triggered()),
             this, SLOT(slotTestResize800()));
 
 /* RVT_PORT    testResize1024 = new QAction("Resize to 1024x768",
                                  "Resize 3", 0, this); */
     testResize1024 = new QAction("Resize to 1024x768", this);
-    connect(testResize1024, SIGNAL(activated()),
+    connect(testResize1024, SIGNAL(triggered()),
             this, SLOT(slotTestResize1024()));
 
 }
