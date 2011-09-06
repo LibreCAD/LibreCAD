@@ -102,14 +102,15 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     addColor(Qt::magenta,tr("Magenta"));
     addColor(Qt::darkMagenta,tr("Dark Magenta"));
     addItem(QIcon(":/ui/color07.png"), tr("Black / White"),Qt::black);
-    //addColor(Qt::black,tr("Black"));
-    //addColor(Qt::white,tr("White"));
+    //colorIndexBlack=findData(Qt::black); //record the number for special color black/white
+    //std::cout<<"colorIndexBlack="<<colorIndexBlack<<std::endl;
     addColor(Qt::gray,tr("Gray"));
     addColor(Qt::darkGray,tr("Dark Gray"));
     addColor(Qt::lightGray,tr("Light Gray"));
 //static colors ends here
     // last item is reserved for "Others.." to trigger color picker
-    addItem(QIcon(":/ui/colorxx.png"), tr("Others.."));
+    QString others(tr("Others.."));
+    addItem(QIcon(":/ui/colorxx.png"), others);
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotColorChanged(int)));
@@ -128,7 +129,7 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
  */
 void QG_ColorBox::setColor(const RS_Color& color) {
     currentColor = color;
-std::cout<<"initilizing for color: "<<color<<std::endl;
+//std::cout<<"initial color: "<<color<<std::endl;
     int cIndex;
 
     if (color.isByLayer() && showByLayer) {
@@ -136,16 +137,22 @@ std::cout<<"initilizing for color: "<<color<<std::endl;
     } else if (color.isByBlock() && showByLayer) {
         cIndex=1;
     } else {
-        cIndex=findData(color.toQColor());
-        if(cIndex == -1 ) {
+        for(cIndex=colorIndexStart;cIndex< count() - 1;cIndex++) {
+	//searching for the color, allowing difference up to 2
+		QColor q(itemData(cIndex).value<QColor>());
+		if( abs(q.red() - color.red())
+		   +abs(q.green() - color.green())
+		   +abs(q.blue() - color.blue()) <= 3
+		) {
+			break;
+		}
+	}
+        if(cIndex == count() - 1) {
        	    cIndex=findData(Qt::black); //default to Qt::black
         }
-//	else {
-//            if ( itemData(cIndex) == QVariant::Invalid) cIndex=count() - 1; // invalid input color, set to "Others..", setting to Black/White is another option
-//        }
     }
     setCurrentIndex(cIndex);
-std::cout<<"Default color for choosing: "<<RS_Color(itemData(cIndex).value<QColor>())<<std::endl;
+//std::cout<<"Default color for choosing: cIndex="<<cIndex<<" "<<RS_Color(itemData(cIndex).value<QColor>())<<std::endl;
 
     if (currentIndex()!= count() -1 ) {
         slotColorChanged(currentIndex());
