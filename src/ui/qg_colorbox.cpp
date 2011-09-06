@@ -29,6 +29,7 @@
 #include <qcolordialog.h>
 #include <qpainter.h>
 #include <qpixmap.h>
+#include <iostream>
 
 /**
  * Default Constructor. You must call init manually if you choose
@@ -127,7 +128,7 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
  */
 void QG_ColorBox::setColor(const RS_Color& color) {
     currentColor = color;
-
+std::cout<<"initilizing for color: "<<color<<std::endl;
     int cIndex;
 
     if (color.isByLayer() && showByLayer) {
@@ -137,12 +138,14 @@ void QG_ColorBox::setColor(const RS_Color& color) {
     } else {
         cIndex=findData(color.toQColor());
         if(cIndex == -1 ) {
-            cIndex=count() - 1; // the last item is "Others.."
-        } else {
-            if ( itemData(cIndex) == QVariant::Invalid) cIndex=count() - 1; // invalid input color, set to "Others..", setting to Black/White is another option
+       	    cIndex=findData(Qt::black); //default to Qt::black
         }
+//	else {
+//            if ( itemData(cIndex) == QVariant::Invalid) cIndex=count() - 1; // invalid input color, set to "Others..", setting to Black/White is another option
+//        }
     }
     setCurrentIndex(cIndex);
+std::cout<<"Default color for choosing: "<<RS_Color(itemData(cIndex).value<QColor>())<<std::endl;
 
     if (currentIndex()!= count() -1 ) {
         slotColorChanged(currentIndex());
