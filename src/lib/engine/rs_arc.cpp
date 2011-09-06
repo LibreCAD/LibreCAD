@@ -76,56 +76,6 @@ bool RS_Arc::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
         return true;
 }
 
-//    if (p1.distanceTo(p2)>RS_TOLERANCE &&
-//            p2.distanceTo(p3)>RS_TOLERANCE &&
-//            p3.distanceTo(p1)>RS_TOLERANCE) {
-//
-//        // middle points between 3 points:
-//        RS_Vector mp1, mp2;
-//        RS_Vector dir1, dir2;
-//        double a1, a2;
-//
-//        // intersection of two middle lines
-//        mp1 = (p1 + p2)/2.0;
-//        a1 = p1.angleTo(p2) + M_PI/2.0;
-//        dir1.setPolar(100.0, a1);
-//        mp2 = (p2 + p3)/2.0;
-//        a2 = p2.angleTo(p3) + M_PI/2.0;
-//        dir2.setPolar(100.0, a2);
-//
-//        RS_ConstructionLineData d1(mp1, mp1 + dir1);
-//        RS_ConstructionLineData d2(mp2, mp2 + dir2);
-//        RS_ConstructionLine midLine1(NULL, d1);
-//        RS_ConstructionLine midLine2(NULL, d2);
-//
-//        RS_VectorSolutions sol =
-//            RS_Information::getIntersection(&midLine1, &midLine2);
-//
-//        data.center = sol.get(0);
-//        data.radius = data.center.distanceTo(p3);
-//        data.angle1 = data.center.angleTo(p1);
-//        data.angle2 = data.center.angleTo(p3);
-//        data.reversed = RS_Math::isAngleBetween(data.center.angleTo(p2),
-//                                                data.angle1, data.angle2, true);
-//
-//        if (sol.get(0).valid && data.radius<1.0e14 &&
-//                data.radius>RS_TOLERANCE) {
-//            calculateEndpoints();
-//            calculateBorders();
-//            return true;
-//        } else {
-//            RS_DEBUG->print("RS_Arc::createFrom3P(): "
-//                            "Cannot create an arc with inf radius.");
-//            return false;
-//        }
-//    } else {
-//        RS_DEBUG->print("RS_Arc::createFrom3P(): "
-//                        "Cannot create an arc with radius 0.0.");
-//        return false;
-//    }
-//}
-
-
 
 /**
  * Creates an arc from its startpoint, endpoint, start direction (angle)
@@ -313,6 +263,13 @@ RS_Vector RS_Arc::getNearestCenter(const RS_Vector& coord,
 
 RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
                                    double* dist) {
+//    if( RS_Math::isSameDirection(getAngle1(),getAngle2(),RS_TOLERANCE_ANGLE) ) {
+//	//no middle point for whole circle
+//	if(dist != NULL) {
+//		*dist=RS_MAXDOUBLE;
+//	}
+//	return RS_Vector(false);
+//    }
 
     RS_Vector ret = getMiddlepoint();
 
@@ -605,9 +562,7 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
 
 
 void RS_Arc::reverse() {
-    double a = data.angle1;
-    data.angle1 = data.angle2;
-    data.angle2 = a;
+    std::swap(data.angle1,data.angle2);
     data.reversed = !data.reversed;
     calculateEndpoints();
     calculateBorders();
@@ -814,6 +769,11 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
  * @return Middle point of the entity.
  */
 RS_Vector RS_Arc::getMiddlepoint() const {
+//    if( RS_Math::isSameDirection(getAngle1(),getAngle2(),RS_TOLERANCE_ANGLE) ) {
+//	//no middle point for whole circle
+//	return RS_Vector(false);
+//	}
+
     double a;
     RS_Vector ret;
 
@@ -841,7 +801,7 @@ double RS_Arc::getAngleLength() const {
     if (isReversed()) std::swap(a,b);
     ret = RS_Math::correctAngle(b-a);
     // full circle:
-    if (fabs(ret)<1.0e-6) {
+    if (fabs(remainder(ret,2.*M_PI))<RS_TOLERANCE_ANGLE) {
         ret = 2*M_PI;
     }
 
