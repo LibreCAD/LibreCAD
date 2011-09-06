@@ -2132,8 +2132,8 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
     }
 
     // cut point is at endpoint of entity:
-    if (cutCoord.distanceTo(cutEntity->getStartpoint())<1.0e-6 ||
-            cutCoord.distanceTo(cutEntity->getEndpoint())<1.0e-6) {
+    if (cutCoord.distanceTo(cutEntity->getStartpoint())<RS_TOLERANCE ||
+            cutCoord.distanceTo(cutEntity->getEndpoint())<RS_TOLERANCE) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::cut: Cutting point on endpoint");
         return false;
@@ -2150,16 +2150,14 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
     // create new two halves:
     if (cutEntity->rtti()==RS2::EntityCircle) {
         RS_Circle* c = (RS_Circle*)cutEntity;
+	double a=c->getCenter().angleTo(cutCoord);
         cut1 = new RS_Arc(cutEntity->getParent(),
                           RS_ArcData(c->getCenter(),
                                      c->getRadius(),
-                                     0.0,0.0, false));
+                                     a,a, false));
         cut1->setPen(cutEntity->getPen(false));
         cut1->setLayer(cutEntity->getLayer(false));
         cut2 = NULL;
-
-        cut1->trimEndpoint(cutCoord);
-        cut1->trimStartpoint(cutCoord);
     } else {
         cut1 = (RS_AtomicEntity*)cutEntity->clone();
         cut2 = (RS_AtomicEntity*)cutEntity->clone();
