@@ -516,7 +516,7 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
     }
 
     mtext+=data.text.c_str();
-    mtext = toNativeString(mtext.toLocal8Bit().data(), getDXFEncoding());
+    mtext = toNativeString((char*) mtext.toUtf8(), getDXFEncoding());
 
     // use default style for the drawing:
     if (sty.isEmpty()) {
