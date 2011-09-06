@@ -1536,7 +1536,7 @@ bool RS_Modification::scale(RS_ScaleData& data) {
                     RS_Vector(c->getRadius(),0.),
                     1.0,
                     0.,
-                    2.*M_PI,
+                    0.,
                     false);
                 ec= new RS_Ellipse(container,d);
             } else if ( ec->rtti() == RS2::EntityArc ) {
@@ -2146,26 +2146,52 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
 
     RS_AtomicEntity* cut1 = NULL;
     RS_AtomicEntity* cut2 = NULL;
+    double a;
 
-    // create new two halves:
-    if (cutEntity->rtti()==RS2::EntityCircle) {
-        RS_Circle* c = (RS_Circle*)cutEntity;
-	double a=c->getCenter().angleTo(cutCoord);
+    switch (cutEntity->rtti()) {
+    case RS2::EntityCircle:
+    	// convert to a whole 2 pi range arc
+        //RS_Circle* c = (RS_Circle*)cutEntity;
+	a=static_cast<RS_Circle*>(cutEntity)->getCenter().angleTo(cutCoord);
         cut1 = new RS_Arc(cutEntity->getParent(),
-                          RS_ArcData(c->getCenter(),
-                                     c->getRadius(),
+                          RS_ArcData(static_cast<RS_Circle*>(cutEntity) ->getCenter(),
+                                     static_cast<RS_Circle*>(cutEntity) ->getRadius(),
                                      a,a, false));
         cut1->setPen(cutEntity->getPen(false));
         cut1->setLayer(cutEntity->getLayer(false));
-        cut2 = NULL;
-    } else {
+        //cut2 = NULL; // cut2 is NULL by default
+	break;
+    case RS2::EntityEllipse:
+    // ToDo, to really handle Ellipse Arcs properly, we need to create a new class RS_EllipseArc, keep RS_Ellipse for whole range Ellipses
+	if(RS_Math::isSameDirection(
+		 static_cast<RS_Ellipse*>(cutEntity) ->getAngle1(),
+		 static_cast<RS_Ellipse*>(cutEntity) ->getAngle2(),
+		 RS_TOLERANCE_ANGLE)
+		 && ! std::isnormal(static_cast<RS_Ellipse*>(cutEntity) ->getAngle1())
+		 && ! std::isnormal(static_cast<RS_Ellipse*>(cutEntity) ->getAngle2())
+		 ) {
+        // whole ellipse, convert to a whole range elliptic arc
+	a=static_cast<RS_Ellipse*>(cutEntity) ->getEllipseAngle(cutCoord);
+        cut1 = new RS_Ellipse(cutEntity->getParent(),
+                          RS_EllipseData(static_cast<RS_Ellipse*>(cutEntity) ->getCenter(),
+                                     static_cast<RS_Ellipse*>(cutEntity) ->getMajorP(),
+                                     static_cast<RS_Ellipse*>(cutEntity) ->getRatio(),
+                                     a,a+2.*M_PI, static_cast<RS_Ellipse*>(cutEntity) ->isReversed()
+				     )
+			    );
+        cut1->setPen(cutEntity->getPen(false));
+        cut1->setLayer(cutEntity->getLayer(false));
+        //cut2 = NULL; // cut2 is NULL by default
+	break;
+	}
+	// handle ellipse arc the using the default method
+    default:
         cut1 = (RS_AtomicEntity*)cutEntity->clone();
         cut2 = (RS_AtomicEntity*)cutEntity->clone();
 
         cut1->trimEndpoint(cutCoord);
         cut2->trimStartpoint(cutCoord);
     }
-
     // add new cut entity:
     container->addEntity(cut1);
     if (cut2!=NULL) {
