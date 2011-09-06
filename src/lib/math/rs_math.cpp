@@ -386,11 +386,15 @@ void RS_Math::test() {
 
     std::cout << "RS_Math::test: complete\n";
 }
-//quadratic, cubic, and quartic equation solver
-// ce[] contains coefficent of the cubic equation:
-// roots[] pointed to a list of real roots
+
+// quadratic, cubic, and quartic equation solver
+// @ ce[] contains coefficent of the cubic equation:
+// @ roots[] pointed to a list of real roots
+// 
 // solvers assume arguments are valid, and there's no attempt to verify validity of the argument pointers
 //
+// @author Dongxu Li <dongxuli2011@gmail.com>
+
 unsigned int RS_Math::quadraticSolver(double * ce,  double * roots)
 //quadratic solver for
 // x^2 + ce[0] x + ce[2] =0
