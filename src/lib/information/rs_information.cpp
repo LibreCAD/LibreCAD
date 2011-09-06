@@ -581,6 +581,11 @@ RS_VectorSolutions RS_Information::getIntersectionArcArc(RS_Arc* e1,
     return ret;
 }
 
+// find intersections between ellipse/arc/circle using quartic equation solver
+//
+// @author Dongxu Li <dongxuli2011@gmail.com>
+//
+
 RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1, RS_Ellipse* e2) {
     RS_VectorSolutions ret;
 
