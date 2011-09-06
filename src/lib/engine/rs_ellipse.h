@@ -32,6 +32,8 @@
 
 /**
  * Holds the data that defines an ellipse.
+ * angle1=angle2=0.0 is reserved for whole ellipses
+ * add 2*M_PI to angle1 or angle2 to make whole range ellipse arcs
  */
 class RS_EllipseData {
 public:

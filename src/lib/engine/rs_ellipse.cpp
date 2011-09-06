@@ -189,8 +189,11 @@ bool RS_Ellipse::switchMajorMinor(void)
     RS_Vector vp=getMajorP();
     setMajorP(RS_Vector(- data.ratio*vp.y, data.ratio*vp.x)); //direction pi/2 relative to old MajorP;
     setRatio(1./data.ratio);
+    if(   std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) )  {
+    //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
     setAngle1(getEllipseAngle(vp_start));
     setAngle2(getEllipseAngle(vp_end));
+    }
     return true;
 }
 
@@ -483,15 +486,15 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
             ||  RS_Math::isSameDirection(ia2,ia,RS_TOLERANCE) ) {
         //whole ellipse
         if( !RS_Math::isAngleBetween(am,ia,ia2,isReversed())) {
-            RS_Math::swap(ia,ia2);
-            RS_Math::swap(is,is2);
+            std::swap(ia,ia2);
+            std::swap(is,is2);
         }
         setAngle1(ia);
         setAngle2(ia2);
         double da1=fabs(remainder(getAngle1()-am,2*M_PI));
         double da2=fabs(remainder(getAngle2()-am,2*M_PI));
         if(da2<da1) {
-            RS_Math::swap(is,is2);
+            std::swap(is,is2);
         }
 
     } else {
@@ -519,14 +522,14 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
             if( ((da1 < da2) && (RS_Math::isAngleBetween(ia2,ia,getAngle1(),isReversed()))) ||
                     ((da1 > da2) && (RS_Math::isAngleBetween(ia2,getAngle2(),ia,isReversed())))
               ) {
-                RS_Math::swap(is,is2);
+                std::swap(is,is2);
                 //std::cout<<"reset: angle1="<<getAngle1()<<" angle2="<<getAngle2()<<" am="<< am<<" is="<<getEllipseAngle(is)<<" ia2="<<ia2<<std::endl;
             }
         } else {
             //choose intersection as new end
             if( dia > dia2) {
-                RS_Math::swap(is,is2);
-                RS_Math::swap(ia,ia2);
+                std::swap(is,is2);
+                std::swap(ia,ia2);
             }
             if(RS_Math::isAngleBetween(ia,getAngle1(),getAngle2(),isReversed())) {
                 if(RS_Math::isAngleBetween(am,getAngle1(),ia,isReversed())) {
@@ -583,8 +586,11 @@ void RS_Ellipse::scale(RS_Vector center, RS_Vector factor) {
     a=cA+cB;
     b=vp.magnitude();
     setRatio( sqrt((a - b)/(a + b) ));
+    if(   std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) )  {
+    //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
     setAngle1(getEllipseAngle(vpStart));
     setAngle2(getEllipseAngle(vpEnd));
+    }
     //calculateEndpoints();
     calculateBorders();
 }
@@ -607,8 +613,11 @@ void RS_Ellipse::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
     setCenter(center);
     setReversed(!isReversed());
     setMajorP(mp - center);
+    if(   std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) )  {
+    //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
     setAngle1( getEllipseAngle(startpoint));
     setAngle2( getEllipseAngle(endpoint));
+    }
 /*  old version
     data.majorP = mp - data.center;
 
