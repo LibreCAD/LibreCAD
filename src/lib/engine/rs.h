@@ -29,6 +29,7 @@
 
 #include <qnamespace.h>
 #include <qprinter.h>
+#include <iostream>
 
 #define RS_TEST
 
@@ -144,6 +145,67 @@ public:
 		EntityOverlayBox    /**< OverlayBox */
     };
 
+/**
+* return entity type as a QString
+*/
+
+static QString qStringType(EntityType t)
+{
+        std::cout<<"starting\n";
+                     switch(t) {
+case RS2::EntityBlock:
+return QString("EntityBlock");
+case RS2::EntityFontChar:
+return QString("EntityFontChar");
+case RS2::EntityInsert:
+return QString("EntityInsert");
+case RS2::EntityGraphic:
+return QString("EntityGraphic");
+case RS2::EntityPoint:
+return QString("EntityPoint");
+case RS2::EntityLine:
+return QString("EntityLine");
+case RS2::EntityPolyline:
+return QString("EntityPolyline");
+case RS2::EntityVertex:
+return QString("EntityVertex");
+case RS2::EntityArc:
+return QString("EntityArc");
+case RS2::EntityCircle:
+return QString("EntityCircle");
+case RS2::EntityEllipse:
+return QString("EntityEllipse");
+case RS2::EntitySolid:
+return QString("EntitySolid");
+case RS2::EntityConstructionLine:
+return QString("EntityConstructionLine");
+case RS2::EntityText:
+return QString("EntityText");
+case RS2::EntityDimAligned:
+return QString("EntityDimAligned");
+case RS2::EntityDimLinear:
+return QString("EntityDimLinear");
+case RS2::EntityDimRadial:
+return QString("EntityDimRadial");
+case RS2::EntityDimDiametric:
+return QString("EntityDimDiametric");
+case RS2::EntityDimAngular:
+return QString("EntityDimAngular");
+case RS2::EntityDimLeader:
+return QString("EntityDimLeader");
+case RS2::EntityHatch:
+return QString("EntityHatch");
+case RS2::EntityImage:
+return QString("EntityImage");
+case RS2::EntitySpline:
+return QString("EntitySpline");
+case RS2::EntityOverlayBox:
+return QString("EntityOverlayBox");
+default:
+        return QString("EntityUnknown");
+    }
+
+}
     /**
      * Action types used by action factories.
      */

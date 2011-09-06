@@ -503,7 +503,23 @@ void RS_EntityContainer::calculateBorders() {
 
         if (e->isVisible() && (layer==NULL || !layer->isFrozen())) {
             e->calculateBorders();
-            adjustBorders(e);
+            RS_Vector vp(e->getSize());
+            //Only adjust for valid border size
+            if ( e->rtti() == RS2::EntityText ) {
+                    std::cout<<"entity ID= "<<e->getId()<< " "<<*e<<std::endl;
+            }
+            if( std::isfinite<double>(vp.x) && std::isfinite<double>(vp.y) 
+                && fabs(vp.x) < RS_MAXDOUBLE && fabs(vp.y) < RS_MAXDOUBLE
+                            ) {
+                   // std::cout<<"entity ID= "<<e->getId()<<" entityType= "<<qPrintable(RS2::qStringType(e->rtti()))<<" size= "<<e->getSize()<<" vp="<<vp<<std::endl;
+                    adjustBorders(e);
+            } else {
+                    std::cout<<"Found invalid size for entity ID= "<<e->getId()<<" size= "<<e->getSize()<<" vp="<<vp<<std::endl;
+                    std::cout<<"std::isfinite<double>("<<vp.x<<")="<<std::isfinite<double>(vp.x)<<std::endl;
+                    std::cout<<"std::isfinite<double>("<<vp.y<<")="<<std::isfinite<double>(vp.y)<<std::endl;
+                    std::cout<<"fabs("<<vp.x<<")<RS_MAXDOUBLE="<<(fabs(vp.x)<RS_MAXDOUBLE)<<std::endl;
+                    std::cout<<"fabs("<<vp.y<<")<RS_MAXDOUBLE="<<(fabs(vp.y)<RS_MAXDOUBLE)<<std::endl;
+            }
         }
     }
 
@@ -552,7 +568,12 @@ void RS_EntityContainer::forcedCalculateBorders() {
         if (e->isContainer()) {
             ((RS_EntityContainer*)e)->forcedCalculateBorders();
         } else {
+                RS_Vector vp(e->getSize());
+            if( std::isfinite<double>(vp.x) && std::isfinite<double>(vp.y) 
+                && fabs(vp.x) < RS_MAXDOUBLE && fabs(vp.y) < RS_MAXDOUBLE
+                            ) {
             e->calculateBorders();
+            }
         }
         adjustBorders(e);
     }

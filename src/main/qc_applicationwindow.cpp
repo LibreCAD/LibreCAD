@@ -63,6 +63,7 @@
 #include "qg_cadtoolbar.h"
 #include "qg_actionfactory.h"
 #include "qg_blockwidget.h"
+#include "qg_layerwidget.h"
 #include "qg_librarywidget.h"
 #include "qg_commandwidget.h"
 
@@ -745,7 +746,7 @@ void QC_ApplicationWindow::initActions(void)
 	action->setShortcut(tr("CTRL+M"));
 	//action->zetStatusTip(tr("Focus on Command Line"));
 		
-    connect(action, SIGNAL(activated()),
+    connect(action, SIGNAL(triggered()),
             this, SLOT(slotFocusCommandLine()));
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -1278,92 +1279,92 @@ void QC_ApplicationWindow::initActions(void)
 
     //helpAboutApp->zetStatusTip(tr("About the application"));
     //helpAboutApp->setWhatsThis(tr("About\n\nAbout the application"));
-    connect(helpAboutApp, SIGNAL(activated()),
+    connect(helpAboutApp, SIGNAL(triggered()),
             this, SLOT(slotHelpAbout()));
 
     helpManual = new QAction(QIcon(":/main/contents.png"), tr("&Manual"), this);
     //helpManual->zetStatusTip(tr("Launch the online manual"));
-    connect(helpManual, SIGNAL(activated()),
+    connect(helpManual, SIGNAL(triggered()),
             this, SLOT(slotHelpManual()));
 
 /* RVT_PORT    testDumpEntities = new QAction("Dump Entities",
                                    "Dump &Entities", 0, this); */
     testDumpEntities = new QAction("Dump Entities", this);
-    connect(testDumpEntities, SIGNAL(activated()),
+    connect(testDumpEntities, SIGNAL(triggered()),
             this, SLOT(slotTestDumpEntities()));
     
 /* RVT_PORT	testDumpUndo = new QAction("Dump Undo Info",
 							   "Undo Info", 0, this); */
 	testDumpUndo = new QAction("Dump Undo Info", this);
-    connect(testDumpUndo, SIGNAL(activated()),
+    connect(testDumpUndo, SIGNAL(triggered()),
             this, SLOT(slotTestDumpUndo()));
 
 /* RVT_PORT    testUpdateInserts = new QAction("Update Inserts",
                                     "&Update Inserts", 0, this); */
     testUpdateInserts = new QAction("Update Inserts", this);
-    connect(testUpdateInserts, SIGNAL(activated()),
+    connect(testUpdateInserts, SIGNAL(triggered()),
             this, SLOT(slotTestUpdateInserts()));
 
 /* RVT_PORT    testDrawFreehand = new QAction("Draw Freehand",
 	 "Draw Freehand", 0, this); */
 	 testDrawFreehand = new QAction("Draw Freehand", this); 
-    connect(testDrawFreehand, SIGNAL(activated()),
+    connect(testDrawFreehand, SIGNAL(triggered()),
             this, SLOT(slotTestDrawFreehand()));
 
 /* RVT_PORT    testInsertBlock = new QAction("Insert Block",
                                   "Insert Block", 0, this); */
     testInsertBlock = new QAction("Insert Block", this);
 
-    connect(testInsertBlock, SIGNAL(activated()),
+    connect(testInsertBlock, SIGNAL(triggered()),
             this, SLOT(slotTestInsertBlock()));
 
 /* RVT_PORT    testInsertText = new QAction("Insert Text",
                                  "Insert Text", 0, this); */
     testInsertText = new QAction("Insert Text", this);
-    connect(testInsertText, SIGNAL(activated()),
+    connect(testInsertText, SIGNAL(triggered()),
             this, SLOT(slotTestInsertText()));
 
 /* RVT_PORT    testInsertImage = new QAction("Insert Image",
                                   "Insert Image", 0, this); */
 	// "Insert Image",
     testInsertImage = new QAction(tr("Insert Image"), this);
-    connect(testInsertImage, SIGNAL(activated()),
+    connect(testInsertImage, SIGNAL(triggered()),
             this, SLOT(slotTestInsertImage()));
 
 /* RVT_PORT    testUnicode = new QAction("Unicode",
                               "Unicode", 0, this); */
     testUnicode = new QAction("Unicode", this);
-    connect(testUnicode, SIGNAL(activated()),
+    connect(testUnicode, SIGNAL(triggered()),
             this, SLOT(slotTestUnicode()));
 
 /* RVT_PORT    testInsertEllipse = new QAction("Insert Ellipse",
                                     "Insert Ellipse", 0, this); */
     testInsertEllipse = new QAction("Insert Ellipse", this);
-    connect(testInsertEllipse, SIGNAL(activated()),
+    connect(testInsertEllipse, SIGNAL(triggered()),
             this, SLOT(slotTestInsertEllipse()));
 
 /*  RVT_PORT  testMath01 = new QAction("Math01",
                              "Math01", 0, this); */
     testMath01 = new QAction("Math01", this);
-    connect(testMath01, SIGNAL(activated()),
+    connect(testMath01, SIGNAL(triggered()),
             this, SLOT(slotTestMath01()));
 
 /* RVT_PORT    testResize640 = new QAction("Resize to 640x480",
                                 "Resize 1", 0, this); */
     testResize640 = new QAction("Resize to 640x480", this);
-    connect(testResize640, SIGNAL(activated()),
+    connect(testResize640, SIGNAL(triggered()),
             this, SLOT(slotTestResize640()));
 
 /* RVT_PORT    testResize800 = new QAction("Resize to 800x600",
                                 "Resize 2", 0, this); */
     testResize800 = new QAction("Resize to 800x600", this);
-    connect(testResize800, SIGNAL(activated()),
+    connect(testResize800, SIGNAL(triggered()),
             this, SLOT(slotTestResize800()));
 
 /* RVT_PORT    testResize1024 = new QAction("Resize to 1024x768",
                                  "Resize 3", 0, this); */
     testResize1024 = new QAction("Resize to 1024x768", this);
-    connect(testResize1024, SIGNAL(activated()),
+    connect(testResize1024, SIGNAL(triggered()),
             this, SLOT(slotTestResize1024()));
 
 }
@@ -1520,6 +1521,15 @@ void QC_ApplicationWindow::initSettings() {
         }
     }
     RS_SETTINGS->endGroup();
+//    QList <QAction*> recentFilesAction;
+
+    for (int i = 0; i < recentFiles->getNumber(); ++i) {
+        recentFilesAction.insert(i, new QAction(this));
+        recentFilesAction[i]->setVisible(false);
+        connect(recentFilesAction[i], SIGNAL(triggered()),
+                this, SLOT(slotFileOpenRecent()));
+        fileMenu->addAction(recentFilesAction[i]);
+    }
     if (recentFiles->count()>0) {
         updateRecentFilesMenu();
     }
@@ -1723,7 +1733,18 @@ void QC_ApplicationWindow::updateRecentFilesMenu() {
     RS_DEBUG->print("QC_ApplicationWindow::updateRecentFilesMenu()");
 
     RS_DEBUG->print("Updating recent file menu...");
-    for (int i=0; i<recentFiles->getNumber(); ++i) {
+    int numRecentFiles = qMin(recentFiles->count(), recentFiles->getNumber());
+
+    for (int i = 0; i < numRecentFiles; ++i) {
+        QString text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(i));
+        recentFilesAction[i]->setText(text);
+        recentFilesAction[i]->setData(recentFiles->get(i));
+        recentFilesAction[i]->setVisible(true);
+    }
+    for (int j = numRecentFiles; j < recentFiles->getNumber(); ++j)
+        recentFilesAction[j]->setVisible(false);
+
+/*    for (int i=0; i<recentFiles->getNumber(); ++i) {
         QString label = QString( "&%1 %2" ).
                         arg(i+1).arg(recentFiles->get(i));
 
@@ -1736,7 +1757,7 @@ void QC_ApplicationWindow::updateRecentFilesMenu() {
                                  this, SLOT(slotFileOpenRecent(int)),
                                  0, i);
         }
-    }
+    }*/
 }
 
 
@@ -2114,13 +2135,17 @@ void QC_ApplicationWindow::slotFileOpen() {
  * Called when a recently opened file is chosen from the list in the
  * file menu.
  */
-void QC_ApplicationWindow::slotFileOpenRecent(int id) {
+void QC_ApplicationWindow::slotFileOpenRecent() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpenRecent()");
 
+    QAction *action = qobject_cast<QAction *>(sender());
+    if (action) {
+
     statusBar()->showMessage(tr("Opening recent file..."));
-    QString fileName = recentFiles->get(id);
+    QString fileName = action->data().toString();
 
     slotFileOpen(fileName, RS2::FormatUnknown);
+    }
 }
 
 
@@ -2634,8 +2659,9 @@ void QC_ApplicationWindow::slotFilePrint() {
     RS_SETTINGS->beginGroup("/Print");
     printer.setOutputFileName(RS_SETTINGS->readEntry("/FileName", ""));
     printer.setColorMode((QPrinter::ColorMode)RS_SETTINGS->readNumEntry("/ColorMode", (int)QPrinter::Color));
-    printer.setOutputToFile((bool)RS_SETTINGS->readNumEntry("/PrintToFile",
-                             0));
+//RLZ: No more needed, if setOutputFileName == "" then setOutputToFile is false
+/*    printer.setOutputToFile((bool)RS_SETTINGS->readNumEntry("/PrintToFile",
+                             0));*/
     RS_SETTINGS->endGroup();
 
     // printer setup:
@@ -2675,7 +2701,8 @@ void QC_ApplicationWindow::slotFilePrint() {
         painter.end();
 
         RS_SETTINGS->beginGroup("/Print");
-        RS_SETTINGS->writeEntry("/PrintToFile", (int)printer.outputToFile());
+        //RLZ: No more needed, if outputFileName == "" then PrintToFile is false
+//        RS_SETTINGS->writeEntry("/PrintToFile", (int)printer.outputToFile());
         RS_SETTINGS->writeEntry("/ColorMode", (int)printer.colorMode());
         RS_SETTINGS->writeEntry("/FileName", printer.outputFileName());
         RS_SETTINGS->endGroup();

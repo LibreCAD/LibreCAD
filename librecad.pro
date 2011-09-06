@@ -9,8 +9,6 @@ DEFINES += QC_VERSION="\"master\""
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 
 
-# Add qt3support
-QT += qt3support
 CONFIG += qt \
     warn_on \
     link_prl \
@@ -202,13 +200,7 @@ HEADERS = \
     src/lib/scripting/rs_simplepython.h \
     src/lib/scripting/rs_python_wrappers.h \
     src/lib/scripting/rs_script.h \
-    src/lib/scripting/rs_scriptlist.h \ 
-    src/main/doc_plugin_interface.h \
-    src/plugins/document_interface.h \
-    src/plugins/qc_plugininterface.h \
-    src/plugins/intern/qc_actiongetpoint.h \
-    src/plugins/intern/qc_actiongetselect.h \
-    src/plugins/intern/qc_actiongetent.h
+    src/lib/scripting/rs_scriptlist.h
 
 SOURCES = \
     dxflib/src/dl_dxf.cpp \
@@ -288,11 +280,7 @@ SOURCES = \
     src/lib/scripting/rs_simplepython.cpp \
     src/lib/scripting/rs_python_wrappers.cpp \
     src/lib/scripting/rs_script.cpp \
-    src/lib/scripting/rs_scriptlist.cpp \
-    src/main/doc_plugin_interface.cpp \
-    src/plugins/intern/qc_actiongetpoint.cpp \
-    src/plugins/intern/qc_actiongetselect.cpp \
-    src/plugins/intern/qc_actiongetent.cpp
+    src/lib/scripting/rs_scriptlist.cpp
 
 # ################################################################################
 # Command
@@ -458,6 +446,7 @@ SOURCES += src/actions/rs_actionblocksadd.cpp \
     src/actions/rs_actiondrawlinetangent1.cpp \
     src/actions/rs_actiondrawlinetangent2.cpp \
     src/actions/rs_actiondrawpoint.cpp \
+    src/actions/rs_actiondrawpolyline.cpp \
     src/actions/rs_actiondrawspline.cpp \
     src/actions/rs_actiondrawtext.cpp \
     src/actions/rs_actioneditcopy.cpp \
@@ -501,6 +490,13 @@ SOURCES += src/actions/rs_actionblocksadd.cpp \
     src/actions/rs_actionmodifyexplodetext.cpp \
     src/actions/rs_actionoptionsdrawing.cpp \
     src/actions/rs_actionparisdebugcreatecontainer.cpp \
+    src/actions/rs_actionpolylineadd.cpp \
+    src/actions/rs_actionpolylineappend.cpp \
+    src/actions/rs_actionpolylinedel.cpp \
+    src/actions/rs_actionpolylinedelbetween.cpp \
+    src/actions/rs_actionpolylinetrim.cpp \
+    src/actions/rs_actionpolylineequidistant.cpp \
+    src/actions/rs_actionpolylinesegment.cpp \
     src/actions/rs_actionprintpreview.cpp \
     src/actions/rs_actionselect.cpp \
     src/actions/rs_actionselectall.cpp \
@@ -523,41 +519,9 @@ SOURCES += src/actions/rs_actionblocksadd.cpp \
     src/actions/rs_actionzoomprevious.cpp \
     src/actions/rs_actionzoomredraw.cpp \
     src/actions/rs_actionzoomscroll.cpp \
-    src/actions/rs_actionzoomwindow.cpp \
-    src/actions/rs_actiondrawpolyline.cpp \
-    src/actions/rs_actionpolylineadd.cpp \
-    src/actions/rs_actionpolylineappend.cpp \
-    src/actions/rs_actionpolylinedel.cpp \
-    src/actions/rs_actionpolylinedelbetween.cpp \
-    src/actions/rs_actionpolylinetrim.cpp \
-    src/actions/rs_actionpolylineequidistant.cpp \
-    src/actions/rs_actionpolylinesegment.cpp
+    src/actions/rs_actionzoomwindow.cpp
 
 RESOURCES += res/actions/actions.qrc
-
-IMAGES += res/actions/configure.png \
-    res/actions/editcopy2.png \
-    res/actions/editcut2.png \
-    res/actions/editpaste2.png \
-    res/actions/exit.png \
-    res/actions/fileclose.png \
-    res/actions/filenew.png \
-    res/actions/fileopen2.png \
-    res/actions/fileprint.png \
-    res/actions/fileprintpreview.png \
-    res/actions/filesave2.png \
-    res/actions/filesaveas.png \
-    res/actions/redo2.png \
-    res/actions/undo2.png \
-    res/actions/viewgrid.png \
-    res/actions/viewdraft.png \
-    res/actions/zoomauto.png \
-    res/actions/zoomin.png \
-    res/actions/zoomout.png \
-    res/actions/zoompan.png \
-    res/actions/zoomprevious.png \
-    res/actions/zoomredraw.png \
-    res/actions/zoomwindow.png
 
 # ################################################################################
 # UI
@@ -620,7 +584,6 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_dlgmoverotate.h \
     src/ui/forms/qg_dlgoptionsdrawing.h \
     src/ui/forms/qg_dlgoptionsgeneral.h \
-    src/ui/forms/qg_dlgoptionsvariables.h \
     src/ui/forms/qg_dlgpoint.h \
     src/ui/forms/qg_dlgpolyline.h \
     src/ui/forms/qg_dlgrotate.h \
@@ -710,7 +673,6 @@ SOURCES += src/ui/qg_actionfactory.cpp \
     src/ui/forms/qg_dlgmoverotate.cpp \
     src/ui/forms/qg_dlgoptionsdrawing.cpp \
     src/ui/forms/qg_dlgoptionsgeneral.cpp \
-    src/ui/forms/qg_dlgoptionsvariables.cpp \
     src/ui/forms/qg_dlgpoint.cpp \
     src/ui/forms/qg_dlgpolyline.cpp \
     src/ui/forms/qg_dlgrotate.cpp \
@@ -783,7 +745,6 @@ FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_dlgmoverotate.ui \
     src/ui/forms/qg_dlgoptionsdrawing.ui \
     src/ui/forms/qg_dlgoptionsgeneral.ui \
-    src/ui/forms/qg_dlgoptionsvariables.ui \
     src/ui/forms/qg_dlgpoint.ui \
     src/ui/forms/qg_dlgpolyline.ui \
     src/ui/forms/qg_dlgrotate.ui \
@@ -826,6 +787,12 @@ HEADERS += \
     src/main/qc_graphicview.h \
     src/main/qc_mdiwindow.h \
     src/main/helpbrowser.h \
+    src/main/doc_plugin_interface.h \
+    src/plugins/document_interface.h \
+    src/plugins/qc_plugininterface.h \
+    src/plugins/intern/qc_actiongetpoint.h \
+    src/plugins/intern/qc_actiongetselect.h \
+    src/plugins/intern/qc_actiongetent.h \
     src/main/main.h
 
 SOURCES += \
@@ -834,13 +801,12 @@ SOURCES += \
     src/main/qc_graphicview.cpp \
     src/main/qc_mdiwindow.cpp \
     src/main/helpbrowser.cpp \
+    src/main/doc_plugin_interface.cpp \
+    src/plugins/intern/qc_actiongetpoint.cpp \
+    src/plugins/intern/qc_actiongetselect.cpp \
+    src/plugins/intern/qc_actiongetent.cpp \
     src/main/main.cpp
 
-IMAGES += res/main/contents.png \
-    res/main/document.png \
-    res/main/editclear.png \
-    res/main/librecad16.png \
-    res/main/librecad.png
 RESOURCES += res/main/main.qrc
 
 # ################################################################################

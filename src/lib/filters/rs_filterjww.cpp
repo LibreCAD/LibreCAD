@@ -525,7 +525,7 @@ void RS_FilterJWW::addMText(const DL_MTextData& data) {
 	}
 
     mtext+=data.text.c_str();
-    mtext = toNativeString(mtext, getDXFEncoding());
+    mtext = toNativeString(mtext.toLocal8Bit().data(), getDXFEncoding());
 
 	// use default style for the drawing:
 	if (sty.isEmpty()) {
@@ -3006,7 +3006,7 @@ QString RS_FilterJWW::toNativeString(const char* data, const QString& encoding) 
      *	  the string through a textcoder.
      *	--------------------------------------------------------------------- */
     if (!res.contains("\\U+")) {
-        QTextCodec *codec = QTextCodec::codecForName(encoding);
+        QTextCodec *codec = QTextCodec::codecForName(encoding.toAscii());
         if (codec)
             res = codec->toUnicode(data);
     }
