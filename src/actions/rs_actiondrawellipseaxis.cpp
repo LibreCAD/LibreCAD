@@ -49,7 +49,7 @@ RS_ActionDrawEllipseAxis::RS_ActionDrawEllipseAxis(
     major = RS_Vector(false);
     ratio = 0.5;
     angle1 = 0.0;
-    angle2 = 2*M_PI;
+    angle2 = isArc?2.*M_PI:0.0;
 }
 
 
@@ -90,7 +90,7 @@ void RS_ActionDrawEllipseAxis::init(int status) {
         angle1 = 0.0;
     }
     if (status<=SetAngle2) {
-        angle2 = 2*M_PI;
+        angle2 = 0.0;
     }
 }
 
@@ -143,7 +143,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
             deletePreview();
             RS_EllipseData ed(center, mouse-center,
                               0.5,
-                              0.0, 2*M_PI,
+                              0.0, isArc?2.*M_PI:0.0,
                               false);
             preview->addEntity(new RS_Ellipse(preview, ed));
             drawPreview();
@@ -158,7 +158,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
             ratio = d/(line.getLength()/2);
             RS_EllipseData ed(center, major,
                               ratio,
-                              0.0, 2*M_PI,
+                              0.0, isArc?2.*M_PI:0.0,
                               false);
             preview->addEntity(new RS_Ellipse(preview, ed));
             drawPreview();
