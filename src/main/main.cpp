@@ -218,6 +218,9 @@ int main(int argc, char** argv) {
         }
 #endif
 
+        // Set LC_NUMERIC so that enetring numeric values uses . as teh decimal seperator
+        setlocale(LC_NUMERIC, "C");
+
         RS_DEBUG->print("main: loading files..");
         bool files_loaded = false;
         for (QStringList::Iterator it = fileList.begin(); it != fileList.end();
@@ -235,9 +238,6 @@ int main(int argc, char** argv) {
                         files_loaded = true;
         }
         RS_DEBUG->print("main: loading files: OK");
-
-        // Set LC_NUMERIC so that enetring numeric values uses . as teh decimal seperator
-        setlocale(LC_NUMERIC, "C");
 
 #ifdef QSPLASHSCREEN_H
 # ifndef QC_DELAYED_SPLASH_SCREEN
