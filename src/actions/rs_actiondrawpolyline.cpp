@@ -408,7 +408,7 @@ void RS_ActionDrawPolyline::updateToolBar() {
     if (!isFinished()) {
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
     } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarLines);
+        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarPolylines);
     }
 }
 
