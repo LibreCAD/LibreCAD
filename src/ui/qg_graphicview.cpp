@@ -32,6 +32,7 @@
 #include "rs_actionzoomin.h"
 #include "rs_actionzoompan.h"
 #include "rs_actionzoomscroll.h"
+#include "rs_actionzoomauto.h"
 #include "rs_actionmodifydelete.h"
 #include "rs_actionselectsingle.h"
 #include "rs_settings.h"
@@ -320,6 +321,18 @@ void QG_GraphicView::mousePressEvent(QMouseEvent* e) {
 
     RS_GraphicView::mousePressEvent(e);
     QWidget::mousePressEvent(e);
+}
+
+void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e) {
+    // zoom auto with double click middle mouse button
+#if QT_VERSION < 0x040700
+    if (e->button()==Qt::MidButton) {
+#else
+    if (e->button()==Qt::MiddleButton) {
+#endif
+        setCurrentAction(new RS_ActionZoomAuto(*container, *this));
+        e->accept();
+    }
 }
 
 
