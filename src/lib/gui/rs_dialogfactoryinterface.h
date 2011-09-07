@@ -365,9 +365,7 @@ public:
      *            point it snaps to.
      * @param rel Relative coordiante.
      */
-    virtual void updateCoordinateWidget(const RS_Vector& abs,
-										const RS_Vector& rel,
-										bool updateFormat=false) = 0;
+    virtual void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false) = 0;
 
     /**
      * This virtual method must be overwritten if the graphic view has
@@ -379,8 +377,9 @@ public:
      * @param right Help text for the right mouse button.
      */
     virtual void updateMouseWidget(const QString& left,
-                                   const QString& right) = 0;
-    virtual void updateMouseWidget(void)=0;
+                                   const QString& right,
+                                   bool keeping=true) = 0;
+    virtual void restoreMouseWidget(void)=0;
 								   
     /**
      * This virtual method must be overwritten if the graphic view has
