@@ -79,9 +79,10 @@ public:
 protected:
     virtual void emulateMouseMoveEvent();
     virtual void mousePressEvent(QMouseEvent* e);
+    virtual void mouseDoubleClickEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void mouseMoveEvent(QMouseEvent* e);
-	virtual void tabletEvent(QTabletEvent* e);
+    virtual void tabletEvent(QTabletEvent* e);
     virtual void leaveEvent(QEvent*);
     virtual void enterEvent(QEvent*);
     virtual void focusInEvent(QFocusEvent*);
