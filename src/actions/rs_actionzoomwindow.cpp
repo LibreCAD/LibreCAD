@@ -152,13 +152,13 @@ void RS_ActionZoomWindow::updateMouseButtonHints() {
 
     switch (getStatus()) {
     case 0:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first edge"), tr("Cancel"));
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first edge"), tr("Cancel"),false);
         break;
     case 1:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second edge"), tr("Back"));
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second edge"), tr("Back"),false);
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->restoreMouseWidget();
         break;
     }
 }
