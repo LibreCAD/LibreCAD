@@ -38,6 +38,16 @@
 class RS_ActionZoomPan : public RS_ActionInterface {
 	Q_OBJECT
 public:
+      /*
+       ** Action States.
+      */
+     enum Status {
+        SetPanStart,   /**< Setting Start.  */
+        SetPanning,     /**< Setting panning. */
+        SetPanEnd,      /**< Setting End */
+     };
+
+public:
     RS_ActionZoomPan(RS_EntityContainer& container,
                      RS_GraphicView& graphicView);
     ~RS_ActionZoomPan() {}
@@ -49,6 +59,7 @@ public:
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mousePressEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
+    virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 
 protected:

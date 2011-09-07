@@ -242,13 +242,11 @@ public:
     virtual void requestOptionsDrawingDialog(RS_Graphic& graphic);
 
     virtual void requestPreviousMenu();
-
-    virtual void updateCoordinateWidget(const RS_Vector& abs,
-                                        const RS_Vector& rel,
-                                        bool updateFormat=false);
+    virtual void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false);
     virtual void updateMouseWidget(const QString& left,
-                                   const QString& right);
-    virtual void updateMouseWidget(void);
+                                   const QString& right,
+                                   bool keeping=true);
+    virtual void restoreMouseWidget(void);
     virtual void updateSelectionWidget(int num);
     virtual void commandMessage(const QString& message);
 	virtual bool isAdapter() { return false; }
@@ -276,6 +274,7 @@ protected:
 private:
     QString *leftHintCurrent, *rightHintCurrent;
     QString *leftHintSaved, *rightHintSaved;
+    bool *hintKeeping;
 };
 
 #endif
