@@ -244,6 +244,7 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
 			//action->zetStatusTip(tr("Closes the current drawing"));			
                         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotFileClose()));
+                        action->setShortcutContext(Qt::WidgetShortcut);
         break;
 
     case RS2::ActionFilePrint:			
