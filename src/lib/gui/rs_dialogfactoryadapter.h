@@ -80,12 +80,11 @@ public:
     virtual bool requestHatchDialog(RS_Hatch* ) { return false; }
     virtual void requestOptionsGeneralDialog() {}
     virtual void requestOptionsDrawingDialog(RS_Graphic& ) {}
-    virtual void updateCoordinateWidget(const RS_Vector& ,
-										const RS_Vector& ,
-										bool =false) {}
+    virtual void updateCoordinateWidget(const RS_Vector& , const RS_Vector& , bool =false) {}
     virtual void updateMouseWidget(const QString& ,
-                                   const QString& ) {}
-    virtual void updateMouseWidget(void) {}
+                                   const QString& ,
+                                   bool) {}
+    virtual void restoreMouseWidget(void) {}
     virtual void updateSelectionWidget(int ) {}
     virtual void commandMessage(const QString& ) {}
 	virtual bool isAdapter() { return true; }

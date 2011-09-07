@@ -122,6 +122,7 @@ QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
     rightHintCurrent=new QString("");
     leftHintSaved=new QString("");
     rightHintSaved=new QString("");
+    hintKeeping=new bool(true);
 	RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory: OK");
 }
 
@@ -135,6 +136,7 @@ QG_DialogFactory::~QG_DialogFactory() {
     delete rightHintCurrent;
     delete leftHintSaved;
     delete rightHintSaved;
+    delete hintKeeping;
     RS_DEBUG->print("QG_DialogFactory::~QG_DialogFactory");
     RS_DEBUG->print("QG_DialogFactory::~QG_DialogFactory: OK");
 }
@@ -1706,18 +1708,22 @@ void QG_DialogFactory::updateCoordinateWidget(const RS_Vector& abs,
 
 /**
  * Called when an action has a mouse hint.
+ * @left mouse hint for left button
+ * @right mouse hint for right button
+ * @keeping whether to keep the mouse hints to be restored after interruption, default to true
  */
+
 void QG_DialogFactory::updateMouseWidget(const QString& left,
-        const QString& right) {
+        const QString& right, bool keeping /* = true */) {
 	
     if ( left != *leftHintCurrent || right != *rightHintCurrent ) {
-    	//if ( *leftHintSaved != *leftHintCurrent
-        //            || *rightHintSaved != *rightHintCurrent ) {
+	 if ( *hintKeeping ) {//whether the current hints should be save to HintSaved
             *leftHintSaved=*leftHintCurrent;
             *rightHintSaved=*rightHintCurrent;
-	//   }
+	 }
          *leftHintCurrent= left.isNull()? QString(""):left;
          *rightHintCurrent=right.isNull()? QString(""):right;
+         *hintKeeping=keeping;
     	if (mouseWidget!=NULL) {
 	    mouseWidget->setHelp(*leftHintCurrent, *rightHintCurrent);
 	    }
@@ -1728,19 +1734,19 @@ void QG_DialogFactory::updateMouseWidget(const QString& left,
 }
 
 /**
- * Called to restore saved mouse hint.
+ * Called to restore saved mouse hints
  */
-void QG_DialogFactory::updateMouseWidget(void) {
+void QG_DialogFactory::restoreMouseWidget(void) {
+    *leftHintCurrent=*leftHintSaved;
+    *rightHintCurrent=*rightHintSaved;
     if (mouseWidget!=NULL) {
    // || leftHintSaved->isNull() || rightHintSaved->isNull())) {
-        mouseWidget->setHelp(*leftHintSaved, *rightHintSaved);
+        mouseWidget->setHelp(*leftHintCurrent, *rightHintCurrent);
     }
     if (commandWidget!=NULL) {
-    //|| leftHintSaved->isNull()) ) {
-        commandWidget->setCommand(*leftHintSaved);
+        commandWidget->setCommand(*leftHintCurrent);
     }
 }
-
 
 /**
  * Called whenever the selection changed.
