@@ -64,23 +64,20 @@ void RS_ActionDrawText::init(int status) {
                 RS_Text tmp(NULL, data);
                 if (RS_DIALOGFACTORY->requestTextDialog(&tmp)) {
                     data = tmp.getData();
-                    preparePreview();
-                    preview->setVisible(false);
-
                     setStatus(SetPos);
                     showOptions();
                 } else {
                     hideOptions();
                     finish();
                 }
-			// RVT_PORT should we reall redraw here??
-			graphicView->redraw(RS2::RedrawDrawing); 
-
             }
             break;
 
         case SetPos:
             RS_DIALOGFACTORY->requestOptions(this, true, true);
+            deletePreview();
+            preview->setVisible(true);
+            preparePreview();
             break;
 
         default:
@@ -133,10 +130,9 @@ void RS_ActionDrawText::trigger() {
 
 
 void RS_ActionDrawText::preparePreview() {
-    data.insertionPoint = RS_Vector(0.0,0.0);
+    data.insertionPoint = pos;
     RS_Text* text = new RS_Text(preview, data);
     text->update();
-    //text->setVisible(false);
     preview->addEntity(text);
     textChanged = false;
 }
@@ -150,14 +146,7 @@ void RS_ActionDrawText::mouseMoveEvent(QMouseEvent* e) {
         pos = mouse;
 
         deletePreview();
-        if (textChanged) {
-            preparePreview();
-        }
-        if (!preview->isVisible()) {
-            preview->setVisible(true);
-        }
-        offset = RS_Vector(graphicView->toGuiDX(pos.x),
-                           -graphicView->toGuiDY(pos.y));
+        preparePreview();
         drawPreview();
     }
 
