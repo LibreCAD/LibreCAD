@@ -1727,10 +1727,10 @@ void QG_DialogFactory::updateMouseWidget(const QString& left,
     	if (mouseWidget!=NULL) {
 	    mouseWidget->setHelp(*leftHintCurrent, *rightHintCurrent);
 	    }
-	 }
     if (commandWidget!=NULL) {
         commandWidget->setCommand(*leftHintCurrent);
     }
+   }
 }
 
 /**
