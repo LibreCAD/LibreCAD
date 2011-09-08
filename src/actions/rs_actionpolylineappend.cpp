@@ -62,8 +62,8 @@ void RS_ActionPolylineAppend::trigger() {
 	// upd. undo list:
 	if (document!=NULL) {
 		document->startUndoCycle();
-                // RVT_PORT need to decide on how to handle undy cycles
-                // originalPolyline->setUndoState(true);
+                // RVT_PORT need to decide on how to handle undo cycles
+                originalPolyline->setUndoState(true);
 		document->addUndoable(originalPolyline);
 		document->addUndoable(polyline);
                 document->endUndoCycle();
@@ -89,9 +89,11 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
 			originalPolyline = (RS_Polyline*)catchEntity(e);
 			if (originalPolyline==NULL) {
 				RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
+                                return;
 			} else if (originalPolyline->rtti()!=RS2::EntityPolyline) {
 				RS_DIALOGFACTORY->commandMessage(
 					tr("Entity must be a polyline."));
+                                return;
 			} else {
 				RS_Vector clickCoord = snapPoint(e);
 				RS_Entity* entFirst = ((RS_Polyline*)originalPolyline)->firstEntity();
@@ -161,7 +163,7 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
 				polyline->setPenToActive();
 				container->addEntity(polyline);
 			}
-			// RVT_PORT (can be deleted) deletePreview();
+                        // RVT_PORT (can be deleted) deletePreview();
 			//clearPreview();
 			deleteSnapper();
 			graphicView->drawEntity(polyline);
@@ -169,7 +171,7 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
 		}
 		//trigger();
 		//data.startpoint = data.endpoint;
-		updateMouseButtonHints();
+                updateMouseButtonHints();
 		//graphicView->moveRelativeZero(mouse);
 		break;
 
