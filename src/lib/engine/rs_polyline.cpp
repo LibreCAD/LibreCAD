@@ -460,17 +460,21 @@ void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view,
     // We get the pen from the entitycontainer and apply it to the
     // first line so that subsequent line are draw in the right color
     RS_Pen p=this->getPen(true);
-    e->setPen(p);
-    view->drawEntity(painter, e);
+//prevent segfault if polyline is empty
+    if (e != NULL) {
+        e->setPen(p);
+        view->drawEntity(painter, e);
 
-	// draw subsequent entities with same pen:
-    for (RS_Entity* e=nextEntity(RS2::ResolveNone);
-            e!=NULL;
-            e = nextEntity(RS2::ResolveNone)) {
+        // draw subsequent entities with same pen:
+        for (RS_Entity* e=nextEntity(RS2::ResolveNone);
+             e!=NULL;
+             e = nextEntity(RS2::ResolveNone)) {
 
-        view->drawEntityPlain(painter, e);
+            view->drawEntityPlain(painter, e);
+        }
     }
 }
+
 
 
 
