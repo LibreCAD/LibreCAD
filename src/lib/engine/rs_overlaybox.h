@@ -100,7 +100,7 @@ public:
 	virtual RS_Vector getNearestEndpoint(const RS_Vector&, double*){return RS_Vector();}
 	virtual RS_Vector getNearestPointOnEntity(const RS_Vector&, bool, double*, RS_Entity**){return RS_Vector();}
 	virtual RS_Vector getNearestCenter(const RS_Vector&, double*){return RS_Vector();}
-	virtual RS_Vector getNearestMiddle(const RS_Vector&, double*){return RS_Vector();}
+	virtual RS_Vector getNearestMiddle(const RS_Vector&, double*,int){return RS_Vector();}
 	virtual RS_Vector getNearestDist(double, const RS_Vector&, double*){return RS_Vector();}
 	virtual double getDistanceToPoint(const RS_Vector&, RS_Entity**, RS2::ResolveLevel, double){return -1;}
 	

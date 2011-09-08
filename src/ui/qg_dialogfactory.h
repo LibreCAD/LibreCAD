@@ -220,6 +220,7 @@ protected:
 
 public:
     virtual void requestSnapDistOptions(double& dist, bool on);
+    virtual void requestSnapMiddleOptions(int middlePoints, bool on);
 
 public:
     virtual void requestToolBar(RS2::ToolBarId id);

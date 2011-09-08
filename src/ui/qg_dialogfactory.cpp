@@ -90,6 +90,7 @@
 #include "qg_roundoptions.h"
 #include "qg_selectionwidget.h"
 #include "qg_snapdistoptions.h"
+#include "qg_snapmiddleoptions.h"
 #include "qg_splineoptions.h"
 #include "qg_textoptions.h"
 #include "qg_trimamountoptions.h"
@@ -1184,6 +1185,25 @@ void QG_DialogFactory::requestDimLinearOptions(RS_ActionInterface* action,
     }
 }
 
+/**
+ * Shows a widget for 'snap to equidistant middle points ' options.
+ */
+void QG_DialogFactory::requestSnapMiddleOptions(int middlePoints, bool on) {
+    static QG_SnapMiddleOptions* toolWidget = NULL;
+
+    if (optionWidget!=NULL) {
+        if (toolWidget!=NULL) {
+            delete toolWidget;
+            toolWidget = NULL;
+        }
+        if (on==true) {
+            toolWidget = new QG_SnapMiddleOptions();
+            optionWidget->addWidget(toolWidget);
+            toolWidget->setMiddlePoints(&middlePoints);
+			toolWidget->show();
+        }
+    }
+}
 
 
 /**

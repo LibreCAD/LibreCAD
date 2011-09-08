@@ -199,6 +199,9 @@ public:
     virtual bool isVisible();
 
     virtual RS_VectorSolutions getRefPoints();
+    virtual RS_Vector getMiddlePoint(void){
+            return RS_Vector(false);
+    }
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
                                      double* dist = NULL);
 
