@@ -282,10 +282,8 @@ RS_Vector RS_Snapper::snapCenter(RS_Vector coord) {
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapMiddle(RS_Vector coord) {
-    RS_Vector vec;
 
-    vec = container->getNearestMiddle(coord,NULL,middlePoints);
-    return vec;
+    return container->getNearestMiddle(coord,NULL,middlePoints);
 }
 
 
@@ -297,7 +295,7 @@ RS_Vector RS_Snapper::snapMiddle(RS_Vector coord) {
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapDist(RS_Vector coord) {
-    RS_Vector vec(false);
+    RS_Vector vec;
 
     vec = container->getNearestDist(distance,
                                     coord,
@@ -439,6 +437,7 @@ void RS_Snapper::hideOptions() {
             RS_DIALOGFACTORY->requestSnapDistOptions(distance, false);
             break;
                 case RS2::SnapMiddle:
+		std::cout<<"requestSnapMiddleOptions hide\n";
             RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, false);
             break;
                 default:
@@ -450,13 +449,14 @@ void RS_Snapper::hideOptions() {
  * Shows the snapper options. Default implementation does nothing.
  */
 void RS_Snapper::showOptions() {
+		std::cout<<"showOptions()\n";
                 if (RS_DIALOGFACTORY==NULL) return;
         switch (snapMode) {
                 case RS2::SnapDist:
             RS_DIALOGFACTORY->requestSnapDistOptions(distance, true);
             break;
                 case RS2::SnapMiddle:
-		std::cout<<"requestSnapMiddleOptions\n";
+		std::cout<<"requestSnapMiddleOptions show\n";
             RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, true);
             break;
                 default:
