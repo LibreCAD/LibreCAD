@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>150</width>
+    <width>155</width>
     <height>24</height>
    </rect>
   </property>
@@ -18,15 +18,18 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>130</width>
+    <width>150</width>
     <height>22</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>150</width>
-    <height>32767</height>
+    <width>155</width>
+    <height>24</height>
    </size>
+  </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
   </property>
   <property name="windowTitle">
    <string>Snap Distance Options</string>
@@ -52,7 +55,7 @@
     <rect>
      <x>100</x>
      <y>0</y>
-     <width>41</width>
+     <width>31</width>
      <height>22</height>
     </rect>
    </property>

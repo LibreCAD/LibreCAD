@@ -292,10 +292,10 @@ RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
         do {
                 vp.setPolar(getRadius(),angle);
                 vp += getCenter();
-                double dist=coord.distanceTo(vp);
-                if(dist<curDist){
+                double d=coord.distanceTo(vp);
+                if(d<curDist){
                         curPoint=vp;
-                        curDist=dist;
+                        curDist=d;
                 }
                 angle += da;
                 j++;
