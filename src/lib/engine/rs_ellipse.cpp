@@ -373,12 +373,14 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     int j=1;
     double curDist=RS_MAXDOUBLE;
     double angle=getAngle();
-    double a=RS_Math::correctAngle(amin+da-angle);
+    //double a=RS_Math::correctAngle(amin+da-angle);
+    double a=amin+da;
     RS_Vector curPoint;
+    RS_Vector scaleFactor(RS_Vector(1./getMajorRadius(),1./getMinorRadius()));
     do {
-    RS_Vector vp(a-angle);
+    RS_Vector vp(a);
     RS_Vector vp2=vp;
-    vp2.scale(RS_Vector(1./getMajorRadius(),1./getMinorRadius()));
+    vp2.scale(scaleFactor);
     vp.scale(1./vp2.magnitude());
     vp.rotate(angle);
     vp.move(getCenter());
