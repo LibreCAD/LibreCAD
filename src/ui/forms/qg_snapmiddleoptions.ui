@@ -50,7 +50,7 @@
   <widget class="QSpinBox" name="spMiddlePoints">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>100</x>
      <y>0</y>
      <width>41</width>
      <height>22</height>
@@ -58,28 +58,6 @@
    </property>
    <property name="value">
     <number>1</number>
-   </property>
-  </widget>
-  <widget class="Line" name="sep1">
-   <property name="geometry">
-    <rect>
-     <x>146</x>
-     <y>1</y>
-     <width>16</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::VLine</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Sunken</enum>
    </property>
   </widget>
  </widget>
