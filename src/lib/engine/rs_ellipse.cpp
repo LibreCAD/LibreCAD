@@ -395,7 +395,6 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
         *dist = curDist;
     }
     RS_DEBUG->print("RS_Ellipse::getNearestMiddle: angle1=%g, angle2=%g, middle=%g\n",amin,amax,a);
-    std::cout<<"RS_Ellipse::getNearestMiddle: angle1="<<getCenter().angleTo(getStartpoint())<<" angle2="<<getCenter().angleTo(getEndpoint())<<" angle="<<getAngle()<<" amin="<<amin<<" angle2="<<amax<<" snapAngle="<<a<<std::endl;
     return curPoint;
 }
 
