@@ -74,7 +74,7 @@ public:
 //  virtual void updateMouseCursor();
 //	virtual void updateToolBar();
 //	void close();
-//	void undo();
+    void undo();
 
 private:
 	/**
