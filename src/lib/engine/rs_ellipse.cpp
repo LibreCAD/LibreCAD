@@ -363,18 +363,17 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
         return vp;
     }
     double angle=getAngle();
-    double amin=getCenter().angleTo(getStartpoint())-angle;
-    double amax=getCenter().angleTo(getEndpoint())-angle;
+    double amin=getCenter().angleTo(getStartpoint());
+    double amax=getCenter().angleTo(getEndpoint());
     if(isReversed()) {
             std::swap(amin,amax);
     }
-    if( RS_Math::isAngleBetween(0.,amin,amax,false)) amax += 2.*M_PI;
     int i=middlePoints + 1;
-    double da=(amax-amin)/i;
+    double da=fmod(amax-amin+2.*M_PI, 2.*M_PI)/i;
     int j=1;
     double curDist=RS_MAXDOUBLE;
     //double a=RS_Math::correctAngle(amin+da-angle);
-    double a=amin+da;
+    double a=amin-angle+da;
     RS_Vector curPoint;
     RS_Vector scaleFactor(RS_Vector(1./getMajorRadius(),1./getMinorRadius()));
     do {
@@ -395,7 +394,8 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     if (dist!=NULL) {
         *dist = curDist;
     }
-    RS_DEBUG->print("RS_Ellipse::getNearestMiddle: angle1=%g, angle2=%g, middle=%g\n",data.angle1,data.angle2,a);
+    RS_DEBUG->print("RS_Ellipse::getNearestMiddle: angle1=%g, angle2=%g, middle=%g\n",amin,amax,a);
+    std::cout<<"RS_Ellipse::getNearestMiddle: angle1="<<getCenter().angleTo(getStartpoint())<<" angle2="<<getCenter().angleTo(getEndpoint())<<" angle="<<getAngle()<<" amin="<<amin<<" angle2="<<amax<<" snapAngle="<<a<<std::endl;
     return curPoint;
 }
 
