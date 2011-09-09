@@ -362,8 +362,9 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
         }
         return vp;
     }
-    double amin=getCenter().angleTo(getStartpoint());
-    double amax=getCenter().angleTo(getEndpoint());
+    double angle=getAngle();
+    double amin=getCenter().angleTo(getStartpoint())-angle;
+    double amax=getCenter().angleTo(getEndpoint())-angle;
     if(isReversed()) {
             std::swap(amin,amax);
     }
@@ -372,7 +373,6 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     double da=(amax-amin)/i;
     int j=1;
     double curDist=RS_MAXDOUBLE;
-    double angle=getAngle();
     //double a=RS_Math::correctAngle(amin+da-angle);
     double a=amin+da;
     RS_Vector curPoint;
