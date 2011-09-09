@@ -65,7 +65,7 @@ void RS_Snapper::init() {
     keyEntity = NULL;
     snapSpot = RS_Vector(false);
     snapCoord = RS_Vector(false);
-    middlePoints = 1;
+    //middlePoints = 1;
     distance = 1.0;
     RS_SETTINGS->beginGroup("/Snap");
     snapRange = RS_SETTINGS->readNumEntry("/Range", 20);
