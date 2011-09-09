@@ -369,7 +369,11 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
             std::swap(amin,amax);
     }
     int i=middlePoints + 1;
-    double da=fmod(amax-amin+2.*M_PI, 2.*M_PI)/i;
+    double da=fmod(amax-amin+2.*M_PI, 2.*M_PI);
+    if ( da < RS_TOLERANCE ) {
+            da = 2.*M_PI; //whole ellipse
+    }
+    da /= i;
     int j=1;
     double curDist=RS_MAXDOUBLE;
     //double a=RS_Math::correctAngle(amin+da-angle);
