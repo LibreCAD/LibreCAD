@@ -179,7 +179,7 @@ void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
     if (data.middleOfText.valid && !forceAutoText) {
         textPos = data.middleOfText;
     } else {
-        textPos = dimensionLine->getMiddlepoint();
+        textPos = dimensionLine->getMiddlePoint();
 
         RS_Vector distV;
 

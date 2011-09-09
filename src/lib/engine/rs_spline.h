@@ -162,7 +162,7 @@ public:
 	//          const RS_Vector& trimPoint);
 	//virtual void reverse();
     /** @return the center point of the line. */
-    //RS_Vector getMiddlepoint() {
+    //RS_Vector getMiddlePoint() {
     //    return (data.startpoint + data.endpoint)/2.0;
     //}
 	//virtual bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2);
