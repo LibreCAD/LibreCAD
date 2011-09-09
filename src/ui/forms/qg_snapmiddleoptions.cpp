@@ -64,7 +64,6 @@ void QG_SnapMiddleOptions::destroy() {
 
 void QG_SnapMiddleOptions::setMiddlePoints(int* i) {
     middlePoints = i;
-RS_Snapper::RS_Snapper(
     RS_SETTINGS->beginGroup("/Snap");
     RS_SETTINGS->writeEntry("/MiddlePoints", *i);
     RS_SETTINGS->endGroup();
@@ -73,5 +72,7 @@ RS_Snapper::RS_Snapper(
 }
 
 void QG_SnapMiddleOptions::updateMiddlePoints(const int& i) {
+        if (middlePoints != NULL) {
         *middlePoints = i;
+        }
 }
