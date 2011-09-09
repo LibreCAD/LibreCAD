@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>155</width>
+    <width>145</width>
     <height>24</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>150</width>
+    <width>135</width>
     <height>22</height>
    </size>
   </property>
@@ -50,14 +50,17 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QSpinBox" name="spMiddlePoints">
+  <widget class="QSpinBox" name="sbMiddlePoints">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>90</x>
      <y>1</y>
-     <width>35</width>
+     <width>40</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="toolTip">
+    <string>Number of equidistant division points</string>
    </property>
    <property name="minimum">
     <number>1</number>
@@ -75,7 +78,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>spMiddlePoints</sender>
+   <sender>sbMiddlePoints</sender>
    <signal>valueChanged(int)</signal>
    <receiver>QG_SnapMiddleOptions</receiver>
    <slot>updateMiddlePoints(int)</slot>
