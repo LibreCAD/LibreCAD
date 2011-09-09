@@ -37,7 +37,7 @@ public:
     ~QG_SnapMiddleOptions();
 
 public slots:
-    virtual void setMiddlePoints( int i );
+    virtual void setMiddlePoints( int* i );
     virtual void updateMiddlePoints( const QString& i );
 
 protected:
