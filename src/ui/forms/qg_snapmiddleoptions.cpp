@@ -58,16 +58,19 @@ void QG_SnapMiddleOptions::languageChange()
 
 void QG_SnapMiddleOptions::destroy() {
     RS_SETTINGS->beginGroup("/Snap");
-    RS_SETTINGS->writeEntry("/MiddlePoints", sbMiddlePoints->value());
+    RS_SETTINGS->writeEntry("/MiddlePoints", *middlePoints);
     RS_SETTINGS->endGroup();
 }
 
 void QG_SnapMiddleOptions::setMiddlePoints(int* i) {
     middlePoints = i;
     RS_SETTINGS->beginGroup("/Snap");
-    RS_SETTINGS->readNumEntry("/MiddlePoints", *i);
+    *i=RS_SETTINGS->readNumEntry("/MiddlePoints", 1);
+    if( !( *i>=1 && *i<=99)) {
+            *i=1;
+        RS_SETTINGS->writeEntry("/MiddlePoints", 1);
+    }
     RS_SETTINGS->endGroup();
-    if( !( *i>=1 && *i<=99)) *i=1;
 
     sbMiddlePoints->setValue(*i);
 }
@@ -77,3 +80,4 @@ void QG_SnapMiddleOptions::updateMiddlePoints(const int& i) {
         *middlePoints = i;
         }
 }
+//EOF
