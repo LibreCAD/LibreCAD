@@ -62,16 +62,16 @@ void QG_SnapMiddleOptions::destroy() {
     RS_SETTINGS->endGroup();
 }
 
-void QG_SnapMiddleOptions::setMiddlePoints(int i) {
+void QG_SnapMiddleOptions::setMiddlePoints(int* i) {
     middlePoints = i;
-
+RS_Snapper::RS_Snapper(
     RS_SETTINGS->beginGroup("/Snap");
-    QString r = RS_SETTINGS->readEntry("/MiddlePoints", "1");
+    RS_SETTINGS->writeEntry("/MiddlePoints", *i);
     RS_SETTINGS->endGroup();
 
-    spMiddlePoints->setValue(r.toInt());
+    spMiddlePoints->setValue(*i);
 }
 
-void QG_SnapMiddleOptions::updateMiddlePoints(const QString& i) {
-        middlePoints = i.toInt();
+void QG_SnapMiddleOptions::updateMiddlePoints(const int& i) {
+        middlePoints = i;
 }

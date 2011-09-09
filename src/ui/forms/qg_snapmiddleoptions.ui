@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>150</width>
-    <height>22</height>
+    <height>24</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,57 +29,82 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Snap Middle Point Options</string>
+   <string>Snap Distance Options</string>
   </property>
+  <widget class="QLabel" name="lDist">
+   <property name="geometry">
+    <rect>
+     <x>1</x>
+     <y>1</y>
+     <width>101</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Middle Points:</string>
+   </property>
+   <property name="wordWrap">
+    <bool>false</bool>
+   </property>
+  </widget>
   <widget class="QSpinBox" name="spMiddlePoints">
    <property name="geometry">
     <rect>
-     <x>98</x>
-     <y>1</y>
-     <width>50</width>
-     <height>23</height>
+     <x>110</x>
+     <y>0</y>
+     <width>41</width>
+     <height>22</height>
     </rect>
-   </property>
-   <property name="toolTip">
-    <string>Number of equidistant points in middle</string>
    </property>
    <property name="value">
     <number>1</number>
    </property>
   </widget>
-  <widget class="QLabel" name="lMiddlePoints">
+  <widget class="Line" name="sep1">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>92</width>
-     <height>21</height>
+     <x>146</x>
+     <y>1</y>
+     <width>16</width>
+     <height>22</height>
     </rect>
    </property>
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+    <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <property name="text">
-    <string>Middle Points</string>
+   <property name="frameShape">
+    <enum>QFrame::VLine</enum>
    </property>
-   <property name="alignment">
-    <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-   </property>
-   <property name="wordWrap">
-    <bool>false</bool>
+   <property name="frameShadow">
+    <enum>QFrame::Sunken</enum>
    </property>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <includes>
   <include location="local">rs_circle.h</include>
-  <include location="local">rs_ellipse.h</include>
-  <include location="local">rs_snapper.h</include>
   <include location="local">rs_settings.h</include>
  </includes>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>spMiddlePoints</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>QG_SnapMiddleOptions</receiver>
+   <slot>updateMiddlePoints(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
