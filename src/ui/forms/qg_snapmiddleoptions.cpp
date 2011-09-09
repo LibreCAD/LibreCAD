@@ -73,5 +73,5 @@ RS_Snapper::RS_Snapper(
 }
 
 void QG_SnapMiddleOptions::updateMiddlePoints(const int& i) {
-        middlePoints = i;
+        *middlePoints = i;
 }

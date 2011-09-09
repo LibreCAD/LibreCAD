@@ -41,7 +41,7 @@ public slots:
     virtual void updateMiddlePoints( const QString& i );
 
 protected:
-    int middlePoints;
+    int* middlePoints;
 
 protected slots:
     virtual void languageChange();
