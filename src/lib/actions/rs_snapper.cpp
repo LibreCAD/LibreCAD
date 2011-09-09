@@ -32,6 +32,7 @@
 #include "rs_grid.h"
 #include "rs_settings.h"
 #include "rs_overlayline.h"
+#include <iostream>
 
 
 /**
@@ -39,6 +40,8 @@
  */
 RS_Snapper::RS_Snapper(RS_EntityContainer& container,
                        RS_GraphicView& graphicView) {
+		       RS_DEBUG->print("RS_Snapper::RS_Snapper()");
+		       std::cout<<"RS_Snapper, constructor\n";
     this->container = &container;
     this->graphicView = &graphicView;
     finished = false;
@@ -90,12 +93,14 @@ void RS_Snapper::finish() {
  */
 RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
 	RS_DEBUG->print("RS_Snapper::snapPoint");
+	std::cout<<"RS_Snapper::snapPoint\n";
 
     snapSpot = RS_Vector(false);
 
     if (e==NULL) {
 		RS_DEBUG->print(RS_Debug::D_WARNING, 
 			"RS_Snapper::snapPoint: event is NULL");
+			std::cout<<"RS_Snapper::snapPoint: event is NULL\n";
         return snapSpot;
     }
 

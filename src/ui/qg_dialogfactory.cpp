@@ -1199,7 +1199,7 @@ void QG_DialogFactory::requestSnapMiddleOptions(int middlePoints, bool on) {
         if (on==true) {
             toolWidget = new QG_SnapMiddleOptions();
             optionWidget->addWidget(toolWidget);
-            toolWidget->setMiddlePoints(&middlePoints);
+            toolWidget->setMiddlePoints(middlePoints);
 			toolWidget->show();
         }
     }
