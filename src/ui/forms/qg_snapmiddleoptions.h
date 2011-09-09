@@ -38,7 +38,7 @@ public:
 
 public slots:
     virtual void setMiddlePoints( int* i );
-    virtual void updateMiddlePoints( const QString& i );
+    virtual void updateMiddlePoints( const int& i );
 
 protected:
     int* middlePoints;
