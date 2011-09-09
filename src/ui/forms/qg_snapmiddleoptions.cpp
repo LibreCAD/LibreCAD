@@ -73,7 +73,5 @@ void QG_SnapMiddleOptions::setMiddlePoints(int i) {
 }
 
 void QG_SnapMiddleOptions::updateMiddlePoints(const QString& i) {
-    if (middlePoints!=NULL) {
-        *middlePoints = i.toInt();
-    }
+        middlePoints = i.toInt();
 }
