@@ -1075,7 +1075,7 @@ RS_Vector RS_EntityContainer::getNearestMiddle(const RS_Vector& coord,
        double curDist;                 // currently measured distance
        RS_Vector closestPoint;         // closest found endpoint
        RS_Vector point;                // endpoint found
-       std::cout<<"RS_EntityContainer::getNearestMiddle() middlePoints="<<middlePoints<<std::endl;
+       //std::cout<<"RS_EntityContainer::getNearestMiddle() middlePoints="<<middlePoints<<std::endl;
         for (RS_Entity* en = firstEntity(RS2::ResolveAll);
                 en != NULL;
                 en = nextEntity(RS2::ResolveAll)) {

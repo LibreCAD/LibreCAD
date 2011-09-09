@@ -69,8 +69,8 @@ void RS_Snapper::init() {
     distance = 1.0;
     RS_SETTINGS->beginGroup("/Snap");
     snapRange = RS_SETTINGS->readNumEntry("/Range", 20);
-    middlePoints = RS_SETTINGS->readNumEntry("/MiddlePoints", 1);
-    std::cout<<" RS_SETTINGS->readNumEntry(\"/MiddlePoints\", 1), middlePoints="<<middlePoints<<std::endl;
+//    middlePoints = RS_SETTINGS->readNumEntry("/MiddlePoints", 1);
+//    std::cout<<" RS_SETTINGS->readNumEntry(\"/MiddlePoints\", 1), middlePoints="<<middlePoints<<std::endl;
     RS_SETTINGS->endGroup();
     RS_SETTINGS->beginGroup("/Appearance");
     showCrosshairs = (bool)RS_SETTINGS->readNumEntry("/ShowCrosshairs", 1);
@@ -457,7 +457,7 @@ void RS_Snapper::showOptions() {
             RS_DIALOGFACTORY->requestSnapDistOptions(distance, true);
             break;
                 case RS2::SnapMiddle:
-		std::cout<<"requestSnapMiddleOptions show, middlePoints= "<<middlePoints<<"\n";
+		//std::cout<<"requestSnapMiddleOptions show, middlePoints= "<<middlePoints<<"\n";
             RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, true);
             break;
                 default:
