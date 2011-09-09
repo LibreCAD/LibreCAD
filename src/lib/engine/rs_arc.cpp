@@ -283,7 +283,11 @@ RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
                 std::swap(amin,amax);
         }
         int i=middlePoints+1;
-        double da=fmod(amax-amin+2.*M_PI, 2.*M_PI)/i;
+        double da=fmod(amax-amin+2.*M_PI, 2.*M_PI);
+        if ( da < RS_TOLERANCE ) {
+                da= 2.*M_PI; // whole circle
+        }
+        da /= i;
         double angle=amin +da;
         double curDist=RS_MAXDOUBLE;
         RS_Vector vp,curPoint;
