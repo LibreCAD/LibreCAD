@@ -67,7 +67,7 @@ void QG_SnapMiddleOptions::setMiddlePoints(int* i) {
     RS_SETTINGS->beginGroup("/Snap");
     RS_SETTINGS->readNumEntry("/MiddlePoints", *i);
     RS_SETTINGS->endGroup();
-    if( !( *i>=0 && *i<=99)) *i=1;
+    if( !( *i>=1 && *i<=99)) *i=1;
 
     spMiddlePoints->setValue(*i);
 }
