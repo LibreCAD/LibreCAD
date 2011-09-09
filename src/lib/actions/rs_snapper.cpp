@@ -77,6 +77,7 @@ void RS_Snapper::init() {
 }
 
 void RS_Snapper::finish() {
+	hideOptions();
     finished = true;
 }
 
@@ -99,7 +100,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     }
 
     RS_Vector mouseCoord = graphicView->toGraph(e->x(), e->y());
-
+std::cout<<"switch(snapMode)\n";
     switch (snapMode) {
 
     case RS2::SnapFree:
@@ -123,6 +124,8 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
         break;
 
     case RS2::SnapMiddle:
+    	showOptions();
+std::cout<<"showOptions(), SnapMiddle\n";
         snapSpot = snapMiddle(mouseCoord);
         break;
 
@@ -283,7 +286,7 @@ RS_Vector RS_Snapper::snapCenter(RS_Vector coord) {
  */
 RS_Vector RS_Snapper::snapMiddle(RS_Vector coord) {
 
-    return container->getNearestMiddle(coord,NULL,middlePoints);
+    return container->getNearestMiddle(coord,(double *) NULL,middlePoints);
 }
 
 
@@ -431,6 +434,7 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e,
  * Hides the snapper options. Default implementation does nothing.
  */
 void RS_Snapper::hideOptions() {
+		std::cout<<"hideOptions()\n";
         if (RS_DIALOGFACTORY==NULL) return;
         switch (snapMode) {
                 case RS2::SnapDist:
@@ -460,6 +464,7 @@ void RS_Snapper::showOptions() {
             RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, true);
             break;
                 default:
+		hideOptions();
             break;
         }
 }

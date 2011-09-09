@@ -25,8 +25,8 @@
 **********************************************************************/
 
 #pragma once
-#ifndef RS_SNAPPER_H
-#define RS_SNAPPER_H
+//#ifndef RS_SNAPPER_H
+//#define RS_SNAPPER_H
 
 #include "rs_entitycontainer.h"
 
@@ -160,5 +160,5 @@ protected:
 	bool finished;
 };
 
-#endif
+//#endif
 //EOF
