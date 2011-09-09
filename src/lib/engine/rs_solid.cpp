@@ -149,7 +149,8 @@ RS_Vector RS_Solid::getNearestCenter(const RS_Vector& /*coord*/,
 
 
 RS_Vector RS_Solid::getNearestMiddle(const RS_Vector& /*coord*/,
-                                     double* dist) {
+                                     double* dist,
+                                     const int /*middlePoints*/) {
     if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;
     }

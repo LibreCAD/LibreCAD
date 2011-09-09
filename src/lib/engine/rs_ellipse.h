@@ -227,6 +227,7 @@ public:
         return data.majorP.magnitude()*data.ratio;
     }
 
+    virtual RS_Vector getMiddlePoint(void);
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL);
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
@@ -234,7 +235,9 @@ public:
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
                                        double* dist = NULL);
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL);
+                                       double* dist = NULL,
+                                       int middlePoints = 1
+                                       );
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
                                      double* dist = NULL);

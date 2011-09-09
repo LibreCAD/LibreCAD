@@ -143,10 +143,6 @@ public:
     virtual RS_Vector prepareTrim(const RS_Vector& trimCoord,
                                   const RS_VectorSolutions& trimSol);
     virtual void reverse();
-    /** @return the center point of the line. */
-    RS_Vector getMiddlepoint() {
-        return (data.startpoint + data.endpoint)/2.0;
-    }
     /** Sets the y coordinate of the startpoint */
     void setStartpointY(double val) {
         data.startpoint.y = val;
@@ -180,6 +176,7 @@ public:
         return data.endpoint.angleTo(data.startpoint);
     }
 
+    virtual RS_Vector getMiddlePoint();
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL);
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
@@ -187,7 +184,9 @@ public:
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
                                        double* dist = NULL);
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL);
+                                       double* dist = NULL,
+                                       int middlePoints = 1
+                                       );
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
                                      double* dist = NULL);

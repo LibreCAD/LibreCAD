@@ -211,7 +211,7 @@ public:
 
     virtual void reverse();
 
-    RS_Vector getMiddlepoint() const;
+    virtual RS_Vector getMiddlePoint() ;
     double getAngleLength() const;
     virtual double getLength();
     double getBulge() const;
@@ -230,7 +230,9 @@ public:
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
                                        double* dist = NULL);
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL);
+                                       double* dist = NULL,
+                                       int middlePoints = 1
+                                       );
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
                                      double* dist = NULL);

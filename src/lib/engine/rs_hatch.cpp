@@ -412,12 +412,12 @@ void RS_Hatch::update() {
         RS_Vector middlePoint2;
         if (e->rtti()==RS2::EntityLine) {
             RS_Line* line = (RS_Line*)e;
-            middlePoint = line->getMiddlepoint();
+            middlePoint = line->getMiddlePoint();
             middlePoint2 = line->getNearestDist(line->getLength()/2.1,
                                                 line->getStartpoint());
         } else if (e->rtti()==RS2::EntityArc) {
             RS_Arc* arc = (RS_Arc*)e;
-            middlePoint = arc->getMiddlepoint();
+            middlePoint = arc->getMiddlePoint();
             middlePoint2 = arc->getNearestDist(arc->getLength()/2.1,
                                                arc->getStartpoint());
         } else {

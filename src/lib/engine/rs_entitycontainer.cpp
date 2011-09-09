@@ -1064,47 +1064,35 @@ RS_Vector RS_EntityContainer::getNearestCenter(const RS_Vector& coord,
     return point;
 }
 
-
+/** @return the nearest of equidistant middle points of the line. */
 
 RS_Vector RS_EntityContainer::getNearestMiddle(const RS_Vector& coord,
-        double* dist) {
+                double* dist,
+                int middlePoints
+        ) {
 
-    RS_Vector point(false);
-    RS_Entity* closestEntity;
-
-    closestEntity = getNearestEntity(coord, NULL, RS2::ResolveNone);
-
-    if (closestEntity!=NULL) {
-        point = closestEntity->getNearestMiddle(coord, dist);
-    }
-
-    return point;
-
-
-    /*
        double minDist = RS_MAXDOUBLE;  // minimum measured distance
        double curDist;                 // currently measured distance
        RS_Vector closestPoint;         // closest found endpoint
        RS_Vector point;                // endpoint found
-
-       for (RS_Entity* en = firstEntity();
-               en != NULL;
-               en = nextEntity()) {
+       std::cout<<"RS_EntityContainer::getNearestMiddle() middlePoints="<<middlePoints<<std::endl;
+        for (RS_Entity* en = firstEntity(RS2::ResolveAll);
+                en != NULL;
+                en = nextEntity(RS2::ResolveAll)) {
 
            if (en->isVisible()) {
-               point = en->getNearestMiddle(coord, &curDist);
+               point = en->getNearestMiddle(coord, &curDist, middlePoints);
                if (curDist<minDist) {
                    closestPoint = point;
                    minDist = curDist;
-                   if (dist!=NULL) {
-                       *dist = curDist;
-                   }
                }
            }
        }
+                   if (dist!=NULL) {
+                       *dist = curDist;
+                   }
 
        return closestPoint;
-    */
 }
 
 
