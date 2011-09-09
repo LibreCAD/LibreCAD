@@ -102,6 +102,7 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
 				RS_Entity* nearestSegment = originalPolyline->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),
 									graphicView->toGraphY(e->y())), &dist, RS2::ResolveNone);
 				polyline = (RS_Polyline*)originalPolyline->clone();
+                                container->addEntity(polyline);
 				prepend = false;
 				if (nearestSegment == entFirst){
 					prepend = true;
@@ -161,7 +162,6 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
 			if (polyline->count()==1) {
 				polyline->setLayerToActive();
 				polyline->setPenToActive();
-				container->addEntity(polyline);
 			}
                         // RVT_PORT (can be deleted) deletePreview();
 			//clearPreview();
@@ -213,4 +213,11 @@ void RS_ActionPolylineAppend::updateMouseButtonHints() {
 		break;
 	}
 }
+
+void RS_ActionPolylineAppend::undo() {
+    if (history.size()>1) {
+        RS_ActionDrawPolyline::undo();
+    }
+}
+
 // EOF
