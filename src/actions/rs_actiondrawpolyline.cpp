@@ -49,7 +49,8 @@ RS_ActionDrawPolyline::~RS_ActionDrawPolyline() {}
 QAction* RS_ActionDrawPolyline::createGUIAction(RS2::ActionType /*type*/, 
 				QObject* /*parent*/) {
 	// (tr("Polyline")
-	QAction* action = new QAction(tr("&Polyline"),  NULL);	
+    QAction* action = new QAction(tr("&Polyline"),  NULL);
+    action->setIcon(QIcon(":/extui/polyline.png"));
     action->setStatusTip(tr("Draw polylines"));
     return action;
 }
@@ -435,30 +436,24 @@ void RS_ActionDrawPolyline::close() {
 
 void RS_ActionDrawPolyline::undo() {
     if (history.size()>1) {
-        if (history.size()>2){
 	history.removeLast();
         bHistory.removeLast();
         deletePreview();
-        // clearPreview();
-        //graphicView->setCurrentAction(
-        //    new RS_ActionEditUndo(true, *container, *graphicView));
-		//if (history.last()!=NULL) {
-                point = history.last();
-		//}
-		if (polyline!=NULL) {
-			polyline->removeLastVertex();
-        	graphicView->moveRelativeZero(polyline->getStartpoint());
-			graphicView->redraw();
-		}
-        //if (history.count()==1) {
-          //polyline->clear();
-	  //delete polyline;
-          //polyline = NULL;
-        //}	
-	}
-	else
-	RS_DIALOGFACTORY->commandMessage(
-		tr("Undo disallowed due a fatal bug somewhere. Sorry."));
+        point = history.last();
+
+        if(history.size()==1){
+            graphicView->moveRelativeZero(history.at(0));
+            //remove polyline from container,
+            //container calls delete over polyline
+            container->removeEntity(polyline);
+            polyline = NULL;
+            graphicView->drawEntity(polyline);
+        }
+        if (polyline!=NULL) {
+            polyline->removeLastVertex();
+            graphicView->moveRelativeZero(polyline->getEndpoint());
+            graphicView->drawEntity(polyline);
+        }
     } else {
         RS_DIALOGFACTORY->commandMessage(
             tr("Cannot undo: "

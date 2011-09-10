@@ -43,7 +43,8 @@ RS_ActionPolylineDelBetween::RS_ActionPolylineDelBetween(RS_EntityContainer& con
 QAction* RS_ActionPolylineDelBetween::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	QAction* action = new QAction(tr("Delete &between two nodes"), NULL);
 	action->setShortcut(QKeySequence());
-	action->setStatusTip(tr("Delete between two nodes"));
+        action->setIcon(QIcon(":/extui/polylinedelbetween.png"));
+        action->setStatusTip(tr("Delete between two nodes"));
 	return action;
 }
 

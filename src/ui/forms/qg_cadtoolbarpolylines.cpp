@@ -124,6 +124,12 @@ void QG_CadToolBarPolylines::polylineEquidistant() {
     }
 }
 
+void QG_CadToolBarPolylines::polylineSegment() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotPolylineSegment();
+    }
+}
+
 void QG_CadToolBarPolylines::back() {
     if (cadToolBar!=NULL) {
         cadToolBar->back();
