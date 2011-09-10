@@ -39,7 +39,8 @@ RS_ActionPolylineAppend::RS_ActionPolylineAppend(RS_EntityContainer& container,
 QAction* RS_ActionPolylineAppend::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	QAction* action = new QAction(tr("A&ppend node"), NULL);
 	action->setShortcut(QKeySequence());
-	action->setStatusTip(tr("Append polyline's node"));
+        action->setIcon(QIcon(":/extui/polylineappend.png"));
+        action->setStatusTip(tr("Append polyline's node"));
 	return action;
 }
 
