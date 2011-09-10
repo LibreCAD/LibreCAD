@@ -437,12 +437,15 @@ void RS_Snapper::hideOptions() {
         if (RS_DIALOGFACTORY==NULL) return;
         switch (snapMode) {
                 case RS2::SnapDist:
+                        std::cout<<"case RS2::SnapDist\n";
             RS_DIALOGFACTORY->requestSnapDistOptions(distance, false);
             break;
                 case RS2::SnapMiddle:
+                        std::cout<<"case RS2::SnapMiddle\n";
             RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, false);
             break;
                 default:
+                        std::cout<<"case default\n";
             break;
         }
 }

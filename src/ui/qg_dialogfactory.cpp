@@ -1190,6 +1190,7 @@ void QG_DialogFactory::requestDimLinearOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestSnapMiddleOptions(int& middlePoints, bool on) {
     static QG_SnapMiddleOptions* toolWidget = NULL;
+    std::cout<<"requestSnapMiddleOptions(bool="<<on<<std::endl;
 
     if (optionWidget!=NULL) {
         if (toolWidget!=NULL) {
@@ -1211,6 +1212,7 @@ void QG_DialogFactory::requestSnapMiddleOptions(int& middlePoints, bool on) {
  */
 void QG_DialogFactory::requestSnapDistOptions(double& dist, bool on) {
     static QG_SnapDistOptions* toolWidget = NULL;
+    std::cout<<"requestSnapDistOptions(bool="<<on<<std::endl;
 
     if (optionWidget!=NULL) {
         if (toolWidget!=NULL) {
