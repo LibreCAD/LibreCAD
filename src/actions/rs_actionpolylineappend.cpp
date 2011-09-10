@@ -39,7 +39,8 @@ RS_ActionPolylineAppend::RS_ActionPolylineAppend(RS_EntityContainer& container,
 QAction* RS_ActionPolylineAppend::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	QAction* action = new QAction(tr("A&ppend node"), NULL);
 	action->setShortcut(QKeySequence());
-	action->setStatusTip(tr("Append polyline's node"));
+        action->setIcon(QIcon(":/extui/polylineappend.png"));
+        action->setStatusTip(tr("Append polyline's node"));
 	return action;
 }
 
@@ -62,8 +63,8 @@ void RS_ActionPolylineAppend::trigger() {
 	// upd. undo list:
 	if (document!=NULL) {
 		document->startUndoCycle();
-                // RVT_PORT need to decide on how to handle undy cycles
-                // originalPolyline->setUndoState(true);
+                // RVT_PORT need to decide on how to handle undo cycles
+                originalPolyline->setUndoState(true);
 		document->addUndoable(originalPolyline);
 		document->addUndoable(polyline);
                 document->endUndoCycle();
@@ -89,9 +90,11 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
 			originalPolyline = (RS_Polyline*)catchEntity(e);
 			if (originalPolyline==NULL) {
 				RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
+                                return;
 			} else if (originalPolyline->rtti()!=RS2::EntityPolyline) {
 				RS_DIALOGFACTORY->commandMessage(
 					tr("Entity must be a polyline."));
+                                return;
 			} else {
 				RS_Vector clickCoord = snapPoint(e);
 				RS_Entity* entFirst = ((RS_Polyline*)originalPolyline)->firstEntity();
@@ -100,6 +103,7 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
 				RS_Entity* nearestSegment = originalPolyline->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),
 									graphicView->toGraphY(e->y())), &dist, RS2::ResolveNone);
 				polyline = (RS_Polyline*)originalPolyline->clone();
+                                container->addEntity(polyline);
 				prepend = false;
 				if (nearestSegment == entFirst){
 					prepend = true;
@@ -159,9 +163,8 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
 			if (polyline->count()==1) {
 				polyline->setLayerToActive();
 				polyline->setPenToActive();
-				container->addEntity(polyline);
 			}
-			// RVT_PORT (can be deleted) deletePreview();
+                        // RVT_PORT (can be deleted) deletePreview();
 			//clearPreview();
 			deleteSnapper();
 			graphicView->drawEntity(polyline);
@@ -169,7 +172,7 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
 		}
 		//trigger();
 		//data.startpoint = data.endpoint;
-		updateMouseButtonHints();
+                updateMouseButtonHints();
 		//graphicView->moveRelativeZero(mouse);
 		break;
 
@@ -211,4 +214,11 @@ void RS_ActionPolylineAppend::updateMouseButtonHints() {
 		break;
 	}
 }
+
+void RS_ActionPolylineAppend::undo() {
+    if (history.size()>1) {
+        RS_ActionDrawPolyline::undo();
+    }
+}
+
 // EOF
