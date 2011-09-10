@@ -136,6 +136,7 @@
 #include "rs_actionpolylinedelbetween.h"
 #include "rs_actionpolylinetrim.h"
 #include "rs_actionpolylineequidistant.h"
+#include "rs_actionpolylinesegment.h"
 #include "rs_selection.h"
 
 #include "qg_mainwindowinterface.h"
@@ -417,6 +418,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionPolylineEquidistant:
         a = new RS_ActionPolylineEquidistant(*doc, *gv);
+        break;
+    case RS2::ActionPolylineSegment:
+        a = new RS_ActionPolylineSegment(*doc, *gv);
         break;
     case RS2::ActionDrawLinePolygon:
         a = new RS_ActionDrawLinePolygon(*doc, *gv);
@@ -1124,6 +1128,9 @@ void QG_ActionHandler::slotPolylineTrim() {
 
 void QG_ActionHandler::slotPolylineEquidistant() {
     setCurrentAction(RS2::ActionPolylineEquidistant);
+}
+void QG_ActionHandler::slotPolylineSegment() {
+    setCurrentAction(RS2::ActionPolylineSegment);
 }
 
 void QG_ActionHandler::slotDrawLinePolygon() {

@@ -133,6 +133,7 @@ public slots:
     void slotPolylineDelBetween();
     void slotPolylineTrim();
     void slotPolylineEquidistant();
+    void slotPolylineSegment();
 
     void slotDimAligned();
     void slotDimLinear();
