@@ -960,6 +960,11 @@ void QC_ApplicationWindow::initActions(void)
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
+    action = actionFactory.createAction(RS2::ActionPolylineSegment,
+                                        actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+
     // Text:
     action = actionFactory.createAction(RS2::ActionDrawText,
                                         actionHandler);
