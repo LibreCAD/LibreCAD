@@ -58,7 +58,6 @@ void RS_ActionPolylineAppend::trigger() {
 	//RS_Polyline* polyline = new RS_Polyline(container, data);
 	polyline->setLayerToActive();
 	polyline->setPenToActive();
-	container->addEntity(polyline);
 
 	// upd. undo list:
 	if (document!=NULL) {
@@ -95,7 +94,11 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
 				RS_DIALOGFACTORY->commandMessage(
 					tr("Entity must be a polyline."));
                                 return;
-			} else {
+                        } else if (originalPolyline->isClosed()) {
+                            RS_DIALOGFACTORY->commandMessage(
+                                    tr("Can not append nodes in a closed polyline."));
+                            return;
+                        } else {
 				RS_Vector clickCoord = snapPoint(e);
 				RS_Entity* entFirst = ((RS_Polyline*)originalPolyline)->firstEntity();
 				RS_Entity* entLast = ((RS_Polyline*)originalPolyline)->lastEntity();
@@ -107,9 +110,9 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
 				prepend = false;
 				if (nearestSegment == entFirst){
 					prepend = true;
-					point = entFirst->getNearestEndpoint(clickCoord, &dist);
+                                        point = originalPolyline->getStartpoint();
 				}else if (nearestSegment == entLast){
-					point = entLast->getNearestEndpoint(clickCoord, &dist);
+                                        point = originalPolyline->getEndpoint();
 				}else{
 					RS_DIALOGFACTORY->commandMessage(
 						tr("Click somewhere near the beginning or end of existing polyline."));
@@ -217,8 +220,16 @@ void RS_ActionPolylineAppend::updateMouseButtonHints() {
 
 void RS_ActionPolylineAppend::undo() {
     if (history.size()>1) {
-        RS_ActionDrawPolyline::undo();
+        history.removeLast();
+        bHistory.removeLast();
+        deletePreview();
+        point = history.last();
+    } else {
+        RS_DIALOGFACTORY->commandMessage(
+            tr("Cannot undo: "
+               "Not enough entities defined yet."));
     }
+
 }
 
 // EOF
