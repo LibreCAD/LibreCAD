@@ -1072,15 +1072,21 @@ RS_Vector RS_EntityContainer::getNearestMiddle(const RS_Vector& coord,
         ) {
 
        double minDist = RS_MAXDOUBLE;  // minimum measured distance
-       double curDist;                 // currently measured distance
+       double curDist = RS_MAXDOUBLE;                 // currently measured distance
        RS_Vector closestPoint;         // closest found endpoint
        RS_Vector point;                // endpoint found
        //std::cout<<"RS_EntityContainer::getNearestMiddle() middlePoints="<<middlePoints<<std::endl;
+
         for (RS_Entity* en = firstEntity(RS2::ResolveAll);
                 en != NULL;
                 en = nextEntity(RS2::ResolveAll)) {
 
            if (en->isVisible()) {
+                   if (en->rtti() == RS2::EntityLine ) {
+                           if (en->getParent()->rtti() == RS2::EntitySpline){
+                                   continue; //no middle point for Spline
+                           }
+                   }
                point = en->getNearestMiddle(coord, &curDist, middlePoints);
                if (curDist<minDist) {
                    closestPoint = point;
@@ -1226,6 +1232,7 @@ double RS_EntityContainer::getDistanceToPoint(const RS_Vector& coord,
         double solidDist) {
 
     RS_DEBUG->print("RS_EntityContainer::getDistanceToPoint");
+    
 
     double minDist = RS_MAXDOUBLE;      // minimum measured distance
     double curDist;                     // currently measured distance
