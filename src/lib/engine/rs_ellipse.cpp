@@ -340,9 +340,15 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
  * a naive implementation of middle point
  * to accurately locate the middle point from arc length is possible by using elliptic integral to find the total arc length, then, using elliptic function to find the half length point
  */
+RS_Vector RS_Ellipse::getMiddlePoint(){
+        return getNearestMiddle(getCenter());
+}
 RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
-                                       double* dist) {
-    if ( RS_Math::isSameDirection(data.angle1,data.angle2, RS_TOLERANCE_ANGLE) ) { // no middle point for whole ellipse
+                                       double* dist,
+                                       int middlePoints 
+                                       ) {
+    if ( ! ( std::isnormal(getAngle1()) || std::isnormal(getAngle2()))) {
+            //no middle point for whole ellipse, angle1=angle2=0
         if (dist!=NULL) {
             *dist = RS_MAXDOUBLE;
         }
@@ -356,21 +362,44 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
         }
         return vp;
     }
+    double angle=getAngle();
     double amin=getCenter().angleTo(getStartpoint());
     double amax=getCenter().angleTo(getEndpoint());
-    double a=RS_Math::correctAngle(0.5*(amin+amax));
-    if (! RS_Math::isAngleBetween(a,amin,amax,isReversed() ) ) a += M_PI; // condition to adjust one end by 2*M_PI, therefore, the middle point by M_PI
-    RS_Vector vp(a-getAngle());
-    RS_Vector vp2=vp;
-    vp2.scale(RS_Vector(1./getMajorRadius(),1./getMinorRadius()));
-    vp.scale(1./vp2.magnitude());
-    vp.rotate(getAngle());
-    vp.move(getCenter());
-    if (dist!=NULL) {
-        *dist = coord.distanceTo(vp);
+    if(isReversed()) {
+            std::swap(amin,amax);
     }
-    RS_DEBUG->print("RS_Ellipse::getNearestMiddle: angle1=%g, angle2=%g, middle=%g\n",data.angle1,data.angle2,a);
-    return vp;
+    int i=middlePoints + 1;
+    double da=fmod(amax-amin+2.*M_PI, 2.*M_PI);
+    if ( da < RS_TOLERANCE ) {
+            da = 2.*M_PI; //whole ellipse
+    }
+    da /= i;
+    int j=1;
+    double curDist=RS_MAXDOUBLE;
+    //double a=RS_Math::correctAngle(amin+da-angle);
+    double a=amin-angle+da;
+    RS_Vector curPoint;
+    RS_Vector scaleFactor(RS_Vector(1./getMajorRadius(),1./getMinorRadius()));
+    do {
+    RS_Vector vp(a);
+    RS_Vector vp2=vp;
+    vp2.scale(scaleFactor);
+    vp.scale(1./vp2.magnitude());
+    vp.rotate(angle);
+    vp.move(getCenter());
+    double d=coord.distanceTo(vp);
+    if(d<curDist) {
+            curDist=d;
+            curPoint=vp;
+    }
+    j++;
+    a += da;
+    } while (j<i);
+    if (dist!=NULL) {
+        *dist = curDist;
+    }
+    RS_DEBUG->print("RS_Ellipse::getNearestMiddle: angle1=%g, angle2=%g, middle=%g\n",amin,amax,a);
+    return curPoint;
 }
 
 

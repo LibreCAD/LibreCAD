@@ -24,9 +24,9 @@
 **
 **********************************************************************/
 
-
-#ifndef RS_SNAPPER_H
-#define RS_SNAPPER_H
+#pragma once
+//#ifndef RS_SNAPPER_H
+//#define RS_SNAPPER_H
 
 #include "rs_entitycontainer.h"
 
@@ -144,6 +144,11 @@ protected:
      * given distance from endpoints.
      */
     double distance;
+    /**
+     * Snap to equidistant middle points
+     * default to 1, i.e., equidistant to start/end points
+     */
+    int middlePoints;
 	/**
 	 * Snap range for catching entities.
 	 */
@@ -155,4 +160,5 @@ protected:
 	bool finished;
 };
 
-#endif
+//#endif
+//EOF

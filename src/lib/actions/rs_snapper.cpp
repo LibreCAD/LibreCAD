@@ -32,6 +32,7 @@
 #include "rs_grid.h"
 #include "rs_settings.h"
 #include "rs_overlayline.h"
+#include <iostream>
 
 
 /**
@@ -39,6 +40,7 @@
  */
 RS_Snapper::RS_Snapper(RS_EntityContainer& container,
                        RS_GraphicView& graphicView) {
+		       RS_DEBUG->print("RS_Snapper::RS_Snapper()");
     this->container = &container;
     this->graphicView = &graphicView;
     finished = false;
@@ -63,9 +65,12 @@ void RS_Snapper::init() {
     keyEntity = NULL;
     snapSpot = RS_Vector(false);
     snapCoord = RS_Vector(false);
+    //middlePoints = 1;
     distance = 1.0;
     RS_SETTINGS->beginGroup("/Snap");
     snapRange = RS_SETTINGS->readNumEntry("/Range", 20);
+//    middlePoints = RS_SETTINGS->readNumEntry("/MiddlePoints", 1);
+//    std::cout<<" RS_SETTINGS->readNumEntry(\"/MiddlePoints\", 1), middlePoints="<<middlePoints<<std::endl;
     RS_SETTINGS->endGroup();
     RS_SETTINGS->beginGroup("/Appearance");
     showCrosshairs = (bool)RS_SETTINGS->readNumEntry("/ShowCrosshairs", 1);
@@ -98,7 +103,6 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     }
 
     RS_Vector mouseCoord = graphicView->toGraph(e->x(), e->y());
-
     switch (snapMode) {
 
     case RS2::SnapFree:
@@ -281,10 +285,8 @@ RS_Vector RS_Snapper::snapCenter(RS_Vector coord) {
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapMiddle(RS_Vector coord) {
-    RS_Vector vec(false);
 
-    vec = container->getNearestMiddle(coord, NULL);
-    return vec;
+    return container->getNearestMiddle(coord,(double *) NULL,middlePoints);
 }
 
 
@@ -296,7 +298,7 @@ RS_Vector RS_Snapper::snapMiddle(RS_Vector coord) {
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapDist(RS_Vector coord) {
-    RS_Vector vec(false);
+    RS_Vector vec;
 
     vec = container->getNearestDist(distance,
                                     coord,
@@ -432,24 +434,36 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e,
  * Hides the snapper options. Default implementation does nothing.
  */
 void RS_Snapper::hideOptions() {
-    if (snapMode==RS2::SnapDist) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY==NULL) return;
+        switch (snapMode) {
+                case RS2::SnapDist:
             RS_DIALOGFACTORY->requestSnapDistOptions(distance, false);
+            break;
+                case RS2::SnapMiddle:
+            RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, false);
+            break;
+                default:
+            break;
         }
-    }
 }
-
-
 
 /**
  * Shows the snapper options. Default implementation does nothing.
  */
 void RS_Snapper::showOptions() {
-    if (snapMode==RS2::SnapDist) {
-        if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY==NULL) return;
+        switch (snapMode) {
+                case RS2::SnapDist:
             RS_DIALOGFACTORY->requestSnapDistOptions(distance, true);
+            break;
+                case RS2::SnapMiddle:
+		//std::cout<<"requestSnapMiddleOptions show, middlePoints= "<<middlePoints<<"\n";
+            RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, true);
+            break;
+                default:
+		hideOptions();
+            break;
         }
-    }
 }
 
 

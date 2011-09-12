@@ -367,7 +367,7 @@ void RS_DimAngular::update(bool /*autoText*/) {
 
     // text label:
     RS_TextData textData;
-    RS_Vector textPos = arc->getMiddlepoint();
+    RS_Vector textPos = arc->getMiddlePoint();
 
     RS_Vector distV;
     double textAngle;

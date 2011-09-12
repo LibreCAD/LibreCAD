@@ -233,6 +233,7 @@ public:
      * @param on true: switch widget on, false: off
      */
     virtual void requestSnapDistOptions(double& dist, bool on) = 0;
+    virtual void requestSnapMiddleOptions(int& middlePoints, bool on) = 0;
 
     /**
      * This virtual method must be overwritten and must present

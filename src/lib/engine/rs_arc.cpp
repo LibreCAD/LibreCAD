@@ -259,27 +259,56 @@ RS_Vector RS_Arc::getNearestCenter(const RS_Vector& coord,
     return data.center;
 }
 
-
+/*
+ * get the nearest equidistant middle points
+ * @coord, coordinate
+ * @middlePoints, number of equidistant middle points
+ *
+ */
 
 RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
-                                   double* dist) {
-//    if( RS_Math::isSameDirection(getAngle1(),getAngle2(),RS_TOLERANCE_ANGLE) ) {
-//	//no middle point for whole circle
-//	if(dist != NULL) {
-//		*dist=RS_MAXDOUBLE;
-//	}
-//	return RS_Vector(false);
-//    }
-
-    RS_Vector ret = getMiddlepoint();
+                                   double* dist,
+                                   int middlePoints
+                                   ) {
+        double amin=getAngle1();
+        double amax=getAngle2();
+        if( !(std::isnormal(amin) || std::isnormal(amax))){
+                //whole circle, no middle point
+                if(dist != NULL) {
+                        *dist=RS_MAXDOUBLE;
+                }
+                return RS_Vector(false);
+        }
+        if(isReversed()) {
+                std::swap(amin,amax);
+        }
+        int i=middlePoints+1;
+        double da=fmod(amax-amin+2.*M_PI, 2.*M_PI);
+        if ( da < RS_TOLERANCE ) {
+                da= 2.*M_PI; // whole circle
+        }
+        da /= i;
+        double angle=amin +da;
+        double curDist=RS_MAXDOUBLE;
+        RS_Vector vp,curPoint;
+        int j=1;
+        do {
+                vp.setPolar(getRadius(),angle);
+                vp += getCenter();
+                double d=coord.distanceTo(vp);
+                if(d<curDist){
+                        curPoint=vp;
+                        curDist=d;
+                }
+                angle += da;
+                j++;
+        }while (j<i);
 
     if (dist!=NULL) {
-        *dist = coord.distanceTo(ret);
+        *dist = curDist;
     }
-    return ret;
+    return curPoint;
 }
-
-
 
 RS_Vector RS_Arc::getNearestDist(double distance,
                                  const RS_Vector& coord,
@@ -768,24 +797,8 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 /**
  * @return Middle point of the entity.
  */
-RS_Vector RS_Arc::getMiddlepoint() const {
-//    if( RS_Math::isSameDirection(getAngle1(),getAngle2(),RS_TOLERANCE_ANGLE) ) {
-//	//no middle point for whole circle
-//	return RS_Vector(false);
-//	}
-
-    double a;
-    RS_Vector ret;
-
-    if (isReversed()) {
-        a = data.angle1 - getAngleLength()/2.0;
-    } else {
-        a = data.angle1 + getAngleLength()/2.0;
-    }
-    ret.setPolar(data.radius, a);
-    ret+=data.center;
-
-    return ret;
+RS_Vector RS_Arc::getMiddlePoint() {
+        return getNearestMiddle(getCenter());
 }
 
 

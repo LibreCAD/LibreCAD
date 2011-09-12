@@ -298,7 +298,13 @@ void QG_CadToolBarSnap::setLockRelativeZero(bool on) {
 }
 
 void QG_CadToolBarSnap::back() {
+
+     if (actionHandler!=NULL) {
+         actionHandler-> disableSnaps();
+     }
     if (cadToolBar!=NULL) {
+        snapFree(); //set to snapFree to hide all snapMode option widget displayed on toolbar
+        disableSnaps();
         cadToolBar->back();
     }
 }

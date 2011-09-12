@@ -237,8 +237,14 @@ RS_Vector RS_Circle::getNearestCenter(const RS_Vector& coord,
 
 
 
+RS_Vector RS_Circle::getMiddlePoint(void)
+{
+    return RS_Vector(false);
+}
 RS_Vector RS_Circle::getNearestMiddle(const RS_Vector& /*coord*/,
-                                      double* dist) {
+                                      double* dist,
+                                      const int /*middlePoints*/
+                                      ) {
     if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;
     }

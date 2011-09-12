@@ -170,7 +170,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Snap to middle points</string>
+    <string>Snap to equidistant points of entity</string>
    </property>
    <property name="text">
     <string/>

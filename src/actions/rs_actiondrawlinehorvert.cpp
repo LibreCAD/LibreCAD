@@ -87,7 +87,7 @@ void RS_ActionDrawLineHorVert::trigger() {
     }
 
 	graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(line->getMiddlepoint());
+    graphicView->moveRelativeZero(line->getMiddlePoint());
     RS_DEBUG->print("RS_ActionDrawLineHorVert::trigger():"
                     " line added: %d", line->getId());
 
