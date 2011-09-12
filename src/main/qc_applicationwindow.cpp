@@ -2094,6 +2094,11 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     // Link the dialog factory to the option widget:
     //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
     // Link the dialog factory to the cad tool bar:
+    if (cadToolBar!=NULL) {
+//set SnapFree to avoid orphaned snapOptions, bug#3407522
+            cadToolBar->setSnapFree();
+            cadToolBar->showToolBar(RS2::ToolBarMain);
+    }
     QG_DIALOGFACTORY->setCadToolBar(cadToolBar);
     // Link the dialog factory to the command widget:
     QG_DIALOGFACTORY->setCommandWidget(commandWidget);
