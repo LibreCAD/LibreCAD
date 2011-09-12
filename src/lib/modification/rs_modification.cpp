@@ -2156,7 +2156,7 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
         cut1 = new RS_Arc(cutEntity->getParent(),
                           RS_ArcData(static_cast<RS_Circle*>(cutEntity) ->getCenter(),
                                      static_cast<RS_Circle*>(cutEntity) ->getRadius(),
-                                     a,a, false));
+                                     a,a+2.*M_PI, false));
         cut1->setPen(cutEntity->getPen(false));
         cut1->setLayer(cutEntity->getLayer(false));
         //cut2 = NULL; // cut2 is NULL by default

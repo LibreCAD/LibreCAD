@@ -329,8 +329,13 @@ public:
      *
      * @return The closest middle point.
      */
+    virtual RS_Vector getMiddlePoint(void){
+            return RS_Vector(false);
+    }
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL) = 0;
+                                       double* dist = NULL,
+                                       int middlePoints = 1
+                                       ) = 0;
 
     /**
      * Must be overwritten to get the nearest point with a given

@@ -129,8 +129,11 @@ RS_Vector RS_ConstructionLine::getNearestCenter(const RS_Vector& /*coord*/,
 
 
 
+RS_Vector RS_ConstructionLine::getMiddlePoint(){
+    return RS_Vector(false);
+}
 RS_Vector RS_ConstructionLine::getNearestMiddle(const RS_Vector& /*coord*/,
-        double* dist) {
+        double* dist, const int /*middlePoints*/) {
     if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;
     }

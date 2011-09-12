@@ -125,6 +125,36 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
     return ret;
 }
 
+    RS_Vector RS_Line::getMiddlePoint()
+{
+        return (getStartpoint() + getEndpoint())*0.5;
+}
+/** @return the nearest of equidistant middle points of the line. */
+    RS_Vector RS_Line::getNearestMiddle(const RS_Vector& coord,
+                    double* dist,
+                    int middlePoints
+                    ) {
+            int i= middlePoints + 1;
+            RS_Vector dvp((getEndpoint() - getStartpoint())/double(i));
+            RS_Vector vp(getStartpoint()+dvp);
+            RS_Vector curPoint;
+            int j=1;
+            double curDist=RS_MAXDOUBLE;
+            do{
+            double d=coord.distanceTo(vp);
+            if (d<curDist) {
+                    curDist=d;
+                    curPoint=vp;
+            }
+            j++;
+            vp += dvp;
+            } while ( j<i);
+
+            if(dist != NULL) {
+                    *dist=curDist;
+            }
+        return curPoint;
+    }
 
 
 RS_Vector RS_Line::getNearestCenter(const RS_Vector& coord,
@@ -138,14 +168,6 @@ RS_Vector RS_Line::getNearestCenter(const RS_Vector& coord,
 
     return p;
 }
-
-
-
-RS_Vector RS_Line::getNearestMiddle(const RS_Vector& coord,
-                                    double* dist) {
-    return getNearestCenter(coord, dist);
-}
-
 
 
 RS_Vector RS_Line::getNearestDist(double distance,

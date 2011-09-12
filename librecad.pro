@@ -611,6 +611,7 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_roundoptions.h \
     src/ui/forms/qg_selectionwidget.h \
     src/ui/forms/qg_snapdistoptions.h \
+    src/ui/forms/qg_snapmiddleoptions.h \
     src/ui/forms/qg_splineoptions.h \
     src/ui/forms/qg_textoptions.h \
     src/ui/forms/qg_trimamountoptions.h \
@@ -700,6 +701,7 @@ SOURCES += src/ui/qg_actionfactory.cpp \
     src/ui/forms/qg_roundoptions.cpp \
     src/ui/forms/qg_selectionwidget.cpp \
     src/ui/forms/qg_snapdistoptions.cpp \
+    src/ui/forms/qg_snapmiddleoptions.cpp \
     src/ui/forms/qg_splineoptions.cpp \
     src/ui/forms/qg_textoptions.cpp \
     src/ui/forms/qg_trimamountoptions.cpp \
@@ -772,6 +774,7 @@ FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_roundoptions.ui \
     src/ui/forms/qg_selectionwidget.ui \
     src/ui/forms/qg_snapdistoptions.ui \
+    src/ui/forms/qg_snapmiddleoptions.ui \
     src/ui/forms/qg_splineoptions.ui \
     src/ui/forms/qg_textoptions.ui \
     src/ui/forms/qg_trimamountoptions.ui \

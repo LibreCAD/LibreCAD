@@ -182,9 +182,12 @@ RS_Vector RS_Image::getNearestCenter(const RS_Vector& coord,
 }
 
 
-
+/*
+ * ToDo, implement middlePoints
+ */
 RS_Vector RS_Image::getNearestMiddle(const RS_Vector& coord,
-                                     double* dist) {
+                                     double* dist,
+                                     const int /*middlePoints*/) {
     return getNearestCenter(coord, dist);
 }
 

@@ -89,9 +89,14 @@ RS_Vector RS_Point::getNearestCenter(const RS_Vector& coord, double* dist) {
 }
 
 
+RS_Vector RS_Point::getMiddlePoint(){
+    return data.pos;
+}
+
 
 RS_Vector RS_Point::getNearestMiddle(const RS_Vector& coord,
-                                     double* dist) {
+                                     double* dist,
+                                     const int /*middlePoints*/) {
     if (dist!=NULL) {
         *dist = data.pos.distanceTo(coord);
     }
