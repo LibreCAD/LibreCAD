@@ -293,3 +293,9 @@ void QG_CadToolBar::showToolBarSelect(RS_ActionInterface* selectAction,
     tbSelect->setSelectAction(selectAction);
     showToolBar(RS2::ToolBarSelect);
 }
+
+void QG_CadToolBar::setSnapFree() {
+        if (tbSnap != NULL ) {
+                tbSnap->snapFree();
+        }
+}
