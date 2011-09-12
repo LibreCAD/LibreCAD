@@ -262,7 +262,7 @@ void RS_ActionInterface::finish() {
     finished = true;
     graphicView->setMouseCursor(RS2::ArrowCursor);
     updateToolBar();
-    //hideOptions(); //have to skip, bug# 3407522
+    hideOptions();
     RS_Snapper::finish();
 	RS_DEBUG->print("RS_ActionInterface::finish: OK");
 }
