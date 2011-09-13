@@ -105,6 +105,14 @@ public:
     }
 	
     /**
+     * @return A list of absolute paths to all NEW font files found.
+     */
+    QStringList getNewFontList() {
+        QStringList ret = getFileList("fonts", "lff");
+                return ret;
+    }
+
+    /**
      * @return A list of absolute paths to all hatch pattern files found.
      */
     QStringList getPatternList() {
