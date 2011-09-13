@@ -128,6 +128,9 @@ protected:
     void closeEvent(QCloseEvent*);
 
 private:
+    void drawChars();
+
+private:
     /** window ID */
     int id;
     /** ID counter */
