@@ -246,6 +246,7 @@ public:
                                       RS2::ResolveLevel level=RS2::ResolveNone,
                                       double solidDist = RS_MAXDOUBLE);
     bool switchMajorMinor(void); //switch major minor axes to keep major the longer ellipse radius
+    virtual void correctAngles();//make sure angleLength() is not more than 2*M_PI
     virtual bool isPointOnEntity(const RS_Vector& coord,
                                  double tolerance=RS_TOLERANCE);
 
