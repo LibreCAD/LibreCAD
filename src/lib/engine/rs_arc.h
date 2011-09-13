@@ -198,6 +198,7 @@ public:
     virtual RS_Vector getEndpoint() const {
         return endpoint;
     }
+    virtual void correctAngles();//make sure angleLength() is not more than 2*M_PI
     virtual void moveStartpoint(const RS_Vector& pos);
     virtual void moveEndpoint(const RS_Vector& pos);
 
