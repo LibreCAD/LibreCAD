@@ -33,12 +33,15 @@
 #include "rs_graphic.h"
 #include "qg_exitdialog.h"
 #include "qg_filedialog.h"
+#include "rs_insert.h"
+#include "rs_text.h"
 
 #include <qapplication.h>
 #include <qcursor.h>
 #include <qpainter.h>
 #include <QMessageBox>
 #include <QPrintDialog>
+#include <QFileInfo>
 
 int QC_MDIWindow::idCounter = 0;
 
@@ -304,6 +307,9 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
             //QString message=tr("Loaded document: ")+fileName;
             //statusBar()->showMessage(message, 2000);
 
+            if (fileName.endsWith(".lff") || fileName.endsWith(".cxf"))
+                drawChars();
+
             RS_DEBUG->print("QC_MDIWindow::slotFileOpen: autoZoom");
             graphicView->zoomAuto(false);
             RS_DEBUG->print("QC_MDIWindow::slotFileOpen: autoZoom: OK");
@@ -320,6 +326,30 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
     return ret;
 }
 
+void QC_MDIWindow::drawChars() {
+
+    RS_BlockList* bl = document->getBlockList();
+    double sep = document->getGraphic()->getVariableDouble("LetterSpacing", 3.0);
+    double h = sep/3;
+    sep = sep*3;
+    for (int i=0; i<bl->count(); ++i) {
+        RS_Block* ch = bl->at(i);
+        RS_InsertData data(ch->getName(), RS_Vector(i*sep,0), RS_Vector(1,1), 0, 1, 1, RS_Vector(0,0));
+        RS_Insert* in = new RS_Insert(document, data);
+        document->addEntity(in);
+        QFileInfo info(document->getFilename() );
+        QString uCode = (ch->getName()).mid(1,4);
+        RS_TextData datatx(RS_Vector(i*sep,-h), h, 4*h, RS2::VAlignTop,
+                           RS2::HAlignLeft, RS2::ByStyle, RS2::AtLeast,
+                           1, uCode, "standard", 0);
+/*        RS_TextData datatx(RS_Vector(i*sep,-h), h, 4*h, RS2::VAlignTop,
+                           RS2::HAlignLeft, RS2::ByStyle, RS2::AtLeast,
+                           1, uCode, info.baseName(), 0);*/
+        RS_Text *tx = new RS_Text(document, datatx);
+        document->addEntity(tx);
+    }
+
+}
 
 
 /**

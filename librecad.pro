@@ -176,6 +176,7 @@ HEADERS = \
     src/lib/filters/rs_filterdxf.h \
     src/lib/filters/rs_filterdxf1.h \
     src/lib/filters/rs_filterjww.h \
+    src/lib/filters/rs_filterlff.h \
     src/lib/filters/rs_filterinterface.h \
     src/lib/gui/rs_commandevent.h \
     src/lib/gui/rs_coordinateevent.h \
@@ -262,6 +263,7 @@ SOURCES = \
     src/lib/filters/rs_filterdxf.cpp \
     src/lib/filters/rs_filterdxf1.cpp \
     src/lib/filters/rs_filterjww.cpp \
+    src/lib/filters/rs_filterlff.cpp \
     src/lib/gui/rs_dialogfactory.cpp \
     src/lib/gui/rs_eventhandler.cpp \
     src/lib/gui/rs_graphicview.cpp \
@@ -323,6 +325,7 @@ HEADERS += src/actions/rs_actionblocksadd.h \
     src/actions/rs_actiondrawlinehorvert.h \
     src/actions/rs_actiondrawlineparallel.h \
     src/actions/rs_actiondrawlineparallelthrough.h \
+    src/actions/rs_actiondrawlineorthtan.h \
     src/actions/rs_actiondrawlinepolygon.h \
     src/actions/rs_actiondrawlinepolygon2.h \
     src/actions/rs_actiondrawlinerectangle.h \
@@ -439,6 +442,7 @@ SOURCES += src/actions/rs_actionblocksadd.cpp \
     src/actions/rs_actiondrawlinehorvert.cpp \
     src/actions/rs_actiondrawlineparallel.cpp \
     src/actions/rs_actiondrawlineparallelthrough.cpp \
+    src/actions/rs_actiondrawlineorthtan.cpp \
     src/actions/rs_actiondrawlinepolygon.cpp \
     src/actions/rs_actiondrawlinepolygon2.cpp \
     src/actions/rs_actiondrawlinerectangle.cpp \

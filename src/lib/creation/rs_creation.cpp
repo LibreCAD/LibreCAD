@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -128,7 +128,7 @@ RS_Creation::RS_Creation(RS_EntityContainer* container,
  * @param startPoint Start point of the polyline
  */
 /*RS_Polyline* RS_Creation::createPolyline(const RS_Vector& startPoint) {
-    RS_Polyline* pl = new RS_Polyline(entityContainer, 
+    RS_Polyline* pl = new RS_Polyline(entityContainer,
 		RS_PolylineData(startPoint, RS_Vector(0.0,0.0), 0));
     entityContainer->addEntity(pl);
     return pl;
@@ -137,15 +137,15 @@ RS_Creation::RS_Creation(RS_EntityContainer* container,
 
 
 /**
- * Creates an entity parallel to the given entity e through the given 
+ * Creates an entity parallel to the given entity e through the given
  * 'coord'.
  *
- * @param coord Coordinate to define the distance / side (typically a 
+ * @param coord Coordinate to define the distance / side (typically a
  *              mouse coordinate).
  * @param number Number of parallels.
  * @param e Original entity.
  *
- * @return Pointer to the first created parallel or NULL if no 
+ * @return Pointer to the first created parallel or NULL if no
  *    parallel has been created.
  */
 RS_Entity* RS_Creation::createParallelThrough(const RS_Vector& coord,
@@ -161,7 +161,7 @@ RS_Entity* RS_Creation::createParallelThrough(const RS_Vector& coord,
         RS_Line* l = (RS_Line*)e;
         RS_ConstructionLine cl(NULL,
                                RS_ConstructionLineData(l->getStartpoint(),
-                                                       l->getEndpoint()));
+                                       l->getEndpoint()));
         dist = cl.getDistanceToPoint(coord);
     } else {
         dist = e->getDistanceToPoint(coord);
@@ -177,18 +177,18 @@ RS_Entity* RS_Creation::createParallelThrough(const RS_Vector& coord,
 
 
 /**
- * Creates an entity parallel to the given entity e. 
+ * Creates an entity parallel to the given entity e.
  * Out of the 2 possible parallels, the one closest to
  * the given coordinate is returned.
  * Lines, Arcs and Circles can have parallels.
  *
- * @param coord Coordinate to define which parallel we want (typically a 
+ * @param coord Coordinate to define which parallel we want (typically a
  *              mouse coordinate).
  * @param distance Distance of the parallel.
  * @param number Number of parallels.
  * @param e Original entity.
  *
- * @return Pointer to the first created parallel or NULL if no 
+ * @return Pointer to the first created parallel or NULL if no
  *    parallel has been created.
  */
 RS_Entity* RS_Creation::createParallel(const RS_Vector& coord,
@@ -221,17 +221,17 @@ RS_Entity* RS_Creation::createParallel(const RS_Vector& coord,
 
 
 /**
- * Creates a line parallel to the given line e. 
+ * Creates a line parallel to the given line e.
  * Out of the 2 possible parallels, the one closest to
  * the given coordinate is returned.
  *
- * @param coord Coordinate to define which parallel we want (typically a 
+ * @param coord Coordinate to define which parallel we want (typically a
  *              mouse coordinate).
  * @param distance Distance of the parallel.
  * @param number Number of parallels.
  * @param e Original entity.
  *
- * @return Pointer to the first created parallel or NULL if no 
+ * @return Pointer to the first created parallel or NULL if no
  *    parallel has been created.
  */
 RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
@@ -308,17 +308,17 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
 
 
 /**
- * Creates a arc parallel to the given arc e. 
+ * Creates a arc parallel to the given arc e.
  * Out of the 2 possible parallels, the one closest to
  * the given coordinate is returned.
  *
- * @param coord Coordinate to define which parallel we want (typically a 
+ * @param coord Coordinate to define which parallel we want (typically a
  *              mouse coordinate).
  * @param distance Distance of the parallel.
  * @param number Number of parallels.
  * @param e Original entity.
  *
- * @return Pointer to the first created parallel or NULL if no 
+ * @return Pointer to the first created parallel or NULL if no
  *    parallel has been created.
  */
 RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
@@ -394,17 +394,17 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
 
 
 /**
- * Creates a circle parallel to the given circle e. 
+ * Creates a circle parallel to the given circle e.
  * Out of the 2 possible parallels, the one closest to
  * the given coordinate is returned.
  *
- * @param coord Coordinate to define which parallel we want (typically a 
+ * @param coord Coordinate to define which parallel we want (typically a
  *              mouse coordinate).
  * @param distance Distance of the parallel.
  * @param number Number of parallels.
  * @param e Original entity.
  *
- * @return Pointer to the first created parallel or NULL if no 
+ * @return Pointer to the first created parallel or NULL if no
  *    parallel has been created.
  */
 RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
@@ -479,11 +479,11 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
 
 
 /**
- * Creates a bisecting line of the angle between the entities 
+ * Creates a bisecting line of the angle between the entities
  * e1 and e2. Out of the 4 possible bisectors, the one closest to
  * the given coordinate is returned.
  *
- * @param coord Coordinate to define which bisector we want (typically a 
+ * @param coord Coordinate to define which bisector we want (typically a
  *              mouse coordinate).
  * @param length Length of the bisecting line.
  * @param num Number of bisectors
@@ -562,297 +562,414 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
     return ret;
 }
 
-
-
 /**
- * Creates a tangent between a given point and a circle or arc.
- * Out of the 2 possible tangents, the one closest to
- * the given coordinate is returned.
+ * create a tangent line which is orthogonal to the given RS_Line(normal)
+ * @coord, the tangent line closest to this point
+ * @normal, the line orthogonal to the tangent line
+ * @circle, arc/circle/ellipse for tangent line
  *
- * @param coord Coordinate to define which tangent we want (typically a 
- *              mouse coordinate).
- * @param point Point.
- * @param circle Circle, arc or ellipse entity.
+ * Author: Dongxu Li
  */
-RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
-                                     const RS_Vector& point,
-                                     RS_Entity* circle) {
-    RS_Line* ret = NULL;
-    RS_Vector circleCenter;
+RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
+                                        RS_Line* normal,
+                                        RS_Entity* circle) {
+        RS_Line* ret = NULL;
 
-    // check given entities:
-    if (circle==NULL || !point.valid ||
-            (circle->rtti()!=RS2::EntityArc && circle->rtti()!=RS2::EntityCircle
-             && circle->rtti()!=RS2::EntityEllipse)) {
+        // check given entities:
+        if (circle==NULL||normal==NULL
+                ||!coord.valid ||
+                (   circle->rtti()!=RS2::EntityArc
+                    && circle->rtti()!=RS2::EntityCircle
+                    && circle->rtti()!=RS2::EntityEllipse)) {
 
-        return NULL;
-    }
-
-    if (circle->rtti()==RS2::EntityCircle) {
-        circleCenter = ((RS_Circle*)circle)->getCenter();
-    } else if (circle->rtti()==RS2::EntityArc) {
-        circleCenter = ((RS_Arc*)circle)->getCenter();
-    } else if (circle->rtti()==RS2::EntityEllipse) {
-        circleCenter = ((RS_Ellipse*)circle)->getCenter();
-    }
-
-    // the two tangent points:
-    RS_VectorSolutions sol;
-
-    // calculate tangent points for arcs / circles:
-    if (circle->rtti()!=RS2::EntityEllipse) {
-        // create temp. thales circle:
-        RS_Vector tCenter = (point + circleCenter)/2.0;
-        double tRadius = point.distanceTo(tCenter);
-
-        RS_Circle tmp(NULL, RS_CircleData(tCenter, tRadius));
-
-        // get the two intersection points which are the tangent points:
-        sol = RS_Information::getIntersection(&tmp, circle, false);
-    }
-
-    // calculate tangent points for ellipses:
-    else {
-        RS_Ellipse* el = (RS_Ellipse*)circle;
-        sol.alloc(2);
-        //sol.set(0, circleCenter);
-        //sol.set(1, circleCenter);
-
-
-        double a = el->getMajorRadius();     // the length of the major axis / 2
-        double b = el->getMinorRadius();     // the length of the minor axis / 2
-
-		// rotate and move point:
-		RS_Vector point2 = point;
-		point2.move(-el->getCenter());
-		point2.rotate(-el->getAngle());
-		
-        double xp = point2.x;             // coordinates of the given point
-        double yp = point2.y;
-		
-        double xt1;                      // Tangent point 1
-        double yt1;
-        double xt2;                      // Tangent point 2
-        double yt2;
-
-        double a2 = a * a;
-        double b2 = b * b;
-        double d = a2 / b2 * yp / xp;
-        double e = a2 / xp;
-        double af = b2 * d * d + a2;
-        double bf = -b2 * d * e * 2.0;
-        double cf = b2 * e * e - a2 * b2;
-        double t = sqrt(bf * bf - af * cf * 4.0);
-        yt1 = (t - bf) / (af * 2.0);
-        xt1 = e - d * yt1;
-        yt2 = (-t - bf) / (af * 2.0);
-        xt2 = e - d * yt2;
-
-		RS_Vector s1 = RS_Vector(xt1, yt1);
-		RS_Vector s2 = RS_Vector(xt2, yt2);
-
-		s1.rotate(el->getAngle());
-		s1.move(el->getCenter());
-	
-		s2.rotate(el->getAngle());
-		s2.move(el->getCenter());
-		
-		sol.set(0, s1);
-		sol.set(1, s2);
-
-		
-    }
-
-    if (!sol.get(0).valid || !sol.get(1).valid) {
-        return NULL;
-    }
-
-    // create all possible tangents:
-    RS_Line* poss[2];
-
-    RS_LineData d;
-
-    d = RS_LineData(sol.get(0), point);
-    poss[0] = new RS_Line(NULL, d);
-    d = RS_LineData(sol.get(1), point);
-    poss[1] = new RS_Line(NULL, d);
-
-    // find closest tangent:
-    double minDist = RS_MAXDOUBLE;
-    double dist;
-    int idx = -1;
-    for (int i=0; i<2; ++i) {
-        dist = poss[i]->getDistanceToPoint(coord);
-        if (dist<minDist) {
-            minDist = dist;
-            idx = i;
+            return ret;
         }
-    }
+        //if( normal->getLength()<RS_TOLERANCE) return ret;//line too short
+        RS_Vector t0;
 
-    // create the closest tangent:
-    if (idx!=-1) {
-        RS_LineData d = poss[idx]->getData();
-
-        for (int i=0; i<2; ++i) {
-            delete poss[i];
-        }
-
+        // calculate tangent points for arcs / circles:
+        t0= circle->getNearestOrthTan(coord,*normal,false);
+        if(!t0.valid) return ret;
+        RS_Vector vp(normal->getStartpoint());
+        RS_Vector direction(normal->getEndpoint() - vp);
+        RS_Vector vpt(t0 - vp);
         if (document!=NULL && handleUndo) {
             document->startUndoCycle();
         }
-
-        ret = new RS_Line(container, d);
+        double a=RS_Vector::dotP(vpt,vpt);
+        if( a <RS_TOLERANCE*RS_TOLERANCE) {
+            vp = t0 + direction;//selected line already a tangent
+        } else {
+            //find projection on the normal line
+            vp += direction*( RS_Vector::dotP(direction,vpt)/RS_Vector::dotP(direction,direction));
+        }
+        ret = new RS_Line(container, RS_LineData(vp,t0));
         ret->setLayerToActive();
         ret->setPenToActive();
-        if (container!=NULL) {
-            container->addEntity(ret);
-        }
-        if (document!=NULL && handleUndo) {
-            document->addUndoable(ret);
-            document->endUndoCycle();
-        }
-        if (graphicView!=NULL) {
-            graphicView->drawEntity(ret);
-        }
-    } else {
-        ret = NULL;
-    }
-
-    return ret;
+        return ret;
 }
+    /**
+     * Creates a tangent between a given point and a circle or arc.
+     * Out of the 2 possible tangents, the one closest to
+     * the given coordinate is returned.
+     *
+     * @param coord Coordinate to define which tangent we want (typically a
+     *              mouse coordinate).
+     * @param point Point.
+     * @param circle Circle, arc or ellipse entity.
+     */
+    RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
+                                         const RS_Vector& point,
+                                         RS_Entity* circle) {
+        RS_Line* ret = NULL;
+        RS_Vector circleCenter;
 
+        // check given entities:
+        if (circle==NULL || !point.valid ||
+                (circle->rtti()!=RS2::EntityArc && circle->rtti()!=RS2::EntityCircle
+                 && circle->rtti()!=RS2::EntityEllipse)) {
 
-
-/**
- * Creates a tangent between two circles or arcs.
- * Out of the 4 possible tangents, the one closest to
- * the given coordinate is returned.
- *
- * @param coord Coordinate to define which tangent we want (typically a 
- *              mouse coordinate).
- * @param circle1 1st circle or arc entity.
- * @param circle2 2nd circle or arc entity.
- */
-RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
-                                     RS_Entity* circle1,
-                                     RS_Entity* circle2) {
-    RS_Line* ret = NULL;
-    RS_Vector circleCenter1;
-    RS_Vector circleCenter2;
-    double circleRadius1 = 0.0;
-    double circleRadius2 = 0.0;
-
-    // check given entities:
-    if (circle1==NULL || circle2==NULL ||
-            (circle1->rtti()!=RS2::EntityArc &&
-             circle1->rtti()!=RS2::EntityCircle) ||
-            (circle2->rtti()!=RS2::EntityArc &&
-             circle2->rtti()!=RS2::EntityCircle) ) {
-
-        return NULL;
-    }
-
-    if (circle1->rtti()==RS2::EntityCircle) {
-        circleCenter1 = ((RS_Circle*)circle1)->getCenter();
-        circleRadius1 = ((RS_Circle*)circle1)->getRadius();
-    } else if (circle1->rtti()==RS2::EntityArc) {
-        circleCenter1 = ((RS_Arc*)circle1)->getCenter();
-        circleRadius1 = ((RS_Arc*)circle1)->getRadius();
-    }
-
-    if (circle2->rtti()==RS2::EntityCircle) {
-        circleCenter2 = ((RS_Circle*)circle2)->getCenter();
-        circleRadius2 = ((RS_Circle*)circle2)->getRadius();
-    } else if (circle2->rtti()==RS2::EntityArc) {
-        circleCenter2 = ((RS_Arc*)circle2)->getCenter();
-        circleRadius2 = ((RS_Arc*)circle2)->getRadius();
-    }
-
-    // create all possible tangents:
-    RS_Line* poss[4];
-    for (int i=0; i<4; ++i) {
-        poss[i] = NULL;
-    }
-
-    RS_LineData d;
-
-    double angle1 = circleCenter1.angleTo(circleCenter2);
-    double dist1 = circleCenter1.distanceTo(circleCenter2);
-
-    if (dist1>1.0e-6) {
-        // outer tangents:
-        double dist2 = circleRadius2 - circleRadius1;
-        if (dist1>dist2) {
-            double angle2 = asin(dist2/dist1);
-            double angt1 = angle1 + angle2 + M_PI/2.0;
-            double angt2 = angle1 - angle2 - M_PI/2.0;
-            RS_Vector offs1;
-            RS_Vector offs2;
-
-            offs1.setPolar(circleRadius1, angt1);
-            offs2.setPolar(circleRadius2, angt1);
-
-            d = RS_LineData(circleCenter1 + offs1,
-                            circleCenter2 + offs2);
-            poss[0] = new RS_Line(NULL, d);
-
-
-            offs1.setPolar(circleRadius1, angt2);
-            offs2.setPolar(circleRadius2, angt2);
-
-            d = RS_LineData(circleCenter1 + offs1,
-                            circleCenter2 + offs2);
-            poss[1] = new RS_Line(NULL, d);
+            return NULL;
         }
 
-        // inner tangents:
-        double dist3 = circleRadius2 + circleRadius1;
-        if (dist1>dist3) {
-            double angle3 = asin(dist3/dist1);
-            double angt3 = angle1 + angle3 + M_PI/2.0;
-            double angt4 = angle1 - angle3 - M_PI/2.0;
-            RS_Vector offs1;
-            RS_Vector offs2;
-
-            offs1.setPolar(circleRadius1, angt3);
-            offs2.setPolar(circleRadius2, angt3);
-
-            d = RS_LineData(circleCenter1 - offs1,
-                            circleCenter2 + offs2);
-            poss[2] = new RS_Line(NULL, d);
-
-
-            offs1.setPolar(circleRadius1, angt4);
-            offs2.setPolar(circleRadius2, angt4);
-
-            d = RS_LineData(circleCenter1 - offs1,
-                            circleCenter2 + offs2);
-            poss[3] = new RS_Line(NULL, d);
+        if (circle->rtti()==RS2::EntityCircle) {
+            circleCenter = ((RS_Circle*)circle)->getCenter();
+        } else if (circle->rtti()==RS2::EntityArc) {
+            circleCenter = ((RS_Arc*)circle)->getCenter();
+        } else if (circle->rtti()==RS2::EntityEllipse) {
+            circleCenter = ((RS_Ellipse*)circle)->getCenter();
         }
 
-    }
+        // the two tangent points:
+        RS_VectorSolutions sol;
 
-    // find closest tangent:
-    double minDist = RS_MAXDOUBLE;
-    double dist;
-    int idx = -1;
-    for (int i=0; i<4; ++i) {
-        if (poss[i]!=NULL) {
+        // calculate tangent points for arcs / circles:
+        if (circle->rtti()!=RS2::EntityEllipse) {
+            // create temp. thales circle:
+            RS_Vector tCenter = (point + circleCenter)/2.0;
+            double tRadius = point.distanceTo(tCenter);
+
+            RS_Circle tmp(NULL, RS_CircleData(tCenter, tRadius));
+
+            // get the two intersection points which are the tangent points:
+            sol = RS_Information::getIntersection(&tmp, circle, false);
+        }
+
+        // calculate tangent points for ellipses:
+        else {
+            RS_Ellipse* el = (RS_Ellipse*)circle;
+            sol.alloc(2);
+            //sol.set(0, circleCenter);
+            //sol.set(1, circleCenter);
+
+
+            double a = el->getMajorRadius();     // the length of the major axis / 2
+            double b = el->getMinorRadius();     // the length of the minor axis / 2
+
+            // rotate and move point:
+            RS_Vector point2 = point;
+            point2.move(-el->getCenter());
+            point2.rotate(-el->getAngle());
+
+            double xp = point2.x;             // coordinates of the given point
+            double yp = point2.y;
+
+            double xt1;                      // Tangent point 1
+            double yt1;
+            double xt2;                      // Tangent point 2
+            double yt2;
+
+            double a2 = a * a;
+            double b2 = b * b;
+            double d = a2 / b2 * yp / xp;
+            double e = a2 / xp;
+            double af = b2 * d * d + a2;
+            double bf = -b2 * d * e * 2.0;
+            double cf = b2 * e * e - a2 * b2;
+            double t = sqrt(bf * bf - af * cf * 4.0);
+            yt1 = (t - bf) / (af * 2.0);
+            xt1 = e - d * yt1;
+            yt2 = (-t - bf) / (af * 2.0);
+            xt2 = e - d * yt2;
+
+            RS_Vector s1 = RS_Vector(xt1, yt1);
+            RS_Vector s2 = RS_Vector(xt2, yt2);
+
+            s1.rotate(el->getAngle());
+            s1.move(el->getCenter());
+
+            s2.rotate(el->getAngle());
+            s2.move(el->getCenter());
+
+            sol.set(0, s1);
+            sol.set(1, s2);
+
+
+        }
+
+        if (!sol.get(0).valid || !sol.get(1).valid) {
+            return NULL;
+        }
+
+        // create all possible tangents:
+        RS_Line* poss[2];
+
+        RS_LineData d;
+
+        d = RS_LineData(sol.get(0), point);
+        poss[0] = new RS_Line(NULL, d);
+        d = RS_LineData(sol.get(1), point);
+        poss[1] = new RS_Line(NULL, d);
+
+        // find closest tangent:
+        double minDist = RS_MAXDOUBLE;
+        double dist;
+        int idx = -1;
+        for (int i=0; i<2; ++i) {
             dist = poss[i]->getDistanceToPoint(coord);
             if (dist<minDist) {
                 minDist = dist;
                 idx = i;
             }
         }
-    }
 
-    if (idx!=-1) {
-        RS_LineData d = poss[idx]->getData();
-        for (int i=0; i<4; ++i) {
-            if (poss[i]!=NULL) {
+        // create the closest tangent:
+        if (idx!=-1) {
+            RS_LineData d = poss[idx]->getData();
+
+            for (int i=0; i<2; ++i) {
                 delete poss[i];
             }
+
+            if (document!=NULL && handleUndo) {
+                document->startUndoCycle();
+            }
+
+            ret = new RS_Line(container, d);
+            ret->setLayerToActive();
+            ret->setPenToActive();
+            if (container!=NULL) {
+                container->addEntity(ret);
+            }
+            if (document!=NULL && handleUndo) {
+                document->addUndoable(ret);
+                document->endUndoCycle();
+            }
+            if (graphicView!=NULL) {
+                graphicView->drawEntity(ret);
+            }
+        } else {
+            ret = NULL;
         }
+
+        return ret;
+    }
+
+
+
+    /**
+     * Creates a tangent between two circles or arcs.
+     * Out of the 4 possible tangents, the one closest to
+     * the given coordinate is returned.
+     *
+     * @param coord Coordinate to define which tangent we want (typically a
+     *              mouse coordinate).
+     * @param circle1 1st circle or arc entity.
+     * @param circle2 2nd circle or arc entity.
+     */
+    RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
+                                         RS_Entity* circle1,
+                                         RS_Entity* circle2) {
+        RS_Line* ret = NULL;
+        RS_Vector circleCenter1;
+        RS_Vector circleCenter2;
+        double circleRadius1 = 0.0;
+        double circleRadius2 = 0.0;
+
+        // check given entities:
+        if (circle1==NULL || circle2==NULL ||
+                (circle1->rtti()!=RS2::EntityArc &&
+                 circle1->rtti()!=RS2::EntityCircle) ||
+                (circle2->rtti()!=RS2::EntityArc &&
+                 circle2->rtti()!=RS2::EntityCircle) ) {
+
+            return NULL;
+        }
+
+        if (circle1->rtti()==RS2::EntityCircle) {
+            circleCenter1 = ((RS_Circle*)circle1)->getCenter();
+            circleRadius1 = ((RS_Circle*)circle1)->getRadius();
+        } else if (circle1->rtti()==RS2::EntityArc) {
+            circleCenter1 = ((RS_Arc*)circle1)->getCenter();
+            circleRadius1 = ((RS_Arc*)circle1)->getRadius();
+        }
+
+        if (circle2->rtti()==RS2::EntityCircle) {
+            circleCenter2 = ((RS_Circle*)circle2)->getCenter();
+            circleRadius2 = ((RS_Circle*)circle2)->getRadius();
+        } else if (circle2->rtti()==RS2::EntityArc) {
+            circleCenter2 = ((RS_Arc*)circle2)->getCenter();
+            circleRadius2 = ((RS_Arc*)circle2)->getRadius();
+        }
+
+        // create all possible tangents:
+        RS_Line* poss[4];
+        for (int i=0; i<4; ++i) {
+            poss[i] = NULL;
+        }
+
+        RS_LineData d;
+
+        double angle1 = circleCenter1.angleTo(circleCenter2);
+        double dist1 = circleCenter1.distanceTo(circleCenter2);
+
+        if (dist1>1.0e-6) {
+            // outer tangents:
+            double dist2 = circleRadius2 - circleRadius1;
+            if (dist1>dist2) {
+                double angle2 = asin(dist2/dist1);
+                double angt1 = angle1 + angle2 + M_PI/2.0;
+                double angt2 = angle1 - angle2 - M_PI/2.0;
+                RS_Vector offs1;
+                RS_Vector offs2;
+
+                offs1.setPolar(circleRadius1, angt1);
+                offs2.setPolar(circleRadius2, angt1);
+
+                d = RS_LineData(circleCenter1 + offs1,
+                                circleCenter2 + offs2);
+                poss[0] = new RS_Line(NULL, d);
+
+
+                offs1.setPolar(circleRadius1, angt2);
+                offs2.setPolar(circleRadius2, angt2);
+
+                d = RS_LineData(circleCenter1 + offs1,
+                                circleCenter2 + offs2);
+                poss[1] = new RS_Line(NULL, d);
+            }
+
+            // inner tangents:
+            double dist3 = circleRadius2 + circleRadius1;
+            if (dist1>dist3) {
+                double angle3 = asin(dist3/dist1);
+                double angt3 = angle1 + angle3 + M_PI/2.0;
+                double angt4 = angle1 - angle3 - M_PI/2.0;
+                RS_Vector offs1;
+                RS_Vector offs2;
+
+                offs1.setPolar(circleRadius1, angt3);
+                offs2.setPolar(circleRadius2, angt3);
+
+                d = RS_LineData(circleCenter1 - offs1,
+                                circleCenter2 + offs2);
+                poss[2] = new RS_Line(NULL, d);
+
+
+                offs1.setPolar(circleRadius1, angt4);
+                offs2.setPolar(circleRadius2, angt4);
+
+                d = RS_LineData(circleCenter1 - offs1,
+                                circleCenter2 + offs2);
+                poss[3] = new RS_Line(NULL, d);
+            }
+
+        }
+
+        // find closest tangent:
+        double minDist = RS_MAXDOUBLE;
+        double dist;
+        int idx = -1;
+        for (int i=0; i<4; ++i) {
+            if (poss[i]!=NULL) {
+                dist = poss[i]->getDistanceToPoint(coord);
+                if (dist<minDist) {
+                    minDist = dist;
+                    idx = i;
+                }
+            }
+        }
+
+        if (idx!=-1) {
+            RS_LineData d = poss[idx]->getData();
+            for (int i=0; i<4; ++i) {
+                if (poss[i]!=NULL) {
+                    delete poss[i];
+                }
+            }
+
+            if (document!=NULL && handleUndo) {
+                document->startUndoCycle();
+            }
+
+            ret = new RS_Line(container, d);
+            ret->setLayerToActive();
+            ret->setPenToActive();
+            if (container!=NULL) {
+                container->addEntity(ret);
+            }
+            if (document!=NULL && handleUndo) {
+                document->addUndoable(ret);
+                document->endUndoCycle();
+            }
+            if (graphicView!=NULL) {
+                graphicView->drawEntity(ret);
+            }
+        } else {
+            ret = NULL;
+        }
+
+        return ret;
+    }
+
+
+    /**
+     * Creates a line with a relative angle to the given entity.
+     *
+     * @param coord Coordinate to define the point where the line should end.
+     *              (typically a mouse coordinate).
+     * @param entity Pointer to basis entity. The angle is relative to the
+     *               angle of this entity.
+     * @param angle Angle of the line relative to the angle of the basis entity.
+     * @param length Length of the line we're creating.
+     */
+    RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
+            RS_Entity* entity,
+            double angle,
+            double length) {
+
+        // check given entity / coord:
+        if (entity==NULL || !coord.valid ||
+                (entity->rtti()!=RS2::EntityArc && entity->rtti()!=RS2::EntityCircle
+                 && entity->rtti()!=RS2::EntityLine)) {
+
+            return NULL;
+        }
+
+        double a1=0.0;
+
+        switch (entity->rtti()) {
+        case RS2::EntityLine:
+            a1 = ((RS_Line*)entity)->getAngle1();
+            break;
+        case RS2::EntityArc:
+            a1 = ((RS_Arc*)entity)->getCenter().angleTo(coord) + M_PI/2.0;
+            break;
+        case RS2::EntityCircle:
+            a1 = ((RS_Circle*)entity)->getCenter().angleTo(coord);
+            break;
+        default:
+            // never reached
+            break;
+        }
+
+        a1 += angle;
+
+        RS_Vector v1;
+        v1.setPolar(length, a1);
+        //RS_ConstructionLineData(coord-v1, coord+v1);
+        RS_LineData d(coord-v1, coord+v1);
+        RS_Line* ret;
 
         if (document!=NULL && handleUndo) {
             document->startUndoCycle();
@@ -871,386 +988,313 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
         if (graphicView!=NULL) {
             graphicView->drawEntity(ret);
         }
-    } else {
-        ret = NULL;
+
+        return ret;
     }
 
-    return ret;
-}
 
+    /**
+     * Creates a polygon with 'number' edges.
+     *
+     * @param center Center of the polygon.
+     * @param corner The first corner of the polygon
+     * @param number Number of edges / corners.
+     */
+    RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
+                                        const RS_Vector& corner,
+                                        int number) {
 
-/**
- * Creates a line with a relative angle to the given entity.
- *
- * @param coord Coordinate to define the point where the line should end.
- *              (typically a mouse coordinate).
- * @param entity Pointer to basis entity. The angle is relative to the 
- *               angle of this entity.
- * @param angle Angle of the line relative to the angle of the basis entity.
- * @param length Length of the line we're creating.
- */
-RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
-        RS_Entity* entity,
-        double angle,
-        double length) {
-
-    // check given entity / coord:
-    if (entity==NULL || !coord.valid ||
-            (entity->rtti()!=RS2::EntityArc && entity->rtti()!=RS2::EntityCircle
-             && entity->rtti()!=RS2::EntityLine)) {
-
-        return NULL;
-    }
-
-    double a1=0.0;
-
-    switch (entity->rtti()) {
-    case RS2::EntityLine:
-        a1 = ((RS_Line*)entity)->getAngle1();
-        break;
-    case RS2::EntityArc:
-        a1 = ((RS_Arc*)entity)->getCenter().angleTo(coord) + M_PI/2.0;
-        break;
-    case RS2::EntityCircle:
-        a1 = ((RS_Circle*)entity)->getCenter().angleTo(coord);
-        break;
-    default:
-        // never reached
-        break;
-    }
-
-    a1 += angle;
-
-    RS_Vector v1;
-    v1.setPolar(length, a1);
-    //RS_ConstructionLineData(coord-v1, coord+v1);
-    RS_LineData d(coord-v1, coord+v1);
-    RS_Line* ret;
-
-    if (document!=NULL && handleUndo) {
-        document->startUndoCycle();
-    }
-
-    ret = new RS_Line(container, d);
-    ret->setLayerToActive();
-    ret->setPenToActive();
-    if (container!=NULL) {
-        container->addEntity(ret);
-    }
-    if (document!=NULL && handleUndo) {
-        document->addUndoable(ret);
-        document->endUndoCycle();
-    }
-    if (graphicView!=NULL) {
-        graphicView->drawEntity(ret);
-    }
-
-    return ret;
-}
-
-
-/**
- * Creates a polygon with 'number' edges.
- *
- * @param center Center of the polygon.
- * @param corner The first corner of the polygon
- * @param number Number of edges / corners.
- */
-RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
-                                    const RS_Vector& corner,
-                                    int number) {
-
-    // check given coords / number:
-    if (!center.valid || !corner.valid || number<3) {
-        return NULL;
-    }
-
-    RS_Line* ret = NULL;
-
-    if (document!=NULL && handleUndo) {
-        document->startUndoCycle();
-    }
-
-    RS_Vector c1(false);
-    RS_Vector c2 = corner;
-    RS_Line* line;
-
-    for (int n=1; n<=number; ++n) {
-        c1 = c2;
-        c2 = c2.rotate(center, (M_PI*2)/number);
-
-        line = new RS_Line(container, RS_LineData(c1, c2));
-        line->setLayerToActive();
-        line->setPenToActive();
-
-        if (ret==NULL) {
-            ret = line;
+        // check given coords / number:
+        if (!center.valid || !corner.valid || number<3) {
+            return NULL;
         }
 
-        if (container!=NULL) {
-            container->addEntity(line);
-        }
+        RS_Line* ret = NULL;
+
         if (document!=NULL && handleUndo) {
-            document->addUndoable(line);
-        }
-        if (graphicView!=NULL) {
-            graphicView->drawEntity(line);
-        }
-    }
-
-    if (document!=NULL && handleUndo) {
-        document->endUndoCycle();
-    }
-
-    return ret;
-}
-
-
-
-/**
- * Creates a polygon with 'number' edges.
- *
- * @param corner1 The first corner of the polygon.
- * @param corner2 The second corner of the polygon.
- * @param number Number of edges / corners.
- */
-RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
-                                     const RS_Vector& corner2,
-                                     int number) {
-
-    // check given coords / number:
-    if (!corner1.valid || !corner2.valid || number<3) {
-        return NULL;
-    }
-
-    RS_Line* ret = NULL;
-
-    if (document!=NULL && handleUndo) {
-        document->startUndoCycle();
-    }
-
-    double len = corner1.distanceTo(corner2);
-    double ang1 = corner1.angleTo(corner2);
-    double ang = ang1;
-
-    RS_Vector c1(false);
-    RS_Vector c2 = corner1;
-    RS_Vector edge;
-    RS_Line* line;
-
-    for (int n=1; n<=number; ++n) {
-        c1 = c2;
-        edge.setPolar(len, ang);
-        c2 = c1 + edge;
-
-        line = new RS_Line(container, RS_LineData(c1, c2));
-        line->setLayerToActive();
-        line->setPenToActive();
-
-        if (ret==NULL) {
-            ret = line;
+            document->startUndoCycle();
         }
 
-        if (container!=NULL) {
-            container->addEntity(line);
-        }
-        if (document!=NULL && handleUndo) {
-            document->addUndoable(line);
-        }
-        if (graphicView!=NULL) {
-            graphicView->drawEntity(line);
-        }
+        RS_Vector c1(false);
+        RS_Vector c2 = corner;
+        RS_Line* line;
 
-        // more accurate than incrementing the angle:
-        ang = ang1 + (2*M_PI)/number*n;
-    }
+        for (int n=1; n<=number; ++n) {
+            c1 = c2;
+            c2 = c2.rotate(center, (M_PI*2)/number);
 
-    if (document!=NULL && handleUndo) {
-        document->endUndoCycle();
-    }
+            line = new RS_Line(container, RS_LineData(c1, c2));
+            line->setLayerToActive();
+            line->setPenToActive();
 
-    return ret;
-}
-
-
-
-/**
- * Creates an insert with the given data.
- *
- * @param data Insert data (position, block name, ..)
- */
-RS_Insert* RS_Creation::createInsert(RS_InsertData& data) {
-
-    RS_DEBUG->print("RS_Creation::createInsert");
-
-    if (document!=NULL && handleUndo) {
-        document->startUndoCycle();
-    }
-
-    RS_Insert* ins = new RS_Insert(container, data);
-    // inserts are also on layers
-    ins->setLayerToActive();
-    ins->setPenToActive();
-
-    if (container!=NULL) {
-        container->addEntity(ins);
-    }
-    if (document!=NULL && handleUndo) {
-        document->addUndoable(ins);
-        document->endUndoCycle();
-    }
-    if (graphicView!=NULL) {
-        graphicView->drawEntity(ins);
-    }
-
-    RS_DEBUG->print("RS_Creation::createInsert: OK");
-
-    return ins;
-}
-
-
-
-/**
- * Creates an image with the given data.
- */
-RS_Image* RS_Creation::createImage(RS_ImageData& data) {
-
-    if (document!=NULL && handleUndo) {
-        document->startUndoCycle();
-    }
-
-    RS_Image* img = new RS_Image(container, data);
-    img->setLayerToActive();
-    img->setPenToActive();
-    img->update();
-
-    if (container!=NULL) {
-        container->addEntity(img);
-    }
-    if (document!=NULL && handleUndo) {
-        document->addUndoable(img);
-        document->endUndoCycle();
-    }
-    if (graphicView!=NULL) {
-        graphicView->drawEntity(img);
-    }
-
-    return img;
-}
-
-
-/**
- * Creates a new block from the currently selected entitiies.
- *
- * @param referencePoint Reference point for the block.
- * @param name Block name
- * @param remove true: remove existing entities, false: don't touch entities
- */
-RS_Block* RS_Creation::createBlock(const RS_BlockData& data,
-                                   const RS_Vector& referencePoint,
-                                   const bool remove) {
-
-    // start undo cycle for the container if we're deleting the existing entities
-    if (remove && document!=NULL) {
-        document->startUndoCycle();
-    }
-
-    RS_Block* block =
-        new RS_Block(container,
-                     RS_BlockData(data.name, data.basePoint, data.frozen));
-
-    // copy entities into a block
-    for (RS_Entity* e=container->firstEntity();
-            e!=NULL;
-            e=container->nextEntity()) {
-        //for (uint i=0; i<container->count(); ++i) {
-        //RS_Entity* e = container->entityAt(i);
-
-        if (e!=NULL && e->isSelected()) {
-
-            // delete / redraw entity in graphic view:
-            if (remove) {
-                if (graphicView!=NULL) {
-                    graphicView->deleteEntity(e);
-                }
-                e->setSelected(false);
-            } else {
-                if (graphicView!=NULL) {
-                    graphicView->deleteEntity(e);
-                }
-                e->setSelected(false);
-                if (graphicView!=NULL) {
-                    graphicView->drawEntity(e);
-                }
+            if (ret==NULL) {
+                ret = line;
             }
 
-            // add entity to block:
-            RS_Entity* c = e->clone();
-            c->move(-referencePoint);
-            block->addEntity(c);
+            if (container!=NULL) {
+                container->addEntity(line);
+            }
+            if (document!=NULL && handleUndo) {
+                document->addUndoable(line);
+            }
+            if (graphicView!=NULL) {
+                graphicView->drawEntity(line);
+            }
+        }
 
-            if (remove) {
-                //container->removeEntity(e);
-                //i=0;
-                e->changeUndoState();
-                if (document!=NULL) {
-                    document->addUndoable(e);
+        if (document!=NULL && handleUndo) {
+            document->endUndoCycle();
+        }
+
+        return ret;
+    }
+
+
+
+    /**
+     * Creates a polygon with 'number' edges.
+     *
+     * @param corner1 The first corner of the polygon.
+     * @param corner2 The second corner of the polygon.
+     * @param number Number of edges / corners.
+     */
+    RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
+                                         const RS_Vector& corner2,
+                                         int number) {
+
+        // check given coords / number:
+        if (!corner1.valid || !corner2.valid || number<3) {
+            return NULL;
+        }
+
+        RS_Line* ret = NULL;
+
+        if (document!=NULL && handleUndo) {
+            document->startUndoCycle();
+        }
+
+        double len = corner1.distanceTo(corner2);
+        double ang1 = corner1.angleTo(corner2);
+        double ang = ang1;
+
+        RS_Vector c1(false);
+        RS_Vector c2 = corner1;
+        RS_Vector edge;
+        RS_Line* line;
+
+        for (int n=1; n<=number; ++n) {
+            c1 = c2;
+            edge.setPolar(len, ang);
+            c2 = c1 + edge;
+
+            line = new RS_Line(container, RS_LineData(c1, c2));
+            line->setLayerToActive();
+            line->setPenToActive();
+
+            if (ret==NULL) {
+                ret = line;
+            }
+
+            if (container!=NULL) {
+                container->addEntity(line);
+            }
+            if (document!=NULL && handleUndo) {
+                document->addUndoable(line);
+            }
+            if (graphicView!=NULL) {
+                graphicView->drawEntity(line);
+            }
+
+            // more accurate than incrementing the angle:
+            ang = ang1 + (2*M_PI)/number*n;
+        }
+
+        if (document!=NULL && handleUndo) {
+            document->endUndoCycle();
+        }
+
+        return ret;
+    }
+
+
+
+    /**
+     * Creates an insert with the given data.
+     *
+     * @param data Insert data (position, block name, ..)
+     */
+    RS_Insert* RS_Creation::createInsert(RS_InsertData& data) {
+
+        RS_DEBUG->print("RS_Creation::createInsert");
+
+        if (document!=NULL && handleUndo) {
+            document->startUndoCycle();
+        }
+
+        RS_Insert* ins = new RS_Insert(container, data);
+        // inserts are also on layers
+        ins->setLayerToActive();
+        ins->setPenToActive();
+
+        if (container!=NULL) {
+            container->addEntity(ins);
+        }
+        if (document!=NULL && handleUndo) {
+            document->addUndoable(ins);
+            document->endUndoCycle();
+        }
+        if (graphicView!=NULL) {
+            graphicView->drawEntity(ins);
+        }
+
+        RS_DEBUG->print("RS_Creation::createInsert: OK");
+
+        return ins;
+    }
+
+
+
+    /**
+     * Creates an image with the given data.
+     */
+    RS_Image* RS_Creation::createImage(RS_ImageData& data) {
+
+        if (document!=NULL && handleUndo) {
+            document->startUndoCycle();
+        }
+
+        RS_Image* img = new RS_Image(container, data);
+        img->setLayerToActive();
+        img->setPenToActive();
+        img->update();
+
+        if (container!=NULL) {
+            container->addEntity(img);
+        }
+        if (document!=NULL && handleUndo) {
+            document->addUndoable(img);
+            document->endUndoCycle();
+        }
+        if (graphicView!=NULL) {
+            graphicView->drawEntity(img);
+        }
+
+        return img;
+    }
+
+
+    /**
+     * Creates a new block from the currently selected entitiies.
+     *
+     * @param referencePoint Reference point for the block.
+     * @param name Block name
+     * @param remove true: remove existing entities, false: don't touch entities
+     */
+    RS_Block* RS_Creation::createBlock(const RS_BlockData& data,
+                                       const RS_Vector& referencePoint,
+                                       const bool remove) {
+
+        // start undo cycle for the container if we're deleting the existing entities
+        if (remove && document!=NULL) {
+            document->startUndoCycle();
+        }
+
+        RS_Block* block =
+            new RS_Block(container,
+                         RS_BlockData(data.name, data.basePoint, data.frozen));
+
+        // copy entities into a block
+        for (RS_Entity* e=container->firstEntity();
+                e!=NULL;
+                e=container->nextEntity()) {
+            //for (uint i=0; i<container->count(); ++i) {
+            //RS_Entity* e = container->entityAt(i);
+
+            if (e!=NULL && e->isSelected()) {
+
+                // delete / redraw entity in graphic view:
+                if (remove) {
+                    if (graphicView!=NULL) {
+                        graphicView->deleteEntity(e);
+                    }
+                    e->setSelected(false);
+                } else {
+                    if (graphicView!=NULL) {
+                        graphicView->deleteEntity(e);
+                    }
+                    e->setSelected(false);
+                    if (graphicView!=NULL) {
+                        graphicView->drawEntity(e);
+                    }
+                }
+
+                // add entity to block:
+                RS_Entity* c = e->clone();
+                c->move(-referencePoint);
+                block->addEntity(c);
+
+                if (remove) {
+                    //container->removeEntity(e);
+                    //i=0;
+                    e->changeUndoState();
+                    if (document!=NULL) {
+                        document->addUndoable(e);
+                    }
                 }
             }
         }
+
+        if (remove && document!=NULL) {
+            document->endUndoCycle();
+        }
+
+        if (graphic!=NULL) {
+            graphic->addBlock(block);
+        }
+
+        return block;
     }
 
-    if (remove && document!=NULL) {
-        document->endUndoCycle();
-    }
-
-    if (graphic!=NULL) {
-        graphic->addBlock(block);
-    }
-
-    return block;
-}
 
 
+    /**
+     * Inserts a library item from the given path into the drawing.
+     */
+    RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
 
-/**
- * Inserts a library item from the given path into the drawing.
- */
-RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
+        RS_DEBUG->print("RS_Creation::createLibraryInsert");
 
-    RS_DEBUG->print("RS_Creation::createLibraryInsert");
+        RS_Graphic g;
+        if (!g.open(data.file, RS2::FormatUnknown)) {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                            "RS_Creation::createLibraryInsert: Cannot open file: %s");
+            return NULL;
+        }
 
-    RS_Graphic g;
-    if (!g.open(data.file, RS2::FormatUnknown)) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-			"RS_Creation::createLibraryInsert: Cannot open file: %s");
+        // unit conversion:
+        if (graphic!=NULL) {
+            double uf = RS_Units::convert(1.0, g.getUnit(),
+                                          graphic->getUnit());
+            g.scale(RS_Vector(0.0, 0.0), RS_Vector(uf, uf));
+        }
+
+        //g.scale(RS_Vector(data.factor, data.factor));
+        //g.rotate(data.angle);
+
+        QString s;
+        s = QFileInfo(data.file).completeBaseName();
+
+        RS_Modification m(*container, graphicView);
+        m.paste(
+            RS_PasteData(
+                data.insertionPoint,
+                data.factor, data.angle, true,
+                s),
+            &g);
+
+        RS_DEBUG->print("RS_Creation::createLibraryInsert: OK");
+
         return NULL;
     }
-
-    // unit conversion:
-    if (graphic!=NULL) {
-        double uf = RS_Units::convert(1.0, g.getUnit(),
-                                      graphic->getUnit());
-        g.scale(RS_Vector(0.0, 0.0), RS_Vector(uf, uf));
-    }
-
-    //g.scale(RS_Vector(data.factor, data.factor));
-    //g.rotate(data.angle);
-
-    QString s;
-    s = QFileInfo(data.file).completeBaseName();
-
-    RS_Modification m(*container, graphicView);
-    m.paste(
-        RS_PasteData(
-            data.insertionPoint,
-            data.factor, data.angle, true,
-            s),
-        &g);
-
-    RS_DEBUG->print("RS_Creation::createLibraryInsert: OK");
-
-    return NULL;
-}
 
 // EOF

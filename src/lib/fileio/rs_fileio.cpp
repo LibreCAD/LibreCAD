@@ -132,7 +132,9 @@ RS2::FormatType RS_FileIO::detectFormat(const QString& file) {
     QFileInfo fi(file);
 
     QString ext = fi.suffix().toLower();
-    if (ext=="cxf") {
+    if (ext=="lff") {
+        type = RS2::FormatLFF;
+    } else if (ext=="cxf") {
         type = RS2::FormatCXF;
     } else if (ext=="dxf") {
         type = RS2::FormatDXF1;

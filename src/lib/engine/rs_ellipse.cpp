@@ -414,6 +414,50 @@ RS_Vector RS_Ellipse::getNearestDist(double /*distance*/,
 }
 
 
+RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
+                    const RS_Line& normal,
+                    bool onEntity )
+{
+        if ( !coord.valid ) {
+                return RS_Vector(false);
+        }
+        RS_Vector direction=normal.getEndpoint() - normal.getStartpoint();
+        if (RS_Vector::dotP(direction,direction)< RS_TOLERANCE*RS_TOLERANCE) {
+                //undefined direction
+                return RS_Vector(false);
+        }
+        //scale to ellipse angle
+        direction.rotate(-getAngle());
+        double angle=direction.scale(RS_Vector(1.,getRatio())).angle();
+        direction.set(getMajorRadius()*cos(angle),getMinorRadius()*sin(angle));//relative to center
+        QList<RS_Vector> sol;
+        for(int i=0;i<2;i++){
+                if(!onEntity || 
+                   RS_Math::isAngleBetween(angle,getAngle1(),getAngle2(),isReversed())) {
+                if(i){
+                sol.append(- direction);
+                }else{
+                sol.append(direction);
+                }
+                }
+                angle=RS_Math::correctAngle(angle+M_PI);
+        }
+        RS_Vector vp;
+        switch(sol.count()) {
+                case 0:
+                        return RS_Vector(false);
+                case 2:
+                        if( RS_Vector::dotP(sol[1]-getCenter(),coord-getCenter())>0.) {
+                                vp=sol[1];
+                                break;
+                        }
+                default:
+                        vp=sol[0];
+        }
+        return getCenter() + vp.rotate(getAngle());
+}
+
+
 
 double RS_Ellipse::getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity,
@@ -450,11 +494,22 @@ void RS_Ellipse::rotate( double angle) {
     calculateBorders();
 }
 
+/**
+ * make sure angleLength() is not more than 2*M_PI
+ */
+void RS_Ellipse::correctAngles() {
+        double *pa1= & data.angle1;
+        double *pa2= & data.angle2;
+        if (isReversed()) std::swap(pa1,pa2);
+        *pa2 = *pa1 + fmod(*pa2 - *pa1, 2.*M_PI);
+        if ( fabs(data.angle1 - data.angle2) < RS_TOLERANCE_ANGLE ) *pa2 += 2.*M_PI;
+}
 
 void RS_Ellipse::moveStartpoint(const RS_Vector& pos) {
     data.angle1 = getEllipseAngle(pos);
     //data.angle1 = data.center.angleTo(pos);
     //calculateEndpoints();
+    correctAngles(); // make sure angleLength is no more than 2*M_PI
     calculateBorders();
 }
 
@@ -464,6 +519,7 @@ void RS_Ellipse::moveEndpoint(const RS_Vector& pos) {
     data.angle2 = getEllipseAngle(pos);
     //data.angle2 = data.center.angleTo(pos);
     //calculateEndpoints();
+    correctAngles(); // make sure angleLength is no more than 2*M_PI
     calculateBorders();
 }
 
@@ -620,6 +676,7 @@ void RS_Ellipse::scale(RS_Vector center, RS_Vector factor) {
     setAngle1(getEllipseAngle(vpStart));
     setAngle2(getEllipseAngle(vpEnd));
     }
+    correctAngles();//avoid extra 2.*M_PI in angles
     //calculateEndpoints();
     calculateBorders();
 }
@@ -664,6 +721,7 @@ void RS_Ellipse::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
     data.reversed = (!data.reversed);
 */
     //calculateEndpoints();
+    correctAngles();//avoid extra 2.*M_PI in angles
     calculateBorders();
 }
 
@@ -679,6 +737,7 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     if (ref.distanceTo(endpoint)<1.0e-4) {
         moveEndpoint(endpoint+offset);
     }
+    correctAngles();//avoid extra 2.*M_PI in angles
 }
 
 

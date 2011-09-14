@@ -50,7 +50,8 @@ RS_FontList::RS_FontList() {
 void RS_FontList::init() {
     RS_DEBUG->print("RS_FontList::initFonts");
 
-    QStringList list = RS_SYSTEM->getFontList();
+    QStringList list = RS_SYSTEM->getNewFontList();
+    list.append(RS_SYSTEM->getFontList());
     QHash<QString, int> added; //used to remember added fonts (avoid duplication)
     RS_Font* font;
 

@@ -241,11 +241,15 @@ public:
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
                                      double* dist = NULL);
+    virtual RS_Vector getNearestOrthTan(const RS_Vector& coord,
+                                    const RS_Line& normal,
+                                     bool onEntity = false);
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
                                       double solidDist = RS_MAXDOUBLE);
     bool switchMajorMinor(void); //switch major minor axes to keep major the longer ellipse radius
+    virtual void correctAngles();//make sure angleLength() is not more than 2*M_PI
     virtual bool isPointOnEntity(const RS_Vector& coord,
                                  double tolerance=RS_TOLERANCE);
 
