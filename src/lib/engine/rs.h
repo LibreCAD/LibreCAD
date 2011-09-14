@@ -234,7 +234,7 @@ public:
         ActionDrawLineParallel,
         ActionDrawLineParallelThrough,
         ActionDrawLinePolygon,
-        ActionDrawLinePolygon2,
+        ActionDrawLinePolygonCorCor,
         ActionDrawLineRectangle,
         ActionDrawLineRelAngle,
         ActionDrawLineTangent1,
