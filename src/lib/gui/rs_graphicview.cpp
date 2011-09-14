@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -71,7 +71,7 @@ RS_GraphicView::RS_GraphicView()
 
     mx = my = 0;
 
-    defaultSnapMode = RS2::SnapFree;
+    //@todo load default snap mode from prefrences.
     defaultSnapRes = RS2::RestrictNothing;
 
     RS_SETTINGS->beginGroup("/Appearance");
@@ -267,7 +267,7 @@ void RS_GraphicView::killSelectActions() {
 
 
 /**
- * Kills all running actions. 
+ * Kills all running actions.
  */
 void RS_GraphicView::killAllActions() {
     if (eventHandler!=NULL) {
@@ -304,7 +304,7 @@ void RS_GraphicView::enter() {
 
 
 /**
- * Called by the actual GUI class which implements the RS_GraphicView 
+ * Called by the actual GUI class which implements the RS_GraphicView
  * interface to notify LibreCAD about mouse events.
  */
 void RS_GraphicView::mousePressEvent(QMouseEvent* e) {
@@ -345,8 +345,8 @@ void RS_GraphicView::mouseReleaseEvent(QMouseEvent* e) {
  *							  RS_GraphicView interface to notify LibreCAD about
  *							  mouse events.
  *
- *	Author(s):			..., Claude Sylvain	
- *	Created:				?	
+ *	Author(s):			..., Claude Sylvain
+ *	Created:				?
  *	Last modified:		23 July 2011
  *
  *	Parameters:			QMouseEvent* e:
@@ -594,7 +594,7 @@ void RS_GraphicView::zoomOutY(double f) {
 void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
 
     RS_DEBUG->print("RS_GraphicView::zoomAuto");
-    
+
 	saveView();
 
     if (container!=NULL) {
@@ -661,7 +661,7 @@ void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
 
 
 /**
- * Shows previous view. 
+ * Shows previous view.
  */
 void RS_GraphicView::zoomPrevious() {
 
@@ -675,8 +675,8 @@ void RS_GraphicView::zoomPrevious() {
 
 
 /**
- * Saves the current view as previous view to which we can 
- * switch back later with @see restoreView(). 
+ * Saves the current view as previous view to which we can
+ * switch back later with @see restoreView().
  */
 void RS_GraphicView::saveView() {
 	previousOffsetX = offsetX;
@@ -687,8 +687,8 @@ void RS_GraphicView::saveView() {
 
 
 /**
- * Restores the view previously saved with 
- * @see saveView(). 
+ * Restores the view previously saved with
+ * @see saveView().
  */
 void RS_GraphicView::restoreView() {
 	int pox = previousOffsetX;
@@ -696,11 +696,11 @@ void RS_GraphicView::restoreView() {
 	RS_Vector pf = previousFactor;
 
 	saveView();
-	
+
 	offsetX = pox;
 	offsetY = poy;
 	factor = pf;
-	
+
     adjustOffsetControls();
     adjustZoomControls();
 	//    updateGrid();
@@ -712,8 +712,8 @@ void RS_GraphicView::restoreView() {
 /*	*
  *	Function name:
  *	Description:		Performs autozoom in Y axis only.
- *	Author(s):			..., Claude Sylvain	
- *	Created:				?	
+ *	Author(s):			..., Claude Sylvain
+ *	Created:				?
  *	Last modified:		23 July 2011
  *
  *	Parameters:			bool axis:
@@ -798,7 +798,7 @@ void RS_GraphicView::zoomWindow(RS_Vector v1, RS_Vector v2,
 
 
 	saveView();
-	
+
     double zoomX=480.0;    // Zoom for X-Axis
     double zoomY=640.0;    // Zoom for Y-Axis   (Set smaller one)
     double dum;            // Dummy for switching values
@@ -972,7 +972,7 @@ void RS_GraphicView::zoomPage() {
 
 
 /**
- * Draws the entities within the given range. 
+ * Draws the entities within the given range.
  */
 void RS_GraphicView::drawWindow_DEPRECATED(RS_Vector v1, RS_Vector v2) {
     RS_DEBUG->print("RS_GraphicView::drawWindow() begin");
@@ -989,9 +989,9 @@ void RS_GraphicView::drawWindow_DEPRECATED(RS_Vector v1, RS_Vector v2) {
 }
 
 /**
- * Draws the entities. 
+ * Draws the entities.
  * This function can only be called from within the paint event
- * 
+ *
  */
 void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 
@@ -1015,8 +1015,8 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 /*	*
  *	Function name:
  *	Description: 		Do the drawing, step 2/3.
- *	Author(s):			..., Claude Sylvain	
- *	Created:				?	
+ *	Author(s):			..., Claude Sylvain
+ *	Created:				?
  *	Last modified:		23 July 2011
  *
  *	Parameters:			RS_Painter *painter:
@@ -1041,7 +1041,7 @@ void RS_GraphicView::drawLayer3(RS_Painter *painter) {
     if (!isPrintPreview()) {
         drawRelativeZero(painter);
 		drawOverlay(painter);
-    }	
+    }
 }
 
 
@@ -1070,7 +1070,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
         painter->setPen(RS_Pen(foreground,
 							   RS2::Width00, RS2::SolidLine));
     }
-	
+
         // Getting pen from entity (or layer)
         RS_Pen pen = e->getPen(true);
 
@@ -1127,10 +1127,10 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 
 /**
  * Draws an entity. Might be recusively called e.g. for polylines.
- * If the class wide painter is NULL a new painter will be created 
+ * If the class wide painter is NULL a new painter will be created
  * and destroyed afterwards.
  *
- * @param patternOffset Offset of line pattern (used for connected 
+ * @param patternOffset Offset of line pattern (used for connected
  *        lines e.g. in splines).
  * @param db Double buffering on (recommended) / off
  */
@@ -1141,7 +1141,7 @@ void RS_GraphicView::drawEntity(RS_Entity* e, double patternOffset) {
 	// Dis-advantage is that we still need to iterate over all entities, but
 	// this might be very fast
 	// For now we just redraw the drawing untill we are going to optmize drawing
-	redraw(RS2::RedrawDrawing); 
+	redraw(RS2::RedrawDrawing);
 }
 void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double patternOffset) {
 
@@ -1155,7 +1155,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double patter
     if (!e->isVisible()) {
         return;
     }
-	
+
     // test if the entity is in the viewport
 	/* temporary disabled so rs_overlaylien can be drawn
     if (!e->isContainer() && !isPrinting() &&
@@ -1167,7 +1167,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double patter
 
     // set pen (color):
     setPenForEntity(painter, e );
-	
+
     //RS_DEBUG->print("draw plain");
     if (isDraftMode()) {
 		// large texts as rectangles:
@@ -1177,13 +1177,13 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double patter
             } else {
                 drawEntityPlain(painter, e, patternOffset);
             }
-		} 
-		
+		}
+
 		// all images as rectangles:
 		else if (e->rtti()==RS2::EntityImage) {
             painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
-        } 
-		
+        }
+
 		// hide hatches:
 		else if (e->rtti()==RS2::EntityHatch) {
             // nothing
@@ -1233,7 +1233,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double patter
 
 
 /**
- * Draws an entity. 
+ * Draws an entity.
  * The painter must be initialized and all the attributes (pen) must be set.
  */
 void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e, double patternOffset) {
@@ -1250,11 +1250,11 @@ void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e, double p
 }
 
 /**
- * Deletes an entity with the background color. 
+ * Deletes an entity with the background color.
  * Might be recusively called e.g. for polylines.
  */
 void RS_GraphicView::deleteEntity(RS_Entity* e) {
-	
+
 	// RVT_PORT When we delete a single entoty, we can do this but we need to remove this then also from containerEntities
 	RS_DEBUG->print("RS_GraphicView::deleteEntity will for now redraw the whole screen instead of just deleting the entity");
 	setDeleteMode(true);
@@ -1351,16 +1351,16 @@ RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
 
 
 /**
- * This virtual method can be overwritten to draw the absolute 
+ * This virtual method can be overwritten to draw the absolute
  * zero. It's called from within drawIt(). The default implemetation
  * draws a simple red cross on the zero of thge sheet
  * THis function can ONLY be called from within a paintEvent because it will
  * use the painter
- * 
+ *
  * @see drawIt()
  */
 void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter) {
-	
+
     int zr = 20;
 
 	RS_Pen p(QColor(255,0,0), RS2::Width00, RS2::SolidLine);
@@ -1383,7 +1383,7 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter) {
 
 
 /**
- * This virtual method can be overwritten to draw the relative 
+ * This virtual method can be overwritten to draw the relative
  * zero point. It's called from within drawIt(). The default implemetation
  * draws a simple red round zero point. This is the point that was last created by the user, end of a line for example
  * THis function can ONLY be called from within a paintEvent because it will
@@ -1396,7 +1396,7 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
     if (relativeZero.valid==false) {
         return;
     }
-	
+
 	RS_Pen p(RS_Color(255, 0, 0), RS2::Width00, RS2::SolidLine);
 	p.setScreenWidth(0);
     painter->setPen(p);
@@ -1422,7 +1422,7 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
  * Draws the paper border (for print previews).
  * This function can ONLY be called from within a paintEvent because it will
  * use the painter
- * 
+ *
  * @see drawIt()
  */
 void RS_GraphicView::drawPaper(RS_Painter *painter) {
@@ -1430,7 +1430,7 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
     if (container==NULL) {
         return;
     }
-	
+
 	RS_Graphic* graphic = container->getGraphic();
     if (graphic->getPaperScale()<1.0e-6) {
         return;
@@ -1475,15 +1475,15 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
 /**
  * Draws the grid.
  *
- * @see drawIt() 
+ * @see drawIt()
  */
 void RS_GraphicView::drawGrid(RS_Painter *painter) {
 
     if (grid==NULL || isGridOn()==false) {
         return;
     }
-	
-	
+
+
     // draw grid:
     //painter->setPen(Qt::gray);
     painter->setPen(gridColor);
@@ -1520,7 +1520,7 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
     if (grid==NULL || isGridOn()==false /*|| grid->getMetaSpacing()<0.0*/) {
         return;
     }
-	
+
     RS_Pen pen(metaGridColor,
                RS2::Width00,
                RS2::DotLine);
@@ -1558,7 +1558,7 @@ void RS_GraphicView::drawOverlay(RS_Painter *painter) {
 /**
  * Sets the default snap mode used by newly created actions.
  */
-void RS_GraphicView::setDefaultSnapMode(RS2::SnapMode sm) {
+void RS_GraphicView::setDefaultSnapMode(RS_SnapMode sm) {
     defaultSnapMode = sm;
     if (eventHandler!=NULL) {
         eventHandler->setSnapMode(sm);
@@ -1705,14 +1705,14 @@ void RS_GraphicView::moveRelativeZero(const RS_Vector& pos) {
 
 /**
  * Remove all overlay entities
- */ 
+ */
 RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics position)
 {
 	if (overlayEntities[position]!=NULL) {
 		return overlayEntities[position];
-	} 
+	}
 	overlayEntities[position]=new RS_EntityContainer(NULL);
-	
+
 	return overlayEntities[position];
 
 }
