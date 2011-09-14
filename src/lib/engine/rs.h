@@ -107,6 +107,7 @@ public:
         FormatDXF1,          /**< QCad 1 compatibility DXF format. */
         FormatDXF,           /**< DXF format. 2000. */
         FormatDXF12,         /**< DXF format. R12. */
+        FormatLFF,           /**< LibreCAD Font File format. */
         FormatCXF,           /**< CAM Expert Font format. */
         FormatJWW,           /**< JWW Format type */
         FormatJWC            /**< JWC Format type */
@@ -229,6 +230,7 @@ public:
         ActionDrawLineHorVert,
         ActionDrawLineHorizontal,
         ActionDrawLineOrthogonal,
+        ActionDrawLineOrthTan,
         ActionDrawLineParallel,
         ActionDrawLineParallelThrough,
         ActionDrawLinePolygon,

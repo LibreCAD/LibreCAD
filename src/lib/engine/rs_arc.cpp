@@ -394,6 +394,42 @@ RS_Vector RS_Arc::getNearestDist(double distance,
 }
 
 
+RS_Vector RS_Arc::getNearestOrthTan(const RS_Vector& coord,
+                    const RS_Line& normal,
+                    bool onEntity )
+{
+        if ( !coord.valid ) {
+                return RS_Vector(false);
+        }
+        double angle=normal.getAngle1();
+        RS_Vector vp;
+        vp.setPolar(getRadius(),angle);
+        QList<RS_Vector> sol;
+        for(int i=0;i <= 1;i++){
+                if(!onEntity ||
+                   RS_Math::isAngleBetween(angle,getAngle1(),getAngle2(),isReversed())) {
+                if(i){
+                sol.append(- vp);
+                }else {
+                sol.append(vp);
+                }
+        }
+                angle=RS_Math::correctAngle(angle+M_PI);
+        }
+        switch(sol.count()) {
+                case 0:
+                        return RS_Vector(false);
+                case 2:
+                        if( RS_Vector::dotP(sol[1],coord-getCenter())>0.) {
+                                vp=sol[1];
+                                break;
+                        }
+                default:
+                        vp=sol[0];
+        }
+        return getCenter()+vp;
+}
+
 
 double RS_Arc::getDistanceToPoint(const RS_Vector& coord,
                                   RS_Entity** entity,
@@ -439,6 +475,7 @@ void RS_Arc::moveStartpoint(const RS_Vector& pos) {
     //if (parent!=NULL && parent->rtti()==RS2::EntityPolyline) {
     double bulge = getBulge();
     createFrom2PBulge(pos, getEndpoint(), bulge);
+    correctAngles(); // make sure angleLength is no more than 2*M_PI
     //}
 
     // normal arc: move angle1
@@ -456,6 +493,7 @@ void RS_Arc::moveEndpoint(const RS_Vector& pos) {
     //if (parent!=NULL && parent->rtti()==RS2::EntityPolyline) {
     double bulge = getBulge();
     createFrom2PBulge(getStartpoint(), pos, bulge);
+    correctAngles(); // make sure angleLength is no more than 2*M_PI
     //}
 
     // normal arc: move angle1
@@ -467,9 +505,20 @@ void RS_Arc::moveEndpoint(const RS_Vector& pos) {
 }
 
 
+/**
+ * make sure angleLength() is not more than 2*M_PI
+ */
+void RS_Arc::correctAngles() {
+        double *pa1= & data.angle1;
+        double *pa2= & data.angle2;
+        if (isReversed()) std::swap(pa1,pa2);
+        *pa2 = *pa1 + fmod(*pa2 - *pa1, 2.*M_PI);
+        if ( fabs(getAngleLength()) < RS_TOLERANCE_ANGLE ) *pa2 += 2.*M_PI;
+}
 
 void RS_Arc::trimStartpoint(const RS_Vector& pos) {
     data.angle1 = data.center.angleTo(pos);
+    correctAngles(); // make sure angleLength is no more than 2*M_PI
     calculateEndpoints();
     calculateBorders();
 }
@@ -478,6 +527,7 @@ void RS_Arc::trimStartpoint(const RS_Vector& pos) {
 
 void RS_Arc::trimEndpoint(const RS_Vector& pos) {
     data.angle2 = data.center.angleTo(pos);
+    correctAngles(); // make sure angleLength is no more than 2*M_PI
     calculateEndpoints();
     calculateBorders();
 }
@@ -644,6 +694,7 @@ void RS_Arc::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
     double a= (axisPoint2 - axisPoint1).angle()*2;
     setAngle1(RS_Math::correctAngle(a - getAngle1()));
     setAngle2(RS_Math::correctAngle(a - getAngle2()));
+    correctAngles(); // make sure angleLength is no more than 2*M_PI
     calculateEndpoints();
     calculateBorders();
 }
@@ -657,6 +708,7 @@ void RS_Arc::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     if (ref.distanceTo(endpoint)<1.0e-4) {
         moveEndpoint(endpoint+offset);
     }
+    correctAngles(); // make sure angleLength is no more than 2*M_PI
 }
 
 
@@ -680,6 +732,7 @@ void RS_Arc::stretch(RS_Vector firstCorner,
             moveEndpoint(getEndpoint() + offset);
         }
     }
+    correctAngles(); // make sure angleLength is no more than 2*M_PI
 }
 
 

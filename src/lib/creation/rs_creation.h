@@ -91,7 +91,12 @@ public:
     RS_Line* createTangent1(const RS_Vector& coord,
                             const RS_Vector& point,
                             RS_Entity* circle);
-
+/**
+ * create a tangent line which is orthogonal to the given RS_Line(normal)
+ */
+    RS_Line* createLineOrthTan(const RS_Vector& coord,
+                            RS_Line* normal,
+                            RS_Entity* circle);
     RS_Line* createTangent2(const RS_Vector& coord,
                             RS_Entity* circle1,
                             RS_Entity* circle2);

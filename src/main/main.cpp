@@ -45,6 +45,7 @@ QSplashScreen *splash;
 #include "rs_filterdxf.h"
 #include "rs_filterdxf1.h"
 #include "rs_filterjww.h"
+#include "rs_filterlff.h"
 
 #include "qg_dlginitial.h"
 
@@ -101,6 +102,7 @@ int main(int argc, char** argv) {
     RS_SETTINGS->init(XSTR(QC_COMPANYKEY), XSTR(QC_APPKEY));
     RS_SYSTEM->init(XSTR(QC_APPNAME), XSTR(QC_VERSION), XSTR(QC_APPDIR), prgDir);
 
+        RS_FILEIO->registerFilter(new RS_FilterLFF());
         RS_FILEIO->registerFilter(new RS_FilterCXF());
         RS_FILEIO->registerFilter(new RS_FilterDXF());
         RS_FILEIO->registerFilter(new RS_FilterJWW());
