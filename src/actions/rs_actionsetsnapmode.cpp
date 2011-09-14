@@ -50,7 +50,7 @@ void RS_ActionSetSnapMode::trigger() {
     switch (snapMode) {
 
         case RS2::SnapFree:
-            s.clear();
+            s.clearAll();
             break;
 
         case RS2::SnapEndpoint:

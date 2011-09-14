@@ -67,7 +67,7 @@ QAction* RS_ActionSelectWindow::createGUIAction(RS2::ActionType type, QObject* /
 void RS_ActionSelectWindow::init(int status) {
     RS_PreviewActionInterface::init(status);
     v1 = v2 = RS_Vector(false);
-    snapMode.clear();
+    snapMode.clearAll();
     snapRes = RS2::RestrictNothing;
 }
 
