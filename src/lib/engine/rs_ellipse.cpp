@@ -414,6 +414,50 @@ RS_Vector RS_Ellipse::getNearestDist(double /*distance*/,
 }
 
 
+RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
+                    const RS_Line& normal,
+                    bool onEntity )
+{
+        if ( !coord.valid ) {
+                return RS_Vector(false);
+        }
+        RS_Vector direction=normal.getEndpoint() - normal.getStartpoint();
+        if (RS_Vector::dotP(direction,direction)< RS_TOLERANCE*RS_TOLERANCE) {
+                //undefined direction
+                return RS_Vector(false);
+        }
+        //scale to ellipse angle
+        direction.rotate(-getAngle());
+        double angle=direction.scale(RS_Vector(1.,getRatio())).angle();
+        direction.set(getMajorRadius()*cos(angle),getMinorRadius()*sin(angle));//relative to center
+        QList<RS_Vector> sol;
+        for(int i=0;i<2;i++){
+                if(!onEntity || 
+                   RS_Math::isAngleBetween(angle,getAngle1(),getAngle2(),isReversed())) {
+                if(i){
+                sol.append(- direction);
+                }else{
+                sol.append(direction);
+                }
+                }
+                angle=RS_Math::correctAngle(angle+M_PI);
+        }
+        RS_Vector vp;
+        switch(sol.count()) {
+                case 0:
+                        return RS_Vector(false);
+                case 2:
+                        if( RS_Vector::dotP(sol[1]-getCenter(),coord-getCenter())>0.) {
+                                vp=sol[1];
+                                break;
+                        }
+                default:
+                        vp=sol[0];
+        }
+        return getCenter() + vp.rotate(getAngle());
+}
+
+
 
 double RS_Ellipse::getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity,
