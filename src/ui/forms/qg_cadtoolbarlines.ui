@@ -228,7 +228,7 @@
   <widget class="QToolButton" name="bOrthogonal">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>28</x>
      <y>160</y>
      <width>28</width>
      <height>28</height>
@@ -248,8 +248,8 @@
   <widget class="QToolButton" name="bRelAngle">
    <property name="geometry">
     <rect>
-     <x>28</x>
-     <y>160</y>
+     <x>0</x>
+     <y>188</y>
      <width>28</width>
      <height>28</height>
     </rect>
@@ -268,7 +268,7 @@
   <widget class="QToolButton" name="bPolygon">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>28</x>
      <y>188</y>
      <width>28</width>
      <height>28</height>
@@ -288,8 +288,8 @@
   <widget class="QToolButton" name="bPolygon2">
    <property name="geometry">
     <rect>
-     <x>28</x>
-     <y>188</y>
+     <x>0</x>
+     <y>216</y>
      <width>28</width>
      <height>28</height>
     </rect>
@@ -308,7 +308,7 @@
   <widget class="QToolButton" name="bFree">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>28</x>
      <y>216</y>
      <width>28</width>
      <height>28</height>
@@ -343,6 +343,29 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/linesparathrough.png</normaloff>:/extui/linesparathrough.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bOrthTan">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>160</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Tangents to a circle, orthogonal to a line</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+            <normaloff>:/extui/linesorthtan.png</normaloff>:/extui/linesorthtan.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
    </property>
   </widget>
  </widget>
@@ -532,6 +555,22 @@
    <signal>clicked()</signal>
    <receiver>QG_CadToolBarLines</receiver>
    <slot>drawLineVertical()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bOrthTan</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarLines</receiver>
+   <slot>drawLineOrthTan()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>20</x>

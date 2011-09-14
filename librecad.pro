@@ -325,6 +325,7 @@ HEADERS += src/actions/rs_actionblocksadd.h \
     src/actions/rs_actiondrawlinehorvert.h \
     src/actions/rs_actiondrawlineparallel.h \
     src/actions/rs_actiondrawlineparallelthrough.h \
+    src/actions/rs_actiondrawlineorthtan.h \
     src/actions/rs_actiondrawlinepolygon.h \
     src/actions/rs_actiondrawlinepolygon2.h \
     src/actions/rs_actiondrawlinerectangle.h \
@@ -441,6 +442,7 @@ SOURCES += src/actions/rs_actionblocksadd.cpp \
     src/actions/rs_actiondrawlinehorvert.cpp \
     src/actions/rs_actiondrawlineparallel.cpp \
     src/actions/rs_actiondrawlineparallelthrough.cpp \
+    src/actions/rs_actiondrawlineorthtan.cpp \
     src/actions/rs_actiondrawlinepolygon.cpp \
     src/actions/rs_actiondrawlinepolygon2.cpp \
     src/actions/rs_actiondrawlinerectangle.cpp \

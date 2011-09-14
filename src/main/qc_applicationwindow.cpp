@@ -845,6 +845,10 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionDrawLineOrthTan,
+                                        actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawLineOrthogonal,
                                         actionHandler);
     subMenu->addAction(action);
@@ -857,9 +861,6 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    //action = actionFactory.createAction(RS2::ActionDrawLineHorVert,
-    //                                    actionHandler);
-    //action->addTo(subMenu);
     action = actionFactory.createAction(RS2::ActionDrawLinePolygon,
                                         actionHandler);
     subMenu->addAction(action);

@@ -24,3 +24,6 @@ plugins.pro.user
 
 #pkg files
 *.pkg
+#vim files
+*.swp
+*.orig
