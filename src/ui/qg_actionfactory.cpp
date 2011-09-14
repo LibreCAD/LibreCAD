@@ -605,7 +605,7 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 obj, SLOT(slotDrawLinePolygon()));
         break;
 
-    case RS2::ActionDrawLinePolygon2:
+    case RS2::ActionDrawLinePolygonCorCor:
 		action = RS_ActionDrawLinePolygon::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotDrawLinePolygon2()));
