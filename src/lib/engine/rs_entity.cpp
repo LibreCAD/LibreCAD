@@ -800,6 +800,17 @@ double RS_Entity::getStyleFactor(RS_GraphicView* view) {
 QString RS_Entity::getUserDefVar(QString key) {
     return varList.value(key, NULL);
 }
+/*
+ * @coord
+ * @normal
+ * @bool
+ * return a line tangent to entity and orthogonal to the line (*normal)
+ */
+RS_Vector RS_Entity::getNearestOrthTan(const RS_Vector& /*coord*/,
+                    const RS_Line& /*normal*/,
+                    bool /*onEntity = false*/){
+        return RS_Vector(false);
+}
 
 
 /**

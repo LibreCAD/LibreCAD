@@ -54,6 +54,7 @@ public slots:
     virtual void drawLineTangent1();
     virtual void drawLineTangent2();
     virtual void drawLineOrthogonal();
+    virtual void drawLineOrthTan();
     virtual void drawLineRelAngle();
     virtual void drawLineFree();
     virtual void drawLinePolygon();

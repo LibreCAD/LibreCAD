@@ -394,6 +394,42 @@ RS_Vector RS_Arc::getNearestDist(double distance,
 }
 
 
+RS_Vector RS_Arc::getNearestOrthTan(const RS_Vector& coord,
+                    const RS_Line& normal,
+                    bool onEntity )
+{
+        if ( !coord.valid ) {
+                return RS_Vector(false);
+        }
+        double angle=normal.getAngle1();
+        RS_Vector vp;
+        vp.setPolar(getRadius(),angle);
+        QList<RS_Vector> sol;
+        for(int i=0;i <= 1;i++){
+                if(!onEntity ||
+                   RS_Math::isAngleBetween(angle,getAngle1(),getAngle2(),isReversed())) {
+                if(i){
+                sol.append(- vp);
+                }else {
+                sol.append(vp);
+                }
+        }
+                angle=RS_Math::correctAngle(angle+M_PI);
+        }
+        switch(sol.count()) {
+                case 0:
+                        return RS_Vector(false);
+                case 2:
+                        if( RS_Vector::dotP(sol[1],coord-getCenter())>0.) {
+                                vp=sol[1];
+                                break;
+                        }
+                default:
+                        vp=sol[0];
+        }
+        return getCenter()+vp;
+}
+
 
 double RS_Arc::getDistanceToPoint(const RS_Vector& coord,
                                   RS_Entity** entity,

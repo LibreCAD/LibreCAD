@@ -108,6 +108,7 @@ public slots:
     void slotDrawLineTangent1();
     void slotDrawLineTangent2();
     void slotDrawLineOrthogonal();
+    void slotDrawLineOrthTan();
     void slotDrawLineRelAngle();
     void slotDrawLinePolygon();
     void slotDrawLinePolygon2();

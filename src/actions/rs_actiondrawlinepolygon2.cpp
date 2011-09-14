@@ -37,7 +37,7 @@
 RS_ActionDrawLinePolygon2::RS_ActionDrawLinePolygon2(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Polygons", container, graphicView) {
+        :RS_PreviewActionInterface("Draw Polygons (C,C)", container, graphicView) {
 
     corner1 = RS_Vector(false);
     corner2 = RS_Vector(false);
