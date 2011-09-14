@@ -47,6 +47,7 @@ public:
     //virtual void keyPressEvent(QKeyEvent* e);
     void mouseReleaseEvent(QMouseEvent* e);
     void updateToolBar();
+    void updateMouseButtonHints();
 
 private:
     RS2::ActionType nextAction;
