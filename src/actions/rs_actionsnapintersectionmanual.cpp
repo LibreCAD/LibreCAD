@@ -59,7 +59,7 @@ QAction* RS_ActionSnapIntersectionManual::createGUIAction(RS2::ActionType /*type
 void RS_ActionSnapIntersectionManual::init(int status) {
     RS_ActionInterface::init(status);
 
-    snapMode.clear();
+    snapMode.clearAll();
     snapRes = RS2::RestrictNothing;
 }
 

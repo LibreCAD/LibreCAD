@@ -50,7 +50,7 @@ QAction* RS_ActionZoomPan::createGUIAction(RS2::ActionType /*type*/, QObject* /*
 
 void RS_ActionZoomPan::init(int status) {
     RS_ActionInterface::init(status);
-    snapMode.clear();
+    snapMode.clearAll();
     snapRes = RS2::RestrictNothing;
     //v1 = v2 = RS_Vector(false);
     x1 = y1 = x2 = y2 = -1;

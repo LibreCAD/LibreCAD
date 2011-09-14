@@ -56,7 +56,7 @@ QAction* RS_ActionModifyTrimAmount::createGUIAction(RS2::ActionType /*type*/, QO
 void RS_ActionModifyTrimAmount::init(int status) {
     RS_ActionInterface::init(status);
 
-    snapMode.clear();
+    snapMode.clearAll();
     snapRes = RS2::RestrictNothing;
 }
 

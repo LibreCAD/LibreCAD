@@ -74,7 +74,7 @@ QAction* RS_ActionModifyTrim::createGUIAction(RS2::ActionType type, QObject* /*p
 void RS_ActionModifyTrim::init(int status) {
     RS_ActionInterface::init(status);
 
-    snapMode.clear();
+    snapMode.clearAll();
     snapRes = RS2::RestrictNothing;
 
 }

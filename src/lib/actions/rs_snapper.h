@@ -39,14 +39,25 @@ class RS_Vector;
 class RS_Preview;
 class QMouseEvent;
 
+/**
+  * This class holds information on how to snap the mouse.
+  *
+  * @author Kevin Cox
+  */
 struct RS_SnapMode {
 public:
-    bool snapEndpoint;
-    bool snapMiddle;
-    bool snapCenter;
-    bool snapOnEntity;
-    bool snapIntersection;
+    bool snapEndpoint;     /// Whether to snap to endpoints or not.
+    bool snapMiddle;       /// Whether to snap to midpoints or not.
+    bool snapCenter;       /// Whether to snap to centers or not.
+    bool snapOnEntity;     /// Whether to snap to entities or not.
+    bool snapIntersection; /// Whether to snap to intersections or not.
 
+    /**
+      * Default Constructor
+      *
+      * Creates a RS_SnapMode that specifies only free snapping.
+      *
+      */
     RS_SnapMode():
         snapEndpoint    (false),
         snapMiddle      (false),
@@ -55,7 +66,14 @@ public:
         snapIntersection(false)
     {}
 
-    RS_SnapMode &clear(void) {
+    /**
+      * Disable all snapping.
+      *
+      * This effectivly puts the object into free snap mode.
+      *
+      * @returns A refrence to itself.
+      */
+    RS_SnapMode &clearAll(void) {
         snapEndpoint     = false;
         snapMiddle       = false;
         snapCenter       = false;

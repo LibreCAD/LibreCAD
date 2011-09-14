@@ -66,7 +66,7 @@ void RS_ActionDefault::init(int status) {
 
 	RS_PreviewActionInterface::init(status);
     v1 = v2 = RS_Vector(false);
-    snapMode.clear();
+    snapMode.clearAll();
     snapRes = RS2::RestrictNothing;
     restrBak = RS2::RestrictNothing;
 	RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
