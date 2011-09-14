@@ -66,6 +66,7 @@
 #include "rs_actiondrawlinerelangle.h"
 #include "rs_actiondrawlinetangent1.h"
 #include "rs_actiondrawlinetangent2.h"
+#include "rs_actiondrawlineorthtan.h"
 #include "rs_actiondrawpoint.h"
 #include "rs_actiondrawspline.h"
 #include "rs_actiondrawtext.h"
@@ -567,6 +568,12 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
 		action = RS_ActionDrawLineTangent2::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotDrawLineTangent2()));
+        break;
+
+    case RS2::ActionDrawLineOrthTan:
+                action = RS_ActionDrawLineOrthTan::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotDrawLineOrthTan()));
         break;
 
     case RS2::ActionDrawLineOrthogonal:

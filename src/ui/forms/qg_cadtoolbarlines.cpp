@@ -156,6 +156,12 @@ void QG_CadToolBarLines::drawLineOrthogonal() {
     }
 }
 
+void QG_CadToolBarLines::drawLineOrthTan() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawLineOrthTan();
+    }
+}
+
 void QG_CadToolBarLines::drawLineRelAngle() {
     if (cadToolBar!=NULL && actionHandler!=NULL) {
         actionHandler->slotDrawLineRelAngle();

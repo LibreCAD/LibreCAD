@@ -270,6 +270,22 @@ RS_Vector RS_Circle::getNearestDist(double /*distance*/,
 }
 
 
+RS_Vector RS_Circle::getNearestOrthTan(const RS_Vector& coord,
+                    const RS_Line& normal,
+                    bool /*onEntity = false*/)
+{
+        if ( !coord.valid) {
+                return RS_Vector(false);
+        }
+        RS_Vector vp0(coord-getCenter());
+        RS_Vector vp1(normal.getAngle1());
+        double d=RS_Vector::dotP(vp0,vp1);
+        if(d >= 0. ) {
+                return getCenter() + vp1*getRadius();
+        }else{
+                return getCenter() - vp1*getRadius();
+        }
+}
 
 double RS_Circle::getDistanceToPoint(const RS_Vector& coord,
                                      RS_Entity** entity,

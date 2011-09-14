@@ -230,6 +230,7 @@ public:
         ActionDrawLineHorVert,
         ActionDrawLineHorizontal,
         ActionDrawLineOrthogonal,
+        ActionDrawLineOrthTan,
         ActionDrawLineParallel,
         ActionDrawLineParallelThrough,
         ActionDrawLinePolygon,

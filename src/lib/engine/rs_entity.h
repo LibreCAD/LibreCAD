@@ -423,6 +423,9 @@ public:
      *
      * @return The measured distance between \p coord and the entity.
      */
+    virtual RS_Vector getNearestOrthTan(const RS_Vector& /*coord*/,
+                    const RS_Line& /*normal*/,
+                    bool onEntity = false);
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity = NULL,
                                       RS2::ResolveLevel level = RS2::ResolveNone,

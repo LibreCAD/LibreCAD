@@ -66,6 +66,7 @@
 #include "rs_actiondrawlinepolygon2.h"
 #include "rs_actiondrawlinerectangle.h"
 #include "rs_actiondrawlinerelangle.h"
+#include "rs_actiondrawlineorthtan.h"
 #include "rs_actiondrawlinetangent1.h"
 #include "rs_actiondrawlinetangent2.h"
 #include "rs_actiondrawpoint.h"
@@ -385,6 +386,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionDrawLineBisector:
         a = new RS_ActionDrawLineBisector(*doc, *gv);
+        break;
+    case RS2::ActionDrawLineOrthTan:
+        a = new RS_ActionDrawLineOrthTan(*doc, *gv);
         break;
     case RS2::ActionDrawLineTangent1:
         a = new RS_ActionDrawLineTangent1(*doc, *gv);
@@ -1094,6 +1098,10 @@ void QG_ActionHandler::slotDrawLineTangent2() {
     setCurrentAction(RS2::ActionDrawLineTangent2);
 }
 
+void QG_ActionHandler::slotDrawLineOrthTan() {
+    setCurrentAction(RS2::ActionDrawLineOrthTan);
+}
+
 void QG_ActionHandler::slotDrawLineOrthogonal() {
     setCurrentAction(RS2::ActionDrawLineOrthogonal);
 }
@@ -1681,3 +1689,4 @@ void QG_ActionHandler::setCadToolBarSnap(QG_CadToolBarSnap* tb) {
 }
 
 // EOF
+
