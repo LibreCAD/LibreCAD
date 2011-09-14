@@ -654,7 +654,7 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         requestLinePolygonOptions(action, on, update);
         break;
 
-    case RS2::ActionDrawLinePolygon2:
+    case RS2::ActionDrawLinePolygonCorCor:
         requestLinePolygon2Options(action, on, update);
         break;
 
