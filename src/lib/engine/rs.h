@@ -233,7 +233,7 @@ public:
         ActionDrawLineOrthTan,
         ActionDrawLineParallel,
         ActionDrawLineParallelThrough,
-        ActionDrawLinePolygon,
+        ActionDrawLinePolygonCenCor,
         ActionDrawLinePolygonCorCor,
         ActionDrawLineRectangle,
         ActionDrawLineRelAngle,

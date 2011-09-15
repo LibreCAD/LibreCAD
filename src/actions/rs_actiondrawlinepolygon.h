@@ -35,7 +35,7 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawLinePolygon : public RS_PreviewActionInterface {
+class RS_ActionDrawLinePolygonCenCor : public RS_PreviewActionInterface {
 	Q_OBJECT
 private:
     enum Status {
@@ -45,14 +45,14 @@ private:
 	};
 	
 public:
-    RS_ActionDrawLinePolygon(RS_EntityContainer& container,
+    RS_ActionDrawLinePolygonCenCor(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLinePolygon() {}
+    ~RS_ActionDrawLinePolygonCenCor() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	
 	virtual RS2::ActionType rtti() {
-		return RS2::ActionDrawLinePolygon;
+                return RS2::ActionDrawLinePolygonCenCor;
 	}
 
     virtual void trigger();

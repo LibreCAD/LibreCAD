@@ -426,11 +426,11 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionPolylineSegment:
         a = new RS_ActionPolylineSegment(*doc, *gv);
         break;
-    case RS2::ActionDrawLinePolygon:
-        a = new RS_ActionDrawLinePolygon(*doc, *gv);
+    case RS2::ActionDrawLinePolygonCenCor:
+        a = new RS_ActionDrawLinePolygonCenCor(*doc, *gv);
         break;
     case RS2::ActionDrawLinePolygonCorCor:
-        a = new RS_ActionDrawLinePolygon2(*doc, *gv);
+        a = new RS_ActionDrawLinePolygonCorCor(*doc, *gv);
         break;
     case RS2::ActionDrawCircle:
         a = new RS_ActionDrawCircle(*doc, *gv);
@@ -1142,7 +1142,7 @@ void QG_ActionHandler::slotPolylineSegment() {
 }
 
 void QG_ActionHandler::slotDrawLinePolygon() {
-    setCurrentAction(RS2::ActionDrawLinePolygon);
+    setCurrentAction(RS2::ActionDrawLinePolygonCenCor);
 }
 
 void QG_ActionHandler::slotDrawLinePolygon2() {
