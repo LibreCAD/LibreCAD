@@ -2098,6 +2098,8 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     if (cadToolBar!=NULL) {
         //set SnapFree to avoid orphaned snapOptions, bug#3407522
             if ( getGraphicView() != NULL && getDocument() != NULL ) {
+                    //need to detect graphicView and Document for NULL
+//bug#3408689
                 cadToolBar->setSnapFree();
             }
         cadToolBar->showToolBar(RS2::ToolBarMain);
