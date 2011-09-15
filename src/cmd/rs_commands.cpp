@@ -270,7 +270,9 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
     } else if (c==tr("re", "rectangle")) {
         ret = RS2::ActionDrawLineRectangle;
     } else if (c==tr("rp", "regular polygon")) {
-        ret = RS2::ActionDrawLinePolygon;
+        ret = RS2::ActionDrawLinePolygonCenCor;
+    } else if (c==tr("rp2", "regular polygon2")) {
+        ret = RS2::ActionDrawLinePolygonCorCor;
     } else if (c==tr("ci", "circle")) {
         ret = RS2::ActionDrawCircle;
     } else if (c==tr("c2", "2 point circle")) {

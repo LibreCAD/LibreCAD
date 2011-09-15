@@ -650,7 +650,7 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         requestLineRelAngleOptions(action, on, update);
         break;
 
-    case RS2::ActionDrawLinePolygon:
+    case RS2::ActionDrawLinePolygonCenCor:
         requestLinePolygonOptions(action, on, update);
         break;
 
