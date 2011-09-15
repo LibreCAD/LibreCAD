@@ -50,10 +50,10 @@ RS_ActionBlocksCreate::~RS_ActionBlocksCreate() {}
 
 
 QAction* RS_ActionBlocksCreate::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// (tr("Create Block"),
-    QAction* action = new QAction(tr("&Create Block"), NULL); 
+        // (tr("Create Block"),
+    QAction* action = new QAction(tr("&Create Block"), NULL);
     //action->zetStatusTip(tr("Create Block"));
-	action->setIcon(QIcon(":/extui/menublock.png"));
+        action->setIcon(QIcon(":/extui/menublock.png"));
     return action;
 }
 
@@ -95,8 +95,10 @@ void RS_ActionBlocksCreate::trigger() {
         }
     }
 
-	graphicView->redraw(RS2::RedrawDrawing); 
+        graphicView->redraw(RS2::RedrawDrawing);
 
+    setStatus(getStatus()+1); // clear mouse button hints
+    updateMouseButtonHints();
     finish();
     graphicView->killSelectActions();
 }
@@ -113,8 +115,8 @@ void RS_ActionBlocksCreate::mouseMoveEvent(QMouseEvent* e) {
             deletePreview();
             //preview->addAllFrom(*block);
             //preview->move(data.insertionPoint);
-        	RS_Creation creation(preview, NULL, false);
-        	creation.createInsert(data);
+                RS_Creation creation(preview, NULL, false);
+                creation.createInsert(data);
             drawPreview();
     }*/
         break;
