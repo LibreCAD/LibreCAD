@@ -61,6 +61,7 @@
 #include "rs_selection.h"
 
 #include "qg_cadtoolbar.h"
+#include "qg_snaptoolbar.h"
 #include "qg_actionfactory.h"
 #include "qg_blockwidget.h"
 #include "qg_layerwidget.h"
@@ -1438,7 +1439,7 @@ void QC_ApplicationWindow::initToolBar() {
 
 	QSizePolicy toolBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
-    fileToolBar = new QToolBar( "File Operations", this);
+	fileToolBar = new QToolBar( "File Operations", this);
 	fileToolBar->setSizePolicy(toolBarPolicy);
 	fileToolBar->setObjectName ( "FileTB" );
 
@@ -1455,6 +1456,11 @@ void QC_ApplicationWindow::initToolBar() {
 
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
             this, SLOT(slotPenChanged(RS_Pen)));
+
+    snapToolBar = new QG_SnapToolBar("Snap Selection", this);
+    snapToolBar->setSizePolicy(toolBarPolicy);
+    snapToolBar->setObjectName ( "SnapTB" );
+    connect(snapToolBar, SIGNAL(snapsChanged(RS_SnapMode)), this, SLOT(slotSnapsChanged(RS_SnapMode)));
 
     optionWidget = new QToolBar("Tool Options", this);
 	QSizePolicy optionWidgetBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
@@ -2044,6 +2050,15 @@ void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
     }
 
     RS_DEBUG->print("QC_ApplicationWindow::slotPenChanged() end");
+}
+
+/**
+ * Called when something changed in the snaps tool bar
+ */
+void QC_ApplicationWindow::slotSnapsChanged(RS_SnapMode snaps) {
+    RS_DEBUG->print("QC_ApplicationWindow::slotSnapsChanged() begin");
+
+    actionHandler->slotSetSnaps(snaps);
 }
 
 
