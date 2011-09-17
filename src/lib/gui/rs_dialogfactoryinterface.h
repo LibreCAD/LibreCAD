@@ -381,7 +381,8 @@ public:
                                    const QString& right,
                                    bool keeping=true) = 0;
     virtual void restoreMouseWidget(void)=0;
-								   
+    virtual void updateArcTangentialOptions(const double& d, bool byRadius)=0;
+
     /**
      * This virtual method must be overwritten if the graphic view has
      * a component that is interested in the current number of selected
@@ -405,7 +406,8 @@ public:
     virtual void commandMessage(const QString& message) = 0;
 
 
-	virtual bool isAdapter() = 0;
+        virtual bool isAdapter() = 0;
+
 };
 
 #endif

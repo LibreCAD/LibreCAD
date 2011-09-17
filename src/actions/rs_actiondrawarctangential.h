@@ -86,6 +86,17 @@ public:
 	double getRadius() {
 		return data.radius;
 	}
+        void setAngle(double r) {
+                angleLength= r;
+        }
+
+        double getAngle() {
+                return angleLength;
+        }
+        virtual void setByRadius(bool status=true);
+        virtual bool getByRadius(){
+                return byRadius;
+        }
 
 protected:
     /**
@@ -103,7 +114,10 @@ protected:
     /**
 	 * Arc data calculated.
 	 */
-	RS_ArcData data;
+        RS_ArcData data;
+        private:
+        double angleLength;
+        bool byRadius;
 };
 
 #endif

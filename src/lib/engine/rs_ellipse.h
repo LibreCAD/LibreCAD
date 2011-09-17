@@ -267,6 +267,10 @@ public:
     //virtual void calculateEndpoints();
     virtual void calculateBorders();
 
+    //direction of tangent at endpoints
+    virtual double getDirection1();
+    virtual double getDirection2();
+
 protected:
     RS_EllipseData data;
 };

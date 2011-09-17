@@ -87,6 +87,7 @@ public:
                                    bool) {}
     virtual void restoreMouseWidget(void) {}
     virtual void updateSelectionWidget(int ) {}
+    virtual void updateArcTangentialOptions(const double& , bool ){}
     virtual void commandMessage(const QString& ) {}
 	virtual bool isAdapter() { return true; }
 };

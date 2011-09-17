@@ -114,3 +114,10 @@ void QG_CadToolBarArcs::back() {
         cadToolBar->back();
     }
 }
+
+void QG_CadToolBarArcs::on_bArcTangential_clicked()
+{
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawArcTangential();
+    }
+}
