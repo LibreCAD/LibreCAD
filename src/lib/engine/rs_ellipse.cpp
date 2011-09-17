@@ -725,7 +725,33 @@ void RS_Ellipse::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
     calculateBorders();
 }
 
+/**
+  * get direction1 and direction2
+  * get the tangent pointing outside at end points
+  *
+  * Author: Dongxu Li
+  */
+//getDirection1 for start point
+double RS_Ellipse::getDirection1(){
+    RS_Vector vp;
+    if (isReversed()){
+        vp.set(getMajorRadius()*sin(getAngle1()), -getMinorRadius()*cos(getAngle1()));
+    } else {
+        vp.set(-getMajorRadius()*sin(getAngle1()), getMinorRadius()*cos(getAngle1()));
+    }
+    return vp.angle()+getAngle();
+}
 
+//getDirection2 for end point
+double RS_Ellipse::getDirection2(){
+    RS_Vector vp;
+    if (isReversed()){
+        vp.set(-getMajorRadius()*sin(getAngle2()), getMinorRadius()*cos(getAngle2()));
+    } else {
+        vp.set(getMajorRadius()*sin(getAngle2()), -getMinorRadius()*cos(getAngle2()));
+    }
+    return vp.angle()+getAngle();
+}
 
 void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     RS_Vector startpoint = getStartpoint();
