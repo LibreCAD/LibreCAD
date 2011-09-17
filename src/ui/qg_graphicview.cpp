@@ -71,6 +71,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WFlags f)
 
     hScrollBar = new QG_ScrollBar(Qt::Horizontal, this);
     hScrollBar->setSingleStep(50);
+    hScrollBar->setCursor(Qt::ArrowCursor);
     layout->addWidget(hScrollBar, 1, 0);
     layout->addItem(new QSpacerItem(0, hScrollBar->sizeHint().height()), 1, 0);
     connect(hScrollBar, SIGNAL(valueChanged(int)),
@@ -78,6 +79,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WFlags f)
 
     vScrollBar = new QG_ScrollBar(Qt::Vertical, this);
     vScrollBar->setSingleStep(50);
+    vScrollBar->setCursor(Qt::ArrowCursor);
     layout->addWidget(vScrollBar, 0, 2);
     layout->addItem(new QSpacerItem(vScrollBar->sizeHint().width(), 0), 0, 2);
     connect(vScrollBar, SIGNAL(valueChanged(int)),
