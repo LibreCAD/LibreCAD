@@ -201,7 +201,8 @@ HEADERS = \
     src/lib/scripting/rs_simplepython.h \
     src/lib/scripting/rs_python_wrappers.h \
     src/lib/scripting/rs_script.h \
-    src/lib/scripting/rs_scriptlist.h
+    src/lib/scripting/rs_scriptlist.h \
+    src/ui/forms/qg_snaptoolbar.h
 
 SOURCES = \
     dxflib/src/dl_dxf.cpp \
@@ -282,7 +283,8 @@ SOURCES = \
     src/lib/scripting/rs_simplepython.cpp \
     src/lib/scripting/rs_python_wrappers.cpp \
     src/lib/scripting/rs_script.cpp \
-    src/lib/scripting/rs_scriptlist.cpp
+    src/lib/scripting/rs_scriptlist.cpp \
+    src/ui/forms/qg_snaptoolbar.cpp
 
 # ################################################################################
 # Command
@@ -782,7 +784,8 @@ FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_splineoptions.ui \
     src/ui/forms/qg_textoptions.ui \
     src/ui/forms/qg_trimamountoptions.ui \
-    src/ui/forms/qg_widgetpen.ui
+    src/ui/forms/qg_widgetpen.ui \
+    src/ui/forms/qg_snaptoolbar.ui
 
 RESOURCES += res/ui/ui.qrc
 
@@ -867,3 +870,6 @@ TRANSLATIONS = ts/librecad_cs.ts \
 
 # Include any custom.pro files for personal/special builds
 exists( custom.pro ):include( custom.pro )
+
+
+

@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -41,6 +41,7 @@
 
 class QG_LibraryWidget;
 class QG_CadToolBar;
+class QG_SnapToolBar;
 class QC_DialogFactory;
 class QG_LayerWidget;
 class QG_BlockWidget;
@@ -105,6 +106,7 @@ public slots:
     void slotTileVertical();
 
     void slotPenChanged(RS_Pen p);
+    void slotSnapsChanged(RS_SnapMode s);
 
     /** generates a new document for a graphic. */
     QC_MDIWindow* slotFileNew(RS_Document* doc=NULL);
@@ -127,7 +129,7 @@ public slots:
     void slotFileAutoSave();
 	/** exports the document as bitmap */
 	void slotFileExport();
-	bool slotFileExport(const QString& name, const QString& format, 
+	bool slotFileExport(const QString& name, const QString& format,
 		QSize size, bool black, bool bw=false);
     /** closes the current file */
     void slotFileClose();
@@ -149,14 +151,14 @@ public slots:
 
     // void slotBlocksEdit();
     void slotOptionsGeneral();
-	
+
     void slotScriptOpenIDE();
     void slotScriptRun();
-	
+
 	void slotRunStartScript();
 	void slotRunScript();
 	void slotRunScript(const QString& name);
-	
+
 	void slotInsertBlock();
 	void slotInsertBlock(const QString& name);
 
@@ -252,13 +254,13 @@ public:
         }
         return NULL;
     }
-	
+
 	/**
 	 * Creates a new document. Implementation from RS_MainWindowInterface.
 	 */
     virtual void createNewDocument(
                 const QString& fileName = QString::null, RS_Document* doc=NULL) {
-		
+
 		slotFileNew(doc);
                 if (fileName!=QString::null && getDocument()!=NULL) {
 			getDocument()->setFilename(fileName);
@@ -285,7 +287,7 @@ public:
 
         //virtual QToolBar* createToolBar(const QString& name);
 	//virtual void addToolBarButton(QToolBar* tb);
-	
+
     /**
      * @return Pointer to the qsa object.
      */
@@ -381,6 +383,8 @@ private:
     QToolBar* editToolBar;
     QToolBar* zoomToolBar;
 
+    QG_SnapToolBar* snapToolBar;
+
     // Toolbar for selecting the current pen
     QG_PenToolBar* penToolBar;
     // Toolbar for CAD tools
@@ -391,7 +395,7 @@ private:
 
     QAction* scriptOpenIDE;
     QAction* scriptRun;
-	
+
     QAction* helpAboutApp;
     QAction* helpManual;
 
