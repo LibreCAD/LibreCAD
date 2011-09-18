@@ -130,11 +130,9 @@ void RS_ActionZoomPan::updateMouseButtonHints()
 
 
 void RS_ActionZoomPan::updateMouseCursor() {
-#ifndef __APPLE__
         if(getStatus()==SetPanning) {
     graphicView->setMouseCursor(RS2::MovingHandCursor);
         }
-#endif
 }
 
 
