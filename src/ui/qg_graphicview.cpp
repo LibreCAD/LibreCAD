@@ -83,7 +83,6 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WFlags f)
     connect(vScrollBar, SIGNAL(valueChanged(int)),
             this, SLOT(slotVScrolled(int)));
 
-#ifndef __APPLE__
     // Mouse Cursors:
     QPixmap cur1(":ui/cur_cad_bmp.png");
     curCad = new QCursor(cur1, 15, 15);
@@ -99,14 +98,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WFlags f)
 
     QPixmap cur5(":ui/cur_hand_bmp.png");
     curHand = new QCursor(cur5, 15, 15);
-#else
-    // No individual cursors for the Mac
-    curCad = NULL;
-    curMagnifier = NULL;
-    curDel = NULL;
-    curSelect = NULL;
-    curHand = NULL;
-#endif
+
 
     // Dummy widgets for scrollbar corners:
     //layout->addWidget(new QWidget(this), 1, 1);
@@ -226,9 +218,6 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
     case RS2::WhatsThisCursor:
         setCursor(Qt::WhatsThisCursor);
         break;
-
-#ifndef __APPLE__
-
     case RS2::CadCursor:
         setCursor(*curCad);
         break;
@@ -244,24 +233,7 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
     case RS2::MovingHandCursor:
         setCursor(*curHand);
         break;
-#else
-        // Reduced cursor selection for the Mac:
-    case RS2::CadCursor:
-        setCursor(Qt::CrossCursor);
-        break;
-    case RS2::DelCursor:
-        setCursor(Qt::CrossCursor);
-        break;
-    case RS2::SelectCursor:
-        setCursor(Qt::CrossCursor);
-        break;
-    case RS2::MagnifierCursor:
-        setCursor(Qt::CrossCursor);
-        break;
-    case RS2::MovingHandCursor:
-        setCursor(Qt::PointingHandCursor);
-        break;
-#endif
+
     }
 
 }
