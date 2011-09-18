@@ -37,6 +37,7 @@
 /*
 #include "qg_cadtoolbar.h"
 #include "qg_coordinatewidget.h"
+#include "qg_arctangentialoptions.h"
 #include "qg_selectionwidget.h"
 #include "qg_mousewidget.h"
 #include "qg_printpreviewoptions.h"
@@ -47,6 +48,7 @@ class QToolBar;
 class QG_CoordinateWidget;
 class QG_SelectionWidget;
 class QG_MouseWidget;
+class QG_ArcTangentialOptions;
 //class PrintPreviewOptions;
 class QG_CommandWidget;
 class QG_MainWindowInterface;
@@ -252,7 +254,9 @@ public:
     virtual void commandMessage(const QString& message);
 	virtual bool isAdapter() { return false; }
 
-	static QString extToFormat(const QString& ext);
+        static QString extToFormat(const QString& ext);
+        virtual void updateArcTangentialOptions(const double& d, bool byRadius);
+
 
 
 protected:
@@ -270,6 +274,8 @@ protected:
     QG_CadToolBar* cadToolBar;
     //! Pointer to the command line widget
     QG_CommandWidget* commandWidget;
+    //! Pointer to arcTangential Option widge
+    QG_ArcTangentialOptions* arcTangentialOptions;
     //! Pointer to the main app window
     QG_MainWindowInterface* mainWindow;
 private:
