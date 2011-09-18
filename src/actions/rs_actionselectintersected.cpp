@@ -68,8 +68,8 @@ void RS_ActionSelectIntersected::init(int status) {
     RS_PreviewActionInterface::init(status);
 
     v1 = v2 = RS_Vector(false);
-    snapMode.clearAll();
-    snapRes = RS2::RestrictNothing;
+    snapMode.clear();
+    snapMode.restriction = RS2::RestrictNothing;
 }
 
 

@@ -49,8 +49,13 @@ public:
     bool snapEndpoint;     /// Whether to snap to endpoints or not.
     bool snapMiddle;       /// Whether to snap to midpoints or not.
     bool snapCenter;       /// Whether to snap to centers or not.
-    bool snapOnEntity;     /// Whether to snap to entities or not.
     bool snapIntersection; /// Whether to snap to intersections or not.
+
+    bool snapOnEntity;     /// Whether to snap to entities or not.
+
+    RS2::SnapRestriction restriction; /// The restriction on the free snap.
+
+    double distance; /// The distance to snap before defaulting to free snaping.
 
     /**
       * Default Constructor
@@ -58,13 +63,7 @@ public:
       * Creates a RS_SnapMode that specifies only free snapping.
       *
       */
-    RS_SnapMode():
-        snapEndpoint    (false),
-        snapMiddle      (false),
-        snapCenter      (false),
-        snapOnEntity    (false),
-        snapIntersection(false)
-    {}
+    RS_SnapMode() { hardReset(); }
 
     /**
       * Disable all snapping.
@@ -73,12 +72,33 @@ public:
       *
       * @returns A refrence to itself.
       */
-    RS_SnapMode &clearAll(void) {
+    RS_SnapMode &clear(void) {
         snapEndpoint     = false;
         snapMiddle       = false;
         snapCenter       = false;
         snapOnEntity     = false;
         snapIntersection = false;
+
+        restriction = RS2::RestrictNothing;
+
+        return *this;
+    }
+
+    /**
+     * Reset to default settings
+     *
+     * @returns A refrence to itself.
+     */
+    RS_SnapMode &hardReset(void) {
+        snapEndpoint     = false;
+        snapMiddle       = false;
+        snapCenter       = false;
+        snapOnEntity     = false;
+        snapIntersection = false;
+
+        restriction = RS2::RestrictNothing;
+
+        distance = 10;
 
         return *this;
     }
@@ -122,7 +142,7 @@ public:
     }
     /** Sets a new snap restriction. */
     void setSnapRestriction(RS2::SnapRestriction snapRes) {
-        this->snapRes = snapRes;
+        //this->snapRes = snapRes;
     }
 
 	/**
@@ -186,7 +206,7 @@ protected:
     RS_Vector snapCoord;
     RS_Vector snapSpot;
     RS_SnapMode snapMode;
-    RS2::SnapRestriction snapRes;
+    //RS2::SnapRestriction snapRes;
     /**
      * Snap distance for snaping to points with a
      * given distance from endpoints.

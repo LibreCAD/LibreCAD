@@ -23,8 +23,6 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <iostream>
-
 #include <QContextMenuEvent>
 #include <QToolBar>
 
@@ -54,6 +52,25 @@ void QG_SnapToolBar::setSnaps ( RS_SnapMode s )
     snapCenter->setChecked(s.snapCenter);
     snapMiddle->setChecked(s.snapMiddle);
     snapIntersection->setChecked(s.snapIntersection);
+
+
+    restrictOrthoagonal->setChecked(false); // Init to false
+    restrictHorizontal->setChecked(false);  //
+    restrictVertical->setChecked(false);    //
+    switch (s.restriction)
+    {
+    case RS2::RestrictOrthogonal:
+        restrictOrthoagonal->setChecked(true);
+        break;
+    case RS2::RestrictHorizontal:
+        restrictHorizontal->setChecked(true);
+        break;
+    case RS2::RestrictVertical:
+        restrictVertical->setChecked(true);
+        break;
+    default:
+        break;
+    }
 }
 
 RS_SnapMode QG_SnapToolBar::getSnaps ( void )
@@ -65,6 +82,15 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void )
     s.snapCenter       = snapCenter->isChecked();
     s.snapMiddle       = snapMiddle->isChecked();
     s.snapIntersection = snapIntersection->isChecked();
+
+    if (restrictOrthoagonal->isChecked())
+        s.restriction = RS2::RestrictOrthogonal;
+    else if (restrictHorizontal->isChecked())
+        s.restriction = RS2::RestrictHorizontal;
+    else if (restrictVertical->isChecked())
+        s.restriction = RS2::RestrictVertical;
+    else
+        s.restriction = RS2::RestrictNothing;
 
     return s;
 }
@@ -102,38 +128,57 @@ void QG_SnapToolBar::init()
 
     this->addSeparator();
 
-    QAction *a;
-
-    a = new QAction(QIcon(":/extui/restrictorthogonal.png"), "Restrict Orthogonal", this);
-    a->setCheckable(true);
-    connect(a, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(a);
-    a = new QAction(QIcon(":/extui/restricthorizontal.png"), "Restrict Horizontal", this);
-    a->setCheckable(true);
-    connect(a, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(a);
-    a = new QAction(QIcon(":/extui/restrictvertical.png"), "Restrict Vertical", this);
-    a->setCheckable(true);
-    connect(a, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(a);
+    restrictOrthoagonal = new QAction(QIcon(":/extui/restrictorthogonal.png"),
+                                      "Restrict Orthogonal", this);
+    restrictOrthoagonal->setCheckable(true);
+    connect(restrictOrthoagonal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    connect(restrictOrthoagonal, SIGNAL(triggered(bool)),
+            this, SLOT(restrictOrthoagonalTriggered(bool)));
+    this->addAction(restrictOrthoagonal);
+    restrictHorizontal = new QAction(QIcon(":/extui/restricthorizontal.png"),
+                                     "Restrict Horizontal", this);
+    restrictHorizontal->setCheckable(true);
+    connect(restrictHorizontal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    connect(restrictHorizontal, SIGNAL(triggered(bool)),
+            this, SLOT(restrictHorizontalTriggered(bool)));
+    this->addAction(restrictHorizontal);
+    restrictVertical = new QAction(QIcon(":/extui/restrictvertical.png"),
+                                   "Restrict Vertical", this);
+    restrictVertical->setCheckable(true);
+    connect(restrictVertical, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    connect(restrictVertical, SIGNAL(triggered(bool)),
+            this, SLOT(restrictVerticalTriggered(bool)));
+    this->addAction(restrictVertical);
 
     this->addSeparator();
-
-    a = new QAction(QIcon(":/extui/relzeromove.png"), "Relitave zero move", this);
-    a->setCheckable(false);
-    connect(a, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(a);
-    a = new QAction(QIcon(":/extui/relzerolock.png"), "Relative zero lock", this);
-    a->setCheckable(false);
-    connect(a, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(a);
 }
 
 /* Slots */
 
 void QG_SnapToolBar::actionTriggered()
 {
-    std::cerr << "Triggered" <<std::endl;
     emit snapsChanged(getSnaps());
+}
+
+void QG_SnapToolBar::restrictOrthoagonalTriggered(bool activated)
+{
+    if (activated) {
+        restrictHorizontal->setChecked(false);
+        restrictVertical->setChecked(false);
+    }
+}
+void QG_SnapToolBar::restrictHorizontalTriggered(bool activated)
+{
+    if (activated) {
+        restrictOrthoagonal->setChecked(false);
+        restrictVertical->setChecked(false);
+    }
+}
+void QG_SnapToolBar::restrictVerticalTriggered(bool activated)
+{
+    if (activated) {
+        restrictOrthoagonal->setChecked(false);
+        restrictHorizontal->setChecked(false);
+    }
 }
 
