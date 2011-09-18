@@ -150,11 +150,38 @@ void RS_Ellipse::calculateBorders() {
 
 
 
-RS_VectorSolutions RS_Ellipse::getRefPoints() {
+RS_VectorSolutions RS_Ellipse::getRefPoints() const {
     RS_VectorSolutions ret(getStartpoint(), getEndpoint(), data.center);
     return ret;
 }
 
+/**
+  * get direction1 and direction2
+  * get the tangent pointing outside at end points
+  *
+  * Author: Dongxu Li
+  */
+//getDirection1 for start point
+double RS_Ellipse::getDirection1() const {
+    RS_Vector vp;
+    if (isReversed()){
+        vp.set(sin(getAngle1()), -getRatio()*cos(getAngle1()));
+    } else {
+        vp.set(-sin(getAngle1()), getRatio()*cos(getAngle1()));
+    }
+    return vp.angle()+getAngle();
+}
+
+//getDirection2 for end point
+double RS_Ellipse::getDirection2() const {
+    RS_Vector vp;
+    if (isReversed()){
+        vp.set(-sin(getAngle2()), getRatio()*cos(getAngle2()));
+    } else {
+        vp.set(sin(getAngle2()), -getRatio()*cos(getAngle2()));
+    }
+    return vp.angle()+getAngle();
+}
 
 
 RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist) {
@@ -564,7 +591,7 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
     if( trimSol.getNumber() == 1 ) return (trimSol.get(0));
     double am=getEllipseAngle(trimCoord);
     QList<double> ias;
-    double ia,ia2;
+    double ia(0.),ia2(0.);
     RS_Vector is,is2;
     for(int ii=0; ii<trimSol.getNumber(); ii++) { //find closest according ellipse angle
         ias.append(getEllipseAngle(trimSol.get(ii)));
@@ -649,7 +676,7 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
     return is;
 }
 
-double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) {
+double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) const {
     RS_Vector m = pos-data.center;
     m.rotate(-data.majorP.angle());
     m.scale(RS_Vector(data.ratio, 1.0));

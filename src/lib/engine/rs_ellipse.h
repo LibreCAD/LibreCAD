@@ -132,14 +132,14 @@ public:
     virtual RS_Vector prepareTrim(const RS_Vector& trimCoord,
                                   const RS_VectorSolutions& trimSol);
 
-    double getEllipseAngle(const RS_Vector& pos);
+    double getEllipseAngle(const RS_Vector& pos) const;
 
     /** @return Copy of data that defines the ellipse. **/
     RS_EllipseData getData() {
         return data;
     }
 
-    virtual RS_VectorSolutions getRefPoints();
+    virtual RS_VectorSolutions getRefPoints() const;
 
     /**
      * @retval true if the arc is reversed (clockwise),
@@ -159,7 +159,7 @@ public:
     }
 
     /** @return The start angle of this arc */
-    double getAngle1() {
+    double getAngle1() const {
         return data.angle1;
     }
     /** Sets new start angle. */
@@ -167,7 +167,7 @@ public:
         data.angle1 = a1;
     }
     /** @return The end angle of this arc */
-    double getAngle2() {
+    double getAngle2() const {
         return data.angle2;
     }
     /** Sets new end angle. */
@@ -177,7 +177,7 @@ public:
 
 
     /** @return The center point (x) of this arc */
-    RS_Vector getCenter() {
+    RS_Vector getCenter() const{
         return data.center;
     }
     /** Sets new center. */
@@ -186,7 +186,7 @@ public:
     }
 
     /** @return The endpoint of the major axis (relative to center). */
-    RS_Vector getMajorP() {
+    RS_Vector getMajorP() const {
         return data.majorP;
     }
     /** Sets new major point (relative to center). */
@@ -195,7 +195,7 @@ public:
     }
 
     /** @return The ratio of minor to major axis */
-    double getRatio() {
+    double getRatio() const {
         return data.ratio;
     }
     /** Sets new ratio. */
@@ -224,6 +224,8 @@ public:
     double getMinorRadius() const {
         return data.majorP.magnitude()*data.ratio;
     }
+    virtual double getDirection1() const;
+    virtual double getDirection2() const;
 
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL);

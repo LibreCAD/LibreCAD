@@ -87,6 +87,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WFlags f)
 
     hScrollBar = new QG_ScrollBar(Qt::Horizontal, this);
     hScrollBar->setLineStep(50);
+    hScrollBar->setCursor(Qt::ArrowCursor);
     layout->addMultiCellWidget(hScrollBar, 1, 1, 0, 0);
     layout->addRowSpacing(1, hScrollBar->sizeHint().height());
     connect(hScrollBar, SIGNAL(valueChanged(int)),
@@ -94,6 +95,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WFlags f)
 
     vScrollBar = new QG_ScrollBar(Qt::Vertical, this);
     vScrollBar->setLineStep(50);
+    vScrollBar->setCursor(Qt::ArrowCursor);
     layout->addMultiCellWidget(vScrollBar, 0, 0, 2, 2);
     layout->addColSpacing(2, vScrollBar->sizeHint().width());
     connect(vScrollBar, SIGNAL(valueChanged(int)),
