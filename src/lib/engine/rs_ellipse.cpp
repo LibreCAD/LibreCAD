@@ -412,7 +412,12 @@ RS_Vector RS_Ellipse::getNearestDist(double /*distance*/,
     }
     return RS_Vector(false);
 }
-
+/**
+  * get the tangential point of a tangential line orthogonal to a given line
+  *@ normal, the given line
+  *@ onEntity, should the tangential be required to on entity of the elliptic arc
+  *@ coord, current cursor position
+  */
 
 RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
                     const RS_Line& normal,
@@ -628,7 +633,7 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
     return is;
 }
 
-double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) {
+double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) const {
     RS_Vector m = pos-data.center;
     m.rotate(-data.majorP.angle());
     m.scale(RS_Vector(data.ratio, 1.0));
@@ -732,23 +737,23 @@ void RS_Ellipse::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
   * Author: Dongxu Li
   */
 //getDirection1 for start point
-double RS_Ellipse::getDirection1(){
+double RS_Ellipse::getDirection1() const {
     RS_Vector vp;
     if (isReversed()){
-        vp.set(getMajorRadius()*sin(getAngle1()), -getMinorRadius()*cos(getAngle1()));
+        vp.set(sin(getAngle1()), -getRatio()*cos(getAngle1()));
     } else {
-        vp.set(-getMajorRadius()*sin(getAngle1()), getMinorRadius()*cos(getAngle1()));
+        vp.set(-sin(getAngle1()), getRatio()*cos(getAngle1()));
     }
     return vp.angle()+getAngle();
 }
 
 //getDirection2 for end point
-double RS_Ellipse::getDirection2(){
+double RS_Ellipse::getDirection2() const {
     RS_Vector vp;
     if (isReversed()){
-        vp.set(-getMajorRadius()*sin(getAngle2()), getMinorRadius()*cos(getAngle2()));
+        vp.set(-sin(getAngle2()), getRatio()*cos(getAngle2()));
     } else {
-        vp.set(getMajorRadius()*sin(getAngle2()), -getMinorRadius()*cos(getAngle2()));
+        vp.set(sin(getAngle2()), -getRatio()*cos(getAngle2()));
     }
     return vp.angle()+getAngle();
 }
