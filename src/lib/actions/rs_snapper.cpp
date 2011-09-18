@@ -132,14 +132,15 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
             snapSpot = t;
     }
 
-    if (snapMode.snapOnEntity && snapSpot.distanceTo(mouseCoord) > 5 ) {
+    if (snapMode.snapOnEntity &&
+        snapSpot.distanceTo(mouseCoord) > snapMode.distance) {
         t = snapOnEntity(mouseCoord);
 
         if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
             snapSpot = t;
     }
 
-    if ( snapSpot.distanceTo(mouseCoord) > 5 ) { //@todo make configurable
+    if (snapSpot.disgittanceTo(mouseCoord) > snapMode.distance) {
         // handle snap restrictions that can be activated in addition
         //   to the ones above:
         switch (snapMode.restriction) {
