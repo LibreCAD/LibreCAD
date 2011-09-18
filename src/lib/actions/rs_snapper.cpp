@@ -33,10 +33,6 @@
 #include "rs_settings.h"
 #include "rs_overlayline.h"
 
-#include <iostream>
-using namespace std;
-
-
 /**
  * Constructor.
  */
@@ -140,7 +136,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
             snapSpot = t;
     }
 
-    if (snapSpot.disgittanceTo(mouseCoord) > snapMode.distance) {
+    if (snapSpot.distanceTo(mouseCoord) > snapMode.distance) {
         // handle snap restrictions that can be activated in addition
         //   to the ones above:
         switch (snapMode.restriction) {

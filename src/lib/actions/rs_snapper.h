@@ -98,7 +98,7 @@ public:
 
         restriction = RS2::RestrictNothing;
 
-        distance = 10;
+        distance = 5;
 
         return *this;
     }

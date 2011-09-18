@@ -28,9 +28,6 @@
 
 #include "qg_snaptoolbar.h"
 
-#include <iostream>
-using namespace std;
-
 /*
  *  Constructs a QG_CadToolBarSnap as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
