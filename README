@@ -1,7 +1,6 @@
-
 ---- About LibreCAD ----
-LibreCAD is a 2D CAD drawing tool based on the community edition of QCad (www.qcad.org). 
-LibreCAD has been re-structured and ported to qt4 and works natively cross platform between OSX, Windows and Linux. 
+LibreCAD is a 2D CAD drawing tool based on the community edition of QCad (www.qcad.org).
+LibreCAD has been re-structured and ported to qt4 and works natively cross platform between OSX, Windows and Linux.
 See www.librecad.org
 
 ---- UNIX and OSX users ----
@@ -10,12 +9,12 @@ CD into that directory and follow these instructions:
 
 # Build makefile and compile LibreCAD
 
-qmake 
+qmake
 make
 
 ---- Ubuntu/Debian users ----
 
-Make sure you have the qt-4 SDK installed 
+Make sure you have the qt-4 SDK installed
 Install the qt4 SDK by executing the following commands:
 
 sudo apt-get install g++ gcc make git-core libqt4-dev qt4-qmake libqt4-qt3support qt4-dev-tools
@@ -32,7 +31,7 @@ After installation, start qtCreator and load LibreCAD.pro,
 from the the build menu select 'Build All'
 
 
------ 
+-----
 Ubuntu Lucid
 gcc version 4.4.3 (Ubuntu 4.4.3-4ubuntu5)
 Using Qt version 4.6.2 in /usr/lib
@@ -50,4 +49,3 @@ Using Qt version 4.4.3 in /usr/lib
 ----- (RVT)
 Windows XP
 Using Qt version 4.7.0
-
