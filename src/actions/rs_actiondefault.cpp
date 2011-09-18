@@ -66,8 +66,8 @@ void RS_ActionDefault::init(int status) {
 
 	RS_PreviewActionInterface::init(status);
     v1 = v2 = RS_Vector(false);
-    snapMode.clearAll();
-    snapRes = RS2::RestrictNothing;
+    snapMode.clear();
+    snapMode.restriction = RS2::RestrictNothing;
     restrBak = RS2::RestrictNothing;
 	RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
 
@@ -83,7 +83,7 @@ void RS_ActionDefault::trigger() {
 
 void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {
 	if (e->key()==Qt::Key_Shift) {
-		restrBak = snapRes;
+		restrBak = snapMode.restriction;
 		setSnapRestriction(RS2::RestrictOrthogonal);
 	}
 }

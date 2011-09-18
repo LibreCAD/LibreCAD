@@ -58,7 +58,7 @@ void RS_ActionModifyBevel::init(int status) {
     RS_ActionInterface::init(status);
 
     //snapMode = RS2::SnapFree;
-    snapRes = RS2::RestrictNothing;
+    snapMode.restriction = RS2::RestrictNothing;
 }
 
 

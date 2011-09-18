@@ -61,7 +61,7 @@ RS_Snapper::~RS_Snapper() {}
  */
 void RS_Snapper::init() {
     snapMode = graphicView->getDefaultSnapMode();
-    snapRes = graphicView->getSnapRestriction();
+    //snapRes = graphicView->getSnapRestriction();
     keyEntity = NULL;
     snapSpot = RS_Vector(false);
     snapCoord = RS_Vector(false);
@@ -111,12 +111,6 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
         if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
             snapSpot = t;
     }
-    if (snapMode.snapOnEntity) {
-        t = snapOnEntity(mouseCoord);
-
-        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
-            snapSpot = t;
-    }
     if (snapMode.snapCenter) {
         t = snapCenter(mouseCoord);
 
@@ -136,25 +130,32 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
             snapSpot = t;
     }
 
-    if ( snapSpot.distanceTo(mouseCoord) > 5 ) //@todo make configurable
-        snapSpot = mouseCoord;
+    if (snapMode.snapOnEntity && snapSpot.distanceTo(mouseCoord) > 5 ) {
+        t = snapOnEntity(mouseCoord);
 
-    // handle snap restrictions that can be activated in addition
-    //   to the ones above:
-    switch (snapRes) {
-    case RS2::RestrictOrthogonal:
-        snapCoord = restrictOrthogonal(snapSpot);
-        break;
-    case RS2::RestrictHorizontal:
-        snapCoord = restrictHorizontal(snapSpot);
-        break;
-    case RS2::RestrictVertical:
-        snapCoord = restrictVertical(snapSpot);
-        break;
-    default:
-    case RS2::RestrictNothing:
-        snapCoord = snapSpot;
-        break;
+        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+            snapSpot = t;
+    }
+
+    if ( snapSpot.distanceTo(mouseCoord) > 5 ) { //@todo make configurable
+        // handle snap restrictions that can be activated in addition
+        //   to the ones above:
+        switch (snapMode.restriction) {
+        case RS2::RestrictOrthogonal:
+            snapCoord = restrictOrthogonal(mouseCoord);
+            break;
+        case RS2::RestrictHorizontal:
+            snapCoord = restrictHorizontal(mouseCoord);
+            break;
+        case RS2::RestrictVertical:
+            snapCoord = restrictVertical(mouseCoord);
+            break;
+
+        default:
+        case RS2::RestrictNothing:
+            snapCoord = mouseCoord;
+            break;
+        }
     }
 
     drawSnapper();

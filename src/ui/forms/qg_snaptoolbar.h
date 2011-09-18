@@ -48,6 +48,10 @@ public:
 private slots:
     void actionTriggered(void);
 
+    void restrictOrthoagonalTriggered(bool);
+    void restrictHorizontalTriggered(bool);
+    void restrictVerticalTriggered(bool);
+
 public slots:
     void setSnaps(RS_SnapMode);
 
@@ -62,6 +66,11 @@ private:
     QAction *snapMiddle;
     //QAction *snapDistance;
     QAction *snapIntersection;
+
+
+    QAction *restrictOrthoagonal;
+    QAction *restrictHorizontal;
+    QAction *restrictVertical;
 
     void init();
 
