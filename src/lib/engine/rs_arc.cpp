@@ -108,7 +108,46 @@ bool RS_Arc::createFrom2PDirectionRadius(const RS_Vector& startPoint,
     if (fabs(diff-M_PI)<1.0e-1) {
         data.reversed = true;
     }
+    calculateEndpoints();
+    calculateBorders();
 
+    return true;
+}
+
+/**
+ * Creates an arc from its startpoint, endpoint, start direction (angle)
+ * and angle length.
+ *
+ * @retval true Successfully created arc
+ * @retval false Cannot creats arc (radius to small or endpoint to far away)
+ */
+bool RS_Arc::createFrom2PDirectionAngle(const RS_Vector& startPoint,
+                                        const RS_Vector& endPoint,
+                                        double direction1, double angleLength) {
+    if( fabs(remainder( angleLength, M_PI))<RS_TOLERANCE_ANGLE ) return false;
+    data.radius=0.5*startPoint.distanceTo(endPoint)/sin(0.5*angleLength);
+
+    RS_Vector ortho;
+    ortho.setPolar(data.radius, direction1 + M_PI/2.0);
+    RS_Vector center1 = startPoint + ortho;
+    RS_Vector center2 = startPoint - ortho;
+
+    if (center1.distanceTo(endPoint) < center2.distanceTo(endPoint)) {
+        data.center = center1;
+    } else {
+        data.center = center2;
+    }
+
+    data.angle1 = data.center.angleTo(startPoint);
+    data.reversed = false;
+
+    double diff = RS_Math::correctAngle(getDirection1()-direction1);
+    if (fabs(diff-M_PI)<1.0e-1) {
+    data.angle2 = RS_Math::correctAngle(data.angle1 -angleLength);
+        data.reversed = true;
+    }else{
+    data.angle2 = RS_Math::correctAngle(data.angle1 +angleLength);
+    }
     calculateEndpoints();
     calculateBorders();
 

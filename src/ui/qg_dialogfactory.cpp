@@ -1018,6 +1018,17 @@ void QG_DialogFactory::requestArcTangentialOptions(RS_ActionInterface* action,
             //toolWidget->setData(&data);
 			toolWidget->show();
         }
+            arcTangentialOptions=toolWidget;
+    }
+}
+
+void QG_DialogFactory::updateArcTangentialOptions(const double& d, bool byRadius)
+{
+    if (arcTangentialOptions==NULL) return;
+    if(byRadius){
+        arcTangentialOptions->updateAngle(QString::number(d,'g',5));
+    }else{
+        arcTangentialOptions->updateRadius(QString::number(d,'g',5));
     }
 }
 
@@ -1027,7 +1038,7 @@ void QG_DialogFactory::requestArcTangentialOptions(RS_ActionInterface* action,
  * Shows a widget for arc options.
  */
 void QG_DialogFactory::requestCircleOptions(RS_ActionInterface* action,
-        bool on, bool update) {
+                                            bool on, bool update) {
     static QG_CircleOptions* toolWidget = NULL;
 
     if (optionWidget!=NULL) {
@@ -1039,7 +1050,7 @@ void QG_DialogFactory::requestCircleOptions(RS_ActionInterface* action,
             toolWidget = new QG_CircleOptions();
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
-			toolWidget->show();
+            toolWidget->show();
         }
     }
 }
