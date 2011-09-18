@@ -28,6 +28,9 @@
 
 #include "qg_snaptoolbar.h"
 
+#include <iostream>
+using namespace std;
+
 /*
  *  Constructs a QG_CadToolBarSnap as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -131,26 +134,24 @@ void QG_SnapToolBar::init()
     restrictOrthoagonal = new QAction(QIcon(":/extui/restrictorthogonal.png"),
                                       "Restrict Orthogonal", this);
     restrictOrthoagonal->setCheckable(true);
-    connect(restrictOrthoagonal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     connect(restrictOrthoagonal, SIGNAL(triggered(bool)),
             this, SLOT(restrictOrthoagonalTriggered(bool)));
+    connect(restrictOrthoagonal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     this->addAction(restrictOrthoagonal);
     restrictHorizontal = new QAction(QIcon(":/extui/restricthorizontal.png"),
                                      "Restrict Horizontal", this);
     restrictHorizontal->setCheckable(true);
-    connect(restrictHorizontal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     connect(restrictHorizontal, SIGNAL(triggered(bool)),
             this, SLOT(restrictHorizontalTriggered(bool)));
+    connect(restrictHorizontal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     this->addAction(restrictHorizontal);
     restrictVertical = new QAction(QIcon(":/extui/restrictvertical.png"),
                                    "Restrict Vertical", this);
     restrictVertical->setCheckable(true);
-    connect(restrictVertical, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     connect(restrictVertical, SIGNAL(triggered(bool)),
             this, SLOT(restrictVerticalTriggered(bool)));
+    connect(restrictVertical, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     this->addAction(restrictVertical);
-
-    this->addSeparator();
 }
 
 /* Slots */

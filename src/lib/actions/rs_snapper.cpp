@@ -32,7 +32,9 @@
 #include "rs_grid.h"
 #include "rs_settings.h"
 #include "rs_overlayline.h"
+
 #include <iostream>
+using namespace std;
 
 
 /**
@@ -157,6 +159,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
             break;
         }
     }
+    else snapCoord = snapSpot;
 
     drawSnapper();
 
