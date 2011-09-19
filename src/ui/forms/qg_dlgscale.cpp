@@ -66,14 +66,11 @@ void QG_DlgScale::languageChange()
 
 void QG_DlgScale::on_leFactorX_textChanged(const QString& arg1)
 {
-   scaleFactorX=arg1;
-   if(cbIsotropic->isChecked()) {
-           scaleFactorY=scaleFactorX;
-           leFactorY->setEnabled(true);
-           leFactorY->setText(scaleFactorY);
-           leFactorY->setReadOnly(true);
-           leFactorY->setDisabled(true);
-   }
+    scaleFactorX=arg1;
+    if(cbIsotropic->isChecked()) {
+        scaleFactorY=scaleFactorX;
+        leFactorY->setText(scaleFactorY);
+    }
 }
 
 
@@ -84,17 +81,12 @@ void QG_DlgScale::on_leFactorY_textChanged(const QString& arg1)
 
 void QG_DlgScale::on_cbIsotropic_toggled(bool checked)
 {
-    leFactorY->setReadOnly(checked); //cbIsotropic->isChecked());
-        if(checked) {
-                scaleFactorY=scaleFactorX;
-           leFactorY->setText(scaleFactorY);
-           leFactorY->setReadOnly(true);
-           leFactorY->setDisabled(true);
-        } else {
-           leFactorY->setEnabled(true);
-           leFactorY->setReadOnly(false);
-           leFactorY->setText(scaleFactorY);
-        }
+    leFactorY->setDisabled(checked);
+    leFactorY->setReadOnly(checked);
+    if(checked) {
+        scaleFactorY=scaleFactorX;
+        leFactorY->setText(scaleFactorY);
+    }
 }
 
 void QG_DlgScale::init() {
@@ -129,16 +121,13 @@ void QG_DlgScale::init() {
     leFactorX->setValidator(new QDoubleValidator(1.e-10,1.e+10,10,leFactorX));
     leFactorY->setValidator(new QDoubleValidator(1.e-10,1.e+10,10,leFactorY));
     leFactorX->setText(scaleFactorX);
+    leFactorY->setDisabled(isotropic);
+    leFactorY->setReadOnly(isotropic);
     if (isotropic) {
-            scaleFactorY=scaleFactorX;
-            leFactorY->setText(scaleFactorY);
-            leFactorY->setReadOnly(true);
-            leFactorY->setDisabled(true);
+        scaleFactorY=scaleFactorX;
+        leFactorY->setText(scaleFactorY);
     } else {
-            leFactorY->setEnabled(true);
-            leFactorY->setText(scaleFactorY);
-            leFactorY->setReadOnly(false);
-            //leFactorY->setDisabled(false);
+        leFactorY->setText(scaleFactorY);
     }
     cbCurrentAttributes->setChecked(useCurrentAttributes);
     cbCurrentLayer->setChecked(useCurrentLayer);
@@ -181,14 +170,11 @@ void QG_DlgScale::updateData() {
         data->number = leNumber->text().toInt();
     }
     scaleFactorX=leFactorX->text();
+            leFactorY->setDisabled(cbIsotropic->isChecked());
     if(cbIsotropic->isChecked()) {
             scaleFactorY=scaleFactorX;
             leFactorY->setText(scaleFactorY);
-            leFactorY->setReadOnly(true);
-            leFactorY->setDisabled(true);
     } else {
-            //leFactorY->setEnabled(true);
-            //leFactorY->setReadOnly(false);
             scaleFactorY=leFactorY->text();
     }
     data->factor = RS_Vector(scaleFactorX.toDouble(), scaleFactorY.toDouble());
