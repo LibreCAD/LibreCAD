@@ -41,6 +41,8 @@ public slots:
     virtual void setAction( RS_ActionInterface * a, bool update );
     virtual void updateRadius( const QString & s );
     virtual void updateAngle( const QString & s );
+    virtual void updateByRadius(const bool br);
+
 
 protected:
     RS_ActionDrawArcTangential* action;
