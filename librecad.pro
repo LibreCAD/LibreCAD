@@ -95,6 +95,8 @@ INCLUDEPATH += \
     src/ui/forms \
     res
 
+#depends check, bug#3411161
+DEPENDPATH = $$INCLUDEPATH
 # ################################################################################
 # Library
 HEADERS = \
