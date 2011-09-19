@@ -35,7 +35,8 @@ QG_ArcTangentialOptions::QG_ArcTangentialOptions(QWidget* parent, Qt::WindowFlag
     : QWidget(parent, fl)
 {
     setupUi(this);
-
+    leRadius->setValidator(new QDoubleValidator(RS_TOLERANCE,1.e+10,4,leRadius));
+    leAngle->setValidator(new QDoubleValidator(RS_TOLERANCE_ANGLE,360,4,leAngle));
 }
 
 /*
@@ -66,6 +67,8 @@ void QG_ArcTangentialOptions::destroy() {
         RS_SETTINGS->writeEntry("/ArcTangentialByRadius", QString("0"));
     }
     RS_SETTINGS->endGroup();
+    delete leRadius->validator();
+    delete leAngle->validator();
 }
 
 void QG_ArcTangentialOptions::setAction(RS_ActionInterface* a, bool update) {
