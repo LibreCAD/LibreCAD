@@ -97,10 +97,6 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void )
 
 void QG_SnapToolBar::init()
 {
-    /*snapFree = new QAction(QIcon(":/extui/snapfree.png"), "Snap Free", this);
-    snapFree->setCheckable(true);
-    connect(snapFree, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(snapFree);*/
     snapEnd = new QAction(QIcon(":/extui/snapendpoint.png"), "Snap on Endpoints", this);
     snapEnd->setCheckable(true);
     connect(snapEnd, SIGNAL(triggered()), this, SLOT(actionTriggered()));
@@ -117,10 +113,6 @@ void QG_SnapToolBar::init()
     snapMiddle->setCheckable(true);
     connect(snapMiddle, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     this->addAction(snapMiddle);
-    /*snapDistance = new QAction(QIcon(":/extui/snapdist.png"), "Snap Distance", this);
-    snapDistance->setCheckable(true);
-    connect(snapDistance, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(snapDistance);*/
     snapIntersection = new QAction(QIcon(":/extui/snapintersection.png"), "Snap Intersection", this);
     snapIntersection->setCheckable(true);
     connect(snapIntersection, SIGNAL(triggered()), this, SLOT(actionTriggered()));

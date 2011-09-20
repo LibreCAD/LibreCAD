@@ -150,13 +150,17 @@ QG_ActionHandler::QG_ActionHandler(QG_MainWindowInterface* mw) {
     RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler");
     mainWindow = mw;
 
-    snapFree = NULL;
-    snapGrid = NULL;
-    snapEndpoint = NULL;
-    snapOnEntity = NULL;
-    snapCenter = NULL;
-    snapMiddle = NULL;
-    snapDist = NULL;
+    snapFree               = NULL;
+    snapGrid               = NULL;
+    snapEndpoint           = NULL;
+    snapOnEntity           = NULL;
+    snapCenter             = NULL;
+    snapMiddle             = NULL;
+    snapDist               = NULL;
+    snapIntersection       = NULL;
+    snapIntersectionManual = NULL;
+
+    cadToolBarSnap = NULL;
 
     restrictNothing = NULL;
     restrictOrthogonal = NULL;
