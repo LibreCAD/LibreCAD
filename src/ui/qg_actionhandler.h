@@ -95,6 +95,7 @@ public slots:
     void slotSelectLayer();
 
     void slotDrawPoint(bool);
+    void slotDrawPoint();
     void slotDrawLine();
     void slotDrawLineAngle();
     void slotDrawLineHorizontal();

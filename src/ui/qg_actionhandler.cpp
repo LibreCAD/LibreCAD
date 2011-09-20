@@ -1050,6 +1050,11 @@ void QG_ActionHandler::slotSelectLayer() {
     setCurrentAction(RS2::ActionSelectLayer);
 }
 
+void QG_ActionHandler::slotDrawPoint() {
+        std::cout<<"slotDrawPoint(void)\n";
+        setCurrentAction(RS2::ActionDrawPoint);
+}
+
 void QG_ActionHandler::slotDrawPoint(bool checked) {
         std::cout<<"slotDrawPoint("<<checked<<")\n";
     if(checked) {
