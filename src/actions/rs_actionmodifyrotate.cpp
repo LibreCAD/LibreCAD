@@ -178,6 +178,8 @@ void RS_ActionModifyRotate::updateMouseCursor() {
 
 
 void RS_ActionModifyRotate::updateToolBar() {
+    //not needed any more with new snap
+    return;
     switch (getStatus()) {
     case setCenterPoint:
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);

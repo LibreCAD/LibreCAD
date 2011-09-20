@@ -179,6 +179,8 @@ void RS_ActionPolylineDel::updateMouseCursor() {
 
 
 void RS_ActionPolylineDel::updateToolBar() {
+    //not needed any more with new snap
+    return;
     switch (getStatus()) {
     case SetDelPoint:
     case ChooseEntity:

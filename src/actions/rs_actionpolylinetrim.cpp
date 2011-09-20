@@ -208,6 +208,8 @@ void RS_ActionPolylineTrim::updateMouseCursor() {
 
 
 void RS_ActionPolylineTrim::updateToolBar() {
+    //not needed any more with new snap
+    return;
 	switch (getStatus()) {
 	case SetSegment1:
 	case SetSegment2:

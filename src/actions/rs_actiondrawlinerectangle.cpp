@@ -214,6 +214,8 @@ void RS_ActionDrawLineRectangle::updateMouseCursor() {
 
 
 void RS_ActionDrawLineRectangle::updateToolBar() {
+    //not needed any more with new snap
+    return;
     if (RS_DIALOGFACTORY!=NULL) {
         if (!isFinished()) {
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);

@@ -160,7 +160,7 @@ void RS_ActionInfoDist2::updateToolBar() {
     switch (getStatus()) {
     case SetPoint:
     case SetEntity:
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
+        //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
         break;
     default:
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarInfo);

@@ -182,6 +182,8 @@ void RS_ActionModifyRotate2::updateMouseCursor() {
 
 
 void RS_ActionModifyRotate2::updateToolBar() {
+    //not needed any more with new snap
+    return;
     switch (getStatus()) {
     case SetReferencePoint1:
     case SetReferencePoint2:

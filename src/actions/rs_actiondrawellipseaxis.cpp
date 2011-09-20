@@ -409,6 +409,8 @@ void RS_ActionDrawEllipseAxis::updateMouseCursor() {
 
 
 void RS_ActionDrawEllipseAxis::updateToolBar() {
+    //not needed any more with new snap
+    return;
     if (RS_DIALOGFACTORY!=NULL) {
         if (!isFinished()) {
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
