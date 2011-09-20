@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -32,8 +32,6 @@
 #include "rs_grid.h"
 #include "rs_settings.h"
 #include "rs_overlayline.h"
-#include <iostream>
-
 
 /**
  * Constructor.
@@ -61,7 +59,7 @@ RS_Snapper::~RS_Snapper() {}
  */
 void RS_Snapper::init() {
     snapMode = graphicView->getDefaultSnapMode();
-    snapRes = graphicView->getSnapRestriction();
+    //snapRes = graphicView->getSnapRestriction();
     keyEntity = NULL;
     snapSpot = RS_Vector(false);
     snapCoord = RS_Vector(false);
@@ -95,69 +93,70 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
 	RS_DEBUG->print("RS_Snapper::snapPoint");
 
     snapSpot = RS_Vector(false);
+    RS_Vector t(false);
 
     if (e==NULL) {
-		RS_DEBUG->print(RS_Debug::D_WARNING, 
+		RS_DEBUG->print(RS_Debug::D_WARNING,
 			"RS_Snapper::snapPoint: event is NULL");
         return snapSpot;
     }
 
     RS_Vector mouseCoord = graphicView->toGraph(e->x(), e->y());
-    switch (snapMode) {
 
-    case RS2::SnapFree:
-        snapSpot = snapFree(mouseCoord);
-        break;
+    if (snapMode.snapEndpoint) {
+        t = snapEndpoint(mouseCoord);
 
-    case RS2::SnapEndpoint:
-        snapSpot = snapEndpoint(mouseCoord);
-        break;
+        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+            snapSpot = t;
+    }
+    if (snapMode.snapCenter) {
+        t = snapCenter(mouseCoord);
 
-    case RS2::SnapGrid:
-        snapSpot = snapGrid(mouseCoord);
-        break;
+        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+            snapSpot = t;
+    }
+    if (snapMode.snapMiddle) {
+        t = snapMiddle(mouseCoord);
 
-    case RS2::SnapOnEntity:
-        snapSpot = snapOnEntity(mouseCoord);
-        break;
+        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+            snapSpot = t;
+    }
+    if (snapMode.snapIntersection) {
+        t = snapIntersection(mouseCoord);
 
-    case RS2::SnapCenter:
-        snapSpot = snapCenter(mouseCoord);
-        break;
-
-    case RS2::SnapMiddle:
-        snapSpot = snapMiddle(mouseCoord);
-        break;
-
-    case RS2::SnapDist:
-        snapSpot = snapDist(mouseCoord);
-        break;
-
-    case RS2::SnapIntersection:
-        snapSpot = snapIntersection(mouseCoord);
-        break;
-
-    default:
-        break;
+        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+            snapSpot = t;
     }
 
-    // handle snap restrictions that can be activated in addition
-    //   to the ones above:
-    switch (snapRes) {
-    case RS2::RestrictOrthogonal:
-        snapCoord = restrictOrthogonal(snapSpot);
-        break;
-    case RS2::RestrictHorizontal:
-        snapCoord = restrictHorizontal(snapSpot);
-        break;
-    case RS2::RestrictVertical:
-        snapCoord = restrictVertical(snapSpot);
-        break;
-    default:
-    case RS2::RestrictNothing:
-        snapCoord = snapSpot;
-        break;
+    if (snapMode.snapOnEntity &&
+        snapSpot.distanceTo(mouseCoord) > snapMode.distance) {
+        t = snapOnEntity(mouseCoord);
+
+        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+            snapSpot = t;
     }
+
+    if (snapSpot.distanceTo(mouseCoord) > snapMode.distance) {
+        // handle snap restrictions that can be activated in addition
+        //   to the ones above:
+        switch (snapMode.restriction) {
+        case RS2::RestrictOrthogonal:
+            snapCoord = restrictOrthogonal(mouseCoord);
+            break;
+        case RS2::RestrictHorizontal:
+            snapCoord = restrictHorizontal(mouseCoord);
+            break;
+        case RS2::RestrictVertical:
+            snapCoord = restrictVertical(mouseCoord);
+            break;
+
+        default:
+        case RS2::RestrictNothing:
+            snapCoord = mouseCoord;
+            break;
+        }
+    }
+    else snapCoord = snapSpot;
 
     drawSnapper();
 
@@ -165,7 +164,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
         RS_DIALOGFACTORY->updateCoordinateWidget(snapCoord,
                 snapCoord - graphicView->getRelativeZero());
     }
-	
+
 	RS_DEBUG->print("RS_Snapper::snapPoint: OK");
 
     return snapCoord;
@@ -216,9 +215,9 @@ RS_Vector RS_Snapper::snapGrid(RS_Vector coord) {
     double dist=0.0;
 
     RS_Grid* grid = graphicView->getGrid();
-	
+
 	RS_DEBUG->print("RS_Snapper::snapGrid 001");
-	
+
     if (grid!=NULL) {
 		RS_DEBUG->print("RS_Snapper::snapGrid 002");
         RS_Vector* pts = grid->getPoints();
@@ -240,7 +239,7 @@ RS_Vector RS_Snapper::snapGrid(RS_Vector coord) {
 		RS_DEBUG->print("RS_Snapper::snapGrid 006");
     }
     keyEntity = NULL;
-	
+
 	RS_DEBUG->print("RS_Snapper::snapGrid end");
 
     return vec;
@@ -434,7 +433,7 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e,
  * Hides the snapper options. Default implementation does nothing.
  */
 void RS_Snapper::hideOptions() {
-        if (RS_DIALOGFACTORY==NULL) return;
+        /*if (RS_DIALOGFACTORY==NULL) return;
         switch (snapMode) {
                 case RS2::SnapDist:
             RS_DIALOGFACTORY->requestSnapDistOptions(distance, false);
@@ -444,14 +443,14 @@ void RS_Snapper::hideOptions() {
             break;
                 default:
             break;
-        }
+        }*/
 }
 
 /**
  * Shows the snapper options. Default implementation does nothing.
  */
 void RS_Snapper::showOptions() {
-                if (RS_DIALOGFACTORY==NULL) return;
+       /*         if (RS_DIALOGFACTORY==NULL) return;
         switch (snapMode) {
                 case RS2::SnapDist:
             RS_DIALOGFACTORY->requestSnapDistOptions(distance, true);
@@ -463,7 +462,7 @@ void RS_Snapper::showOptions() {
                 default:
 		hideOptions();
             break;
-        }
+        }*/
 }
 
 
@@ -472,7 +471,7 @@ void RS_Snapper::showOptions() {
  */
 void RS_Snapper::deleteSnapper() {// RVT_PORT (can be deleted??)
 	RS_DEBUG->print("RS_Snapper::Delete Snapper");
-	
+
 	graphicView->getOverlayContainer(RS2::Snapper)->clear();
 	graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
 }
@@ -494,33 +493,33 @@ void RS_Snapper::drawSnapper() {
 			// Pen for snapper
 			RS_Pen pen(RS_Color(255,194,0), RS2::Width00, RS2::SolidLine);
 			pen.setScreenWidth(1);
-			
+
 			// Circle to show snap area
 			RS_Circle *circle=new RS_Circle(NULL, RS_CircleData(snapCoord, 4/graphicView->getFactor().x));
 			circle->setPen(pen);
-			
+
 			container->addEntity(circle);
-			
+
             // crosshairs:
             if (showCrosshairs==true) {
-				
-				
+
+
 				RS_OverlayLine *line=new RS_OverlayLine(NULL, RS_LineData(RS_Vector(0, graphicView->toGuiY(snapCoord.y)),
 														RS_Vector(graphicView->getWidth(), graphicView->toGuiY(snapCoord.y))));
 				line->setPen(crossHairPen);
 				container->addEntity(line);
-				
+
 				line=new RS_OverlayLine(NULL, RS_LineData(RS_Vector(graphicView->toGuiX(snapCoord.x),0),
 														RS_Vector(graphicView->toGuiX(snapCoord.x), graphicView->getHeight())));
 				line->setPen(crossHairPen);
 				container->addEntity(line);
-				
+
             }
 			graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
 			RS_DEBUG->print("RS_Snapper::Snapped draw end");
         }
         if (snapCoord.valid && snapCoord!=snapSpot) {
-			
+
 			RS_OverlayLine *line=new RS_OverlayLine(NULL, RS_LineData(graphicView->toGui(snapSpot)+RS_Vector(-5,0),
 																	  graphicView->toGui(snapSpot)+RS_Vector(-1,4)));
 			line->setPen(crossHairPen);
@@ -537,7 +536,7 @@ void RS_Snapper::drawSnapper() {
 																	  graphicView->toGui(snapSpot)+RS_Vector(-4,-1)));
 			line->setPen(crossHairPen);
 			container->addEntity(line);
-			
+
 			graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
         }
     }

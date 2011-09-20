@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -150,13 +150,17 @@ QG_ActionHandler::QG_ActionHandler(QG_MainWindowInterface* mw) {
     RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler");
     mainWindow = mw;
 
-    snapFree = NULL;
-    snapGrid = NULL;
-    snapEndpoint = NULL;
-    snapOnEntity = NULL;
-    snapCenter = NULL;
-    snapMiddle = NULL;
-    snapDist = NULL;
+    snapFree               = NULL;
+    snapGrid               = NULL;
+    snapEndpoint           = NULL;
+    snapOnEntity           = NULL;
+    snapCenter             = NULL;
+    snapMiddle             = NULL;
+    snapDist               = NULL;
+    snapIntersection       = NULL;
+    snapIntersectionManual = NULL;
+
+    cadToolBarSnap = NULL;
 
     restrictNothing = NULL;
     restrictOrthogonal = NULL;
@@ -321,7 +325,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         gv->killSelectActions();
         a = new RS_ActionSelectLayer(*doc, *gv);
         break;
-		
+
         // Tool actions:
         //
     case RS2::ActionToolRegenerateDimensions:
@@ -741,7 +745,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionBlocksExplodeNoSelect:
         a = new RS_ActionBlocksExplode(*doc, *gv);
         break;
-		
+
 
         // library browser:
         //
@@ -768,7 +772,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     if (a!=NULL) {
         gv->setCurrentAction(a);
     }
-	
+
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction(): OK");
     return a;
 }
@@ -796,7 +800,7 @@ QStringList QG_ActionHandler::getAvailableCommands() {
 /**
  * Launches the command represented by the given keycode if possible.
  *
- * @return true: the command was recognized. 
+ * @return true: the command was recognized.
  *         false: the command is not known and was probably intended for a
  *            running action.
  */
@@ -876,7 +880,7 @@ bool QG_ActionHandler::keycode(const QString& code) {
 /**
  * Launches the given command if possible.
  *
- * @return true: the command was recognized. 
+ * @return true: the command was recognized.
  *         false: the command is not known and was probably intended for a
  *            running action.
  */
@@ -945,7 +949,7 @@ void QG_ActionHandler::slotFileSaveAs() {
 void QG_ActionHandler::slotFileClose() {
 	setCurrentAction(RS2::ActionFileClose);
 }
- 
+
 void QG_ActionHandler::slotFilePrint() {
 	setCurrentAction(RS2::ActionFilePrint);
 }
@@ -1319,6 +1323,11 @@ void QG_ActionHandler::slotModifyExplodeText() {
     setCurrentAction(RS2::ActionModifyExplodeText);
 }
 
+void QG_ActionHandler::slotSetSnaps(RS_SnapMode s) {
+    disableSnaps();
+
+    mainWindow->getGraphicView()->setDefaultSnapMode(s);
+}
 
 void QG_ActionHandler::slotSnapFree() {
     disableSnaps();
