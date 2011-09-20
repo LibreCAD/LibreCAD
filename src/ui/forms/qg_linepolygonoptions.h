@@ -29,7 +29,7 @@
 #include "ui_qg_linepolygonoptions.h"
 
 class RS_ActionInterface;
-class RS_ActionDrawLinePolygon;
+class RS_ActionDrawLinePolygonCenCor;
 
 class QG_LinePolygonOptions : public QWidget, public Ui::QG_LinePolygonOptions
 {
@@ -44,7 +44,7 @@ public slots:
     virtual void updateNumber( int n );
 
 protected:
-    RS_ActionDrawLinePolygon* action;
+    RS_ActionDrawLinePolygonCenCor* action;
 
 protected slots:
     virtual void languageChange();

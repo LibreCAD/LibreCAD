@@ -44,8 +44,7 @@ RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(
 
 QAction* RS_ActionDrawLineOrthTan::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action = new QAction(tr("Tangent &Orthogonal"), NULL);
-    action->setIcon(QIcon(":/extui/lineorthtan.png"));
-    //action->zetStatusTip(tr("Draw tangent (point, circle)"));
+    action->setIcon(QIcon(":/extui/linesorthtan.png"));
     return action;
 }
 
@@ -199,6 +198,8 @@ void RS_ActionDrawLineOrthTan::updateMouseCursor() {
 
 
 void RS_ActionDrawLineOrthTan::updateToolBar() {
+    //not needed any more with new snap
+    return;
     if (RS_DIALOGFACTORY!=NULL) {
         if (!isFinished()) {
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);

@@ -288,6 +288,8 @@ void RS_ActionDrawLine::updateMouseCursor() {
 
 
 void RS_ActionDrawLine::updateToolBar() {
+    //not needed any more with new snap
+    return;
     if (!isFinished()) {
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
     } else {

@@ -174,7 +174,7 @@ void RS_ActionInfoDist::updateToolBar() {
     switch (getStatus()) {
     case SetPoint1:
     case SetPoint2:
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
+        //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
         break;
     default:
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarInfo);

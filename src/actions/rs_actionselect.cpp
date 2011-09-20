@@ -59,11 +59,26 @@ void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionSelect::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
-        if (!isFinished()) {
-            RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
-        } else {
+        if (isFinished()) {
+            switch(nextAction) {
+            case RS2::ActionModifyAttributesNoSelect:
+            case RS2::ActionModifyDeleteNoSelect:
+            case RS2::ActionModifyDeleteQuick:
+            case RS2::ActionModifyMoveNoSelect:
+            case RS2::ActionModifyRotateNoSelect:
+            case RS2::ActionModifyScaleNoSelect:
+            case RS2::ActionModifyMirrorNoSelect:
+            case RS2::ActionModifyMoveRotateNoSelect:
+            case RS2::ActionModifyRotate2NoSelect:
+            case RS2::ActionModifyExplodeTextNoSelect:
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-            //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+            break;
+            //case RS2::ActionBlocksCreateNoSelect:
+            default:
+            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+            }
+        } else {
+            RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
         }
     }
 }
@@ -99,6 +114,9 @@ void RS_ActionSelect::updateMouseButtonHints() {
         break;
     case RS2::ActionModifyExplodeTextNoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select to explode text"), tr("Cancel"));
+        break;
+    case RS2::ActionBlocksCreateNoSelect:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to create block"), tr("Cancel"));
         break;
 
     default:

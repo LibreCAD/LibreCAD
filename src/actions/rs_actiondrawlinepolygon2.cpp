@@ -34,10 +34,10 @@
 
 
 
-RS_ActionDrawLinePolygon2::RS_ActionDrawLinePolygon2(
+RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Polygons (C,C)", container, graphicView) {
+        :RS_PreviewActionInterface("Draw Polygons (Corner,Corner)", container, graphicView) {
 
     corner1 = RS_Vector(false);
     corner2 = RS_Vector(false);
@@ -45,7 +45,7 @@ RS_ActionDrawLinePolygon2::RS_ActionDrawLinePolygon2(
     number = 3;
 }
 
-QAction* RS_ActionDrawLinePolygon2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
+QAction* RS_ActionDrawLinePolygonCorCor::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Polygon")
     QAction* action = new QAction(tr("Polygo&n (Cor,Cor)"), NULL);
 	action->setIcon(QIcon(":/extui/linespolygon2.png"));
@@ -54,7 +54,7 @@ QAction* RS_ActionDrawLinePolygon2::createGUIAction(RS2::ActionType /*type*/, QO
 }
 
 
-void RS_ActionDrawLinePolygon2::trigger() {
+void RS_ActionDrawLinePolygonCorCor::trigger() {
     RS_PreviewActionInterface::trigger();
 
     deletePreview();
@@ -70,7 +70,7 @@ void RS_ActionDrawLinePolygon2::trigger() {
 
 
 
-void RS_ActionDrawLinePolygon2::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionDrawLinePolygonCorCor::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLinePolygon2::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -98,7 +98,7 @@ void RS_ActionDrawLinePolygon2::mouseMoveEvent(QMouseEvent* e) {
 
 
 
-void RS_ActionDrawLinePolygon2::mouseReleaseEvent(QMouseEvent* e) {
+void RS_ActionDrawLinePolygonCorCor::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -110,7 +110,7 @@ void RS_ActionDrawLinePolygon2::mouseReleaseEvent(QMouseEvent* e) {
 
 
 
-void RS_ActionDrawLinePolygon2::coordinateEvent(RS_CoordinateEvent* e) {
+void RS_ActionDrawLinePolygonCorCor::coordinateEvent(RS_CoordinateEvent* e) {
     if (e==NULL) {
         return;
     }
@@ -136,7 +136,7 @@ void RS_ActionDrawLinePolygon2::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 
-void RS_ActionDrawLinePolygon2::updateMouseButtonHints() {
+void RS_ActionDrawLinePolygonCorCor::updateMouseButtonHints() {
     if (RS_DIALOGFACTORY!=NULL) {
         switch (getStatus()) {
         case SetCorner1:
@@ -162,7 +162,7 @@ void RS_ActionDrawLinePolygon2::updateMouseButtonHints() {
 
 
 
-void RS_ActionDrawLinePolygon2::showOptions() {
+void RS_ActionDrawLinePolygonCorCor::showOptions() {
     RS_ActionInterface::showOptions();
 
     if (RS_DIALOGFACTORY!=NULL) {
@@ -172,7 +172,7 @@ void RS_ActionDrawLinePolygon2::showOptions() {
 
 
 
-void RS_ActionDrawLinePolygon2::hideOptions() {
+void RS_ActionDrawLinePolygonCorCor::hideOptions() {
     RS_ActionInterface::hideOptions();
 
     if (RS_DIALOGFACTORY!=NULL) {
@@ -182,7 +182,7 @@ void RS_ActionDrawLinePolygon2::hideOptions() {
 
 
 
-void RS_ActionDrawLinePolygon2::commandEvent(RS_CommandEvent* e) {
+void RS_ActionDrawLinePolygonCorCor::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
@@ -234,7 +234,7 @@ void RS_ActionDrawLinePolygon2::commandEvent(RS_CommandEvent* e) {
 
 
 
-QStringList RS_ActionDrawLinePolygon2::getAvailableCommands() {
+QStringList RS_ActionDrawLinePolygonCorCor::getAvailableCommands() {
     QStringList cmd;
 
     switch (getStatus()) {
@@ -251,13 +251,15 @@ QStringList RS_ActionDrawLinePolygon2::getAvailableCommands() {
 
 
 
-void RS_ActionDrawLinePolygon2::updateMouseCursor() {
+void RS_ActionDrawLinePolygonCorCor::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
 
 
-void RS_ActionDrawLinePolygon2::updateToolBar() {
+void RS_ActionDrawLinePolygonCorCor::updateToolBar() {
+    //not needed any more with new snap
+    return;
     if (RS_DIALOGFACTORY!=NULL) {
         if (!isFinished()) {
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);

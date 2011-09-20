@@ -170,7 +170,7 @@ void RS_ActionInfoAngle::updateToolBar() {
     switch (getStatus()) {
     case SetEntity1:
     case SetEntity2:
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
+        //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
         break;
     default:
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarInfo);

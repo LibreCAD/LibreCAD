@@ -285,6 +285,8 @@ void RS_ActionDrawText::updateMouseCursor() {
 
 
 void RS_ActionDrawText::updateToolBar() {
+    //not needed any more with new snap
+    return;
     if (RS_DIALOGFACTORY!=NULL) {
         switch (getStatus()) {
         case SetPos:

@@ -40,12 +40,24 @@ public:
 public slots:
     virtual void setAction( RS_ActionInterface * a, bool update );
     virtual void updateRadius( const QString & s );
+    virtual void updateAngle( const QString & s );
+    virtual void updateByRadius(const bool br);
+
 
 protected:
     RS_ActionDrawArcTangential* action;
 
 protected slots:
     virtual void languageChange();
+
+private slots:
+    void on_leRadius_textEdited(const QString &arg1);
+
+    void on_leAngle_textEdited(const QString &arg1);
+
+    void on_rbRadius_clicked(bool checked);
+
+    void on_rbAngle_clicked(bool checked);
 
 private:
     void destroy();

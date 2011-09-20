@@ -221,6 +221,8 @@ public:
                       const RS_Vector& p3);
     bool createFrom2PDirectionRadius(const RS_Vector& startPoint, const RS_Vector& endPoint,
                                      double direction1, double radius);
+    bool createFrom2PDirectionAngle(const RS_Vector& startPoint, const RS_Vector& endPoint,
+                                     double direction1, double angleLength);
     bool createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& endPoint,
                            double bulge);
 

@@ -80,6 +80,8 @@ void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
                 ah, SLOT(slotDrawSpline()));
         connect(bMenuPolyline, SIGNAL(clicked()),
                 tb, SLOT(showToolBarPolylines()));
+        connect(bMenuPoint, SIGNAL(toggled()),
+                tb, SLOT(showToolBarPoints()));
 
         connect(bMenuText, SIGNAL(clicked()),
                 ah, SLOT(slotDrawText()));

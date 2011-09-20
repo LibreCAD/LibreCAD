@@ -19,7 +19,11 @@ Install the qt4 SDK by executing the following commands:
 
 sudo apt-get install g++ gcc make git-core libqt4-dev qt4-qmake libqt4-qt3support qt4-dev-tools
 
-See elso : http://www.librecad.org/2010/10/debian-64-bit-and-ubuntu-compile-how-to/
+For SVN see elso : 
+http://www.librecad.org/2010/10/debian-64-bit-and-ubuntu-compile-how-to/
+
+For git see also:
+http://librecad.org/cms/home/from-source/linux.html
 
 NOTE 1: On systems (Ubuntu??) You might need to run qmake-qt4 instead of just qmake
 

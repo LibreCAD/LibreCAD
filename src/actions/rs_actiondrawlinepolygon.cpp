@@ -34,10 +34,10 @@
 
 
 
-RS_ActionDrawLinePolygon::RS_ActionDrawLinePolygon(
+RS_ActionDrawLinePolygonCenCor::RS_ActionDrawLinePolygonCenCor(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Polygons", container, graphicView) {
+        :RS_PreviewActionInterface("Draw Polygons (Center,Corner)", container, graphicView) {
 
     center = RS_Vector(false);
     corner = RS_Vector(false);
@@ -45,7 +45,7 @@ RS_ActionDrawLinePolygon::RS_ActionDrawLinePolygon(
     number = 3;
 }
 
-QAction* RS_ActionDrawLinePolygon::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
+QAction* RS_ActionDrawLinePolygonCenCor::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// Polygon
     QAction* action = new QAction(tr("Pol&ygon (Cen,Cor)"),  NULL);
 		action->setIcon(QIcon(":/extui/linespolygon.png"));
@@ -54,7 +54,7 @@ QAction* RS_ActionDrawLinePolygon::createGUIAction(RS2::ActionType /*type*/, QOb
 }
 
 
-void RS_ActionDrawLinePolygon::trigger() {
+void RS_ActionDrawLinePolygonCenCor::trigger() {
     RS_PreviewActionInterface::trigger();
 
     deletePreview();
@@ -70,7 +70,7 @@ void RS_ActionDrawLinePolygon::trigger() {
 
 
 
-void RS_ActionDrawLinePolygon::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionDrawLinePolygonCenCor::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLinePolygon::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -98,7 +98,7 @@ void RS_ActionDrawLinePolygon::mouseMoveEvent(QMouseEvent* e) {
 
 
 
-void RS_ActionDrawLinePolygon::mouseReleaseEvent(QMouseEvent* e) {
+void RS_ActionDrawLinePolygonCenCor::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -110,7 +110,7 @@ void RS_ActionDrawLinePolygon::mouseReleaseEvent(QMouseEvent* e) {
 
 
 
-void RS_ActionDrawLinePolygon::coordinateEvent(RS_CoordinateEvent* e) {
+void RS_ActionDrawLinePolygonCenCor::coordinateEvent(RS_CoordinateEvent* e) {
     if (e==NULL) {
         return;
     }
@@ -136,7 +136,7 @@ void RS_ActionDrawLinePolygon::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 
-void RS_ActionDrawLinePolygon::updateMouseButtonHints() {
+void RS_ActionDrawLinePolygonCenCor::updateMouseButtonHints() {
     if (RS_DIALOGFACTORY!=NULL) {
         switch (getStatus()) {
         case SetCenter:
@@ -161,7 +161,7 @@ void RS_ActionDrawLinePolygon::updateMouseButtonHints() {
 
 
 
-void RS_ActionDrawLinePolygon::showOptions() {
+void RS_ActionDrawLinePolygonCenCor::showOptions() {
     RS_ActionInterface::showOptions();
 
     if (RS_DIALOGFACTORY!=NULL) {
@@ -171,7 +171,7 @@ void RS_ActionDrawLinePolygon::showOptions() {
 
 
 
-void RS_ActionDrawLinePolygon::hideOptions() {
+void RS_ActionDrawLinePolygonCenCor::hideOptions() {
     RS_ActionInterface::hideOptions();
 
     if (RS_DIALOGFACTORY!=NULL) {
@@ -181,7 +181,7 @@ void RS_ActionDrawLinePolygon::hideOptions() {
 
 
 
-void RS_ActionDrawLinePolygon::commandEvent(RS_CommandEvent* e) {
+void RS_ActionDrawLinePolygonCenCor::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
@@ -233,7 +233,7 @@ void RS_ActionDrawLinePolygon::commandEvent(RS_CommandEvent* e) {
 
 
 
-QStringList RS_ActionDrawLinePolygon::getAvailableCommands() {
+QStringList RS_ActionDrawLinePolygonCenCor::getAvailableCommands() {
     QStringList cmd;
 
     switch (getStatus()) {
@@ -250,13 +250,15 @@ QStringList RS_ActionDrawLinePolygon::getAvailableCommands() {
 
 
 
-void RS_ActionDrawLinePolygon::updateMouseCursor() {
+void RS_ActionDrawLinePolygonCenCor::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
 
 
-void RS_ActionDrawLinePolygon::updateToolBar() {
+void RS_ActionDrawLinePolygonCenCor::updateToolBar() {
+    //not needed any more with new snap
+    return;
     if (RS_DIALOGFACTORY!=NULL) {
         if (!isFinished()) {
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);

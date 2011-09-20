@@ -55,6 +55,9 @@ protected:
 protected slots:
     virtual void languageChange();
 
+private slots:
+    void on_bArcTangential_clicked();
+
 private:
     void init();
 
