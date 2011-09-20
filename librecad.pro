@@ -48,7 +48,6 @@ win32 {
     CONFIG += release
     QMAKE_CFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
-    DEFINES += QC_SCMREVISION=\"\"
     TARGET = LibreCAD
     DEFINES += QC_APPDIR="\"LibreCAD\""
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
@@ -95,6 +94,8 @@ INCLUDEPATH += \
     src/ui/forms \
     res
 
+#depends check, bug#3411161
+DEPENDPATH = $$INCLUDEPATH
 # ################################################################################
 # Library
 HEADERS = \

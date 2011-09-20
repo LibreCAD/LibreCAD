@@ -71,6 +71,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WFlags f)
 
     hScrollBar = new QG_ScrollBar(Qt::Horizontal, this);
     hScrollBar->setSingleStep(50);
+    hScrollBar->setCursor(Qt::ArrowCursor);
     layout->addWidget(hScrollBar, 1, 0);
     layout->addItem(new QSpacerItem(0, hScrollBar->sizeHint().height()), 1, 0);
     connect(hScrollBar, SIGNAL(valueChanged(int)),
@@ -78,34 +79,30 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WFlags f)
 
     vScrollBar = new QG_ScrollBar(Qt::Vertical, this);
     vScrollBar->setSingleStep(50);
+    vScrollBar->setCursor(Qt::ArrowCursor);
     layout->addWidget(vScrollBar, 0, 2);
     layout->addItem(new QSpacerItem(vScrollBar->sizeHint().width(), 0), 0, 2);
     connect(vScrollBar, SIGNAL(valueChanged(int)),
             this, SLOT(slotVScrolled(int)));
 
-#ifndef __APPLE__
     // Mouse Cursors:
     QPixmap cur1(":ui/cur_cad_bmp.png");
-    curCad = new QCursor(cur1, 15, 15);
-
     QPixmap cur2(":ui/cur_glass_bmp.png");
-    curMagnifier = new QCursor(cur2, 12, 12);
-
     QPixmap cur3(":ui/cur_del_bmp.png");
-    curDel = new QCursor(cur3, 15, 15);
-
     QPixmap cur4(":ui/cur_select_bmp.png");
-    curSelect = new QCursor(cur4, 15, 15);
-
     QPixmap cur5(":ui/cur_hand_bmp.png");
+#ifdef Q_OS_WIN32
+    curCad = new QCursor(cur1, 16, 16);
+    curMagnifier = new QCursor(cur2, 12, 12);
+    curDel = new QCursor(cur3, 16, 16);
+    curSelect = new QCursor(cur4, 16, 16);
     curHand = new QCursor(cur5, 15, 15);
 #else
-    // No individual cursors for the Mac
-    curCad = NULL;
-    curMagnifier = NULL;
-    curDel = NULL;
-    curSelect = NULL;
-    curHand = NULL;
+    curCad = new QCursor(cur1, 15, 15);
+    curMagnifier = new QCursor(cur2, 12, 12);
+    curDel = new QCursor(cur3, 15, 15);
+    curSelect = new QCursor(cur4, 15, 15);
+    curHand = new QCursor(cur5, 15, 15);
 #endif
 
     // Dummy widgets for scrollbar corners:
@@ -226,9 +223,6 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
     case RS2::WhatsThisCursor:
         setCursor(Qt::WhatsThisCursor);
         break;
-
-#ifndef __APPLE__
-
     case RS2::CadCursor:
         setCursor(*curCad);
         break;
@@ -244,24 +238,7 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
     case RS2::MovingHandCursor:
         setCursor(*curHand);
         break;
-#else
-        // Reduced cursor selection for the Mac:
-    case RS2::CadCursor:
-        setCursor(Qt::CrossCursor);
-        break;
-    case RS2::DelCursor:
-        setCursor(Qt::CrossCursor);
-        break;
-    case RS2::SelectCursor:
-        setCursor(Qt::CrossCursor);
-        break;
-    case RS2::MagnifierCursor:
-        setCursor(Qt::CrossCursor);
-        break;
-    case RS2::MovingHandCursor:
-        setCursor(Qt::PointingHandCursor);
-        break;
-#endif
+
     }
 
 }

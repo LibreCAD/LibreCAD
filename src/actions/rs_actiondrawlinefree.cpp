@@ -149,6 +149,8 @@ void RS_ActionDrawLineFree::updateMouseCursor() {
 
 
 void RS_ActionDrawLineFree::updateToolBar() {
+    //not needed any more with new snap
+    return;
     if (!isFinished()) {
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
     } else {

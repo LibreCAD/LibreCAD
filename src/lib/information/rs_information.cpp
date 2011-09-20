@@ -207,9 +207,11 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
     double tol = 1.0e-4;
 
     if (e1==NULL || e2==NULL ) {
+        RS_DEBUG->print("RS_Information::getIntersection() for NULL entities");
         return ret;
     }
     if (e1->getId() == e2->getId()) {
+        RS_DEBUG->print("RS_Information::getIntersection() of the same entity");
         return ret;
     }
 
@@ -217,21 +219,23 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
     if (
         e1->rtti()==RS2::EntityText || e2->rtti()==RS2::EntityText ||
         isDimension(e1->rtti()) || isDimension(e2->rtti())) {
-
         return ret;
     }
     // a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
-    if ( e1 -> getMin().x > e2 -> getMax().x 
-      || e1 -> getMax().x < e2 -> getMin().x 
-      || e1 -> getMin().y > e2 -> getMax().y 
-      || e1 -> getMax().y < e2 -> getMin().y 
-      ) {
+    if (onEntities
+            && (
+                e1 -> getMin().x > e2 -> getMax().x
+                || e1 -> getMax().x < e2 -> getMin().x
+                || e1 -> getMin().y > e2 -> getMax().y
+                || e1 -> getMax().y < e2 -> getMin().y
+                )
+            ) {
             return ret;
     }
 
     // one entity is an ellipse:
     if (e1->rtti()==RS2::EntityEllipse || e2->rtti()==RS2::EntityEllipse) {
-        if (e2->rtti()==RS2::EntityEllipse) RS_Math::swap( e1, e2);
+        if (e2->rtti()==RS2::EntityEllipse) std::swap( e1, e2);
         if (e2->rtti()==RS2::EntityEllipse) {
             ret = getIntersectionEllipseEllipse((RS_Ellipse*)e1, (RS_Ellipse *) e2);
         }
@@ -410,6 +414,7 @@ RS_VectorSolutions RS_Information::getIntersectionLineLine(RS_Line* e1,
     RS_VectorSolutions ret;
 
     if (e1==NULL || e2==NULL) {
+        RS_DEBUG->print("RS_Information::getIntersectionLineLin() for NULL entities");
         return ret;
     }
 

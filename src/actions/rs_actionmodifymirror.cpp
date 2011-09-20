@@ -190,7 +190,7 @@ void RS_ActionModifyMirror::updateToolBar() {
         switch (getStatus()) {
         case SetAxisPoint1:
         case SetAxisPoint2:
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
+            //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
             break;
         default:
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);

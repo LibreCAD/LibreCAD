@@ -293,6 +293,9 @@ void RS_ActionDrawLineBisector::updateMouseCursor() {
 
 
 void RS_ActionDrawLineBisector::updateToolBar() {
+    //not needed any more with new snap
+    return;
+
     RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarLines);
 }
 

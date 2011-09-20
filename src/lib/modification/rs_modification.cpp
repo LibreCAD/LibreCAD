@@ -2164,19 +2164,19 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
     case RS2::EntityEllipse:
     // ToDo, to really handle Ellipse Arcs properly, we need to create a new class RS_EllipseArc, keep RS_Ellipse for whole range Ellipses
 	if(RS_Math::isSameDirection(
-		 static_cast<RS_Ellipse*>(cutEntity) ->getAngle1(),
-		 static_cast<RS_Ellipse*>(cutEntity) ->getAngle2(),
+                 static_cast<const RS_Ellipse*>(cutEntity) ->getAngle1(),
+                 static_cast<const RS_Ellipse*>(cutEntity) ->getAngle2(),
 		 RS_TOLERANCE_ANGLE)
-		 && ! std::isnormal(static_cast<RS_Ellipse*>(cutEntity) ->getAngle1())
-		 && ! std::isnormal(static_cast<RS_Ellipse*>(cutEntity) ->getAngle2())
+                 && ! std::isnormal(static_cast<const RS_Ellipse*>(cutEntity) ->getAngle1())
+                 && ! std::isnormal(static_cast<const RS_Ellipse*>(cutEntity) ->getAngle2())
 		 ) {
         // whole ellipse, convert to a whole range elliptic arc
-	a=static_cast<RS_Ellipse*>(cutEntity) ->getEllipseAngle(cutCoord);
+        a=static_cast<const RS_Ellipse*>(cutEntity) ->getEllipseAngle(cutCoord);
         cut1 = new RS_Ellipse(cutEntity->getParent(),
-                          RS_EllipseData(static_cast<RS_Ellipse*>(cutEntity) ->getCenter(),
-                                     static_cast<RS_Ellipse*>(cutEntity) ->getMajorP(),
-                                     static_cast<RS_Ellipse*>(cutEntity) ->getRatio(),
-                                     a,a+2.*M_PI, static_cast<RS_Ellipse*>(cutEntity) ->isReversed()
+                          RS_EllipseData(static_cast<const RS_Ellipse*>(cutEntity) ->getCenter(),
+                                     static_cast<const RS_Ellipse*>(cutEntity) ->getMajorP(),
+                                     static_cast<const RS_Ellipse*>(cutEntity) ->getRatio(),
+                                     a,a+2.*M_PI, static_cast<const RS_Ellipse*>(cutEntity) ->isReversed()
 				     )
 			    );
         cut1->setPen(cutEntity->getPen(false));

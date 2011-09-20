@@ -49,61 +49,75 @@ public:
 
 public:
     RS_ActionDrawArcTangential(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
+                               RS_GraphicView& graphicView);
     ~RS_ActionDrawArcTangential();
-	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionDrawArcTangential;
-	}
+
+    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+
+    virtual RS2::ActionType rtti() {
+        return RS2::ActionDrawArcTangential;
+    }
 
     void reset();
 
     virtual void init(int status=0);
-	
+
     virtual void trigger();
-	void preparePreview();
-	
+    void preparePreview();
+
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
 
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
+    virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+    virtual QStringList getAvailableCommands();
     
-	virtual void hideOptions();
+    virtual void hideOptions();
     virtual void showOptions();
-	
+
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
     virtual void updateToolBar();
 
-	void setRadius(double r) {
-		data.radius = r;
-	}
+    void setRadius(double r) {
+        data.radius = r;
+    }
 
-	double getRadius() {
-		return data.radius;
-	}
+    double getRadius() const {
+        return data.radius;
+    }
+    void setAngle(double r) {
+        angleLength= r;
+    }
+
+    double getAngle() const {
+        return angleLength;
+    }
+    virtual void setByRadius(bool status=true);
+    virtual bool getByRadius() const {
+        return byRadius;
+    }
 
 protected:
     /**
      * Base entity.
      */
     RS_AtomicEntity* baseEntity;
-	/**
-	 * Start point of base entity clicked?
-	 */
-	bool isStartPoint;
+    /**
+  * Start point of base entity clicked?
+  */
+    bool isStartPoint;
     /**
      * Point that determines end angle.
      */
     RS_Vector point;
     /**
-	 * Arc data calculated.
-	 */
-	RS_ArcData data;
+  * Arc data calculated.
+  */
+    RS_ArcData data;
+private:
+    double angleLength;
+    bool byRadius;
 };
 
 #endif

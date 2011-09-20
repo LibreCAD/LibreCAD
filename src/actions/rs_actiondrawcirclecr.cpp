@@ -237,6 +237,8 @@ void RS_ActionDrawCircleCR::updateMouseCursor() {
 
 
 void RS_ActionDrawCircleCR::updateToolBar() {
+    //not needed any more with new snap
+    return;
     if (!isFinished()) {
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
     } else {

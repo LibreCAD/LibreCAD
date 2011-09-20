@@ -221,6 +221,8 @@ void RS_ActionDrawHatch::updateMouseCursor() {
 
 
 void RS_ActionDrawHatch::updateToolBar() {
+    //not needed any more with new snap
+    return;
     RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
 }
 

@@ -599,14 +599,14 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 obj, SLOT(slotDrawPolyline()));
         break;
 		
-    case RS2::ActionDrawLinePolygon:
-		action = RS_ActionDrawLinePolygon::createGUIAction(id, mw);
+    case RS2::ActionDrawLinePolygonCenCor:
+                action = RS_ActionDrawLinePolygonCenCor::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotDrawLinePolygon()));
         break;
 
-    case RS2::ActionDrawLinePolygon2:
-		action = RS_ActionDrawLinePolygon::createGUIAction(id, mw);
+    case RS2::ActionDrawLinePolygonCorCor:
+                action = RS_ActionDrawLinePolygonCorCor::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotDrawLinePolygon2()));
         break;

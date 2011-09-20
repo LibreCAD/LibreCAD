@@ -134,10 +134,10 @@ public:
     virtual RS_Vector prepareTrim(const RS_Vector& trimCoord,
                                   const RS_VectorSolutions& trimSol);
 
-    double getEllipseAngle(const RS_Vector& pos);
+    double getEllipseAngle (const RS_Vector& pos) const;
 
     /** @return Copy of data that defines the ellipse. **/
-    RS_EllipseData getData() {
+    RS_EllipseData getData() const {
         return data;
     }
 
@@ -161,7 +161,7 @@ public:
     }
 
     /** @return The start angle of this arc */
-    double getAngle1() {
+    double getAngle1() const {
         return data.angle1;
     }
     /** Sets new start angle. */
@@ -169,7 +169,7 @@ public:
         data.angle1 = a1;
     }
     /** @return The end angle of this arc */
-    double getAngle2() {
+    double getAngle2() const {
         return data.angle2;
     }
     /** Sets new end angle. */
@@ -179,7 +179,7 @@ public:
 
 
     /** @return The center point (x) of this arc */
-    RS_Vector getCenter() {
+    RS_Vector getCenter() const {
         return data.center;
     }
     /** Sets new center. */
@@ -188,7 +188,7 @@ public:
     }
 
     /** @return The endpoint of the major axis (relative to center). */
-    RS_Vector getMajorP() {
+    RS_Vector getMajorP() const {
         return data.majorP;
     }
     /** Sets new major point (relative to center). */
@@ -197,7 +197,7 @@ public:
     }
 
     /** @return The ratio of minor to major axis */
-    double getRatio() {
+    double getRatio() const {
         return data.ratio;
     }
     /** Sets new ratio. */
@@ -266,6 +266,10 @@ public:
 
     //virtual void calculateEndpoints();
     virtual void calculateBorders();
+
+    //direction of tangent at endpoints
+    virtual double getDirection1() const;
+    virtual double getDirection2() const;
 
 protected:
     RS_EllipseData data;
