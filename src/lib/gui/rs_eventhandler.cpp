@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -90,7 +90,7 @@ void RS_EventHandler::enter() {
 
 
 /**
- * Called by RS_GraphicView 
+ * Called by RS_GraphicView
  */
 void RS_EventHandler::mousePressEvent(QMouseEvent* e) {
     if (actionIndex>=0 && currentActions[actionIndex]!=NULL) {
@@ -110,7 +110,7 @@ void RS_EventHandler::mousePressEvent(QMouseEvent* e) {
 
 
 /**
- * Called by RS_GraphicView 
+ * Called by RS_GraphicView
  */
 void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
 
@@ -136,7 +136,7 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
 
 
 /**
- * Called by RS_GraphicView 
+ * Called by RS_GraphicView
  */
 void RS_EventHandler::mouseMoveEvent(QMouseEvent* e) {
     if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
@@ -157,7 +157,7 @@ void RS_EventHandler::mouseMoveEvent(QMouseEvent* e) {
 
 
 /**
- * Called by RS_GraphicView 
+ * Called by RS_GraphicView
  */
 void RS_EventHandler::mouseLeaveEvent() {
     if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
@@ -174,7 +174,7 @@ void RS_EventHandler::mouseLeaveEvent() {
 
 
 /**
- * Called by RS_GraphicView 
+ * Called by RS_GraphicView
  */
 void RS_EventHandler::mouseEnterEvent() {
     if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
@@ -190,7 +190,7 @@ void RS_EventHandler::mouseEnterEvent() {
 
 
 /**
- * Called by RS_GraphicView 
+ * Called by RS_GraphicView
  */
 void RS_EventHandler::keyPressEvent(QKeyEvent* e) {
     if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
@@ -203,7 +203,7 @@ void RS_EventHandler::keyPressEvent(QKeyEvent* e) {
 		else {
 			e->ignore();
 		}
-		
+
         //RS_DEBUG->print("currently no action defined");
     }
 }
@@ -211,7 +211,7 @@ void RS_EventHandler::keyPressEvent(QKeyEvent* e) {
 
 
 /**
- * Called by RS_GraphicView 
+ * Called by RS_GraphicView
  */
 void RS_EventHandler::keyReleaseEvent(QKeyEvent* e) {
     if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
@@ -548,7 +548,7 @@ bool RS_EventHandler::hasAction() {
  */
 void RS_EventHandler::cleanUp() {
     RS_DEBUG->print("RS_EventHandler::cleanUp");
-	
+
     int o=0;   // old index
     int n=0;   // new index
     int resume=0; // index of action to resume
@@ -613,7 +613,7 @@ void RS_EventHandler::cleanUp() {
 /**
  * Sets the snap mode for all currently active actions.
  */
-void RS_EventHandler::setSnapMode(RS2::SnapMode sm) {
+void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
     for (int c=0; c<RS_MAXACTIONS; ++c) {
         if (currentActions[c]!=NULL) {
             currentActions[c]->setSnapMode(sm);

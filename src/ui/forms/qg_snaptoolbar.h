@@ -23,31 +23,57 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#ifndef QG_SNAPTOOLBAR_H
+#define QG_SNAPTOOLBAR_H
 
-#ifndef RS_ACTIONSETSNAPMODE_H
-#define RS_ACTIONSETSNAPMODE_H
+class QG_CadToolBar;
+class QG_ActionHandler;
 
-#include "rs_actioninterface.h"
+#include <QToolBar>
 
+#include "rs_snapper.h"
 
-/**
- * This action changes the current snap mode.
- *
- * @author Andrew Mustun
- */
-class RS_ActionSetSnapMode : public RS_ActionInterface {
-	Q_OBJECT
+#include "ui_qg_snaptoolbar.h"
+
+class QG_SnapToolBar : public QToolBar
+{
+    Q_OBJECT
+
 public:
-    RS_ActionSetSnapMode(RS_EntityContainer& container,
-                         RS_GraphicView& graphicView,
-                         RS2::SnapMode snapMode);
-    ~RS_ActionSetSnapMode() {}
+    QG_SnapToolBar( const QString & title, QWidget * parent = 0 );
+    ~QG_SnapToolBar();
 
-    virtual void init(int status=0);
-    virtual void trigger();
+    RS_SnapMode getSnaps ( void );
 
-protected:
-    RS2::SnapMode snapMode;
+private slots:
+    void actionTriggered(void);
+
+    void restrictOrthoagonalTriggered(bool);
+    void restrictHorizontalTriggered(bool);
+    void restrictVerticalTriggered(bool);
+
+public slots:
+    void setSnaps(RS_SnapMode);
+
+signals:
+    void snapsChanged(RS_SnapMode);
+
+private:
+    //QAction *snapFree;
+    QAction *snapEnd;
+    QAction *snapOnEntity;
+    QAction *snapCenter;
+    QAction *snapMiddle;
+    //QAction *snapDistance;
+    QAction *snapIntersection;
+
+
+    QAction *restrictOrthoagonal;
+    QAction *restrictHorizontal;
+    QAction *restrictVertical;
+
+    void init();
+
 };
 
-#endif
+#endif // QG_SNAPTOOLBAR_H
