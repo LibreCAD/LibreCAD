@@ -183,6 +183,8 @@ void RS_ActionPolylineAdd::updateMouseCursor() {
 
 
 void RS_ActionPolylineAdd::updateToolBar() {
+    //not needed any more with new snap
+    return;
 	switch (getStatus()) {
 	case SetAddCoord:
 	case ChooseSegment:

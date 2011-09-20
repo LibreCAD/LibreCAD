@@ -257,6 +257,8 @@ void RS_ActionDrawLinePolygonCenCor::updateMouseCursor() {
 
 
 void RS_ActionDrawLinePolygonCenCor::updateToolBar() {
+    //not needed any more with new snap
+    return;
     if (RS_DIALOGFACTORY!=NULL) {
         if (!isFinished()) {
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);

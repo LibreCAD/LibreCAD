@@ -172,7 +172,8 @@ void RS_ActionModifyCut::updateMouseCursor() {
 
 
 void RS_ActionModifyCut::updateToolBar() {
-
+    //not needed any more with new snap
+    return;
     switch (getStatus()) {
     case SetCutCoord:
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
