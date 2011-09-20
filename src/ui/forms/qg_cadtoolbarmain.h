@@ -44,6 +44,8 @@ public slots:
 
 protected slots:
     virtual void languageChange();
+private:
+    QG_ActionHandler* actionHandler;
 
 };
 
