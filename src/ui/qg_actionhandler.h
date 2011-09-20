@@ -94,7 +94,7 @@ public slots:
     void slotDeselectIntersected();
     void slotSelectLayer();
 
-    void slotDrawPoint();
+    void slotDrawPoint(bool);
     void slotDrawLine();
     void slotDrawLineAngle();
     void slotDrawLineHorizontal();

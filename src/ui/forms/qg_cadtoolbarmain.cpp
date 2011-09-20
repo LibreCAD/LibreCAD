@@ -80,7 +80,7 @@ void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
                 ah, SLOT(slotDrawSpline()));
         connect(bMenuPolyline, SIGNAL(clicked()),
                 tb, SLOT(showToolBarPolylines()));
-        connect(bMenuPoint, SIGNAL(toggled()),
+        connect(bMenuPoint, SIGNAL(toogled(bool)),
                 ah, SLOT(slotDrawPoint()));
 
         connect(bMenuText, SIGNAL(clicked()),
@@ -106,3 +106,4 @@ void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
                         "QG_CadToolBarMain::setCadToolBar(): No valid action handler set.");
     }
 }
+
