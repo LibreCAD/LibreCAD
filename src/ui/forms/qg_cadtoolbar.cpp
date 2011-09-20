@@ -240,7 +240,9 @@ void QG_CadToolBar::showToolBarMain() {
 }
 
 void QG_CadToolBar::showToolBarPoints() {
-    showToolBar(RS2::ToolBarPoints);
+//not needed
+        return;
+    //showToolBar(RS2::ToolBarPoints);
 }
 
 void QG_CadToolBar::showToolBarLines() {

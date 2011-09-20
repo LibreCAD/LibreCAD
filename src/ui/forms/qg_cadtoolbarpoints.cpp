@@ -84,7 +84,7 @@ void QG_CadToolBarPoints::setCadToolBar(QG_CadToolBar* tb) {
 
 void QG_CadToolBarPoints::drawPoint() {
     if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawPoint();
+        actionHandler->slotDrawPoint(true);
     }
 }
 
