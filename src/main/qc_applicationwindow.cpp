@@ -1102,7 +1102,7 @@ void QC_ApplicationWindow::initActions(void)
 
     // Snapping actions:
     //
-    menu = menuBar()->addMenu(tr("&Snap"));
+    /*menu = menuBar()->addMenu(tr("&Snap"));
     menu->setObjectName("Snap");
     action = actionFactory.createAction(RS2::ActionSnapFree, actionHandler);
     menu->addAction(action);
@@ -1163,6 +1163,7 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    */
 
     // Info actions:
     //
@@ -1460,7 +1461,9 @@ void QC_ApplicationWindow::initToolBar() {
     snapToolBar = new QG_SnapToolBar("Snap Selection", this);
     snapToolBar->setSizePolicy(toolBarPolicy);
     snapToolBar->setObjectName ( "SnapTB" );
-    connect(snapToolBar, SIGNAL(snapsChanged(RS_SnapMode)), this, SLOT(slotSnapsChanged(RS_SnapMode)));
+    connect(snapToolBar, SIGNAL(snapsChanged(RS_SnapMode)),
+            this, SLOT(slotSnapsChanged(RS_SnapMode)));
+    this->addToolBar(snapToolBar);
 
     optionWidget = new QToolBar("Tool Options", this);
 	QSizePolicy optionWidgetBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
@@ -1474,11 +1477,11 @@ void QC_ApplicationWindow::initToolBar() {
 
     // CAD toolbar left:
     QToolBar* t = new QToolBar("CAD Tools", this);
-    t->setMinimumSize(56,400);
+    t->setMinimumSize(66,400);
 	QSizePolicy policy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
 	t->setSizePolicy(policy);
 	t->setObjectName ( "CADTB" );
-    t->setFixedWidth(56);
+    t->setFixedWidth(66);
     t->setFloatable(false);
     t->setAllowedAreas(Qt::LeftToolBarArea | Qt::RightToolBarArea);
    // t->setVerticallyStretchable(true);
