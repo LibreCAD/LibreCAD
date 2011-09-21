@@ -775,12 +775,12 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
 //    }
 //    std::cout<<std::endl;
 //    std::cout<<"counts= "<<counts<<"\tFound "<<ivs0<<" EllipseEllipse intersections\n";
-    ret.alloc(ivs0);
+    //ret.alloc(ivs0);
     for(unsigned i=0; i<ivs0; i++) {
         RS_Vector vp=vs0.get(i);
         vp.rotate(-shifta1);
         vp.move(-shiftc1);
-        ret.set(i,vp);
+        ret.push_back(vp);
     }
     return ret;
 }
