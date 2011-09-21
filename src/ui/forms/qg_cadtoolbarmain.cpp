@@ -26,6 +26,7 @@
 #include "qg_cadtoolbarmain.h"
 
 #include "qg_cadtoolbar.h"
+#include "qg_cadtoolbarmain.h"
 
 /*
  *  Constructs a QG_CadToolBarMain as a child of 'parent', with the
@@ -115,4 +116,5 @@ void QG_CadToolBarMain::slotDrawPoint() {
     }
     bMenuPoint->setChecked(true);
     actionHandler->slotDrawPoint();
+    bMenuPoint->setChecked(false);
 }
