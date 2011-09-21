@@ -743,7 +743,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
 //	std::cout<<roots[i]<<" ";
 //	}
 //	std::cout<<std::endl;
-    RS_VectorSolutions vs0(8);
+    RS_VectorSolutions vs0;
     unsigned int ivs0=0;
     for(unsigned int i=0; i<counts; i++) {
         double y=roots[i];
@@ -753,14 +753,14 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
         if( fabs(d)>RS_TOLERANCE*sqrt(RS_TOLERANCE)) {//whether there's x^1 term in bezout determinant
             x=-((v1*y+v3)*y+v4 )/d;
             if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
-                vs0.set(ivs0++, RS_Vector(x,y));
+                vs0.push_back(RS_Vector(x,y));
         } else { // no x^1 term, have to use x^2 term, then, have to check plus/minus sqrt
             x=a1*sqrt(1-y*y*ma011);
             if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
-                vs0.set(ivs0++, RS_Vector(x,y));
+                vs0.push_back(RS_Vector(x,y));
             x=-x;
             if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
-                vs0.set(ivs0++, RS_Vector(x,y));
+                vs0.push_back(RS_Vector(x,y));
         }
         //std::cout<<"eq1="<<ma000*x*x+ma011*y*y-1.<<std::endl;
         //std::cout<<"eq2="<<ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1<<std::endl;
@@ -776,10 +776,12 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
 //    std::cout<<std::endl;
 //    std::cout<<"counts= "<<counts<<"\tFound "<<ivs0<<" EllipseEllipse intersections\n";
     //ret.alloc(ivs0);
-    for(unsigned i=0; i<ivs0; i++) {
+    shifta1 = - shifta1;
+    shiftc1 = - shiftc1;
+    for(unsigned i=0; i<vs0.getNumber(); i++) {
         RS_Vector vp=vs0.get(i);
-        vp.rotate(-shifta1);
-        vp.move(-shiftc1);
+        vp.rotate(shifta1);
+        vp.move(shiftc1);
         ret.push_back(vp);
     }
     return ret;
