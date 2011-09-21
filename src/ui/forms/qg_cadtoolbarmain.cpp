@@ -109,12 +109,10 @@ void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
 }
 
 void QG_CadToolBarMain::slotDrawPoint() {
-    if( bMenuPoint->isChecked()) {
-        bMenuPoint->setChecked(false);
-        actionHandler->getCurrentAction()->finish();
-        return;
-    }
     bMenuPoint->setChecked(true);
     actionHandler->slotDrawPoint();
+}
+
+void QG_CadToolBarMain::clearDrawPoint() {
     bMenuPoint->setChecked(false);
 }

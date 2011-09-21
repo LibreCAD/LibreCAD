@@ -302,3 +302,7 @@ void QG_CadToolBar::setSnapFree() {
                 tbSnap->snapFree();
         }
 }
+
+void QG_CadToolBar::clearDrawPoint() {
+    tbMain->clearDrawPoint();
+}
