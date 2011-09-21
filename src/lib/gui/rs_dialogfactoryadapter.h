@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -44,29 +44,29 @@ public:
     virtual void requestPreviousMenu() {}
     virtual void requestWarningDialog(const QString& ) {}
     virtual RS_GraphicView* requestNewDocument(const QString& = QString::null,
-			RS_Document* =NULL) { return NULL; }
+                        RS_Document* =NULL) { return NULL; }
     virtual RS_Layer* requestNewLayerDialog(
         RS_LayerList* = NULL) { return NULL; }
     virtual RS_Layer* requestLayerRemovalDialog(
         RS_LayerList* = NULL) { return NULL; }
     virtual RS_Layer* requestEditLayerDialog(
         RS_LayerList* = NULL) { return NULL; }
-    virtual RS_BlockData requestNewBlockDialog(RS_BlockList* ) 
-		{ return RS_BlockData(); }
+    virtual RS_BlockData requestNewBlockDialog(RS_BlockList* )
+                { return RS_BlockData(); }
     virtual RS_Block* requestBlockRemovalDialog(
         RS_BlockList* ) { return NULL; }
     virtual RS_BlockData requestBlockAttributesDialog(
         RS_BlockList* ) { return RS_BlockData(); }
     virtual void requestEditBlockWindow(
         RS_BlockList* ) {}
-	virtual void closeEditBlockWindow(RS_Block* ) {}
+        virtual void closeEditBlockWindow(RS_Block* ) {}
     virtual QString requestImageOpenDialog() { return ""; }
-    virtual void requestOptions(RS_ActionInterface* , 
-		bool , bool = false) {}
+    virtual void requestOptions(RS_ActionInterface* ,
+                bool , bool = false) {}
     virtual void requestSnapDistOptions(double& , bool ) {}
     virtual void requestSnapMiddleOptions(int& , bool ) {}
     virtual bool requestAttributesDialog(RS_AttributesData& ,
-		RS_LayerList& ) { return false; }
+                RS_LayerList& ) { return false; }
     virtual bool requestMoveDialog(RS_MoveData& ) { return false; }
     virtual bool requestRotateDialog(RS_RotateData& ) { return false; }
     virtual bool requestScaleDialog(RS_ScaleData& ) { return false; }
@@ -74,6 +74,7 @@ public:
     virtual bool requestMoveRotateDialog(RS_MoveRotateData& ) { return false; }
     virtual bool requestRotate2Dialog(RS_Rotate2Data& ) { return false; }
     virtual void requestToolBar(RS2::ToolBarId ) {}
+    virtual void clearDrawPoint() {}
     virtual void requestToolBarSelect(RS_ActionInterface* ,
                                       RS2::ActionType ) {}
     virtual bool requestModifyEntityDialog(RS_Entity* ) { return false; }
@@ -89,7 +90,7 @@ public:
     virtual void updateSelectionWidget(int ) {}
     virtual void updateArcTangentialOptions(const double& , bool ){}
     virtual void commandMessage(const QString& ) {}
-	virtual bool isAdapter() { return true; }
+        virtual bool isAdapter() { return true; }
 };
 
 #endif

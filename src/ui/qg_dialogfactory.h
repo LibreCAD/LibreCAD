@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -88,7 +88,7 @@ public:
     virtual void setMouseWidget(QG_MouseWidget* mw) {
         mouseWidget = mw;
     }
-	
+
     /**
      * Links this dialog factory to a selection widget.
      */
@@ -123,7 +123,7 @@ public:
     QG_CommandWidget* getCommandWidget() {
         return commandWidget;
     }
-	
+
     /**
      * Links the dialog factory to a main app window.
      */
@@ -133,9 +133,9 @@ public:
 
 
     virtual void requestWarningDialog(const QString& warning);
-	
+
     virtual RS_GraphicView* requestNewDocument(const QString& fileName = QString::null,
-			RS_Document* doc=NULL);
+                        RS_Document* doc=NULL);
 
     virtual RS_Layer* requestNewLayerDialog(
         RS_LayerList* layerList = NULL);
@@ -155,7 +155,7 @@ public:
         RS_Block* /*blockList*/) {}
     //virtual QString requestFileSaveAsDialog();
     //virtual QString requestFileOpenDialog();
-	
+
     virtual QString requestImageOpenDialog();
 
 
@@ -186,16 +186,16 @@ protected:
 
     virtual void requestArcOptions(RS_ActionInterface* action,
                                    bool on, bool update);
-    
-	virtual void requestArcTangentialOptions(RS_ActionInterface* action,
+
+        virtual void requestArcTangentialOptions(RS_ActionInterface* action,
                                    bool on, bool update);
 
     virtual void requestCircleOptions(RS_ActionInterface* action,
                                       bool on, bool update);
-									  
+
     virtual void requestSplineOptions(RS_ActionInterface* action,
                                       bool on, bool update);
-									  
+
     virtual void requestTextOptions(RS_ActionInterface* action,
                                    bool on, bool update);
 
@@ -203,12 +203,12 @@ protected:
                                          bool on, bool update);
     virtual void requestDimLinearOptions(RS_ActionInterface* action,
                                          bool on, bool update);
-										 
+
     virtual void requestInsertOptions(RS_ActionInterface* action,
                                    bool on, bool update);
     virtual void requestImageOptions(RS_ActionInterface* action,
                                    bool on, bool update);
-										 
+
     virtual void requestTrimAmountOptions(RS_ActionInterface* action,
                                           bool on, bool update);
     virtual void requestMoveRotateOptions(RS_ActionInterface* action,
@@ -226,18 +226,19 @@ public:
 
 public:
     virtual void requestToolBar(RS2::ToolBarId id);
+    virtual void clearDrawPoint();
     virtual void requestToolBarSelect(RS_ActionInterface* selectAction,
                                       RS2::ActionType nextAction);
 
-    virtual bool requestAttributesDialog(RS_AttributesData& data, 
-				RS_LayerList& layerList);
+    virtual bool requestAttributesDialog(RS_AttributesData& data,
+                                RS_LayerList& layerList);
     virtual bool requestMoveDialog(RS_MoveData& data);
     virtual bool requestRotateDialog(RS_RotateData& data);
     virtual bool requestScaleDialog(RS_ScaleData& data);
     virtual bool requestMirrorDialog(RS_MirrorData& data);
     virtual bool requestMoveRotateDialog(RS_MoveRotateData& data);
     virtual bool requestRotate2Dialog(RS_Rotate2Data& data);
-	
+
     virtual bool requestModifyEntityDialog(RS_Entity* entity);
     virtual bool requestTextDialog(RS_Text* text);
     virtual bool requestHatchDialog(RS_Hatch* hatch);
@@ -252,7 +253,7 @@ public:
     virtual void restoreMouseWidget(void);
     virtual void updateSelectionWidget(int num);
     virtual void commandMessage(const QString& message);
-	virtual bool isAdapter() { return false; }
+        virtual bool isAdapter() { return false; }
 
         static QString extToFormat(const QString& ext);
         virtual void updateArcTangentialOptions(const double& d, bool byRadius);

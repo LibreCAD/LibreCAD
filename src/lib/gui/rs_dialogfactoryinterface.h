@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -61,6 +61,7 @@ class RS_ScaleData;
 class RS_Solid;
 class RS_Text;
 class RS_Vector;
+class QG_CadToolBar;
 
 /**
  * Interface for objects that can create and show dialogs.
@@ -84,22 +85,22 @@ public:
      */
     virtual void requestWarningDialog(const QString& warning) = 0;
 
-	/**
-	 * This virtual method must be overwritten and must create a new
-	 * window for the given document or for a new document isf no document
-	 * is given.
-	 */
+        /**
+         * This virtual method must be overwritten and must create a new
+         * window for the given document or for a new document isf no document
+         * is given.
+         */
     virtual RS_GraphicView* requestNewDocument(const QString& fileName = QString::null,
-			RS_Document* doc=NULL) = 0;
+                        RS_Document* doc=NULL) = 0;
 
     /**
      * This virtual method must be overwritten and must provide
-     * a dialog for choosing the properties of a new layer to be 
-     * created. The method must create the new layer but not add 
+     * a dialog for choosing the properties of a new layer to be
+     * created. The method must create the new layer but not add
      * it to the layer list. The latter is up to the caller.
      *
-     * @return The implementation is expected to return a pointer 
-     *         to the newly created layer or NULL if the user 
+     * @return The implementation is expected to return a pointer
+     *         to the newly created layer or NULL if the user
      *         cancels the dialog.
      */
     virtual RS_Layer* requestNewLayerDialog(
@@ -123,8 +124,8 @@ public:
      * a dialog to edit the layers attributes. The method must
      * not actually edit the layer. This is up to the caller.
      *
-     * @return The implementation is expected to return a pointer 
-     *         to the modified layer or NULL if the user 
+     * @return The implementation is expected to return a pointer
+     *         to the modified layer or NULL if the user
      *         cancels the dialog.
      */
     virtual RS_Layer* requestEditLayerDialog(
@@ -132,27 +133,27 @@ public:
 
     /**
      * This virtual method must be overwritten and must provide
-     * a dialog for choosing the properties of a new block to be 
-     * created. The method must create the new block but not add 
+     * a dialog for choosing the properties of a new block to be
+     * created. The method must create the new block but not add
      * it to the block list. The latter is up to the caller.
     *
     * @param block Pointer to the newly created block with default
     *              attributes.
      *
-     * @return The implementation is expected to return a pointer 
-     *         to the newly created block or NULL if the user 
+     * @return The implementation is expected to return a pointer
+     *         to the newly created block or NULL if the user
      *         cancels the dialog.
      */
     virtual RS_BlockData requestNewBlockDialog(RS_BlockList* blockList) = 0;
 
     /**
      * This virtual method must be overwritten and must provide
-     * a dialog that asks for permission for removing the selected 
-     * block from the block list. The method must not actually 
+     * a dialog that asks for permission for removing the selected
+     * block from the block list. The method must not actually
      * remove the block. This is up to the caller.
      *
-     * @return The implementation is expected to return a pointer 
-     *         to the block which can be removed or NULL if the user 
+     * @return The implementation is expected to return a pointer
+     *         to the block which can be removed or NULL if the user
      *         cancels the dialog.
      */
     virtual RS_Block* requestBlockRemovalDialog(
@@ -160,11 +161,11 @@ public:
 
     /**
      * This virtual method must be overwritten and must provide
-     * a dialog that allows to change blocks attributes of the  
-     * currently active block. 
+     * a dialog that allows to change blocks attributes of the
+     * currently active block.
      *
-     * @return The implementation is expected to return a pointer 
-     *         to the block which was changed or NULL if the user 
+     * @return The implementation is expected to return a pointer
+     *         to the block which was changed or NULL if the user
      *         cancels the dialog.
      */
     virtual RS_BlockData requestBlockAttributesDialog(
@@ -172,12 +173,12 @@ public:
 
     /**
      * This virtual method must be overwritten and should provide
-     * a way to edit a block. 
+     * a way to edit a block.
      */
     virtual void requestEditBlockWindow(
         RS_BlockList* blockList) = 0;
 
-	virtual void closeEditBlockWindow(RS_Block* block) = 0;
+        virtual void closeEditBlockWindow(RS_Block* block) = 0;
 
     /**
      * This virtual method must be overwritten and must provide
@@ -200,7 +201,7 @@ public:
      *         the user cancels the dialog.
      */
     //virtual QString requestFileOpenDialog() = 0;
-	
+
     /**
      * This virtual method must be overwritten and must provide
      * a dialog to get a filename for opening an image file. The method must
@@ -211,24 +212,24 @@ public:
      *         the user cancels the dialog.
      */
     virtual QString requestImageOpenDialog() = 0;
-	
+
     /**
      * This virtual method must be overwritten and must present
      * a widget for options for the given action.
      *
-	 * @param action Pointer to the action which needs the options.
+         * @param action Pointer to the action which needs the options.
      * @param on true: switch widget on, false: off
-	 * @param update true: widget gets data from the action, false: 
-	 *   widget gets data from config file.
+         * @param update true: widget gets data from the action, false:
+         *   widget gets data from config file.
      */
-    virtual void requestOptions(RS_ActionInterface* action, 
-		bool on, bool update = false) = 0;
+    virtual void requestOptions(RS_ActionInterface* action,
+                bool on, bool update = false) = 0;
 
     /**
      * This virtual method must be overwritten and must present
      * a widget for snap point with distance options.
      *
-     * @param dist Distance which can be directly changed 
+     * @param dist Distance which can be directly changed
      *             by the presented widget.
      * @param on true: switch widget on, false: off
      */
@@ -239,17 +240,17 @@ public:
      * This virtual method must be overwritten and must present
      * a widget for entity attributes.
      *
-     * @param data Attribute data which can be directly changed 
+     * @param data Attribute data which can be directly changed
      *             by the presented widget.
      */
     virtual bool requestAttributesDialog(RS_AttributesData& data,
-		RS_LayerList& layerList) = 0;
+                RS_LayerList& layerList) = 0;
 
     /**
      * This virtual method must be overwritten and must present
      * a widget for move options (number of copies).
      *
-     * @param data Move data which can be directly changed 
+     * @param data Move data which can be directly changed
      *             by the presented widget.
      */
     virtual bool requestMoveDialog(RS_MoveData& data) = 0;
@@ -258,7 +259,7 @@ public:
      * This virtual method must be overwritten and must present
      * a widget for rotate options (number of copies, angle).
      *
-     * @param data Rotation data which can be directly changed 
+     * @param data Rotation data which can be directly changed
      *             by the presented widget.
      */
     virtual bool requestRotateDialog(RS_RotateData& data) = 0;
@@ -267,7 +268,7 @@ public:
      * This virtual method must be overwritten and must present
      * a widget for rotate options (number of copies, angle).
      *
-     * @param data Scaling data which can be directly changed 
+     * @param data Scaling data which can be directly changed
      *             by the presented widget.
      */
     virtual bool requestScaleDialog(RS_ScaleData& data) = 0;
@@ -276,7 +277,7 @@ public:
      * This virtual method must be overwritten and must present
      * a widget for mirror options (number of copies).
      *
-     * @param data Mirror data which can be directly changed 
+     * @param data Mirror data which can be directly changed
      *             by the presented widget.
      */
     virtual bool requestMirrorDialog(RS_MirrorData& data) = 0;
@@ -285,17 +286,17 @@ public:
      * This virtual method must be overwritten and must present
      * a widget for move/rotate options (number of copies, angle).
      *
-     * @param data Move/rotate data which can be directly changed 
+     * @param data Move/rotate data which can be directly changed
      *             by the presented widget.
      */
     virtual bool requestMoveRotateDialog(RS_MoveRotateData& data) = 0;
 
     /**
      * This virtual method must be overwritten and must present
-     * a widget for rotate around two centers options (number of 
+     * a widget for rotate around two centers options (number of
     * copies, angles).
      *
-     * @param data Rotate data which can be directly changed 
+     * @param data Rotate data which can be directly changed
      *             by the presented widget.
      */
     virtual bool requestRotate2Dialog(RS_Rotate2Data& data) = 0;
@@ -307,6 +308,7 @@ public:
      * @param id Tool bar ID.
      */
     virtual void requestToolBar(RS2::ToolBarId id) = 0;
+    virtual void clearDrawPoint() = 0;
 
     /**
      * This virtual method must be overwritten and must show
@@ -341,18 +343,18 @@ public:
      * @param entity Pointer to the hatch entity.
      */
     virtual bool requestHatchDialog(RS_Hatch* hatch) = 0;
-	
+
     /**
      * This virtual method must be overwritten and must present
      * a dialog for general application options.
      */
     virtual void requestOptionsGeneralDialog() = 0;
-	
+
     /**
      * This virtual method must be overwritten and must present
      * a dialog for drawing options.
-	 *
-	 * @param graphic Graphic document.
+         *
+         * @param graphic Graphic document.
      */
     virtual void requestOptionsDrawingDialog(RS_Graphic& graphic) = 0;
 
@@ -362,7 +364,7 @@ public:
      * The implementation will be called every time the mouse position
      * changes.
      *
-     * @param abs Absolute coordiante of the mouse cursor or the 
+     * @param abs Absolute coordiante of the mouse cursor or the
      *            point it snaps to.
      * @param rel Relative coordiante.
      */
@@ -386,7 +388,7 @@ public:
     /**
      * This virtual method must be overwritten if the graphic view has
      * a component that is interested in the current number of selected
-	 * entities.
+         * entities.
      * The implementation will be called every time the selection
      * changes.
      *
@@ -396,7 +398,7 @@ public:
 
     /**
      * This virtual method must be overwritten if the graphic view has
-     * a component that is interested in command messages (such as a 
+     * a component that is interested in command messages (such as a
     * command line history).
      * The implementation will be called typically by actions to inform
      * the user about current events and errors.

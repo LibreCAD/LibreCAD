@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -41,11 +41,11 @@ RS_ActionDrawPoint::RS_ActionDrawPoint(RS_EntityContainer& container,
 
 
 QAction* RS_ActionDrawPoint::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// (tr("Points")
-	QAction* action = new QAction(tr("&Points"),  NULL);
-	action->setIcon(QIcon(":/extui/points.png"));
+        // (tr("Points")
+        QAction* action = new QAction(tr("&Points"),  NULL);
+        action->setIcon(QIcon(":/extui/points.png"));
     //action->zetStatusTip(tr("Draw Points"));
-	
+
     return action;
 }
 
@@ -61,7 +61,7 @@ void RS_ActionDrawPoint::trigger() {
             document->endUndoCycle();
         }
 
-		graphicView->redraw(RS2::RedrawDrawing);
+                graphicView->redraw(RS2::RedrawDrawing);
         graphicView->moveRelativeZero(pt);
     }
 }
@@ -141,14 +141,10 @@ void RS_ActionDrawPoint::updateMouseCursor() {
 
 void RS_ActionDrawPoint::updateToolBar() {
         //not needed
-        return;
     if (RS_DIALOGFACTORY!=NULL) {
-        if (!isFinished()) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        } else {
-            // No need to show the single item ToolBarPoints, show toolBarMain upon finished instead, bug# 3391635
-            //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarPoints);
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+        if (isFinished()) {
+            //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+            RS_DIALOGFACTORY->clearDrawPoint();
         }
     }
 }

@@ -120,7 +120,7 @@ public:
     virtual ~RS_Snapper();
 
     void init();
-	void finish();
+        void finish();
 
     /**
      * @return Pointer to the entity which was the key entity for the
@@ -141,18 +141,18 @@ public:
         return &this->snapMode;
     }
     /** Sets a new snap restriction. */
-    void setSnapRestriction(RS2::SnapRestriction snapRes) {
+    void setSnapRestriction(RS2::SnapRestriction /*snapRes*/) {
         //this->snapRes = snapRes;
     }
 
-	/**
-	 * Sets the snap range in pixels for catchEntity().
-	 *
-	 * @see catchEntity()
-	 */
-	void setSnapRange(int r) {
-		snapRange = r;
-	}
+        /**
+         * Sets the snap range in pixels for catchEntity().
+         *
+         * @see catchEntity()
+         */
+        void setSnapRange(int r) {
+                snapRange = r;
+        }
 
     RS_Vector snapPoint(QMouseEvent* e);
 
@@ -181,7 +181,7 @@ public:
      * Suspends this snapper while another action takes place.
      */
     virtual void suspend() {
-		// RVT Don't delete the snapper here!
+                // RVT Don't delete the snapper here!
         // RVT_PORT (can be deleted)();
         snapSpot = snapCoord = RS_Vector(false);
     }
@@ -217,15 +217,15 @@ protected:
      * default to 1, i.e., equidistant to start/end points
      */
     int middlePoints;
-	/**
-	 * Snap range for catching entities.
-	 */
-	int snapRange;
-	/**
-	 * Show large cross hairs.
-	 */
-	bool showCrosshairs;
-	bool finished;
+        /**
+         * Snap range for catching entities.
+         */
+        int snapRange;
+        /**
+         * Show large cross hairs.
+         */
+        bool showCrosshairs;
+        bool finished;
 };
 
 //#endif
