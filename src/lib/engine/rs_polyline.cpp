@@ -338,21 +338,19 @@ void RS_Polyline::addEntity(RS_Entity* entity) {
 
 
 RS_VectorSolutions RS_Polyline::getRefPoints() {
-    RS_VectorSolutions ret(count()+1);
+    RS_VectorSolutions ret;
 
-    int i=0;
-    ret.set(0, data.startpoint);
-	i++;
+    ret.push_back(data.startpoint);
     
-	for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-            e!=NULL;
-            e = nextEntity(RS2::ResolveNone), i++) {
-		if (e->isAtomic()) {
-        	ret.set(i, ((RS_AtomicEntity*)e)->getEndpoint());
-		}
+    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
+         e!=NULL;
+         e = nextEntity(RS2::ResolveNone)) {
+        if (e->isAtomic()) {
+            ret.push_back(((RS_AtomicEntity*)e)->getEndpoint());
+        }
     }
     
-	ret.set(count(), data.endpoint);
+    ret.push_back( data.endpoint);
 
     return ret;
 }
