@@ -370,37 +370,20 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
 
     // Check all intersection points for being on entities:
     //
-    if (onEntities==true) {
-        if (!e1->isPointOnEntity(ret.get(0), tol) ||
-                !e2->isPointOnEntity(ret.get(0), tol)) {
-            ret.set(0, RS_Vector(false));
+    RS_VectorSolutions ret2;
+    for(int i=0;i<ret.getNumber();i++) {
+        if ( ! ret.get(i).valid) continue;
+        if (onEntities==true) {
+                //ignore intersections not on entity
+            if (!(e1->isPointOnEntity(ret.get(i), tol) &&
+                  e2->isPointOnEntity(ret.get(i), tol))) {
+                continue;
+            }
         }
-        if (!e1->isPointOnEntity(ret.get(1), tol) ||
-                !e2->isPointOnEntity(ret.get(1), tol)) {
-            ret.set(1, RS_Vector(false));
-        }
-        if (!e1->isPointOnEntity(ret.get(2), tol) ||
-                !e2->isPointOnEntity(ret.get(2), tol)) {
-            ret.set(2, RS_Vector(false));
-        }
-        if (!e1->isPointOnEntity(ret.get(3), tol) ||
-                !e2->isPointOnEntity(ret.get(3), tol)) {
-            ret.set(3, RS_Vector(false));
-        }
+        ret2.push_back(ret.get(i));
     }
 
-    int k=0;
-    for (int i=0; i<4; ++i) {
-        if (ret.get(i).valid) {
-            ret.set(k, ret.get(i));
-            k++;
-        }
-    }
-    for (int i=k; i<4; ++i) {
-        ret.set(i, RS_Vector(false));
-    }
-
-    return ret;
+    return ret2;
 }
 
 
