@@ -26,9 +26,10 @@
 #ifndef QG_CADTOOLBARMAIN_H
 #define QG_CADTOOLBARMAIN_H
 
-class QG_CadToolBar;
 
 #include "ui_qg_cadtoolbarmain.h"
+#include "qg_actionhandler.h"
+class QG_CadToolBar;
 
 class QG_CadToolBarMain : public QWidget, public Ui::QG_CadToolBarMain
 {
@@ -46,7 +47,8 @@ protected slots:
     virtual void languageChange();
 private:
     QG_ActionHandler* actionHandler;
-
+private slots:
+    virtual void slotDrawPoint();
 };
 
-#endif // QG_CADTOOLBARMAIN_H
+#endif
