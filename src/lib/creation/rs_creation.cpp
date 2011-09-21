@@ -658,7 +658,7 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
         // calculate tangent points for ellipses:
         else {
             RS_Ellipse* el = (RS_Ellipse*)circle;
-            sol.alloc(2);
+            //sol.alloc(2);
             //sol.set(0, circleCenter);
             //sol.set(1, circleCenter);
 
@@ -701,12 +701,15 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
             s2.rotate(el->getAngle());
             s2.move(el->getCenter());
 
-            sol.set(0, s1);
-            sol.set(1, s2);
+            sol.push_back(s1);
+            sol.push_back(s2);
 
 
         }
 
+        if (sol.getNumber() < 2 ) {
+                return NULL;
+        }
         if (!sol.get(0).valid || !sol.get(1).valid) {
             return NULL;
         }
