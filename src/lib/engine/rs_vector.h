@@ -29,7 +29,7 @@
 #define RS_VECTOR_H
 
 #include <iostream>
-
+#include <QList>
 #include "rs.h"
 
 /**
@@ -130,6 +130,7 @@ public:
     int getNumber() const;
     bool hasValid() const;
     void set(int i, const RS_Vector& v);
+    void push_back(const RS_Vector& v);
     void setTangent(bool t);
     bool isTangent() const;
     RS_Vector getClosest(const RS_Vector& coord,
@@ -148,8 +149,7 @@ public:
                                       const RS_VectorSolutions& s);
 
 private:
-    RS_Vector* vector;
-    int num;
+    QList<RS_Vector> vector;
     bool tangent;
 };
 

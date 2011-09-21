@@ -1909,7 +1909,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     } else if (limitEntity->isContainer()) {
         RS_EntityContainer* ec = (RS_EntityContainer*)limitEntity;
 
-        sol.alloc(128);
+        //sol.alloc(128);
         int i=0;
 
         for (RS_Entity* e=ec->firstEntity(RS2::ResolveAll); e!=NULL;
@@ -1924,9 +1924,9 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
 
                 if (s2.hasValid()) {
                     for (int k=0; k<s2.getNumber(); ++k) {
-                        if (i<128 && s2.get(k).valid) {
+                        if (s2.get(k).valid) {
                             if (e->isPointOnEntity(s2.get(k), 1.0e-4)) {
-                                sol.set(i++, s2.get(k));
+                                sol.push_back(s2.get(k));
                             }
                         }
                     }
