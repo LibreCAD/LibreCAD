@@ -248,8 +248,12 @@ void RS_Font::readCXF(QString path) {
                 }
             } while (!line.isEmpty());
 
-            letter->calculateBorders();
-            letterList.add(letter);
+            if (letter->isEmpty()) {
+                delete letter;
+            } else {
+                letter->calculateBorders();
+                letterList.add(letter);
+            }
         }
     }
     f.close();
@@ -376,8 +380,12 @@ void RS_Font::readLFF(QString path) {
 
             } while (!line.isEmpty());
 
-            letter->calculateBorders();
-            letterList.add(letter);
+            if (letter->isEmpty()) {
+                delete letter;
+            } else {
+                letter->calculateBorders();
+                letterList.add(letter);
+            }
         }
     }
     f.close();
