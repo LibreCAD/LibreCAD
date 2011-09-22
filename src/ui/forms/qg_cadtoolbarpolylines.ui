@@ -64,6 +64,12 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/polyline.png</normaloff>:/extui/polyline.png</iconset>
    </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QToolButton" name="bPolylineTrim">
    <property name="geometry">
@@ -83,6 +89,12 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/polylinetrim.png</normaloff>:/extui/polylinetrim.png</iconset>
+   </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToolButton" name="bPolylineEquidistant">
@@ -104,6 +116,12 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/polylineequidstant.png</normaloff>:/extui/polylineequidstant.png</iconset>
    </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QToolButton" name="bPolylineDelBetween">
    <property name="geometry">
@@ -123,6 +141,12 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/polylinedelbetween.png</normaloff>:/extui/polylinedelbetween.png</iconset>
+   </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToolButton" name="bPolylineDel">
@@ -144,6 +168,12 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/polylinedel.png</normaloff>:/extui/polylinedel.png</iconset>
    </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QToolButton" name="bPolylineAdd">
    <property name="geometry">
@@ -163,6 +193,12 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/polylineadd.png</normaloff>:/extui/polylineadd.png</iconset>
+   </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToolButton" name="bPolylineAppend">
@@ -184,6 +220,12 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/polylineappend.png</normaloff>:/extui/polylineappend.png</iconset>
    </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QToolButton" name="bPolylineSegment">
    <property name="geometry">
@@ -203,6 +245,12 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/polylinesegment.png</normaloff>:/extui/polylinesegment.png</iconset>
+   </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>

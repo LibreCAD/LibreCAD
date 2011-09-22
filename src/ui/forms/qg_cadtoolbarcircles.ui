@@ -44,6 +44,12 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/circles2p.png</normaloff>:/extui/circles2p.png</iconset>
    </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QToolButton" name="bCircleCR">
    <property name="geometry">
@@ -63,6 +69,12 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/circlescr.png</normaloff>:/extui/circlescr.png</iconset>
+   </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToolButton" name="bCircle">
@@ -84,6 +96,12 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/circles.png</normaloff>:/extui/circles.png</iconset>
    </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QToolButton" name="bCircle3P">
    <property name="geometry">
@@ -103,6 +121,12 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/circles3p.png</normaloff>:/extui/circles3p.png</iconset>
+   </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToolButton" name="bBack">
@@ -143,6 +167,12 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/circlespara.png</normaloff>:/extui/circlespara.png</iconset>
+   </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>

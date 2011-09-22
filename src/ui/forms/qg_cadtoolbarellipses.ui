@@ -44,6 +44,12 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/ellipsearcsaxes.png</normaloff>:/extui/ellipsearcsaxes.png</iconset>
    </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QToolButton" name="bEllipseAxes">
    <property name="geometry">
@@ -63,6 +69,12 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/ellipsesaxes.png</normaloff>:/extui/ellipsesaxes.png</iconset>
+   </property>
+      <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToolButton" name="bBack">
