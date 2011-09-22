@@ -2122,11 +2122,18 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     // Link the dialog factory to the cad tool bar:
     if (cadToolBar!=NULL) {
         //set SnapFree to avoid orphaned snapOptions, bug#3407522
-            if ( getGraphicView() != NULL && getDocument() != NULL ) {
+            /* setting snap option toolbar pointers to non-static fixes
+             * bug#3407522
+            if (snapToolBar != NULL && getGraphicView() != NULL && getDocument() != NULL ) {
                     //need to detect graphicView and Document for NULL
 //bug#3408689
-                cadToolBar->setSnapFree();
+                RS_SnapMode s=snapToolBar->getSnaps();
+                s.snapMiddle=false;
+                s.snapDistance=false;
+                snapToolBar->setSnaps(s);
+                //cadToolBar->setSnapFree();
             }
+            */
         cadToolBar->showToolBar(RS2::ToolBarMain);
         }
     QG_DIALOGFACTORY->setCadToolBar(cadToolBar);

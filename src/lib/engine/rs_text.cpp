@@ -332,7 +332,9 @@ void RS_Text::update() {
                     //letterWidth = RS_Vector(letter->getSize().x, 0.0);
 					// from 2.0.4.6:
                     letterWidth = RS_Vector(letter->getMax().x-letterPos.x, 0.0);
-					
+                    if (letterWidth.x < 0)
+                        letterWidth.x = -letterSpace.x;
+
                     oneLine->addEntity(letter);
 
                     // next letter position:

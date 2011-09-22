@@ -1051,7 +1051,7 @@ void QG_ActionHandler::slotSelectLayer() {
 }
 
 void QG_ActionHandler::slotDrawPoint() {
-    setCurrentAction(RS2::ActionDrawPoint);
+        setCurrentAction(RS2::ActionDrawPoint);
 }
 
 void QG_ActionHandler::slotDrawLine() {

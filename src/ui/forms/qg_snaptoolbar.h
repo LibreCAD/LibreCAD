@@ -64,7 +64,7 @@ private:
     QAction *snapOnEntity;
     QAction *snapCenter;
     QAction *snapMiddle;
-    //QAction *snapDistance;
+    QAction *snapDistance;
     QAction *snapIntersection;
 
 
