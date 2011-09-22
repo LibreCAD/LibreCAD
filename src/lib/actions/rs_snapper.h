@@ -48,6 +48,7 @@ struct RS_SnapMode {
 public:
     bool snapEndpoint;     /// Whether to snap to endpoints or not.
     bool snapMiddle;       /// Whether to snap to midpoints or not.
+    bool snapDistance;       /// Whether to snap to distance from endpoints or not.
     bool snapCenter;       /// Whether to snap to centers or not.
     bool snapIntersection; /// Whether to snap to intersections or not.
 
@@ -75,6 +76,7 @@ public:
     RS_SnapMode &clear(void) {
         snapEndpoint     = false;
         snapMiddle       = false;
+        snapDistance       = false;
         snapCenter       = false;
         snapOnEntity     = false;
         snapIntersection = false;
@@ -92,6 +94,7 @@ public:
     RS_SnapMode &hardReset(void) {
         snapEndpoint     = false;
         snapMiddle       = false;
+        snapDistance       = false;
         snapCenter       = false;
         snapOnEntity     = false;
         snapIntersection = false;
@@ -134,9 +137,8 @@ public:
     }
 
     /** Sets a new snap mode. */
-    void setSnapMode(RS_SnapMode snapMode) {
-        this->snapMode = snapMode;
-    }
+    void setSnapMode(RS_SnapMode snapMode);
+
     RS_SnapMode *getSnapMode(void) {
         return &this->snapMode;
     }

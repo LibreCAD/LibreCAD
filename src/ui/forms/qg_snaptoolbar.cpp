@@ -81,6 +81,7 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void )
     s.snapOnEntity     = snapOnEntity->isChecked();
     s.snapCenter       = snapCenter->isChecked();
     s.snapMiddle       = snapMiddle->isChecked();
+    s.snapDistance       = snapDistance->isChecked();
     s.snapIntersection = snapIntersection->isChecked();
 
     if (restrictOrthoagonal->isChecked())
@@ -113,6 +114,10 @@ void QG_SnapToolBar::init()
     snapMiddle->setCheckable(true);
     connect(snapMiddle, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     this->addAction(snapMiddle);
+    snapDistance = new QAction(QIcon(":/extui/snapdist.png"), "Snap Distance", this);
+    snapDistance ->setCheckable(true);
+    connect(snapDistance, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    this->addAction(snapDistance);
     snapIntersection = new QAction(QIcon(":/extui/snapintersection.png"), "Snap Intersection", this);
     snapIntersection->setCheckable(true);
     connect(snapIntersection, SIGNAL(triggered()), this, SLOT(actionTriggered()));
