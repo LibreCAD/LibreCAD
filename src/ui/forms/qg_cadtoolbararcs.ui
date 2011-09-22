@@ -64,6 +64,12 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/arcspara.png</normaloff>:/extui/arcspara.png</iconset>
    </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QToolButton" name="bArc">
    <property name="geometry">
@@ -83,6 +89,12 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/arcscraa.png</normaloff>:/extui/arcscraa.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToolButton" name="bArc3P">
@@ -104,6 +116,12 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/arcs3p.png</normaloff>:/extui/arcs3p.png</iconset>
    </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QToolButton" name="bArcTangential">
    <property name="geometry">
@@ -123,6 +141,12 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/arcstangential.png</normaloff>:/extui/arcstangential.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>
