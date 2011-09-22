@@ -77,6 +77,7 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void )
 {
     RS_SnapMode s;
 
+    s.snapGrid         = snapEnd->isChecked();
     s.snapEndpoint     = snapEnd->isChecked();
     s.snapOnEntity     = snapOnEntity->isChecked();
     s.snapCenter       = snapCenter->isChecked();
