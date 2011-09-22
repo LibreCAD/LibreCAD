@@ -225,22 +225,18 @@ RS_Vector RS_Snapper::snapEndpoint(RS_Vector coord) {
  */
 RS_Vector RS_Snapper::snapGrid(RS_Vector coord) {
 
-        RS_DEBUG->print("RS_Snapper::snapGrid begin");
+    RS_DEBUG->print("RS_Snapper::snapGrid begin");
 
     RS_Vector vec(false);
     double dist=0.0;
 
     RS_Grid* grid = graphicView->getGrid();
 
-        RS_DEBUG->print("RS_Snapper::snapGrid 001");
 
     if (grid!=NULL) {
-                RS_DEBUG->print("RS_Snapper::snapGrid 002");
         RS_Vector* pts = grid->getPoints();
-                RS_DEBUG->print("RS_Snapper::snapGrid 003");
         int closest = -1;
         dist = 32000.00;
-                RS_DEBUG->print("RS_Snapper::snapGrid 004");
         for (int i=0; i<grid->count(); ++i) {
             double d = pts[i].distanceTo(coord);
             if (d<dist) {
@@ -248,15 +244,15 @@ RS_Vector RS_Snapper::snapGrid(RS_Vector coord) {
                 dist = d;
             }
         }
-                RS_DEBUG->print("RS_Snapper::snapGrid 005");
-                if (closest>=0) {
-                vec = pts[closest];
-                }
-                RS_DEBUG->print("RS_Snapper::snapGrid 006");
+        if (closest>=0) {
+            vec = pts[closest];
+        }
+    }else {
+        RS_DEBUG->print("RS_Snapper:: getGrid() returns NULL\n");
     }
     keyEntity = NULL;
 
-        RS_DEBUG->print("RS_Snapper::snapGrid end");
+    RS_DEBUG->print("RS_Snapper::snapGrid end");
 
     return vec;
 }
