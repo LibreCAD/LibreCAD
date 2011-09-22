@@ -532,3 +532,64 @@ void RS_Snapper::drawSnapper() {
 
 }
 
+/**
+  * snap mode to a flag integer
+  */
+unsigned int RS_Snapper::snapModeToInt(RS_SnapMode s)
+{
+    unsigned int ret; //initial
+    switch (s.restriction) {
+    case RS2::RestrictHorizontal:
+        ret=1;
+        break;
+    case RS2::RestrictVertical:
+        ret=2;
+        break;
+    case RS2::RestrictOrthogonal:
+        ret=3;
+        break;
+    default:
+        ret=0;
+    }
+    ret <<=1;ret &= s.snapEndpoint;
+    ret <<=1;ret &= s.snapMiddle;
+    ret <<=1;ret &= s.snapDistance;
+    ret <<=1;ret &= s.snapCenter;
+    ret <<=1;ret &= s.snapOnEntity;
+    ret <<=1;ret &= s.snapIntersection;
+   return ret;
+}
+/**
+  * integer flag to snapMode
+  */
+RS_SnapMode RS_Snapper::intToSnapMode(unsigned int ret)
+{
+    RS_SnapMode s; //initial
+    unsigned int binaryOne(0x1);
+    s.snapIntersection =ret & binaryOne;
+    ret >>= 1;
+    s.snapOnEntity =ret & binaryOne;
+    ret >>= 1;
+    s.snapCenter =ret & binaryOne;
+    ret >>= 1;
+    s.snapDistance =ret & binaryOne;
+    ret >>= 1;
+    s.snapMiddle =ret & binaryOne;
+    ret >>= 1;
+    s.snapEndpoint =ret & binaryOne;
+    ret >>= 1;
+    switch (ret) {
+    case 1:
+            s.restriction=RS2::RestrictHorizontal;
+        break;
+    case 2:
+            s.restriction=RS2::RestrictVertical;
+        break;
+    case 3:
+            s.restriction=RS2::RestrictOrthogonal;
+        break;
+    default:
+            s.restriction=RS2::RestrictNothing;
+    }
+   return s;
+}
