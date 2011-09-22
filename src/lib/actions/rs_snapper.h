@@ -199,6 +199,8 @@ public:
     virtual void showOptions();
 
     void drawSnapper();
+    static unsigned int snapModeToInt(RS_SnapMode s);
+    static RS_SnapMode intToSnapMode(unsigned int);
 
 protected:
     void deleteSnapper();
