@@ -42,6 +42,8 @@
 #include "qg_mousewidget.h"
 #include "qg_printpreviewoptions.h"
 */
+#include "qg_snapmiddleoptions.h"
+#include "qg_snapdistoptions.h"
 
 class QG_CadToolBar;
 class QToolBar;
@@ -283,6 +285,9 @@ private:
     QString *leftHintCurrent, *rightHintCurrent;
     QString *leftHintSaved, *rightHintSaved;
     bool *hintKeeping;
+    // pointers to snap option widgets
+    QG_SnapMiddleOptions* snapMiddleOptions;
+    QG_SnapDistOptions* snapDistOptions;
 };
 
 #endif
