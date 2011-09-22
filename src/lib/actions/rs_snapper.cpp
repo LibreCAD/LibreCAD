@@ -107,7 +107,12 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     }
 
     RS_Vector mouseCoord = graphicView->toGraph(e->x(), e->y());
+    if (snapMode.snapGrid) {
+        t = snapGrid(mouseCoord);
 
+        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+            snapSpot = t;
+    }
     if (snapMode.snapEndpoint) {
         t = snapEndpoint(mouseCoord);
 
@@ -551,6 +556,7 @@ unsigned int RS_Snapper::snapModeToInt(RS_SnapMode s)
     default:
         ret=0;
     }
+    ret <<=1;ret &= s.snapGrid;
     ret <<=1;ret &= s.snapEndpoint;
     ret <<=1;ret &= s.snapMiddle;
     ret <<=1;ret &= s.snapDistance;
@@ -577,6 +583,8 @@ RS_SnapMode RS_Snapper::intToSnapMode(unsigned int ret)
     s.snapMiddle =ret & binaryOne;
     ret >>= 1;
     s.snapEndpoint =ret & binaryOne;
+    ret >>= 1;
+    s.snapGrid =ret & binaryOne;
     ret >>= 1;
     switch (ret) {
     case 1:
