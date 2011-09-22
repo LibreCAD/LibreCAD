@@ -97,6 +97,8 @@
 #include "qg_polylineoptions.h"
 #include "qg_layerwidget.h"
 #include "qg_mainwindowinterface.h"
+#include "qg_snapmiddleoptions.h"
+#include "qg_snapdistoptions.h"
 
 //QG_DialogFactory* QG_DialogFactory::uniqueInstance = NULL;
 
@@ -124,6 +126,8 @@ QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
     leftHintSaved=new QString("");
     rightHintSaved=new QString("");
     hintKeeping=new bool(true);
+    snapMiddleOptions=NULL;
+    snapDistOptions=NULL;
         RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory: OK");
 }
 
@@ -1200,18 +1204,17 @@ void QG_DialogFactory::requestDimLinearOptions(RS_ActionInterface* action,
  * Shows a widget for 'snap to equidistant middle points ' options.
  */
 void QG_DialogFactory::requestSnapMiddleOptions(int& middlePoints, bool on) {
-    static QG_SnapMiddleOptions* toolWidget = NULL;
 
     if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
-            delete toolWidget;
-            toolWidget = NULL;
+        if (snapMiddleOptions!=NULL) {
+            delete snapMiddleOptions;
+            snapMiddleOptions = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_SnapMiddleOptions();
-            optionWidget->addWidget(toolWidget);
-            toolWidget->setMiddlePoints(&middlePoints);
-                        toolWidget->show();
+            snapMiddleOptions = new QG_SnapMiddleOptions();
+            optionWidget->addWidget(snapMiddleOptions);
+            snapMiddleOptions->setMiddlePoints(&middlePoints);
+                        snapMiddleOptions->show();
         }
     }
 }
@@ -1221,18 +1224,17 @@ void QG_DialogFactory::requestSnapMiddleOptions(int& middlePoints, bool on) {
  * Shows a widget for 'snap to a point with a given distance' options.
  */
 void QG_DialogFactory::requestSnapDistOptions(double& dist, bool on) {
-    static QG_SnapDistOptions* toolWidget = NULL;
 
     if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
-            delete toolWidget;
-            toolWidget = NULL;
+        if (snapDistOptions!=NULL) {
+            delete snapDistOptions;
+            snapDistOptions = NULL;
         }
         if (on==true) {
-            toolWidget = new QG_SnapDistOptions();
-            optionWidget->addWidget(toolWidget);
-            toolWidget->setDist(&dist);
-                        toolWidget->show();
+            snapDistOptions = new QG_SnapDistOptions();
+            optionWidget->addWidget(snapDistOptions);
+            snapDistOptions->setDist(&dist);
+                        snapDistOptions->show();
         }
     }
 }
