@@ -60,6 +60,7 @@ signals:
 
 private:
     //QAction *snapFree;
+    QAction *snapGrid;
     QAction *snapEnd;
     QAction *snapOnEntity;
     QAction *snapCenter;

@@ -98,6 +98,10 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void )
 
 void QG_SnapToolBar::init()
 {
+    snapGrid = new QAction(QIcon(":/extui/snapgrid.png"), "Snap on grid", this);
+    snapGrid->setCheckable(true);
+    connect(snapGrid, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    this->addAction(snapGrid);
     snapEnd = new QAction(QIcon(":/extui/snapendpoint.png"), "Snap on Endpoints", this);
     snapEnd->setCheckable(true);
     connect(snapEnd, SIGNAL(triggered()), this, SLOT(actionTriggered()));
