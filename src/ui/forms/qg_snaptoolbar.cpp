@@ -27,6 +27,7 @@
 #include <QToolBar>
 
 #include "qg_snaptoolbar.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_CadToolBarSnap as a child of 'parent', with the
@@ -42,6 +43,11 @@ QG_SnapToolBar::QG_SnapToolBar( const QString & title, QWidget * parent )
  */
 QG_SnapToolBar::~QG_SnapToolBar()
 {
+    //@write default snap mode from prefrences.
+    RS_SETTINGS->beginGroup("/Snap");
+    unsigned int snapFlags=RS_Snapper::snapModeToInt(getSnaps());
+    RS_SETTINGS->writeEntry("/SnapMode",QString::number(snapFlags));
+    RS_SETTINGS->endGroup();
     // no need to delete child widgets, Qt does it all for us
 }
 
@@ -52,25 +58,8 @@ void QG_SnapToolBar::setSnaps ( RS_SnapMode s )
     snapCenter->setChecked(s.snapCenter);
     snapMiddle->setChecked(s.snapMiddle);
     snapIntersection->setChecked(s.snapIntersection);
-
-
-    restrictOrthoagonal->setChecked(false); // Init to false
-    restrictHorizontal->setChecked(false);  //
-    restrictVertical->setChecked(false);    //
-    switch (s.restriction)
-    {
-    case RS2::RestrictOrthogonal:
-        restrictOrthoagonal->setChecked(true);
-        break;
-    case RS2::RestrictHorizontal:
-        restrictHorizontal->setChecked(true);
-        break;
-    case RS2::RestrictVertical:
-        restrictVertical->setChecked(true);
-        break;
-    default:
-        break;
-    }
+    restrictHorizontal->setChecked(s.restriction==RS2::RestrictHorizontal ||  s.restriction==RS2::RestrictOrthogonal);
+    restrictVertical->setChecked(s.restriction==RS2::RestrictVertical ||  s.restriction==RS2::RestrictOrthogonal);
 }
 
 RS_SnapMode QG_SnapToolBar::getSnaps ( void )
@@ -159,6 +148,11 @@ void QG_SnapToolBar::init()
     //        this, SLOT(restrictVerticalTriggered(bool)));
     connect(restrictVertical, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     this->addAction(restrictVertical);
+    RS_SETTINGS->beginGroup("/Snap");
+    unsigned int snapFlags(RS_SETTINGS->readNumEntry("/SnapMode",0));
+    RS_SETTINGS->endGroup();
+    setSnaps(RS_Snapper::intToSnapMode(snapFlags));
+    actionTriggered();
 }
 
 /* Slots */

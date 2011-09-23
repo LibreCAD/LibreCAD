@@ -552,13 +552,13 @@ unsigned int RS_Snapper::snapModeToInt(RS_SnapMode s)
     default:
         ret=0;
     }
-    ret <<=1;ret &= s.snapGrid;
-    ret <<=1;ret &= s.snapEndpoint;
-    ret <<=1;ret &= s.snapMiddle;
-    ret <<=1;ret &= s.snapDistance;
-    ret <<=1;ret &= s.snapCenter;
-    ret <<=1;ret &= s.snapOnEntity;
-    ret <<=1;ret &= s.snapIntersection;
+    ret <<=1;ret |= s.snapGrid;
+    ret <<=1;ret |= s.snapEndpoint;
+    ret <<=1;ret |= s.snapMiddle;
+    ret <<=1;ret |= s.snapDistance;
+    ret <<=1;ret |= s.snapCenter;
+    ret <<=1;ret |= s.snapOnEntity;
+    ret <<=1;ret |= s.snapIntersection;
    return ret;
 }
 /**
