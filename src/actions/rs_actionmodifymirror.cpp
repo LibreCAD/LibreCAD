@@ -186,6 +186,8 @@ void RS_ActionModifyMirror::updateMouseCursor() {
 
 
 void RS_ActionModifyMirror::updateToolBar() {
+    //not needed any more
+    return;
     if (RS_DIALOGFACTORY!=NULL) {
         switch (getStatus()) {
         case SetAxisPoint1:
