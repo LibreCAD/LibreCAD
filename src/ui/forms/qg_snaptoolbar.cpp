@@ -28,6 +28,7 @@
 
 #include "qg_snaptoolbar.h"
 #include "rs_settings.h"
+#include "qg_cadtoolbar.h"
 
 /*
  *  Constructs a QG_CadToolBarSnap as a child of 'parent', with the
@@ -35,6 +36,7 @@
  */
 QG_SnapToolBar::QG_SnapToolBar( const QString & title, QWidget * parent )
     : QToolBar(title, parent) {
+    actionHandler=NULL;
     init();
 }
 
@@ -94,6 +96,7 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void )
 
 void QG_SnapToolBar::init()
 {
+
     snapGrid = new QAction(QIcon(":/extui/snapgrid.png"), "Snap on grid", this);
     snapGrid->setCheckable(true);
     connect(snapGrid, SIGNAL(triggered()), this, SLOT(actionTriggered()));
@@ -152,14 +155,35 @@ void QG_SnapToolBar::init()
     unsigned int snapFlags(RS_SETTINGS->readNumEntry("/SnapMode",0));
     RS_SETTINGS->endGroup();
     setSnaps(RS_Snapper::intToSnapMode(snapFlags));
-    actionTriggered();
+    this->addSeparator();
+    bRelZero = new QAction(QIcon(":/extui/relzeromove.png"), "Set relative zero position", this);
+    bRelZero->setCheckable(false);
+    connect(bRelZero, SIGNAL(clicked()), actionHandler, SLOT(slotSetRelativeZero()));
+    this->addAction(bRelZero);
+    bLockRelZero = new QAction(QIcon(":/extui/relzerolock.png"), "Lock relative zero position", this);
+    bLockRelZero->setCheckable(true);
+    connect(bLockRelZero, SIGNAL(isChecked(bool)), actionHandler, SLOT(slotLockRelativeZero(bool) ));
+    this->addAction(bLockRelZero);
+}
+
+void QG_SnapToolBar::setActionHandler(QG_ActionHandler* ah){
+    actionHandler=ah;
 }
 
 /* Slots */
 
 void QG_SnapToolBar::actionTriggered()
 {
-    emit snapsChanged(getSnaps());
+    actionHandler->slotSetSnaps(getSnaps());
+    //emit snapsChanged(getSnaps());
+}
+void QG_SnapToolBar::slotSetRelativeZero()
+{
+    actionHandler->slotSetRelativeZero();
+}
+void QG_SnapToolBar::slotLockRelativeZero(bool on)
+{
+    actionHandler->slotLockRelativeZero(on);
 }
 
 void QG_SnapToolBar::restrictOrthoagonalTriggered(bool activated)
