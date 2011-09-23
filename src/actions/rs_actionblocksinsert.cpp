@@ -352,6 +352,8 @@ void RS_ActionBlocksInsert::updateMouseCursor() {
 
 
 void RS_ActionBlocksInsert::updateToolBar() {
+    //not needed any more
+    return;
     if (!isFinished()) {
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
     } else {

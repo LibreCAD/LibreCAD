@@ -382,6 +382,8 @@ void RS_ActionDefault::updateMouseCursor() {
 
 
 void RS_ActionDefault::updateToolBar() {
+    //not needed any more
+    return;
     //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
 	switch (getStatus()) {
 	case Neutral:

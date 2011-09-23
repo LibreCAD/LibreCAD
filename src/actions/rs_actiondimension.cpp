@@ -94,6 +94,8 @@ void RS_ActionDimension::updateMouseCursor() {
 
 
 void RS_ActionDimension::updateToolBar() {
+    //not needed any more
+    return;
     if (RS_DIALOGFACTORY!=NULL) {
         if (!isFinished()) {
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);

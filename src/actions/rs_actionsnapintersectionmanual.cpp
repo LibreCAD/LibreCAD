@@ -199,7 +199,9 @@ void RS_ActionSnapIntersectionManual::updateMouseCursor() {
 
 
 void RS_ActionSnapIntersectionManual::updateToolBar() {
-    RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
+    //not needed any more
+    return;
+    //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
 }
 
 
