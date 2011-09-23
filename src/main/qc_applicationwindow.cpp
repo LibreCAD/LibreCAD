@@ -1464,12 +1464,14 @@ void QC_ApplicationWindow::initToolBar() {
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
             this, SLOT(slotPenChanged(RS_Pen)));
 
+    //Add snap toolbar
     snapToolBar = new QG_SnapToolBar("Snap Selection", this);
     snapToolBar->setSizePolicy(toolBarPolicy);
     snapToolBar->setObjectName ( "SnapTB" );
     connect(snapToolBar, SIGNAL(snapsChanged(RS_SnapMode)),
             this, SLOT(slotSnapsChanged(RS_SnapMode)));
     this->addToolBar(snapToolBar);
+
 
     optionWidget = new QToolBar("Tool Options", this);
         QSizePolicy optionWidgetBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
@@ -1900,8 +1902,13 @@ void QC_ApplicationWindow::slotWindowActivated(QWidget*) {
         m->getDocument()->updateInserts();
         m->getGraphicView()->redraw();
 
-        // set snapmode from snapping menu
-        actionHandler->updateSnapMode();
+        // set snapmode from snap toolbar
+        //actionHandler->updateSnapMode();
+        if(snapToolBar != NULL ){
+            actionHandler->slotSetSnaps(snapToolBar->getSnaps());
+        }else {
+            RS_DEBUG->print(D_ERROR,"snapToolBar is NULL\n");
+        }
 
         // set pen from pen toolbar
         slotPenChanged(penToolBar->getPen());
@@ -2136,6 +2143,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
             */
         cadToolBar->showToolBar(RS2::ToolBarMain);
         }
+
     QG_DIALOGFACTORY->setCadToolBar(cadToolBar);
     // Link the dialog factory to the command widget:
     QG_DIALOGFACTORY->setCommandWidget(commandWidget);
