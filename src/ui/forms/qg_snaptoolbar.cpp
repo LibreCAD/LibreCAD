@@ -158,11 +158,11 @@ void QG_SnapToolBar::init()
     this->addSeparator();
     bRelZero = new QAction(QIcon(":/extui/relzeromove.png"), "Set relative zero position", this);
     bRelZero->setCheckable(false);
-    connect(bRelZero, SIGNAL(clicked()), actionHandler, SLOT(slotSetRelativeZero()));
+    connect(bRelZero, SIGNAL(clicked()), this, SLOT(slotSetRelativeZero()));
     this->addAction(bRelZero);
     bLockRelZero = new QAction(QIcon(":/extui/relzerolock.png"), "Lock relative zero position", this);
     bLockRelZero->setCheckable(true);
-    connect(bLockRelZero, SIGNAL(isChecked(bool)), actionHandler, SLOT(slotLockRelativeZero(bool) ));
+    connect(bLockRelZero, SIGNAL(isChecked(bool)), this, SLOT(slotLockRelativeZero(bool) ));
     this->addAction(bLockRelZero);
 }
 
