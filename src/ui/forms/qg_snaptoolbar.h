@@ -72,6 +72,7 @@ private:
     QAction *restrictOrthoagonal;
     QAction *restrictHorizontal;
     QAction *restrictVertical;
+    RS_SnapMode snapMode;
 
     void init();
 

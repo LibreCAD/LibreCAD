@@ -71,14 +71,6 @@ RS_GraphicView::RS_GraphicView()
 
     mx = my = 0;
 
-    //@load default snap mode from prefrences.
-    RS_SETTINGS->beginGroup("/Snap");
-    unsigned int snapFlags(RS_SETTINGS->readNumEntry("/SnapMode",0));
-    RS_SETTINGS->endGroup();
-    defaultSnapMode=RS_Snapper::intToSnapMode(snapFlags);
-    defaultSnapRes=defaultSnapMode.restriction;
-
-
     RS_SETTINGS->beginGroup("/Appearance");
     setBackground(QColor(RS_SETTINGS->readEntry("/BackgroundColor", "#000000")));
     setGridColor(QColor(RS_SETTINGS->readEntry("/GridColor", "#7F7F7F")));
@@ -100,11 +92,7 @@ RS_GraphicView::RS_GraphicView()
  * Destructor.
  */
 RS_GraphicView::~RS_GraphicView() {
-    //@write default snap mode from prefrences.
-    RS_SETTINGS->beginGroup("/Snap");
-    unsigned int snapFlags=RS_Snapper::snapModeToInt(defaultSnapMode);
-    RS_SETTINGS->writeEntry("/SnapMode",QString::number(snapFlags));
-    RS_SETTINGS->endGroup();
+
     //delete grid;
     delete grid;
 }
