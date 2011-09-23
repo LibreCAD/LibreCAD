@@ -31,6 +31,7 @@
 
 class QG_MainWindowInterface;
 class QG_CadToolBarSnap;
+class QG_SnapToolBarSnap;
 class QG_CadToolBarSelect;
 
 
@@ -45,12 +46,12 @@ public:
     QG_ActionHandler(QG_MainWindowInterface* mw);
     virtual ~QG_ActionHandler();
 
-	RS_ActionInterface* getCurrentAction();
+        RS_ActionInterface* getCurrentAction();
     RS_ActionInterface* setCurrentAction(RS2::ActionType id);
-	void killSelectActions();
+        void killSelectActions();
 
-	bool keycode(const QString& code);
-	bool command(const QString& cmd);
+        bool keycode(const QString& code);
+        bool command(const QString& cmd);
         QStringList getAvailableCommands();
 
 public slots:
@@ -259,6 +260,7 @@ public slots:
         lockRelativeZero = a;
     }
 
+    //not needed any more, will be removed
     void setCadToolBarSnap(QG_CadToolBarSnap* tb);
 
 private:

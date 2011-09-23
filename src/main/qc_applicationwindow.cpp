@@ -1468,8 +1468,9 @@ void QC_ApplicationWindow::initToolBar() {
     snapToolBar = new QG_SnapToolBar("Snap Selection", this);
     snapToolBar->setSizePolicy(toolBarPolicy);
     snapToolBar->setObjectName ( "SnapTB" );
-    connect(snapToolBar, SIGNAL(snapsChanged(RS_SnapMode)),
-            this, SLOT(slotSnapsChanged(RS_SnapMode)));
+    //connect(snapToolBar, SIGNAL(snapsChanged(RS_SnapMode)),
+    //        this, SLOT(slotSnapsChanged(RS_SnapMode)));
+    snapToolBar->setActionHandler(actionHandler);
     this->addToolBar(snapToolBar);
 
 
