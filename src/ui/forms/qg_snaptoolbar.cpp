@@ -77,27 +77,38 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void )
 {
     RS_SnapMode s;
 
+    s.snapGrid         = snapGrid->isChecked();
     s.snapEndpoint     = snapEnd->isChecked();
     s.snapOnEntity     = snapOnEntity->isChecked();
     s.snapCenter       = snapCenter->isChecked();
     s.snapMiddle       = snapMiddle->isChecked();
     s.snapDistance       = snapDistance->isChecked();
     s.snapIntersection = snapIntersection->isChecked();
-
-    if (restrictOrthoagonal->isChecked())
-        s.restriction = RS2::RestrictOrthogonal;
-    else if (restrictHorizontal->isChecked())
-        s.restriction = RS2::RestrictHorizontal;
-    else if (restrictVertical->isChecked())
-        s.restriction = RS2::RestrictVertical;
-    else
-        s.restriction = RS2::RestrictNothing;
+    // removed Restrict Othogonal button
+    // todo simplify internal restrict rules
+    if (restrictHorizontal->isChecked()) {
+        if (restrictVertical->isChecked()) {
+            s.restriction = RS2::RestrictOrthogonal;
+        } else {
+            s.restriction = RS2::RestrictHorizontal;
+        }
+    } else {
+        if (restrictVertical->isChecked()) {
+            s.restriction = RS2::RestrictVertical;
+        } else {
+            s.restriction = RS2::RestrictNothing;
+        }
+    }
 
     return s;
 }
 
 void QG_SnapToolBar::init()
 {
+    snapGrid = new QAction(QIcon(":/extui/snapgrid.png"), "Snap on grid", this);
+    snapGrid->setCheckable(true);
+    connect(snapGrid, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    this->addAction(snapGrid);
     snapEnd = new QAction(QIcon(":/extui/snapendpoint.png"), "Snap on Endpoints", this);
     snapEnd->setCheckable(true);
     connect(snapEnd, SIGNAL(triggered()), this, SLOT(actionTriggered()));
@@ -125,6 +136,7 @@ void QG_SnapToolBar::init()
 
     this->addSeparator();
 
+    /*
     restrictOrthoagonal = new QAction(QIcon(":/extui/restrictorthogonal.png"),
                                       "Restrict Orthogonal", this);
     restrictOrthoagonal->setCheckable(true);
@@ -132,18 +144,19 @@ void QG_SnapToolBar::init()
             this, SLOT(restrictOrthoagonalTriggered(bool)));
     connect(restrictOrthoagonal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     this->addAction(restrictOrthoagonal);
+    */
     restrictHorizontal = new QAction(QIcon(":/extui/restricthorizontal.png"),
                                      "Restrict Horizontal", this);
     restrictHorizontal->setCheckable(true);
-    connect(restrictHorizontal, SIGNAL(triggered(bool)),
-            this, SLOT(restrictHorizontalTriggered(bool)));
+    //connect(restrictHorizontal, SIGNAL(triggered(bool)),
+    //        this, SLOT(restrictHorizontalTriggered(bool)));
     connect(restrictHorizontal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     this->addAction(restrictHorizontal);
     restrictVertical = new QAction(QIcon(":/extui/restrictvertical.png"),
                                    "Restrict Vertical", this);
     restrictVertical->setCheckable(true);
-    connect(restrictVertical, SIGNAL(triggered(bool)),
-            this, SLOT(restrictVerticalTriggered(bool)));
+    //connect(restrictVertical, SIGNAL(triggered(bool)),
+    //        this, SLOT(restrictVerticalTriggered(bool)));
     connect(restrictVertical, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     this->addAction(restrictVertical);
 }
@@ -157,23 +170,29 @@ void QG_SnapToolBar::actionTriggered()
 
 void QG_SnapToolBar::restrictOrthoagonalTriggered(bool activated)
 {
+        /* not needed any more, will be removed
     if (activated) {
         restrictHorizontal->setChecked(false);
         restrictVertical->setChecked(false);
     }
+    */
 }
 void QG_SnapToolBar::restrictHorizontalTriggered(bool activated)
 {
+        /* not needed any more, will be removed
     if (activated) {
         restrictOrthoagonal->setChecked(false);
         restrictVertical->setChecked(false);
     }
+    */
 }
 void QG_SnapToolBar::restrictVerticalTriggered(bool activated)
 {
+        /* not needed any more, will be removed
     if (activated) {
         restrictOrthoagonal->setChecked(false);
         restrictHorizontal->setChecked(false);
     }
+    */
 }
 

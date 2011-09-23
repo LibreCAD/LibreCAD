@@ -107,7 +107,12 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     }
 
     RS_Vector mouseCoord = graphicView->toGraph(e->x(), e->y());
+    if (snapMode.snapGrid) {
+        t = snapGrid(mouseCoord);
 
+        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+            snapSpot = t;
+    }
     if (snapMode.snapEndpoint) {
         t = snapEndpoint(mouseCoord);
 
@@ -220,22 +225,18 @@ RS_Vector RS_Snapper::snapEndpoint(RS_Vector coord) {
  */
 RS_Vector RS_Snapper::snapGrid(RS_Vector coord) {
 
-        RS_DEBUG->print("RS_Snapper::snapGrid begin");
+    RS_DEBUG->print("RS_Snapper::snapGrid begin");
 
     RS_Vector vec(false);
     double dist=0.0;
 
     RS_Grid* grid = graphicView->getGrid();
 
-        RS_DEBUG->print("RS_Snapper::snapGrid 001");
 
     if (grid!=NULL) {
-                RS_DEBUG->print("RS_Snapper::snapGrid 002");
         RS_Vector* pts = grid->getPoints();
-                RS_DEBUG->print("RS_Snapper::snapGrid 003");
         int closest = -1;
         dist = 32000.00;
-                RS_DEBUG->print("RS_Snapper::snapGrid 004");
         for (int i=0; i<grid->count(); ++i) {
             double d = pts[i].distanceTo(coord);
             if (d<dist) {
@@ -243,15 +244,15 @@ RS_Vector RS_Snapper::snapGrid(RS_Vector coord) {
                 dist = d;
             }
         }
-                RS_DEBUG->print("RS_Snapper::snapGrid 005");
-                if (closest>=0) {
-                vec = pts[closest];
-                }
-                RS_DEBUG->print("RS_Snapper::snapGrid 006");
+        if (closest>=0) {
+            vec = pts[closest];
+        }
+    }else {
+        RS_DEBUG->print("RS_Snapper:: getGrid() returns NULL\n");
     }
     keyEntity = NULL;
 
-        RS_DEBUG->print("RS_Snapper::snapGrid end");
+    RS_DEBUG->print("RS_Snapper::snapGrid end");
 
     return vec;
 }
@@ -532,3 +533,67 @@ void RS_Snapper::drawSnapper() {
 
 }
 
+/**
+  * snap mode to a flag integer
+  */
+unsigned int RS_Snapper::snapModeToInt(RS_SnapMode s)
+{
+    unsigned int ret; //initial
+    switch (s.restriction) {
+    case RS2::RestrictHorizontal:
+        ret=1;
+        break;
+    case RS2::RestrictVertical:
+        ret=2;
+        break;
+    case RS2::RestrictOrthogonal:
+        ret=3;
+        break;
+    default:
+        ret=0;
+    }
+    ret <<=1;ret &= s.snapGrid;
+    ret <<=1;ret &= s.snapEndpoint;
+    ret <<=1;ret &= s.snapMiddle;
+    ret <<=1;ret &= s.snapDistance;
+    ret <<=1;ret &= s.snapCenter;
+    ret <<=1;ret &= s.snapOnEntity;
+    ret <<=1;ret &= s.snapIntersection;
+   return ret;
+}
+/**
+  * integer flag to snapMode
+  */
+RS_SnapMode RS_Snapper::intToSnapMode(unsigned int ret)
+{
+    RS_SnapMode s; //initial
+    unsigned int binaryOne(0x1);
+    s.snapIntersection =ret & binaryOne;
+    ret >>= 1;
+    s.snapOnEntity =ret & binaryOne;
+    ret >>= 1;
+    s.snapCenter =ret & binaryOne;
+    ret >>= 1;
+    s.snapDistance =ret & binaryOne;
+    ret >>= 1;
+    s.snapMiddle =ret & binaryOne;
+    ret >>= 1;
+    s.snapEndpoint =ret & binaryOne;
+    ret >>= 1;
+    s.snapGrid =ret & binaryOne;
+    ret >>= 1;
+    switch (ret) {
+    case 1:
+            s.restriction=RS2::RestrictHorizontal;
+        break;
+    case 2:
+            s.restriction=RS2::RestrictVertical;
+        break;
+    case 3:
+            s.restriction=RS2::RestrictOrthogonal;
+        break;
+    default:
+            s.restriction=RS2::RestrictNothing;
+    }
+   return s;
+}

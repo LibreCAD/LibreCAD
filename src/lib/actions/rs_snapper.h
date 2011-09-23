@@ -46,6 +46,7 @@ class QMouseEvent;
   */
 struct RS_SnapMode {
 public:
+    bool snapGrid;     /// Whether to snap to grid or not.
     bool snapEndpoint;     /// Whether to snap to endpoints or not.
     bool snapMiddle;       /// Whether to snap to midpoints or not.
     bool snapDistance;       /// Whether to snap to distance from endpoints or not.
@@ -74,6 +75,7 @@ public:
       * @returns A refrence to itself.
       */
     RS_SnapMode &clear(void) {
+        snapGrid     = false;
         snapEndpoint     = false;
         snapMiddle       = false;
         snapDistance       = false;
@@ -92,6 +94,7 @@ public:
      * @returns A refrence to itself.
      */
     RS_SnapMode &hardReset(void) {
+        snapGrid     = false;
         snapEndpoint     = false;
         snapMiddle       = false;
         snapDistance       = false;
@@ -199,6 +202,8 @@ public:
     virtual void showOptions();
 
     void drawSnapper();
+    static unsigned int snapModeToInt(RS_SnapMode s);
+    static RS_SnapMode intToSnapMode(unsigned int);
 
 protected:
     void deleteSnapper();

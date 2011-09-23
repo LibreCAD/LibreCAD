@@ -124,6 +124,12 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/menuspline.png</normaloff>:/extui/menuspline.png</iconset>
    </property>
+         <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QToolButton" name="bMenuText">
    <property name="geometry">
@@ -325,6 +331,9 @@
      <normaloff>:/extui/points.png</normaloff>:/extui/points.png</iconset>
    </property>
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
     <bool>true</bool>
    </property>
   </widget>
