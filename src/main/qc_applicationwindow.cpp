@@ -1907,7 +1907,7 @@ void QC_ApplicationWindow::slotWindowActivated(QWidget*) {
         if(snapToolBar != NULL ){
             actionHandler->slotSetSnaps(snapToolBar->getSnaps());
         }else {
-            RS_DEBUG->print(D_ERROR,"snapToolBar is NULL\n");
+            RS_DEBUG->print(RS_Debug::D_ERROR,"snapToolBar is NULL\n");
         }
 
         // set pen from pen toolbar

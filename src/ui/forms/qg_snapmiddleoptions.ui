@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>145</width>
+    <width>135</width>
     <height>24</height>
    </rect>
   </property>
@@ -53,7 +53,7 @@
   <widget class="QSpinBox" name="sbMiddlePoints">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>93</x>
      <y>1</y>
      <width>40</width>
      <height>22</height>
@@ -67,6 +67,19 @@
    </property>
    <property name="value">
     <number>1</number>
+   </property>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>10</y>
+     <width>3</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
    </property>
   </widget>
  </widget>

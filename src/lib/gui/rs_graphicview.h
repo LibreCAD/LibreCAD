@@ -407,7 +407,7 @@ public:
 
 	/**
 	 * @retval true This is a a graphic view for printing.
-	 * @retval false Otherwise.
+         * @retval false setSnapOtherwise.
 	 */
 	bool isPrinting() {
 		return printing;
