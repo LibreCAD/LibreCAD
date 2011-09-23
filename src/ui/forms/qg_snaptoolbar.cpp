@@ -158,11 +158,11 @@ void QG_SnapToolBar::init()
     this->addSeparator();
     bRelZero = new QAction(QIcon(":/extui/relzeromove.png"), "Set relative zero position", this);
     bRelZero->setCheckable(false);
-    connect(bRelZero, SIGNAL(clicked()), this, SLOT(slotSetRelativeZero()));
+    connect(bRelZero, SIGNAL(triggered()), this, SLOT(slotSetRelativeZero()));
     this->addAction(bRelZero);
     bLockRelZero = new QAction(QIcon(":/extui/relzerolock.png"), "Lock relative zero position", this);
     bLockRelZero->setCheckable(true);
-    connect(bLockRelZero, SIGNAL(isChecked(bool)), this, SLOT(slotLockRelativeZero(bool) ));
+    connect(bLockRelZero, SIGNAL(triggered()), this, SLOT(slotLockRelativeZero() ));
     this->addAction(bLockRelZero);
 }
 
@@ -181,36 +181,8 @@ void QG_SnapToolBar::slotSetRelativeZero()
 {
     actionHandler->slotSetRelativeZero();
 }
-void QG_SnapToolBar::slotLockRelativeZero(bool on)
+void QG_SnapToolBar::slotLockRelativeZero()
 {
-    actionHandler->slotLockRelativeZero(on);
-}
-
-void QG_SnapToolBar::restrictOrthoagonalTriggered(bool activated)
-{
-        /* not needed any more, will be removed
-    if (activated) {
-        restrictHorizontal->setChecked(false);
-        restrictVertical->setChecked(false);
-    }
-    */
-}
-void QG_SnapToolBar::restrictHorizontalTriggered(bool activated)
-{
-        /* not needed any more, will be removed
-    if (activated) {
-        restrictOrthoagonal->setChecked(false);
-        restrictVertical->setChecked(false);
-    }
-    */
-}
-void QG_SnapToolBar::restrictVerticalTriggered(bool activated)
-{
-        /* not needed any more, will be removed
-    if (activated) {
-        restrictOrthoagonal->setChecked(false);
-        restrictHorizontal->setChecked(false);
-    }
-    */
+    actionHandler->slotLockRelativeZero(bLockRelZero->isChecked());
 }
 

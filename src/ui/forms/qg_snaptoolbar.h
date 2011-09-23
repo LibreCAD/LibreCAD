@@ -51,12 +51,12 @@ public:
 private slots:
     void actionTriggered(void);
     void slotSetRelativeZero(void);
-    void slotLockRelativeZero(bool on);
+    void slotLockRelativeZero(void);
 
     //following restriction slots are not needed any more
-    void restrictOrthoagonalTriggered(bool);
-    void restrictHorizontalTriggered(bool);
-    void restrictVerticalTriggered(bool);
+    //void restrictOrthoagonalTriggered(bool);
+    //void restrictHorizontalTriggered(bool);
+    //void restrictVerticalTriggered(bool);
 
 public slots:
     void setSnaps(RS_SnapMode);
