@@ -371,8 +371,8 @@ void RS_Font::readLFF(QString path) {
                         if (coords.size() == 3 && coords.at(2).at(0) == QChar('A')){
                             QString bulgeStr = coords.at(2);
                             bulge = bulgeStr.remove(0,1).toDouble();
-                            pline->setNextBulge(bulge);
                         }
+                        pline->setNextBulge(bulge);
                         pline->addVertex(RS_Vector(x1, y1), bulge);
                     }
                     letter->addEntity(pline);
