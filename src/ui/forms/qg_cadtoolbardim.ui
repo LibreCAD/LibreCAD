@@ -64,12 +64,6 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/dimaligned.png</normaloff>:/extui/dimaligned.png</iconset>
    </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
   </widget>
   <widget class="QToolButton" name="bLinear">
    <property name="geometry">
@@ -89,12 +83,6 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/dimlinear.png</normaloff>:/extui/dimlinear.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToolButton" name="bLinearHor">
@@ -116,12 +104,6 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/dimhor.png</normaloff>:/extui/dimhor.png</iconset>
    </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
   </widget>
   <widget class="QToolButton" name="bLinearVer">
    <property name="geometry">
@@ -141,12 +123,6 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/dimver.png</normaloff>:/extui/dimver.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToolButton" name="bRadial">
@@ -168,12 +144,6 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/dimradial.png</normaloff>:/extui/dimradial.png</iconset>
    </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
   </widget>
   <widget class="QToolButton" name="bDiametric">
    <property name="geometry">
@@ -193,12 +163,6 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/dimdiametric.png</normaloff>:/extui/dimdiametric.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToolButton" name="bAngular">
@@ -220,12 +184,6 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/dimangular.png</normaloff>:/extui/dimangular.png</iconset>
    </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
   </widget>
   <widget class="QToolButton" name="bLeader">
    <property name="geometry">
@@ -245,12 +203,6 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/dimleader.png</normaloff>:/extui/dimleader.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
    </property>
   </widget>
  </widget>

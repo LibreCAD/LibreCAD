@@ -70,14 +70,6 @@ RS_GraphicView::RS_GraphicView()
     relativeZeroLocked=false;
 
     mx = my = 0;
-    //Restore from saved snapMode
-    RS_SETTINGS->beginGroup("/Snap");
-    unsigned int snapFlags(RS_SETTINGS->readNumEntry("/SnapMode",0));
-    RS_SETTINGS->endGroup();
-    RS_SnapMode s=RS_Snapper::intToSnapMode(snapFlags);
-    setDefaultSnapMode(s);
-    setDefaultSnapRestriction(s.restriction);
-    std::cout<<"RS_GraphicView():: Restoring from saved preferences: snapFlags="<<snapFlags<<std::endl;
 
     RS_SETTINGS->beginGroup("/Appearance");
     setBackground(QColor(RS_SETTINGS->readEntry("/BackgroundColor", "#000000")));
@@ -100,12 +92,7 @@ RS_GraphicView::RS_GraphicView()
  * Destructor.
  */
 RS_GraphicView::~RS_GraphicView() {
-    //@write default snap mode from prefrences.
-    RS_SETTINGS->beginGroup("/Snap");
-    unsigned int snapFlags=RS_Snapper::snapModeToInt(defaultSnapMode);
-    RS_SETTINGS->writeEntry("/SnapMode",QString::number(snapFlags));
-    RS_SETTINGS->endGroup();
-    std::cout<<"~RS_GraphicView() destrcutor:: Saving to preferences: snapFlags="<<snapFlags<<std::endl;
+
     //delete grid;
     delete grid;
 }
