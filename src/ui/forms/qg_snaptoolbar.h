@@ -44,8 +44,10 @@ public:
     virtual ~QG_SnapToolBar();
 
     RS_SnapMode getSnaps ( void );
+    void saveSnapMode(void );
     virtual void setActionHandler(QG_ActionHandler* ah);
-    protected:
+
+protected:
     QG_ActionHandler* actionHandler;
 
 private slots:
