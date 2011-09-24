@@ -155,10 +155,6 @@ void QG_SnapToolBar::init()
     //        this, SLOT(restrictVerticalTriggered(bool)));
     connect(restrictVertical, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     this->addAction(restrictVertical);
-    RS_SETTINGS->beginGroup("/Snap");
-    unsigned int snapFlags(RS_SETTINGS->readNumEntry("/SnapMode",0));
-    RS_SETTINGS->endGroup();
-    std::cout<<"Restored snapMode, flags="<<snapFlags<<std::endl;
     setSnaps(RS_Snapper::intToSnapMode(snapFlags));
     this->addSeparator();
     bRelZero = new QAction(QIcon(":/extui/relzeromove.png"), "Set relative zero position", this);
