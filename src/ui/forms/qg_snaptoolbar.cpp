@@ -50,7 +50,6 @@ QG_SnapToolBar::~QG_SnapToolBar()
     unsigned int snapFlags=RS_Snapper::snapModeToInt(getSnaps());
     RS_SETTINGS->writeEntry("/SnapMode",QString::number(snapFlags));
     RS_SETTINGS->endGroup();
-    std::cout<<"Saving to preferences: snapFlags="<<snapFlags<<std::endl;
     // no need to delete child widgets, Qt does it all for us
 }
 
@@ -152,7 +151,10 @@ void QG_SnapToolBar::init()
     //        this, SLOT(restrictVerticalTriggered(bool)));
     connect(restrictVertical, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     this->addAction(restrictVertical);
-
+    RS_SETTINGS->beginGroup("/Snap");
+    unsigned int snapFlags(RS_SETTINGS->readNumEntry("/SnapMode",0));
+    RS_SETTINGS->endGroup();
+    setSnaps(RS_Snapper::intToSnapMode(snapFlags));
     this->addSeparator();
     bRelZero = new QAction(QIcon(":/extui/relzeromove.png"), "Set relative zero position", this);
     bRelZero->setCheckable(false);
@@ -162,8 +164,6 @@ void QG_SnapToolBar::init()
     bLockRelZero->setCheckable(true);
     connect(bLockRelZero, SIGNAL(triggered()), this, SLOT(slotLockRelativeZero() ));
     this->addAction(bLockRelZero);
-
-
 }
 
 void QG_SnapToolBar::setActionHandler(QG_ActionHandler* ah){
