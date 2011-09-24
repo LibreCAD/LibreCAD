@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>56</width>
+    <width>65</width>
     <height>336</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>56</width>
+    <width>65</width>
     <height>336</height>
    </size>
   </property>
@@ -30,9 +30,21 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>56</width>
+     <width>65</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>65</width>
+     <height>20</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>65</width>
+     <height>20</height>
+    </size>
    </property>
    <property name="toolTip">
     <string>Back to main menu</string>
@@ -44,15 +56,27 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>65</width>
+     <height>20</height>
+    </size>
+   </property>
   </widget>
   <widget class="QToolButton" name="bSpline">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>20</y>
-     <width>28</width>
-     <height>28</height>
+     <width>32</width>
+     <height>32</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
    </property>
    <property name="toolTip">
     <string>Spline</string>
@@ -63,6 +87,12 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/splinesnurbs.png</normaloff>:/extui/splinesnurbs.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
    </property>
   </widget>
  </widget>

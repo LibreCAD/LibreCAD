@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>56</width>
+    <width>65</width>
     <height>338</height>
    </rect>
   </property>
@@ -18,452 +18,491 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>56</width>
+    <width>65</width>
     <height>336</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Lines</string>
   </property>
-  <widget class="QToolButton" name="bBack">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>56</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Back to main menu</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bNormal">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>20</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Line with two points</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linesnormal.png</normaloff>:/extui/linesnormal.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bAngle">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>20</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Line with given angle</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linesangle.png</normaloff>:/extui/linesangle.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bHorizontal">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>48</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Horizontal lines</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/lineshor.png</normaloff>:/extui/lineshor.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bVertical">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>48</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Vertical lines</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linesver.png</normaloff>:/extui/linesver.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bRectangle">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>76</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Rectangles</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linesrect.png</normaloff>:/extui/linesrect.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bBisector">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>76</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Bisectors</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linesbisector.png</normaloff>:/extui/linesbisector.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bParallel">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>104</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Parallels with distance</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linespara.png</normaloff>:/extui/linespara.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bTangent1">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>132</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Tangents from point to circle</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linestan1.png</normaloff>:/extui/linestan1.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bTangent2">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>132</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Tangents from circle to circle</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linestan2.png</normaloff>:/extui/linestan2.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bOrthogonal">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>160</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Orthogonal lines</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linesorthogonal.png</normaloff>:/extui/linesorthogonal.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bRelAngle">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>188</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Lines with relative angles</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linesrelativeangle.png</normaloff>:/extui/linesrelativeangle.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bPolygon">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>188</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Polygons with Center and Corner</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linespolygon.png</normaloff>:/extui/linespolygon.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bPolygon2">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>216</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Polygons with two Corners</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linespolygon2.png</normaloff>:/extui/linespolygon2.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bFree">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>216</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Freehand lines</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linesfree.png</normaloff>:/extui/linesfree.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bParallelThrough">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>104</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Parallels through point</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linesparathrough.png</normaloff>:/extui/linesparathrough.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bOrthTan">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>160</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Tangents to a circle, orthogonal to a line</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/linesorthtan.png</normaloff>:/extui/linesorthtan.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-   <property name="checkable">
-    <bool>false</bool>
-   </property>
-  </widget>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item row="0" column="0" colspan="2">
+    <widget class="QToolButton" name="bBack">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>65</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Back to main menu</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>65</width>
+       <height>20</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QToolButton" name="bNormal">
+     <property name="toolTip">
+      <string>Line with two points</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linesnormal.png</normaloff>:/extui/linesnormal.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QToolButton" name="bAngle">
+     <property name="toolTip">
+      <string>Line with given angle</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linesangle.png</normaloff>:/extui/linesangle.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QToolButton" name="bHorizontal">
+     <property name="toolTip">
+      <string>Horizontal lines</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/lineshor.png</normaloff>:/extui/lineshor.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QToolButton" name="bVertical">
+     <property name="toolTip">
+      <string>Vertical lines</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linesver.png</normaloff>:/extui/linesver.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QToolButton" name="bRectangle">
+     <property name="toolTip">
+      <string>Rectangles</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linesrect.png</normaloff>:/extui/linesrect.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QToolButton" name="bBisector">
+     <property name="toolTip">
+      <string>Bisectors</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linesbisector.png</normaloff>:/extui/linesbisector.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QToolButton" name="bParallel">
+     <property name="toolTip">
+      <string>Parallels with distance</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linespara.png</normaloff>:/extui/linespara.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QToolButton" name="bParallelThrough">
+     <property name="toolTip">
+      <string>Parallels through point</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linesparathrough.png</normaloff>:/extui/linesparathrough.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QToolButton" name="bTangent1">
+     <property name="toolTip">
+      <string>Tangents from point to circle</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linestan1.png</normaloff>:/extui/linestan1.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QToolButton" name="bTangent2">
+     <property name="toolTip">
+      <string>Tangents from circle to circle</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linestan2.png</normaloff>:/extui/linestan2.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QToolButton" name="bOrthTan">
+     <property name="toolTip">
+      <string>Tangents to a circle, orthogonal to a line</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linesorthtan.png</normaloff>:/extui/linesorthtan.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QToolButton" name="bOrthogonal">
+     <property name="toolTip">
+      <string>Orthogonal lines</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linesorthogonal.png</normaloff>:/extui/linesorthogonal.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QToolButton" name="bRelAngle">
+     <property name="toolTip">
+      <string>Lines with relative angles</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linesrelativeangle.png</normaloff>:/extui/linesrelativeangle.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QToolButton" name="bPolygon">
+     <property name="toolTip">
+      <string>Polygons with Center and Corner</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linespolygon.png</normaloff>:/extui/linespolygon.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QToolButton" name="bPolygon2">
+     <property name="toolTip">
+      <string>Polygons with two Corners</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linespolygon2.png</normaloff>:/extui/linespolygon2.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QToolButton" name="bFree">
+     <property name="toolTip">
+      <string>Freehand lines</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/linesfree.png</normaloff>:/extui/linesfree.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
