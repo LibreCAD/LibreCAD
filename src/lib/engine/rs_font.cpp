@@ -226,8 +226,12 @@ bool RS_Font::loadFont() {
                 }
             } while (!line.isEmpty());
 
-            letter->calculateBorders();
-            letterList.add(letter);
+            if (letter->isEmpty()) {
+                delete letter;
+            } else {
+                letter->calculateBorders();
+                letterList.add(letter);
+            }
         }
     }
 
