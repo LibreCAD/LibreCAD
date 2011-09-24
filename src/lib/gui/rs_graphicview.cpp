@@ -92,12 +92,6 @@ RS_GraphicView::RS_GraphicView()
  * Destructor.
  */
 RS_GraphicView::~RS_GraphicView() {
-    //@write default snap mode from prefrences.
-    RS_SETTINGS->beginGroup("/Snap");
-    unsigned int snapFlags=RS_Snapper::snapModeToInt(defaultSnapMode);
-    RS_SETTINGS->writeEntry("/SnapMode",QString::number(snapFlags));
-    RS_SETTINGS->endGroup();
-    std::cout<<"~RS_GraphicView()::Saved snapMode, flags="<<snapFlags<<std::endl;
     //delete grid;
     delete grid;
 }
