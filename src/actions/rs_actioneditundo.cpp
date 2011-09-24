@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -51,26 +51,26 @@ RS_ActionEditUndo::~RS_ActionEditUndo() {}
 
 QAction* RS_ActionEditUndo::createGUIAction(RS2::ActionType type, QObject* parent) {
     QAction* action;
-    if (type==RS2::ActionEditUndo) {		
-		// tr("Undo")
-		action = new QAction(tr("&Undo"), parent);
+    if (type==RS2::ActionEditUndo) {
+                // tr("Undo")
+                action = new QAction(tr("&Undo"), parent);
 #if QT_VERSION >= 0x040600
                 action->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/actions/undo2.png")));
 #else
                 action->setIcon(QIcon(":/actions/undo2.png"));
 #endif
-		action->setShortcut(QKeySequence::Undo);
-		//action->zetStatusTip(tr("Undoes last action"));
+                action->setShortcut(QKeySequence::Undo);
+                //action->zetStatusTip(tr("Undoes last action"));
     } else {
-		// tr("Redo")
-		action = new QAction(tr("&Redo"), parent);
+                // tr("Redo")
+                action = new QAction(tr("&Redo"), parent);
 #if QT_VERSION >= 0x040600
                 action->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/actions/redo2.png")));
 #else
                 action->setIcon(QIcon(":/actions/redo2.png"));
 #endif
-		action->setShortcut(QKeySequence::Redo);
-		//action->zetStatusTip(tr("Redoes last action"));
+                action->setShortcut(QKeySequence::Redo);
+                //action->zetStatusTip(tr("Redoes last action"));
     }
 
     return action;
@@ -85,14 +85,22 @@ void RS_ActionEditUndo::init(int status) {
 
 void RS_ActionEditUndo::trigger() {
     if (undo) {
-        document->undo();
+        if(!document->undo()) {
+            if( RS_DIALOGFACTORY != NULL ) {
+                RS_DIALOGFACTORY->commandMessage(tr("Nothing to undo!"));
+            }
+        }
     } else {
-        document->redo();
+        if(!document->redo()) {
+            if( RS_DIALOGFACTORY != NULL ) {
+                RS_DIALOGFACTORY->commandMessage(tr("Nothing to redo!"));
+            }
+        }
     }
 
     document->updateInserts();
 
-	graphicView->redraw(RS2::RedrawDrawing); 
+    graphicView->redraw(RS2::RedrawDrawing);
 
 
     finish();
