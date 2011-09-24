@@ -300,7 +300,6 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting action handler");
-
     delete actionHandler;
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
@@ -1465,12 +1464,11 @@ void QC_ApplicationWindow::initToolBar() {
             this, SLOT(slotPenChanged(RS_Pen)));
 
     //Add snap toolbar
-    snapToolBar = new QG_SnapToolBar("Snap Selection", this);
+    snapToolBar = new QG_SnapToolBar("Snap Selection",actionHandler, this);
     snapToolBar->setSizePolicy(toolBarPolicy);
     snapToolBar->setObjectName ( "SnapTB" );
     //connect(snapToolBar, SIGNAL(snapsChanged(RS_SnapMode)),
     //        this, SLOT(slotSnapsChanged(RS_SnapMode)));
-    snapToolBar->setActionHandler(actionHandler);
     this->addToolBar(snapToolBar);
 
 

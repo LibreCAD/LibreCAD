@@ -40,8 +40,8 @@ class QG_SnapToolBar : public QToolBar
     Q_OBJECT
 
 public:
-    QG_SnapToolBar( const QString & title, QWidget * parent = 0 );
-    ~QG_SnapToolBar();
+    QG_SnapToolBar( const QString & title, QG_ActionHandler* ah, QWidget * parent = 0 );
+    virtual ~QG_SnapToolBar();
 
     RS_SnapMode getSnaps ( void );
     virtual void setActionHandler(QG_ActionHandler* ah);
@@ -50,8 +50,8 @@ public:
 
 private slots:
     void actionTriggered(void);
-    void slotSetRelativeZero(void);
-    void slotLockRelativeZero(void);
+    //void slotSetRelativeZero(void);
+    //void slotLockRelativeZero(void);
 
     //following restriction slots are not needed any more
     //void restrictOrthoagonalTriggered(bool);

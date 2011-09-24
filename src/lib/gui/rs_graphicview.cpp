@@ -44,7 +44,7 @@
 RS_GraphicView::RS_GraphicView()
         : background(), foreground() {
     drawingMode = RS2::ModeFull;
-	printing = false;
+        printing = false;
     deleteMode = false;
     factor = RS_Vector(1.0,1.0);
     offsetX = 0;
@@ -92,7 +92,12 @@ RS_GraphicView::RS_GraphicView()
  * Destructor.
  */
 RS_GraphicView::~RS_GraphicView() {
-
+    //@write default snap mode from prefrences.
+    RS_SETTINGS->beginGroup("/Snap");
+    unsigned int snapFlags=RS_Snapper::snapModeToInt(defaultSnapMode);
+    RS_SETTINGS->writeEntry("/SnapMode",QString::number(snapFlags));
+    RS_SETTINGS->endGroup();
+    std::cout<<"~RS_GraphicView()::Saved snapMode, flags="<<snapFlags<<std::endl;
     //delete grid;
     delete grid;
 }
@@ -245,11 +250,11 @@ RS_ActionInterface* RS_GraphicView::getCurrentAction() {
  * Sets the current action of the event handler.
  */
 void RS_GraphicView::setCurrentAction(RS_ActionInterface* action) {
-	RS_DEBUG->print("RS_GraphicView::setCurrentAction");
+        RS_DEBUG->print("RS_GraphicView::setCurrentAction");
     if (eventHandler!=NULL) {
         eventHandler->setCurrentAction(action);
     }
-	RS_DEBUG->print("RS_GraphicView::setCurrentAction: OK");
+        RS_DEBUG->print("RS_GraphicView::setCurrentAction: OK");
 }
 
 
@@ -319,10 +324,10 @@ void RS_GraphicView::mousePressEvent(QMouseEvent* e) {
  * interface to notify LibreCAD about mouse events.
  */
 void RS_GraphicView::mouseReleaseEvent(QMouseEvent* e) {
-	RS_DEBUG->print("RS_GraphicView::mouseReleaseEvent");
+        RS_DEBUG->print("RS_GraphicView::mouseReleaseEvent");
     if (eventHandler!=NULL) {
         if (e->button()!=Qt::RightButton ||
-			eventHandler->hasAction()) {
+                        eventHandler->hasAction()) {
 
             eventHandler->mouseReleaseEvent(e);
             //e->accept();
@@ -333,7 +338,7 @@ void RS_GraphicView::mouseReleaseEvent(QMouseEvent* e) {
             e->accept();
         }
     }
-	RS_DEBUG->print("RS_GraphicView::mouseReleaseEvent: OK");
+        RS_DEBUG->print("RS_GraphicView::mouseReleaseEvent: OK");
 }
 
 
@@ -379,8 +384,8 @@ void RS_GraphicView::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_GraphicView::mouseMoveEvent 003");
 
     if (	((eventHandler == NULL) || !eventHandler->hasAction()) &&
-			(graphic != NULL))
-	 {
+                        (graphic != NULL))
+         {
         RS_Vector	mouse		= toGraph(RS_Vector(mx, my));
         RS_Vector	relMouse	= mouse - getRelativeZero();
 
@@ -481,7 +486,7 @@ void RS_GraphicView::zoomIn(double f, const RS_Vector& center) {
 
     if (f<1.0e-6) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-        	"RS_GraphicView::zoomIn: invalid factor");
+                "RS_GraphicView::zoomIn: invalid factor");
         return;
     }
 
@@ -539,7 +544,7 @@ void RS_GraphicView::zoomInY(double f) {
 void RS_GraphicView::zoomOut(double f, const RS_Vector& center) {
     if (f<1.0e-6) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-        	"RS_GraphicView::zoomOut: invalid factor");
+                "RS_GraphicView::zoomOut: invalid factor");
         return;
     }
     zoomIn(1/f, center);
@@ -553,7 +558,7 @@ void RS_GraphicView::zoomOut(double f, const RS_Vector& center) {
 void RS_GraphicView::zoomOutX(double f) {
     if (f<1.0e-6) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-        	"RS_GraphicView::zoomOutX: invalid factor");
+                "RS_GraphicView::zoomOutX: invalid factor");
         return;
     }
     factor.x/=f;
@@ -572,7 +577,7 @@ void RS_GraphicView::zoomOutX(double f) {
 void RS_GraphicView::zoomOutY(double f) {
     if (f<1.0e-6) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-        	"RS_GraphicView::zoomOutY: invalid factor");
+                "RS_GraphicView::zoomOutY: invalid factor");
         return;
     }
     factor.y/=f;
@@ -594,7 +599,7 @@ void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
 
     RS_DEBUG->print("RS_GraphicView::zoomAuto");
 
-	saveView();
+        saveView();
 
     if (container!=NULL) {
         container->calculateBorders();
@@ -650,7 +655,7 @@ void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
         RS_DEBUG->print("centerOffsetY");
         centerOffsetY();
         RS_DEBUG->print("updateGrid");
-		//    updateGrid();
+                //    updateGrid();
 
         redraw();
     }
@@ -667,7 +672,7 @@ void RS_GraphicView::zoomPrevious() {
     RS_DEBUG->print("RS_GraphicView::zoomPrevious");
 
     if (container!=NULL) {
-		restoreView();
+                restoreView();
     }
 }
 
@@ -678,9 +683,9 @@ void RS_GraphicView::zoomPrevious() {
  * switch back later with @see restoreView().
  */
 void RS_GraphicView::saveView() {
-	previousOffsetX = offsetX;
-	previousOffsetY = offsetY;
-	previousFactor = factor;
+        previousOffsetX = offsetX;
+        previousOffsetY = offsetY;
+        previousFactor = factor;
 }
 
 
@@ -690,21 +695,21 @@ void RS_GraphicView::saveView() {
  * @see saveView().
  */
 void RS_GraphicView::restoreView() {
-	int pox = previousOffsetX;
-	int poy = previousOffsetY;
-	RS_Vector pf = previousFactor;
+        int pox = previousOffsetX;
+        int poy = previousOffsetY;
+        RS_Vector pf = previousFactor;
 
-	saveView();
+        saveView();
 
-	offsetX = pox;
-	offsetY = poy;
-	factor = pf;
+        offsetX = pox;
+        offsetY = poy;
+        factor = pf;
 
     adjustOffsetControls();
     adjustZoomControls();
-	//    updateGrid();
+        //    updateGrid();
 
-	redraw();
+        redraw();
 }
 
 
@@ -740,7 +745,7 @@ void RS_GraphicView::zoomAutoY(bool axis) {
 
                 if (	((x1 > 0.0) && (x1 < (double) getWidth())) ||
                      ((x2 > 0.0) && (x2 < (double) getWidth())))
-					 {
+                                         {
                     minY = std::min(minY, l->getStartpoint().y);
                     minY = std::min(minY, l->getEndpoint().y);
                     maxY = std::max(maxY, l->getStartpoint().y);
@@ -776,7 +781,7 @@ void RS_GraphicView::zoomAutoY(bool axis) {
                             - (minY*factor.y)) + borderBottom;
             adjustOffsetControls();
             adjustZoomControls();
-			//    updateGrid();
+                        //    updateGrid();
 
         }
         RS_DEBUG->print("Auto zoom y ok");
@@ -796,7 +801,7 @@ void RS_GraphicView::zoomWindow(RS_Vector v1, RS_Vector v2,
                                 bool keepAspectRatio) {
 
 
-	saveView();
+        saveView();
 
     double zoomX=480.0;    // Zoom for X-Axis
     double zoomY=640.0;    // Zoom for Y-Axis   (Set smaller one)
@@ -859,7 +864,7 @@ void RS_GraphicView::zoomWindow(RS_Vector v1, RS_Vector v2,
 
     adjustOffsetControls();
     adjustZoomControls();
-	//    updateGrid();
+        //    updateGrid();
 
     redraw();
 }
@@ -878,7 +883,7 @@ void RS_GraphicView::zoomPan(int dx, int dy) {
 
     adjustOffsetControls();
     //adjustZoomControls();
-	//    updateGrid();
+        //    updateGrid();
 
     redraw();
 }
@@ -905,7 +910,7 @@ void RS_GraphicView::zoomScroll(RS2::Direction direction) {
     }
     adjustOffsetControls();
     adjustZoomControls();
-	//    updateGrid();
+        //    updateGrid();
 
     redraw();
 }
@@ -963,7 +968,7 @@ void RS_GraphicView::zoomPage() {
     centerOffsetY();
     adjustOffsetControls();
     adjustZoomControls();
-	//    updateGrid();
+        //    updateGrid();
 
     redraw();
 }
@@ -1026,12 +1031,12 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 
 void RS_GraphicView::drawLayer2(RS_Painter *painter)
 {
-	drawEntity(painter, container);	//	Draw all entities.
+        drawEntity(painter, container);	//	Draw all entities.
 
-	//	If not in print preview, draw the absolute zero reference.
-	//	----------------------------------------------------------
-	if (!isPrintPreview())
-		drawAbsoluteZero(painter);
+        //	If not in print preview, draw the absolute zero reference.
+        //	----------------------------------------------------------
+        if (!isPrintPreview())
+                drawAbsoluteZero(painter);
 }
 
 
@@ -1039,7 +1044,7 @@ void RS_GraphicView::drawLayer3(RS_Painter *painter) {
     // drawing zero points:
     if (!isPrintPreview()) {
         drawRelativeZero(painter);
-		drawOverlay(painter);
+                drawOverlay(painter);
     }
 }
 
@@ -1067,7 +1072,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 {
     if (draftMode) {
         painter->setPen(RS_Pen(foreground,
-							   RS2::Width00, RS2::SolidLine));
+                                                           RS2::Width00, RS2::SolidLine));
     }
 
         // Getting pen from entity (or layer)
@@ -1078,21 +1083,21 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
             w = 0;
         }
 
-		// Scale pen width.
-		//	----------------
-		if (!draftMode)
-		{
-			double uf = 1.0;	//	Unit factor.
+                // Scale pen width.
+                //	----------------
+                if (!draftMode)
+                {
+                        double uf = 1.0;	//	Unit factor.
 
-			RS_Graphic* graphic = container->getGraphic();
+                        RS_Graphic* graphic = container->getGraphic();
 
-			if (graphic != NULL)
-				uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
+                        if (graphic != NULL)
+                                uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
 
-				pen.setScreenWidth(toGuiDX(w / 100.0 * uf));
-		}
-		else
-			pen.setScreenWidth(0);
+                                pen.setScreenWidth(toGuiDX(w / 100.0 * uf));
+                }
+                else
+                        pen.setScreenWidth(0);
 
         // prevent drawing with 1-width which is slow:
         if (RS_Math::round(pen.getScreenWidth())==1) {
@@ -1134,13 +1139,13 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
  * @param db Double buffering on (recommended) / off
  */
 void RS_GraphicView::drawEntity(RS_Entity* e, double patternOffset) {
-	RS_DEBUG->print("RS_GraphicView::drawEntity(RS_Entity*,patternOffset) not supported anymore");
-	// RVT_PORT this needs to be optimized
-	// ONe way to do is to send a RS2::RedrawSelected, then teh draw routine will onyl draw all selected entities
-	// Dis-advantage is that we still need to iterate over all entities, but
-	// this might be very fast
-	// For now we just redraw the drawing untill we are going to optmize drawing
-	redraw(RS2::RedrawDrawing);
+        RS_DEBUG->print("RS_GraphicView::drawEntity(RS_Entity*,patternOffset) not supported anymore");
+        // RVT_PORT this needs to be optimized
+        // ONe way to do is to send a RS2::RedrawSelected, then teh draw routine will onyl draw all selected entities
+        // Dis-advantage is that we still need to iterate over all entities, but
+        // this might be very fast
+        // For now we just redraw the drawing untill we are going to optmize drawing
+        redraw(RS2::RedrawDrawing);
 }
 void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double patternOffset) {
 
@@ -1156,7 +1161,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double patter
     }
 
     // test if the entity is in the viewport
-	/* temporary disabled so rs_overlaylien can be drawn
+        /* temporary disabled so rs_overlaylien can be drawn
     if (!e->isContainer() && !isPrinting() &&
             (painter==NULL || !painter->isPreviewMode()) &&
             (toGuiX(e->getMax().x)<0 || toGuiX(e->getMin().x)>getWidth() ||
@@ -1169,22 +1174,22 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double patter
 
     //RS_DEBUG->print("draw plain");
     if (isDraftMode()) {
-		// large texts as rectangles:
+                // large texts as rectangles:
         if (e->rtti()==RS2::EntityText) {
             if (toGuiDX(((RS_Text*)e)->getHeight())<4 || e->countDeep()>100) {
                 painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
             } else {
                 drawEntityPlain(painter, e, patternOffset);
             }
-		}
+                }
 
-		// all images as rectangles:
-		else if (e->rtti()==RS2::EntityImage) {
+                // all images as rectangles:
+                else if (e->rtti()==RS2::EntityImage) {
             painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
         }
 
-		// hide hatches:
-		else if (e->rtti()==RS2::EntityHatch) {
+                // hide hatches:
+                else if (e->rtti()==RS2::EntityHatch) {
             // nothing
         }
 
@@ -1201,20 +1206,20 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double patter
             RS_VectorSolutions s = e->getRefPoints();
 
             for (int i=0; i<s.getNumber(); ++i) {
-				int sz = -1;
-				RS_Color col = RS_Color(0,0,255);
-				if (e->rtti()==RS2::EntityPolyline) {
-					if (i==0 || i==s.getNumber()-1) {
-						if (i==0) {
-							sz = 4;
-							col = QColor(0,64,255);
-						}
-						else {
-							sz = 3;
-							col = QColor(0,0,128);
-						}
-					}
-				}
+                                int sz = -1;
+                                RS_Color col = RS_Color(0,0,255);
+                                if (e->rtti()==RS2::EntityPolyline) {
+                                        if (i==0 || i==s.getNumber()-1) {
+                                                if (i==0) {
+                                                        sz = 4;
+                                                        col = QColor(0,64,255);
+                                                }
+                                                else {
+                                                        sz = 3;
+                                                        col = QColor(0,0,128);
+                                                }
+                                        }
+                                }
                 if (getDeleteMode()) {
                     painter->drawHandle(toGui(s.get(i)), background, sz);
                 } else {
@@ -1254,12 +1259,12 @@ void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e, double p
  */
 void RS_GraphicView::deleteEntity(RS_Entity* e) {
 
-	// RVT_PORT When we delete a single entoty, we can do this but we need to remove this then also from containerEntities
-	RS_DEBUG->print("RS_GraphicView::deleteEntity will for now redraw the whole screen instead of just deleting the entity");
-	setDeleteMode(true);
+        // RVT_PORT When we delete a single entoty, we can do this but we need to remove this then also from containerEntities
+        RS_DEBUG->print("RS_GraphicView::deleteEntity will for now redraw the whole screen instead of just deleting the entity");
+        setDeleteMode(true);
     drawEntity(e);
-	setDeleteMode(false);
-	redraw(RS2::RedrawDrawing);
+        setDeleteMode(false);
+        redraw(RS2::RedrawDrawing);
 }
 
 
@@ -1362,8 +1367,8 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter) {
 
     int zr = 20;
 
-	RS_Pen p(QColor(255,0,0), RS2::Width00, RS2::SolidLine);
-	p.setScreenWidth(0);
+        RS_Pen p(QColor(255,0,0), RS2::Width00, RS2::SolidLine);
+        p.setScreenWidth(0);
     painter->setPen(p);
     //painter->setBrush(Qt::NoBrush);
 
@@ -1396,8 +1401,8 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
         return;
     }
 
-	RS_Pen p(RS_Color(255, 0, 0), RS2::Width00, RS2::SolidLine);
-	p.setScreenWidth(0);
+        RS_Pen p(RS_Color(255, 0, 0), RS2::Width00, RS2::SolidLine);
+        p.setScreenWidth(0);
     painter->setPen(p);
 
     int zr=5;
@@ -1430,13 +1435,13 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
         return;
     }
 
-	RS_Graphic* graphic = container->getGraphic();
+        RS_Graphic* graphic = container->getGraphic();
     if (graphic->getPaperScale()<1.0e-6) {
         return;
     }
 
     // draw paper:
-	// RVT_PORT rewritten from     painter->setPen(Qt::gray);
+        // RVT_PORT rewritten from     painter->setPen(Qt::gray);
     painter->setPen(QColor(Qt::gray));
 
     RS_Vector pinsbase = graphic->getPaperInsertionBase();
@@ -1487,7 +1492,7 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
     //painter->setPen(Qt::gray);
     painter->setPen(gridColor);
 
-	grid->updatePointArray();
+        grid->updatePointArray();
     RS_Vector* pts = grid->getPoints();
     if (pts!=NULL) {
         for (int i=0; i<grid->count(); ++i) {
@@ -1545,13 +1550,13 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 }
 
 void RS_GraphicView::drawOverlay(RS_Painter *painter) {
-	QList<int> keys=overlayEntities.keys();
-	for (int i = 0; i < keys.size(); ++i) {
-		if (overlayEntities[i] != NULL) {
-			setPenForEntity(painter, overlayEntities[i] );
-			drawEntityPlain(painter, overlayEntities[i], 0.0);
-		}
-	}
+        QList<int> keys=overlayEntities.keys();
+        for (int i = 0; i < keys.size(); ++i) {
+                if (overlayEntities[i] != NULL) {
+                        setPenForEntity(painter, overlayEntities[i] );
+                        drawEntityPlain(painter, overlayEntities[i], 0.0);
+                }
+        }
 }
 
 /**
@@ -1698,7 +1703,7 @@ void RS_GraphicView::setRelativeZero(const RS_Vector& pos) {
  */
 void RS_GraphicView::moveRelativeZero(const RS_Vector& pos) {
     setRelativeZero(pos);
-	redraw(RS2::RedrawGrid);
+        redraw(RS2::RedrawGrid);
 }
 
 
@@ -1707,12 +1712,12 @@ void RS_GraphicView::moveRelativeZero(const RS_Vector& pos) {
  */
 RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics position)
 {
-	if (overlayEntities[position]!=NULL) {
-		return overlayEntities[position];
-	}
-	overlayEntities[position]=new RS_EntityContainer(NULL);
+        if (overlayEntities[position]!=NULL) {
+                return overlayEntities[position];
+        }
+        overlayEntities[position]=new RS_EntityContainer(NULL);
 
-	return overlayEntities[position];
+        return overlayEntities[position];
 
 }
 

@@ -34,9 +34,9 @@
  *  Constructs a QG_CadToolBarSnap as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_SnapToolBar::QG_SnapToolBar( const QString & title, QWidget * parent )
+QG_SnapToolBar::QG_SnapToolBar( const QString & title, QG_ActionHandler* ah, QWidget * parent )
     : QToolBar(title, parent) {
-    actionHandler=NULL;
+    actionHandler=ah;
     init();
 }
 
@@ -46,19 +46,23 @@ QG_SnapToolBar::QG_SnapToolBar( const QString & title, QWidget * parent )
 QG_SnapToolBar::~QG_SnapToolBar()
 {
     //@write default snap mode from prefrences.
-    RS_SETTINGS->beginGroup("/Snap");
     unsigned int snapFlags=RS_Snapper::snapModeToInt(getSnaps());
+    std::cout<<"Saving snapMode, flags="<<snapFlags<<std::endl;
+    RS_SETTINGS->beginGroup("/Snap");
     RS_SETTINGS->writeEntry("/SnapMode",QString::number(snapFlags));
     RS_SETTINGS->endGroup();
+    std::cout<<"Saved snapMode, flags="<<snapFlags<<std::endl;
     // no need to delete child widgets, Qt does it all for us
 }
 
 void QG_SnapToolBar::setSnaps ( RS_SnapMode s )
 {
+    snapGrid->setChecked(s.snapGrid);
     snapEnd->setChecked(s.snapEndpoint);
     snapOnEntity->setChecked(s.snapOnEntity);
     snapCenter->setChecked(s.snapCenter);
     snapMiddle->setChecked(s.snapMiddle);
+    snapDistance->setChecked(s.snapDistance);
     snapIntersection->setChecked(s.snapIntersection);
     restrictHorizontal->setChecked(s.restriction==RS2::RestrictHorizontal ||  s.restriction==RS2::RestrictOrthogonal);
     restrictVertical->setChecked(s.restriction==RS2::RestrictVertical ||  s.restriction==RS2::RestrictOrthogonal);
@@ -154,16 +158,22 @@ void QG_SnapToolBar::init()
     RS_SETTINGS->beginGroup("/Snap");
     unsigned int snapFlags(RS_SETTINGS->readNumEntry("/SnapMode",0));
     RS_SETTINGS->endGroup();
+    std::cout<<"Restored snapMode, flags="<<snapFlags<<std::endl;
     setSnaps(RS_Snapper::intToSnapMode(snapFlags));
     this->addSeparator();
     bRelZero = new QAction(QIcon(":/extui/relzeromove.png"), "Set relative zero position", this);
     bRelZero->setCheckable(false);
-    connect(bRelZero, SIGNAL(triggered()), this, SLOT(slotSetRelativeZero()));
+    connect(bRelZero, SIGNAL(triggered()), actionHandler, SLOT(slotSetRelativeZero()));
+    //connect(bRelZero, SIGNAL(triggered()), this, SLOT(slotSetRelativeZero()));
     this->addAction(bRelZero);
     bLockRelZero = new QAction(QIcon(":/extui/relzerolock.png"), "Lock relative zero position", this);
     bLockRelZero->setCheckable(true);
-    connect(bLockRelZero, SIGNAL(triggered()), this, SLOT(slotLockRelativeZero() ));
+    connect(bLockRelZero, SIGNAL(toggled(bool)),actionHandler, SLOT(slotLockRelativeZero(bool)));
     this->addAction(bLockRelZero);
+    //restore snapMode from saved preferences
+    RS_SETTINGS->beginGroup("/Snap");
+    setSnaps(RS_Snapper::intToSnapMode(RS_SETTINGS->readNumEntry("/SnapMode",0)));
+    RS_SETTINGS->endGroup();
 }
 
 void QG_SnapToolBar::setActionHandler(QG_ActionHandler* ah){
@@ -176,13 +186,5 @@ void QG_SnapToolBar::actionTriggered()
 {
     actionHandler->slotSetSnaps(getSnaps());
     //emit snapsChanged(getSnaps());
-}
-void QG_SnapToolBar::slotSetRelativeZero()
-{
-    actionHandler->slotSetRelativeZero();
-}
-void QG_SnapToolBar::slotLockRelativeZero()
-{
-    actionHandler->slotLockRelativeZero(bLockRelZero->isChecked());
 }
 
