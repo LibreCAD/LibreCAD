@@ -61,6 +61,7 @@
 #include "rs_selection.h"
 
 #include "qg_cadtoolbar.h"
+#include "qg_snaptoolbar.h"
 #include "qg_actionfactory.h"
 #include "qg_blockwidget.h"
 #include "qg_layerwidget.h"
@@ -99,12 +100,12 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
  *	- Notes: Extra characters appearing in the windows title bar
  *	  are " - [", ... "]" (5), and sometimes "Print preview of " (17).
  *	*/
-#define WTB_EXTRA_SIZE			(5 + 17)
+#define WTB_EXTRA_SIZE        (5 + 17)
 
 /*	Window Title Bar Maximum Size.
  *	Notes: On Windows XP, this is 79.
  *	*/
-#define WTB_MAX_SIZE				79
+#define WTB_MAX_SIZE        79
 
 
 /**
@@ -365,6 +366,7 @@ void QC_ApplicationWindow::slotRunScript(const QString& name) {
 #ifdef RS_SCRIPTING
         RS_DEBUG->print("QC_ApplicationWindow::slotRunScript");
 
+
         if (scripter==NULL) {
                 RS_DEBUG->print(RS_Debug::D_WARNING,
                         "QC_ApplicationWindow::slotRunScript: "
@@ -415,6 +417,7 @@ void QC_ApplicationWindow::slotInsertBlock(const QString& name) {
         RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: '%s'", name.toLatin1().data());
 
     statusBar()->showMessage(tr("Inserting block '%1'").arg(name), 2000);
+
 
         RS_GraphicView* graphicView = getGraphicView();
         RS_Document* document = getDocument();
@@ -739,6 +742,7 @@ void QC_ApplicationWindow::initActions(void)
 
     // RVT_PORT menu->insertItem(tr("Vie&ws"), createDockWindowMenu(NoToolBars));
     // RVT_PORT menu->insertItem(tr("Tool&bars"), createDockWindowMenu(OnlyToolBars));
+
 
         // tr("Focus on Command Line")
         action = new QAction(tr("Focus on &Command Line"), this);
@@ -1101,7 +1105,7 @@ void QC_ApplicationWindow::initActions(void)
 
     // Snapping actions:
     //
-    menu = menuBar()->addMenu(tr("&Snap"));
+    /*menu = menuBar()->addMenu(tr("&Snap"));
     menu->setObjectName("Snap");
     action = actionFactory.createAction(RS2::ActionSnapFree, actionHandler);
     menu->addAction(action);
@@ -1162,6 +1166,7 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    */
 
     // Info actions:
     //
@@ -1253,6 +1258,7 @@ void QC_ApplicationWindow::initActions(void)
     action = actionFactory.createAction(RS2::ActionBlocksExplode, actionHandler);
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+
 
         QMainWindow::addToolBarBreak(Qt::TopToolBarArea);
 
@@ -1436,9 +1442,10 @@ void QC_ApplicationWindow::initMenuBar() {
 void QC_ApplicationWindow::initToolBar() {
     RS_DEBUG->print("QC_ApplicationWindow::initToolBar()");
 
+
         QSizePolicy toolBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
-    fileToolBar = new QToolBar( "File Operations", this);
+        fileToolBar = new QToolBar( "File Operations", this);
         fileToolBar->setSizePolicy(toolBarPolicy);
         fileToolBar->setObjectName ( "FileTB" );
 
@@ -1446,6 +1453,7 @@ void QC_ApplicationWindow::initToolBar() {
         editToolBar->setSizePolicy(toolBarPolicy);
         editToolBar->setObjectName ( "EditTB" );
     zoomToolBar = new QToolBar( "Zoom Operations", this);
+
         zoomToolBar->setSizePolicy(toolBarPolicy);
         zoomToolBar->setObjectName ( "ZoomTB" );
 
@@ -1455,6 +1463,13 @@ void QC_ApplicationWindow::initToolBar() {
 
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
             this, SLOT(slotPenChanged(RS_Pen)));
+
+    snapToolBar = new QG_SnapToolBar("Snap Selection", this);
+    snapToolBar->setSizePolicy(toolBarPolicy);
+    snapToolBar->setObjectName ( "SnapTB" );
+    connect(snapToolBar, SIGNAL(snapsChanged(RS_SnapMode)),
+            this, SLOT(slotSnapsChanged(RS_SnapMode)));
+    this->addToolBar(snapToolBar);
 
     optionWidget = new QToolBar("Tool Options", this);
         QSizePolicy optionWidgetBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
@@ -1468,11 +1483,12 @@ void QC_ApplicationWindow::initToolBar() {
 
     // CAD toolbar left:
     QToolBar* t = new QToolBar("CAD Tools", this);
-    t->setMinimumSize(56,400);
+
+    t->setMinimumSize(66,400);
         QSizePolicy policy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
         t->setSizePolicy(policy);
         t->setObjectName ( "CADTB" );
-    t->setFixedWidth(56);
+    t->setFixedWidth(66);
     t->setFloatable(false);
     t->setAllowedAreas(Qt::LeftToolBarArea | Qt::RightToolBarArea);
    // t->setVerticallyStretchable(true);
@@ -2046,6 +2062,15 @@ void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
     RS_DEBUG->print("QC_ApplicationWindow::slotPenChanged() end");
 }
 
+/**
+ * Called when something changed in the snaps tool bar
+ */
+void QC_ApplicationWindow::slotSnapsChanged(RS_SnapMode snaps) {
+    RS_DEBUG->print("QC_ApplicationWindow::slotSnapsChanged() begin");
+
+    actionHandler->slotSetSnaps(snaps);
+}
+
 
 
 /**
@@ -2097,11 +2122,18 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     // Link the dialog factory to the cad tool bar:
     if (cadToolBar!=NULL) {
         //set SnapFree to avoid orphaned snapOptions, bug#3407522
-            if ( getGraphicView() != NULL && getDocument() != NULL ) {
+            /* setting snap option toolbar pointers to non-static fixes
+             * bug#3407522
+            if (snapToolBar != NULL && getGraphicView() != NULL && getDocument() != NULL ) {
                     //need to detect graphicView and Document for NULL
 //bug#3408689
-                cadToolBar->setSnapFree();
+                RS_SnapMode s=snapToolBar->getSnaps();
+                s.snapMiddle=false;
+                s.snapDistance=false;
+                snapToolBar->setSnaps(s);
+                //cadToolBar->setSnapFree();
             }
+            */
         cadToolBar->showToolBar(RS2::ToolBarMain);
         }
     QG_DIALOGFACTORY->setCadToolBar(cadToolBar);
@@ -2191,6 +2223,7 @@ QString QC_ApplicationWindow::
          *	*/
     int	wtb_as = WTB_MAX_SIZE - ((int) strlen(XSTR(QC_APPNAME)) + WTB_EXTRA_SIZE);
 
+
         /*	- If string to display to window title bar is too long, truncate
          *	  it from the left.
          *	---------------------------------------------------------------- */
@@ -2278,6 +2311,7 @@ void QC_ApplicationWindow::
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: OK");
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption");
+
 
                 /*	Format and set caption.
                  *	----------------------- */
@@ -2620,6 +2654,7 @@ void QC_ApplicationWindow::slotFileClose() {
     if (m!=NULL) {
         m->close();
     }
+
 
         /*
         m = getMDIWindow();
@@ -4125,6 +4160,7 @@ bool QC_ApplicationWindow::queryExit(bool force) {
     RS_DEBUG->print("QC_ApplicationWindow::queryExit()");
 
     bool succ = true;
+
 
          QWidgetList list = workspace->windowList();
 

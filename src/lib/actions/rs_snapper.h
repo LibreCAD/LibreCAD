@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -40,7 +40,78 @@ class RS_Preview;
 class QMouseEvent;
 
 /**
- * This class is used for snapping functions in a graphic view. 
+  * This class holds information on how to snap the mouse.
+  *
+  * @author Kevin Cox
+  */
+struct RS_SnapMode {
+public:
+    bool snapGrid;     /// Whether to snap to grid or not.
+    bool snapEndpoint;     /// Whether to snap to endpoints or not.
+    bool snapMiddle;       /// Whether to snap to midpoints or not.
+    bool snapDistance;       /// Whether to snap to distance from endpoints or not.
+    bool snapCenter;       /// Whether to snap to centers or not.
+    bool snapIntersection; /// Whether to snap to intersections or not.
+
+    bool snapOnEntity;     /// Whether to snap to entities or not.
+
+    RS2::SnapRestriction restriction; /// The restriction on the free snap.
+
+    double distance; /// The distance to snap before defaulting to free snaping.
+
+    /**
+      * Default Constructor
+      *
+      * Creates a RS_SnapMode that specifies only free snapping.
+      *
+      */
+    RS_SnapMode() { hardReset(); }
+
+    /**
+      * Disable all snapping.
+      *
+      * This effectivly puts the object into free snap mode.
+      *
+      * @returns A refrence to itself.
+      */
+    RS_SnapMode &clear(void) {
+        snapGrid     = false;
+        snapEndpoint     = false;
+        snapMiddle       = false;
+        snapDistance       = false;
+        snapCenter       = false;
+        snapOnEntity     = false;
+        snapIntersection = false;
+
+        restriction = RS2::RestrictNothing;
+
+        return *this;
+    }
+
+    /**
+     * Reset to default settings
+     *
+     * @returns A refrence to itself.
+     */
+    RS_SnapMode &hardReset(void) {
+        snapGrid     = false;
+        snapEndpoint     = false;
+        snapMiddle       = false;
+        snapDistance       = false;
+        snapCenter       = false;
+        snapOnEntity     = false;
+        snapIntersection = false;
+
+        restriction = RS2::RestrictNothing;
+
+        distance = 5;
+
+        return *this;
+    }
+};
+
+/**
+ * This class is used for snapping functions in a graphic view.
  * Actions are usually derrived from this base class if they need
  * to catch entities or snap to coordinates. Use the methods to
  * retrieve a graphic coordinate from a mouse coordinate.
@@ -55,7 +126,7 @@ public:
     virtual ~RS_Snapper();
 
     void init();
-	void finish();
+        void finish();
 
     /**
      * @return Pointer to the entity which was the key entity for the
@@ -69,22 +140,24 @@ public:
     }
 
     /** Sets a new snap mode. */
-    void setSnapMode(RS2::SnapMode snapMode) {
-        this->snapMode = snapMode;
+    void setSnapMode(RS_SnapMode snapMode);
+
+    RS_SnapMode *getSnapMode(void) {
+        return &this->snapMode;
     }
     /** Sets a new snap restriction. */
-    void setSnapRestriction(RS2::SnapRestriction snapRes) {
-        this->snapRes = snapRes;
+    void setSnapRestriction(RS2::SnapRestriction /*snapRes*/) {
+        //this->snapRes = snapRes;
     }
 
-	/** 
-	 * Sets the snap range in pixels for catchEntity().
-	 *
-	 * @see catchEntity()
-	 */
-	void setSnapRange(int r) {
-		snapRange = r;
-	}
+        /**
+         * Sets the snap range in pixels for catchEntity().
+         *
+         * @see catchEntity()
+         */
+        void setSnapRange(int r) {
+                snapRange = r;
+        }
 
     RS_Vector snapPoint(QMouseEvent* e);
 
@@ -97,7 +170,7 @@ public:
     RS_Vector snapDist(RS_Vector coord);
     RS_Vector snapIntersection(RS_Vector coord);
     //RS_Vector snapDirect(RS_Vector coord, bool abs);
-	
+
     RS_Vector restrictOrthogonal(RS_Vector coord);
     RS_Vector restrictHorizontal(RS_Vector coord);
     RS_Vector restrictVertical(RS_Vector coord);
@@ -113,7 +186,7 @@ public:
      * Suspends this snapper while another action takes place.
      */
     virtual void suspend() {
-		// RVT Don't delete the snapper here!
+                // RVT Don't delete the snapper here!
         // RVT_PORT (can be deleted)();
         snapSpot = snapCoord = RS_Vector(false);
     }
@@ -129,6 +202,8 @@ public:
     virtual void showOptions();
 
     void drawSnapper();
+    static unsigned int snapModeToInt(RS_SnapMode s);
+    static RS_SnapMode intToSnapMode(unsigned int);
 
 protected:
     void deleteSnapper();
@@ -137,10 +212,10 @@ protected:
     RS_Entity* keyEntity;
     RS_Vector snapCoord;
     RS_Vector snapSpot;
-    RS2::SnapMode snapMode;
-    RS2::SnapRestriction snapRes;
+    RS_SnapMode snapMode;
+    //RS2::SnapRestriction snapRes;
     /**
-     * Snap distance for snaping to points with a 
+     * Snap distance for snaping to points with a
      * given distance from endpoints.
      */
     double distance;
@@ -149,15 +224,15 @@ protected:
      * default to 1, i.e., equidistant to start/end points
      */
     int middlePoints;
-	/**
-	 * Snap range for catching entities.
-	 */
-	int snapRange;
-	/**
-	 * Show large cross hairs.
-	 */
-	bool showCrosshairs;
-	bool finished;
+        /**
+         * Snap range for catching entities.
+         */
+        int snapRange;
+        /**
+         * Show large cross hairs.
+         */
+        bool showCrosshairs;
+        bool finished;
 };
 
 //#endif

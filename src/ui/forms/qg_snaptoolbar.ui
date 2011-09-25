@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QG_SnapToolBar</class>
+ <widget class="QWidget" name="QG_SnapToolBar">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>576</width>
+    <height>75</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>56</width>
+    <height>28</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Snap</string>
+  </property>
+  <widget class="QToolButton" name="bGrid">
+   <property name="geometry">
+    <rect>
+     <x>306</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Snap to grid</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/snapgrid.png</normaloff>:/extui/snapgrid.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bFree">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Free positioning</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/snapfree.png</normaloff>:/extui/snapfree.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bEndpoint">
+   <property name="geometry">
+    <rect>
+     <x>47</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Snap to Endpoints</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/snapendpoint.png</normaloff>:/extui/snapendpoint.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bOnEntity">
+   <property name="geometry">
+    <rect>
+     <x>195</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Snap to closest point on entity</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/snaponentity.png</normaloff>:/extui/snaponentity.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bCenter">
+   <property name="geometry">
+    <rect>
+     <x>121</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Snap to center points</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/snapcenter.png</normaloff>:/extui/snapcenter.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMiddle">
+   <property name="geometry">
+    <rect>
+     <x>84</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Snap to equidistant points of entity</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/snapmiddle.png</normaloff>:/extui/snapmiddle.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bDist">
+   <property name="geometry">
+    <rect>
+     <x>232</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Snap to point with given distance to endpoint</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/snapdist.png</normaloff>:/extui/snapdist.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bIntersection">
+   <property name="geometry">
+    <rect>
+     <x>158</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Snap to intersections automatically</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/snapintersection.png</normaloff>:/extui/snapintersection.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bResNothing">
+   <property name="geometry">
+    <rect>
+     <x>343</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Restrict Nothing</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/snapfree.png</normaloff>:/extui/snapfree.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bResOrthogonal">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Restrict Orthogonally</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/restrictorthogonal.png</normaloff>:/extui/restrictorthogonal.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bResHorizontal">
+   <property name="geometry">
+    <rect>
+     <x>417</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Restrict Horizontally</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/restricthorizontal.png</normaloff>:/extui/restricthorizontal.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bResVertical">
+   <property name="geometry">
+    <rect>
+     <x>454</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Restrict Vertically</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/restrictvertical.png</normaloff>:/extui/restrictvertical.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bRelZero">
+   <property name="geometry">
+    <rect>
+     <x>491</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Move relative Zero</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/relzeromove.png</normaloff>:/extui/relzeromove.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bLockRelZero">
+   <property name="geometry">
+    <rect>
+     <x>528</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Lock relative Zero</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/relzerolock.png</normaloff>:/extui/relzerolock.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bIntersectionManual">
+   <property name="geometry">
+    <rect>
+     <x>269</x>
+     <y>25</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Snap to intersections manually</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>:/extui/snapintersectionm.png</normaloff>:/extui/snapintersectionm.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>bFree</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>snapFree()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bGrid</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>snapGrid()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bEndpoint</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>snapEndpoint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bOnEntity</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>snapOnEntity()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bCenter</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>snapCenter()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bMiddle</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>snapMiddle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bDist</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>snapDist()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bIntersection</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>snapIntersection()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bResOrthogonal</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>restrictOrthogonal()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bResNothing</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>restrictNothing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bRelZero</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>setRelativeZero()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bLockRelZero</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>lockRelativeZero(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bResHorizontal</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>restrictHorizontal()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bResVertical</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>restrictVertical()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bIntersectionManual</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_SnapToolBar</receiver>
+   <slot>snapIntersectionManual()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -34,8 +34,8 @@
 /**
  * Default constructor.
  *
- * @param keepAspectRatio Keep the aspect ratio. true: the factors 
- *          in x and y will stay the same. false Exactly the chosen 
+ * @param keepAspectRatio Keep the aspect ratio. true: the factors
+ *          in x and y will stay the same. false Exactly the chosen
  *          area will be fit to the viewport.
  */
 RS_ActionZoomWindow::RS_ActionZoomWindow(RS_EntityContainer& container,
@@ -56,7 +56,7 @@ QAction* RS_ActionZoomWindow::createGUIAction(RS2::ActionType /*type*/, QObject*
         action->setIcon(QIcon(":/actions/zoomwindow.png"));
 #endif
         //action->zetStatusTip(tr("Zooms in a window"));
-	
+
     return action;
 }
 
@@ -66,8 +66,8 @@ void RS_ActionZoomWindow::init(int status) {
 
     RS_PreviewActionInterface::init(status);
     v1 = v2 = RS_Vector(false);
-    snapMode = RS2::SnapFree;
-    snapRes = RS2::RestrictNothing;
+    snapMode.clear();
+    snapMode.restriction = RS2::RestrictNothing;
 }
 
 

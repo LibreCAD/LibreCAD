@@ -23,33 +23,58 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#ifndef QG_CADTOOLBARMAIN_H
-#define QG_CADTOOLBARMAIN_H
+#ifndef QG_SNAPTOOLBAR_H
+#define QG_SNAPTOOLBAR_H
 
-
-#include "ui_qg_cadtoolbarmain.h"
-#include "qg_actionhandler.h"
 class QG_CadToolBar;
+class QG_ActionHandler;
 
-class QG_CadToolBarMain : public QWidget, public Ui::QG_CadToolBarMain
+#include <QToolBar>
+
+#include "rs_snapper.h"
+
+#include "ui_qg_snaptoolbar.h"
+
+class QG_SnapToolBar : public QToolBar
 {
     Q_OBJECT
 
 public:
-    QG_CadToolBarMain(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-    ~QG_CadToolBarMain();
+    QG_SnapToolBar( const QString & title, QWidget * parent = 0 );
+    ~QG_SnapToolBar();
+
+    RS_SnapMode getSnaps ( void );
+
+private slots:
+    void actionTriggered(void);
+
+    void restrictOrthoagonalTriggered(bool);
+    void restrictHorizontalTriggered(bool);
+    void restrictVerticalTriggered(bool);
 
 public slots:
-    virtual void init();
-    virtual void setCadToolBar( QG_CadToolBar * tb );
-    virtual void clearDrawPoint();
+    void setSnaps(RS_SnapMode);
 
-protected slots:
-    virtual void languageChange();
+signals:
+    void snapsChanged(RS_SnapMode);
+
 private:
-    QG_ActionHandler* actionHandler;
-private slots:
-    virtual void slotDrawPoint();
+    //QAction *snapFree;
+    QAction *snapGrid;
+    QAction *snapEnd;
+    QAction *snapOnEntity;
+    QAction *snapCenter;
+    QAction *snapMiddle;
+    QAction *snapDistance;
+    QAction *snapIntersection;
+
+
+    QAction *restrictOrthoagonal;
+    QAction *restrictHorizontal;
+    QAction *restrictVertical;
+
+    void init();
+
 };
 
-#endif
+#endif // QG_SNAPTOOLBAR_H

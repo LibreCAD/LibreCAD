@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>56</width>
+    <width>66</width>
     <height>336</height>
    </rect>
   </property>
@@ -25,33 +25,13 @@
   <property name="windowTitle">
    <string>Main</string>
   </property>
-  <widget class="QToolButton" name="bMenuLine">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>0</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Show menu &quot;Lines&quot;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/menuline.png</normaloff>:/extui/menuline.png</iconset>
-   </property>
-  </widget>
   <widget class="QToolButton" name="bMenuArc">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>28</y>
-     <width>28</width>
-     <height>28</height>
+     <x>3</x>
+     <y>3</y>
+     <width>30</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="toolTip">
@@ -65,53 +45,33 @@
      <normaloff>:/extui/menuarc.png</normaloff>:/extui/menuarc.png</iconset>
    </property>
   </widget>
-  <widget class="QToolButton" name="bMenuPoint">
+  <widget class="QToolButton" name="bMenuLine">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>28</width>
-     <height>28</height>
+     <x>33</x>
+     <y>3</y>
+     <width>30</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="toolTip">
-    <string>Points</string>
+    <string>Show menu &quot;Lines&quot;</string>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/points.png</normaloff>:/extui/points.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bMenuSpline">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>56</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Splines</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/menuspline.png</normaloff>:/extui/menuspline.png</iconset>
+     <normaloff>:/extui/menuline.png</normaloff>:/extui/menuline.png</iconset>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuEllipse">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>56</y>
-     <width>28</width>
-     <height>28</height>
+     <x>3</x>
+     <y>35</y>
+     <width>30</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="toolTip">
@@ -128,10 +88,10 @@
   <widget class="QToolButton" name="bMenuCircle">
    <property name="geometry">
     <rect>
-     <x>28</x>
-     <y>28</y>
-     <width>28</width>
-     <height>28</height>
+     <x>33</x>
+     <y>35</y>
+     <width>30</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="toolTip">
@@ -145,13 +105,39 @@
      <normaloff>:/extui/menucircle.png</normaloff>:/extui/menucircle.png</iconset>
    </property>
   </widget>
+  <widget class="QToolButton" name="bMenuSpline">
+   <property name="geometry">
+    <rect>
+     <x>33</x>
+     <y>67</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Splines</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/menuspline.png</normaloff>:/extui/menuspline.png</iconset>
+   </property>
+         <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
+  </widget>
   <widget class="QToolButton" name="bMenuText">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>116</y>
-     <width>28</width>
-     <height>28</height>
+     <x>3</x>
+     <y>151</y>
+     <width>30</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="toolTip">
@@ -165,33 +151,13 @@
      <normaloff>:/extui/menutext.png</normaloff>:/extui/menutext.png</iconset>
    </property>
   </widget>
-  <widget class="QToolButton" name="bMenuDim">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>116</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Show menu &quot;Dimensions&quot;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/dimhor.png</normaloff>:/extui/dimhor.png</iconset>
-   </property>
-  </widget>
   <widget class="QToolButton" name="bMenuHatch">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>144</y>
-     <width>28</width>
-     <height>28</height>
+     <x>3</x>
+     <y>183</y>
+     <width>30</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="toolTip">
@@ -208,10 +174,10 @@
   <widget class="QToolButton" name="bMenuImage">
    <property name="geometry">
     <rect>
-     <x>28</x>
-     <y>144</y>
-     <width>28</width>
-     <height>28</height>
+     <x>33</x>
+     <y>183</y>
+     <width>30</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="toolTip">
@@ -228,10 +194,10 @@
   <widget class="QToolButton" name="bMenuModify">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>176</y>
-     <width>28</width>
-     <height>28</height>
+     <x>3</x>
+     <y>215</y>
+     <width>30</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="toolTip">
@@ -248,10 +214,10 @@
   <widget class="QToolButton" name="bMenuInfo">
    <property name="geometry">
     <rect>
-     <x>28</x>
-     <y>176</y>
-     <width>28</width>
-     <height>28</height>
+     <x>33</x>
+     <y>215</y>
+     <width>30</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="toolTip">
@@ -268,10 +234,10 @@
   <widget class="QToolButton" name="bMenuBlock">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>204</y>
-     <width>28</width>
-     <height>28</height>
+     <x>3</x>
+     <y>247</y>
+     <width>30</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="toolTip">
@@ -288,10 +254,10 @@
   <widget class="QToolButton" name="bMenuSelect">
    <property name="geometry">
     <rect>
-     <x>28</x>
-     <y>204</y>
-     <width>28</width>
-     <height>28</height>
+     <x>33</x>
+     <y>247</y>
+     <width>30</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="toolTip">
@@ -308,10 +274,10 @@
   <widget class="QToolButton" name="bMenuPolyline">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>84</y>
-     <width>28</width>
-     <height>28</height>
+     <x>3</x>
+     <y>67</y>
+     <width>30</width>
+     <height>32</height>
     </rect>
    </property>
    <property name="toolTip">
@@ -325,8 +291,70 @@
      <normaloff>:/extui/menupolyline.png</normaloff>:/extui/menupolyline.png</iconset>
    </property>
   </widget>
+  <widget class="QToolButton" name="bMenuDim">
+   <property name="geometry">
+    <rect>
+     <x>33</x>
+     <y>151</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Show menu &quot;Dimensions&quot;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/dimhor.png</normaloff>:/extui/dimhor.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bMenuPoint">
+   <property name="geometry">
+    <rect>
+     <x>3</x>
+     <y>99</y>
+     <width>30</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Points</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/points.png</normaloff>:/extui/points.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>bMenuArc</tabstop>
+  <tabstop>bMenuLine</tabstop>
+  <tabstop>bMenuEllipse</tabstop>
+  <tabstop>bMenuCircle</tabstop>
+  <tabstop>bMenuPolyline</tabstop>
+  <tabstop>bMenuSpline</tabstop>
+  <tabstop>bMenuText</tabstop>
+  <tabstop>bMenuDim</tabstop>
+  <tabstop>bMenuHatch</tabstop>
+  <tabstop>bMenuImage</tabstop>
+  <tabstop>bMenuModify</tabstop>
+  <tabstop>bMenuInfo</tabstop>
+  <tabstop>bMenuBlock</tabstop>
+  <tabstop>bMenuSelect</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../res/extui/extui.qrc"/>
  </resources>

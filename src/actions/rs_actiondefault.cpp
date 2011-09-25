@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -54,7 +54,7 @@ RS_ActionDefault::~RS_ActionDefault() {
 
 
 
-QAction* RS_ActionDefault::createGUIAction(RS2::ActionType /*type*/, 
+QAction* RS_ActionDefault::createGUIAction(RS2::ActionType /*type*/,
 	QObject* /*parent*/) {
 
 	return NULL;
@@ -63,14 +63,14 @@ QAction* RS_ActionDefault::createGUIAction(RS2::ActionType /*type*/,
 
 void RS_ActionDefault::init(int status) {
 	RS_DEBUG->print("RS_ActionDefault::init");
-    
+
 	RS_PreviewActionInterface::init(status);
     v1 = v2 = RS_Vector(false);
-    snapMode = RS2::SnapFree;
-    snapRes = RS2::RestrictNothing;
+    snapMode.clear();
+    snapMode.restriction = RS2::RestrictNothing;
     restrBak = RS2::RestrictNothing;
 	RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-	
+
 	RS_DEBUG->print("RS_ActionDefault::init: OK");
 }
 
@@ -83,7 +83,7 @@ void RS_ActionDefault::trigger() {
 
 void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {
 	if (e->key()==Qt::Key_Shift) {
-		restrBak = snapRes;
+		restrBak = snapMode.restriction;
 		setSnapRestriction(RS2::RestrictOrthogonal);
 	}
 }
@@ -117,7 +117,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
                 setStatus(MovingRef);
                 v1 = ref;
     			graphicView->moveRelativeZero(v1);
-            } 
+            }
 			else {
                 // test for an entity to drag:
                 RS_Entity* en = catchEntity(v1);
@@ -136,7 +136,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
             }
         }
         break;
-		
+
     case MovingRef:
         v2 = snapPoint(e);
 
@@ -161,32 +161,32 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
             v2 = mouse;
 
             deletePreview();
-			
+
 			RS_Pen pen_f(RS_Color(50,50,255,40), RS2::Width00, RS2::SolidLine);
 			RS_OverlayBox* ob=new RS_OverlayBox(preview, RS_OverlayBoxData(v1, v2));
-			ob->setPen(pen_f);	
+			ob->setPen(pen_f);
 			preview->addEntity(ob);
-			
+
 			RS_Pen pen(RS_Color(218,105,24), RS2::Width00, RS2::SolidLine);
-			pen.setScreenWidth(1);			
+			pen.setScreenWidth(1);
 
 			// TODO change to a rs_box sort of entity
 			RS_Line* e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v1.y),  RS_Vector(v2.x, v1.y)));
 			e->setPen(pen);
 			preview->addEntity(e);
-			
-			e=new RS_Line(preview, RS_LineData(RS_Vector(v2.x, v1.y),  RS_Vector(v2.x, v2.y)));			
+
+			e=new RS_Line(preview, RS_LineData(RS_Vector(v2.x, v1.y),  RS_Vector(v2.x, v2.y)));
 			e->setPen(pen);
 			preview->addEntity(e);
-			
+
 			e=new RS_Line(preview, RS_LineData(RS_Vector(v2.x, v2.y),  RS_Vector(v1.x, v2.y)));
 			e->setPen(pen);
 			preview->addEntity(e);
-			
+
 			e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v2.y),  RS_Vector(v1.x, v1.y)));
 			e->setPen(pen);
 			preview->addEntity(e);
-			
+
             drawPreview();
         }
 
@@ -221,7 +221,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
                                 RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
             }
             break;
-			
+
         case MovingRef: {
         		v2 = snapPoint(e);
                 deletePreview();

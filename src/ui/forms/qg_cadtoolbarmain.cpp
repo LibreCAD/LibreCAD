@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,17 +15,18 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 #include "qg_cadtoolbarmain.h"
 
 #include "qg_cadtoolbar.h"
+#include "qg_cadtoolbarmain.h"
 
 /*
  *  Constructs a QG_CadToolBarMain as a child of 'parent', with the
@@ -57,19 +58,17 @@ void QG_CadToolBarMain::languageChange()
 }
 
 void QG_CadToolBarMain::init() {
+        actionHandler= NULL;
 }
 
 void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
-    QG_ActionHandler* ah = NULL;
     if (tb!=NULL) {
-        ah = tb->getActionHandler();
+        actionHandler= tb->getActionHandler();
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_CadToolBarMain::setCadToolBar(): No valid toolbar set.");
     }
-    if (ah!=NULL) {
-        connect(bMenuPoint, SIGNAL(clicked()),
-                ah, SLOT(slotDrawPoint()));
+    if (actionHandler!=NULL) {
         connect(bMenuLine, SIGNAL(clicked()),
                 tb, SLOT(showToolBarLines()));
         connect(bMenuArc, SIGNAL(clicked()),
@@ -79,18 +78,20 @@ void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
         connect(bMenuEllipse, SIGNAL(clicked()),
                 tb, SLOT(showToolBarEllipses()));
         connect(bMenuSpline, SIGNAL(clicked()),
-                ah, SLOT(slotDrawSpline()));
+                actionHandler, SLOT(slotDrawSpline()));
         connect(bMenuPolyline, SIGNAL(clicked()),
                 tb, SLOT(showToolBarPolylines()));
+        connect(bMenuPoint, SIGNAL(clicked()),
+                this, SLOT(slotDrawPoint()));
 
         connect(bMenuText, SIGNAL(clicked()),
-                ah, SLOT(slotDrawText()));
+                actionHandler, SLOT(slotDrawText()));
         connect(bMenuDim, SIGNAL(clicked()),
                 tb, SLOT(showToolBarDim()));
         connect(bMenuHatch, SIGNAL(clicked()),
-                ah, SLOT(slotDrawHatch()));
+                actionHandler, SLOT(slotDrawHatch()));
         connect(bMenuImage, SIGNAL(clicked()),
-                ah, SLOT(slotDrawImage()));
+                actionHandler, SLOT(slotDrawImage()));
 
         connect(bMenuModify, SIGNAL(clicked()),
                 tb, SLOT(showToolBarModify()));
@@ -98,11 +99,20 @@ void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
                 tb, SLOT(showToolBarInfo()));
 
         connect(bMenuBlock, SIGNAL(clicked()),
-                ah, SLOT(slotBlocksCreate()));
+                actionHandler, SLOT(slotBlocksCreate()));
         connect(bMenuSelect, SIGNAL(clicked()),
                 tb, SLOT(showToolBarSelect()));
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_CadToolBarMain::setCadToolBar(): No valid action handler set.");
     }
+}
+
+void QG_CadToolBarMain::slotDrawPoint() {
+    bMenuPoint->setChecked(true);
+    actionHandler->slotDrawPoint();
+}
+
+void QG_CadToolBarMain::clearDrawPoint() {
+    bMenuPoint->setChecked(false);
 }

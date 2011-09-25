@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -58,7 +58,7 @@ QAction* RS_ActionSelectWindow::createGUIAction(RS2::ActionType type, QObject* /
     } else {
         action = new QAction(tr("Deselect Window"), NULL);
 		action->setIcon(QIcon(":/extui/deselectwindow.png"));
-        //action->zetStatusTip(tr("Deselects all Entities in a given Window"));		
+        //action->zetStatusTip(tr("Deselects all Entities in a given Window"));
 	}
     return action;
 }
@@ -67,8 +67,8 @@ QAction* RS_ActionSelectWindow::createGUIAction(RS2::ActionType type, QObject* /
 void RS_ActionSelectWindow::init(int status) {
     RS_PreviewActionInterface::init(status);
     v1 = v2 = RS_Vector(false);
-    snapMode = RS2::SnapFree;
-    snapRes = RS2::RestrictNothing;
+    snapMode.clear();
+    snapMode.restriction = RS2::RestrictNothing;
 }
 
 
@@ -99,11 +99,11 @@ void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
         deletePreview();
 		RS_Pen pen_f(RS_Color(50,50,255,40), RS2::Width00, RS2::SolidLine);
 		RS_OverlayBox* ob=new RS_OverlayBox(preview, RS_OverlayBoxData(v1, v2));
-		ob->setPen(pen_f);	
+		ob->setPen(pen_f);
 		preview->addEntity(ob);
-		
+
 		RS_Pen pen(RS_Color(218,105,24), RS2::Width00, RS2::SolidLine);
-		
+
 		// TODO change to a rs_box sort of entity
 		RS_Line* e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v1.y),  RS_Vector(v2.x, v1.y)));
 		e->setPen(pen);
@@ -120,7 +120,7 @@ void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
 		e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v2.y),  RS_Vector(v1.x, v1.y)));
 		e->setPen(pen);
         preview->addEntity(e);
-		 
+
         drawPreview();
     }
 }

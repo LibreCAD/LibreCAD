@@ -275,6 +275,8 @@ void RS_ActionDrawLineParallelThrough::updateMouseCursor() {
 
 
 void RS_ActionDrawLineParallelThrough::updateToolBar() {
+    //not needed any more with new snap
+    return;
     if (getStatus()==SetPos && !isFinished()) {
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
     } else {

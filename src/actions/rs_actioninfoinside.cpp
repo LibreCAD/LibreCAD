@@ -118,6 +118,8 @@ void RS_ActionInfoInside::updateMouseCursor() {
 
 
 void RS_ActionInfoInside::updateToolBar() {
+    //not needed any more with new snap
+    return;
     if (!isFinished()) {
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
     } else {

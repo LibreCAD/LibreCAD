@@ -206,6 +206,8 @@ void RS_ActionPolylineDelBetween::updateMouseCursor() {
 
 
 void RS_ActionPolylineDelBetween::updateToolBar() {
+    //not needed any more with new snap
+    return;
 	switch (getStatus()) {
 	case SetNodePoint1:
 	case SetNodePoint2:
