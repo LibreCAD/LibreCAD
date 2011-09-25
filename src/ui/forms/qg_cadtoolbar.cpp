@@ -298,6 +298,8 @@ void QG_CadToolBar::showToolBarSelect(RS_ActionInterface* selectAction,
 }
 
 void QG_CadToolBar::setSnapFree() {
+    //not needed any more, will be removed
+    return;
         if (tbSnap != NULL ) {
                 tbSnap->snapFree();
         }
