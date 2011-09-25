@@ -2271,6 +2271,11 @@ void QC_ApplicationWindow::
     if (!fileName.isEmpty())
          {
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: creating new doc window");
+        if (recentFiles->indexOf(fileName) >=0) {
+            QString message=tr("Warning: File already opened : ")+fileName;
+            commandWidget->appendHistory(message);
+            statusBar()->showMessage(message, 2000);
+        }
         // Create new document window:
         QC_MDIWindow* w = slotFileNew();
         // RVT_PORT qApp->processEvents(1000);
@@ -2367,12 +2372,21 @@ void QC_ApplicationWindow::slotFileSave() {
                     statusBar()->showMessage(tr("Saved drawing: %1").arg(name), 2000);
                 }
             } else {
+                QString message( tr("Cannot save the file ") +
+                                 w->getDocument()->getFilename()
+                                 + tr(" , please check the filename and permissions.")
+                                 );
+                statusBar()->showMessage(message, 2000);
+                commandWidget->appendHistory(message);
+                slotFileSaveAs();
                 // error
+                /*
                 QMessageBox::information(this, QMessageBox::tr("Warning"),
                                          tr("Cannot save the file\n%1\nPlease "
                                             "check the permissions.")
                                          .arg(w->getDocument()->getFilename()),
                                          QMessageBox::Ok);
+                                         */
             }
         }
     }
