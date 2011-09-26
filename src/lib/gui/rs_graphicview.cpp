@@ -92,7 +92,15 @@ RS_GraphicView::RS_GraphicView()
  * Destructor.
  */
 RS_GraphicView::~RS_GraphicView() {
-    //delete grid;
+    /*
+    //@write default snap mode from prefrences.
+    defaultSnapMode.restriction=defaultSnapRes;
+    unsigned int snapFlags=RS_Snapper::snapModeToInt(defaultSnapMode);
+    RS_SETTINGS->beginGroup("/Snap");
+    RS_SETTINGS->writeEntry("/SnapMode",QString::number(snapFlags));
+    RS_SETTINGS->endGroup();
+    // no need to delete child widgets, Qt does it all for us
+    */
     delete grid;
 }
 
@@ -1132,7 +1140,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
  *        lines e.g. in splines).
  * @param db Double buffering on (recommended) / off
  */
-void RS_GraphicView::drawEntity(RS_Entity* e, double patternOffset) {
+void RS_GraphicView::drawEntity(RS_Entity* /*e*/, double /*patternOffset*/) {
         RS_DEBUG->print("RS_GraphicView::drawEntity(RS_Entity*,patternOffset) not supported anymore");
         // RVT_PORT this needs to be optimized
         // ONe way to do is to send a RS2::RedrawSelected, then teh draw routine will onyl draw all selected entities

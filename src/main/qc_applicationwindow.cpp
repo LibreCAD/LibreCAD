@@ -482,7 +482,7 @@ void QC_ApplicationWindow::closeEvent(QCloseEvent* ce) {
         ce->ignore();
     }
 //we shouldn't need this; saving should be done within ~QG_SnapToolBar()
-    snapToolBar->saveSnapMode();
+    //snapToolBar->saveSnapMode();
 
     RS_DEBUG->print("QC_ApplicationWindow::closeEvent(): OK");
 }
@@ -1608,7 +1608,8 @@ void QC_ApplicationWindow::storeSettings() {
     RS_SETTINGS->writeEntry("/WindowY", y());
     RS_SETTINGS->writeEntry("/DockWindows", QVariant (saveState()));
     RS_SETTINGS->endGroup();
-snapToolBar->saveSnapMode();
+    //save snapMode
+    snapToolBar->saveSnapMode();
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings(): OK");
 }
 
