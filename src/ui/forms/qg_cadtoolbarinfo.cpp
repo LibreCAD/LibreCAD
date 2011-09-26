@@ -122,14 +122,6 @@ void QG_CadToolBarInfo::restoreAction()
 {
     if(actionHandler==NULL) return;
     //clear all action
-    RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
-    if(currentAction != NULL) {
-        currentAction->finish(false); //finish the action, but do not update toolBar
-    }
-    if ( bDist ->isChecked() ) {
-        actionHandler->slotInfoDist();
-        return;
-    }
     if ( bDist2 ->isChecked() ) {
         actionHandler->slotInfoDist2();
         return;
@@ -145,5 +137,12 @@ void QG_CadToolBarInfo::restoreAction()
     if ( bArea ->isChecked() ) {
         actionHandler->slotInfoArea();
         return;
+    }
+    //default to measure point to point distance
+    //bDist->setChecked(true);
+    //actionHandler->slotInfoDist();
+    RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+    if(currentAction != NULL) {
+        currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }

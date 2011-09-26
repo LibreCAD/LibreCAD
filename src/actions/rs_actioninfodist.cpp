@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -38,11 +38,11 @@ RS_ActionInfoDist::RS_ActionInfoDist(RS_EntityContainer& container,
 
 
 QAction* RS_ActionInfoDist::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Distance Point to Point")
-	QAction* action = new QAction(tr("&Distance Point to Point"), NULL);
-	//action->zetStatusTip(tr("Measures the distance between two points"));
-	action->setIcon(QIcon(":/extui/restricthorizontal.png"));
-	return action;
+        // tr("Distance Point to Point")
+        QAction* action = new QAction(tr("&Distance Point to Point"), NULL);
+        //action->zetStatusTip(tr("Measures the distance between two points"));
+        action->setIcon(QIcon(":/extui/restricthorizontal.png"));
+        return action;
 }
 
 
@@ -124,7 +124,7 @@ void RS_ActionInfoDist::coordinateEvent(RS_CoordinateEvent* e) {
     switch (getStatus()) {
     case SetPoint1:
         point1 = mouse;
-    	graphicView->moveRelativeZero(point1);
+        graphicView->moveRelativeZero(point1);
         setStatus(SetPoint2);
         break;
 
@@ -132,7 +132,7 @@ void RS_ActionInfoDist::coordinateEvent(RS_CoordinateEvent* e) {
         if (point1.valid) {
             point2 = mouse;
             deletePreview();
-    		graphicView->moveRelativeZero(point2);
+                graphicView->moveRelativeZero(point2);
             trigger();
             setStatus(SetPoint1);
         }
@@ -171,6 +171,8 @@ void RS_ActionInfoDist::updateMouseCursor() {
 
 
 void RS_ActionInfoDist::updateToolBar() {
+    return;
+    /*
     switch (getStatus()) {
     case SetPoint1:
     case SetPoint2:
@@ -180,6 +182,7 @@ void RS_ActionInfoDist::updateToolBar() {
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarInfo);
         break;
     }
+    */
 }
 
 
