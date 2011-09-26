@@ -39,6 +39,7 @@ public:
     QG_CadToolBarMain(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_CadToolBarMain();
     void restoreAction(); //restore action from checked button
+    void finishCurrentAction(); //clear current action
 
 public slots:
     virtual void init();
@@ -49,8 +50,8 @@ protected slots:
 private:
     QG_ActionHandler* actionHandler;
 private slots:
-    virtual void slotDrawText();
-    virtual void slotDrawImage();
+    void slotDrawText();
+    void slotDrawImage();
 };
 
 #endif
