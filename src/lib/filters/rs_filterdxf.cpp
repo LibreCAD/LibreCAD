@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -291,7 +291,7 @@ void RS_FilterDXF::addLine(const DL_LineData& data) {
 
 /**
  * Implementation of the method which handles arc entities.
- * 
+ *
  * @param angle1 Start angle in deg (!)
  * @param angle2 End angle in deg (!)
  */
@@ -404,8 +404,8 @@ void RS_FilterDXF::addSpline(const DL_SplineData& data) {
         currentContainer->addEntity(spline);
     } else {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-			"RS_FilterDXF::addSpline: Invalid degree for spline: %d. "
-			"Accepted values are 1..3.", data.degree);
+                        "RS_FilterDXF::addSpline: Invalid degree for spline: %d. "
+                        "Accepted values are 1..3.", data.degree);
     }
 }
 
@@ -459,7 +459,7 @@ void RS_FilterDXF::addInsert(const DL_InsertData& data) {
 
 
 /**
- * Implementation of the method which handles text 
+ * Implementation of the method which handles text
  * chunks for MText entities.
  */
 void RS_FilterDXF::addMTextChunk(const char* text) {
@@ -471,7 +471,7 @@ void RS_FilterDXF::addMTextChunk(const char* text) {
 
 
 /**
- * Implementation of the method which handles 
+ * Implementation of the method which handles
  * multi texts (MTEXT).
  */
 void RS_FilterDXF::addMText(const DL_MTextData& data) {
@@ -556,7 +556,7 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
 
 
 /**
- * Implementation of the method which handles 
+ * Implementation of the method which handles
  * texts (TEXT).
  */
 void RS_FilterDXF::addText(const DL_TextData& data) {
@@ -632,7 +632,11 @@ void RS_FilterDXF::addText(const DL_TextData& data) {
     addMText(DL_MTextData(
                  refPoint.x,
                  refPoint.y,
+#ifdef  RS_VECTOR2D
+                 0.,
+#else
                  refPoint.z,
+#endif
                  data.height, width,
                  attachmentPoint,
                  drawingDirection,
@@ -645,7 +649,7 @@ void RS_FilterDXF::addText(const DL_TextData& data) {
 
 
 /**
- * Implementation of the method which handles 
+ * Implementation of the method which handles
  * dimensions (DIMENSION).
  */
 RS_DimensionData RS_FilterDXF::convDimensionData(
@@ -709,7 +713,7 @@ RS_DimensionData RS_FilterDXF::convDimensionData(
 
 
 /**
- * Implementation of the method which handles 
+ * Implementation of the method which handles
  * aligned dimensions (DIMENSION).
  */
 void RS_FilterDXF::addDimAlign(const DL_DimensionData& data,
@@ -733,7 +737,7 @@ void RS_FilterDXF::addDimAlign(const DL_DimensionData& data,
 
 
 /**
- * Implementation of the method which handles 
+ * Implementation of the method which handles
  * linear dimensions (DIMENSION).
  */
 void RS_FilterDXF::addDimLinear(const DL_DimensionData& data,
@@ -1107,7 +1111,11 @@ void RS_FilterDXF::setVariableVector(const char* key,
     // update document's variable list:
     if (currentContainer->rtti()==RS2::EntityGraphic) {
         ((RS_Graphic*)currentContainer)->addVariable(QString(key),
+#ifdef  RS_VECTOR2D
+                RS_Vector(v1, v2), code);
+#else
                 RS_Vector(v1, v2, v3), code);
+#endif
     }
 }
 
@@ -1277,10 +1285,10 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
         for (uint i=0; i<graphic->countBlocks(); ++i) {
             RS_Block* blk = graphic->blockAt(i);
-			dxf.writeBlockRecord(*dw, 
+                        dxf.writeBlockRecord(*dw,
                             std::string(blk->getName().toLocal8Bit()));
-			/*
-			// v2.0.4.9..:
+                        /*
+                        // v2.0.4.9..:
             //writeBlock(*dw, blk);
             dw->dxfString(  0, "BLOCK_RECORD");
             //dw.dxfHex(5, 0x1F);
@@ -1290,9 +1298,9 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
             dw->dxfString(100, "AcDbBlockTableRecord");
             dw->dxfString(  2, blk->getName().toLocal8Bit());
             dw->dxfHex(340, 0);
-			*/
+                        */
         }
-    	dw->tableEnd();
+        dw->tableEnd();
     }
 
     // end of tables:
@@ -1433,7 +1441,11 @@ void RS_FilterDXF::writeVariables(DL_WriterA& dw) {
                            it.value().getVector().y);
                 if ( isVariableTwoDimensional(it.key()) == false) {
                     dw.dxfReal(it.value().getCode()+20,
+#ifdef  RS_VECTOR2D
+                               0.);
+#else
                                it.value().getVector().z);
+#endif
                 }
                 break;
             }
@@ -1452,8 +1464,8 @@ void RS_FilterDXF::writeVariables(DL_WriterA& dw) {
  */
 void RS_FilterDXF::writeLayer(DL_WriterA& dw, RS_Layer* l) {
     if (l==NULL) {
-		RS_DEBUG->print(RS_Debug::D_WARNING, 
-			"RS_FilterDXF::writeLayer: layer is NULL");
+                RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_FilterDXF::writeLayer: layer is NULL");
         return;
     }
 
@@ -1502,7 +1514,7 @@ void RS_FilterDXF::writeAppid(DL_WriterA& dw, const char* appid) {
 void RS_FilterDXF::writeBlock(DL_WriterA& dw, RS_Block* blk) {
     if (blk==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-			"RS_FilterDXF::writeBlock: Block is NULL");
+                        "RS_FilterDXF::writeBlock: Block is NULL");
         return;
     }
 
@@ -1512,7 +1524,11 @@ void RS_FilterDXF::writeBlock(DL_WriterA& dw, RS_Block* blk) {
                    DL_BlockData((const char*)blk->getName().toLocal8Bit(), 0,
                                 blk->getBasePoint().x,
                                 blk->getBasePoint().y,
+#ifdef  RS_VECTOR2D
+                                0.));
+#else
                                 blk->getBasePoint().z));
+#endif
     for (RS_Entity* e=blk->firstEntity(RS2::ResolveNone);
             e!=NULL;
             e=blk->nextEntity(RS2::ResolveNone)) {
@@ -1646,12 +1662,12 @@ void RS_FilterDXF::writePolyline(DL_WriterA& dw,
                                  RS_Polyline* l,
                                  const DL_Attributes& attrib) {
 
-	int count = l->count();
-	if (l->isClosed()==false) {
-		count++;
-	}
+        int count = l->count();
+        if (l->isClosed()==false) {
+                count++;
+        }
 
-	dxf.writePolyline(
+        dxf.writePolyline(
         dw,
         DL_PolylineData(count,
                         0, 0,
@@ -1660,7 +1676,7 @@ void RS_FilterDXF::writePolyline(DL_WriterA& dw,
     bool first = true;
     RS_Entity* nextEntity = 0;
     RS_AtomicEntity* ae = NULL;
-	RS_Entity* lastEntity = l->lastEntity(RS2::ResolveNone);
+        RS_Entity* lastEntity = l->lastEntity(RS2::ResolveNone);
     for (RS_Entity* v=l->firstEntity(RS2::ResolveNone);
             v!=NULL;
             v=nextEntity) {
@@ -1673,8 +1689,8 @@ void RS_FilterDXF::writePolyline(DL_WriterA& dw,
 
         ae = (RS_AtomicEntity*)v;
         double bulge=0.0;
-        
-		// Write vertex:
+
+                // Write vertex:
         if (first) {
             if (v->rtti()==RS2::EntityArc) {
                 bulge = ((RS_Arc*)v)->getBulge();
@@ -1683,7 +1699,7 @@ void RS_FilterDXF::writePolyline(DL_WriterA& dw,
                             DL_VertexData(ae->getStartpoint().x,
                                           ae->getStartpoint().y,
                                           0.0,
-										  bulge));
+                                                                                  bulge));
             first = false;
         }
 
@@ -1692,9 +1708,9 @@ void RS_FilterDXF::writePolyline(DL_WriterA& dw,
                 if (nextEntity->rtti()==RS2::EntityArc) {
                     bulge = ((RS_Arc*)nextEntity)->getBulge();
                 }
-				else {
-					bulge = 0.0;
-				}
+                                else {
+                                        bulge = 0.0;
+                                }
             }
         /*} else {
             if (v->rtti()==RS2::EntityArc) {
@@ -1703,13 +1719,13 @@ void RS_FilterDXF::writePolyline(DL_WriterA& dw,
         }*/
 
 
-		if (l->isClosed()==false || v!=lastEntity) {
-        	dxf.writeVertex(dw,
+                if (l->isClosed()==false || v!=lastEntity) {
+                dxf.writeVertex(dw,
                         DL_VertexData(ae->getEndpoint().x,
                                       ae->getEndpoint().y,
                                       0.0,
                                       bulge));
-		}
+                }
     }
     dxf.writePolylineEnd(dw);
 }
@@ -2114,7 +2130,7 @@ void RS_FilterDXF::writeLeader(DL_WriterA& dw, RS_Leader* l,
         }
     } else {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-			"dropping leader with no vertices");
+                        "dropping leader with no vertices");
     }
 }
 
@@ -2147,7 +2163,7 @@ void RS_FilterDXF::writeHatch(DL_WriterA& dw, RS_Hatch* h,
 
     if (!writeIt) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-			"RS_FilterDXF::writeHatch: Dropping Hatch");
+                        "RS_FilterDXF::writeHatch: Dropping Hatch");
     } else {
         DL_HatchData data(h->countLoops(),
                           h->isSolid(),
@@ -2441,7 +2457,7 @@ DL_Attributes RS_FilterDXF::getEntityAttributes(RS_Entity* entity) {
 RS_Pen RS_FilterDXF::attributesToPen(const DL_Attributes& attrib) const {
 
     /*
-    printf("converting Color %d to %s\n", 
+    printf("converting Color %d to %s\n",
        attrib.getColor(), numberToColor(attrib.getColor()).name().toLatin1().data());
     */
 
@@ -2526,7 +2542,7 @@ RS_Color RS_FilterDXF::numberToColor(int num, bool comp) {
                             (int)(dxfColors[num][2]*255));
         } else {
             RS_DEBUG->print(RS_Debug::D_WARNING,
-				"RS_FilterDXF::numberToColor: Invalid color number given.");
+                                "RS_FilterDXF::numberToColor: Invalid color number given.");
             return RS_Color(RS2::FlagByLayer);
         }
     }
@@ -2778,7 +2794,7 @@ QString RS_FilterDXF::lineTypeToName(RS2::LineType lineType) {
  * Converts a RS_LineType into a name for a line type.
  */
 /*QString RS_FilterDXF::lineTypeToDescription(RS2::LineType lineType) {
- 
+
     // Standard linetypes for QCad II / AutoCAD
     switch (lineType) {
     case RS2::SolidLine:
@@ -2798,7 +2814,7 @@ QString RS_FilterDXF::lineTypeToName(RS2::LineType lineType) {
     default:
         break;
     }
- 
+
     return "CONTINUOUS";
 }*/
 
