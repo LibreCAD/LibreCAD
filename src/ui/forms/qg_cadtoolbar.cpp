@@ -216,17 +216,22 @@ void QG_CadToolBar::showToolBar(int id) {
         newTb = tbCircles;
         break;
     case RS2::ToolBarInfo:
+        tbInfo->restoreAction();
         newTb = tbInfo;
         break;
     case RS2::ToolBarModify:
+        tbModify->restoreAction();
         newTb = tbModify;
         break;
     case RS2::ToolBarDim:
+        tbDim->restoreAction();
         newTb = tbDim;
         break;
+        /* not needed any more
     case RS2::ToolBarSnap:
         newTb = tbSnap;
         break;
+        */
     case RS2::ToolBarSelect:
         newTb = tbSelect;
         break;
@@ -313,8 +318,4 @@ void QG_CadToolBar::setSnapFree() {
         if (tbSnap != NULL ) {
                 tbSnap->snapFree();
         }
-}
-
-void QG_CadToolBar::clearDrawPoint() {
-    tbMain->clearDrawPoint();
 }

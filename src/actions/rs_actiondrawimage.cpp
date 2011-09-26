@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -47,11 +47,11 @@ RS_ActionDrawImage::~RS_ActionDrawImage() {}
 
 
 QAction* RS_ActionDrawImage::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Image")
-	QAction* action = new QAction(tr("&Image"),  NULL);
-	action->setIcon(QIcon(":/extui/menuimage.png"));
-	//action->zetStatusTip(tr("Insert Image (Bitmap)"));
-	return action;
+        // tr("Image")
+        QAction* action = new QAction(tr("&Image"),  NULL);
+        action->setIcon(QIcon(":/extui/menuimage.png"));
+        //action->zetStatusTip(tr("Insert Image (Bitmap)"));
+        return action;
 }
 
 void RS_ActionDrawImage::init(int status) {
@@ -60,19 +60,19 @@ void RS_ActionDrawImage::init(int status) {
     reset();
 
     data.file = RS_DIALOGFACTORY->requestImageOpenDialog();
-	// RVT_PORT should we really redarw here?? graphicView->redraw();
+        // RVT_PORT should we really redarw here?? graphicView->redraw();
 
-	if (!data.file.isEmpty()) {
-    	//std::cout << "file: " << data.file << "\n";
+        if (!data.file.isEmpty()) {
+        //std::cout << "file: " << data.file << "\n";
 
         img = QImage(data.file);
-    	setStatus(SetTargetPoint);
-	}
-	else {
-		finish();
-		updateToolBar();
+        setStatus(SetTargetPoint);
+        }
+        else {
+                finish();
+                updateToolBar();
         //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-	}
+        }
 }
 
 
@@ -97,11 +97,11 @@ void RS_ActionDrawImage::trigger() {
         creation.createImage(data);
     }
 
-	graphicView->redraw(RS2::RedrawDrawing); 
+        graphicView->redraw(RS2::RedrawDrawing);
 
     //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
     finish();
-	updateToolBar();
+        updateToolBar();
 }
 
 
@@ -151,7 +151,7 @@ void RS_ActionDrawImage::mouseReleaseEvent(QMouseEvent* e) {
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         //init(getStatus()-1);
-		finish();
+                finish();
     }
 }
 
@@ -242,19 +242,23 @@ QStringList RS_ActionDrawImage::getAvailableCommands() {
 void RS_ActionDrawImage::showOptions() {
     RS_ActionInterface::showOptions();
 
-    RS_DIALOGFACTORY->requestOptions(this, true);
+    if(RS_DIALOGFACTORY!=NULL){
+        RS_DIALOGFACTORY->requestOptions(this, true);
+    }
 }
 
 
 
 void RS_ActionDrawImage::hideOptions() {
     RS_ActionInterface::hideOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, false);
+    if(RS_DIALOGFACTORY!=NULL){
+        RS_DIALOGFACTORY->requestOptions(this, false);
+    }
 }
 
 
 void RS_ActionDrawImage::updateMouseButtonHints() {
+    if(RS_DIALOGFACTORY==NULL) return;
     switch (getStatus()) {
     case SetTargetPoint:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
@@ -283,6 +287,11 @@ void RS_ActionDrawImage::updateMouseCursor() {
 
 
 void RS_ActionDrawImage::updateToolBar() {
+    if(RS_DIALOGFACTORY==NULL) return;
+    if (isFinished()) {
+        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+    }
+    /*
     //not needed any more with new snap
     return;
     if (!isFinished()) {
@@ -290,6 +299,7 @@ void RS_ActionDrawImage::updateToolBar() {
     } else {
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
     }
+    */
 }
 
 

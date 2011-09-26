@@ -214,6 +214,12 @@
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/menutext.png</normaloff>:/extui/menutext.png</iconset>
    </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QToolButton" name="bMenuDim">
    <property name="geometry">
@@ -273,6 +279,12 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/menuimage.png</normaloff>:/extui/menuimage.png</iconset>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToolButton" name="bMenuModify">
@@ -353,6 +365,34 @@
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/menuselect.png</normaloff>:/extui/menuselect.png</iconset>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bHidden">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>398</y>
+     <width>0</width>
+     <height>0</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Points</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>
