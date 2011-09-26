@@ -116,3 +116,22 @@ void QG_CadToolBarMain::slotDrawPoint() {
 void QG_CadToolBarMain::clearDrawPoint() {
     bMenuPoint->setChecked(false);
 }
+
+//restore action from checked button
+void QG_CadToolBarMain::restoreAction()
+{
+    if(actionHandler==NULL) return;
+    if ( bMenuSpline ->isChecked() ) {
+        actionHandler->slotDrawSpline();
+        return;
+    }
+    if ( bMenuPoint ->isChecked() ) {
+        actionHandler->slotDrawPoint();
+        return;
+    }
+    //clear all action
+    RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+    if(currentAction != NULL) {
+        currentAction->finish(false); //finish the action, but do not update toolBar
+    }
+}

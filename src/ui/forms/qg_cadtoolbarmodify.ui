@@ -53,6 +53,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>65</width>
+       <height>20</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="1" column="0">

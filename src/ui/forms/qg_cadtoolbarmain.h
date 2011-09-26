@@ -38,6 +38,7 @@ class QG_CadToolBarMain : public QWidget, public Ui::QG_CadToolBarMain
 public:
     QG_CadToolBarMain(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_CadToolBarMain();
+    void restoreAction(); //restore action from checked button
 
 public slots:
     virtual void init();
