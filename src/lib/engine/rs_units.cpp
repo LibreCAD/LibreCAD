@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -419,7 +419,7 @@ double RS_Units::convert(double val, RS2::Unit src, RS2::Unit dest) {
         return (val*getFactorToMM(src))/getFactorToMM(dest);
     } else {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-			"RS_Units::convert: invalid factor");
+                        "RS_Units::convert: invalid factor");
         return val;
     }
 }
@@ -431,8 +431,11 @@ double RS_Units::convert(double val, RS2::Unit src, RS2::Unit dest) {
  */
 RS_Vector RS_Units::convert(const RS_Vector val, RS2::Unit src, RS2::Unit dest) {
     return RS_Vector(convert(val.x, src, dest),
-                     convert(val.y, src, dest),
-                     convert(val.z, src, dest));
+                     convert(val.y, src, dest)
+#ifndef RS_VECTOR2D
+                     , convert(val.z, src, dest)
+#endif
+                     );
 }
 
 
@@ -480,7 +483,7 @@ QString RS_Units::formatLinear(double length, RS2::Unit unit,
 
     default:
         RS_DEBUG->print(RS_Debug::D_WARNING,
-			"RS_Units::formatLinear: Unknown format");
+                        "RS_Units::formatLinear: Unknown format");
         ret = "";
         break;
     }
@@ -657,7 +660,7 @@ QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
             denominator = denominator / gcd;
         } else {
             RS_DEBUG->print(RS_Debug::D_WARNING,
-				"RS_Units::formatFractional: invalid gcd");
+                                "RS_Units::formatFractional: invalid gcd");
             nominator = 0;
             denominator = 0;
         }
@@ -708,7 +711,7 @@ QString RS_Units::formatAngle(double angle, RS2::AngleFormat format,
         break;
     default:
         RS_DEBUG->print(RS_Debug::D_WARNING,
-			"RS_Units::formatAngle: Unknown Angle Unit");
+                        "RS_Units::formatAngle: Unknown Angle Unit");
         return "";
         break;
     }
@@ -1306,7 +1309,7 @@ void RS_Units::test() {
         for (int prec=0; prec<=6; ++prec) {
             s = RS_Units::formatLinear(v, RS2::Inch, RS2::Architectural,
                                        prec, true);
-			// RVT_PORT changed  << s to s.ascii()
+                        // RVT_PORT changed  << s to s.ascii()
             std::cout << "prec: " << prec << " v: " << v << " s: " << s.toAscii().data() << "\n";
         }
     }
