@@ -184,10 +184,13 @@ void QG_CadToolBar::showToolBar(int id) {
     case RS2::ToolBarMain:
         newTb = tbMain;
         break;
+        /* not needed any more
     case RS2::ToolBarPoints:
         newTb = tbPoints;
         break;
+        */
     case RS2::ToolBarLines:
+        tbLines->restoreAction();
         newTb = tbLines;
         break;
     case RS2::ToolBarArcs:
