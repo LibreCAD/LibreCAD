@@ -182,6 +182,7 @@ void QG_CadToolBar::showToolBar(int id) {
     switch (id) {
     default:
     case RS2::ToolBarMain:
+        tbMain->restoreAction();
         newTb = tbMain;
         break;
         /* not needed any more
@@ -201,10 +202,11 @@ void QG_CadToolBar::showToolBar(int id) {
         tbEllipses->restoreAction();
         newTb = tbEllipses;
         break;
+        /*
     case RS2::ToolBarSplines:
-        tbSplines->restoreAction();
         newTb = tbSplines;
         break;
+        */
     case RS2::ToolBarPolylines:
         tbPolylines->restoreAction();
         newTb = tbPolylines;

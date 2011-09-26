@@ -219,15 +219,15 @@ RS_ActionInterface* QG_ActionHandler::getCurrentAction() {
  */
 RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction()");
-	RS_GraphicView* gv = mainWindow->getGraphicView();
+        RS_GraphicView* gv = mainWindow->getGraphicView();
     RS_Document* doc = mainWindow->getDocument();
     RS_ActionInterface* a = NULL;
 
     // only global options are allowed without a document:
     if (gv==NULL || doc==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-        	"QG_ActionHandler::setCurrentAction: graphic view or "
-        	"document is NULL");
+                "QG_ActionHandler::setCurrentAction: graphic view or "
+                "document is NULL");
         return NULL;
     }
 
@@ -893,7 +893,7 @@ bool QG_ActionHandler::command(const QString& cmd) {
         if (gv!=NULL) {
             gv->back();
         }
-		RS_DEBUG->print("QG_ActionHandler::command: back");
+                RS_DEBUG->print("QG_ActionHandler::command: back");
         return true;
     }
 
@@ -902,26 +902,26 @@ bool QG_ActionHandler::command(const QString& cmd) {
 
     RS_GraphicView* gv = mainWindow->getGraphicView();
     if (gv!=NULL) {
-		RS_DEBUG->print("QG_ActionHandler::command: trigger command event in "
-		" graphic view");
+                RS_DEBUG->print("QG_ActionHandler::command: trigger command event in "
+                " graphic view");
         gv->commandEvent(&e);
     }
 
     // if the current action can't deal with the command,
     //   it might be intended to launch a new command
     if (!e.isAccepted()) {
-		RS_DEBUG->print("QG_ActionHandler::command: convert cmd to action type");
+                RS_DEBUG->print("QG_ActionHandler::command: convert cmd to action type");
         // command for new action:
         RS2::ActionType type = RS_COMMANDS->cmdToAction(cmd);
         if (type!=RS2::ActionNone) {
-			RS_DEBUG->print("QG_ActionHandler::command: setting current action");
+                        RS_DEBUG->print("QG_ActionHandler::command: setting current action");
             setCurrentAction(type);
-			RS_DEBUG->print("QG_ActionHandler::command: current action set");
+                        RS_DEBUG->print("QG_ActionHandler::command: current action set");
             return true;
         }
     }
 
-	RS_DEBUG->print("QG_ActionHandler::command: current action not set");
+        RS_DEBUG->print("QG_ActionHandler::command: current action not set");
     return false;
 }
 
@@ -937,7 +937,7 @@ void QG_ActionHandler::slotFileOpen() {
 }
 /*
 void QG_ActionHandler::slotFileSave() {
-	setCurrentAction(RS2::ActionFileSave);
+        setCurrentAction(RS2::ActionFileSave);
 }
 */
 
@@ -947,11 +947,11 @@ void QG_ActionHandler::slotFileSaveAs() {
 
 /*
 void QG_ActionHandler::slotFileClose() {
-	setCurrentAction(RS2::ActionFileClose);
+        setCurrentAction(RS2::ActionFileClose);
 }
 
 void QG_ActionHandler::slotFilePrint() {
-	setCurrentAction(RS2::ActionFilePrint);
+        setCurrentAction(RS2::ActionFilePrint);
 }
 */
 
@@ -1530,6 +1530,7 @@ void QG_ActionHandler::disableRestrictions() {
  * Used after the active window changed.
  */
 void QG_ActionHandler::updateSnapMode() {
+/* not needed any more
     if (snapFree!=NULL && snapFree->isChecked()) {
         slotSnapFree();
     } else if (snapGrid!=NULL && snapGrid->isChecked()) {
@@ -1563,6 +1564,7 @@ void QG_ActionHandler::updateSnapMode() {
     if (lockRelativeZero!=NULL) {
         slotLockRelativeZero(lockRelativeZero->isChecked());
     }
+    */
 }
 
 void QG_ActionHandler::slotSetRelativeZero() {

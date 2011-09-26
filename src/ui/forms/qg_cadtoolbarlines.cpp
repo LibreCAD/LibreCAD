@@ -197,50 +197,71 @@ void QG_CadToolBarLines::restoreAction() {
     if(actionHandler==NULL) return;
     if(bNormal->isChecked()) {
         actionHandler->slotDrawLine();
+        return;
     }
     if(bAngle->isChecked()) {
         actionHandler->slotDrawLineAngle();
+        return;
     }
     if(bHorizontal->isChecked()) {
         actionHandler->slotDrawLineHorizontal();
+        return;
     }
     if(bVertical->isChecked()) {
         actionHandler->slotDrawLineVertical();
+        return;
     }
     if(bRectangle->isChecked()) {
         actionHandler->slotDrawLineRectangle();
+        return;
     }
     if(bBisector->isChecked()) {
         actionHandler->slotDrawLineBisector();
+        return;
     }
     if(bParallel->isChecked()) {
         actionHandler->slotDrawLineParallel();
+        return;
     }
     if(bParallelThrough->isChecked()) {
         actionHandler->slotDrawLineParallelThrough();
+        return;
     }
     if(bTangent1->isChecked()) {
         actionHandler->slotDrawLineTangent1();
+        return;
     }
     if(bTangent2->isChecked()) {
         actionHandler->slotDrawLineTangent2();
+        return;
     }
     if(bOrthTan->isChecked()) {
         actionHandler->slotDrawLineOrthTan();
+        return;
     }
     if(bOrthogonal->isChecked()) {
         actionHandler->slotDrawLineOrthogonal();
+        return;
     }
     if(bRelAngle->isChecked()) {
         actionHandler->slotDrawLineRelAngle();
+        return;
     }
     if(bPolygon->isChecked()) {
         actionHandler->slotDrawLinePolygon();
+        return;
     }
     if(bPolygon2->isChecked()) {
         actionHandler->slotDrawLinePolygon2();
+        return;
     }
     if(bFree->isChecked()) {
         actionHandler->slotDrawLineFree();
+        return;
+    }
+    //clear all action
+    RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+    if(currentAction != NULL) {
+        currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }

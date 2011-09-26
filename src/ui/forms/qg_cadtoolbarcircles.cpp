@@ -123,18 +123,28 @@ void QG_CadToolBarCircles::restoreAction()
     if(actionHandler==NULL) return;
     if ( bCircle ->isChecked() ) {
         actionHandler->slotDrawCircle();
+        return;
     }
     if ( bCircleCR ->isChecked() ) {
         actionHandler->slotDrawCircleCR();
+        return;
     }
     if ( bCircle2P ->isChecked() ) {
         actionHandler->slotDrawCircle2P();
+        return;
     }
     if ( bCircle3P ->isChecked() ) {
         actionHandler->slotDrawCircle3P();
+        return;
     }
     if ( bCircleParallel ->isChecked() ) {
         actionHandler->slotDrawCircleParallel();
+        return;
+    }
+    //clear all action
+    RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+    if(currentAction != NULL) {
+        currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }
 //EOF

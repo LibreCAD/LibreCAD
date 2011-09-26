@@ -105,8 +105,15 @@ void QG_CadToolBarEllipses::restoreAction()
     if(actionHandler==NULL) return;
     if ( bEllipseAxes ->isChecked() ) {
         actionHandler->slotDrawEllipseAxis();
+        return;
     }
     if ( bEllipseArcAxes ->isChecked() ) {
         actionHandler->slotDrawEllipseArcAxis();
+        return;
+    }
+    //clear all action
+    RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+    if(currentAction != NULL) {
+        currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }
