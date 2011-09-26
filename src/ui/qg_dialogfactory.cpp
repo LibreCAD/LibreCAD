@@ -1365,12 +1365,6 @@ void QG_DialogFactory::requestToolBar(RS2::ToolBarId id) {
     }
 }
 
-void QG_DialogFactory::clearDrawPoint() {
-    if (cadToolBar!=NULL) {
-        cadToolBar->clearDrawPoint();
-    }
-}
-
 
 /**
  * Shows the select toolbar with the given action to launch.

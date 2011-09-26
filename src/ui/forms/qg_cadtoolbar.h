@@ -76,7 +76,6 @@ public slots:
     virtual void showToolBarSelect();
     virtual void showToolBarSelect( RS_ActionInterface * selectAction, int nextAction );
     virtual void setSnapFree();
-    virtual void clearDrawPoint();
 
 signals:
     void signalBack();

@@ -82,7 +82,7 @@ void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
         connect(bMenuPolyline, SIGNAL(clicked()),
                 tb, SLOT(showToolBarPolylines()));
         connect(bMenuPoint, SIGNAL(clicked()),
-                this, SLOT(slotDrawPoint()));
+                actionHandler, SLOT(slotDrawPoint()));
 
         connect(bMenuText, SIGNAL(clicked()),
                 actionHandler, SLOT(slotDrawText()));
@@ -92,6 +92,7 @@ void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
                 actionHandler, SLOT(slotDrawHatch()));
         connect(bMenuImage, SIGNAL(clicked()),
                 actionHandler, SLOT(slotDrawImage()));
+                //actionHandler, SLOT(slotDrawImage()));
 
         connect(bMenuModify, SIGNAL(clicked()),
                 tb, SLOT(showToolBarModify()));
@@ -108,14 +109,6 @@ void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
     }
 }
 
-void QG_CadToolBarMain::slotDrawPoint() {
-    bMenuPoint->setChecked(true);
-    actionHandler->slotDrawPoint();
-}
-
-void QG_CadToolBarMain::clearDrawPoint() {
-    bMenuPoint->setChecked(false);
-}
 
 //restore action from checked button
 void QG_CadToolBarMain::restoreAction()
@@ -129,7 +122,7 @@ void QG_CadToolBarMain::restoreAction()
         actionHandler->slotDrawPoint();
         return;
     }
-    //clear all action
+    bHidden->setChecked(true);
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
     if(currentAction != NULL) {
         currentAction->finish(false); //finish the action, but do not update toolBar

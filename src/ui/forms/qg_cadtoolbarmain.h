@@ -43,14 +43,14 @@ public:
 public slots:
     virtual void init();
     virtual void setCadToolBar( QG_CadToolBar * tb );
-    virtual void clearDrawPoint();
 
 protected slots:
     virtual void languageChange();
 private:
     QG_ActionHandler* actionHandler;
 private slots:
-    virtual void slotDrawPoint();
+    virtual void slotDrawText();
+    virtual void slotDrawImage();
 };
 
 #endif
