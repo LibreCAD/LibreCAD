@@ -126,4 +126,24 @@ void QG_CadToolBarInfo::restoreAction()
     if(currentAction != NULL) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
+    if ( bDist ->isChecked() ) {
+        actionHandler->slotInfoDist();
+        return;
+    }
+    if ( bDist2 ->isChecked() ) {
+        actionHandler->slotInfoDist2();
+        return;
+    }
+    if ( bAngle ->isChecked() ) {
+        actionHandler->slotInfoAngle();
+        return;
+    }
+    if ( bTotalLength ->isChecked() ) {
+        actionHandler->slotInfoTotalLength();
+        return;
+    }
+    if ( bArea ->isChecked() ) {
+        actionHandler->slotInfoArea();
+        return;
+    }
 }

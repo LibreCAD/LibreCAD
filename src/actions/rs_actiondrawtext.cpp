@@ -69,6 +69,7 @@ void RS_ActionDrawText::init(int status) {
                 } else {
                     hideOptions();
                     finish();
+                updateMouseButtonHints();
                 }
             }
             break;
@@ -282,8 +283,6 @@ void RS_ActionDrawText::updateMouseButtonHints() {
 void RS_ActionDrawText::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
 
 void RS_ActionDrawText::updateToolBar() {
     if(isFinished()) {
