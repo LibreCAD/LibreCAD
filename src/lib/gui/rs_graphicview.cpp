@@ -1582,7 +1582,7 @@ void RS_GraphicView::setSnapRestriction(RS2::SnapRestriction sr) {
  * Translates a vector in real coordinates to a vector in screen coordinates.
  */
 RS_Vector RS_GraphicView::toGui(RS_Vector v) {
-    return RS_Vector(toGuiX(v.x), toGuiY(v.y), 0.0);
+    return RS_Vector(toGuiX(v.x), toGuiY(v.y));
 }
 
 
@@ -1630,7 +1630,7 @@ double RS_GraphicView::toGuiDY(double d) {
  */
 RS_Vector RS_GraphicView::toGraph(RS_Vector v) {
     return RS_Vector(toGraphX(RS_Math::round(v.x)),
-                     toGraphY(RS_Math::round(v.y)), 0.0);
+                     toGraphY(RS_Math::round(v.y)));
 }
 
 
@@ -1639,7 +1639,7 @@ RS_Vector RS_GraphicView::toGraph(RS_Vector v) {
  * Translates two screen coordinates to a vector in real coordinates.
  */
 RS_Vector RS_GraphicView::toGraph(int x, int y) {
-    return RS_Vector(toGraphX(x), toGraphY(y), 0.0);
+    return RS_Vector(toGraphX(x), toGraphY(y));
 }
 
 

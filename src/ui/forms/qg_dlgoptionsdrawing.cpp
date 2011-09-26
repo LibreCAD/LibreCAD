@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 #include "qg_dlgoptionsdrawing.h"
@@ -99,7 +99,7 @@ void QG_DlgOptionsDrawing::init() {
     for (int i=RS2::Custom; i<=RS2::NPageSize; i++) {
         cbPaperFormat->addItem(RS_Units::paperFormatToString((RS2::PaperFormat)i));
     }
-    
+
     // Encodings:
     /*
     QStringList encodingList;
@@ -187,7 +187,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     // paper format:
     bool landscape;
     RS2::PaperFormat format = graphic->getPaperFormat(&landscape);
-	RS_DEBUG->print("QG_DlgOptionsDrawing::setGraphic: paper format is: %d", (int)format);
+        RS_DEBUG->print("QG_DlgOptionsDrawing::setGraphic: paper format is: %d", (int)format);
     cbPaperFormat->setCurrentIndex((int)format);
 
     // paper orientation:
@@ -251,7 +251,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
 
     RS_DEBUG->print("QG_DlgOptionsDrawing::setGraphic: splinesegs is: %d",
                     splinesegs);
-    
+
     // encoding:
     /*
     QString encoding = graphic->getVariableString("$DWGCODEPAGE",
@@ -299,17 +299,21 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->setPaperFormat(
             (RS2::PaperFormat)cbPaperFormat->currentIndex(),
             rbLandscape->isChecked());
-		// custom paper size:
+                // custom paper size:
                 if ((RS2::PaperFormat)cbPaperFormat->currentIndex()==RS2::Custom) {
-			graphic->setPaperSize(
-				RS_Vector(RS_Math::eval(lePaperWidth->text()),
-				          RS_Math::eval(lePaperHeight->text())));
-		}
+                        graphic->setPaperSize(
+                                RS_Vector(RS_Math::eval(lePaperWidth->text()),
+                                          RS_Math::eval(lePaperHeight->text())));
+                }
 
         // grid:
         //graphic->addVariable("$GRIDMODE", (int)cbGridOn->isChecked() , 70);
         graphic->setGridOn(cbGridOn->isChecked());
+#ifdef  RS_VECTOR2D
+        RS_Vector spacing(0.0,0.0);
+#else
         RS_Vector spacing(0.0,0.0,0.0);
+#endif
         if (cbXSpacing->currentText()==tr("auto")) {
             spacing.x = 0.0;
         } else {
@@ -337,14 +341,14 @@ void QG_DlgOptionsDrawing::validate() {
         // splines:
         graphic->addVariable("$SPLINESEGS",
                              (int)RS_Math::eval(cbSplineSegs->currentText()), 70);
-        
+
         RS_DEBUG->print("QG_DlgOptionsDrawing::validate: splinesegs is: %s",
                         cbSplineSegs->currentText().toLatin1().data());
-        
+
         // update all dimension and spline entities in the graphic to match the new settings:
         graphic->updateDimensions(false);
         graphic->updateSplines();
-        
+
         graphic->setModified(true);
     }
     accept();
@@ -416,8 +420,8 @@ void QG_DlgOptionsDrawing::updateLengthPrecision() {
         break;
 
     default:
-        RS_DEBUG->print(RS_Debug::D_ERROR, 
-			"QG_DlgOptionsDrawing::updateLengthPrecision: error");
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                        "QG_DlgOptionsDrawing::updateLengthPrecision: error");
         break;
     }
 
@@ -514,24 +518,24 @@ void QG_DlgOptionsDrawing::updatePreview() {
 
 
 /**
- * Updates the paper size. Called for initialisation as well as when the 
+ * Updates the paper size. Called for initialisation as well as when the
  * paper format changes.
  */
 void  QG_DlgOptionsDrawing::updatePaperSize() {
     RS2::PaperFormat format = (RS2::PaperFormat)cbPaperFormat->currentIndex();
 
-	if (format==RS2::Custom) {
-		RS_Vector s = graphic->getPaperSize();
-		//RS_Vector plimmin = graphic->getVariableVector("$PLIMMIN", RS_Vector(0,0));
-		//RS_Vector plimmax = graphic->getVariableVector("$PLIMMAX", RS_Vector(100,100));
-		lePaperWidth->setText(QString("%1").arg(s.x));
-		lePaperHeight->setText(QString("%1").arg(s.y));
-	}
-	else {
-	    RS_Vector s = RS_Units::paperFormatToSize(format);
-	    lePaperWidth->setText(QString("%1").arg(s.x));
-	    lePaperHeight->setText(QString("%1").arg(s.y));
-	}
+        if (format==RS2::Custom) {
+                RS_Vector s = graphic->getPaperSize();
+                //RS_Vector plimmin = graphic->getVariableVector("$PLIMMIN", RS_Vector(0,0));
+                //RS_Vector plimmax = graphic->getVariableVector("$PLIMMAX", RS_Vector(100,100));
+                lePaperWidth->setText(QString("%1").arg(s.x));
+                lePaperHeight->setText(QString("%1").arg(s.y));
+        }
+        else {
+            RS_Vector s = RS_Units::paperFormatToSize(format);
+            lePaperWidth->setText(QString("%1").arg(s.x));
+            lePaperHeight->setText(QString("%1").arg(s.y));
+        }
 
     if (cbPaperFormat->currentIndex()==0) {
         lePaperWidth->setEnabled(true);

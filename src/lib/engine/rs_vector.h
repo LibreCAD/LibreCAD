@@ -40,14 +40,22 @@
 class RS_Vector {
 public:
     RS_Vector();
+#ifdef  RS_VECTOR2D
+    RS_Vector(double vx, double vy);
+#else
     RS_Vector(double vx, double vy, double vz=0.0);
+#endif
     RS_Vector(double angle);
     //RS_Vector(double v[]);
     explicit RS_Vector(bool valid);
     ~RS_Vector();
 
     void set(double angle); // set to unit vector by the direction of angle
+#ifdef  RS_VECTOR2D
+    void set(double vx, double vy);
+#else
     void set(double vx, double vy, double vz=0.0);
+#endif
     void setPolar(double radius, double angle);
 
     double distanceTo(const RS_Vector& v) const;
@@ -98,7 +106,9 @@ public:
 public:
     double x;
     double y;
+#ifndef RS_VECTOR2D
     double z;
+#endif
     bool valid;
 };
 

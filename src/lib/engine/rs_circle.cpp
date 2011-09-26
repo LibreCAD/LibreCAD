@@ -49,7 +49,7 @@ RS_Circle::RS_Circle(RS_EntityContainer* parent,
 
 
 void RS_Circle::calculateBorders() {
-    RS_Vector r(data.radius,data.radius,0.0);
+    RS_Vector r(data.radius,data.radius);
     minV = data.center - r;
     maxV = data.center + r;
 }
