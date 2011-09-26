@@ -194,6 +194,7 @@ void QG_CadToolBarLines::back() {
 
 //restore action from checked
 void QG_CadToolBarLines::restoreAction() {
+    if(actionHandler==NULL) return;
     if(bNormal->isChecked()) {
         actionHandler->slotDrawLine();
     }

@@ -114,5 +114,23 @@ void QG_CadToolBarArcs::back() {
         cadToolBar->back();
     }
 }
+//restore action from checked button
+void QG_CadToolBarArcs::restoreAction()
+{
+    if(actionHandler==NULL) return;
+    if ( bArc ->isChecked() ) {
+        actionHandler->slotDrawArc();
+    }
+    if ( bArc3P ->isChecked() ) {
+        actionHandler->slotDrawArc3P();
+    }
+    if ( bArcParallel ->isChecked() ) {
+        actionHandler->slotDrawArcParallel();
+    }
+    if ( bArcTangential ->isChecked() ) {
+        actionHandler->slotDrawArcTangential();
+    }
+
+}
 
 //EOF

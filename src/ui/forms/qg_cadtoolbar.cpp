@@ -194,18 +194,23 @@ void QG_CadToolBar::showToolBar(int id) {
         newTb = tbLines;
         break;
     case RS2::ToolBarArcs:
+        tbArcs->restoreAction();
         newTb = tbArcs;
         break;
     case RS2::ToolBarEllipses:
+        tbEllipses->restoreAction();
         newTb = tbEllipses;
         break;
     case RS2::ToolBarSplines:
+        tbSplines->restoreAction();
         newTb = tbSplines;
         break;
     case RS2::ToolBarPolylines:
+        tbPolylines->restoreAction();
         newTb = tbPolylines;
         break;
     case RS2::ToolBarCircles:
+        tbCircles->restoreAction();
         newTb = tbCircles;
         break;
     case RS2::ToolBarInfo:

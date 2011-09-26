@@ -38,6 +38,7 @@ class QG_CadToolBarArcs : public QWidget, public Ui::QG_CadToolBarArcs
 public:
     QG_CadToolBarArcs(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_CadToolBarArcs();
+    void restoreAction(); //restore action from checked button
 
 public slots:
     virtual void contextMenuEvent( QContextMenuEvent * e );
