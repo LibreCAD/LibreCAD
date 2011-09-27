@@ -164,27 +164,32 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
             snapSpot = t;
     }
 
-    if (snapSpot.distanceTo(mouseCoord) > snapMode.distance) {
-        // handle snap restrictions that can be activated in addition
-        //   to the ones above:
-        switch (snapMode.restriction) {
-        case RS2::RestrictOrthogonal:
-            snapCoord = restrictOrthogonal(mouseCoord);
-            break;
-        case RS2::RestrictHorizontal:
-            snapCoord = restrictHorizontal(mouseCoord);
-            break;
-        case RS2::RestrictVertical:
-            snapCoord = restrictVertical(mouseCoord);
-            break;
+    //if (snapSpot.distanceTo(mouseCoord) > snapMode.distance) {
+    // handle snap restrictions that can be activated in addition
+    //   to the ones above:
+    //apply restriction
+    RS_Vector rz = graphicView->getRelativeZero();
+    RS_Vector vpv(rz.x,snapSpot.y);
+    RS_Vector vph(snapSpot.x,rz.y);
+    switch (snapMode.restriction) {
+    case RS2::RestrictOrthogonal:
+        snapCoord= ( mouseCoord.distanceTo(vpv)< mouseCoord.distanceTo(vph))?
+                    vpv:vph;
+        break;
+    case RS2::RestrictHorizontal:
+        snapCoord = vph;
+        break;
+    case RS2::RestrictVertical:
+        snapCoord = vpv;
+        break;
 
-        default:
-        case RS2::RestrictNothing:
-            snapCoord = mouseCoord;
-            break;
-        }
+    //case RS2::RestrictNothing:
+    default:
+        snapCoord = snapSpot;
+        break;
     }
-    else snapCoord = snapSpot;
+    //}
+    //else snapCoord = snapSpot;
 
     drawSnapper();
 
