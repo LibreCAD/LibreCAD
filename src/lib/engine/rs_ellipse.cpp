@@ -343,6 +343,7 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
 RS_Vector RS_Ellipse::getMiddlePoint(){
         return getNearestMiddle(getCenter());
 }
+
 RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
                                        double* dist,
                                        int middlePoints
@@ -355,7 +356,9 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
         }
         return RS_Vector(false);
     }
-    if ( getMajorRadius() < RS_TOLERANCE || getMinorRadius() < RS_TOLERANCE ) {
+    double ra(getMajorRaidus());
+    double rb(getMinorRaidus());
+    if ( ra < RS_TOLERANCE || rb < RS_TOLERANCE ) {
             //zero radius, return the center
             RS_Vector vp(getCenter());
         if (dist!=NULL) {
@@ -363,46 +366,35 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
         }
         return vp;
     }
-    double angle=getAngle();
     double amin=getCenter().angleTo(getStartpoint());
     double amax=getCenter().angleTo(getEndpoint());
     if(isReversed()) {
             std::swap(amin,amax);
     }
-    int i=middlePoints + 1;
     double da=fmod(amax-amin+2.*M_PI, 2.*M_PI);
     if ( da < RS_TOLERANCE ) {
             da = 2.*M_PI; //whole ellipse
     }
-    da /= i;
-    int j=1;
-    double curDist=RS_MAXDOUBLE;
-    //double a=RS_Math::correctAngle(amin+da-angle);
-    double a=amin-angle+da;
-    RS_Vector curPoint;
-    RS_Vector scaleFactor(RS_Vector(1./getMajorRadius(),1./getMinorRadius()));
-    do {
-    RS_Vector vp(a);
-    RS_Vector vp2=vp;
-    vp2.scale(scaleFactor);
+    RS_Vector vp(getNearestPointOnEntity(coord,true,dist));
+    double a=getCenter().angleTo(vp);
+    int counts(middlePoints + 1);
+    int i( static_cast<int>(fmod(a-amin+2.*M_PI,2.*M_PI)/da*counts+0.5));
+    if(!i) i++; // remove end points
+    if(i==counts) i--;
+    a=amin + da*(double(i)/double(counts))-getAngle();
+    vp.set(a);
+    RS_Vector vp2(vp);
+    vp2.scale( RS_Vector(1./ra,1./rb));
     vp.scale(1./vp2.magnitude());
-    vp.rotate(angle);
+    vp.rotate(getAngle());
     vp.move(getCenter());
-    double d=coord.distanceTo(vp);
-    if(d<curDist) {
-            curDist=d;
-            curPoint=vp;
-    }
-    j++;
-    a += da;
-    //std::cout<<"j="<<j<<"\ti="<<i<<std::endl;
-    } while (j<i);
+
     if (dist!=NULL) {
-        *dist = curDist;
+        *dist = vp.distanceTo(coord);
     }
-    RS_DEBUG->print("RS_Ellipse::getNearestMiddle: angle1=%g, angle2=%g, middle=%g\n",amin,amax,a);
+    //RS_DEBUG->print("RS_Ellipse::getNearestMiddle: angle1=%g, angle2=%g, middle=%g\n",amin,amax,a);
     RS_DEBUG->print("RS_Ellpse::getNearestMiddle(): end\n");
-    return curPoint;
+    return vp;
 }
 
 

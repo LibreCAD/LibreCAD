@@ -323,33 +323,25 @@ RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
         if(isReversed()) {
                 std::swap(amin,amax);
         }
-        int i=middlePoints+1;
         double da=fmod(amax-amin+2.*M_PI, 2.*M_PI);
         if ( da < RS_TOLERANCE ) {
                 da= 2.*M_PI; // whole circle
         }
-        da /= i;
-        double angle=amin +da;
-        double curDist=RS_MAXDOUBLE;
-        RS_Vector vp,curPoint;
-        int j=1;
-        do {
-                vp.setPolar(getRadius(),angle);
-                vp += getCenter();
-                double d=coord.distanceTo(vp);
-                if(d<curDist){
-                        curPoint=vp;
-                        curDist=d;
-                }
-                angle += da;
-                j++;
-        }while (j<i);
+        RS_Vector vp(getNearestPointOnEntity(coord,true,dist));
+        double angle=getCenter().angleTo(vp);
+        int counts=middlePoints+1;
+        int i( static_cast<int>(fmod(angle-amin+2.*M_PI,2.*M_PI)/da*counts+0.5));
+        if(!i) i++; // remove end points
+        if(i==counts) i--;
+        angle=amin + da*(double(i)/double(counts));
+        vp.setPolar(getRadius(), angle);
+        vp.move(getCenter());
 
     if (dist!=NULL) {
-        *dist = curDist;
+        *dist = vp.distanceTo(coord);
     }
     RS_DEBUG->print("RS_Arc::getNearestMiddle(): end\n");
-    return curPoint;
+    return vp;
 }
 
 RS_Vector RS_Arc::getNearestDist(double distance,
