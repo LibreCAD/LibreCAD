@@ -337,7 +337,7 @@ RS_Vector RS_Vector::scale(RS_Vector center, RS_Vector factor) {
 RS_Vector RS_Vector::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
     /*
     RS_ConstructionLine axis(NULL,
-    	RS_ConstructionLineData(axisPoint1, axisPoint2));
+        RS_ConstructionLineData(axisPoint1, axisPoint2));
 
     RS_Vector xp = axis.getNearestPointOnEntity(*this);
     xp = xp - (*this);
@@ -528,7 +528,15 @@ RS_VectorSolutions::RS_VectorSolutions(const RS_VectorSolutions& s)
  * Constructor for num solutions.
  */
 RS_VectorSolutions::RS_VectorSolutions(int num) {
+#if QT_VERSION >= 0x040700
     vector.reserve(num);
+#else
+    if(vector.size() <num) {
+        for(int i=vector.size();i<num;i++){
+            vector.push_back(RS_Vector(false));
+        }
+    }
+#endif/
 }
 
 
@@ -613,12 +621,16 @@ RS_VectorSolutions::~RS_VectorSolutions() {
  * Allocates 'num' vectors.
  */
 void RS_VectorSolutions::alloc(int num) {
-    vector.clear();
+#if QT_VERSION >= 0x040700
     vector.reserve(num);
-    for (int i=0; i<num; ++i)  {
-        vector[i] = RS_Vector(false);
+#else
+    if(vector.size() <num) {
+        for(int i=vector.size();i<num;i++){
+            vector.push_back(RS_Vector(false));
+        }
     }
-    tangent = false;
+#endif
+   // tangent = false;
 }
 
 /**
