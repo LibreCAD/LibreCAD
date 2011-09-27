@@ -607,7 +607,15 @@ RS_VectorSolutions::RS_VectorSolutions(const RS_VectorSolutions& s)
  * Constructor for num solutions.
  */
 RS_VectorSolutions::RS_VectorSolutions(int num) {
+#if QT_VERSION >= 0x040700
     vector.reserve(num);
+#else
+    if(vector.size() <num) {
+        for(int i=vector.size();i<num;i++){
+            vector.push_back(RS_Vector(false));
+        }
+    }
+#endif/
 }
 
 
@@ -692,12 +700,16 @@ RS_VectorSolutions::~RS_VectorSolutions() {
  * Allocates 'num' vectors.
  */
 void RS_VectorSolutions::alloc(int num) {
-    vector.clear();
+#if QT_VERSION >= 0x040700
     vector.reserve(num);
-    for (int i=0; i<num; ++i)  {
-        vector[i] = RS_Vector(false);
+#else
+    if(vector.size() <num) {
+        for(int i=vector.size();i<num;i++){
+            vector.push_back(RS_Vector(false));
+        }
     }
-    tangent = false;
+#endif
+   // tangent = false;
 }
 
 /**
