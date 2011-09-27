@@ -39,7 +39,7 @@
     <number>0</number>
    </property>
    <property name="spacing">
-    <number>0</number>
+    <number>1</number>
    </property>
    <item row="0" column="0" colspan="2">
     <widget class="QToolButton" name="bBack">
@@ -147,7 +147,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -159,6 +159,28 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="3" column="0">
+    <widget class="QToolButton" name="bHidden">
+     <property name="toolTip">
+      <string>Arc with Center, Point, Angles</string>
+     </property>
+     <property name="text">
+      <string notr="true"/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
