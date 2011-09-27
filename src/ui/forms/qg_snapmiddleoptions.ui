@@ -78,6 +78,12 @@
      <height>61</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+     <horstretch>2</horstretch>
+     <verstretch>24</verstretch>
+    </sizepolicy>
+   </property>
    <property name="orientation">
     <enum>Qt::Vertical</enum>
    </property>
@@ -89,22 +95,5 @@
   <include location="local">rs_settings.h</include>
  </includes>
  <resources/>
- <connections>
-  <connection>
-   <sender>sbMiddlePoints</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>QG_SnapMiddleOptions</receiver>
-   <slot>updateMiddlePoints(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

@@ -112,16 +112,16 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
     RS_Vector vpc=coord-data.startpoint;
     vpc.rotate(-angle); // rotate to use the line direction as x-axis
     if ( (vpc.x >= 0. && vpc.x <= r) || ! onEntity ) { //use the projection
-    	ret=RS_Vector(vpc.x,0.);
-	ret.rotate(angle);
-	ret += data.startpoint;
+        ret=RS_Vector(vpc.x,0.);
+        ret.rotate(angle);
+        ret += data.startpoint;
     } else {// onEntity=true and projection not within range, only have to check the endpoints
-    	ret=getNearestEndpoint(coord,dist);
+        ret=getNearestEndpoint(coord,dist);
     }
 
     if (dist!=NULL) {
         *dist = ret.distanceTo(coord);
-	}
+        }
     return ret;
 }
 
@@ -134,6 +134,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
                     double* dist,
                     int middlePoints
                     ) {
+        RS_DEBUG->print("RS_Line::getNearestMiddle(): begin\n");
             int i= middlePoints + 1;
             RS_Vector dvp((getEndpoint() - getStartpoint())/double(i));
             RS_Vector vp(getStartpoint()+dvp);
@@ -153,6 +154,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
             if(dist != NULL) {
                     *dist=curDist;
             }
+        RS_DEBUG->print("RS_Line::getNearestMiddle(): end\n");
         return curPoint;
     }
 
