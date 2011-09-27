@@ -61,7 +61,7 @@ class QC_PluginInterface;
  */
 class QC_ApplicationWindow: public QMainWindow,
     public QG_MainWindowInterface
-	{
+        {
     Q_OBJECT
 
 public:
@@ -74,7 +74,7 @@ public:
     void initStatusBar();
 
     void initSettings();
-	void restoreDocks();
+        void restoreDocks();
     void storeSettings();
 
     void updateRecentFilesMenu();
@@ -84,20 +84,20 @@ public:
 
     bool queryExit(bool force);
 
-	/** Catch hotkey for giving focus to command line. */
+        /** Catch hotkey for giving focus to command line. */
     virtual void keyPressEvent(QKeyEvent* e);
     virtual void keyReleaseEvent(QKeyEvent* e);
 
 public slots:
     virtual void show();
     void finishSplashScreen();
-	void slotFocus();
+        void slotFocus();
     void slotBack();
     void slotKillAllActions();
     //void slotNext();
     void slotEnter();
     void slotFocusCommandLine();
-	void slotError(const QString& msg);
+        void slotError(const QString& msg);
 
     void slotWindowActivated(QWidget* w);
     void slotWindowsMenuAboutToShow();
@@ -127,10 +127,10 @@ public slots:
     void slotFileSaveAs();
     /** auto-save document */
     void slotFileAutoSave();
-	/** exports the document as bitmap */
-	void slotFileExport();
-	bool slotFileExport(const QString& name, const QString& format,
-		QSize size, bool black, bool bw=false);
+        /** exports the document as bitmap */
+        void slotFileExport();
+        bool slotFileExport(const QString& name, const QString& format,
+                QSize size, bool black, bool bw=false);
     /** closes the current file */
     void slotFileClose();
     /** closing the current file */
@@ -155,12 +155,12 @@ public slots:
     void slotScriptOpenIDE();
     void slotScriptRun();
 
-	void slotRunStartScript();
-	void slotRunScript();
-	void slotRunScript(const QString& name);
+        void slotRunStartScript();
+        void slotRunScript();
+        void slotRunScript(const QString& name);
 
-	void slotInsertBlock();
-	void slotInsertBlock(const QString& name);
+        void slotInsertBlock();
+        void slotInsertBlock(const QString& name);
 
     /** shows an about dlg*/
     void slotHelpAbout();
@@ -219,12 +219,12 @@ public:
      * MDI Window is active.
      */
     QC_MDIWindow* getMDIWindow() {
-		if (workspace!=NULL) {
-        	return (QC_MDIWindow*)workspace->activeWindow();
-		}
-		else {
-			return NULL;
-		}
+                if (workspace!=NULL) {
+                return (QC_MDIWindow*)workspace->activeWindow();
+                }
+                else {
+                        return NULL;
+                }
     }
 
     /**
@@ -255,17 +255,17 @@ public:
         return NULL;
     }
 
-	/**
-	 * Creates a new document. Implementation from RS_MainWindowInterface.
-	 */
+        /**
+         * Creates a new document. Implementation from RS_MainWindowInterface.
+         */
     virtual void createNewDocument(
                 const QString& fileName = QString::null, RS_Document* doc=NULL) {
 
-		slotFileNew(doc);
+                slotFileNew(doc);
                 if (fileName!=QString::null && getDocument()!=NULL) {
-			getDocument()->setFilename(fileName);
-		}
-	}
+                        getDocument()->setFilename(fileName);
+                }
+        }
 
     /**
      * Implementation from QG_MainWindowInterface.
@@ -286,31 +286,31 @@ public:
 
 
         //virtual QToolBar* createToolBar(const QString& name);
-	//virtual void addToolBarButton(QToolBar* tb);
+        //virtual void addToolBarButton(QToolBar* tb);
 
     /**
      * @return Pointer to the qsa object.
      */
 #ifdef RS_SCRIPTING
     QSProject* getQSAProject() {
-		if (scripter!=NULL) {
-	        return scripter->getQSAProject();
-		}
-		else {
-			return NULL;
-		}
+                if (scripter!=NULL) {
+                return scripter->getQSAProject();
+                }
+                else {
+                        return NULL;
+                }
     }
 #endif
 
-	void redrawAll();
-	void updateGrids();
+        void redrawAll();
+        void updateGrids();
 
-	/**
-	 * Implementation from QG_MainWindowInterface.
-	 */
-	virtual void setFocus2() {
-		setFocus();
-	}
+        /**
+         * Implementation from QG_MainWindowInterface.
+         */
+        virtual void setFocus2() {
+                setFocus();
+        }
 
 protected:
     void closeEvent(QCloseEvent*);
@@ -328,8 +328,8 @@ private:
     /** Workspace for MDI */
     QWorkspace* workspace;
 
-	/** Dialog factory */
-	QC_DialogFactory* dialogFactory;
+        /** Dialog factory */
+        QC_DialogFactory* dialogFactory;
 
     /** Layer list widget */
     QG_LayerWidget* layerWidget;
@@ -346,9 +346,9 @@ private:
     QDockWidget* libraryDockWindow;
 
 
-	/** Command line */
-	QG_CommandWidget* commandWidget;
-	QDockWidget* commandDockWindow;
+        /** Command line */
+        QG_CommandWidget* commandWidget;
+        QDockWidget* commandDockWindow;
 
     /** Coordinate widget */
     QG_CoordinateWidget* coordinateWidget;
@@ -362,13 +362,14 @@ private:
 
     /** Recent files list */
     QG_RecentFiles* recentFiles;
+    QStringList openedFiles;
 
     /** Action handler. */
-	QG_ActionHandler* actionHandler;
+        QG_ActionHandler* actionHandler;
 
 #ifdef RS_SCRIPTING
-	/** Scripting interface. */
-	QS_Scripter* scripter;
+        /** Scripting interface. */
+        QS_Scripter* scripter;
 #endif
 
     QMenu* fileMenu;
