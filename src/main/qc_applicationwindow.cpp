@@ -1426,6 +1426,7 @@ void QC_ApplicationWindow::initMenuBar() {
 
     // menuBar configuration
     recentFiles = new QG_RecentFiles(9);
+    openedFiles.clear();
 }
 
 
@@ -2230,7 +2231,7 @@ void QC_ApplicationWindow::
     if (!fileName.isEmpty())
          {
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: creating new doc window");
-        if (recentFiles->indexOf(fileName) >=0) {
+        if (openedFiles.indexOf(fileName) >=0) {
             QString message=tr("Warning: File already opened : ")+fileName;
             commandWidget->appendHistory(message);
             statusBar()->showMessage(message, 2000);
@@ -2272,6 +2273,7 @@ void QC_ApplicationWindow::
 
         // update recent files menu:
         recentFiles->add(fileName);
+        openedFiles.append(fileName);
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: 2");
         updateRecentFilesMenu();
 
@@ -2640,6 +2642,12 @@ void QC_ApplicationWindow::slotFileClosing() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
 
     RS_DEBUG->print("detaching lists");
+    QC_MDIWindow* w = getMDIWindow();
+
+    int pos=openedFiles.indexOf(w->getDocument()->getFilename());
+    if(pos>=0) {
+        openedFiles.erase(openedFiles.begin()+pos);
+    }
     layerWidget->setLayerList(NULL, false);
     blockWidget->setBlockList(NULL);
     coordinateWidget->setGraphic(NULL);
