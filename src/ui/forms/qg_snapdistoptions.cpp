@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 #include "qg_snapdistoptions.h"
@@ -62,18 +62,28 @@ void QG_SnapDistOptions::destroy() {
     RS_SETTINGS->endGroup();
 }
 
-void QG_SnapDistOptions::setDist(double* d) {
-    dist = d;
+void QG_SnapDistOptions::setDist(double& d, bool initial) {
+    dist = &d;
+    if(initial) {
+        RS_SETTINGS->beginGroup("/Snap");
+        QString r = RS_SETTINGS->readEntry("/Distance", "1.0");
+        RS_SETTINGS->endGroup();
 
-    RS_SETTINGS->beginGroup("/Snap");
-    QString r = RS_SETTINGS->readEntry("/Distance", "1.0");
-    RS_SETTINGS->endGroup();
-
-    leDist->setText(r);
+        leDist->setText(r);
+        *dist=r.toDouble();
+    } else {
+        *dist=leDist->text().toDouble();
+    }
 }
 
 void QG_SnapDistOptions::updateDist(const QString& d) {
     if (dist!=NULL) {
-        *dist = RS_Math::eval(d, 1.0);
+        *dist = RS_Math::eval(d, 1.0);/*
+        //a brutal force
+        //todo cleanup distance value for rs_snapper
+    RS_SETTINGS->beginGroup("/Snap");
+    RS_SETTINGS->writeEntry("/Distance", d);
+    RS_SETTINGS->endGroup();
+    std::cout<<"QG_SnapDistOptions::updateDist(): distance="<<qPrintable(d)<<"\t "<<*dist<<std::endl;*/
     }
 }

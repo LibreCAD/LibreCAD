@@ -345,8 +345,9 @@ RS_Vector RS_Ellipse::getMiddlePoint(){
 }
 RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
                                        double* dist,
-                                       int middlePoints 
+                                       int middlePoints
                                        ) {
+    RS_DEBUG->print("RS_Ellpse::getNearestMiddle(): begin\n");
     if ( ! ( std::isnormal(getAngle1()) || std::isnormal(getAngle2()))) {
             //no middle point for whole ellipse, angle1=angle2=0
         if (dist!=NULL) {
@@ -394,11 +395,13 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     }
     j++;
     a += da;
+    //std::cout<<"j="<<j<<"\ti="<<i<<std::endl;
     } while (j<i);
     if (dist!=NULL) {
         *dist = curDist;
     }
     RS_DEBUG->print("RS_Ellipse::getNearestMiddle: angle1=%g, angle2=%g, middle=%g\n",amin,amax,a);
+    RS_DEBUG->print("RS_Ellpse::getNearestMiddle(): end\n");
     return curPoint;
 }
 
@@ -437,7 +440,7 @@ RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
         direction.set(getMajorRadius()*cos(angle),getMinorRadius()*sin(angle));//relative to center
         QList<RS_Vector> sol;
         for(int i=0;i<2;i++){
-                if(!onEntity || 
+                if(!onEntity ||
                    RS_Math::isAngleBetween(angle,getAngle1(),getAngle2(),isReversed())) {
                 if(i){
                 sol.append(- direction);
