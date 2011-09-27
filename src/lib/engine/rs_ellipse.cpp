@@ -356,8 +356,8 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
         }
         return RS_Vector(false);
     }
-    double ra(getMajorRaidus());
-    double rb(getMinorRaidus());
+    double ra(getMajorRadius());
+    double rb(getMinorRadius());
     if ( ra < RS_TOLERANCE || rb < RS_TOLERANCE ) {
             //zero radius, return the center
             RS_Vector vp(getCenter());
