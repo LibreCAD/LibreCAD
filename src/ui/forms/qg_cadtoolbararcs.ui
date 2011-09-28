@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>56</width>
+    <width>65</width>
     <height>336</height>
    </rect>
   </property>
@@ -18,137 +18,171 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>56</width>
+    <width>65</width>
     <height>336</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Arcs</string>
   </property>
-  <widget class="QToolButton" name="bBack">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>56</width>
-     <height>20</height>
-    </rect>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
    </property>
-   <property name="toolTip">
-    <string>Back to main menu</string>
+   <property name="topMargin">
+    <number>1</number>
    </property>
-   <property name="text">
-    <string/>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
+   <property name="bottomMargin">
+    <number>0</number>
    </property>
-  </widget>
-  <widget class="QToolButton" name="bArcParallel">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>48</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
+   <property name="spacing">
+    <number>1</number>
    </property>
-   <property name="toolTip">
-    <string>Concentric</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/arcspara.png</normaloff>:/extui/arcspara.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bArc">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>20</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Arc with Center, Point, Angles</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/arcscraa.png</normaloff>:/extui/arcscraa.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bArc3P">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>20</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Arc with three points</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/arcs3p.png</normaloff>:/extui/arcs3p.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bArcTangential">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>48</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Arc tangential to base entity with radius</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/arcstangential.png</normaloff>:/extui/arcstangential.png</iconset>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
+   <item row="0" column="0" colspan="2">
+    <widget class="QToolButton" name="bBack">
+     <property name="maximumSize">
+      <size>
+       <width>65</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Back to main menu</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>65</width>
+       <height>20</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QToolButton" name="bArc">
+     <property name="toolTip">
+      <string>Arc with Center, Point, Angles</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/arcscraa.png</normaloff>:/extui/arcscraa.png</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QToolButton" name="bArc3P">
+     <property name="toolTip">
+      <string>Arc with three points</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/arcs3p.png</normaloff>:/extui/arcs3p.png</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QToolButton" name="bArcParallel">
+     <property name="toolTip">
+      <string>Concentric</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/arcspara.png</normaloff>:/extui/arcspara.png</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QToolButton" name="bArcTangential">
+     <property name="toolTip">
+      <string>Arc tangential to base entity with radius</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/arcstangential.png</normaloff>:/extui/arcstangential.png</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="0">
+    <widget class="QToolButton" name="bHidden">
+     <property name="toolTip">
+      <string>Arc with Center, Point, Angles</string>
+     </property>
+     <property name="text">
+      <string notr="true"/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>

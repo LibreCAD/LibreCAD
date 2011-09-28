@@ -40,17 +40,27 @@ class QG_SnapToolBar : public QToolBar
     Q_OBJECT
 
 public:
-    QG_SnapToolBar( const QString & title, QWidget * parent = 0 );
-    ~QG_SnapToolBar();
+    QG_SnapToolBar( const QString & title, QG_ActionHandler* ah, QWidget * parent = 0 );
+    virtual ~QG_SnapToolBar();
 
     RS_SnapMode getSnaps ( void );
+    void saveSnapMode(void );
+    virtual void setActionHandler(QG_ActionHandler* ah);
+    bool lockedRelativeZero();
+    void setLockedRelativeZero(bool on);
+
+protected:
+    QG_ActionHandler* actionHandler;
 
 private slots:
     void actionTriggered(void);
+    //void slotSetRelativeZero(void);
+    //void slotLockRelativeZero(void);
 
-    void restrictOrthoagonalTriggered(bool);
-    void restrictHorizontalTriggered(bool);
-    void restrictVerticalTriggered(bool);
+    //following restriction slots are not needed any more
+    //void restrictOrthoagonalTriggered(bool);
+    //void restrictHorizontalTriggered(bool);
+    //void restrictVerticalTriggered(bool);
 
 public slots:
     void setSnaps(RS_SnapMode);
@@ -72,6 +82,9 @@ private:
     QAction *restrictOrthoagonal;
     QAction *restrictHorizontal;
     QAction *restrictVertical;
+    QAction *bRelZero;
+    QAction *bLockRelZero;
+    RS_SnapMode snapMode;
 
     void init();
 

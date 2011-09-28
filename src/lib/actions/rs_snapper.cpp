@@ -63,12 +63,13 @@ void RS_Snapper::init() {
     keyEntity = NULL;
     snapSpot = RS_Vector(false);
     snapCoord = RS_Vector(false);
-    //middlePoints = 1;
     distance = 1.0;
     RS_SETTINGS->beginGroup("/Snap");
     snapRange = RS_SETTINGS->readNumEntry("/Range", 20);
-//    middlePoints = RS_SETTINGS->readNumEntry("/MiddlePoints", 1);
-//    std::cout<<" RS_SETTINGS->readNumEntry(\"/MiddlePoints\", 1), middlePoints="<<middlePoints<<std::endl;
+    //middlePoints behaviors weird, add brutal force here
+    //todo, clean up middlePoints
+    //middlePoints= RS_SETTINGS->readNumEntry("/MiddlePoints", 1);
+    //distance=RS_SETTINGS->readEntry("/Distance", QString("1")).toDouble();
     RS_SETTINGS->endGroup();
     RS_SETTINGS->beginGroup("/Appearance");
     showCrosshairs = (bool)RS_SETTINGS->readNumEntry("/ShowCrosshairs", 1);
@@ -87,7 +88,21 @@ void RS_Snapper::setSnapMode(RS_SnapMode snapMode) {
     if (RS_DIALOGFACTORY==NULL) return;
     RS_DIALOGFACTORY->requestSnapDistOptions(distance, snapMode.snapDistance);
     RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, snapMode.snapMiddle);
+//std::cout<<"RS_Snapper::setSnapMode(): middlePoints="<<middlePoints<<std::endl;
 }
+//get current mouse coordinates
+RS_Vector RS_Snapper::snapFree(QMouseEvent* e) {
+    if (e==NULL) {
+                RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Snapper::snapFree: event is NULL");
+        return RS_Vector(false);
+    }
+    snapSpot=graphicView->toGraph(e->x(), e->y());
+    snapCoord=snapSpot;
+    showCrosshairs=true;
+    return snapCoord;
+}
+
 /**
  * Snap to a coordinate in the drawing using the current snap mode.
  *
@@ -107,6 +122,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     }
 
     RS_Vector mouseCoord = graphicView->toGraph(e->x(), e->y());
+
     if (snapMode.snapGrid) {
         t = snapGrid(mouseCoord);
 
@@ -126,12 +142,22 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
             snapSpot = t;
     }
     if (snapMode.snapMiddle) {
+        //this is still brutal force
+        //todo: accept value from widget QG_SnapMiddleOptions
+        if(RS_DIALOGFACTORY != NULL) {
+            RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, snapMode.snapMiddle);
+        }
         t = snapMiddle(mouseCoord);
 
         if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
             snapSpot = t;
     }
     if (snapMode.snapDistance) {
+        //this is still brutal force
+        //todo: accept value from widget QG_SnapDistOptions
+        if(RS_DIALOGFACTORY != NULL) {
+            RS_DIALOGFACTORY->requestSnapDistOptions(distance, snapMode.snapDistance);
+        }
         t = snapDist(mouseCoord);
 
         if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
@@ -152,27 +178,37 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
             snapSpot = t;
     }
 
-    if (snapSpot.distanceTo(mouseCoord) > snapMode.distance) {
-        // handle snap restrictions that can be activated in addition
-        //   to the ones above:
-        switch (snapMode.restriction) {
-        case RS2::RestrictOrthogonal:
-            snapCoord = restrictOrthogonal(mouseCoord);
-            break;
-        case RS2::RestrictHorizontal:
-            snapCoord = restrictHorizontal(mouseCoord);
-            break;
-        case RS2::RestrictVertical:
-            snapCoord = restrictVertical(mouseCoord);
-            break;
-
-        default:
-        case RS2::RestrictNothing:
-            snapCoord = mouseCoord;
-            break;
-        }
+    if( ! snapSpot.valid ) {
+        snapSpot=mouseCoord; //default to snapFree
+    } else {
+        if (mouseCoord.distanceTo(snapSpot) > snapRange ) snapSpot = mouseCoord;
     }
-    else snapCoord = snapSpot;
+    //if (snapSpot.distanceTo(mouseCoord) > snapMode.distance) {
+    // handle snap restrictions that can be activated in addition
+    //   to the ones above:
+    //apply restriction
+    RS_Vector rz = graphicView->getRelativeZero();
+    RS_Vector vpv(rz.x,snapSpot.y);
+    RS_Vector vph(snapSpot.x,rz.y);
+    switch (snapMode.restriction) {
+    case RS2::RestrictOrthogonal:
+        snapCoord= ( mouseCoord.distanceTo(vpv)< mouseCoord.distanceTo(vph))?
+                    vpv:vph;
+        break;
+    case RS2::RestrictHorizontal:
+        snapCoord = vph;
+        break;
+    case RS2::RestrictVertical:
+        snapCoord = vpv;
+        break;
+
+    //case RS2::RestrictNothing:
+    default:
+        snapCoord = snapSpot;
+        break;
+    }
+    //}
+    //else snapCoord = snapSpot;
 
     drawSnapper();
 
@@ -296,8 +332,8 @@ RS_Vector RS_Snapper::snapCenter(RS_Vector coord) {
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapMiddle(RS_Vector coord) {
-
-    return container->getNearestMiddle(coord,(double *) NULL,middlePoints);
+//std::cout<<"RS_Snapper::snapMiddle(): middlePoints="<<middlePoints<<std::endl;
+    return container->getNearestMiddle(coord,static_cast<double *>(NULL),middlePoints);
 }
 
 
@@ -311,6 +347,7 @@ RS_Vector RS_Snapper::snapMiddle(RS_Vector coord) {
 RS_Vector RS_Snapper::snapDist(RS_Vector coord) {
     RS_Vector vec;
 
+//std::cout<<" RS_Snapper::snapDist(RS_Vector coord): distance="<<distance<<std::endl;
     vec = container->getNearestDist(distance,
                                     coord,
                                     NULL);
@@ -552,13 +589,13 @@ unsigned int RS_Snapper::snapModeToInt(RS_SnapMode s)
     default:
         ret=0;
     }
-    ret <<=1;ret &= s.snapGrid;
-    ret <<=1;ret &= s.snapEndpoint;
-    ret <<=1;ret &= s.snapMiddle;
-    ret <<=1;ret &= s.snapDistance;
-    ret <<=1;ret &= s.snapCenter;
-    ret <<=1;ret &= s.snapOnEntity;
-    ret <<=1;ret &= s.snapIntersection;
+    ret <<=1;ret |= s.snapGrid;
+    ret <<=1;ret |= s.snapEndpoint;
+    ret <<=1;ret |= s.snapMiddle;
+    ret <<=1;ret |= s.snapDistance;
+    ret <<=1;ret |= s.snapCenter;
+    ret <<=1;ret |= s.snapOnEntity;
+    ret <<=1;ret |= s.snapIntersection;
    return ret;
 }
 /**

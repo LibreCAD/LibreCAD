@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -74,7 +74,7 @@ int RS_Undo::countRedoCycles() {
  */
 void RS_Undo::addUndoCycle(RS_UndoCycle* i) {
     RS_DEBUG->print("RS_Undo::addUndoCycle");
-	
+
     undoList.insert(++undoPointer, i);
 
     RS_DEBUG->print("RS_Undo::addUndoCycle: ok");
@@ -123,7 +123,7 @@ void RS_Undo::startUndoCycle() {
         // Remove obsolete undo cycles:
         delete undoList.takeLast();
     }
-	
+
     currentCycle = new RS_UndoCycle();
 }
 
@@ -134,12 +134,12 @@ void RS_Undo::startUndoCycle() {
  */
 void RS_Undo::addUndoable(RS_Undoable* u) {
     RS_DEBUG->print("RS_Undo::addUndoable");
-	
+
     if (currentCycle!=NULL) {
         currentCycle->addUndoable(u);
     } else {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-			"RS_Undo::addUndoable(): No undo cycle active.");
+                        "RS_Undo::addUndoable(): No undo cycle active.");
     }
 }
 
@@ -158,39 +158,51 @@ void RS_Undo::endUndoCycle() {
 /**
  * Undoes the last undo cycle.
  */
-void RS_Undo::undo() {
+bool RS_Undo::undo() {
     RS_DEBUG->print("RS_Undo::undo");
 
     if (undoPointer>=0) {
 
-        RS_UndoCycle* uc = NULL;
-        if (undoPointer < undoList.size())
-            uc = undoList.at(undoPointer);
+        RS_UndoCycle* uc=NULL;
+        while( undoPointer>=0 && undoPointer < undoList.size() ) {
+            uc = undoList[undoPointer];
+            undoPointer--;
+            if (uc == NULL ) continue;
+            break;
+        }
         if (uc != NULL) {
             for (int i = 0; i < uc->undoables.size(); ++i) {
                 (uc->undoables.at(i))->changeUndoState();
             }
-            undoPointer--;
+            return true;
         }
     }
+    return false;
 }
 
 
 /**
  * Redoes the undo cycle which was at last undone.
  */
-void RS_Undo::redo() {
+bool RS_Undo::redo() {
     RS_DEBUG->print("RS_Undo::redo");
 
     if (undoPointer+1 < undoList.size()) {
-        undoPointer++;
-        RS_UndoCycle* uc = undoList.at(undoPointer);
+
+        RS_UndoCycle* uc = NULL;
+        while( ++undoPointer < undoList.size()) {
+            uc = undoList[undoPointer];
+            if (uc == NULL ) continue;
+            break;
+        }
         if (uc != NULL) {
             for (int i = 0; i < uc->undoables.size(); ++i) {
                 (uc->undoables.at(i))->changeUndoState();
             }
+            return true;
         }
     }
+    return false;
 }
 
 
@@ -200,8 +212,8 @@ void RS_Undo::redo() {
  * or NULL.
  */
 RS_UndoCycle* RS_Undo::getUndoCycle() {
-	RS_UndoCycle* ret = NULL;
-	
+        RS_UndoCycle* ret = NULL;
+
     RS_DEBUG->print("RS_Undo::getUndoCycle");
 
     if ( (undoPointer>=0) && (undoPointer < undoList.size()) ) {
@@ -241,9 +253,9 @@ std::ostream& operator << (std::ostream& os, RS_Undo& l) {
         if (i==l.undoPointer) {
             os << " -->";
         }
-		else {
+                else {
             os << "    ";
-		}
+                }
         os << *(l.undoList.at(i)) << "\n";
     }
     return os;
@@ -268,14 +280,14 @@ bool RS_Undo::test() {
     // Add 500 Undo Cycles with i Undoables in every Cycle
     for (i=1; i<=500; ++i) {
         //c1 = new RS_UndoCycle();
-		undo.startUndoCycle();
+                undo.startUndoCycle();
         for (k=1; k<=i; ++k) {
             u1 = new RS_Undoable();
             //c1->
-			undo.addUndoable(u1);
+                        undo.addUndoable(u1);
         }
         //undo.addUndoCycle(c1);
-		undo.endUndoCycle();
+                undo.endUndoCycle();
     }
     std::cout << "OK\n";
 
@@ -315,14 +327,14 @@ bool RS_Undo::test() {
     std::cout << "  Adding 10 cycles..";
     for (i=1; i<=10; ++i) {
         //c1 = new RS_UndoCycle();
-		undo.startUndoCycle();
+                undo.startUndoCycle();
         for (k=1; k<=10; ++k) {
             u1 = new RS_Undoable();
             //c1->addUndoable(u1);
-			undo.addUndoable(u1);
+                        undo.addUndoable(u1);
         }
         //undo.addUndoCycle(c1);
-		undo.endUndoCycle();
+                undo.endUndoCycle();
     }
     std::cout << "OK\n";
 
@@ -359,14 +371,14 @@ bool RS_Undo::test() {
     std::cout << "  Adding 1 cycle..";
     for (i=1; i<=1; ++i) {
         //c1 = new RS_UndoCycle();
-		undo.startUndoCycle();
+                undo.startUndoCycle();
         for (k=1; k<=10; ++k) {
             u1 = new RS_Undoable();
             //c1->addUndoable(u1);
-			undo.addUndoable(u1);
+                        undo.addUndoable(u1);
         }
         //undo.addUndoCycle(c1);
-		undo.endUndoCycle();
+                undo.endUndoCycle();
     }
     std::cout << "OK\n";
 

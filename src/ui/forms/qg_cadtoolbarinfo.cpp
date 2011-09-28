@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 #include "qg_cadtoolbarinfo.h"
@@ -115,5 +115,34 @@ void QG_CadToolBarInfo::infoArea() {
 void QG_CadToolBarInfo::back() {
     if (cadToolBar!=NULL) {
         cadToolBar->back();
+    }
+}
+//restore action from checked button
+void QG_CadToolBarInfo::restoreAction()
+{
+    if(actionHandler==NULL) return;
+    //clear all action
+    if ( bDist2 ->isChecked() ) {
+        actionHandler->slotInfoDist2();
+        return;
+    }
+    if ( bAngle ->isChecked() ) {
+        actionHandler->slotInfoAngle();
+        return;
+    }
+    if ( bTotalLength ->isChecked() ) {
+        actionHandler->slotInfoTotalLength();
+        return;
+    }
+    if ( bArea ->isChecked() ) {
+        actionHandler->slotInfoArea();
+        return;
+    }
+    //default to measure point to point distance
+    //bDist->setChecked(true);
+    //actionHandler->slotInfoDist();
+    RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+    if(currentAction != NULL) {
+        currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }

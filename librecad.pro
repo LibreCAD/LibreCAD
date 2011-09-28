@@ -7,6 +7,8 @@ DEFINES += QC_COMPANYNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYKEY="\"LibreCAD\""
 DEFINES += QC_VERSION="\"master\""
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
+#uncomment to use 2D rs_vector instead of 3D
+#DEFINES += RS_VECTOR2D=1
 
 
 CONFIG += qt \
@@ -14,44 +16,44 @@ CONFIG += qt \
     link_prl \
     help
 
-QMAKE_CXXFLAGS_DEBUG += 
-QMAKE_CXXFLAGS += 
+QMAKE_CXXFLAGS_DEBUG +=
+QMAKE_CXXFLAGS +=
 
 # Make translations at the end of the process
-unix { 
+unix {
     # Get SVN revision number
     # SVNREVISION = $$system(svn info -R | grep -o \"Revision: [0-9]*\" | sed -e \"s/Revision: //\" | head -n1)
     # Temporary disabled getting SCM version
     SCMREVISION=$$system(git describe --tags)
     DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
-    macx { 
+    macx {
         CONFIG += x86 x86_64
         TARGET = LibreCAD
         DEFINES += QC_APPDIR="\"LibreCAD\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
         RC_FILE = res/main/librecad.icns
         DESTDIR = .
-        
+
         QMAKE_POST_LINK = scripts/postprocess-osx.sh
     }
-    else { 
+    else {
         TARGET = librecad
         DEFINES += QC_APPDIR="\"librecad\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_librecad"
         RC_FILE = res/main/librecad.icns
         DESTDIR = unix
-        
+
         QMAKE_POST_LINK = scripts/postprocess-unix.sh
     }
 }
-win32 { 
+win32 {
     CONFIG += release
     QMAKE_CFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
     TARGET = LibreCAD
     DEFINES += QC_APPDIR="\"LibreCAD\""
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
-    
+
     RC_FILE = res\\main\\librecad.rc
     DESTDIR = .
     QMAKE_POST_LINK = scripts\\postprocess-win.bat
@@ -566,7 +568,6 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_cadtoolbarsplines.h \
     src/ui/forms/qg_cadtoolbarinfo.h \
     src/ui/forms/qg_cadtoolbarmain.h \
-    src/ui/forms/qg_cadtoolbarsnap.h \
     src/ui/forms/qg_cadtoolbarmodify.h \
     src/ui/forms/qg_commandwidget.h \
     src/ui/forms/qg_cadtoolbararcs.h \
@@ -657,7 +658,6 @@ SOURCES += src/ui/qg_actionfactory.cpp \
     src/ui/forms/qg_cadtoolbarpoints.cpp \
     src/ui/forms/qg_cadtoolbarpolylines.cpp \
     src/ui/forms/qg_cadtoolbarselect.cpp \
-    src/ui/forms/qg_cadtoolbarsnap.cpp \
     src/ui/forms/qg_cadtoolbarsplines.cpp \
     src/ui/forms/qg_circleoptions.cpp \
     src/ui/forms/qg_commandwidget.cpp \
@@ -731,7 +731,6 @@ FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_cadtoolbarpoints.ui \
     src/ui/forms/qg_cadtoolbarpolylines.ui \
     src/ui/forms/qg_cadtoolbarselect.ui \
-    src/ui/forms/qg_cadtoolbarsnap.ui \
     src/ui/forms/qg_cadtoolbarsplines.ui \
     src/ui/forms/qg_circleoptions.ui \
     src/ui/forms/qg_coordinatewidget.ui \

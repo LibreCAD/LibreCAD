@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -36,12 +36,12 @@ class RS_CommandEvent;
 
 //template<class T> T* instantiate(RS_EntityContainer& container, RS_GraphicView& graphicView) {
 //	return new T(container, graphicView);
-	//void (*function)() = T::instantiate;
-	//return (*function)();
+        //void (*function)() = T::instantiate;
+        //return (*function)();
 //}
 
 /**
- * This is the interface that must be implemented for all 
+ * This is the interface that must be implemented for all
  * action classes. Action classes handle actions such
  * as drawing lines, moving entities or zooming in.
  *
@@ -56,7 +56,7 @@ public:
                        RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
     virtual ~RS_ActionInterface();
-	
+
     virtual RS2::ActionType rtti();
 
     QString getName();
@@ -79,7 +79,7 @@ public:
     virtual void updateToolBar();
     virtual bool isFinished();
     virtual void setFinished();
-    virtual void finish();
+    virtual void finish(bool updateTB = true );
     virtual void setPredecessor(RS_ActionInterface* pre);
     virtual void suspend();
     virtual void resume();
@@ -107,21 +107,21 @@ protected:
     QString name;
 
     /**
-     * This flag is set when the action has terminated and 
+     * This flag is set when the action has terminated and
      * can be deleted.
      */
     bool finished;
 
     /**
-     * Pointer to the graphic is this container is a graphic. 
+     * Pointer to the graphic is this container is a graphic.
      * NULL otherwise
      */
     RS_Graphic* graphic;
 
-	/**
-	 * Pointer to the document (graphic or block) or NULL.
-	 */
-	RS_Document* document;
+        /**
+         * Pointer to the document (graphic or block) or NULL.
+         */
+        RS_Document* document;
 
     /**
      * Pointer to the default mouse cursor for this action or NULL.
@@ -142,13 +142,13 @@ protected:
      * Command used for showing help for every action.
      */
     //static QString cmdHelp;
-	
+
     /**
      * Command for answering yes to a question.
      */
     //static QString cmdYes;
     //static QString cmdYes2;
-	
+
      /**
      * Command for answering no to a question.
      */

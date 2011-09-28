@@ -309,8 +309,10 @@ RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
                                    double* dist,
                                    int middlePoints
                                    ) {
+    RS_DEBUG->print("RS_Arc::getNearestMiddle(): begin\n");
         double amin=getAngle1();
         double amax=getAngle2();
+        //std::cout<<"RS_Arc::getNearestMiddle(): middlePoints="<<middlePoints<<std::endl;
         if( !(std::isnormal(amin) || std::isnormal(amax))){
                 //whole circle, no middle point
                 if(dist != NULL) {
@@ -321,32 +323,25 @@ RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
         if(isReversed()) {
                 std::swap(amin,amax);
         }
-        int i=middlePoints+1;
         double da=fmod(amax-amin+2.*M_PI, 2.*M_PI);
         if ( da < RS_TOLERANCE ) {
                 da= 2.*M_PI; // whole circle
         }
-        da /= i;
-        double angle=amin +da;
-        double curDist=RS_MAXDOUBLE;
-        RS_Vector vp,curPoint;
-        int j=1;
-        do {
-                vp.setPolar(getRadius(),angle);
-                vp += getCenter();
-                double d=coord.distanceTo(vp);
-                if(d<curDist){
-                        curPoint=vp;
-                        curDist=d;
-                }
-                angle += da;
-                j++;
-        }while (j<i);
+        RS_Vector vp(getNearestPointOnEntity(coord,true,dist));
+        double angle=getCenter().angleTo(vp);
+        int counts=middlePoints+1;
+        int i( static_cast<int>(fmod(angle-amin+2.*M_PI,2.*M_PI)/da*counts+0.5));
+        if(!i) i++; // remove end points
+        if(i==counts) i--;
+        angle=amin + da*(double(i)/double(counts));
+        vp.setPolar(getRadius(), angle);
+        vp.move(getCenter());
 
     if (dist!=NULL) {
-        *dist = curDist;
+        *dist = vp.distanceTo(coord);
     }
-    return curPoint;
+    RS_DEBUG->print("RS_Arc::getNearestMiddle(): end\n");
+    return vp;
 }
 
 RS_Vector RS_Arc::getNearestDist(double distance,
@@ -519,9 +514,9 @@ void RS_Arc::moveStartpoint(const RS_Vector& pos) {
 
     // normal arc: move angle1
     /*else {
-    	data.angle1 = data.center.angleTo(pos);
-    	calculateEndpoints();
-    	calculateBorders();
+        data.angle1 = data.center.angleTo(pos);
+        calculateEndpoints();
+        calculateBorders();
     }*/
 }
 
@@ -537,9 +532,9 @@ void RS_Arc::moveEndpoint(const RS_Vector& pos) {
 
     // normal arc: move angle1
     /*else {
-    	data.angle2 = data.center.angleTo(pos);
+        data.angle2 = data.center.angleTo(pos);
         calculateEndpoints();
-    	calculateBorders();
+        calculateBorders();
     }*/
 }
 

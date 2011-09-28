@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 #include "qg_cadtoolbarcircles.h"
@@ -117,3 +117,34 @@ void QG_CadToolBarCircles::back() {
         cadToolBar->back();
     }
 }
+//restore action from checked button
+void QG_CadToolBarCircles::restoreAction()
+{
+    if(actionHandler==NULL) return;
+    if ( bCircle ->isChecked() ) {
+        actionHandler->slotDrawCircle();
+        return;
+    }
+    if ( bCircleCR ->isChecked() ) {
+        actionHandler->slotDrawCircleCR();
+        return;
+    }
+    if ( bCircle2P ->isChecked() ) {
+        actionHandler->slotDrawCircle2P();
+        return;
+    }
+    if ( bCircle3P ->isChecked() ) {
+        actionHandler->slotDrawCircle3P();
+        return;
+    }
+    if ( bCircleParallel ->isChecked() ) {
+        actionHandler->slotDrawCircleParallel();
+        return;
+    }
+    //clear all action
+    RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+    if(currentAction != NULL) {
+        currentAction->finish(false); //finish the action, but do not update toolBar
+    }
+}
+//EOF

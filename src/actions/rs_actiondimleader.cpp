@@ -267,6 +267,8 @@ void RS_ActionDimLeader::updateMouseCursor() {
 
 
 void RS_ActionDimLeader::updateToolBar() {
+    //not needed any more
+    return;
     if (RS_DIALOGFACTORY!=NULL) {
         if (!isFinished()) {
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);

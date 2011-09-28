@@ -144,7 +144,7 @@ void QC_ActionGetPoint::updateToolBar() {
     switch (getStatus()) {
     case SetReferencePoint:
     case SetTargetPoint:
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
+        //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
         break;
     default:
         RS_DIALOGFACTORY->requestPreviousMenu();

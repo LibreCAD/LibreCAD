@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 #include "qg_cadtoolbarmodify.h"
@@ -193,5 +193,90 @@ void QG_CadToolBarModify::modifyExplodeText() {
 void QG_CadToolBarModify::back() {
     if (cadToolBar!=NULL) {
         cadToolBar->back();
+    }
+}
+//restore action from checked
+void QG_CadToolBarModify::restoreAction() {
+    if(actionHandler==NULL) return;
+    if ( bMove ->isChecked() ) {
+        actionHandler->slotModifyMove();
+        return;
+    }
+    if ( bRotate ->isChecked() ) {
+        actionHandler->slotModifyRotate();
+        return;
+    }
+    if ( bScale ->isChecked() ) {
+        actionHandler->slotModifyScale();
+        return;
+    }
+    if ( bMirror ->isChecked() ) {
+        actionHandler->slotModifyMirror();
+        return;
+    }
+    if ( bMoveRotate ->isChecked() ) {
+        actionHandler->slotModifyMoveRotate();
+        return;
+    }
+    if ( bRotate2 ->isChecked() ) {
+        actionHandler->slotModifyRotate2();
+        return;
+    }
+    if ( bTrim ->isChecked() ) {
+        actionHandler->slotModifyTrim();
+        return;
+    }
+    if ( bTrim2 ->isChecked() ) {
+        actionHandler->slotModifyTrim2();
+        return;
+    }
+    if ( bTrimAmount ->isChecked() ) {
+        actionHandler->slotModifyTrimAmount();
+        return;
+    }
+    if ( bBevel ->isChecked() ) {
+        actionHandler->slotModifyBevel();
+        return;
+    }
+    if ( bRound ->isChecked() ) {
+        actionHandler->slotModifyRound();
+        return;
+    }
+    if ( bCut ->isChecked() ) {
+        actionHandler->slotModifyCut();
+        return;
+    }
+    if ( bStretch ->isChecked() ) {
+        actionHandler->slotModifyStretch();
+        return;
+    }
+    if ( bEntity ->isChecked() ) {
+        actionHandler->slotModifyEntity();
+        return;
+    }
+    if ( bAttributes ->isChecked() ) {
+        actionHandler->slotModifyAttributes();
+        return;
+    }
+    if ( bDelete ->isChecked() ) {
+        actionHandler->slotModifyDelete();
+        return;
+    }
+    if ( bExplode ->isChecked() ) {
+        actionHandler->slotBlocksExplode();
+        return;
+    }
+    if ( bExplodeText ->isChecked() ) {
+        actionHandler->slotModifyExplodeText();
+        return;
+    }
+    if ( bEntityText ->isChecked() ) {
+        actionHandler->slotModifyExplodeText();
+        return;
+    }
+    //clear all action
+    RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+    if(currentAction != NULL) {
+        currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }

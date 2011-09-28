@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 #include "qg_cadtoolbarlines.h"
@@ -189,5 +189,79 @@ void QG_CadToolBarLines::drawLinePolygon2() {
 void QG_CadToolBarLines::back() {
     if (cadToolBar!=NULL) {
         cadToolBar->back();
+    }
+}
+
+//restore action from checked
+void QG_CadToolBarLines::restoreAction() {
+    if(actionHandler==NULL) return;
+    if(bNormal->isChecked()) {
+        actionHandler->slotDrawLine();
+        return;
+    }
+    if(bAngle->isChecked()) {
+        actionHandler->slotDrawLineAngle();
+        return;
+    }
+    if(bHorizontal->isChecked()) {
+        actionHandler->slotDrawLineHorizontal();
+        return;
+    }
+    if(bVertical->isChecked()) {
+        actionHandler->slotDrawLineVertical();
+        return;
+    }
+    if(bRectangle->isChecked()) {
+        actionHandler->slotDrawLineRectangle();
+        return;
+    }
+    if(bBisector->isChecked()) {
+        actionHandler->slotDrawLineBisector();
+        return;
+    }
+    if(bParallel->isChecked()) {
+        actionHandler->slotDrawLineParallel();
+        return;
+    }
+    if(bParallelThrough->isChecked()) {
+        actionHandler->slotDrawLineParallelThrough();
+        return;
+    }
+    if(bTangent1->isChecked()) {
+        actionHandler->slotDrawLineTangent1();
+        return;
+    }
+    if(bTangent2->isChecked()) {
+        actionHandler->slotDrawLineTangent2();
+        return;
+    }
+    if(bOrthTan->isChecked()) {
+        actionHandler->slotDrawLineOrthTan();
+        return;
+    }
+    if(bOrthogonal->isChecked()) {
+        actionHandler->slotDrawLineOrthogonal();
+        return;
+    }
+    if(bRelAngle->isChecked()) {
+        actionHandler->slotDrawLineRelAngle();
+        return;
+    }
+    if(bPolygon->isChecked()) {
+        actionHandler->slotDrawLinePolygon();
+        return;
+    }
+    if(bPolygon2->isChecked()) {
+        actionHandler->slotDrawLinePolygon2();
+        return;
+    }
+    if(bFree->isChecked()) {
+        actionHandler->slotDrawLineFree();
+        return;
+    }
+    //clear all action
+    RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+    if(currentAction != NULL) {
+        currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }

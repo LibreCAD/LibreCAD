@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>56</width>
+    <width>65</width>
     <height>448</height>
    </rect>
   </property>
@@ -25,406 +25,322 @@
   <property name="windowTitle">
    <string>Modify</string>
   </property>
-  <widget class="QToolButton" name="bBack">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>56</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Back to main menu</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bStretch">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>206</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Stretch</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifystretch.png</normaloff>:/extui/modifystretch.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bRound">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>172</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Round</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifyround.png</normaloff>:/extui/modifyround.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bBevel">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>172</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Bevel</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifybevel.png</normaloff>:/extui/modifybevel.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bTrimAmount">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>138</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Trim by amount</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifytrimamount.png</normaloff>:/extui/modifytrimamount.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bTrim">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>110</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Trim / Extend</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifytrim.png</normaloff>:/extui/modifytrim.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bDelete">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>268</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Delete</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifydelete.png</normaloff>:/extui/modifydelete.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bAttributes">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>240</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Edit Entity Attributes</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifyattributes.png</normaloff>:/extui/modifyattributes.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bMirror">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>48</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Mirror</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifymirror.png</normaloff>:/extui/modifymirror.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bScale">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>48</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Scale</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifyscale.png</normaloff>:/extui/modifyscale.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bRotate">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>20</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Rotate</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifyrotate.png</normaloff>:/extui/modifyrotate.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bMove">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>20</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-	 <string>Move / Copy</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifymove.png</normaloff>:/extui/modifymove.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bMoveRotate">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>76</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Move and Rotate</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifymoverotate.png</normaloff>:/extui/modifymoverotate.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bRotate2">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>76</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Rotate Two</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifyrotate2.png</normaloff>:/extui/modifyrotate2.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bTrim2">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>110</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Trim / Extend two</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifytrim2.png</normaloff>:/extui/modifytrim2.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bCut">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>206</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Divide</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifycut.png</normaloff>:/extui/modifycut.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bExplode">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>268</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Explode</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifyexplode.png</normaloff>:/extui/modifyexplode.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bExplodeText">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>302</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Explode Text into Letters</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifyexplodetext.png</normaloff>:/extui/modifyexplodetext.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bEntity">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>240</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Edit Entity Geometry</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifyentity.png</normaloff>:/extui/modifyentity.png</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="bEntityText">
-   <property name="geometry">
-    <rect>
-     <x>28</x>
-     <y>302</y>
-     <width>28</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Edit Text</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../../../res/extui/extui.qrc">
-     <normaloff>:/extui/modifytext.png</normaloff>:/extui/modifytext.png</iconset>
-   </property>
-  </widget>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item row="0" column="0" colspan="2">
+    <widget class="QToolButton" name="bBack">
+     <property name="toolTip">
+      <string>Back to main menu</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>65</width>
+       <height>20</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QToolButton" name="bMove">
+     <property name="toolTip">
+      <string>Move / Copy</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifymove.png</normaloff>:/extui/modifymove.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QToolButton" name="bRotate">
+     <property name="toolTip">
+      <string>Rotate</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifyrotate.png</normaloff>:/extui/modifyrotate.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QToolButton" name="bScale">
+     <property name="toolTip">
+      <string>Scale</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifyscale.png</normaloff>:/extui/modifyscale.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QToolButton" name="bMirror">
+     <property name="toolTip">
+      <string>Mirror</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifymirror.png</normaloff>:/extui/modifymirror.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QToolButton" name="bMoveRotate">
+     <property name="toolTip">
+      <string>Move and Rotate</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifymoverotate.png</normaloff>:/extui/modifymoverotate.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QToolButton" name="bRotate2">
+     <property name="toolTip">
+      <string>Rotate Two</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifyrotate2.png</normaloff>:/extui/modifyrotate2.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QToolButton" name="bTrim">
+     <property name="toolTip">
+      <string>Trim / Extend</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifytrim.png</normaloff>:/extui/modifytrim.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QToolButton" name="bTrim2">
+     <property name="toolTip">
+      <string>Trim / Extend two</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifytrim2.png</normaloff>:/extui/modifytrim2.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QToolButton" name="bTrimAmount">
+     <property name="toolTip">
+      <string>Trim by amount</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifytrimamount.png</normaloff>:/extui/modifytrimamount.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QToolButton" name="bBevel">
+     <property name="toolTip">
+      <string>Bevel</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifybevel.png</normaloff>:/extui/modifybevel.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QToolButton" name="bRound">
+     <property name="toolTip">
+      <string>Round</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifyround.png</normaloff>:/extui/modifyround.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QToolButton" name="bCut">
+     <property name="toolTip">
+      <string>Divide</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifycut.png</normaloff>:/extui/modifycut.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QToolButton" name="bStretch">
+     <property name="toolTip">
+      <string>Stretch</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifystretch.png</normaloff>:/extui/modifystretch.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QToolButton" name="bEntity">
+     <property name="toolTip">
+      <string>Edit Entity Geometry</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifyentity.png</normaloff>:/extui/modifyentity.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QToolButton" name="bAttributes">
+     <property name="toolTip">
+      <string>Edit Entity Attributes</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifyattributes.png</normaloff>:/extui/modifyattributes.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
+    <widget class="QToolButton" name="bDelete">
+     <property name="toolTip">
+      <string>Delete</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifydelete.png</normaloff>:/extui/modifydelete.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="QToolButton" name="bExplode">
+     <property name="toolTip">
+      <string>Explode</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifyexplode.png</normaloff>:/extui/modifyexplode.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <widget class="QToolButton" name="bExplodeText">
+     <property name="toolTip">
+      <string>Explode Text into Letters</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifyexplodetext.png</normaloff>:/extui/modifyexplodetext.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <widget class="QToolButton" name="bEntityText">
+     <property name="toolTip">
+      <string>Edit Text</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/modifytext.png</normaloff>:/extui/modifytext.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

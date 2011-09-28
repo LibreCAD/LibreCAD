@@ -112,16 +112,16 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
     RS_Vector vpc=coord-data.startpoint;
     vpc.rotate(-angle); // rotate to use the line direction as x-axis
     if ( (vpc.x >= 0. && vpc.x <= r) || ! onEntity ) { //use the projection
-    	ret=RS_Vector(vpc.x,0.);
-	ret.rotate(angle);
-	ret += data.startpoint;
+        ret=RS_Vector(vpc.x,0.);
+        ret.rotate(angle);
+        ret += data.startpoint;
     } else {// onEntity=true and projection not within range, only have to check the endpoints
-    	ret=getNearestEndpoint(coord,dist);
+        ret=getNearestEndpoint(coord,dist);
     }
 
     if (dist!=NULL) {
         *dist = ret.distanceTo(coord);
-	}
+        }
     return ret;
 }
 
@@ -129,31 +129,34 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
 {
         return (getStartpoint() + getEndpoint())*0.5;
 }
-/** @return the nearest of equidistant middle points of the line. */
+    /** @return the nearest of equidistant middle points of the line. */
     RS_Vector RS_Line::getNearestMiddle(const RS_Vector& coord,
-                    double* dist,
-                    int middlePoints
-                    ) {
-            int i= middlePoints + 1;
-            RS_Vector dvp((getEndpoint() - getStartpoint())/double(i));
-            RS_Vector vp(getStartpoint()+dvp);
-            RS_Vector curPoint;
-            int j=1;
-            double curDist=RS_MAXDOUBLE;
-            do{
-            double d=coord.distanceTo(vp);
-            if (d<curDist) {
-                    curDist=d;
-                    curPoint=vp;
+                                        double* dist,
+                                        int middlePoints
+                                        ) {
+        RS_DEBUG->print("RS_Line::getNearestMiddle(): begin\n");
+        RS_Vector dvp(getEndpoint() - getStartpoint());
+        double l=dvp.magnitude();
+        if( l<= RS_TOLERANCE) {
+            //line too short
+            RS_Vector vp(getStartpoint() + dvp*0.5);
+            if (dist != NULL) {
+                *dist=vp.distanceTo(coord);
             }
-            j++;
-            vp += dvp;
-            } while ( j<i);
+            return vp;
+        }
+        RS_Vector vp0(getNearestPointOnEntity(coord,true,dist));
+        int counts=middlePoints+1;
+        int i( static_cast<int>(vp0.distanceTo(getStartpoint())/l*counts+0.5));
+        if(!i) i++; // remove end points
+        if(i==counts) i--;
+        vp0=getStartpoint() + dvp*(double(i)/double(counts));
 
-            if(dist != NULL) {
-                    *dist=curDist;
-            }
-        return curPoint;
+        if(dist != NULL) {
+            *dist=vp0.distanceTo(coord);
+        }
+        RS_DEBUG->print("RS_Line::getNearestMiddle(): end\n");
+        return vp0;
     }
 
 

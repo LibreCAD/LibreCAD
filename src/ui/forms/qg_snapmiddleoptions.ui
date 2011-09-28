@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>145</width>
+    <width>135</width>
     <height>24</height>
    </rect>
   </property>
@@ -53,7 +53,7 @@
   <widget class="QSpinBox" name="sbMiddlePoints">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>93</x>
      <y>1</y>
      <width>40</width>
      <height>22</height>
@@ -76,22 +76,5 @@
   <include location="local">rs_settings.h</include>
  </includes>
  <resources/>
- <connections>
-  <connection>
-   <sender>sbMiddlePoints</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>QG_SnapMiddleOptions</receiver>
-   <slot>updateMiddlePoints(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

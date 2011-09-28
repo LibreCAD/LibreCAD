@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 #include "qg_snapmiddleoptions.h"
@@ -31,11 +31,11 @@
  *  Constructs a QG_SnapMiddleOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_SnapMiddleOptions::QG_SnapMiddleOptions(QWidget* parent, Qt::WindowFlags fl)
+QG_SnapMiddleOptions::QG_SnapMiddleOptions(int& i, QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
 {
     setupUi(this);
-
+    middlePoints=&i;
 }
 
 /*
@@ -62,22 +62,36 @@ void QG_SnapMiddleOptions::destroy() {
     RS_SETTINGS->endGroup();
 }
 
-void QG_SnapMiddleOptions::setMiddlePoints(int* i) {
-    middlePoints = i;
+void QG_SnapMiddleOptions::setMiddlePoints( int& i, bool initial) {
+    middlePoints = &i;
+    if(initial) {
     RS_SETTINGS->beginGroup("/Snap");
-    *i=RS_SETTINGS->readNumEntry("/MiddlePoints", 1);
-    if( !( *i>=1 && *i<=99)) {
-            *i=1;
+    *middlePoints=RS_SETTINGS->readNumEntry("/MiddlePoints", 1);
+    if( !( *middlePoints>=1 && *middlePoints<=99)) {
+        *middlePoints=1;
         RS_SETTINGS->writeEntry("/MiddlePoints", 1);
     }
+    sbMiddlePoints->setValue(*middlePoints);
     RS_SETTINGS->endGroup();
+    } else {
+        *middlePoints=sbMiddlePoints->value();
+    }
 
-    sbMiddlePoints->setValue(*i);
 }
 
-void QG_SnapMiddleOptions::updateMiddlePoints(const int& i) {
-        if (middlePoints != NULL) {
-        *middlePoints = i;
-        }
+void QG_SnapMiddleOptions::updateMiddlePoints() {
+    if (middlePoints != NULL) {
+        *middlePoints = sbMiddlePoints->value();
+    }
+}
+
+void QG_SnapMiddleOptions::on_sbMiddlePoints_valueChanged(int i)
+{
+    if (middlePoints != NULL) {
+        *middlePoints = i;/*
+    RS_SETTINGS->beginGroup("/Snap");
+    RS_SETTINGS->writeEntry("/MiddlePoints", *middlePoints);
+    RS_SETTINGS->endGroup();*/
+    }
 }
 //EOF

@@ -300,7 +300,6 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting action handler");
-
     delete actionHandler;
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
@@ -482,7 +481,8 @@ void QC_ApplicationWindow::closeEvent(QCloseEvent* ce) {
     if (!queryExit(false)) {
         ce->ignore();
     }
-
+//we shouldn't need this; saving should be done within ~QG_SnapToolBar()
+    //snapToolBar->saveSnapMode();
 
     RS_DEBUG->print("QC_ApplicationWindow::closeEvent(): OK");
 }
@@ -1105,7 +1105,7 @@ void QC_ApplicationWindow::initActions(void)
 
     // Snapping actions:
     //
-    /*menu = menuBar()->addMenu(tr("&Snap"));
+    menu = menuBar()->addMenu(tr("&Snap"));
     menu->setObjectName("Snap");
     action = actionFactory.createAction(RS2::ActionSnapFree, actionHandler);
     menu->addAction(action);
@@ -1135,11 +1135,11 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action = actionFactory.createAction(RS2::ActionSnapIntersectionManual,
-                                        actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->addSeparator();
+//    action = actionFactory.createAction(RS2::ActionSnapIntersectionManual,
+//                                        actionHandler);
+//    menu->addAction(action);
+//    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+//    menu->addSeparator();
     action = actionFactory.createAction(RS2::ActionRestrictNothing,
                                         actionHandler);
     menu->addAction(action);
@@ -1166,7 +1166,6 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    */
 
     // Info actions:
     //
@@ -1432,6 +1431,7 @@ void QC_ApplicationWindow::initMenuBar() {
 
     // menuBar configuration
     recentFiles = new QG_RecentFiles(9);
+    openedFiles.clear();
 }
 
 
@@ -1464,12 +1464,14 @@ void QC_ApplicationWindow::initToolBar() {
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
             this, SLOT(slotPenChanged(RS_Pen)));
 
-    snapToolBar = new QG_SnapToolBar("Snap Selection", this);
+    //Add snap toolbar
+    snapToolBar = new QG_SnapToolBar("Snap Selection",actionHandler, this);
     snapToolBar->setSizePolicy(toolBarPolicy);
     snapToolBar->setObjectName ( "SnapTB" );
-    connect(snapToolBar, SIGNAL(snapsChanged(RS_SnapMode)),
-            this, SLOT(slotSnapsChanged(RS_SnapMode)));
+    //connect(snapToolBar, SIGNAL(snapsChanged(RS_SnapMode)),
+    //        this, SLOT(slotSnapsChanged(RS_SnapMode)));
     this->addToolBar(snapToolBar);
+
 
     optionWidget = new QToolBar("Tool Options", this);
         QSizePolicy optionWidgetBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
@@ -1606,7 +1608,8 @@ void QC_ApplicationWindow::storeSettings() {
     RS_SETTINGS->writeEntry("/WindowY", y());
     RS_SETTINGS->writeEntry("/DockWindows", QVariant (saveState()));
     RS_SETTINGS->endGroup();
-
+    //save snapMode
+    snapToolBar->saveSnapMode();
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings(): OK");
 }
 
@@ -1900,8 +1903,13 @@ void QC_ApplicationWindow::slotWindowActivated(QWidget*) {
         m->getDocument()->updateInserts();
         m->getGraphicView()->redraw();
 
-        // set snapmode from snapping menu
-        actionHandler->updateSnapMode();
+        // set snapmode from snap toolbar
+        //actionHandler->updateSnapMode();
+        if(snapToolBar != NULL ){
+            actionHandler->slotSetSnaps(snapToolBar->getSnaps());
+        }else {
+            RS_DEBUG->print(RS_Debug::D_ERROR,"snapToolBar is NULL\n");
+        }
 
         // set pen from pen toolbar
         slotPenChanged(penToolBar->getPen());
@@ -2136,6 +2144,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
             */
         cadToolBar->showToolBar(RS2::ToolBarMain);
         }
+
     QG_DIALOGFACTORY->setCadToolBar(cadToolBar);
     // Link the dialog factory to the command widget:
     QG_DIALOGFACTORY->setCommandWidget(commandWidget);
@@ -2263,6 +2272,11 @@ void QC_ApplicationWindow::
     if (!fileName.isEmpty())
          {
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: creating new doc window");
+        if (openedFiles.indexOf(fileName) >=0) {
+            QString message=tr("Warning: File already opened : ")+fileName;
+            commandWidget->appendHistory(message);
+            statusBar()->showMessage(message, 2000);
+        }
         // Create new document window:
         QC_MDIWindow* w = slotFileNew();
         // RVT_PORT qApp->processEvents(1000);
@@ -2300,6 +2314,7 @@ void QC_ApplicationWindow::
 
         // update recent files menu:
         recentFiles->add(fileName);
+        openedFiles.append(fileName);
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: 2");
         updateRecentFilesMenu();
 
@@ -2359,12 +2374,21 @@ void QC_ApplicationWindow::slotFileSave() {
                     statusBar()->showMessage(tr("Saved drawing: %1").arg(name), 2000);
                 }
             } else {
+                QString message( tr("Cannot save the file ") +
+                                 w->getDocument()->getFilename()
+                                 + tr(" , please check the filename and permissions.")
+                                 );
+                statusBar()->showMessage(message, 2000);
+                commandWidget->appendHistory(message);
+                slotFileSaveAs();
                 // error
+                /*
                 QMessageBox::information(this, QMessageBox::tr("Warning"),
                                          tr("Cannot save the file\n%1\nPlease "
                                             "check the permissions.")
                                          .arg(w->getDocument()->getFilename()),
                                          QMessageBox::Ok);
+                                         */
             }
         }
     }
@@ -2661,6 +2685,12 @@ void QC_ApplicationWindow::slotFileClosing() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
 
     RS_DEBUG->print("detaching lists");
+    QC_MDIWindow* w = getMDIWindow();
+
+    int pos=openedFiles.indexOf(w->getDocument()->getFilename());
+    if(pos>=0) {
+        openedFiles.erase(openedFiles.begin()+pos);
+    }
     layerWidget->setLayerList(NULL, false);
     blockWidget->setBlockList(NULL);
     coordinateWidget->setGraphic(NULL);

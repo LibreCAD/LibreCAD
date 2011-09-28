@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -45,9 +45,9 @@ RS_ActionDrawText::RS_ActionDrawText(RS_EntityContainer& container,
 
 
 QAction* RS_ActionDrawText::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Text")
+        // tr("Text")
     QAction* action = new QAction(tr("&Text"),  NULL);
-	action->setIcon(QIcon(":/extui/menutext.png"));
+        action->setIcon(QIcon(":/extui/menutext.png"));
     //action->zetStatusTip(tr("Draw Text Entities"));
     return action;
 }
@@ -69,6 +69,7 @@ void RS_ActionDrawText::init(int status) {
                 } else {
                     hideOptions();
                     finish();
+                updateMouseButtonHints();
                 }
             }
             break;
@@ -121,7 +122,7 @@ void RS_ActionDrawText::trigger() {
             document->endUndoCycle();
         }
 
-		graphicView->redraw(RS2::RedrawDrawing);
+                graphicView->redraw(RS2::RedrawDrawing);
 
         textChanged = true;
         setStatus(SetPos);
@@ -265,6 +266,7 @@ void RS_ActionDrawText::updateMouseButtonHints() {
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify insertion point"),
                                                 tr("Cancel"));
             break;
+        case ShowDialog:
         case SetText:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Enter text:"),
                                                 tr("Back"));
@@ -282,9 +284,13 @@ void RS_ActionDrawText::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
 void RS_ActionDrawText::updateToolBar() {
+    if(isFinished()) {
+        if (RS_DIALOGFACTORY!=NULL) {
+            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+        }
+    }
+    /*
     //not needed any more with new snap
     return;
     if (RS_DIALOGFACTORY!=NULL) {
@@ -297,6 +303,7 @@ void RS_ActionDrawText::updateToolBar() {
             break;
         }
     }
+    */
 }
 
 

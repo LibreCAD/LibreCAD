@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -117,13 +117,13 @@ void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
                                                       mouse));
                 preview->addEntity(currentLine);
 
-				if (preview->count()>1) {
-                	closingLine = new RS_Line(preview,
+                                if (preview->count()>1) {
+                        closingLine = new RS_Line(preview,
                                           RS_LineData(mouse,
                                                       point1));
 
-                	preview->addEntity(closingLine);
-				}
+                        preview->addEntity(closingLine);
+                                }
 
                 drawPreview();
             }
@@ -255,6 +255,7 @@ void RS_ActionInfoArea::updateMouseCursor() {
 
 
 void RS_ActionInfoArea::updateToolBar() {
+    /*not needed any more
     switch (getStatus()) {
     case SetFirstPoint:
     case SetNextPoint:
@@ -264,6 +265,7 @@ void RS_ActionInfoArea::updateToolBar() {
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarInfo);
         break;
     }
+    */
 }
 
 

@@ -97,8 +97,6 @@
 #include "qg_polylineoptions.h"
 #include "qg_layerwidget.h"
 #include "qg_mainwindowinterface.h"
-#include "qg_snapmiddleoptions.h"
-#include "qg_snapdistoptions.h"
 
 //QG_DialogFactory* QG_DialogFactory::uniqueInstance = NULL;
 
@@ -1205,18 +1203,24 @@ void QG_DialogFactory::requestDimLinearOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestSnapMiddleOptions(int& middlePoints, bool on) {
 
-    if (optionWidget!=NULL) {
+    if(!on) {
         if (snapMiddleOptions!=NULL) {
             delete snapMiddleOptions;
             snapMiddleOptions = NULL;
         }
-        if (on==true) {
-            snapMiddleOptions = new QG_SnapMiddleOptions();
-            optionWidget->addWidget(snapMiddleOptions);
-            snapMiddleOptions->setMiddlePoints(&middlePoints);
-                        snapMiddleOptions->show();
-        }
+        return;
     }
+    if (optionWidget!=NULL ) {
+        if (snapMiddleOptions==NULL) {
+            snapMiddleOptions = new QG_SnapMiddleOptions(middlePoints);
+            optionWidget->addWidget(snapMiddleOptions);
+            snapMiddleOptions->setMiddlePoints(middlePoints);
+        }else{
+            snapMiddleOptions->setMiddlePoints(middlePoints,false);
+        }
+        snapMiddleOptions->show();
+    }
+    //std::cout<<"QG_DialogFactory::requestSnapMiddleOptions(): middlePoints="<<middlePoints<<std::endl;
 }
 
 
@@ -1224,18 +1228,23 @@ void QG_DialogFactory::requestSnapMiddleOptions(int& middlePoints, bool on) {
  * Shows a widget for 'snap to a point with a given distance' options.
  */
 void QG_DialogFactory::requestSnapDistOptions(double& dist, bool on) {
-
-    if (optionWidget!=NULL) {
+    if(!on) {
         if (snapDistOptions!=NULL) {
             delete snapDistOptions;
             snapDistOptions = NULL;
         }
-        if (on==true) {
+        return;
+    }
+    if (optionWidget!=NULL ) {
+        if ( snapDistOptions==NULL) {
             snapDistOptions = new QG_SnapDistOptions();
             optionWidget->addWidget(snapDistOptions);
-            snapDistOptions->setDist(&dist);
-                        snapDistOptions->show();
+        snapDistOptions->setDist(dist);
+        }else {
+        snapDistOptions->setDist(dist,false);
         }
+        //std::cout<<"QG_DialogFactory::requestSnapDistOptions(): dist="<<dist<<std::endl;
+        snapDistOptions->show();
     }
 }
 
@@ -1362,12 +1371,6 @@ void QG_DialogFactory::requestLibraryInsertOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestToolBar(RS2::ToolBarId id) {
     if (cadToolBar!=NULL) {
         cadToolBar->showToolBar(id);
-    }
-}
-
-void QG_DialogFactory::clearDrawPoint() {
-    if (cadToolBar!=NULL) {
-        cadToolBar->clearDrawPoint();
     }
 }
 

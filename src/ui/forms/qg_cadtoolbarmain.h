@@ -38,18 +38,20 @@ class QG_CadToolBarMain : public QWidget, public Ui::QG_CadToolBarMain
 public:
     QG_CadToolBarMain(QWidget* parent = 0, Qt::WindowFlags fl = 0);
     ~QG_CadToolBarMain();
+    void restoreAction(); //restore action from checked button
+    void finishCurrentAction(); //clear current action
 
 public slots:
     virtual void init();
     virtual void setCadToolBar( QG_CadToolBar * tb );
-    virtual void clearDrawPoint();
 
 protected slots:
     virtual void languageChange();
 private:
     QG_ActionHandler* actionHandler;
 private slots:
-    virtual void slotDrawPoint();
+    void slotDrawText();
+    void slotDrawImage();
 };
 
 #endif

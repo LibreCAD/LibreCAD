@@ -204,17 +204,20 @@ void RS_Text::update() {
 
     // For every letter:
     for (int i=0; i<(int)data.text.length(); ++i) {
+        bool handled = false;
         switch (data.text.at(i).unicode()) {
         case 0x0A:
             // line feed:
             updateAddLine(oneLine, lineCounter++);
             oneLine = new RS_EntityContainer(this);
             letterPos = RS_Vector(0.0, -9.0);
+            handled = true;
             break;
 
         case 0x20:
             // Space:
             letterPos+=space;
+            handled = true;
             break;
 
         case 0x5C: {
@@ -226,6 +229,7 @@ void RS_Text::update() {
                     updateAddLine(oneLine, lineCounter++);
                     oneLine = new RS_EntityContainer(this);
                     letterPos = RS_Vector(0.0, -9.0);
+                    handled = true;
                     break;
 
                 case 'S': {
@@ -299,13 +303,17 @@ void RS_Text::update() {
                         }
                         letterPos += letterSpace;
                     }
+                    handled = true;
                     break;
 
                 default:
+                    i--;
                     break;
                 }
             }
-            break;
+            //if char is not handled continue in default: statement
+            if (handled)
+                break;
 
         default: {
                 // One Letter:

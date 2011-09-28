@@ -27,13 +27,17 @@
 #include <QToolBar>
 
 #include "qg_snaptoolbar.h"
+#include "rs_settings.h"
+#include "qg_cadtoolbar.h"
 
 /*
  *  Constructs a QG_CadToolBarSnap as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_SnapToolBar::QG_SnapToolBar( const QString & title, QWidget * parent )
+QG_SnapToolBar::QG_SnapToolBar( const QString & title, QG_ActionHandler* ah, QWidget * parent )
     : QToolBar(title, parent) {
+    actionHandler=ah;
+    actionHandler->setSnapToolBar(this);
     init();
 }
 
@@ -42,35 +46,33 @@ QG_SnapToolBar::QG_SnapToolBar( const QString & title, QWidget * parent )
  */
 QG_SnapToolBar::~QG_SnapToolBar()
 {
+    //@Save default snap mode to prefrences.
+    //never being called
+    saveSnapMode();
+    // no need to delete child widgets, Qt does it all for us
+}
+
+void QG_SnapToolBar::saveSnapMode()
+{
+    //@write default snap mode from prefrences.
+    unsigned int snapFlags=RS_Snapper::snapModeToInt(getSnaps());
+    RS_SETTINGS->beginGroup("/Snap");
+    RS_SETTINGS->writeEntry("/SnapMode",QString::number(snapFlags));
+    RS_SETTINGS->endGroup();
     // no need to delete child widgets, Qt does it all for us
 }
 
 void QG_SnapToolBar::setSnaps ( RS_SnapMode s )
 {
+    snapGrid->setChecked(s.snapGrid);
     snapEnd->setChecked(s.snapEndpoint);
     snapOnEntity->setChecked(s.snapOnEntity);
     snapCenter->setChecked(s.snapCenter);
     snapMiddle->setChecked(s.snapMiddle);
+    snapDistance->setChecked(s.snapDistance);
     snapIntersection->setChecked(s.snapIntersection);
-
-
-    restrictOrthoagonal->setChecked(false); // Init to false
-    restrictHorizontal->setChecked(false);  //
-    restrictVertical->setChecked(false);    //
-    switch (s.restriction)
-    {
-    case RS2::RestrictOrthogonal:
-        restrictOrthoagonal->setChecked(true);
-        break;
-    case RS2::RestrictHorizontal:
-        restrictHorizontal->setChecked(true);
-        break;
-    case RS2::RestrictVertical:
-        restrictVertical->setChecked(true);
-        break;
-    default:
-        break;
-    }
+    restrictHorizontal->setChecked(s.restriction==RS2::RestrictHorizontal ||  s.restriction==RS2::RestrictOrthogonal);
+    restrictVertical->setChecked(s.restriction==RS2::RestrictVertical ||  s.restriction==RS2::RestrictOrthogonal);
 }
 
 RS_SnapMode QG_SnapToolBar::getSnaps ( void )
@@ -159,40 +161,41 @@ void QG_SnapToolBar::init()
     //        this, SLOT(restrictVerticalTriggered(bool)));
     connect(restrictVertical, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     this->addAction(restrictVertical);
+
+    this->addSeparator();
+    bRelZero = new QAction(QIcon(":/extui/relzeromove.png"), "Set relative zero position", this);
+    bRelZero->setCheckable(false);
+    connect(bRelZero, SIGNAL(triggered()), actionHandler, SLOT(slotSetRelativeZero()));
+    //connect(bRelZero, SIGNAL(triggered()), this, SLOT(slotSetRelativeZero()));
+    this->addAction(bRelZero);
+    bLockRelZero = new QAction(QIcon(":/extui/relzerolock.png"), "Lock relative zero position", this);
+    bLockRelZero->setCheckable(true);
+    connect(bLockRelZero, SIGNAL(toggled(bool)),actionHandler, SLOT(slotLockRelativeZero(bool)));
+    this->addAction(bLockRelZero);
+    //restore snapMode from saved preferences
+    RS_SETTINGS->beginGroup("/Snap");
+    setSnaps(RS_Snapper::intToSnapMode(RS_SETTINGS->readNumEntry("/SnapMode",0)));
+    RS_SETTINGS->endGroup();
+    setIconSize(QSize(24,24));
+}
+
+bool QG_SnapToolBar::lockedRelativeZero()
+{
+    return bLockRelZero->isChecked();
+}
+void QG_SnapToolBar::setLockedRelativeZero(bool on)
+{
+    bLockRelZero->setChecked(on);
+}
+void QG_SnapToolBar::setActionHandler(QG_ActionHandler* ah){
+    actionHandler=ah;
 }
 
 /* Slots */
 
 void QG_SnapToolBar::actionTriggered()
 {
-    emit snapsChanged(getSnaps());
-}
-
-void QG_SnapToolBar::restrictOrthoagonalTriggered(bool activated)
-{
-        /* not needed any more, will be removed
-    if (activated) {
-        restrictHorizontal->setChecked(false);
-        restrictVertical->setChecked(false);
-    }
-    */
-}
-void QG_SnapToolBar::restrictHorizontalTriggered(bool activated)
-{
-        /* not needed any more, will be removed
-    if (activated) {
-        restrictOrthoagonal->setChecked(false);
-        restrictVertical->setChecked(false);
-    }
-    */
-}
-void QG_SnapToolBar::restrictVerticalTriggered(bool activated)
-{
-        /* not needed any more, will be removed
-    if (activated) {
-        restrictOrthoagonal->setChecked(false);
-        restrictHorizontal->setChecked(false);
-    }
-    */
+    actionHandler->slotSetSnaps(getSnaps());
+    //emit snapsChanged(getSnaps());
 }
 

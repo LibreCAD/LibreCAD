@@ -187,6 +187,8 @@ void RS_ActionSelectWindow::updateMouseCursor() {
 
 
 void RS_ActionSelectWindow::updateToolBar() {
+    //not needed any more
+    return;
     if (!isFinished()) {
         //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);

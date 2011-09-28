@@ -82,16 +82,18 @@ void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
         connect(bMenuPolyline, SIGNAL(clicked()),
                 tb, SLOT(showToolBarPolylines()));
         connect(bMenuPoint, SIGNAL(clicked()),
-                this, SLOT(slotDrawPoint()));
+                actionHandler, SLOT(slotDrawPoint()));
 
         connect(bMenuText, SIGNAL(clicked()),
-                actionHandler, SLOT(slotDrawText()));
+                //actionHandler, SLOT(slotDrawText()));
+                this, SLOT(slotDrawText()));
         connect(bMenuDim, SIGNAL(clicked()),
                 tb, SLOT(showToolBarDim()));
         connect(bMenuHatch, SIGNAL(clicked()),
                 actionHandler, SLOT(slotDrawHatch()));
         connect(bMenuImage, SIGNAL(clicked()),
-                actionHandler, SLOT(slotDrawImage()));
+                this, SLOT(slotDrawImage()));
+                //actionHandler, SLOT(slotDrawImage()));
 
         connect(bMenuModify, SIGNAL(clicked()),
                 tb, SLOT(showToolBarModify()));
@@ -108,11 +110,40 @@ void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
     }
 }
 
-void QG_CadToolBarMain::slotDrawPoint() {
-    bMenuPoint->setChecked(true);
-    actionHandler->slotDrawPoint();
+//clear current action
+void QG_CadToolBarMain::finishCurrentAction()
+{
+    if(actionHandler==NULL) return;
+    RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+    if(currentAction != NULL) {
+        currentAction->finish(false); //finish the action, but do not update toolBar
+    }
 }
 
-void QG_CadToolBarMain::clearDrawPoint() {
-    bMenuPoint->setChecked(false);
+void QG_CadToolBarMain::slotDrawText()
+{
+    finishCurrentAction();
+    actionHandler->slotDrawText();
+}
+
+void QG_CadToolBarMain::slotDrawImage()
+{
+    finishCurrentAction();
+    actionHandler->slotDrawImage();
+}
+
+//restore action from checked button
+void QG_CadToolBarMain::restoreAction()
+{
+    if(actionHandler==NULL) return;
+    if ( bMenuSpline ->isChecked() ) {
+        actionHandler->slotDrawSpline();
+        return;
+    }
+    if ( bMenuPoint ->isChecked() ) {
+        actionHandler->slotDrawPoint();
+        return;
+    }
+    bHidden->setChecked(true);
+    finishCurrentAction();
 }

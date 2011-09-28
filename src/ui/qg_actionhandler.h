@@ -30,7 +30,8 @@
 #include "rs_actioninterface.h"
 
 class QG_MainWindowInterface;
-class QG_CadToolBarSnap;
+//class QG_CadToolBarSnap;
+class QG_SnapToolBar;
 class QG_CadToolBarSelect;
 
 
@@ -45,13 +46,15 @@ public:
     QG_ActionHandler(QG_MainWindowInterface* mw);
     virtual ~QG_ActionHandler();
 
-	RS_ActionInterface* getCurrentAction();
+        RS_ActionInterface* getCurrentAction();
     RS_ActionInterface* setCurrentAction(RS2::ActionType id);
-	void killSelectActions();
+        void killSelectActions();
 
-	bool keycode(const QString& code);
-	bool command(const QString& cmd);
+        bool keycode(const QString& code);
+        bool command(const QString& cmd);
         QStringList getAvailableCommands();
+    RS_SnapMode getSnaps();
+   RS2::SnapRestriction getSnapRestriction();
 
 public slots:
     /*void slotFileNew();*/
@@ -183,7 +186,7 @@ public slots:
 
     void disableSnaps();
     void disableRestrictions();
-    void updateSnapMode();
+    void updateSnapMode(RS_SnapMode&);
 
     void slotSetRelativeZero();
     void slotLockRelativeZero(bool on);
@@ -259,11 +262,12 @@ public slots:
         lockRelativeZero = a;
     }
 
-    void setCadToolBarSnap(QG_CadToolBarSnap* tb);
+    //not needed any more, will be removed
+    void setSnapToolBar(QG_SnapToolBar* tb);
 
 private:
     QG_MainWindowInterface* mainWindow;
-    QG_CadToolBarSnap* cadToolBarSnap;
+    QG_SnapToolBar* snapToolBar;
 
     QAction* snapFree;
     QAction* snapGrid;
@@ -281,6 +285,7 @@ private:
     QAction* restrictVertical;
 
     QAction* lockRelativeZero;
+    bool lockedRelZero;
 };
 
 #endif
