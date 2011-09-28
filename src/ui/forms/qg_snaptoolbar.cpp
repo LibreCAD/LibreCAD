@@ -179,6 +179,14 @@ void QG_SnapToolBar::init()
     setIconSize(QSize(24,24));
 }
 
+bool QG_SnapToolBar::lockedRelativeZero()
+{
+    return bLockRelZero->isChecked();
+}
+void QG_SnapToolBar::setLockedRelativeZero(bool on)
+{
+    bLockRelZero->setChecked(on);
+}
 void QG_SnapToolBar::setActionHandler(QG_ActionHandler* ah){
     actionHandler=ah;
 }

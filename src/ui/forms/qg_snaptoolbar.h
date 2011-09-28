@@ -46,6 +46,8 @@ public:
     RS_SnapMode getSnaps ( void );
     void saveSnapMode(void );
     virtual void setActionHandler(QG_ActionHandler* ah);
+    bool lockedRelativeZero();
+    void setLockedRelativeZero(bool on);
 
 protected:
     QG_ActionHandler* actionHandler;

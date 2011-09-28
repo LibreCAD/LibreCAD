@@ -168,6 +168,7 @@ QG_ActionHandler::QG_ActionHandler(QG_MainWindowInterface* mw) {
     restrictVertical = NULL;
 
     lockRelativeZero = NULL;
+    lockedRelZero=false;
     RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler: OK");
 }
 
@@ -1334,8 +1335,10 @@ void QG_ActionHandler::slotModifyExplodeText() {
 }
 
 void QG_ActionHandler::slotSetSnaps(RS_SnapMode s) {
-    //disableSnaps();
-
+    updateSnapMode(s);
+    if(snapToolBar != NULL) {
+        snapToolBar->setSnaps(s);
+    }
     mainWindow->getGraphicView()->setDefaultSnapMode(s);
 }
 
@@ -1348,10 +1351,7 @@ void QG_ActionHandler::slotSnapGrid() {
     if(snapGrid==NULL) return;
     RS_SnapMode s=getSnaps();
     s.snapGrid = snapGrid->isChecked();
-
-    if(snapToolBar != NULL) {
-        snapToolBar->setSnaps(s);
-    }
+    slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapEndpoint() {
@@ -1359,9 +1359,7 @@ void QG_ActionHandler::slotSnapEndpoint() {
     RS_SnapMode s=getSnaps();
     s.snapEndpoint = snapEndpoint->isChecked();
 
-    if(snapToolBar != NULL) {
-        snapToolBar->setSnaps(s);
-    }
+    slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapOnEntity() {
@@ -1369,9 +1367,7 @@ void QG_ActionHandler::slotSnapOnEntity() {
     RS_SnapMode s=getSnaps();
     s.snapOnEntity = snapOnEntity->isChecked();
 
-    if(snapToolBar != NULL) {
-        snapToolBar->setSnaps(s);
-    }
+    slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapCenter() {
@@ -1379,9 +1375,7 @@ void QG_ActionHandler::slotSnapCenter() {
     RS_SnapMode s=getSnaps();
     s.snapCenter = snapCenter->isChecked();
 
-    if(snapToolBar != NULL) {
-        snapToolBar->setSnaps(s);
-    }
+    slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapMiddle() {
@@ -1389,9 +1383,7 @@ void QG_ActionHandler::slotSnapMiddle() {
     RS_SnapMode s=getSnaps();
     s.snapMiddle = snapMiddle->isChecked();
 
-    if(snapToolBar != NULL) {
-        snapToolBar->setSnaps(s);
-    }
+    slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapDist() {
@@ -1399,9 +1391,7 @@ void QG_ActionHandler::slotSnapDist() {
     RS_SnapMode s=getSnaps();
     s.snapDistance = snapDist->isChecked();
 
-    if(snapToolBar != NULL) {
-        snapToolBar->setSnaps(s);
-    }
+    slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapIntersection() {
@@ -1409,9 +1399,7 @@ void QG_ActionHandler::slotSnapIntersection() {
     RS_SnapMode s=getSnaps();
     s.snapIntersection = snapIntersection->isChecked();
 
-    if(snapToolBar != NULL) {
-        snapToolBar->setSnaps(s);
-    }
+    slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapIntersectionManual() {
@@ -1422,7 +1410,7 @@ void QG_ActionHandler::slotSnapIntersectionManual() {
     /*if (snapToolBar!=NULL) {
         snapToolBar->setSnapMode(RS2::SnapIntersectionManual);
 }*/
-    setCurrentAction(RS2::ActionSnapIntersectionManual);
+    //setCurrentAction(RS2::ActionSnapIntersectionManual);
 }
 
 void QG_ActionHandler::disableSnaps() {
@@ -1454,9 +1442,7 @@ void QG_ActionHandler::disableSnaps() {
 //        snapIntersectionManual->setChecked(false);
 //    }
 
-    if (snapToolBar!=NULL) {
-        snapToolBar->setSnaps(RS_SnapMode());
-    }
+    slotSetSnaps(RS_SnapMode());
 }
 
 void QG_ActionHandler::slotRestrictNothing() {
@@ -1464,9 +1450,7 @@ void QG_ActionHandler::slotRestrictNothing() {
     restrictVertical->setChecked(false);
     RS_SnapMode s=getSnaps();
     s.restriction=RS2::RestrictNothing;
-    if (snapToolBar!=NULL) {
-        snapToolBar->setSnaps(s);
-    }
+    slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotRestrictOrthogonal() {
@@ -1475,27 +1459,19 @@ void QG_ActionHandler::slotRestrictOrthogonal() {
     restrictVertical->setChecked(true);
     RS_SnapMode s=getSnaps();
     s.restriction=RS2::RestrictOrthogonal;
-    if (snapToolBar!=NULL) {
-        snapToolBar->setSnaps(s);
-    }
+    slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotRestrictHorizontal() {
     RS_SnapMode s=getSnaps();
     s.restriction=getSnapRestriction();
-    if(snapToolBar != NULL) {
-        snapToolBar->setSnaps(s);
-    }
-
+    slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotRestrictVertical() {
     RS_SnapMode s=getSnaps();
     s.restriction=getSnapRestriction();
-    if(snapToolBar != NULL) {
-        snapToolBar->setSnaps(s);
-    }
-
+    slotSetSnaps(s);
 }
 
 // find snap restriction from menu
@@ -1531,9 +1507,7 @@ void QG_ActionHandler::disableRestrictions() {
     if (restrictVertical!=NULL) {
         restrictVertical->setChecked(false);
     }
-    if (snapToolBar!=NULL) {
-        snapToolBar->setSnaps(s);
-    }
+    slotSetSnaps(s);
 }
 
 
@@ -1541,42 +1515,42 @@ void QG_ActionHandler::disableRestrictions() {
  * Updates the snap mode for the current document from the selected menu.
  * Used after the active window changed.
  */
-void QG_ActionHandler::updateSnapMode() {
-/* not needed any more
-    if (snapFree!=NULL && snapFree->isChecked()) {
-        slotSnapFree();
-    } else if (snapGrid!=NULL && snapGrid->isChecked()) {
-        slotSnapGrid();
-    } else if (snapEndpoint!=NULL && snapEndpoint->isChecked()) {
-        slotSnapEndpoint();
-    } else if (snapOnEntity!=NULL && snapOnEntity->isChecked()) {
-        slotSnapOnEntity();
-    } else if (snapCenter!=NULL && snapCenter->isChecked()) {
-        slotSnapCenter();
-    } else if (snapMiddle!=NULL && snapMiddle->isChecked()) {
-        slotSnapMiddle();
-    } else if (snapDist!=NULL && snapDist->isChecked()) {
-        slotSnapDist();
-    } else if (snapIntersection!=NULL && snapIntersection->isChecked()) {
-        slotSnapIntersection();
+void QG_ActionHandler::updateSnapMode(RS_SnapMode& s) {
+    if (snapGrid!=NULL ) {
+        snapGrid->setChecked(s.snapGrid);
     }
-
-    // snap restricitons:
-    if (restrictNothing!=NULL && restrictNothing->isChecked()) {
-        slotRestrictNothing();
-    } else if (restrictOrthogonal!=NULL && restrictOrthogonal->isChecked()) {
-        slotRestrictOrthogonal();
-    } else if (restrictHorizontal!=NULL && restrictHorizontal->isChecked()) {
-        slotRestrictHorizontal();
-    } else if (restrictVertical!=NULL && restrictVertical->isChecked()) {
-        slotRestrictVertical();
+    if (snapEndpoint!=NULL ) {
+        snapEndpoint->setChecked(s.snapEndpoint);
+    }
+    if (snapCenter!=NULL ) {
+        snapCenter->setChecked(s.snapCenter);
+    }
+    if (snapMiddle!=NULL ) {
+        snapMiddle->setChecked(s.snapMiddle);
+    }
+    if (snapDist!=NULL ) {
+        snapDist->setChecked(s.snapDistance);
+    }
+    if (snapIntersection!=NULL ) {
+        snapIntersection->setChecked(s.snapIntersection);
+    }
+    if (restrictHorizontal!=NULL ) {
+        restrictHorizontal->setChecked(
+                    s.restriction==RS2::RestrictHorizontal
+                    || s.restriction==RS2::RestrictOrthogonal
+                    );
+    }
+    if (restrictVertical!=NULL ) {
+        restrictVertical->setChecked(
+                    s.restriction==RS2::RestrictVertical
+                    || s.restriction==RS2::RestrictOrthogonal
+                    );
     }
 
     // lock of relative zero:
-    if (lockRelativeZero!=NULL) {
-        slotLockRelativeZero(lockRelativeZero->isChecked());
+    if (lockRelativeZero!=NULL && snapToolBar != NULL) {
+        lockRelativeZero->setChecked(snapToolBar->lockedRelativeZero());
     }
-    */
 }
 
 void QG_ActionHandler::slotSetRelativeZero() {
@@ -1586,6 +1560,9 @@ void QG_ActionHandler::slotSetRelativeZero() {
 void QG_ActionHandler::slotLockRelativeZero(bool on) {
     if (lockRelativeZero!=NULL) {
         lockRelativeZero->setChecked(on);
+        if (snapToolBar != NULL) {
+            snapToolBar->setLockedRelativeZero(on);
+        }
     }
     if (on) {
         setCurrentAction(RS2::ActionLockRelativeZero);

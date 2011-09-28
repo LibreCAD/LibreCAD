@@ -186,7 +186,7 @@ public slots:
 
     void disableSnaps();
     void disableRestrictions();
-    void updateSnapMode();
+    void updateSnapMode(RS_SnapMode&);
 
     void slotSetRelativeZero();
     void slotLockRelativeZero(bool on);
@@ -285,6 +285,7 @@ private:
     QAction* restrictVertical;
 
     QAction* lockRelativeZero;
+    bool lockedRelZero;
 };
 
 #endif
