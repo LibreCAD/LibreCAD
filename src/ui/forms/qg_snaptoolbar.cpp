@@ -28,7 +28,6 @@
 
 #include "qg_snaptoolbar.h"
 #include "rs_settings.h"
-#include "qg_cadtoolbar.h"
 
 /*
  *  Constructs a QG_CadToolBarSnap as a child of 'parent', with the
@@ -37,6 +36,7 @@
 QG_SnapToolBar::QG_SnapToolBar( const QString & title, QG_ActionHandler* ah, QWidget * parent )
     : QToolBar(title, parent) {
     actionHandler=ah;
+    actionHandler->setSnapToolBar(this);
     init();
 }
 
@@ -178,6 +178,14 @@ void QG_SnapToolBar::init()
     setIconSize(QSize(24,24));
 }
 
+bool QG_SnapToolBar::lockedRelativeZero()
+{
+    return bLockRelZero->isChecked();
+}
+void QG_SnapToolBar::setLockedRelativeZero(bool on)
+{
+    bLockRelZero->setChecked(on);
+}
 void QG_SnapToolBar::setActionHandler(QG_ActionHandler* ah){
     actionHandler=ah;
 }
