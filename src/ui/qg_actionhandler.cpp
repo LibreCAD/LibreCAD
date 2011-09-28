@@ -141,7 +141,7 @@
 #include "rs_selection.h"
 
 #include "qg_mainwindowinterface.h"
-#include "qg_cadtoolbarsnap.h"
+#include "qg_snaptoolbar.h"
 
 /**
  * Constructor
@@ -160,7 +160,7 @@ QG_ActionHandler::QG_ActionHandler(QG_MainWindowInterface* mw) {
     snapIntersection       = NULL;
     snapIntersectionManual = NULL;
 
-    cadToolBarSnap = NULL;
+    snapToolBar= NULL;
 
     restrictNothing = NULL;
     restrictOrthogonal = NULL;
@@ -795,6 +795,16 @@ QStringList QG_ActionHandler::getAvailableCommands() {
     }
 }
 
+//get snap mode from snap toolbar
+RS_SnapMode QG_ActionHandler::getSnaps()
+{
+    if (snapToolBar != NULL) {
+        return snapToolBar->getSnaps();
+    }
+    //return a free snap mode
+    return RS_SnapMode();
+}
+
 
 
 /**
@@ -858,8 +868,8 @@ bool QG_ActionHandler::keycode(const QString& code) {
             slotRestrictOrthogonal();
             break;
         case RS2::ActionRestrictHorizontal:
-            slotRestrictHorizontal();
-            break;
+            //slotRestrictHorizontal();
+            //break;
         case RS2::ActionRestrictVertical:
             slotRestrictVertical();
             break;
@@ -1324,97 +1334,84 @@ void QG_ActionHandler::slotModifyExplodeText() {
 }
 
 void QG_ActionHandler::slotSetSnaps(RS_SnapMode s) {
-    disableSnaps();
+    //disableSnaps();
 
     mainWindow->getGraphicView()->setDefaultSnapMode(s);
 }
 
 void QG_ActionHandler::slotSnapFree() {
+    if ( snapFree == NULL) return;
     disableSnaps();
-    if (snapFree!=NULL) {
-        snapFree->setChecked(true);
-    }
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->setSnapMode(RS2::SnapFree);
-    }
-    setCurrentAction(RS2::ActionSnapFree);
 }
 
 void QG_ActionHandler::slotSnapGrid() {
-    disableSnaps();
-    if (snapGrid!=NULL) {
-        snapGrid->setChecked(true);
+    if(snapGrid==NULL) return;
+    RS_SnapMode s=getSnaps();
+    s.snapGrid = snapGrid->isChecked();
+
+    if(snapToolBar != NULL) {
+        snapToolBar->setSnaps(s);
     }
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->setSnapMode(RS2::SnapGrid);
-    }
-    setCurrentAction(RS2::ActionSnapGrid);
 }
 
 void QG_ActionHandler::slotSnapEndpoint() {
-    disableSnaps();
-    if (snapEndpoint!=NULL) {
-        snapEndpoint->setChecked(true);
+    if(snapEndpoint==NULL) return;
+    RS_SnapMode s=getSnaps();
+    s.snapEndpoint = snapEndpoint->isChecked();
+
+    if(snapToolBar != NULL) {
+        snapToolBar->setSnaps(s);
     }
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->setSnapMode(RS2::SnapEndpoint);
-    }
-    setCurrentAction(RS2::ActionSnapEndpoint);
 }
 
 void QG_ActionHandler::slotSnapOnEntity() {
-    disableSnaps();
-    if (snapOnEntity!=NULL) {
-        snapOnEntity->setChecked(true);
+    if(snapOnEntity==NULL) return;
+    RS_SnapMode s=getSnaps();
+    s.snapOnEntity = snapOnEntity->isChecked();
+
+    if(snapToolBar != NULL) {
+        snapToolBar->setSnaps(s);
     }
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->setSnapMode(RS2::SnapOnEntity);
-    }
-    setCurrentAction(RS2::ActionSnapOnEntity);
 }
 
 void QG_ActionHandler::slotSnapCenter() {
-    disableSnaps();
-    if (snapCenter!=NULL) {
-        snapCenter->setChecked(true);
+    if(snapCenter==NULL) return;
+    RS_SnapMode s=getSnaps();
+    s.snapCenter = snapCenter->isChecked();
+
+    if(snapToolBar != NULL) {
+        snapToolBar->setSnaps(s);
     }
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->setSnapMode(RS2::SnapCenter);
-    }
-    setCurrentAction(RS2::ActionSnapCenter);
 }
 
 void QG_ActionHandler::slotSnapMiddle() {
-    disableSnaps();
-    if (snapMiddle!=NULL) {
-        snapMiddle->setChecked(true);
+    if(snapMiddle==NULL) return;
+    RS_SnapMode s=getSnaps();
+    s.snapMiddle = snapMiddle->isChecked();
+
+    if(snapToolBar != NULL) {
+        snapToolBar->setSnaps(s);
     }
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->setSnapMode(RS2::SnapMiddle);
-    }
-    setCurrentAction(RS2::ActionSnapMiddle);
 }
 
 void QG_ActionHandler::slotSnapDist() {
-    disableSnaps();
-    if (snapDist!=NULL) {
-        snapDist->setChecked(true);
+    if(snapDist==NULL) return;
+    RS_SnapMode s=getSnaps();
+    s.snapDistance = snapDist->isChecked();
+
+    if(snapToolBar != NULL) {
+        snapToolBar->setSnaps(s);
     }
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->setSnapMode(RS2::SnapDist);
-    }
-    setCurrentAction(RS2::ActionSnapDist);
 }
 
 void QG_ActionHandler::slotSnapIntersection() {
-    disableSnaps();
-    if (snapIntersection!=NULL) {
-        snapIntersection->setChecked(true);
+    if(snapIntersection==NULL) return;
+    RS_SnapMode s=getSnaps();
+    s.snapIntersection = snapIntersection->isChecked();
+
+    if(snapToolBar != NULL) {
+        snapToolBar->setSnaps(s);
     }
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->setSnapMode(RS2::SnapIntersection);
-    }
-    setCurrentAction(RS2::ActionSnapIntersection);
 }
 
 void QG_ActionHandler::slotSnapIntersectionManual() {
@@ -1422,16 +1419,16 @@ void QG_ActionHandler::slotSnapIntersectionManual() {
     /*if (snapIntersectionManual!=NULL) {
         snapIntersectionManual->setChecked(true);
 }*/
-    /*if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->setSnapMode(RS2::SnapIntersectionManual);
+    /*if (snapToolBar!=NULL) {
+        snapToolBar->setSnapMode(RS2::SnapIntersectionManual);
 }*/
     setCurrentAction(RS2::ActionSnapIntersectionManual);
 }
 
 void QG_ActionHandler::disableSnaps() {
-    if (snapFree!=NULL) {
-        snapFree->setChecked(false);
-    }
+//    if (snapFree!=NULL) {
+//        snapFree->setChecked(false);
+//    }
     if (snapGrid!=NULL) {
         snapGrid->setChecked(false);
     }
@@ -1453,74 +1450,89 @@ void QG_ActionHandler::disableSnaps() {
     if (snapIntersection!=NULL) {
         snapIntersection->setChecked(false);
     }
-    if (snapIntersectionManual!=NULL) {
-        snapIntersectionManual->setChecked(false);
-    }
+//    if (snapIntersectionManual!=NULL) {
+//        snapIntersectionManual->setChecked(false);
+//    }
 
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->disableSnaps();
+    if (snapToolBar!=NULL) {
+        snapToolBar->setSnaps(RS_SnapMode());
     }
 }
 
 void QG_ActionHandler::slotRestrictNothing() {
-    disableRestrictions();
-    if (restrictNothing!=NULL) {
-        restrictNothing->setChecked(true);
+    restrictHorizontal->setChecked(false);
+    restrictVertical->setChecked(false);
+    RS_SnapMode s=getSnaps();
+    s.restriction=RS2::RestrictNothing;
+    if (snapToolBar!=NULL) {
+        snapToolBar->setSnaps(s);
     }
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->setSnapRestriction(RS2::RestrictNothing);
-    }
-    setCurrentAction(RS2::ActionRestrictNothing);
 }
 
 void QG_ActionHandler::slotRestrictOrthogonal() {
-    disableRestrictions();
-    if (restrictOrthogonal!=NULL) {
-        restrictOrthogonal->setChecked(true);
+    if( restrictHorizontal ==NULL || restrictVertical==NULL) return;
+    restrictHorizontal->setChecked(true);
+    restrictVertical->setChecked(true);
+    RS_SnapMode s=getSnaps();
+    s.restriction=RS2::RestrictOrthogonal;
+    if (snapToolBar!=NULL) {
+        snapToolBar->setSnaps(s);
     }
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->setSnapRestriction(RS2::RestrictOrthogonal);
-    }
-    setCurrentAction(RS2::ActionRestrictOrthogonal);
 }
 
 void QG_ActionHandler::slotRestrictHorizontal() {
-    disableRestrictions();
-    if (restrictHorizontal!=NULL) {
-        restrictHorizontal->setChecked(true);
+    RS_SnapMode s=getSnaps();
+    s.restriction=getSnapRestriction();
+    if(snapToolBar != NULL) {
+        snapToolBar->setSnaps(s);
     }
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->setSnapRestriction(RS2::RestrictHorizontal);
-    }
-    setCurrentAction(RS2::ActionRestrictHorizontal);
+
 }
 
 void QG_ActionHandler::slotRestrictVertical() {
-    disableRestrictions();
-    if (restrictVertical!=NULL) {
-        restrictVertical->setChecked(true);
+    RS_SnapMode s=getSnaps();
+    s.restriction=getSnapRestriction();
+    if(snapToolBar != NULL) {
+        snapToolBar->setSnaps(s);
     }
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->setSnapRestriction(RS2::RestrictVertical);
+
+}
+
+// find snap restriction from menu
+RS2::SnapRestriction QG_ActionHandler::getSnapRestriction(){
+    if(restrictVertical == NULL
+            || restrictHorizontal == NULL) {
+        return  RS2::RestrictNothing;
     }
-    setCurrentAction(RS2::ActionRestrictVertical);
+    RS2::SnapRestriction s;
+    if (restrictHorizontal->isChecked()) {
+        if (restrictVertical->isChecked()) {
+            s= RS2::RestrictOrthogonal;
+        } else {
+            s= RS2::RestrictHorizontal;
+        }
+    } else {
+        if (restrictVertical->isChecked()) {
+            s= RS2::RestrictVertical;
+        } else {
+            s= RS2::RestrictNothing;
+        }
+    }
+    return s;
 }
 
 void QG_ActionHandler::disableRestrictions() {
-    if (restrictNothing!=NULL) {
-        restrictNothing->setChecked(false);
-    }
-    if (restrictOrthogonal!=NULL) {
-        restrictOrthogonal->setChecked(false);
-    }
+    RS_SnapMode s=getSnaps();
+    s.restriction= RS2::RestrictNothing;
+
     if (restrictHorizontal!=NULL) {
         restrictHorizontal->setChecked(false);
     }
     if (restrictVertical!=NULL) {
         restrictVertical->setChecked(false);
     }
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->disableRestrictions();
+    if (snapToolBar!=NULL) {
+        snapToolBar->setSnaps(s);
     }
 }
 
@@ -1579,9 +1591,6 @@ void QG_ActionHandler::slotLockRelativeZero(bool on) {
         setCurrentAction(RS2::ActionLockRelativeZero);
     } else {
         setCurrentAction(RS2::ActionUnlockRelativeZero);
-    }
-    if (cadToolBarSnap!=NULL) {
-        cadToolBarSnap->setLockRelativeZero(on);
     }
 }
 
@@ -1695,8 +1704,8 @@ void QG_ActionHandler::slotFocusNormal() {
     * Creates link to snap tool bar so we can update the button
     * state if the snapping action changes.
     */
-void QG_ActionHandler::setCadToolBarSnap(QG_CadToolBarSnap* tb) {
-    cadToolBarSnap = tb;
+void QG_ActionHandler::setSnapToolBar(QG_SnapToolBar* tb) {
+    snapToolBar = tb;
 }
 
 // EOF

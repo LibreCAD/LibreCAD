@@ -37,6 +37,7 @@
 QG_SnapToolBar::QG_SnapToolBar( const QString & title, QG_ActionHandler* ah, QWidget * parent )
     : QToolBar(title, parent) {
     actionHandler=ah;
+    actionHandler->setSnapToolBar(this);
     init();
 }
 

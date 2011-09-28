@@ -30,8 +30,8 @@
 #include "rs_actioninterface.h"
 
 class QG_MainWindowInterface;
-class QG_CadToolBarSnap;
-class QG_SnapToolBarSnap;
+//class QG_CadToolBarSnap;
+class QG_SnapToolBar;
 class QG_CadToolBarSelect;
 
 
@@ -53,6 +53,8 @@ public:
         bool keycode(const QString& code);
         bool command(const QString& cmd);
         QStringList getAvailableCommands();
+    RS_SnapMode getSnaps();
+   RS2::SnapRestriction getSnapRestriction();
 
 public slots:
     /*void slotFileNew();*/
@@ -261,11 +263,11 @@ public slots:
     }
 
     //not needed any more, will be removed
-    void setCadToolBarSnap(QG_CadToolBarSnap* tb);
+    void setSnapToolBar(QG_SnapToolBar* tb);
 
 private:
     QG_MainWindowInterface* mainWindow;
-    QG_CadToolBarSnap* cadToolBarSnap;
+    QG_SnapToolBar* snapToolBar;
 
     QAction* snapFree;
     QAction* snapGrid;
