@@ -314,7 +314,10 @@ bool RS_Graphic::save(bool isAutoSave)
                     QFileInfo	*finfo				= new QFileInfo(filename);
                     QDateTime m=finfo->lastModified();
                     delete finfo;
-                    if ( m != modifiedTime ) {
+                    //bug#3414993
+                    //modifiedTime should only be used for the same filename
+                    if ( currentFileName == QString(filename)
+                         && modifiedTime.isValid() && m != modifiedTime ) {
                         //file modified by others
                         RS_DEBUG->print(RS_Debug::D_WARNING, "File on disk modified, can not save");
                         return false;
@@ -336,6 +339,7 @@ bool RS_Graphic::save(bool isAutoSave)
                         ret = RS_FILEIO->fileExport(*this, *actualName, actualType);
                     QFileInfo	*finfo				= new QFileInfo(*actualName);
                     modifiedTime=finfo->lastModified();
+                    currentFileName=*actualName;
                     delete finfo;
                         delete actualName;
                 }
@@ -512,6 +516,7 @@ bool RS_Graphic::open(const QString &filename, RS2::FormatType type) {
         layerList.setModified(false);
         blockList.setModified(false);
     modifiedTime = finfo.lastModified();
+    currentFileName=QString(filename);
 
     //cout << *((RS_Graphic*)graphic);
     //calculateBorders();
