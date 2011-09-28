@@ -279,6 +279,7 @@ private:
 
         bool BackupDrawingFile(const QString &filename);
         QDateTime modifiedTime;
+        QString currentFileName; //keep a copy of filename for the modifiedTime
 
         RS_LayerList layerList;
         RS_BlockList blockList;
