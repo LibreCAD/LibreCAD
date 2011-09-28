@@ -1105,7 +1105,7 @@ void QC_ApplicationWindow::initActions(void)
 
     // Snapping actions:
     //
-    /*menu = menuBar()->addMenu(tr("&Snap"));
+    menu = menuBar()->addMenu(tr("&Snap"));
     menu->setObjectName("Snap");
     action = actionFactory.createAction(RS2::ActionSnapFree, actionHandler);
     menu->addAction(action);
@@ -1135,11 +1135,11 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action = actionFactory.createAction(RS2::ActionSnapIntersectionManual,
-                                        actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->addSeparator();
+//    action = actionFactory.createAction(RS2::ActionSnapIntersectionManual,
+//                                        actionHandler);
+//    menu->addAction(action);
+//    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+//    menu->addSeparator();
     action = actionFactory.createAction(RS2::ActionRestrictNothing,
                                         actionHandler);
     menu->addAction(action);
@@ -1166,7 +1166,6 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    */
 
     // Info actions:
     //

@@ -122,6 +122,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     }
 
     RS_Vector mouseCoord = graphicView->toGraph(e->x(), e->y());
+
     if (snapMode.snapGrid) {
         t = snapGrid(mouseCoord);
 
@@ -177,6 +178,11 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
             snapSpot = t;
     }
 
+    if( ! snapSpot.valid ) {
+        snapSpot=mouseCoord; //default to snapFree
+    } else {
+        if (mouseCoord.distanceTo(snapSpot) > snapRange ) snapSpot = mouseCoord;
+    }
     //if (snapSpot.distanceTo(mouseCoord) > snapMode.distance) {
     // handle snap restrictions that can be activated in addition
     //   to the ones above:

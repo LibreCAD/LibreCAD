@@ -40,8 +40,8 @@ class QG_ActionHandler;
 #include "qg_cadtoolbarpoints.h"
 #include "qg_cadtoolbarpolylines.h"
 #include "qg_cadtoolbarselect.h"
-#include "qg_cadtoolbarsnap.h"
 #include "qg_cadtoolbarsplines.h"
+#include "qg_snaptoolbar.h"
 #include "ui_qg_cadtoolbar.h"
 
 class QG_CadToolBar : public QWidget, public Ui::QG_CadToolBar
@@ -94,7 +94,7 @@ protected:
     QG_CadToolBarArcs* tbArcs;
     QG_CadToolBarModify* tbModify;
     QG_CadToolBarCircles* tbCircles;
-    QG_CadToolBarSnap* tbSnap;
+    QG_SnapToolBar* tbSnap;
     QG_CadToolBarSelect* tbSelect;
     QG_CadToolBarPolylines* tbPolylines;
 
