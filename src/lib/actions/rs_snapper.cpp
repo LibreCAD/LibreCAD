@@ -90,6 +90,16 @@ void RS_Snapper::setSnapMode(RS_SnapMode snapMode) {
     RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, snapMode.snapMiddle);
 //std::cout<<"RS_Snapper::setSnapMode(): middlePoints="<<middlePoints<<std::endl;
 }
+//get current mouse coordinates
+RS_Vector RS_Snapper::snapFree(QMouseEvent* e) {
+    if (e==NULL) {
+                RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Snapper::snapFree: event is NULL");
+        return RS_Vector(false);
+    }
+    return graphicView->toGraph(e->x(), e->y());
+}
+
 /**
  * Snap to a coordinate in the drawing using the current snap mode.
  *

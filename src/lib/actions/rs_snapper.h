@@ -160,6 +160,7 @@ public:
         }
 
     RS_Vector snapPoint(QMouseEvent* e);
+    RS_Vector snapFree(QMouseEvent* e);
 
     RS_Vector snapFree(RS_Vector coord);
     RS_Vector snapEndpoint(RS_Vector coord);

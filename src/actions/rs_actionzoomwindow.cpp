@@ -48,8 +48,8 @@ RS_ActionZoomWindow::RS_ActionZoomWindow(RS_EntityContainer& container,
 
 
 QAction* RS_ActionZoomWindow::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Window Zoom")
-	QAction* action = new QAction(tr("&Window Zoom"), NULL);
+        // tr("Window Zoom")
+        QAction* action = new QAction(tr("&Window Zoom"), NULL);
 #if QT_VERSION >= 0x040600
         action->setIcon(QIcon::fromTheme("zoom-select", QIcon(":/actions/zoomwindow.png")));
 #else
@@ -66,8 +66,8 @@ void RS_ActionZoomWindow::init(int status) {
 
     RS_PreviewActionInterface::init(status);
     v1 = v2 = RS_Vector(false);
-    snapMode.clear();
-    snapMode.restriction = RS2::RestrictNothing;
+   // snapMode.clear();
+   // snapMode.restriction = RS2::RestrictNothing;
 }
 
 
@@ -113,9 +113,9 @@ void RS_ActionZoomWindow::mouseMoveEvent(QMouseEvent* e) {
 void RS_ActionZoomWindow::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
-        case 0:
-            v1 = snapPoint(e);
-            setStatus(1);
+        case SetFirstCorner:
+            v1 = snapFree(e);
+            setStatus(SetSecondCorner);
             break;
 
         default:
@@ -133,13 +133,13 @@ void RS_ActionZoomWindow::mouseReleaseEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionZoomWindow::mouseReleaseEvent()");
 
     if (e->button()==Qt::RightButton) {
-        if (getStatus()==1) {
+        if (getStatus()==SetSecondCorner) {
             deletePreview();
         }
         init(getStatus()-1);
     } else if (e->button()==Qt::LeftButton) {
-        if (getStatus()==1) {
-            v2 = snapPoint(e);
+        if (getStatus()==SetSecondCorner) {
+            v2 = snapFree(e);
             trigger();
         }
     }
@@ -151,10 +151,10 @@ void RS_ActionZoomWindow::updateMouseButtonHints() {
     RS_DEBUG->print("RS_ActionZoomWindow::updateMouseButtonHints()");
 
     switch (getStatus()) {
-    case 0:
+    case SetFirstCorner:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first edge"), tr("Cancel"),false);
         break;
-    case 1:
+    case SetSecondCorner:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second edge"), tr("Back"),false);
         break;
     default:
