@@ -486,6 +486,16 @@
               <string>200</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>400</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>800</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="2" column="0">
