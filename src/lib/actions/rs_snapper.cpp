@@ -97,7 +97,10 @@ RS_Vector RS_Snapper::snapFree(QMouseEvent* e) {
                         "RS_Snapper::snapFree: event is NULL");
         return RS_Vector(false);
     }
-    return graphicView->toGraph(e->x(), e->y());
+    snapSpot=graphicView->toGraph(e->x(), e->y());
+    snapCoord=snapSpot;
+    showCrosshairs=true;
+    return snapCoord;
 }
 
 /**
