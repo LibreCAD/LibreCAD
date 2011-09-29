@@ -49,6 +49,11 @@ public:
         return fileName;
     }
 	
+    /** @return the fileLicense of this font. */
+    QString getFileLicense() const {
+        return fileLicense;
+    }
+
     /** @return the encoding of this font. */
     QString getEncoding() const {
         return encoding;
@@ -100,12 +105,19 @@ public:
     friend class RS_FontList;
 
 private:
+    void readCXF(QString path);
+    void readLFF(QString path);
+
+private:
 	//! block list (letters)
 	RS_BlockList letterList;
 
     //! Font file name
     QString fileName;
 	
+    //! Font file license
+    QString fileLicense;
+
     //! Font encoding (see docu for QTextCodec)
     QString encoding;
 
