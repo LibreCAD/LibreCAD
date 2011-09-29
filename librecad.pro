@@ -174,6 +174,7 @@ HEADERS = \
     src/lib/filters/rs_filtercxf.h \
     src/lib/filters/rs_filterdxf.h \
     src/lib/filters/rs_filterdxf1.h \
+    src/lib/filters/rs_filterlff.h \
     src/lib/filters/rs_filterinterface.h \
     src/lib/gui/rs_commandevent.h \
     src/lib/gui/rs_coordinateevent.h \
@@ -263,6 +264,7 @@ SOURCES = \
     src/lib/filters/rs_filtercxf.cpp \
     src/lib/filters/rs_filterdxf.cpp \
     src/lib/filters/rs_filterdxf1.cpp \
+    src/lib/filters/rs_filterlff.cpp \
     src/lib/gui/rs_dialogfactory.cpp \
     src/lib/gui/rs_eventhandler.cpp \
     src/lib/gui/rs_graphicview.cpp \

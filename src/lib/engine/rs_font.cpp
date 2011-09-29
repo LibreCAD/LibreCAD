@@ -31,6 +31,7 @@
 #include <QTextStream>
 #include <QTextCodec>
 
+#include "rs_polyline.h"
 #include "rs_fontchar.h"
 #include "rs_system.h"
 
@@ -43,11 +44,12 @@
 RS_Font::RS_Font(const QString& fileName, bool owner)
         :	letterList(owner) {
     this->fileName = fileName;
-	encoding = "";
+    encoding = "";
     loaded = false;
     letterSpacing = 3.0;
     wordSpacing = 6.75;
     lineSpacingFactor = 1.0;
+    fileLicense = "unknown";
 }
 
 
@@ -68,8 +70,11 @@ bool RS_Font::loadFont() {
     QString path;
 
     // Search for the appropriate font if we have only the name of the font:
-    if (!fileName.toLower().contains(".cxf")) {
-        QStringList fonts = RS_SYSTEM->getFontList();
+    if (!fileName.toLower().contains(".cxf") &&
+            !fileName.toLower().contains(".lff")) {
+        QStringList fonts = RS_SYSTEM->getNewFontList();
+        fonts.append(RS_SYSTEM->getFontList());
+
         QFileInfo file;
         for (QStringList::Iterator it = fonts.begin();
                 it!=fonts.end();
@@ -106,9 +111,26 @@ bool RS_Font::loadFont() {
 			"Successfully opened font file: %s", 
                         path.toLatin1().data());
     }
+    f.close();
 
-    QTextStream ts(&f);
+    if (path.contains(".cxf"))
+        readCXF(path);
+    if (path.contains(".lff"))
+        readLFF(path);
+
+    loaded = true;
+
+    RS_DEBUG->print("RS_Font::loadFont OK");
+
+    return true;
+}
+
+
+void RS_Font::readCXF(QString path) {
     QString line;
+    QFile f(path);
+    f.open(QIODevice::ReadOnly);
+    QTextStream ts(&f);
 
     // Read line by line until we find a new letter:
     while (!ts.atEnd()) {
@@ -234,13 +256,139 @@ bool RS_Font::loadFont() {
             }
         }
     }
-
     f.close();
-    loaded = true;
-	
-    RS_DEBUG->print("RS_Font::loadFont OK");
+}
 
-    return true;
+void RS_Font::readLFF(QString path) {
+    QString line;
+    QFile f(path);
+    encoding = "UTF-8";
+    f.open(QIODevice::ReadOnly);
+    QTextStream ts(&f);
+
+    // Read line by line until we find a new letter:
+    while (!ts.atEnd()) {
+        line = ts.readLine();
+
+        if (line.isEmpty())
+            continue;
+
+        // Read font settings:
+        if (line.at(0)=='#') {
+            QStringList lst =line.remove(0,1).split(':', QString::SkipEmptyParts);
+            //if size is < 2 is a comentary not parameter
+            if (lst.size()<2)
+                continue;
+
+            QString identifier = lst.at(0).trimmed();
+            QString value = lst.at(1).trimmed();
+
+            if (identifier.toLower()=="letterspacing") {
+                letterSpacing = value.toDouble();
+            } else if (identifier.toLower()=="wordspacing") {
+                wordSpacing = value.toDouble();
+            } else if (identifier.toLower()=="linespacingfactor") {
+                lineSpacingFactor = value.toDouble();
+            } else if (identifier.toLower()=="author") {
+                authors.append(value);
+            } else if (identifier.toLower()=="name") {
+                names.append(value);
+            } else if (identifier.toLower()=="license") {
+                fileLicense = value;
+            } else if (identifier.toLower()=="encoding") {
+                                ts.setCodec(QTextCodec::codecForName(value.toLatin1()));
+                                encoding = value;
+            }
+        }
+
+        // Add another letter to this font:
+        else if (line.at(0)=='[') {
+
+            // uniode character:
+            QChar ch;
+
+            // read unicode:
+            QRegExp regexp("[0-9A-Fa-f]{4,4}");
+            regexp.indexIn(line);
+            QString cap = regexp.cap();
+            if (!cap.isNull()) {
+                int uCode = cap.toInt(NULL, 16);
+                ch = QChar(uCode);
+            }
+            // only unicode allowed
+            else {
+                continue;
+            }
+
+            // create new letter:
+            RS_FontChar* letter =
+                new RS_FontChar(NULL, ch, RS_Vector(0.0, 0.0));
+
+            // Read entities of this letter:
+            QStringList vertex;
+            QStringList coords;
+
+            do {
+                line = ts.readLine();
+
+                if (line.isEmpty()) {
+                    continue;
+                }
+
+                // Defined char:
+                if (line.at(0)=='C') {
+                    line.remove(0,1);
+                    int uCode = line.toInt(NULL, 16);
+                    QChar ch = QChar(uCode);
+                    RS_Block* bk = letterList.find(ch);
+                    if (bk != NULL) {
+                        RS_Entity* bk2 = bk->clone();
+                        bk2->setPen(RS_Pen(RS2::FlagInvalid));
+                        bk2->setLayer(NULL);
+                        letter->addEntity(bk2);
+                    }
+                }
+                //sequence:
+                else {
+                    vertex = line.split(';', QString::SkipEmptyParts);
+                    //at least is required two vertex
+                    if (vertex.size()<2)
+                        continue;
+                    RS_Polyline* pline = new RS_Polyline(letter, RS_PolylineData());
+                    pline->setPen(RS_Pen(RS2::FlagInvalid));
+                    pline->setLayer(NULL);
+                    for (int i = 0; i < vertex.size(); ++i) {
+                        double x1, y1;
+                        double bulge = 0;
+
+                        coords = vertex.at(i).split(',', QString::SkipEmptyParts);
+                        //at least X,Y is required
+                        if (coords.size()<2)
+                            continue;
+                        x1 = coords.at(0).toDouble();
+                        y1 = coords.at(1).toDouble();
+                        //check presence of bulge
+                        if (coords.size() == 3 && coords.at(2).at(0) == QChar('A')){
+                            QString bulgeStr = coords.at(2);
+                            bulge = bulgeStr.remove(0,1).toDouble();
+                        }
+                        pline->setNextBulge(bulge);
+                        pline->addVertex(RS_Vector(x1, y1), bulge);
+                    }
+                    letter->addEntity(pline);
+                }
+
+            } while (!line.isEmpty());
+
+            if (letter->isEmpty()) {
+                delete letter;
+            } else {
+                letter->calculateBorders();
+                letterList.add(letter);
+            }
+        }
+    }
+    f.close();
 }
 
 
