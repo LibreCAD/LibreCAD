@@ -1445,7 +1445,7 @@ void QC_ApplicationWindow::initToolBar() {
     RS_DEBUG->print("QC_ApplicationWindow::initToolBar()");
 
 
-        QSizePolicy toolBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+        QSizePolicy toolBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 
         fileToolBar = new QToolBar( "File Operations", this);
         fileToolBar->setSizePolicy(toolBarPolicy);
@@ -1469,6 +1469,7 @@ void QC_ApplicationWindow::initToolBar() {
     //Add snap toolbar
     snapToolBar = new QG_SnapToolBar("Snap Selection",actionHandler, this);
     snapToolBar->setSizePolicy(toolBarPolicy);
+    snapToolBar->setIconSize(QSize(32,30));
     snapToolBar->setObjectName ( "SnapTB" );
     //connect(snapToolBar, SIGNAL(snapsChanged(RS_SnapMode)),
     //        this, SLOT(slotSnapsChanged(RS_SnapMode)));
