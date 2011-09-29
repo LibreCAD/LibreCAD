@@ -1012,10 +1012,21 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
     //while ( (en = it.current()) != NULL ) {
     //    ++it;
     for (RS_Entity* en = firstEntity();
-            en != NULL;
-            en = nextEntity()) {
+         en != NULL;
+         en = nextEntity()) {
 
-        if (en->isVisible()) {
+        if (en->isVisible()
+                && en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
+                //&& en->rtti() != RS2::EntityPoint         /**Point*/
+                //&& en->getParent()->rtti() != RS2::EntitySpline
+                && en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
+                && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimRadial    /**< Radial Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimDiametric /**< Diametric Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimAngular   /**< Angular Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimLeader    /**< Leader Dimension */
+                ){//no end point for Insert, text, Dim
             point = en->getNearestEndpoint(coord, &curDist);
             if (point.valid && curDist<minDist) {
                 closestPoint = point;
@@ -1062,16 +1073,28 @@ RS_Vector RS_EntityContainer::getNearestPointOnEntity(const RS_Vector& coord,
 
 
 RS_Vector RS_EntityContainer::getNearestCenter(const RS_Vector& coord,
-        double* dist) {
+                                               double* dist) {
 
     RS_Vector point(false);
-    RS_Entity* closestEntity;
 
     //closestEntity = getNearestEntity(coord, NULL, RS2::ResolveAll);
-    closestEntity = getNearestEntity(coord, NULL, RS2::ResolveNone);
+    RS_Entity* en = getNearestEntity(coord, NULL, RS2::ResolveNone);
 
-    if (closestEntity!=NULL) {
-        point = closestEntity->getNearestCenter(coord, dist);
+    if (en!=NULL) {
+        if ( en->isVisible()
+             && en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
+             //&& en->rtti() != RS2::EntityPoint         /**Point*/
+             && en->getParent()->rtti() != RS2::EntitySpline
+             && en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
+             && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
+             && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
+             && en->getParent()->rtti() != RS2::EntityDimRadial    /**< Radial Dimension */
+             && en->getParent()->rtti() != RS2::EntityDimDiametric /**< Diametric Dimension */
+             && en->getParent()->rtti() != RS2::EntityDimAngular   /**< Angular Dimension */
+             && en->getParent()->rtti() != RS2::EntityDimLeader    /**< Leader Dimension */
+             ){//no center point for Spline, Insert, text, Dim
+            point = en->getNearestCenter(coord, dist);
+        }
     }
 
     return point;
