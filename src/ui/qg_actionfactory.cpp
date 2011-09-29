@@ -329,6 +329,7 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
     case RS2::ActionViewCadToolbar:
     case RS2::ActionViewFileToolbar:
     case RS2::ActionViewEditToolbar:
+    case RS2::ActionViewSnapToolbar:
         if (obj2) {
             action=((QToolBar *)obj2)->toggleViewAction();
         }
