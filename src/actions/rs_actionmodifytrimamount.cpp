@@ -42,14 +42,15 @@ RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(
     trimEntity = NULL;
     trimCoord = RS_Vector(false);
     distance = 0.0;
+    byTotal = false;
 }
 
 QAction* RS_ActionModifyTrimAmount::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Lengthen")
-	QAction* action = new QAction(tr("&Lengthen"), NULL);
-	action->setIcon(QIcon(":/extui/modifytrimamount.png"));
-	//action->zetStatusTip(tr("Lengthen by a given amount"));
-	return action;
+        // tr("Lengthen")
+        QAction* action = new QAction(tr("&Lengthen"), NULL);
+        action->setIcon(QIcon(":/extui/modifytrimamount.png"));
+        //action->zetStatusTip(tr("Lengthen by a given amount"));
+        return action;
 }
 
 
@@ -69,7 +70,15 @@ void RS_ActionModifyTrimAmount::trigger() {
     if (trimEntity!=NULL && trimEntity->isAtomic()) {
 
         RS_Modification m(*container, graphicView);
-        m.trimAmount(trimCoord, (RS_AtomicEntity*)trimEntity, distance);
+        double d;
+        if(byTotal) {
+            //the distance is taken as the new total length
+            d = fabs(distance) - trimEntity->getLength();
+        } else {
+            d = distance;
+        }
+
+        m.trimAmount(trimCoord, (RS_AtomicEntity*)trimEntity, d);
 
         trimEntity = NULL;
         setStatus(ChooseTrimEntity);

@@ -355,42 +355,21 @@ RS_Vector RS_Arc::getNearestDist(double distance,
         return RS_Vector(false);
     }
 
-    double a1, a2;
-    RS_Vector p1, p2;
     double aDist = distance / data.radius;
-
-    if (isReversed()) {
-        a1 = data.angle1 - aDist;
-        a2 = data.angle2 + aDist;
-    } else {
-        a1 = data.angle1 + aDist;
-        a2 = data.angle2 - aDist;
+    if (isReversed()) aDist= -aDist;
+    double a;
+    if(coord.distanceTo(getStartpoint()) < coord.distanceTo(getEndpoint())) {
+        a=getAngle1() + aDist;
+    }else {
+        a=getAngle2() - aDist;
     }
 
-    p1.setPolar(data.radius, a1);
-    p1 += data.center;
-    p2.setPolar(data.radius, a2);
-    p2 += data.center;
 
-    double dist1, dist2;
-    RS_Vector* nearerPoint;
+    RS_Vector ret;
+    ret.setPolar(data.radius, a);
+    ret += getCenter();
 
-    dist1 = p1.distanceTo(coord);
-    dist2 = p2.distanceTo(coord);
-
-    if (dist2<dist1) {
-        if (dist!=NULL) {
-            *dist = dist2;
-        }
-        nearerPoint = &p2;
-    } else {
-        if (dist!=NULL) {
-            *dist = dist1;
-        }
-        nearerPoint = &p1;
-    }
-
-    return *nearerPoint;
+    return ret;
 }
 
 
