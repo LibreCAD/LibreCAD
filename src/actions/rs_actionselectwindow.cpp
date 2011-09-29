@@ -53,13 +53,13 @@ QAction* RS_ActionSelectWindow::createGUIAction(RS2::ActionType type, QObject* /
 
     if (type==RS2::ActionSelectWindow) {
         action = new QAction(tr("Select Window"),  NULL);
-		action->setIcon(QIcon(":/extui/selectwindow.png"));
+                action->setIcon(QIcon(":/extui/selectwindow.png"));
         //action->zetStatusTip(tr("Selects all Entities in a given Window"));
     } else {
         action = new QAction(tr("Deselect Window"), NULL);
-		action->setIcon(QIcon(":/extui/deselectwindow.png"));
+                action->setIcon(QIcon(":/extui/deselectwindow.png"));
         //action->zetStatusTip(tr("Deselects all Entities in a given Window"));
-	}
+        }
     return action;
 }
 
@@ -67,8 +67,8 @@ QAction* RS_ActionSelectWindow::createGUIAction(RS2::ActionType type, QObject* /
 void RS_ActionSelectWindow::init(int status) {
     RS_PreviewActionInterface::init(status);
     v1 = v2 = RS_Vector(false);
-    snapMode.clear();
-    snapMode.restriction = RS2::RestrictNothing;
+    //snapMode.clear();
+    //snapMode.restriction = RS2::RestrictNothing;
 }
 
 
@@ -94,31 +94,33 @@ void RS_ActionSelectWindow::trigger() {
 
 
 void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
+    snapFree(e);
+    drawSnapper();
     if (getStatus()==SetCorner2 && v1.valid) {
-        v2 = snapPoint(e);
+        v2 = snapFree(e);
         deletePreview();
-		RS_Pen pen_f(RS_Color(50,50,255,40), RS2::Width00, RS2::SolidLine);
-		RS_OverlayBox* ob=new RS_OverlayBox(preview, RS_OverlayBoxData(v1, v2));
-		ob->setPen(pen_f);
-		preview->addEntity(ob);
+                RS_Pen pen_f(RS_Color(50,50,255,40), RS2::Width00, RS2::SolidLine);
+                RS_OverlayBox* ob=new RS_OverlayBox(preview, RS_OverlayBoxData(v1, v2));
+                ob->setPen(pen_f);
+                preview->addEntity(ob);
 
-		RS_Pen pen(RS_Color(218,105,24), RS2::Width00, RS2::SolidLine);
+                RS_Pen pen(RS_Color(218,105,24), RS2::Width00, RS2::SolidLine);
 
-		// TODO change to a rs_box sort of entity
-		RS_Line* e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v1.y),  RS_Vector(v2.x, v1.y)));
-		e->setPen(pen);
+                // TODO change to a rs_box sort of entity
+                RS_Line* e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v1.y),  RS_Vector(v2.x, v1.y)));
+                e->setPen(pen);
         preview->addEntity(e);
 
-		e=new RS_Line(preview, RS_LineData(RS_Vector(v2.x, v1.y),  RS_Vector(v2.x, v2.y)));
-		e->setPen(pen);
+                e=new RS_Line(preview, RS_LineData(RS_Vector(v2.x, v1.y),  RS_Vector(v2.x, v2.y)));
+                e->setPen(pen);
         preview->addEntity(e);
 
-		e=new RS_Line(preview, RS_LineData(RS_Vector(v2.x, v2.y),  RS_Vector(v1.x, v2.y)));
-		e->setPen(pen);
+                e=new RS_Line(preview, RS_LineData(RS_Vector(v2.x, v2.y),  RS_Vector(v1.x, v2.y)));
+                e->setPen(pen);
         preview->addEntity(e);
 
-		e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v2.y),  RS_Vector(v1.x, v1.y)));
-		e->setPen(pen);
+                e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v2.y),  RS_Vector(v1.x, v1.y)));
+                e->setPen(pen);
         preview->addEntity(e);
 
         drawPreview();
@@ -131,7 +133,7 @@ void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetCorner1:
-            v1 = snapPoint(e);
+            v1 = snapFree(e);
             setStatus(SetCorner2);
             break;
 
@@ -151,7 +153,7 @@ void RS_ActionSelectWindow::mouseReleaseEvent(QMouseEvent* e) {
 
     if (e->button()==Qt::LeftButton) {
         if (getStatus()==SetCorner2) {
-            v2 = snapPoint(e);
+            v2 = snapFree(e);
             trigger();
         }
     } else if (e->button()==Qt::RightButton) {
@@ -167,7 +169,7 @@ void RS_ActionSelectWindow::mouseReleaseEvent(QMouseEvent* e) {
 void RS_ActionSelectWindow::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetCorner1:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Choose first edge"), tr("Cancel"));
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Click and drag for the selection window"), tr("Cancel"));
         break;
     case SetCorner2:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Choose second edge"), tr("Back"));
