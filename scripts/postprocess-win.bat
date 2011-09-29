@@ -23,6 +23,7 @@ mkdir %RESOURCEDIR%\library\misc
 mkdir %RESOURCEDIR%\library\templates
 copy support\patterns\*.dxf %RESOURCEDIR%\patterns
 copy support\fonts\*.cxf %RESOURCEDIR%\fonts
+copy support\fonts\*.lff %RESOURCEDIR%\fonts
 copy support\doc\*.qhc %RESOURCEDIR%\doc
 copy support\doc\*.qch %RESOURCEDIR%\doc
 copy support\library\misc\*.dxf %RESOURCEDIR%\library\misc
