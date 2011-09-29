@@ -60,6 +60,7 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     bool cancel = false;
     QString fn = "";
 
+    filters.append("LFF Font (*.lff)");
     filters.append("Drawing Exchange DXF 2000 (*.dxf)");
     filters.append("Drawing Exchange DXF R12 (*.dxf)");
     filters.append("Font (*.cxf)");
@@ -84,8 +85,10 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
             // append default extension:
             // TODO, since we are starting to suppor tmore extensions, we need to find a better way to add the default
             if (QFileInfo(fn).fileName().indexOf('.')==-1) {
-                if (fileDlg->selectedFilter()=="Font (*.cxf)") {
-                    fn+=".cxf";
+                if (fileDlg->selectedFilter()=="LFF Font (*.lff)") {
+                    fn+=".lff";
+                } else if (fileDlg->selectedFilter()=="Font (*.cxf)") {
+                        fn+=".cxf";
                 } else {
                     fn+=".dxf";
                 }
@@ -93,7 +96,9 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
 
             // set format:
             if (type!=NULL) {
-                if (fileDlg->selectedFilter()=="Font (*.cxf)") {
+                if (fileDlg->selectedFilter()=="LFF Font (*.lff)") {
+                    *type = RS2::FormatLFF;
+                } else if (fileDlg->selectedFilter()=="Font (*.cxf)") {
                     *type = RS2::FormatCXF;
                 } else if (fileDlg->selectedFilter()=="Drawing Exchange DXF R12 (*.dxf)") {
                     *type = RS2::FormatDXF12;
@@ -174,6 +179,7 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
 
     QString fDxf(QObject::tr("Drawing Exchange %1").arg("(*.dxf *.DXF)"));
     QString fDxf1(QObject::tr("QCad 1.x file %1").arg("(*.dxf *.DXF)"));
+    QString fLff(QObject::tr("LFF Font %1").arg("(*.lff)"));
     QString fCxf(QObject::tr("Font %1").arg("(*.cxf)"));
 
     RS_DEBUG->print("fDxf: %s", fDxf.toLatin1().data());
@@ -188,6 +194,7 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
     QStringList filters;
     filters.append(fDxf);
     filters.append(fDxf1);
+    filters.append(fLff);
     filters.append(fCxf);
 
     fileDlg->setFilters(filters);
