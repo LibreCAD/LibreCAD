@@ -106,6 +106,7 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void )
 
 void QG_SnapToolBar::init()
 {
+    setIconSize(QSize(24,24));
     snapGrid = new QAction(QIcon(":/extui/snapgrid.png"), "Snap on grid", this);
     snapGrid->setCheckable(true);
     connect(snapGrid, SIGNAL(triggered()), this, SLOT(actionTriggered()));
@@ -175,7 +176,6 @@ void QG_SnapToolBar::init()
     RS_SETTINGS->beginGroup("/Snap");
     setSnaps(RS_Snapper::intToSnapMode(RS_SETTINGS->readNumEntry("/SnapMode",0)));
     RS_SETTINGS->endGroup();
-    setIconSize(QSize(24,24));
 }
 
 bool QG_SnapToolBar::lockedRelativeZero()
