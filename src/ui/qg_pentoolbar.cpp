@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -34,28 +34,28 @@ QG_PenToolBar::QG_PenToolBar( const QString & title, QWidget * parent )
         : QToolBar(title, parent) {
 
     colorBox = new QG_ColorBox(true, false, this, "colorbox");
-    colorBox->setMinimumWidth(80);
+    colorBox->setMinimumWidth(64);
     connect(colorBox, SIGNAL(colorChanged(const RS_Color&)),
             this, SLOT(slotColorChanged(const RS_Color&)));
 
     widthBox = new QG_WidthBox(true, false, this, "widthbox");
-    widthBox->setMinimumWidth(80);
+    widthBox->setMinimumWidth(64);
     connect(widthBox, SIGNAL(widthChanged(RS2::LineWidth)),
             this, SLOT(slotWidthChanged(RS2::LineWidth)));
 
     lineTypeBox = new QG_LineTypeBox(true, false, this, "lineTypebox");
-    lineTypeBox->setMinimumWidth(80);
+    lineTypeBox->setMinimumWidth(64);
     connect(lineTypeBox, SIGNAL(lineTypeChanged(RS2::LineType)),
-            this, SLOT(slotLineTypeChanged(RS2::LineType))); 
+            this, SLOT(slotLineTypeChanged(RS2::LineType)));
 
     currentPen.setColor(colorBox->getColor());
     currentPen.setWidth(widthBox->getWidth());
     currentPen.setLineType(lineTypeBox->getLineType());
-			
-	addWidget(colorBox);                                                                                                                                     
-	addWidget(widthBox);                                                                                                                                     
-	addWidget(lineTypeBox);  
-			
+
+        addWidget(colorBox);
+        addWidget(widthBox);
+        addWidget(lineTypeBox);
+
 }
 
 
@@ -66,7 +66,7 @@ QG_PenToolBar::~QG_PenToolBar() {}
 
 
 /**
- * Called by the layer list if this object was added as a listener 
+ * Called by the layer list if this object was added as a listener
  * to a layer list.
  */
 void QG_PenToolBar::layerActivated(RS_Layer* l) {
@@ -92,7 +92,7 @@ void QG_PenToolBar::layerActivated(RS_Layer* l) {
 
 
 /**
- * Called by the layer list (if this object was previously 
+ * Called by the layer list (if this object was previously
  * added as a listener to a layer list).
  */
 void QG_PenToolBar::layerEdited(RS_Layer*) {}

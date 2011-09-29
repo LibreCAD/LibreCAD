@@ -739,6 +739,8 @@ void QC_ApplicationWindow::initActions(void)
     subMenu->addAction(action);
     action = actionFactory.createAction(RS2::ActionViewEditToolbar, this, this->editToolBar);
     subMenu->addAction(action);
+    action = actionFactory.createAction(RS2::ActionViewSnapToolbar, this, this->snapToolBar);
+    subMenu->addAction(action);
 
     // RVT_PORT menu->insertItem(tr("Vie&ws"), createDockWindowMenu(NoToolBars));
     // RVT_PORT menu->insertItem(tr("Tool&bars"), createDockWindowMenu(OnlyToolBars));
