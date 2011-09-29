@@ -39,10 +39,10 @@ RS_ActionZoomPan::RS_ActionZoomPan(RS_EntityContainer& container,
 
 
 QAction* RS_ActionZoomPan::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Pan Zoom")
-	QAction* action = new QAction(tr("Zoom &Panning"), NULL);
-	action->setIcon(QIcon(":/actions/zoompan.png"));
-	//action->zetStatusTip(tr("Realtime Panning"));
+        // tr("Pan Zoom")
+        QAction* action = new QAction(tr("Zoom &Panning"), NULL);
+        action->setIcon(QIcon(":/actions/zoompan.png"));
+        //action->zetStatusTip(tr("Realtime Panning"));
 
     return action;
 }
@@ -131,9 +131,16 @@ void RS_ActionZoomPan::updateMouseButtonHints()
 
 
 void RS_ActionZoomPan::updateMouseCursor() {
-        if(getStatus()==SetPanning) {
-    graphicView->setMouseCursor(RS2::MovingHandCursor);
-        }
+    switch (getStatus()){
+    case SetPanStart:
+        graphicView->setMouseCursor(RS2::OpenHandCursor);
+        break;
+    case SetPanning:
+        graphicView->setMouseCursor(RS2::ClosedHandCursor);
+        break;
+    default:
+        break;
+    }
 }
 
 
