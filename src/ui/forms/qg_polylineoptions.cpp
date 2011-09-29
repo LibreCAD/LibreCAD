@@ -81,7 +81,7 @@ void QG_PolylineOptions::setAction(RS_ActionInterface* a, bool update) {
         } else {
             RS_SETTINGS->beginGroup("/Draw");
             sd1 = RS_SETTINGS->readEntry("/PolylineRadius", "1.0");
-            sd2 = RS_SETTINGS->readEntry("/PolylineAngle", "1.0");
+            sd2 = RS_SETTINGS->readEntry("/PolylineAngle", "180.0");
             mode = RS_SETTINGS->readNumEntry("/PolylineMode",0);
 	    reversed = RS_SETTINGS->readNumEntry("/PolylineReversed", 0);
             RS_SETTINGS->endGroup();
