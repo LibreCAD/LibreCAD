@@ -167,28 +167,14 @@ RS_Vector RS_Line::getNearestDist(double distance,
     RS_Vector dv;
     dv.setPolar(distance, a1);
 
-    RS_Vector p1 = data.startpoint + dv;
-    RS_Vector p2 = data.endpoint - dv;
-
-    double dist1, dist2;
-    RS_Vector* nearerPoint;
-
-    dist1 = p1.distanceTo(coord);
-    dist2 = p2.distanceTo(coord);
-
-    if (dist2<dist1) {
-        if (dist!=NULL) {
-            *dist = dist2;
-        }
-        nearerPoint = &p2;
-    } else {
-        if (dist!=NULL) {
-            *dist = dist1;
-        }
-        nearerPoint = &p1;
+    RS_Vector ret;
+    if(coord.distanceTo(getStartpoint()) < coord.distanceTo(getEndpoint())) {
+        ret = getStartpoint() + dv;
+    }else{
+        ret = getEndpoint() - dv;
     }
 
-    return *nearerPoint;
+    return ret;
 }
 
 
