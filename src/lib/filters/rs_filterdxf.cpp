@@ -530,7 +530,9 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
     } else {
         // A certain CAD program uses SIMPLEX, we don't have so we change it to normallatin2
         if (sty=="simplex") {
-            sty="normallatin2";
+            sty="iso";
+        } else if  (sty=="normal" || sty=="normallatin1" || sty=="normallatin2") {
+            sty="iso";
         }
     }
 
