@@ -59,8 +59,12 @@ protected:
 protected slots:
     virtual void languageChange();
 
+private slots:
+    void on_bBack_clicked();
+
 private:
     void init();
+    QG_CadToolBar* parentTB;
 
 };
 

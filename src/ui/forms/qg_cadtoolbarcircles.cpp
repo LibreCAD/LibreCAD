@@ -35,6 +35,7 @@ QG_CadToolBarCircles::QG_CadToolBarCircles(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
 {
     setupUi(this);
+    parentTB=static_cast<QG_CadToolBar*>(parent);
 
     init();
 }
@@ -146,5 +147,10 @@ void QG_CadToolBarCircles::restoreAction()
     if(currentAction != NULL) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
+}
+
+void QG_CadToolBarCircles::on_bBack_clicked()
+{
+   parentTB->showPreviousToolBar();
 }
 //EOF

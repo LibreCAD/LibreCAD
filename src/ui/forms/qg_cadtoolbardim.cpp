@@ -35,7 +35,7 @@ QG_CadToolBarDim::QG_CadToolBarDim(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
 {
     setupUi(this);
-
+    parentTB=static_cast<QG_CadToolBar*>(parent);
     init();
 }
 
@@ -176,4 +176,9 @@ void QG_CadToolBarDim::restoreAction()
     if(currentAction != NULL) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
+}
+
+void QG_CadToolBarDim::on_bBack_clicked()
+{
+    parentTB->showPreviousToolBar();
 }

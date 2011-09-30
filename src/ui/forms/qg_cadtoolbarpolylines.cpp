@@ -35,7 +35,7 @@ QG_CadToolBarPolylines::QG_CadToolBarPolylines(QWidget* parent, Qt::WindowFlags 
     : QWidget(parent, fl)
 {
     setupUi(this);
-
+    parentTB=static_cast<QG_CadToolBar*>(parent);
     init();
 }
 
@@ -165,3 +165,8 @@ void QG_CadToolBarPolylines::restoreAction()
     }
 }
 //EOF
+
+void QG_CadToolBarPolylines::on_bBack_clicked()
+{
+    parentTB->showPreviousToolBar();
+}

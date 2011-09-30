@@ -36,6 +36,7 @@ QG_CadToolBarArcs::QG_CadToolBarArcs(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
 {
     setupUi(this);
+    parentTB=static_cast<QG_CadToolBar*>(parent);
 
     init();
 }
@@ -109,11 +110,6 @@ void QG_CadToolBarArcs::drawArcTangential() {
     }
 }
 
-void QG_CadToolBarArcs::back() {
-    if (cadToolBar!=NULL) {
-        cadToolBar->back();
-    }
-}
 //restore action from checked button
 void QG_CadToolBarArcs::restoreAction()
 {
@@ -141,4 +137,8 @@ void QG_CadToolBarArcs::restoreAction()
     }
 }
 
+void QG_CadToolBarArcs::on_bBack_clicked()
+{
+   parentTB->showPreviousToolBar();
+}
 //EOF

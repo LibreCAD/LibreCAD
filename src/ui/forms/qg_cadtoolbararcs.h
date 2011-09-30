@@ -47,7 +47,6 @@ public slots:
     virtual void drawArc3P();
     virtual void drawArcParallel();
     virtual void drawArcTangential();
-    virtual void back();
 
 protected:
     QG_CadToolBar* cadToolBar;
@@ -56,8 +55,12 @@ protected:
 protected slots:
     virtual void languageChange();
 
+private slots:
+    void on_bBack_clicked();
+
 private:
     void init();
+    QG_CadToolBar* parentTB;
 
 };
 

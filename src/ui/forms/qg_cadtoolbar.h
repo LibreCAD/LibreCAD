@@ -60,7 +60,7 @@ public slots:
     virtual void mouseReleaseEvent( QMouseEvent * e );
     virtual void contextMenuEvent( QContextMenuEvent * e );
     virtual void createSubToolBars( QG_ActionHandler * ah );
-    virtual void showToolBar( int id );
+    virtual void showToolBar(RS2::ToolBarId id );
     virtual void showToolBarMain();
     virtual void showToolBarPoints();
     virtual void showToolBarLines();
@@ -75,6 +75,7 @@ public slots:
     virtual void showToolBarDim();
     virtual void showToolBarSelect();
     virtual void showToolBarSelect( RS_ActionInterface * selectAction, int nextAction );
+    virtual void showPreviousToolBar();
     virtual void setSnapFree();
 
 signals:
@@ -86,6 +87,8 @@ protected:
     QG_CadToolBarInfo* tbInfo;
     QG_ActionHandler* actionHandler;
     QWidget* currentTb;
+    RS2::ToolBarId previousID;
+    RS2::ToolBarId savedID;
     QG_CadToolBarMain* tbMain;
     QG_CadToolBarDim* tbDim;
     QG_CadToolBarLines* tbLines;
