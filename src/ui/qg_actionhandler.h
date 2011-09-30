@@ -238,7 +238,7 @@ public slots:
         snapMiddle = a;
     }
     void setActionSnapDist(QAction* a) {
-        snapDist = a;
+        snapDistance = a;
     }
     void setActionSnapIntersection(QAction* a) {
         snapIntersection = a;
@@ -275,7 +275,7 @@ private:
     QAction* snapOnEntity;
     QAction* snapCenter;
     QAction* snapMiddle;
-    QAction* snapDist;
+    QAction* snapDistance;
     QAction* snapIntersection;
     QAction* snapIntersectionManual;
 
