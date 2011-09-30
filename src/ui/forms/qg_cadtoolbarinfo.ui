@@ -26,16 +26,7 @@
    <string>Info</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>1</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <property name="spacing">
@@ -69,6 +60,12 @@
    </item>
    <item row="1" column="0">
     <widget class="QToolButton" name="bDist">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Distance (Point, Point)</string>
      </property>
@@ -95,6 +92,12 @@
    </item>
    <item row="1" column="1">
     <widget class="QToolButton" name="bDist2">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Distance (Entity, Point)</string>
      </property>
@@ -121,6 +124,12 @@
    </item>
    <item row="2" column="0">
     <widget class="QToolButton" name="bAngle">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Angle</string>
      </property>
@@ -147,6 +156,12 @@
    </item>
    <item row="2" column="1">
     <widget class="QToolButton" name="bTotalLength">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Total length of selected entities</string>
      </property>
@@ -173,6 +188,12 @@
    </item>
    <item row="3" column="0">
     <widget class="QToolButton" name="bArea">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Area of polygon</string>
      </property>
@@ -225,7 +246,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>20</x>
-     <y>20</y>
+     <y>41</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -256,8 +277,8 @@
    <slot>infoDist2()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>53</x>
+     <y>41</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -273,7 +294,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>20</x>
-     <y>20</y>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -288,8 +309,8 @@
    <slot>infoTotalLength()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>53</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -305,7 +326,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>20</x>
-     <y>20</y>
+     <y>121</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
