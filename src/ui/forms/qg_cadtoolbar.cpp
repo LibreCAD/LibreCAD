@@ -245,7 +245,7 @@ void QG_CadToolBar::showToolBar(int id) {
     }
     currentTb = newTb;
     if (currentTb!=NULL) {
-        currentTb->move(0,20);
+        //currentTb->move(0,20);
         currentTb->show();
     }
 }

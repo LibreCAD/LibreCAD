@@ -43,6 +43,12 @@
    </property>
    <item row="0" column="0" colspan="2">
     <widget class="QToolButton" name="bBack">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Back to main menu</string>
      </property>
@@ -73,6 +79,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/selectnothing.png</normaloff>:/extui/selectnothing.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="1" column="1">
@@ -86,6 +98,12 @@
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/selectall.png</normaloff>:/extui/selectall.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -101,6 +119,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/selectsingle.png</normaloff>:/extui/selectsingle.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="2" column="1">
@@ -114,6 +138,12 @@
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/selectcontour.png</normaloff>:/extui/selectcontour.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -129,6 +159,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/deselectwindow.png</normaloff>:/extui/deselectwindow.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="3" column="1">
@@ -142,6 +178,12 @@
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/selectwindow.png</normaloff>:/extui/selectwindow.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -157,6 +199,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/deselectinters.png</normaloff>:/extui/deselectinters.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="4" column="1">
@@ -170,6 +218,12 @@
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/selectinters.png</normaloff>:/extui/selectinters.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -185,6 +239,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/selectinvert.png</normaloff>:/extui/selectinvert.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="5" column="1">
@@ -199,10 +259,22 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/selectlayer.png</normaloff>:/extui/selectlayer.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="6" column="0" colspan="2">
     <widget class="QToolButton" name="bDoit">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Continue action</string>
      </property>
