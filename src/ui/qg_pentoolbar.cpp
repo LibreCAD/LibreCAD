@@ -32,7 +32,8 @@
  */
 QG_PenToolBar::QG_PenToolBar( const QString & title, QWidget * parent )
         : QToolBar(title, parent) {
-
+this->setMinimumWidth(300);
+this->setMaximumWidth(360);
     colorBox = new QG_ColorBox(true, false, this, "colorbox");
     colorBox->setMinimumWidth(64);
     connect(colorBox, SIGNAL(colorChanged(const RS_Color&)),
