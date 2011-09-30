@@ -228,6 +228,7 @@ public:
 
 public:
     virtual void requestToolBar(RS2::ToolBarId id);
+    virtual void resetToolBar();
     virtual void requestToolBarSelect(RS_ActionInterface* selectAction,
                                       RS2::ActionType nextAction);
 

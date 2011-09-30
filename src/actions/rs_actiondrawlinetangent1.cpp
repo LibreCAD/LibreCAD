@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -45,9 +45,9 @@ RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 
 
 QAction* RS_ActionDrawLineTangent1::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("&Tangent (P,C)"),
+        // tr("&Tangent (P,C)"),
     QAction* action = new QAction(tr("Tangent (P,C)"), NULL);
-	action->setIcon(QIcon(":/extui/linestan1.png"));
+        action->setIcon(QIcon(":/extui/linestan1.png"));
     //action->zetStatusTip(tr("Draw tangent (point, circle)"));
     return action;
 }
@@ -73,7 +73,7 @@ void RS_ActionDrawLineTangent1::trigger() {
                 document->endUndoCycle();
             }
 
-			graphicView->redraw(RS2::RedrawDrawing);
+                        graphicView->redraw(RS2::RedrawDrawing);
 
             setStatus(SetPoint);
         }
@@ -200,13 +200,9 @@ void RS_ActionDrawLineTangent1::updateMouseCursor() {
 
 
 void RS_ActionDrawLineTangent1::updateToolBar() {
-    //not needed any more with new snap
-    return;
     if (RS_DIALOGFACTORY!=NULL) {
-        if (!isFinished()) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        } else {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarLines);
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
         }
     }
 }

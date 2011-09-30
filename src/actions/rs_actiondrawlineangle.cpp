@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -55,26 +55,26 @@ RS_ActionDrawLineAngle::~RS_ActionDrawLineAngle() {}
 
 QAction* RS_ActionDrawLineAngle::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
     QAction* action=NULL;
-	
-	if (type==RS2::ActionDrawLineAngle) {
-		// tr("&Angle"),
-		// "Line: Angle"
-		action = new QAction(tr("&Angle"),  NULL);
-		action->setIcon(QIcon(":/extui/linesangle.png"));
-	    //action->zetStatusTip(tr("Draw lines with a given angle"));
-	}
-	else if (type==RS2::ActionDrawLineHorizontal) {
+
+        if (type==RS2::ActionDrawLineAngle) {
+                // tr("&Angle"),
+                // "Line: Angle"
+                action = new QAction(tr("&Angle"),  NULL);
+                action->setIcon(QIcon(":/extui/linesangle.png"));
+            //action->zetStatusTip(tr("Draw lines with a given angle"));
+        }
+        else if (type==RS2::ActionDrawLineHorizontal) {
                     //  tr("Line: Horizontal"),
             action = new QAction(tr("&Horizontal"),  NULL);
                     action->setIcon(QIcon(":/extui/lineshor.png"));
             //action->zetStatusTip(tr("Draw horizontal lines"));
-	}
-	else if (type==RS2::ActionDrawLineVertical) {
+        }
+        else if (type==RS2::ActionDrawLineVertical) {
                     // tr("H&orizontal / Vertical"),
             action = new QAction(tr("Vertical"), NULL);
                     action->setIcon(QIcon(":/extui/linesver.png"));
             //action->zetStatusTip(tr("Draw vertical lines"));
-	}
+        }
     return action;
 }
 
@@ -109,9 +109,9 @@ void RS_ActionDrawLineAngle::trigger() {
         document->addUndoable(line);
         document->endUndoCycle();
     }
-	
+
     graphicView->moveRelativeZero(data.startpoint);
-	graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %d",
                     line->getId());
 }
@@ -303,12 +303,10 @@ void RS_ActionDrawLineAngle::updateMouseCursor() {
 
 
 void RS_ActionDrawLineAngle::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarLines);
+    if (RS_DIALOGFACTORY!=NULL) {
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
+        }
     }
 }
 

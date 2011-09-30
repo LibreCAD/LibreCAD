@@ -182,6 +182,12 @@ void QG_CadToolBar::showPreviousToolBar() {
     if(previousID != RS2::ToolBarNone) {
         showToolBar(previousID);
     }
+    if(actionHandler != NULL) {
+        RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+        if(currentAction != NULL) {
+            currentAction->finish(false); //finish the action, but do not update toolBar
+        }
+    }
 }
 
 void QG_CadToolBar::showToolBar(RS2::ToolBarId id) {
@@ -257,6 +263,41 @@ void QG_CadToolBar::showToolBar(RS2::ToolBarId id) {
     if (currentTb!=NULL) {
         //currentTb->move(0,20);
         currentTb->show();
+    }
+}
+
+void QG_CadToolBar::resetToolBar() {
+    if(currentTb == tbMain) {
+        tbMain->resetToolBar();
+        return;
+    }
+    if(currentTb == tbLines) {
+        tbLines->resetToolBar();
+        return;
+    }
+    if(currentTb == tbArcs) {
+        tbArcs->resetToolBar();
+        return;
+    }
+    if(currentTb == tbCircles) {
+        tbCircles->resetToolBar();
+        return;
+    }
+    if(currentTb == tbEllipses) {
+        tbEllipses->resetToolBar();
+        return;
+    }
+    if(currentTb == tbPolylines) {
+        tbPolylines->resetToolBar();
+        return;
+    }
+    if(currentTb == tbDim) {
+        tbDim->resetToolBar();
+        return;
+    }
+    if(currentTb == tbInfo) {
+        tbInfo->resetToolBar();
+        return;
     }
 }
 

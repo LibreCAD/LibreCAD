@@ -140,14 +140,11 @@ void RS_ActionDrawPoint::updateMouseCursor() {
 
 
 void RS_ActionDrawPoint::updateToolBar() {
-        //not needed
-    /*
     if (RS_DIALOGFACTORY!=NULL) {
         if (isFinished()) {
-            //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+            RS_DIALOGFACTORY->resetToolBar();
         }
     }
-    */
 }
 
 // EOF

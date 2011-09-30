@@ -40,6 +40,7 @@ public:
     ~QG_CadToolBarMain();
     void restoreAction(); //restore action from checked button
     void finishCurrentAction(); //clear current action
+    void resetToolBar();
 
 public slots:
     virtual void init();

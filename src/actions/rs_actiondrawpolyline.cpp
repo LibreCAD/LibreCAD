@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -46,9 +46,9 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
 RS_ActionDrawPolyline::~RS_ActionDrawPolyline() {}
 
 
-QAction* RS_ActionDrawPolyline::createGUIAction(RS2::ActionType /*type*/, 
-				QObject* /*parent*/) {
-	// (tr("Polyline")
+QAction* RS_ActionDrawPolyline::createGUIAction(RS2::ActionType /*type*/,
+                                QObject* /*parent*/) {
+        // (tr("Polyline")
     QAction* action = new QAction(tr("&Polyline"),  NULL);
     action->setIcon(QIcon(":/extui/polyline.png"));
     action->setStatusTip(tr("Draw polylines"));
@@ -58,7 +58,7 @@ QAction* RS_ActionDrawPolyline::createGUIAction(RS2::ActionType /*type*/,
 
 
 void RS_ActionDrawPolyline::reset() {
-	polyline = NULL;
+        polyline = NULL;
     data = RS_PolylineData(RS_Vector(false), RS_Vector(false), false);
     start = RS_Vector(false);
     history.clear();
@@ -78,11 +78,11 @@ void RS_ActionDrawPolyline::init(int status) {
 void RS_ActionDrawPolyline::trigger() {
     RS_PreviewActionInterface::trigger();
 
-	if (polyline==NULL) {
-		return;
-	}
+        if (polyline==NULL) {
+                return;
+        }
 
-	// add the entity
+        // add the entity
     //RS_Polyline* polyline = new RS_Polyline(container, data);
     //polyline->setLayerToActive();
     //polyline->setPenToActive();
@@ -95,7 +95,7 @@ void RS_ActionDrawPolyline::trigger() {
         document->endUndoCycle();
     }
 
-	// upd view
+        // upd view
     deleteSnapper();
     graphicView->moveRelativeZero(RS_Vector(0.0,0.0));
     graphicView->drawEntity(polyline);
@@ -104,7 +104,7 @@ void RS_ActionDrawPolyline::trigger() {
     RS_DEBUG->print("RS_ActionDrawLinePolyline::trigger(): polyline added: %d",
                     polyline->getId());
 
-	polyline = NULL;
+        polyline = NULL;
 }
 
 
@@ -117,15 +117,15 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent* e) {
     if (getStatus()==SetNextPoint && point.valid) {
         deletePreview();
         // clearPreview();
-		
-		//RS_Polyline* p = polyline->clone();
-		//p->reparent(preview);
-		//preview->addEntity(p);
+
+                //RS_Polyline* p = polyline->clone();
+                //p->reparent(preview);
+                //preview->addEntity(p);
         if (fabs(bulge)<RS_TOLERANCE || Mode==Line) {
-	    preview->addEntity(new RS_Line(preview,
+            preview->addEntity(new RS_Line(preview,
                                        RS_LineData(point, mouse)));
-	} else
-	    preview->addEntity(new RS_Arc(preview,arc_data));
+        } else
+            preview->addEntity(new RS_Arc(preview,arc_data));
         drawPreview();
     }
 
@@ -139,9 +139,9 @@ void RS_ActionDrawPolyline::mouseReleaseEvent(QMouseEvent* e) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
-		if (getStatus()==SetNextPoint) {
-			trigger();
-		}
+                if (getStatus()==SetNextPoint) {
+                        trigger();
+                }
         deletePreview();
         // clearPreview();
         deleteSnapper();
@@ -164,56 +164,56 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
         b=0.0;
         break;
      case Tangential:
-	if (polyline!=NULL){
+        if (polyline!=NULL){
             lastentity = (RS_AtomicEntity*)polyline->lastEntity();
             direction = RS_Math::correctAngle(
                 lastentity->getDirection2()+M_PI);
-	    line.setStartpoint(point);
-	    line.setEndpoint(mouse);
-	    direction2=RS_Math::correctAngle(line.getDirection2()+M_PI);
-	    delta=fabs(direction-direction2);
-	    if(delta<RS_TOLERANCE_ANGLE ||
-		(delta<M_PI+RS_TOLERANCE_ANGLE &&
-		delta>M_PI-RS_TOLERANCE_ANGLE))
-		b=0;
-	    else{
-		b=tan((direction2-direction)/2);
-	        suc = arc.createFrom2PBulge(point,mouse,b);
-        	if (suc)
-	            arc_data = arc.getData();
-        	else
-          	    b=0;
-	    }
-	}
-	else
-	    b=0;
+            line.setStartpoint(point);
+            line.setEndpoint(mouse);
+            direction2=RS_Math::correctAngle(line.getDirection2()+M_PI);
+            delta=fabs(direction-direction2);
+            if(delta<RS_TOLERANCE_ANGLE ||
+                (delta<M_PI+RS_TOLERANCE_ANGLE &&
+                delta>M_PI-RS_TOLERANCE_ANGLE))
+                b=0;
+            else{
+                b=tan((direction2-direction)/2);
+                suc = arc.createFrom2PBulge(point,mouse,b);
+                if (suc)
+                    arc_data = arc.getData();
+                else
+                    b=0;
+            }
+        }
+        else
+            b=0;
         break;
      case TanRad:
         if (polyline!=NULL){
-	    lastentity = (RS_AtomicEntity*)polyline->lastEntity();
-	    direction = RS_Math::correctAngle(
-		lastentity->getDirection2()+M_PI);
-	    suc = arc.createFrom2PDirectionRadius(point, mouse,
-		direction,Radius);
-	    if (suc){
-        	arc_data = arc.getData();
-		b=arc.getBulge();
-		calculatedEndpoint = arc.getEndpoint();
-		calculatedSegment=true;
-	    
-	    }
-	    else
-		b=0;
-	}
+            lastentity = (RS_AtomicEntity*)polyline->lastEntity();
+            direction = RS_Math::correctAngle(
+                lastentity->getDirection2()+M_PI);
+            suc = arc.createFrom2PDirectionRadius(point, mouse,
+                direction,Radius);
+            if (suc){
+                arc_data = arc.getData();
+                b=arc.getBulge();
+                calculatedEndpoint = arc.getEndpoint();
+                calculatedSegment=true;
+
+            }
+            else
+                b=0;
+        }
         else
           b=0;
-	break;
+        break;
 /*     case TanAng:
-	b=tan(Reversed*Angle*M_PI/720.0);
-	break;
+        b=tan(Reversed*Angle*M_PI/720.0);
+        break;
      case TanRadAng:
-	b=tan(Reversed*Angle*M_PI/720.0);
-	break;*/
+        b=tan(Reversed*Angle*M_PI/720.0);
+        break;*/
      case Ang:
         b=tan(Reversed*Angle*M_PI/720.0);
         suc = arc.createFrom2PBulge(point,mouse,b);
@@ -221,12 +221,12 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
           arc_data = arc.getData();
         else
           b=0;
-	break;
+        break;
 /*     case RadAngEndp:
         b=tan(Reversed*Angle*M_PI/720.0);
         break;
      case RadAngCenp:
-	b=tan(Reversed*Angle*M_PI/720.0);*/
+        b=tan(Reversed*Angle*M_PI/720.0);*/
     }
     return b;
 }
@@ -239,13 +239,13 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
     RS_Vector mouse = e->getCoordinate();
     double bulge=solveBulge(mouse);
     if (calculatedSegment)
-	mouse=calculatedEndpoint;
+        mouse=calculatedEndpoint;
 
     switch (getStatus()) {
     case SetStartpoint:
-	//	data.startpoint = mouse;
+        //	data.startpoint = mouse;
         //printf ("SetStartpoint\n");
-	point = mouse;
+        point = mouse;
         history.clear();
         history.append(mouse);
         bHistory.clear();
@@ -257,30 +257,30 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
         break;
 
     case SetNextPoint:
-    	graphicView->moveRelativeZero(mouse);
+        graphicView->moveRelativeZero(mouse);
         point = mouse;
         history.append(mouse);
         bHistory.append(bulge);
-		if (polyline==NULL) {
-			//printf("polyline==NULL\n");
-			polyline = new RS_Polyline(container, data);
-			polyline->addVertex(start, 0.0);
-		}
-		if (polyline!=NULL) {
-			polyline->setNextBulge(bulge);
-			polyline->addVertex(mouse, 0.0);
-			polyline->setEndpoint(mouse);
-			if (polyline->count()==1) {
-    			polyline->setLayerToActive();
-    			polyline->setPenToActive();
-				container->addEntity(polyline);
-			}
-			deletePreview();
-			// clearPreview();
-			deleteSnapper();
-			graphicView->drawEntity(polyline);
-			drawSnapper();
-		}
+                if (polyline==NULL) {
+                        //printf("polyline==NULL\n");
+                        polyline = new RS_Polyline(container, data);
+                        polyline->addVertex(start, 0.0);
+                }
+                if (polyline!=NULL) {
+                        polyline->setNextBulge(bulge);
+                        polyline->addVertex(mouse, 0.0);
+                        polyline->setEndpoint(mouse);
+                        if (polyline->count()==1) {
+                        polyline->setLayerToActive();
+                        polyline->setPenToActive();
+                                container->addEntity(polyline);
+                        }
+                        deletePreview();
+                        // clearPreview();
+                        deleteSnapper();
+                        graphicView->drawEntity(polyline);
+                        drawSnapper();
+                }
         //trigger();
         //data.startpoint = data.endpoint;
         updateMouseButtonHints();
@@ -406,12 +406,10 @@ void RS_ActionDrawPolyline::updateMouseCursor() {
 
 
 void RS_ActionDrawPolyline::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarPolylines);
+    if (RS_DIALOGFACTORY!=NULL) {
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
+        }
     }
 }
 
@@ -419,14 +417,14 @@ void RS_ActionDrawPolyline::close() {
     if (history.size()>2 && start.valid) {
         //data.endpoint = start;
         //trigger();
-		if (polyline!=NULL) {
-			if (Mode==TanRad)
-				Mode=Line;
-			RS_CoordinateEvent e(polyline->getStartpoint());
-			coordinateEvent(&e);
-		}
+                if (polyline!=NULL) {
+                        if (Mode==TanRad)
+                                Mode=Line;
+                        RS_CoordinateEvent e(polyline->getStartpoint());
+                        coordinateEvent(&e);
+                }
         polyline->setClosed(true);
-		trigger();
+                trigger();
         setStatus(SetStartpoint);
         graphicView->moveRelativeZero(start);
     } else {
@@ -438,7 +436,7 @@ void RS_ActionDrawPolyline::close() {
 
 void RS_ActionDrawPolyline::undo() {
     if (history.size()>1) {
-	history.removeLast();
+        history.removeLast();
         bHistory.removeLast();
         deletePreview();
         point = history.last();

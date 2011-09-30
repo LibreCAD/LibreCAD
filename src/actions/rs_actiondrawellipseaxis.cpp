@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -34,7 +34,7 @@
 /**
  * Constructor.
  *
- * @param isArc true if this action will produce an ellipse arc. 
+ * @param isArc true if this action will produce an ellipse arc.
  *              false if it will produce a full ellipse.
  */
 RS_ActionDrawEllipseAxis::RS_ActionDrawEllipseAxis(
@@ -61,14 +61,14 @@ QAction* RS_ActionDrawEllipseAxis::createGUIAction(RS2::ActionType type, QObject
     QAction* action;
 
     if (type==RS2::ActionDrawEllipseArcAxis) {
-		// (tr("Ellipse Arc with Axis")
+                // (tr("Ellipse Arc with Axis")
         action = new QAction(tr("&Ellipse Arc (Axis)"), NULL);
-		action->setIcon(QIcon(":/extui/ellipsearcsaxes.png"));
+                action->setIcon(QIcon(":/extui/ellipsearcsaxes.png"));
         //action->zetStatusTip(tr("Draw Ellipse Arcs"));
     } else {
-		// tr("Ellipse with Axis")
+                // tr("Ellipse with Axis")
         action = new QAction(tr("&Ellipse (Axis)"), NULL);
-		action->setIcon(QIcon(":/extui/ellipsesaxes.png"));
+                action->setIcon(QIcon(":/extui/ellipsesaxes.png"));
         //action->zetStatusTip(tr("Draw Ellipses"));
     }
     return action;
@@ -117,7 +117,7 @@ void RS_ActionDrawEllipseAxis::trigger() {
     }
 
     RS_Vector rz = graphicView->getRelativeZero();
-	graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(rz);
     drawSnapper();
 
@@ -168,17 +168,17 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
     case SetAngle1:
         if (center.valid && major.valid) {
             deletePreview();
-			
+
             //angle1 = center.angleTo(mouse);
 
-			RS_Vector m = mouse;
-			m.rotate(center, -major.angle());
-			RS_Vector v = m-center;
-			v.scale(RS_Vector(1.0, 1.0/ratio));
-			angle1 = v.angle(); // + major.angle();
+                        RS_Vector m = mouse;
+                        m.rotate(center, -major.angle());
+                        RS_Vector v = m-center;
+                        v.scale(RS_Vector(1.0, 1.0/ratio));
+                        angle1 = v.angle(); // + major.angle();
 
             preview->addEntity(new RS_Line(preview, RS_LineData(center, mouse)));
-			
+
             RS_EllipseData ed(center, major,
                               ratio,
                               angle1, angle1+1.0,
@@ -192,15 +192,15 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
         if (center.valid && major.valid) {
             deletePreview();
             //angle2 = center.angleTo(mouse);
-			
-			RS_Vector m = mouse;
-			m.rotate(center, -major.angle());
-			RS_Vector v = m-center;
-			v.scale(RS_Vector(1.0, 1.0/ratio));
-			angle2 = v.angle(); // + major.angle();
+
+                        RS_Vector m = mouse;
+                        m.rotate(center, -major.angle());
+                        RS_Vector v = m-center;
+                        v.scale(RS_Vector(1.0, 1.0/ratio));
+                        angle2 = v.angle(); // + major.angle();
 
             preview->addEntity(new RS_Line(preview, RS_LineData(center, mouse)));
-			
+
             RS_EllipseData ed(
                 center, major,
                 ratio,
@@ -267,21 +267,21 @@ void RS_ActionDrawEllipseAxis::coordinateEvent(RS_CoordinateEvent* e) {
 
     case SetAngle1: {
         //angle1 = center.angleTo(mouse);
-		RS_Vector m = mouse;
-		m.rotate(center, -major.angle());
-		RS_Vector v = m-center;
-		v.scale(RS_Vector(1.0, 1.0/ratio));
-		angle1 = v.angle();
+                RS_Vector m = mouse;
+                m.rotate(center, -major.angle());
+                RS_Vector v = m-center;
+                v.scale(RS_Vector(1.0, 1.0/ratio));
+                angle1 = v.angle();
         setStatus(SetAngle2);
-		} break;
+                } break;
 
     case SetAngle2: {
         //angle2 = center.angleTo(mouse);
-		RS_Vector m = mouse;
-		m.rotate(center, -major.angle());
-		RS_Vector v = m-center;
-		v.scale(RS_Vector(1.0, 1.0/ratio));
-		angle2 = v.angle();
+                RS_Vector m = mouse;
+                m.rotate(center, -major.angle());
+                RS_Vector v = m-center;
+                v.scale(RS_Vector(1.0, 1.0/ratio));
+                angle2 = v.angle();
         trigger();
         } break;
 
@@ -409,13 +409,9 @@ void RS_ActionDrawEllipseAxis::updateMouseCursor() {
 
 
 void RS_ActionDrawEllipseAxis::updateToolBar() {
-    //not needed any more with new snap
-    return;
     if (RS_DIALOGFACTORY!=NULL) {
-        if (!isFinished()) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        } else {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarEllipses);
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
         }
     }
 }

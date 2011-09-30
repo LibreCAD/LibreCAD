@@ -47,6 +47,8 @@ public slots:
     virtual void drawArc3P();
     virtual void drawArcParallel();
     virtual void drawArcTangential();
+    virtual void back();
+    virtual void resetToolBar();
 
 protected:
     QG_CadToolBar* cadToolBar;

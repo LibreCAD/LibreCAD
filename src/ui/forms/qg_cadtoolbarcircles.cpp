@@ -143,12 +143,16 @@ void QG_CadToolBarCircles::restoreAction()
         return;
     }
     //clear all action
+    bHidden->setChecked(true);
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
     if(currentAction != NULL) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }
 
+void QG_CadToolBarCircles::resetToolBar() {
+    bHidden->setChecked(true);
+}
 void QG_CadToolBarCircles::on_bBack_clicked()
 {
    parentTB->showPreviousToolBar();

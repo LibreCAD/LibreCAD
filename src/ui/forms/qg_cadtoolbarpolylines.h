@@ -54,6 +54,7 @@ public slots:
     virtual void polylineEquidistant();
     virtual void polylineSegment();
     virtual void back();
+    virtual void resetToolBar();
 
 protected:
     QG_ActionHandler* actionHandler;

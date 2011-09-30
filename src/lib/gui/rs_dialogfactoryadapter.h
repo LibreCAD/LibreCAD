@@ -74,6 +74,7 @@ public:
     virtual bool requestMoveRotateDialog(RS_MoveRotateData& ) { return false; }
     virtual bool requestRotate2Dialog(RS_Rotate2Data& ) { return false; }
     virtual void requestToolBar(RS2::ToolBarId ) {}
+    virtual void resetToolBar() {}
     virtual void requestToolBarSelect(RS_ActionInterface* ,
                                       RS2::ActionType ) {}
     virtual bool requestModifyEntityDialog(RS_Entity* ) { return false; }

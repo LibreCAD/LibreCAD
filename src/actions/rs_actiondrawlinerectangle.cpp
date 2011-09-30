@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -46,11 +46,11 @@ RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
 RS_ActionDrawLineRectangle::~RS_ActionDrawLineRectangle() {}
 
 QAction* RS_ActionDrawLineRectangle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	//  tr("&Rectangle"),
-	QAction* action = new QAction(tr("Rectangle"), NULL);
-	action->setIcon(QIcon(":/extui/linesrect.png"));
+        //  tr("&Rectangle"),
+        QAction* action = new QAction(tr("Rectangle"), NULL);
+        action->setIcon(QIcon(":/extui/linesrect.png"));
     //action->zetStatusTip(tr("Draw rectangles"));
-	return action;
+        return action;
 }
 
 
@@ -96,7 +96,7 @@ void RS_ActionDrawLineRectangle::trigger() {
     }
 
     // upd. view
-	graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(corner2);
 }
 
@@ -214,13 +214,9 @@ void RS_ActionDrawLineRectangle::updateMouseCursor() {
 
 
 void RS_ActionDrawLineRectangle::updateToolBar() {
-    //not needed any more with new snap
-    return;
     if (RS_DIALOGFACTORY!=NULL) {
-        if (!isFinished()) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        } else {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarLines);
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
         }
     }
 }

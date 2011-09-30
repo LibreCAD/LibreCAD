@@ -52,7 +52,8 @@ public slots:
     virtual void drawDimDiametric();
     virtual void drawDimAngular();
     virtual void drawDimLeader();
-    virtual void back();
+    //virtual void back();
+    virtual void resetToolBar();
 
 protected:
     QG_CadToolBar* cadToolBar;

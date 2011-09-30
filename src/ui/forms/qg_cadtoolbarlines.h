@@ -61,6 +61,7 @@ public slots:
     virtual void drawLinePolygon();
     virtual void drawLinePolygon2();
     virtual void back();
+    virtual void resetToolBar();
 
 protected:
     QG_CadToolBar* cadToolBar;

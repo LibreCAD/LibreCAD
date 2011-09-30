@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -31,13 +31,13 @@
 #include "rs_dimaligned.h"
 
 /**
- * This action class can handle user events to draw 
+ * This action class can handle user events to draw
  * aligned dimensions.
  *
  * @author Andrew Mustun
  */
 class RS_ActionDimAligned : public RS_ActionDimension {
-	Q_OBJECT
+        Q_OBJECT
 public:
     /**
      * Action States.
@@ -46,7 +46,7 @@ public:
         SetExtPoint1,    /**< Setting the 1st ext point.  */
         SetExtPoint2,    /**< Setting the 2nd ext point. */
         SetDefPoint,     /**< Setting the common def point */
-		SetText          /**< Setting the text label in command line */
+                SetText          /**< Setting the text label in command line */
     };
 
 public:
@@ -54,27 +54,27 @@ public:
                         RS_GraphicView& graphicView);
     ~RS_ActionDimAligned();
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionDimAligned;
-	}
+        static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+
+        virtual RS2::ActionType rtti() {
+                return RS2::ActionDimAligned;
+        }
 
     virtual void reset();
 
     virtual void trigger();
-	void preparePreview();
-	
+        void preparePreview();
+
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
 
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
+        virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
         virtual QStringList getAvailableCommands();
-	
+
     virtual void hideOptions();
     virtual void showOptions();
-	
+
     virtual void updateMouseButtonHints();
 
 protected:
@@ -83,8 +83,8 @@ protected:
      */
     RS_DimAlignedData edata;
 
-	/** Last status before entering text. */
-	Status lastStatus;
+        /** Last status before entering text. */
+        Status lastStatus;
 }
 ;
 
