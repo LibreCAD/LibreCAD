@@ -156,7 +156,7 @@ QG_ActionHandler::QG_ActionHandler(QG_MainWindowInterface* mw) {
     snapOnEntity           = NULL;
     snapCenter             = NULL;
     snapMiddle             = NULL;
-    snapDist               = NULL;
+    snapDistance               = NULL;
     snapIntersection       = NULL;
     snapIntersectionManual = NULL;
 
@@ -1387,9 +1387,9 @@ void QG_ActionHandler::slotSnapMiddle() {
 }
 
 void QG_ActionHandler::slotSnapDist() {
-    if(snapDist==NULL) return;
+    if(snapDistance==NULL) return;
     RS_SnapMode s=getSnaps();
-    s.snapDistance = snapDist->isChecked();
+    s.snapDistance = snapDistance->isChecked();
 
     slotSetSnaps(s);
 }
@@ -1432,8 +1432,8 @@ void QG_ActionHandler::disableSnaps() {
     if (snapMiddle!=NULL) {
         snapMiddle->setChecked(false);
     }
-    if (snapDist!=NULL) {
-        snapDist->setChecked(false);
+    if (snapDistance!=NULL) {
+        snapDistance->setChecked(false);
     }
     if (snapIntersection!=NULL) {
         snapIntersection->setChecked(false);
@@ -1519,6 +1519,9 @@ void QG_ActionHandler::updateSnapMode(RS_SnapMode& s) {
     if (snapGrid!=NULL ) {
         snapGrid->setChecked(s.snapGrid);
     }
+    if (snapOnEntity!=NULL ) {
+        snapOnEntity->setChecked(s.snapOnEntity);
+    }
     if (snapEndpoint!=NULL ) {
         snapEndpoint->setChecked(s.snapEndpoint);
     }
@@ -1528,8 +1531,8 @@ void QG_ActionHandler::updateSnapMode(RS_SnapMode& s) {
     if (snapMiddle!=NULL ) {
         snapMiddle->setChecked(s.snapMiddle);
     }
-    if (snapDist!=NULL ) {
-        snapDist->setChecked(s.snapDistance);
+    if (snapDistance!=NULL ) {
+        snapDistance->setChecked(s.snapDistance);
     }
     if (snapIntersection!=NULL ) {
         snapIntersection->setChecked(s.snapIntersection);
