@@ -35,7 +35,7 @@ QG_CadToolBarModify::QG_CadToolBarModify(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
 {
     setupUi(this);
-
+    parentTB=static_cast<QG_CadToolBar*>(parent);
     init();
 }
 
@@ -279,4 +279,9 @@ void QG_CadToolBarModify::restoreAction() {
     if(currentAction != NULL) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
+}
+
+void QG_CadToolBarModify::on_bBack_clicked()
+{
+   parentTB->showPreviousToolBar();
 }
