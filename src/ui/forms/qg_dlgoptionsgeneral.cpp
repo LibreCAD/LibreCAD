@@ -112,13 +112,18 @@ void QG_DlgOptionsGeneral::init() {
     QString minGridSpacing = RS_SETTINGS->readEntry("/MinGridSpacing", "10");
     cbMinGridSpacing->setCurrentIndex( cbMinGridSpacing->findText(minGridSpacing) );
 
+    int idx;
     // preview:
     QString maxPreview = RS_SETTINGS->readEntry("/MaxPreview", "100");
-    cbMaxPreview->setCurrentIndex( cbMaxPreview->findText(maxPreview) );
-
+    idx= cbMaxPreview->findText(maxPreview) ;
+    if(idx<0) {
+            //not found in combobox, prepend it
+        idx = 0;
+        cbMaxPreview->insertItem( idx,maxPreview);
+    }
+    cbMaxPreview->setCurrentIndex(idx);
 
     // colors:
-    int idx;
     QString backgroundColor = RS_SETTINGS->readEntry("/BackgroundColor", "Black");
     idx = cbBackgroundColor->findText(backgroundColor);
     //backgroundColor not present in combobox, prepend it
