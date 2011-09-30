@@ -399,22 +399,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>bBack</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_CadToolBarDim</receiver>
-   <slot>back()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>bRadial</sender>
    <signal>clicked()</signal>
    <receiver>QG_CadToolBarDim</receiver>

@@ -59,6 +59,8 @@ void QG_CadToolBar::languageChange()
 void QG_CadToolBar::init() {
     actionHandler = NULL;
     currentTb = NULL;
+    previousID = RS2::ToolBarNone;
+    savedID = RS2::ToolBarNone;
 
     tbMain = NULL;
 
@@ -176,7 +178,13 @@ void QG_CadToolBar::createSubToolBars(QG_ActionHandler* ah) {
 }
 
 
-void QG_CadToolBar::showToolBar(int id) {
+void QG_CadToolBar::showPreviousToolBar() {
+    if(previousID != RS2::ToolBarNone) {
+        showToolBar(previousID);
+    }
+}
+
+void QG_CadToolBar::showToolBar(RS2::ToolBarId id) {
     QWidget* newTb = NULL;
 
     switch (id) {
@@ -243,6 +251,8 @@ void QG_CadToolBar::showToolBar(int id) {
     if (currentTb!=NULL) {
         currentTb->hide();
     }
+    previousID=savedID;
+    savedID=id;
     currentTb = newTb;
     if (currentTb!=NULL) {
         //currentTb->move(0,20);

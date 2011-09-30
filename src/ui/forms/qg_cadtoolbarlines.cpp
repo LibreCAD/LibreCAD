@@ -35,6 +35,7 @@ QG_CadToolBarLines::QG_CadToolBarLines(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
 {
     setupUi(this);
+    parentTB=static_cast<QG_CadToolBar*>(parent);
 
     init();
 }
@@ -264,4 +265,9 @@ void QG_CadToolBarLines::restoreAction() {
     if(currentAction != NULL) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
+}
+
+void QG_CadToolBarLines::on_bBack_clicked()
+{
+   parentTB->showPreviousToolBar();
 }

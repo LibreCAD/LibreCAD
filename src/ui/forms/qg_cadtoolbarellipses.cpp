@@ -35,7 +35,7 @@ QG_CadToolBarEllipses::QG_CadToolBarEllipses(QWidget* parent, Qt::WindowFlags fl
     : QWidget(parent, fl)
 {
     setupUi(this);
-
+    parentTB=static_cast<QG_CadToolBar*>(parent);
     init();
 }
 
@@ -116,4 +116,9 @@ void QG_CadToolBarEllipses::restoreAction()
     if(currentAction != NULL) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
+}
+
+void QG_CadToolBarEllipses::on_bBack_clicked()
+{
+    parentTB->showPreviousToolBar();
 }

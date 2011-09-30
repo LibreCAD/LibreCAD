@@ -414,7 +414,8 @@ public:
         ToolBarSnap,        /**< Snap. */
         ToolBarModify,      /**< Modify. */
         ToolBarSelect,      /**< Select. */
-        ToolBarInfo         /**< Information */
+        ToolBarInfo,         /**< Information */
+        ToolBarNone         /**< Invalid toolbar ID */
     };
 
     /**

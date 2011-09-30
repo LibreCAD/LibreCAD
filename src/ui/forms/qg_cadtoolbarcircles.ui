@@ -326,21 +326,5 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>bBack</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_CadToolBarCircles</receiver>
-   <slot>back()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
 </ui>
