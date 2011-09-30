@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>65</width>
-    <height>448</height>
+    <height>336</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -38,10 +38,7 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <property name="horizontalSpacing">
-    <number>1</number>
-   </property>
-   <property name="verticalSpacing">
+   <property name="spacing">
     <number>0</number>
    </property>
    <item row="0" column="0" colspan="2">
@@ -78,6 +75,12 @@
    </item>
    <item row="1" column="0">
     <widget class="QToolButton" name="bNormal">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Line with two points</string>
      </property>
@@ -104,6 +107,12 @@
    </item>
    <item row="1" column="1">
     <widget class="QToolButton" name="bAngle">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Line with given angle</string>
      </property>
@@ -130,6 +139,12 @@
    </item>
    <item row="2" column="0">
     <widget class="QToolButton" name="bHorizontal">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Horizontal lines</string>
      </property>
@@ -156,6 +171,12 @@
    </item>
    <item row="2" column="1">
     <widget class="QToolButton" name="bVertical">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Vertical lines</string>
      </property>
@@ -182,6 +203,12 @@
    </item>
    <item row="3" column="0">
     <widget class="QToolButton" name="bRectangle">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Rectangles</string>
      </property>
@@ -208,6 +235,12 @@
    </item>
    <item row="3" column="1">
     <widget class="QToolButton" name="bBisector">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Bisectors</string>
      </property>
@@ -234,6 +267,12 @@
    </item>
    <item row="4" column="0">
     <widget class="QToolButton" name="bParallel">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Parallels with distance</string>
      </property>
@@ -260,6 +299,12 @@
    </item>
    <item row="4" column="1">
     <widget class="QToolButton" name="bParallelThrough">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Parallels through point</string>
      </property>
@@ -286,6 +331,12 @@
    </item>
    <item row="5" column="0">
     <widget class="QToolButton" name="bTangent1">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Tangents from point to circle</string>
      </property>
@@ -312,6 +363,12 @@
    </item>
    <item row="5" column="1">
     <widget class="QToolButton" name="bTangent2">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Tangents from circle to circle</string>
      </property>
@@ -338,6 +395,12 @@
    </item>
    <item row="6" column="0">
     <widget class="QToolButton" name="bOrthTan">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Tangents to a circle, orthogonal to a line</string>
      </property>
@@ -364,6 +427,12 @@
    </item>
    <item row="6" column="1">
     <widget class="QToolButton" name="bOrthogonal">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Orthogonal lines</string>
      </property>
@@ -390,6 +459,12 @@
    </item>
    <item row="7" column="0">
     <widget class="QToolButton" name="bRelAngle">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Lines with relative angles</string>
      </property>
@@ -416,6 +491,12 @@
    </item>
    <item row="7" column="1">
     <widget class="QToolButton" name="bPolygon">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Polygons with Center and Corner</string>
      </property>
@@ -442,6 +523,12 @@
    </item>
    <item row="8" column="0">
     <widget class="QToolButton" name="bPolygon2">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Polygons with two Corners</string>
      </property>
@@ -468,6 +555,12 @@
    </item>
    <item row="8" column="1">
     <widget class="QToolButton" name="bFree">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Freehand lines</string>
      </property>
@@ -548,7 +641,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>20</x>
-     <y>20</y>
+     <y>41</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -563,8 +656,8 @@
    <slot>drawLineFree()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>53</x>
+     <y>318</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -580,7 +673,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>20</x>
-     <y>20</y>
+     <y>160</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -595,8 +688,8 @@
    <slot>drawLineAngle()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>53</x>
+     <y>41</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -612,7 +705,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>20</x>
-     <y>20</y>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -627,8 +720,8 @@
    <slot>drawLineBisector()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>53</x>
+     <y>120</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -644,7 +737,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>20</x>
-     <y>20</y>
+     <y>200</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -659,8 +752,8 @@
    <slot>drawLineTangent2()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>53</x>
+     <y>200</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -676,7 +769,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>20</x>
-     <y>20</y>
+     <y>120</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -708,7 +801,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>20</x>
-     <y>20</y>
+     <y>279</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -723,8 +816,8 @@
    <slot>drawLineVertical()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>53</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -740,7 +833,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>20</x>
-     <y>20</y>
+     <y>239</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -755,8 +848,8 @@
    <slot>drawLineOrthogonal()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>53</x>
+     <y>239</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -771,8 +864,8 @@
    <slot>drawLinePolygon()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>53</x>
+     <y>279</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -788,7 +881,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>20</x>
-     <y>20</y>
+     <y>318</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -803,8 +896,8 @@
    <slot>drawLineParallelThrough()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>53</x>
+     <y>160</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
