@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -47,11 +47,11 @@ RS_ActionDimAligned::RS_ActionDimAligned(RS_EntityContainer& container,
 RS_ActionDimAligned::~RS_ActionDimAligned() {}
 
 QAction* RS_ActionDimAligned::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	//tr("Aligned")
-	QAction* action = new QAction(tr("&Aligned"),  NULL);
-	action->setIcon(QIcon(":/extui/dimaligned.png"));
-	//action->zetStatusTip(tr("Aligned Dimension"));
-	return action;
+        //tr("Aligned")
+        QAction* action = new QAction(tr("&Aligned"),  NULL);
+        action->setIcon(QIcon(":/extui/dimaligned.png"));
+        //action->zetStatusTip(tr("Aligned Dimension"));
+        return action;
 }
 
 
@@ -74,7 +74,7 @@ void RS_ActionDimAligned::trigger() {
     preparePreview();
     graphicView->moveRelativeZero(data.definitionPoint);
 
-	//data.text = getText();
+        //data.text = getText();
     RS_DimAligned* dim =
         new RS_DimAligned(container, data, edata);
     dim->setLayerToActive();
@@ -90,7 +90,7 @@ void RS_ActionDimAligned::trigger() {
     }
 
     RS_Vector rz = graphicView->getRelativeZero();
-	graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(rz);
 
     RS_DEBUG->print("RS_ActionDimAligned::trigger():"
@@ -143,7 +143,7 @@ void RS_ActionDimAligned::mouseMoveEvent(QMouseEvent* e) {
 
             preparePreview();
 
-			//data.text = getText();
+                        //data.text = getText();
             RS_DimAligned* dim = new RS_DimAligned(preview, data, edata);
             dim->update();
             preview->addEntity(dim);
@@ -151,8 +151,8 @@ void RS_ActionDimAligned::mouseMoveEvent(QMouseEvent* e) {
         }
         break;
 
-	default:
-		break;
+        default:
+                break;
     }
 
     RS_DEBUG->print("RS_ActionDimAligned::mouseMoveEvent end");
@@ -306,6 +306,5 @@ void RS_ActionDimAligned::showOptions() {
         RS_DIALOGFACTORY->requestOptions(this, true);
     }
 }
-
 
 // EOF

@@ -112,12 +112,16 @@ void QG_CadToolBarEllipses::restoreAction()
         return;
     }
     //clear all action
+    bHidden->setChecked(true);
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
     if(currentAction != NULL) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }
 
+void QG_CadToolBarEllipses::resetToolBar() {
+    bHidden->setChecked(true);
+}
 void QG_CadToolBarEllipses::on_bBack_clicked()
 {
     parentTB->showPreviousToolBar();

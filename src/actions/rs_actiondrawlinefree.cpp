@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -47,9 +47,9 @@ RS_ActionDrawLineFree::~RS_ActionDrawLineFree() {
 }
 
 QAction* RS_ActionDrawLineFree::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr(""Line: Freehand"),
+        // tr(""Line: Freehand"),
     QAction* action = new QAction(tr("&Freehand Line"), NULL);
-	action->setIcon(QIcon(":/extui/linesfree.png"));
+        action->setIcon(QIcon(":/extui/linesfree.png"));
     //action->zetStatusTip(tr("Draw freehand lines"));
     return action;
 }
@@ -65,12 +65,12 @@ void RS_ActionDrawLineFree::trigger() {
                         document->addUndoable(polyline);
                         document->endUndoCycle();
                 }
-		graphicView->redraw(RS2::RedrawDrawing);
+                graphicView->redraw(RS2::RedrawDrawing);
         RS_DEBUG->print("RS_ActionDrawLineFree::trigger():"
                         " polyline added: %d", polyline->getId());
             } else {
-	    delete polyline;
-	    }
+            delete polyline;
+            }
         polyline = NULL;
     }
 }
@@ -149,12 +149,10 @@ void RS_ActionDrawLineFree::updateMouseCursor() {
 
 
 void RS_ActionDrawLineFree::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarLines);
+    if (RS_DIALOGFACTORY!=NULL) {
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
+        }
     }
 }
 

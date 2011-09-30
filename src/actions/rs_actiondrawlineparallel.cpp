@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -53,15 +53,15 @@ QAction* RS_ActionDrawLineParallel::createGUIAction(RS2::ActionType type, QObjec
     QAction* action = NULL;
 
     if (type==RS2::ActionDrawLineParallel) {
-		// tr("Para&llel"),
+                // tr("Para&llel"),
         action = new QAction(tr("Parallel"), NULL);
-		action->setIcon(QIcon(":/extui/linespara.png"));
+                action->setIcon(QIcon(":/extui/linespara.png"));
     } else if (type==RS2::ActionDrawArcParallel) {
         action = new QAction(tr("Concentric"), NULL);
-		action->setIcon(QIcon(":/extui/arcspara.png"));
+                action->setIcon(QIcon(":/extui/arcspara.png"));
     } else if (type==RS2::ActionDrawCircleParallel) {
         action = new QAction(tr("Concentric"), NULL);
-		action->setIcon(QIcon(":/extui/circlespara.png"));
+                action->setIcon(QIcon(":/extui/circlespara.png"));
     }
     //action->zetStatusTip(tr("Draw parallels to existing lines, arcs, "circles"));
     return action;
@@ -263,10 +263,10 @@ void RS_ActionDrawLineParallel::updateMouseCursor() {
 
 
 void RS_ActionDrawLineParallel::updateToolBar() {
-    //not needed any more with new snap
-    return;
     if (RS_DIALOGFACTORY!=NULL) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarLines);
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
+        }
     }
 }
 

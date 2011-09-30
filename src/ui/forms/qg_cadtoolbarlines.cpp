@@ -261,12 +261,16 @@ void QG_CadToolBarLines::restoreAction() {
         return;
     }
     //clear all action
+    bHidden->setChecked(true);
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
     if(currentAction != NULL) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }
 
+void QG_CadToolBarLines::resetToolBar() {
+    bHidden->setChecked(true);
+}
 void QG_CadToolBarLines::on_bBack_clicked()
 {
    parentTB->showPreviousToolBar();

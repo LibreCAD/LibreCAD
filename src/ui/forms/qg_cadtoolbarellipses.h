@@ -48,6 +48,7 @@ public slots:
     virtual void drawEllipseAxis();
     virtual void drawEllipseArcAxis();
     virtual void back();
+    virtual void resetToolBar();
 
 protected:
     QG_CadToolBar* cadToolBar;

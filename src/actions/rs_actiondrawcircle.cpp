@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -49,9 +49,9 @@ QAction* RS_ActionDrawCircle::createGUIAction(RS2::ActionType /*type*/, QObject*
 /*RVT_PORT    QAction* action = new QAction(tr("Circle: Center, Point"),
                                   tr("Center, &Point"),
                                   QKeySequence(), NULL); */
-	// "Circle: Center, Point"
+        // "Circle: Center, Point"
     QAction* action = new QAction(tr("Center, &Point"), NULL);
-	action->setIcon(QIcon(":/extui/circles.png"));
+        action->setIcon(QIcon(":/extui/circles.png"));
     //action->zetStatusTip(tr("Draw circles with center and point"));
     return action;
 }
@@ -85,7 +85,7 @@ void RS_ActionDrawCircle::trigger() {
         document->addUndoable(circle);
         document->endUndoCycle();
     }
-	graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(circle->getCenter());
 
     setStatus(SetCenter);
@@ -248,15 +248,9 @@ void RS_ActionDrawCircle::updateMouseCursor() {
 
 
 void RS_ActionDrawCircle::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    if (!isFinished()) {
-        if (RS_DIALOGFACTORY!=NULL) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        }
-    } else {
-        if (RS_DIALOGFACTORY!=NULL) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarCircles);
+    if (RS_DIALOGFACTORY!=NULL) {
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
         }
     }
 }

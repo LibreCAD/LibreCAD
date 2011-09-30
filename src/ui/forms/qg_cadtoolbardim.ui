@@ -327,6 +327,34 @@
      </property>
     </spacer>
    </item>
+   <item row="6" column="0">
+    <widget class="QToolButton" name="bHidden">
+     <property name="maximumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Concentric</string>
+     </property>
+     <property name="text">
+      <string notr="true"/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

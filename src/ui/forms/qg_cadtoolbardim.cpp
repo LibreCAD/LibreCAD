@@ -130,11 +130,11 @@ void QG_CadToolBarDim::drawDimLeader() {
     }
 }
 
-void QG_CadToolBarDim::back() {
-    if (cadToolBar!=NULL) {
-        cadToolBar->back();
-    }
-}
+//void QG_CadToolBarDim::back() {
+//    if (cadToolBar!=NULL) {
+//        cadToolBar->back();
+//    }
+//}
 //restore action from checked button
 void QG_CadToolBarDim::restoreAction()
 {
@@ -172,10 +172,14 @@ void QG_CadToolBarDim::restoreAction()
         return;
     }
     //clear all action
+    bHidden->setChecked(true);
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
     if(currentAction != NULL) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
+}
+void QG_CadToolBarDim::resetToolBar() {
+    bHidden->setChecked(true);
 }
 
 void QG_CadToolBarDim::on_bBack_clicked()

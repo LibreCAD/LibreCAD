@@ -84,16 +84,10 @@ void RS_ActionInfoTotalLength::trigger() {
 
 
 void RS_ActionInfoTotalLength::updateToolBar() {
-    //not needed any more with new snap
-    /*
     if (RS_DIALOGFACTORY!=NULL) {
-        if (!isFinished()) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarInfo);
-        } else {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
         }
     }
-    */
 }
-
 // EOF

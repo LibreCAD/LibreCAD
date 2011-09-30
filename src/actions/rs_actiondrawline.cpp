@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -40,9 +40,9 @@ RS_ActionDrawLine::RS_ActionDrawLine(RS_EntityContainer& container,
         :RS_PreviewActionInterface("Draw lines",
                            container, graphicView) {
 
-	RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine");
+        RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine");
     reset();
-	RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine: OK");
+        RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine: OK");
 }
 
 
@@ -51,9 +51,9 @@ RS_ActionDrawLine::~RS_ActionDrawLine() {}
 
 
 QAction* RS_ActionDrawLine::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	//tr("Line: 2 Points")
+        //tr("Line: 2 Points")
     QAction* action = new QAction(tr("&2 Points"), NULL);
-	action->setIcon(QIcon(":/extui/linesnormal.png"));
+        action->setIcon(QIcon(":/extui/linesnormal.png"));
     //action->zetStatusTip(tr("Draw lines"));
     return action;
 }
@@ -61,21 +61,21 @@ QAction* RS_ActionDrawLine::createGUIAction(RS2::ActionType /*type*/, QObject* /
 
 
 void RS_ActionDrawLine::reset() {
-	RS_DEBUG->print("RS_ActionDrawLine::reset");
+        RS_DEBUG->print("RS_ActionDrawLine::reset");
     data = RS_LineData(RS_Vector(false), RS_Vector(false));
     start = RS_Vector(false);
     history.clear();
-	RS_DEBUG->print("RS_ActionDrawLine::reset: OK");
+        RS_DEBUG->print("RS_ActionDrawLine::reset: OK");
 }
 
 
 
 void RS_ActionDrawLine::init(int status) {
-	RS_DEBUG->print("RS_ActionDrawLine::init");
+        RS_DEBUG->print("RS_ActionDrawLine::init");
     RS_PreviewActionInterface::init(status);
 
     reset();
-	RS_DEBUG->print("RS_ActionDrawLine::init: OK");
+        RS_DEBUG->print("RS_ActionDrawLine::init: OK");
 }
 
 
@@ -95,7 +95,7 @@ void RS_ActionDrawLine::trigger() {
         document->endUndoCycle();
     }
 
-	graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(line->getEndpoint());
     RS_DEBUG->print("RS_ActionDrawLine::trigger(): line added: %d",
                     line->getId());
@@ -110,11 +110,11 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
     RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point: OK");
     if (getStatus()==SetEndpoint && data.startpoint.valid) {
-    	RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: update preview");
+        RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: update preview");
         deletePreview();
         preview->addEntity(new RS_Line(preview,
                                        RS_LineData(data.startpoint, mouse)));
-    	RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: draw preview");
+        RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: draw preview");
         drawPreview();
     }
 
@@ -136,9 +136,9 @@ void RS_ActionDrawLine::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
-	RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent");
+        RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent");
     if (e==NULL) {
-		RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent: event was NULL");
+                RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent: event was NULL");
         return;
     }
 
@@ -167,13 +167,13 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
     default:
         break;
     }
-	RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent: OK");
+        RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent: OK");
 }
 
 
 
 void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
-	RS_DEBUG->print("RS_ActionDrawLine::commandEvent");
+        RS_DEBUG->print("RS_ActionDrawLine::commandEvent");
     QString c = e->getCommand().toLower();
 
     switch (getStatus()) {
@@ -202,7 +202,7 @@ void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
     default:
         break;
     }
-	RS_DEBUG->print("RS_ActionDrawLine::commandEvent: OK");
+        RS_DEBUG->print("RS_ActionDrawLine::commandEvent: OK");
 }
 
 
@@ -266,11 +266,11 @@ void RS_ActionDrawLine::updateMouseButtonHints() {
 
 
 void RS_ActionDrawLine::showOptions() {
-	RS_DEBUG->print("RS_ActionDrawLine::showOptions");
+        RS_DEBUG->print("RS_ActionDrawLine::showOptions");
     RS_ActionInterface::showOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, true);
-	RS_DEBUG->print("RS_ActionDrawLine::showOptions: OK");
+        RS_DEBUG->print("RS_ActionDrawLine::showOptions: OK");
 }
 
 
@@ -288,12 +288,10 @@ void RS_ActionDrawLine::updateMouseCursor() {
 
 
 void RS_ActionDrawLine::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarLines);
+    if (RS_DIALOGFACTORY!=NULL) {
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
+        }
     }
 }
 

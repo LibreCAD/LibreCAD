@@ -308,6 +308,7 @@ public:
      * @param id Tool bar ID.
      */
     virtual void requestToolBar(RS2::ToolBarId id) = 0;
+    virtual void resetToolBar() = 0;
 
     /**
      * This virtual method must be overwritten and must show

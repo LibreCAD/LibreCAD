@@ -167,18 +167,11 @@ void RS_ActionInfoAngle::updateMouseCursor() {
 
 
 void RS_ActionInfoAngle::updateToolBar() {
-    //not needed any more
-    /*
-    switch (getStatus()) {
-    case SetEntity1:
-    case SetEntity2:
-        //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        break;
-    default:
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarInfo);
-        break;
+    if (RS_DIALOGFACTORY!=NULL) {
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
+        }
     }
-    */
 }
 
 

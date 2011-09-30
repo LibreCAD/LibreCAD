@@ -51,6 +51,7 @@ public slots:
     virtual void drawCircle3P();
     virtual void drawCircleParallel();
     virtual void back();
+    virtual void resetToolBar();
 
 protected:
     QG_ActionHandler* actionHandler;

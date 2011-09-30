@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -44,9 +44,9 @@ RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
 }
 
 QAction* RS_ActionDrawLineTangent2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Tan&gent (C,C)"),
+        // tr("Tan&gent (C,C)"),
     QAction* action = new QAction(tr("Tangent (C,C)"), NULL);
-	action->setIcon(QIcon(":/extui/linestan2.png"));
+        action->setIcon(QIcon(":/extui/linestan2.png"));
     //action->zetStatusTip(tr("Draw tangent (circle, circle)"));
 
     return action;
@@ -73,7 +73,7 @@ void RS_ActionDrawLineTangent2::trigger() {
                 document->addUndoable(newEntity);
                 document->endUndoCycle();
             }
-			graphicView->redraw(RS2::RedrawDrawing);
+                        graphicView->redraw(RS2::RedrawDrawing);
             setStatus(SetCircle1);
         }
         delete tangent;
@@ -184,10 +184,10 @@ void RS_ActionDrawLineTangent2::updateMouseCursor() {
 
 
 void RS_ActionDrawLineTangent2::updateToolBar() {
-    //not needed any more with new snap
-    return;
     if (RS_DIALOGFACTORY!=NULL) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarLines);
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
+        }
     }
 }
 

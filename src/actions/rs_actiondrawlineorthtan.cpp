@@ -198,13 +198,9 @@ void RS_ActionDrawLineOrthTan::updateMouseCursor() {
 
 
 void RS_ActionDrawLineOrthTan::updateToolBar() {
-    //not needed any more with new snap
-    return;
     if (RS_DIALOGFACTORY!=NULL) {
-        if (!isFinished()) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        } else {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarLines);
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
         }
     }
 }

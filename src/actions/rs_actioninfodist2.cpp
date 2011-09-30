@@ -157,17 +157,11 @@ void RS_ActionInfoDist2::updateMouseCursor() {
 
 
 void RS_ActionInfoDist2::updateToolBar() {
-    /* not needed any more
-    switch (getStatus()) {
-    case SetPoint:
-    case SetEntity:
-        //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        break;
-    default:
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarInfo);
-        break;
+    if (RS_DIALOGFACTORY!=NULL) {
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
+        }
     }
-    */
 }
 
 

@@ -140,33 +140,50 @@ void QG_CadToolBarPolylines::restoreAction()
 {
     if(actionHandler==NULL) return;
     if ( bPolyline ->isChecked() ) {
-    actionHandler->slotDrawPolyline();
+        actionHandler->slotDrawPolyline();
+        return;
     }
     if ( bPolylineAdd ->isChecked() ) {
-    actionHandler->slotPolylineAdd();
+        actionHandler->slotPolylineAdd();
+        return;
     }
     if ( bPolylineAppend ->isChecked() ) {
-    actionHandler->slotPolylineAppend();
+        actionHandler->slotPolylineAppend();
+        return;
     }
     if ( bPolylineDel ->isChecked() ) {
-    actionHandler->slotPolylineDel();
+        actionHandler->slotPolylineDel();
+        return;
     }
     if ( bPolylineDelBetween ->isChecked() ) {
-    actionHandler->slotPolylineDelBetween();
+        actionHandler->slotPolylineDelBetween();
+        return;
     }
     if ( bPolylineTrim ->isChecked() ) {
-    actionHandler->slotPolylineTrim();
+        actionHandler->slotPolylineTrim();
+        return;
     }
     if ( bPolylineEquidistant ->isChecked() ) {
-    actionHandler->slotPolylineEquidistant();
+        actionHandler->slotPolylineEquidistant();
+        return;
     }
     if ( bPolylineSegment ->isChecked() ) {
-    actionHandler->slotPolylineSegment();
+        actionHandler->slotPolylineSegment();
+        return;
+    }
+    bHidden->setChecked(true);
+    RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+    if(currentAction != NULL) {
+        currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }
-//EOF
+
+void QG_CadToolBarPolylines::resetToolBar() {
+    bHidden->setChecked(true);
+}
 
 void QG_CadToolBarPolylines::on_bBack_clicked()
 {
     parentTB->showPreviousToolBar();
 }
+//EOF

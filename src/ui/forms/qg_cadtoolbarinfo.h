@@ -50,7 +50,8 @@ public slots:
     virtual void infoAngle();
     virtual void infoTotalLength();
     virtual void infoArea();
-    virtual void back();
+//    virtual void back();
+    virtual void resetToolBar();
 
 protected:
     QG_ActionHandler* actionHandler;

@@ -1375,6 +1375,12 @@ void QG_DialogFactory::requestToolBar(RS2::ToolBarId id) {
 }
 
 
+void QG_DialogFactory::resetToolBar() {
+    if (cadToolBar!=NULL) {
+        cadToolBar->resetToolBar();
+    }
+}
+
 /**
  * Shows the select toolbar with the given action to launch.
  */

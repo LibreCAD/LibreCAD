@@ -177,6 +177,12 @@
    </item>
    <item row="3" column="0">
     <widget class="QToolButton" name="bHidden">
+     <property name="maximumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="toolTip">
       <string>Arc with Center, Point, Angles</string>
      </property>

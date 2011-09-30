@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -52,19 +52,19 @@ RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
 
 QAction* RS_ActionDrawLineRelAngle::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
     QAction* action = NULL;
-	
-	if (type==RS2::ActionDrawLineRelAngle) {
-		// tr("R&elative angle"),
-		action = new QAction(tr("Relative angle"), NULL); 
-		action->setIcon(QIcon(":/extui/linesrelativeangle.png"));
-    	//action->zetStatusTip(tr("Draw line with relative angle"));
-	}
-	else if (type==RS2::ActionDrawLineOrthogonal) {
-		// tr("&Orthogonal"),
-    	action = new QAction(tr("Orthogonal"), NULL);
-		action->setIcon(QIcon(":/extui/linesorthogonal.png"));
+
+        if (type==RS2::ActionDrawLineRelAngle) {
+                // tr("R&elative angle"),
+                action = new QAction(tr("Relative angle"), NULL);
+                action->setIcon(QIcon(":/extui/linesrelativeangle.png"));
+        //action->zetStatusTip(tr("Draw line with relative angle"));
+        }
+        else if (type==RS2::ActionDrawLineOrthogonal) {
+                // tr("&Orthogonal"),
+        action = new QAction(tr("Orthogonal"), NULL);
+                action->setIcon(QIcon(":/extui/linesorthogonal.png"));
         //action->zetStatusTip(tr("Draw orthogonal line"));
-	}
+        }
     return action;
 }
 
@@ -355,13 +355,9 @@ void RS_ActionDrawLineRelAngle::updateMouseCursor() {
 
 
 void RS_ActionDrawLineRelAngle::updateToolBar() {
-    //not needed any more with new snap
-    return;
     if (RS_DIALOGFACTORY!=NULL) {
-        if (!isFinished()) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        } else {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarLines);
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
         }
     }
 }
