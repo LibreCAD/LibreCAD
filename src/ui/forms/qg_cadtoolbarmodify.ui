@@ -73,6 +73,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifymove.png</normaloff>:/extui/modifymove.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="1" column="1">
@@ -86,6 +92,12 @@
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifyrotate.png</normaloff>:/extui/modifyrotate.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -101,6 +113,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifyscale.png</normaloff>:/extui/modifyscale.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="2" column="1">
@@ -114,6 +132,12 @@
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifymirror.png</normaloff>:/extui/modifymirror.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -129,6 +153,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifymoverotate.png</normaloff>:/extui/modifymoverotate.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="3" column="1">
@@ -142,6 +172,12 @@
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifyrotate2.png</normaloff>:/extui/modifyrotate2.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -157,6 +193,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifytrim.png</normaloff>:/extui/modifytrim.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="4" column="1">
@@ -170,6 +212,12 @@
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifytrim2.png</normaloff>:/extui/modifytrim2.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -185,6 +233,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifytrimamount.png</normaloff>:/extui/modifytrimamount.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="6" column="0">
@@ -198,6 +252,12 @@
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifybevel.png</normaloff>:/extui/modifybevel.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -213,6 +273,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifyround.png</normaloff>:/extui/modifyround.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="7" column="0">
@@ -226,6 +292,12 @@
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifycut.png</normaloff>:/extui/modifycut.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -241,6 +313,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifystretch.png</normaloff>:/extui/modifystretch.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="8" column="0">
@@ -254,6 +332,12 @@
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifyentity.png</normaloff>:/extui/modifyentity.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -269,6 +353,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifyattributes.png</normaloff>:/extui/modifyattributes.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="9" column="0">
@@ -282,6 +372,12 @@
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifydelete.png</normaloff>:/extui/modifydelete.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -297,6 +393,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifyexplode.png</normaloff>:/extui/modifyexplode.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="10" column="0">
@@ -311,6 +413,12 @@
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifyexplodetext.png</normaloff>:/extui/modifyexplodetext.png</iconset>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item row="10" column="1">
@@ -324,6 +432,12 @@
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/modifytext.png</normaloff>:/extui/modifytext.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </item>
