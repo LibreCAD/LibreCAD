@@ -134,7 +134,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
                                         double* dist,
                                         int middlePoints
                                         ) {
-        RS_DEBUG->print("RS_Line::getNearestMiddle(): begin\n");
+//        RS_DEBUG->print("RS_Line::getNearestMiddle(): begin\n");
         RS_Vector dvp(getEndpoint() - getStartpoint());
         double l=dvp.magnitude();
         if( l<= RS_TOLERANCE) {
@@ -155,7 +155,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
         if(dist != NULL) {
             *dist=vp0.distanceTo(coord);
         }
-        RS_DEBUG->print("RS_Line::getNearestMiddle(): end\n");
+//        RS_DEBUG->print("RS_Line::getNearestMiddle(): end\n");
         return vp0;
     }
 
@@ -243,7 +243,7 @@ double RS_Line::getDistanceToPoint(const RS_Vector& coord,
                                    RS2::ResolveLevel /*level*/,
                                    double /*solidDist*/) {
 
-    RS_DEBUG->print("RS_Line::getDistanceToPoint");
+//    RS_DEBUG->print("RS_Line::getDistanceToPoint");
 
     if (entity!=NULL) {
         *entity = this;
@@ -355,61 +355,61 @@ bool RS_Line::hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2) {
 
 
 void RS_Line::move(RS_Vector offset) {
-    RS_DEBUG->print("RS_Line::move1: sp: %f/%f, ep: %f/%f",
-                    data.startpoint.x, data.startpoint.y,
-                    data.endpoint.x, data.endpoint.y);
+//    RS_DEBUG->print("RS_Line::move1: sp: %f/%f, ep: %f/%f",
+//                    data.startpoint.x, data.startpoint.y,
+//                    data.endpoint.x, data.endpoint.y);
 
-    RS_DEBUG->print("RS_Line::move1: offset: %f/%f", offset.x, offset.y);
+//    RS_DEBUG->print("RS_Line::move1: offset: %f/%f", offset.x, offset.y);
 
     data.startpoint.move(offset);
     data.endpoint.move(offset);
     calculateBorders();
-    RS_DEBUG->print("RS_Line::move2: sp: %f/%f, ep: %f/%f",
-                    data.startpoint.x, data.startpoint.y,
-                    data.endpoint.x, data.endpoint.y);
+//    RS_DEBUG->print("RS_Line::move2: sp: %f/%f, ep: %f/%f",
+//                    data.startpoint.x, data.startpoint.y,
+//                    data.endpoint.x, data.endpoint.y);
 }
 
 void RS_Line::rotate(double angle) {
-    RS_DEBUG->print("RS_Line::rotate");
-    RS_DEBUG->print("RS_Line::rotate1: sp: %f/%f, ep: %f/%f",
-                    data.startpoint.x, data.startpoint.y,
-                    data.endpoint.x, data.endpoint.y);
+//    RS_DEBUG->print("RS_Line::rotate");
+//    RS_DEBUG->print("RS_Line::rotate1: sp: %f/%f, ep: %f/%f",
+//                    data.startpoint.x, data.startpoint.y,
+//                    data.endpoint.x, data.endpoint.y);
     data.startpoint.rotate(angle);
     data.endpoint.rotate(angle);
-    RS_DEBUG->print("RS_Line::rotate2: sp: %f/%f, ep: %f/%f",
-                    data.startpoint.x, data.startpoint.y,
-                    data.endpoint.x, data.endpoint.y);
+//    RS_DEBUG->print("RS_Line::rotate2: sp: %f/%f, ep: %f/%f",
+//                    data.startpoint.x, data.startpoint.y,
+//                    data.endpoint.x, data.endpoint.y);
     calculateBorders();
-    RS_DEBUG->print("RS_Line::rotate: OK");
+//    RS_DEBUG->print("RS_Line::rotate: OK");
 }
 
 
 
 void RS_Line::rotate(RS_Vector center, double angle) {
-    RS_DEBUG->print("RS_Line::rotate");
-    RS_DEBUG->print("RS_Line::rotate1: sp: %f/%f, ep: %f/%f",
-                    data.startpoint.x, data.startpoint.y,
-                    data.endpoint.x, data.endpoint.y);
+//    RS_DEBUG->print("RS_Line::rotate");
+//    RS_DEBUG->print("RS_Line::rotate1: sp: %f/%f, ep: %f/%f",
+//                    data.startpoint.x, data.startpoint.y,
+//                    data.endpoint.x, data.endpoint.y);
     data.startpoint.rotate(center, angle);
     data.endpoint.rotate(center, angle);
-    RS_DEBUG->print("RS_Line::rotate2: sp: %f/%f, ep: %f/%f",
-                    data.startpoint.x, data.startpoint.y,
-                    data.endpoint.x, data.endpoint.y);
+//    RS_DEBUG->print("RS_Line::rotate2: sp: %f/%f, ep: %f/%f",
+//                    data.startpoint.x, data.startpoint.y,
+//                    data.endpoint.x, data.endpoint.y);
     calculateBorders();
-    RS_DEBUG->print("RS_Line::rotate: OK");
+//    RS_DEBUG->print("RS_Line::rotate: OK");
 }
 
 
 
 void RS_Line::scale(RS_Vector center, RS_Vector factor) {
-    RS_DEBUG->print("RS_Line::scale1: sp: %f/%f, ep: %f/%f",
-                    data.startpoint.x, data.startpoint.y,
-                    data.endpoint.x, data.endpoint.y);
+//    RS_DEBUG->print("RS_Line::scale1: sp: %f/%f, ep: %f/%f",
+//                    data.startpoint.x, data.startpoint.y,
+//                    data.endpoint.x, data.endpoint.y);
     data.startpoint.scale(center, factor);
     data.endpoint.scale(center, factor);
-    RS_DEBUG->print("RS_Line::scale2: sp: %f/%f, ep: %f/%f",
-                    data.startpoint.x, data.startpoint.y,
-                    data.endpoint.x, data.endpoint.y);
+//    RS_DEBUG->print("RS_Line::scale2: sp: %f/%f, ep: %f/%f",
+//                    data.startpoint.x, data.startpoint.y,
+//                    data.endpoint.x, data.endpoint.y);
     calculateBorders();
 }
 
