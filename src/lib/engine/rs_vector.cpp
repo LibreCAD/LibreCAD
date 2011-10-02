@@ -287,20 +287,20 @@ RS_Vector RS_Vector::move(RS_Vector offset) {
  * Rotates this vector around 0/0 by the given angle.
  */
 RS_Vector RS_Vector::rotate(double ang) {
-    RS_DEBUG->print("RS_Vector::rotate: angle: %f", ang);
+//    RS_DEBUG->print("RS_Vector::rotate: angle: %f", ang);
 
     double r = magnitude();
 
-    RS_DEBUG->print("RS_Vector::rotate: r: %f", r);
+//    RS_DEBUG->print("RS_Vector::rotate: r: %f", r);
 
     double a = angle() + ang;
 
-    RS_DEBUG->print("RS_Vector::rotate: a: %f", a);
+//    RS_DEBUG->print("RS_Vector::rotate: a: %f", a);
 
     x = cos(a) * r;
     y = sin(a) * r;
 
-    RS_DEBUG->print("RS_Vector::rotate: x/y: %f/%f", x, y);
+//    RS_DEBUG->print("RS_Vector::rotate: x/y: %f/%f", x, y);
 
     return *this;
 }
@@ -312,14 +312,14 @@ RS_Vector RS_Vector::rotate(double ang) {
  */
 RS_Vector RS_Vector::rotate(RS_Vector angleVector) {
     if( angleVector.valid) {
-        RS_DEBUG->print("RS_Vector::rotate: rotating Vecotr: %g/%g", x,y);
-        RS_DEBUG->print("RS_Vector::rotate: rotating by Vecotr: %g/%g", angleVector.x,angleVector.y);
+//        RS_DEBUG->print("RS_Vector::rotate: rotating Vecotr: %g/%g", x,y);
+//        RS_DEBUG->print("RS_Vector::rotate: rotating by Vecotr: %g/%g", angleVector.x,angleVector.y);
         x = x * angleVector.x - y * angleVector.y;
         y = x * angleVector.y + y * angleVector.x;
 
-        RS_DEBUG->print("RS_Vector::rotate: rotated x/y: %f/%f", x, y);
+//        RS_DEBUG->print("RS_Vector::rotate: rotated x/y: %f/%f", x, y);
     } else {
-        RS_DEBUG->print("RS_Vector::rotate: rotating by invalid RS_Vector");
+//        RS_DEBUG->print("RS_Vector::rotate: rotating by invalid RS_Vector");
     }
 
     return *this;
