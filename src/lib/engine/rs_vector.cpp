@@ -207,11 +207,14 @@ double RS_Vector::angleBetween(const RS_Vector& v1, const RS_Vector& v2) const {
         return 0.0;
     }
     else {
-        RS_Vector vStart=v1- (*this);
-        RS_Vector vEnd=v2- (*this);
-        if( vStart.magnitude() < RS_TOLERANCE
-                || vEnd.magnitude() < RS_TOLERANCE) return 0.0;
-        return RS_Math::correctAngle(vEnd.angle() - vStart.angle());
+        RS_Vector vStart(v1- (*this));
+        RS_Vector vEnd(v2- (*this));
+        //        if( vStart.magnitude() < RS_TOLERANCE
+        //                || vEnd.magnitude() < RS_TOLERANCE) return 0.0;
+        return RS_Math::correctAngle( atan2( vStart.x*vEnd.y-vStart.y*vEnd.x, vStart.x*vEnd.x+vStart.y*vEnd.y));
+
+        //         std::cout<<"old algorithm:: "<<RS_Math::correctAngle(vEnd.angle() - vStart.angle())<<std::endl;
+//        return RS_Math::correctAngle(vEnd.angle() - vStart.angle());
     }
 }
 
