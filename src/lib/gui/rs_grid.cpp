@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -75,13 +75,14 @@ void RS_Grid::updatePointArray() {
         bool scaleGrid = (bool)RS_SETTINGS->readNumEntry("/ScaleGrid", 1);
         int minGridSpacing = RS_SETTINGS->readNumEntry("/MinGridSpacing", 10);
         RS_SETTINGS->endGroup();
-		
+
         // get grid setting
-		RS_Vector userGrid;
+                RS_Vector userGrid;
         if (graphic!=NULL) {
-            userGrid = graphic->getVariableVector("$GRIDUNIT", 
-				RS_Vector(-1.0, -1.0));
+            userGrid = graphic->getVariableVector("$GRIDUNIT",
+                                RS_Vector(-1.0, -1.0));
         }
+//std::cout<<"Grid userGrid="<<userGrid<<std::endl;
 
         // delete old grid:
         if (pt!=NULL) {
@@ -96,11 +97,11 @@ void RS_Grid::updatePointArray() {
             delete[] metaY;
             metaY = NULL;
         }
-		number = 0;
-		numMetaX = 0;
-		numMetaY = 0;
-		
-    	RS_DEBUG->print("RS_Grid::update: 001");
+                number = 0;
+                numMetaX = 0;
+                numMetaY = 0;
+
+//        RS_DEBUG->print("RS_Grid::update: 001");
 
         // find out unit:
         RS2::Unit unit = RS2::None;
@@ -112,99 +113,109 @@ void RS_Grid::updatePointArray() {
 
         RS_Vector gridWidth;
         RS_Vector metaGridWidth;
-		
-    	RS_DEBUG->print("RS_Grid::update: 002");
+
+//        RS_DEBUG->print("RS_Grid::update: 002");
 
         // init grid spacing:
         // metric grid:
         if (RS_Units::isMetric(unit) || unit==RS2::None ||
                 format==RS2::Decimal || format==RS2::Engineering) {
 
-			if (userGrid.x>0.0) {
-				gridWidth.x = userGrid.x;
-			}
-			else {
-            	gridWidth.x = 0.000001;
-			}
-			
-			if (userGrid.y>0.0) {
-				gridWidth.y = userGrid.y;
-			}
-			else {
-            	gridWidth.y = 0.000001;
-			}
-			
-    		RS_DEBUG->print("RS_Grid::update: 003");
-			
-            // auto scale grid
-            if (scaleGrid) {
-                while (graphicView->toGuiDX(gridWidth.x)<minGridSpacing) {
-                    gridWidth.x*=10;
+                        if (userGrid.x>0.0) {
+                                gridWidth.x = userGrid.x;
+                        }
+                        else {
+                gridWidth.x = 0.000001;
+                        }
+
+                        if (userGrid.y>0.0) {
+                                gridWidth.y = userGrid.y;
+                        }
+                        else {
+                gridWidth.y = 0.000001;
+                        }
+
+//                RS_DEBUG->print("RS_Grid::update: 003");
+
+                // auto scale grid
+                //scale grid by drawing setting as well, bug#3416862
+                if (scaleGrid|| userGrid.x<=1e-6 || userGrid.y<=1e-6) {
+                    if(scaleGrid || userGrid.x<=1e-6) {
+                        while (graphicView->toGuiDX(gridWidth.x)<minGridSpacing) {
+                            gridWidth.x*=10;
+                        }
+                    }
+                    if(scaleGrid || userGrid.y<=1e-6) {
+                        while (graphicView->toGuiDY(gridWidth.y)<minGridSpacing) {
+                            gridWidth.y*=10;
+                        }
+                    }
                 }
-                while (graphicView->toGuiDY(gridWidth.y)<minGridSpacing) {
-                    gridWidth.y*=10;
-                }
-            }
-            metaGridWidth.x = gridWidth.x*10;
+                metaGridWidth.x = gridWidth.x*10;
             metaGridWidth.y = gridWidth.y*10;
-			
-    		RS_DEBUG->print("RS_Grid::update: 004");
+
+//                RS_DEBUG->print("RS_Grid::update: 004");
         }
 
         // imperial grid:
         else {
-		
-    		RS_DEBUG->print("RS_Grid::update: 005");
-			
-			if (userGrid.x>0.0) {
-				gridWidth.x = userGrid.x;
-			}
-			else {
-            	gridWidth.x = 1.0/1024.0;
-			}
-			
-			if (userGrid.y>0.0) {
-				gridWidth.y = userGrid.y;
-			}
-			else {
-            	gridWidth.y = 1.0/1024.0;
-			}
-    		RS_DEBUG->print("RS_Grid::update: 006");
 
-            if (unit==RS2::Inch) {
-    			RS_DEBUG->print("RS_Grid::update: 007");
-				
-                // auto scale grid
-                if (scaleGrid) {
-                    while (graphicView->toGuiDX(gridWidth.x)<minGridSpacing) {
-                        if (RS_Math::round(gridWidth.x)>=36) {
-                            gridWidth.x*=2;
-                        } else if (RS_Math::round(gridWidth.x)>=12) {
-                            gridWidth.x*=3;
-                        } else if (RS_Math::round(gridWidth.x)>=4) {
-                            gridWidth.x*=3;
-                        } else if (RS_Math::round(gridWidth.x)>=1) {
-                            gridWidth.x*=2;
-                        } else {
-                            gridWidth.x*=2;
+//                RS_DEBUG->print("RS_Grid::update: 005");
+
+                        if (userGrid.x>0.0) {
+                                gridWidth.x = userGrid.x;
+                        }
+                        else {
+                gridWidth.x = 1.0/1024.0;
+                        }
+
+                        if (userGrid.y>0.0) {
+                                gridWidth.y = userGrid.y;
+                        }
+                        else {
+                gridWidth.y = 1.0/1024.0;
+                        }
+//                RS_DEBUG->print("RS_Grid::update: 006");
+
+                if (unit==RS2::Inch) {
+//                    RS_DEBUG->print("RS_Grid::update: 007");
+
+                    // auto scale grid
+                    //scale grid by drawing setting as well, bug#3416862
+                    if (scaleGrid|| userGrid.x<=1e-6 || userGrid.y<=1e-6) {
+                        if(scaleGrid || userGrid.x<=1e-6) {
+                            while (graphicView->toGuiDX(gridWidth.x)<minGridSpacing) {
+                                if (RS_Math::round(gridWidth.x)>=36) {
+                                    gridWidth.x*=2;
+                                } else if (RS_Math::round(gridWidth.x)>=12) {
+                                    gridWidth.x*=3;
+                                } else if (RS_Math::round(gridWidth.x)>=4) {
+                                    gridWidth.x*=3;
+                                } else if (RS_Math::round(gridWidth.x)>=1) {
+                                    gridWidth.x*=2;
+                                } else {
+                                    gridWidth.x*=2;
+                                }
+                            }
+                        }
+                        if(scaleGrid || userGrid.y<=1e-6) {
+                            while (graphicView->toGuiDY(gridWidth.y)<minGridSpacing) {
+                                if (RS_Math::round(gridWidth.y)>=36) {
+                                    gridWidth.y*=2;
+                                } else if (RS_Math::round(gridWidth.y)>=12) {
+                                    gridWidth.y*=3;
+                                } else if (RS_Math::round(gridWidth.y)>=4) {
+                                    gridWidth.y*=3;
+                                } else if (RS_Math::round(gridWidth.y)>=1) {
+                                    gridWidth.y*=2;
+                                } else {
+                                    gridWidth.y*=2;
+                                }
+                            }
                         }
                     }
-                    while (graphicView->toGuiDY(gridWidth.y)<minGridSpacing) {
-                        if (RS_Math::round(gridWidth.y)>=36) {
-                            gridWidth.y*=2;
-                        } else if (RS_Math::round(gridWidth.y)>=12) {
-                            gridWidth.y*=3;
-                        } else if (RS_Math::round(gridWidth.y)>=4) {
-                            gridWidth.y*=3;
-                        } else if (RS_Math::round(gridWidth.y)>=1) {
-                            gridWidth.y*=2;
-                        } else {
-                            gridWidth.y*=2;
-                        }
-                    }
-                }
-				
-    			RS_DEBUG->print("RS_Grid::update: 008");
+
+//                    RS_DEBUG->print("RS_Grid::update: 008");
 
                 // metagrid X shows inches..
                 metaGridWidth.x = 1.0;
@@ -229,9 +240,9 @@ void RS_Grid::updatePointArray() {
 
                     }
                 }
-				
-    			RS_DEBUG->print("RS_Grid::update: 009");
-				
+
+//                        RS_DEBUG->print("RS_Grid::update: 009");
+
                 // metagrid Y shows inches..
                 metaGridWidth.y = 1.0;
 
@@ -256,37 +267,39 @@ void RS_Grid::updatePointArray() {
                     }
                 }
 
-    			RS_DEBUG->print("RS_Grid::update: 010");
+//                        RS_DEBUG->print("RS_Grid::update: 010");
             } else {
-			
-    			RS_DEBUG->print("RS_Grid::update: 011");
-				
+
+//                        RS_DEBUG->print("RS_Grid::update: 011");
+
                 if (scaleGrid) {
-                	while (graphicView->toGuiDX(gridWidth.x)<minGridSpacing) {
-                    	gridWidth.x*=2;
-                	}
-                	metaGridWidth.x = -1.0;
-					
-                	while (graphicView->toGuiDY(gridWidth.y)<minGridSpacing) {
-                    	gridWidth.y*=2;
-                	}
-                	metaGridWidth.y = -1.0;
-				}
-    			RS_DEBUG->print("RS_Grid::update: 012");
+                        while (graphicView->toGuiDX(gridWidth.x)<minGridSpacing) {
+                        gridWidth.x*=2;
+                        }
+                        metaGridWidth.x = -1.0;
+
+                        while (graphicView->toGuiDY(gridWidth.y)<minGridSpacing) {
+                        gridWidth.y*=2;
+                        }
+                        metaGridWidth.y = -1.0;
+                                }
+//                        RS_DEBUG->print("RS_Grid::update: 012");
             }
             //gridWidth.y = gridWidth.x;
             //metaGridWidth.y = metaGridWidth.x;
         }
-		
-    	RS_DEBUG->print("RS_Grid::update: 013");
+
+//        RS_DEBUG->print("RS_Grid::update: 013");
 
         // for grid info:
         spacing = gridWidth.x;
         metaSpacing = metaGridWidth.x;
+//std::cout<<"Grid spacing="<<spacing<<std::endl;
+//std::cout<<"Grid metaSpacing="<<metaSpacing<<std::endl;
 
-        if (gridWidth.x>1.0e-6 && gridWidth.y>1.0e-6 && 
-            graphicView->toGuiDX(gridWidth.x)>2 && 
-			graphicView->toGuiDY(gridWidth.y)>2) {
+        if (gridWidth.x>1.0e-6 && gridWidth.y>1.0e-6 &&
+            graphicView->toGuiDX(gridWidth.x)>2 &&
+                        graphicView->toGuiDY(gridWidth.y)>2) {
 
             // find grid boundaries
             double left = (int)(graphicView->toGraphX(0) / gridWidth.x)
@@ -310,8 +323,7 @@ void RS_Grid::updatePointArray() {
             int numberX = (RS_Math::round((right-left) / gridWidth.x) + 1);
             int numberY = (RS_Math::round((top-bottom) / gridWidth.y) + 1);
             number = numberX*numberY;
-
-    		RS_DEBUG->print("RS_Grid::update: 014");
+//                RS_DEBUG->print("RS_Grid::update: 014");
 
             // create grid array:
             if (number>0 && number<1000000) {
@@ -327,18 +339,18 @@ void RS_Grid::updatePointArray() {
                 }
             } else {
                 number = 0;
-				pt = NULL;
+                                pt = NULL;
             }
-			
-    		RS_DEBUG->print("RS_Grid::update: 015");
+
+//                RS_DEBUG->print("RS_Grid::update: 015");
         }
 
 
         // find meta grid boundaries
-        if (metaGridWidth.x>1.0e-6 && metaGridWidth.y>1.0e-6 && 
-			graphicView->toGuiDX(metaGridWidth.x)>2 && 
-			graphicView->toGuiDY(metaGridWidth.y)>2) {
-			
+        if (metaGridWidth.x>1.0e-6 && metaGridWidth.y>1.0e-6 &&
+                        graphicView->toGuiDX(metaGridWidth.x)>2 &&
+                        graphicView->toGuiDY(metaGridWidth.y)>2) {
+
             double mleft = (int)(graphicView->toGraphX(0) /
                                  metaGridWidth.x) * metaGridWidth.x;
             double mright = (int)(graphicView->toGraphX(graphicView->getWidth()) /
@@ -371,12 +383,12 @@ void RS_Grid::updatePointArray() {
                     metaY[i++] = mbottom+y*metaGridWidth.y;
                 }
             }
-			else {
-				numMetaX = 0;
-				metaX = NULL;
-				numMetaY = 0;
-				metaY = NULL;
-			}
+                        else {
+                                numMetaX = 0;
+                                metaX = NULL;
+                                numMetaY = 0;
+                                metaY = NULL;
+                        }
         }
     }
     RS_DEBUG->print("RS_Grid::update: OK");
