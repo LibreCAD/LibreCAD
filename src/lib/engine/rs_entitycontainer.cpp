@@ -498,8 +498,8 @@ void RS_EntityContainer::calculateBorders() {
 
         RS_Layer* layer = e->getLayer();
 
-        RS_DEBUG->print("RS_EntityContainer::calculateBorders: "
-                        "isVisible: %d", (int)e->isVisible());
+//        RS_DEBUG->print("RS_EntityContainer::calculateBorders: "
+//                        "isVisible: %d", (int)e->isVisible());
 
         if (e->isVisible() && (layer==NULL || !layer->isFrozen())) {
             e->calculateBorders();
