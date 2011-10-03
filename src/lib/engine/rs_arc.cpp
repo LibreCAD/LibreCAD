@@ -661,7 +661,7 @@ void RS_Arc::reverse() {
 }
 
 
-void RS_Arc::move(RS_Vector offset) {
+void RS_Arc::move(const RS_Vector& offset) {
     data.center.move(offset);
     calculateEndpoints();
     calculateBorders();
@@ -669,7 +669,7 @@ void RS_Arc::move(RS_Vector offset) {
 
 
 
-void RS_Arc::rotate(RS_Vector center, double angle) {
+void RS_Arc::rotate(const RS_Vector& center, const double& angle) {
     RS_DEBUG->print("RS_Arc::rotate");
     data.center.rotate(center, angle);
     data.angle1 = RS_Math::correctAngle(data.angle1+angle);
@@ -679,9 +679,20 @@ void RS_Arc::rotate(RS_Vector center, double angle) {
     RS_DEBUG->print("RS_Arc::rotate: OK");
 }
 
+void RS_Arc::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    RS_DEBUG->print("RS_Arc::rotate");
+    data.center.rotate(center, angleVector);
+    double angle(angleVector.angle());
+    data.angle1 = RS_Math::correctAngle(data.angle1+angle);
+    data.angle2 = RS_Math::correctAngle(data.angle2+angle);
+    calculateEndpoints();
+    calculateBorders();
+    RS_DEBUG->print("RS_Arc::rotate: OK");
+}
 
 
-void RS_Arc::scale(RS_Vector center, RS_Vector factor) {
+
+void RS_Arc::scale(const RS_Vector& center, const RS_Vector& factor) {
     // negative scaling: mirroring
     if (factor.x<0.0) {
         mirror(data.center, data.center + RS_Vector(0.0, 1.0));
@@ -701,7 +712,7 @@ void RS_Arc::scale(RS_Vector center, RS_Vector factor) {
 
 
 
-void RS_Arc::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_Arc::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     data.center.mirror(axisPoint1, axisPoint2);
     setReversed( ! isReversed() );
     double a= (axisPoint2 - axisPoint1).angle()*2;
@@ -726,9 +737,9 @@ void RS_Arc::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 
 
 
-void RS_Arc::stretch(RS_Vector firstCorner,
-                     RS_Vector secondCorner,
-                     RS_Vector offset) {
+void RS_Arc::stretch(const RS_Vector& firstCorner,
+                     const RS_Vector& secondCorner,
+                     const RS_Vector& offset) {
 
     if (getMin().isInWindow(firstCorner, secondCorner) &&
             getMax().isInWindow(firstCorner, secondCorner)) {
@@ -863,8 +874,17 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 /**
  * @return Middle point of the entity.
  */
-RS_Vector RS_Arc::getMiddlePoint() {
-        return getNearestMiddle(getCenter());
+RS_Vector RS_Arc::getMiddlePoint() const {
+    double a=getAngle1();
+    double b=getAngle2();
+
+    if (isReversed()) {
+        a =b+ RS_Math::correctAngle(a-b)*0.5;
+    }else{
+        a += RS_Math::correctAngle(b-a)*0.5;
+    }
+    RS_Vector ret(a);
+    return getCenter() + ret*getRadius();
 }
 
 
@@ -892,7 +912,7 @@ double RS_Arc::getAngleLength() const {
 /**
  * @return Length of the arc.
  */
-double RS_Arc::getLength() {
+double RS_Arc::getLength() const {
     return getAngleLength()*data.radius;
 }
 

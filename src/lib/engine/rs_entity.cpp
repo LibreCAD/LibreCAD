@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -58,11 +58,11 @@ RS_Entity::RS_Entity(RS_EntityContainer* parent) {
  * Copy constructor.
  */
 /*RS_Entity::RS_Entity(const RS_Entity& e) : RS_Flags(e.getFlags()) {
-	cout << "copy constructor called\n";
-	init();
-	parent = e.parent;
-	layer = e.layer;
-	//setFlag(e.getFlags());
+        cout << "copy constructor called\n";
+        init();
+        parent = e.parent;
+        layer = e.layer;
+        //setFlag(e.getFlags());
     minV = e.minV;
     maxV = e.maxV;
     pen = e.pen;
@@ -86,7 +86,7 @@ void RS_Entity::init() {
     setFlag(RS2::FlagVisible);
     //layer = NULL;
     //pen = RS_Pen();
-	updateEnabled = true;
+        updateEnabled = true;
     setLayerToActive();
     setPenToActive();
     initId();
@@ -101,7 +101,7 @@ void RS_Entity::initId() {
 }
 
 /**
- * Resets the borders of this element. 
+ * Resets the borders of this element.
  */
 void RS_Entity::resetBorders() {
     // TODO: Check that. windoze XP crashes with MAXDOUBLE
@@ -191,7 +191,7 @@ void RS_Entity::setProcessed(bool on) {
 
 
 /**
- * @return True if the processed flag is set. 
+ * @return True if the processed flag is set.
  */
 bool RS_Entity::isProcessed() const {
     return getFlag(RS2::FlagProcessed);
@@ -206,7 +206,7 @@ bool RS_Entity::isProcessed() const {
  *               false: entity has become visible.
  */
 void RS_Entity::undoStateChanged(bool /*undone*/) {
-	setSelected(false);
+        setSelected(false);
     update();
 }
 
@@ -215,12 +215,12 @@ void RS_Entity::undoStateChanged(bool /*undone*/) {
  * @return true if this entity or any parent entities are undone.
  */
 bool RS_Entity::isUndone() const {
-	if (parent==NULL) {
-		return RS_Undoable::isUndone();
-	}
-	else {
-		return RS_Undoable::isUndone() || parent->isUndone();
-	}
+        if (parent==NULL) {
+                return RS_Undoable::isUndone();
+        }
+        else {
+                return RS_Undoable::isUndone() || parent->isUndone();
+        }
 }
 
 
@@ -259,7 +259,7 @@ bool RS_Entity::isPointOnEntity(const RS_Vector& coord,
  * Is this entity visible?
  *
  * @return true Only if the entity and the layer it is on are visible.
- * The Layer might also be NULL. In that case the layer visiblity 
+ * The Layer might also be NULL. In that case the layer visiblity
 * is ignored.
  */
 bool RS_Entity::isVisible() {
@@ -272,10 +272,10 @@ bool RS_Entity::isVisible() {
         return false;
     }
 
-	/*RS_EntityCotnainer* parent = getParent();
-	if (parent!=NULL && parent->isUndone()) {
-		return false;
-	}*/
+        /*RS_EntityCotnainer* parent = getParent();
+        if (parent!=NULL && parent->isUndone()) {
+                return false;
+        }*/
 
     if (getLayer()==NULL) {
         return true;
@@ -335,7 +335,7 @@ bool RS_Entity::isVisible() {
 
 
 /**
- * Sets the highlight status of the entity. Highlighted entities 
+ * Sets the highlight status of the entity. Highlighted entities
  * usually indicate a feedback to a user action.
  */
 void RS_Entity::setHighlighted(bool on) {
@@ -440,7 +440,7 @@ RS_Entity* RS_Entity::getBlockOrInsert() {
 /**
  * @return The parent document in which this entity is stored
  * or the parent's parent document or NULL if none of the parents
- * are stored in a document. Note that a document is usually 
+ * are stored in a document. Note that a document is usually
  * either a Graphic or a Block.
  */
 RS_Document* RS_Entity::getDocument() {
@@ -580,8 +580,8 @@ RS2::Unit RS_Entity::getGraphicUnit() {
 /**
  * Returns a pointer to the layer this entity is on or NULL.
  *
- * @para resolve true: if the layer is ByBlock, the layer of the 
- *               block this entity is in is returned. 
+ * @para resolve true: if the layer is ByBlock, the layer of the
+ *               block this entity is in is returned.
  *               false: the layer of the entity is returned.
  *
  * @return pointer to the layer this entity is on. If the layer
@@ -609,7 +609,7 @@ RS_Layer* RS_Entity::getLayer(bool resolve) const {
 
 
 /**
- * Sets the layer of this entity to the layer with the given name 
+ * Sets the layer of this entity to the layer with the given name
  */
 void RS_Entity::setLayer(const QString& name) {
     RS_Graphic* graphic = getGraphic();
@@ -652,12 +652,12 @@ void RS_Entity::setLayerToActive() {
  * Gets the pen needed to draw this entity.
  * The attributes can also come from the layer this entity is on
  * if the flags are set accordingly.
- * 
- * @param resolve true: Resolve the pen to a drawable pen (e.g. the pen 
+ *
+ * @param resolve true: Resolve the pen to a drawable pen (e.g. the pen
  *         from the layer or parent..)
  *         false: Don't resolve and return a pen or ByLayer, ByBlock, ...
  *
- * @return Pen for this entity. 
+ * @return Pen for this entity.
  */
 RS_Pen RS_Entity::getPen(bool resolve) const {
 
@@ -727,13 +727,13 @@ void RS_Entity::setPenToActive() {
 
 
 /**
- * Implementations must stretch the given range of the entity 
- * by the given offset. This default implementation moves the 
+ * Implementations must stretch the given range of the entity
+ * by the given offset. This default implementation moves the
  * whole entity if it is completely inside the given range.
  */
-void RS_Entity::stretch(RS_Vector firstCorner,
-                        RS_Vector secondCorner,
-                        RS_Vector offset) {
+void RS_Entity::stretch(const RS_Vector& firstCorner,
+                        const RS_Vector& secondCorner,
+                        const RS_Vector& offset) {
 
     //e->calculateBorders();
     if (getMin().isInWindow(firstCorner, secondCorner) &&
@@ -746,7 +746,7 @@ void RS_Entity::stretch(RS_Vector firstCorner,
 
 
 /**
- * @return Factor for scaling the line styles considering the current 
+ * @return Factor for scaling the line styles considering the current
  * paper scaling and the fact that styles are stored in Millimeter.
  */
 double RS_Entity::getStyleFactor(RS_GraphicView* view) {
@@ -783,12 +783,12 @@ double RS_Entity::getStyleFactor(RS_GraphicView* view) {
         }
     }
 
-	//RS_DEBUG->print("stylefactor: %f", styleFactor);
-	//RS_DEBUG->print("viewfactor: %f", view->getFactor().x);
+        //RS_DEBUG->print("stylefactor: %f", styleFactor);
+        //RS_DEBUG->print("viewfactor: %f", view->getFactor().x);
 
-	if (styleFactor*view->getFactor().x<0.2) {
-		styleFactor = -1.0;
-	}
+        if (styleFactor*view->getFactor().x<0.2) {
+                styleFactor = -1.0;
+        }
 
     return styleFactor;
 }
@@ -797,7 +797,7 @@ double RS_Entity::getStyleFactor(RS_GraphicView* view) {
 /**
  * @return User defined variable connected to this entity or NULL if not found.
  */
-QString RS_Entity::getUserDefVar(QString key) {
+QString RS_Entity::getUserDefVar(const QString& key) const {
     return varList.value(key, NULL);
 }
 /*
@@ -867,7 +867,7 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
 
     os << e.pen << "\n";
 
-	os << "variable list:\n";
+        os << "variable list:\n";
     QHash<QString, QString>::const_iterator it = e.varList.constBegin();
     while (it != e.varList.constEnd() ) {
         os << it.key().toLatin1().data() << ": " << it.value().toLatin1().data() << ", ";

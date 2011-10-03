@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -49,8 +49,8 @@ void RS_Point::calculateBorders () {
 
 
 RS_VectorSolutions RS_Point::getRefPoints() {
-	RS_VectorSolutions ret(data.pos);
-	return ret;
+        RS_VectorSolutions ret(data.pos);
+        return ret;
 }
 
 
@@ -120,7 +120,7 @@ RS_Vector RS_Point::getNearestDist(double /*distance*/,
 double RS_Point::getDistanceToPoint(const RS_Vector& coord,
                                     RS_Entity** entity,
                                     RS2::ResolveLevel /*level*/,
-									double /*solidDist*/) {
+                                                                        double /*solidDist*/) {
     if (entity!=NULL) {
         *entity = this;
     }
@@ -130,34 +130,37 @@ double RS_Point::getDistanceToPoint(const RS_Vector& coord,
 
 
 void RS_Point::moveStartpoint(const RS_Vector& pos) {
-	data.pos = pos;
-	calculateBorders();
+        data.pos = pos;
+        calculateBorders();
 }
 
 
 
-void RS_Point::move(RS_Vector offset) {
+void RS_Point::move(const RS_Vector& offset) {
     data.pos.move(offset);
     calculateBorders();
 }
 
 
 
-void RS_Point::rotate(RS_Vector center, double angle) {
+void RS_Point::rotate(const RS_Vector& center, const double& angle) {
     data.pos.rotate(center, angle);
+    calculateBorders();
+}
+void RS_Point::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    data.pos.rotate(center, angleVector);
     calculateBorders();
 }
 
 
-
-void RS_Point::scale(RS_Vector center, RS_Vector factor) {
+void RS_Point::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.pos.scale(center, factor);
     calculateBorders();
 }
 
 
 
-void RS_Point::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_Point::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     data.pos.mirror(axisPoint1, axisPoint2);
     calculateBorders();
 }
