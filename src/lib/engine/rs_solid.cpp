@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -43,7 +43,7 @@ RS_Solid::RS_Solid(RS_EntityContainer* parent,
 
 
 /**
- * @return Corner number 'num'. 
+ * @return Corner number 'num'.
  */
 RS_Vector RS_Solid::getCorner(int num) {
     if (num>=0 && num<4) {
@@ -178,13 +178,13 @@ RS_Vector RS_Solid::getNearestDist(double /*distance*/,
 double RS_Solid::getDistanceToPoint(const RS_Vector& /*coord*/,
                                     RS_Entity** /*entity*/,
                                     RS2::ResolveLevel /*level*/,
-								    double /*solidDist*/) {
+                                                                    double /*solidDist*/) {
     return RS_MAXDOUBLE;
 }
 
 
 
-void RS_Solid::move(RS_Vector offset) {
+void RS_Solid::move(const RS_Vector& offset) {
     for (int i=0; i<4; ++i) {
         data.corner[i].move(offset);
     }
@@ -193,16 +193,25 @@ void RS_Solid::move(RS_Vector offset) {
 
 
 
-void RS_Solid::rotate(RS_Vector center, double angle) {
+//rotation
+void RS_Solid::rotate(const RS_Vector& center, const double& angle) {
+    RS_Vector angleVector(angle);
     for (int i=0; i<4; ++i) {
-        data.corner[i].rotate(center, angle);
+        data.corner[i].rotate(center, angleVector);
+    }
+    calculateBorders();
+}
+
+void RS_Solid::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    for (int i=0; i<4; ++i) {
+        data.corner[i].rotate(center, angleVector);
     }
     calculateBorders();
 }
 
 
 
-void RS_Solid::scale(RS_Vector center, RS_Vector factor) {
+void RS_Solid::scale(const RS_Vector& center, const RS_Vector& factor) {
     for (int i=0; i<4; ++i) {
         data.corner[i].scale(center, factor);
     }
@@ -211,7 +220,7 @@ void RS_Solid::scale(RS_Vector center, RS_Vector factor) {
 
 
 
-void RS_Solid::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_Solid::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     for (int i=0; i<4; ++i) {
         data.corner[i].mirror(axisPoint1, axisPoint2);
     }
@@ -219,8 +228,8 @@ void RS_Solid::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
 }
 
 
-void RS_Solid::draw(RS_Painter* painter, RS_GraphicView* view, 
-	double /*patternOffset*/) {
+void RS_Solid::draw(RS_Painter* painter, RS_GraphicView* view,
+        double /*patternOffset*/) {
 
     if (painter==NULL || view==NULL) {
         return;

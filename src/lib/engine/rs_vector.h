@@ -67,25 +67,27 @@ public:
     RS_Vector lerp(const RS_Vector& v, double t) const;
 
     bool isInWindow(const RS_Vector& firstCorner, const RS_Vector& secondCorner);
+    bool isInWindowOrdered(const RS_Vector& vLow, const RS_Vector& vHigh);
 
-    RS_Vector move(RS_Vector offset);
-    RS_Vector rotate(double ang);
-    RS_Vector rotate(RS_Vector angleVector);
-    RS_Vector rotate(RS_Vector center, double ang);
-    RS_Vector scale(double factor);
-    RS_Vector scale(RS_Vector factor);
-    RS_Vector scale(RS_Vector center, RS_Vector factor);
-    RS_Vector mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
+    RS_Vector move(const RS_Vector& offset);
+    RS_Vector rotate(const double& ang);
+    RS_Vector rotate(const RS_Vector& angleVector);
+    RS_Vector rotate(const RS_Vector& center, const double& ang);
+    RS_Vector rotate(const RS_Vector& center, const RS_Vector& angleVector);
+    RS_Vector scale(const double& factor);
+    RS_Vector scale(const RS_Vector& factor);
+    RS_Vector scale(const RS_Vector& center, const RS_Vector& factor);
+    RS_Vector mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
 
     RS_Vector operator + (const RS_Vector& v) const;
     RS_Vector operator - (const RS_Vector& v) const;
-    RS_Vector operator * (double s) const;
-    RS_Vector operator / (double s) const;
+    RS_Vector operator * (const double& s) const;
+    RS_Vector operator / (const double& s) const;
     RS_Vector operator - () const;
 
     void operator += (const RS_Vector& v);
     void operator -= (const RS_Vector& v);
-    void operator *= (double s);
+    void operator *= (const double& s);
 
     bool operator == (const RS_Vector& v) const;
     bool operator != (const RS_Vector& v) const {
@@ -148,11 +150,12 @@ public:
                          double* dist=NULL, int* index=NULL) const;
     double getClosestDistance(const RS_Vector& coord,
                               int counts);
-    void rotate(double ang);
-    void rotate(RS_Vector angleVector);
-    void rotate(RS_Vector center, double ang);
-    void move(RS_Vector vp);
-    void scale(RS_Vector center, RS_Vector factor);
+    void rotate(const double& ang);
+    void rotate(const RS_Vector& angleVector);
+    void rotate(const RS_Vector& center, const double& ang);
+    void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+    void move(const RS_Vector& vp);
+    void scale(const RS_Vector& center, const RS_Vector& factor);
 
     RS_VectorSolutions operator = (const RS_VectorSolutions& s);
 
