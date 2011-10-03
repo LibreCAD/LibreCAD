@@ -104,25 +104,28 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
     if (entity!=NULL) {
         *entity = this;
     }
-    RS_Vector ret;
 
-    RS_Vector vpl = data.endpoint-data.startpoint;
-    double angle=vpl.angle();
-    double r=vpl.magnitude();
+    RS_Vector direction = data.endpoint-data.startpoint;
     RS_Vector vpc=coord-data.startpoint;
-    vpc.rotate(-angle); // rotate to use the line direction as x-axis
-    if ( (vpc.x >= 0. && vpc.x <= r) || ! onEntity ) { //use the projection
-        ret=RS_Vector(vpc.x,0.);
-        ret.rotate(angle);
-        ret += data.startpoint;
-    } else {// onEntity=true and projection not within range, only have to check the endpoints
-        ret=getNearestEndpoint(coord,dist);
+    double a=RS_Vector::dotP(direction,direction);
+    if( a < RS_TOLERANCE*RS_TOLERANCE) {
+        //line too short
+        vpc=getMiddlePoint();
+    }else{
+        //find projection on line
+        vpc = data.startpoint + direction*RS_Vector::dotP(vpc,direction)/a;
+        if( onEntity &&
+                !( vpc.x>= minV.x && vpc.x <= maxV.x && vpc.y>= minV.y && vpc.y<=maxV.y)
+                ) {
+            //projection point not within range, find the nearest endpoint
+            return getNearestEndpoint(coord,dist);
+        }
     }
 
     if (dist!=NULL) {
-        *dist = ret.distanceTo(coord);
-        }
-    return ret;
+        *dist = vpc.distanceTo(coord);
+    }
+    return vpc;
 }
 
     RS_Vector RS_Line::getMiddlePoint()
@@ -139,11 +142,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
         double l=dvp.magnitude();
         if( l<= RS_TOLERANCE) {
             //line too short
-            RS_Vector vp(getStartpoint() + dvp*0.5);
-            if (dist != NULL) {
-                *dist=vp.distanceTo(coord);
-            }
-            return vp;
+            return getNearestCenter(coord, dist);
         }
         RS_Vector vp0(getNearestPointOnEntity(coord,true,dist));
         int counts=middlePoints+1;
@@ -163,7 +162,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
 RS_Vector RS_Line::getNearestCenter(const RS_Vector& coord,
                                     double* dist) {
 
-    RS_Vector p = (data.startpoint + data.endpoint)/2.0;
+    RS_Vector p = (data.startpoint + data.endpoint)*0.5;
 
     if (dist!=NULL) {
         *dist = p.distanceTo(coord);
