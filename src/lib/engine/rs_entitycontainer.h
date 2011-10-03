@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -56,7 +56,7 @@ public:
     virtual RS2::EntityType rtti() const {
         return RS2::EntityContainer;
     }
-	
+
     void reparent(RS_EntityContainer* parent);
 
     /**
@@ -66,16 +66,16 @@ public:
     virtual bool isContainer() const {
         return true;
     }
-	
+
     /**
      * @return false: because entities made from this class
      *         and subclasses are containers for other entities.
      */
     virtual bool isAtomic() const {
-		return false;
-	}
-	
-	virtual double getLength();
+                return false;
+        }
+
+        virtual double getLength();
 
     virtual void undoStateChanged(bool undone);
     virtual void setVisible(bool v);
@@ -83,8 +83,8 @@ public:
     virtual bool setSelected(bool select=true);
     virtual bool toggleSelected();
 
-    virtual void selectWindow(RS_Vector v1, RS_Vector v2, 
-		bool select=true, bool cross=false);
+    virtual void selectWindow(RS_Vector v1, RS_Vector v2,
+                bool select=true, bool cross=false);
 
     virtual void addEntity(RS_Entity* entity);
     virtual void insertEntity(int index, RS_Entity* entity);
@@ -96,14 +96,14 @@ public:
     virtual RS_Entity* prevEntity(RS2::ResolveLevel level=RS2::ResolveNone);
     virtual RS_Entity* entityAt(int index);
 //RLZ unused	virtual int entityAt();
-	virtual int findEntity(RS_Entity* entity);
+        virtual int findEntity(RS_Entity* entity);
     virtual void clear();
 
     QListIterator<RS_Entity*> createIterator();
 
     //virtual unsigned long int count() {
-	//	return count(false);
-	//}
+        //	return count(false);
+        //}
     virtual bool isEmpty() {
         return count()==0;
     }
@@ -139,7 +139,7 @@ public:
 
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
             bool onEntity = true,
-			double* dist = NULL,
+                        double* dist = NULL,
             RS_Entity** entity=NULL);
 
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
@@ -157,26 +157,27 @@ public:
                                      double* dist = NULL);
     virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
                                      double* dist = NULL);
-			
+
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
-				      double solidDist = RS_MAXDOUBLE);
+                                      double solidDist = RS_MAXDOUBLE);
 
     virtual bool optimizeContours();
-	
-	virtual bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2);
-	
-	virtual void move(RS_Vector offset);
-    virtual void rotate(RS_Vector center, double angle);
-    virtual void scale(RS_Vector center, RS_Vector factor);
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
-	
-    virtual void stretch(RS_Vector firstCorner,
-                         RS_Vector secondCorner,
-                         RS_Vector offset);
-	virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
-	virtual void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset);
+
+        virtual bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2);
+
+        virtual void move(const RS_Vector& offset);
+    virtual void rotate(const RS_Vector& center, const double& angle);
+    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
+    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+
+    virtual void stretch(const RS_Vector& firstCorner,
+                         const RS_Vector& secondCorner,
+                         const RS_Vector& offset);
+        virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
+        virtual void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset);
 
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);
 
@@ -194,7 +195,7 @@ protected:
 
     /**
      * Automatically update the borders of the container when entities
-     * are added or removed. 
+     * are added or removed.
      */
     static bool autoUpdateBorders;
 

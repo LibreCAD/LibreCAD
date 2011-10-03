@@ -77,9 +77,9 @@ public:
 
     virtual RS_Entity* clone();
     /*{
-    	cout << "cloning line\n";
-    	return new RS_Line(*this);
-    	//RS_Entity::copy(src);
+        cout << "cloning line\n";
+        return new RS_Line(*this);
+        //RS_Entity::copy(src);
            //if (src!=NULL && src->rtti()==RS2::EntityLine) {
            //    startpoint = src->getStartpoint();
            //    endpoint = src->getEndpoint();
@@ -153,7 +153,7 @@ public:
         data.endpoint.y = val;
         calculateBorders();
     }
-    virtual bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2);
+    virtual bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2);
 
     /**
      * @return The length of the line.
@@ -199,14 +199,15 @@ public:
                                       RS2::ResolveLevel level=RS2::ResolveNone,
                                       double solidDist = RS_MAXDOUBLE);
 
-    virtual void move(RS_Vector offset);
-    virtual void rotate(double angle);
-    virtual void rotate(RS_Vector center, double angle);
-    virtual void scale(RS_Vector center, RS_Vector factor);
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
-    virtual void stretch(RS_Vector firstCorner,
-                         RS_Vector secondCorner,
-                         RS_Vector offset);
+    virtual void move(const RS_Vector& offset);
+    virtual void rotate(const double& angle);
+    virtual void rotate(const RS_Vector& center, const double& angle);
+    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
+    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+    virtual void stretch(const RS_Vector& firstCorner,
+                         const RS_Vector& secondCorner,
+                         const RS_Vector& offset);
     virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);

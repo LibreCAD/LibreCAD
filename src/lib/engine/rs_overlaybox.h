@@ -92,10 +92,11 @@ public:
     }
 	
 	/** We should make a seperate drawing meganism for overlays and not use entities */
-	virtual void move(RS_Vector offset){}
-    virtual void rotate(RS_Vector center, double angle){}
-    virtual void scale(RS_Vector center, RS_Vector factor){}
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2){}
+        virtual void move(const RS_Vector& offset){}
+    virtual void rotate(const RS_Vector& center, const double& angle){}
+    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector){}
+    virtual void scale(const RS_Vector& center, const RS_Vector& factor){}
+    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2){}
 	virtual void calculateBorders(){}
 	virtual RS_Vector getNearestEndpoint(const RS_Vector&, double*){return RS_Vector();}
 	virtual RS_Vector getNearestPointOnEntity(const RS_Vector&, bool, double*, RS_Entity**){return RS_Vector();}

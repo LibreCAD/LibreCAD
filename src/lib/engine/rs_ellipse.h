@@ -251,13 +251,14 @@ public:
     bool switchMajorMinor(void); //switch major minor axes to keep major the longer ellipse radius
     virtual void correctAngles();//make sure angleLength() is not more than 2*M_PI
     virtual bool isPointOnEntity(const RS_Vector& coord,
-                                 double tolerance=RS_TOLERANCE);
+                                 double tolerance=RS_TOLERANCE) const;
 
-    virtual void move(RS_Vector offset);
-    virtual void rotate(double angle);
-    virtual void rotate(RS_Vector center, double angle);
-    virtual void scale(RS_Vector center, RS_Vector factor);
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
+    virtual void move(const RS_Vector& offset);
+    virtual void rotate(const double& angle);
+    virtual void rotate(const RS_Vector& center, const double& angle);
+    virtual void rotate(const RS_Vector& center, const RS_Vector& angle);
+    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
+    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
     virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);

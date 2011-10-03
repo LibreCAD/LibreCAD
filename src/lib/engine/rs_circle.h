@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -101,38 +101,38 @@ public:
     RS_CircleData getData() {
         return data;
     }
-    
-	virtual RS_VectorSolutions getRefPoints();
 
-	virtual RS_Vector getStartpoint() const {
-		return data.center + RS_Vector(data.radius, 0.0);
-	}
-	virtual RS_Vector getEndpoint() const {
-		return data.center + RS_Vector(data.radius, 0.0);
-	}
-	/** 
-	 * @return Direction 1. The angle at which the arc starts at 
-	 * the startpoint. 
-	 */
-	double getDirection1() const {
-		return M_PI/2.0;
-	}
-	/** 
-	 * @return Direction 2. The angle at which the arc starts at 
-	 * the endpoint.
-	 */
-	double getDirection2() const {
-		return M_PI/2.0*3.0;
-	}
+        virtual RS_VectorSolutions getRefPoints();
+
+        virtual RS_Vector getStartpoint() const {
+                return data.center + RS_Vector(data.radius, 0.0);
+        }
+        virtual RS_Vector getEndpoint() const {
+                return data.center + RS_Vector(data.radius, 0.0);
+        }
+        /**
+         * @return Direction 1. The angle at which the arc starts at
+         * the startpoint.
+         */
+        double getDirection1() const {
+                return M_PI/2.0;
+        }
+        /**
+         * @return Direction 2. The angle at which the arc starts at
+         * the endpoint.
+         */
+        double getDirection2() const {
+                return M_PI/2.0*3.0;
+        }
 
     /** @return The center point (x) of this arc */
     RS_Vector getCenter() {
         return data.center;
     }
     /** Sets new center. */
-	void setCenter(const RS_Vector& c) {
-		data.center = c;
-	}
+        void setCenter(const RS_Vector& c) {
+                data.center = c;
+        }
     /** @return The radius of this arc */
     double getRadius() {
         return data.radius;
@@ -168,16 +168,17 @@ public:
     virtual RS_Vector getNearestOrthTan(const RS_Vector& coord,
                     const RS_Line& normal,
                     bool onEntity = false);
-    
+
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
-									  double solidDist = RS_MAXDOUBLE);
+                                                                          double solidDist = RS_MAXDOUBLE);
 
-    virtual void move(RS_Vector offset);
-    virtual void rotate(RS_Vector center, double angle);
-    virtual void scale(RS_Vector center, RS_Vector factor);
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
+    virtual void move(const RS_Vector& offset);
+    virtual void rotate(const RS_Vector& center, const double& angle);
+    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
+    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
 virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);

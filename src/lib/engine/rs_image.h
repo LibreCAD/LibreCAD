@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -42,24 +42,24 @@ public:
     RS_ImageData() {}
 
     RS_ImageData(int handle,
-				const RS_Vector& insertionPoint,
+                                const RS_Vector& insertionPoint,
                 const RS_Vector& uVector,
-				const RS_Vector& vVector,
-				const RS_Vector& size,
+                                const RS_Vector& vVector,
+                                const RS_Vector& size,
                                 const QString& file,
-				int brightness,
-				int contrast,
-				int fade) {
+                                int brightness,
+                                int contrast,
+                                int fade) {
 
-		this->handle = handle;
+                this->handle = handle;
         this->insertionPoint = insertionPoint;
         this->uVector = uVector;
         this->vVector = vVector;
         this->size = size;
         this->file = file;
-		this->brightness = brightness;
-		this->contrast = contrast;
-		this->fade = fade;
+                this->brightness = brightness;
+                this->contrast = contrast;
+                this->fade = fade;
     }
 
     friend std::ostream& operator << (std::ostream& os, const RS_ImageData& ld) {
@@ -68,24 +68,24 @@ public:
     }
 
 public:
-	/** Handle of image definition. */
-	int handle;
-	/** Insertion point. */
+        /** Handle of image definition. */
+        int handle;
+        /** Insertion point. */
     RS_Vector insertionPoint;
-	/** u vector. Points along visual bottom of image. */
+        /** u vector. Points along visual bottom of image. */
     RS_Vector uVector;
-	/** v vector. Points along visual left of image. */
+        /** v vector. Points along visual left of image. */
     RS_Vector vVector;
-	/** Image size in pixel. */
-	RS_Vector size;
-	/** Path to image file. */
+        /** Image size in pixel. */
+        RS_Vector size;
+        /** Path to image file. */
         QString file;
-	/** Brightness (0..100, default: 50). */
-	int brightness;
-	/** Contrast (0..100, default: 50). */
-	int contrast;
-	/** Fade (0..100, default: 0). */
-	int fade;
+        /** Brightness (0..100, default: 50). */
+        int brightness;
+        /** Contrast (0..100, default: 50). */
+        int contrast;
+        /** Fade (0..100, default: 0). */
+        int fade;
 };
 
 
@@ -109,7 +109,7 @@ public:
         return RS2::EntityImage;
     }
 
-	virtual void update();
+        virtual void update();
 
     /** @return Copy of data that defines the image. */
     RS_ImageData getData() const {
@@ -126,81 +126,81 @@ public:
         calculateBorders();
     }
 
-	/** @return File name of the image. */
+        /** @return File name of the image. */
         QString getFile() const {
-		return data.file;
-	}
-	
-	/** Sets the file name of the image.  */
+                return data.file;
+        }
+
+        /** Sets the file name of the image.  */
         void setFile(const QString& file) {
-		data.file = file;
-	}
+                data.file = file;
+        }
 
-	/** @return u Vector. Points along bottom, 1 pixel long. */
-	RS_Vector getUVector() const {
-		return data.uVector;
-	}
-	/** @return v Vector. Points along left, 1 pixel long. */
-	RS_Vector getVVector() const {
-		return data.vVector;
-	}
-	/** @return Width of image in pixels. */
-	int getWidth() const {
-		return (int)data.size.x;
-	}
-	/** @return Height of image in pixels. */
-	int getHeight() const {
-		return (int)data.size.y;
-	}
-	/** @return Brightness. */
-	int getBrightness() const {
-		return data.brightness;
-	}
-	/** @return Contrast. */
-	int getContrast() const {
-		return data.contrast;
-	}
-	/** @return Fade. */
-	int getFade() const {
-		return data.fade;
-	}
-	/** @return Image definition handle. */
-	int getHandle() const {
-		return data.handle;
-	}
-	/** Sets the image definition handle. */
-	void setHandle(int h) {
-		data.handle = h;
-	}
-	
+        /** @return u Vector. Points along bottom, 1 pixel long. */
+        RS_Vector getUVector() const {
+                return data.uVector;
+        }
+        /** @return v Vector. Points along left, 1 pixel long. */
+        RS_Vector getVVector() const {
+                return data.vVector;
+        }
+        /** @return Width of image in pixels. */
+        int getWidth() const {
+                return (int)data.size.x;
+        }
+        /** @return Height of image in pixels. */
+        int getHeight() const {
+                return (int)data.size.y;
+        }
+        /** @return Brightness. */
+        int getBrightness() const {
+                return data.brightness;
+        }
+        /** @return Contrast. */
+        int getContrast() const {
+                return data.contrast;
+        }
+        /** @return Fade. */
+        int getFade() const {
+                return data.fade;
+        }
+        /** @return Image definition handle. */
+        int getHandle() const {
+                return data.handle;
+        }
+        /** Sets the image definition handle. */
+        void setHandle(int h) {
+                data.handle = h;
+        }
 
-	/** @return The four corners. **/
-	RS_VectorSolutions getCorners() {
-		RS_VectorSolutions sol(4);
 
-		sol.set(0, data.insertionPoint);
-		sol.set(1, 
-			data.insertionPoint + data.uVector*RS_Math::round(data.size.x));
-		sol.set(3, 
-			data.insertionPoint + data.vVector*RS_Math::round(data.size.y));
-		sol.set(2, sol.get(3) + data.uVector*RS_Math::round(data.size.x));
+        /** @return The four corners. **/
+        RS_VectorSolutions getCorners() {
+                RS_VectorSolutions sol(4);
 
-		return sol;
-	}
+                sol.set(0, data.insertionPoint);
+                sol.set(1,
+                        data.insertionPoint + data.uVector*RS_Math::round(data.size.x));
+                sol.set(3,
+                        data.insertionPoint + data.vVector*RS_Math::round(data.size.y));
+                sol.set(2, sol.get(3) + data.uVector*RS_Math::round(data.size.x));
 
-	/**
-	 * @return image with in graphic units.
-	 */
-	double getImageWidth() {
-		return data.size.x * data.uVector.magnitude();
-	}
-	
-	/**
-	 * @return image height in graphic units.
-	 */
-	double getImageHeight() {
-		return data.size.y * data.vVector.magnitude();
-	}
+                return sol;
+        }
+
+        /**
+         * @return image with in graphic units.
+         */
+        double getImageWidth() {
+                return data.size.x * data.uVector.magnitude();
+        }
+
+        /**
+         * @return image height in graphic units.
+         */
+        double getImageHeight() {
+                return data.size.y * data.vVector.magnitude();
+        }
 
 
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
@@ -218,16 +218,17 @@ public:
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
-									  double solidDist = RS_MAXDOUBLE);
+                                                                          double solidDist = RS_MAXDOUBLE);
 
-	virtual double getLength() {
-		return -1.0;
-	}
+        virtual double getLength() {
+                return -1.0;
+        }
 
-    virtual void move(RS_Vector offset);
-    virtual void rotate(RS_Vector center, double angle);
-    virtual void scale(RS_Vector center, RS_Vector factor);
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
+    virtual void move(const RS_Vector& offset);
+    virtual void rotate(const RS_Vector& center, const double& angle);
+    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
+    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
     /*virtual void stretch(RS_Vector firstCorner,
                          RS_Vector secondCorner,
                          RS_Vector offset);*/
@@ -242,8 +243,8 @@ protected:
     RS_ImageData data;
         QImage img;
         //QImage** img;
-	//int nx;
-	//int ny;
+        //int nx;
+        //int ny;
 };
 
 #endif
