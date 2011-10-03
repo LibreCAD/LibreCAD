@@ -369,7 +369,7 @@ RS_Vector RS_Vector::scale(RS_Vector center, RS_Vector factor) {
 
 
 /**
- * Mirrors this vector at the given axis.
+ * Mirrors this vector at the given axis, defined by two points on axis.
  */
 RS_Vector RS_Vector::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
     /*
@@ -380,19 +380,14 @@ RS_Vector RS_Vector::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
     xp = xp - (*this);
     (*this) += (xp*2);
     */
-
-    double phi1 = axisPoint1.angleTo(*this);
-    double phi2 = axisPoint1.angleTo(axisPoint2) - phi1;
-    double r1 = axisPoint1.distanceTo(*this);
-    double r2 = axisPoint2.distanceTo(*this);
-
-    if (r1<1.0e-6 || r2<1.0e-6) {
-        // point touches one axis point
+    RS_Vector direction(axisPoint2-axisPoint1);
+    double a= dotP(direction,direction);
+    RS_Vector ret(false);
+    if(a<RS_TOLERANCE*RS_TOLERANCE) {
+        return ret;
     }
-    else {
-        setPolar(r1, phi1 + 2*phi2);
-        (*this) += axisPoint1;
-    }
+    ret= axisPoint1 + direction* dotP(*this - axisPoint1,direction)/a; //projection point
+    *this = ret + ret - *this;
 
     return *this;
 }
