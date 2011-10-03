@@ -54,6 +54,11 @@ public:
         return fileLicense;
     }
 
+    /** @return the creation date of this font. */
+    QString getFileCreate() const {
+        return fileCreate;
+    }
+
     /** @return the encoding of this font. */
     QString getEncoding() const {
         return encoding;
@@ -117,6 +122,9 @@ private:
 	
     //! Font file license
     QString fileLicense;
+
+    //! Font file license
+    QString fileCreate;
 
     //! Font encoding (see docu for QTextCodec)
     QString encoding;
