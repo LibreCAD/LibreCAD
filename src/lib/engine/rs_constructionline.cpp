@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -101,10 +101,10 @@ RS_Vector RS_ConstructionLine::getNearestPointOnEntity(const RS_Vector& coord,
     RS_Vector ea = data.point1-data.point2;
     RS_Vector ap = coord-data.point1;
     RS_Vector ep = coord-data.point2;
-	
-	if (ae.magnitude()<1.0e-6 || ea.magnitude()<1.0e-6) {
-		return RS_Vector(false);
-	}
+
+        if (ae.magnitude()<1.0e-6 || ea.magnitude()<1.0e-6) {
+                return RS_Vector(false);
+        }
 
     // Orthogonal projection from both sides:
     RS_Vector ba = ae * RS_Vector::dotP(ae, ap)
@@ -170,7 +170,7 @@ double RS_ConstructionLine::getDistanceToPoint(const RS_Vector& coord,
 
 
 
-void RS_ConstructionLine::move(RS_Vector offset) {
+void RS_ConstructionLine::move(const RS_Vector& offset) {
     data.point1.move(offset);
     data.point2.move(offset);
     //calculateBorders();
@@ -178,15 +178,20 @@ void RS_ConstructionLine::move(RS_Vector offset) {
 
 
 
-void RS_ConstructionLine::rotate(RS_Vector center, double angle) {
-    data.point1.rotate(center, angle);
-    data.point2.rotate(center, angle);
+void RS_ConstructionLine::rotate(const RS_Vector& center, const double& angle) {
+    RS_Vector angleVector(angle);
+    data.point1.rotate(center, angleVector);
+    data.point2.rotate(center, angleVector);
     //calculateBorders();
 }
 
+void RS_ConstructionLine::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    data.point1.rotate(center, angleVector);
+    data.point2.rotate(center, angleVector);
+    //calculateBorders();
+}
 
-
-void RS_ConstructionLine::scale(RS_Vector center, RS_Vector factor) {
+void RS_ConstructionLine::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.point1.scale(center, factor);
     data.point2.scale(center, factor);
     //calculateBorders();
@@ -194,9 +199,9 @@ void RS_ConstructionLine::scale(RS_Vector center, RS_Vector factor) {
 
 
 
-void RS_ConstructionLine::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
-	data.point1.mirror(axisPoint1, axisPoint2);
-	data.point2.mirror(axisPoint1, axisPoint2);
+void RS_ConstructionLine::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
+        data.point1.mirror(axisPoint1, axisPoint2);
+        data.point2.mirror(axisPoint1, axisPoint2);
 }
 
 

@@ -312,16 +312,36 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
  * @retval false otherwise
  */
 bool RS_Ellipse::isPointOnEntity(const RS_Vector& coord,
-                                 double tolerance) {
-    if ( getCenter().distanceTo(coord) < tolerance ) {
-            if (getMajorRadius() < tolerance || getMinorRadius() < tolerance ) {
-                    return true;
-            } else {
-                    return false;
-            }
+                                 double tolerance) const {
+    double t=fabs(tolerance);
+    double a=getMajorRadius();
+    double b=a*getRatio();
+
+    RS_Vector vp(coord - getCenter());
+    vp.rotate(-getAngle());
+    if ( a<t ) {
+        //radius treated as zero
+        if(fabs(vp.x)<t && fabs(vp.y) < b) return true;
+        return false;
     }
-    double dist = getDistanceToPoint(coord, NULL, RS2::ResolveNone);
-    return (dist<=tolerance);
+    if ( b<t ) {
+        //radius treated as zero
+        if (fabs(vp.y)<t && fabs(vp.x) < a) return true;
+        return false;
+    }
+    vp.scale(1./a,1./b);
+    if (fabs(vp.squared()-1.) < t) return true;
+    return false;
+
+//    if ( getCenter().distanceTo(coord) < tolerance ) {
+//            if (getMajorRadius() < tolerance || getMinorRadius() < tolerance ) {
+//                    return true;
+//            } else {
+//                    return false;
+//            }
+//    }
+//    double dist = getDistanceToPoint(coord, NULL, RS2::ResolveNone);
+//    return (dist<=tolerance);
 }
 
 
@@ -472,24 +492,33 @@ double RS_Ellipse::getDistanceToPoint(const RS_Vector& coord,
 
 
 
-void RS_Ellipse::move(RS_Vector offset) {
+void RS_Ellipse::move(const RS_Vector& offset) {
     data.center.move(offset);
     //calculateEndpoints();
-    calculateBorders();
+    minV.move(offset);
+    maxV.move(offset);
 }
 
 
 
-void RS_Ellipse::rotate(RS_Vector center, double angle) {
-    data.center.rotate(center, angle);
-    data.majorP.rotate(angle);
+void RS_Ellipse::rotate(const RS_Vector& center, const double& angle) {
+    RS_Vector angleVector(angle);
+    data.center.rotate(center, angleVector);
+    data.majorP.rotate(angleVector);
+    //calculateEndpoints();
+    calculateBorders();
+}
+void RS_Ellipse::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    data.center.rotate(center, angleVector);
+    data.majorP.rotate(angleVector);
     //calculateEndpoints();
     calculateBorders();
 }
 
-void RS_Ellipse::rotate( double angle) {
-    data.center.rotate(angle);
-    data.majorP.rotate(angle);
+void RS_Ellipse::rotate( const double& angle) {
+    RS_Vector angleVector(angle);
+    data.center.rotate(angleVector);
+    data.majorP.rotate(angleVector);
     //calculateEndpoints();
     calculateBorders();
 }
@@ -652,7 +681,7 @@ double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) const {
  * y *= ky
  * find the maximum and minimum of x^2 + y^2,
  */
-void RS_Ellipse::scale(RS_Vector center, RS_Vector factor) {
+void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.center.scale(center, factor);
     RS_Vector vpStart=getStartpoint().scale(getCenter(),factor);
     RS_Vector vpEnd=getEndpoint().scale(getCenter(),factor);;
@@ -686,7 +715,7 @@ void RS_Ellipse::scale(RS_Vector center, RS_Vector factor) {
 /**
  * mirror by the axis defined by axisPoint1 and axisPoint2
  */
-void RS_Ellipse::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_Ellipse::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_Vector center=getCenter();
     RS_Vector mp = center + getMajorP();
     RS_Vector startpoint = getStartpoint();

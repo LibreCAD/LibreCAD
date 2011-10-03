@@ -212,9 +212,9 @@ public:
 
     virtual void reverse();
 
-    virtual RS_Vector getMiddlePoint() ;
+    virtual RS_Vector getMiddlePoint() const;
     double getAngleLength() const;
-    virtual double getLength();
+    virtual double getLength() const;
     double getBulge() const;
 
     bool createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
@@ -244,19 +244,20 @@ public:
     virtual RS_Vector getNearestOrthTan(const RS_Vector& coord,
                     const RS_Line& normal,
                     bool onEntity = false);
-    
+
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
                                       double solidDist = RS_MAXDOUBLE);
-    virtual void move(RS_Vector offset);
-    virtual void rotate(RS_Vector center, double angle);
-    virtual void scale(RS_Vector center, RS_Vector factor);
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
+    virtual void move(const RS_Vector& offset);
+    virtual void rotate(const RS_Vector& center, const double& angle);
+    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
+    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
     virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
-    virtual void stretch(RS_Vector firstCorner,
-                         RS_Vector secondCorner,
-                         RS_Vector offset);
+    virtual void stretch(const RS_Vector& firstCorner,
+                         const RS_Vector& secondCorner,
+                         const RS_Vector& offset);
 
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);
 
