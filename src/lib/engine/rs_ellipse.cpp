@@ -422,7 +422,7 @@ RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
                 return RS_Vector(false);
         }
         RS_Vector direction=normal.getEndpoint() - normal.getStartpoint();
-        if (RS_Vector::dotP(direction,direction)< RS_TOLERANCE*RS_TOLERANCE) {
+        if (direction.squared()< RS_TOLERANCE*RS_TOLERANCE) {
                 //undefined direction
                 return RS_Vector(false);
         }

@@ -125,8 +125,8 @@ bool RS_Circle::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
                              const RS_Vector& p3) {
         RS_Vector vra=p2 - p1;
         RS_Vector vrb=p3 - p1;
-        double ra2=RS_Vector::dotP(vra,vra)*0.5;
-        double rb2=RS_Vector::dotP(vrb,vrb)*0.5;
+        double ra2=vra.squared()*0.5;
+        double rb2=vrb.squared()*0.5;
         double crossp=vra.x * vrb.y - vra.y * vrb.x;
         if (fabs(crossp)< RS_TOLERANCE*RS_TOLERANCE) {
                 RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
