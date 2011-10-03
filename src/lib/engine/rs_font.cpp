@@ -298,6 +298,8 @@ void RS_Font::readLFF(QString path) {
             } else if (identifier.toLower()=="encoding") {
                                 ts.setCodec(QTextCodec::codecForName(value.toLatin1()));
                                 encoding = value;
+            } else if (identifier.toLower()=="created") {
+                fileCreate = value;
             }
         }
 
