@@ -237,7 +237,20 @@ double RS_Vector::magnitude() const {
     return ret;
 }
 
-
+/**
+  * @return square of vector length
+  */
+double RS_Vector::squared() const {
+    // Note that the z coordinate is also needed for 2d
+    //   (due to definition of crossP())
+    if (valid) {
+#ifdef  RS_VECTOR2D
+        return x*x + y*y;
+#else
+        return x*x + y*y + z*z;
+#endif
+    }
+}
 /**
  *
  */
