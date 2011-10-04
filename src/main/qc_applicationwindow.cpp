@@ -1901,8 +1901,12 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(int id) {
 
     QWidget* w = workspace->windowList().at(id);
     if (w!=NULL) {
-        w->showNormal();
+        // to avoid showing by tile(), bug#3418133
+        // todo, is showNormal() indeed the proper way?
+//        w->showNormal();
+        w->showMaximized();
         w->setFocus();
+        workspace->setActiveWindow(w);
         // RVT_PORT need to reset/cleanup current menu here to avoid menu clutter
     }
 }
