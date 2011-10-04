@@ -75,25 +75,21 @@ RS_VectorSolutions RS_Line::getRefPoints() {
 
 RS_Vector RS_Line::getNearestEndpoint(const RS_Vector& coord,
                                       double* dist) {
-    double dist1, dist2;
-    RS_Vector* nearerPoint;
-
-    dist1 = data.startpoint.distanceTo(coord);
-    dist2 = data.endpoint.distanceTo(coord);
+    double dist1((data.startpoint-coord).squared());
+    double dist2((data.endpoint-coord).squared());
 
     if (dist2<dist1) {
         if (dist!=NULL) {
-            *dist = dist2;
+            *dist = sqrt(dist2);
         }
-        nearerPoint = &data.endpoint;
+        return data.endpoint;
     } else {
         if (dist!=NULL) {
-            *dist = dist1;
+            *dist = sqrt(dist1);
         }
-        nearerPoint = &data.startpoint;
+        return data.startpoint;
     }
 
-    return *nearerPoint;
 }
 
 
@@ -176,10 +172,8 @@ RS_Vector RS_Line::getNearestDist(double distance,
                                   const RS_Vector& coord,
                                   double* dist) {
 
-    double a1 = getAngle1();
-
     RS_Vector dv;
-    dv.setPolar(distance, a1);
+    dv.setPolar(distance, getAngle1());
 
     RS_Vector ret;
     //if(coord.distanceTo(getStartpoint()) < coord.distanceTo(getEndpoint())) {

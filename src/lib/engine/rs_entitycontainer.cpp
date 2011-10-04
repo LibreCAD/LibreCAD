@@ -1466,12 +1466,15 @@ bool RS_EntityContainer::hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2) {
 
 void RS_EntityContainer::move(const RS_Vector& offset) {
     for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-            e!=NULL;
-            e=nextEntity(RS2::ResolveNone)) {
+         e!=NULL;
+         e=nextEntity(RS2::ResolveNone)) {
         e->move(offset);
+        if (autoUpdateBorders) {
+            e->moveBorders(offset);
+        }
     }
     if (autoUpdateBorders) {
-        calculateBorders();
+        moveBorders(offset);
     }
 }
 
