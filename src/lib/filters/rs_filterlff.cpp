@@ -27,10 +27,9 @@
 
 #include "rs_filterlff.h"
 
-/*#include <iostream>
-#include <fstream>*/
 #include <QTextStream>
 #include <QStringList>
+#include <QDate>
 
 #include "rs_font.h"
 #include "rs_utility.h"
@@ -85,6 +84,7 @@ bool RS_FilterLFF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
     g.addVariable("LineSpacingFactor", font.getLineSpacingFactor(), 0);
     g.addVariable("Authors", font.getAuthors().join(","), 0);
     g.addVariable("License", font.getFileLicense(), 0);
+    g.addVariable("Created", font.getFileCreate(), 0);
     if (!font.getEncoding().isEmpty()) {
         g.addVariable("Encoding", font.getEncoding(), 0);
     }
@@ -112,7 +112,16 @@ bool RS_FilterLFF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 	return true;
 }
 
-
+QString clearZeros(double num, int prec){
+    QString str = QString::number(num, 'f', prec);
+    int i = str.length()- 1;
+    while (str.at(i) == '0' && i>1) {
+        --i;
+    }
+    if (str.at(i) != '.')
+            i++;
+    return str.left(i);
+}
 
 /**
  * Implementation of the method used for RS_Export to communicate
@@ -157,6 +166,10 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                   g.getVariableDouble("WordSpacing", 6.75));
         ts << QString("# LineSpacingFactor: %1\n").arg(
                   g.getVariableDouble("LineSpacingFactor", 1.0));
+        QString dateline = QDate::currentDate().toString ("yyyy-MM-dd");
+        ts << QString("# Created:           %1\n").arg(
+                  g.getVariableString("Created", dateline));
+        ts << QString("# Last modified:     %1\n").arg(dateline);
 
         QString sa = g.getVariableString("Authors", "");
         RS_DEBUG->print("authors: %s", sa.toLocal8Bit().data());
@@ -199,19 +212,19 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                         // lines:
                         if (e->rtti()==RS2::EntityLine) {
                             RS_Line* l = (RS_Line*)e;
-                            ts << QString("%1,%2;%3,%4\n").arg(
-                                     l->getStartpoint().x).arg(
-                                     l->getStartpoint().y).arg(
-                                     l->getEndpoint().x).arg(l->getEndpoint().y);
+                            ts << clearZeros(l->getStartpoint().x, 5) << ',';
+                            ts << clearZeros(l->getStartpoint().y, 5) << ';';
+                            ts << clearZeros(l->getEndpoint().x, 5) << ',';
+                            ts << clearZeros(l->getEndpoint().y, 5) << '\n';
                         }
                         // arcs:
                         else if (e->rtti()==RS2::EntityArc) {
                             RS_Arc* a = (RS_Arc*)e;
-                            ts << QString("%1,%2;%3,%4,A%5\n").arg(
-                                     a->getStartpoint().x).arg(
-                                     a->getStartpoint().y).arg(
-                                     a->getEndpoint().x).arg(
-                                     a->getEndpoint().y).arg(a->getBulge());
+                            ts << clearZeros(a->getStartpoint().x, 5) << ',';
+                            ts << clearZeros(a->getStartpoint().y, 5) << ';';
+                            ts << clearZeros(a->getEndpoint().x, 5) << ',';
+                            ts << clearZeros(a->getEndpoint().y, 5) << ",A";
+                            ts << clearZeros(a->getBulge(), 5) << '\n';
                         }
                         else if (e->rtti()==RS2::EntityBlock) {
                             RS_Block* b = (RS_Block*)e;
@@ -224,20 +237,20 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                         }
                         else if (e->rtti()==RS2::EntityPolyline) {
                             RS_Polyline* p = (RS_Polyline*)e;
-                            ts << QString::number(p->getStartpoint().x) <<',';
-                            ts << QString::number(p->getStartpoint().y);
+                            ts << clearZeros(p->getStartpoint().x, 5) << ',';
+                            ts << clearZeros(p->getStartpoint().y, 5);
                             for (RS_Entity* e2=p->firstEntity(RS2::ResolveNone);
                                  e2!=NULL;
                                  e2=p->nextEntity(RS2::ResolveNone)) {
                                 if (e2->rtti()==RS2::EntityLine){
                                     RS_Line* l = (RS_Line*)e2;
-                                    ts << ';' << QString::number(l->getEndpoint().x) <<',';
-                                    ts << QString::number(l->getEndpoint().y);
+                                    ts << ';' << clearZeros(l->getEndpoint().x, 5) << ',';
+                                    ts << clearZeros(l->getEndpoint().y, 5);
                                 } else if (e2->rtti()==RS2::EntityArc){
                                     RS_Arc* a = (RS_Arc*)e2;
-                                    ts << ';' << QString::number(a->getEndpoint().x) <<',';
-                                    ts << QString::number(a->getEndpoint().y) <<',';
-                                    ts << 'A' << QString::number(a->getBulge());
+                                    ts << ';' << clearZeros(a->getEndpoint().x, 5) << ',';
+                                    ts << clearZeros(a->getEndpoint().y, 5) <<',';
+                                    ts << clearZeros(a->getBulge(), 5);
                                 }
                             }
                             ts<<'\n';

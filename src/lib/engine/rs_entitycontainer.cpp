@@ -498,8 +498,8 @@ void RS_EntityContainer::calculateBorders() {
 
         RS_Layer* layer = e->getLayer();
 
-        RS_DEBUG->print("RS_EntityContainer::calculateBorders: "
-                        "isVisible: %d", (int)e->isVisible());
+//        RS_DEBUG->print("RS_EntityContainer::calculateBorders: "
+//                        "isVisible: %d", (int)e->isVisible());
 
         if (e->isVisible() && (layer==NULL || !layer->isFrozen())) {
             e->calculateBorders();
@@ -1464,7 +1464,7 @@ bool RS_EntityContainer::hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2) {
 }
 
 
-void RS_EntityContainer::move(RS_Vector offset) {
+void RS_EntityContainer::move(const RS_Vector& offset) {
     for (RS_Entity* e=firstEntity(RS2::ResolveNone);
             e!=NULL;
             e=nextEntity(RS2::ResolveNone)) {
@@ -1477,11 +1477,12 @@ void RS_EntityContainer::move(RS_Vector offset) {
 
 
 
-void RS_EntityContainer::rotate(RS_Vector center, double angle) {
+void RS_EntityContainer::rotate(const RS_Vector& center, const double& angle) {
+    RS_Vector angleVector(angle);
     for (RS_Entity* e=firstEntity(RS2::ResolveNone);
             e!=NULL;
             e=nextEntity(RS2::ResolveNone)) {
-        e->rotate(center, angle);
+        e->rotate(center, angleVector);
     }
     if (autoUpdateBorders) {
         calculateBorders();
@@ -1489,8 +1490,19 @@ void RS_EntityContainer::rotate(RS_Vector center, double angle) {
 }
 
 
+void RS_EntityContainer::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
+            e!=NULL;
+            e=nextEntity(RS2::ResolveNone)) {
+        e->rotate(center, angleVector);
+    }
+    if (autoUpdateBorders) {
+        calculateBorders();
+    }
+}
 
-void RS_EntityContainer::scale(RS_Vector center, RS_Vector factor) {
+
+void RS_EntityContainer::scale(const RS_Vector& center, const RS_Vector& factor) {
     if (fabs(factor.x)>RS_TOLERANCE && fabs(factor.y)>RS_TOLERANCE) {
         for (RS_Entity* e=firstEntity(RS2::ResolveNone);
                 e!=NULL;
@@ -1505,7 +1517,7 @@ void RS_EntityContainer::scale(RS_Vector center, RS_Vector factor) {
 
 
 
-void RS_EntityContainer::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_EntityContainer::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     if (axisPoint1.distanceTo(axisPoint2)>1.0e-6) {
         for (RS_Entity* e=firstEntity(RS2::ResolveNone);
                 e!=NULL;
@@ -1516,9 +1528,9 @@ void RS_EntityContainer::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
 }
 
 
-void RS_EntityContainer::stretch(RS_Vector firstCorner,
-                                 RS_Vector secondCorner,
-                                 RS_Vector offset) {
+void RS_EntityContainer::stretch(const RS_Vector& firstCorner,
+                                 const RS_Vector& secondCorner,
+                                 const RS_Vector& offset) {
 
     if (getMin().isInWindow(firstCorner, secondCorner) &&
             getMax().isInWindow(firstCorner, secondCorner)) {

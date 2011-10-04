@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -84,18 +84,18 @@ public:
     virtual RS2::EntityType rtti() const {
         return RS2::EntityConstructionLine;
     }
-    
-	/** 
-	 * @todo
-	 * @return Start point of the entity. 
-	 */
+
+        /**
+         * @todo
+         * @return Start point of the entity.
+         */
     virtual RS_Vector getStartpoint() const {
         return RS_Vector(false);
     }
-    /** 
-	 * @todo
-	 * @return End point of the entity. 
-	 */
+    /**
+         * @todo
+         * @return End point of the entity.
+         */
     virtual RS_Vector getEndpoint() const {
         return RS_Vector(false);
     }
@@ -130,15 +130,16 @@ public:
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
-									  double solidDist = RS_MAXDOUBLE);
+                                                                          double solidDist = RS_MAXDOUBLE);
 
-    virtual void move(RS_Vector offset);
-    virtual void rotate(RS_Vector center, double angle);
-    virtual void scale(RS_Vector center, RS_Vector factor);
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
+    virtual void move(const RS_Vector& offset);
+    virtual void rotate(const RS_Vector& center, const double& angle);
+    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
+    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
 
-    virtual void draw(RS_Painter* /*painter*/, RS_GraphicView* /*view*/, 
-		double /*patternOffset*/) {}
+    virtual void draw(RS_Painter* /*painter*/, RS_GraphicView* /*view*/,
+                double /*patternOffset*/) {}
 
     friend std::ostream& operator << (std::ostream& os,
                                       const RS_ConstructionLine& l);
