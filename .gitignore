@@ -14,7 +14,7 @@ html/
 intermediate/
 Makefile
 qmake_image_collection.cpp
-librecad.pro.user
+librecad.pro.user*
 *.qch
 *.qhc
 plugins.pro.user
