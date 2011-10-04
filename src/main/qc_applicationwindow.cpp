@@ -802,10 +802,10 @@ void QC_ApplicationWindow::initActions(void)
     menu->setObjectName("Draw");
 
     // Points:
-    subMenu= menu->addMenu(tr("&Point"));
-    subMenu->setObjectName("Point");
+//    subMenu= menu->addMenu(tr("&Point"));
+//    subMenu->setObjectName("Point");
     action = actionFactory.createAction(RS2::ActionDrawPoint, actionHandler);
-    subMenu->addAction(action);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Lines:
@@ -926,10 +926,10 @@ void QC_ApplicationWindow::initActions(void)
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Splines:
-    subMenu= menu->addMenu(tr("&Spline"));
-    subMenu->setObjectName("Spline");
+//    subMenu= menu->addMenu(tr("&Spline"));
+//    subMenu->setObjectName("Spline");
     action = actionFactory.createAction(RS2::ActionDrawSpline, actionHandler);
-    subMenu->addAction(action);
+    menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
         // Polylines:

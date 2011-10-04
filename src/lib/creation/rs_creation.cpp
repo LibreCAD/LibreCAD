@@ -129,7 +129,7 @@ RS_Creation::RS_Creation(RS_EntityContainer* container,
  */
 /*RS_Polyline* RS_Creation::createPolyline(const RS_Vector& startPoint) {
     RS_Polyline* pl = new RS_Polyline(entityContainer,
-		RS_PolylineData(startPoint, RS_Vector(0.0,0.0), 0));
+                RS_PolylineData(startPoint, RS_Vector(0.0,0.0), 0));
     entityContainer->addEntity(pl);
     return pl;
 }*/
@@ -593,15 +593,19 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
         RS_Vector vp(normal->getStartpoint());
         RS_Vector direction(normal->getEndpoint() - vp);
         RS_Vector vpt(t0 - vp);
-        if (document!=NULL && handleUndo) {
-            document->startUndoCycle();
-        }
-        double a=RS_Vector::dotP(vpt,vpt);
+        double a=direction.squared();
         if( a <RS_TOLERANCE*RS_TOLERANCE) {
-            vp = t0 + direction;//selected line already a tangent
+            return NULL;//undefined direction
         } else {
             //find projection on the normal line
-            vp += direction*( RS_Vector::dotP(direction,vpt)/RS_Vector::dotP(direction,direction));
+            vp += direction*( RS_Vector::dotP(direction,vpt)/a);
+            if( fabs(vp.x - t0.x) <=RS_TOLERANCE || fabs(vp.y-t0.y)<=RS_TOLERANCE) {
+                //t0 already on the given line, need to extend in the normal direction
+                vp += RS_Vector(-direction.y,direction.x);
+            }
+        }
+        if (document!=NULL && handleUndo) {
+            document->startUndoCycle();
         }
         ret = new RS_Line(container, RS_LineData(vp,t0));
         ret->setLayerToActive();

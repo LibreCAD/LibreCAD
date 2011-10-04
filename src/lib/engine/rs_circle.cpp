@@ -125,8 +125,8 @@ bool RS_Circle::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
                              const RS_Vector& p3) {
         RS_Vector vra=p2 - p1;
         RS_Vector vrb=p3 - p1;
-        double ra2=RS_Vector::dotP(vra,vra)*0.5;
-        double rb2=RS_Vector::dotP(vrb,vrb)*0.5;
+        double ra2=vra.squared()*0.5;
+        double rb2=vrb.squared()*0.5;
         double crossp=vra.x * vrb.y - vra.y * vrb.x;
         if (fabs(crossp)< RS_TOLERANCE*RS_TOLERANCE) {
                 RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
@@ -307,21 +307,24 @@ double RS_Circle::getDistanceToPoint(const RS_Vector& coord,
 
 
 
-void RS_Circle::move(RS_Vector offset) {
+void RS_Circle::move(const RS_Vector& offset) {
     data.center.move(offset);
     calculateBorders();
 }
 
 
 
-void RS_Circle::rotate(RS_Vector center, double angle) {
+void RS_Circle::rotate(const RS_Vector& center, const double& angle) {
     data.center.rotate(center, angle);
     calculateBorders();
 }
 
+void RS_Circle::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    data.center.rotate(center, angleVector);
+    calculateBorders();
+}
 
-
-void RS_Circle::scale(RS_Vector center, RS_Vector factor) {
+void RS_Circle::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.center.scale(center, factor);
     data.radius *= factor.x;
     calculateBorders();
@@ -329,7 +332,7 @@ void RS_Circle::scale(RS_Vector center, RS_Vector factor) {
 
 
 
-void RS_Circle::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_Circle::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     data.center.mirror(axisPoint1, axisPoint2);
     calculateBorders();
 }

@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -97,27 +97,27 @@ public:
     unsigned long int getId() const {
         return id;
     }
-	
+
     /**
-     * This method must be overwritten in subclasses and return the 
+     * This method must be overwritten in subclasses and return the
      * number of <b>atomic</b> entities in this entity.
      */
     virtual unsigned long int count() = 0;
-	
+
     /**
-     * This method must be overwritten in subclasses and return the 
+     * This method must be overwritten in subclasses and return the
      * number of <b>atomic</b> entities in this entity including sub containers.
      */
     virtual unsigned long int countDeep() = 0;
 
 
-	/**
-	 * Implementations must return the total length of the entity
-	 * or a negative number if the entity has no length (e.g. a text or hatch).
-	 */
-	virtual double getLength() {
-		return -1.0;
-	}
+        /**
+         * Implementations must return the total length of the entity
+         * or a negative number if the entity has no length (e.g. a text or hatch).
+         */
+        virtual double getLength() {
+                return -1.0;
+        }
 
     /**
      * @return Parent of this entity or NULL if this is a root entity.
@@ -151,25 +151,25 @@ public:
     void setPen(const RS_Pen& pen) {
         this->pen = pen;
     }
-	
-	
+
+
     void setPenToActive();
     RS_Pen getPen(bool resolve = true) const;
 
     /**
-     * Must be overwritten to return true if an entity type 
+     * Must be overwritten to return true if an entity type
      * is a container for other entities (e.g. polyline, group, ...).
      */
     virtual bool isContainer() const = 0;
 
     /**
-     * Must be overwritten to return true if an entity type 
+     * Must be overwritten to return true if an entity type
      * is an atomic entity.
      */
     virtual bool isAtomic() const = 0;
 
     /**
-     * Must be overwritten to return true if an entity type 
+     * Must be overwritten to return true if an entity type
      * is a potential edge entity of a contour. By default
     * this returns false.
      */
@@ -188,7 +188,7 @@ public:
     virtual bool setSelected(bool select);
     virtual bool toggleSelected();
     virtual bool isSelected() const;
-	virtual bool isParentSelected();
+        virtual bool isParentSelected();
     virtual bool isProcessed() const;
     virtual void setProcessed(bool on);
     virtual bool isInWindow(RS_Vector v1, RS_Vector v2);
@@ -203,9 +203,9 @@ public:
             delFlag(RS2::FlagVisible);
         }
     }
-	virtual void setHighlighted(bool on);
-	virtual bool isHighlighted();
-	
+        virtual void setHighlighted(bool on);
+        virtual bool isHighlighted();
+
     virtual bool isLocked();
 
     virtual void undoStateChanged(bool undone);
@@ -217,13 +217,13 @@ public:
      * paramters or undo state changed.
      */
     virtual void update() {}
-	
+
     virtual void setUpdateEnabled(bool on) {
-		updateEnabled = on;
-	}
+                updateEnabled = on;
+        }
 
     /**
-     * This method doesn't do any calculations. 
+     * This method doesn't do any calculations.
      * @return minimum coordinate of the entity.
      * @see calculateBorders()
      */
@@ -232,7 +232,7 @@ public:
     }
 
     /**
-     * This method doesn't do any calculations. 
+     * This method doesn't do any calculations.
      * @return minimum coordinate of the entity.
      * @see calculateBorders()
      */
@@ -241,8 +241,8 @@ public:
     }
 
     /**
-     * This method returns the difference of max and min returned 
-     * by the above functions. 
+     * This method returns the difference of max and min returned
+     * by the above functions.
      * @return size of the entity.
      * @see calculateBorders()
      * @see getMin()
@@ -255,26 +255,26 @@ public:
     void addGraphicVariable(const QString& key, double val, int code);
     void addGraphicVariable(const QString& key, int val, int code);
     void addGraphicVariable(const QString& key, const QString& val, int code);
-	
+
     double getGraphicVariableDouble(const QString& key, double def);
     int getGraphicVariableInt(const QString& key, int def);
     QString getGraphicVariableString(const QString& key,
                                        const QString& def);
 
-	RS2::Unit getGraphicUnit();
+        RS2::Unit getGraphicUnit();
 
     /**
-     * Must be overwritten to get all reference points of the entity. 
+     * Must be overwritten to get all reference points of the entity.
      */
     virtual RS_VectorSolutions getRefPoints() {
-		RS_VectorSolutions ret;
-		return ret;
-	}
+                RS_VectorSolutions ret;
+                return ret;
+        }
 
 
     /**
-     * Must be overwritten to get the closest endpoint to the 
-     * given coordinate for this entity. 
+     * Must be overwritten to get the closest endpoint to the
+     * given coordinate for this entity.
      *
      * @param coord Coordinate (typically a mouse coordinate)
      * @param dist Pointer to a value which will contain the measured
@@ -288,12 +288,12 @@ public:
                                          double* dist = NULL) = 0;
 
     /**
-     * Must be overwritten to get the closest coordinate to the 
+     * Must be overwritten to get the closest coordinate to the
     * given coordinate which is on this entity.
      *
      * @param coord Coordinate (typically a mouse coordinate)
      * @param dist Pointer to a value which will contain the measured
-     * distance between \p coord and the point. The passed pointer can 
+     * distance between \p coord and the point. The passed pointer can
      * also be \p NULL in which case the distance will be lost.
      *
      * @return The closest coordinate.
@@ -303,8 +303,8 @@ public:
             RS_Entity** entity = NULL) = 0;
 
     /**
-     * Must be overwritten to get the (nearest) center point to the 
-     * given coordinate for this entity. 
+     * Must be overwritten to get the (nearest) center point to the
+     * given coordinate for this entity.
      *
      * @param coord Coordinate (typically a mouse coordinate)
      * @param dist Pointer to a value which will contain the measured
@@ -318,8 +318,8 @@ public:
                                        double* dist = NULL) = 0;
 
     /**
-     * Must be overwritten to get the (nearest) middle point to the 
-     * given coordinate for this entity. 
+     * Must be overwritten to get the (nearest) middle point to the
+     * given coordinate for this entity.
      *
      * @param coord Coordinate (typically a mouse coordinate)
      * @param dist Pointer to a value which will contain the measured
@@ -339,7 +339,7 @@ public:
 
     /**
      * Must be overwritten to get the nearest point with a given
-     * distance to the endpoint to the given coordinate for this entity. 
+     * distance to the endpoint to the given coordinate for this entity.
      *
      * @param distance Distance to endpoint.
      * @param coord Coordinate (typically a mouse coordinate)
@@ -353,10 +353,10 @@ public:
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
                                      double* dist = NULL) = 0;
-									 
+
     /**
      * Must be overwritten to get the point with a given
-     * distance to the start- or endpoint to the given coordinate for this entity. 
+     * distance to the start- or endpoint to the given coordinate for this entity.
      *
      * @param distance Distance to endpoint.
      * @param startp true = measured from Startpoint, false = measured from Endpoint
@@ -365,11 +365,11 @@ public:
      */
     virtual RS_Vector getNearestDist(double /*distance*/,
                                      bool /*startp*/) {
-		return RS_Vector(false);
-	}
-									 
+                return RS_Vector(false);
+        }
+
     /**
-     * Must be overwritten to get the nearest reference point for this entity. 
+     * Must be overwritten to get the nearest reference point for this entity.
      *
      * @param coord Coordinate (typically a mouse coordinate)
      * @param dist Pointer to a value which will contain the measured
@@ -380,16 +380,16 @@ public:
      * @return The closest point with the given distance to the endpoint.
      */
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                     double* dist = NULL) { 
-		RS_VectorSolutions s = getRefPoints();
-		
-		return s.getClosest(coord, dist); 
-	}
-	
+                                     double* dist = NULL) {
+                RS_VectorSolutions s = getRefPoints();
+
+                return s.getClosest(coord, dist);
+        }
+
     /**
-     * Gets the nearest reference point of this entity if it is selected. 
-	 * Containers re-implement this method to return the nearest reference
-	 * point of a selected sub entity.
+     * Gets the nearest reference point of this entity if it is selected.
+         * Containers re-implement this method to return the nearest reference
+         * point of a selected sub entity.
      *
      * @param coord Coordinate (typically a mouse coordinate)
      * @param dist Pointer to a value which will contain the measured
@@ -400,24 +400,24 @@ public:
      * @return The closest point with the given distance to the endpoint.
      */
     virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
-                                     double* dist = NULL) { 
-		if (isSelected()) {
-			return getNearestRef(coord, dist);
-		}
-		else {
-			return RS_Vector(false); 
-		}
-	}
+                                     double* dist = NULL) {
+                if (isSelected()) {
+                        return getNearestRef(coord, dist);
+                }
+                else {
+                        return RS_Vector(false);
+                }
+        }
 
     /**
-     * Must be overwritten to get the shortest distance between this 
+     * Must be overwritten to get the shortest distance between this
      * entity and a coordinate.
      *
      * @param coord Coordinate (typically a mouse coordinate)
-     * @param entity Pointer which will contain the (sub-)entity which is 
-     *               closest to the given point or NULL if the caller is not 
+     * @param entity Pointer which will contain the (sub-)entity which is
+     *               closest to the given point or NULL if the caller is not
      *               interested in this information.
-     * @param level The resolve level. 
+     * @param level The resolve level.
      *
      * @sa RS2::ResolveLevel
      *
@@ -429,7 +429,7 @@ public:
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity = NULL,
                                       RS2::ResolveLevel level = RS2::ResolveNone,
-									  double solidDist = RS_MAXDOUBLE) = 0;
+                                                                          double solidDist = RS_MAXDOUBLE) = 0;
 
     virtual bool isPointOnEntity(const RS_Vector& coord,
                                  double tolerance=RS_TOLERANCE);
@@ -437,63 +437,64 @@ public:
     /**
      * Implementations must move the entity by the given vector.
      */
-    virtual void move(RS_Vector offset) = 0;
+    virtual void move(const RS_Vector& offset) = 0;
 
     /**
      * Implementations must rotate the entity by the given angle around
      * the given center.
      */
-    virtual void rotate(RS_Vector center, double angle) = 0;
+    virtual void rotate(const RS_Vector& center, const double& angle) = 0;
+    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector) = 0;
 
     /**
      * Implementations must scale the entity by the given factors.
      */
-    virtual void scale(RS_Vector center, RS_Vector factor) = 0;
+    virtual void scale(const RS_Vector& center, const RS_Vector& factor) = 0;
 
     /**
      * Acts like scale(RS_Vector) but with equal factors.
      * Equal to scale(center, RS_Vector(factor, factor)).
      */
-    virtual void scale(RS_Vector center, double factor) {
+    virtual void scale(const RS_Vector& center, const double& factor) {
         scale(center, RS_Vector(factor, factor));
     }
 
     /**
      * Implementations must mirror the entity by the given axis.
      */
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) = 0;
+    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) = 0;
 
-    virtual void stretch(RS_Vector firstCorner,
-                         RS_Vector secondCorner,
-                         RS_Vector offset);
+    virtual void stretch(const RS_Vector& firstCorner,
+                         const RS_Vector& secondCorner,
+                         const RS_Vector& offset);
 
-	/**
-	 * Implementations must drag the reference point(s) of all
-	 * (sub-)entities that are very close to ref by offset.
-	 */
-	virtual void moveRef(const RS_Vector& /*ref*/, 
-		const RS_Vector& /*offset*/) {
-		return;
-	}
-	
-	/**
-	 * Implementations must drag the reference point(s) of selected 
-	 * (sub-)entities that are very close to ref by offset.
-	 */
-	virtual void moveSelectedRef(const RS_Vector& /*ref*/, 
-		const RS_Vector& /*offset*/) {
-		return;
-	}
+        /**
+         * Implementations must drag the reference point(s) of all
+         * (sub-)entities that are very close to ref by offset.
+         */
+        virtual void moveRef(const RS_Vector& /*ref*/,
+                const RS_Vector& /*offset*/) {
+                return;
+        }
+
+        /**
+         * Implementations must drag the reference point(s) of selected
+         * (sub-)entities that are very close to ref by offset.
+         */
+        virtual void moveSelectedRef(const RS_Vector& /*ref*/,
+                const RS_Vector& /*offset*/) {
+                return;
+        }
 
     /**
      * Implementations must draw the entity on the given device.
      */
-    virtual void draw(RS_Painter* painter, RS_GraphicView* view, 
-		double patternOffset = 0.0) = 0;
+    virtual void draw(RS_Painter* painter, RS_GraphicView* view,
+                double patternOffset = 0.0) = 0;
 
-	double getStyleFactor(RS_GraphicView* view);
-	
-        QString getUserDefVar(QString key);
+        double getStyleFactor(RS_GraphicView* view);
+
+        QString getUserDefVar(const QString& key) const;
         QList<QString> getAllKeys();
         void setUserDefVar(QString key, QString val);
         void delUserDefVar(QString key);
@@ -519,9 +520,9 @@ protected:
 
     //! pen (attributes) for this entity
     RS_Pen pen;
-	
-	//! auto updating enabled?
-	bool updateEnabled;
+
+        //! auto updating enabled?
+        bool updateEnabled;
 
 private:
         QMultiHash<QString, QString> varList;

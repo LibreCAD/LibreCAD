@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -53,24 +53,24 @@ RS_DimAngular::RS_DimAngular(RS_EntityContainer* parent,
 
 
 /**
- * @return Automatically created label for the default 
+ * @return Automatically created label for the default
  * measurement of this dimension.
  */
 QString RS_DimAngular::getMeasuredLabel() {
     QString ret;
 
-	int dimaunit = getGraphicVariableInt("$DIMAUNIT", 0);
-	int dimadec = getGraphicVariableInt("$DIMADEC", 0);
+        int dimaunit = getGraphicVariableInt("$DIMAUNIT", 0);
+        int dimadec = getGraphicVariableInt("$DIMADEC", 0);
 
-	ret = RS_Units::formatAngle(getAngle(), 
-		RS_FilterDXF::numberToAngleFormat(dimaunit),
-		dimadec);
-	
+        ret = RS_Units::formatAngle(getAngle(),
+                RS_FilterDXF::numberToAngleFormat(dimaunit),
+                dimadec);
+
     /*
         ret = QString("%1%2")
           .arg(RS_Math::rad2deg(getAngle()))
           .arg(QChar(0xB0));
-	*/
+        */
     return ret;
 }
 
@@ -83,8 +83,8 @@ double RS_DimAngular::getAngle() {
     double ang1 = 0.0;
     double ang2 = 0.0;
     bool reversed = false;
-	RS_Vector p1;
-	RS_Vector p2;
+        RS_Vector p1;
+        RS_Vector p2;
 
     getAngles(ang1, ang2, reversed, p1, p2);
     return reversed ? RS_Math::correctAngle(ang1 - ang2) :  RS_Math::correctAngle(ang2 - ang1);
@@ -141,8 +141,8 @@ RS_Vector vp2(data.definitionPoint - edata.definitionPoint3);
 // a1 = ( |p2|^2 <p0.p1> - <p1.p2><p0.p2>) /( |p1|^2 |p2|^2 - <p1.p2>^2)
 // a2 = ( |p1|^2 <p0.p2> - <p1.p2><p0.p1>) /( |p1|^2 |p2|^2 - <p1.p2>^2)
 
-double rp1=RS_Vector::dotP(vp1,vp1);
-double rp2=RS_Vector::dotP(vp2,vp2);
+double rp1=vp1.squared();
+double rp2=vp2.squared();
 double p0p1=RS_Vector::dotP(vp0,vp1);
 double p0p2=RS_Vector::dotP(vp0,vp2);
 double p1p2=RS_Vector::dotP(vp1,vp2);
@@ -151,14 +151,14 @@ double a1=d*(rp2*p0p1-p1p2*p0p2); // we only need the sign, so, use multiply ins
 if ( a1 >= 0. ) {
             p1 = edata.definitionPoint2;
 } else {
-	    vp1 *= -1;
+            vp1 *= -1;
             p1 = edata.definitionPoint1;
 }
 a1 = d*(rp1*p0p2-p1p2*p0p1);
 if ( a1 >= 0. ) {
             p2 = data.definitionPoint;
 } else {
-	    vp2 *= -1;
+            vp2 *= -1;
             p2 = edata.definitionPoint3;
 }
 
@@ -228,7 +228,7 @@ return true;
 
 
 /**
- * Updates the sub entities of this dimension. Called when the 
+ * Updates the sub entities of this dimension. Called when the
  * dimension or the position, alignment, .. changes.
  *
  * @param autoText Automatically reposition the text label
@@ -238,10 +238,10 @@ void RS_DimAngular::update(bool /*autoText*/) {
     RS_DEBUG->print("RS_DimAngular::update");
 
     clear();
-	
-	if (isUndone()) {
-		return;
-	}
+
+        if (isUndone()) {
+                return;
+        }
 
     // distance from entities (DIMEXO)
     double dimexo = getExtensionLineOffset();
@@ -313,12 +313,12 @@ void RS_DimAngular::update(bool /*autoText*/) {
     // arrow angles:
     double arrowAngle1, arrowAngle2;
     double arrowAng;
-	if (rad>1.0e-6) {
-		arrowAng = getArrowSize() / rad;
-	}
-	else {
-		arrowAng = 0.0;
-	}
+        if (rad>1.0e-6) {
+                arrowAng = getArrowSize() / rad;
+        }
+        else {
+                arrowAng = 0.0;
+        }
     RS_Vector v1, v2;
     if (!arc->isReversed()) {
         v1.setPolar(rad, arc->getAngle1()+arrowAng);

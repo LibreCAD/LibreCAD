@@ -113,6 +113,9 @@ void RS_ActionInterface::init(int status) {
                 updateMouseButtonHints();
         updateMouseCursor();
         updateToolBar();
+    }else{
+        //delete snapper when finished, bug#3416878
+        deleteSnapper();
     }
 }
 

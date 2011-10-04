@@ -81,6 +81,7 @@ void RS_Snapper::init() {
 
 void RS_Snapper::finish() {
     finished = true;
+    deleteSnapper();
 }
 
 void RS_Snapper::setSnapMode(RS_SnapMode snapMode) {

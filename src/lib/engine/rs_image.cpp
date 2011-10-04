@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -52,7 +52,7 @@ RS_Image::RS_Image(RS_EntityContainer* parent,
  */
 RS_Image::~RS_Image() {
     /*if (img!=NULL) {
-    	delete[] img;
+        delete[] img;
     }*/
 }
 
@@ -61,7 +61,7 @@ RS_Image::~RS_Image() {
 
 RS_Entity* RS_Image::clone() {
     RS_Image* i = new RS_Image(*this);
-	i->setHandle(getHandle());
+        i->setHandle(getHandle());
     i->initId();
     i->update();
     return i;
@@ -93,26 +93,26 @@ void RS_Image::update() {
     int w,h;
     for (int x = 0; x<nx; ++x) {
         img[x] = new QImage[ny];
-    	for (int y = 0; y<ny; ++y) {
-    		if (x<nx-1) {
-    			w = 100;
-    		}
-    		else {
-    			w = image.width()%100;
-    		}
-    		
-    		if (y<ny-1) {
-    			h = 100;
-    		}
-    		else {
-    			h = image.height()%100;
-    		}
+        for (int y = 0; y<ny; ++y) {
+                if (x<nx-1) {
+                        w = 100;
+                }
+                else {
+                        w = image.width()%100;
+                }
+
+                if (y<ny-1) {
+                        h = 100;
+                }
+                else {
+                        h = image.height()%100;
+                }
 
                 pm = QPixmap(w, h);
-    		RS_PainterQt painter(&pm);
-    		painter.drawImage(-x*100, -y*100, image);
-    		img[x][y] = pm.convertToImage();
-    	}
+                RS_PainterQt painter(&pm);
+                painter.drawImage(-x*100, -y*100, image);
+                img[x][y] = pm.convertToImage();
+        }
     }
     */
 }
@@ -220,7 +220,7 @@ RS_Vector RS_Image::getNearestDist(double distance,
 double RS_Image::getDistanceToPoint(const RS_Vector& coord,
                                     RS_Entity** entity,
                                     RS2::ResolveLevel /*level*/,
-									double /*solidDist*/) {
+                                                                        double /*solidDist*/) {
     if (entity!=NULL) {
         *entity = this;
     }
@@ -249,23 +249,30 @@ double RS_Image::getDistanceToPoint(const RS_Vector& coord,
 
 
 
-void RS_Image::move(RS_Vector offset) {
+void RS_Image::move(const RS_Vector& offset) {
     data.insertionPoint.move(offset);
     calculateBorders();
 }
 
 
 
-void RS_Image::rotate(RS_Vector center, double angle) {
-    data.insertionPoint.rotate(center, angle);
-    data.uVector.rotate(angle);
-    data.vVector.rotate(angle);
+void RS_Image::rotate(const RS_Vector& center, const double& angle) {
+    RS_Vector angleVector(angle);
+    data.insertionPoint.rotate(center, angleVector);
+    data.uVector.rotate(angleVector);
+    data.vVector.rotate(angleVector);
+    calculateBorders();
+}
+
+void RS_Image::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    data.insertionPoint.rotate(center, angleVector);
+    data.uVector.rotate(angleVector);
+    data.vVector.rotate(angleVector);
     calculateBorders();
 }
 
 
-
-void RS_Image::scale(RS_Vector center, RS_Vector factor) {
+void RS_Image::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.insertionPoint.scale(center, factor);
     data.uVector.scale(factor);
     data.vVector.scale(factor);
@@ -274,10 +281,12 @@ void RS_Image::scale(RS_Vector center, RS_Vector factor) {
 
 
 
-void RS_Image::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_Image::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     data.insertionPoint.mirror(axisPoint1, axisPoint2);
-    data.uVector.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
-    data.vVector.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
+    RS_Vector vp0(0.,0.);
+    RS_Vector vp1( axisPoint2-axisPoint1 );
+    data.uVector.mirror(vp0,vp1);
+    data.vVector.mirror(vp0,vp1);
     calculateBorders();
 }
 
@@ -329,12 +338,12 @@ void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double /*patternO
             stopY = (int)data.size.y;
         }
     }
-	else {
-		startX = 0;
-		startY = 0;
-		stopX = 0;
-		stopY = 0;
-	}
+        else {
+                startX = 0;
+                startY = 0;
+                stopX = 0;
+                stopY = 0;
+        }
 
     painter->drawImg(img,
                      view->toGui(data.insertionPoint),
