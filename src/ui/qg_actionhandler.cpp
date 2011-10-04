@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -212,15 +212,16 @@ RS_ActionInterface* QG_ActionHandler::getCurrentAction() {
  */
 RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction()");
-	RS_GraphicView* gv = mainWindow->getGraphicView();
+        RS_GraphicView* gv = mainWindow->getGraphicView();
     RS_Document* doc = mainWindow->getDocument();
     RS_ActionInterface* a = NULL;
 
     // only global options are allowed without a document:
     if (gv==NULL || doc==NULL) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-        	"QG_ActionHandler::setCurrentAction: graphic view or "
-        	"document is NULL");
+        //limit warning messages to --debug mode
+//        RS_DEBUG->print(RS_Debug::D_WARNING,
+        RS_DEBUG->print("QG_ActionHandler::setCurrentAction: graphic view or "
+                "document is NULL");
         return NULL;
     }
 
@@ -318,7 +319,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         gv->killSelectActions();
         a = new RS_ActionSelectLayer(*doc, *gv);
         break;
-		
+
         // Tool actions:
         //
     case RS2::ActionToolRegenerateDimensions:
@@ -729,7 +730,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionBlocksExplodeNoSelect:
         a = new RS_ActionBlocksExplode(*doc, *gv);
         break;
-		
+
 
         // library browser:
         //
@@ -756,7 +757,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     if (a!=NULL) {
         gv->setCurrentAction(a);
     }
-	
+
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction(): OK");
     return a;
 }
@@ -784,7 +785,7 @@ QStringList QG_ActionHandler::getAvailableCommands() {
 /**
  * Launches the command represented by the given keycode if possible.
  *
- * @return true: the command was recognized. 
+ * @return true: the command was recognized.
  *         false: the command is not known and was probably intended for a
  *            running action.
  */
@@ -864,12 +865,12 @@ bool QG_ActionHandler::keycode(const QString& code) {
 /**
  * Launches the given command if possible.
  *
- * @return true: the command was recognized. 
+ * @return true: the command was recognized.
  *         false: the command is not known and was probably intended for a
  *            running action.
  */
 bool QG_ActionHandler::command(const QString& cmd) {
-	RS_DEBUG->print("QG_ActionHandler::command: %s", cmd.latin1());
+        RS_DEBUG->print("QG_ActionHandler::command: %s", cmd.latin1());
     QString c = cmd.lower();
 
     if (c=="\n") {
@@ -877,7 +878,7 @@ bool QG_ActionHandler::command(const QString& cmd) {
         if (gv!=NULL) {
             gv->back();
         }
-		RS_DEBUG->print("QG_ActionHandler::command: back");
+                RS_DEBUG->print("QG_ActionHandler::command: back");
         return true;
     }
 
@@ -886,26 +887,26 @@ bool QG_ActionHandler::command(const QString& cmd) {
 
     RS_GraphicView* gv = mainWindow->getGraphicView();
     if (gv!=NULL) {
-		RS_DEBUG->print("QG_ActionHandler::command: trigger command event in "
-		" graphic view");
+                RS_DEBUG->print("QG_ActionHandler::command: trigger command event in "
+                " graphic view");
         gv->commandEvent(&e);
     }
 
     // if the current action can't deal with the command,
     //   it might be intended to launch a new command
     if (!e.isAccepted()) {
-		RS_DEBUG->print("QG_ActionHandler::command: convert cmd to action type");
+                RS_DEBUG->print("QG_ActionHandler::command: convert cmd to action type");
         // command for new action:
         RS2::ActionType type = RS_COMMANDS->cmdToAction(cmd);
         if (type!=RS2::ActionNone) {
-			RS_DEBUG->print("QG_ActionHandler::command: setting current action");
+                        RS_DEBUG->print("QG_ActionHandler::command: setting current action");
             setCurrentAction(type);
-			RS_DEBUG->print("QG_ActionHandler::command: current action set");
+                        RS_DEBUG->print("QG_ActionHandler::command: current action set");
             return true;
         }
     }
 
-	RS_DEBUG->print("QG_ActionHandler::command: current action not set");
+        RS_DEBUG->print("QG_ActionHandler::command: current action not set");
     return false;
 }
 
@@ -921,7 +922,7 @@ void QG_ActionHandler::slotFileOpen() {
 }
 /*
 void QG_ActionHandler::slotFileSave() {
-	setCurrentAction(RS2::ActionFileSave);
+        setCurrentAction(RS2::ActionFileSave);
 }
 */
 
@@ -931,11 +932,11 @@ void QG_ActionHandler::slotFileSaveAs() {
 
 /*
 void QG_ActionHandler::slotFileClose() {
-	setCurrentAction(RS2::ActionFileClose);
+        setCurrentAction(RS2::ActionFileClose);
 }
- 
+
 void QG_ActionHandler::slotFilePrint() {
-	setCurrentAction(RS2::ActionFilePrint);
+        setCurrentAction(RS2::ActionFilePrint);
 }
 */
 

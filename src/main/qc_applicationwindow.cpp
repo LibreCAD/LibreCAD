@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -108,48 +108,48 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     helpWindow = NULL;
 
     workspace = NULL;
-    
+
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
      setIcon(qPixmapFromMimeSource(QC_APP_ICON));
 
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating action handler");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating action handler");
     actionHandler = new QG_ActionHandler(this);
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating action handler: OK");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating action handler: OK");
 
 #ifdef RS_SCRIPTING
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating scripter");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating scripter");
     scripter = new QS_Scripter(this, this);
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating scripter: OK");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating scripter: OK");
 #endif
 
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init view");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init view");
     initView();
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init toolbar");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init toolbar");
     initToolBar();
         RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init actions");
     initActions();
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init menu bar");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init menu bar");
     initMenuBar();
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
     initStatusBar();
 
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory");
     dialogFactory = new QC_DialogFactory(this, optionWidget);
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory: OK");
-	RS_DEBUG->print("setting dialog factory object");
-	if (RS_DialogFactory::instance()==NULL) {
-		RS_DEBUG->print("no RS_DialogFactory instance");
-	}
-	else {
-		RS_DEBUG->print("got RS_DialogFactory instance");
-	}
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory: OK");
+        RS_DEBUG->print("setting dialog factory object");
+        if (RS_DialogFactory::instance()==NULL) {
+                RS_DEBUG->print("no RS_DialogFactory instance");
+        }
+        else {
+                RS_DEBUG->print("got RS_DialogFactory instance");
+        }
     RS_DialogFactory::instance()->setFactoryObject(dialogFactory);
-	RS_DEBUG->print("setting dialog factory object: OK");
+        RS_DEBUG->print("setting dialog factory object: OK");
 
         RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
     initSettings();
 
-	RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init MDI");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init MDI");
     initMDI();
 
     // Activate autosave timer
@@ -298,7 +298,7 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
                     "deleting dialog factory: OK");
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-	"deleting assistant.."); 
+        "deleting assistant..");
     if (helpEngine!=NULL) {
         delete helpEngine;
     }
@@ -318,8 +318,8 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
  * Runs the start script if scripting is available.
  */
 void QC_ApplicationWindow::slotRunStartScript() {
-	slotRunScript("autostart.qs");
-	restoreDocks();
+        slotRunScript("autostart.qs");
+        restoreDocks();
 }
 
 
@@ -334,9 +334,9 @@ void QC_ApplicationWindow::slotRunScript() {
     const QObject* s = sender();
     if (s!=NULL) {
         QString script = ((QAction*)s)->text();
-        RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: %s", 
-			script.latin1());
-		slotRunScript(script);
+        RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: %s",
+                        script.latin1());
+                slotRunScript(script);
     }
 }
 
@@ -348,46 +348,46 @@ void QC_ApplicationWindow::slotRunScript() {
 void QC_ApplicationWindow::slotRunScript(const QString& name) {
     Q_UNUSED(name);
 #ifdef RS_SCRIPTING
-	RS_DEBUG->print("QC_ApplicationWindow::slotRunScript");
+        RS_DEBUG->print("QC_ApplicationWindow::slotRunScript");
 
-	if (scripter==NULL) {
-		RS_DEBUG->print(RS_Debug::D_WARNING, 
-			"QC_ApplicationWindow::slotRunScript: "
-			"scripter not initialized");
-		return;
-	}
+        if (scripter==NULL) {
+                RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "QC_ApplicationWindow::slotRunScript: "
+                        "scripter not initialized");
+                return;
+        }
 
     statusBar()->showMessage(tr("Running script '%1'").arg(name), 2000);
 
-	QStringList scriptList = RS_SYSTEM->getScriptList();
-	scriptList.append(RS_SYSTEM->getHomeDir() + "/." XSTR(QC_APPKEY) "/" + name);
-	
-	for (QStringList::Iterator it = scriptList.begin(); it!=scriptList.end(); ++it) {
-		RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: "
-			"checking script '%s'", (*it).latin1());
-		QFileInfo fi(*it);
-		if (fi.exists() && fi.fileName()==name) {
-			RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: running '%s'", 
-				(*it).latin1());
-			scripter->runScript(*it, "main");
-		}
-	}
+        QStringList scriptList = RS_SYSTEM->getScriptList();
+        scriptList.append(RS_SYSTEM->getHomeDir() + "/." XSTR(QC_APPKEY) "/" + name);
+
+        for (QStringList::Iterator it = scriptList.begin(); it!=scriptList.end(); ++it) {
+                RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: "
+                        "checking script '%s'", (*it).latin1());
+                QFileInfo fi(*it);
+                if (fi.exists() && fi.fileName()==name) {
+                        RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: running '%s'",
+                                (*it).latin1());
+                        scripter->runScript(*it, "main");
+                }
+        }
 #endif
 }
 
 
 
 /**
- * Called from toolbar buttons that were added by scripts to 
+ * Called from toolbar buttons that were added by scripts to
  * insert blocks.
  */
 void QC_ApplicationWindow::slotInsertBlock() {
     const QObject* s = sender();
     if (s!=NULL) {
         QString block = ((QAction*)s)->text();
-        RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: %s", 
-			block.latin1());
-		slotInsertBlock(block);
+        RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: %s",
+                        block.latin1());
+                slotInsertBlock(block);
     }
 }
 
@@ -397,18 +397,18 @@ void QC_ApplicationWindow::slotInsertBlock() {
  * Called to insert blocks.
  */
 void QC_ApplicationWindow::slotInsertBlock(const QString& name) {
-	RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: '%s'", name.latin1());
+        RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: '%s'", name.latin1());
 
     statusBar()->showMessage(tr("Inserting block '%1'").arg(name), 2000);
 
-	RS_GraphicView* graphicView = getGraphicView();
-	RS_Document* document = getDocument();
-	if (graphicView!=NULL && document!=NULL) {
-		RS_ActionLibraryInsert* action = 
-			new RS_ActionLibraryInsert(*document, *graphicView);
-		action->setFile(name);
-		graphicView->setCurrentAction(action);
-	}
+        RS_GraphicView* graphicView = getGraphicView();
+        RS_Document* document = getDocument();
+        if (graphicView!=NULL && document!=NULL) {
+                RS_ActionLibraryInsert* action =
+                        new RS_ActionLibraryInsert(*document, *graphicView);
+                action->setFile(name);
+                graphicView->setCurrentAction(action);
+        }
 }
 
 
@@ -420,7 +420,7 @@ void QC_ApplicationWindow::show() {
 #ifdef QSPLASHSCREEN_H
     if (splash) {
         splash->raise();
-	}
+        }
 #endif
 
     QMainWindow::show();
@@ -620,13 +620,13 @@ void QC_ApplicationWindow::initActions(void)
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     //addToolBar(tb, tr("Edit"));
-	addToolBar(Qt::TopToolBarArea, tb); //tr("Edit");
+        addToolBar(Qt::TopToolBarArea, tb); //tr("Edit");
 
     // Options menu:
     //
     //menu = new QPopupMenu(this);
     //menuBar()->insertItem(tr("&Options"), menu);
-	
+
 
     // Viewing / Zooming actions:
     //
@@ -688,7 +688,7 @@ void QC_ApplicationWindow::initActions(void)
     action->addTo(tb);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionZoomPan, actionHandler);
-	menu->addAction(action);
+        menu->addAction(action);
     action->addTo(tb);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
@@ -726,18 +726,18 @@ void QC_ApplicationWindow::initActions(void)
     // RVT_PORT menu->insertItem(tr("Vie&ws"), createDockWindowMenu(NoToolBars));
     // RVT_PORT menu->insertItem(tr("Tool&bars"), createDockWindowMenu(OnlyToolBars));
 
-	// tr("Focus on Command Line")
-	action = new QAction(tr("Focus on &Command Line"), this);
-	action->setIcon(QIcon(":/main/editclear.png"));
-	action->setShortcut(tr("CTRL+M"));
-	//action->zetStatusTip(tr("Focus on Command Line"));
-		
+        // tr("Focus on Command Line")
+        action = new QAction(tr("Focus on &Command Line"), this);
+        action->setIcon(QIcon(":/main/editclear.png"));
+        action->setShortcut(tr("CTRL+M"));
+        //action->zetStatusTip(tr("Focus on Command Line"));
+
     connect(action, SIGNAL(activated()),
             this, SLOT(slotFocusCommandLine()));
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     //addToolBar(tb, tr("View"));
-	addToolBar(Qt::TopToolBarArea, tb); //tr("View");
+        addToolBar(Qt::TopToolBarArea, tb); //tr("View");
 
     // Selecting actions:
     //
@@ -910,8 +910,8 @@ void QC_ApplicationWindow::initActions(void)
     action = actionFactory.createAction(RS2::ActionDrawSpline, actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    
-	// Polylines:
+
+        // Polylines:
     subMenu= menu->addMenu(tr("&Polyline"));
     subMenu->setName("Polyline");
     action = actionFactory.createAction(RS2::ActionDrawPolyline,
@@ -935,7 +935,7 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     action->addTo(subMenu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-	
+
     // Text:
     action = actionFactory.createAction(RS2::ActionDrawText,
                                         actionHandler);
@@ -1223,14 +1223,14 @@ void QC_ApplicationWindow::initActions(void)
     action = actionFactory.createAction(RS2::ActionBlocksExplode, actionHandler);
     action->addTo(menu);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-	
-	QMainWindow::addToolBarBreak(Qt::TopToolBarArea);
-	
 
-	addToolBar(Qt::TopToolBarArea, penToolBar);                                                                                                               
-    addToolBar(Qt::TopToolBarArea, optionWidget); 
-	
-	
+        QMainWindow::addToolBarBreak(Qt::TopToolBarArea);
+
+
+        addToolBar(Qt::TopToolBarArea, penToolBar);
+    addToolBar(Qt::TopToolBarArea, optionWidget);
+
+
 #ifdef RS_SCRIPTING
     // Scripts menu:
     //
@@ -1249,9 +1249,9 @@ void QC_ApplicationWindow::initActions(void)
 
     // Help menu:
     //
-    /*RVT_PORThelpAboutApp = new QAction(tr("About"), 
-							   qPixmapFromMimeSource(QC_APP_ICON16), 
-							   tr("&About %1").arg(QC_APPNAME), 0, this); */
+    /*RVT_PORThelpAboutApp = new QAction(tr("About"),
+                                                           qPixmapFromMimeSource(QC_APP_ICON16),
+                                                           tr("&About %1").arg(QC_APPNAME), 0, this); */
     helpAboutApp = new QAction(qPixmapFromMimeSource(QC_APP_ICON16), tr("About"), this);
 
     //helpAboutApp->zetStatusTip(tr("About the application"));
@@ -1269,10 +1269,10 @@ void QC_ApplicationWindow::initActions(void)
     testDumpEntities = new QAction("Dump Entities", this);
     connect(testDumpEntities, SIGNAL(activated()),
             this, SLOT(slotTestDumpEntities()));
-    
+
 /* RVT_PORT	testDumpUndo = new QAction("Dump Undo Info",
-							   "Undo Info", 0, this); */
-	testDumpUndo = new QAction("Dump Undo Info", this);
+                                                           "Undo Info", 0, this); */
+        testDumpUndo = new QAction("Dump Undo Info", this);
     connect(testDumpUndo, SIGNAL(activated()),
             this, SLOT(slotTestDumpUndo()));
 
@@ -1283,8 +1283,8 @@ void QC_ApplicationWindow::initActions(void)
             this, SLOT(slotTestUpdateInserts()));
 
 /* RVT_PORT    testDrawFreehand = new QAction("Draw Freehand",
-	 "Draw Freehand", 0, this); */
-	 testDrawFreehand = new QAction("Draw Freehand", this); 
+         "Draw Freehand", 0, this); */
+         testDrawFreehand = new QAction("Draw Freehand", this);
     connect(testDrawFreehand, SIGNAL(activated()),
             this, SLOT(slotTestDrawFreehand()));
 
@@ -1303,7 +1303,7 @@ void QC_ApplicationWindow::initActions(void)
 
 /* RVT_PORT    testInsertImage = new QAction("Insert Image",
                                   "Insert Image", 0, this); */
-	// "Insert Image",
+        // "Insert Image",
     testInsertImage = new QAction(tr("Insert Image"), this);
     connect(testInsertImage, SIGNAL(activated()),
             this, SLOT(slotTestInsertImage()));
@@ -1409,32 +1409,32 @@ void QC_ApplicationWindow::initMenuBar() {
 void QC_ApplicationWindow::initToolBar() {
     RS_DEBUG->print("QC_ApplicationWindow::initToolBar()");
 
-	QSizePolicy toolBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed); 
+        QSizePolicy toolBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
-    fileToolBar = new QToolBar( "File Operations", this);	
-	fileToolBar->setSizePolicy(toolBarPolicy);
-	fileToolBar->setObjectName ( "FileTB" );
-	
+    fileToolBar = new QToolBar( "File Operations", this);
+        fileToolBar->setSizePolicy(toolBarPolicy);
+        fileToolBar->setObjectName ( "FileTB" );
+
     editToolBar = new QToolBar( "Edit Operations", this);
-	editToolBar->setSizePolicy(toolBarPolicy);
-	editToolBar->setObjectName ( "EditTB" );
+        editToolBar->setSizePolicy(toolBarPolicy);
+        editToolBar->setObjectName ( "EditTB" );
     zoomToolBar = new QToolBar( "Zoom Operations", this);
-	zoomToolBar->setSizePolicy(toolBarPolicy);
-	zoomToolBar->setObjectName ( "ZoomTB" );
-	    
-	penToolBar = new QG_PenToolBar("Pen Selection", this);
-	penToolBar->setSizePolicy(toolBarPolicy);
-	penToolBar->setObjectName ( "PenTB" );
-	
+        zoomToolBar->setSizePolicy(toolBarPolicy);
+        zoomToolBar->setObjectName ( "ZoomTB" );
+
+        penToolBar = new QG_PenToolBar("Pen Selection", this);
+        penToolBar->setSizePolicy(toolBarPolicy);
+        penToolBar->setObjectName ( "PenTB" );
+
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
-            this, SLOT(slotPenChanged(RS_Pen))); 
+            this, SLOT(slotPenChanged(RS_Pen)));
 
     optionWidget = new QToolBar("Tool Options", this);
-	QSizePolicy optionWidgetBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed); 
-	optionWidget->setMinimumSize(440,30);
-	optionWidget->setSizePolicy(optionWidgetBarPolicy);	
-	optionWidget->setObjectName ( "ToolTB" );
-	
+        QSizePolicy optionWidgetBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+        optionWidget->setMinimumSize(440,30);
+        optionWidget->setSizePolicy(optionWidgetBarPolicy);
+        optionWidget->setObjectName ( "ToolTB" );
+
     //optionWidget->setFixedExtentHeight(26);
     //optionWidget->setHorizontallyStretchable(true);
     //addDockWindow(optionWidget, DockTop, true);
@@ -1442,14 +1442,14 @@ void QC_ApplicationWindow::initToolBar() {
     // CAD toolbar left:
     QToolBar* t = new QToolBar("CAD Tools", this);
     t->setMinimumSize(56,400);
-	QSizePolicy policy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding); 
-	t->setSizePolicy(policy);
-	t->setObjectName ( "CADTB" );
+        QSizePolicy policy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
+        t->setSizePolicy(policy);
+        t->setObjectName ( "CADTB" );
     t->setFixedWidth(56);
     t->setFloatable(false);
     t->setAllowedAreas(Qt::LeftToolBarArea | Qt::RightToolBarArea);
    // t->setVerticallyStretchable(true);
-	addToolBar(Qt::LeftToolBarArea, t); 
+        addToolBar(Qt::LeftToolBarArea, t);
 
     cadToolBar = new QG_CadToolBar(t, "CAD Tools");
     cadToolBar->createSubToolBars(actionHandler);
@@ -1483,7 +1483,7 @@ void QC_ApplicationWindow::initStatusBar() {
 
 
 /**
- * Initializes the global application settings from the 
+ * Initializes the global application settings from the
  * config file (unix, mac) or registry (windows).
  */
 void QC_ApplicationWindow::initSettings() {
@@ -1520,7 +1520,7 @@ void QC_ApplicationWindow::initSettings() {
     resize(windowWidth, windowHeight);
     move(windowX, windowY);
 
-	restoreDocks();
+        restoreDocks();
 }
 
 
@@ -1577,7 +1577,7 @@ void QC_ApplicationWindow::initView() {
 
     RS_DEBUG->print("  layer widget..");
     dw = new QDockWidget( "Layer", this);
-	dw->setObjectName ( "LayerDW" );
+        dw->setObjectName ( "LayerDW" );
     layerWidget = new QG_LayerWidget(actionHandler, dw, "Layer");
     layerWidget->setFocusPolicy(Qt::NoFocus);
     connect(layerWidget, SIGNAL(escape()),
@@ -1595,12 +1595,12 @@ void QC_ApplicationWindow::initView() {
     //dw->resize(120,workspace->height()/2);
     addDockWidget (Qt::RightDockWidgetArea, dw );
 
-	
+
     layerDockWindow = dw;
 
     RS_DEBUG->print("  block widget..");
     dw = new QDockWidget("Block", this);
-	dw->setObjectName ( "BlockDW" );
+        dw->setObjectName ( "BlockDW" );
     // dw->setResizeEnabled(true);
     blockWidget = new QG_BlockWidget(actionHandler, dw, "Block");
     blockWidget->setFocusPolicy(Qt::NoFocus);
@@ -1614,19 +1614,21 @@ void QC_ApplicationWindow::initView() {
     dw->setCaption(tr("Block List"));
     // dw->setCloseMode(QDockWidget::Always);
     //dw->setFixedExtentHeight(400);
-	addDockWidget(Qt::RightDockWidgetArea, dw); 
+        addDockWidget(Qt::RightDockWidgetArea, dw);
     blockDockWindow = dw;
 
     RS_DEBUG->print("  library widget..");
     dw = new QDockWidget("Library", this);
-	dw->setObjectName ( "LibraryDW" );
+        dw->setObjectName ( "LibraryDW" );
     libraryWidget = new QG_LibraryWidget(dw, "Library");
     libraryWidget->setActionHandler(actionHandler);
     libraryWidget->setFocusPolicy(Qt::NoFocus);
     connect(libraryWidget, SIGNAL(escape()),
             this, SLOT(slotFocus()));
-    connect(this, SIGNAL(windowsChanged(bool)),
-            (QObject*)libraryWidget->bInsert, SLOT(setEnabled(bool)));
+    //fixme , there's no slot setEnabled(bool) for QVBoxLayout
+    // fix me
+//    connect(this, SIGNAL(windowsChanged(bool)),
+//           /* (QObject*)*/libraryWidget->bInsert, SLOT(setEnabled(bool)));
     dw->setWidget(libraryWidget);
     //dw->setFixedExtentWidth(240);
     //dw->setHeight(400);
@@ -1638,11 +1640,11 @@ void QC_ApplicationWindow::initView() {
 
     libraryDockWindow = dw;
     libraryDockWindow->hide();
-	
+
 
     RS_DEBUG->print("  command widget..");
     dw = new QDockWidget("Command", this);
-	dw->setObjectName ( "CommandDW" );
+        dw->setObjectName ( "CommandDW" );
     // dw->setResizeEnabled(true);
     commandWidget = new QG_CommandWidget(dw, "Command");
     commandWidget->setActionHandler(actionHandler);
@@ -1661,22 +1663,22 @@ void QC_ApplicationWindow::initView() {
     dw->setCaption(tr("Command line"));
     // dw->setCloseMode(QDockWidget::Always);
     commandDockWindow = dw;
-	addDockWidget(Qt::BottomDockWidgetArea, dw); 
+        addDockWidget(Qt::BottomDockWidgetArea, dw);
 
     RS_DEBUG->print("  done");
 }
 
-	
+
 
 /**
- * Creates a new toolbar. 
+ * Creates a new toolbar.
  * Implementation from QG_MainWindowInterface.
  * Can be called from scripts to add individual GUI elements.
  */
 /*QToolBar* QC_ApplicationWindow::createToolBar(const QString& name) {
     QToolBar* tb = new QToolBar(name, this);
-	tb->setLabel(name);
-	return tb;
+        tb->setLabel(name);
+        return tb;
 }*/
 
 
@@ -1685,13 +1687,13 @@ void QC_ApplicationWindow::initView() {
  * Creates a new button in the given tool bar for running a script.
  */
 /*void QC_ApplicationWindow::addToolBarButton(QToolBar* tb) {
-	if (tb!=NULL) {
-    	QAction* action = new QAction("Blah", 
-			QPixmap::fromMimeSource("zoomwindow.png"),
+        if (tb!=NULL) {
+        QAction* action = new QAction("Blah",
+                        QPixmap::fromMimeSource("zoomwindow.png"),
             "&Blah", QKeySequence(), NULL);
-    	//action->zetStatusTip("Blah blah");
-		action->addTo(tb);
-	}
+        //action->zetStatusTip("Blah blah");
+                action->addTo(tb);
+        }
 }*/
 
 
@@ -1778,13 +1780,13 @@ void QC_ApplicationWindow::slotFocusCommandLine() {
         commandWidget->setFocus();
     }
 }
-	
+
 
 /**
  * Shows the given error on the command line.
  */
 void QC_ApplicationWindow::slotError(const QString& msg) {
-	commandWidget->appendHistory(msg);
+        commandWidget->appendHistory(msg);
 }
 
 
@@ -1817,7 +1819,7 @@ void QC_ApplicationWindow::slotWindowActivated(QWidget*) {
     if (m!=NULL && m->getDocument()!=NULL) {
 
         RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated: "
-			"document: %d", m->getDocument()->getId());
+                        "document: %d", m->getDocument()->getId());
 
         bool showByBlock = m->getDocument()->rtti()==RS2::EntityBlock;
 
@@ -1848,7 +1850,7 @@ void QC_ApplicationWindow::slotWindowActivated(QWidget*) {
             emit(gridChanged(m->getGraphic()->isGridOn()));
             emit(printPreviewChanged(m->getGraphicView()->isPrintPreview()));
         }
-    } 
+    }
 
     // Disable/Enable menu and toolbar items
     emit windowsChanged(m!=NULL && m->getDocument()!=NULL);
@@ -1930,8 +1932,8 @@ void QC_ApplicationWindow::slotTileHorizontal() {
     int y = 0;
     for (int i=0; i<int(windows.count()); ++i) {
         QWidget *window = windows.at(i);
-/* RVT_PORT 
-		if (window->testWState(WState_Maximized)) {
+/* RVT_PORT
+                if (window->testWState(WState_Maximized)) {
             // prevent flicker
             window->hide();
             window->showNormal();
@@ -1976,7 +1978,7 @@ void QC_ApplicationWindow::slotTileVertical() {
 
            //window->parentWidget()->setGeometry(0, y,
            //                                    workspace->width(), actHeight);
-           //window->parentWidget()->resize(window->parentWidget()->width(), 
+           //window->parentWidget()->resize(window->parentWidget()->width(),
         //        window->parentWidget()->height());
            //window->resize(window->width(), window->height());
            //y+=actHeight;
@@ -1985,7 +1987,7 @@ void QC_ApplicationWindow::slotTileVertical() {
 }
 
 /**
- * Called when something changed in the pen tool bar 
+ * Called when something changed in the pen tool bar
  * (e.g. color, width, style).
  */
 void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
@@ -2019,7 +2021,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     RS_DEBUG->print("  creating MDI window");
     QC_MDIWindow* w = new QC_MDIWindow(doc, workspace,
                                        0, Qt::WDestructiveClose);
-	//w->setWindowState(WindowMaximized);
+        //w->setWindowState(WindowMaximized);
     connect(w, SIGNAL(signalClosing()),
             this, SLOT(slotFileClosing()));
 
@@ -2061,8 +2063,8 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     QG_DIALOGFACTORY->setCommandWidget(commandWidget);
     // Link the dialog factory to the main app window:
     QG_DIALOGFACTORY->setMainWindow(this);
-	
-	workspace->addWindow(w);
+
+        workspace->addWindow(w);
 
     RS_DEBUG->print("  showing MDI window");
     if (workspace->windowList().isEmpty()) {
@@ -2075,7 +2077,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNew() OK");
     setFocus();
-	
+
     return w;
 }
 
@@ -2138,7 +2140,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName,
         coordinateWidget->setGraphic(w->getGraphic());
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: open file");
-        
+
         qApp->processEvents(QEventLoop::AllEvents, 1000);
 
         // open the file in the new view:
@@ -2240,15 +2242,15 @@ void QC_ApplicationWindow::slotFileSaveAs() {
         bool cancelled;
         if (w->slotFileSaveAs(cancelled)) {
             if (!cancelled) {
-            	name = w->getDocument()->getFilename();
-            	recentFiles->add(name);
-            	w->setCaption(name);
-		if (!autosaveTimer->isActive()) {
+                name = w->getDocument()->getFilename();
+                recentFiles->add(name);
+                w->setCaption(name);
+                if (!autosaveTimer->isActive()) {
                     RS_SETTINGS->beginGroup("/Defaults");
                     autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000);
                     RS_SETTINGS->endGroup();
                 }
-	    }
+            }
         } else {
             // error
             QMessageBox::information(this, QMessageBox::tr("Warning"),
@@ -2278,21 +2280,21 @@ void QC_ApplicationWindow::slotFileAutoSave() {
     QC_MDIWindow* w = getMDIWindow();
     QString name;
     if (w!=NULL) {
-	bool cancelled;
-	if (w->slotFileSave(cancelled, true)) {
-	    // auto-save cannot be cancelled by user, so the
-	    // "cancelled" parameter is a dummy
-	    statusBar()->message(tr("Auto-saved drawing"), 2000);
-	} else {
-	    // error
-	    autosaveTimer->stop();
-	    QMessageBox::information(this, QMessageBox::tr("Warning"),
-				     tr("Cannot auto-save the file\n%1\nPlease "
-					"check the permissions.\n"
-					"Auto-save disabled.")
-				     .arg(w->getDocument()->getAutoSaveFilename()),
-				     QMessageBox::Ok);
-	}
+        bool cancelled;
+        if (w->slotFileSave(cancelled, true)) {
+            // auto-save cannot be cancelled by user, so the
+            // "cancelled" parameter is a dummy
+            statusBar()->message(tr("Auto-saved drawing"), 2000);
+        } else {
+            // error
+            autosaveTimer->stop();
+            QMessageBox::information(this, QMessageBox::tr("Warning"),
+                                     tr("Cannot auto-save the file\n%1\nPlease "
+                                        "check the permissions.\n"
+                                        "Auto-save disabled.")
+                                     .arg(w->getDocument()->getAutoSaveFilename()),
+                                     QMessageBox::Ok);
+        }
     }
 }
 
@@ -2404,16 +2406,16 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     QC_MDIWindow* w = getMDIWindow();
     if (w==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-        	"QC_ApplicationWindow::slotFileExport: "
-        	"no window opened");
+                "QC_ApplicationWindow::slotFileExport: "
+                "no window opened");
         return false;
     }
 
     RS_Graphic* graphic = w->getDocument()->getGraphic();
     if (graphic==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-        	"QC_ApplicationWindow::slotFileExport: "
-        	"no graphic");
+                "QC_ApplicationWindow::slotFileExport: "
+                "no graphic");
         return false;
     }
 
@@ -2461,7 +2463,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     iio.setFileName(name);
     iio.setFormat(format.ascii());
     // RVT_PORT if (iio.write()) {
-	if (iio.write(img)) {
+        if (iio.write(img)) {
         ret = true;
     }
     QString error=iio.errorString();
@@ -2491,20 +2493,20 @@ void QC_ApplicationWindow::slotFileClose() {
     if (m!=NULL) {
         m->close(true);
     }
-   
-   	/*
-	m = getMDIWindow();
+
+        /*
+        m = getMDIWindow();
     if (m!=NULL) {
-		//m->showMaximized();
-		m->setWindowState(WindowMaximized);
-	}
-	*/
+                //m->showMaximized();
+                m->setWindowState(WindowMaximized);
+        }
+        */
 }
 
 
 
 /**
- * Called when a MDI window is actually about to close. Used to 
+ * Called when a MDI window is actually about to close. Used to
  * detach widgets from the document.
  */
 void QC_ApplicationWindow::slotFileClosing() {
@@ -2527,16 +2529,16 @@ void QC_ApplicationWindow::slotFilePrint() {
     QC_MDIWindow* w = getMDIWindow();
     if (w==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-        	"QC_ApplicationWindow::slotFilePrint: "
-        	"no window opened");
+                "QC_ApplicationWindow::slotFilePrint: "
+                "no window opened");
         return;
     }
 
     RS_Graphic* graphic = w->getDocument()->getGraphic();
     if (graphic==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-        	"QC_ApplicationWindow::slotFilePrint: "
-        	"no graphic");
+                "QC_ApplicationWindow::slotFilePrint: "
+                "no graphic");
         return;
     }
 
@@ -2622,8 +2624,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
     QC_MDIWindow* parent = getMDIWindow();
     if (parent==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-        	"QC_ApplicationWindow::slotFilePrintPreview: "
-        	"no window opened");
+                "QC_ApplicationWindow::slotFilePrintPreview: "
+                "no window opened");
         return;
     }
 
@@ -2650,8 +2652,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
 
                 QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), workspace,
                                                    0, Qt::WDestructiveClose);
-				workspace->addWindow(w);
-				w->setWindowState(Qt::WindowMaximized);
+                                workspace->addWindow(w);
+                                w->setWindowState(Qt::WindowMaximized);
                 parent->addChildWindow(w);
                 connect(w, SIGNAL(signalClosing()),
                          this, SLOT(slotFileClose()));
@@ -2826,7 +2828,7 @@ void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
 /*
 void QC_ApplicationWindow::slotBlocksEdit() {
     RS_DEBUG->print("QC_ApplicationWindow::slotBlocksEdit()");
- 
+
     QC_MDIWindow* parent = getMDIWindow();
     if (parent!=NULL) {
         RS_BlockList* blist = blockWidget->getBlockList();
@@ -3288,10 +3290,10 @@ void QC_ApplicationWindow::slotTestDumpUndo() {
     RS_DEBUG->print("QC_ApplicationWindow::slotTestDumpUndo()");
 
     RS_Document* d = getDocument();
-	if (d!=NULL) {
-		std::cout << *(RS_Undo*)d;
-		std::cout << std::endl;
-	}
+        if (d!=NULL) {
+                std::cout << *(RS_Undo*)d;
+                std::cout << std::endl;
+        }
 }
 
 
@@ -3331,7 +3333,7 @@ void QC_ApplicationWindow::slotTestDrawFreehand() {
 
            //QMouseEvent rsm1(posx, posy, LEFT);
         QMouseEvent rsm1(QEvent::MouseButtonPress,
-                           QPoint(posx,posy), 
+                           QPoint(posx,posy),
                            RS2::LeftButton,
                            RS2::LeftButton);
            action->mousePressEvent(&rsm1);
@@ -3350,9 +3352,9 @@ void QC_ApplicationWindow::slotTestDrawFreehand() {
                posy+=speedy;
 
                //QMouseEvent rsm2(posx, posy, LEFT);
-            
+
             QMouseEvent rsm2(QEvent::MouseMove,
-                           QPoint(posx,posy), 
+                           QPoint(posx,posy),
                            RS2::LeftButton,
                            RS2::LeftButton);
                action->mouseMoveEvent(&rsm2);
@@ -3599,7 +3601,7 @@ void QC_ApplicationWindow::slotTestInsertEllipse() {
 
                       ellipse = new RS_Ellipse(graphic,
                                                v,
-                                               RS_Vector((x/5+50.0)/2.0, 0.0), 
+                                               RS_Vector((x/5+50.0)/2.0, 0.0),
                                          fabs(x/y),
                                                0.0, 2*M_PI,
                                                false);
@@ -3986,15 +3988,15 @@ bool QC_ApplicationWindow::queryExit(bool force) {
 
     bool succ = true;
 
-	 QWidgetList list = workspace->windowList();
-	
-	while (!list.isEmpty()) {
-		QC_MDIWindow *tmp=(QC_MDIWindow*)list.takeFirst();
-		succ = tmp->closeMDI(force);
-		if (!succ) {
+         QWidgetList list = workspace->windowList();
+
+        while (!list.isEmpty()) {
+                QC_MDIWindow *tmp=(QC_MDIWindow*)list.takeFirst();
+                succ = tmp->closeMDI(force);
+                if (!succ) {
             break;
         }
-	}
+        }
 
     if (succ) {
         storeSettings();
