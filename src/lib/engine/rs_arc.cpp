@@ -656,15 +656,18 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
 void RS_Arc::reverse() {
     std::swap(data.angle1,data.angle2);
     data.reversed = !data.reversed;
-    calculateEndpoints();
-    calculateBorders();
+//    calculateEndpoints();
+    std::swap(startpoint,endpoint);
+    //reversing the order of start/end doesn't change position
+//    calculateBorders();
 }
 
 
 void RS_Arc::move(const RS_Vector& offset) {
     data.center.move(offset);
-    calculateEndpoints();
-    calculateBorders();
+    startpoint.move(offset);
+    endpoint.move(offset);
+    moveBorders(offset);
 }
 
 
@@ -706,8 +709,12 @@ void RS_Arc::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.center.scale(center, factor);
     data.radius *= factor.x;
     data.radius = fabs( data.radius );
-    calculateEndpoints();
-    calculateBorders();
+//    calculateEndpoints();
+    //todo, does this handle negative factors properly?
+    startpoint.scale(center,factor);
+    endpoint.scale(center,factor);
+    scaleBorders(center,factor);
+//    calculateBorders();
 }
 
 
