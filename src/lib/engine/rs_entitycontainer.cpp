@@ -164,14 +164,14 @@ void RS_EntityContainer::undoStateChanged(bool undone) {
 
 
 void RS_EntityContainer::setVisible(bool v) {
-    RS_DEBUG->print("RS_EntityContainer::setVisible: %d", v);
+//    RS_DEBUG->print("RS_EntityContainer::setVisible: %d", v);
     RS_Entity::setVisible(v);
 
     // All sub-entities:
     for (RS_Entity* e=firstEntity(RS2::ResolveNone);
             e!=NULL;
             e=nextEntity(RS2::ResolveNone)) {
-        RS_DEBUG->print("RS_EntityContainer::setVisible: subentity: %d", v);
+//        RS_DEBUG->print("RS_EntityContainer::setVisible: subentity: %d", v);
         e->setVisible(v);
     }
 }

@@ -261,7 +261,9 @@ void QG_CadToolBar::showToolBar(RS2::ToolBarId id) {
     savedID=id;
     currentTb = newTb;
     if (currentTb!=NULL) {
-        currentTb->move(0,10); //shift down to show the handle to move the toolbar
+        //shift down to show the handle to move the toolbar
+        //has to be 20, 10 is not enough
+        currentTb->move(0,20);
         currentTb->show();
     }
 }
