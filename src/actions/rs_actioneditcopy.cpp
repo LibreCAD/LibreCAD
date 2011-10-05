@@ -151,11 +151,11 @@ void RS_ActionEditCopy::updateMouseCursor() {
 void RS_ActionEditCopy::updateToolBar() {
     //not needed any more with new snap
     return;
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-    }
+//    if (!isFinished()) {
+//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
+//    } else {
+//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+//    }
 }
 
 
