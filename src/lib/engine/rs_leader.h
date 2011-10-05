@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -49,8 +49,8 @@ public:
         return os;
     }
 
-	/** true: leader has an arrow head. false: no arrow. */
-	bool arrowHead;
+        /** true: leader has an arrow head. false: no arrow. */
+        bool arrowHead;
 };
 
 
@@ -80,25 +80,25 @@ public:
         return RS2::EntityDimLeader;
     }
 
-	virtual void update();
+        virtual void update();
 
     /** @return Copy of data that defines the leader. */
     RS_LeaderData getData() const {
         return data;
     }
 
-	/** @return true: if this leader has an arrow at the beginning. */
-	bool hasArrowHead() {
-		return data.arrowHead;
-	}
+        /** @return true: if this leader has an arrow at the beginning. */
+        bool hasArrowHead() {
+                return data.arrowHead;
+        }
 
     virtual RS_Entity* addVertex(const RS_Vector& v);
     virtual void addEntity(RS_Entity* entity);
 
-	virtual double getLength() {
-		return -1.0;
-	}
-	
+//	virtual double getLength() const {
+//		return -1.0;
+//	}
+
     virtual void move(RS_Vector offset);
     virtual void rotate(RS_Vector center, double angle);
     virtual void scale(RS_Vector center, RS_Vector factor);
@@ -111,7 +111,7 @@ public:
 
 protected:
     RS_LeaderData data;
-	bool empty;
+        bool empty;
 };
 
 #endif

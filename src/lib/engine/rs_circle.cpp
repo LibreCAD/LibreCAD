@@ -68,7 +68,7 @@ double RS_Circle::getAngleLength() const {
 /**
  * @return Length of the circle which is the circumference.
  */
-double RS_Circle::getLength() {
+double RS_Circle::getLength() const {
     return 2*M_PI*data.radius;
 }
 

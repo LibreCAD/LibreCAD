@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -39,11 +39,11 @@ RS_ActionBlocksRemove::RS_ActionBlocksRemove(RS_EntityContainer& container,
 
 
 QAction* RS_ActionBlocksRemove::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Remove Block")
-	QAction* action = new QAction(tr("&Remove Block"), NULL);
+        // tr("Remove Block")
+        QAction* action = new QAction(tr("&Remove Block"), NULL);
     //action->zetStatusTip(tr("Remove Block"));
-	action->setIcon(QIcon(":/ui/blockremove.png"));
-	return action;
+        action->setIcon(QIcon(":/ui/blockremove.png"));
+        return action;
 }
 
 void RS_ActionBlocksRemove::trigger() {
@@ -60,11 +60,11 @@ void RS_ActionBlocksRemove::trigger() {
         for (int bi=0; bi<blkLst->count(); bi++) {
             containerList.append(blkLst->at(bi));
         }
-        
+
         if (block!=NULL) {
-            
+
             for (int i = 0; i < containerList.size(); ++i) {
-        
+
                 RS_EntityContainer* cont = containerList.at(i);
                 // remove all inserts from the graphic:
                 bool done;
@@ -86,21 +86,21 @@ void RS_ActionBlocksRemove::trigger() {
                 } while (!done);
             }
 
-			// close all windows that are editing this block:
-        	if (RS_DIALOGFACTORY!=NULL) {
-	            RS_DIALOGFACTORY->closeEditBlockWindow(block);
-    	    }
+                        // close all windows that are editing this block:
+                if (RS_DIALOGFACTORY!=NULL) {
+                    RS_DIALOGFACTORY->closeEditBlockWindow(block);
+            }
 
             // Now remove the block from the block list:
             graphic->removeBlock(block);
             graphic->updateInserts();
-			graphicView->redraw(RS2::RedrawDrawing); 
+                        graphicView->redraw(RS2::RedrawDrawing);
 
         }
     }
 
     finish();
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected());
+    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }
 
 

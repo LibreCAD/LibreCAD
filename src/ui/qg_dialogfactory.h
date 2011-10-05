@@ -253,7 +253,7 @@ public:
                                    const QString& right,
                                    bool keeping=true);
     virtual void restoreMouseWidget(void);
-    virtual void updateSelectionWidget(int num);
+    virtual void updateSelectionWidget(int num, double length);//updated for total number of selected, and total length of selected
     virtual void commandMessage(const QString& message);
         virtual bool isAdapter() { return false; }
 

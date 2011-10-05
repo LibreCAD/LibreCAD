@@ -220,9 +220,9 @@ public:
                                       RS2::ResolveLevel level=RS2::ResolveNone,
                                                                           double solidDist = RS_MAXDOUBLE);
 
-        virtual double getLength() {
-                return -1.0;
-        }
+//        virtual double getLength() const {
+//                return -1.0;
+//        }
 
     virtual void move(const RS_Vector& offset);
     virtual void rotate(const RS_Vector& center, const double& angle);

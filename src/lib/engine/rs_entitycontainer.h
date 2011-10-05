@@ -75,7 +75,7 @@ public:
                 return false;
         }
 
-        virtual double getLength();
+        virtual double getLength() const;
 
     virtual void undoStateChanged(bool undone);
     virtual void setVisible(bool v);

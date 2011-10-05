@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -41,22 +41,22 @@ public:
      */
     RS_HatchData() {}
 
-	/**
-	 * @param solid true: solid fill, false: pattern.
-	 * @param scale Pattern scale or spacing.
-	 * @param pattern Pattern name.
-	 */
+        /**
+         * @param solid true: solid fill, false: pattern.
+         * @param scale Pattern scale or spacing.
+         * @param pattern Pattern name.
+         */
     RS_HatchData(bool solid,
-	             double scale,
-				 double angle,
+                     double scale,
+                                 double angle,
                      const QString& pattern) {
-		this->solid = solid;
-		this->scale = scale;
-		this->angle = angle;
-		this->pattern = pattern;
+                this->solid = solid;
+                this->scale = scale;
+                this->angle = angle;
+                this->pattern = pattern;
 
-		//std::cout << "RS_HatchData: " << pattern.latin1() << "\n";
-	}
+                //std::cout << "RS_HatchData: " << pattern.latin1() << "\n";
+        }
 
     friend std::ostream& operator << (std::ostream& os, const RS_HatchData& td) {
         os << "(" << td.pattern.toLatin1().data() << ")";
@@ -64,9 +64,9 @@ public:
     }
 
 public:
-	bool solid;
-	double scale;
-	double angle;
+        bool solid;
+        double scale;
+        double angle;
         QString pattern;
 };
 
@@ -89,18 +89,18 @@ public:
     virtual RS2::EntityType rtti() const {
         return RS2::EntityHatch;
     }
-	
+
     /**
      * @return true: if this is a hatch with lines (hatch pattern),
      *         false: if this is filled with a solid color.
      */
     virtual bool isContainer() const {
-		if (isSolid()) {
-			return false;
-		}
-		else {
-        	return true;
-		}
+                if (isSolid()) {
+                        return false;
+                }
+                else {
+                return true;
+                }
     }
 
     /** @return Copy of data that defines the hatch. */
@@ -108,54 +108,54 @@ public:
         return data;
     }
 
-	bool validate();
-	
-	int countLoops();
+        bool validate();
 
-	/** @return true if this is a solid fill. false if it is a pattern hatch. */
-	bool isSolid() const {
-		return data.solid;
-	}
-	void setSolid(bool solid) {
-		data.solid = solid;
-	}
+        int countLoops();
+
+        /** @return true if this is a solid fill. false if it is a pattern hatch. */
+        bool isSolid() const {
+                return data.solid;
+        }
+        void setSolid(bool solid) {
+                data.solid = solid;
+        }
 
         QString getPattern() {
-		return data.pattern;
-	}
+                return data.pattern;
+        }
         void setPattern(const QString& pattern) {
-		data.pattern = pattern;
-	}
-	
-	double getScale() {
-		return data.scale;
-	}
-	void setScale(double scale) {
-		data.scale = scale;
-	}
-	
-	double getAngle() {
-		return data.angle;
-	}
-	void setAngle(double angle) {
-		data.angle = angle;
-	}
+                data.pattern = pattern;
+        }
+
+        double getScale() {
+                return data.scale;
+        }
+        void setScale(double scale) {
+                data.scale = scale;
+        }
+
+        double getAngle() {
+                return data.angle;
+        }
+        void setAngle(double angle) {
+                data.angle = angle;
+        }
 
     virtual void calculateBorders();
     void update();
-	void activateContour(bool on);
-	
-    virtual void draw(RS_Painter* painter, RS_GraphicView* view, 
-		double patternOffset=0.0);
+        void activateContour(bool on);
 
-	virtual double getLength() {
-		return -1.0;
-	}
-	
+    virtual void draw(RS_Painter* painter, RS_GraphicView* view,
+                double patternOffset=0.0);
+
+//	virtual double getLength() {
+//		return -1.0;
+//	}
+
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity = NULL,
                                       RS2::ResolveLevel level = RS2::ResolveNone,
-									  double solidDist = RS_MAXDOUBLE);
+                                                                          double solidDist = RS_MAXDOUBLE);
 
     virtual void move(RS_Vector offset);
     virtual void rotate(RS_Vector center, double angle);
@@ -169,9 +169,9 @@ public:
 
 protected:
     RS_HatchData data;
-	RS_EntityContainer* hatch;
-	bool updateRunning;
-	bool needOptimization;
+        RS_EntityContainer* hatch;
+        bool updateRunning;
+        bool needOptimization;
 };
 
 #endif

@@ -45,11 +45,11 @@ RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
 }
 
 QAction* RS_ActionModifyRound::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// (tr("Round")
-	QAction* action = new QAction(tr("&Round"), NULL);
-	action->setIcon(QIcon(":/extui/modifyround.png"));
+        // (tr("Round")
+        QAction* action = new QAction(tr("&Round"), NULL);
+        action->setIcon(QIcon(":/extui/modifyround.png"));
     //action->zetStatusTip(tr("Round Entities"));
-	return action;
+        return action;
 }
 
 
@@ -87,7 +87,7 @@ void RS_ActionModifyRound::trigger() {
         setStatus(SetEntity1);
 
         if (RS_DIALOGFACTORY!=NULL) {
-            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected());
+            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
         }
     }
 }
@@ -111,7 +111,7 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
         coord2 = mouse;
 
         if (entity1!=NULL && entity2!=NULL && entity2->isAtomic() &&
-			RS_Information::isTrimmable(entity1, entity2)) {
+                        RS_Information::isTrimmable(entity1, entity2)) {
 
             deletePreview();
             //preview->addSelectionFrom(*container);
@@ -159,7 +159,7 @@ void RS_ActionModifyRound::mouseReleaseEvent(QMouseEvent* e) {
             entity1 = se;
             coord1 = mouse;
             if (entity1!=NULL && entity1->isAtomic() &&
-				RS_Information::isTrimmable(entity1)) {
+                                RS_Information::isTrimmable(entity1)) {
                 setStatus(SetEntity2);
             }
             break;
@@ -168,7 +168,7 @@ void RS_ActionModifyRound::mouseReleaseEvent(QMouseEvent* e) {
             entity2 = se;
             coord2 = mouse;
             if (entity2!=NULL && entity2->isAtomic() &&
-			    RS_Information::isTrimmable(entity1, entity2)) {
+                            RS_Information::isTrimmable(entity1, entity2)) {
                 //setStatus(ChooseRounding);
                 trigger();
             }

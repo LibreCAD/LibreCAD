@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -124,7 +124,7 @@ public:
 
 /**
  * Class for a text entity.
- * Please note that text strings can contain special 
+ * Please note that text strings can contain special
  * characters such as %%c for a diameter sign as well as unicode
  * characters. Line feeds are stored as real line feeds in the string.
  *
@@ -177,15 +177,15 @@ public:
     RS2::VAlign getVAlign() {
         return data.valign;
     }
-	void setVAlign(RS2::VAlign va) {
-		data.valign = va;
-	}
+        void setVAlign(RS2::VAlign va) {
+                data.valign = va;
+        }
     RS2::HAlign getHAlign() {
         return data.halign;
     }
-	void setHAlign(RS2::HAlign ha) {
-		data.halign = ha;
-	}
+        void setHAlign(RS2::HAlign ha) {
+                data.halign = ha;
+        }
     RS2::TextDrawingDirection getDrawingDirection() {
         return data.drawingDirection;
     }
@@ -208,9 +208,9 @@ public:
     QString getStyle() {
         return data.style;
     }
-	void setAngle(double a) {
-		data.angle = a;
-	}
+        void setAngle(double a) {
+                data.angle = a;
+        }
     double getAngle() {
         return data.angle;
     }
@@ -221,10 +221,10 @@ public:
         return usedTextHeight;
     }
 
-	virtual double getLength() {
-		return -1.0;
-	}
-	
+//	virtual double getLength() const {
+//		return -1.0;
+//	}
+
     virtual RS_VectorSolutions getRefPoints();
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
                                      double* dist = NULL);
@@ -233,7 +233,7 @@ public:
     virtual void rotate(RS_Vector center, double angle);
     virtual void scale(RS_Vector center, RS_Vector factor);
     virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
-	virtual bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2);
+        virtual bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2);
     virtual void stretch(RS_Vector firstCorner,
                          RS_Vector secondCorner,
                          RS_Vector offset);
@@ -244,7 +244,7 @@ protected:
     RS_TextData data;
 
     /**
-     * Text width used by the current contents of this text entity. 
+     * Text width used by the current contents of this text entity.
      * This property is updated by the update method.
      * @see update
      */

@@ -50,22 +50,22 @@ RS_ActionModifyTrim::RS_ActionModifyTrim(RS_EntityContainer& container,
 QAction* RS_ActionModifyTrim::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
     QAction* action;
 
-	switch (type) {
-	default:
-	case RS2::ActionModifyTrim:
-		// (tr("Trim")
-		action = new QAction(tr("&Trim"), NULL);
-		action->setIcon(QIcon(":/extui/modifytrim.png"));
-	    //action->zetStatusTip(tr("Trim Entities"));
-		break;
+        switch (type) {
+        default:
+        case RS2::ActionModifyTrim:
+                // (tr("Trim")
+                action = new QAction(tr("&Trim"), NULL);
+                action->setIcon(QIcon(":/extui/modifytrim.png"));
+            //action->zetStatusTip(tr("Trim Entities"));
+                break;
 
-	case RS2::ActionModifyTrim2:
-		// tr("Trim Two")
-		action = new QAction(tr("&Trim Two"), NULL);
-		action->setIcon(QIcon(":/extui/modifytrim2.png"));
+        case RS2::ActionModifyTrim2:
+                // tr("Trim Two")
+                action = new QAction(tr("&Trim Two"), NULL);
+                action->setIcon(QIcon(":/extui/modifytrim2.png"));
         //action->zetStatusTip(tr("Trim two Entities"));
-		break;
-	}
+                break;
+        }
 
     return action;
 }
@@ -102,7 +102,7 @@ void RS_ActionModifyTrim::trigger() {
             setStatus(ChooseTrimEntity);
         }
 
-        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected());
+        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
 }
 

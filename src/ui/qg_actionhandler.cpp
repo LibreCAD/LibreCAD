@@ -262,7 +262,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 
             RS_Selection s((RS_EntityContainer&)*doc, gv);
             s.selectAll(false);
-            RS_DIALOGFACTORY->updateSelectionWidget(doc->countSelected());
+            RS_DIALOGFACTORY->updateSelectionWidget(doc->countSelected(),doc->totalSelectedLength());
         }
         break;
     case RS2::ActionEditUndo:
