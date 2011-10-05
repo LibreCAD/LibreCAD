@@ -107,10 +107,11 @@ public:
     virtual bool isEmpty() {
         return count()==0;
     }
-    virtual unsigned long int count();
-    virtual unsigned long int countDeep();
+    virtual unsigned int count();
+    virtual unsigned int countDeep();
     //virtual unsigned long int countLayerEntities(RS_Layer* layer);
-    virtual unsigned long int countSelected();
+    virtual unsigned int countSelected();
+    virtual double totalSelectedLength();
 
     /**
      * Enables / disables automatic update of borders on entity removals

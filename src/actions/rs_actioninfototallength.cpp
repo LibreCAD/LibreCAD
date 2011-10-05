@@ -54,21 +54,7 @@ void RS_ActionInfoTotalLength::trigger() {
 
     RS_DEBUG->print("RS_ActionInfoTotalLength::trigger()");
 
-    double len = 0.0;
-    for (RS_Entity* e = container->firstEntity(RS2::ResolveNone);
-            e != NULL;
-            e = container->nextEntity(RS2::ResolveNone)) {
-
-        if (e->isVisible() && e->isSelected()) {
-            double l = e->getLength();
-            if (l<0.0) {
-                len = -1.0;
-                break;
-            } else {
-                len += l;
-            }
-        }
-    }
+    double len (container->getSelectedLength());
 
     if (len>0.0) {
         RS_DIALOGFACTORY->commandMessage(

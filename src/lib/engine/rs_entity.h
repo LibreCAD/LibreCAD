@@ -109,13 +109,13 @@ public:
      * This method must be overwritten in subclasses and return the
      * number of <b>atomic</b> entities in this entity.
      */
-    virtual unsigned long int count() = 0;
+    virtual unsigned int count() = 0;
 
     /**
      * This method must be overwritten in subclasses and return the
      * number of <b>atomic</b> entities in this entity including sub containers.
      */
-    virtual unsigned long int countDeep() = 0;
+    virtual unsigned int countDeep() = 0;
 
 
         /**
