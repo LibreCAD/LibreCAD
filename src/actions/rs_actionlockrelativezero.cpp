@@ -54,7 +54,7 @@ QAction* RS_ActionLockRelativeZero::createGUIAction(RS2::ActionType /*type*/, QO
 void RS_ActionLockRelativeZero::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
-    finish();
+    finish(false);
 }
 
 void RS_ActionLockRelativeZero::trigger() {

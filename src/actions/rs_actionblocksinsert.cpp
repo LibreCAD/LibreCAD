@@ -63,7 +63,7 @@ void RS_ActionBlocksInsert::init(int status) {
         if (block!=NULL) {
             data.name = block->getName();
         } else {
-            finish();
+            finish(false);
         }
     }
 }

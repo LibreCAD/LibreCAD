@@ -85,7 +85,7 @@ void RS_ActionSnapIntersectionManual::trigger() {
                 predecessor->coordinateEvent(&e);
             }
         }
-        finish();
+        finish(false);
     }
 }
 

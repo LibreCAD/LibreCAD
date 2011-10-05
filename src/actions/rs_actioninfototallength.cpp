@@ -64,7 +64,7 @@ void RS_ActionInfoTotalLength::trigger() {
                                             "entities cannot be measured."));
     }
 
-    finish();
+    finish(false);
 }
 
 

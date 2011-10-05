@@ -56,7 +56,7 @@ void RS_ActionBlocksExplode::init(int status) {
     RS_PreviewActionInterface::init(status);
 
     trigger();
-    finish();
+    finish(false);
 }
 
 

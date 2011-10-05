@@ -77,7 +77,7 @@ void RS_ActionLayersRemove::trigger() {
         // Now remove the layer from the layer list:
         graphic->removeLayer(layer);
     }
-    finish();
+    finish(false);
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }
 

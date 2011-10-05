@@ -41,7 +41,7 @@ RS_ActionZoomScroll::RS_ActionZoomScroll(RS2::Direction direction,
 
 void RS_ActionZoomScroll::trigger() {
     graphicView->zoomScroll(direction);
-    finish();
+    finish(false);
 }
 
 

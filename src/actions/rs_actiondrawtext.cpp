@@ -68,7 +68,7 @@ void RS_ActionDrawText::init(int status) {
                     showOptions();
                 } else {
                     hideOptions();
-                    finish();
+                    finish(false);
                 updateMouseButtonHints();
                 }
             }
@@ -163,7 +163,7 @@ void RS_ActionDrawText::mouseReleaseEvent(QMouseEvent* e) {
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
         //init(getStatus()-1);
-        finish();
+        finish(false);
     }
 }
 

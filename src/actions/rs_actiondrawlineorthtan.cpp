@@ -130,7 +130,7 @@ void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent* e) {
             }
         deletePreview();
         if (getStatus() == SetLine) {
-                finish();
+                finish(false);
         }else{
                 init(getStatus()-1);
         }

@@ -141,7 +141,7 @@ void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent* e) {
                     data.axisPoint2 = axisPoint2;
                     deletePreview();
                     trigger();
-                    finish();
+                    finish(false);
                 }
             }
             break;

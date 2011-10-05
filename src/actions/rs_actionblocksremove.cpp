@@ -99,7 +99,7 @@ void RS_ActionBlocksRemove::trigger() {
         }
     }
 
-    finish();
+    finish(false);
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }
 

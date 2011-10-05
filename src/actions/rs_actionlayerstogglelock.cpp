@@ -77,7 +77,7 @@ void RS_ActionLayersToggleLock::trigger() {
         }
 
     }
-    finish();
+    finish(false);
 }
 
 

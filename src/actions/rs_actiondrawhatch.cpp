@@ -60,11 +60,11 @@ void RS_ActionDrawHatch::init(int status) {
     if (RS_DIALOGFACTORY->requestHatchDialog(&tmp)) {
         data = tmp.getData();
         trigger();
-        finish();
+        finish(false);
         graphicView->redraw(RS2::RedrawDrawing); 
 
     } else {
-        finish();
+        finish(false);
     }
 }
 

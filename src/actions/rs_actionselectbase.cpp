@@ -43,7 +43,7 @@ RS_ActionSelectBase::RS_ActionSelectBase(const char* name,
  */
 void RS_ActionSelectBase::keyReleaseEvent(QKeyEvent* e) {
     if (e->key()==Qt::Key_Return && predecessor!=NULL) {
-        finish();
+        finish(false);
     }
 }
 

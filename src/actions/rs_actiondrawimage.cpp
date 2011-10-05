@@ -69,7 +69,7 @@ void RS_ActionDrawImage::init(int status) {
         setStatus(SetTargetPoint);
         }
         else {
-                finish();
+                finish(false);
                 updateToolBar();
         //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
         }
@@ -100,7 +100,7 @@ void RS_ActionDrawImage::trigger() {
         graphicView->redraw(RS2::RedrawDrawing);
 
     //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-    finish();
+    finish(false);
         updateToolBar();
 }
 
@@ -151,7 +151,7 @@ void RS_ActionDrawImage::mouseReleaseEvent(QMouseEvent* e) {
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         //init(getStatus()-1);
-                finish();
+                finish(false);
     }
 }
 

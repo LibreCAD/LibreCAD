@@ -65,7 +65,7 @@ void RS_ActionLayersFreezeAll::trigger() {
         //RS_Layer* layer = graphic->getActiveLayer();
         graphic->freezeAllLayers(freeze);
     }
-    finish();
+    finish(false);
 }
 
 

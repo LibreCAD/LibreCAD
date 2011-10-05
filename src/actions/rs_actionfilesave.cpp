@@ -57,7 +57,7 @@ void RS_ActionFileSave::trigger() {
     if (graphic!=NULL) {
         graphic->save();
     }
-    finish();
+    finish(false);
 }
 
 

@@ -55,7 +55,7 @@ void RS_ActionLayersAdd::trigger() {
                 graphic->addLayer(layer);
         }
     }
-    finish();
+    finish(false);
 }
 
 

@@ -71,7 +71,7 @@ void RS_ActionZoomPan::trigger() {
         x1 = x2;
         y1 = y2;
     }
-    if(getStatus()==SetPanEnd) finish();
+    if(getStatus()==SetPanEnd) finish(false);
 }
 
 

@@ -84,7 +84,7 @@ void RS_ActionToolRegenerateDimensions::trigger() {
         RS_DIALOGFACTORY->commandMessage(tr("No dimension entities found"));
     }
 
-    finish();
+    finish(false);
 }
 
 

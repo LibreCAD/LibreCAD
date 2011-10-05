@@ -57,7 +57,7 @@ void RS_ActionFileSaveAs::trigger() {
     if (graphic!=NULL && !fileName.isEmpty()) {
         graphic->saveAs(fileName, RS2::FormatUnknown);
     }
-    finish();
+    finish(false);
 }
 
 

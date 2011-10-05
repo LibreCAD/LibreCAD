@@ -52,7 +52,7 @@ void RS_ActionLayersToggleView::trigger() {
         RS_Layer* layer = graphic->getActiveLayer();
         graphic->toggleLayer(layer);
     }
-    finish();
+    finish(false);
 }
 
 
