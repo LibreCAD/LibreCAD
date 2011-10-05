@@ -25,6 +25,7 @@
 **********************************************************************/
 
 
+#include <boost/math/special_functions/ellint_2.hpp>
 #include "rs_ellipse.h"
 
 #include "rs_graphic.h"
@@ -179,13 +180,85 @@ RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist) {
 
     return nearerPoint;
 }
+/**
+  * find total length of the ellipse (arc)
+  *
+  *Author: Dongxu Li
+  */
+double RS_Ellipse::getLength() const
+{
+    double x1,x2;
+    double a,k;
+    if(getRatio()>1.) {
+        //switch major/minor axis, because we need the ratio smaller than one
+        std::cout<<"switching major/minor\n";
+        RS_Ellipse e(NULL, data);
+        e.switchMajorMinor();
+        x1=e.getAngle1();
+        x2=e.getAngle2();
+        a=e.getMajorRadius();
+        k=e.getRatio();
+    }else{
+        x1=getAngle1();
+        x2=getAngle2();
+        a=getMajorRadius();
+        k=getRatio();
+    }
+    k= 1-k*k;//elliptic modulus, or eccentricity
+    std::cout<<"1, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
+    if(isReversed())  std::swap(x1,x2);
+    x1=RS_Math::correctAngle(x1);
+    x2=RS_Math::correctAngle(x2);
+    std::cout<<"2, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
+    if(x2 < x1+RS_TOLERANCE_ANGLE) x2 += 2.*M_PI;
+    double ret;
+    std::cout<<"3, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
+    if( x2 >= M_PI) {
+        // the complete elliptic integral
+        ret=  (static_cast< int>((x2+RS_TOLERANCE_ANGLE)/M_PI) -
+               (static_cast<int>((x1+RS_TOLERANCE_ANGLE)/M_PI)
+                ))*2;
+        std::cout<<"Adding "<<ret<<" of E("<<k<<")\n";
+        ret*=boost::math::ellint_2<double>(k);
+    } else {
+        ret=0.;
+    }
+    x1=fmod(x1,M_PI);
+    x2=fmod(x2,M_PI);
+    if( fabs(x2-x1)>RS_TOLERANCE_ANGLE)  {
+        ret += ellipticIntegral_2(k,x2)-ellipticIntegral_2(k,x1);
+    }
+    return a*ret;
+}
 
+/**
+ * wrapper of elliptic integral of the second type, Legendre form
+ *@k the elliptic modulus or eccentricity
+ *@phi elliptic angle, must be within range of [0, M_PI]
+ *
+ *Author: Dongxu Li
+ */
+double RS_Ellipse::ellipticIntegral_2(const double& k, const double& phi)
+{
+    double a= phi-M_PI/2.;
+    if(a<0.) {
+        return - boost::math::ellint_2<double,double>(k,fabs(a));
+    } else {
+        return boost::math::ellint_2<double,double>(k,a);
+    }
+}
+
+/**
+  * switch the major/minor axis naming
+  *
+  *Author: Dongxu Li
+  */
 bool RS_Ellipse::switchMajorMinor(void)
 //switch naming of major/minor, return true if success
 {
     if (fabs(data.ratio) < RS_TOLERANCE) return false;
     RS_Vector vp_start=getStartpoint();
-    RS_Vector vp_end=getStartpoint();
+    RS_Vector vp_end=getEndpoint();
     RS_Vector vp=getMajorP();
     setMajorP(RS_Vector(- data.ratio*vp.y, data.ratio*vp.x)); //direction pi/2 relative to old MajorP;
     setRatio(1./data.ratio);
@@ -224,7 +297,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     ret.rotate(-getAngle());
     double x=ret.x,y=ret.y;
     double a=getMajorRadius();
-    double b=getMinorRadius();
+    double b=a*getRatio();
     //std::cout<<"(a= "<<a<<" b= "<<b<<" x= "<<x<<" y= "<<y<<" )\n";
     //std::cout<<"finding minimum for ("<<x<<"-"<<a<<"*cos(t))^2+("<<y<<"-"<<b<<"*sin(t))^2\n";
     double twoa2b2=2*(a*a-b*b);
@@ -363,7 +436,11 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
 RS_Vector RS_Ellipse::getMiddlePoint(){
         return getNearestMiddle(getCenter());
 }
-
+/**
+  * get Nearest equidistant point
+  *
+  *Author: Dongxu Li
+  */
 RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
                                        double* dist,
                                        int middlePoints
@@ -377,7 +454,7 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
         return RS_Vector(false);
     }
     double ra(getMajorRadius());
-    double rb(getMinorRadius());
+    double rb(getRatio()*ra);
     if ( ra < RS_TOLERANCE || rb < RS_TOLERANCE ) {
             //zero radius, return the center
             RS_Vector vp(getCenter());
@@ -432,6 +509,8 @@ RS_Vector RS_Ellipse::getNearestDist(double /*distance*/,
   *@ normal, the given line
   *@ onEntity, should the tangential be required to on entity of the elliptic arc
   *@ coord, current cursor position
+  *
+  *Author: Dongxu Li
   */
 
 RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
@@ -449,7 +528,8 @@ RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
         //scale to ellipse angle
         direction.rotate(-getAngle());
         double angle=direction.scale(RS_Vector(1.,getRatio())).angle();
-        direction.set(getMajorRadius()*cos(angle),getMinorRadius()*sin(angle));//relative to center
+        double ra(getMajorRadius());
+        direction.set(ra*cos(angle),getRatio()*ra*sin(angle));//relative to center
         QList<RS_Vector> sol;
         for(int i=0;i<2;i++){
                 if(!onEntity ||
@@ -692,7 +772,7 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     double kx2= factor.x * factor.x;
     double ky2= factor.y * factor.y;
     double a=getMajorRadius();
-    double b=getMinorRadius();
+    double b=getRatio()*a;
     double cA=0.5*a*a*(kx2*ct2+ky2*st2);
     double cB=0.5*b*b*(kx2*st2+ky2*ct2);
     double cC=a*b*ct*st*(ky2-kx2);
@@ -788,10 +868,11 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     RS_Vector startpoint = getStartpoint();
     RS_Vector endpoint = getEndpoint();
 
-    if (ref.distanceTo(startpoint)<1.0e-4) {
+//    if (ref.distanceTo(startpoint)<1.0e-4) {
+    if ((ref-startpoint).squared()<1.0e-8) {
         moveStartpoint(startpoint+offset);
     }
-    if (ref.distanceTo(endpoint)<1.0e-4) {
+    if ((ref-endpoint).squared()<1.0e-8) {
         moveEndpoint(endpoint+offset);
     }
     correctAngles();//avoid extra 2.*M_PI in angles
@@ -803,6 +884,8 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patter
     if (painter==NULL || view==NULL) {
         return;
     }
+double ra(getMajorRadius());
+double rb(getRatio()*ra);
 
 
     if (getPen().getLineType()==RS2::SolidLine ||
@@ -810,8 +893,8 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patter
             view->getDrawingMode()==RS2::ModePreview) {
 
         painter->drawEllipse(view->toGui(getCenter()),
-                             getMajorRadius() * view->getFactor().x,
-                             getMinorRadius() * view->getFactor().x,
+                             ra * view->getFactor().x,
+                             rb * view->getFactor().x,
                              getAngle(),
                              getAngle1(), getAngle2(),
                              isReversed());
@@ -819,8 +902,8 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patter
         double styleFactor = getStyleFactor(view);
         if (styleFactor<0.0) {
             painter->drawEllipse(view->toGui(getCenter()),
-                                 getMajorRadius() * view->getFactor().x,
-                                 getMinorRadius() * view->getFactor().x,
+                                 ra * view->getFactor().x,
+                                 rb * view->getFactor().x,
                                  getAngle(),
                                  getAngle1(), getAngle2(),
                                  isReversed());
@@ -858,12 +941,14 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patter
         double curA = getAngle1();
         double curR;
         RS_Vector cp = view->toGui(getCenter());
-        double r1 = getMajorRadius() * view->getFactor().x;
-        double r2 = getMinorRadius() * view->getFactor().x;
+        double r1 = ra * view->getFactor().x;
+        double r2 = rb * view->getFactor().x;
 
         do {
-            curR = sqrt(RS_Math::pow(getMinorRadius()*cos(curA), 2.0)
-                        + RS_Math::pow(getMajorRadius()*sin(curA), 2.0));
+            RS_Vector vp0(ra,rb);
+            curR=vp0.scale(RS_Vector(curA)).magnitude();
+//            curR = sqrt(RS_Math::pow(ra*cos(curA), 2.0)
+//                        + RS_Math::pow(rb*sin(curA), 2.0));
 
             if (curR>1.0e-6) {
                 da[i] = fabs(pat->pattern[i] * styleFactor) / curR;

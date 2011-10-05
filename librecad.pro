@@ -26,6 +26,10 @@ unix {
     # Temporary disabled getting SCM version
     SCMREVISION=$$system(git describe --tags)
     DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
+#fixme , boost, how to handle boost properly for win32 and unix
+    CONFIG += link_pkgconfig
+    PKGCONFIG += boost
+#
     macx {
         CONFIG += x86 x86_64
         TARGET = LibreCAD
@@ -63,6 +67,7 @@ win32 {
 # LIBS += \
 # -Ldxflib/lib -ldxf \
 # Store intermedia stuff somewhere else
+#LIBS += -lboost
 OBJECTS_DIR = intermediate/obj
 MOC_DIR = intermediate/moc
 RCC_DIR = intermediate/rcc
@@ -869,6 +874,7 @@ TRANSLATIONS = ts/librecad_cs.ts \
 
 # Include any custom.pro files for personal/special builds
 exists( custom.pro ):include( custom.pro )
+
 
 
 
