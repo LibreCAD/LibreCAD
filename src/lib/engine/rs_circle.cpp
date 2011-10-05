@@ -309,7 +309,8 @@ double RS_Circle::getDistanceToPoint(const RS_Vector& coord,
 
 void RS_Circle::move(const RS_Vector& offset) {
     data.center.move(offset);
-    calculateBorders();
+    moveBorders(offset);
+//    calculateBorders();
 }
 
 
@@ -327,7 +328,8 @@ void RS_Circle::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
 void RS_Circle::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.center.scale(center, factor);
     data.radius *= factor.x;
-    calculateBorders();
+    scaleBorders(center,factor);
+//    calculateBorders();
 }
 
 

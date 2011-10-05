@@ -164,14 +164,14 @@ void RS_EntityContainer::undoStateChanged(bool undone) {
 
 
 void RS_EntityContainer::setVisible(bool v) {
-    RS_DEBUG->print("RS_EntityContainer::setVisible: %d", v);
+//    RS_DEBUG->print("RS_EntityContainer::setVisible: %d", v);
     RS_Entity::setVisible(v);
 
     // All sub-entities:
     for (RS_Entity* e=firstEntity(RS2::ResolveNone);
             e!=NULL;
             e=nextEntity(RS2::ResolveNone)) {
-        RS_DEBUG->print("RS_EntityContainer::setVisible: subentity: %d", v);
+//        RS_DEBUG->print("RS_EntityContainer::setVisible: subentity: %d", v);
         e->setVisible(v);
     }
 }
@@ -1466,12 +1466,15 @@ bool RS_EntityContainer::hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2) {
 
 void RS_EntityContainer::move(const RS_Vector& offset) {
     for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-            e!=NULL;
-            e=nextEntity(RS2::ResolveNone)) {
+         e!=NULL;
+         e=nextEntity(RS2::ResolveNone)) {
         e->move(offset);
+        if (autoUpdateBorders) {
+            e->moveBorders(offset);
+        }
     }
     if (autoUpdateBorders) {
-        calculateBorders();
+        moveBorders(offset);
     }
 }
 

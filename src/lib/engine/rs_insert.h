@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -37,9 +37,9 @@ class RS_BlockList;
  */
 class RS_InsertData {
 public:
-	/**
-	 * Default constructor.
-	 */
+        /**
+         * Default constructor.
+         */
     RS_InsertData() {}
 
     /**
@@ -56,7 +56,7 @@ public:
      *    to share the blocks (letters) from a font.
      * @param updateMode RS2::Update will update the insert entity instantly
      *    RS2::NoUpdate will not update the insert. You can update
-     *	  it later manually using the update() method. This is 
+     *	  it later manually using the update() method. This is
      *    often the case since you might want to adjust attributes
      *    after creating an insert entity.
      */
@@ -101,9 +101,9 @@ public:
 
 /**
  * An insert inserts a block into the drawing at a certain location
- * with certain attributes (angle, scale, ...). 
+ * with certain attributes (angle, scale, ...).
  * Inserts don't really contain other entities internally. They just
- * refer to a block. However, to the outside world they act exactly 
+ * refer to a block. However, to the outside world they act exactly
  * like EntityContainer.
  *
  * @author Andrew Mustun
@@ -132,12 +132,12 @@ public:
         return data;
     }
 
-	/**
-	 * Reimplementation of reparent. Invalidates block cache pointer.
-	 */
+        /**
+         * Reimplementation of reparent. Invalidates block cache pointer.
+         */
     virtual void reparent(RS_EntityContainer* parent) {
-		RS_Entity::reparent(parent);
-		block = NULL;
+                RS_Entity::reparent(parent);
+                block = NULL;
     }
 
     RS_Block* getBlockForInsert();
@@ -149,9 +149,9 @@ public:
     }
 
         void setName(const QString& newName) {
-		data.name = newName;
-		update();
-	}
+                data.name = newName;
+                update();
+        }
 
     RS_Vector getInsertionPoint() const {
         return data.insertionPoint;
@@ -164,9 +164,9 @@ public:
         return data.scaleFactor;
     }
 
-	void setScale(const RS_Vector& s) {
-		data.scaleFactor = s;
-	}
+        void setScale(const RS_Vector& s) {
+                data.scaleFactor = s;
+        }
 
     double getAngle() const {
         return data.angle;
@@ -178,43 +178,44 @@ public:
     int getCols() const {
         return data.cols;
     }
-	void setCols(int c) {
-		data.cols = c;
-	}
+        void setCols(int c) {
+                data.cols = c;
+        }
 
     int getRows() const {
         return data.rows;
     }
-	void setRows(int r) {
-		data.rows = r;
-	}
+        void setRows(int r) {
+                data.rows = r;
+        }
 
     RS_Vector getSpacing() const {
         return data.spacing;
     }
-	void setSpacing(const RS_Vector& s) {
-		data.spacing = s;
-	}
-	
+        void setSpacing(const RS_Vector& s) {
+                data.spacing = s;
+        }
+
     virtual bool isVisible();
 
     virtual RS_VectorSolutions getRefPoints();
-    virtual RS_Vector getMiddlePoint(void){
+    virtual RS_Vector getMiddlePoint(void) const{
             return RS_Vector(false);
     }
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                     double* dist = NULL);
+                                     double* dist = NULL) ;
 
-    virtual void move(RS_Vector offset);
-    virtual void rotate(RS_Vector center, double angle);
-    virtual void scale(RS_Vector center, RS_Vector factor);
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
+    virtual void move(const RS_Vector& offset);
+    virtual void rotate(const RS_Vector& center, const double& angle);
+    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
+    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
 
     friend std::ostream& operator << (std::ostream& os, const RS_Insert& i);
 
 protected:
     RS_InsertData data;
-	RS_Block* block;
+        RS_Block* block;
 };
 
 
