@@ -107,27 +107,17 @@ public:
     /**
      * @return Start point of the entity.
      */
-    virtual RS_Vector getStartpoint() const {
-        RS_Vector p(data.angle1);
-        p.scale(RS_Vector(1.,getRatio()))*getMajorRadius();
-        p.move(getCenter());
-        p.rotate(data.center, getAngle());
-        return p;
-    }
+    virtual RS_Vector getStartpoint() const;
+
     /**
      * @return End point of the entity.
      */
-    virtual RS_Vector getEndpoint() const {
-        RS_Vector p(data.angle2);
-        p.scale(RS_Vector(1.,getRatio()))*getMajorRadius();
-        p.move(getCenter());
-        p.rotate(data.center, getAngle());
-        return p;
-    }
+    virtual RS_Vector getEndpoint() const;
 
     virtual void moveStartpoint(const RS_Vector& pos);
     virtual void moveEndpoint(const RS_Vector& pos);
     virtual double getLength() const;
+    double getEllipseLength(double a1, double a2) const;
     static double ellipticIntegral_2(const double& k, const double& phi);//wrapper for elliptic integral
 
     virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord,

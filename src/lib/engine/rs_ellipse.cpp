@@ -72,7 +72,7 @@ void RS_Ellipse::calculateBorders() {
     RS_DEBUG->print("RS_Ellipse::calculateBorders");
 
     double radius1 = getMajorRadius();
-    double radius2 = getMinorRadius();
+    double radius2 = getRatio()*radius1;
     double angle = getAngle();
     //double a1 = ((!isReversed()) ? data.angle1 : data.angle2);
     //double a2 = ((!isReversed()) ? data.angle2 : data.angle1);
@@ -163,17 +163,17 @@ RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist) {
     RS_Vector startpoint = getStartpoint();
     RS_Vector endpoint = getEndpoint();
 
-    dist1 = startpoint.distanceTo(coord);
-    dist2 = endpoint.distanceTo(coord);
+    dist1 = (startpoint-coord).squared();
+    dist2 = (endpoint-coord).squared();
 
     if (dist2<dist1) {
         if (dist!=NULL) {
-            *dist = dist2;
+            *dist = sqrt(dist2);
         }
         nearerPoint = endpoint;
     } else {
         if (dist!=NULL) {
-            *dist = dist1;
+            *dist = sqrt(dist1);
         }
         nearerPoint = startpoint;
     }
@@ -187,23 +187,21 @@ RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist) {
   */
 double RS_Ellipse::getLength() const
 {
-    double x1,x2;
-    double a,k;
-    if(getRatio()>1.) {
-        //switch major/minor axis, because we need the ratio smaller than one
-//        std::cout<<"switching major/minor\n";
         RS_Ellipse e(NULL, data);
-        e.switchMajorMinor();
-        x1=e.getAngle1();
-        x2=e.getAngle2();
-        a=e.getMajorRadius();
-        k=e.getRatio();
-    }else{
-        x1=getAngle1();
-        x2=getAngle2();
-        a=getMajorRadius();
-        k=getRatio();
+        //switch major/minor axis, because we need the ratio smaller than one
+    if(e.getRatio()>1.)  e.switchMajorMinor();
+    if(e.isReversed()) {
+        e.setReversed(false);
+        std::swap(e.data.angle1,e.data.angle2);
     }
+    return e.getEllipseLength(e.data.angle1,e.data.angle2);
+}
+
+//Ellipse must have ratio<1, and not reversed
+//return the arc length between ellipse angle x1, x2
+double RS_Ellipse::getEllipseLength(double x1, double x2) const
+{
+    double a(getMajorRadius()),k(getRatio());
     k= 1-k*k;//elliptic modulus, or eccentricity
 //    std::cout<<"1, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
     if(isReversed())  std::swap(x1,x2);
@@ -270,6 +268,28 @@ bool RS_Ellipse::switchMajorMinor(void)
     return true;
 }
 
+/**
+ * @return Start point of the entity.
+ */
+RS_Vector  RS_Ellipse::getStartpoint() const {
+    RS_Vector p(data.angle1);
+    double ra=getMajorRadius();
+    p.scale(RS_Vector(ra,ra*getRatio()));
+    p.rotate(getAngle());
+    p.move(getCenter());
+    return p;
+}
+/**
+ * @return End point of the entity.
+ */
+RS_Vector  RS_Ellipse::getEndpoint() const {
+    RS_Vector p(data.angle2);
+    double ra=getMajorRadius();
+    p.scale(RS_Vector(ra,ra*getRatio()));
+    p.rotate(getAngle());
+    p.move(getCenter());
+    return p;
+}
 //implemented using an analytical aglorithm
 // find nearest point on ellipse to a given point
 //
@@ -495,7 +515,7 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
 }
 
 
-
+//todo , implement this
 RS_Vector RS_Ellipse::getNearestDist(double /*distance*/,
                                      const RS_Vector& /*coord*/,
                                      double* dist) {
