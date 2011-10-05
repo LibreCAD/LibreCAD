@@ -108,9 +108,9 @@ public:
      * @return Start point of the entity.
      */
     virtual RS_Vector getStartpoint() const {
-        RS_Vector p;
-        p.set(data.center.x + cos(data.angle1) * getMajorRadius(),
-              data.center.y + sin(data.angle1) * getMinorRadius());
+        RS_Vector p(data.angle1);
+        p.scale(RS_Vector(1.,getRatio()))*getMajorRadius();
+        p.move(getCenter());
         p.rotate(data.center, getAngle());
         return p;
     }
@@ -118,9 +118,9 @@ public:
      * @return End point of the entity.
      */
     virtual RS_Vector getEndpoint() const {
-        RS_Vector p;
-        p.set(data.center.x + cos(data.angle2) * getMajorRadius(),
-              data.center.y + sin(data.angle2) * getMinorRadius());
+        RS_Vector p(data.angle2);
+        p.scale(RS_Vector(1.,getRatio()))*getMajorRadius();
+        p.move(getCenter());
         p.rotate(data.center, getAngle());
         return p;
     }

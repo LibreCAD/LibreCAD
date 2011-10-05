@@ -191,7 +191,7 @@ double RS_Ellipse::getLength() const
     double a,k;
     if(getRatio()>1.) {
         //switch major/minor axis, because we need the ratio smaller than one
-        std::cout<<"switching major/minor\n";
+//        std::cout<<"switching major/minor\n";
         RS_Ellipse e(NULL, data);
         e.switchMajorMinor();
         x1=e.getAngle1();
@@ -205,20 +205,20 @@ double RS_Ellipse::getLength() const
         k=getRatio();
     }
     k= 1-k*k;//elliptic modulus, or eccentricity
-    std::cout<<"1, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
+//    std::cout<<"1, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
     if(isReversed())  std::swap(x1,x2);
     x1=RS_Math::correctAngle(x1);
     x2=RS_Math::correctAngle(x2);
-    std::cout<<"2, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
+//    std::cout<<"2, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
     if(x2 < x1+RS_TOLERANCE_ANGLE) x2 += 2.*M_PI;
     double ret;
-    std::cout<<"3, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
+//    std::cout<<"3, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
     if( x2 >= M_PI) {
         // the complete elliptic integral
         ret=  (static_cast< int>((x2+RS_TOLERANCE_ANGLE)/M_PI) -
                (static_cast<int>((x1+RS_TOLERANCE_ANGLE)/M_PI)
                 ))*2;
-        std::cout<<"Adding "<<ret<<" of E("<<k<<")\n";
+//        std::cout<<"Adding "<<ret<<" of E("<<k<<")\n";
         ret*=boost::math::ellint_2<double>(k);
     } else {
         ret=0.;
