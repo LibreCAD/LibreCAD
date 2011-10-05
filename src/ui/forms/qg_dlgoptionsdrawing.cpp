@@ -302,8 +302,11 @@ void QG_DlgOptionsDrawing::validate() {
                 // custom paper size:
                 if ((RS2::PaperFormat)cbPaperFormat->currentIndex()==RS2::Custom) {
                         graphic->setPaperSize(
-                                RS_Vector(RS_Math::eval(lePaperWidth->text()),
-                                          RS_Math::eval(lePaperHeight->text())));
+                              RS_Units::convert(
+                                        RS_Vector(RS_Math::eval(lePaperWidth->text()),
+                                          RS_Math::eval(lePaperHeight->text())),
+                                        (RS2::Unit) cbUnit->currentIndex(),
+                                        RS2::Millimeter));
                 }
 
         // grid:
@@ -525,7 +528,11 @@ void  QG_DlgOptionsDrawing::updatePaperSize() {
     RS2::PaperFormat format = (RS2::PaperFormat)cbPaperFormat->currentIndex();
 
         if (format==RS2::Custom) {
-                RS_Vector s = graphic->getPaperSize();
+            RS_Vector s = RS_Units::convert(
+                 graphic->getPaperSize(),
+                        RS2::Millimeter,
+                        (RS2::Unit) cbUnit->currentIndex()
+                        );
                 //RS_Vector plimmin = graphic->getVariableVector("$PLIMMIN", RS_Vector(0,0));
                 //RS_Vector plimmax = graphic->getVariableVector("$PLIMMAX", RS_Vector(100,100));
                 lePaperWidth->setText(QString("%1").arg(s.x));
