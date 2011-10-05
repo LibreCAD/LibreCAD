@@ -920,8 +920,26 @@ RS_Vector RS_Units::paperFormatToSize(RS2::PaperFormat p) {
     case RS2::Tabloid:
         ret = RS_Vector(279.0, 432.0);
         break;
+
+    case RS2::Arch_A:
+    return RS_Vector(229.,305.);
+    case RS2::Arch_B:
+    return RS_Vector(305.,457.);
+    case RS2::Arch_C:
+    return RS_Vector(457.,610.);
+    case RS2::Arch_D:
+    return RS_Vector(610.,914.);
+    case RS2::Arch_E:
+    return RS_Vector(914.,1219.);
+    case RS2::Arch_E1:
+    return RS_Vector(762.,1067.);
+    case RS2::Arch_E2:
+    return RS_Vector(660.,965.);
+    case RS2::Arch_E3:
+    return RS_Vector(686.,991.);
+
     case RS2::NPageSize:
-        ret = RS_Vector(0.0, 0.0);
+        return RS_Vector(0.0, 0.0);
         break;
     default:
         break;
@@ -1089,6 +1107,23 @@ QString RS_Units::paperFormatToString(RS2::PaperFormat p) {
     case RS2::Tabloid:
         ret = "Tabloid";
         break;
+    case RS2::Arch_A:
+    return QString("Arch A");
+    case RS2::Arch_B:
+    return QString("Arch B");
+    case RS2::Arch_C:
+    return QString("Arch C");
+    case RS2::Arch_D:
+    return QString("Arch D");
+    case RS2::Arch_E:
+    return QString("Arch E");
+    case RS2::Arch_E1:
+    return QString("Arch E1");
+    case RS2::Arch_E2:
+    return QString("Arch E2");
+    case RS2::Arch_E3:
+    return QString("Arch E3");
+
     case RS2::NPageSize:
         ret = "NPageSize";
         break;
@@ -1194,9 +1229,17 @@ RS2::PaperFormat RS_Units::stringToPaperFormat(const QString& p) {
     //    ret = RS2::Ledger;
     } else if (p=="tabloid") {
         ret = RS2::Tabloid;
-    } else if (p=="npagesize") {
-        ret = RS2::NPageSize;
     }
+    if (p==QString("Arch A")) return RS2::Arch_A;
+    if (p==QString("Arch B")) return RS2::Arch_B;
+    if (p==QString("Arch C")) return RS2::Arch_C;
+    if (p==QString("Arch D")) return RS2::Arch_D;
+    if (p==QString("Arch E")) return RS2::Arch_E;
+    if (p==QString("Arch E1")) return RS2::Arch_E1;
+    if (p==QString("Arch E2")) return RS2::Arch_E2;
+    if (p==QString("Arch E3")) return RS2::Arch_E3;
+
+    if (p=="npagesize") return RS2::NPageSize;
 
     return ret;
 }
