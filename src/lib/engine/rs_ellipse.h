@@ -127,6 +127,8 @@ public:
 
     virtual void moveStartpoint(const RS_Vector& pos);
     virtual void moveEndpoint(const RS_Vector& pos);
+    virtual double getLength() const;
+    static double ellipticIntegral_2(const double& k, const double& phi);//wrapper for elliptic integral
 
     virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
                                      const RS_Vector& trimPoint);
