@@ -419,7 +419,7 @@ void RS_EntityContainer::clear() {
 /**
  * Counts all entities (branches of the tree).
  */
-unsigned long int RS_EntityContainer::count() {
+unsigned int RS_EntityContainer::count() {
     return entities.size();
 }
 
@@ -427,7 +427,7 @@ unsigned long int RS_EntityContainer::count() {
 /**
  * Counts all entities (leaves of the tree).
  */
-unsigned long int RS_EntityContainer::countDeep() {
+unsigned int RS_EntityContainer::countDeep() {
     unsigned long int c=0;
 
     for (RS_Entity* t=firstEntity(RS2::ResolveNone);
@@ -444,8 +444,8 @@ unsigned long int RS_EntityContainer::countDeep() {
 /**
  * Counts the selected entities in this container.
  */
-unsigned long int RS_EntityContainer::countSelected() {
-    unsigned long int c=0;
+unsigned int RS_EntityContainer::countSelected() {
+    unsigned int c=0;
 
     for (RS_Entity* t=firstEntity(RS2::ResolveNone);
             t!=NULL;
@@ -459,6 +459,24 @@ unsigned long int RS_EntityContainer::countSelected() {
     return c;
 }
 
+/**
+ * Counts the selected entities in this container.
+ */
+double RS_EntityContainer::totalSelectedLength() {
+    double ret(0.0);
+    for (RS_Entity* e = firstEntity(RS2::ResolveNone);
+            e != NULL;
+            e = nextEntity(RS2::ResolveNone)) {
+
+        if (e->isVisible() && e->isSelected()) {
+            double l = e->getLength();
+            if (l>=0.) {
+                ret += l;
+            }
+        }
+    }
+return ret;
+}
 
 
 /**

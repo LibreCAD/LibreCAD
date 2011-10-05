@@ -68,14 +68,14 @@ public:
     /**
      * @return Always 1 for atomic entities.
      */
-    virtual unsigned long int count() {
+    virtual unsigned int count() {
         return 1;
     }
 
     /**
      * @return Always 1 for atomic entities.
      */
-    virtual unsigned long int countDeep() {
+    virtual unsigned int countDeep() {
         return 1;
     }
 
