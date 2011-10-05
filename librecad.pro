@@ -47,7 +47,6 @@ unix {
     }
 }
 win32 {
-    CONFIG += release
     QMAKE_CFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
     TARGET = LibreCAD
