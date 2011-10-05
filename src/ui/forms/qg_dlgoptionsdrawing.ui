@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab1">
       <attribute name="title">
@@ -1005,9 +1005,7 @@
   <tabstop>cbDimGap</tabstop>
   <tabstop>cbDimAsz</tabstop>
  </tabstops>
- <resources>
-  <include location="../../../res/extui/extui.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonOk</sender>
