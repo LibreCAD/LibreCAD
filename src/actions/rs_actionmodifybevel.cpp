@@ -46,9 +46,9 @@ RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
 
 
 QAction* RS_ActionModifyBevel::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Bevel")
+        // tr("Bevel")
     QAction* action = new QAction(tr("&Bevel"),  NULL);
-	action->setIcon(QIcon(":/extui/modifybevel.png"));
+        action->setIcon(QIcon(":/extui/modifybevel.png"));
     //action->zetStatusTip(tr("Bevel Entities"));
     return action;
 }
@@ -79,7 +79,7 @@ void RS_ActionModifyBevel::trigger() {
         entity2 = NULL;
         setStatus(SetEntity1);
 
-        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected());
+        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
 }
 
@@ -98,10 +98,10 @@ void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetEntity2:
-		if (entity1!=NULL && RS_Information::isTrimmable(entity1)) {
-        	coord2 = mouse;
-	        entity2 = se;
-		}
+                if (entity1!=NULL && RS_Information::isTrimmable(entity1)) {
+                coord2 = mouse;
+                entity2 = se;
+                }
         break;
 
     default:
@@ -124,7 +124,7 @@ void RS_ActionModifyBevel::mouseReleaseEvent(QMouseEvent* e) {
 
         case SetEntity2:
             if (entity2!=NULL && entity2->isAtomic() &&
-			    RS_Information::isTrimmable(entity1, entity2)) {
+                            RS_Information::isTrimmable(entity1, entity2)) {
                 trigger();
             }
             break;

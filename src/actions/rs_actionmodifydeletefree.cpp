@@ -89,20 +89,20 @@ void RS_ActionModifyDeleteFree::trigger() {
                     }
 
                     // draws the new polylines on the screen:
-					graphicView->redraw(RS2::RedrawDrawing);
+                                        graphicView->redraw(RS2::RedrawDrawing);
 
                     init();
 
                     RS_DIALOGFACTORY->updateSelectionWidget(
-                        container->countSelected());
+                        container->countSelected(),container->totalSelectedLength());
                 } else {
-        			RS_DIALOGFACTORY->commandMessage(tr("Entities not in the same polyline."));
+                                RS_DIALOGFACTORY->commandMessage(tr("Entities not in the same polyline."));
                 }
             } else {
-        		RS_DIALOGFACTORY->commandMessage(tr("Parent of second entity is not a polyline"));
+                        RS_DIALOGFACTORY->commandMessage(tr("Parent of second entity is not a polyline"));
             }
         } else {
-        	RS_DIALOGFACTORY->commandMessage(tr("Parent of second entity is NULL"));
+                RS_DIALOGFACTORY->commandMessage(tr("Parent of second entity is NULL"));
         }
     } else {
         RS_DIALOGFACTORY->commandMessage(tr("One of the chosen entities is NULL"));
@@ -127,16 +127,16 @@ void RS_ActionModifyDeleteFree::mouseReleaseEvent(QMouseEvent* e) {
                             polyline = (RS_Polyline*)parent;
                             setStatus(1);
                         } else {
-        					RS_DIALOGFACTORY->commandMessage(
-								tr("Parent of first entity is not a polyline"));
+                                                RS_DIALOGFACTORY->commandMessage(
+                                                                tr("Parent of first entity is not a polyline"));
                         }
                     } else {
-        				RS_DIALOGFACTORY->commandMessage(
-							tr("Parent of first entity is NULL"));
+                                        RS_DIALOGFACTORY->commandMessage(
+                                                        tr("Parent of first entity is NULL"));
                     }
                 } else {
-        			RS_DIALOGFACTORY->commandMessage(
-						tr("First entity is NULL"));
+                                RS_DIALOGFACTORY->commandMessage(
+                                                tr("First entity is NULL"));
                 }
             }
             break;
@@ -148,7 +148,7 @@ void RS_ActionModifyDeleteFree::mouseReleaseEvent(QMouseEvent* e) {
                 if (e2!=NULL) {
                     trigger();
                 } else {
-        			RS_DIALOGFACTORY->commandMessage(tr("Second entity is NULL"));
+                                RS_DIALOGFACTORY->commandMessage(tr("Second entity is NULL"));
                 }
             }
             break;

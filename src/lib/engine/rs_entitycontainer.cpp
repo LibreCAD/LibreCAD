@@ -181,12 +181,12 @@ void RS_EntityContainer::setVisible(bool v) {
 /**
  * @return Total length of all entities in this container.
  */
-double RS_EntityContainer::getLength() {
+double RS_EntityContainer::getLength() const {
     double ret = 0.0;
 
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
+    for (RS_Entity* e=const_cast<RS_EntityContainer*>(this)->firstEntity(RS2::ResolveNone);
             e!=NULL;
-            e=nextEntity(RS2::ResolveNone)) {
+            e=const_cast<RS_EntityContainer*>(this)->nextEntity(RS2::ResolveNone)) {
         if (e->isVisible()) {
             double l = e->getLength();
             if (l<0.0) {

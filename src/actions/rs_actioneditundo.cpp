@@ -104,7 +104,7 @@ void RS_ActionEditUndo::trigger() {
 
 
     finish();
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected());
+    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }
 
 

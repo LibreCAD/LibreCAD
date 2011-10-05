@@ -53,11 +53,11 @@ QAction* RS_ActionSelectIntersected::createGUIAction(RS2::ActionType type, QObje
     QAction* action;
     if (type==RS2::ActionSelectIntersected) {
         action = new QAction(tr("Select Intersected Entities"),  NULL);
-		action->setIcon(QIcon(":/extui/selectinters.png"));
+                action->setIcon(QIcon(":/extui/selectinters.png"));
         //action->zetStatusTip(tr("Selects all entities intersected by a line"));
     } else {
         action = new QAction(tr("Deselect Intersected Entities"), NULL);
-		action->setIcon(QIcon(":/extui/deselectinters.png"));
+                action->setIcon(QIcon(":/extui/deselectinters.png"));
         //action->zetStatusTip(tr("Deselects all entities intersected by a line"));
     }
     return action;
@@ -84,7 +84,7 @@ void RS_ActionSelectIntersected::trigger() {
             s.selectIntersected(v1, v2, select);
 
             if (RS_DIALOGFACTORY!=NULL) {
-                RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected());
+                RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
             }
 
             init();

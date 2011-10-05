@@ -142,7 +142,7 @@ public:
         data.radius = r;
     }
     double getAngleLength() const;
-    virtual double getLength();
+    virtual double getLength() const;
 
     bool createFromCR(const RS_Vector& c, double r);
     bool createFrom2P(const RS_Vector& p1, const RS_Vector& p2);

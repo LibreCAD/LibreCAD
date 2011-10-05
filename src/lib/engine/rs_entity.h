@@ -122,7 +122,7 @@ public:
          * Implementations must return the total length of the entity
          * or a negative number if the entity has no length (e.g. a text or hatch).
          */
-        virtual double getLength() {
+        virtual double getLength() const {
                 return -1.0;
         }
 

@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -40,11 +40,11 @@ public:
      * Default constructor. Leaves the data object uninitialized.
      */
     RS_SplineData() {}
-    
-	RS_SplineData(int degree, bool closed) {
-		this->degree = degree;
-		this->closed = closed;
-	}
+
+        RS_SplineData(int degree, bool closed) {
+                this->degree = degree;
+                this->closed = closed;
+        }
 
     friend std::ostream& operator << (std::ostream& os, const RS_SplineData& ld) {
         os << "( degree: " << ld.degree <<
@@ -54,11 +54,11 @@ public:
     }
 
 public:
-	/** Degree of the spline (1, 2, 3) */
-	int degree;
-	/** Closed flag. */
-	bool closed;
-	/** Control points of the spline. */
+        /** Degree of the spline (1, 2, 3) */
+        int degree;
+        /** Closed flag. */
+        bool closed;
+        /** Control points of the spline. */
     QList<RS_Vector> controlPoints;
 };
 
@@ -90,44 +90,44 @@ public:
     RS_SplineData getData() const {
         return data;
     }
-	
-	/** Sets the splines degree (1-3). */
-	void setDegree(int deg) {
-		if (deg>=1 && deg<=3) {
-			data.degree = deg;
-		}
-	}
 
-	/** @return Degree of this spline curve (1-3).*/
-	int getDegree() {
-		return data.degree;
-	}
+        /** Sets the splines degree (1-3). */
+        void setDegree(int deg) {
+                if (deg>=1 && deg<=3) {
+                        data.degree = deg;
+                }
+        }
 
-	/** @return 0. */
+        /** @return Degree of this spline curve (1-3).*/
+        int getDegree() {
+                return data.degree;
+        }
+
+        /** @return 0. */
     int getNumberOfKnots() {
-		return 0;
-	}
+                return 0;
+        }
 
-	/** @return Number of control points. */
-	int getNumberOfControlPoints() {
-		return data.controlPoints.count();
-	}
+        /** @return Number of control points. */
+        int getNumberOfControlPoints() {
+                return data.controlPoints.count();
+        }
 
-	/** 
-	 * @retval true if the spline is closed.
-	 * @retval false otherwise.
-	 */
-	bool isClosed() {
-		return data.closed;
-	}
+        /**
+         * @retval true if the spline is closed.
+         * @retval false otherwise.
+         */
+        bool isClosed() {
+                return data.closed;
+        }
 
-	/**
-	 * Sets the closed falg of this spline.
-	 */
-	void setClosed(bool c) {
-		data.closed = c;
-		update();
-	}
+        /**
+         * Sets the closed falg of this spline.
+         */
+        void setClosed(bool c) {
+                data.closed = c;
+                update();
+        }
 
     virtual RS_VectorSolutions getRefPoints();
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
@@ -154,23 +154,23 @@ public:
     //    calculateBorders();
     //}
 
-	void update();
-	
-	//virtual void moveStartpoint(const RS_Vector& pos);
-	//virtual void moveEndpoint(const RS_Vector& pos);
-	//virtual RS2::Ending getTrimPoint(const RS_Vector& coord, 
-	//          const RS_Vector& trimPoint);
-	//virtual void reverse();
+        void update();
+
+        //virtual void moveStartpoint(const RS_Vector& pos);
+        //virtual void moveEndpoint(const RS_Vector& pos);
+        //virtual RS2::Ending getTrimPoint(const RS_Vector& coord,
+        //          const RS_Vector& trimPoint);
+        //virtual void reverse();
     /** @return the center point of the line. */
     //RS_Vector getMiddlePoint() {
     //    return (data.startpoint + data.endpoint)/2.0;
     //}
-	//virtual bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2);
+        //virtual bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2);
 
     /**
      * @return The length of the line.
      */
-    //virtual double getLength() {
+    //virtual double getLength() const {
     //    return data.startpoint.distanceTo(data.endpoint);
     //}
 
@@ -204,16 +204,16 @@ public:
     /*virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
-									  double solidDist = RS_MAXDOUBLE);*/
-    
-	virtual void addControlPoint(const RS_Vector& v);
-	virtual void removeLastControlPoint();
+                                                                          double solidDist = RS_MAXDOUBLE);*/
+
+        virtual void addControlPoint(const RS_Vector& v);
+        virtual void removeLastControlPoint();
 
     virtual void move(RS_Vector offset);
     virtual void rotate(RS_Vector center, double angle);
     virtual void scale(RS_Vector center, RS_Vector factor);
     virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
-	virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
+        virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);
         QList<RS_Vector> getControlPoints();
@@ -222,15 +222,15 @@ public:
 
     virtual void calculateBorders();
 
-	static void rbasis(int c, double t, int npts, int x[], double h[], double r[]);
-	
-	static void knot(int num, int order, int knotVector[]);
-	static void rbspline(int npts, int k, int p1,
-		double b[], double h[], double p[]);
-		
-	static void knotu(int num, int order, int knotVector[]);
-	static void rbsplinu(int npts, int k, int p1,
-		double b[], double h[], double p[]);
+        static void rbasis(int c, double t, int npts, int x[], double h[], double r[]);
+
+        static void knot(int num, int order, int knotVector[]);
+        static void rbspline(int npts, int k, int p1,
+                double b[], double h[], double p[]);
+
+        static void knotu(int num, int order, int knotVector[]);
+        static void rbsplinu(int npts, int k, int p1,
+                double b[], double h[], double p[]);
 
 protected:
     RS_SplineData data;

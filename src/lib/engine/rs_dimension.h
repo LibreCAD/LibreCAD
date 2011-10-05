@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -53,7 +53,7 @@ public:
      *         or "<>" for the actual measurement or " " (one blank space).
      *         for supressing the text.
      * @param style Dimension style name.
-     * @param angle Rotation angle of dimension text away from 
+     * @param angle Rotation angle of dimension text away from
      *         default orientation.
      */
     RS_DimensionData(const RS_Vector& definitionPoint,
@@ -103,9 +103,9 @@ public:
     /** Line spacing factor */
     double lineSpacingFactor;
     /**
-    * Text string entered explicitly by user or null 
-    * or "<>" for the actual measurement or " " (one blank space) 
-    * for supressing the text. 
+    * Text string entered explicitly by user or null
+    * or "<>" for the actual measurement or " " (one blank space)
+    * for supressing the text.
     */
     QString text;
     /** Dimension style name */
@@ -131,9 +131,9 @@ public:
     RS_DimensionData getData() const {
         return data;
     }
-	
-	RS_Vector getNearestRef(const RS_Vector& coord, double* dist);
-	RS_Vector getNearestSelectedRef(const RS_Vector& coord, double* dist);
+
+        RS_Vector getNearestRef(const RS_Vector& coord, double* dist);
+        RS_Vector getNearestSelectedRef(const RS_Vector& coord, double* dist);
 
     QString getLabel(bool resolve=true);
         void setLabel(const QString& l);
@@ -151,7 +151,7 @@ public:
     virtual void update(bool autoText=false) = 0;
 
     void updateCreateDimensionLine(const RS_Vector& p1, const RS_Vector& p2,
-	          bool arrow1=true, bool arrow2=true, bool autoText=false);
+                  bool arrow1=true, bool arrow2=true, bool autoText=false);
 
     RS_Vector getDefinitionPoint() {
         return data.definitionPoint;
@@ -194,12 +194,12 @@ public:
     double getExtensionLineOffset();
     double getDimensionLineGap();
     double getTextHeight();
-	
+
         double getGraphicVariable(const QString& key, double defMM, int code);
 
-	virtual double getLength() {
-		return -1.0;
-	}
+//	virtual double getLength() {
+//		return -1.0;
+//	}
 
     virtual void move(RS_Vector offset);
     virtual void rotate(RS_Vector center, double angle);

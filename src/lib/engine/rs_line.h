@@ -158,7 +158,7 @@ public:
     /**
      * @return The length of the line.
      */
-    virtual double getLength() {
+    virtual double getLength() const {
         return data.startpoint.distanceTo(data.endpoint);
     }
 

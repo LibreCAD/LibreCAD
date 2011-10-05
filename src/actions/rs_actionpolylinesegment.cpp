@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -56,173 +56,173 @@ void RS_ActionPolylineSegment::init(int status) {
  * Rearranges the atomic entities in this container in a way that connected
  * entities are stored in the right order and direction.
  * Non-recoursive. Only affects atomic entities in this container.
- * 
+ *
  * @retval true all contours were closed
  * @retval false at least one contour is not closed
  */
 bool RS_ActionPolylineSegment::convertPolyline(RS_Entity* selectedEntity) {
 
-	RS_DEBUG->print("RS_ActionPolylineSegment::convertPolyline");
+        RS_DEBUG->print("RS_ActionPolylineSegment::convertPolyline");
 
-	RS_Vector current(false);
-	RS_Vector start(false);
-	RS_Vector end(false);
-	RS_EntityContainer tmp;
+        RS_Vector current(false);
+        RS_Vector start(false);
+        RS_Vector end(false);
+        RS_EntityContainer tmp;
 
-	bool closed = true;
+        bool closed = true;
 
-	int pos = container->findEntity(selectedEntity);
-	RS_Entity* e1=container->entityAt(pos);
+        int pos = container->findEntity(selectedEntity);
+        RS_Entity* e1=container->entityAt(pos);
 
-	if (document!=NULL) {
-		document->startUndoCycle();
-	}
-	if (document!=NULL) {
-		if (e1!=NULL && e1->isEdge() && !e1->isContainer() &&
-					!e1->isProcessed()) {
+        if (document!=NULL) {
+                document->startUndoCycle();
+        }
+        if (document!=NULL) {
+                if (e1!=NULL && e1->isEdge() && !e1->isContainer() &&
+                                        !e1->isProcessed()) {
 
-			RS_AtomicEntity* ce = (RS_AtomicEntity*)e1;
+                        RS_AtomicEntity* ce = (RS_AtomicEntity*)e1;
 
 ///////////////////////////////////////////////////
-			ce->setUndoState(true);
-			document->addUndoable(ce);
+                        ce->setUndoState(true);
+                        document->addUndoable(ce);
 ///////////////////////////////////////////////////
 
-			// next contour start:
-			ce->setProcessed(true);
-			tmp.addEntity(ce->clone());
-			current = ce->getStartpoint();
-			end = ce->getEndpoint();
+                        // next contour start:
+                        ce->setProcessed(true);
+                        tmp.addEntity(ce->clone());
+                        current = ce->getStartpoint();
+                        end = ce->getEndpoint();
 
-			// find first connected entities:
-			for (int ei=pos-1; ei>=0; --ei) {
-				RS_Entity* e2=container->entityAt(ei);
+                        // find first connected entities:
+                        for (int ei=pos-1; ei>=0; --ei) {
+                                RS_Entity* e2=container->entityAt(ei);
 
-				if (e2!=NULL && e2->isEdge() && !e2->isContainer() &&
-						!e2->isProcessed()) {
+                                if (e2!=NULL && e2->isEdge() && !e2->isContainer() &&
+                                                !e2->isProcessed()) {
 
-					RS_AtomicEntity* e = (RS_AtomicEntity*)e2;
+                                        RS_AtomicEntity* e = (RS_AtomicEntity*)e2;
 ///////////////////////////////////////////////////
-					e->setUndoState(true);
-					document->addUndoable(e);
+                                        e->setUndoState(true);
+                                        document->addUndoable(e);
 ///////////////////////////////////////////////////
-					if (e->getEndpoint().distanceTo(current) <
-							1.0e-4) {
-						e->setProcessed(true);
-						tmp.insertEntity(0,e->clone());
-						current = e->getStartpoint();
-					} else if (e->getStartpoint().distanceTo(current) <
-							   1.0e-4) {
-						e->setProcessed(true);
-						RS_AtomicEntity* cl = (RS_AtomicEntity*)e->clone();
-						cl->reverse();
-						tmp.insertEntity(0,cl);
-						current = cl->getStartpoint();
-					}else
-						break;
-				}
-			}
+                                        if (e->getEndpoint().distanceTo(current) <
+                                                        1.0e-4) {
+                                                e->setProcessed(true);
+                                                tmp.insertEntity(0,e->clone());
+                                                current = e->getStartpoint();
+                                        } else if (e->getStartpoint().distanceTo(current) <
+                                                           1.0e-4) {
+                                                e->setProcessed(true);
+                                                RS_AtomicEntity* cl = (RS_AtomicEntity*)e->clone();
+                                                cl->reverse();
+                                                tmp.insertEntity(0,cl);
+                                                current = cl->getStartpoint();
+                                        }else
+                                                break;
+                                }
+                        }
 
-			if (current.distanceTo(end)>1.0e-4) {
-				closed = false;
-			}
+                        if (current.distanceTo(end)>1.0e-4) {
+                                closed = false;
+                        }
 
-			current = ce->getEndpoint();
-			start = ce->getStartpoint();
-			// find last connected entities:
-			for (uint ei=pos+1; ei<container->count(); ++ei) {
-				RS_Entity* e2=container->entityAt(ei);
+                        current = ce->getEndpoint();
+                        start = ce->getStartpoint();
+                        // find last connected entities:
+                        for (uint ei=pos+1; ei<container->count(); ++ei) {
+                                RS_Entity* e2=container->entityAt(ei);
 ///////////////////////////////////////////////////
-				e2->setUndoState(true);
-				document->addUndoable(e2);
+                                e2->setUndoState(true);
+                                document->addUndoable(e2);
 ///////////////////////////////////////////////////
-				if (e2!=NULL && e2->isEdge() && !e2->isContainer() &&
-						!e2->isProcessed()) {
-					RS_AtomicEntity* e = (RS_AtomicEntity*)e2;
-					if (e->getStartpoint().distanceTo(current) <
-							1.0e-4) {
-						e->setProcessed(true);
-						tmp.addEntity(e->clone());
-						current = e->getEndpoint();
-					} else if (e->getEndpoint().distanceTo(current) <
-							   1.0e-4) {
-						e->setProcessed(true);
-						RS_AtomicEntity* cl = (RS_AtomicEntity*)e->clone();
-						cl->reverse();
-						tmp.addEntity(cl);
-						current = cl->getEndpoint();
-					}else
-						break;
-				}
-			}
-			if (current.distanceTo(start)>1.0e-4) {
-				closed = false;
-			}
-		}
-	}
-	if (document!=NULL) {
-		document->endUndoCycle();
-	}
+                                if (e2!=NULL && e2->isEdge() && !e2->isContainer() &&
+                                                !e2->isProcessed()) {
+                                        RS_AtomicEntity* e = (RS_AtomicEntity*)e2;
+                                        if (e->getStartpoint().distanceTo(current) <
+                                                        1.0e-4) {
+                                                e->setProcessed(true);
+                                                tmp.addEntity(e->clone());
+                                                current = e->getEndpoint();
+                                        } else if (e->getEndpoint().distanceTo(current) <
+                                                           1.0e-4) {
+                                                e->setProcessed(true);
+                                                RS_AtomicEntity* cl = (RS_AtomicEntity*)e->clone();
+                                                cl->reverse();
+                                                tmp.addEntity(cl);
+                                                current = cl->getEndpoint();
+                                        }else
+                                                break;
+                                }
+                        }
+                        if (current.distanceTo(start)>1.0e-4) {
+                                closed = false;
+                        }
+                }
+        }
+        if (document!=NULL) {
+                document->endUndoCycle();
+        }
 
-	RS_Polyline* newPolyline = new RS_Polyline(container, RS_PolylineData(RS_Vector(false), RS_Vector(false), closed));
-	newPolyline->setLayerToActive();
-	newPolyline->setPenToActive();
-	// add new polyline:
-	bool first = true;
-	RS_Entity* lastEntity = tmp.lastEntity();
-	for (RS_Entity* en=tmp.firstEntity(); en!=NULL; en=tmp.nextEntity()) {
-		en->setProcessed(false);
-		double bulge = 0.0;
-		if (en->rtti()==RS2::EntityArc) {
-			bulge = ((RS_Arc*)en)->getBulge();
-		} else {
-			bulge = 0.0;
-		}
-		if (first) {
-			newPolyline->setNextBulge(bulge);
-			newPolyline->addVertex(((RS_AtomicEntity*)en)->getStartpoint());
-			first = false;
-		}
-		if (en!=lastEntity || closed==false){
-			newPolyline->setNextBulge(bulge);
-			newPolyline->addVertex(((RS_AtomicEntity*)en)->getEndpoint());
-		}
-	}
-	double bulge = lastEntity->rtti() == RS2::EntityArc? ((RS_Arc*)lastEntity)->getBulge():0.0;
-	newPolyline->setNextBulge(bulge);
-	newPolyline->endPolyline();
-	container->addEntity(newPolyline);
+        RS_Polyline* newPolyline = new RS_Polyline(container, RS_PolylineData(RS_Vector(false), RS_Vector(false), closed));
+        newPolyline->setLayerToActive();
+        newPolyline->setPenToActive();
+        // add new polyline:
+        bool first = true;
+        RS_Entity* lastEntity = tmp.lastEntity();
+        for (RS_Entity* en=tmp.firstEntity(); en!=NULL; en=tmp.nextEntity()) {
+                en->setProcessed(false);
+                double bulge = 0.0;
+                if (en->rtti()==RS2::EntityArc) {
+                        bulge = ((RS_Arc*)en)->getBulge();
+                } else {
+                        bulge = 0.0;
+                }
+                if (first) {
+                        newPolyline->setNextBulge(bulge);
+                        newPolyline->addVertex(((RS_AtomicEntity*)en)->getStartpoint());
+                        first = false;
+                }
+                if (en!=lastEntity || closed==false){
+                        newPolyline->setNextBulge(bulge);
+                        newPolyline->addVertex(((RS_AtomicEntity*)en)->getEndpoint());
+                }
+        }
+        double bulge = lastEntity->rtti() == RS2::EntityArc? ((RS_Arc*)lastEntity)->getBulge():0.0;
+        newPolyline->setNextBulge(bulge);
+        newPolyline->endPolyline();
+        container->addEntity(newPolyline);
 
-	if (graphicView!=NULL) {
-		graphicView->drawEntity(newPolyline);
-	}
+        if (graphicView!=NULL) {
+                graphicView->drawEntity(newPolyline);
+        }
 
-	if (document!=NULL) {
-		document->startUndoCycle();
-		document->addUndoable(newPolyline);
-		document->endUndoCycle();
-	}
-	RS_DEBUG->print("RS_ActionPolylineSegment::convertPolyline: OK");
-	return closed;
+        if (document!=NULL) {
+                document->startUndoCycle();
+                document->addUndoable(newPolyline);
+                document->endUndoCycle();
+        }
+        RS_DEBUG->print("RS_ActionPolylineSegment::convertPolyline: OK");
+        return closed;
 }
 
 void RS_ActionPolylineSegment::trigger() {
 
     RS_DEBUG->print("RS_ActionPolylineSegment::trigger()");
 
-	if (targetEntity!=NULL /*&& selectedSegment!=NULL && targetPoint.valid */) {
+        if (targetEntity!=NULL /*&& selectedSegment!=NULL && targetPoint.valid */) {
         targetEntity->setHighlighted(false);
         graphicView->drawEntity(targetEntity);
-		container->optimizeContours();
-		convertPolyline(targetEntity);
+                container->optimizeContours();
+                convertPolyline(targetEntity);
 
         targetEntity = NULL;
         setStatus(ChooseEntity);
 
-        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected());
+        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
 ////////////////////////////////////////2006/06/15
-		graphicView->redraw();
+                graphicView->redraw();
 ////////////////////////////////////////
 }
 
@@ -260,9 +260,9 @@ void RS_ActionPolylineSegment::mouseReleaseEvent(QMouseEvent* e) {
                 graphicView->drawEntity(targetEntity);
 //                setStatus(SetReferencePoint);
 ////////////////////////////////////////2006/06/15
-				graphicView->redraw();
+                                graphicView->redraw();
 ////////////////////////////////////////
-            	trigger();
+                trigger();
             }
             break;
         default:
@@ -274,7 +274,7 @@ void RS_ActionPolylineSegment::mouseReleaseEvent(QMouseEvent* e) {
             targetEntity->setHighlighted(false);
             graphicView->drawEntity(targetEntity);
 ////////////////////////////////////////2006/06/15
-		graphicView->redraw();
+                graphicView->redraw();
 ////////////////////////////////////////
         }
         init(getStatus()-1);

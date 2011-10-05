@@ -54,7 +54,7 @@ void RS_ActionInfoTotalLength::trigger() {
 
     RS_DEBUG->print("RS_ActionInfoTotalLength::trigger()");
 
-    double len (container->getSelectedLength());
+    double len (container->totalSelectedLength());
 
     if (len>0.0) {
         RS_DIALOGFACTORY->commandMessage(

@@ -1812,7 +1812,11 @@ void QC_ApplicationWindow::slotKillAllActions() {
 
         RS_Selection s((RS_EntityContainer&)*m->getDocument(), gv);
         s.selectAll(false);
-        RS_DIALOGFACTORY->updateSelectionWidget(m->getDocument()->countSelected());
+        RS_DIALOGFACTORY->updateSelectionWidget(
+                    m->getDocument()->countSelected()
+                    ,
+                    m->getDocument()->totalSelectedLength()
+                    );
 
         gv->redraw(RS2::RedrawAll);
     }

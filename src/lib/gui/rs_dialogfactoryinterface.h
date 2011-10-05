@@ -394,7 +394,7 @@ public:
      *
      * @param num Number of selected entities
      */
-    virtual void updateSelectionWidget(int num) = 0;
+    virtual void updateSelectionWidget(int num, double length) = 0;
 
     /**
      * This virtual method must be overwritten if the graphic view has

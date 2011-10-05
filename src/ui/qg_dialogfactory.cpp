@@ -1798,9 +1798,10 @@ void QG_DialogFactory::restoreMouseWidget(void) {
 /**
  * Called whenever the selection changed.
  */
-void QG_DialogFactory::updateSelectionWidget(int num) {
+void QG_DialogFactory::updateSelectionWidget(int num, double length) {
     if (selectionWidget!=NULL) {
         selectionWidget->setNumber(num);
+        selectionWidget->setTotalLength(length);
     }
 }
 
