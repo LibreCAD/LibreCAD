@@ -120,14 +120,16 @@ void RS_Image::update() {
 
 
 void RS_Image::calculateBorders() {
-    resetBorders();
 
     RS_VectorSolutions sol = getCorners();
-
-    for (int i=0; i<4; ++i) {
-        minV = RS_Vector::minimum(minV, sol.get(i));
-        maxV = RS_Vector::maximum(maxV, sol.get(i));
-    }
+        minV =  RS_Vector::minimum(
+                RS_Vector::minimum(sol.get(0), sol.get(1)),
+                RS_Vector::minimum(sol.get(2), sol.get(3))
+                    );
+        maxV =  RS_Vector::maximum(
+                RS_Vector::maximum(sol.get(0), sol.get(1)),
+                RS_Vector::maximum(sol.get(2), sol.get(3))
+                    );
 }
 
 
@@ -251,7 +253,7 @@ double RS_Image::getDistanceToPoint(const RS_Vector& coord,
 
 void RS_Image::move(const RS_Vector& offset) {
     data.insertionPoint.move(offset);
-    calculateBorders();
+    moveBorders(offset);
 }
 
 
@@ -276,7 +278,7 @@ void RS_Image::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.insertionPoint.scale(center, factor);
     data.uVector.scale(factor);
     data.vVector.scale(factor);
-    calculateBorders();
+    scaleBorders(center,factor);
 }
 
 

@@ -263,7 +263,7 @@ RS_Vector RS_Insert::getNearestRef(const RS_Vector& coord,
 
 
 
-void RS_Insert::move(RS_Vector offset) {
+void RS_Insert::move(const RS_Vector& offset) {
         RS_DEBUG->print("RS_Insert::move: offset: %f/%f",
                 offset.x, offset.y);
         RS_DEBUG->print("RS_Insert::move1: insertionPoint: %f/%f",
@@ -276,7 +276,7 @@ void RS_Insert::move(RS_Vector offset) {
 
 
 
-void RS_Insert::rotate(RS_Vector center, double angle) {
+void RS_Insert::rotate(const RS_Vector& center, const double& angle) {
         RS_DEBUG->print("RS_Insert::rotate1: insertionPoint: %f/%f "
             "/ center: %f/%f",
                 data.insertionPoint.x, data.insertionPoint.y,
@@ -287,10 +287,21 @@ void RS_Insert::rotate(RS_Vector center, double angle) {
                 data.insertionPoint.x, data.insertionPoint.y);
     update();
 }
+void RS_Insert::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+        RS_DEBUG->print("RS_Insert::rotate1: insertionPoint: %f/%f "
+            "/ center: %f/%f",
+                data.insertionPoint.x, data.insertionPoint.y,
+                center.x, center.y);
+    data.insertionPoint.rotate(center, angleVector);
+    data.angle = RS_Math::correctAngle(data.angle+angleVector.angle());
+        RS_DEBUG->print("RS_Insert::rotate2: insertionPoint: %f/%f",
+                data.insertionPoint.x, data.insertionPoint.y);
+    update();
+}
 
 
 
-void RS_Insert::scale(RS_Vector center, RS_Vector factor) {
+void RS_Insert::scale(const RS_Vector& center, const RS_Vector& factor) {
         RS_DEBUG->print("RS_Insert::scale1: insertionPoint: %f/%f",
                 data.insertionPoint.x, data.insertionPoint.y);
     data.insertionPoint.scale(center, factor);
@@ -303,7 +314,7 @@ void RS_Insert::scale(RS_Vector center, RS_Vector factor) {
 
 
 
-void RS_Insert::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_Insert::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     data.insertionPoint.mirror(axisPoint1, axisPoint2);
 
         RS_Vector vec;

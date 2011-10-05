@@ -708,7 +708,8 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     }
     correctAngles();//avoid extra 2.*M_PI in angles
     //calculateEndpoints();
-    calculateBorders();
+    scaleBorders(center,factor);
+//    calculateBorders();
 }
 
 

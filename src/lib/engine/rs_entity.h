@@ -74,7 +74,14 @@ public:
     }
 
     void resetBorders();
-
+    void moveBorders(const RS_Vector& offset){
+        minV.move(offset);
+        maxV.move(offset);
+    }
+    void scaleBorders(const RS_Vector& center, const RS_Vector& factor){
+        minV.scale(center,factor);
+        maxV.scale(center,factor);
+    }
     /**
      * Must be overwritten to return the rtti of this entity
      * (e.g. RS2::EntityArc).
