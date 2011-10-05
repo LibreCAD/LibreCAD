@@ -1004,6 +1004,15 @@ public:
                 Folio,
                 //Ledger,
                 Tabloid,
+        Arch_A,
+        Arch_B,
+        Arch_C,
+        Arch_D,
+        Arch_E,
+        Arch_E1,
+        Arch_E2,
+        Arch_E3,
+
                 NPageSize
         };
 
