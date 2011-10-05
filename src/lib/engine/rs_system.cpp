@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -86,7 +86,7 @@ void RS_System::initLanguageList() {
         RS_DEBUG->print("RS_System::initLanguageList: qm file: %s",
                         (*it).toLatin1().data());
 
-        int i1 = (*it).indexOf('_');
+        int i1 = (*it).lastIndexOf('_');
         int i2 = (*it).indexOf('.', i1);
         QString l = (*it).mid(i1+1, i2-i1-1);
 
@@ -481,9 +481,9 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 
         //local (application) directory has priority over other dirs:
         if (!appDir.isEmpty() && appDir!="/" && appDir!=getHomeDir()) {
-		if( appDir != getCurrentDir() && subDirectory != QString("plugins")) {// 17 Aug, 2011, Dongxu Li, do not look for plugins in the current folder, we should install plugins to system or ~/.LibreCAD/plugins/
+                if( appDir != getCurrentDir() && subDirectory != QString("plugins")) {// 17 Aug, 2011, Dongxu Li, do not look for plugins in the current folder, we should install plugins to system or ~/.LibreCAD/plugins/
             dirList.append(appDir + "/" + subDirectory);
-	    }
+            }
         }
 
         // Ubuntu
