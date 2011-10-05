@@ -532,9 +532,14 @@ void  QG_DlgOptionsDrawing::updatePaperSize() {
                 lePaperHeight->setText(QString("%1").arg(s.y));
         }
         else {
-            RS_Vector s = RS_Units::paperFormatToSize(format);
-            lePaperWidth->setText(QString("%1").arg(s.x));
-            lePaperHeight->setText(QString("%1").arg(s.y));
+            //display paper size according to current units
+            RS_Vector s = RS_Units::convert(
+                        RS_Units::paperFormatToSize(format),
+                        RS2::Millimeter,
+                        (RS2::Unit) cbUnit->currentIndex()
+                        );
+            lePaperWidth->setText(QString("%1").setNum(s.x,'g',5));
+            lePaperHeight->setText(QString("%1").setNum(s.y,'g',5));
         }
 
     if (cbPaperFormat->currentIndex()==0) {
@@ -559,5 +564,7 @@ void QG_DlgOptionsDrawing::updateUnitLabels() {
     lDimUnit3->setText(sign);
     lDimUnit4->setText(sign);
     lDimUnit5->setText(sign);
+    //have to update paper size when unit changes
+    updatePaperSize();
 }
 
