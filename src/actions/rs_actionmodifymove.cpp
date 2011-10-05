@@ -168,19 +168,8 @@ void RS_ActionModifyMove::updateMouseCursor() {
 
 
 void RS_ActionModifyMove::updateToolBar() {
-    //not needed any more
-    return;
-    switch (getStatus()) {
-        /*case Select:
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
-            break;*/
-    case SetReferencePoint:
-    case SetTargetPoint:
-        //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        break;
-    default:
+    if(RS_DIALOGFACTORY != NULL) {
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-        break;
     }
 }
 
