@@ -182,7 +182,7 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent* e) {
     switch (getStatus()) {
     case SetEntity: {
             if (checkCommand("through", c)) {
-                finish();
+                finish(false);
                 graphicView->setCurrentAction(
                     new RS_ActionDrawLineParallelThrough(*container,
                                                          *graphicView));

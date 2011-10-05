@@ -99,7 +99,7 @@ void RS_ActionBlocksCreate::trigger() {
 
     setStatus(getStatus()+1); // clear mouse button hints
     updateMouseButtonHints();
-    finish();
+    finish(false);
     graphicView->killSelectActions();
 }
 

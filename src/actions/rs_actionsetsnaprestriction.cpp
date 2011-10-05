@@ -49,7 +49,7 @@ RS_ActionSetSnapRestriction::RS_ActionSetSnapRestriction(
 void RS_ActionSetSnapRestriction::trigger() {
     graphicView->setSnapRestriction(snapRes);
 	
-    finish();
+    finish(false);
 }
 
 

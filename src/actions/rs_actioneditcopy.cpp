@@ -93,7 +93,7 @@ void RS_ActionEditCopy::trigger() {
     m.copy(referencePoint, !copy);
 
     //graphicView->redraw();
-    finish();
+    finish(false);
     graphicView->killSelectActions();
     //init(getStatus()-1);
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());

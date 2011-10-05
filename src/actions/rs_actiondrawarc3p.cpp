@@ -207,7 +207,7 @@ void RS_ActionDrawArc3P::commandEvent(RS_CommandEvent* e) {
     }
 
     if (RS_COMMANDS->checkCommand("center", c, rtti())) {
-        finish();
+        finish(false);
         graphicView->setCurrentAction(
             new RS_ActionDrawArc(*container, *graphicView));
     }

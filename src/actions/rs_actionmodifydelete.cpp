@@ -63,7 +63,7 @@ void RS_ActionModifyDelete::trigger() {
     RS_Modification m(*container, graphicView);
     m.remove();
 
-    finish();
+    finish(false);
 
     if (RS_DIALOGFACTORY!=NULL) {
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());

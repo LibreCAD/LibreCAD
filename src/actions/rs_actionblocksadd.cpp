@@ -60,7 +60,7 @@ void RS_ActionBlocksAdd::trigger() {
 			}
 		}
     }
-    finish();
+    finish(false);
 }
 
 

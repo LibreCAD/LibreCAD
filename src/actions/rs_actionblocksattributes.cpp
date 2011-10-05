@@ -76,7 +76,7 @@ void RS_ActionBlocksAttributes::trigger() {
         }
 
     }
-    finish();
+    finish(false);
 }
 
 

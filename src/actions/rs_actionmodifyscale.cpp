@@ -96,7 +96,7 @@ void RS_ActionModifyScale::mouseReleaseEvent(QMouseEvent* e) {
             if (RS_DIALOGFACTORY->requestScaleDialog(data)) {
                 data.referencePoint = referencePoint;
                 trigger();
-                finish();
+                finish(false);
             }
             break;
 

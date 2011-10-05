@@ -56,7 +56,7 @@ void RS_ActionBlocksEdit::trigger() {
         RS_DEBUG->print(RS_Debug::D_WARNING,
         	"RS_ActionBlocksEdit::trigger(): graphic is NULL");
     }
-    finish();
+    finish(false);
 }
 
 

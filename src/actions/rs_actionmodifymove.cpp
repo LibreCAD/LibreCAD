@@ -129,7 +129,7 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
         if (RS_DIALOGFACTORY->requestMoveDialog(data)) {
             data.offset = targetPoint - referencePoint;
             trigger();
-            finish();
+            finish(false);
         }
         break;
 
@@ -168,8 +168,10 @@ void RS_ActionModifyMove::updateMouseCursor() {
 
 
 void RS_ActionModifyMove::updateToolBar() {
-    if(RS_DIALOGFACTORY != NULL) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+    if( isFinished()) {
+        if(RS_DIALOGFACTORY != NULL) {
+            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+        }
     }
 }
 

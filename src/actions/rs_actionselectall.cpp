@@ -62,7 +62,7 @@ QAction* RS_ActionSelectAll::createGUIAction(RS2::ActionType type, QObject* pare
 void RS_ActionSelectAll::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
-    finish();
+    finish(false);
 }
 
 void RS_ActionSelectAll::trigger() {

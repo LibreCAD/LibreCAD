@@ -48,7 +48,7 @@ QAction* RS_ActionSelectInvert::createGUIAction(RS2::ActionType /*type*/, QObjec
 void RS_ActionSelectInvert::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
-    finish();
+    finish(false);
 }
 
 void RS_ActionSelectInvert::trigger() {

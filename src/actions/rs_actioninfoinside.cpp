@@ -71,7 +71,7 @@ void RS_ActionInfoInside::trigger() {
     } else {
         RS_DIALOGFACTORY->commandMessage(tr("Point is outside selected contour."));
     }
-    finish();
+    finish(false);
 }
 
 

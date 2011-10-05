@@ -77,7 +77,7 @@ void RS_ActionModifyAttributes::trigger() {
         }
     }
 
-    finish();
+    finish(false);
     graphicView->killSelectActions();
 
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());

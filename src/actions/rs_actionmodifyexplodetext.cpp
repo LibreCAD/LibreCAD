@@ -56,7 +56,7 @@ void RS_ActionModifyExplodeText::init(int status) {
     RS_PreviewActionInterface::init(status);
 
     trigger();
-    finish();
+    finish(false);
 }
 
 

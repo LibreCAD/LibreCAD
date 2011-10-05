@@ -55,7 +55,7 @@ void RS_ActionSetRelativeZero::trigger() {
         graphicView->moveRelativeZero(pt);
         graphicView->lockRelativeZero(wasLocked);
     }
-    finish();
+    finish(false);
 }
 
 

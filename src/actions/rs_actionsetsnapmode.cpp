@@ -83,7 +83,7 @@ void RS_ActionSetSnapMode::trigger() {
 
     graphicView->setDefaultSnapMode(s);
 
-    finish();
+    finish(false);
 }
 
 

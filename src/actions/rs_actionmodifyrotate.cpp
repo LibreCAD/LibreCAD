@@ -120,7 +120,7 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent* e) {
             setStatus(ShowDialog);
             if (RS_DIALOGFACTORY->requestRotateDialog(data)) {
                 trigger();
-                finish();
+                finish(false);
             }
         } else {
             data.angle=pos.angle();
@@ -137,7 +137,7 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent* e) {
         setStatus(ShowDialog);
         if (RS_DIALOGFACTORY->requestRotateDialog(data)) {
             trigger();
-            finish();
+            finish(false);
         }
         break;
 

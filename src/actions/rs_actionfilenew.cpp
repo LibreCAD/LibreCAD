@@ -59,7 +59,7 @@ void RS_ActionFileNew::trigger() {
         graphic->open(fileName, );
 }
     */
-    finish();
+    finish(false);
 }
 
 

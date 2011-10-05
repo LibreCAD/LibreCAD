@@ -107,7 +107,7 @@ void RS_ActionZoomIn::trigger() {
         }
         break;
     }
-    finish();
+    finish(false);
 }
 
 

@@ -68,7 +68,7 @@ void RS_ActionOptionsDrawing::trigger() {
         graphicView->redraw(RS2::RedrawGrid);
         graphicView->redraw(RS2::RedrawDrawing); 
     }
-    finish();
+    finish(false);
 }
 
 

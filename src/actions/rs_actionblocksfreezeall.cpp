@@ -69,7 +69,7 @@ void RS_ActionBlocksFreezeAll::trigger() {
     }
 	graphicView->redraw(RS2::RedrawDrawing); 
 
-    finish();
+    finish(false);
 }
 
 

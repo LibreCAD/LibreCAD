@@ -62,7 +62,7 @@ void RS_ActionSelectSingle::trigger() {
 
 void RS_ActionSelectSingle::keyPressEvent(QKeyEvent* e) {
     if (e->key()==Qt::Key_Enter) {
-        finish();
+        finish(false);
     }
 }
 

@@ -61,7 +61,7 @@ void RS_ActionModifyMoveRotate::trigger() {
     RS_Modification m(*container, graphicView);
     m.moveRotate(data);
 
-    finish();
+    finish(false);
 
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }

@@ -71,7 +71,7 @@ void RS_ActionLayersEdit::trigger() {
             }
         }
     }
-    finish();
+    finish(false);
 
 	graphicView->redraw(RS2::RedrawDrawing); 
 
