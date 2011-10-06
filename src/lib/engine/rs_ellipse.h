@@ -31,7 +31,7 @@
 #ifdef  HAS_BOOST
 #include <boost/math/special_functions/ellint_2.hpp>
 #include <boost/math/tools/roots.hpp>
-#include <boost/math/tools/tuple.hpp>
+#include <boost/fusion/tuple.hpp>
 #endif
 
 #include "rs_atomicentity.h"
@@ -298,7 +298,7 @@ public:
         distance=target;
     }
 
-    boost::math::tuple<double, double, double> operator()(double const& z) const {
+    boost::fusion::tuple <double, double, double> operator()(double const& z) const {
         double cz=cos(z);
         double sz=sin(z);
         //delta amplitude

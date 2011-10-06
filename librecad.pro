@@ -46,8 +46,8 @@ unix {
         DESTDIR = unix
 
 #fixme , boost, how to handle boost properly for win32 and unix
-    CONFIG += link_pkgconfig
-    PKGCONFIG += boost
+#    CONFIG += link_pkgconfig
+#    PKGCONFIG += boost
 #
         QMAKE_POST_LINK = scripts/postprocess-unix.sh
     }
