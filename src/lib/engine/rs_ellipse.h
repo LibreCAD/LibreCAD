@@ -116,8 +116,14 @@ public:
 
     virtual void moveStartpoint(const RS_Vector& pos);
     virtual void moveEndpoint(const RS_Vector& pos);
+#ifdef  HAS_BOOST
     virtual double getLength() const;
     double getEllipseLength(double a1, double a2) const;
+#else
+    virtual double getLength() const{
+        return -1.;
+   }
+#endif
     static double ellipticIntegral_2(const double& k, const double& phi);//wrapper for elliptic integral
 
     virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord,

@@ -38,7 +38,8 @@ unix {
     }
     else {
         TARGET = librecad
-        HAS_BOOST = 1
+#fixme , need to detect whether boost is there
+        DEFINES += HAS_BOOST=1
         DEFINES += QC_APPDIR="\"librecad\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_librecad"
         RC_FILE = res/main/librecad.icns
