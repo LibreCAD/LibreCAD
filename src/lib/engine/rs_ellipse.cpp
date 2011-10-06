@@ -26,6 +26,10 @@
 
 #ifdef  HAS_BOOST
 #include <boost/math/special_functions/ellint_2.hpp>
+#include <boost/math/tools/roots.hpp>
+#include <boost/math/tools/tuple.hpp>
+#include <boost/bind.hpp>
+
 #endif
 
 #include "rs_ellipse.h"
@@ -208,7 +212,7 @@ double RS_Ellipse::getEllipseLength(double x1, double x2) const
     double a(getMajorRadius()),k(getRatio());
     k= 1-k*k;//elliptic modulus, or eccentricity
 //    std::cout<<"1, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
-    if(isReversed())  std::swap(x1,x2);
+//    if(isReversed())  std::swap(x1,x2);
     x1=RS_Math::correctAngle(x1);
     x2=RS_Math::correctAngle(x2);
 //    std::cout<<"2, angle1="<<x1/M_PI<<" angle2="<<x2/M_PI<<std::endl;
@@ -233,6 +237,10 @@ double RS_Ellipse::getEllipseLength(double x1, double x2) const
     return a*ret;
 }
 
+double RS_Ellipse::getEllipseLength( double x2) const
+{
+    return getEllipseLength(getAngle1(),x2);
+}
 /**
  * wrapper of elliptic integral of the second type, Legendre form
  *@k the elliptic modulus or eccentricity
@@ -248,6 +256,75 @@ double RS_Ellipse::ellipticIntegral_2(const double& k, const double& phi)
     } else {
         return boost::math::ellint_2<double,double>(k,a);
     }
+}
+
+/**
+  * get the point on the ellipse arc and with distance from the start point
+  * the distance is expected to be within 0 and getLength()
+  * using Newton-Raphson from boost
+  *
+  *Author: Dongxu Li
+  */
+
+RS_Vector RS_Ellipse::getNearestDist(double distance,
+                                     const RS_Vector& coord,
+                                     double* dist) {
+    RS_Ellipse e(NULL,data);
+    if(e.getRatio()>1.) e.switchMajorMinor();
+    double ra=e.getMajorRadius();
+    //fixme , need to handle zero major or minor axis length
+    if(e.getRatio()<RS_TOLERANCE || ra<RS_TOLERANCE) {
+        return(false);
+    }
+    double rb=e.getRatio()*ra;
+    if(e.isReversed()) {
+        std::swap(e.data.angle1,e.data.angle2);
+        e.setReversed(false);
+    }
+    double x1=e.getAngle1();
+    double x2=e.getAngle2();
+    if(x2<x1+RS_TOLERANCE_ANGLE) x2 += 2.*M_PI;
+    double l=e.getEllipseLength(x1,x2);
+    distance=fabs(distance);
+    if(distance > l+RS_TOLERANCE) return(RS_Vector(false));
+    if(distance > l-RS_TOLERANCE) return(getNearestEndpoint(coord,dist));
+    double guess= distance*(ra+rb)/(2.*ra*rb);
+
+    guess=(RS_Vector(x1+guess).scale(RS_Vector(e.getRatio(),1.))).angle();//convert to ellipse angle
+    if( ! RS_Math::isAngleBetween(guess,x1,x2,false)) {
+        guess=x1 +0.5*RS_Math::getAngleDifference(x1,x2);
+    }else{
+        if( guess < x1) guess += 2.*M_PI;
+    }
+    int digits=std::numeric_limits<double>::digits;
+
+//    RS_Vector vp1(getEllipsePoint(boost::math::tools::halley_iterate<double>(distance_functor(&e,distance),
+   distance_functor X(&e,distance);
+    RS_Vector vp1(getEllipsePoint(boost::math::tools::halley_iterate<distance_functor,double>(
+                                      X, guess, x1, x2, digits)));
+    X.setDistance(l-distance);
+    guess=x1+(x2-guess);
+    RS_Vector vp2(getEllipsePoint(boost::math::tools::halley_iterate<distance_functor,double>(
+                                      X, guess, x1, x2, digits)));
+    x1= (vp1-coord).squared();
+    x2= (vp2-coord).squared();
+    if( x1 > x2 ){
+        x1=x2;
+        vp1=vp2;
+    }
+    if(dist !=NULL)  *dist=sqrt(x1);
+    return vp1;
+}
+#else
+
+//todo , implement this
+RS_Vector RS_Ellipse::getNearestDist(double /*distance*/,
+                                     const RS_Vector& /*coord*/,
+                                     double* dist) {
+    if (dist!=NULL) {
+        *dist = RS_MAXDOUBLE;
+    }
+    return RS_Vector(false);
 }
 #endif
 
@@ -277,18 +354,19 @@ bool RS_Ellipse::switchMajorMinor(void)
  * @return Start point of the entity.
  */
 RS_Vector  RS_Ellipse::getStartpoint() const {
-    RS_Vector p(data.angle1);
-    double ra=getMajorRadius();
-    p.scale(RS_Vector(ra,ra*getRatio()));
-    p.rotate(getAngle());
-    p.move(getCenter());
-    return p;
+    return getEllipsePoint(data.angle1);
 }
 /**
  * @return End point of the entity.
  */
 RS_Vector  RS_Ellipse::getEndpoint() const {
-    RS_Vector p(data.angle2);
+    return getEllipsePoint(data.angle2);
+}
+/**
+ * @return Ellipse point by ellipse angle
+ */
+RS_Vector  RS_Ellipse::getEllipsePoint(const double& a) const {
+    RS_Vector p(a);
     double ra=getMajorRadius();
     p.scale(RS_Vector(ra,ra*getRatio()));
     p.rotate(getAngle());
@@ -356,8 +434,8 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         return RS_Vector(coord); // better not to return invalid: return RS_Vector(false);
     }
 
-    RS_Vector vp2(false);
-    double d(RS_MAXDOUBLE),d2,s,dDistance(RS_MAXDOUBLE);
+//    RS_Vector vp2(false);
+    double d,d2,s,dDistance(RS_MAXDOUBLE*RS_MAXDOUBLE);
     //double ea;
     for(unsigned int i=0; i<counts; i++) {
         //I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
@@ -368,25 +446,26 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         if (d2<0) continue; // fartherest
         RS_Vector vp3;
         vp3.set(a*roots[i],b*s);
-        d=vp3.distanceTo(ret);
+        d=(vp3-ret).squared();
 //        std::cout<<i<<" Checking: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" ds2= "<<d<<" d="<<d2<<std::endl;
-        if( vp2.valid && d>dDistance) continue;
-        vp2=vp3;
+        if( ret.valid && d>dDistance) continue;
+        ret=vp3;
         dDistance=d;
 //			ea=atan2(roots[i],s);
     }
-    if( ! vp2.valid ) {
+    if( ! ret.valid ) {
         //this should not happen
-        std::cout<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<std::endl;
-        std::cout<<"(x,y)=( "<<x<<" , "<<y<<" ) a= "<<a<<" b= "<<b<<" sine= "<<s<<" d2= "<<d2<<" dist= "<<d<<std::endl;
-        std::cout<<"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
+//        std::cout<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<std::endl;
+//        std::cout<<"(x,y)=( "<<x<<" , "<<y<<" ) a= "<<a<<" b= "<<b<<" sine= "<<s<<" d2= "<<d2<<" dist= "<<d<<std::endl;
+//        std::cout<<"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
+        RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n");
     }
     if (dist!=NULL) {
-        *dist = dDistance;
+        *dist = sqrt(dDistance);
     }
-    vp2.rotate(getAngle());
-    vp2.move(getCenter());
-    ret=vp2;
+    ret.rotate(getAngle());
+    ret.move(getCenter());
+//    ret=vp2;
     if (onEntity) {
         if (!RS_Math::isAngleBetween(getEllipseAngle(ret), getAngle1(), getAngle2(), isReversed())) { // not on entity, use the nearest endpoint
                //std::cout<<"not on ellipse, ( "<<getAngle1()<<" "<<getEllipseAngle(ret)<<" "<<getAngle2()<<" ) reversed= "<<isReversed()<<"\n";
@@ -394,9 +473,9 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         }
     }
 
-    if(! ret.valid) {
-        std::cout<<"RS_Ellipse::getNearestOnEntity() returns invalid by mistake. This should not happen!"<<std::endl;
-    }
+//    if(! ret.valid) {
+//        std::cout<<"RS_Ellipse::getNearestOnEntity() returns invalid by mistake. This should not happen!"<<std::endl;
+//    }
     return ret;
 }
 
@@ -519,16 +598,6 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     return vp;
 }
 
-
-//todo , implement this
-RS_Vector RS_Ellipse::getNearestDist(double /*distance*/,
-                                     const RS_Vector& /*coord*/,
-                                     double* dist) {
-    if (dist!=NULL) {
-        *dist = RS_MAXDOUBLE;
-    }
-    return RS_Vector(false);
-}
 /**
   * get the tangential point of a tangential line orthogonal to a given line
   *@ normal, the given line
@@ -600,8 +669,9 @@ double RS_Ellipse::getDistanceToPoint(const RS_Vector& coord,
 void RS_Ellipse::move(const RS_Vector& offset) {
     data.center.move(offset);
     //calculateEndpoints();
-    minV.move(offset);
-    maxV.move(offset);
+//    minV.move(offset);
+//    maxV.move(offset);
+    moveBorders(offset);
 }
 
 
