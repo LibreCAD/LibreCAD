@@ -119,7 +119,7 @@ public:
      * @return End point of the entity.
      */
     virtual RS_Vector getEndpoint() const;
-    virtual RS_Vector getEllipsePoint(const double& a) const;
+    virtual RS_Vector getEllipsePoint(const double& a) const; //find the point according to ellipse angle
 
     virtual void moveStartpoint(const RS_Vector& pos);
     virtual void moveEndpoint(const RS_Vector& pos);
@@ -284,7 +284,7 @@ protected:
 };
 
 #ifdef  HAS_BOOST
-//functor to solve for distance
+//functor to solve for distance, used by snapDistance
 class distance_functor
 {
 public:
@@ -297,29 +297,23 @@ public:
     void setDistance(const double& target){
         distance=target;
     }
-    boost::math::tuple<double, double, double> fdiff(double const& z) const{
-        // z is estimate so far.
-                //            e->setAngle2(z);
-                double cz=cos(z);
-                double sz=sin(z);
 
-                double d=sqrt(1-k2*sz*sz);//delta amplitude
-
-                return boost::math::make_tuple(
-                            e->getEllipseLength(z)-distance,
-                            ra*d, // return f(x), f'(x) and f''(x)
-                            k2*ra*sz*cz/d
-                            );
-    }
-
-    boost::math::tuple<double, double, double> operator()(double const& z) const
-    {
-        return fdiff(z);
+    boost::math::tuple<double, double, double> operator()(double const& z) const {
+        double cz=cos(z);
+        double sz=sin(z);
+        //delta amplitude
+        double d=sqrt(1-k2*sz*sz);
+        // return f(x), f'(x) and f''(x)
+        return boost::math::make_tuple(
+                    e->getEllipseLength(z)-distance,
+                    ra*d,
+                    k2*ra*sz*cz/d
+                    );
     }
 
 private:
 
-    double distance; // to be 'cube-rooted'.
+    double distance;
     RS_Ellipse* e;
     double ra;
     double k2;
@@ -328,5 +322,4 @@ private:
 
 
 #endif
-
-
+//EOF
