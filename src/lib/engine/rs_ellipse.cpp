@@ -298,7 +298,7 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
     }
     int digits=std::numeric_limits<double>::digits;
 
-//    RS_Vector vp1(getEllipsePoint(boost::math::tools::halley_iterate<double>(distance_functor(&e,distance),
+//    solve the distance by second order newton_raphson
    distance_functor X(&e,distance);
     RS_Vector vp1(getEllipsePoint(boost::math::tools::halley_iterate<distance_functor,double>(
                                       X, guess, x1, x2, digits)));
