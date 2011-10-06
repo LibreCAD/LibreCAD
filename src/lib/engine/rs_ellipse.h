@@ -28,6 +28,12 @@
 #ifndef RS_ELLIPSE_H
 #define RS_ELLIPSE_H
 
+#ifdef  HAS_BOOST
+#include <boost/math/special_functions/ellint_2.hpp>
+#include <boost/math/tools/roots.hpp>
+#include <boost/math/tools/tuple.hpp>
+#endif
+
 #include "rs_atomicentity.h"
 
 /**
@@ -113,12 +119,14 @@ public:
      * @return End point of the entity.
      */
     virtual RS_Vector getEndpoint() const;
+    virtual RS_Vector getEllipsePoint(const double& a) const;
 
     virtual void moveStartpoint(const RS_Vector& pos);
     virtual void moveEndpoint(const RS_Vector& pos);
 #ifdef  HAS_BOOST
     virtual double getLength() const;
     double getEllipseLength(double a1, double a2) const;
+    double getEllipseLength(double a2) const;
 #else
     virtual double getLength() const{
         return -1.;
@@ -272,6 +280,53 @@ public:
 
 protected:
     RS_EllipseData data;
+
 };
 
+#ifdef  HAS_BOOST
+//functor to solve for distance
+class distance_functor
+{
+public:
+    distance_functor(RS_Ellipse* ellipse, double const& target) : distance(target)
+    { // Constructor
+        e=ellipse;
+        ra=e->getMajorRadius();
+        k2=1.- e->getRatio()*e->getRatio();
+    }
+    void setDistance(const double& target){
+        distance=target;
+    }
+    boost::math::tuple<double, double, double> fdiff(double const& z) const{
+        // z is estimate so far.
+                //            e->setAngle2(z);
+                double cz=cos(z);
+                double sz=sin(z);
+
+                double d=sqrt(1-k2*sz*sz);//delta amplitude
+
+                return boost::math::make_tuple(
+                            e->getEllipseLength(z)-distance,
+                            ra*d, // return f(x), f'(x) and f''(x)
+                            k2*ra*sz*cz/d
+                            );
+    }
+
+    boost::math::tuple<double, double, double> operator()(double const& z) const
+    {
+        return fdiff(z);
+    }
+
+private:
+
+    double distance; // to be 'cube-rooted'.
+    RS_Ellipse* e;
+    double ra;
+    double k2;
+};
 #endif
+
+
+#endif
+
+
