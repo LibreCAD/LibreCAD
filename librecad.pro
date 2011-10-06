@@ -26,10 +26,6 @@ unix {
     # Temporary disabled getting SCM version
     SCMREVISION=$$system(git describe --tags)
     DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
-#fixme , boost, how to handle boost properly for win32 and unix
-    CONFIG += link_pkgconfig
-    PKGCONFIG += boost
-#
     macx {
         CONFIG += x86 x86_64
         TARGET = LibreCAD
@@ -42,11 +38,16 @@ unix {
     }
     else {
         TARGET = librecad
+        HAS_BOOST = 1
         DEFINES += QC_APPDIR="\"librecad\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_librecad"
         RC_FILE = res/main/librecad.icns
         DESTDIR = unix
 
+#fixme , boost, how to handle boost properly for win32 and unix
+    CONFIG += link_pkgconfig
+    PKGCONFIG += boost
+#
         QMAKE_POST_LINK = scripts/postprocess-unix.sh
     }
 }
