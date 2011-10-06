@@ -24,8 +24,10 @@
 **
 **********************************************************************/
 
-
+#ifdef  HAS_BOOST
 #include <boost/math/special_functions/ellint_2.hpp>
+#endif
+
 #include "rs_ellipse.h"
 
 #include "rs_graphic.h"
@@ -180,6 +182,8 @@ RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist) {
 
     return nearerPoint;
 }
+
+#ifdef  HAS_BOOST
 /**
   * find total length of the ellipse (arc)
   *
@@ -245,6 +249,7 @@ double RS_Ellipse::ellipticIntegral_2(const double& k, const double& phi)
         return boost::math::ellint_2<double,double>(k,a);
     }
 }
+#endif
 
 /**
   * switch the major/minor axis naming
