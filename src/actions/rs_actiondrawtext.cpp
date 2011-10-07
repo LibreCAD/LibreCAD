@@ -143,10 +143,15 @@ void RS_ActionDrawText::mouseMoveEvent(QMouseEvent* e) {
 
     if (getStatus()==SetPos) {
         RS_Vector mouse = snapPoint(e);
+        RS_Vector mov = mouse-pos;
         pos = mouse;
-
-        deletePreview();
-        preparePreview();
+        if (textChanged || pos.valid == false || preview->isEmpty()) {
+            deletePreview();
+            preparePreview();
+        } else {
+            preview->move(mov);
+            preview->setVisible(true);
+        }
         drawPreview();
     }
 
