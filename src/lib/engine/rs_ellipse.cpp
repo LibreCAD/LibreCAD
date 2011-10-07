@@ -973,32 +973,32 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 
 
 void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patternOffset*/) {
-
+//    std::cout<<"RS_Ellipse::draw(): begin\n";
     if (painter==NULL || view==NULL) {
         return;
     }
-double ra(getMajorRadius()*view->getFactor().x);
-double rb(getRatio()*ra);
-            double mAngle=getAngle();
-
-if ( !isSelected() && (
-         getPen().getLineType()==RS2::SolidLine ||
-         view->getDrawingMode()==RS2::ModePreview)) {
-         std::cout<<"1\n";
-    painter->drawEllipse(view->toGui(getCenter()),
-                         ra,
-                         rb,
-                         mAngle,
-                         getAngle1(), getAngle2(),
-                         isReversed());
-} else {
+    double ra(getMajorRadius()*view->getFactor().x);
+    double rb(getRatio()*ra);
+    double mAngle=getAngle();
+    RS_Vector cp(view->toGui(getCenter()));
+    if ( !isSelected() && (
+             getPen().getLineType()==RS2::SolidLine ||
+             view->getDrawingMode()==RS2::ModePreview)) {
+        painter->drawEllipse(cp,
+                             ra,
+                             rb,
+                             mAngle,
+                             getAngle1(), getAngle2(),
+                             isReversed());
+        return;
+    }
     double styleFactor = getStyleFactor(view);
     if (styleFactor<=0.0||getAngleLength()<=RS_TOLERANCE_ANGLE) {
-         std::cout<<"2\n";
-        painter->drawEllipse(view->toGui(getCenter()),
-                         ra,
-                         rb,
-                         mAngle,
+        std::cout<<"2\n";
+        painter->drawEllipse(cp,
+                             ra,
+                             rb,
+                             mAngle,
                              getAngle1(), getAngle2(),
                              isReversed());
         return;
@@ -1023,20 +1023,24 @@ if ( !isSelected() && (
     painter->setPen(pen);
     double* ds = new double[pat->num];
     int i(0);
-    double amin(2.);
-    double rmin=std::min(ra,rb);
+    double amin(5.);
+    double patternLength=0.;
     while( i<pat->num){
-        ds[i]=fabs(pat->pattern[i] * styleFactor);
-        double ds0=ds[i]*rmin;
-        if(amin>ds0) amin=ds0;
-//        patternSegmentLength += fabs(ds[i]);
+        ds[i]=fabs(pat->pattern[i] * styleFactor);//pattern length
+        if(amin>ds[i]) amin=ds[i];
+        patternLength += ds[i];
         i++;
     }
-
     if(amin>RS_TOLERANCE){
-        amin=2./amin;
+        amin=5./amin;
+        patternLength *= amin;
+        if (patternLength > 100.) {
+            amin *= 100./patternLength;
+//            patternLength=100.;
+        }
         for(i=0;i<pat->num;i++){
             ds[i] *= amin;
+//            patternLength += ds[i];
         }
     }else{
         RS_DEBUG->print(RS_Debug::D_WARNING, "Invalid pattern");
@@ -1057,10 +1061,9 @@ if ( !isSelected() && (
     if (isReversed()) std::swap(a1,a2);
     if(a2 <a1) a2 +=2.*M_PI;
     double curA(a1);
-    RS_Vector cp = view->toGui(getCenter());//center to draw
     double da,a3;
 
-    do {
+    do {//draw patterned ellipse
         //            RS_Vector vp0(ra,rb);
         double curR=RS_Vector(ra*sin(curA),rb*cos(curA)).magnitude();
         //            curR = sqrt(RS_Math::pow(ra*cos(curA), 2.0)
@@ -1072,7 +1075,7 @@ if ( !isSelected() && (
             //                if(da<1) da=1.;
             //                da /= curR;
             //std::cout<<"pattern[i]  "<<pat->pattern[i]<<std::endl;
-            std::cout<<"da="<<da<<std::endl;
+//            std::cout<<"da="<<da<<std::endl;
             //std::cout<<"tot="<<tot<<std::endl;
             a3=curA+da;
             tot += da;
@@ -1081,8 +1084,7 @@ if ( !isSelected() && (
                 a3=a2;
             }
             if (pat->pattern[i]>0.){
-                //std::cout<<"drawing length "<<(a2-curA)*curR<<std::endl;
-            std::cout<<"curA="<<curA<<"\ta2="<<a3<< "\t"<<(a3-curA)*curR<<std::endl;
+//                std::cout<<"curA="<<curA<<"\ta2="<<a3<< "\t"<<(a3-curA)*curR<<std::endl;
                 painter->drawEllipse(cp,
                                      ra, rb,
                                      mAngle,
@@ -1092,14 +1094,13 @@ if ( !isSelected() && (
             }
         }else{
             //ellipse too small
-         std::cout<<"4\n";
             painter->drawEllipse(cp,
                                  ra, rb,
                                  mAngle,
                                  curA,
                                  a2,
                                  false);
-            done=true;
+            return;
         }
         curA=a3;
 
@@ -1111,7 +1112,6 @@ if ( !isSelected() && (
     } while(!done);
 
     delete[] ds;
-}
 }
 
 
