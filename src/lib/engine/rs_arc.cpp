@@ -778,9 +778,9 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     //double styleFactor = getStyleFactor();
 
     // simple style-less lines
-    if (getPen().getLineType()==RS2::SolidLine ||
-            ! isSelected() ||
-            view->getDrawingMode()==RS2::ModePreview) {
+    if ( !isSelected() && (
+            getPen().getLineType()==RS2::SolidLine ||
+            view->getDrawingMode()==RS2::ModePreview)) {
 
         painter->drawArc(view->toGui(getCenter()),
                          getRadius() * view->getFactor().x,

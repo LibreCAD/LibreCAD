@@ -476,7 +476,8 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
                           view->toGui(getEndpoint()));
     } else {
         double styleFactor = getStyleFactor(view);
-        if (styleFactor<0.0) {
+        double length=getLength();
+        if (styleFactor<0.0 || length<=RS_TOLERANCE) {
             painter->drawLine(view->toGui(getStartpoint()),
                               view->toGui(getEndpoint()));
             return;
@@ -505,38 +506,41 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
         int i;
 
         // line data:
-        double length = getLength();
-        double angle = getAngle1();
+//        double angle = getAngle1();
+        RS_Vector direction=(getEndpoint()-getStartpoint())/length; //cos(angle), sin(angle)
 
         // pattern segment length:
         double patternSegmentLength = 0.0;
 
         // create pattern:
         RS_Vector* dp = new RS_Vector[pat->num];
+        double* ds = new double[pat->num];
 
         for (i=0; i<pat->num; ++i) {
-            dp[i] = RS_Vector(cos(angle) * fabs(pat->pattern[i] * styleFactor),
-                              sin(angle) * fabs(pat->pattern[i] * styleFactor));
+            ds[i]=fabs(pat->pattern[i] * styleFactor);
+            dp[i] = direction*ds[i];
 
-            patternSegmentLength += fabs(pat->pattern[i] * styleFactor);
+            patternSegmentLength += ds[i];
         }
 
         // handle pattern offset:
-        int m;
-        if (patternOffset<0.0) {
-            m = (int)ceil(patternOffset / patternSegmentLength);
-        }
-        else {
-            m = (int)floor(patternOffset / patternSegmentLength);
-        }
+//        int m= fmod(patternOffset/patternSegmentLength,1.);
+//        if (patternOffset<0.0) {
+//            m = (int)ceil(patternOffset / patternSegmentLength);
+//        }
+//        else {
+//            m = (int)floor(patternOffset / patternSegmentLength);
+//        }
 
-        patternOffset -= (m*patternSegmentLength);
+//        patternOffset -= (m*patternSegmentLength);
+        patternOffset = fmod(patternOffset, patternSegmentLength);
+
         //if (patternOffset<0.0) {
         //	patternOffset+=patternSegmentLength;
         //}
         //RS_DEBUG->print("pattern. offset: %f", patternOffset);
-        RS_Vector patternOffsetVec;
-        patternOffsetVec.setPolar(patternOffset, angle);
+        RS_Vector patternOffsetVec=direction*patternOffset;
+//        patternOffsetVec.setPolar(patternOffset, angle);
 
         double tot=patternOffset;
         i=0;
@@ -566,10 +570,8 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
                     }
                 }
 
-                if (drop) {
-                    // do nothing
-                }
-                else {
+                if (!drop) {
+                    // draw nothing if drop is set
                     RS_Vector p1 = curP;
                     RS_Vector p2 = curP + dp[i];
 
@@ -585,7 +587,8 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
                 }
             }
             curP+=dp[i];
-            tot+=fabs(pat->pattern[i]*styleFactor);
+//            tot+=fabs(pat->pattern[i]*styleFactor);
+            tot+=ds[i];
             //RS_DEBUG->print("pattern. tot: %f", tot);
             done=tot>length;
 
@@ -596,6 +599,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
         } while(!done);
 
         delete[] dp;
+        delete[] ds;
 
     }
 }

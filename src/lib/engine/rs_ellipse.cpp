@@ -981,33 +981,31 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patter
 double ra(getMajorRadius());
 double rb(getRatio()*ra);
 
-
-    if (getPen().getLineType()==RS2::SolidLine ||
-            ! isSelected() ||
-            view->getDrawingMode()==RS2::ModePreview) {
-
+if ( !isSelected() && (
+         getPen().getLineType()==RS2::SolidLine ||
+         view->getDrawingMode()==RS2::ModePreview)) {
+    painter->drawEllipse(view->toGui(getCenter()),
+                         ra * view->getFactor().x,
+                         rb * view->getFactor().x,
+                         getAngle(),
+                         getAngle1(), getAngle2(),
+                         isReversed());
+} else {
+    double styleFactor = getStyleFactor(view);
+    if (styleFactor<0.0) {
         painter->drawEllipse(view->toGui(getCenter()),
                              ra * view->getFactor().x,
                              rb * view->getFactor().x,
                              getAngle(),
                              getAngle1(), getAngle2(),
                              isReversed());
-    } else {
-        double styleFactor = getStyleFactor(view);
-        if (styleFactor<0.0) {
-            painter->drawEllipse(view->toGui(getCenter()),
-                                 ra * view->getFactor().x,
-                                 rb * view->getFactor().x,
-                                 getAngle(),
-                                 getAngle1(), getAngle2(),
-                                 isReversed());
-            return;
-        }
+        return;
+    }
 
-        // Pattern:
-        RS_LineTypePattern* pat;
-        if (isSelected()) {
-            pat = &patternSelected;
+    // Pattern:
+    RS_LineTypePattern* pat;
+    if (isSelected()) {
+        pat = &patternSelected;
         } else {
             pat = view->getPattern(getPen().getLineType());
         }
@@ -1021,61 +1019,87 @@ double rb(getRatio()*ra);
         pen.setLineType(RS2::SolidLine);
         painter->setPen(pen);
 
-        double* da;     // array of distances in x.
+//        double* da;     // array of distances in x.
         int i;          // index counter
 
-        double length = getAngleLength();
+//        double length = getAngleLength();
 
         // create pattern:
-        da = new double[pat->num];
+//        da = new double[pat->num];
 
         double tot=0.0;
         i=0;
         bool done = false;
-        double curA = getAngle1();
+        double a1=getAngle1();
+        double a2=getAngle2();
+        if (isReversed()) std::swap(a1,a2);
         double curR;
+        double curA(a1);
+        if(a2 <a1) a2 +=2.*M_PI;
         RS_Vector cp = view->toGui(getCenter());
         double r1 = ra * view->getFactor().x;
         double r2 = rb * view->getFactor().x;
+            double mAngle=getAngle();
+            double da,a3;
+        double* ds=new double[pat->num];
+        double k(1.);
+        int j=0;
+        if(styleFactor<1.) styleFactor=1.;
+//        for(int i=0;i<pat->num;i++){
+//            ds[i]=pat->pattern[i] * styleFactor;
+//            if(!i || da<ds[i]) da=ds[i];
+//        }
 
         do {
-            RS_Vector vp0(ra,rb);
-            curR=vp0.scale(RS_Vector(curA)).magnitude();
+//            RS_Vector vp0(ra,rb);
+            curR=RS_Vector(r1*sin(curA),r2*cos(curA)).magnitude();
 //            curR = sqrt(RS_Math::pow(ra*cos(curA), 2.0)
 //                        + RS_Math::pow(rb*sin(curA), 2.0));
 
+std::cout<<"curR  "<<curR<<std::endl;
             if (curR>1.0e-6) {
-                da[i] = fabs(pat->pattern[i] * styleFactor) / curR;
-                if (pat->pattern[i] * styleFactor > 0.0) {
-
-                    if (tot+fabs(da[i])<length) {
-                        painter->drawEllipse(cp,
-                                             r1, r2,
-                                             getAngle(),
-                                             curA,
-                                             curA + da[i],
-                                             false);
-                    } else {
-                        painter->drawEllipse(cp,
-                                             r1, r2,
-                                             getAngle(),
-                                             curA,
-                                             getAngle2(),
-                                             false);
-                    }
+                da = k*fabs(ds[i]);
+                if(da<1) da=1.;
+                da /= curR;
+std::cout<<"pattern[i]  "<<pat->pattern[i]<<std::endl;
+std::cout<<"da[i]="<<da<<std::endl;
+std::cout<<"tot="<<tot<<std::endl;
+                a3=curA+da;
+                tot += da;
+                if(a3>a2){
+                    done=true;
+                    a3=a2;
                 }
+std::cout<<"curA="<<curA<<"\ta2="<<a2<< "\t"<<(a2-curA)*curR<<std::endl;
+                if (ds[i]>0.){
+std::cout<<"drawing length "<<(a2-curA)*curR<<std::endl;
+                    painter->drawEllipse(cp,
+                                         r1, r2,
+                                         mAngle,
+                                         curA,
+                                         a3,
+                                         false);
+                }
+            }else{
+                //ellipse too small
+                painter->drawEllipse(cp,
+                                     r1, r2,
+                                     mAngle,
+                                     curA,
+                                     a2,
+                                     false);
+                done=true;
             }
-            curA+=da[i];
-            tot+=fabs(da[i]);
-            done=tot>length;
+            curA=a3;
 
-            i++;
-            if (i>=pat->num) {
-                i=0;
-            }
-        } while(!done);
+            i = (i+1) % pat->num;//using pattern in cyclic
+            //            i++;
+            //            if (i>=pat->num) {
+            //                i=0;
+            //            }
+            } while(!done);
 
-        delete[] da;
+        delete[] ds;
     }
 }
 
