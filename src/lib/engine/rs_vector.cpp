@@ -546,6 +546,18 @@ void RS_Vector::operator *= (const double& s) {
     z *= s;
 #endif
 }
+/**
+ * /= operator
+ */
+void RS_Vector::operator /= (const double& s) {
+    if(fabs(s)>RS_TOLERANCE) {
+    x /= s;
+    y /= s;
+#ifndef RS_VECTOR2D
+    z /= s;
+#endif
+    }
+}
 
 
 

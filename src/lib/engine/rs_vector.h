@@ -88,6 +88,7 @@ public:
     void operator += (const RS_Vector& v);
     void operator -= (const RS_Vector& v);
     void operator *= (const double& s);
+    void operator /= (const double& s);
 
     bool operator == (const RS_Vector& v) const;
     bool operator != (const RS_Vector& v) const {
