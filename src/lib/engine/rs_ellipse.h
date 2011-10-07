@@ -216,11 +216,14 @@ public:
      * @return Angle length in rad.
      */
     virtual double getAngleLength() const {
+        double ret;
         if (isReversed()) {
-            return data.angle1-data.angle2;
+            ret= RS_Math::correctAngle(data.angle1-data.angle2);
         } else {
-            return data.angle2-data.angle1;
+            ret= RS_Math::correctAngle(data.angle2-data.angle1);
         }
+        if(ret<RS_TOLERANCE_ANGLE) ret=2.*M_PI;
+        return ret;
     }
 
     /** @return The major radius of this ellipse. Same as getRadius() */
