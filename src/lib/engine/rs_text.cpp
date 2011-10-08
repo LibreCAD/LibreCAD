@@ -381,10 +381,13 @@ void RS_Text::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
     textLine->move(RS_Vector(0.0, -9.0 * lineCounter
                              * data.lineSpacingFactor * 1.6));
 
-    textLine->forcedCalculateBorders();
+    if( ! RS_EntityContainer::autoUpdateBorders) {
+        //only update borders when needed
+        textLine->forcedCalculateBorders();
+    }
     RS_Vector textSize = textLine->getSize();
 
-    RS_DEBUG->print("RS_Text::updateAddLine: width 2: %f", textSize.x);
+        RS_DEBUG->print("RS_Text::updateAddLine: width 2: %f", textSize.x);
 
     // Horizontal Align:
     switch (data.halign) {
