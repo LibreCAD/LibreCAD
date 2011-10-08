@@ -97,7 +97,10 @@ public:
 
     static RS_Vector minimum(const RS_Vector& v1, const RS_Vector& v2);
     static RS_Vector maximum(const RS_Vector& v1, const RS_Vector& v2);
+#ifndef RS_VECTOR2D
+//    crossP only defined for 3D
     static RS_Vector crossP(const RS_Vector& v1, const RS_Vector& v2);
+#endif
     static double dotP(const RS_Vector& v1, const RS_Vector& v2);
 
     friend std::ostream& operator << (std::ostream&, const RS_Vector& v);
