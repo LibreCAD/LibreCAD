@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -105,13 +105,13 @@ public:
     }
 
     /**
-     * @return Copy of data that defines the linear dimension. 
+     * @return Copy of data that defines the linear dimension.
      * @see getData()
      */
     RS_DimLinearData getEData() const {
         return edata;
     }
-	
+
     virtual RS_VectorSolutions getRefPoints();
 
     virtual QString getMeasuredLabel();
@@ -130,24 +130,24 @@ public:
         return edata.angle;
     }
 
-	void setAngle(double a) {
-		edata.angle = RS_Math::correctAngle(a);
-	}
+        void setAngle(double a) {
+                edata.angle = RS_Math::correctAngle(a);
+        }
 
     double getOblique() {
         return edata.oblique;
     }
 
-	virtual bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2);
-
-    virtual void move(RS_Vector offset);
-    virtual void rotate(RS_Vector center, double angle);
-    virtual void scale(RS_Vector center, RS_Vector factor);
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
-    virtual void stretch(RS_Vector firstCorner,
-                         RS_Vector secondCorner,
-                         RS_Vector offset);
-	virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
+    virtual void move(const RS_Vector& offset);
+    virtual void rotate(const RS_Vector& center, const double& angle);
+    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
+    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+    virtual bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2);
+    virtual void stretch(const RS_Vector& firstCorner,
+                         const RS_Vector& secondCorner,
+                         const RS_Vector& offset);
+    virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 
     friend std::ostream& operator << (std::ostream& os,
                                       const RS_DimLinear& d);

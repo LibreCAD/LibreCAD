@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -53,8 +53,8 @@ RS_Hatch::RS_Hatch(RS_EntityContainer* parent,
  * Validates the hatch.
  */
 bool RS_Hatch::validate() {
-	bool ret = true;
-	
+        bool ret = true;
+
     // loops:
     for (RS_Entity* l=firstEntity(RS2::ResolveNone);
             l!=NULL;
@@ -67,17 +67,17 @@ bool RS_Hatch::validate() {
         }
     }
 
-	return ret;
+        return ret;
 }
 
 
-    
+
 RS_Entity* RS_Hatch::clone() {
     RS_Hatch* t = new RS_Hatch(*this);
     t->setOwner(isOwner());
     t->initId();
     t->detach();
-	t->hatch = NULL;
+        t->hatch = NULL;
     return t;
 }
 
@@ -105,8 +105,8 @@ void RS_Hatch::calculateBorders() {
 
     RS_EntityContainer::calculateBorders();
 
-	RS_DEBUG->print("RS_Hatch::calculateBorders: size: %f,%f", 
-		getSize().x, getSize().y);
+        RS_DEBUG->print("RS_Hatch::calculateBorders: size: %f,%f",
+                getSize().x, getSize().y);
 
     activateContour(false);
 }
@@ -114,12 +114,12 @@ void RS_Hatch::calculateBorders() {
 
 
 /**
- * Updates the Hatch. Called when the 
+ * Updates the Hatch. Called when the
  * hatch or it's data, position, alignment, .. changes.
  */
 void RS_Hatch::update() {
-	RS_DEBUG->print("RS_Hatch::update");
-	RS_DEBUG->print("RS_Hatch::update: contour has %d loops", count());
+        RS_DEBUG->print("RS_Hatch::update");
+        RS_DEBUG->print("RS_Hatch::update: contour has %d loops", count());
 
     if (updateRunning) {
         return;
@@ -147,12 +147,12 @@ void RS_Hatch::update() {
         return;
     }
 
-	if (!validate()) {
-		RS_DEBUG->print(RS_Debug::D_WARNING,
-			"RS_Hatch::update: invalid contour in hatch found");
+        if (!validate()) {
+                RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Hatch::update: invalid contour in hatch found");
         updateRunning = false;
-		return;
-	}
+                return;
+        }
 
     // search pattern:
     RS_DEBUG->print("RS_Hatch::update: requesting pattern");
@@ -461,31 +461,31 @@ void RS_Hatch::update() {
  * Activates of deactivates the hatch boundary.
  */
 void RS_Hatch::activateContour(bool on) {
-	RS_DEBUG->print("RS_Hatch::activateContour: %d", (int)on);
+        RS_DEBUG->print("RS_Hatch::activateContour: %d", (int)on);
     for (RS_Entity* e=firstEntity(); e!=NULL;
             e=nextEntity()) {
         if (!e->isUndone()) {
             if (!e->getFlag(RS2::FlagTemp)) {
-				RS_DEBUG->print("RS_Hatch::activateContour: set visible");
+                                RS_DEBUG->print("RS_Hatch::activateContour: set visible");
                 e->setVisible(on);
             }
-			else {
-				RS_DEBUG->print("RS_Hatch::activateContour: entity temp");
-			}
+                        else {
+                                RS_DEBUG->print("RS_Hatch::activateContour: entity temp");
+                        }
         }
-		else {
-			RS_DEBUG->print("RS_Hatch::activateContour: entity undone");
-		}
+                else {
+                        RS_DEBUG->print("RS_Hatch::activateContour: entity undone");
+                }
     }
-	RS_DEBUG->print("RS_Hatch::activateContour: OK");
+        RS_DEBUG->print("RS_Hatch::activateContour: OK");
 }
 
 
 /**
  * Overrides drawing of subentities. This is only ever called for solid fills.
  */
-void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, 
-	double /*patternOffset*/) {
+void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view,
+        double /*patternOffset*/) {
 
     if (!data.solid) {
         for (RS_Entity* se=firstEntity();
@@ -694,22 +694,27 @@ double RS_Hatch::getDistanceToPoint(
 
 
 
-void RS_Hatch::move(RS_Vector offset) {
+void RS_Hatch::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
     update();
 }
 
 
 
-void RS_Hatch::rotate(RS_Vector center, double angle) {
+void RS_Hatch::rotate(const RS_Vector& center, const double& angle) {
     RS_EntityContainer::rotate(center, angle);
     data.angle = RS_Math::correctAngle(data.angle+angle);
     update();
 }
 
 
+void RS_Hatch::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    RS_EntityContainer::rotate(center, angleVector);
+    data.angle = RS_Math::correctAngle(data.angle+angleVector.angle());
+    update();
+}
 
-void RS_Hatch::scale(RS_Vector center, RS_Vector factor) {
+void RS_Hatch::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_EntityContainer::scale(center, factor);
     data.scale *= factor.x;
     update();
@@ -717,7 +722,7 @@ void RS_Hatch::scale(RS_Vector center, RS_Vector factor) {
 
 
 
-void RS_Hatch::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_Hatch::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_EntityContainer::mirror(axisPoint1, axisPoint2);
     double ang = axisPoint1.angleTo(axisPoint2);
     data.angle = RS_Math::correctAngle(data.angle + ang*2.0);
@@ -725,9 +730,9 @@ void RS_Hatch::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
 }
 
 
-void RS_Hatch::stretch(RS_Vector firstCorner,
-                       RS_Vector secondCorner,
-                       RS_Vector offset) {
+void RS_Hatch::stretch(const RS_Vector& firstCorner,
+                       const RS_Vector& secondCorner,
+                       const RS_Vector& offset) {
 
     RS_EntityContainer::stretch(firstCorner, secondCorner, offset);
     update();

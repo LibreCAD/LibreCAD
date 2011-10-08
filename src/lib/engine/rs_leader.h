@@ -99,13 +99,15 @@ public:
 //		return -1.0;
 //	}
 
-    virtual void move(RS_Vector offset);
-    virtual void rotate(RS_Vector center, double angle);
-    virtual void scale(RS_Vector center, RS_Vector factor);
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
-    virtual void stretch(RS_Vector firstCorner,
-                         RS_Vector secondCorner,
-                         RS_Vector offset);
+
+        virtual void move(const RS_Vector& offset);
+        virtual void rotate(const RS_Vector& center, const double& angle);
+        virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+        virtual void scale(const RS_Vector& center, const RS_Vector& factor);
+        virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+        virtual void stretch(const RS_Vector& firstCorner,
+                             const RS_Vector& secondCorner,
+                             const RS_Vector& offset);
 
     friend std::ostream& operator << (std::ostream& os, const RS_Leader& l);
 

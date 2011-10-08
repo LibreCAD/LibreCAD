@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -50,14 +50,14 @@ RS_DimLinear::RS_DimLinear(RS_EntityContainer* parent,
 
 
 RS_VectorSolutions RS_DimLinear::getRefPoints() {
-	RS_VectorSolutions ret(edata.extensionPoint1, edata.extensionPoint2,
-						data.definitionPoint, data.middleOfText);
-	return ret;
+        RS_VectorSolutions ret(edata.extensionPoint1, edata.extensionPoint2,
+                                                data.definitionPoint, data.middleOfText);
+        return ret;
 }
 
 
 /**
- * @return Automatically created label for the default 
+ * @return Automatically created label for the default
  * measurement of this dimension.
  */
 QString RS_DimLinear::getMeasuredLabel() {
@@ -76,31 +76,31 @@ QString RS_DimLinear::getMeasuredLabel() {
     // Definitive dimension line:
     double dist = dimP1.distanceTo(dimP2);
 
-	RS_Graphic* graphic = getGraphic();
+        RS_Graphic* graphic = getGraphic();
 
     QString ret;
-	if (graphic!=NULL) {
-		ret = RS_Units::formatLinear(dist, graphic->getUnit(), 
-			graphic->getLinearFormat(), graphic->getLinearPrecision());
-	}
-	else {
+        if (graphic!=NULL) {
+                ret = RS_Units::formatLinear(dist, graphic->getUnit(),
+                        graphic->getLinearFormat(), graphic->getLinearPrecision());
+        }
+        else {
         ret = QString("%1").arg(dist);
-	}
+        }
 
     return ret;
 }
 
 
 
-bool RS_DimLinear::hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2) {
-	return (edata.extensionPoint1.isInWindow(v1, v2) ||
-	        edata.extensionPoint2.isInWindow(v1, v2));
+bool RS_DimLinear::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) {
+        return (edata.extensionPoint1.isInWindow(v1, v2) ||
+                edata.extensionPoint2.isInWindow(v1, v2));
 }
 
 
 
 /**
- * Updates the sub entities of this dimension. Called when the 
+ * Updates the sub entities of this dimension. Called when the
  * text or the position, alignment, .. changes.
  *
  * @param autoText Automatically reposition the text label
@@ -111,9 +111,9 @@ void RS_DimLinear::update(bool autoText) {
 
     clear();
 
-	if (isUndone()) {
-		return;
-	}
+        if (isUndone()) {
+                return;
+        }
 
     // distance from entities (DIMEXO)
     double dimexo = getExtensionLineOffset();
@@ -152,7 +152,7 @@ void RS_DimLinear::update(bool autoText) {
 
     vDimexe2.setPolar(dimexe, edata.extensionPoint2.angleTo(dimP2));
     vDimexo2.setPolar(dimexo, edata.extensionPoint2.angleTo(dimP2));
-	
+
     if ((edata.extensionPoint1-dimP1).magnitude()<1e-6) {
         vDimexe1.setPolar(dimexe,
                           data.definitionPoint.angleTo(dimP1)-M_PI/2.0);
@@ -165,7 +165,7 @@ void RS_DimLinear::update(bool autoText) {
         vDimexo2.setPolar(dimexo,
                           data.definitionPoint.angleTo(dimP2)-M_PI/2.0);
     }
-	
+
     // extension lines:
     ld = RS_LineData(edata.extensionPoint1+vDimexo1,
                      dimP1+vDimexe1);
@@ -186,7 +186,7 @@ void RS_DimLinear::update(bool autoText) {
 
 
 
-void RS_DimLinear::move(RS_Vector offset) {
+void RS_DimLinear::move(const RS_Vector& offset) {
     RS_Dimension::move(offset);
 
     edata.extensionPoint1.move(offset);
@@ -196,18 +196,29 @@ void RS_DimLinear::move(RS_Vector offset) {
 
 
 
-void RS_DimLinear::rotate(RS_Vector center, double angle) {
-    RS_Dimension::rotate(center, angle);
+void RS_DimLinear::rotate(const RS_Vector& center, const double& angle) {
+    RS_Vector angleVector(angle);
+    RS_Dimension::rotate(center, angleVector);
 
-    edata.extensionPoint1.rotate(center, angle);
-    edata.extensionPoint2.rotate(center, angle);
+    edata.extensionPoint1.rotate(center, angleVector);
+    edata.extensionPoint2.rotate(center, angleVector);
     edata.angle = RS_Math::correctAngle(edata.angle+angle);
     update();
 }
 
 
+void RS_DimLinear::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    RS_Dimension::rotate(center, angleVector);
 
-void RS_DimLinear::scale(RS_Vector center, RS_Vector factor) {
+    edata.extensionPoint1.rotate(center, angleVector);
+    edata.extensionPoint2.rotate(center, angleVector);
+    edata.angle = RS_Math::correctAngle(edata.angle+angleVector.angle());
+    update();
+}
+
+
+
+void RS_DimLinear::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_Dimension::scale(center, factor);
 
     edata.extensionPoint1.scale(center, factor);
@@ -217,7 +228,7 @@ void RS_DimLinear::scale(RS_Vector center, RS_Vector factor) {
 
 
 
-void RS_DimLinear::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_DimLinear::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_Dimension::mirror(axisPoint1, axisPoint2);
 
     edata.extensionPoint1.mirror(axisPoint1, axisPoint2);
@@ -233,9 +244,9 @@ void RS_DimLinear::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
 
 
 
-void RS_DimLinear::stretch(RS_Vector firstCorner,
-                           RS_Vector secondCorner,
-                           RS_Vector offset) {
+void RS_DimLinear::stretch(const RS_Vector& firstCorner,
+                           const RS_Vector& secondCorner,
+                           const RS_Vector& offset) {
 
     //e->calculateBorders();
     if (getMin().isInWindow(firstCorner, secondCorner) &&
@@ -257,7 +268,7 @@ void RS_DimLinear::stretch(RS_Vector firstCorner,
             edata.extensionPoint2.move(offset);
         }
 
-		/*
+                /*
         double ang2 = edata.extensionPoint1.angleTo(edata.extensionPoint2)
                       + M_PI/2;
 
@@ -273,7 +284,7 @@ void RS_DimLinear::stretch(RS_Vector firstCorner,
         RS_Vector v;
         v.setPolar(len, ang2);
         data.definitionPoint = edata.extensionPoint2 + v;
-		*/
+                */
     }
     update(true);
 }
@@ -284,19 +295,19 @@ void RS_DimLinear::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 
     if (ref.distanceTo(data.definitionPoint)<1.0e-4) {
         data.definitionPoint += offset;
-		update(true);
+                update(true);
     }
-	else if (ref.distanceTo(data.middleOfText)<1.0e-4) {
+        else if (ref.distanceTo(data.middleOfText)<1.0e-4) {
         data.middleOfText += offset;
-		update(false);
+                update(false);
     }
-	else if (ref.distanceTo(edata.extensionPoint1)<1.0e-4) {
+        else if (ref.distanceTo(edata.extensionPoint1)<1.0e-4) {
         edata.extensionPoint1 += offset;
-		update(true);
+                update(true);
     }
-	else if (ref.distanceTo(edata.extensionPoint2)<1.0e-4) {
+        else if (ref.distanceTo(edata.extensionPoint2)<1.0e-4) {
         edata.extensionPoint2 += offset;
-		update(true);
+                update(true);
     }
 }
 

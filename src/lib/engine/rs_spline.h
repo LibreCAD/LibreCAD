@@ -199,9 +199,9 @@ public:
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
                                      double* dist = NULL);
-    //virtual RS_Vector getNearestRef(const RS_Vector& coord,
-    //                                 double* dist = NULL);
-    /*virtual double getDistanceToPoint(const RS_Vector& coord,
+        //virtual RS_Vector getNearestRef(const RS_Vector& coord,
+        //                                 double* dist = NULL);
+        /*virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
                                                                           double solidDist = RS_MAXDOUBLE);*/
@@ -209,31 +209,33 @@ public:
         virtual void addControlPoint(const RS_Vector& v);
         virtual void removeLastControlPoint();
 
-    virtual void move(RS_Vector offset);
-    virtual void rotate(RS_Vector center, double angle);
-    virtual void scale(RS_Vector center, RS_Vector factor);
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
+        virtual void move(const RS_Vector& offset);
+        virtual void rotate(const RS_Vector& center, const double& angle);
+        virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+        virtual void scale(const RS_Vector& center, const RS_Vector& factor);
+        virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+
         virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 
-    virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);
+        virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);
         QList<RS_Vector> getControlPoints();
 
-    friend std::ostream& operator << (std::ostream& os, const RS_Spline& l);
+        friend std::ostream& operator << (std::ostream& os, const RS_Spline& l);
 
-    virtual void calculateBorders();
+        virtual void calculateBorders();
 
         static void rbasis(int c, double t, int npts, int x[], double h[], double r[]);
 
         static void knot(int num, int order, int knotVector[]);
         static void rbspline(int npts, int k, int p1,
-                double b[], double h[], double p[]);
+                             double b[], double h[], double p[]);
 
         static void knotu(int num, int order, int knotVector[]);
         static void rbsplinu(int npts, int k, int p1,
-                double b[], double h[], double p[]);
+                             double b[], double h[], double p[]);
 
 protected:
-    RS_SplineData data;
+        RS_SplineData data;
 }
 ;
 

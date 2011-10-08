@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -111,7 +111,7 @@ public:
     RS_Vector getStartpoint() {
         return data.startpoint;
     }
-	
+
     /** sets a new end point of the polyline */
     void setEndpoint(RS_Vector& v) {
         data.endpoint = v;
@@ -122,23 +122,23 @@ public:
         return data.endpoint;
     }
 
-	double getClosingBulge();
+        double getClosingBulge();
 
-	void updateEndpoints();
+        void updateEndpoints();
 
     /** @return true if the polyline is closed. false otherwise */
     bool isClosed() const {
         return data.getFlag(RS2::FlagClosed);
     }
 
-	void setClosed(bool cl) {
-		if (cl) {
-			data.setFlag(RS2::FlagClosed);
-		}
-		else {
-			data.delFlag(RS2::FlagClosed);
-		}
-	}
+        void setClosed(bool cl) {
+                if (cl) {
+                        data.setFlag(RS2::FlagClosed);
+                }
+                else {
+                        data.delFlag(RS2::FlagClosed);
+                }
+        }
 
     void setClosed(bool cl, double bulge);//RLZ: rewrite this:
 
@@ -151,40 +151,43 @@ public:
     virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
                                      double* dist = NULL);
 
-    virtual RS_Entity* addVertex(const RS_Vector& v, 
+    virtual RS_Entity* addVertex(const RS_Vector& v,
                 double bulge=0.0, bool prepend=false);
-	virtual void setNextBulge(double bulge) {
-		nextBulge = bulge;
-	}
+        virtual void setNextBulge(double bulge) {
+                nextBulge = bulge;
+        }
     virtual void addEntity(RS_Entity* entity);
     //virtual void addSegment(RS_Entity* entity);
     virtual void removeLastVertex();
     virtual void endPolyline();
 
-	//virtual void reorder();
+    //virtual void reorder();
 
-    virtual void move(RS_Vector offset);
-    virtual void rotate(RS_Vector center, double angle);
-    virtual void scale(RS_Vector center, RS_Vector factor);
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
-	virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
-    virtual void stretch(RS_Vector firstCorner,
-                         RS_Vector secondCorner,
-                         RS_Vector offset);
-	
-    virtual void draw(RS_Painter* painter, RS_GraphicView* view, 
-		double patternOffset=0.0);
+
+    virtual void move(const RS_Vector& offset);
+    virtual void rotate(const RS_Vector& center, const double& angle);
+    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
+    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+    virtual void stretch(const RS_Vector& firstCorner,
+                         const RS_Vector& secondCorner,
+                         const RS_Vector& offset);
+
+    virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
+
+    virtual void draw(RS_Painter* painter, RS_GraphicView* view,
+                      double patternOffset=0.0);
 
     friend std::ostream& operator << (std::ostream& os, const RS_Polyline& l);
 
 protected:
-    virtual RS_Entity* createVertex(const RS_Vector& v, 
-		double bulge=0.0, bool prepend=false);
+    virtual RS_Entity* createVertex(const RS_Vector& v,
+                double bulge=0.0, bool prepend=false);
 
 protected:
     RS_PolylineData data;
     RS_Entity* closingEntity;
-	double nextBulge;
+        double nextBulge;
 };
 
 #endif
