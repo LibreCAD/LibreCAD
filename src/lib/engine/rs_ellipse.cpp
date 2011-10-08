@@ -993,16 +993,16 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patter
         return;
     }
     double styleFactor = getStyleFactor(view);
-    if (styleFactor<=0.0){
-        painter->drawEllipse(cp,
-                             ra,
-                             rb,
-                             mAngle,
-                             getAngle1(), getAngle2(),
-                             isReversed());
-        RS_DEBUG->print(RS_Debug::D_WARNING,"RS_Ellipse::draw(): negative Style Factor, do not use pattern for drawing");
-        return;
-    }
+//    if (styleFactor<=0.0){
+//        painter->drawEllipse(cp,
+//                             ra,
+//                             rb,
+//                             mAngle,
+//                             getAngle1(), getAngle2(),
+//                             isReversed());
+//        RS_DEBUG->print(RS_Debug::D_WARNING,"RS_Ellipse::draw(): negative Style Factor, do not use pattern for drawing");
+//        return;
+//    }
 
     // Pattern:
     RS_LineTypePattern* pat;
@@ -1023,7 +1023,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patter
     painter->setPen(pen);
     double* ds = new double[pat->num];
     int i(0);
-    double amin(3.);
+    double amin(2.);
     double patternLength=0.;
     while( i<pat->num){
         ds[i]=fabs(pat->pattern[i] * styleFactor);//pattern length
@@ -1032,7 +1032,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patter
         i++;
     }
     if(amin>RS_TOLERANCE){
-        amin=3./amin;
+        amin=2./amin;
         patternLength *= amin;
         if (patternLength > 50.) {
             amin *= 50./patternLength;
