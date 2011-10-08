@@ -462,22 +462,27 @@ RS_Vector RS_Text::getNearestRef(const RS_Vector& coord,
 }
 
 
-void RS_Text::move(RS_Vector offset) {
+void RS_Text::move(const RS_Vector& offset) {
     data.insertionPoint.move(offset);
     update();
 }
 
 
 
-void RS_Text::rotate(RS_Vector center, double angle) {
+void RS_Text::rotate(const RS_Vector& center, const double& angle) {
     data.insertionPoint.rotate(center, angle);
     data.angle = RS_Math::correctAngle(data.angle+angle);
+    update();
+}
+void RS_Text::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    data.insertionPoint.rotate(center, angleVector);
+    data.angle = RS_Math::correctAngle(data.angle+angleVector.angle());
     update();
 }
 
 
 
-void RS_Text::scale(RS_Vector center, RS_Vector factor) {
+void RS_Text::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.insertionPoint.scale(center, factor);
     data.width*=factor.x;
     data.height*=factor.x;
@@ -486,7 +491,7 @@ void RS_Text::scale(RS_Vector center, RS_Vector factor) {
 
 
 
-void RS_Text::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_Text::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     data.insertionPoint.mirror(axisPoint1, axisPoint2);
     //double ang = axisPoint1.angleTo(axisPoint2);
     bool readable = RS_Math::isAngleReadable(data.angle);
@@ -517,7 +522,7 @@ void RS_Text::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
 
 
 
-bool RS_Text::hasEndpointsWithinWindow(RS_Vector /*v1*/, RS_Vector /*v2*/) {
+bool RS_Text::hasEndpointsWithinWindow(const RS_Vector& /*v1*/, const RS_Vector& /*v2*/) {
     return false;
 }
 
@@ -527,9 +532,7 @@ bool RS_Text::hasEndpointsWithinWindow(RS_Vector /*v1*/, RS_Vector /*v2*/) {
  * Implementations must stretch the given range of the entity
  * by the given offset.
  */
-void RS_Text::stretch(RS_Vector firstCorner,
-                      RS_Vector secondCorner,
-                      RS_Vector offset) {
+void RS_Text::stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorner, const RS_Vector& offset) {
 
     if (getMin().isInWindow(firstCorner, secondCorner) &&
             getMax().isInWindow(firstCorner, secondCorner)) {
