@@ -57,6 +57,7 @@ void QG_CadToolBar::languageChange()
 
 
 void QG_CadToolBar::init() {
+    setCursor(Qt::ArrowCursor);
     actionHandler = NULL;
     currentTb = NULL;
     previousID = RS2::ToolBarNone;
