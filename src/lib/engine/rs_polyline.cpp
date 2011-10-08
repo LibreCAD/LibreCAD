@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -59,7 +59,7 @@ RS_Polyline::RS_Polyline(RS_EntityContainer* parent,
 
 
 /**
- * Destructor 
+ * Destructor
  */
 RS_Polyline::~RS_Polyline() {}
 
@@ -68,21 +68,21 @@ RS_Polyline::~RS_Polyline() {}
  * Removes the last vertex of this polyline.
  */
 void RS_Polyline::removeLastVertex() {
-	RS_Entity* last = lastEntity();
-	if (last!=NULL) {
-		removeEntity(last);
-		last = lastEntity();
-		if (last!=NULL) {
-			if (last->isAtomic()) {
-				data.endpoint = ((RS_AtomicEntity*)last)->getEndpoint();
-			}
-			else {
-				RS_DEBUG->print(RS_Debug::D_WARNING, 
-					"RS_Polyline::removeLastVertex: "
-				 	"polyline contains non-atomic entity");
-			}
-		}
-	}
+        RS_Entity* last = lastEntity();
+        if (last!=NULL) {
+                removeEntity(last);
+                last = lastEntity();
+                if (last!=NULL) {
+                        if (last->isAtomic()) {
+                                data.endpoint = ((RS_AtomicEntity*)last)->getEndpoint();
+                        }
+                        else {
+                                RS_DEBUG->print(RS_Debug::D_WARNING,
+                                        "RS_Polyline::removeLastVertex: "
+                                        "polyline contains non-atomic entity");
+                        }
+                }
+        }
 }
 
 
@@ -92,7 +92,7 @@ void RS_Polyline::removeLastVertex() {
  * sets the startpoint to the point 'v'.
  *
  * The very first vertex added with this method is the startpoint.
- * 
+ *
  * @param v vertex coordinate to be added
  * @param bulge The bulge of the arc or 0 for a line segment (see DXF documentation)
  * @param prepend true: prepend at start instead of append at end
@@ -116,17 +116,17 @@ RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend
         // add entity to the polyline:
         entity = createVertex(v, nextBulge, prepend);
         if (entity!=NULL) {
-			if (prepend==false) {
-            	RS_EntityContainer::addEntity(entity);
-				data.endpoint = v;
-			}
-			else {
-            	RS_EntityContainer::insertEntity(0, entity);
-				data.startpoint = v;
-			}
+                        if (prepend==false) {
+                RS_EntityContainer::addEntity(entity);
+                                data.endpoint = v;
+                        }
+                        else {
+                RS_EntityContainer::insertEntity(0, entity);
+                                data.startpoint = v;
+                        }
         }
         nextBulge = bulge;
-    	endPolyline();
+        endPolyline();
     }
     //data.endpoint = v;
 
@@ -136,11 +136,11 @@ RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend
 
 
 /**
- * Creates a vertex from the endpoint of the last element or 
+ * Creates a vertex from the endpoint of the last element or
  * sets the startpoint to the point 'v'.
  *
  * The very first vertex added is the starting point.
- * 
+ *
  * @param v vertex coordinate
  * @param bulge The bulge of the arc (see DXF documentation)
  * @param prepend true: Prepend instead of append at end
@@ -157,12 +157,12 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
 
     // create line for the polyline:
     if (fabs(bulge)<RS_TOLERANCE) {
-		if (prepend==false) {
-        	entity = new RS_Line(this, RS_LineData(data.endpoint, v));
-		}
-		else {
-        	entity = new RS_Line(this, RS_LineData(v, data.startpoint));
-		}
+                if (prepend==false) {
+                entity = new RS_Line(this, RS_LineData(data.endpoint, v));
+                }
+                else {
+                entity = new RS_Line(this, RS_LineData(v, data.startpoint));
+                }
         entity->setSelected(isSelected());
         entity->setPen(RS_Pen(RS2::FlagInvalid));
         entity->setLayer(NULL);
@@ -181,16 +181,16 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
         double dist;
         double angle;
 
-		if (prepend==false) {
-	        middle = (data.endpoint+v)/2.0;
-    	    dist = data.endpoint.distanceTo(v)/2.0;
-        	angle = data.endpoint.angleTo(v);
-		}
-		else {
-	        middle = (data.startpoint+v)/2.0;
-    	    dist = data.startpoint.distanceTo(v)/2.0;
-        	angle = v.angleTo(data.startpoint);
-		}
+                if (prepend==false) {
+                middle = (data.endpoint+v)/2.0;
+            dist = data.endpoint.distanceTo(v)/2.0;
+                angle = data.endpoint.angleTo(v);
+                }
+                else {
+                middle = (data.startpoint+v)/2.0;
+            dist = data.startpoint.distanceTo(v)/2.0;
+                angle = v.angleTo(data.startpoint);
+                }
 
         // alpha can't be 0.0 at this point
         radius = fabs(dist / sin(alpha/2.0));
@@ -211,17 +211,17 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
         center.setPolar(h, angle);
         center+=middle;
 
-		double a1;
-		double a2;
+                double a1;
+                double a2;
 
-		if (prepend==false) {
-			a1 = center.angleTo(data.endpoint);
-			a2 = center.angleTo(v);
-		}
-		else {
-			a1 = center.angleTo(v);
-			a2 = center.angleTo(data.startpoint);
-		}
+                if (prepend==false) {
+                        a1 = center.angleTo(data.endpoint);
+                        a2 = center.angleTo(v);
+                }
+                else {
+                        a1 = center.angleTo(v);
+                        a2 = center.angleTo(data.startpoint);
+                }
 
         RS_ArcData d(center, radius,
                      a1, a2,
@@ -241,11 +241,11 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
  * Ends polyline and adds the last entity if the polyline is closed
  */
 void RS_Polyline::endPolyline() {
-	RS_DEBUG->print("RS_Polyline::endPolyline");
+        RS_DEBUG->print("RS_Polyline::endPolyline");
 
     if (isClosed()) {
-		RS_DEBUG->print("RS_Polyline::endPolyline: adding closing entity");
-		
+                RS_DEBUG->print("RS_Polyline::endPolyline: adding closing entity");
+
         // remove old closing entity:
         if (closingEntity!=NULL) {
             removeEntity(closingEntity);
@@ -278,13 +278,13 @@ void RS_Polyline::setClosed(bool cl, double bulge) {
  */
 double RS_Polyline::getClosingBulge() {
     if (isClosed()) {
-		RS_Entity* e = lastEntity();
-		if (e!=NULL && e->rtti()==RS2::EntityArc) {
-			return ((RS_Arc*)e)->getBulge();
-		}
-	}
+                RS_Entity* e = lastEntity();
+                if (e!=NULL && e->rtti()==RS2::EntityArc) {
+                        return ((RS_Arc*)e)->getBulge();
+                }
+        }
 
-	return 0.0;
+        return 0.0;
 }
 
 
@@ -292,19 +292,19 @@ double RS_Polyline::getClosingBulge() {
  * Sets the polylines start and endpoint to match the first and last vertex.
  */
 void RS_Polyline::updateEndpoints() {
-	RS_Entity* e1 = firstEntity();
-	if (e1!=NULL && e1->isAtomic()) {
-		RS_Vector v = ((RS_AtomicEntity*)e1)->getStartpoint();
-		setStartpoint(v);
-	}
-	
-	RS_Entity* e2 = lastEntity();
-	if (isClosed()) {
-		e2 = prevEntity();
-	}
-	if (e2!=NULL && e2->isAtomic()) {
-		RS_Vector v = ((RS_AtomicEntity*)e2)->getEndpoint();
-		setEndpoint(v);
+        RS_Entity* e1 = firstEntity();
+        if (e1!=NULL && e1->isAtomic()) {
+                RS_Vector v = ((RS_AtomicEntity*)e1)->getStartpoint();
+                setStartpoint(v);
+        }
+
+        RS_Entity* e2 = lastEntity();
+        if (isClosed()) {
+                e2 = prevEntity();
+        }
+        if (e2!=NULL && e2->isAtomic()) {
+                RS_Vector v = ((RS_AtomicEntity*)e2)->getEndpoint();
+                setEndpoint(v);
     }
 }
 
@@ -331,8 +331,8 @@ void RS_Polyline::addEntity(RS_Entity* entity) {
  * Adds a segment to the polyline.
  */
 /*void RS_Polyline::addSegment(RS_Entity* entity) {
-	RS_EntityContainer::addEntity(entity);
-	// TODO: reorder and check polyline
+        RS_EntityContainer::addEntity(entity);
+        // TODO: reorder and check polyline
 }*/
 
 
@@ -341,7 +341,7 @@ RS_VectorSolutions RS_Polyline::getRefPoints() {
     RS_VectorSolutions ret;
 
     ret.push_back(data.startpoint);
-    
+
     for (RS_Entity* e=firstEntity(RS2::ResolveNone);
          e!=NULL;
          e = nextEntity(RS2::ResolveNone)) {
@@ -349,7 +349,7 @@ RS_VectorSolutions RS_Polyline::getRefPoints() {
             ret.push_back(((RS_AtomicEntity*)e)->getEndpoint());
         }
     }
-    
+
     ret.push_back( data.endpoint);
 
     return ret;
@@ -371,19 +371,19 @@ RS_Vector RS_Polyline::getNearestSelectedRef(const RS_Vector& coord,
 
 /*
 void RS_Polyline::reorder() {
-	// current point:
-	RS_Vector cp;
+        // current point:
+        RS_Vector cp;
 
-	bool done = false;
-	do {
-		
-	} while(!done);
+        bool done = false;
+        do {
+
+        } while(!done);
 }
 */
 
 
 
-void RS_Polyline::move(RS_Vector offset) {
+void RS_Polyline::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
     data.startpoint.move(offset);
     data.endpoint.move(offset);
@@ -391,15 +391,20 @@ void RS_Polyline::move(RS_Vector offset) {
 
 
 
-void RS_Polyline::rotate(RS_Vector center, double angle) {
-    RS_EntityContainer::rotate(center, angle);
-    data.startpoint.rotate(center, angle);
-    data.endpoint.rotate(center, angle);
+void RS_Polyline::rotate(const RS_Vector& center, const double& angle) {
+    rotate(center, RS_Vector(angle));
+}
+
+
+void RS_Polyline::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    RS_EntityContainer::rotate(center, angleVector);
+    data.startpoint.rotate(center, angleVector);
+    data.endpoint.rotate(center, angleVector);
 }
 
 
 
-void RS_Polyline::scale(RS_Vector center, RS_Vector factor) {
+void RS_Polyline::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_EntityContainer::scale(center, factor);
     data.startpoint.scale(center, factor);
     data.endpoint.scale(center, factor);
@@ -407,7 +412,7 @@ void RS_Polyline::scale(RS_Vector center, RS_Vector factor) {
 
 
 
-void RS_Polyline::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_Polyline::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_EntityContainer::mirror(axisPoint1, axisPoint2);
     data.startpoint.mirror(axisPoint1, axisPoint2);
     data.endpoint.mirror(axisPoint1, axisPoint2);
@@ -416,7 +421,7 @@ void RS_Polyline::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
 
 
 void RS_Polyline::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-	RS_EntityContainer::moveRef(ref, offset);
+        RS_EntityContainer::moveRef(ref, offset);
     if (ref.distanceTo(data.startpoint)<1.0e-4) {
        data.startpoint.move(offset);
     }
@@ -428,32 +433,32 @@ void RS_Polyline::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 
 
 
-void RS_Polyline::stretch(RS_Vector firstCorner,
-                                 RS_Vector secondCorner,
-                                 RS_Vector offset) {
+void RS_Polyline::stretch(const RS_Vector& firstCorner,
+                          const RS_Vector& secondCorner,
+                          const RS_Vector& offset) {
 
     if (data.startpoint.isInWindow(firstCorner, secondCorner)) {
         data.startpoint.move(offset);
-    } 
+    }
     if (data.endpoint.isInWindow(firstCorner, secondCorner)) {
         data.endpoint.move(offset);
-    } 
-	
-	RS_EntityContainer::stretch(firstCorner, secondCorner, offset);
+    }
+
+        RS_EntityContainer::stretch(firstCorner, secondCorner, offset);
 }
 
 
 /**
  * Slightly optimized drawing for polylines.
  */
-void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view, 
-	double /*patternOffset*/) {
+void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view,
+        double /*patternOffset*/) {
 
     if (view==NULL) {
         return;
     }
-	
-	// draw first entity and set correct pen:
+
+        // draw first entity and set correct pen:
     RS_Entity* e = firstEntity(RS2::ResolveNone);
     // We get the pen from the entitycontainer and apply it to the
     // first line so that subsequent line are draw in the right color

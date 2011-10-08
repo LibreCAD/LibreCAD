@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -66,7 +66,7 @@ void RS_Spline::calculateBorders() {
     maxV = RS_Vector::maximum(data.startpoint, data.endpoint);
 
     QList<RS_Vector>::iterator it;
-    for (it = data.controlPoints.begin(); 
+    for (it = data.controlPoints.begin();
     it!=data.controlPoints.end(); ++it) {
 
     minV = RS_Vector::minimum(*it, minV);
@@ -104,7 +104,7 @@ RS_Vector RS_Spline::getNearestSelectedRef(const RS_Vector& coord,
 
 
 /**
- * Updates the internal polygon of this spline. Called when the 
+ * Updates the internal polygon of this spline. Called when the
  * spline or it's data, position, .. changes.
  */
 void RS_Spline::update() {
@@ -212,7 +212,7 @@ RS_Vector RS_Spline::getNearestEndpoint(const RS_Vector& coord,
     if (dist!=NULL) {
         *dist = minDist;
     }
-	return ret;
+        return ret;
 }
 
 
@@ -262,7 +262,7 @@ RS_Vector RS_Spline::getNearestDist(double /*distance*/,
 
 
 
-void RS_Spline::move(RS_Vector offset) {
+void RS_Spline::move(const RS_Vector& offset) {
     for (int i = 0; i < data.controlPoints.size(); ++i) {
         data.controlPoints[i].move(offset);
     }
@@ -272,17 +272,21 @@ void RS_Spline::move(RS_Vector offset) {
 
 
 
-void RS_Spline::rotate(RS_Vector center, double angle) {
+void RS_Spline::rotate(const RS_Vector& center, const double& angle) {
+    rotate(center,RS_Vector(angle));
+}
+
+
+
+void RS_Spline::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     for (int i = 0; i < data.controlPoints.size(); ++i) {
-        (data.controlPoints[i] ).rotate(center, angle);
+        (data.controlPoints[i] ).rotate(center, angleVector);
     }
 
     update();
 }
 
-
-
-void RS_Spline::scale(RS_Vector center, RS_Vector factor) {
+void RS_Spline::scale(const RS_Vector& center, const RS_Vector& factor) {
     for (int i = 0; i < data.controlPoints.size(); ++i) {
         (data.controlPoints[i] ).scale(center, factor);
     }
@@ -292,7 +296,7 @@ void RS_Spline::scale(RS_Vector center, RS_Vector factor) {
 
 
 
-void RS_Spline::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_Spline::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     for (int i = 0; i < data.controlPoints.size(); ++i) {
         (data.controlPoints[i] ).mirror(axisPoint1, axisPoint2);
     }
@@ -352,7 +356,7 @@ void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view) {
    if (painter==NULL || view==NULL) {
        return;
    }
- 
+
    / *
       if (data.controlPoints.count()>0) {
           RS_Vector prev(false);
@@ -366,41 +370,41 @@ void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view) {
           }
       }
    * /
- 
+
    int i;
    int npts = data.controlPoints.count();
    // order:
    int k = 4;
    // resolution:
    int p1 = 100;
- 
+
    double* b = new double[npts*3+1];
    double* h = new double[npts+1];
    double* p = new double[p1*3+1];
- 
+
    QList<RS_Vector>::iterator it;
    i = 1;
    for (it = data.controlPoints.begin(); it!=data.controlPoints.end(); ++it) {
        b[i] = (*it).x;
        b[i+1] = (*it).y;
        b[i+2] = 0.0;
- 
-	RS_DEBUG->print("RS_Spline::draw: b[%d]: %f/%f", i, b[i], b[i+1]);
-	i+=3;
+
+        RS_DEBUG->print("RS_Spline::draw: b[%d]: %f/%f", i, b[i], b[i+1]);
+        i+=3;
    }
- 
+
    // set all homogeneous weighting factors to 1.0
    for (i=1; i <= npts; i++) {
        h[i] = 1.0;
    }
- 
+
    //
    for (i = 1; i <= 3*p1; i++) {
        p[i] = 0.0;
    }
- 
+
    rbspline(npts,k,p1,b,h,p);
- 
+
    RS_Vector prev(false);
    for (i = 1; i <= 3*p1; i=i+3) {
        if (prev.valid) {
@@ -441,7 +445,7 @@ void RS_Spline::removeLastControlPoint() {
 
 
 /**
- * Generates B-Spline open knot vector with multiplicity 
+ * Generates B-Spline open knot vector with multiplicity
  * equal to the order at the ends.
  */
 void RS_Spline::knot(int num, int order, int knotVector[]) {
@@ -641,17 +645,17 @@ void RS_Spline::rbsplinu(int npts, int k, int p1,
     knotu(npts,k,x);
 
     /*
-    	printf("The knot vector is ");
-    	for (i = 1; i <= nplusc; i++){
-    		printf(" %d ", x[i]);
-    	}
-    	printf("\n");
-     
-    	printf("The usable parameter range is ");
-    	for (i = k; i <= npts+1; i++){
-    		printf(" %d ", x[i]);
-    	}
-    	printf("\n");
+        printf("The knot vector is ");
+        for (i = 1; i <= nplusc; i++){
+                printf(" %d ", x[i]);
+        }
+        printf("\n");
+
+        printf("The usable parameter range is ");
+        for (i = k; i <= npts+1; i++){
+                printf(" %d ", x[i]);
+        }
+        printf("\n");
     */
 
     icount = 0;
@@ -669,12 +673,12 @@ void RS_Spline::rbsplinu(int npts, int k, int p1,
 
         rbasis(k,t,npts,x,h,nbasis);      /* generate the basis function for this value of t */
         /*
-        		printf("t = %f \n",t);
-        		printf("nbasis = ");
-        		for (i = 1; i <= npts; i++){
-        			printf("%f  ",nbasis[i]);
-        		}
-        		printf("\n");
+                        printf("t = %f \n",t);
+                        printf("nbasis = ");
+                        for (i = 1; i <= npts; i++){
+                                printf("%f  ",nbasis[i]);
+                        }
+                        printf("\n");
         */
         for (j = 1; j <= 3; j++) {      /* generate a point on the curve */
             jcount = j;
@@ -684,13 +688,13 @@ void RS_Spline::rbsplinu(int npts, int k, int p1,
                 temp = nbasis[i]*b[jcount];
                 p[icount + j] = p[icount + j] + temp;
                 /*
-                				printf("jcount,nbasis,b,nbasis*b,p = %d %f %f %f %f\n",jcount,nbasis[i],b[jcount],temp,p[icount+j]);
+                                                printf("jcount,nbasis,b,nbasis*b,p = %d %f %f %f %f\n",jcount,nbasis[i],b[jcount],temp,p[icount+j]);
                 */
                 jcount = jcount + 3;
             }
         }
         /*
-        		printf("icount, p %d %f %f %f \n",icount,p[icount+1],p[icount+2],p[icount+3]);
+                        printf("icount, p %d %f %f %f \n",icount,p[icount+1],p[icount+2],p[icount+3]);
         */
         icount = icount + 3;
         t = t + step;

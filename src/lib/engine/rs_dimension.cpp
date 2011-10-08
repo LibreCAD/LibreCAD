@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -56,17 +56,17 @@ RS_Vector RS_Dimension::getNearestSelectedRef(const RS_Vector& coord,
 
 
 /**
- * @return Dimension text. Either a text the user defined or 
+ * @return Dimension text. Either a text the user defined or
  *         the measured text.
  *
- * @param resolve false: return plain value. true: return measured 
+ * @param resolve false: return plain value. true: return measured
  *      label if appropriate.
  * @see getMeasuredLabel
  */
 QString RS_Dimension::getLabel(bool resolve) {
-	if (!resolve) {
-		return data.text;
-	}
+        if (!resolve) {
+                return data.text;
+        }
 
     QString ret="";
 
@@ -94,7 +94,7 @@ QString RS_Dimension::getLabel(bool resolve) {
  * Sets a new text for the label.
  */
 void RS_Dimension::setLabel(const QString& l) {
-	data.text = l;
+        data.text = l;
 }
 
 
@@ -133,7 +133,7 @@ void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
     } else {
         arrowAngle1 = dimensionLine->getAngle1();
         arrowAngle2 = dimensionLine->getAngle2();
-       
+
         // extend dimension line outside arrows
         RS_Vector dir;
         dir.setPolar(getArrowSize()*2, arrowAngle2);
@@ -171,10 +171,10 @@ void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
     RS_TextData textData;
     RS_Vector textPos;
 
-	double dimAngle1 = dimensionLine->getAngle1();
-	double textAngle;
-	bool corrected=false;
-	textAngle = RS_Math::makeAngleReadable(dimAngle1, true, &corrected);
+        double dimAngle1 = dimensionLine->getAngle1();
+        double textAngle;
+        bool corrected=false;
+        textAngle = RS_Math::makeAngleReadable(dimAngle1, true, &corrected);
 
     if (data.middleOfText.valid && !forceAutoText) {
         textPos = data.middleOfText;
@@ -195,7 +195,7 @@ void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
         textPos+=distV;
         //// the next update should still be able to adjust this
         ////   auto text position. leave it invalid
-		data.middleOfText = textPos;
+                data.middleOfText = textPos;
     }
 
     textData = RS_TextData(textPos,
@@ -271,7 +271,7 @@ double RS_Dimension::getTextHeight() {
 
 
 /**
- * @return the given graphic variable or the default value given in mm 
+ * @return the given graphic variable or the default value given in mm
  * converted to the graphic unit.
  * If the variable is not found it is added with the given default
  * value converted to the local unit.
@@ -294,29 +294,35 @@ double RS_Dimension::getGraphicVariable(const QString& key, double defMM,
 
 
 
-void RS_Dimension::move(RS_Vector offset) {
+void RS_Dimension::move(const RS_Vector& offset) {
     data.definitionPoint.move(offset);
     data.middleOfText.move(offset);
 }
 
 
 
-void RS_Dimension::rotate(RS_Vector center, double angle) {
-    data.definitionPoint.rotate(center, angle);
-    data.middleOfText.rotate(center, angle);
+void RS_Dimension::rotate(const RS_Vector& center, const double& angle) {
+    RS_Vector angleVector(angle);
+    data.definitionPoint.rotate(center, angleVector);
+    data.middleOfText.rotate(center, angleVector);
     data.angle = RS_Math::correctAngle(data.angle+angle);
 }
 
+void RS_Dimension::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    data.definitionPoint.rotate(center, angleVector);
+    data.middleOfText.rotate(center, angleVector);
+    data.angle = RS_Math::correctAngle(data.angle+angleVector.angle());
+}
 
 
-void RS_Dimension::scale(RS_Vector center, RS_Vector factor) {
+void RS_Dimension::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.definitionPoint.scale(center, factor);
     data.middleOfText.scale(center, factor);
 }
 
 
 
-void RS_Dimension::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_Dimension::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     data.definitionPoint.mirror(axisPoint1, axisPoint2);
     data.middleOfText.mirror(axisPoint1, axisPoint2);
 }

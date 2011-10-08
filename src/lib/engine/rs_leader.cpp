@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -55,7 +55,7 @@ RS_Leader::RS_Leader(RS_EntityContainer* parent,
 
 
 /**
- * Destructor 
+ * Destructor
  */
 RS_Leader::~RS_Leader() {}
 
@@ -73,10 +73,10 @@ void RS_Leader::update() {
             break;
         }
     }
-	
-	if (isUndone()) {
-		return;
-	}
+
+        if (isUndone()) {
+                return;
+        }
 
     RS_Entity* fe = firstEntity();
     if (fe!=NULL && fe->isAtomic()) {
@@ -99,11 +99,11 @@ void RS_Leader::update() {
 
 
 /**
- * Adds a vertex from the endpoint of the last element or 
+ * Adds a vertex from the endpoint of the last element or
  * sets the startpoint to the point 'v'.
  *
  * The very first vertex added is the starting point.
- * 
+ *
  * @param v vertex coordinate
  *
  * @return Pointer to the entity that was addded or NULL if this
@@ -124,9 +124,9 @@ RS_Entity* RS_Leader::addVertex(const RS_Vector& v) {
         entity->setLayer(NULL);
         RS_EntityContainer::addEntity(entity);
 
-		if (count()==1 && hasArrowHead()) {
-			update();
-		}
+                if (count()==1 && hasArrowHead()) {
+                        update();
+                }
 
         last = v;
     }
@@ -154,36 +154,41 @@ void RS_Leader::addEntity(RS_Entity* entity) {
 
 
 
-void RS_Leader::move(RS_Vector offset) {
+void RS_Leader::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
     update();
 }
 
 
 
-void RS_Leader::rotate(RS_Vector center, double angle) {
+void RS_Leader::rotate(const RS_Vector& center, const double& angle) {
     RS_EntityContainer::rotate(center, angle);
     update();
 }
 
 
+void RS_Leader::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    RS_EntityContainer::rotate(center, angleVector);
+    update();
+}
 
-void RS_Leader::scale(RS_Vector center, RS_Vector factor) {
+
+void RS_Leader::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_EntityContainer::scale(center, factor);
     update();
 }
 
 
 
-void RS_Leader::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_Leader::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_EntityContainer::mirror(axisPoint1, axisPoint2);
     update();
 }
 
 
-void RS_Leader::stretch(RS_Vector firstCorner,
-                       RS_Vector secondCorner,
-                       RS_Vector offset) {
+void RS_Leader::stretch(const RS_Vector& firstCorner,
+                       const RS_Vector& secondCorner,
+                       const RS_Vector& offset) {
 
     RS_EntityContainer::stretch(firstCorner, secondCorner, offset);
     update();

@@ -413,7 +413,7 @@ void RS_DimAngular::update(bool /*autoText*/) {
 
 
 
-void RS_DimAngular::move(RS_Vector offset) {
+void RS_DimAngular::move(const RS_Vector& offset) {
     RS_Dimension::move(offset);
 
     edata.definitionPoint1.move(offset);
@@ -425,19 +425,22 @@ void RS_DimAngular::move(RS_Vector offset) {
 
 
 
-void RS_DimAngular::rotate(RS_Vector center, double angle) {
-    RS_Dimension::rotate(center, angle);
+void RS_DimAngular::rotate(const RS_Vector& center, const double& angle) {
+    rotate(center, RS_Vector(angle));
+}
 
-    edata.definitionPoint1.rotate(center, angle);
-    edata.definitionPoint2.rotate(center, angle);
-    edata.definitionPoint3.rotate(center, angle);
-    edata.definitionPoint4.rotate(center, angle);
+void RS_DimAngular::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    RS_Dimension::rotate(center, angleVector);
+
+    edata.definitionPoint1.rotate(center, angleVector);
+    edata.definitionPoint2.rotate(center, angleVector);
+    edata.definitionPoint3.rotate(center, angleVector);
+    edata.definitionPoint4.rotate(center, angleVector);
     update();
 }
 
 
-
-void RS_DimAngular::scale(RS_Vector center, RS_Vector factor) {
+void RS_DimAngular::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_Dimension::scale(center, factor);
 
     edata.definitionPoint1.scale(center, factor);
@@ -449,7 +452,7 @@ void RS_DimAngular::scale(RS_Vector center, RS_Vector factor) {
 
 
 
-void RS_DimAngular::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
+void RS_DimAngular::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_Dimension::mirror(axisPoint1, axisPoint2);
 
     edata.definitionPoint1.mirror(axisPoint1, axisPoint2);

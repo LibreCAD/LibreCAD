@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -43,13 +43,13 @@ public:
     /**
      * Constructor with initialisation.
      *
-     * @param definitionPoint Definition point of the angular dimension. 
+     * @param definitionPoint Definition point of the angular dimension.
      * @param leader Leader length.
      */
     RS_DimAngularData(const RS_Vector& definitionPoint1,
                       const RS_Vector& definitionPoint2,
-					  const RS_Vector& definitionPoint3,
-					  const RS_Vector& definitionPoint4) {
+                                          const RS_Vector& definitionPoint3,
+                                          const RS_Vector& definitionPoint4) {
         this->definitionPoint1 = definitionPoint1;
         this->definitionPoint2 = definitionPoint2;
         this->definitionPoint3 = definitionPoint3;
@@ -59,7 +59,7 @@ public:
     friend std::ostream& operator << (std::ostream& os,
                                       const RS_DimAngularData& dd) {
         os << "(" << dd.definitionPoint1 << "/" << dd.definitionPoint2 << "/"
-		          << dd.definitionPoint3 << "/" << dd.definitionPoint3 << ")";
+                          << dd.definitionPoint3 << "/" << dd.definitionPoint3 << ")";
         return os;
     }
 
@@ -102,7 +102,7 @@ public:
     }
 
     /**
-     * @return Copy of data that defines the angular dimension. 
+     * @return Copy of data that defines the angular dimension.
      * @see getData()
      */
     RS_DimAngularData getEData() const {
@@ -112,8 +112,8 @@ public:
     virtual QString getMeasuredLabel();
     double getAngle();
     RS_Vector getCenter();
-	bool getAngles(double& ang1, double& ang2, bool& reversed,
-		RS_Vector& p1, RS_Vector& p2);
+        bool getAngles(double& ang1, double& ang2, bool& reversed,
+                RS_Vector& p1, RS_Vector& p2);
 
     virtual void update(bool autoText=false);
 
@@ -129,11 +129,11 @@ public:
     RS_Vector getDefinitionPoint4() {
         return edata.definitionPoint4;
     }
-
-    virtual void move(RS_Vector offset);
-    virtual void rotate(RS_Vector center, double angle);
-    virtual void scale(RS_Vector center, RS_Vector factor);
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
+    virtual void move(const RS_Vector& offset);
+       virtual void rotate(const RS_Vector& center, const double& angle);
+       virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+       virtual void scale(const RS_Vector& center, const RS_Vector& factor);
+       virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
 
     friend std::ostream& operator << (std::ostream& os,
                                       const RS_DimAngular& d);

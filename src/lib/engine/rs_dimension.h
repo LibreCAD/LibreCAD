@@ -197,14 +197,15 @@ public:
 
         double getGraphicVariable(const QString& key, double defMM, int code);
 
-//	virtual double getLength() {
-//		return -1.0;
-//	}
+        //	virtual double getLength() {
+        //		return -1.0;
+        //	}
 
-    virtual void move(RS_Vector offset);
-    virtual void rotate(RS_Vector center, double angle);
-    virtual void scale(RS_Vector center, RS_Vector factor);
-    virtual void mirror(RS_Vector axisPoint1, RS_Vector axisPoint2);
+        virtual void move(const RS_Vector& offset);
+        virtual void rotate(const RS_Vector& center, const double& angle);
+        virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+        virtual void scale(const RS_Vector& center, const RS_Vector& factor);
+        virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
 
 protected:
     /** Data common to all dimension entities. */
