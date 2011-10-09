@@ -475,7 +475,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
         painter->drawLine(pStart,pEnd);
         return;
     }
-    double styleFactor = getStyleFactor(view);
+//    double styleFactor = getStyleFactor(view);
     RS_Vector direction=pEnd-pStart;
     double  length=direction.magnitude();
     if (/*styleFactor<0.0 ||*/ length<=1. || fabs(view->getFactor().x)<RS_TOLERANCE) {
@@ -487,6 +487,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
     // Pattern:
     RS_LineTypePattern* pat;
     if (isSelected()) {
+//        styleFactor=1.;
         pat = &patternSelected;
     } else {
         pat = view->getPattern(getPen().getLineType());
@@ -516,14 +517,17 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
     RS_Vector* dp = new RS_Vector[pat->num];
     double* ds = new double[pat->num];
     //styleFactor /= view->getFactor().x;
-    double lmin(2.);
+//    double lmin(2.);
     int j(0);
     for (i=0; i<pat->num; ++i) {
-        ds[j]=pat->pattern[i] * styleFactor;
+//        ds[j]=pat->pattern[i] * styleFactor;
+        //fixme, styleFactor support needed
+        ds[j]=pat->pattern[i] ;
         if(fabs(ds[j])<RS_TOLERANCE) continue;//invalid pattern length, skip it
         //searching for minimum
-        if(lmin>fabs(ds[j])) lmin=fabs(ds[j]);
+//        if(lmin>fabs(ds[j])) lmin=fabs(ds[j]);
         patternSegmentLength += fabs(ds[j]);
+        dp[j] = direction*fabs(ds[j]);
         j++;
     }
     if(!j) {
@@ -534,17 +538,17 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
                           view->toGui(getEndpoint()));
         return;
     }
-    lmin=2./lmin;
-    patternSegmentLength *= lmin;
-    if (patternSegmentLength>80) lmin *= 80/patternSegmentLength;
-            for (i=0; i<j; ++i) {
-        //scale the minimum to 1
-        ds[i] *= lmin;
-    }
-    for (i=0; i<j; ++i) {
-        dp[i] = direction*fabs(ds[i]);
-        patternSegmentLength += fabs(ds[i]);
-    }
+//    lmin=2./lmin;
+//    patternSegmentLength *= lmin;
+//    if (patternSegmentLength>80) lmin *= 80/patternSegmentLength;
+//            for (i=0; i<j; ++i) {
+//        //scale the minimum to 1
+//        ds[i] *= lmin;
+//    }
+//    for (i=0; i<j; ++i) {
+//        dp[i] = direction*fabs(ds[i]);
+////        patternSegmentLength += fabs(ds[i]);
+//    }
     // handle pattern offset:
     //        int m= fmod(patternOffset/patternSegmentLength,1.);
     //        if (patternOffset<0.0) {

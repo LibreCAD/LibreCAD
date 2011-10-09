@@ -992,7 +992,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patter
                              isReversed());
         return;
     }
-    double styleFactor = getStyleFactor(view);
+//    double styleFactor = getStyleFactor(view);
 //    if (styleFactor<=0.0){
 //        painter->drawEllipse(cp,
 //                             ra,
@@ -1023,29 +1023,32 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patter
     painter->setPen(pen);
     double* ds = new double[pat->num];
     //normalize pattern
-    double amin(2.);
-    double patternLength=0.;
+//    double amin(2.);
+//    double patternLength=0.;
 
     int i(0),j(0);
     while( i<pat->num){
-        ds[j]=pat->pattern[i++] * styleFactor;//pattern length
-        if(fabs(ds[j])<RS_TOLERANCE) continue;
-        if(amin>fabs(ds[j])) amin=fabs(ds[j]);
-        patternLength += fabs(ds[j]);
+//        ds[j]=pat->pattern[i++] * styleFactor;//pattern length
+        //fixme, styleFactor needed
+        ds[j]=pat->pattern[i++] ;//pattern length
+//        if(fabs(ds[j])<RS_TOLERANCE) continue;
+//        if(amin>fabs(ds[j])) amin=fabs(ds[j]);
+//        patternLength += fabs(ds[j]);
         j++;
     }
-    if(amin>RS_TOLERANCE && j){
-        amin=2./amin;
-        patternLength *= amin;
-        if (patternLength > 50.) {
-            amin *= 50./patternLength;
-//            patternLength=100.;
-        }
-        for(i=0;i<j;i++){
-            ds[i] *= amin;
-//            patternLength += ds[i];
-        }
-    }else{
+//    if(amin>RS_TOLERANCE && j){
+//        amin=2./amin;
+//        patternLength *= amin;
+//        if (patternLength > 50.) {
+//            amin *= 50./patternLength;
+////            patternLength=100.;
+//        }
+//        for(i=0;i<j;i++){
+//            ds[i] *= amin;
+////            patternLength += ds[i];
+//        }
+//    }else
+if(!j) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "Invalid pattern");
     }
 

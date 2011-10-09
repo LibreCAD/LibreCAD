@@ -789,7 +789,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
                          isReversed());
         return;
     }
-    double styleFactor = getStyleFactor(view);
+//    double styleFactor = getStyleFactor(view);
     //        if (styleFactor<0.0) {
     //            painter->drawArc(cp,
     //                             ra,
@@ -831,14 +831,16 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     // create scaled pattern:
     double* da = new double[pat->num];
   // array of distances in x.
-    double k=2.;
-    double patternLength=0.;
+//    double k=2.;
+//    double patternLength=0.;
     int i(0),j(0);          // index counter
     while(i<pat->num){
-        da[j] = pat->pattern[i++] * styleFactor;
+//        da[j] = pat->pattern[i++] * styleFactor;
+        //fixme, stylefactor needed
+        da[j] = pat->pattern[i++]/ra;
 //        if(fabs(da[j])<RS_TOLERANCE) continue;
-        if(fabs(da[j]) > RS_TOLERANCE && fabs(da[j])<k) k=fabs(da[j]);
-        patternLength += fabs(da[j]);
+//        if(fabs(da[j]) > RS_TOLERANCE && fabs(da[j])<k) k=fabs(da[j]);
+//        patternLength += fabs(da[j]);
         j++;
     }
     if(!j){
@@ -852,15 +854,15 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
                          isReversed());
         return;
     }
-    k= 2./k;
-    patternLength *=k;
-    if (patternLength>80.) k*=80./patternLength;
-    for(i=0;i<j;i++) {
-        da[i]*=k/ra; //normalize pattern
-    }
+//    k= 2./k;
+//    patternLength *=k;
+//    if (patternLength>80.) k*=80./patternLength;
+//    for(i=0;i<j;i++) {
+//        da[i]*=k/ra; //normalize pattern
+//    }
 
 
-    bool done = false;
+//    bool done = false;
     double curA (a1);
     double a3;
     //double cx = getCenter().x * factor.x + offsetX;
