@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -40,23 +40,23 @@ RS_PainterQt::RS_PainterQt( QPaintDevice* pd)
  */
 RS_PainterQt::~RS_PainterQt() {}
 
-	
-	
+
+
 void RS_PainterQt::moveTo(int x, int y) {
-	//RVT_PORT changed from QPainter::moveTo(x,y);
-	rememberX=x;
-	rememberY=y;
+        //RVT_PORT changed from QPainter::moveTo(x,y);
+        rememberX=x;
+        rememberY=y;
 }
 
 
 void RS_PainterQt::lineTo(int x, int y) {
-	// RVT_PORT changed from QPainter::lineTo(x, y);
-	QPainterPath path;
-	path.moveTo(rememberX,rememberY);
-	path.lineTo(x,y);
-	QPainter::drawPath(path);
-	rememberX=x;
-	rememberY=y;
+        // RVT_PORT changed from QPainter::lineTo(x, y);
+        QPainterPath path;
+        path.moveTo(rememberX,rememberY);
+        path.lineTo(x,y);
+        QPainter::drawPath(path);
+        rememberX=x;
+        rememberY=y;
 }
 
 /**
@@ -85,7 +85,7 @@ void RS_PainterQt::drawPoint(const RS_Vector& p) {
  */
 void RS_PainterQt::drawLine(const RS_Vector& p1, const RS_Vector& p2) {
 #ifdef __APPLE1__
-	int w2 = (int)getPen().getScreenWidth()/2;
+        int w2 = (int)getPen().getScreenWidth()/2;
     QPainter::drawLine(toScreenX(p1.x-w2), toScreenY(p1.y-w2),
                        toScreenX(p2.x-w2), toScreenY(p2.y-w2));
 #else
@@ -103,10 +103,10 @@ void RS_PainterQt::drawLine(const RS_Vector& p1, const RS_Vector& p2) {
  * Draws a rectangle with corners p1, p2.
  */
 /*void RS_PainterQt::drawRect(const RS_Vector& p1, const RS_Vector& p2) {
-	/ *QPainter::drawRect(toScreenX(p1.x), toScreenY(p1.y),
-					   abs(toScreenX(p2.x) - toScreenX(p1.x)), 
-					   abs(toScreenY(p2.y) - toScreenY(p1.y)));* /
-	QPainter::drawLine(toScreenX(p1.x), toScreenY(p1.y),
+        / *QPainter::drawRect(toScreenX(p1.x), toScreenY(p1.y),
+                                           abs(toScreenX(p2.x) - toScreenX(p1.x)),
+                                           abs(toScreenY(p2.y) - toScreenY(p1.y)));* /
+        QPainter::drawLine(toScreenX(p1.x), toScreenY(p1.y),
                        toScreenX(p2.x), toScreenY(p1.y));
     QPainter::drawLine(toScreenX(p2.x), toScreenY(p1.y),
                        toScreenX(p2.x), toScreenY(p2.y));
@@ -145,7 +145,7 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
         drawGridPoint(cp);
     } else {
 #ifdef __APPLE1__
-		drawArcMac(cp, radius, a1, a2, reversed);
+                drawArcMac(cp, radius, a1, a2, reversed);
 #else
         int   cix;            // Next point on circle
         int   ciy;            //
@@ -235,7 +235,7 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
         drawGridPoint(cp);
     } else {
 #ifdef __APPL1E__
-		drawArcMac(cp, radius, a1, a2, reversed);
+                drawArcMac(cp, radius, a1, a2, reversed);
 #else
         QPolygon pa;
         createArc(pa, cp, radius, a1, a2, reversed);
@@ -246,7 +246,7 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
 
 
 /**
- * Draws an arc on apple. 
+ * Draws an arc on apple.
  *
  * @param cx center in x
  * @param cy center in y
@@ -258,7 +258,7 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
 void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
                            double a1, double a2,
                            bool reversed) {
-	RS_DEBUG->print("RS_PainterQt::drawArcMac");
+        RS_DEBUG->print("RS_PainterQt::drawArcMac");
     if(radius<=0.5) {
         drawGridPoint(cp);
     } else {
@@ -269,8 +269,8 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
               double ciy;            //
               double aStep;         // Angle Step (rad)
               double a;             // Current Angle (rad)
-			  double ox;
-			  double oy;
+                          double ox;
+                          double oy;
 
               if(2.0/radius<=1.0) {
                   aStep=asin(2.0/radius);
@@ -300,9 +300,9 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
                       cix = cp.x+cos(a)*radius;
                       ciy = cp.y-sin(a)*radius;
                       //lineTo(cix, ciy);
-					  drawLine(RS_Vector(ox, oy), RS_Vector(cix, ciy));
-					  ox = cix;
-					  oy = ciy;
+                                          drawLine(RS_Vector(ox, oy), RS_Vector(cix, ciy));
+                                          ox = cix;
+                                          oy = ciy;
                       //pa.resize(i+1);
                       //pa.setPoint(i++, cix, ciy);
                   }
@@ -315,15 +315,15 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
                       cix = cp.x+cos(a)*radius;
                       ciy = cp.y-sin(a)*radius;
                       drawLine(RS_Vector(ox, oy), RS_Vector(cix, ciy));
-					  ox = cix;
-					  oy = ciy;
-					  //lineTo(cix, ciy);
+                                          ox = cix;
+                                          oy = ciy;
+                                          //lineTo(cix, ciy);
                       //pa.resize(i+1);
                       //pa.setPoint(i++, cix, ciy);
                   }
               }
-              drawLine(RS_Vector(ox, oy), 
-			  		RS_Vector(cp.x+cos(a2)*radius,
+              drawLine(RS_Vector(ox, oy),
+                                        RS_Vector(cp.x+cos(a2)*radius,
                      cp.y-sin(a2)*radius));
               //lineTo(toScreenX(cp.x+cos(a2)*radius),
               //       toScreenY(cp.y-sin(a2)*radius));
@@ -346,7 +346,7 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
 void RS_PainterQt::drawCircle(const RS_Vector& cp, double radius) {
 
 // RVT_PORT    if (drawingMode==RS2::ModeXOR && radius<500) {
-		if (radius<500) {
+                if (radius<500) {
         // This is _very_ slow for large arcs:
         QPainter::drawEllipse(toScreenX(cp.x-radius),
                               toScreenY(cp.y-radius),
@@ -366,7 +366,7 @@ void RS_PainterQt::drawCircle(const RS_Vector& cp, double radius) {
                 cp + RS_Vector(radius, 0.0),
                 false);
 #endif
-	}
+        }
 }
 
 
@@ -385,7 +385,6 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
     //} else {
     //int   cix;            // Next point on arc
     //int   ciy;            //
-    double aStep;         // Angle Step (rad)
     double a;             // Current Angle (rad)
 
     // Angle step in rad
@@ -394,23 +393,23 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
            if (radius1<RS_TOLERANCE) {
                aStep=1.0;
            } else {
-    		if (fabs(2.0/radius1)<=1.0) {
-               	aStep=asin(2.0/radius1);
-    		}
-    		else {
-    			aStep = 1.0;
-    		}
+                if (fabs(2.0/radius1)<=1.0) {
+                aStep=asin(2.0/radius1);
+                }
+                else {
+                        aStep = 1.0;
+                }
            }
        } else {
            if (radius2<RS_TOLERANCE) {
                aStep=1.0;
            } else {
-    		if (fabs(2.0/radius2)<=1.0) {
-               	aStep=asin(2.0/radius2);
-    		}
-    		else {
-    			aStep = 1.0;
-    		}
+                if (fabs(2.0/radius2)<=1.0) {
+                aStep=asin(2.0/radius2);
+                }
+                else {
+                        aStep = 1.0;
+                }
            }
        }
 
@@ -419,43 +418,50 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
        }
     */
 
-    aStep=0.01;
+    double aStep(0.01);         // Angle Step (rad)
+    double sStep=aStep*std::min(radius1,radius2);
 
-    RS_Vector vp;
-    RS_Vector vc(cp.x, cp.y);
-    vp.set(cp.x+cos(a1)*radius1,
-           cp.y-sin(a1)*radius2);
-    vp.rotate(vc, -angle);
+
+    const RS_Vector vr(radius1,radius2);
+    const RS_Vector rvp(radius2,radius1);
+    double ea1(a1);
+    double ea2(a2);
+    if(reversed) std::swap(ea1,ea2);
+    if(ea2<ea1+RS_TOLERANCE_ANGLE) {
+        ea2 += 2.*M_PI; //potential bug
+    }
+    const RS_Vector angleVector(-angle);
+    RS_Vector vp(-ea1);
+    aStep=sStep/RS_Vector(vp.x*radius2,vp.y*radius1).magnitude();
+    vp.scale(vr);
+    vp.rotate(angleVector);
+    vp.move(cp);
+    //    vp.set(cp.x+cos(a1)*radius1,
+    //           cp.y-sin(a1)*radius2);
+    //    vp.rotate(vc, -angle);
     moveTo(toScreenX(vp.x),
            toScreenY(vp.y));
-    if(!reversed) {
-        // Arc Counterclockwise:
-        if(a1>a2-RS_TOLERANCE) {
-            a2+=2*M_PI;
-        }
-        for(a=a1+aStep; a<=a2; a+=aStep) {
-            vp.set(cp.x+cos(a)*radius1,
-                   cp.y-sin(a)*radius2);
-            vp.rotate(vc, -angle);
-            lineTo(toScreenX(vp.x),
-                   toScreenY(vp.y));
-        }
-    } else {
-        // Arc Clockwise:
-        if(a1<a2+RS_TOLERANCE) {
-            a2-=2*M_PI;
-        }
-        for(a=a1-aStep; a>=a2; a-=aStep) {
-            vp.set(cp.x+cos(a)*radius1,
-                   cp.y-sin(a)*radius2);
-            vp.rotate(vc, -angle);
-            lineTo(toScreenX(vp.x),
-                   toScreenY(vp.y));
-        }
+    // Arc Counterclockwise:
+
+    for(a=ea1+aStep; a<ea2; a+=aStep) {
+        RS_Vector va(-a);
+        vp=va;
+        vp.scale(vr);
+        vp.rotate(angleVector);
+        vp.move(cp);
+
+        //            vp.set(cp.x+cos(a)*radius1,
+        //                   cp.y-sin(a)*radius2);
+        //            vp.rotate(vc, -angle);
+        lineTo(toScreenX(vp.x),
+               toScreenY(vp.y));
+        aStep= sStep/va.scale(rvp).magnitude();
     }
-    vp.set(cp.x+cos(a2)*radius1,
-           cp.y-sin(a2)*radius2);
-    vp.rotate(vc, -angle);
+
+    vp.set(cos(ea2)*radius1,
+           -sin(ea2)*radius2);
+    vp.rotate(angleVector);
+    vp.move(cp);
     lineTo(toScreenX(vp.x),
            toScreenY(vp.y));
     //}
@@ -617,18 +623,18 @@ void RS_PainterQt::resetClipping() {
 }
 
 void RS_PainterQt::fillRect ( const QRectF & rectangle, const RS_Color & color ) {
-	
-	double x1=rectangle.left();
-	double x2=rectangle.right();
-	double y1=rectangle.top();
-	double y2=rectangle.bottom();
-	
-	QPainter::fillRect(toScreenX(x1),toScreenY(y1),toScreenX(x2)-toScreenX(x1),toScreenY(y2)-toScreenX(y1), color);
+
+        double x1=rectangle.left();
+        double x2=rectangle.right();
+        double y1=rectangle.top();
+        double y2=rectangle.bottom();
+
+        QPainter::fillRect(toScreenX(x1),toScreenY(y1),toScreenX(x2)-toScreenX(x1),toScreenY(y2)-toScreenX(y1), color);
 }
 void RS_PainterQt::fillRect ( const QRectF & rectangle, const QBrush & brush ) {
-	double x1=rectangle.left();
-	double x2=rectangle.right();
-	double y1=rectangle.top();
-	double y2=rectangle.bottom();
-	QPainter::fillRect(toScreenX(x1),toScreenY(y1),toScreenX(x2),toScreenY(y2), brush);
+        double x1=rectangle.left();
+        double x2=rectangle.right();
+        double y1=rectangle.top();
+        double y2=rectangle.bottom();
+        QPainter::fillRect(toScreenX(x1),toScreenY(y1),toScreenX(x2),toScreenY(y2), brush);
 }
