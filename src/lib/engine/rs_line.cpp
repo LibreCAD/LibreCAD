@@ -467,21 +467,18 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
     if (painter==NULL || view==NULL) {
         return;
     }
-
-    if (getPen().getLineType()==RS2::SolidLine ||
-            isSelected() ||
-            view->getDrawingMode()==RS2::ModePreview) {
-
-        painter->drawLine(view->toGui(getStartpoint()),
-                          view->toGui(getEndpoint()));
+    RS_Vector pStart(view->toGui(getStartpoint()));
+    RS_Vector pEnd(view->toGui(getEndpoint()));
+    if ( !isSelected() && (
+             getPen().getLineType()==RS2::SolidLine ||
+             view->getDrawingMode()==RS2::ModePreview)) {
+        painter->drawLine(pStart,pEnd);
         return;
     }
     double styleFactor = getStyleFactor(view);
-    RS_Vector pStart(view->toGui(getStartpoint()));
-    RS_Vector pEnd(view->toGui(getEndpoint()));
     RS_Vector direction=pEnd-pStart;
     double  length=direction.magnitude();
-    if (styleFactor<0.0 || length<=1. || fabs(view->getFactor().x)<RS_TOLERANCE) {
+    if (/*styleFactor<0.0 ||*/ length<=1. || fabs(view->getFactor().x)<RS_TOLERANCE) {
         painter->drawLine(pStart,pEnd);
         return;
     }
@@ -522,12 +519,20 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
     double lmin(2.);
     int j(0);
     for (i=0; i<pat->num; ++i) {
-        ds[j]=pat->pattern[i++] * styleFactor;
+        ds[j]=pat->pattern[i] * styleFactor;
         if(fabs(ds[j])<RS_TOLERANCE) continue;//invalid pattern length, skip it
         //searching for minimum
         if(lmin>fabs(ds[j])) lmin=fabs(ds[j]);
         patternSegmentLength += fabs(ds[j]);
         j++;
+    }
+    if(!j) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,"invalid line pattern for line, draw solid line instread");
+        delete[] dp;
+        delete[] ds;
+        painter->drawLine(view->toGui(getStartpoint()),
+                          view->toGui(getEndpoint()));
+        return;
     }
     lmin=2./lmin;
     patternSegmentLength *= lmin;
@@ -564,7 +569,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
 
     double tot=patternOffset;
     //        bool cutStartpoint, cutEndpoint, drop;
-    RS_Vector p1,p2;
+    RS_Vector p1,p2,p3;
     RS_Vector curP(pStart+patternOffsetVec);
     for(i=0;;) {
         //            cutStartpoint = false;
@@ -574,8 +579,8 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double patternOffs
 
         // line segment (otherwise space segment)
         if (ds[i]>0.0) {
-            // drop the whole pattern segment line:
-            if (tot+ fabs(ds[i]) > 0.0) {
+            // drop the whole pattern segment line, for ds[i]<0:
+            if (tot+ fabs(ds[i]) > 0.0|| tot>0.0) {
                 // trim startpoint of pattern segment line to line startpoint
                 p1 =(tot > 0.)? curP:pStart;
                 p2 =(tot+fabs(ds[i])<length)?curP + dp[i]:pEnd;

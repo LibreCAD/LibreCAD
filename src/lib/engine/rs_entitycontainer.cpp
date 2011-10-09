@@ -1211,7 +1211,7 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
                                                       true);
 
                 point=sol.getClosest(coord,&curDist,NULL);
-                if(curDist<minDist){
+                if(sol.getNumber()>0 && curDist<minDist){
                     closestPoint=point;
                     minDist=curDist;
                 }
