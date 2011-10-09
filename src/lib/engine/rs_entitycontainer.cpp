@@ -1202,33 +1202,41 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
 
     if (closestEntity!=NULL) {
         for (RS_Entity* en = firstEntity(RS2::ResolveAll);
-                en != NULL;
-                en = nextEntity(RS2::ResolveAll)) {
+             en != NULL;
+             en = nextEntity(RS2::ResolveAll)) {
 
             if (en->isVisible() && en!=closestEntity) {
                 sol = RS_Information::getIntersection(closestEntity,
                                                       en,
                                                       true);
 
-                for (int i=0; i<4; i++) {
-                    point = sol.get(i);
-                    if (point.valid) {
-                        curDist = coord.distanceTo(point);
-
-                        if (curDist<minDist) {
-                            closestPoint = point;
-                            minDist = curDist;
-                            if (dist!=NULL) {
-                                *dist = curDist;
-                            }
-                        }
-                    }
+                point=sol.getClosest(coord,&curDist,NULL);
+                if(curDist<minDist){
+                    closestPoint=point;
+                    minDist=curDist;
                 }
+
+                //                for (int i=0; i<4; i++) {
+                //                    point = sol.get(i);
+                //                    if (point.valid) {
+                //                        curDist = coord.distanceTo(point);
+
+                //                        if (curDist<minDist) {
+                //                            closestPoint = point;
+                //                            minDist = curDist;
+                //                            if (dist!=NULL) {
+                //                                *dist = curDist;
+                //                            }
+                //                        }
+                //                    }
+                //                }
             }
         }
         //}
     }
-
+    if(dist!=NULL && closestPoint.valid) {
+        *dist=minDist;
+    }
     return closestPoint;
 }
 

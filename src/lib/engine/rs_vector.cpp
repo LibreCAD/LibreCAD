@@ -921,7 +921,7 @@ RS_Vector RS_VectorSolutions::getClosest(const RS_Vector& coord,
         }
     }
     if (dist!=NULL) {
-        *dist = minDist;
+        *dist = sqrt(minDist);
     }
     if (index!=NULL) {
         *index = pos;
