@@ -418,8 +418,6 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
        }
     */
 
-    double aStep(0.01);         // Angle Step (rad)
-    double sStep=aStep*std::min(radius1,radius2);
 
 
     const RS_Vector vr(radius1,radius2);
@@ -431,8 +429,12 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
         ea2 += 2.*M_PI; //potential bug
     }
     const RS_Vector angleVector(-angle);
+    double aStep(0.01/(radius1*radius2));         // Angle Step (0.01 rad)
+    /*
+      draw a new line after tangent changes by 0.01 rad
+      */
     RS_Vector vp(-ea1);
-    aStep=sStep/RS_Vector(vp.x*radius2,vp.y*radius1).magnitude();
+    ea1 += aStep*RS_Vector(vp.x*radius2,vp.y*radius1).squared();
     vp.scale(vr);
     vp.rotate(angleVector);
     vp.move(cp);
@@ -442,9 +444,9 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
     moveTo(toScreenX(vp.x),
            toScreenY(vp.y));
     // Arc Counterclockwise:
+    while(ea1<ea2){
 
-    for(a=ea1+aStep; a<ea2; a+=aStep) {
-        RS_Vector va(-a);
+        RS_Vector va(-ea1);
         vp=va;
         vp.scale(vr);
         vp.rotate(angleVector);
@@ -455,7 +457,7 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
         //            vp.rotate(vc, -angle);
         lineTo(toScreenX(vp.x),
                toScreenY(vp.y));
-        aStep= sStep/va.scale(rvp).magnitude();
+        ea1 += aStep*va.scale(rvp).squared();
     }
 
     vp.set(cos(ea2)*radius1,
