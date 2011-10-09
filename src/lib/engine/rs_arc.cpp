@@ -811,6 +811,9 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     }
 
     if (ra<1.){
+        painter->drawArc(cp, ra,
+                         getAngle1(),getAngle2(),
+                         isReversed());
         return;
     }
 
@@ -825,8 +828,6 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     if(a2<a1+RS_TOLERANCE_ANGLE) a2 += 2.*M_PI;
 
 
-    double length (a2-a1);
-
     // create scaled pattern:
     double* da = new double[pat->num];
   // array of distances in x.
@@ -835,52 +836,55 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     int i(0),j(0);          // index counter
     while(i<pat->num){
         da[j] = pat->pattern[i++] * styleFactor;
-        if(fabs(da[j])<RS_TOLERANCE) continue;
-        if(fabs(da[j])<k) k=fabs(da[j]);
+//        if(fabs(da[j])<RS_TOLERANCE) continue;
+        if(fabs(da[j]) > RS_TOLERANCE && fabs(da[j])<k) k=fabs(da[j]);
         patternLength += fabs(da[j]);
-        da[j] /= ra;
         j++;
     }
     if(!j){
         //invalid pattern
+
+        delete[] da;
+        std::cout<<"RS_Arc::draw(): invalid pattern\n";
         painter->drawArc(cp,
                          ra,
                          getAngle1(), getAngle2(),
                          isReversed());
-        delete[] da;
         return;
     }
     k= 2./k;
     patternLength *=k;
     if (patternLength>80.) k*=80./patternLength;
     for(i=0;i<j;i++) {
-        da[i]*=k; //normalize pattern
+        da[i]*=k/ra; //normalize pattern
     }
 
 
-    double tot=0.0;
     bool done = false;
-    double curA = a1;
+    double curA (a1);
+    double a3;
     //double cx = getCenter().x * factor.x + offsetX;
     //double cy = - a->getCenter().y * factor.y + getHeight() - offsetY;
 
     for(i=0;;) {
-        if (da[i] > 0.0) {
-            if (tot+fabs(da[i])<length) {
+        a3 = curA + fabs(da[i]);
+        if (a3 < a2 ) {
+            if (da[i] > 0.0) {
                 painter->drawArc(cp, ra,
                                  curA,
-                                 curA + fabs(da[i]),
+                                 a3,
                                  false);
-            } else {
+            }
+        } else {
+            if (da[i] > 0.0) {
                 painter->drawArc(cp, ra,
                                  curA,
                                  a2,
                                  false);
-                break;
             }
+            break;
         }
-        curA+=fabs(da[i]);
-        tot+=fabs(da[i]);
+        curA=a3;
         i=(i+1)%j;
     }
 

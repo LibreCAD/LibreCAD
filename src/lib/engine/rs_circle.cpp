@@ -383,6 +383,10 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view,
     }
 
     if (ra<1.){
+        painter->drawArc(cp,
+                         ra,
+                         0.0, 2*M_PI,
+                         false);
         return;
     }
 
@@ -391,13 +395,9 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view,
     pen.setLineType(RS2::SolidLine);
     painter->setPen(pen);
 
-    double* da;     // array of distances in x.
-
-    double length = 2.*M_PI;
-
     // create pattern:
-    da = new double[pat->num];
-
+    double* da= new double[pat->num];
+     // array of distances in x.
     double k=2.;
     double patternLength=0.;
     int i(0),j(0);          // index counter
@@ -406,47 +406,48 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view,
         if(fabs(da[j])<RS_TOLERANCE) continue;
         if(fabs(da[j])<k) k=fabs(da[j]);
         patternLength += fabs(da[j]);
-        da[j] /= ra;
         j++;
     }
     if(!j){
         //invalid pattern
+        delete[] da;
         painter->drawArc(cp,
                          ra,
                          0.,2.*M_PI,
                          false);
-        delete[] da;
         return;
     }
     k= 2./k;
     patternLength *=k;
     if (patternLength>80.) k*=80./patternLength;
     for(i=0;i<j;i++) {
-        da[i]*=k; //normalize pattern
+        da[i]*=k/ra; //normalize pattern
     }
 
-    double tot=0.0;
-    double curA = 0.0;
+    double curA ( 0.0);
+    double a2;
     //double cx = getCenter().x * factor.x + offsetX;
     //double cy = - a->getCenter().y * factor.y + getHeight() - offsetY;
 
     for(i=0;;) {
-        if (da[i]>0.){
-            if (tot+fabs(da[i])<2.*M_PI) {
+        a2= curA+fabs(da[i]);
+        if (a2<2.*M_PI) {
+            if (da[i]>0.){
                 painter->drawArc(cp, ra,
                                  curA,
-                                 curA + fabs(da[i]),
+                                 a2,
                                  false);
-            } else {
+            }
+        } else {
+            if (da[i]>0.){
                 painter->drawArc(cp, ra,
                                  curA,
                                  2*M_PI,
                                  false);
-                break;
             }
+            break;
         }
-        curA+=fabs(da[i]);
-        tot+=fabs(da[i]);
+        curA=a2;
         i=(i+1)%j;
     }
 
