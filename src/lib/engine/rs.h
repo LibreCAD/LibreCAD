@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -83,8 +83,8 @@ public:
         FlagSelected1   = 1<<12,
         /** Endpoint selected */
         FlagSelected2   = 1<<13,
-		/** Entity is highlighted temporarily (as a user action feedback) */
-		FlagHighlighted = 1<<14
+                /** Entity is highlighted temporarily (as a user action feedback) */
+                FlagHighlighted = 1<<14
     };
 
     /**
@@ -142,7 +142,7 @@ public:
         EntityHatch,        /**< Hatch */
         EntityImage,        /**< Image */
         EntitySpline,       /**< Spline */
-		EntityOverlayBox    /**< OverlayBox */
+                EntityOverlayBox    /**< OverlayBox */
     };
 
     /**
@@ -150,7 +150,7 @@ public:
      */
     enum ActionType {
         ActionNone,        /**< Invalid action id. */
-		
+
         ActionDefault,
 
         ActionFileNew,
@@ -162,7 +162,7 @@ public:
         ActionFilePrint,
         ActionFilePrintPreview,
         ActionFileQuit,
-		
+
         ActionPrintPreview,
 
         ActionEditKillAllActions,
@@ -243,14 +243,14 @@ public:
         ActionDrawSpline,
         ActionDrawPolyline,
         ActionDrawText,
-		
-		ActionPolylineAdd,
-		ActionPolylineAppend,
-		ActionPolylineDel,
-		ActionPolylineDelBetween,
-		ActionPolylineTrim,
-		ActionPolylineEquidistant,
-		ActionPolylineSegment,
+
+                ActionPolylineAdd,
+                ActionPolylineAppend,
+                ActionPolylineDel,
+                ActionPolylineDelBetween,
+                ActionPolylineTrim,
+                ActionPolylineEquidistant,
+                ActionPolylineSegment,
 
         ActionDimAligned,
         ActionDimLinear,
@@ -335,22 +335,22 @@ public:
         ActionBlocksCreateNoSelect,
         ActionBlocksExplode,
         ActionBlocksExplodeNoSelect,
-		
+
         ActionModifyExplodeText,
         ActionModifyExplodeTextNoSelect,
-		
+
         ActionLibraryInsert,
 
         ActionOptionsGeneral,
         ActionOptionsDrawing,
 
-		ActionToolRegenerateDimensions,
+                ActionToolRegenerateDimensions,
 
-		ActionScriptOpenIDE,
-		ActionScriptRun,
+                ActionScriptOpenIDE,
+                ActionScriptRun,
 
 #ifndef RS_NO_COMPLEX_ENTITIES
-		ActionPARISDebugCreateContainer,
+                ActionPARISDebugCreateContainer,
 #endif
 
         /** Needed to loop through all actions */
@@ -367,13 +367,13 @@ public:
     };
 
     /**
-     * Update mode for non-atomic entities that need to be updated when 
+     * Update mode for non-atomic entities that need to be updated when
      * they change. e.g. texts, inserts, ...
      */
     enum UpdateMode {
         NoUpdate,       /**< No automatic updates. */
         Update,         /**< Always update automatically when modified. */
-		PreviewUpdate   /**< Update automatically but only for previews (quick update) */
+                PreviewUpdate   /**< Update automatically but only for previews (quick update) */
     };
 
     /**
@@ -383,7 +383,7 @@ public:
         ModeFull,       /**< Draw everything always detailed (default) */
         ModeAuto,       /**< Draw details when reasonable */
         ModePreview,    /**< Draw only in black/white without styles */
-		ModeBW          /**< Black/white. Can be used for printing. */
+                ModeBW          /**< Black/white. Can be used for printing. */
     };
 
     /**
@@ -440,7 +440,7 @@ public:
         Astro = 18,             /**< Astro: 149.6 x 10^9m */
         Lightyear = 19,         /**< Lightyear: 9460731798 x 10^6m */
         Parsec = 20,            /**< Parsec: 30857 x 10^12 */
-		
+
         LastUnit = 21           /**< Used to iterate through units */
     };
 
@@ -492,13 +492,13 @@ public:
     enum ResolveLevel {
         /** Groups are not resolved */
         ResolveNone,
-		/**
-		 * Resolve all but not Inserts.
-		 */
-		ResolveAllButInserts,
+                /**
+                 * Resolve all but not Inserts.
+                 */
+                ResolveAllButInserts,
         /**
-         * all Entity Containers are resolved 
-         * (including Texts, Polylines, ...) 
+         * all Entity Containers are resolved
+         * (including Texts, Polylines, ...)
          */
         ResolveAll
     };
@@ -820,61 +820,61 @@ public:
      * Wrapper for Qt
      */
     static LineWidth intToLineWidth(int w) {
-		if (w==-3) {
-			return WidthDefault;
-		} else if (w==-2) {
-			return WidthByBlock;
-		} else if (w==-1) {
-			return WidthByLayer;
-		} else if (w<3) {
-			return Width00;
-		} else if (w<8) {
-			return Width01;
-		} else if (w<12) {
-			return Width02;
-		} else if (w<14) {
-			return Width03;
-		} else if (w<17) {
-			return Width04;
-		} else if (w<19) {
-			return Width05;
-		} else if (w<23) {
-			return Width06;
-		} else if (w<28) {
-			return Width07;
-		} else if (w<33) {
-			return Width08;
-		} else if (w<38) {
-			return Width09;
-		} else if (w<46) {
-			return Width10;
-		} else if (w<52) {
-			return Width11;
-		} else if (w<57) {
-			return Width12;
-		} else if (w<66) {
-			return Width13;
-		} else if (w<76) {
-			return Width14;
-		} else if (w<86) {
-			return Width15;
-		} else if (w<96) {
-			return Width16;
-		} else if (w<104) {
-			return Width17;
-		} else if (w<114) {
-			return Width18;
-		} else if (w<131) {
-			return Width19;
-		} else if (w<150) {
-			return Width20;
-		} else if (w<180) {
-			return Width21;
-		} else if (w<206) {
-			return Width22;
-		} else {
-			return Width23;
-		}
+                if (w==-3) {
+                        return WidthDefault;
+                } else if (w==-2) {
+                        return WidthByBlock;
+                } else if (w==-1) {
+                        return WidthByLayer;
+                } else if (w<3) {
+                        return Width00;
+                } else if (w<8) {
+                        return Width01;
+                } else if (w<12) {
+                        return Width02;
+                } else if (w<14) {
+                        return Width03;
+                } else if (w<17) {
+                        return Width04;
+                } else if (w<19) {
+                        return Width05;
+                } else if (w<23) {
+                        return Width06;
+                } else if (w<28) {
+                        return Width07;
+                } else if (w<33) {
+                        return Width08;
+                } else if (w<38) {
+                        return Width09;
+                } else if (w<46) {
+                        return Width10;
+                } else if (w<52) {
+                        return Width11;
+                } else if (w<57) {
+                        return Width12;
+                } else if (w<66) {
+                        return Width13;
+                } else if (w<76) {
+                        return Width14;
+                } else if (w<86) {
+                        return Width15;
+                } else if (w<96) {
+                        return Width16;
+                } else if (w<104) {
+                        return Width17;
+                } else if (w<114) {
+                        return Width18;
+                } else if (w<131) {
+                        return Width19;
+                } else if (w<150) {
+                        return Width20;
+                } else if (w<180) {
+                        return Width21;
+                } else if (w<206) {
+                        return Width22;
+                } else {
+                        return Width23;
+                }
     }
 
     /**
@@ -901,7 +901,9 @@ public:
         DelCursor,            /**< DelCursor - cursor for choosing entities */
         SelectCursor,         /**< SelectCursor - for selecting single entities */
         MagnifierCursor,      /**< MagnifierCursor - a magnifying glass. */
-        MovingHandCursor      /**< Moving hand - a little flat hand. */
+        MovingHandCursor,      /**< Moving hand - a little flat hand. */
+        OpenHandCursor,      /**< Open hand - user can click and drag. */
+        ClosedHandCursor      /**< Closed hand - in process of being dragged. */
     };
 
     /**
@@ -911,223 +913,209 @@ public:
         switch (t) {
         case ArrowCursor:
             return Qt::ArrowCursor;
-            break;
         case UpArrowCursor:
             return Qt::UpArrowCursor;
-            break;
         case CrossCursor:
             return Qt::CrossCursor;
-            break;
         case WaitCursor:
             return Qt::WaitCursor;
-            break;
         case IbeamCursor:
             return Qt::IBeamCursor;
-            break;
         case SizeVerCursor:
             return Qt::SizeVerCursor;
-            break;
         case SizeHorCursor:
             return Qt::SizeHorCursor;
-            break;
         case SizeBDiagCursor:
             return Qt::SizeBDiagCursor;
-            break;
         case SizeFDiagCursor:
             return Qt::SizeFDiagCursor;
-            break;
         case SizeAllCursor:
             return Qt::SizeAllCursor;
-            break;
         case BlankCursor:
             return Qt::BlankCursor;
-            break;
         case SplitVCursor:
             return Qt::SplitVCursor;
-            break;
         case SplitHCursor:
             return Qt::SplitHCursor;
-            break;
         case PointingHandCursor:
             return Qt::PointingHandCursor;
-            break;
         case ForbiddenCursor:
             return Qt::ForbiddenCursor;
-            break;
         case WhatsThisCursor:
             return Qt::WhatsThisCursor;
-            break;
+        case OpenHandCursor:
+            return Qt::OpenHandCursor;
+        case ClosedHandCursor:
+            return Qt::ClosedHandCursor;
         default:
             return Qt::ArrowCursor;
-            break;
         }
-        return Qt::ArrowCursor;
     }
 
     /**
      * Paper formats.
      */
     enum PaperFormat {
-        Custom, 
-		Letter, 
-		Legal, 
-		Executive,
-        A0, 
-		A1,
-		A2, 
-		A3, 
-		A4, 
-		A5, 
-		A6, 
-		A7, 
-		A8, 
-		A9, 
-        B0, 
-		B1, 
-		B2, 
-		B3, 
-		B4, 
-		B5, 
-		B6, 
-		B7, 
-		B8, 
-		B9, 
-		B10,
-        C5E, 
-		Comm10E,
-        DLE, 
-		Folio, 
-		//Ledger, 
-		Tabloid, 
-		NPageSize 
-	};
-	
+        Custom,
+                Letter,
+                Legal,
+                Executive,
+        A0,
+                A1,
+                A2,
+                A3,
+                A4,
+                A5,
+                A6,
+                A7,
+                A8,
+                A9,
+        B0,
+                B1,
+                B2,
+                B3,
+                B4,
+                B5,
+                B6,
+                B7,
+                B8,
+                B9,
+                B10,
+        C5E,
+                Comm10E,
+        DLE,
+                Folio,
+                //Ledger,
+                Tabloid,
+                NPageSize
+        };
+
     /**
      * Wrapper for Qt.
      */
     static QPrinter::PageSize rsToQtPaperFormat(RS2::PaperFormat f) {
-		QPrinter::PageSize ret;
-	
-		switch (f) {
+                QPrinter::PageSize ret;
+
+                switch (f) {
         case Custom:
-			ret = QPrinter::Custom;
-			break;
-		case Letter:
-			ret = QPrinter::Letter;
-			break;
-		case Legal:
-			ret = QPrinter::Legal;
-			break;
-		case Executive:
-			ret = QPrinter::Executive;
-			break;
+                        ret = QPrinter::Custom;
+                        break;
+                case Letter:
+                        ret = QPrinter::Letter;
+                        break;
+                case Legal:
+                        ret = QPrinter::Legal;
+                        break;
+                case Executive:
+                        ret = QPrinter::Executive;
+                        break;
                 case A0:
-			ret = QPrinter::A0;
-			break;
-		case A1:
-			ret = QPrinter::A1;
-			break;
-		case A2:
-			ret = QPrinter::A2;
-			break;
-		case A3:
-			ret = QPrinter::A3;
-			break;
-		default:
-		case A4:
-			ret = QPrinter::A4;
-			break;
-		case A5:
-			ret = QPrinter::A5;
-			break;
-		case A6:
-			ret = QPrinter::A6;
-			break;
-		case A7:
-			ret = QPrinter::A7;
-			break;
-		case A8:
-			ret = QPrinter::A8;
-			break;
-		case A9:
-			ret = QPrinter::A9;
-			break;
-		case B0:
-			ret = QPrinter::B0;
-			break;
-		case B1:
-			ret = QPrinter::B1;
-			break;
-		case B2:
-			ret = QPrinter::B2;
-			break;
-		case B3:
-			ret = QPrinter::B3;
-			break;
-		case B4:
-			ret = QPrinter::B4;
-			break;
-		case B5:
-			ret = QPrinter::B5;
-			break;
-		case B6:
-			ret = QPrinter::B6;
-			break;
-		case B7:
-			ret = QPrinter::B7;
-			break;
-		case B8:
-			ret = QPrinter::B8;
-			break;
-		case B9:
-			ret = QPrinter::B9;
-			break;
-		case B10:
-			ret = QPrinter::B10;
-			break;
-		case C5E:
-			ret = QPrinter::C5E;
-			break;
-		case Comm10E:
-			ret = QPrinter::Comm10E;
-			break;
+                        ret = QPrinter::A0;
+                        break;
+                case A1:
+                        ret = QPrinter::A1;
+                        break;
+                case A2:
+                        ret = QPrinter::A2;
+                        break;
+                case A3:
+                        ret = QPrinter::A3;
+                        break;
+                default:
+                case A4:
+                        ret = QPrinter::A4;
+                        break;
+                case A5:
+                        ret = QPrinter::A5;
+                        break;
+                case A6:
+                        ret = QPrinter::A6;
+                        break;
+                case A7:
+                        ret = QPrinter::A7;
+                        break;
+                case A8:
+                        ret = QPrinter::A8;
+                        break;
+                case A9:
+                        ret = QPrinter::A9;
+                        break;
+                case B0:
+                        ret = QPrinter::B0;
+                        break;
+                case B1:
+                        ret = QPrinter::B1;
+                        break;
+                case B2:
+                        ret = QPrinter::B2;
+                        break;
+                case B3:
+                        ret = QPrinter::B3;
+                        break;
+                case B4:
+                        ret = QPrinter::B4;
+                        break;
+                case B5:
+                        ret = QPrinter::B5;
+                        break;
+                case B6:
+                        ret = QPrinter::B6;
+                        break;
+                case B7:
+                        ret = QPrinter::B7;
+                        break;
+                case B8:
+                        ret = QPrinter::B8;
+                        break;
+                case B9:
+                        ret = QPrinter::B9;
+                        break;
+                case B10:
+                        ret = QPrinter::B10;
+                        break;
+                case C5E:
+                        ret = QPrinter::C5E;
+                        break;
+                case Comm10E:
+                        ret = QPrinter::Comm10E;
+                        break;
         case DLE:
-			ret = QPrinter::DLE;
-			break;
-		case Folio:
-			ret = QPrinter::Folio;
-			break;
-		//case Ledger:
-		//	ret = QPrinter::Ledger;
-		//	break;
-		case Tabloid:
-			ret = QPrinter::Tabloid;
-			break;
-		case NPageSize:
-			ret = QPrinter::NPageSize;
-			break;
-		}
+                        ret = QPrinter::DLE;
+                        break;
+                case Folio:
+                        ret = QPrinter::Folio;
+                        break;
+                //case Ledger:
+                //	ret = QPrinter::Ledger;
+                //	break;
+                case Tabloid:
+                        ret = QPrinter::Tabloid;
+                        break;
+                case NPageSize:
+                        ret = QPrinter::NPageSize;
+                        break;
+                }
 
-		return ret;
-	}
+                return ret;
+        }
 
-	/**
-	 * Items that can be put on a overlay, teh items are rendered in this order. Best is to leave snapper as last so
-	 * it always shows up
-	 */
-	enum OverlayGraphics {
-		ActionPreviewEntity, // Action Entities
-		Snapper // Snapper
-	};
-	
-	//Different re-draw methods to speed up rendering of the screen
-	enum RedrawMethod {
-		RedrawNone = 0,
-		RedrawGrid = 1,
-		RedrawOverlay = 2,
-		RedrawDrawing = 4,
-		RedrawAll = 0xffff
-	};
+        /**
+         * Items that can be put on a overlay, teh items are rendered in this order. Best is to leave snapper as last so
+         * it always shows up
+         */
+        enum OverlayGraphics {
+                ActionPreviewEntity, // Action Entities
+                Snapper // Snapper
+        };
+
+        //Different re-draw methods to speed up rendering of the screen
+        enum RedrawMethod {
+                RedrawNone = 0,
+                RedrawGrid = 1,
+                RedrawOverlay = 2,
+                RedrawDrawing = 4,
+                RedrawAll = 0xffff
+        };
 
         /**
          * Text drawing direction.
