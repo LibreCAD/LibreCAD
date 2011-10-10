@@ -249,7 +249,7 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                                 } else if (e2->rtti()==RS2::EntityArc){
                                     RS_Arc* a = (RS_Arc*)e2;
                                     ts << ';' << clearZeros(a->getEndpoint().x, 5) << ',';
-                                    ts << clearZeros(a->getEndpoint().y, 5) <<',';
+                                    ts << clearZeros(a->getEndpoint().y, 5) <<",A";
                                     ts << clearZeros(a->getBulge(), 5);
                                 }
                             }
