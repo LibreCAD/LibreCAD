@@ -906,9 +906,7 @@ public:
         DelCursor,            /**< DelCursor - cursor for choosing entities */
         SelectCursor,         /**< SelectCursor - for selecting single entities */
         MagnifierCursor,      /**< MagnifierCursor - a magnifying glass. */
-        MovingHandCursor,      /**< Moving hand - a little flat hand. */
-        OpenHandCursor,      /**< Moving hand - user can click and drag. */
-        ClosedHandCursor      /**< Moving hand - shown when is being dragged. */
+        MovingHandCursor      /**< Moving hand - a little flat hand. */
     };
 
     /**
@@ -944,6 +942,10 @@ public:
             return Qt::SplitHCursor;
         case PointingHandCursor:
             return Qt::PointingHandCursor;
+        case OpenHandCursor:
+            return Qt::OpenHandCursor;
+        case ClosedHandCursor:
+            return Qt::ClosedHandCursor;
         case ForbiddenCursor:
             return Qt::ForbiddenCursor;
         case WhatsThisCursor:
