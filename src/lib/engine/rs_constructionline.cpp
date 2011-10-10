@@ -66,35 +66,32 @@ void RS_ConstructionLine::calculateBorders() {
 
 
 RS_Vector RS_ConstructionLine::getNearestEndpoint(const RS_Vector& coord,
-        double* dist) {
+        double* dist) const{
     double dist1, dist2;
-    RS_Vector* nearerPoint;
 
-    dist1 = data.point1.distanceTo(coord);
-    dist2 = data.point2.distanceTo(coord);
+    dist1 = (data.point1-coord).squared();
+    dist2 = (data.point2-coord).squared();
 
     if (dist2<dist1) {
         if (dist!=NULL) {
-            *dist = dist2;
+            *dist = sqrt(dist2);
         }
-        nearerPoint = &data.point2;
+        return data.point2;
     } else {
         if (dist!=NULL) {
-            *dist = dist1;
+            *dist = sqrt(dist1);
         }
-        nearerPoint = &data.point1;
+        return data.point1;
     }
-
-    return *nearerPoint;
 }
 
 
 
 RS_Vector RS_ConstructionLine::getNearestPointOnEntity(const RS_Vector& coord,
-        bool /*onEntity*/, double* /*dist*/, RS_Entity** entity) {
+        bool /*onEntity*/, double* /*dist*/, RS_Entity** entity) const{
 
     if (entity!=NULL) {
-        *entity = this;
+        *entity = const_cast<RS_ConstructionLine*>(this);
     }
 
     RS_Vector ae = data.point2-data.point1;
@@ -133,7 +130,7 @@ RS_Vector RS_ConstructionLine::getMiddlePoint(){
     return RS_Vector(false);
 }
 RS_Vector RS_ConstructionLine::getNearestMiddle(const RS_Vector& /*coord*/,
-        double* dist, const int /*middlePoints*/) {
+        double* dist, const int /*middlePoints*/)const {
     if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;
     }
@@ -154,12 +151,12 @@ RS_Vector RS_ConstructionLine::getNearestDist(double /*distance*/,
 
 double RS_ConstructionLine::getDistanceToPoint(const RS_Vector& coord,
         RS_Entity** entity,
-        RS2::ResolveLevel /*level*/, double /*solidDist*/) {
+        RS2::ResolveLevel /*level*/, double /*solidDist*/) const {
 
     RS_DEBUG->print("RS_ConstructionLine::getDistanceToPoint");
 
     if (entity!=NULL) {
-        *entity = this;
+        *entity = const_cast<RS_ConstructionLine*>(this);
     }
     //double dist = RS_MAXDOUBLE;
     RS_Vector se = data.point2-data.point1;

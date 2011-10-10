@@ -197,7 +197,7 @@ RS_VectorSolutions RS_Circle::getRefPoints() {
 /**
  * @return Always an invalid vector.
  */
-RS_Vector RS_Circle::getNearestEndpoint(const RS_Vector& /*coord*/, double* dist) {
+RS_Vector RS_Circle::getNearestEndpoint(const RS_Vector& /*coord*/, double* dist)const {
     if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;
     }
@@ -207,11 +207,11 @@ RS_Vector RS_Circle::getNearestEndpoint(const RS_Vector& /*coord*/, double* dist
 
 
 RS_Vector RS_Circle::getNearestPointOnEntity(const RS_Vector& coord,
-        bool /*onEntity*/, double* dist, RS_Entity** entity) {
+        bool /*onEntity*/, double* dist, RS_Entity** entity)const {
 
     RS_Vector vec(false);
     if (entity!=NULL) {
-        *entity = this;
+        *entity = const_cast<RS_Circle*>(this);
     }
 
     double angle = (coord-data.center).angle();
@@ -237,14 +237,14 @@ RS_Vector RS_Circle::getNearestCenter(const RS_Vector& coord,
 
 
 
-RS_Vector RS_Circle::getMiddlePoint(void)
+RS_Vector RS_Circle::getMiddlePoint(void)const
 {
     return RS_Vector(false);
 }
 RS_Vector RS_Circle::getNearestMiddle(const RS_Vector& /*coord*/,
                                       double* dist,
                                       const int /*middlePoints*/
-                                      ) {
+                                      )const {
     if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;
     }
@@ -289,9 +289,9 @@ RS_Vector RS_Circle::getNearestOrthTan(const RS_Vector& coord,
 
 double RS_Circle::getDistanceToPoint(const RS_Vector& coord,
                                      RS_Entity** entity,
-                                     RS2::ResolveLevel, double) {
+                                     RS2::ResolveLevel, double) const {
     if (entity!=NULL) {
-        *entity = this;
+        *entity = const_cast<RS_Circle*>(this);
     }
 
     // RVT Jan 6 2010, allow selections to mid point of circle

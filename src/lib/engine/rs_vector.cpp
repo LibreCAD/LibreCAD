@@ -334,7 +334,6 @@ RS_Vector RS_Vector::rotate(const double& ang) {
  * 0/0 by the angle of the vector
  */
 RS_Vector RS_Vector::rotate(const RS_Vector& angleVector) {
-    if( angleVector.valid) {
 //        RS_DEBUG->print("RS_Vector::rotate: rotating Vecotr: %g/%g", x,y);
 //        RS_DEBUG->print("RS_Vector::rotate: rotating by Vecotr: %g/%g", angleVector.x,angleVector.y);
         double x0 = x * angleVector.x - y * angleVector.y;
@@ -342,9 +341,6 @@ RS_Vector RS_Vector::rotate(const RS_Vector& angleVector) {
         x = x0;
 
 //        RS_DEBUG->print("RS_Vector::rotate: rotated x/y: %f/%f", x, y);
-    } else {
-//        RS_DEBUG->print("RS_Vector::rotate: rotating by invalid RS_Vector");
-    }
 
     return *this;
 }

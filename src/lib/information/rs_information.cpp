@@ -246,8 +246,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
             ret = getIntersectionArcEllipse((RS_Arc *)e2, (RS_Ellipse *) e1);
         }
         if (e2->rtti()==RS2::EntityLine) {
-            ret = getIntersectionLineEllipse((RS_Line*)e2, (RS_Ellipse*) e1);
-            tol = 1.0e-1;
+            ret = getIntersectionEllipseLine((RS_Line*)e2, (RS_Ellipse*) e1);
+//            tol = 1.0e-1;
         }
 
         // not supported:
@@ -377,6 +377,9 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
                 //ignore intersections not on entity
             if (!(e1->isPointOnEntity(ret.get(i), tol) &&
                   e2->isPointOnEntity(ret.get(i), tol))) {
+//                std::cout<<"Ignored intersection "<<ret.get(i)<<std::endl;
+//                std::cout<<"because: e1->isPointOnEntity(ret.get(i), tol)="<<e1->isPointOnEntity(ret.get(i), tol)
+//                    <<"\t(e2->isPointOnEntity(ret.get(i), tol)="<<e2->isPointOnEntity(ret.get(i), tol)<<std::endl;
                 continue;
             }
         }
@@ -610,7 +613,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
         // treate e01 as a line
         RS_LineData ldata0(RS_Vector(-a1,0.),RS_Vector(a1,0.));
         RS_Line *l0=new RS_Line(e1->getParent(),ldata0);
-        ret= getIntersectionLineEllipse(l0, e02);
+        ret= getIntersectionEllipseLine(l0, e02);
         ret.rotate(-shifta1);
         ret.move(-shiftc1);
         return ret;
@@ -621,7 +624,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
         RS_Line *l0=new RS_Line(e1->getParent(),ldata0);
         l0->rotate(RS_Vector(0.,0.),e02->getAngle());
         l0->move(e02->getCenter());
-        ret= getIntersectionLineEllipse(l0, e01);
+        ret= getIntersectionEllipseLine(l0, e01);
         ret.rotate(-shifta1);
         ret.move(-shiftc1);
         return ret;
@@ -761,7 +764,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     //ret.alloc(ivs0);
     shifta1 = - shifta1;
     shiftc1 = - shiftc1;
-    for(unsigned i=0; i<vs0.getNumber(); i++) {
+    for(int i=0; i<vs0.getNumber(); i++) {
         RS_Vector vp=vs0.get(i);
         vp.rotate(shifta1);
         vp.move(shiftc1);
@@ -813,7 +816,7 @@ RS_VectorSolutions RS_Information::getIntersectionArcEllipse(RS_Arc * a1,
 /**
  * @return One or two intersection points between given entities.
  */
-RS_VectorSolutions RS_Information::getIntersectionLineEllipse(RS_Line* line,
+RS_VectorSolutions RS_Information::getIntersectionEllipseLine(RS_Line* line,
         RS_Ellipse* ellipse) {
 
     RS_VectorSolutions ret;
@@ -823,16 +826,25 @@ RS_VectorSolutions RS_Information::getIntersectionLineEllipse(RS_Line* line,
     }
 
     // rotate into normal position:
-    double ang = ellipse->getAngle();
 
     double rx = ellipse->getMajorRadius();
-    double ry = ellipse->getMinorRadius();
+    if(rx<RS_TOLERANCE) {
+        //zero radius ellipse
+        RS_Vector vp(line->getNearestPointOnEntity(ellipse->getCenter(), true));
+        if((vp-ellipse->getCenter()).squared() <RS_TOLERANCE*RS_TOLERANCE){
+            //center on line
+            ret.push_back(vp);
+        }
+        return ret;
+    }
+    RS_Vector angleVector = ellipse->getMajorP().scale(RS_Vector(1./rx,-1./rx));
+    double ry = rx*ellipse->getRatio();
     RS_Vector center = ellipse->getCenter();
-    RS_Vector a1 = line->getStartpoint().rotate(center, -ang);
-    RS_Vector a2 = line->getEndpoint().rotate(center, -ang);
-    RS_Vector origin = a1;
+    RS_Vector a1 = line->getStartpoint().rotate(center, angleVector);
+    RS_Vector a2 = line->getEndpoint().rotate(center, angleVector);
+//    RS_Vector origin = a1;
     RS_Vector dir = a2-a1;
-    RS_Vector diff = origin - center;
+    RS_Vector diff = a1 - center;
     RS_Vector mDir = RS_Vector(dir.x/(rx*rx), dir.y/(ry*ry));
     RS_Vector mDiff = RS_Vector(diff.x/(rx*rx), diff.y/(ry*ry));
 
@@ -843,86 +855,24 @@ RS_VectorSolutions RS_Information::getIntersectionLineEllipse(RS_Line* line,
 
     if (d < 0) {
         RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: outside 0");
-    } else if ( d > 0 ) {
-        double root = sqrt(d);
-        double t_a = (-b - root) / a;
-        double t_b = (-b + root) / a;
-
-        /*if ( (t_a < 0 || 1 < t_a) && (t_b < 0 || 1 < t_b) ) {
-            if ( (t_a < 0 && t_b < 0) || (t_a > 1 && t_b > 1) ) {
-                RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: outside 1");
-            }
-            else {
-                RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: inside 1");
-            }
-        } else {*/
-        RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: intersection 1");
-        RS_Vector ret1(false);
-        RS_Vector ret2(false);
-        //if ( 0 <= t_a && t_a <= 1 ) {
-        //RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: 0<=t_a<=1");
-        ret1 = a1.lerp(a2, t_a);
-        RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: ret1: %f/%f", ret1.x, ret1.y);
-        //}
-        //if ( 0 <= t_b && t_b <= 1 ) {
-        //RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: 0<=t_b<=1");
-        ret2 = a1.lerp(a2, t_b);
-        RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: ret2: %f/%f", ret2.x, ret2.y);
-        //}
-        if (ret1.valid && ret2.valid) {
-            ret = RS_VectorSolutions(ret1, ret2);
-        }
-        else {
-            if (ret1.valid) {
-                ret = RS_VectorSolutions(ret1);
-            }
-            if (ret2.valid) {
-                ret = RS_VectorSolutions(ret2);
-            }
-        }
-        //}
-    } else {
-        double t = -b/a;
-        if ( 0 <= t && t <= 1 ) {
-            RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: 0<=t<=1");
-            RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: intersection 2");
-            ret = RS_VectorSolutions(a1.lerp(a2, t));
-            RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: ret1: %f/%f", ret.get(0).x, ret.get(0).y);
-        } else {
-            RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: outside 2");
-        }
+        return ret;
     }
+    double root = sqrt(d);
+    double t_a = -b/a;
+    double t_b = root/a;
+    //        double t_b = (-b + root) / a;
 
-    ret.rotate(center, ang);
+    ret.push_back(a1.lerp(a2,t_a+t_b));
+    RS_Vector vp(a1.lerp(a2,t_a-t_b));
+    if ( (ret.get(0)-vp).squared()>RS_TOLERANCE*RS_TOLERANCE) {
+        ret.push_back(vp);
+    }
+    angleVector.y *= -1.;
+    ret.rotate(center, angleVector);
+//    std::cout<<"found Ellipse-Line intersections: "<<ret.getNumber()<<std::endl;
+//    std::cout<<ret<<std::endl;
+    RS_DEBUG->print("RS_Information::getIntersectionEllipseLine(): done");
     return ret;
-
-
-
-    /*
-    RS_Arc* arc = new RS_Arc(NULL,
-                             RS_ArcData(ellipse->getCenter(),
-                                        ellipse->getMajorRadius(),
-                                        ellipse->getAngle1(),
-                                        ellipse->getAngle2(),
-                                        false));
-    RS_Line* other = (RS_Line*)line->clone();
-    double angle = ellipse->getAngle();
-    //double ratio = ellipse->getRatio();
-
-    // rotate entities:
-    other->rotate(ellipse->getCenter(), -angle);
-    other->scale(ellipse->getCenter(), RS_Vector(1.0, 1.0/ellipse->getRatio()));
-
-    ret = getIntersectionLineArc(other, arc);
-
-    ret.scale(ellipse->getCenter(), RS_Vector(1.0, ellipse->getRatio()));
-    ret.rotate(ellipse->getCenter(), angle);
-
-    delete arc;
-    delete other;
-
-    return ret;
-    */
 }
 
 
@@ -1065,19 +1015,19 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
            done = true;
            double minDist = RS_MAXDOUBLE;
            double dist;
-    	av = NULL;
+        av = NULL;
            for (RS_Vector* v = is.first(); v!=NULL; v = is.next()) {
                dist = point.distanceTo(*v);
                if (dist<minDist) {
                    minDist = dist;
                    done = false;
-    			av = v;
+                        av = v;
                }
            }
 
-    	if (!done && av!=NULL) {
-    		is2.append(*av);
-    	}
+        if (!done && av!=NULL) {
+                is2.append(*av);
+        }
        } while (!done);
     */
 

@@ -241,36 +241,34 @@ RS_VectorSolutions RS_Arc::getRefPoints() {
 }
 
 
-RS_Vector RS_Arc::getNearestEndpoint(const RS_Vector& coord, double* dist) {
+RS_Vector RS_Arc::getNearestEndpoint(const RS_Vector& coord, double* dist) const{
     double dist1, dist2;
-    RS_Vector* nearerPoint;
 
-    dist1 = startpoint.distanceTo(coord);
-    dist2 = endpoint.distanceTo(coord);
+    dist1 = (startpoint-coord).squared();
+    dist2 = (endpoint-coord).squared();
 
     if (dist2<dist1) {
         if (dist!=NULL) {
-            *dist = dist2;
+            *dist = sqrt(dist2);
         }
-        nearerPoint = &endpoint;
+         return endpoint;
     } else {
         if (dist!=NULL) {
-            *dist = dist1;
+            *dist = sqrt(dist1);
         }
-        nearerPoint = &startpoint;
+        return startpoint;
     }
 
-    return *nearerPoint;
 }
 
 
 
 RS_Vector RS_Arc::getNearestPointOnEntity(const RS_Vector& coord,
-        bool onEntity, double* dist, RS_Entity** entity) {
+        bool onEntity, double* dist, RS_Entity** entity)const {
 
     RS_Vector vec(false);
     if (entity!=NULL) {
-        *entity = this;
+        *entity = const_cast<RS_Arc*>(this);
     }
 
     double angle = (coord-data.center).angle();
@@ -308,7 +306,7 @@ RS_Vector RS_Arc::getNearestCenter(const RS_Vector& coord,
 RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
                                    double* dist,
                                    int middlePoints
-                                   ) {
+                                   )const {
     RS_DEBUG->print("RS_Arc::getNearestMiddle(): begin\n");
         double amin=getAngle1();
         double amax=getAngle2();
@@ -447,9 +445,9 @@ RS_Vector RS_Arc::getNearestOrthTan(const RS_Vector& coord,
 double RS_Arc::getDistanceToPoint(const RS_Vector& coord,
                                   RS_Entity** entity,
                                   RS2::ResolveLevel,
-                                  double) {
+                                  double) const {
     if (entity!=NULL) {
-        *entity = this;
+        *entity = const_cast<RS_Arc*>(this);
     }
 
     // check endpoints first:

@@ -196,7 +196,7 @@ void RS_Spline::update() {
 
 
 RS_Vector RS_Spline::getNearestEndpoint(const RS_Vector& coord,
-                                        double* dist) {
+                                        double* dist)const {
     double minDist = RS_MAXDOUBLE;
     double d;
     RS_Vector ret(false);
@@ -240,7 +240,7 @@ RS_Vector RS_Spline::getNearestCenter(const RS_Vector& /*coord*/,
 
 
 RS_Vector RS_Spline::getNearestMiddle(const RS_Vector& /*coord*/,
-                                      double* dist) {
+                                      double* dist)const {
     if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;
     }

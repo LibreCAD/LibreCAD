@@ -155,7 +155,7 @@ public:
         virtual double getDistanceToPoint(const RS_Vector& coord,
                                           RS_Entity** entity = NULL,
                                           RS2::ResolveLevel level = RS2::ResolveNone,
-                                          double solidDist = RS_MAXDOUBLE);
+                                          double solidDist = RS_MAXDOUBLE) const;
 
 
         virtual void move(const RS_Vector& offset);

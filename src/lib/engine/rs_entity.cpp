@@ -249,9 +249,9 @@ bool RS_Entity::isInWindow(RS_Vector v1, RS_Vector v2) {
  * @retval false otherwise
  */
 bool RS_Entity::isPointOnEntity(const RS_Vector& coord,
-                                double tolerance) {
+                                double tolerance) const {
     double dist = getDistanceToPoint(coord, NULL, RS2::ResolveNone);
-    return (dist<=tolerance);
+    return (dist<=fabs(tolerance));
 }
 
 

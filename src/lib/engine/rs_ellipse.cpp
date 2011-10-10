@@ -162,7 +162,7 @@ RS_VectorSolutions RS_Ellipse::getRefPoints() {
 
 
 
-RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist) {
+RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
     double dist1, dist2;
     RS_Vector nearerPoint;
     RS_Vector startpoint = getStartpoint();
@@ -378,7 +378,7 @@ RS_Vector  RS_Ellipse::getEllipsePoint(const double& a) const {
 //
 
 RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
-        bool onEntity, double* dist, RS_Entity** entity)
+        bool onEntity, double* dist, RS_Entity** entity)const
 {
 
     RS_DEBUG->print("RS_Ellipse::getNearestPointOnEntity");
@@ -391,7 +391,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     }
 
     if (entity!=NULL) {
-        *entity = this;
+        *entity = const_cast<RS_Ellipse*>(this);
     }
     ret=coord;
     ret.move(-getCenter());
@@ -491,22 +491,21 @@ bool RS_Ellipse::isPointOnEntity(const RS_Vector& coord,
     double t=fabs(tolerance);
     double a=getMajorRadius();
     double b=a*getRatio();
+    RS_Vector vp((coord - getCenter()).rotate(-getAngle()));
+    if ( a<RS_TOLERANCE ) {
+        //radius treated as zero
+        if(fabs(vp.x)<RS_TOLERANCE && fabs(vp.y) < b) return true;
+        return false;
+    }
+    if ( b<RS_TOLERANCE ) {
+        //radius treated as zero
+        if (fabs(vp.y)<RS_TOLERANCE && fabs(vp.x) < a) return true;
+        return false;
+    }
+    vp.scale(RS_Vector(1./a,1./b));
 
-    RS_Vector vp(coord - getCenter());
-    vp.rotate(-getAngle());
-    if ( a<t ) {
-        //radius treated as zero
-        if(fabs(vp.x)<t && fabs(vp.y) < b) return true;
-        return false;
-    }
-    if ( b<t ) {
-        //radius treated as zero
-        if (fabs(vp.y)<t && fabs(vp.x) < a) return true;
-        return false;
-    }
-    vp.scale(1./a,1./b);
-    if (fabs(vp.squared()-1.) < t) return true;
-    return false;
+    if (fabs(vp.squared()-1.) > t) return false;
+    return RS_Math::isAngleBetween(vp.angle(),getAngle1(),getAngle2(),isReversed());
 
 //    if ( getCenter().distanceTo(coord) < tolerance ) {
 //            if (getMajorRadius() < tolerance || getMinorRadius() < tolerance ) {
@@ -535,7 +534,7 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
  * a naive implementation of middle point
  * to accurately locate the middle point from arc length is possible by using elliptic integral to find the total arc length, then, using elliptic function to find the half length point
  */
-RS_Vector RS_Ellipse::getMiddlePoint(){
+RS_Vector RS_Ellipse::getMiddlePoint()const{
         return getNearestMiddle(getCenter());
 }
 /**
@@ -546,7 +545,7 @@ RS_Vector RS_Ellipse::getMiddlePoint(){
 RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
                                        double* dist,
                                        int middlePoints
-                                       ) {
+                                       ) const{
     RS_DEBUG->print("RS_Ellpse::getNearestMiddle(): begin\n");
     if ( ! ( std::isnormal(getAngle1()) || std::isnormal(getAngle2()))) {
             //no middle point for whole ellipse, angle1=angle2=0
@@ -653,7 +652,10 @@ RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
 
 double RS_Ellipse::getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity,
-                                      RS2::ResolveLevel, double /*solidDist*/) {
+                                      RS2::ResolveLevel, double /*solidDist*/) const{
+    if( entity != NULL) {
+        *entity=const_cast<RS_Ellipse*>(this);
+    }
     double dToEntity = RS_MAXDOUBLE;
     getNearestPointOnEntity(coord, true, &dToEntity, entity);
 

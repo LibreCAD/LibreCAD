@@ -1018,7 +1018,7 @@ QListIterator<RS_Entity*> RS_EntityContainer::createIterator() {
  * (one of the vertexes)
  */
 RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
-        double* dist) {
+        double* dist)const {
 
     double minDist = RS_MAXDOUBLE;  // minimum measured distance
     double curDist;                 // currently measured distance
@@ -1029,9 +1029,9 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
     //RS_Entity* en;
     //while ( (en = it.current()) != NULL ) {
     //    ++it;
-    for (RS_Entity* en = firstEntity();
+    for (RS_Entity* en = const_cast<RS_EntityContainer*>(this)->firstEntity();
          en != NULL;
-         en = nextEntity()) {
+         en = const_cast<RS_EntityContainer*>(this)->nextEntity()) {
 
         if (en->isVisible()
                 && en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
@@ -1062,11 +1062,11 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
 
 
 RS_Vector RS_EntityContainer::getNearestPointOnEntity(const RS_Vector& coord,
-        bool onEntity, double* dist, RS_Entity** entity) {
+        bool onEntity, double* dist, RS_Entity** entity)const {
 
     RS_Vector point(false);
 
-    RS_Entity* en = getNearestEntity(coord, dist, RS2::ResolveNone);
+    RS_Entity* en = const_cast<RS_EntityContainer*>(this)->getNearestEntity(coord, dist, RS2::ResolveNone);
 
     if (en!=NULL ) {
         if ( en->isVisible()
@@ -1123,7 +1123,7 @@ RS_Vector RS_EntityContainer::getNearestCenter(const RS_Vector& coord,
 RS_Vector RS_EntityContainer::getNearestMiddle(const RS_Vector& coord,
                 double* dist,
                 int middlePoints
-        ) {
+        ) const{
 
        double minDist = RS_MAXDOUBLE;  // minimum measured distance
        double curDist = RS_MAXDOUBLE;                 // currently measured distance
@@ -1131,9 +1131,9 @@ RS_Vector RS_EntityContainer::getNearestMiddle(const RS_Vector& coord,
        RS_Vector point;                // endpoint found
        //std::cout<<"RS_EntityContainer::getNearestMiddle() middlePoints="<<middlePoints<<std::endl;
 
-        for (RS_Entity* en = firstEntity(RS2::ResolveAll);
+        for (RS_Entity* en =const_cast<RS_EntityContainer*>(this)-> firstEntity(RS2::ResolveAll);
                 en != NULL;
-                en = nextEntity(RS2::ResolveAll)) {
+                en =const_cast<RS_EntityContainer*>(this)-> nextEntity(RS2::ResolveAll)) {
 
            if (en->isVisible() && ! en->isContainer()) {
               if (
@@ -1204,33 +1204,46 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
         for (RS_Entity* en = firstEntity(RS2::ResolveAll);
              en != NULL;
              en = nextEntity(RS2::ResolveAll)) {
-
-            if (en->isVisible() && en!=closestEntity) {
-                sol = RS_Information::getIntersection(closestEntity,
-                                                      en,
-                                                      true);
-
-                point=sol.getClosest(coord,&curDist,NULL);
-                if(sol.getNumber()>0 && curDist<minDist){
-                    closestPoint=point;
-                    minDist=curDist;
-                }
-
-                //                for (int i=0; i<4; i++) {
-                //                    point = sol.get(i);
-                //                    if (point.valid) {
-                //                        curDist = coord.distanceTo(point);
-
-                //                        if (curDist<minDist) {
-                //                            closestPoint = point;
-                //                            minDist = curDist;
-                //                            if (dist!=NULL) {
-                //                                *dist = curDist;
-                //                            }
-                //                        }
-                //                    }
-                //                }
+            if (
+                    !en->isVisible()
+                    || en == closestEntity
+                    || en->rtti() == RS2::EntityPoint         /**Point*/
+                    || en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
+                    || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
+                    || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
+                    || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
+                    || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
+                    || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
+                    || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
+                    || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
+                    ){//do not do intersection for point for Spline, Insert, text, Dim
+                continue;
             }
+
+            sol = RS_Information::getIntersection(closestEntity,
+                                                  en,
+                                                  true);
+
+            point=sol.getClosest(coord,&curDist,NULL);
+            if(sol.getNumber()>0 && curDist<minDist){
+                closestPoint=point;
+                minDist=curDist;
+            }
+
+            //                for (int i=0; i<4; i++) {
+            //                    point = sol.get(i);
+            //                    if (point.valid) {
+            //                        curDist = coord.distanceTo(point);
+
+            //                        if (curDist<minDist) {
+            //                            closestPoint = point;
+            //                            minDist = curDist;
+            //                            if (dist!=NULL) {
+            //                                *dist = curDist;
+            //                            }
+            //                        }
+            //                    }
+            //                }
         }
         //}
     }
@@ -1301,7 +1314,7 @@ RS_Vector RS_EntityContainer::getNearestSelectedRef(const RS_Vector& coord,
 double RS_EntityContainer::getDistanceToPoint(const RS_Vector& coord,
         RS_Entity** entity,
         RS2::ResolveLevel level,
-        double solidDist) {
+        double solidDist) const{
 
     RS_DEBUG->print("RS_EntityContainer::getDistanceToPoint");
 
@@ -1312,9 +1325,9 @@ double RS_EntityContainer::getDistanceToPoint(const RS_Vector& coord,
     RS_Entity* subEntity = NULL;
 
     //int k=0;
-    for (RS_Entity* e = firstEntity(level);
+    for (RS_Entity* e =const_cast<RS_EntityContainer*>(this)-> firstEntity(level);
             e != NULL;
-            e = nextEntity(level)) {
+            e =const_cast<RS_EntityContainer*>(this)-> nextEntity(level)) {
 
         if (e->isVisible()) {
             RS_DEBUG->print("entity: getDistanceToPoint");

@@ -292,7 +292,7 @@ public:
      * @return The closest endpoint.
      */
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL) = 0;
+                                         double* dist = NULL)const = 0;
 
     /**
      * Must be overwritten to get the closest coordinate to the
@@ -307,7 +307,7 @@ public:
      */
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& /*coord*/,
             bool onEntity = true, double* dist = NULL,
-            RS_Entity** entity = NULL) = 0;
+            RS_Entity** entity = NULL) const = 0;
 
     /**
      * Must be overwritten to get the (nearest) center point to the
@@ -336,13 +336,13 @@ public:
      *
      * @return The closest middle point.
      */
-    virtual RS_Vector getMiddlePoint(void){
+    virtual RS_Vector getMiddlePoint(void)const{
             return RS_Vector(false);
     }
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
                                        double* dist = NULL,
                                        int middlePoints = 1
-                                       ) = 0;
+                                       ) const= 0;
 
     /**
      * Must be overwritten to get the nearest point with a given
@@ -436,10 +436,10 @@ public:
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity = NULL,
                                       RS2::ResolveLevel level = RS2::ResolveNone,
-                                                                          double solidDist = RS_MAXDOUBLE) = 0;
+                                                                          double solidDist = RS_MAXDOUBLE) const = 0;
 
     virtual bool isPointOnEntity(const RS_Vector& coord,
-                                 double tolerance=RS_TOLERANCE);
+                                 double tolerance=RS_TOLERANCE) const;
 
     /**
      * Implementations must move the entity by the given vector.

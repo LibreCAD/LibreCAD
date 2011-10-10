@@ -99,7 +99,7 @@ void RS_Solid::calculateBorders() {
 
 
 
-RS_Vector RS_Solid::getNearestEndpoint(const RS_Vector& coord, double* dist) {
+RS_Vector RS_Solid::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
 
     double minDist = RS_MAXDOUBLE;
     double curDist;
@@ -128,7 +128,7 @@ RS_Vector RS_Solid::getNearestEndpoint(const RS_Vector& coord, double* dist) {
  * @todo Implement this.
  */
 RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& /*coord*/,
-        bool /*onEntity*/, double* /*dist*/, RS_Entity** /*entity*/) {
+        bool /*onEntity*/, double* /*dist*/, RS_Entity** /*entity*/)const {
 
     RS_Vector ret(false);
     return ret;
@@ -150,7 +150,7 @@ RS_Vector RS_Solid::getNearestCenter(const RS_Vector& /*coord*/,
 
 RS_Vector RS_Solid::getNearestMiddle(const RS_Vector& /*coord*/,
                                      double* dist,
-                                     const int /*middlePoints*/) {
+                                     const int /*middlePoints*/)const {
     if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;
     }
@@ -178,7 +178,7 @@ RS_Vector RS_Solid::getNearestDist(double /*distance*/,
 double RS_Solid::getDistanceToPoint(const RS_Vector& /*coord*/,
                                     RS_Entity** /*entity*/,
                                     RS2::ResolveLevel /*level*/,
-                                                                    double /*solidDist*/) {
+                                                                    double /*solidDist*/)const {
     return RS_MAXDOUBLE;
 }
 

@@ -80,7 +80,7 @@ public:
     static RS_VectorSolutions getIntersectionCircleEllipse(RS_Circle* e1,
             RS_Ellipse* e2);
     
-	static RS_VectorSolutions getIntersectionLineEllipse(RS_Line* line,
+	static RS_VectorSolutions getIntersectionEllipseLine(RS_Line* line,
             RS_Ellipse* ellipse);
 
     static bool isPointInsideContour(const RS_Vector& point,

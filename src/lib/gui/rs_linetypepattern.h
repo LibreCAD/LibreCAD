@@ -57,7 +57,6 @@ public:
     int num;
 };
 
-// Create line patterns
 //define all line patterns in pixels
 //Author: Dongxu Li
 static RS_LineTypePattern patternSolidLine(1, 50.0);

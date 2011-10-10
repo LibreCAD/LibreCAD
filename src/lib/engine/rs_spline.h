@@ -189,13 +189,13 @@ public:
     //}
 
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL);
+                                         double* dist = NULL)const;
     //virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
     //        bool onEntity=true, double* dist = NULL, RS_Entity** entity=NULL);
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
                                        double* dist = NULL);
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL);
+                                       double* dist = NULL)const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
                                      double* dist = NULL);

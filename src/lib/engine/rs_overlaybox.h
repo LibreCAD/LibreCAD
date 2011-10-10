@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -78,7 +78,7 @@ public:
     }
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);
 
-	/** @return Start point of the entity */
+        /** @return Start point of the entity */
     virtual RS_Vector getCorner1() const {
         return data.corner1;
     }
@@ -86,25 +86,25 @@ public:
     virtual RS_Vector getCorner2() const {
         return data.corner2;
     }
-	/** @return Copy of data that defines the line. */
+        /** @return Copy of data that defines the line. */
     RS_OverlayBoxData getData() const {
         return data;
     }
-	
-	/** We should make a seperate drawing meganism for overlays and not use entities */
+
+        /** We should make a seperate drawing meganism for overlays and not use entities */
         virtual void move(const RS_Vector& offset){}
     virtual void rotate(const RS_Vector& center, const double& angle){}
     virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector){}
     virtual void scale(const RS_Vector& center, const RS_Vector& factor){}
     virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2){}
-	virtual void calculateBorders(){}
-	virtual RS_Vector getNearestEndpoint(const RS_Vector&, double*){return RS_Vector();}
-	virtual RS_Vector getNearestPointOnEntity(const RS_Vector&, bool, double*, RS_Entity**){return RS_Vector();}
-	virtual RS_Vector getNearestCenter(const RS_Vector&, double*){return RS_Vector();}
-	virtual RS_Vector getNearestMiddle(const RS_Vector&, double*,int){return RS_Vector();}
-	virtual RS_Vector getNearestDist(double, const RS_Vector&, double*){return RS_Vector();}
-	virtual double getDistanceToPoint(const RS_Vector&, RS_Entity**, RS2::ResolveLevel, double){return -1;}
-	
+        virtual void calculateBorders(){}
+        virtual RS_Vector getNearestEndpoint(const RS_Vector&, double*)const{return RS_Vector(false);}
+        virtual RS_Vector getNearestPointOnEntity(const RS_Vector&, bool, double*, RS_Entity**)const{return RS_Vector();}
+        virtual RS_Vector getNearestCenter(const RS_Vector&, double*){return RS_Vector();}
+        virtual RS_Vector getNearestMiddle(const RS_Vector&, double*,int)const{return RS_Vector();}
+        virtual RS_Vector getNearestDist(double, const RS_Vector&, double*){return RS_Vector();}
+        virtual double getDistanceToPoint(const RS_Vector&, RS_Entity**, RS2::ResolveLevel, double)const{return -1;}//is -1 right here
+
 protected:
     RS_OverlayBoxData data;
 }

@@ -75,6 +75,7 @@ void RS_ActionDrawLine::init(int status) {
     RS_PreviewActionInterface::init(status);
 
     reset();
+    drawSnapper();
         RS_DEBUG->print("RS_ActionDrawLine::init: OK");
 }
 

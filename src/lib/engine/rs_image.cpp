@@ -135,21 +135,21 @@ void RS_Image::calculateBorders() {
 
 
 RS_Vector RS_Image::getNearestEndpoint(const RS_Vector& coord,
-                                       double* dist) {
-    RS_VectorSolutions corners = getCorners();
+                                       double* dist) const {
+    RS_VectorSolutions corners = const_cast<RS_Image*>(this)->getCorners();
     return corners.getClosest(coord, dist);
 }
 
 
 
 RS_Vector RS_Image::getNearestPointOnEntity(const RS_Vector& coord,
-        bool onEntity, double* dist, RS_Entity** entity) {
+        bool onEntity, double* dist, RS_Entity** entity) const{
 
     if (entity!=NULL) {
-        *entity = this;
+        *entity = const_cast<RS_Image*>(this);
     }
 
-    RS_VectorSolutions corners = getCorners();
+    RS_VectorSolutions corners = const_cast<RS_Image*>(this)->getCorners();
     RS_VectorSolutions points(4);
 
     RS_Line l[] =
@@ -189,8 +189,8 @@ RS_Vector RS_Image::getNearestCenter(const RS_Vector& coord,
  */
 RS_Vector RS_Image::getNearestMiddle(const RS_Vector& coord,
                                      double* dist,
-                                     const int /*middlePoints*/) {
-    return getNearestCenter(coord, dist);
+                                     const int /*middlePoints*/) const{
+    return const_cast<RS_Image*>(this)->getNearestCenter(coord, dist);
 }
 
 
@@ -222,12 +222,12 @@ RS_Vector RS_Image::getNearestDist(double distance,
 double RS_Image::getDistanceToPoint(const RS_Vector& coord,
                                     RS_Entity** entity,
                                     RS2::ResolveLevel /*level*/,
-                                                                        double /*solidDist*/) {
+                                                                        double /*solidDist*/) const{
     if (entity!=NULL) {
-        *entity = this;
+        *entity = const_cast<RS_Image*>(this);
     }
 
-    RS_VectorSolutions corners = getCorners();
+    RS_VectorSolutions corners =const_cast<RS_Image*>(this)-> getCorners();
     double dist;
     double minDist = RS_MAXDOUBLE;
 

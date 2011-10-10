@@ -74,7 +74,7 @@ RS_VectorSolutions RS_Line::getRefPoints() {
 
 
 RS_Vector RS_Line::getNearestEndpoint(const RS_Vector& coord,
-                                      double* dist) {
+                                      double* dist)const {
     double dist1((data.startpoint-coord).squared());
     double dist2((data.endpoint-coord).squared());
 
@@ -95,12 +95,12 @@ RS_Vector RS_Line::getNearestEndpoint(const RS_Vector& coord,
 
 
 RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
-        bool onEntity, double* dist, RS_Entity** entity) {
+        bool onEntity, double* dist, RS_Entity** entity)const {
 
     if (entity!=NULL) {
-        *entity = this;
+        *entity = const_cast<RS_Line*>(this);
     }
-
+//std::cout<<"RS_Line::getNearestPointOnEntity():"<<coord<<std::endl;
     RS_Vector direction = data.endpoint-data.startpoint;
     RS_Vector vpc=coord-data.startpoint;
     double a=direction.squared();
@@ -111,9 +111,10 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
         //find projection on line
         vpc = data.startpoint + direction*RS_Vector::dotP(vpc,direction)/a;
         if( onEntity &&
-                !( vpc.x>= minV.x && vpc.x <= maxV.x && vpc.y>= minV.y && vpc.y<=maxV.y)
-                ) {
+                ! vpc.isInWindowOrdered(minV,maxV) ){
+//                !( vpc.x>= minV.x && vpc.x <= maxV.x && vpc.y>= minV.y && vpc.y<=maxV.y) ) {
             //projection point not within range, find the nearest endpoint
+//            std::cout<<"not within window, returning endpoints\n";
             return getNearestEndpoint(coord,dist);
         }
     }
@@ -124,7 +125,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
     return vpc;
 }
 
-    RS_Vector RS_Line::getMiddlePoint()
+    RS_Vector RS_Line::getMiddlePoint()const
 {
         return (getStartpoint() + getEndpoint())*0.5;
 }
@@ -132,13 +133,13 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
     RS_Vector RS_Line::getNearestMiddle(const RS_Vector& coord,
                                         double* dist,
                                         int middlePoints
-                                        ) {
+                                        )const {
 //        RS_DEBUG->print("RS_Line::getNearestMiddle(): begin\n");
         RS_Vector dvp(getEndpoint() - getStartpoint());
         double l=dvp.magnitude();
         if( l<= RS_TOLERANCE) {
             //line too short
-            return getNearestCenter(coord, dist);
+            return const_cast<RS_Line*>(this)->getNearestCenter(coord, dist);
         }
         RS_Vector vp0(getNearestPointOnEntity(coord,true,dist));
         int counts=middlePoints+1;
@@ -238,12 +239,12 @@ RS_Vector RS_Line::getNearestDist(double distance,
 double RS_Line::getDistanceToPoint(const RS_Vector& coord,
                                    RS_Entity** entity,
                                    RS2::ResolveLevel /*level*/,
-                                   double /*solidDist*/) {
+                                   double /*solidDist*/)const {
 
 //    RS_DEBUG->print("RS_Line::getDistanceToPoint");
 
     if (entity!=NULL) {
-        *entity = this;
+        *entity = const_cast<RS_Line*>(this);
     }
     double ret;
     getNearestPointOnEntity(coord,true,&ret,entity);

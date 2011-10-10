@@ -669,17 +669,17 @@ double RS_Hatch::getDistanceToPoint(
     const RS_Vector& coord,
     RS_Entity** entity,
     RS2::ResolveLevel level,
-    double solidDist) {
+    double solidDist) const {
 
     if (data.solid==true) {
         if (entity!=NULL) {
-            *entity = this;
+            *entity = const_cast<RS_Hatch*>(this);
         }
 
         bool onContour;
         if (RS_Information::isPointInsideContour(
                     coord,
-                    this, &onContour)) {
+                     const_cast<RS_Hatch*>(this), &onContour)) {
 
             // distance is the snap range:
             return solidDist;

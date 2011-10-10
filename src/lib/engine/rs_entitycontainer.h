@@ -132,7 +132,7 @@ public:
 
 
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL);
+                                         double* dist = NULL)const;
 
     RS_Entity* getNearestEntity(const RS_Vector& point,
                                 double* dist = NULL,
@@ -141,14 +141,14 @@ public:
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
             bool onEntity = true,
                         double* dist = NULL,
-            RS_Entity** entity=NULL);
+            RS_Entity** entity=NULL)const;
 
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
                                        double* dist = NULL);
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
                                        double* dist = NULL,
                                        int middlePoints = 1
-                                       );
+                                       )const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
                                      double* dist = NULL);
@@ -162,7 +162,7 @@ public:
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
-                                      double solidDist = RS_MAXDOUBLE);
+                                      double solidDist = RS_MAXDOUBLE) const;
 
     virtual bool optimizeContours();
 
