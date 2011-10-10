@@ -497,7 +497,7 @@ public:
      * Implementations must draw the entity on the given device.
      */
     virtual void draw(RS_Painter* painter, RS_GraphicView* view,
-                double patternOffset = 0.0) = 0;
+                double& patternOffset ) = 0;
 
         double getStyleFactor(RS_GraphicView* view);
 

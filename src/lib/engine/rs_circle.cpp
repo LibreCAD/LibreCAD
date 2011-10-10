@@ -340,8 +340,7 @@ void RS_Circle::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 }
 
 
-void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view,
-                     double /*patternOffset*/) {
+void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 
     if (painter==NULL || view==NULL) {
         return;

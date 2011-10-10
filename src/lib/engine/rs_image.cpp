@@ -294,7 +294,7 @@ void RS_Image::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
 
 
 
-void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double /*patternOffset*/) {
+void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
     if (painter==NULL || view==NULL || img.isNull()) {
         return;
     }

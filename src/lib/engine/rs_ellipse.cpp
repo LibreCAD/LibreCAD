@@ -974,7 +974,7 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 }
 
 
-void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patternOffset*/) {
+void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 //    std::cout<<"RS_Ellipse::draw(): begin\n";
     if (painter==NULL || view==NULL) {
         return;

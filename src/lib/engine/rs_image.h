@@ -233,7 +233,7 @@ public:
                          RS_Vector secondCorner,
                          RS_Vector offset);*/
 
-    virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);
+    virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 
     friend std::ostream& operator << (std::ostream& os, const RS_Image& l);
 

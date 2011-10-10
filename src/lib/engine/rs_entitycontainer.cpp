@@ -1622,7 +1622,7 @@ void RS_EntityContainer::moveSelectedRef(const RS_Vector& ref,
 
 
 void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view,
-                              double /*patternOffset*/) {
+                              double& /*patternOffset*/) {
 
     if (painter==NULL || view==NULL) {
         return;

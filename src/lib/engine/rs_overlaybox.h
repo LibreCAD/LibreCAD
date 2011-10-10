@@ -76,7 +76,7 @@ public:
     virtual RS2::EntityType rtti() const {
         return RS2::EntityOverlayBox;
     }
-    virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);
+    virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 
         /** @return Start point of the entity */
     virtual RS_Vector getCorner1() const {

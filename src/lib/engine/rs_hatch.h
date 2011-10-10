@@ -146,7 +146,7 @@ public:
         void activateContour(bool on);
 
         virtual void draw(RS_Painter* painter, RS_GraphicView* view,
-                          double patternOffset=0.0);
+                          double& patternOffset);
 
         //	virtual double getLength() {
         //		return -1.0;

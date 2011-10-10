@@ -320,8 +320,7 @@ void RS_Spline::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 
 
 
-void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view,
-                     double /*patternOffset*/) {
+void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 
     if (painter==NULL || view==NULL) {
         return;

@@ -128,7 +128,7 @@ public:
     virtual void scale(const RS_Vector& center, const RS_Vector& factor);
     virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
 
-    virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);
+    virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 
     friend std::ostream& operator << (std::ostream& os, const RS_Point& p);
 

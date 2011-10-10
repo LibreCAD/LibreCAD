@@ -484,8 +484,7 @@ void RS_Hatch::activateContour(bool on) {
 /**
  * Overrides drawing of subentities. This is only ever called for solid fills.
  */
-void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view,
-        double /*patternOffset*/) {
+void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 
     if (!data.solid) {
         for (RS_Entity* se=firstEntity();

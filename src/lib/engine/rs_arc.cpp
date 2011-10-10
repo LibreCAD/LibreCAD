@@ -767,7 +767,7 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
 
 
 void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
-                  double /*patternOffset*/) {
+                  double& /*patternOffset*/) {
 
     if (painter==NULL || view==NULL) {
         return;

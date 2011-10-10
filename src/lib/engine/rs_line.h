@@ -210,7 +210,7 @@ public:
                          const RS_Vector& offset);
     virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 
-    virtual void draw(RS_Painter* painter, RS_GraphicView* view, double patternOffset=0.0);
+    virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 
     friend std::ostream& operator << (std::ostream& os, const RS_Line& l);
 
