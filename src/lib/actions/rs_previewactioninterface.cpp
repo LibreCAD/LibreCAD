@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -32,7 +32,7 @@
 /**
  * Constructor.
  *
- * Sets the entity container on which the action class inherited 
+ * Sets the entity container on which the action class inherited
  * from this interface operates.
  */
 RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name,
@@ -48,19 +48,19 @@ RS_ActionInterface(name, container, graphicView) {
 
     /*
     //extension by ST for handling locked layers
-    // 20040101: by andrew: only the selection of entities is 
+    // 20040101: by andrew: only the selection of entities is
     // disabled for locked layers
     RS_Document* doc = container.getDocument();
     if (doc!=NULL) {
-    	RS_LayerList* layerList = doc->getLayerList();
-    	if (layerList!=NULL) {
-    		RS_Layer* activeLayer = layerList->getActive();
-    		if (activeLayer!=NULL) {
-    			if (activeLayer->isLocked()) {
-    				finish();
-    			}
-    		}
-    	}
+        RS_LayerList* layerList = doc->getLayerList();
+        if (layerList!=NULL) {
+                RS_Layer* activeLayer = layerList->getActive();
+                if (activeLayer!=NULL) {
+                        if (activeLayer->isLocked()) {
+                                finish();
+                        }
+                }
+        }
 }
     */
 
@@ -71,8 +71,8 @@ RS_ActionInterface(name, container, graphicView) {
 
 /** Destructor */
 RS_PreviewActionInterface::~RS_PreviewActionInterface() {
-	graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
-	delete preview;
+        graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
+        delete preview;
 }
 
 
@@ -100,6 +100,8 @@ void RS_PreviewActionInterface::suspend() {
 
 void RS_PreviewActionInterface::resume() {
     RS_ActionInterface::resume();
+    updateMouseCursor();
+    updateToolBar();
     updateMouseButtonHints();
     drawPreview();
 }
@@ -116,9 +118,9 @@ void RS_PreviewActionInterface::trigger() {
  * Deletes the preview from the screen.
  */
 void RS_PreviewActionInterface::deletePreview() {
-	graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
-	preview->clear();
-	graphicView->redraw(RS2::RedrawOverlay); 
+        graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
+        preview->clear();
+        graphicView->redraw(RS2::RedrawOverlay);
 }
 
 
@@ -128,12 +130,12 @@ void RS_PreviewActionInterface::deletePreview() {
  */
 void RS_PreviewActionInterface::drawPreview() {
     if (preview && !preview->isEmpty()) {
-		// RVT_PORT How does offset work??        painter->setOffset(offset);
-		RS_EntityContainer *container=graphicView->getOverlayContainer(RS2::ActionPreviewEntity);
-		container->clear();
-		container->setOwner(false); // Little hack for now so we don't delete teh preview twice
-		container->addEntity(preview);
-		graphicView->redraw(RS2::RedrawOverlay);
+                // RVT_PORT How does offset work??        painter->setOffset(offset);
+                RS_EntityContainer *container=graphicView->getOverlayContainer(RS2::ActionPreviewEntity);
+                container->clear();
+                container->setOwner(false); // Little hack for now so we don't delete teh preview twice
+                container->addEntity(preview);
+                graphicView->redraw(RS2::RedrawOverlay);
     }
 }
 

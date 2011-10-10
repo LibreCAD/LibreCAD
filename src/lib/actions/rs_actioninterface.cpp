@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -33,7 +33,7 @@
 /**
  * Constructor.
  *
- * Sets the entity container on which the action class inherited 
+ * Sets the entity container on which the action class inherited
  * from this interface operates.
  *
  * @param name Action name. This can be used internally for
@@ -52,7 +52,7 @@ RS_ActionInterface::RS_ActionInterface(const char* name,
 RS_Snapper(container, graphicView) {
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\"", name);
-	
+
     this->name = name;
     status = 0;
     finished = false;
@@ -110,7 +110,7 @@ void RS_ActionInterface::init(int status) {
     setStatus(status);
     if (status>=0) {
         //graphicView->setMouseCursor(cursor);
-		updateMouseButtonHints();
+                updateMouseButtonHints();
         updateMouseCursor();
         updateToolBar();
     }
@@ -119,23 +119,23 @@ void RS_ActionInterface::init(int status) {
 
 
 /**
- * Called when the mouse moves and this is the current action. 
+ * Called when the mouse moves and this is the current action.
  * This function can be overwritten by the implementing action.
  * The default implementation keeps track of the mouse position.
  */
 void RS_ActionInterface::mouseMoveEvent(QMouseEvent*) {}
 
 /**
- * Called when the left mouse button is pressed and this is the 
- * current action. 
+ * Called when the left mouse button is pressed and this is the
+ * current action.
  * This function can be overwritten by the implementing action.
  * The default implementation does nothing.
  */
 void RS_ActionInterface::mousePressEvent(QMouseEvent*) {}
 
 /**
- * Called when the left mouse button is released and this is 
- * the current action. 
+ * Called when the left mouse button is released and this is
+ * the current action.
  * This function can be overwritten by the implementing action.
  * The default implementation does nothing.
  */
@@ -249,7 +249,7 @@ bool RS_ActionInterface::isFinished() {
  * Forces a termination of the action without any cleanup.
  */
 void RS_ActionInterface::setFinished() {
-	status = -1;
+        status = -1;
 }
 
 
@@ -259,14 +259,14 @@ void RS_ActionInterface::setFinished() {
  * 12 Sep 2011, ToDo, fix bug# 3407522
  */
 void RS_ActionInterface::finish() {
-	RS_DEBUG->print("RS_ActionInterface::finish");
+        RS_DEBUG->print("RS_ActionInterface::finish");
     status = -1;
     finished = true;
     graphicView->setMouseCursor(RS2::ArrowCursor);
     updateToolBar();
     hideOptions();
     RS_Snapper::finish();
-	RS_DEBUG->print("RS_ActionInterface::finish: OK");
+        RS_DEBUG->print("RS_ActionInterface::finish: OK");
 }
 
 /**
@@ -291,6 +291,7 @@ void RS_ActionInterface::suspend() {
 void RS_ActionInterface::resume() {
     updateMouseCursor();
     updateToolBar();
+    updateMouseButtonHints();
     RS_Snapper::resume();
 }
 
