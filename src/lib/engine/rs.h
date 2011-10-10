@@ -906,7 +906,9 @@ public:
         DelCursor,            /**< DelCursor - cursor for choosing entities */
         SelectCursor,         /**< SelectCursor - for selecting single entities */
         MagnifierCursor,      /**< MagnifierCursor - a magnifying glass. */
-        MovingHandCursor      /**< Moving hand - a little flat hand. */
+        MovingHandCursor,      /**< Moving hand - a little flat hand. */
+        OpenHandCursor,      /**< Moving hand - user can click and drag. */
+        ClosedHandCursor      /**< Moving hand - shown when is being dragged. */
     };
 
     /**
@@ -916,57 +918,39 @@ public:
         switch (t) {
         case ArrowCursor:
             return Qt::ArrowCursor;
-            break;
         case UpArrowCursor:
             return Qt::UpArrowCursor;
-            break;
         case CrossCursor:
             return Qt::CrossCursor;
-            break;
         case WaitCursor:
             return Qt::WaitCursor;
-            break;
         case IbeamCursor:
             return Qt::IBeamCursor;
-            break;
         case SizeVerCursor:
             return Qt::SizeVerCursor;
-            break;
         case SizeHorCursor:
             return Qt::SizeHorCursor;
-            break;
         case SizeBDiagCursor:
             return Qt::SizeBDiagCursor;
-            break;
         case SizeFDiagCursor:
             return Qt::SizeFDiagCursor;
-            break;
         case SizeAllCursor:
             return Qt::SizeAllCursor;
-            break;
         case BlankCursor:
             return Qt::BlankCursor;
-            break;
         case SplitVCursor:
             return Qt::SplitVCursor;
-            break;
         case SplitHCursor:
             return Qt::SplitHCursor;
-            break;
         case PointingHandCursor:
             return Qt::PointingHandCursor;
-            break;
         case ForbiddenCursor:
             return Qt::ForbiddenCursor;
-            break;
         case WhatsThisCursor:
             return Qt::WhatsThisCursor;
-            break;
         default:
             return Qt::ArrowCursor;
-            break;
         }
-        return Qt::ArrowCursor;
     }
 
     /**

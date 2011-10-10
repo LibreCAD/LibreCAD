@@ -296,6 +296,7 @@ void RS_ActionInterface::suspend() {
 void RS_ActionInterface::resume() {
     updateMouseCursor();
     updateToolBar();
+    updateMouseButtonHints();
     RS_Snapper::resume();
 }
 

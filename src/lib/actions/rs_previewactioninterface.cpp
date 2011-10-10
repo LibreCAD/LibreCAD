@@ -100,6 +100,8 @@ void RS_PreviewActionInterface::suspend() {
 
 void RS_PreviewActionInterface::resume() {
     RS_ActionInterface::resume();
+    updateMouseCursor();
+    updateToolBar();
     updateMouseButtonHints();
     drawPreview();
 }
