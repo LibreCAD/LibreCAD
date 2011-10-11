@@ -31,7 +31,8 @@
 #ifdef  HAS_BOOST
 #include <boost/math/special_functions/ellint_2.hpp>
 #include <boost/math/tools/roots.hpp>
-#include <boost/fusion/tuple.hpp>
+//#include <boost/fusion/tuple.hpp>
+#include <boost/tuple/tuple.hpp>
 #endif
 
 #include "rs_atomicentity.h"
@@ -307,7 +308,7 @@ public:
         //delta amplitude
         double d=sqrt(1-k2*sz*sz);
         // return f(x), f'(x) and f''(x)
-        return boost::math::make_tuple(
+        return boost::fusion::make_tuple(
                     e->getEllipseLength(z)-distance,
                     ra*d,
                     k2*ra*sz*cz/d

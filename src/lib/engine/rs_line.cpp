@@ -468,8 +468,8 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     if (painter==NULL || view==NULL) {
         return;
     }
-    RS_Vector pStart(view->toGui(getStartpoint()).toInteger()); //it may not be necessary to convert to integer
-    RS_Vector pEnd(view->toGui(getEndpoint()).toInteger());
+    RS_Vector pStart(view->toGui(getStartpoint()));
+    RS_Vector pEnd(view->toGui(getEndpoint()));
 //    std::cout<<"draw line: "<<pStart<<" to "<<pEnd<<std::endl;
     if ( !isSelected() && (
              getPen().getLineType()==RS2::SolidLine ||
@@ -606,7 +606,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     }
     //pattern offset at endpoint
 //    patternOffset=remainder(total-length-0.5*patternSegmentLength,patternSegmentLength)+0.5*patternSegmentLength;
-    patternOffset=total-length;
+    patternOffset=total-(pStart.toInteger()-pEnd.toInteger()).magnitude();
 
     delete[] dp;
     delete[] ds;
