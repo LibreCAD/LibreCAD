@@ -29,6 +29,7 @@
 #define RS_LINETYPEPATTERN_H
 
 #include <stdarg.h>
+#include <cmath>
 
 /**
  * Stores a line type pattern.
@@ -38,12 +39,14 @@ public:
     RS_LineTypePattern(int count ...) {
         va_list ap;
         int i=0;
+        totalLength=0.;
         num = count;
 
         va_start(ap, count);
         pattern = new double[num];
         for (i=0; i<count; i++) {
             pattern[i] = va_arg(ap, double);
+            totalLength+=fabs(pattern[i]);
         }
         va_end(ap);
     }
@@ -54,6 +57,7 @@ public:
 
 public:
     double* pattern;
+    double totalLength;
     int num;
 };
 

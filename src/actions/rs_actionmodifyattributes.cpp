@@ -77,7 +77,7 @@ void RS_ActionModifyAttributes::trigger() {
         }
     }
 
-    finish(false);
+    finish();
     graphicView->killSelectActions();
 
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
@@ -105,13 +105,10 @@ void RS_ActionModifyAttributes::updateMouseCursor() {
 
 
 void RS_ActionModifyAttributes::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-    }
+//    if (isFinished()) {
+//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+//    }
+//    return;
 }
 
 

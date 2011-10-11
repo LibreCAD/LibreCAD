@@ -824,17 +824,13 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     pen.setLineType(RS2::SolidLine);
     painter->setPen(pen);
 
-    double a1(getAngle1());
-    double a2(getAngle2());
-    if(isReversed()) std::swap(a1,a2);
-    if(a2<a1+RS_TOLERANCE_ANGLE) a2 += 2.*M_PI;
 
 
     // create scaled pattern:
     double* da = new double[pat->num];
   // array of distances in x.
 //    double k=2.;
-    double patternSegmentLength=0.;
+    double patternSegmentLength(pat->totalLength);
     int i(0),j(0);          // index counter
     while(i<pat->num){
 //        da[j] = pat->pattern[i++] * styleFactor;
@@ -842,7 +838,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
         da[j] = pat->pattern[i++];
 //        if(fabs(da[j])<RS_TOLERANCE) continue;
 //        if(fabs(da[j]) > RS_TOLERANCE && fabs(da[j])<k) k=fabs(da[j]);
-        patternSegmentLength += fabs(da[j]);
+//        patternSegmentLength += fabs(da[j]);
         da[j]/=ra;
 //        std::cout<<"pattern("<<i-1<<")="<<da[j]<<std::endl;
         j++;
@@ -866,10 +862,20 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 //    }
 
 
-//    bool done = false;
-    double total=-remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength)-0.5*patternSegmentLength;
-    total /= ra; //in angle
-    double curA (a1+total);
+    //    bool done = false;
+    double total=remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength)-0.5*patternSegmentLength;
+
+    double a1(RS_Math::correctAngle(getAngle1()));
+    double a2(RS_Math::correctAngle(getAngle2()));
+
+    if(isReversed()) {//always draw from a1 to a2, so, patternOffset is is automatic
+        if(a1<a2+RS_TOLERANCE_ANGLE) a2 -= 2.*M_PI;
+        total = a1 - total/ra; //in angle
+    }else{
+        if(a2<a1+RS_TOLERANCE_ANGLE) a2 += 2.*M_PI;
+        total = a1 + total/ra; //in angle
+    }
+    double limit(fabs(a1-a2));
     double t2;
     double a11,a21;
     //double cx = getCenter().x * factor.x + offsetX;
@@ -877,25 +883,29 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 
     for(i=0;;) {
 //        std::cout<<"1\n";
-        t2 = curA + fabs(da[i]);
+        if(isReversed()){
+            t2 = total - fabs(da[i]);
+        }else{
+            t2 = total + fabs(da[i]);
+        }
         if(da[i]>0.0) {
 
-            if (t2>a1) {
-                a11=(curA>0.)?curA:a1;
-                a21=(t2<a2)?t2:a2;
+            if (fabs(t2-a2)<limit) {
+                a11=(fabs(total-a2)<limit)?total:a1;
+                a21=(fabs(t2-a1)<limit)?t2:a2;
 //                std::cout<<"drawing ("<<a1<<","<<a2<<")\n";
                 painter->drawArc(cp, ra,
                                  a11,
                                  a21,
-                                 false);
+                                 isReversed());
             }
         }
-        curA=t2;
-        if(t2>=a2) break;
+        total=t2;
+        if(fabs(total-a1)>=limit) break;
         i=(i+1)%j;
     }
 //    patternOffset=remainder(ra*(t2-a2)-0.5*patternSegmentLength,patternSegmentLength)+0.5*patternSegmentLength;
-    patternOffset=ra*(t2-a2);
+    patternOffset=ra*fabs(total-a2);
 
     delete[] da;
 }

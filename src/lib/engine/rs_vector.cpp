@@ -294,6 +294,14 @@ bool RS_Vector::isInWindowOrdered(const RS_Vector& vLow,
     return (x>=vLow.x && x<=vHigh.x && y>=vLow.y && y<=vHigh.y);
 }
 
+/**
+ * move to the closest integer point
+ */
+RS_Vector RS_Vector::toInteger() {
+    x= x - remainder(x,1.);
+    y= y - remainder(y,1.);
+    return *this;
+}
 
 /**
  * Moves this vector by the given offset. Equal to the operator +=.
@@ -804,7 +812,10 @@ void RS_VectorSolutions::set(int i, const RS_Vector& v) {
     if (i<vector.size()) {
         vector[i] = v;
     }else{
-            RS_DEBUG->print(RS_Debug::D_ERROR, "failed to set vector in RS_VectorSolutions: out of range");
+            RS_DEBUG->print(RS_Debug::D_ERROR,
+                            "set member in vector in RS_VectorSolutions: out of range, %d to size of %d", i,vector.size());
+        for(int j=vector.size();j<=i;j++)
+            vector.push_back(v);
     }
 }
 

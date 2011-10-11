@@ -69,6 +69,8 @@ public:
     bool isInWindow(const RS_Vector& firstCorner, const RS_Vector& secondCorner);
     bool isInWindowOrdered(const RS_Vector& vLow, const RS_Vector& vHigh);
 
+    RS_Vector toInteger();
+
     RS_Vector move(const RS_Vector& offset);
     RS_Vector rotate(const double& ang);
     RS_Vector rotate(const RS_Vector& angleVector);
