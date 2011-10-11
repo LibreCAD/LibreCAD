@@ -37,6 +37,7 @@ RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(RS_EntityContainer& c
                 :RS_PreviewActionInterface("Create Equidistant Polylines",
                                                    container, graphicView) {
         dist = 1.0;
+        number = 1;
 }
 
 
@@ -77,6 +78,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
         for (int num=1;
                         num<=number || (number==0 && num<=1);
                         num++) {
+//            std::cout<<"copy: "<<num<<" of "<<number<<std::endl;
                 RS_Polyline* newPolyline = new RS_Polyline(container);
                 newPolyline->setClosed(((RS_Polyline*)originalEntity)->isClosed());
 //		newPolyline->setSelected((RS_Polyline*)originalEntity)->isSelected());
@@ -121,21 +123,28 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                                 newPolyline->addVertex(v1, bulge);
                                 first = false;
                         }else{
-                                line2.setStartpoint(v1);
-                                line2.setEndpoint(v2);
-                                RS_VectorSolutions vsol = RS_Information::getIntersection(&line1, &line2, false);
-                                RS_Vector v = vsol.get(0);
-                                newPolyline->addVertex(v, bulge);
-                                newPolyline->setEndpoint(v);
-                                line1.setStartpoint(v1);
-                                line1.setEndpoint(v2);
-                                if (en==lastEntity/* && newPolyline->isClosed()==false*/){
-                                        newPolyline->addVertex(v2, bulge);
+                            line2.setStartpoint(v1);
+                            line2.setEndpoint(v2);
+                            RS_VectorSolutions vsol = RS_Information::getIntersection(&line1, &line2, false);
+                            RS_Vector v;
+                            if (vsol.getNumber()>0) {
+                                v= vsol.get(0);
+                            }else {
+                                //fixme, this is not correct
+                                v=(line1.getEndpoint()+v1)*0.5;
+                            }
+
+                            newPolyline->addVertex(v, bulge);
+                            newPolyline->setEndpoint(v);
+                            line1.setStartpoint(v1);
+                            line1.setEndpoint(v2);
+                            if (en==lastEntity/* && newPolyline->isClosed()==false*/){
+                                newPolyline->addVertex(v2, bulge);
                                 }
                         }
                 }
                 double bulge = lastEntity->rtti() == RS2::EntityArc? ((RS_Arc*)lastEntity)->getBulge():0.0;
-//		newPolyline->setNextBulge(bulge);
+                newPolyline->setNextBulge(bulge);
                 newPolyline->endPolyline();
                 container->addEntity(newPolyline);
                 document->addUndoable(newPolyline);
@@ -147,6 +156,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
         if (graphicView!=NULL) {
                 graphicView->redraw();
         }
+
 
         return true;
 }

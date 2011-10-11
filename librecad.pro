@@ -621,6 +621,7 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_mousewidget.h \
     src/ui/forms/qg_moverotateoptions.h \
     src/ui/forms/qg_polylineoptions.h \
+    src/ui/forms/qg_polylineequidistantoptions.h \
     src/ui/forms/qg_printpreviewoptions.h \
     src/ui/forms/qg_roundoptions.h \
     src/ui/forms/qg_selectionwidget.h \
@@ -710,6 +711,7 @@ SOURCES += src/ui/qg_actionfactory.cpp \
     src/ui/forms/qg_mousewidget.cpp \
     src/ui/forms/qg_moverotateoptions.cpp \
     src/ui/forms/qg_polylineoptions.cpp \
+    src/ui/forms/qg_polylineequidistantoptions.cpp \
     src/ui/forms/qg_printpreviewoptions.cpp \
     src/ui/forms/qg_roundoptions.cpp \
     src/ui/forms/qg_selectionwidget.cpp \
@@ -782,6 +784,7 @@ FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_mousewidget.ui \
     src/ui/forms/qg_moverotateoptions.ui \
     src/ui/forms/qg_polylineoptions.ui \
+    src/ui/forms/qg_polylineequidistantoptions.ui \
     src/ui/forms/qg_printpreviewoptions.ui \
     src/ui/forms/qg_roundoptions.ui \
     src/ui/forms/qg_selectionwidget.ui \

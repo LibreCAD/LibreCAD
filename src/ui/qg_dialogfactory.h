@@ -42,6 +42,7 @@
 #include "qg_mousewidget.h"
 #include "qg_printpreviewoptions.h"
 */
+#include "qg_polylineequidistantoptions.h"
 #include "qg_snapmiddleoptions.h"
 #include "qg_snapdistoptions.h"
 
@@ -171,6 +172,7 @@ protected:
                                     bool on);
     virtual void requestPolylineOptions(RS_ActionInterface* action,
                                     bool on, bool update);
+    virtual void requestPolylineEquidistantOptions(RS_ActionInterface* action, bool on, bool update=false);
     virtual void requestLineAngleOptions(RS_ActionInterface* action,
                                          bool on, bool update);
     virtual void requestLineRelAngleOptions(RS_ActionInterface* action,
@@ -279,6 +281,7 @@ protected:
     QG_CommandWidget* commandWidget;
     //! Pointer to arcTangential Option widge
     QG_ArcTangentialOptions* arcTangentialOptions;
+    QG_PolylineEquidistantOptions* polylineEquidistantOptions;
     //! Pointer to the main app window
     QG_MainWindowInterface* mainWindow;
 private:

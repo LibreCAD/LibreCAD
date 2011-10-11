@@ -95,6 +95,7 @@
 #include "qg_textoptions.h"
 #include "qg_trimamountoptions.h"
 #include "qg_polylineoptions.h"
+#include "qg_polylineequidistantoptions.h"
 #include "qg_layerwidget.h"
 #include "qg_mainwindowinterface.h"
 
@@ -124,6 +125,7 @@ QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
     leftHintSaved=new QString("");
     rightHintSaved=new QString("");
     hintKeeping=new bool(true);
+    polylineEquidistantOptions=NULL;
     snapMiddleOptions=NULL;
     snapDistOptions=NULL;
         RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory: OK");
@@ -730,6 +732,9 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
     case RS2::ActionLibraryInsert:
         requestLibraryInsertOptions(action, on, update);
         break;
+    case RS2::ActionPolylineEquidistant:
+        requestPolylineEquidistantOptions(action, on, update);
+        break;
 
     default:
         break;
@@ -804,6 +809,30 @@ void QG_DialogFactory::requestPolylineOptions(RS_ActionInterface* action,
             toolWidget->setAction(action, update);
             toolWidget->show();
         }
+    }
+}
+
+/**
+ * Shows a widget for options for the action: "draw equidistant polyline"
+ */
+void QG_DialogFactory::requestPolylineEquidistantOptions(RS_ActionInterface* action,
+                                                         bool on, bool update ) {
+
+    if(!on) {
+        if (polylineEquidistantOptions!=NULL) {
+            delete polylineEquidistantOptions;
+            polylineEquidistantOptions = NULL;
+        }
+        return;
+    }
+    if (optionWidget!=NULL ) {
+        if (polylineEquidistantOptions==NULL) {
+            polylineEquidistantOptions = new QG_PolylineEquidistantOptions();
+
+            optionWidget->addWidget(polylineEquidistantOptions);
+        }
+        polylineEquidistantOptions -> setAction(action, update);
+        polylineEquidistantOptions->show();
     }
 }
 
