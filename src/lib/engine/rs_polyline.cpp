@@ -463,6 +463,7 @@ void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patte
     // first line so that subsequent line are draw in the right color
     RS_Pen p=this->getPen(true);
 //prevent segfault if polyline is empty
+    double patternOffset=0.;
     if (e != NULL) {
         e->setPen(p);
         view->drawEntity(painter, e);
@@ -472,7 +473,7 @@ void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patte
              e!=NULL;
              e = nextEntity(RS2::ResolveNone)) {
 
-            view->drawEntityPlain(painter, e);
+            view->drawEntityPlain(painter, e, patternOffset);
         }
     }
 }

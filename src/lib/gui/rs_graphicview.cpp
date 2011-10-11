@@ -1140,7 +1140,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
  *        lines e.g. in splines).
  * @param db Double buffering on (recommended) / off
  */
-void RS_GraphicView::drawEntity(RS_Entity* /*e*/, double /*patternOffset*/) {
+void RS_GraphicView::drawEntity(RS_Entity* /*e*/, double& /*patternOffset*/) {
         RS_DEBUG->print("RS_GraphicView::drawEntity(RS_Entity*,patternOffset) not supported anymore");
         // RVT_PORT this needs to be optimized
         // ONe way to do is to send a RS2::RedrawSelected, then teh draw routine will onyl draw all selected entities
@@ -1149,7 +1149,20 @@ void RS_GraphicView::drawEntity(RS_Entity* /*e*/, double /*patternOffset*/) {
         // For now we just redraw the drawing untill we are going to optmize drawing
         redraw(RS2::RedrawDrawing);
 }
-void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double patternOffset) {
+void RS_GraphicView::drawEntity(RS_Entity* /*e*/ /*patternOffset*/) {
+        RS_DEBUG->print("RS_GraphicView::drawEntity(RS_Entity*,patternOffset) not supported anymore");
+        // RVT_PORT this needs to be optimized
+        // ONe way to do is to send a RS2::RedrawSelected, then teh draw routine will onyl draw all selected entities
+        // Dis-advantage is that we still need to iterate over all entities, but
+        // this might be very fast
+        // For now we just redraw the drawing untill we are going to optmize drawing
+        redraw(RS2::RedrawDrawing);
+}
+void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e) {
+    double offset(0.);
+    drawEntity(painter,e,offset);
+}
+void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patternOffset) {
 
     // update is diabled:
     // given entity is NULL:
@@ -1242,7 +1255,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double patter
  * Draws an entity.
  * The painter must be initialized and all the attributes (pen) must be set.
  */
-void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e, double patternOffset) {
+void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e, double& patternOffset) {
     if (e==NULL) {
         return;
     }
@@ -1254,7 +1267,18 @@ void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e, double p
     e->draw(painter, this, patternOffset);
 
 }
+void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e) {
+    if (e==NULL) {
+        return;
+    }
 
+    if (!e->isContainer() && (e->isSelected()!=painter->shouldDrawSelected())) {
+        return;
+    }
+    double patternOffset(0.);
+    e->draw(painter, this, patternOffset);
+
+}
 /**
  * Deletes an entity with the background color.
  * Might be recusively called e.g. for polylines.
@@ -1556,7 +1580,7 @@ void RS_GraphicView::drawOverlay(RS_Painter *painter) {
         for (int i = 0; i < keys.size(); ++i) {
                 if (overlayEntities[i] != NULL) {
                         setPenForEntity(painter, overlayEntities[i] );
-                        drawEntityPlain(painter, overlayEntities[i], 0.0);
+                        drawEntityPlain(painter, overlayEntities[i]);
                 }
         }
 }

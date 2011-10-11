@@ -2784,8 +2784,10 @@ void QC_ApplicationWindow::slotFilePrint() {
         gv.setFactor(f*scale);
 
         gv.setContainer(graphic);
+//fixme, I don't understand the meaning of 'true' here
+//        gv.drawEntity(&painter, graphic, true);
 
-        gv.drawEntity(&painter, graphic, true);
+        gv.drawEntity(&painter, graphic );
 
         // GraphicView deletes painter
         painter.end();

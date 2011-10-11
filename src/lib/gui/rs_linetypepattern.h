@@ -62,10 +62,10 @@ public:
 static RS_LineTypePattern patternSolidLine(1, 50.0);
 
 static RS_LineTypePattern patternDotLine(2, 2., -4.);
-static RS_LineTypePattern patternDotLine2(2, 2, -6.);
-static RS_LineTypePattern patternDotLineX2(2, 2, -2.);
+static RS_LineTypePattern patternDotLine2(2, 2., -6.);
+static RS_LineTypePattern patternDotLineX2(2, 2., -2.);
 
-static RS_LineTypePattern patternDashLine(2, 24, -12.0);
+static RS_LineTypePattern patternDashLine(2, 24., -12.0);
 static RS_LineTypePattern patternDashLine2(2, 12.0, -6.0);
 static RS_LineTypePattern patternDashLineX2(2, 48.0, -24.0);
 

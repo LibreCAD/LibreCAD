@@ -767,7 +767,7 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
 
 
 void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
-                  double& /*patternOffset*/) {
+                  double& patternOffset) {
 
     if (painter==NULL || view==NULL) {
         return;
@@ -805,6 +805,10 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     }
 
     if (pat==NULL) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Invalid line pattern, drawing arc using solid line");
+        painter->drawArc(cp, ra,
+                         getAngle1(),getAngle2(),
+                         isReversed());
         return;
     }
 
@@ -830,15 +834,17 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     double* da = new double[pat->num];
   // array of distances in x.
 //    double k=2.;
-//    double patternLength=0.;
+    double patternSegmentLength=0.;
     int i(0),j(0);          // index counter
     while(i<pat->num){
 //        da[j] = pat->pattern[i++] * styleFactor;
         //fixme, stylefactor needed
-        da[j] = pat->pattern[i++]/ra;
+        da[j] = pat->pattern[i++];
 //        if(fabs(da[j])<RS_TOLERANCE) continue;
 //        if(fabs(da[j]) > RS_TOLERANCE && fabs(da[j])<k) k=fabs(da[j]);
-//        patternLength += fabs(da[j]);
+        patternSegmentLength += fabs(da[j]);
+        da[j]/=ra;
+//        std::cout<<"pattern("<<i-1<<")="<<da[j]<<std::endl;
         j++;
     }
     if(!j){
@@ -861,32 +867,35 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 
 
 //    bool done = false;
-    double curA (a1);
-    double a3;
+    double total=-remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength)-0.5*patternSegmentLength;
+    total /= ra; //in angle
+    double curA (a1+total);
+    double t2;
+    double a11,a21;
     //double cx = getCenter().x * factor.x + offsetX;
     //double cy = - a->getCenter().y * factor.y + getHeight() - offsetY;
 
     for(i=0;;) {
-        a3 = curA + fabs(da[i]);
-        if (a3 < a2 ) {
-            if (da[i] > 0.0) {
+//        std::cout<<"1\n";
+        t2 = curA + fabs(da[i]);
+        if(da[i]>0.0) {
+
+            if (t2>a1) {
+                a11=(curA>0.)?curA:a1;
+                a21=(t2<a2)?t2:a2;
+//                std::cout<<"drawing ("<<a1<<","<<a2<<")\n";
                 painter->drawArc(cp, ra,
-                                 curA,
-                                 a3,
+                                 a11,
+                                 a21,
                                  false);
             }
-        } else {
-            if (da[i] > 0.0) {
-                painter->drawArc(cp, ra,
-                                 curA,
-                                 a2,
-                                 false);
-            }
-            break;
         }
-        curA=a3;
+        curA=t2;
+        if(t2>=a2) break;
         i=(i+1)%j;
     }
+//    patternOffset=remainder(ra*(t2-a2)-0.5*patternSegmentLength,patternSegmentLength)+0.5*patternSegmentLength;
+    patternOffset=ra*(t2-a2);
 
     delete[] da;
 }

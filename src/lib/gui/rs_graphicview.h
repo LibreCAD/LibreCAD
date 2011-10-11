@@ -55,7 +55,7 @@ public:
     RS_GraphicView();
     virtual ~RS_GraphicView();
 
-	void cleanUp();
+        void cleanUp();
 
     /**
      * @return Pointer to the graphic entity if the entity container
@@ -93,7 +93,7 @@ public:
 
     /**
      * @reval true Deleting instead of drawing.
-	 *        false Normal drawing mode.
+         *        false Normal drawing mode.
      */
     bool getDeleteMode() {
         return deleteMode;
@@ -130,47 +130,47 @@ public:
         }
     }
 
-	/**
-	 * @return Current background color.
-	 */
-	RS_Color getBackground() {
-		return background;
-	}
+        /**
+         * @return Current background color.
+         */
+        RS_Color getBackground() {
+                return background;
+        }
 
-	/**
-	 * @return Current foreground color.
-	 */
-	RS_Color getForeground() {
-		return foreground;
-	}
+        /**
+         * @return Current foreground color.
+         */
+        RS_Color getForeground() {
+                return foreground;
+        }
 
-	/**
-	 * Sets the grid color.
-	 */
-	void setGridColor(const RS_Color& c) {
-		gridColor = c;
-	}
+        /**
+         * Sets the grid color.
+         */
+        void setGridColor(const RS_Color& c) {
+                gridColor = c;
+        }
 
-	/**
-	 * Sets the meta grid color.
-	 */
-	void setMetaGridColor(const RS_Color& c) {
-		metaGridColor = c;
-	}
+        /**
+         * Sets the meta grid color.
+         */
+        void setMetaGridColor(const RS_Color& c) {
+                metaGridColor = c;
+        }
 
-	/**
-	 * Sets the selection color.
-	 */
-	void setSelectedColor(const RS_Color& c) {
-		selectedColor = c;
-	}
+        /**
+         * Sets the selection color.
+         */
+        void setSelectedColor(const RS_Color& c) {
+                selectedColor = c;
+        }
 
-	/**
-	 * Sets the highlight color.
-	 */
-	void setHighlightedColor(const RS_Color& c) {
-		highlightedColor = c;
-	}
+        /**
+         * Sets the highlight color.
+         */
+        void setHighlightedColor(const RS_Color& c) {
+                highlightedColor = c;
+        }
 
     /**
      * This virtual method can be overwritten to set the mouse
@@ -179,13 +179,13 @@ public:
     virtual void setMouseCursor(RS2::CursorType /*c*/) {}
 
     void setContainer(RS_EntityContainer* container);
-	RS_EntityContainer* getContainer() {
-		return container;
-	}
+        RS_EntityContainer* getContainer() {
+                return container;
+        }
     void setFactor(double f) {
-		setFactorX(f);
-		setFactorY(f);
-	}
+                setFactorX(f);
+                setFactorY(f);
+        }
     void setFactorX(double f);
     void setFactorY(double f);
     //double getFactorX() {
@@ -278,9 +278,9 @@ public:
     void mouseEnterEvent();
     void keyPressEvent(QKeyEvent* e);
     void keyReleaseEvent(QKeyEvent* e);
-	void commandEvent(RS_CommandEvent* e);
-	void enableCoordinateInput();
-	void disableCoordinateInput();
+        void commandEvent(RS_CommandEvent* e);
+        void enableCoordinateInput();
+        void disableCoordinateInput();
 
     virtual void zoomIn(double f=1.5, const RS_Vector& center=RS_Vector(false));
     virtual void zoomInX(double f=1.5);
@@ -291,8 +291,8 @@ public:
     virtual void zoomAuto(bool axis=true, bool keepAspectRatio=true);
     virtual void zoomAutoY(bool axis=true);
     virtual void zoomPrevious();
-	virtual void saveView();
-	virtual void restoreView();
+        virtual void saveView();
+        virtual void restoreView();
     virtual void zoomWindow(RS_Vector v1, RS_Vector v2,
                             bool keepAspectRatio=true);
     //virtual void zoomPan(RS_Vector v1);
@@ -305,9 +305,12 @@ public:
     virtual void drawLayer2(RS_Painter *painter);
     virtual void drawLayer3(RS_Painter *painter);
     virtual void deleteEntity(RS_Entity* e);
-    virtual void drawEntity(RS_Painter *painter, RS_Entity* e, double patternOffset=0.0);
-    virtual void drawEntity(RS_Entity* e, double patternOffset=0.0);
-    virtual void drawEntityPlain(RS_Painter *painter, RS_Entity* e, double patternOffset=0.0);
+    virtual void drawEntity(RS_Painter *painter, RS_Entity* e, double& patternOffset);
+    virtual void drawEntity(RS_Painter *painter, RS_Entity* e);
+    virtual void drawEntity(RS_Entity* e, double& patternOffset);
+    virtual void drawEntity(RS_Entity* e);
+    virtual void drawEntityPlain(RS_Painter *painter, RS_Entity* e);
+    virtual void drawEntityPlain(RS_Painter *painter, RS_Entity* e, double& patternOffset);
     virtual void setPenForEntity(RS_Painter *painter, RS_Entity* e );
 
 
@@ -318,7 +321,7 @@ public:
     virtual void drawPaper(RS_Painter *painter);
     virtual void drawGrid(RS_Painter *painter);
     virtual void drawMetaGrid(RS_Painter *painter);
-	virtual void drawOverlay(RS_Painter *painter);
+        virtual void drawOverlay(RS_Painter *painter);
 
     RS_Grid* getGrid() {
         return grid;
@@ -352,80 +355,80 @@ public:
     double toGraphDX(int d);
     double toGraphDY(int d);
 
-	/**
-	 * (Un-)Locks the position of the relative zero.
-	 *
-	 * @param lock true: lock, false: unlock
-	 */
-	void lockRelativeZero(bool lock) {
-		relativeZeroLocked=lock;
-	}
+        /**
+         * (Un-)Locks the position of the relative zero.
+         *
+         * @param lock true: lock, false: unlock
+         */
+        void lockRelativeZero(bool lock) {
+                relativeZeroLocked=lock;
+        }
 
-	/**
-	 * @return true if the position of the realtive zero point is
-	 * locked.
-	 */
-	bool isRelativeZeroLocked() {
-		return relativeZeroLocked;
-	}
+        /**
+         * @return true if the position of the realtive zero point is
+         * locked.
+         */
+        bool isRelativeZeroLocked() {
+                return relativeZeroLocked;
+        }
 
-	/**
-	 * @return Relative zero coordinate.
-	 */
-	RS_Vector getRelativeZero() {
-		return relativeZero;
-	}
+        /**
+         * @return Relative zero coordinate.
+         */
+        RS_Vector getRelativeZero() {
+                return relativeZero;
+        }
 
-	void setRelativeZero(const RS_Vector& pos);
-	void moveRelativeZero(const RS_Vector& pos);
+        void setRelativeZero(const RS_Vector& pos);
+        void moveRelativeZero(const RS_Vector& pos);
 
-	RS_EventHandler* getEventHandler() {
-		return eventHandler;
-	}
+        RS_EventHandler* getEventHandler() {
+                return eventHandler;
+        }
 
-	/**
-	 * Enables or disables print preview.
-	 */
-	void setPrintPreview(bool pv) {
-		printPreview = pv;
-	}
+        /**
+         * Enables or disables print preview.
+         */
+        void setPrintPreview(bool pv) {
+                printPreview = pv;
+        }
 
-	/**
-	 * @retval true This is a print preview graphic view.
-	 * @retval false Otherwise.
-	 */
-	bool isPrintPreview() {
-		return printPreview;
-	}
+        /**
+         * @retval true This is a print preview graphic view.
+         * @retval false Otherwise.
+         */
+        bool isPrintPreview() {
+                return printPreview;
+        }
 
-	/**
-	 * Enables or disables printing.
-	 */
-	void setPrinting(bool p) {
-		printing = p;
-	}
+        /**
+         * Enables or disables printing.
+         */
+        void setPrinting(bool p) {
+                printing = p;
+        }
 
-	/**
-	 * @retval true This is a a graphic view for printing.
+        /**
+         * @retval true This is a a graphic view for printing.
          * @retval false setSnapOtherwise.
-	 */
-	bool isPrinting() {
-		return printing;
-	}
+         */
+        bool isPrinting() {
+                return printing;
+        }
 
-	/**
-	 * @retval true Draft mode is on for this view (all lines with 1 pixel / no style scaling).
-	 * @retval false Otherwise.
-	 */
-	inline bool isDraftMode() {
-		return draftMode;
-	}
+        /**
+         * @retval true Draft mode is on for this view (all lines with 1 pixel / no style scaling).
+         * @retval false Otherwise.
+         */
+        inline bool isDraftMode() {
+                return draftMode;
+        }
 
-	void setDraftMode(bool dm) {
-		draftMode=dm;
-	}
+        void setDraftMode(bool dm) {
+                draftMode=dm;
+        }
 
-	virtual RS_EntityContainer* getOverlayContainer(RS2::OverlayGraphics position);
+        virtual RS_EntityContainer* getOverlayContainer(RS2::OverlayGraphics position);
 
 protected:
 
@@ -441,10 +444,10 @@ protected:
     RS_Color background;
     /** foreground color (black or white) */
     RS_Color foreground;
-	/** grid color */
+        /** grid color */
     RS_Color gridColor;
-	/** meta grid color */
-	RS_Color metaGridColor;
+        /** meta grid color */
+        RS_Color metaGridColor;
     /** selected color */
     RS_Color selectedColor;
     /** highlighted color */
@@ -452,35 +455,35 @@ protected:
     /** Grid */
     RS_Grid* grid;
     /**
-	 * Current default snap mode for this graphic view. Used for new
-	 * actions.
-	 */
+         * Current default snap mode for this graphic view. Used for new
+         * actions.
+         */
     RS_SnapMode defaultSnapMode;
     /**
-	 * Current default snap restriction for this graphic view. Used for new
-	 * actions.
-	 */
+         * Current default snap restriction for this graphic view. Used for new
+         * actions.
+         */
     RS2::SnapRestriction defaultSnapRes;
 
     RS2::DrawingMode drawingMode;
 
-	/**
-	 * Delete mode. If true, all drawing actions will delete in background color
-	 * instead.
-	 */
-	bool deleteMode;
+        /**
+         * Delete mode. If true, all drawing actions will delete in background color
+         * instead.
+         */
+        bool deleteMode;
 
 private:
     bool zoomFrozen;
     //bool gridVisible;
-	bool draftMode;
+        bool draftMode;
 
     RS_Vector factor;
-	int offsetX;
+        int offsetX;
     int offsetY;
 
-	RS_Vector previousFactor;
-	int previousOffsetX;
+        RS_Vector previousFactor;
+        int previousOffsetX;
     int previousOffsetY;
 
     int borderLeft;
@@ -488,15 +491,15 @@ private:
     int borderRight;
     int borderBottom;
 
-	RS_Vector relativeZero;
-	bool relativeZeroLocked;
-	//! Print preview flag
-	bool printPreview;
-	//! Active when printing only:
-	bool printing;
+        RS_Vector relativeZero;
+        bool relativeZeroLocked;
+        //! Print preview flag
+        bool printPreview;
+        //! Active when printing only:
+        bool printing;
 
-	// Map that will be used for overlaying additional items on top of the main CAD drawing
-	QMap<int, RS_EntityContainer *> overlayEntities;
+        // Map that will be used for overlaying additional items on top of the main CAD drawing
+        QMap<int, RS_EntityContainer *> overlayEntities;
 
 };
 

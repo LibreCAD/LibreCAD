@@ -524,7 +524,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 //        ds[j]=pat->pattern[i] * styleFactor;
         //fixme, styleFactor support needed
         ds[j]=pat->pattern[i] ;
-        if(fabs(ds[j])<RS_TOLERANCE) continue;//invalid pattern length, skip it
+//        if(fabs(ds[j])<RS_TOLERANCE) continue;//invalid pattern length, skip it
         //searching for minimum
 //        if(lmin>fabs(ds[j])) lmin=fabs(ds[j]);
         patternSegmentLength += fabs(ds[j]);
@@ -560,22 +560,22 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     //        }
 
     //        patternOffset -= (m*patternSegmentLength);
-    patternOffset = fmod(patternOffset, patternSegmentLength);
-    if (patternOffset>0.0) {
-        patternOffset-=patternSegmentLength;
-    }
+    //negative of fmod value
+    double total= -0.5*patternSegmentLength -remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength);
+//    double total= patternOffset-patternSegmentLength;
+
 
     //if (patternOffset<0.0) {
     //	patternOffset+=patternSegmentLength;
     //}
     //RS_DEBUG->print("pattern. offset: %f", patternOffset);
-    RS_Vector patternOffsetVec=direction*patternOffset;
+//    RS_Vector patternOffsetVec=direction*patternOffset;
     //        patternOffsetVec.setPolar(patternOffset, angle);
 
-    double tot=patternOffset;
     //        bool cutStartpoint, cutEndpoint, drop;
     RS_Vector p1,p2,p3;
-    RS_Vector curP(pStart+patternOffsetVec);
+    RS_Vector curP(pStart+direction*total);
+    double t2;
     for(i=0;;) {
         //            cutStartpoint = false;
         //            cutEndpoint = false;
@@ -583,27 +583,31 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 
 
         // line segment (otherwise space segment)
+        t2=total+fabs(ds[i]);
+        p3=curP+dp[i];
         if (ds[i]>0.0) {
             // drop the whole pattern segment line, for ds[i]<0:
-            if (tot+ fabs(ds[i]) > 0.0|| tot>0.0) {
-                // trim startpoint of pattern segment line to line startpoint
-                p1 =(tot > 0.)? curP:pStart;
-                p2 =(tot+fabs(ds[i])<length)?curP + dp[i]:pEnd;
+            if (t2 > 0.0) {
+                // trim end points of pattern segment line to line
+                p1 =(total > 0.)? curP:pStart;
+                p2 =(t2<length)?p3:pEnd;
                 painter->drawLine(p1,p2);
-
             }
         }
-        curP+=dp[i];
+        total=t2;
+        curP=p3;
         //            tot+=fabs(pat->pattern[i]*styleFactor);
-        tot+=fabs(ds[i]);
         //RS_DEBUG->print("pattern. tot: %f", tot);
-        if(tot>length) break;
+        if(total>=length) break;
 
         i = (i+1)% j;
         //            if (i>=pat->num) {
         //                i=0;
         //            }
     }
+    //pattern offset at endpoint
+//    patternOffset=remainder(total-length-0.5*patternSegmentLength,patternSegmentLength)+0.5*patternSegmentLength;
+    patternOffset=total-length;
 
     delete[] dp;
     delete[] ds;
