@@ -60,6 +60,7 @@ void RS_ActionModifyMove::trigger() {
     m.move(data);
 
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+    finish(false);
 }
 
 
@@ -129,7 +130,6 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
         if (RS_DIALOGFACTORY->requestMoveDialog(data)) {
             data.offset = targetPoint - referencePoint;
             trigger();
-            finish(false);
         }
         break;
 

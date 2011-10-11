@@ -69,7 +69,7 @@ void RS_ActionDefault::init(int status) {
 //    snapMode.clear();
 //    snapMode.restriction = RS2::RestrictNothing;
 //    restrBak = RS2::RestrictNothing;
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
 
         RS_DEBUG->print("RS_ActionDefault::init: OK");
 }

@@ -77,10 +77,10 @@ void RS_ActionModifyAttributes::trigger() {
         }
     }
 
-    finish();
     graphicView->killSelectActions();
 
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+    finish(false);
 }
 
 

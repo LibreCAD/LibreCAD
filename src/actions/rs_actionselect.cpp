@@ -60,23 +60,25 @@ void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
 void RS_ActionSelect::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
         if (isFinished()) {
-            switch(nextAction) {
-            case RS2::ActionModifyAttributesNoSelect:
-            case RS2::ActionModifyDeleteNoSelect:
-            case RS2::ActionModifyDeleteQuick:
-            case RS2::ActionModifyMoveNoSelect:
-            case RS2::ActionModifyRotateNoSelect:
-            case RS2::ActionModifyScaleNoSelect:
-            case RS2::ActionModifyMirrorNoSelect:
-            case RS2::ActionModifyMoveRotateNoSelect:
-            case RS2::ActionModifyRotate2NoSelect:
-            case RS2::ActionModifyExplodeTextNoSelect:
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-            break;
-            //case RS2::ActionBlocksCreateNoSelect:
-            default:
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-            }
+//            switch(nextAction) {
+//            case RS2::ActionModifyAttributesNoSelect:
+//            case RS2::ActionModifyDeleteNoSelect:
+//            case RS2::ActionModifyDeleteQuick:
+//            case RS2::ActionModifyMoveNoSelect:
+//            case RS2::ActionModifyRotateNoSelect:
+//            case RS2::ActionModifyScaleNoSelect:
+//            case RS2::ActionModifyMirrorNoSelect:
+//            case RS2::ActionModifyMoveRotateNoSelect:
+//            case RS2::ActionModifyRotate2NoSelect:
+//            case RS2::ActionModifyExplodeTextNoSelect:
+//                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+//                break;
+//                //case RS2::ActionBlocksCreateNoSelect:
+//            default:
+//                break;
+//                //            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+//            }
         } else {
             RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
         }
