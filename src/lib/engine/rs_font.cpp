@@ -118,6 +118,23 @@ bool RS_Font::loadFont() {
     if (path.contains(".lff"))
         readLFF(path);
 
+    RS_Block* bk = letterList.find(QChar(0xfffd));
+    if (bk == NULL) {
+        // create new letter:
+        RS_FontChar* letter = new RS_FontChar(NULL, QChar(0xfffd), RS_Vector(0.0, 0.0));
+        RS_Polyline* pline = new RS_Polyline(letter, RS_PolylineData());
+        pline->setPen(RS_Pen(RS2::FlagInvalid));
+        pline->setLayer(NULL);
+        pline->addVertex(RS_Vector(1, 0), 0);
+        pline->addVertex(RS_Vector(0, 2), 0);
+        pline->addVertex(RS_Vector(1, 4), 0);
+        pline->addVertex(RS_Vector(2, 2), 0);
+        pline->addVertex(RS_Vector(1, 0), 0);
+        letter->addEntity(pline);
+        letter->calculateBorders();
+        letterList.add(letter);
+    }
+
     loaded = true;
 
     RS_DEBUG->print("RS_Font::loadFont OK");
