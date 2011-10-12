@@ -199,7 +199,7 @@ public:
     virtual bool isProcessed() const;
     virtual void setProcessed(bool on);
     virtual bool isInWindow(RS_Vector v1, RS_Vector v2);
-    virtual bool hasEndpointsWithinWindow(RS_Vector /*v1*/, RS_Vector /*v2*/) {
+    virtual bool hasEndpointsWithinWindow(const RS_Vector& /*v1*/, const RS_Vector& /*v2*/) {
         return false;
     }
     virtual bool isVisible();

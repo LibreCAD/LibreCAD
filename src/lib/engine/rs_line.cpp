@@ -344,13 +344,9 @@ bool RS_Line::hasEndpointsWithinWindow(const RS_Vector& firstCorner, const RS_Ve
     RS_Vector vLow( std::min(firstCorner.x, secondCorner.x), std::min(firstCorner.y, secondCorner.y));
     RS_Vector vHigh( std::max(firstCorner.x, secondCorner.x), std::max(firstCorner.y, secondCorner.y));
 
-    if ( data.startpoint.isInWindowOrdered(vLow, vHigh)
-         || data.endpoint.isInWindowOrdered(vLow, vHigh)
-         ) {
-        return true;
-    } else {
-        return false;
-    }
+    return data.startpoint.isInWindowOrdered(vLow, vHigh)
+            || data.endpoint.isInWindowOrdered(vLow, vHigh);
+
 }
 
 

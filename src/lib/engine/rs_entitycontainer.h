@@ -166,9 +166,9 @@ public:
 
     virtual bool optimizeContours();
 
-        virtual bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2);
+    virtual bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2);
 
-        virtual void move(const RS_Vector& offset);
+    virtual void move(const RS_Vector& offset);
     virtual void rotate(const RS_Vector& center, const double& angle);
     virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
     virtual void scale(const RS_Vector& center, const RS_Vector& factor);

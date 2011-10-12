@@ -1490,7 +1490,7 @@ bool RS_EntityContainer::optimizeContours() {
 }
 
 
-bool RS_EntityContainer::hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2) {
+bool RS_EntityContainer::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) {
     for (RS_Entity* e=firstEntity(RS2::ResolveNone);
             e!=NULL;
             e=nextEntity(RS2::ResolveNone)) {
