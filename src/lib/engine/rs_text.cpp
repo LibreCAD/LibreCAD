@@ -317,12 +317,16 @@ void RS_Text::update() {
 
         default: {
                 // One Letter:
-                if (font->findLetter(QString(data.text.at(i))) != NULL) {
+                QString letterText = QString(data.text.at(i));
+                if (font->findLetter(letterText) == NULL) {
+                    letterText = QChar(0xfffd);
+                }
+//                if (font->findLetter(QString(data.text.at(i))) != NULL) {
 
                                         RS_DEBUG->print("RS_Text::update: insert a "
                                           "letter at pos: %f/%f", letterPos.x, letterPos.y);
 
-                    RS_InsertData d(QString(data.text.at(i)),
+                    RS_InsertData d(letterText,
                                     letterPos,
                                     RS_Vector(1.0, 1.0),
                                     0.0,
@@ -348,7 +352,7 @@ void RS_Text::update() {
                     // next letter position:
                     letterPos += letterWidth;
                     letterPos += letterSpace;
-                }
+//                }
             }
             break;
         }
