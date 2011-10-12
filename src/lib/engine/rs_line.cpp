@@ -588,8 +588,8 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
             // drop the whole pattern segment line, for ds[i]<0:
             if (t2 > 0.0) {
                 // trim end points of pattern segment line to line
-                p1 =(total > 0.)? curP:pStart;
-                p2 =(t2<length)?p3:pEnd;
+                p1 =(total > -0.5)? curP:pStart;
+                p2 =(t2<length+0.5)?p3:pEnd;
                 painter->drawLine(p1,p2);
             }
         }
@@ -606,7 +606,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     }
     //pattern offset at endpoint
 //    patternOffset=remainder(total-length-0.5*patternSegmentLength,patternSegmentLength)+0.5*patternSegmentLength;
-    patternOffset=total-(pStart.toInteger()-pEnd.toInteger()).magnitude();
+    patternOffset=total-(pStart-pEnd).magnitude();
 
     delete[] dp;
     delete[] ds;

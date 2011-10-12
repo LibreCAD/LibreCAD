@@ -812,8 +812,7 @@ void RS_VectorSolutions::set(int i, const RS_Vector& v) {
     if (i<vector.size()) {
         vector[i] = v;
     }else{
-            RS_DEBUG->print(RS_Debug::D_ERROR,
-                            "set member in vector in RS_VectorSolutions: out of range, %d to size of %d", i,vector.size());
+//            RS_DEBUG->print(RS_Debug::D_ERROR, "set member in vector in RS_VectorSolutions: out of range, %d to size of %d", i,vector.size());
         for(int j=vector.size();j<=i;j++)
             vector.push_back(v);
     }
