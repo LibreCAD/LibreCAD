@@ -289,10 +289,10 @@ protected:
 
 #ifdef  HAS_BOOST
 //functor to solve for distance, used by snapDistance
-class distance_functor
+class EllipseDistanceFunctor
 {
 public:
-    distance_functor(RS_Ellipse* ellipse, double const& target) : distance(target)
+    EllipseDistanceFunctor(RS_Ellipse* ellipse, double const& target) : distance(target)
     { // Constructor
         e=ellipse;
         ra=e->getMajorRadius();

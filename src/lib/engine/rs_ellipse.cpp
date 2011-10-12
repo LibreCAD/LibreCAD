@@ -75,7 +75,7 @@ void RS_Ellipse::calculateEndpoints() {
  * Calculates the boundary box of this ellipse.
  */
 void RS_Ellipse::calculateBorders() {
-    RS_DEBUG->print("RS_Ellipse::calculateBorders");
+//    RS_DEBUG->print("RS_Ellipse::calculateBorders");
 
     double radius1 = getMajorRadius();
     double radius2 = getRatio()*radius1;
@@ -91,29 +91,7 @@ void RS_Ellipse::calculateBorders() {
     double maxY = std::max(startpoint.y, endpoint.y);
 
     RS_Vector vp;
-    // kind of a brute force. TODO: exact calculation
-//    double a = a1;
 
-//    do {
-//        vp.set(data.center.x + radius1 * cos(a),
-//               data.center.y + radius2 * sin(a));
-//        vp.rotate(data.center, angle);
-//
-//        minX = std::min(minX, vp.x);
-//        minY = std::min(minY, vp.y);
-//        maxX = std::max(maxX, vp.x);
-//        maxY = std::max(maxY, vp.y);
-//
-//        a += 0.03;
-//    } while (RS_Math::isAngleBetween(RS_Math::correctAngle(a), a1, a2, false) &&
-//             a<4*M_PI);
-//    std::cout<<"a1="<<a1<<"\ta2="<<a2<<std::endl<<"Old algorithm:\nminX="<<minX<<"\tmaxX="<<maxX<<"\nminY="<<minY<<"\tmaxY="<<maxY<<std::endl;
-
-    // Exact algorithm, based on rotation:
-    // ( r1*cos(a), r2*sin(a)) rotated by angle to
-    // (r1*cos(a)*cos(angle)-r2*sin(a)*sin(angle),r1*cos(a)*sin(angle)+r2*sin(a)*cos(angle))
-    // both coordinates can be further reorganized to the form rr*cos(a+ theta),
-    // with rr and theta angle defined by the coordinates given above
     double amin,amax;
 //      x range
     vp.set(radius1*cos(angle),radius2*sin(angle));
@@ -151,7 +129,7 @@ void RS_Ellipse::calculateBorders() {
 
     minV.set(minX, minY);
     maxV.set(maxX, maxY);
-    RS_DEBUG->print("RS_Ellipse::calculateBorders: OK");
+//    RS_DEBUG->print("RS_Ellipse::calculateBorders: OK");
 }
 
 
@@ -165,7 +143,6 @@ RS_VectorSolutions RS_Ellipse::getRefPoints() {
 
 RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
     double dist1, dist2;
-    RS_Vector nearerPoint;
     RS_Vector startpoint = getStartpoint();
     RS_Vector endpoint = getEndpoint();
 
@@ -176,15 +153,13 @@ RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist)co
         if (dist!=NULL) {
             *dist = sqrt(dist2);
         }
-        nearerPoint = endpoint;
+        return endpoint;
     } else {
         if (dist!=NULL) {
             *dist = sqrt(dist1);
         }
-        nearerPoint = startpoint;
+        return startpoint;
     }
-
-    return nearerPoint;
 }
 
 #ifdef  HAS_BOOST
@@ -237,6 +212,9 @@ double RS_Ellipse::getEllipseLength(double x1, double x2) const
     return a*ret;
 }
 
+/**
+  * arc length from start point (angle1)
+  */
 double RS_Ellipse::getEllipseLength( double x2) const
 {
     return getEllipseLength(getAngle1(),x2);
@@ -250,16 +228,16 @@ double RS_Ellipse::getEllipseLength( double x2) const
  */
 double RS_Ellipse::ellipticIntegral_2(const double& k, const double& phi)
 {
-    double a= phi-M_PI/2.;
-    if(a<0.) {
-        return - boost::math::ellint_2<double,double>(k,fabs(a));
-    } else {
+    double a= remainder(phi-M_PI/2.,M_PI);
+    if(a>0.) {
         return boost::math::ellint_2<double,double>(k,a);
+    } else {
+        return - boost::math::ellint_2<double,double>(k,fabs(a));
     }
 }
 
 /**
-  * get the point on the ellipse arc and with distance from the start point
+  * get the point on the ellipse arc and with arc distance from the start point
   * the distance is expected to be within 0 and getLength()
   * using Newton-Raphson from boost
   *
@@ -269,22 +247,32 @@ double RS_Ellipse::ellipticIntegral_2(const double& k, const double& phi)
 RS_Vector RS_Ellipse::getNearestDist(double distance,
                                      const RS_Vector& coord,
                                      double* dist) {
+//    RS_DEBUG->print("RS_Ellipse::getNearestDist() begin\n");
+    if( ! ( std::isnormal(getAngle1()) || std::isnormal(getAngle2())) ) {
+        // both angles being 0, whole ellipse
+        // no end points for whole ellipse, therefore, no snap by distance from end points.
+        return RS_Vector(false);
+    }
     RS_Ellipse e(NULL,data);
     if(e.getRatio()>1.) e.switchMajorMinor();
     double ra=e.getMajorRadius();
-    //fixme , need to handle zero major or minor axis length
-    if(e.getRatio()<RS_TOLERANCE || ra<RS_TOLERANCE) {
-        return(false);
-    }
     double rb=e.getRatio()*ra;
     if(e.isReversed()) {
         std::swap(e.data.angle1,e.data.angle2);
         e.setReversed(false);
     }
+    if(ra<RS_TOLERANCE) { //elipse too small
+        return(false);
+    }
+    if(getRatio()<RS_TOLERANCE) {
+        //treat the ellipse as a line
+        RS_Line line(NULL,RS_LineData(e.minV,e.maxV));
+        return line.getNearestDist(distance,coord,dist);
+    }
     double x1=e.getAngle1();
     double x2=e.getAngle2();
     if(x2<x1+RS_TOLERANCE_ANGLE) x2 += 2.*M_PI;
-    double l=e.getEllipseLength(x1,x2);
+    double l=e.getEllipseLength(x1,x2); // the getEllipseLength() function only defined for proper e
     distance=fabs(distance);
     if(distance > l+RS_TOLERANCE) return(RS_Vector(false));
     if(distance > l-RS_TOLERANCE) return(getNearestEndpoint(coord,dist));
@@ -297,22 +285,25 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
     }
     int digits=std::numeric_limits<double>::digits;
 
-//    solve the distance by second order newton_raphson
-   distance_functor X(&e,distance);
-    RS_Vector vp1(getEllipsePoint(boost::math::tools::halley_iterate<distance_functor,double>(
+    //    solve equation of the distance by second order newton_raphson
+    EllipseDistanceFunctor X(&e,distance);
+
+//std::cout<<"RS_Ellipse::getNearestDist() dist="<<distance<<" out of total="<<l<<std::endl;
+    RS_Vector vp1(e.getEllipsePoint(boost::math::tools::halley_iterate<EllipseDistanceFunctor,double>(
                                       X, guess, x1, x2, digits)));
     X.setDistance(l-distance);
     guess=x1+(x2-guess);
-    RS_Vector vp2(getEllipsePoint(boost::math::tools::halley_iterate<distance_functor,double>(
+    RS_Vector vp2(e.getEllipsePoint(boost::math::tools::halley_iterate<EllipseDistanceFunctor,double>(
                                       X, guess, x1, x2, digits)));
     x1= (vp1-coord).squared();
     x2= (vp2-coord).squared();
     if( x1 > x2 ){
-        x1=x2;
-        vp1=vp2;
+        if(dist !=NULL)  *dist=sqrt(x2);
+        return vp2;
+    }else{
+        if(dist !=NULL)  *dist=sqrt(x1);
+        return vp1;
     }
-    if(dist !=NULL)  *dist=sqrt(x1);
-    return vp1;
 }
 #else
 
