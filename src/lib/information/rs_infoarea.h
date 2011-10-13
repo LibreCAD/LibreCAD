@@ -47,6 +47,7 @@ public:
         void close(bool closePolygon=true);
         bool isValid();
         bool isClosed();
+        void pop_back();
         double getArea() {
                 return area;
         }

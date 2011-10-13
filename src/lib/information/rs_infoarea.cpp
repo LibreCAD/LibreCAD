@@ -58,7 +58,10 @@ void RS_InfoArea::addPoint(const RS_Vector& p) {
         thePoints.append(p);
 }
 
-
+//remove the last point
+void RS_InfoArea::pop_back() {
+    thePoints.pop_back();
+}
 
 /**
  * Resets the points.
