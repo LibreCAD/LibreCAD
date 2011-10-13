@@ -1,27 +1,23 @@
 /****************************************************************************
 **
-** This file is part of the LibreCAD project, a 2D CAD program
-**
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
-**
-** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software
-** Foundation and appearing in the file gpl-2.0.txt included in the
-** packaging of this file.
-**
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU General Public License for more details.
-**
-** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-**
-** This copyright notice MUST APPEAR in all copies of the script!
-**
+ * Draw ellipse by foci and a point on ellipse
+
+Copyright (C) 2011 Dongxu Li (dongxuli2011@gmail.com)
+Copyright (C) 2011 R. van Twisk (librecad@rvt.dds.nl)
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "rs_actiondrawellipsefocipoint.h"
@@ -92,7 +88,7 @@ void RS_ActionDrawEllipseFociPoint::trigger() {
     }
 
     RS_Vector rz = graphicView->getRelativeZero();
-        graphicView->redraw(RS2::RedrawDrawing);
+    graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(rz);
     drawSnapper();
 
@@ -160,6 +156,7 @@ void RS_ActionDrawEllipseFociPoint::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetFocus1:
+        graphicView->moveRelativeZero(mouse);
         focus1=mouse;
         setStatus(SetFocus2);
         break;
@@ -167,17 +164,19 @@ void RS_ActionDrawEllipseFociPoint::coordinateEvent(RS_CoordinateEvent* e) {
     case SetFocus2:
         c=0.5*focus1.distanceTo(mouse);
         if(c>RS_TOLERANCE){
-        focus2=mouse;
-        center=(focus1+focus2)*0.5;
-        major=focus1-center;
-        major /= c ;
-        setStatus(SetPoint);
+            graphicView->moveRelativeZero(mouse);
+            focus2=mouse;
+            center=(focus1+focus2)*0.5;
+            major=focus1-center;
+            major /= c ;
+            setStatus(SetPoint);
         }
         break;
     case SetPoint:
         point=mouse;
         d=0.5*(focus1.distanceTo(point)+focus2.distanceTo(point));
         if (d > c+ RS_TOLERANCE) {
+            graphicView->moveRelativeZero(mouse);
             trigger();
         }
         break;

@@ -135,8 +135,8 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
 
     switch (getStatus()) {
-    case SetCenter:
-        break;
+//    case SetCenter:
+//        break;
 
     case SetMajor:
         if (center.valid) {
