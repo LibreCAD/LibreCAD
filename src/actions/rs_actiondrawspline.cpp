@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -48,9 +48,9 @@ RS_ActionDrawSpline::~RS_ActionDrawSpline() {}
 
 
 QAction* RS_ActionDrawSpline::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Spline")
+        // tr("Spline")
     QAction* action = new QAction(tr("&Spline"),  NULL);
-	action->setIcon(QIcon(":/extui/menuspline.png"));
+        action->setIcon(QIcon(":/extui/menuspline.png"));
     //action->zetStatusTip(tr("Draw splines"));
     return action;
 }
@@ -58,7 +58,7 @@ QAction* RS_ActionDrawSpline::createGUIAction(RS2::ActionType /*type*/, QObject*
 
 
 void RS_ActionDrawSpline::reset() {
-	spline = NULL;
+        spline = NULL;
     //start = RS_Vector(false);
     history.clear();
     //bHistory.clear();
@@ -77,15 +77,15 @@ void RS_ActionDrawSpline::init(int status) {
 void RS_ActionDrawSpline::trigger() {
     RS_PreviewActionInterface::trigger();
 
-	if (spline==NULL) {
-		return;
-	}
+        if (spline==NULL) {
+                return;
+        }
 
-	// add the entity
+        // add the entity
     //RS_Spline* spline = new RS_Spline(container, data);
     spline->setLayerToActive();
     spline->setPenToActive();
-	spline->update();
+        spline->update();
     container->addEntity(spline);
 
     // upd. undo list:
@@ -95,14 +95,14 @@ void RS_ActionDrawSpline::trigger() {
         document->endUndoCycle();
     }
 
-	// upd view
-	RS_Vector r = graphicView->getRelativeZero();
-	graphicView->redraw(RS2::RedrawDrawing);
+        // upd view
+        RS_Vector r = graphicView->getRelativeZero();
+        graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(r);
     RS_DEBUG->print("RS_ActionDrawSpline::trigger(): spline added: %d",
                     spline->getId());
 
-	spline = NULL;
+        spline = NULL;
     //history.clear();
 }
 
@@ -114,12 +114,12 @@ void RS_ActionDrawSpline::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
     if (getStatus()==SetNextPoint && spline!=NULL /*&& point.valid*/) {
         deletePreview();
-		
-		RS_Spline* tmpSpline = (RS_Spline*)spline->clone();
-		tmpSpline->addControlPoint(mouse);
-		tmpSpline->update();
-		preview->addEntity(tmpSpline);
-		
+
+                RS_Spline* tmpSpline = (RS_Spline*)spline->clone();
+                tmpSpline->addControlPoint(mouse);
+                tmpSpline->update();
+                preview->addEntity(tmpSpline);
+
                 QList<RS_Vector> cpts = tmpSpline->getControlPoints();
                 for (int i = 0; i < cpts.size(); ++i) {
                         preview->addEntity(new RS_Point(preview, RS_PointData(cpts.at(i))));
@@ -137,9 +137,9 @@ void RS_ActionDrawSpline::mouseReleaseEvent(QMouseEvent* e) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
-		if (getStatus()==SetNextPoint) {
-			trigger();
-		}
+                if (getStatus()==SetNextPoint) {
+                        trigger();
+                }
         deletePreview();
         init(getStatus()-1);
     }
@@ -156,14 +156,14 @@ void RS_ActionDrawSpline::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetStartpoint:
-		//data.startpoint = mouse;
+                //data.startpoint = mouse;
         //point = mouse;
         history.clear();
         history.append(mouse);
-		if (spline==NULL) {
-			spline = new RS_Spline(container, data);
-			spline->addControlPoint(mouse);
-		}
+                if (spline==NULL) {
+                        spline = new RS_Spline(container, data);
+                        spline->addControlPoint(mouse);
+                }
         //bHistory.clear();
         //bHistory.append(new double(0.0));
         //start = mouse;
@@ -173,23 +173,23 @@ void RS_ActionDrawSpline::coordinateEvent(RS_CoordinateEvent* e) {
         break;
 
     case SetNextPoint:
-    	graphicView->moveRelativeZero(mouse);
+        graphicView->moveRelativeZero(mouse);
         //point = mouse;
         history.append(mouse);
         //bHistory.append(new double(0.0));
-		if (spline!=NULL) {
-			//graphicView->deleteEntity(spline);
-			spline->addControlPoint(mouse);
-			//spline->setEndpoint(mouse);
-			//if (spline->count()==1) {
-    			//spline->setLayerToActive();
-    			//spline->setPenToActive();
-				//container->addEntity(spline);
-			//}
-			deletePreview();
-			//graphicView->drawEntity(spline);
-			drawSnapper();
-		}
+                if (spline!=NULL) {
+                        //graphicView->deleteEntity(spline);
+                        spline->addControlPoint(mouse);
+                        //spline->setEndpoint(mouse);
+                        //if (spline->count()==1) {
+                        //spline->setLayerToActive();
+                        //spline->setPenToActive();
+                                //container->addEntity(spline);
+                        //}
+                        deletePreview();
+                        //graphicView->drawEntity(spline);
+                        drawSnapper();
+                }
         //trigger();
         //data.startpoint = data.endpoint;
         updateMouseButtonHints();
@@ -315,13 +315,10 @@ void RS_ActionDrawSpline::updateMouseCursor() {
 
 
 void RS_ActionDrawSpline::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-    } else {
-        //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSplines);
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+    if (RS_DIALOGFACTORY!=NULL) {
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
+        }
     }
 }
 
@@ -331,11 +328,11 @@ void RS_ActionDrawSpline::close() {
     if (history.count()>2 && start.valid) {
         //data.endpoint = start;
         //trigger();
-		if (spline!=NULL) {
-			RS_CoordinateEvent e(spline->getStartpoint());
-			coordinateEvent(&e);
-		}
-		trigger();
+                if (spline!=NULL) {
+                        RS_CoordinateEvent e(spline->getStartpoint());
+                        coordinateEvent(&e);
+                }
+                trigger();
         setStatus(SetStartpoint);
         graphicView->moveRelativeZero(start);
     } else {
@@ -354,17 +351,17 @@ void RS_ActionDrawSpline::undo() {
         //graphicView->setCurrentAction(
         //    new RS_ActionEditUndo(true, *container, *graphicView));
                 if (!history.isEmpty()) {
-        	//point = *history.last();
-		}
-		if (spline!=NULL) {
-			spline->removeLastControlPoint();
+                //point = *history.last();
+                }
+                if (spline!=NULL) {
+                        spline->removeLastControlPoint();
                         if (!history.isEmpty()) {
                             RS_Vector v = history.last();
                             graphicView->moveRelativeZero(v);
                         }
-			graphicView->redraw(RS2::RedrawDrawing); 
+                        graphicView->redraw(RS2::RedrawDrawing);
 
-		}
+                }
     } else {
         RS_DIALOGFACTORY->commandMessage(
             tr("Cannot undo: "
@@ -374,25 +371,25 @@ void RS_ActionDrawSpline::undo() {
 
 
 void RS_ActionDrawSpline::setDegree(int deg) {
-	data.degree = deg;
-	if (spline!=NULL) {
-		spline->setDegree(deg);
-	}
+        data.degree = deg;
+        if (spline!=NULL) {
+                spline->setDegree(deg);
+        }
 }
 
 int RS_ActionDrawSpline::getDegree() {
-	return data.degree;
+        return data.degree;
 }
 
 void RS_ActionDrawSpline::setClosed(bool c) {
-	data.closed = c;
-	if (spline!=NULL) {
-		spline->setClosed(c);
-	}
+        data.closed = c;
+        if (spline!=NULL) {
+                spline->setClosed(c);
+        }
 }
 
 bool RS_ActionDrawSpline::isClosed() {
-	return data.closed;
+        return data.closed;
 }
 
 // EOF
