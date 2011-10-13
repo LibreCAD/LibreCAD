@@ -540,7 +540,7 @@ void RS_Spline::rbspline(int npts, int k, int p1,
     double step;
     double t;
     //double nbasis[20];
-    double temp;
+//    double temp;
 
     nplusc = npts + k;
 
@@ -582,8 +582,9 @@ void RS_Spline::rbspline(int npts, int k, int p1,
 
             // Do local matrix multiplication
             for (i = 1; i <= npts; i++) {
-                temp = nbasis[i]*b[jcount];
-                p[icount + j] = p[icount + j] + temp;
+//                temp = nbasis[i]*b[jcount];
+//                p[icount + j] = p[icount + j] + temp;
+                p[icount + j] +=  nbasis[i]*b[jcount];
                 jcount = jcount + 3;
             }
         }
@@ -621,7 +622,7 @@ void RS_Spline::rbsplinu(int npts, int k, int p1,
     double step;
     double t;
     //double nbasis[20];
-    double temp;
+//    double temp;
 
 
     nplusc = npts + k;
@@ -684,8 +685,9 @@ void RS_Spline::rbsplinu(int npts, int k, int p1,
             p[icount+j] = 0.;
 
             for (i = 1; i <= npts; i++) { /* Do local matrix multiplication */
-                temp = nbasis[i]*b[jcount];
-                p[icount + j] = p[icount + j] + temp;
+//                temp = nbasis[i]*b[jcount];
+//                p[icount + j] = p[icount + j] + temp;
+                p[icount + j] += nbasis[i]*b[jcount];
                 /*
                                                 printf("jcount,nbasis,b,nbasis*b,p = %d %f %f %f %f\n",jcount,nbasis[i],b[jcount],temp,p[icount+j]);
                 */
