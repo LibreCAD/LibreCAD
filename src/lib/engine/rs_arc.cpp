@@ -812,6 +812,8 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
         return;
     }
 
+    patternOffset=(patternOffset - getLength()-0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
+
     if (ra<1.){
         painter->drawArc(cp, ra,
                          getAngle1(),getAngle2(),
@@ -905,7 +907,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
         i=(i+1)%j;
     }
 //    patternOffset=remainder(ra*(t2-a2)-0.5*patternSegmentLength,patternSegmentLength)+0.5*patternSegmentLength;
-    patternOffset=ra*fabs(total-a2);
+//    patternOffset=ra*fabs(total-a2);
 
     delete[] da;
 }
