@@ -93,6 +93,11 @@ void QG_CadToolBarEllipses::drawEllipseArcAxis() {
         actionHandler->slotDrawEllipseArcAxis();
     }
 }
+void QG_CadToolBarEllipses::drawEllipseFociPoint() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawEllipseFociPoint();
+    }
+}
 
 void QG_CadToolBarEllipses::back() {
     if (cadToolBar!=NULL) {

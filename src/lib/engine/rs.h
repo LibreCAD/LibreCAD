@@ -221,6 +221,7 @@ public:
         ActionDrawCircleParallel,
         ActionDrawEllipseArcAxis,
         ActionDrawEllipseAxis,
+        ActionDrawEllipseFociPoint,
         ActionDrawHatch,
         ActionDrawHatchNoSelect,
         ActionDrawImage,

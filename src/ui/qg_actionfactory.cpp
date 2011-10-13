@@ -51,6 +51,7 @@
 #include "rs_actiondrawcircle3p.h"
 #include "rs_actiondrawcirclecr.h"
 #include "rs_actiondrawellipseaxis.h"
+#include "rs_actiondrawellipsefocipoint.h"
 #include "rs_actiondrawhatch.h"
 #include "rs_actiondrawimage.h"
 #include "rs_actiondrawline.h"
@@ -676,6 +677,12 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 action = RS_ActionDrawEllipseAxis::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotDrawEllipseArcAxis()));
+        break;
+
+    case RS2::ActionDrawEllipseFociPoint:
+                action = RS_ActionDrawEllipseFociPoint::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotDrawEllipseFociPoint()));
         break;
 
     case RS2::ActionDrawSpline:

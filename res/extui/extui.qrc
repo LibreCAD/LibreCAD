@@ -161,5 +161,6 @@
         <file>tolerance1.png</file>
         <file>tolerance2.png</file>
         <file>widthbox.png</file>
+        <file>ellipsefocipoint.png</file>
     </qresource>
 </RCC>

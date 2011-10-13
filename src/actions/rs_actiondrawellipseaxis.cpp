@@ -62,7 +62,7 @@ QAction* RS_ActionDrawEllipseAxis::createGUIAction(RS2::ActionType type, QObject
 
     if (type==RS2::ActionDrawEllipseArcAxis) {
                 // (tr("Ellipse Arc with Axis")
-        action = new QAction(tr("&Ellipse Arc (Axis)"), NULL);
+        action = new QAction(tr("Ellipse &Arc (Axis)"), NULL);
                 action->setIcon(QIcon(":/extui/ellipsearcsaxes.png"));
         //action->zetStatusTip(tr("Draw Ellipse Arcs"));
     } else {

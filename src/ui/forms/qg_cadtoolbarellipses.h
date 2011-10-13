@@ -47,6 +47,7 @@ public slots:
     virtual void setCadToolBar( QG_CadToolBar * tb );
     virtual void drawEllipseAxis();
     virtual void drawEllipseArcAxis();
+    virtual void drawEllipseFociPoint();
     virtual void back();
     virtual void resetToolBar();
 
