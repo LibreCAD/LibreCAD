@@ -578,7 +578,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     RS_Vector p1,p2,p3;
     RS_Vector curP(pStart+direction*total);
     double t2;
-    for(int j=0;;) {
+    for(int j=0;total<length;j=(j+1)%i) {
         //            cutStartpoint = false;
         //            cutEndpoint = false;
         //            drop = false;
@@ -600,9 +600,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
         curP=p3;
         //            tot+=fabs(pat->pattern[i]*styleFactor);
         //RS_DEBUG->print("pattern. tot: %f", tot);
-        if(total>=length) break;
 
-        j = (j+1)% i;
         //            if (i>=pat->num) {
         //                i=0;
         //            }

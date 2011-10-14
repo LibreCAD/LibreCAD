@@ -880,7 +880,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     //double cx = getCenter().x * factor.x + offsetX;
     //double cy = - a->getCenter().y * factor.y + getHeight() - offsetY;
 
-    for(int j=0;;j=(j+1)%i) {
+    for(int j=0; fabs(total-a1)<limit ;j=(j+1)%i) {
 //        std::cout<<"1\n";
         t2=total+da[j];
 
@@ -897,7 +897,6 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
             }
         }
         total=t2;
-        if(fabs(total-a1)>=limit) break;
     }
 //    patternOffset=remainder(ra*(t2-a2)-0.5*patternSegmentLength,patternSegmentLength)+0.5*patternSegmentLength;
 //    patternOffset=ra*fabs(total-a2);
