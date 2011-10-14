@@ -263,11 +263,11 @@ RS_Vector RS_Spline::getNearestDist(double /*distance*/,
 
 
 void RS_Spline::move(const RS_Vector& offset) {
+    RS_EntityContainer::move(offset);
     for (int i = 0; i < data.controlPoints.size(); ++i) {
         data.controlPoints[i].move(offset);
     }
-
-    update();
+//    update();
 }
 
 
@@ -279,11 +279,11 @@ void RS_Spline::rotate(const RS_Vector& center, const double& angle) {
 
 
 void RS_Spline::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    RS_EntityContainer::rotate(center, angleVector);
     for (int i = 0; i < data.controlPoints.size(); ++i) {
         (data.controlPoints[i] ).rotate(center, angleVector);
     }
-
-    update();
+//    update();
 }
 
 void RS_Spline::scale(const RS_Vector& center, const RS_Vector& factor) {
