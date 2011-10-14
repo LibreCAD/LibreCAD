@@ -471,7 +471,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     double  length=direction.magnitude();
     if (( !isSelected() && (
               getPen().getLineType()==RS2::SolidLine ||
-              view->getDrawingMode()==RS2::ModePreview)) || length<1.-RS_TOLERANCE) {
+              view->getDrawingMode()==RS2::ModePreview)) ) {
         //if length is too small, attempt to draw the line, could be a potential bug
         patternOffset -= length;
         painter->drawLine(pStart,pEnd);
@@ -479,7 +479,6 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     }
     //    double styleFactor = getStyleFactor(view);
 
-    direction/=length; //cos(angle), sin(angle)
 
     // Pattern:
     RS_LineTypePattern* pat;
@@ -490,11 +489,16 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
         pat = view->getPattern(getPen().getLineType());
     }
     if (pat==NULL) {
+        patternOffset -= length;
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Line::draw: Invalid line pattern");
         return;
     }
     patternOffset = remainder(patternOffset - length-0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
+    if(length<=RS_TOLERANCE){
+        return; //avoid division by zero
+    }
+    direction/=length; //cos(angle), sin(angle)
 //    if (/*styleFactor<0.0 ||*/ length<=1. || fabs(view->getFactor().x)<RS_TOLERANCE) {
 //        painter->drawLine(pStart,pEnd);
 //        return;

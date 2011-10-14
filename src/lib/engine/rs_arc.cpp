@@ -814,10 +814,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 
     patternOffset=(patternOffset - getLength()-0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
 
-    if (ra<1.){
-        painter->drawArc(cp, ra,
-                         getAngle1(),getAngle2(),
-                         isReversed());
+    if (ra<RS_TOLERANCE_ANGLE){
         return;
     }
 
@@ -833,19 +830,19 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
   // array of distances in x.
 //    double k=2.;
     double patternSegmentLength(pat->totalLength);
-    int i(0),j(0);          // index counter
+    int i(0);          // index counter
     while(i<pat->num){
 //        da[j] = pat->pattern[i++] * styleFactor;
         //fixme, stylefactor needed
-        da[j] = pat->pattern[i++];
+        da[i] =isReversed()? -fabs(pat->pattern[i]):fabs(pat->pattern[i]);
 //        if(fabs(da[j])<RS_TOLERANCE) continue;
 //        if(fabs(da[j]) > RS_TOLERANCE && fabs(da[j])<k) k=fabs(da[j]);
 //        patternSegmentLength += fabs(da[j]);
-        da[j]/=ra;
+        da[i]/=ra;
 //        std::cout<<"pattern("<<i-1<<")="<<da[j]<<std::endl;
-        j++;
+        i++;
     }
-    if(!j){
+    if(!i){
         //invalid pattern
 
         delete[] da;
@@ -883,14 +880,11 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     //double cx = getCenter().x * factor.x + offsetX;
     //double cy = - a->getCenter().y * factor.y + getHeight() - offsetY;
 
-    for(i=0;;) {
+    for(int j=0;;j=(j+1)%i) {
 //        std::cout<<"1\n";
-        if(isReversed()){
-            t2 = total - fabs(da[i]);
-        }else{
-            t2 = total + fabs(da[i]);
-        }
-        if(da[i]>0.0) {
+        t2=total+da[j];
+
+        if(pat->pattern[j]>0.0) {
 
             if (fabs(t2-a2)<limit) {
                 a11=(fabs(total-a2)<limit)?total:a1;
@@ -904,7 +898,6 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
         }
         total=t2;
         if(fabs(total-a1)>=limit) break;
-        i=(i+1)%j;
     }
 //    patternOffset=remainder(ra*(t2-a2)-0.5*patternSegmentLength,patternSegmentLength)+0.5*patternSegmentLength;
 //    patternOffset=ra*fabs(total-a2);
