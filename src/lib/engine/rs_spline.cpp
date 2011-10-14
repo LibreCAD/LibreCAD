@@ -297,11 +297,12 @@ void RS_Spline::scale(const RS_Vector& center, const RS_Vector& factor) {
 
 
 void RS_Spline::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
+    RS_Container::mirror(axisPoint1, axisPoint2);
     for (int i = 0; i < data.controlPoints.size(); ++i) {
         (data.controlPoints[i] ).mirror(axisPoint1, axisPoint2);
     }
 
-    update();
+//    update();
 }
 
 
