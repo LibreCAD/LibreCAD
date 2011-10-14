@@ -528,10 +528,8 @@ void RS_FilterDXF::addMText(const DL_MTextData& data) {
             sty = variables.getString("$TEXTSTYLE", "Standard");
         }
     } else {
-        // A certain CAD program uses SIMPLEX, we don't have so we change it to normallatin2
-        if (sty=="simplex") {
-            sty="iso";
-        } else if  (sty=="normal" || sty=="normallatin1" || sty=="normallatin2") {
+        // Change the QCAD "normal" style to the more correct ISO-3059
+        if  (sty=="normal" || sty=="normallatin1" || sty=="normallatin2") {
             sty="iso";
         }
     }
