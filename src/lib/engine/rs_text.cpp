@@ -467,21 +467,25 @@ RS_Vector RS_Text::getNearestRef(const RS_Vector& coord,
 
 
 void RS_Text::move(const RS_Vector& offset) {
+    RS_EntityContainer::move(offset);
     data.insertionPoint.move(offset);
-    update();
+//    update();
 }
 
 
 
 void RS_Text::rotate(const RS_Vector& center, const double& angle) {
-    data.insertionPoint.rotate(center, angle);
+    RS_Vector angleVector(angle);
+    RS_EntityContainer::rotate(center, angleVector);
+    data.insertionPoint.rotate(center, angleVector);
     data.angle = RS_Math::correctAngle(data.angle+angle);
-    update();
+//    update();
 }
 void RS_Text::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    RS_EntityContainer::rotate(center, angleVector);
     data.insertionPoint.rotate(center, angleVector);
     data.angle = RS_Math::correctAngle(data.angle+angleVector.angle());
-    update();
+//    update();
 }
 
 
