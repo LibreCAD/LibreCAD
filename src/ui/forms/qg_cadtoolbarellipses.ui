@@ -288,5 +288,21 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>bEllipse4Points</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarEllipses</receiver>
+   <slot>drawEllipse4Points()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>48</x>
+     <y>69</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>32</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>
