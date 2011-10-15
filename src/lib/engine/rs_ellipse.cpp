@@ -546,9 +546,9 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
         dn(i)=1.;
     }
     //solve the linear equation set by LU decomposition in boost ublas
-    std::cout << m << std::endl;
+//    std::cout << m << std::endl;
     int res( boost::numeric::ublas::lu_factorize<boost::numeric::ublas::matrix<double> >(m) != 0 );
-    std::cout << "res="<<res << std::endl;
+//    std::cout << "res="<<res << std::endl;
 
     if ( res ) {
             RS_DEBUG->print(RS_Debug::D_WARNING, "Those 4 points do not define an ellipse");
@@ -562,7 +562,7 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
     ;
     boost::numeric::ublas::inplace_solve(lm,dn, boost::numeric::ublas::lower_tag());
     boost::numeric::ublas::inplace_solve(um,dn, boost::numeric::ublas::upper_tag());
-    std::cout<<"dn="<<dn<<std::endl;
+//    std::cout<<"dn="<<dn<<std::endl;
     if( fabs(dn(0)) < RS_TOLERANCE*RS_TOLERANCE || fabs(dn(2)) <RS_TOLERANCE*RS_TOLERANCE) {
             //this should not happen
             return false;
@@ -576,6 +576,12 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
     data.angle2=0.;
     return true;
 
+}
+#else
+//fixme, solve the linear equation set without boost
+bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& /*sol*/)
+{
+    return false;
 }
 #endif
 

@@ -35,7 +35,9 @@ RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw ellipse from 4 points",
-                           container, graphicView)
+                           container, graphicView),
+          cData(RS_Vector(0.,0.),1.),
+          eData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false)
 {
           points.clean();
 
@@ -70,12 +72,9 @@ void RS_ActionDrawEllipse4Points::trigger() {
     RS_PreviewActionInterface::trigger();
 
 
-    RS_EllipseData ed(center,
-                      major,
-                      ratio,
-                      0., 0.,false);
-    RS_Ellipse* ellipse = new RS_Ellipse(container, ed);
+    RS_Ellipse* ellipse=new RS_Ellipse(container, eData);
 
+    deletePreview();
     container->addEntity(ellipse);
 
     // upd. undo list:
@@ -102,31 +101,64 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-    if(getStatus() == SetPoint4){
+    points.set(getStatus(),mouse);
+    if(preparePreview()) {
+        switch(getStatus()) {
 
 
-        points.set(3,mouse);
+        case SetPoint2:
+        case SetPoint3:
+        {
+            RS_Circle* circle=new RS_Circle(preview, cData);
+            deletePreview();
+            preview->addEntity(circle);
+            drawPreview();
+        }
+            break;
+        case SetPoint4:
         {
             deletePreview();
-            RS_EllipseData ed(RS_Vector(0.,0.),
-                              RS_Vector(1.,0.),
-                              1.,
-                              0., 0.,false);
-            RS_Ellipse* e=new RS_Ellipse(preview, ed);
-            if(! e->createFrom4P(points)) {
-                delete e;
-                return;
-            }
+            RS_Ellipse* e=new RS_Ellipse(preview, eData);
             preview->addEntity(e);
             drawPreview();
         }
+        default:
+            break;
+        }
 
     }
-
     RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent end");
 }
 
 
+bool RS_ActionDrawEllipse4Points::preparePreview(){
+    valid=false;
+    switch(getStatus()) {
+    case SetPoint2:
+    case SetPoint3:
+    {
+        RS_Circle c(preview,cData);
+        valid= c.createFrom3P(points);
+        if(valid){
+            cData=c.getData();
+        }
+
+    }
+        break;
+    case SetPoint4:
+    {
+        RS_Ellipse e(preview,eData);
+        valid= e.createFrom4P(points);
+        if(valid){
+            eData=e.getData();
+        }
+    }
+        break;
+    default:
+        break;
+    }
+    return valid;
+}
 
 void RS_ActionDrawEllipse4Points::mouseReleaseEvent(QMouseEvent* e) {
     // Proceed to next status
@@ -148,44 +180,25 @@ void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent* e) {
         return;
     }
     RS_Vector mouse = e->getCoordinate();
+    points.alloc(getStatus()+1);
+    points.set(getStatus(),mouse);
 
     switch (getStatus()) {
     case SetPoint1:
-        points.clean();
+        graphicView->moveRelativeZero(mouse);
+        setStatus(SetPoint2);
+        break;
     case SetPoint2:
     case SetPoint3:
-        graphicView->moveRelativeZero(mouse);
-        points.push_back(mouse);
-        setStatus(points.getNumber());
-        break;
-
     case SetPoint4:
-        points.set(SetPoint4,mouse);
-    {
-        RS_EllipseData ed(RS_Vector(0.,0.),
-                          RS_Vector(1.,0.),
-                          1.,
-                          0., 0.,false);
-        RS_Ellipse* e=new RS_Ellipse(container, ed);
-        if(e->createFrom4P(points)) {//trigger
-            deletePreview();
+        if( preparePreview()) {
             graphicView->moveRelativeZero(mouse);
-            container->addEntity(e);
-
-            // upd. undo list:
-            if (document!=NULL) {
-                document->startUndoCycle();
-                document->addUndoable(e);
-                document->endUndoCycle();
+            if(getStatus() == SetPoint4) {
+                trigger();
+            }else{
+                setStatus(getStatus()+1);
             }
-
-            RS_Vector rz = graphicView->getRelativeZero();
-            graphicView->redraw(RS2::RedrawDrawing);
-            graphicView->moveRelativeZero(rz);
-            drawSnapper();
-            setStatus(SetPoint1);
         }
-    }
 
     default:
         break;

@@ -748,6 +748,9 @@ void RS_VectorSolutions::alloc(int num) {
         }
     }
 #endif
+    if(vector.size()>num) {
+        vector.erase(vector.begin()+num, vector.end());
+    }
    // tangent = false;
 }
 

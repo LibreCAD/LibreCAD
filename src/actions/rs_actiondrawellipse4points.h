@@ -54,6 +54,7 @@ public:
     virtual void init(int status=0);
 
     virtual void trigger();
+    virtual bool preparePreview();
 
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
@@ -70,8 +71,9 @@ protected:
     // 4 points on ellipse
     RS_VectorSolutions points;
     private:
-    RS_Vector center,major;
-    double ratio;
+    RS_CircleData cData;
+    RS_EllipseData eData;
+    bool valid;
 };
 
 #endif
