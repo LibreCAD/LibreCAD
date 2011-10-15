@@ -250,6 +250,7 @@ double RS_Vector::squared() const {
         return x*x + y*y + z*z;
 #endif
     }
+    return RS_MAXDOUBLE;
 }
 /**
  *

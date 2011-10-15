@@ -98,6 +98,11 @@ void QG_CadToolBarEllipses::drawEllipseFociPoint() {
         actionHandler->slotDrawEllipseFociPoint();
     }
 }
+void QG_CadToolBarEllipses::drawEllipse4Points() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawEllipse4Points();
+    }
+}
 
 void QG_CadToolBarEllipses::back() {
     if (cadToolBar!=NULL) {

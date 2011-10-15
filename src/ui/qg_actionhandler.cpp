@@ -474,6 +474,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawEllipseFociPoint:
         a = new RS_ActionDrawEllipseFociPoint(*doc, *gv);
         break;
+    case RS2::ActionDrawEllipse4Points:
+        a = new RS_ActionDrawEllipse4Points(*doc, *gv);
+        break;
     case RS2::ActionDrawSpline:
         a = new RS_ActionDrawSpline(*doc, *gv);
         break;
@@ -1214,6 +1217,9 @@ void QG_ActionHandler::slotDrawEllipseArcAxis() {
 
 void QG_ActionHandler::slotDrawEllipseFociPoint() {
     setCurrentAction(RS2::ActionDrawEllipseFociPoint);
+}
+void QG_ActionHandler::slotDrawEllipse4Points() {
+    setCurrentAction(RS2::ActionDrawEllipse4Points);
 }
 
 void QG_ActionHandler::slotDrawSpline() {

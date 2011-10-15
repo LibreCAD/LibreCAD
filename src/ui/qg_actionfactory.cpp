@@ -685,6 +685,12 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 obj, SLOT(slotDrawEllipseFociPoint()));
         break;
 
+    case RS2::ActionDrawEllipse4Points:
+                action = RS_ActionDrawEllipse4Points::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotDrawEllipse4Points()));
+        break;
+
     case RS2::ActionDrawSpline:
                 action = RS_ActionDrawSpline::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),

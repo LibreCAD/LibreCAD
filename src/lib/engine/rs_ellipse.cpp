@@ -30,6 +30,10 @@
 #include <boost/tuple/tuple.hpp>
 //#include <boost/fusion/tuple.hpp>
 
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/io.hpp>
+#include <boost/numeric/ublas/lu.hpp>
+
 #endif
 
 #include "rs_ellipse.h"
@@ -520,7 +524,55 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
     return data.center;
 }
 
+/**
+//create Ellipse with axes in x-/y- directions from 4 points
+*
+//todo solve the linear equation when boost is not available
+*
+*@Author Dongxu Li
+*/
+#ifdef	HAS_BOOST
+bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
+{
+    if (sol.getNumber() != 4 ) return (false); //only do 4 points
+    boost::numeric::ublas::matrix<double> m (4, 4);
+    boost::numeric::ublas::vector<double> dn(4);
 
+    for(int i=0;i<sol.getNumber();i++) {//form the linear equation, c0 x^2 + c1 x + c2 y^2 + c3 y = 1
+        m(i,0)=sol.get(i).x * sol.get(i).x;
+        m(i,1)=sol.get(i).x ;
+        m(i,2)=sol.get(i).y * sol.get(i).y;
+        m(i,3)=sol.get(i).y ;
+        dn(i)=1.;
+    }
+    //solve the linear equation set by LU decomposition in boost ublas
+    if ( boost::numeric::ublas::lu_factorize<boost::numeric::ublas::matrix<double> >(m) != 0 ) {
+            RS_DEBUG->print(RS_Debug::D_WARNING, "Those 4 points do not define an ellipse");
+            return false;
+    }
+
+   boost::numeric::ublas:: triangular_matrix<double, boost::numeric::ublas::unit_lower>
+                    lm = boost::numeric::ublas::triangular_adaptor< boost::numeric::ublas::matrix<double>,  boost::numeric::ublas::unit_lower>(m);
+   boost::numeric::ublas:: triangular_matrix<double,  boost::numeric::ublas::upper>
+                    um =  boost::numeric::ublas::triangular_adaptor< boost::numeric::ublas::matrix<double>,  boost::numeric::ublas::upper>(m);
+    ;
+    boost::numeric::ublas::inplace_solve(lm,dn, boost::numeric::ublas::lower_tag());
+    boost::numeric::ublas::inplace_solve(um,dn, boost::numeric::ublas::upper_tag());
+    if( dn(0) < RS_TOLERANCE || dn(2) < RS_TOLERANCE) {
+            //this should not happen
+            return false;
+    }
+    data.center.set(-0.5*dn(1)/dn(0),-0.5*dn(3)/dn(2)); // center
+    double d(1.+0.25*(dn(1)*dn(1)/dn(0)+dn(3)*dn(3)/dn(2)));
+    d=sqrt(1./(dn(0)*d));
+    data.majorP.set(d,0.);
+    data.ratio=sqrt(dn(0)/dn(2));
+    data.angle1=0.;
+    data.angle2=0.;
+    return true;
+
+}
+#endif
 
 /**
  * a naive implementation of middle point
