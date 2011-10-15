@@ -546,7 +546,11 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
         dn(i)=1.;
     }
     //solve the linear equation set by LU decomposition in boost ublas
-    if ( boost::numeric::ublas::lu_factorize<boost::numeric::ublas::matrix<double> >(m) != 0 ) {
+    std::cout << m << std::endl;
+    int res( boost::numeric::ublas::lu_factorize<boost::numeric::ublas::matrix<double> >(m) != 0 );
+    std::cout << "res="<<res << std::endl;
+
+    if ( res ) {
             RS_DEBUG->print(RS_Debug::D_WARNING, "Those 4 points do not define an ellipse");
             return false;
     }
@@ -558,13 +562,14 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
     ;
     boost::numeric::ublas::inplace_solve(lm,dn, boost::numeric::ublas::lower_tag());
     boost::numeric::ublas::inplace_solve(um,dn, boost::numeric::ublas::upper_tag());
-    if( dn(0) < RS_TOLERANCE || dn(2) < RS_TOLERANCE) {
+    std::cout<<"dn="<<dn<<std::endl;
+    if( fabs(dn(0)) < RS_TOLERANCE*RS_TOLERANCE || fabs(dn(2)) <RS_TOLERANCE*RS_TOLERANCE) {
             //this should not happen
             return false;
     }
     data.center.set(-0.5*dn(1)/dn(0),-0.5*dn(3)/dn(2)); // center
     double d(1.+0.25*(dn(1)*dn(1)/dn(0)+dn(3)*dn(3)/dn(2)));
-    d=sqrt(1./(dn(0)*d));
+    d=sqrt(d/dn(0));
     data.majorP.set(d,0.);
     data.ratio=sqrt(dn(0)/dn(2));
     data.angle1=0.;

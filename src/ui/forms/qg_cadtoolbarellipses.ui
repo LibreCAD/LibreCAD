@@ -169,7 +169,7 @@
       </size>
      </property>
      <property name="toolTip">
-      <string>Draw Ellipse by foci and a point on ellipse</string>
+      <string>Draw Ellipse with axes in x-/y-directions by four points on ellipse</string>
      </property>
      <property name="text">
       <string/>

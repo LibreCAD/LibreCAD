@@ -99,7 +99,7 @@ void QG_CadToolBarEllipses::drawEllipseFociPoint() {
     }
 }
 void QG_CadToolBarEllipses::drawEllipse4Points() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+    if (actionHandler!=NULL) {
         actionHandler->slotDrawEllipse4Points();
     }
 }
@@ -119,6 +119,14 @@ void QG_CadToolBarEllipses::restoreAction()
     }
     if ( bEllipseArcAxes ->isChecked() ) {
         actionHandler->slotDrawEllipseArcAxis();
+        return;
+    }
+    if ( bEllipseFociPoint ->isChecked() ) {
+        actionHandler->slotDrawEllipseFociPoint();
+        return;
+    }
+    if ( bEllipse4Points ->isChecked() ) {
+        actionHandler->slotDrawEllipse4Points();
         return;
     }
     //clear all action

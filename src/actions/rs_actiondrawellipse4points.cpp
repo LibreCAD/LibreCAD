@@ -52,7 +52,7 @@ QAction* RS_ActionDrawEllipse4Points::createGUIAction(RS2::ActionType /*type*/, 
     QAction* action;
 
     action = new QAction(tr("Ellipse &4 Point"), NULL);
-    action->setIcon(QIcon(":/extui/ellipsefocipoint.png"));
+    action->setIcon(QIcon(":/extui/ellipse4points.png"));
     return action;
 }
 
@@ -156,17 +156,19 @@ void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent* e) {
     case SetPoint3:
         graphicView->moveRelativeZero(mouse);
         points.push_back(mouse);
+        setStatus(points.getNumber());
         break;
 
     case SetPoint4:
-        points.push_back(mouse);
+        points.set(SetPoint4,mouse);
     {
         RS_EllipseData ed(RS_Vector(0.,0.),
                           RS_Vector(1.,0.),
                           1.,
                           0., 0.,false);
-        RS_Ellipse* e=new RS_Ellipse(preview, ed);
+        RS_Ellipse* e=new RS_Ellipse(container, ed);
         if(e->createFrom4P(points)) {//trigger
+            deletePreview();
             graphicView->moveRelativeZero(mouse);
             container->addEntity(e);
 
