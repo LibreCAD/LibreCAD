@@ -54,6 +54,7 @@
 #include "rs_actiondrawcirclecr.h"
 #include "rs_actiondrawellipseaxis.h"
 #include "rs_actiondrawellipsefocipoint.h"
+#include "rs_actiondrawellipse4points.h"
 #include "rs_actiondrawhatch.h"
 #include "rs_actiondrawimage.h"
 #include "rs_actiondrawline.h"

@@ -35,15 +35,17 @@ RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw ellipse from 4 points",
-                           container, graphicView),
+                           container, graphicView)
 {
-          points.clear();
+          points.clean();
 
 }
 
 
 
-RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points() {}
+RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points() {
+    points.clean();
+}
 
 
 QAction* RS_ActionDrawEllipse4Points::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
@@ -58,7 +60,7 @@ void RS_ActionDrawEllipse4Points::init(int status) {
     RS_PreviewActionInterface::init(status);
 
     if (status==SetPoint1) {
-        points.clear();
+        points.clean();
     }
 }
 
@@ -104,19 +106,20 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent* e) {
 
 
         points.set(3,mouse);
-        if (d > c+ RS_TOLERANCE) {
+        {
             deletePreview();
-            RS_EllipseData ed(center,
-                              major*d,
-                              sqrt(d*d-c*c)/d,
+            RS_EllipseData ed(RS_Vector(0.,0.),
+                              RS_Vector(1.,0.),
+                              1.,
                               0., 0.,false);
-            RS_Ellipse e=new RS_Ellipse(preview, ed));
-            e->createFrom4P(points);
+            RS_Ellipse* e=new RS_Ellipse(preview, ed);
+            if(! e->createFrom4P(points)) {
+                delete e;
+                return;
+            }
             preview->addEntity(e);
             drawPreview();
         }
-
-
 
     }
 
@@ -148,7 +151,7 @@ void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetPoint1:
-        points.clear();
+        points.clean();
     case SetPoint2:
     case SetPoint3:
         graphicView->moveRelativeZero(mouse);
@@ -158,11 +161,11 @@ void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent* e) {
     case SetPoint4:
         points.push_back(mouse);
     {
-        RS_EllipseData ed(center,
-                          major*d,
-                          sqrt(d*d-c*c)/d,
+        RS_EllipseData ed(RS_Vector(0.,0.),
+                          RS_Vector(1.,0.),
+                          1.,
                           0., 0.,false);
-        RS_Ellipse e=new RS_Ellipse(preview, ed));
+        RS_Ellipse* e=new RS_Ellipse(preview, ed);
         if(e->createFrom4P(points)) {//trigger
             graphicView->moveRelativeZero(mouse);
             container->addEntity(e);
@@ -178,7 +181,6 @@ void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent* e) {
             graphicView->redraw(RS2::RedrawDrawing);
             graphicView->moveRelativeZero(rz);
             drawSnapper();
-           points.clear();
             setStatus(SetPoint1);
         }
     }
