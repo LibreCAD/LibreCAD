@@ -193,26 +193,45 @@ void RS_Spline::update() {
     delete[] p;
 }
 
+RS_Vector RS_Spline::getStartpoint() const {
+   if (data.closed) return RS_Vector(false);
+   return static_cast<RS_Line*>(const_cast<RS_Spline*>(this)->firstEntity())->getStartpoint();
+}
+RS_Vector RS_Spline::getEndpoint() const {
+   if (data.closed) return RS_Vector(false);
+   return static_cast<RS_Line*>(const_cast<RS_Spline*>(this)->lastEntity())->getEndpoint();
+}
 
 
 RS_Vector RS_Spline::getNearestEndpoint(const RS_Vector& coord,
                                         double* dist)const {
     double minDist = RS_MAXDOUBLE;
-    double d;
     RS_Vector ret(false);
+    if(! data.closed) { // no endpoint for closed spline
+       RS_Vector vp1(getStartpoint());
+       RS_Vector vp2(getEndpoint());
+       double d1( (coord-vp1).squared());
+       double d2( (coord-vp2).squared());
+       if( d1<d2){
+           ret=vp1;
+           minDist=sqrt(d1);
+       }else{
+           ret=vp2;
+           minDist=sqrt(d2);
+       }
+//        for (int i=0; i<data.controlPoints.count(); i++) {
+//            d = (data.controlPoints.at(i)).distanceTo(coord);
 
-    for (int i=0; i<data.controlPoints.count(); i++) {
-        d = (data.controlPoints.at(i)).distanceTo(coord);
-
-        if (d<minDist) {
-            minDist = d;
-            ret = data.controlPoints.at(i);
-        }
+//            if (d<minDist) {
+//                minDist = d;
+//                ret = data.controlPoints.at(i);
+//            }
+//        }
     }
     if (dist!=NULL) {
         *dist = minDist;
     }
-        return ret;
+    return ret;
 }
 
 
@@ -327,7 +346,6 @@ void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patter
         return;
     }
 
-    RS_Entity* e = firstEntity(RS2::ResolveNone);
     double offset(0.0);
 
 //    if (e!=NULL) {
@@ -336,7 +354,7 @@ void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patter
 //        //RS_DEBUG->print("offset: %f\nlength was: %f", offset, e->getLength());
 //    }
 
-    for (RS_Entity* e=nextEntity(RS2::ResolveNone);
+    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
             e!=NULL;
             e = nextEntity(RS2::ResolveNone)) {
 
