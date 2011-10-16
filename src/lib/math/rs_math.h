@@ -40,6 +40,7 @@
 #include <cstdlib>
 
 #include <QRegExp>
+#include <QVector>
 #include "fparser.hh"
 
 #include "rs.h"
@@ -94,6 +95,8 @@ public:
     static unsigned int quadraticSolver(double * ce, double * roots);
     static unsigned int cubicSolver(double * ce, double * roots);
     static unsigned int quarticSolver(double * ce, double * roots);
+    //solver for linear equation set
+    static bool linearSolver(const QVector<QVector<double> >& m, QVector<double>& dn);
 
     /**
      * Evaluates a mathematical expression and returns the result.

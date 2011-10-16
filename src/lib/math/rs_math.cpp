@@ -23,6 +23,11 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#ifdef  HAS_BOOST
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/io.hpp>
+#include <boost/numeric/ublas/lu.hpp>
+#endif
 
 #include "rs_math.h"
 
@@ -122,7 +127,7 @@ bool RS_Math::isAngleBetween(double a,
 
 //    bool ret = false;
 
-    if (reversed) swap(a1,a2); 
+    if (reversed) swap(a1,a2);
     if ( ( correctAngle(a2 -a1) >= correctAngle(a - a1) + RS_TOLERANCE_ANGLE &&
             correctAngle(a - a1) >= RS_TOLERANCE_ANGLE  ) || fabs( remainder(correctAngle(a2 - a1 ) , 2.*M_PI)) < RS_TOLERANCE_ANGLE) {
             // the |a2-a1| % (2 pi)=0 means the whole angular range
@@ -390,7 +395,7 @@ void RS_Math::test() {
 // quadratic, cubic, and quartic equation solver
 // @ ce[] contains coefficent of the cubic equation:
 // @ roots[] pointed to a list of real roots
-// 
+//
 // solvers assume arguments are valid, and there's no attempt to verify validity of the argument pointers
 //
 // @author Dongxu Li <dongxuli2011@gmail.com>
@@ -568,3 +573,112 @@ unsigned int RS_Math::quarticSolver(double * ce, double *roots)
     }
     return 0;
 }
+
+//linear Equation solver by Gauss-Jordan
+/**
+  * Solve linear equation set
+  *@ mt holds the augmented matrix
+  *@ sn holds the solution
+  *@ return true, if the equation set has a unique solution, return false otherwise
+  *
+  *@Author: Dongxu Li
+  */
+
+bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>& sn){
+    //verify the matrix size
+    int mSize(mt.size()); //rows
+    int aSize(mSize+1); //columns of augmented matrix
+    for(int i=0;i<mSize;i++) {
+        if(mt[i].size() != aSize ) return false;
+    }
+    sn.resize(mSize);//to hold the solution
+#ifdef	HAS_BOOST
+    boost::numeric::ublas::matrix<double> bm (mSize, mSize);
+    boost::numeric::ublas::vector<double> bs(mSize);
+
+    for(int i=0;i<mSize;i++) {
+        for(int j=0;j<mSize;j++) {
+            bm(i,j)=mt[i][j];
+        }
+        bs(i)=mt[i][mSize];
+    }
+    //solve the linear equation set by LU decomposition in boost ublas
+
+    if ( boost::numeric::ublas::lu_factorize<boost::numeric::ublas::matrix<double> >(bm) ) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Those 4 points do not define an ellipse");
+        return false;
+    }
+
+    boost::numeric::ublas:: triangular_matrix<double, boost::numeric::ublas::unit_lower>
+            lm = boost::numeric::ublas::triangular_adaptor< boost::numeric::ublas::matrix<double>,  boost::numeric::ublas::unit_lower>(bm);
+    boost::numeric::ublas:: triangular_matrix<double,  boost::numeric::ublas::upper>
+            um =  boost::numeric::ublas::triangular_adaptor< boost::numeric::ublas::matrix<double>,  boost::numeric::ublas::upper>(bm);
+    ;
+    boost::numeric::ublas::inplace_solve(lm,bs, boost::numeric::ublas::lower_tag());
+    boost::numeric::ublas::inplace_solve(um,bs, boost::numeric::ublas::upper_tag());
+    for(int i=0;i<mSize;i++){
+        sn[i]=bs(i);
+    }
+    //    std::cout<<"dn="<<dn<<std::endl;
+    //    data.center.set(-0.5*dn(1)/dn(0),-0.5*dn(3)/dn(2)); // center
+    //    double d(1.+0.25*(dn(1)*dn(1)/dn(0)+dn(3)*dn(3)/dn(2)));
+    //    if(fabs(dn(0))<RS_TOLERANCE*RS_TOLERANCE
+    //            ||fabs(dn(2))<RS_TOLERANCE*RS_TOLERANCE
+    //            ||d/dn(0)<RS_TOLERANCE*RS_TOLERANCE
+    //            ||d/dn(2)<RS_TOLERANCE*RS_TOLERANCE
+    //            ) {
+    //        //ellipse not defined
+    //        return false;
+    //    }
+    //    d=sqrt(d/dn(0));
+    //    data.majorP.set(d,0.);
+    //    data.ratio=sqrt(dn(0)/dn(2));
+#else
+    // solve the linear equation by Gauss-Jordan elimination
+    QVector<QVector<double> > mt0(mt); //copy the matrix;
+    for(int i=0;i<mSize;i++){
+        int imax(i);
+        double cmax(fabs(mt0[i][i]));
+        for(int j=i+1;j<mSize;j++) {
+            if(fabs(mt0[j][i]) > cmax ) {
+                imax=j;
+                cmax=fabs(mt0[j][i]);
+            }
+        }
+        if(cmax<RS_TOLERANCE*RS_TOLERANCE) return false; //singular matrix
+        if(imax != i) {//move the line with largest absolute value at column i to row i, to avoid division by zero
+            std::swap(mt0[i],mt0[imax]);
+            //            for(int j=i;j<=mSize;j++) {
+            //                std::swap(m[i][j],m[imax][j]);
+            //            }
+        }
+        //        for(int k=i+1;k<5;k++) { //normalize the i-th row
+        for(int k=mSize;k>=i;k--) { //normalize the i-th row
+            mt0[i][k] /= mt0[i][i];
+        }
+        for(int j=0;j<mSize;j++) {//Gauss-Jordan
+            if(j != i ) {
+                //                for(int k=i+1;k<5;k++) {
+                for(int k=mSize;k>=i;k--) {
+                    mt0[j][k] -= mt0[i][k]*mt0[j][i];
+                }
+            }
+        }
+        //output gauss-jordan results for debugging
+        //        std::cout<<"========"<<i<<"==========\n";
+        //        for(int j=0;j<mSize;j++) {//Gauss-Jordan
+        //            for(int k=0;k<=mSize;k++) {
+        //                std::cout<<m[j][k]<<'\t';
+        //            }
+        //            std::cout<<std::endl;
+        //        }
+    }
+    for(int i=0;i<mSize;i++) {
+        sn[i]=mt0[i][mSize];
+    }
+#endif
+
+    return true;
+}
+
+//EOF

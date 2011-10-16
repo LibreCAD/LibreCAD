@@ -36,6 +36,7 @@
 
 #endif
 
+#include <QVector>
 #include "rs_ellipse.h"
 
 #include "rs_graphic.h"
@@ -534,114 +535,32 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
 bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
 {
     if (sol.getNumber() != 4 ) return (false); //only do 4 points
-#ifdef	HAS_BOOST
-    boost::numeric::ublas::matrix<double> m (4, 4);
-    boost::numeric::ublas::vector<double> dn(4);
-
-    for(int i=0;i<sol.getNumber();i++) {//form the linear equation, c0 x^2 + c1 x + c2 y^2 + c3 y = 1
-        m(i,0)=sol.get(i).x * sol.get(i).x;
-        m(i,1)=sol.get(i).x ;
-        m(i,2)=sol.get(i).y * sol.get(i).y;
-        m(i,3)=sol.get(i).y ;
-        dn(i)=1.;
-    }
-    //solve the linear equation set by LU decomposition in boost ublas
-//    std::cout << m << std::endl;
-    int res( boost::numeric::ublas::lu_factorize<boost::numeric::ublas::matrix<double> >(m) != 0 );
-//    std::cout << "res="<<res << std::endl;
-
-    if ( res ) {
-            RS_DEBUG->print(RS_Debug::D_WARNING, "Those 4 points do not define an ellipse");
-            return false;
-    }
-
-   boost::numeric::ublas:: triangular_matrix<double, boost::numeric::ublas::unit_lower>
-                    lm = boost::numeric::ublas::triangular_adaptor< boost::numeric::ublas::matrix<double>,  boost::numeric::ublas::unit_lower>(m);
-   boost::numeric::ublas:: triangular_matrix<double,  boost::numeric::ublas::upper>
-                    um =  boost::numeric::ublas::triangular_adaptor< boost::numeric::ublas::matrix<double>,  boost::numeric::ublas::upper>(m);
-    ;
-    boost::numeric::ublas::inplace_solve(lm,dn, boost::numeric::ublas::lower_tag());
-    boost::numeric::ublas::inplace_solve(um,dn, boost::numeric::ublas::upper_tag());
-//    std::cout<<"dn="<<dn<<std::endl;
-    data.center.set(-0.5*dn(1)/dn(0),-0.5*dn(3)/dn(2)); // center
-    double d(1.+0.25*(dn(1)*dn(1)/dn(0)+dn(3)*dn(3)/dn(2)));
-    if(fabs(dn(0))<RS_TOLERANCE*RS_TOLERANCE
-            ||fabs(dn(2))<RS_TOLERANCE*RS_TOLERANCE
-            ||d/dn(0)<RS_TOLERANCE*RS_TOLERANCE
-            ||d/dn(2)<RS_TOLERANCE*RS_TOLERANCE
-            ) {
-        //ellipse not defined
-        return false;
-    }
-    d=sqrt(d/dn(0));
-    data.majorP.set(d,0.);
-    data.ratio=sqrt(dn(0)/dn(2));
-#else
-// solve the linear equation by Gauss-Jordan elimination
-    int mSize(4); //the augmented matrix size: mSize by mSize +1
-    double m[mSize][mSize+1];
+    QVector<QVector<double> > mt;
+    QVector<double> dn;
+    int mSize(4);
+    mt.resize(mSize);
     for(int i=0;i<mSize;i++) {//form the linear equation, c0 x^2 + c1 x + c2 y^2 + c3 y = 1
-        m[i][0]=sol.get(i).x * sol.get(i).x;
-        m[i][1]=sol.get(i).x ;
-        m[i][2]=sol.get(i).y * sol.get(i).y;
-        m[i][3]=sol.get(i).y ;
-        m[i][4]=1.;
+        mt[i].resize(mSize+1);
+        mt[i][0]=sol.get(i).x * sol.get(i).x;
+        mt[i][1]=sol.get(i).x ;
+        mt[i][2]=sol.get(i).y * sol.get(i).y;
+        mt[i][3]=sol.get(i).y ;
+        mt[i][4]=1.;
     }
-    for(int i=0;i<mSize;i++){
-        int imax(i);
-        double cmax(fabs(m[i][i]));
-        for(int j=i+1;j<mSize;j++) {
-            if(fabs(m[j][i]) > cmax ) {
-                imax=j;
-                cmax=fabs(m[j][i]);
-            }
-        }
-        if(cmax<RS_TOLERANCE*RS_TOLERANCE) return false; //singular matrix
-        if(imax != i) {//move the line with largest absolute value at column i to row i, to avoid division by zero
-            for(int j=i;j<=mSize;j++) {
-                std::swap(m[i][j],m[imax][j]);
-            }
-        }
-        //        for(int k=i+1;k<5;k++) { //normalize the i-th row
-        for(int k=mSize;k>=i;k--) { //normalize the i-th row
-            m[i][k] /= m[i][i];
-        }
-        for(int j=0;j<mSize;j++) {//Gauss-Jordan
-            if(j != i ) {
-                //                for(int k=i+1;k<5;k++) {
-                for(int k=mSize;k>=i;k--) {
-                    m[j][k] -= m[i][k]*m[j][i];
-                }
-            }
-        }
-        //output gauss-jordan results for debugging
-//        std::cout<<"========"<<i<<"==========\n";
-//        for(int j=0;j<mSize;j++) {//Gauss-Jordan
-//            for(int k=0;k<=mSize;k++) {
-//                std::cout<<m[j][k]<<'\t';
-//            }
-//            std::cout<<std::endl;
-//        }
-    }
-
-    data.center.set(-0.5*m[1][4]/m[0][4],-0.5*m[3][4]/m[2][4]); // center
-    double d(1.+0.25*(m[1][4]*m[1][4]/m[0][4]+m[3][4]*m[3][4]/m[2][4]));
-    if(fabs(m[0][4])<RS_TOLERANCE*RS_TOLERANCE
-            ||fabs(m[2][4])<RS_TOLERANCE*RS_TOLERANCE
-            ||d/m[0][4]<RS_TOLERANCE*RS_TOLERANCE
-            ||d/m[2][4]<RS_TOLERANCE*RS_TOLERANCE
+    if ( ! RS_Math::linearSolver(mt,dn)) return false;
+    double d(1.+0.25*(dn[1]*dn[1]/dn[0]+dn[3]*dn[3]/dn[2]));
+    if(fabs(dn[0])<RS_TOLERANCE*RS_TOLERANCE
+            ||fabs(dn[2])<RS_TOLERANCE*RS_TOLERANCE
+            ||d/dn[0]<RS_TOLERANCE*RS_TOLERANCE
+            ||d/dn[2]<RS_TOLERANCE*RS_TOLERANCE
             ) {
         //ellipse not defined
         return false;
     }
-    //    std::cout<<"m[0][4]="<<m[0][4]<<std::endl;
-//    std::cout<<"m[2][4]="<<m[2][4]<<std::endl;
-//    std::cout<<"d="<<d<<std::endl;
-    d=sqrt(d/m[0][4]); // major radius
+    data.center.set(-0.5*dn[1]/dn[0],-0.5*dn[3]/dn[2]); // center
+    d=sqrt(d/dn[0]);
     data.majorP.set(d,0.);
-    data.ratio=sqrt(m[0][4]/m[2][4]);
-
-#endif
+    data.ratio=sqrt(dn[0]/dn[2]);
     data.angle1=0.;
     data.angle2=0.;
     return true;
