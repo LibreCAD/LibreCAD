@@ -236,9 +236,7 @@ public:
     double getMinorRadius() const {
         return data.majorP.magnitude()*data.ratio;
     }
-#ifdef	HAS_BOOST
     bool createFrom4P(const RS_VectorSolutions& sol);
-#endif
     virtual RS_Vector getMiddlePoint(void)const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL) const;

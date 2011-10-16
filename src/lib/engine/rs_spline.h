@@ -136,11 +136,11 @@ public:
                                      double* dist = NULL);
 
     /** @return Start point of the entity */
-    //virtual RS_Vector getStartpoint() const {
+    virtual RS_Vector getStartpoint() const ;
     //    return data.startpoint;
     //}
     /** @return End point of the entity */
-    //virtual RS_Vector getEndpoint() const {
+    virtual RS_Vector getEndpoint() const ;
     //    return data.endpoint;
     //}
     /** Sets the startpoint */
