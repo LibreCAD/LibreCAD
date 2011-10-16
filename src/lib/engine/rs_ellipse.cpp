@@ -531,10 +531,10 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
 *
 *@Author Dongxu Li
 */
-#ifdef	HAS_BOOST
 bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
 {
     if (sol.getNumber() != 4 ) return (false); //only do 4 points
+#ifdef	HAS_BOOST
     boost::numeric::ublas::matrix<double> m (4, 4);
     boost::numeric::ublas::vector<double> dn(4);
 
@@ -572,18 +572,58 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
     d=sqrt(d/dn(0));
     data.majorP.set(d,0.);
     data.ratio=sqrt(dn(0)/dn(2));
+#else
+// solve the linear equation by Gauss-Jordan elimination
+    int mSize(4); //the augmented matrix size: mSize by mSize +1
+    double m[mSize][mSize+1];
+    for(int i=0;i<mSize;i++) {//form the linear equation, c0 x^2 + c1 x + c2 y^2 + c3 y = 1
+        m[i][0]=sol.get(i).x * sol.get(i).x;
+        m[i][1]=sol.get(i).x ;
+        m[i][2]=sol.get(i).y * sol.get(i).y;
+        m[i][3]=sol.get(i).y ;
+        m[i][4]=1.;
+    }
+    for(int i=0;i<mSize;i++){
+        int imax(i);
+        double cmax(fabs(m[i][i]));
+        for(int j=i+1;j<mSize;j++) {
+            if(fabs(m[j][i]) > cmax ) {
+                imax=j;
+                cmax=fabs(m[j][i]);
+            }
+        }
+        if(cmax<RS_TOLERANCE) return false; //singular matrix
+        if(imax != i) {//move the line with largest absolute value at column i to row i, to avoid division by zero
+            for(int j=i;j<=mSize;j++) {
+                std::swap(m[i][j],m[imax][j]);
+            }
+        }
+        //        for(int k=i+1;k<5;k++) { //normalize the i-th row
+        for(int k=mSize;k>i;k--) { //normalize the i-th row
+            m[i][k] /= m[i][i];
+        }
+        for(int j=0;j<mSize;j++) {//Gauss-Jordan
+            if(j != i ) {
+                //                for(int k=i+1;k<5;k++) {
+                for(int k=mSize;k>i;k--) {
+                    m[j][k] -= m[i][k]*m[j][i];
+                }
+            }
+        }
+    }
+
+    data.center.set(-0.5*m[1][4]/m[0][4],-0.5*m[3][4]/m[2][4]); // center
+    double d(1.+0.25*(m[1][4]*m[1][4]/m[0][4]+m[3][4]*m[3][4]/m[2][4]));
+    d=sqrt(d/m[0][4]); // major radius
+    data.majorP.set(d,0.);
+    data.ratio=sqrt(m[0][4]/m[2][4]);
+
+#endif
     data.angle1=0.;
     data.angle2=0.;
     return true;
 
 }
-#else
-//fixme, solve the linear equation set without boost
-bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& /*sol*/)
-{
-    return false;
-}
-#endif
 
 /**
  * a naive implementation of middle point
