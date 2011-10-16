@@ -953,8 +953,8 @@ double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) const {
  */
 void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.center.scale(center, factor);
-    RS_Vector vpStart=getStartpoint().scale(getCenter(),factor);
-    RS_Vector vpEnd=getEndpoint().scale(getCenter(),factor);;
+    RS_Vector vpStart=getStartpoint().scale(center,factor);
+    RS_Vector vpEnd=getEndpoint().scale(center,factor);;
     double ct=cos(getAngle());
     double ct2 = ct*ct; // cos^2 angle
     double st=sin(getAngle());
