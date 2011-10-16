@@ -54,6 +54,7 @@
 #include "rs_actiondrawcirclecr.h"
 #include "rs_actiondrawellipseaxis.h"
 #include "rs_actiondrawellipsefocipoint.h"
+#include "rs_actiondrawellipse4points.h"
 #include "rs_actiondrawhatch.h"
 #include "rs_actiondrawimage.h"
 #include "rs_actiondrawline.h"
@@ -473,6 +474,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionDrawEllipseFociPoint:
         a = new RS_ActionDrawEllipseFociPoint(*doc, *gv);
+        break;
+    case RS2::ActionDrawEllipse4Points:
+        a = new RS_ActionDrawEllipse4Points(*doc, *gv);
         break;
     case RS2::ActionDrawSpline:
         a = new RS_ActionDrawSpline(*doc, *gv);
@@ -1214,6 +1218,9 @@ void QG_ActionHandler::slotDrawEllipseArcAxis() {
 
 void QG_ActionHandler::slotDrawEllipseFociPoint() {
     setCurrentAction(RS2::ActionDrawEllipseFociPoint);
+}
+void QG_ActionHandler::slotDrawEllipse4Points() {
+    setCurrentAction(RS2::ActionDrawEllipse4Points);
 }
 
 void QG_ActionHandler::slotDrawSpline() {

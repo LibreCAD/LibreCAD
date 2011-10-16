@@ -928,6 +928,10 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionDrawEllipse4Points,
+                                        actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Splines:
 //    subMenu= menu->addMenu(tr("&Spline"));
@@ -2157,6 +2161,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
             }
             */
         cadToolBar->showToolBar(RS2::ToolBarMain);
+        cadToolBar->resetToolBar();
         }
 
     QG_DIALOGFACTORY->setCadToolBar(cadToolBar);

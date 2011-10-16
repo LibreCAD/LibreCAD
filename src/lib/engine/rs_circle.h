@@ -148,6 +148,7 @@ public:
     bool createFrom2P(const RS_Vector& p1, const RS_Vector& p2);
     bool createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
                       const RS_Vector& p3);
+    bool createFrom3P(const RS_VectorSolutions& sol);
 
     virtual RS_Vector getMiddlePoint(void)const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,

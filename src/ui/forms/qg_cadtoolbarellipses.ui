@@ -26,14 +26,11 @@
    <string>Ellipses</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="horizontalSpacing">
-    <number>1</number>
-   </property>
-   <property name="verticalSpacing">
-    <number>0</number>
-   </property>
    <property name="margin">
     <number>0</number>
+   </property>
+   <property name="spacing">
+    <number>1</number>
    </property>
    <item row="0" column="0" colspan="2">
     <widget class="QToolButton" name="bBack">
@@ -56,7 +53,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset>
+      <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
      </property>
      <property name="iconSize">
@@ -82,7 +79,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset>
+      <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/ellipsesaxes.png</normaloff>:/extui/ellipsesaxes.png</iconset>
      </property>
      <property name="iconSize">
@@ -114,7 +111,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset>
+      <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/ellipsearcsaxes.png</normaloff>:/extui/ellipsearcsaxes.png</iconset>
      </property>
      <property name="iconSize">
@@ -146,8 +143,40 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset>
+      <iconset resource="../../../res/extui/extui.qrc">
        <normaloff>:/extui/ellipsefocipoint.png</normaloff>:/extui/ellipsefocipoint.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QToolButton" name="bEllipse4Points">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Draw Ellipse with axes in x-/y-directions by four points on ellipse</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/ellipse4points.png</normaloff>:/extui/ellipse4points.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -171,7 +200,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>40</height>
+       <height>245</height>
       </size>
      </property>
     </spacer>
@@ -207,7 +236,9 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../../res/extui/extui.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>bEllipseAxes</sender>
@@ -250,6 +281,22 @@
     <hint type="sourcelabel">
      <x>15</x>
      <y>75</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>32</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bEllipse4Points</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarEllipses</receiver>
+   <slot>drawEllipse4Points()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>48</x>
+     <y>69</y>
     </hint>
     <hint type="destinationlabel">
      <x>32</x>

@@ -48,6 +48,7 @@ public slots:
     virtual void drawEllipseAxis();
     virtual void drawEllipseArcAxis();
     virtual void drawEllipseFociPoint();
+    virtual void drawEllipse4Points();
     virtual void back();
     virtual void resetToolBar();
 
