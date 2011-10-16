@@ -563,12 +563,16 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
     boost::numeric::ublas::inplace_solve(lm,dn, boost::numeric::ublas::lower_tag());
     boost::numeric::ublas::inplace_solve(um,dn, boost::numeric::ublas::upper_tag());
 //    std::cout<<"dn="<<dn<<std::endl;
-    if( fabs(dn(0)) < RS_TOLERANCE*RS_TOLERANCE || fabs(dn(2)) <RS_TOLERANCE*RS_TOLERANCE) {
-            //this should not happen
-            return false;
-    }
     data.center.set(-0.5*dn(1)/dn(0),-0.5*dn(3)/dn(2)); // center
     double d(1.+0.25*(dn(1)*dn(1)/dn(0)+dn(3)*dn(3)/dn(2)));
+    if(fabs(dn(0))<RS_TOLERANCE*RS_TOLERANCE
+            ||fabs(dn(2))<RS_TOLERANCE*RS_TOLERANCE
+            ||d/dn(0)<RS_TOLERANCE*RS_TOLERANCE
+            ||d/dn(2)<RS_TOLERANCE*RS_TOLERANCE
+            ) {
+        //ellipse not defined
+        return false;
+    }
     d=sqrt(d/dn(0));
     data.majorP.set(d,0.);
     data.ratio=sqrt(dn(0)/dn(2));
@@ -592,28 +596,47 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
                 cmax=fabs(m[j][i]);
             }
         }
-        if(cmax<RS_TOLERANCE) return false; //singular matrix
+        if(cmax<RS_TOLERANCE*RS_TOLERANCE) return false; //singular matrix
         if(imax != i) {//move the line with largest absolute value at column i to row i, to avoid division by zero
             for(int j=i;j<=mSize;j++) {
                 std::swap(m[i][j],m[imax][j]);
             }
         }
         //        for(int k=i+1;k<5;k++) { //normalize the i-th row
-        for(int k=mSize;k>i;k--) { //normalize the i-th row
+        for(int k=mSize;k>=i;k--) { //normalize the i-th row
             m[i][k] /= m[i][i];
         }
         for(int j=0;j<mSize;j++) {//Gauss-Jordan
             if(j != i ) {
                 //                for(int k=i+1;k<5;k++) {
-                for(int k=mSize;k>i;k--) {
+                for(int k=mSize;k>=i;k--) {
                     m[j][k] -= m[i][k]*m[j][i];
                 }
             }
         }
+        //output gauss-jordan results for debugging
+//        std::cout<<"========"<<i<<"==========\n";
+//        for(int j=0;j<mSize;j++) {//Gauss-Jordan
+//            for(int k=0;k<=mSize;k++) {
+//                std::cout<<m[j][k]<<'\t';
+//            }
+//            std::cout<<std::endl;
+//        }
     }
 
     data.center.set(-0.5*m[1][4]/m[0][4],-0.5*m[3][4]/m[2][4]); // center
     double d(1.+0.25*(m[1][4]*m[1][4]/m[0][4]+m[3][4]*m[3][4]/m[2][4]));
+    if(fabs(m[0][4])<RS_TOLERANCE*RS_TOLERANCE
+            ||fabs(m[2][4])<RS_TOLERANCE*RS_TOLERANCE
+            ||d/m[0][4]<RS_TOLERANCE*RS_TOLERANCE
+            ||d/m[2][4]<RS_TOLERANCE*RS_TOLERANCE
+            ) {
+        //ellipse not defined
+        return false;
+    }
+    //    std::cout<<"m[0][4]="<<m[0][4]<<std::endl;
+//    std::cout<<"m[2][4]="<<m[2][4]<<std::endl;
+//    std::cout<<"d="<<d<<std::endl;
     d=sqrt(d/m[0][4]); // major radius
     data.majorP.set(d,0.);
     data.ratio=sqrt(m[0][4]/m[2][4]);
