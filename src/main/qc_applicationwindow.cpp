@@ -2161,6 +2161,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
             }
             */
         cadToolBar->showToolBar(RS2::ToolBarMain);
+        cadToolBar->resetToolBar();
         }
 
     QG_DIALOGFACTORY->setCadToolBar(cadToolBar);
