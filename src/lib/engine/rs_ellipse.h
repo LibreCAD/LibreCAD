@@ -237,6 +237,7 @@ public:
         return data.majorP.magnitude()*data.ratio;
     }
     bool createFrom4P(const RS_VectorSolutions& sol);
+    bool createInscribeQuadrilateral(const QVector<RS_Line*>& lines);
     virtual RS_Vector getMiddlePoint(void)const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL) const;

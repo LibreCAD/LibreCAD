@@ -128,6 +128,7 @@ public slots:
     void slotDrawEllipseArcAxis();
     void slotDrawEllipseFociPoint();
     void slotDrawEllipse4Points();
+    void slotDrawEllipseInscribe();
     void slotDrawSpline();
     void slotDrawText();
     void slotDrawHatch();

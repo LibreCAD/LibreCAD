@@ -72,8 +72,10 @@ class RS_Line : public RS_AtomicEntity {
 public:
     //RS_Line(RS_EntityContainer* parent);
     //RS_Line(const RS_Line& l);
+    RS_Line(){};
     RS_Line(RS_EntityContainer* parent,
             const RS_LineData& d);
+//    RS_Line(const RS_Vector& pStart, const RS_Vector& pEnd);
 
     virtual RS_Entity* clone();
     /*{

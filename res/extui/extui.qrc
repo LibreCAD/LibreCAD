@@ -163,5 +163,6 @@
         <file>widthbox.png</file>
         <file>ellipsefocipoint.png</file>
         <file>ellipse4points.png</file>
+        <file>ellipseinscribed.png</file>
     </qresource>
 </RCC>

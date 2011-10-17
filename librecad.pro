@@ -329,6 +329,7 @@ HEADERS += src/actions/rs_actionblocksadd.h \
     src/actions/rs_actiondrawellipseaxis.h \
     src/actions/rs_actiondrawellipsefocipoint.h \
     src/actions/rs_actiondrawellipse4points.h \
+    src/actions/rs_actiondrawellipseinscribe.h \
     src/actions/rs_actiondrawhatch.h \
     src/actions/rs_actiondrawimage.h \
     src/actions/rs_actiondrawline.h \
@@ -448,6 +449,7 @@ SOURCES += src/actions/rs_actionblocksadd.cpp \
     src/actions/rs_actiondrawellipseaxis.cpp \
     src/actions/rs_actiondrawellipsefocipoint.cpp \
     src/actions/rs_actiondrawellipse4points.cpp \
+    src/actions/rs_actiondrawellipseinscribe.cpp \
     src/actions/rs_actiondrawhatch.cpp \
     src/actions/rs_actiondrawimage.cpp \
     src/actions/rs_actiondrawline.cpp \
