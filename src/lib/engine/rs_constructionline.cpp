@@ -160,9 +160,15 @@ double RS_ConstructionLine::getDistanceToPoint(const RS_Vector& coord,
     }
     //double dist = RS_MAXDOUBLE;
     RS_Vector se = data.point2-data.point1;
+    double d(se.magnitude());
+    if(d<RS_TOLERANCE) {
+        //line too short
+        return RS_MAXDOUBLE;
+    }
+    se.set( se.x/d,-se.y/d); //normalized
     RS_Vector vpc= coord - data.point1;
-    vpc.rotate( - se.angle()); // rotate to use the line as x-axis, and projection is simply vpc.x now.
-    return ( vpc.x * vpc.x );
+    vpc.rotate(se); // rotate to use the line as x-axis, and the distance is fabs(y)
+    return ( fabs(vpc.y) );
 }
 
 
