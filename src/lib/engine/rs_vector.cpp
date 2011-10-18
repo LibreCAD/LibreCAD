@@ -654,7 +654,7 @@ RS_VectorSolutions::RS_VectorSolutions(int num) {
             vector.push_back(RS_Vector(false));
         }
     }
-#endif/
+#endif
 }
 
 
