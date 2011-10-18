@@ -32,7 +32,7 @@
    <property name="spacing">
     <number>1</number>
    </property>
-   <item row="0" column="0" colspan="2">
+   <item row="0" column="0" colspan="3">
     <widget class="QToolButton" name="bBack">
      <property name="minimumSize">
       <size>
@@ -64,7 +64,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="1" column="0" colspan="2">
     <widget class="QToolButton" name="bEllipseAxes">
      <property name="maximumSize">
       <size>
@@ -96,7 +96,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
+   <item row="1" column="2">
     <widget class="QToolButton" name="bEllipseArcAxes">
      <property name="maximumSize">
       <size>
@@ -128,7 +128,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="2" column="0" colspan="2">
     <widget class="QToolButton" name="bEllipseFociPoint">
      <property name="maximumSize">
       <size>
@@ -160,7 +160,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
+   <item row="2" column="2">
     <widget class="QToolButton" name="bEllipse4Points">
      <property name="maximumSize">
       <size>
@@ -193,6 +193,38 @@
     </widget>
    </item>
    <item row="3" column="0">
+    <widget class="QToolButton" name="bEllipseCenter3Points">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Draw Ellipse with axes in x-/y-directions by four points on ellipse</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/ellipsecenter3points.png</normaloff>:/extui/ellipsecenter3points.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1" colspan="2">
     <widget class="QToolButton" name="bEllipseInscribe">
      <property name="maximumSize">
       <size>
@@ -224,7 +256,7 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item row="4" column="0" colspan="2">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -341,6 +373,22 @@
    <signal>clicked()</signal>
    <receiver>QG_CadToolBarEllipses</receiver>
    <slot>drawEllipseInscribe()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>15</x>
+     <y>102</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>32</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bEllipseCenter3Points</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarEllipses</receiver>
+   <slot>drawEllipseCenter3Points()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>15</x>

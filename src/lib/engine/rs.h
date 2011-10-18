@@ -223,6 +223,7 @@ public:
         ActionDrawEllipseAxis,
         ActionDrawEllipseFociPoint,
         ActionDrawEllipse4Points,
+        ActionDrawEllipseCenter3Points,
         ActionDrawEllipseInscribe,
 
         ActionDrawHatch,

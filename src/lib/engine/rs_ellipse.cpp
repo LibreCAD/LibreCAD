@@ -565,6 +565,91 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
     return true;
 
 }
+
+/**
+//create Ellipse with center and 3 points
+*
+*
+*@Author Dongxu Li
+*/
+bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
+    if(sol.getNumber()<3) return false; //need one center and 3 points on ellipse
+    QVector<QVector<double> > mt;
+    int mSize(sol.getNumber() -1);
+
+    mt.resize(mSize);
+    QVector<double> dn(mSize);
+    switch(mSize){
+    case 2:
+        for(int i=0;i<mSize;i++){//form the linear equation
+            mt[i].resize(mSize+1);
+            RS_Vector vp(sol.get(i+1)-sol.get(0)); //the first vector is center
+            mt[i][0]=vp.x*vp.x;
+            mt[i][1]=vp.y*vp.y;
+            mt[i][2]=1.;
+        }
+        if ( ! RS_Math::linearSolver(mt,dn) ) return false;
+        if( dn[0]<RS_TOLERANCE*RS_TOLERANCE || dn[1]<RS_TOLERANCE*RS_TOLERANCE) return false;
+        setMajorP(RS_Vector(1./sqrt(dn[0]),0.));
+        setRatio(sqrt(dn[0]/dn[1]));
+        setAngle1(0.);
+        setAngle2(0.);
+        setCenter(sol.get(0));
+        return true;
+        break;
+    case 3:
+        for(int i=0;i<mSize;i++){//form the linear equation
+            mt[i].resize(mSize+1);
+            RS_Vector vp(sol.get(i+1)-sol.get(0)); //the first vector is center
+            mt[i][0]=vp.x*vp.x;
+            mt[i][1]=vp.x*vp.y;
+            mt[i][2]=vp.y*vp.y;
+            mt[i][3]=1.;
+        }
+        if ( ! RS_Math::linearSolver(mt,dn) ) return false;
+        setCenter(sol.get(0));
+        return createFromQuadratic(dn);
+    default:
+        return false;
+    }
+}
+
+/**create from quadratic form:
+  * dn[0] x^2 + dn[1] xy + dn[2] y^2 =1
+  * centered at (0,0)
+  *
+  *@Author: Dongxu Li
+  */
+bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
+    if(fabs(dn[0]) <RS_TOLERANCE*RS_TOLERANCE || fabs(dn[2])<RS_TOLERANCE*RS_TOLERANCE) return false; //invalid quadratic form
+    //eigenvalue and eigen vectors of quadratic form
+    // (dn[0] 0.5*dn[1])
+    // (0.5*dn[1] dn[2])
+    double d(dn[0]-dn[2]);
+    double s(sqrt(d*d+dn[1]*dn[1]));
+    //        std::cout<<"d="<<d<<std::endl;
+    //        std::cout<<"s="<<s<<std::endl;
+    double lambda1(0.5*(s+dn[0]+dn[2]));
+    double lambda2(0.5*(-s+dn[0]+dn[2]));
+    //        std::cout<<"lambda1="<<lambda1<<std::endl;
+    //        std::cout<<"lambda2="<<lambda2<<std::endl;
+    if(lambda1<RS_TOLERANCE*RS_TOLERANCE) return false;
+    if(lambda2<RS_TOLERANCE*RS_TOLERANCE) return false;
+    RS_Vector majorP(-dn[1]/(s+d),1.);
+    majorP /= sqrt(majorP.squared()*lambda2);
+//    ratio=sqrt(lambda2/lambda1);
+//    setCenter(center);
+    setMajorP(majorP);
+    setRatio(sqrt(lambda2/lambda1));
+    setAngle1(0.);
+    setAngle2(0.);
+//    if(angleVector.valid) {//need to rotate back, for the parallelogram case
+//        angleVector.y *= -1.;
+//        rotate(angleVector);
+//    }
+    return true;
+}
+
 /**
 //create Ellipse inscribed in a quadrilateral
 *
@@ -632,7 +717,8 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
     }
     RS_VectorSolutions sol=RS_Information::getIntersection( & ip[0],& ip[1],true);
     if(sol.getNumber()==0) {//this should not happen
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Ellipse::createInscribeQuadrilateral(): can not locate projection Center");
+//        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Ellipse::createInscribeQuadrilateral(): can not locate projection Center");
+        RS_DEBUG->print("RS_Ellipse::createInscribeQuadrilateral(): can not locate projection Center");
         return false;
     }
     RS_Vector centerProjection(sol.get(0));
@@ -668,7 +754,8 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
     sol=RS_Information::getIntersection(cl0,cl1,false);
     if(sol.getNumber()==0){
         //this should not happen
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Ellipse::createInscribeQuadrilateral(): can not locate Ellipse Center");
+//        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Ellipse::createInscribeQuadrilateral(): can not locate Ellipse Center");
+        RS_DEBUG->print("RS_Ellipse::createInscribeQuadrilateral(): can not locate Ellipse Center");
         return false;
     }
     RS_Vector center(sol.get(0));
@@ -676,8 +763,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
     delete cl0;
     delete cl1;
 
-    RS_Vector major,minor;
-    double ratio;
+//    double ratio;
     //        std::cout<<"dn="<<dn[0]<<' '<<dn[1]<<' '<<dn[2]<<std::endl;
     QVector<double> dn(3);
     RS_Vector angleVector(false);
@@ -685,15 +771,15 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
         //avoid division by zero, if already in square form
         //fixme, need to handle degenerate case better
         //        double angle(center.angleTo(tangent[0]));
-        major=tangent[0]-center;
-        double dx(major.magnitude());
+        RS_Vector majorP(tangent[0]-center);
+        double dx(majorP.magnitude());
         if(dx<RS_TOLERANCE*RS_TOLERANCE) return false; //refuse to return zero size ellipse
-        angleVector.set(major.x/dx,-major.y/dx);
+        angleVector.set(majorP.x/dx,-majorP.y/dx);
         for(int i=0;i<4;i++)tangent[i].rotate(center,angleVector);
 
-        minor=(tangent[2]-center);
-        double dy2(minor.squared());
-        if(fabs(minor.y)<RS_TOLERANCE || dy2<RS_TOLERANCE*RS_TOLERANCE) return false; //refuse to return zero size ellipse
+        RS_Vector minorP(tangent[2]-center);
+        double dy2(minorP.squared());
+        if(fabs(minorP.y)<RS_TOLERANCE || dy2<RS_TOLERANCE*RS_TOLERANCE) return false; //refuse to return zero size ellipse
         // y'= y
         // x'= x-y/tan
         // reverse scale
@@ -701,14 +787,14 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
         // x=x'+y' tan
         //
         double ia2=1./(dx*dx);
-        double ib2=1./(minor.y*minor.y);
+        double ib2=1./(minorP.y*minorP.y);
         //ellipse scaled:
         // ia2*x'^2+ib2*y'^2=1
         // ia2*(x-y*minor.x/minor.y)^2+ib2*y^2=1
         // ia2*x^2 -2*ia2*minor.x/minor.y xy + ia2*minor.x^2*ib2 y^2 + ib2*y^2 =1
         dn[0]=ia2;
-        dn[1]=-2.*ia2*minor.x/minor.y;
-        dn[2]=ib2*ia2*minor.x*minor.x+ib2;
+        dn[1]=-2.*ia2*minorP.x/minorP.y;
+        dn[2]=ib2*ia2*minorP.x*minorP.x+ib2;
         //        RS_Vector vp(tangent[0].x,tangent[2].y);
 
         ////        RS_Vector vp0(dx-minor.x,minor.y);//scaled minor
@@ -741,28 +827,30 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
         }
         if ( ! RS_Math::linearSolver(mt,dn) ) return false;
     }
-    if(fabs(dn[0]) <RS_TOLERANCE*RS_TOLERANCE || fabs(dn[2])<RS_TOLERANCE*RS_TOLERANCE) return false; //invalid quadratic form
-    //eigenvalue and eigen vectors of quadratic form
-    // (dn[0] 0.5*dn[1])
-    // (0.5*dn[1] dn[2])
-    double d(dn[0]-dn[2]);
-    double s(sqrt(d*d+dn[1]*dn[1]));
-    //        std::cout<<"d="<<d<<std::endl;
-    //        std::cout<<"s="<<s<<std::endl;
-    double lambda1(0.5*(s+dn[0]+dn[2]));
-    double lambda2(0.5*(-s+dn[0]+dn[2]));
-    //        std::cout<<"lambda1="<<lambda1<<std::endl;
-    //        std::cout<<"lambda2="<<lambda2<<std::endl;
-    if(lambda1<RS_TOLERANCE*RS_TOLERANCE) return false;
-    if(lambda2<RS_TOLERANCE*RS_TOLERANCE) return false;
-    major.set(-dn[1]/(s+d),1.);
-    major /= sqrt(major.squared()*lambda2);
-    ratio=sqrt(lambda2/lambda1);
+
+//    if(fabs(dn[0]) <RS_TOLERANCE*RS_TOLERANCE || fabs(dn[2])<RS_TOLERANCE*RS_TOLERANCE) return false; //invalid quadratic form
+//    //eigenvalue and eigen vectors of quadratic form
+//    // (dn[0] 0.5*dn[1])
+//    // (0.5*dn[1] dn[2])
+//    double d(dn[0]-dn[2]);
+//    double s(sqrt(d*d+dn[1]*dn[1]));
+//    //        std::cout<<"d="<<d<<std::endl;
+//    //        std::cout<<"s="<<s<<std::endl;
+//    double lambda1(0.5*(s+dn[0]+dn[2]));
+//    double lambda2(0.5*(-s+dn[0]+dn[2]));
+//    //        std::cout<<"lambda1="<<lambda1<<std::endl;
+//    //        std::cout<<"lambda2="<<lambda2<<std::endl;
+//    if(lambda1<RS_TOLERANCE*RS_TOLERANCE) return false;
+//    if(lambda2<RS_TOLERANCE*RS_TOLERANCE) return false;
+//    major.set(-dn[1]/(s+d),1.);
+//    major /= sqrt(major.squared()*lambda2);
+//    ratio=sqrt(lambda2/lambda1);
     setCenter(center);
-    setMajorP(major);
-    setRatio(ratio);
-    setAngle1(0.);
-    setAngle2(0.);
+    if(! createFromQuadratic(dn)) return false;
+//    setMajorP(major);
+//    setRatio(ratio);
+//    setAngle1(0.);
+//    setAngle2(0.);
     if(angleVector.valid) {//need to rotate back, for the parallelogram case
         angleVector.y *= -1.;
         rotate(angleVector);

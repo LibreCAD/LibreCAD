@@ -103,6 +103,11 @@ void QG_CadToolBarEllipses::drawEllipse4Points() {
         actionHandler->slotDrawEllipse4Points();
     }
 }
+void QG_CadToolBarEllipses::drawEllipseCenter3Points() {
+    if (actionHandler!=NULL) {
+        actionHandler->slotDrawEllipseCenter3Points();
+    }
+}
 void QG_CadToolBarEllipses::drawEllipseInscribe() {
     if (actionHandler!=NULL) {
         actionHandler->slotDrawEllipseInscribe();
@@ -132,6 +137,10 @@ void QG_CadToolBarEllipses::restoreAction()
     }
     if ( bEllipse4Points ->isChecked() ) {
         actionHandler->slotDrawEllipse4Points();
+        return;
+    }
+    if ( bEllipseCenter3Points ->isChecked() ) {
+        actionHandler->slotDrawEllipseCenter3Points();
         return;
     }
     if ( bEllipseInscribe ->isChecked() ) {

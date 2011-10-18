@@ -932,9 +932,14 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionDrawEllipseCenter3Points,
+                                        actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawEllipseInscribe,
                                         actionHandler);
     subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Splines:
 //    subMenu= menu->addMenu(tr("&Spline"));
