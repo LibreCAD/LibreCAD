@@ -107,6 +107,9 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
         RS_Entity*  en = catchEntity(e, RS2::ResolveAll);
         if(en == NULL) return;
         if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
+        for(int i=0;i<3;i++) {
+            if(en->getId() == lines[i]->getId()) return; //do not pull in the same line again
+        }
         if(en->getParent() != NULL) {
             if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
                  || en->getParent()->rtti() == RS2::EntitySpline
@@ -157,6 +160,9 @@ void RS_ActionDrawEllipseInscribe::mouseReleaseEvent(QMouseEvent* e) {
         RS_Entity*  en = catchEntity(e, RS2::ResolveAll);
         if(en == NULL) return;
         if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
+        for(int i=0;i<getStatus();i++) {
+            if(en->getId() == lines[i]->getId()) return; //do not pull in the same line again
+        }
         if(en->getParent() != NULL) {
             if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
                     || en->getParent()->rtti() == RS2::EntitySpline
