@@ -611,7 +611,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
         RS_VectorSolutions sol1=RS_Information::getIntersectionLineLine(quad[l],quad[m]);
         if(sol1.getNumber()==0) continue;
 
-        ip.push_back(RS_Line(getParent(),RS_LineData(sol0.get(0),sol1.get(0))));
+        ip.push_back(RS_Line(sol0.get(0),sol1.get(0)));
     }
 
     //    std::cout<<"20 ip.size()="<<ip.size()<<"\n";
@@ -639,10 +639,10 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
     //    std::cout<<"RS_Ellipse::createInscribe(): centerProjection="<<centerProjection<<std::endl;
 
     QVector<RS_Line> edge; //form the closed quadrilateral with ordered edges
-    edge.push_back(RS_Line(getParent(),RS_LineData(ip[0].getStartpoint(),ip[1].getStartpoint())));
-    edge.push_back(RS_Line(getParent(),RS_LineData(ip[1].getStartpoint(),ip[0].getEndpoint())));
-    edge.push_back(RS_Line(getParent(),RS_LineData(ip[0].getEndpoint(),ip[1].getEndpoint())));
-    edge.push_back(RS_Line(getParent(),RS_LineData(ip[1].getEndpoint(),ip[0].getStartpoint())));
+    edge.push_back(RS_Line(ip[0].getStartpoint(),ip[1].getStartpoint()));
+    edge.push_back(RS_Line(ip[1].getStartpoint(),ip[0].getEndpoint()));
+    edge.push_back(RS_Line(ip[0].getEndpoint(),ip[1].getEndpoint()));
+    edge.push_back(RS_Line(ip[1].getEndpoint(),ip[0].getStartpoint()));
     QVector<RS_Vector> tangent;//holds the tangential points on edges, in the order of edges: 1 3 2 0
     for(int i=0;i<=1;i++) {
         RS_VectorSolutions sol1=RS_Information::getIntersection(& edge[i],& edge[(i+2)%edge.size()],false);
@@ -653,7 +653,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
             direction=sol1.get(0)-centerProjection;
         }
         //                std::cout<<"Direction: "<<direction<<std::endl;
-        RS_Line l(getParent(),RS_LineData(centerProjection, centerProjection+direction));
+        RS_Line l(centerProjection, centerProjection+direction);
         for(int k=1;k<=3;k+=2){
             RS_VectorSolutions sol2=RS_Information::getIntersection(&l, &edge[(i+k)%edge.size()],false);
             for(int j=0;j<sol2.getNumber();j++) {
@@ -663,8 +663,8 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
         }
     }
 
-    RS_Line* cl0=new RS_Line(getParent(),RS_LineData(ip[0].getEndpoint(),(tangent[0]+tangent[2])*0.5));
-    RS_Line* cl1=new RS_Line(getParent(),RS_LineData(ip[1].getEndpoint(),(tangent[1]+tangent[2])*0.5));
+    RS_Line* cl0=new RS_Line(ip[0].getEndpoint(),(tangent[0]+tangent[2])*0.5);
+    RS_Line* cl1=new RS_Line(ip[1].getEndpoint(),(tangent[1]+tangent[2])*0.5);
     sol=RS_Information::getIntersection(cl0,cl1,false);
     if(sol.getNumber()==0){
         //this should not happen
@@ -763,7 +763,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
     setRatio(ratio);
     setAngle1(0.);
     setAngle2(0.);
-    if(angleVector.valid) {
+    if(angleVector.valid) {//need to rotate back, for the parallelogram case
         angleVector.y *= -1.;
         rotate(angleVector);
     }

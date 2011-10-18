@@ -34,7 +34,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw ellipse from 4 lines",
+        :RS_PreviewActionInterface("Draw ellipse inscribed",
                            container, graphicView),
           eData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false)
 {
@@ -63,6 +63,12 @@ void RS_ActionDrawEllipseInscribe::init(int status) {
     }
 }
 
+void RS_ActionDrawEllipseInscribe::finish(bool updateTB){
+    for(int i=0;i<lines.size();i++) lines[i]->setHighlighted(false);
+    graphicView->redraw(RS2::RedrawDrawing);
+    lines.clear();
+    RS_PreviewActionInterface::finish(updateTB);
+}
 
 
 void RS_ActionDrawEllipseInscribe::trigger() {

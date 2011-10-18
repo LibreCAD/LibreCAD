@@ -43,10 +43,10 @@ RS_Line::RS_Line(RS_EntityContainer* parent,
 }
 
 ////construct a line from two endpoints, to be used for construction
-//RS_Line::RS_Line(const RS_Vector& pStart, const RS_Vector& pEnd)
-//    :RS_AtomicEntity(NULL), data(pStart,pEnd) {
-//    calculateBorders();
-//}
+RS_Line::RS_Line(const RS_Vector& pStart, const RS_Vector& pEnd)
+    :RS_AtomicEntity(NULL), data(pStart,pEnd) {
+    calculateBorders();
+}
 
 
 /**

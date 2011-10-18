@@ -47,10 +47,10 @@ public:
 
 public:
     RS_ActionDrawEllipseInscribe(RS_EntityContainer& container,
-                             RS_GraphicView& graphicView);
+                                 RS_GraphicView& graphicView);
     ~RS_ActionDrawEllipseInscribe();
 
-        static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
+    static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 
     virtual void init(int status=0);
 
@@ -60,10 +60,10 @@ public:
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
 
-//        virtual void coordinateEvent(RS_CoordinateEvent* e);
-//    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
-
+    //        virtual void coordinateEvent(RS_CoordinateEvent* e);
+    //    virtual void commandEvent(RS_CommandEvent* e);
+    virtual QStringList getAvailableCommands();
+    virtual void finish(bool updateTB=true);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
     virtual void updateToolBar();
