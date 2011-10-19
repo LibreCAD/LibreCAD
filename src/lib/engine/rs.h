@@ -219,6 +219,8 @@ public:
         ActionDrawCircle3P,
         ActionDrawCircleCR,
         ActionDrawCircleParallel,
+        ActionDrawCircleInscribe,
+
         ActionDrawEllipseArcAxis,
         ActionDrawEllipseAxis,
         ActionDrawEllipseFociPoint,

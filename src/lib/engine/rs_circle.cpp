@@ -200,6 +200,42 @@ bool RS_Circle::createFrom3P(const RS_VectorSolutions& sol) {
 //        return false;
 //    }
 //}
+bool RS_Circle::createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& lines){
+    if(lines.size()<3) return false;
+    QVector<RS_Line*> tri(lines);
+    RS_VectorSolutions sol=RS_Information::getIntersectionLineLine(tri[0],tri[1]);
+    if(sol.getNumber() == 0 ) {//move parallel to opposite
+        std::swap(tri[1],tri[2]);
+    sol=RS_Information::getIntersectionLineLine(tri[0],tri[1]);
+    }
+    if(sol.getNumber() == 0 ) return false;
+    RS_Vector vp0(sol.get(0));
+    sol=RS_Information::getIntersectionLineLine(tri[2],tri[1]);
+    if(sol.getNumber() == 0 ) return false;
+    RS_Vector vp1(sol.get(0));
+    RS_Vector dvp(vp1-vp0);
+    double a(dvp.squared());
+    if( a< RS_TOLERANCE*RS_TOLERANCE) return false; //three lines share a common intersecting point
+    RS_Vector vp(coord - vp0);
+    vp -= dvp*(RS_Vector::dotP(dvp,vp)/a); //normal component
+    RS_Vector vl0(tri[0]->getEndpoint() - tri[0]->getStartpoint());
+    a=dvp.angle();
+    double angle0(0.5*(vl0.angle() + a));
+    if( RS_Vector::dotP(vp,vl0) <0.) {
+                  angle0 += 0.5*M_PI;
+    }
+
+    RS_Line line0(vp0, vp0+RS_Vector(angle0));//first bisecting line
+    vl0=(tri[2]->getEndpoint() - tri[2]->getStartpoint());
+    angle0=0.5*(vl0.angle() + a+M_PI);
+    if( RS_Vector::dotP(vp,vl0) <0.) {
+                  angle0 += 0.5*M_PI;
+    }
+    RS_Line line1(vp1, vp1+RS_Vector(angle0));//second bisection line
+    sol=RS_Information::getIntersectionLineLine(&line0,&line1);
+    if(sol.getNumber() == 0 ) return false;
+    return createFromCR(sol.get(0),tri[1]->getDistanceToPoint(sol.get(0)));
+}
 
 
 RS_VectorSolutions RS_Circle::getRefPoints() {

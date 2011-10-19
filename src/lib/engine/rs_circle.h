@@ -28,6 +28,7 @@
 #ifndef RS_CIRCLE_H
 #define RS_CIRCLE_H
 
+#include <QVector>
 #include "rs_atomicentity.h"
 
 
@@ -149,6 +150,7 @@ public:
     bool createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
                       const RS_Vector& p3);
     bool createFrom3P(const RS_VectorSolutions& sol);
+    bool createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& lines);
 
     virtual RS_Vector getMiddlePoint(void)const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,

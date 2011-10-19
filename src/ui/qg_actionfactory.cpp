@@ -50,6 +50,7 @@
 #include "rs_actiondrawcircle2p.h"
 #include "rs_actiondrawcircle3p.h"
 #include "rs_actiondrawcirclecr.h"
+#include "rs_actiondrawcircleinscribe.h"
 #include "rs_actiondrawellipseaxis.h"
 #include "rs_actiondrawellipsefocipoint.h"
 #include "rs_actiondrawellipse4points.h"
@@ -650,6 +651,12 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 action = RS_ActionDrawLineParallel::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotDrawCircleParallel()));
+        break;
+
+    case RS2::ActionDrawCircleInscribe:
+                action = RS_ActionDrawCircleInscribe::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotDrawCircleInscribe()));
         break;
 
     case RS2::ActionDrawArc:

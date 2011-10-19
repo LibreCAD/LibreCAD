@@ -112,6 +112,11 @@ void QG_CadToolBarCircles::drawCircleParallel() {
         actionHandler->slotDrawCircleParallel();
     }
 }
+void QG_CadToolBarCircles::drawCircleInscribe() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawCircleInscribe();
+    }
+}
 
 void QG_CadToolBarCircles::back() {
     if (cadToolBar!=NULL) {
@@ -140,6 +145,10 @@ void QG_CadToolBarCircles::restoreAction()
     }
     if ( bCircleParallel ->isChecked() ) {
         actionHandler->slotDrawCircleParallel();
+        return;
+    }
+    if ( bCircleInscribe ->isChecked() ) {
+        actionHandler->slotDrawCircleInscribe();
         return;
     }
     //clear all action

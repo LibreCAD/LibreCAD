@@ -165,5 +165,6 @@
         <file>ellipse4points.png</file>
         <file>ellipseinscribed.png</file>
         <file>ellipsecenter3points.png</file>
+        <file>circleinscribe.png</file>
     </qresource>
 </RCC>

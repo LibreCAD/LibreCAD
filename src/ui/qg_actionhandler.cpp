@@ -52,6 +52,7 @@
 #include "rs_actiondrawcircle2p.h"
 #include "rs_actiondrawcircle3p.h"
 #include "rs_actiondrawcirclecr.h"
+#include "rs_actiondrawcircleinscribe.h"
 #include "rs_actiondrawellipseaxis.h"
 #include "rs_actiondrawellipsefocipoint.h"
 #include "rs_actiondrawellipse4points.h"
@@ -455,6 +456,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionDrawCircleParallel:
         a = new RS_ActionDrawLineParallel(*doc, *gv);
+        break;
+    case RS2::ActionDrawCircleInscribe:
+        a = new RS_ActionDrawCircleInscribe(*doc, *gv);
         break;
     case RS2::ActionDrawArc:
         a = new RS_ActionDrawArc(*doc, *gv);
@@ -1198,6 +1202,10 @@ void QG_ActionHandler::slotDrawCircle3P() {
 
 void QG_ActionHandler::slotDrawCircleParallel() {
     setCurrentAction(RS2::ActionDrawCircleParallel);
+}
+
+void QG_ActionHandler::slotDrawCircleInscribe() {
+    setCurrentAction(RS2::ActionDrawCircleInscribe);
 }
 
 void QG_ActionHandler::slotDrawArc() {
