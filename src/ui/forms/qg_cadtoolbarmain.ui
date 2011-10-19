@@ -317,7 +317,7 @@
       </size>
      </property>
      <property name="toolTip">
-      <string>Show toolbar &quot;Hatch&quot;</string>
+      <string>Create Hatch</string>
      </property>
      <property name="text">
       <string/>
@@ -427,7 +427,7 @@
       </size>
      </property>
      <property name="toolTip">
-      <string>Show toolbar &quot;Blocks&quot;</string>
+      <string>Create Block</string>
      </property>
      <property name="text">
       <string/>
