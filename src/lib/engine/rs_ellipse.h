@@ -31,8 +31,12 @@
 #ifdef  HAS_BOOST
 #include <boost/math/special_functions/ellint_2.hpp>
 #include <boost/math/tools/roots.hpp>
-//#include <boost/fusion/tuple.hpp>
+
+#ifndef HAS_CPP11
+#include <boost/fusion/tuple.hpp>
 #include <boost/tuple/tuple.hpp>
+#endif
+
 #endif
 
 #include "rs_atomicentity.h"
@@ -305,14 +309,17 @@ public:
     void setDistance(const double& target){
         distance=target;
     }
-
+#ifndef HAS_CPP11
     boost::fusion::tuple <double, double, double> operator()(double const& z) const {
+#else
+    std::tuple <double, double, double> operator()(double const& z) const {
+#endif
         double cz=cos(z);
         double sz=sin(z);
         //delta amplitude
         double d=sqrt(1-k2*sz*sz);
         // return f(x), f'(x) and f''(x)
-        return boost::fusion::make_tuple(
+        return std::make_tuple(
                     e->getEllipseLength(z)-distance,
                     ra*d,
                     k2*ra*sz*cz/d

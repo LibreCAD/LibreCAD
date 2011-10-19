@@ -28,7 +28,7 @@
 #include <boost/math/special_functions/ellint_2.hpp>
 #include <boost/math/tools/roots.hpp>
 #include <boost/tuple/tuple.hpp>
-//#include <boost/fusion/tuple.hpp>
+#include <boost/fusion/tuple.hpp>
 
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>

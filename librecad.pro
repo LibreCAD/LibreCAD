@@ -9,6 +9,7 @@ DEFINES += QC_VERSION="\"master\""
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 #uncomment to use 2D rs_vector instead of 3D
 #DEFINES += RS_VECTOR2D=1
+#DEFINES += HAS_CPP11=1
 
 
 CONFIG += qt \
