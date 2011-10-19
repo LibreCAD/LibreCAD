@@ -385,7 +385,7 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
     //} else {
     //int   cix;            // Next point on arc
     //int   ciy;            //
-    double a;             // Current Angle (rad)
+//    double a;             // Current Angle (rad)
 
     // Angle step in rad
     /*
