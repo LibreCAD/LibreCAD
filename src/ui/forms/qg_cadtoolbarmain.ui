@@ -75,7 +75,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Points</string>
+    <string>Draw Points</string>
    </property>
    <property name="text">
     <string/>
@@ -95,7 +95,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Splines</string>
+    <string>Draw Splines</string>
    </property>
    <property name="text">
     <string/>
@@ -155,7 +155,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Text</string>
+    <string>Insert Text</string>
    </property>
    <property name="text">
     <string/>
@@ -195,7 +195,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Hatch</string>
+    <string>Create Hatch</string>
    </property>
    <property name="text">
     <string/>
@@ -215,7 +215,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Image</string>
+    <string>Insert Image</string>
    </property>
    <property name="text">
     <string/>
@@ -255,7 +255,7 @@
     </rect>
    </property>
    <property name="toolTip">
-    <string>Show menu &quot;Measure&quot;</string>
+    <string>Show menu &quot;Info&quot;</string>
    </property>
    <property name="text">
     <string/>
