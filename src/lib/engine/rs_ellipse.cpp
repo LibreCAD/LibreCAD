@@ -576,6 +576,10 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
     if(sol.getNumber()<3) return false; //need one center and 3 points on ellipse
     QVector<QVector<double> > mt;
     int mSize(sol.getNumber() -1);
+    if( (sol.get(mSize) - sol.get(mSize-1)).squared() < RS_TOLERANCE*RS_TOLERANCE ) {
+        //remove the last point
+        mSize--;
+    }
 
     mt.resize(mSize);
     QVector<double> dn(mSize);

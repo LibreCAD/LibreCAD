@@ -190,6 +190,11 @@ void RS_ActionDrawEllipseCenter3Points::coordinateEvent(RS_CoordinateEvent* e) {
         break;
     case SetPoint1:
     case SetPoint2:
+        for(int i=0;i<getStatus()-1;i++) {
+            if( (mouse-points.get(i)).squared() < RS_TOLERANCE*RS_TOLERANCE) {
+                return;//refuse to accept points already chosen
+            }
+        }
 //                setStatus(getStatus()+1);
 //                break;
     case SetPoint3:
