@@ -319,7 +319,11 @@ public:
         //delta amplitude
         double d=sqrt(1-k2*sz*sz);
         // return f(x), f'(x) and f''(x)
+#ifndef HAS_CPP11
+        return boost::fusion::make_tuple(
+#else
         return std::make_tuple(
+#endif
                     e->getEllipseLength(z)-distance,
                     ra*d,
                     k2*ra*sz*cz/d
