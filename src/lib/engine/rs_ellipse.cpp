@@ -1010,9 +1010,7 @@ void RS_Ellipse::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
 }
 
 void RS_Ellipse::rotate( const double& angle) {//rotate around ellipse center
-    RS_Vector angleVector(angle);
-//    data.center.rotate(angleVector);
-    data.majorP.rotate(angleVector);
+    data.majorP.rotate(angle);
     //calculateEndpoints();
     calculateBorders();
 }
