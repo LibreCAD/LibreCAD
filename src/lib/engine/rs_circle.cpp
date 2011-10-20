@@ -80,7 +80,7 @@ double RS_Circle::getLength() const {
  * @param r Radius
  */
 bool RS_Circle::createFromCR(const RS_Vector& c, double r) {
-    if (fabs(r)>RS_TOLERANCE) {
+    if (fabs(r)>RS_TOLERANCE && c.valid ) {
         data.radius = fabs(r);
         data.center = c;
         return true;
@@ -206,7 +206,7 @@ bool RS_Circle::createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& 
     RS_VectorSolutions sol=RS_Information::getIntersectionLineLine(tri[0],tri[1]);
     if(sol.getNumber() == 0 ) {//move parallel to opposite
         std::swap(tri[1],tri[2]);
-    sol=RS_Information::getIntersectionLineLine(tri[0],tri[1]);
+        sol=RS_Information::getIntersectionLineLine(tri[0],tri[1]);
     }
     if(sol.getNumber() == 0 ) return false;
     RS_Vector vp0(sol.get(0));
@@ -222,14 +222,14 @@ bool RS_Circle::createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& 
     a=dvp.angle();
     double angle0(0.5*(vl0.angle() + a));
     if( RS_Vector::dotP(vp,vl0) <0.) {
-                  angle0 += 0.5*M_PI;
+        angle0 += 0.5*M_PI;
     }
 
     RS_Line line0(vp0, vp0+RS_Vector(angle0));//first bisecting line
     vl0=(tri[2]->getEndpoint() - tri[2]->getStartpoint());
     angle0=0.5*(vl0.angle() + a+M_PI);
     if( RS_Vector::dotP(vp,vl0) <0.) {
-                  angle0 += 0.5*M_PI;
+        angle0 += 0.5*M_PI;
     }
     RS_Line line1(vp1, vp1+RS_Vector(angle0));//second bisection line
     sol=RS_Information::getIntersectionLineLine(&line0,&line1);
@@ -264,20 +264,14 @@ RS_Vector RS_Circle::getNearestEndpoint(const RS_Vector& /*coord*/, double* dist
 RS_Vector RS_Circle::getNearestPointOnEntity(const RS_Vector& coord,
         bool /*onEntity*/, double* dist, RS_Entity** entity)const {
 
-    RS_Vector vec(false);
     if (entity!=NULL) {
         *entity = const_cast<RS_Circle*>(this);
     }
-
-    double angle = (coord-data.center).angle();
-    vec.setPolar(data.radius, angle);
-    vec+=data.center;
-
-    if (dist!=NULL) {
-        *dist = fabs((vec-data.center).magnitude()-data.radius);
-    }
-
-    return vec;
+    RS_Vector vp(coord - data.center);
+    double d(vp.magnitude());
+    if( d < RS_TOLERANCE ) return RS_Vector(false);
+    vp *= data.radius/d;
+    return data.center + vp;
 }
 
 
@@ -296,6 +290,7 @@ RS_Vector RS_Circle::getMiddlePoint(void)const
 {
     return RS_Vector(false);
 }
+
 RS_Vector RS_Circle::getNearestMiddle(const RS_Vector& /*coord*/,
                                       double* dist,
                                       const int /*middlePoints*/
