@@ -189,11 +189,10 @@ void RS_ActionDrawEllipseFociPoint::coordinateEvent(RS_CoordinateEvent* e) {
 
 //fixme, support command line
 
-/*
 void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent* e) {
-    QString c = e->getCommand().toLower();
+    QString cmd = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
+    if (checkCommand("help", cmd)) {
         if (RS_DIALOGFACTORY!=NULL) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
@@ -202,57 +201,62 @@ void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent* e) {
     }
 
     switch (getStatus()) {
-    case SetFocus1: {
-            bool ok;
-            double m = RS_Math::eval(c, &ok);
-            if (ok==true) {
-                ratio = m / major.magnitude();
-                if (!isArc) {
-                    trigger();
-                } else {
-                    setStatus(SetAngle1);
-                }
-            } else {
-                if (RS_DIALOGFACTORY!=NULL) {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
-        }
-        break;
+    //    case SetFocus1: {
+    //            bool ok;
+    //            double m = RS_Math::eval(c, &ok);
+    //            if (ok==true) {
+    //                ratio = m / major.magnitude();
+    //                if (!isArc) {
+    //                    trigger();
+    //                } else {
+    //                    setStatus(SetAngle1);
+    //                }
+    //            } else {
+    //                if (RS_DIALOGFACTORY!=NULL) {
+    //                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+    //                }
+    //            }
+    //        }
+    //        break;
 
-    case SetAngle1: {
-            bool ok;
-            double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
-                angle1 = RS_Math::deg2rad(a);
-                setStatus(SetAngle2);
-            } else {
-                if (RS_DIALOGFACTORY!=NULL) {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
-        }
-        break;
+    //    case SetFocus2: {
+    //            bool ok;
+    //            double a = RS_Math::eval(c, &ok);
+    //            if (ok==true) {
+    //                angle1 = RS_Math::deg2rad(a);
+    //                setStatus(SetAngle2);
+    //            } else {
+    //                if (RS_DIALOGFACTORY!=NULL) {
+    //                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+    //                }
+    //            }
+    //        }
+    //        break;
 
-    case SetAngle2: {
-            bool ok;
-            double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
-                angle2 = RS_Math::deg2rad(a);
+    case SetPoint: {
+        bool ok;
+        double a = RS_Math::eval(cmd, &ok);
+        if (ok==true) {
+            e->accept();
+//            std::cout<<"e->isAccepted()="<<e->isAccepted()<<std::endl;
+            d=0.5*fabs(a);
+            if (d > c + RS_TOLERANCE) {
                 trigger();
-            } else {
-                if (RS_DIALOGFACTORY!=NULL) {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
+            }else{
+                RS_DIALOGFACTORY->commandMessage(QString::number(fabs(a))+" is smaller than distance between foci");
+            }
+        } else {
+            if (RS_DIALOGFACTORY!=NULL) {
+                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
             }
         }
+    }
         break;
 
     default:
         break;
     }
 }
-*/
 
 
 QStringList RS_ActionDrawEllipseFociPoint::getAvailableCommands() {
@@ -277,7 +281,7 @@ void RS_ActionDrawEllipseFociPoint::updateMouseButtonHints() {
 
         case SetPoint:
             RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Specify a point on ellipse"),
+                tr("Specify a point on ellipse or total distance to foci"),
                 tr("Back"));
             break;
 

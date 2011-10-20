@@ -940,6 +940,7 @@ bool QG_ActionHandler::command(const QString& cmd) {
 
     // if the current action can't deal with the command,
     //   it might be intended to launch a new command
+//    std::cout<<"QG_ActionHandler::command(): e.isAccepted()="<<e.isAccepted()<<std::endl;
     if (!e.isAccepted()) {
                 RS_DEBUG->print("QG_ActionHandler::command: convert cmd to action type");
         // command for new action:
@@ -950,6 +951,8 @@ bool QG_ActionHandler::command(const QString& cmd) {
                         RS_DEBUG->print("QG_ActionHandler::command: current action set");
             return true;
         }
+    }else{
+        return true;
     }
 
         RS_DEBUG->print("QG_ActionHandler::command: current action not set");

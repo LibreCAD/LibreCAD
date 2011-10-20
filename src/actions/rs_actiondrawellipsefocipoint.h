@@ -58,7 +58,7 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent* e);
 
         virtual void coordinateEvent(RS_CoordinateEvent* e);
-//    virtual void commandEvent(RS_CommandEvent* e);
+    virtual void commandEvent(RS_CommandEvent* e);
         virtual QStringList getAvailableCommands();
 
     virtual void updateMouseButtonHints();
