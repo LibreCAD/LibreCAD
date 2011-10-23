@@ -18,6 +18,7 @@ mkdir -p $RESOURCEDIR/Resources/doc
 mkdir -p $RESOURCEDIR/PlugIns
 cp support/patterns/*.dxf $RESOURCEDIR/Resources/patterns
 cp support/fonts/*.cxf $RESOURCEDIR/Resources/fonts
+cp support/fonts/*.lff $RESOURCEDIR/Resources/fonts
 cp support/doc/*.qhc $RESOURCEDIR/Resources/doc
 cp support/doc/*.qch $RESOURCEDIR/Resources/doc
 find support/library -type d -not -path "*.svn*"  | sed s/support// | xargs -IFILES  mkdir $RESOURCEDIR/Resources/FILES 
