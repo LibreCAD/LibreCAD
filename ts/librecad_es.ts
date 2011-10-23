@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="es">
 <context>
-    <name></name>
+    <name/>
     <message>
         <source>Loading..</source>
         <translation type="obsolete">Cargando...</translation>
@@ -328,8 +327,8 @@ Date: %1</source>
         <translation type="obsolete">Controles de Simulación</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Bloque &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Bloque '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -386,12 +385,12 @@ Ahora puede guardar su trabajo.</translation>
         <translation>&amp;Spline</translation>
     </message>
     <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation>Corriendo script &apos;%1&apos;</translation>
+        <source>Running script '%1'</source>
+        <translation>Corriendo script '%1'</translation>
     </message>
     <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation>Insertando bloque &apos;%1&apos;</translation>
+        <source>Inserting block '%1'</source>
+        <translation>Insertando bloque '%1'</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -432,7 +431,7 @@ Guardado automático desactivado.</translation>
         <translation>Ayuda</translation>
     </message>
     <message>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
         <translation>Se encontraron problemas al buscar archivos de ayuda en el sistema.</translation>
     </message>
     <message>
@@ -472,7 +471,7 @@ Guardado automático desactivado.</translation>
         <translation>Revisión SCM: %1</translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it's website.</source>
         <translation>Por favor done a LibreCAD para ayudar a mantener el codigo fuente y el sitio web.</translation>
     </message>
 </context>
@@ -1994,7 +1993,7 @@ Guardado automático desactivado.</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntero de &amp;Selección</translation>
     </message>
 </context>
 <context>
@@ -2065,8 +2064,8 @@ Guardado automático desactivado.</translation>
         <translation>Renombrando Bloque</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>No se pudo nombrar el bloque. El bloque &quot;%1&quot; ya existe.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>No se pudo nombrar el bloque. El bloque "%1" ya existe.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -2309,7 +2308,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>Area of polygon</source>
-        <translation>Área de poligono</translation>
+        <translation>Área de polígono</translation>
     </message>
 </context>
 <context>
@@ -2390,27 +2389,27 @@ en otra ventana</translation>
         <translation>Principal</translation>
     </message>
     <message>
-        <source>Show menu &quot;Lines&quot;</source>
+        <source>Show menu "Lines"</source>
         <translation>Mostrar menú Líneas</translation>
     </message>
     <message>
-        <source>Show menu &quot;Arcs&quot;</source>
+        <source>Show menu "Arcs"</source>
         <translation>Mostrar menú Arcos</translation>
     </message>
     <message>
-        <source>Show menu &quot;Circles&quot;</source>
+        <source>Show menu "Circles"</source>
         <translation>Mostrar menú Círculos</translation>
     </message>
     <message>
-        <source>Show menu &quot;Points&quot;</source>
-        <translation type="obsolete">&quot;Puntos&quot;</translation>
+        <source>Show menu "Points"</source>
+        <translation type="obsolete">"Puntos"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Measure&quot;</source>
+        <source>Show menu "Measure"</source>
         <translation>Mostrar menú Medir</translation>
     </message>
     <message>
-        <source>Show menu &quot;Ellipses&quot;</source>
+        <source>Show menu "Ellipses"</source>
         <translation>Mostrar menú Elipses</translation>
     </message>
     <message>
@@ -2418,11 +2417,11 @@ en otra ventana</translation>
         <translation>Sombreado / Relleno solido</translation>
     </message>
     <message>
-        <source>Show menu &quot;Edit&quot;</source>
+        <source>Show menu "Edit"</source>
         <translation>Mostrar menú Edición</translation>
     </message>
     <message>
-        <source>Show menu &quot;Dimensions&quot;</source>
+        <source>Show menu "Dimensions"</source>
         <translation>Mostrar menú Acotar</translation>
     </message>
     <message>
@@ -2430,7 +2429,7 @@ en otra ventana</translation>
         <translation>Textos</translation>
     </message>
     <message>
-        <source>Show menu &quot;Select&quot;</source>
+        <source>Show menu "Select"</source>
         <translation>Mostrar menú Selección</translation>
     </message>
     <message>
@@ -2542,11 +2541,11 @@ en otra ventana</translation>
     </message>
     <message>
         <source>Move / Copy</source>
-        <translation type="unfinished">Mover / Copiar</translation>
+        <translation>Mover / Copiar</translation>
     </message>
     <message>
         <source>Rotate Two</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotar Dos</translation>
     </message>
 </context>
 <context>
@@ -2783,7 +2782,7 @@ en otra ventana</translation>
     </message>
     <message>
         <source>Magenta</source>
-        <translation>Violeta</translation>
+        <translation>Magenta</translation>
     </message>
     <message>
         <source>Black / White</source>
@@ -3225,12 +3224,12 @@ en otra ventana</translation>
         <translation>Bienvenido</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Bienvenidos a LibreCAD&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Bienvenidos a LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Por favor seleccione la unidad a utilizar en sus nuevos dibujos y el idioma preferido.&lt;br&gt;
@@ -3536,7 +3535,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>Fractional</source>
-        <translation>Fracción</translation>
+        <translation>Fraccional</translation>
     </message>
     <message>
         <source>Angle</source>
@@ -3599,7 +3598,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
         <translation>Gradianes</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Unidades topográficas</translation>
     </message>
     <message>
@@ -3607,8 +3606,8 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
         <translation>Opciones</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Para mediciones de &quot;Ingenieria&quot; y &quot;Arquitectónicas&quot;, la unidad debe ser la Pulgada.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>Para mediciones de "Ingenieria" y "Arquitectónicas", la unidad debe ser la Pulgada.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -4015,7 +4014,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>&amp;Meta Grid Color:</source>
-        <translation>&amp;Meta Color de rejilla:</translation>
+        <translation>Color de &amp;Meta-rejilla:</translation>
     </message>
     <message>
         <source>Program Defaults</source>
@@ -4344,7 +4343,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>Alignment</source>
-        <translation>Alineamiento</translation>
+        <translation>Alineación</translation>
     </message>
     <message>
         <source>Top Right</source>
@@ -4416,7 +4415,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>Dollar ($)</source>
-        <translation>Moneda ($)</translation>
+        <translation>Dolar ($)</translation>
     </message>
     <message utf8="true">
         <source>Copyright (©)</source>
@@ -4460,63 +4459,63 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>Char:</source>
-        <translation>Char:</translation>
+        <translation>Carácter:</translation>
     </message>
     <message>
         <source>[0000-007F] Basic Latin</source>
-        <translation>[0000-007F] Basic Latin</translation>
+        <translation>[0000-007F] Latín Básico</translation>
     </message>
     <message>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation>[0080-00FF] Latin-1 Supplementary</translation>
+        <translation>[0080-00FF] Latín-1 Suplementario</translation>
     </message>
     <message>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] Latin Extended-A</translation>
+        <translation>[0100-017F] Latín Extendido-A</translation>
     </message>
     <message>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] Latin Extended-B</translation>
+        <translation>[0180-024F] Latín Extendido-B</translation>
     </message>
     <message>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] IPA Extensions</translation>
+        <translation>[0250-02AF] Extensiones IPA</translation>
     </message>
     <message>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation>[02B0-02FF] Spacing Modifier Letters</translation>
+        <translation>[02B0-02FF] Letras Modificadoras de Espaciado</translation>
     </message>
     <message>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation>[0300-036F] Combining Diacritical Marks</translation>
+        <translation>[0300-036F] Signos Diacríticos para Combinar</translation>
     </message>
     <message>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation>[0370-03FF] Greek and Coptic</translation>
+        <translation>[0370-03FF] Griego y Copto</translation>
     </message>
     <message>
         <source>[0400-04FF] Cyrillic</source>
-        <translation>[0400-04FF] Cyrillic</translation>
+        <translation>[0400-04FF] Cirílico</translation>
     </message>
     <message>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation>[0500-052F] Cyrillic Supplementary</translation>
+        <translation>[0500-052F] Cirílico Suplementario</translation>
     </message>
     <message>
         <source>[0530-058F] Armenian</source>
-        <translation>[0530-058F] Armenian</translation>
+        <translation>[0530-058F] Armenio</translation>
     </message>
     <message>
         <source>[0590-05FF] Hebrew</source>
-        <translation>[0590-05FF] Hebrew</translation>
+        <translation>[0590-05FF] Hebreo</translation>
     </message>
     <message>
         <source>[0600-06FF] Arabic</source>
-        <translation>[0600-06FF] Arabic</translation>
+        <translation>[0600-06FF] Árabe</translation>
     </message>
     <message>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] Syriac</translation>
+        <translation>[0700-074F] Siriaco</translation>
     </message>
     <message>
         <source>[0780-07BF] Thaana</source>
@@ -4552,35 +4551,35 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>[0C80-0CFF] Kannada</source>
-        <translation>[0C80-0CFF] Kannada</translation>
+        <translation>[0C80-0CFF] Kannada (canarés)</translation>
     </message>
     <message>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] Malayalam</translation>
+        <translation>[0D00-0D7F] Malayalam (malabar)</translation>
     </message>
     <message>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] Sinhala</translation>
+        <translation>[0D80-0DFF] Sinhala (singalés)</translation>
     </message>
     <message>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] Thai</translation>
+        <translation>[0E00-0E7F] Tailandés</translation>
     </message>
     <message>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] Lao</translation>
+        <translation>[0E80-0EFF] Lao (laosiano)</translation>
     </message>
     <message>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation>[0F00-0FFF] Tibetan</translation>
+        <translation>[0F00-0FFF] Tibetano</translation>
     </message>
     <message>
         <source>[1000-109F] Myanmar</source>
-        <translation>[1000-109F] Myanmar</translation>
+        <translation>[1000-109F] Myanmar (birmano)</translation>
     </message>
     <message>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] Georgian</translation>
+        <translation>[10A0-10FF] Georgiano</translation>
     </message>
     <message>
         <source>[1100-11FF] Hangul Jamo</source>
@@ -4588,15 +4587,15 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>[1200-137F] Ethiopic</source>
-        <translation>[1200-137F] Ethiopic</translation>
+        <translation>[1200-137F] Etíope</translation>
     </message>
     <message>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] Cherokee</translation>
+        <translation>[13A0-13FF] Cheroqui</translation>
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] Unified Canadian Aboriginal Syllabic</translation>
+        <translation>[1400-167F] Silabarios Indígenas Canadienses Unificados</translation>
     </message>
     <message>
         <source>[1680-169F] Ogham</source>
@@ -4604,15 +4603,15 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>[16A0-16FF] Runic</source>
-        <translation>[16A0-16FF] Runic</translation>
+        <translation>[16A0-16FF] Rúnico</translation>
     </message>
     <message>
         <source>[1700-171F] Tagalog</source>
-        <translation>[1700-171F] Tagalog</translation>
+        <translation>[1700-171F] Tagalo</translation>
     </message>
     <message>
         <source>[1720-173F] Hanunoo</source>
-        <translation>[1720-173F] Hanunoo</translation>
+        <translation>[1720-173F] Hanuno'o</translation>
     </message>
     <message>
         <source>[1740-175F] Buhid</source>
@@ -4624,31 +4623,31 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>[1780-17FF] Khmer</source>
-        <translation>[1780-17FF] Khmer</translation>
+        <translation>[1780-17FF] Khmer (camboyano)</translation>
     </message>
     <message>
         <source>[1800-18AF] Mongolian</source>
-        <translation>[1800-18AF] Mongolian</translation>
+        <translation>[1800-18AF] Mongol</translation>
     </message>
     <message>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] Latin Extended Additional</translation>
+        <translation>[1E00-1EFF] Latín Extendido Adicional</translation>
     </message>
     <message>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] Greek Extended</translation>
+        <translation>[1F00-1FFF] Griego Extendido</translation>
     </message>
     <message>
         <source>[2000-206F] General Punctuation</source>
-        <translation>[2000-206F] General Punctuation</translation>
+        <translation>[2000-206F] Puntuación General</translation>
     </message>
     <message>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation>[2070-209F] Superscripts and Subscripts</translation>
+        <translation>[2070-209F] Superíndices y Subíndices</translation>
     </message>
     <message>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation>[20A0-20CF] Currency Symbols</translation>
+        <translation>[20A0-20CF] Símbolos Monetarios</translation>
     </message>
     <message>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
@@ -5470,7 +5469,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>Continuous</source>
-        <translation>Contínua</translation>
+        <translation>Continua</translation>
     </message>
     <message>
         <source>Dot</source>
@@ -5627,7 +5626,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation>Sentido Anti-horario</translation>
+        <translation>Sentido Antihorario</translation>
     </message>
 </context>
 <context>
@@ -5767,7 +5766,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>Width:</source>
-        <translation>Anchura:</translation>
+        <translation>Ancho:</translation>
     </message>
     <message>
         <source>Color:</source>
@@ -5900,32 +5899,32 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
         <translation>Eliminar Capa</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation>La capa &quot;%1&quot; y todos sus objetos serán eliminados.</translation>
+        <source>Layer "%1" and all entities on it will be removed.</source>
+        <translation>La capa "%1" y todos sus objetos serán eliminados.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>La capa &quot;%1&quot; no podrá ser eliminada.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>La capa "%1" no podrá ser eliminada.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
-        <translation>Diálogo de la capa</translation>
+        <translation>Diálogo de capa</translation>
     </message>
     <message>
         <source>Remove Block</source>
         <translation>Eliminar Bloque</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>El bloque &quot;%1&quot; y todos sus objetos serán eliminados.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>El bloque "%1" y todos sus objetos serán eliminados.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Propiedades de capa</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Ya existe una capa &quot;%1&quot;. Por favor especifique otro nombre.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Ya existe una capa "%1". Por favor especifique otro nombre.</translation>
     </message>
 </context>
 <context>
@@ -6010,7 +6009,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1.x file %1</translation>
+        <translation>Archivo QCad 1.x %1</translation>
     </message>
     <message>
         <source>Font %1</source>
@@ -6286,8 +6285,8 @@ Do you want to replace it?</source>
         <translation>Espacio entre filas:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -6653,7 +6652,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Invalid arc data.</source>
-        <translation>Dato del arco invalidado.</translation>
+        <translation>Datos de arco inválidos.</translation>
     </message>
     <message>
         <source>Specify startpoint or [Center]</source>
@@ -6692,7 +6691,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify base entity</source>
-        <translation>Especificar objeto</translation>
+        <translation>Especificar objeto base</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6758,7 +6757,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Invalid Circle data.</source>
-        <translation>Dato de circunferencia inválido.</translation>
+        <translation>Datos de circunferencia inválido.</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -6968,8 +6967,8 @@ Do you want to replace it?</source>
         <translation>Factor:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -7304,8 +7303,8 @@ Do you want to replace it?</source>
         <translation>Expresión no válida</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -8154,12 +8153,12 @@ Do you want to replace it?</source>
         <translation>Factor:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>No se puede abrir el archivo &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>No se puede abrir el archivo '%1'</translation>
     </message>
 </context>
 <context>
@@ -8801,7 +8800,7 @@ Do you want to replace it?</source>
         <translation>&amp;Añadir punto</translation>
     </message>
     <message>
-        <source>Add polyline&apos;s node</source>
+        <source>Add polyline's node</source>
         <translation>Añadir punto en Polilínea</translation>
     </message>
     <message>
@@ -8825,7 +8824,7 @@ Do you want to replace it?</source>
         <translation>Seleccionar polilínea para añadir puntos</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Especifique los puntos a añadir</translation>
     </message>
     <message>
@@ -8844,7 +8843,7 @@ Do you want to replace it?</source>
         <translation>&amp;Añadir punto</translation>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
+        <source>Append polyline's node</source>
         <translation>Añadir punto a polilínea</translation>
     </message>
     <message>
@@ -8887,7 +8886,7 @@ Do you want to replace it?</source>
         <translation>&amp;Borrar punto</translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
+        <source>Delete polyline's node</source>
         <translation>Borrar punto en polilínea</translation>
     </message>
     <message>
@@ -8911,7 +8910,7 @@ Do you want to replace it?</source>
         <translation>Especifique polilínea para borrar punto</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Especifique punto a borrar</translation>
     </message>
     <message>
@@ -9035,7 +9034,7 @@ Do you want to replace it?</source>
         <translation>Recor&amp;tar segmentos</translation>
     </message>
     <message>
-        <source>Trim polyline&apos;s segments</source>
+        <source>Trim polyline's segments</source>
         <translation>Recortar segmentos de polilínea</translation>
     </message>
     <message>

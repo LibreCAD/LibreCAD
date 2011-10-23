@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="pl">
 <context>
@@ -316,8 +315,8 @@ Możesz teraz jedynie zapisać swoją pracę.</translation>
         <translation type="obsolete">Sterowanie symulacją</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Blok &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Blok '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -380,12 +379,12 @@ Możesz teraz zapisać Twoją pracę.
         <translation>&amp;Krzywa składana</translation>
     </message>
     <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation>Uruchamianie skryptu &apos;%1&apos;</translation>
+        <source>Running script '%1'</source>
+        <translation>Uruchamianie skryptu '%1'</translation>
     </message>
     <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation>Wstawianie bloku &apos;%1&apos;</translation>
+        <source>Inserting block '%1'</source>
+        <translation>Wstawianie bloku '%1'</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -426,7 +425,7 @@ Autozapis wyłączony.</translation>
         <translation>Pomoc</translation>
     </message>
     <message>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
         <translation>Kurde, nie mogę odnaleźć plików pomocy.</translation>
     </message>
     <message>
@@ -451,7 +450,7 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>Splash and Logo supplied by</source>
-        <translation>Splash i logo dostarczył</translation>
+        <translation>Splash i logo wykonał</translation>
     </message>
     <message>
         <source>Main Website : </source>
@@ -466,7 +465,7 @@ Autozapis wyłączony.</translation>
         <translation>Rewizja SCM: %1</translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it's website.</source>
         <translation>Prosimy o dotację, która umożliwi rozwój programu LibreCAD i strony internetowej. </translation>
     </message>
 </context>
@@ -1987,7 +1986,7 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished"></translation>
+        <translation>Wskaźnik &amp;wyboru</translation>
     </message>
 </context>
 <context>
@@ -2058,8 +2057,8 @@ Autozapis wyłączony.</translation>
         <translation>Zmiana nazwy bloku</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Nie można nazwać bloku. Blok o nazwie &quot;%1&quot; już istnieje.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Nie można nazwać bloku. Blok o nazwie "%1" już istnieje.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -2383,48 +2382,48 @@ w oddzielnym oknie</translation>
         <translation>Główne</translation>
     </message>
     <message>
-        <source>Show menu &quot;Lines&quot;</source>
-        <translation>Pokaż menu &quot;Linie&quot;</translation>
+        <source>Show menu "Lines"</source>
+        <translation>Pokaż menu "Linie"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Arcs&quot;</source>
-        <translation>Pokaż menu &quot;Łuki&quot;</translation>
+        <source>Show menu "Arcs"</source>
+        <translation>Pokaż menu "Łuki"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Circles&quot;</source>
-        <translation>Pokaż menu &quot;Okręgi&quot;</translation>
+        <source>Show menu "Circles"</source>
+        <translation>Pokaż menu "Okręgi"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Points&quot;</source>
-        <translation type="obsolete">Pokaż menu &quot;Punkty&quot;</translation>
+        <source>Show menu "Points"</source>
+        <translation type="obsolete">Pokaż menu "Punkty"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Measure&quot;</source>
-        <translation>Pokaż menu &quot;Pomiar&quot;</translation>
+        <source>Show menu "Measure"</source>
+        <translation>Pokaż menu "Pomiar"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Ellipses&quot;</source>
-        <translation>Pokaz menu &quot;Elipsy&quot;</translation>
+        <source>Show menu "Ellipses"</source>
+        <translation>Pokaz menu "Elipsy"</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
         <translation>Kreskowanie / całkowite Wypełnienia</translation>
     </message>
     <message>
-        <source>Show menu &quot;Edit&quot;</source>
-        <translation>Pokaż menu &quot;Edycja&quot;</translation>
+        <source>Show menu "Edit"</source>
+        <translation>Pokaż menu "Edycja"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Dimensions&quot;</source>
-        <translation>Pokaż menu &quot;Wymiarowanie&quot;</translation>
+        <source>Show menu "Dimensions"</source>
+        <translation>Pokaż menu "Wymiarowanie"</translation>
     </message>
     <message>
         <source>Texts</source>
         <translation>Teksty</translation>
     </message>
     <message>
-        <source>Show menu &quot;Select&quot;</source>
-        <translation>Pokaż menu &quot;Zaznacz&quot;</translation>
+        <source>Show menu "Select"</source>
+        <translation>Pokaż menu "Zaznacz"</translation>
     </message>
     <message>
         <source>Create Block</source>
@@ -2539,11 +2538,11 @@ w oddzielnym oknie</translation>
     </message>
     <message>
         <source>Move / Copy</source>
-        <translation type="unfinished">Przesuń / kopiuj</translation>
+        <translation>Przesuń / kopiuj</translation>
     </message>
     <message>
         <source>Rotate Two</source>
-        <translation type="unfinished">Obróć dwa</translation>
+        <translation>Obróć dwa</translation>
     </message>
 </context>
 <context>
@@ -3218,12 +3217,12 @@ w oddzielnym oknie</translation>
         <translation>Witaj</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Witaj w programie QCad&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Witaj w programie QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Proszę wybrać jednostkę którą chcesz użyć do tworzena nowych rysunków oraz Twój preferowany język.&lt;br&gt;
@@ -3592,7 +3591,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
         <translation>Gradusy</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Jednostki geometryczne</translation>
     </message>
     <message>
@@ -3600,8 +3599,8 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
         <translation>Opcje</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Dla formatu długości &apos;Inżynierski&apos; i &apos;Architektoniczny&apos;, jednostka musi być ustawiona na cale.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>Dla formatu długości 'Inżynierski' i 'Architektoniczny', jednostka musi być ustawiona na cale.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -4008,7 +4007,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>Program Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia domyślne</translation>
     </message>
     <message>
         <source>Time between automatc saving of thedocument in minutes.</source>
@@ -4023,7 +4022,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>Drawing Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmienne rysunku</translation>
     </message>
     <message>
         <source>Variable</source>
@@ -5379,7 +5378,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     <name>QG_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation>Opcje &quot;linii równoległej poprzez&quot;</translation>
+        <translation>Opcje "linii równoległej poprzez"</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -5733,7 +5732,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     <name>QG_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation type="unfinished">Opcje wyrównywania o wartość</translation>
+        <translation>Opcje wyrównywania o wartość</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
@@ -5889,12 +5888,12 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
         <translation>Usuń warstwę</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation>Warstwa &quot;%1&quot; oraz wszystkie obiekty na niej zostaną usunięte.</translation>
+        <source>Layer "%1" and all entities on it will be removed.</source>
+        <translation>Warstwa "%1" oraz wszystkie obiekty na niej zostaną usunięte.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Warstwa &quot;%1&quot; nie może zostać usunięta.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>Warstwa "%1" nie może zostać usunięta.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -5905,16 +5904,16 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
         <translation>Usuń blok</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Blok &quot;%1&quot; oraz wszystkie jego obiekty zostaną usunięte.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>Blok "%1" oraz wszystkie jego obiekty zostaną usunięte.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Właściwości warstwy</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Warstwa nazwana &quot;%1&quot; już istnieje. Proszę podać inną nazwę.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Warstwa nazwana "%1" już istnieje. Proszę podać inną nazwę.</translation>
     </message>
 </context>
 <context>
@@ -6119,7 +6118,7 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>LibreCAD query</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapytanie LibreCAD</translation>
     </message>
     <message>
         <source>enter a number</source>
@@ -6275,8 +6274,8 @@ Czy chcesz zastąpić?</translation>
         <translation>&amp;Wstaw blok</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -6956,8 +6955,8 @@ Czy chcesz zastąpić?</translation>
         <translation type="obsolete">Wstaw Obraz (Bitmapa)</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -7230,7 +7229,7 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>Specify through point</source>
-        <translation>Wskaż punkt &quot;poprzez&quot;</translation>
+        <translation>Wskaż punkt "poprzez"</translation>
     </message>
     <message>
         <source>Back</source>
@@ -7296,8 +7295,8 @@ Czy chcesz zastąpić?</translation>
         <translation type="obsolete">Rysuj wielobok ze środkiem i wierzchołkiem</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -8150,12 +8149,12 @@ Czy chcesz zastąpić?</translation>
         <translation type="obsolete">Wstawia obiekt z biblioteki części.</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Nie można otworzyć pliku &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Nie można otworzyć pliku '%1'</translation>
     </message>
 </context>
 <context>
@@ -8797,7 +8796,7 @@ Czy chcesz zastąpić?</translation>
         <translation>&amp;Dodaj wierzchołek</translation>
     </message>
     <message>
-        <source>Add polyline&apos;s node</source>
+        <source>Add polyline's node</source>
         <translation>Dołącz wierzchołek</translation>
     </message>
     <message>
@@ -8821,7 +8820,7 @@ Czy chcesz zastąpić?</translation>
         <translation>Zaznacz linię łamaną, aby dodać wierzchołki</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Zdefiniuj punkt nowego wierzchołka</translation>
     </message>
 </context>
@@ -8836,7 +8835,7 @@ Czy chcesz zastąpić?</translation>
         <translation>Dodaj &amp;wierzchołek</translation>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
+        <source>Append polyline's node</source>
         <translation>Dołącz wierzchołek</translation>
     </message>
     <message>
@@ -8883,7 +8882,7 @@ Czy chcesz zastąpić?</translation>
         <translation>&amp;Usuń wierzchołek</translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
+        <source>Delete polyline's node</source>
         <translation>Usuń wierzchołek</translation>
     </message>
     <message>
@@ -8907,7 +8906,7 @@ Czy chcesz zastąpić?</translation>
         <translation>Określ linię łamaną, by usunąć wierzchołek</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Zaznacz wierzchołek do usunięcia</translation>
     </message>
 </context>
@@ -9031,7 +9030,7 @@ Czy chcesz zastąpić?</translation>
         <translation>&amp;Przytnij odcinek</translation>
     </message>
     <message>
-        <source>Trim polyline&apos;s segments</source>
+        <source>Trim polyline's segments</source>
         <translation>Przytnij odcinek łamanej</translation>
     </message>
     <message>
@@ -9386,7 +9385,7 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>&amp;Pan Zoom</source>
-        <translation>&amp;Przesuń-zoom</translation>
+        <translation>&amp;Przesuń widok</translation>
     </message>
     <message>
         <source>Realtime Panning</source>
@@ -10122,7 +10121,7 @@ Czy chcesz zastąpić?</translation>
     <message>
         <source>tm</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>da</source>
@@ -10146,7 +10145,7 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>tm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>xt</source>
@@ -10214,7 +10213,7 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>sn</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>sm</source>
@@ -10234,7 +10233,7 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>k</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>back</source>
@@ -10243,7 +10242,7 @@ Czy chcesz zastąpić?</translation>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
