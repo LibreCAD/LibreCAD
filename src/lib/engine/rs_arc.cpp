@@ -812,7 +812,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
         return;
     }
 
-    patternOffset=(patternOffset - getLength()-0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
+    patternOffset=remainder(patternOffset - getLength()-0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
 
     if (ra<RS_TOLERANCE_ANGLE){
         return;
