@@ -445,61 +445,43 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patter
     painter->setPen(pen);
 
     // create pattern:
-    double* da= new double[pat->num];
-     // array of distances in x.
-//    double k=2.;
-//    double patternLength=0.;
+    double* da;
     int i(0),j(0);          // index counter
-    while(i<pat->num){
-//        da[j] = pat->pattern[i++] * styleFactor;
-        //fixme, styleFactor needed
-        da[j] = pat->pattern[i++]/ra ;
-//        if(fabs(da[j])<RS_TOLERANCE) continue;
-//        if(fabs(da[j])<k) k=fabs(da[j]);
-//        patternLength += fabs(da[j]);
-        j++;
-    }
-    if(!j){
+    if(pat->num>0){
+        da= new double[pat->num];
+        while(i<pat->num){
+            //        da[j] = pat->pattern[i++] * styleFactor;
+            //fixme, styleFactor needed
+            da[i] = pat->pattern[i]/ra ;
+            i++;
+        }
+        j=i;
+    }else {
         //invalid pattern
-        delete[] da;
         painter->drawArc(cp,
                          ra,
                          0.,2.*M_PI,
                          false);
         return;
     }
-//    k= 2./k;
-//    patternLength *=k;
-//    if (patternLength>80.) k*=80./patternLength;
-//    for(i=0;i<j;i++) {
-//        da[i]*=k/ra; //normalize pattern
-//    }
 
     double curA ( 0.0);
     double a2;
-    //double cx = getCenter().x * factor.x + offsetX;
-    //double cy = - a->getCenter().y * factor.y + getHeight() - offsetY;
+    bool notDone=true;
 
-    for(i=0;;) {
+    for(i=0;notDone;i=(i+1)%j) {
         a2= curA+fabs(da[i]);
-        if (a2<2.*M_PI) {
-            if (da[i]>0.){
-                painter->drawArc(cp, ra,
-                                 curA,
-                                 a2,
-                                 false);
-            }
-        } else {
-            if (da[i]>0.){
-                painter->drawArc(cp, ra,
-                                 curA,
-                                 2*M_PI,
-                                 false);
-            }
-            break;
+        if(a2>2.*M_PI) {
+            a2=2.*M_PI;
+            notDone=false;
+        }
+        if (da[i]>0.){
+            painter->drawArc(cp, ra,
+                             curA,
+                             a2,
+                             false);
         }
         curA=a2;
-        i=(i+1)%j;
     }
 
     delete[] da;
