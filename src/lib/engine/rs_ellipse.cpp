@@ -254,7 +254,7 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
         e.setReversed(false);
     }
     if(ra<RS_TOLERANCE) { //elipse too small
-        return(false);
+        return(RS_Vector(false));
     }
     if(getRatio()<RS_TOLERANCE) {
         //treat the ellipse as a line
