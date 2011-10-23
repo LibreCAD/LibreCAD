@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="ja">
 <context>
     <name>QC_ActionGetEnt</name>
     <message>
@@ -16,7 +16,7 @@
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
-        <translation type="unfinished"></translation>
+        <translation>点を指定する</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -38,31 +38,31 @@
     <name>QC_ApplicationWindow</name>
     <message>
         <source>Running script &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>スクリプト&apos;%1&apos;を機動中</translation>
     </message>
     <message>
         <source>Inserting block &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>ブロック&apos;%1&apos;を挿入中</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル(&amp;F)</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>取り込み</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>編集(&amp;E)</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>表示(&amp;V)</translation>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
-        <translation type="unfinished"></translation>
+        <translation>指令枠に焦点を合わせる(&amp;C)</translation>
     </message>
     <message>
         <source>CTRL+M</source>
@@ -70,27 +70,27 @@
     </message>
     <message>
         <source>&amp;Select</source>
-        <translation type="unfinished"></translation>
+        <translation>選択(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>描く(&amp;D)</translation>
     </message>
     <message>
         <source>&amp;Point</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">点(&amp;P)</translation>
     </message>
     <message>
         <source>&amp;Line</source>
-        <translation type="unfinished"></translation>
+        <translation>線(&amp;L)</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>円弧(&amp;A)</translation>
     </message>
     <message>
         <source>&amp;Circle</source>
-        <translation type="unfinished"></translation>
+        <translation>円(&amp;C)</translation>
     </message>
     <message>
         <source>&amp;Ellipse</source>
@@ -98,11 +98,11 @@
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished">スプライン(&amp;S)</translation>
+        <translation type="obsolete">スプライン(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>ポリライン(&amp;P)</translation>
     </message>
     <message>
         <source>&amp;Dimension</source>
@@ -339,6 +339,22 @@ Auto-save disabled.</source>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning: File already opened : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot save the file </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> , please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -396,7 +412,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Endpoints</source>
-        <translation>端点(&amp;E)</translation>
+        <translation type="obsolete">端点(&amp;E)</translation>
     </message>
     <message>
         <source>Snap to endpoints</source>
@@ -408,7 +424,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;On Entity</source>
-        <translation>図形上(&amp;O)</translation>
+        <translation type="obsolete">図形上(&amp;O)</translation>
     </message>
     <message>
         <source>Snap to nearest point on entity</source>
@@ -508,7 +524,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="obsolete">垂直制限(&amp;V)</translation>
+        <translation type="unfinished">垂直制限(&amp;V)</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -627,11 +643,15 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Restrict&amp;Vertically</source>
+        <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Selection pointer</source>
+        <source>&amp;Endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;OnEntity</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -647,7 +667,11 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation>反時計回り</translation>
+        <translation type="obsolete">反時計回り</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -658,7 +682,25 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>半径:</translation>
+        <translation type="obsolete">半径:</translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">角度</translation>
     </message>
 </context>
 <context>
@@ -855,6 +897,14 @@ in a separate window</source>
         <source>Concentric</source>
         <translation>同心円</translation>
     </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CadToolBarDim</name>
@@ -898,6 +948,10 @@ in a separate window</source>
         <source>Leader</source>
         <translation>補助線寸法</translation>
     </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="unfinished">同心円</translation>
+    </message>
 </context>
 <context>
     <name>QG_CadToolBarEllipses</name>
@@ -916,6 +970,30 @@ in a separate window</source>
     <message>
         <source>Back to main menu</source>
         <translation>主メニューに戻る</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse by foci and a point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw Ellipse with by center and 3 points on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="unfinished">同心円</translation>
     </message>
 </context>
 <context>
@@ -947,6 +1025,10 @@ in a separate window</source>
     <message>
         <source>Area of polygon</source>
         <translation>ポリゴンの面積</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="unfinished">同心円</translation>
     </message>
 </context>
 <context>
@@ -1019,6 +1101,10 @@ in a separate window</source>
         <source>Parallels through point</source>
         <translation>端点を通過する平行線</translation>
     </message>
+    <message>
+        <source>Tangents to a circle, orthogonal to a line</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CadToolBarMain</name>
@@ -1028,43 +1114,43 @@ in a separate window</source>
     </message>
     <message>
         <source>Show menu &quot;Lines&quot;</source>
-        <translation>線分メニュ表示</translation>
+        <translation type="obsolete">線分メニュ表示</translation>
     </message>
     <message>
         <source>Show menu &quot;Arcs&quot;</source>
-        <translation>円弧メニュ表示</translation>
+        <translation type="obsolete">円弧メニュ表示</translation>
     </message>
     <message>
         <source>Show menu &quot;Circles&quot;</source>
-        <translation>円メニュ表示</translation>
+        <translation type="obsolete">円メニュ表示</translation>
     </message>
     <message>
         <source>Show menu &quot;Measure&quot;</source>
-        <translation>測定メニュ表示</translation>
+        <translation type="obsolete">測定メニュ表示</translation>
     </message>
     <message>
         <source>Show menu &quot;Ellipses&quot;</source>
-        <translation>楕円メニュ表示</translation>
+        <translation type="obsolete">楕円メニュ表示</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
-        <translation>ハッチ／塗りつぶし</translation>
+        <translation type="obsolete">ハッチ／塗りつぶし</translation>
     </message>
     <message>
         <source>Show menu &quot;Edit&quot;</source>
-        <translation>編集メニュ表示</translation>
+        <translation type="obsolete">編集メニュ表示</translation>
     </message>
     <message>
         <source>Show menu &quot;Dimensions&quot;</source>
-        <translation>寸法メニュ表示</translation>
+        <translation type="obsolete">寸法メニュ表示</translation>
     </message>
     <message>
         <source>Texts</source>
-        <translation>テキスト</translation>
+        <translation type="obsolete">テキスト</translation>
     </message>
     <message>
         <source>Show menu &quot;Select&quot;</source>
-        <translation>選択メニュ表示</translation>
+        <translation type="obsolete">選択メニュ表示</translation>
     </message>
     <message>
         <source>Create Block</source>
@@ -1072,7 +1158,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Raster Image</source>
-        <translation>イメージ</translation>
+        <translation type="obsolete">イメージ</translation>
     </message>
     <message>
         <source>Points</source>
@@ -1080,11 +1166,67 @@ in a separate window</source>
     </message>
     <message>
         <source>Splines</source>
-        <translation>スプライン</translation>
+        <translation type="obsolete">スプライン</translation>
     </message>
     <message>
         <source>Polylines</source>
-        <translation>ポリライン</translation>
+        <translation type="obsolete">ポリライン</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Lines&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Arcs&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Circles&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Ellipses&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Polylines&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw Splines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw Points</source>
+        <translation type="unfinished">点作図</translation>
+    </message>
+    <message>
+        <source>Insert Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Dimensions&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Hatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Modify&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Info&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Select&quot;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1245,7 +1387,15 @@ in a separate window</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="obsolete">既存セグメントからポリライン作成</translation>
+        <translation type="unfinished">既存セグメントからポリライン作成</translation>
+    </message>
+    <message>
+        <source>Polyline equidistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="unfinished">同心円</translation>
     </message>
 </context>
 <context>
@@ -1307,71 +1457,71 @@ in a separate window</source>
     <name>QG_CadToolBarSnap</name>
     <message>
         <source>Snap</source>
-        <translation>スナップ</translation>
+        <translation type="obsolete">スナップ</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>主メニューに戻る</translation>
+        <translation type="obsolete">主メニューに戻る</translation>
     </message>
     <message>
         <source>Snap to grid</source>
-        <translation>グリッドへスナップ</translation>
+        <translation type="obsolete">グリッドへスナップ</translation>
     </message>
     <message>
         <source>Free positioning</source>
-        <translation>任意位置指定</translation>
+        <translation type="obsolete">任意位置指定</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
-        <translation>終点へスナップ</translation>
+        <translation type="obsolete">終点へスナップ</translation>
     </message>
     <message>
         <source>Snap to closest point on entity</source>
-        <translation>図形上の近傍点へスナップ</translation>
+        <translation type="obsolete">図形上の近傍点へスナップ</translation>
     </message>
     <message>
         <source>Snap to center points</source>
-        <translation>中心点へスナップ</translation>
+        <translation type="obsolete">中心点へスナップ</translation>
     </message>
     <message>
         <source>Snap to middle points</source>
-        <translation>中点へスナップ</translation>
+        <translation type="obsolete">中点へスナップ</translation>
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>終点までの指定距離指示で点へスナップ</translation>
+        <translation type="obsolete">終点までの指定距離指示で点へスナップ</translation>
     </message>
     <message>
         <source>Snap to intersections automatically</source>
-        <translation>自動的に交点へスナップ</translation>
+        <translation type="obsolete">自動的に交点へスナップ</translation>
     </message>
     <message>
         <source>No Restriction</source>
-        <translation>制限なし</translation>
+        <translation type="obsolete">制限なし</translation>
     </message>
     <message>
         <source>Orthogonal Restriction</source>
-        <translation>直交制限</translation>
+        <translation type="obsolete">直交制限</translation>
     </message>
     <message>
         <source>Horizontal Restriction</source>
-        <translation>水平制限</translation>
+        <translation type="obsolete">水平制限</translation>
     </message>
     <message>
         <source>Vertical Restriction</source>
-        <translation>垂直制限</translation>
+        <translation type="obsolete">垂直制限</translation>
     </message>
     <message>
         <source>Move relative Zero</source>
-        <translation>相対原点へ移動</translation>
+        <translation type="obsolete">相対原点へ移動</translation>
     </message>
     <message>
         <source>Lock relative Zero</source>
-        <translation>相対原点を固定</translation>
+        <translation type="obsolete">相対原点を固定</translation>
     </message>
     <message>
         <source>Snap to intersections manually</source>
-        <translation>指定して交点へスナップ</translation>
+        <translation type="obsolete">指定して交点へスナップ</translation>
     </message>
 </context>
 <context>
@@ -1454,6 +1604,34 @@ in a separate window</source>
         <source>Unchanged</source>
         <translation>未変更</translation>
     </message>
+    <message>
+        <source>Dark Red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Yellow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Green</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Cyan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Magenta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Gray</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CommandWidget</name>
@@ -1464,6 +1642,10 @@ in a separate window</source>
     <message>
         <source>Command:</source>
         <translation>コマンド:</translation>
+    </message>
+    <message>
+        <source>Unknown command: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2100,7 +2282,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <name>QG_DlgMove</name>
     <message>
         <source>Moving Options</source>
-        <translation>移動オプション</translation>
+        <translation type="obsolete">移動オプション</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -2144,6 +2326,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move/Copy Options</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2629,11 +2815,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#ffffff</source>
-        <translation>#ffffff</translation>
+        <translation type="obsolete">#ffffff</translation>
     </message>
     <message>
         <source>#c0c0c0</source>
-        <translation>#c0c0c0</translation>
+        <translation type="obsolete">#c0c0c0</translation>
     </message>
     <message>
         <source>#808080</source>
@@ -2649,7 +2835,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#a54747</source>
-        <translation>#a54747</translation>
+        <translation type="obsolete">#a54747</translation>
     </message>
     <message>
         <source>#739373</source>
@@ -2692,47 +2878,55 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Time between automatc saving of thedocument in minutes.</source>
+        <source>Auto save time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto save time:</source>
+        <source>#FFFFFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#C0C0C0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#A54747</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>400</source>
+        <translation type="unfinished">400</translation>
+    </message>
+    <message>
+        <source>800</source>
+        <translation type="unfinished">800</translation>
+    </message>
+    <message>
+        <source>Drawing unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time between automatic saving of the document in minutes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto backup</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsVariables</name>
     <message>
-        <source>Drawing Variables</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel</source>
-        <translation type="unfinished">中止</translation>
+        <translation type="obsolete">中止</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -2768,6 +2962,41 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>Esc</source>
         <translation>Esc</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgPolyline</name>
+    <message>
+        <source>Polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">画層:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">図形</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">中止</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="unfinished">Esc</translation>
     </message>
 </context>
 <context>
@@ -2896,7 +3125,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;Factor (f):</source>
-        <translation>倍率&amp;F(f):</translation>
+        <translation type="obsolete">倍率&amp;F(f):</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
@@ -2920,6 +3149,26 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale by the same factor at both x- and y- directions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isotropic Scaling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1.0</source>
+        <translation type="unfinished">1.0</translation>
+    </message>
+    <message>
+        <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3977,7 +4226,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <name>QG_LibraryWidget</name>
     <message>
         <source>Library Browser</source>
-        <translation>ライブラリ一覧</translation>
+        <translation type="obsolete">ライブラリ一覧</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -4063,6 +4312,14 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>Undo</source>
         <translation>取り消し</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4295,6 +4552,22 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Number:</source>
         <translation type="obsolete">数:</translation>
     </message>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">線分相対角度オプション</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">間隔:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_PolylineOptions</name>
@@ -4408,11 +4681,35 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Selected Entities:</source>
-        <translation>図形選択:</translation>
+        <translation type="obsolete">図形選択:</translation>
     </message>
     <message>
         <source>0</source>
         <translation>0</translation>
+    </message>
+    <message>
+        <source>Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total Length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4424,6 +4721,76 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>Distance:</source>
         <translation>距離:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">スナップ距離オプション</translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapToolBar</name>
+    <message>
+        <source>Snap</source>
+        <translation type="unfinished">スナップ</translation>
+    </message>
+    <message>
+        <source>Snap to Endpoints</source>
+        <translation type="unfinished">終点へスナップ</translation>
+    </message>
+    <message>
+        <source>Snap to equidistant points of entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap to center points</source>
+        <translation type="unfinished">中心点へスナップ</translation>
+    </message>
+    <message>
+        <source>Snap to intersections automatically</source>
+        <translation type="unfinished">自動的に交点へスナップ</translation>
+    </message>
+    <message>
+        <source>Snap to closest point on entity</source>
+        <translation type="unfinished">図形上の近傍点へスナップ</translation>
+    </message>
+    <message>
+        <source>Snap to point with given distance to endpoint</source>
+        <translation type="unfinished">終点までの指定距離指示で点へスナップ</translation>
+    </message>
+    <message>
+        <source>Snap to intersections manually</source>
+        <translation type="unfinished">指定して交点へスナップ</translation>
+    </message>
+    <message>
+        <source>Snap to grid</source>
+        <translation type="unfinished">グリッドへスナップ</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontally</source>
+        <translation type="unfinished">水平制限</translation>
+    </message>
+    <message>
+        <source>Restrict Vertically</source>
+        <translation type="unfinished">垂直制限</translation>
+    </message>
+    <message>
+        <source>Move relative Zero</source>
+        <translation type="unfinished">相対原点へ移動</translation>
+    </message>
+    <message>
+        <source>Lock relative Zero</source>
+        <translation type="unfinished">相対原点を固定</translation>
     </message>
 </context>
 <context>
@@ -4484,7 +4851,19 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Amount:</source>
-        <translation>値:</translation>
+        <translation type="obsolete">値:</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">長さ:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4865,6 +5244,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>enter text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LFF Font %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jww %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5432,6 +5819,10 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>戻る</translation>
     </message>
+    <message>
+        <source>Specify end point</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle</name>
@@ -5586,6 +5977,64 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawCircleInscribe</name>
+    <message>
+        <source>Circle &amp;Inscribed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the first line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">中止</translation>
+    </message>
+    <message>
+        <source>Specify the second line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">戻る</translation>
+    </message>
+    <message>
+        <source>Specify the third line</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipse4Points</name>
+    <message>
+        <source>Ellipse &amp;4 Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the first point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">中止</translation>
+    </message>
+    <message>
+        <source>Specify the second point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">戻る</translation>
+    </message>
+    <message>
+        <source>Specify the third point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the fourth point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
         <source>Ellipse Arc with Axis</source>
@@ -5593,7 +6042,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation type="obsolete">軸で楕円弧(&amp;A)</translation>
+        <translation type="unfinished">軸で楕円弧(&amp;A)</translation>
     </message>
     <message>
         <source>Draw Ellipse Arcs</source>
@@ -5643,8 +6092,97 @@ Do you want to replace it?</source>
         <source>Specify end angle</source>
         <translation>終了角指示</translation>
     </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseCenter3Points</name>
     <message>
-        <source>&amp;Ellipse Arc (Axis)</source>
+        <source>Ellipse Center and &amp;3 Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the center of ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">中止</translation>
+    </message>
+    <message>
+        <source>Specify the first point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the second point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">戻る</translation>
+    </message>
+    <message>
+        <source>Specify the third point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseFociPoint</name>
+    <message>
+        <source>Ellipse &amp;Foci Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify first focus of ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">中止</translation>
+    </message>
+    <message>
+        <source>Specify second focus of ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">戻る</translation>
+    </message>
+    <message>
+        <source>Specify a point on ellipse or total distance to foci</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseInscribe</name>
+    <message>
+        <source>Ellipse &amp;Inscribed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the first line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">中止</translation>
+    </message>
+    <message>
+        <source>Specify the second line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">戻る</translation>
+    </message>
+    <message>
+        <source>Specify the third line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the fourth line</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5922,6 +6460,29 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawLineOrthTan</name>
+    <message>
+        <source>Tangent &amp;Orthogonal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">中止</translation>
+    </message>
+    <message>
+        <source>Select circle, arc or ellipse</source>
+        <translation type="unfinished">円、楕円選択</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">戻る</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawLineParallel</name>
     <message>
         <source>Parallel</source>
@@ -6015,7 +6576,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>ポリゴン(&amp;y) 中心、コーナー</translation>
+        <translation type="obsolete">ポリゴン(&amp;y) 中心、コーナー</translation>
     </message>
     <message>
         <source>Draw polygon with center and corner</source>
@@ -6023,7 +6584,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify center</source>
-        <translation>中心指示</translation>
+        <translation type="obsolete">中心指示</translation>
     </message>
     <message>
         <source></source>
@@ -6031,19 +6592,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify a corner</source>
-        <translation>コーナー指示</translation>
+        <translation type="obsolete">コーナー指示</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation>数値入力:</translation>
+        <translation type="obsolete">数値入力:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>有効な数値ではありません。1..9999まで</translation>
+        <translation type="obsolete">有効な数値ではありません。1..9999まで</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation type="obsolete">表記に誤り</translation>
     </message>
 </context>
 <context>
@@ -6054,7 +6615,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>ポリゴン(&amp;n) コーナー、コーナー</translation>
+        <translation type="obsolete">ポリゴン(&amp;n) コーナー、コーナー</translation>
     </message>
     <message>
         <source>Draw polygon with two corners</source>
@@ -6062,31 +6623,93 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify first corner</source>
-        <translation>１つ目のコーナー指示</translation>
+        <translation type="obsolete">１つ目のコーナー指示</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation type="obsolete">中止</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation>２つ目のコーナー指示</translation>
+        <translation type="obsolete">２つ目のコーナー指示</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>戻る</translation>
+        <translation type="obsolete">戻る</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>数値:</translation>
+        <translation type="obsolete">数値:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>有効な数値ではありません。1..9999まで</translation>
+        <translation type="obsolete">有効な数値ではありません。1..9999まで</translation>
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation>表記に誤り。</translation>
+        <translation type="obsolete">表記に誤り。</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLinePolygonCenCor</name>
+    <message>
+        <source>Pol&amp;ygon (Cen,Cor)</source>
+        <translation type="unfinished">ポリゴン(&amp;y) 中心、コーナー</translation>
+    </message>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a corner</source>
+        <translation type="unfinished">コーナー指示</translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="unfinished">数値入力:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">有効な数値ではありません。1..9999まで</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLinePolygonCorCor</name>
+    <message>
+        <source>Polygo&amp;n (Cor,Cor)</source>
+        <translation type="unfinished">ポリゴン(&amp;n) コーナー、コーナー</translation>
+    </message>
+    <message>
+        <source>Specify first corner</source>
+        <translation type="unfinished">１つ目のコーナー指示</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">中止</translation>
+    </message>
+    <message>
+        <source>Specify second corner</source>
+        <translation type="unfinished">２つ目のコーナー指示</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">戻る</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">有効な数値ではありません。1..9999まで</translation>
+    </message>
+    <message>
+        <source>Not a valid expression.</source>
+        <translation type="unfinished">表記に誤り。</translation>
     </message>
 </context>
 <context>
@@ -6284,7 +6907,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ポリライン(&amp;P)</translation>
     </message>
     <message>
         <source>Draw polylines</source>
@@ -6293,10 +6916,6 @@ Do you want to replace it?</source>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
         <translation type="unfinished">線分を閉じることができません: 図形の定義が不足。</translation>
-    </message>
-    <message>
-        <source>Undo disallowed due a fatal bug somewhere. Sorry.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
@@ -6457,6 +7076,14 @@ Do you want to replace it?</source>
         <source>Redoes last action</source>
         <translation type="obsolete">直前のやり直し</translation>
     </message>
+    <message>
+        <source>Nothing to undo!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nothing to redo!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionFileNew</name>
@@ -6601,7 +7228,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Terminate</source>
-        <translation>終了</translation>
+        <translation type="obsolete">終了</translation>
     </message>
 </context>
 <context>
@@ -7250,6 +7877,14 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>戻る</translation>
     </message>
+    <message>
+        <source>Specify rotation center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify target point to rotate to</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate2</name>
@@ -7573,6 +8208,14 @@ Do you want to replace it?</source>
         <source>Specify the polyline somewhere near the beginning or end point</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Can not append nodes in a closed polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
@@ -7821,6 +8464,57 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionSelect</name>
+    <message>
+        <source>Select to modify attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">中止</translation>
+    </message>
+    <message>
+        <source>Select to delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to delete immediately</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to move</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to mirror</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to move and rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select for two axis rotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to explode text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionSelectAll</name>
     <message>
         <source>Select All</source>
@@ -7982,7 +8676,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Choose first edge</source>
-        <translation>１番目の端点指示</translation>
+        <translation type="obsolete">１番目の端点指示</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7996,12 +8690,16 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>戻る</translation>
     </message>
+    <message>
+        <source>Click and drag for the selection window</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionSetRelativeZero</name>
     <message>
         <source>Set Relative Zero</source>
-        <translation>相対原点設定</translation>
+        <translation type="obsolete">相対原点設定</translation>
     </message>
     <message>
         <source>&amp;Set Relative Zero</source>
@@ -8018,6 +8716,10 @@ Do you want to replace it?</source>
     <message>
         <source>Cancel</source>
         <translation>中止</translation>
+    </message>
+    <message>
+        <source>Set &amp;Relative Zero</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8120,11 +8822,27 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Pan Zoom</source>
-        <translation>移動拡大縮小(&amp;P)</translation>
+        <translation type="obsolete">移動拡大縮小(&amp;P)</translation>
     </message>
     <message>
         <source>Realtime Panning</source>
         <translation type="obsolete">リアルタイムパン</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;Panning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click and drag to pan zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">中止</translation>
+    </message>
+    <message>
+        <source>Zoom panning</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8135,11 +8853,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Previous View</source>
-        <translation>全画面(&amp;P)</translation>
+        <translation type="obsolete">全画面(&amp;P)</translation>
     </message>
     <message>
         <source>Shows previous view</source>
         <translation type="obsolete">全画面表示</translation>
+    </message>
+    <message>
+        <source>Previous &amp;View</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8915,6 +9637,11 @@ Do you want to replace it?</source>
     <message>
         <source>b</source>
         <comment>back</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rp2</source>
+        <comment>regular polygon2</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
