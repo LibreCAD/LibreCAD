@@ -92,7 +92,7 @@
     </message>
     <message>
         <source>&amp;Point</source>
-        <translation>&amp;Σημείο</translation>
+        <translation type="obsolete">&amp;Σημείο</translation>
     </message>
     <message>
         <source>&amp;Line</source>
@@ -388,7 +388,7 @@ You can save your work now.</source>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation>&amp;Καμπύλη</translation>
+        <translation type="obsolete">&amp;Καμπύλη</translation>
     </message>
     <message>
         <source>Running script &apos;%1&apos;</source>
@@ -467,6 +467,22 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning: File already opened : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot save the file </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> , please check the filename and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1339,7 +1355,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Endpoints</source>
-        <translation>Άκ&amp;ρα</translation>
+        <translation type="obsolete">Άκ&amp;ρα</translation>
     </message>
     <message>
         <source>Snap to endpoints</source>
@@ -1351,7 +1367,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;On Entity</source>
-        <translation>&amp;Πάνω στα στοιχεία</translation>
+        <translation type="obsolete">&amp;Πάνω στα στοιχεία</translation>
     </message>
     <message>
         <source>Snap to nearest point on entity</source>
@@ -1459,7 +1475,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="obsolete">Περιορισμός &amp;Κάθετα</translation>
+        <translation type="unfinished">Περιορισμός &amp;Κάθετα</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -1974,11 +1990,15 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Restrict&amp;Vertically</source>
+        <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Selection pointer</source>
+        <source>&amp;Endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;OnEntity</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1994,7 +2014,11 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation>Αριστερόστροφα</translation>
+        <translation type="obsolete">Αριστερόστροφα</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2005,7 +2029,25 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Ακτίνα:</translation>
+        <translation type="obsolete">Ακτίνα:</translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">Γωνία</translation>
     </message>
 </context>
 <context>
@@ -2203,6 +2245,14 @@ in a separate window</source>
         <source>Concentric</source>
         <translation>Ομόκεντρα</translation>
     </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CadToolBarDim</name>
@@ -2246,6 +2296,10 @@ in a separate window</source>
         <source>Leader</source>
         <translation>Δείκτης</translation>
     </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="unfinished">Ομόκεντρα</translation>
+    </message>
 </context>
 <context>
     <name>QG_CadToolBarEllipses</name>
@@ -2264,6 +2318,30 @@ in a separate window</source>
     <message>
         <source>Back to main menu</source>
         <translation>Επιστροφή στο κεντρικό μενού</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse by foci and a point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw Ellipse with by center and 3 points on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="unfinished">Ομόκεντρα</translation>
     </message>
 </context>
 <context>
@@ -2295,6 +2373,10 @@ in a separate window</source>
     <message>
         <source>Area of polygon</source>
         <translation>Περιοχή του πολυγώνου</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="unfinished">Ομόκεντρα</translation>
     </message>
 </context>
 <context>
@@ -2367,6 +2449,10 @@ in a separate window</source>
         <source>Parallels through point</source>
         <translation>Παράλληλα μέσω σημείου</translation>
     </message>
+    <message>
+        <source>Tangents to a circle, orthogonal to a line</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CadToolBarMain</name>
@@ -2376,15 +2462,15 @@ in a separate window</source>
     </message>
     <message>
         <source>Show menu &quot;Lines&quot;</source>
-        <translation>Εμφάνιση μενού &quot;Γραμμές&quot;</translation>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Γραμμές&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Arcs&quot;</source>
-        <translation>Εμφάνιση μενού &quot;Τόξα&quot;</translation>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Τόξα&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Circles&quot;</source>
-        <translation>Εμφάνιση μενού &quot;Κύκλοι&quot;</translation>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Κύκλοι&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Points&quot;</source>
@@ -2392,31 +2478,31 @@ in a separate window</source>
     </message>
     <message>
         <source>Show menu &quot;Measure&quot;</source>
-        <translation>Εμφάνιση μενού &quot;Μέτρηση&quot;</translation>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Μέτρηση&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Ellipses&quot;</source>
-        <translation>Εμφάνιση μενού &quot;Ελείψεις&quot;</translation>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Ελείψεις&quot;</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
-        <translation>Διαγραμίσεις / Γεμίσματα</translation>
+        <translation type="obsolete">Διαγραμίσεις / Γεμίσματα</translation>
     </message>
     <message>
         <source>Show menu &quot;Edit&quot;</source>
-        <translation>Εμφάνιση μενού &quot;Διόρθωση&quot;</translation>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Διόρθωση&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Dimensions&quot;</source>
-        <translation>Εμφάνιση μενού &quot;Διαστάσεις&quot;</translation>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Διαστάσεις&quot;</translation>
     </message>
     <message>
         <source>Texts</source>
-        <translation>Κείμενα</translation>
+        <translation type="obsolete">Κείμενα</translation>
     </message>
     <message>
         <source>Show menu &quot;Select&quot;</source>
-        <translation>Εμφάνιση μενού &quot;Επέλεξε&quot;</translation>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Επέλεξε&quot;</translation>
     </message>
     <message>
         <source>Create Block</source>
@@ -2424,7 +2510,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Raster Image</source>
-        <translation>Εισαγωγή εικόνας</translation>
+        <translation type="obsolete">Εισαγωγή εικόνας</translation>
     </message>
     <message>
         <source>Points</source>
@@ -2432,11 +2518,67 @@ in a separate window</source>
     </message>
     <message>
         <source>Splines</source>
-        <translation>Καμπύλες</translation>
+        <translation type="obsolete">Καμπύλες</translation>
     </message>
     <message>
         <source>Polylines</source>
-        <translation type="unfinished">Πολυγραμμές</translation>
+        <translation type="obsolete">Πολυγραμμές</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Lines&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Arcs&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Circles&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Ellipses&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Polylines&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw Splines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Dimensions&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Hatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Modify&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Info&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Select&quot;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2587,6 +2729,18 @@ in a separate window</source>
         <source>Append node</source>
         <translation>Προσάρτηση node</translation>
     </message>
+    <message>
+        <source>Polyline equidistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Polyline from Existing Segments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="unfinished">Ομόκεντρα</translation>
+    </message>
 </context>
 <context>
     <name>QG_CadToolBarSelect</name>
@@ -2647,71 +2801,71 @@ in a separate window</source>
     <name>QG_CadToolBarSnap</name>
     <message>
         <source>Snap</source>
-        <translation>Προσκόλληση</translation>
+        <translation type="obsolete">Προσκόλληση</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Επιστροφή στο κεντρικό μενού</translation>
+        <translation type="obsolete">Επιστροφή στο κεντρικό μενού</translation>
     </message>
     <message>
         <source>Snap to grid</source>
-        <translation>Προσκόλληση στον καμβά</translation>
+        <translation type="obsolete">Προσκόλληση στον καμβά</translation>
     </message>
     <message>
         <source>Free positioning</source>
-        <translation>Ελεύθερη τοποθέτηση</translation>
+        <translation type="obsolete">Ελεύθερη τοποθέτηση</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
-        <translation>Προσκόλληση στις άκρες</translation>
+        <translation type="obsolete">Προσκόλληση στις άκρες</translation>
     </message>
     <message>
         <source>Snap to closest point on entity</source>
-        <translation>Προσκόλληση στο κοντινότερο σημείο του στοιχείου</translation>
+        <translation type="obsolete">Προσκόλληση στο κοντινότερο σημείο του στοιχείου</translation>
     </message>
     <message>
         <source>Snap to center points</source>
-        <translation>Προσκόλληση σε κέντρα</translation>
+        <translation type="obsolete">Προσκόλληση σε κέντρα</translation>
     </message>
     <message>
         <source>Snap to middle points</source>
-        <translation>Προσκόλληση στη μέση</translation>
+        <translation type="obsolete">Προσκόλληση στη μέση</translation>
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Προσκόλληση σε σημείο με καθορισμένη απόσταση από την άκρη</translation>
+        <translation type="obsolete">Προσκόλληση σε σημείο με καθορισμένη απόσταση από την άκρη</translation>
     </message>
     <message>
         <source>Snap to intersections automatically</source>
-        <translation>Προσκόλληση σε διασταυρώσεις αυτόματα</translation>
+        <translation type="obsolete">Προσκόλληση σε διασταυρώσεις αυτόματα</translation>
     </message>
     <message>
         <source>No Restriction</source>
-        <translation>Χωρίς περιορισμό</translation>
+        <translation type="obsolete">Χωρίς περιορισμό</translation>
     </message>
     <message>
         <source>Orthogonal Restriction</source>
-        <translation>Περιορισμός Ορθογώνια</translation>
+        <translation type="obsolete">Περιορισμός Ορθογώνια</translation>
     </message>
     <message>
         <source>Horizontal Restriction</source>
-        <translation>Περιορισμός Οριζόντια</translation>
+        <translation type="obsolete">Περιορισμός Οριζόντια</translation>
     </message>
     <message>
         <source>Vertical Restriction</source>
-        <translation>Περιορισμός Κάθετα</translation>
+        <translation type="obsolete">Περιορισμός Κάθετα</translation>
     </message>
     <message>
         <source>Move relative Zero</source>
-        <translation>Μετακίνηση σημείου Μηδέν</translation>
+        <translation type="obsolete">Μετακίνηση σημείου Μηδέν</translation>
     </message>
     <message>
         <source>Lock relative Zero</source>
-        <translation>Ασφάλιση σημείου Μηδέν</translation>
+        <translation type="obsolete">Ασφάλιση σημείου Μηδέν</translation>
     </message>
     <message>
         <source>Snap to intersections manually</source>
-        <translation>Προσκόλληση σε διασταυρώσεις χειροκίνητα</translation>
+        <translation type="obsolete">Προσκόλληση σε διασταυρώσεις χειροκίνητα</translation>
     </message>
 </context>
 <context>
@@ -2794,6 +2948,34 @@ in a separate window</source>
         <source>Unchanged</source>
         <translation>Αμετάβλητο</translation>
     </message>
+    <message>
+        <source>Dark Red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Yellow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Green</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Cyan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Magenta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Gray</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CommandWidget</name>
@@ -2804,6 +2986,10 @@ in a separate window</source>
     <message>
         <source>Command:</source>
         <translation>Εντολή:</translation>
+    </message>
+    <message>
+        <source>Unknown command: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3391,7 +3577,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <name>QG_DlgMove</name>
     <message>
         <source>Moving Options</source>
-        <translation>Επιλογές Μετακίνησης</translation>
+        <translation type="obsolete">Επιλογές Μετακίνησης</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -3435,6 +3621,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move/Copy Options</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3940,11 +4130,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#ffffff</source>
-        <translation>#ffffff</translation>
+        <translation type="obsolete">#ffffff</translation>
     </message>
     <message>
         <source>#c0c0c0</source>
-        <translation>#c0c0c0</translation>
+        <translation type="obsolete">#c0c0c0</translation>
     </message>
     <message>
         <source>#808080</source>
@@ -3960,7 +4150,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#a54747</source>
-        <translation>#a54747</translation>
+        <translation type="obsolete">#a54747</translation>
     </message>
     <message>
         <source>#739373</source>
@@ -4007,47 +4197,59 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Time between automatc saving of thedocument in minutes.</source>
+        <source>Auto save time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto save time:</source>
+        <source>#FFFFFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#C0C0C0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#A54747</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>400</source>
+        <translation type="unfinished">400</translation>
+    </message>
+    <message>
+        <source>800</source>
+        <translation type="unfinished">800</translation>
+    </message>
+    <message>
+        <source>Drawing unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time between automatic saving of the document in minutes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto backup</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsVariables</name>
     <message>
-        <source>Drawing Variables</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;Εντάξει</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
 </context>
 <context>
@@ -4083,6 +4285,41 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>Esc</source>
         <translation>Διαφυγή</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgPolyline</name>
+    <message>
+        <source>Polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Στρώμα:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Γεωμετρία</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Κλειστό</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="unfinished">&amp;Εντάξει</translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="unfinished">Διαφυγή</translation>
     </message>
 </context>
 <context>
@@ -4211,7 +4448,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;Factor (f):</source>
-        <translation>&amp;Σχέση (σ):</translation>
+        <translation type="obsolete">&amp;Σχέση (σ):</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
@@ -4235,6 +4472,26 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale by the same factor at both x- and y- directions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isotropic Scaling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1.0</source>
+        <translation type="unfinished">1.0</translation>
+    </message>
+    <message>
+        <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5268,7 +5525,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <name>QG_LibraryWidget</name>
     <message>
         <source>Library Browser</source>
-        <translation>Πίνακας Βιβλιοθηκών</translation>
+        <translation type="obsolete">Πίνακας Βιβλιοθηκών</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -5354,6 +5611,14 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>Undo</source>
         <translation>Αναίρεση</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5573,6 +5838,25 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
 </context>
 <context>
+    <name>QG_PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Επιλογές Γραμμών με σχετική γωνία</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Διάκενο:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineOptions</name>
     <message>
         <source>Close</source>
@@ -5669,11 +5953,35 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Selected Entities:</source>
-        <translation>Επιλεγμένα στοιχεία:</translation>
+        <translation type="obsolete">Επιλεγμένα στοιχεία:</translation>
     </message>
     <message>
         <source>0</source>
         <translation>0</translation>
+    </message>
+    <message>
+        <source>Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total Length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5685,6 +5993,76 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>Distance:</source>
         <translation>Απόσταση:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">Επιλογές Απόστασης Προσκόλλησης</translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapToolBar</name>
+    <message>
+        <source>Snap</source>
+        <translation type="unfinished">Προσκόλληση</translation>
+    </message>
+    <message>
+        <source>Snap to Endpoints</source>
+        <translation type="unfinished">Προσκόλληση στις άκρες</translation>
+    </message>
+    <message>
+        <source>Snap to equidistant points of entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap to center points</source>
+        <translation type="unfinished">Προσκόλληση σε κέντρα</translation>
+    </message>
+    <message>
+        <source>Snap to intersections automatically</source>
+        <translation type="unfinished">Προσκόλληση σε διασταυρώσεις αυτόματα</translation>
+    </message>
+    <message>
+        <source>Snap to closest point on entity</source>
+        <translation type="unfinished">Προσκόλληση στο κοντινότερο σημείο του στοιχείου</translation>
+    </message>
+    <message>
+        <source>Snap to point with given distance to endpoint</source>
+        <translation type="unfinished">Προσκόλληση σε σημείο με καθορισμένη απόσταση από την άκρη</translation>
+    </message>
+    <message>
+        <source>Snap to intersections manually</source>
+        <translation type="unfinished">Προσκόλληση σε διασταυρώσεις χειροκίνητα</translation>
+    </message>
+    <message>
+        <source>Snap to grid</source>
+        <translation type="unfinished">Προσκόλληση στον καμβά</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontally</source>
+        <translation type="unfinished">Περιορισμός Οριζόντια</translation>
+    </message>
+    <message>
+        <source>Restrict Vertically</source>
+        <translation type="unfinished">Περιορισμός Κάθετα</translation>
+    </message>
+    <message>
+        <source>Move relative Zero</source>
+        <translation type="unfinished">Μετακίνηση σημείου Μηδέν</translation>
+    </message>
+    <message>
+        <source>Lock relative Zero</source>
+        <translation type="unfinished">Ασφάλιση σημείου Μηδέν</translation>
     </message>
 </context>
 <context>
@@ -5745,7 +6123,19 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Amount:</source>
-        <translation>Σύνολο:</translation>
+        <translation type="obsolete">Σύνολο:</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Μήκος:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6131,6 +6521,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>enter text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LFF Font %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jww %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6698,6 +7096,10 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>Πίσω</translation>
     </message>
+    <message>
+        <source>Specify end point</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle</name>
@@ -6844,6 +7246,64 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawCircleInscribe</name>
+    <message>
+        <source>Circle &amp;Inscribed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the first line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Specify the second line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Πίσω</translation>
+    </message>
+    <message>
+        <source>Specify the third line</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipse4Points</name>
+    <message>
+        <source>Ellipse &amp;4 Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the first point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Specify the second point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Πίσω</translation>
+    </message>
+    <message>
+        <source>Specify the third point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the fourth point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
         <source>Not a valid expression</source>
@@ -6883,7 +7343,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Ellipse Arc (Axis)</source>
-        <translation>Ελει&amp;πτικό Τόξο (Άξονας)</translation>
+        <translation type="obsolete">Ελει&amp;πτικό Τόξο (Άξονας)</translation>
     </message>
     <message>
         <source>Draw Ellipse Arcs</source>
@@ -6900,6 +7360,103 @@ Do you want to replace it?</source>
     <message>
         <source>Draw Ellipses</source>
         <translation type="obsolete">Σχεδίαση Ελείψεων</translation>
+    </message>
+    <message>
+        <source>Ellipse &amp;Arc (Axis)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseCenter3Points</name>
+    <message>
+        <source>Ellipse Center and &amp;3 Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the center of ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Specify the first point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the second point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Πίσω</translation>
+    </message>
+    <message>
+        <source>Specify the third point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseFociPoint</name>
+    <message>
+        <source>Ellipse &amp;Foci Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Μη έγκυρη δήλωση</translation>
+    </message>
+    <message>
+        <source>Specify first focus of ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Specify second focus of ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Πίσω</translation>
+    </message>
+    <message>
+        <source>Specify a point on ellipse or total distance to foci</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseInscribe</name>
+    <message>
+        <source>Ellipse &amp;Inscribed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the first line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Specify the second line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Πίσω</translation>
+    </message>
+    <message>
+        <source>Specify the third line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the fourth line</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7176,6 +7733,29 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawLineOrthTan</name>
+    <message>
+        <source>Tangent &amp;Orthogonal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Select circle, arc or ellipse</source>
+        <translation type="unfinished">Επέλεξε κύκλο, τόξον ή έλειψη</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Πίσω</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawLineParallel</name>
     <message>
         <source>Specify Distance &lt;%1&gt; or select entity or [Through]</source>
@@ -7273,7 +7853,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>Πολύγω&amp;νο (Κεν,Γων)</translation>
+        <translation type="obsolete">Πολύγω&amp;νο (Κεν,Γων)</translation>
     </message>
     <message>
         <source>Draw polygon with center and corner</source>
@@ -7281,7 +7861,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify center</source>
-        <translation>Καθορισμός κέντρου</translation>
+        <translation type="obsolete">Καθορισμός κέντρου</translation>
     </message>
     <message>
         <source></source>
@@ -7289,19 +7869,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify a corner</source>
-        <translation>Καθορισμός γωνίας</translation>
+        <translation type="obsolete">Καθορισμός γωνίας</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation>Εισαγωγή αριθμού:</translation>
+        <translation type="obsolete">Εισαγωγή αριθμού:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Μη έγκυρος αριθμός. Δοκίμασε 1..999</translation>
+        <translation type="obsolete">Μη έγκυρος αριθμός. Δοκίμασε 1..999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Μη έγκυρη δήλωση</translation>
+        <translation type="obsolete">Μη έγκυρη δήλωση</translation>
     </message>
 </context>
 <context>
@@ -7312,7 +7892,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>Πολύγω&amp;νο (Γων,Γων)</translation>
+        <translation type="obsolete">Πολύγω&amp;νο (Γων,Γων)</translation>
     </message>
     <message>
         <source>Draw polygon with two corners</source>
@@ -7320,31 +7900,93 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify first corner</source>
-        <translation>Καθορισμός πρώτης γωνίας</translation>
+        <translation type="obsolete">Καθορισμός πρώτης γωνίας</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation>Καθορισμός δεύτερης γωνίας</translation>
+        <translation type="obsolete">Καθορισμός δεύτερης γωνίας</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Πίσω</translation>
+        <translation type="obsolete">Πίσω</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Αριθμός:</translation>
+        <translation type="obsolete">Αριθμός:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Μη έγκυρος αριθμός. Δοκίμασε 1..9999</translation>
+        <translation type="obsolete">Μη έγκυρος αριθμός. Δοκίμασε 1..9999</translation>
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation>Μη έγκυρη δήλωση.</translation>
+        <translation type="obsolete">Μη έγκυρη δήλωση.</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLinePolygonCenCor</name>
+    <message>
+        <source>Pol&amp;ygon (Cen,Cor)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Καθορισμός κέντρου</translation>
+    </message>
+    <message>
+        <source>Specify a corner</source>
+        <translation type="unfinished">Καθορισμός γωνίας</translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="unfinished">Εισαγωγή αριθμού:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Μη έγκυρη δήλωση</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLinePolygonCorCor</name>
+    <message>
+        <source>Polygo&amp;n (Cor,Cor)</source>
+        <translation type="unfinished">Πολύγω&amp;νο (Γων,Γων)</translation>
+    </message>
+    <message>
+        <source>Specify first corner</source>
+        <translation type="unfinished">Καθορισμός πρώτης γωνίας</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Specify second corner</source>
+        <translation type="unfinished">Καθορισμός δεύτερης γωνίας</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Πίσω</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Αριθμός:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not a valid expression.</source>
+        <translation type="unfinished">Μη έγκυρη δήλωση.</translation>
     </message>
 </context>
 <context>
@@ -7579,10 +8221,6 @@ Do you want to replace it?</source>
         <source>Draw polylines</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Undo disallowed due a fatal bug somewhere. Sorry.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawSpline</name>
@@ -7738,6 +8376,14 @@ Do you want to replace it?</source>
         <source>Redoes last action</source>
         <translation type="obsolete">Επαναφέρει την τελευταία αναίρεση</translation>
     </message>
+    <message>
+        <source>Nothing to undo!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nothing to redo!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionFileNew</name>
@@ -7882,7 +8528,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Terminate</source>
-        <translation>Τερματισμός</translation>
+        <translation type="obsolete">Τερματισμός</translation>
     </message>
 </context>
 <context>
@@ -8520,6 +9166,14 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>Πίσω</translation>
     </message>
+    <message>
+        <source>Specify rotation center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify target point to rotate to</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate2</name>
@@ -8843,6 +9497,14 @@ Do you want to replace it?</source>
         <source>Specify next point</source>
         <translation type="unfinished">Καθορισμός επόμενου σημείου</translation>
     </message>
+    <message>
+        <source>Can not append nodes in a closed polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">Δεν μπορώ να αναιρέσω: Οχι αρκετές δηλώσεις στοιχείων ακόμα.</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
@@ -9055,6 +9717,57 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionSelect</name>
+    <message>
+        <source>Select to modify attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Select to delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to delete immediately</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to move</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to mirror</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to move and rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select for two axis rotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to explode text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionSelectAll</name>
     <message>
         <source>Select All</source>
@@ -9216,7 +9929,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Choose first edge</source>
-        <translation>Επιλογή πρώτου άκρου</translation>
+        <translation type="obsolete">Επιλογή πρώτου άκρου</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9230,12 +9943,16 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>Πίσω</translation>
     </message>
+    <message>
+        <source>Click and drag for the selection window</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionSetRelativeZero</name>
     <message>
         <source>Set Relative Zero</source>
-        <translation>Καθορισμός Σχετικού σημείου Μηδέν</translation>
+        <translation type="obsolete">Καθορισμός Σχετικού σημείου Μηδέν</translation>
     </message>
     <message>
         <source>&amp;Set Relative Zero</source>
@@ -9252,6 +9969,10 @@ Do you want to replace it?</source>
     <message>
         <source>Cancel</source>
         <translation>Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Set &amp;Relative Zero</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9354,11 +10075,27 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Pan Zoom</source>
-        <translation>&amp;Μετακίνηση Εστίασης</translation>
+        <translation type="obsolete">&amp;Μετακίνηση Εστίασης</translation>
     </message>
     <message>
         <source>Realtime Panning</source>
         <translation type="obsolete">Μετακίνηση σε πραγματικό χρόνο</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;Panning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click and drag to pan zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Zoom panning</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9369,11 +10106,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Previous View</source>
-        <translation>Π&amp;ροηγούμενη όψη</translation>
+        <translation type="obsolete">Π&amp;ροηγούμενη όψη</translation>
     </message>
     <message>
         <source>Shows previous view</source>
         <translation type="obsolete">Εμφανίζει την προηγούμενη όψη</translation>
+    </message>
+    <message>
+        <source>Previous &amp;View</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10207,6 +10948,11 @@ Do you want to replace it?</source>
     <message>
         <source>b</source>
         <comment>back</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rp2</source>
+        <comment>regular polygon2</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
