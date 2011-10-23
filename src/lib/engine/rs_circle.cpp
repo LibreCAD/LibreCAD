@@ -106,8 +106,8 @@ bool RS_Circle::createFrom2P(const RS_Vector& p1, const RS_Vector& p2) {
         data.center = (p1+p2)*0.5;
         return true;
     } else {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom2P(): "
-                        "Cannot create a circle with radius 0.0.");
+//        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom2P(): "
+//                        "Cannot create a circle with radius 0.0.");
         return false;
     }
 }
