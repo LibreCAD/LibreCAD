@@ -139,24 +139,28 @@ bool RS_Circle::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
         data.center += p1;
         return true;
 }
+//*create Circle from 3 points
+//Author: Dongxu Li
 bool RS_Circle::createFrom3P(const RS_VectorSolutions& sol) {
-    if(sol.getNumber() == 2) return createFrom2P(sol.get(0),sol.get(1));
     if(sol.getNumber() < 2) return false;
-        RS_Vector vra(sol.get(1) - sol.get(0));
-        RS_Vector vrb(sol.get(2) - sol.get(0));
-        double ra2=vra.squared()*0.5;
-        double rb2=vrb.squared()*0.5;
-        double crossp=vra.x * vrb.y - vra.y * vrb.x;
-        if (fabs(crossp)< RS_TOLERANCE*RS_TOLERANCE) {
-                RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
+    if(sol.getNumber() == 2) return createFrom2P(sol.get(0),sol.get(1));
+    if((sol.get(1)-sol.get(2)).squared() < RS_TOLERANCE*RS_TOLERANCE)
+        return createFrom2P(sol.get(0),sol.get(1));
+    RS_Vector vra(sol.get(1) - sol.get(0));
+    RS_Vector vrb(sol.get(2) - sol.get(0));
+    double ra2=vra.squared()*0.5;
+    double rb2=vrb.squared()*0.5;
+    double crossp=vra.x * vrb.y - vra.y * vrb.x;
+    if (fabs(crossp)< RS_TOLERANCE*RS_TOLERANCE) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
                         "Cannot create a circle with radius 0.0.");
-                return false;
-        }
-        crossp=1./crossp;
-        data.center.set((ra2*vrb.y - rb2*vra.y)*crossp,(rb2*vra.x - ra2*vrb.x)*crossp);
-        data.radius=data.center.magnitude();
-        data.center += sol.get(0);
-        return true;
+        return false;
+    }
+    crossp=1./crossp;
+    data.center.set((ra2*vrb.y - rb2*vra.y)*crossp,(rb2*vra.x - ra2*vrb.x)*crossp);
+    data.radius=data.center.magnitude();
+    data.center += sol.get(0);
+    return true;
 }
 //
 //    if (p1.distanceTo(p2)>RS_TOLERANCE &&
@@ -200,6 +204,11 @@ bool RS_Circle::createFrom3P(const RS_VectorSolutions& sol) {
 //        return false;
 //    }
 //}
+/**
+  *create circle inscribled in a triangle
+  *
+  *Author: Dongxu Li
+  */
 bool RS_Circle::createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& lines){
     if(lines.size()<3) return false;
     QVector<RS_Line*> tri(lines);

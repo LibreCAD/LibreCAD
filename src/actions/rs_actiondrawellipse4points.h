@@ -73,7 +73,7 @@ protected:
     private:
     RS_CircleData cData;
     RS_EllipseData eData;
-    bool valid;
+    bool valid,evalid;
 };
 
 #endif
