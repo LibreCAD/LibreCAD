@@ -1342,15 +1342,15 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patte
     if(a2 <a1+RS_TOLERANCE_ANGLE) a2 +=2.*M_PI;
     painter->setPen(pen);
     int i(0),j(0);
-    double* ds;
+    double* ds = new double[pat->num>0?pat->num:0];
     if(pat->num>0){
-        ds = new double[pat->num];
         while( i<pat->num){
             ds[i]=pat->pattern[i] ;//pattern length
             i++;
         }
         j=i;
     }else {
+        delete[] ds;
         RS_DEBUG->print(RS_Debug::D_WARNING,"Invalid pattern when drawing ellipse");
         painter->drawEllipse(cp,
                              ra, rb,

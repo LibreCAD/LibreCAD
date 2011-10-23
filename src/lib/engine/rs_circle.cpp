@@ -445,10 +445,9 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patter
     painter->setPen(pen);
 
     // create pattern:
-    double* da;
+    double* da=new double[pat->num>0?pat->num:0];
     int i(0),j(0);          // index counter
     if(pat->num>0){
-        da= new double[pat->num];
         while(i<pat->num){
             //        da[j] = pat->pattern[i++] * styleFactor;
             //fixme, styleFactor needed
@@ -458,6 +457,7 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patter
         j=i;
     }else {
         //invalid pattern
+        delete[] da;
         painter->drawArc(cp,
                          ra,
                          0.,2.*M_PI,
