@@ -125,9 +125,26 @@ void RS_Ellipse::calculateBorders() {
 }
 
 
+/**
+  * return the foci of ellipse
+  *
+  *@Author: Dongxu Li
+  */
+
+RS_VectorSolutions RS_Ellipse::getFoci() const {
+    RS_Vector vp(getMajorP()*sqrt(1.-getRatio()*getRatio()));
+    return RS_VectorSolutions(getCenter()+vp, getCenter()-vp);
+}
 
 RS_VectorSolutions RS_Ellipse::getRefPoints() {
-    RS_VectorSolutions ret(getStartpoint(), getEndpoint(), data.center);
+    RS_VectorSolutions ret;
+    if( std::isnormal(getAngle1()) || std::isnormal(getAngle2()) ){
+        //no start/end point for whole ellipse
+        ret.push_back(getStartpoint());
+        ret.push_back(getEndpoint());
+    }
+    ret.push_back(data.center);
+    ret.appendTo(getFoci());
     return ret;
 }
 

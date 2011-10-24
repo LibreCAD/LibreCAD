@@ -115,6 +115,7 @@ public:
      * @return Start point of the entity.
      */
     virtual RS_Vector getStartpoint() const;
+    virtual RS_VectorSolutions getFoci() const;
 
     /**
      * @return End point of the entity.
