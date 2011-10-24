@@ -774,13 +774,14 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     }
     RS_Vector cp=view->toGui(getCenter());
     double ra=getRadius()*view->getFactor().x;
+    double length=getLength()*view->getFactor().x;
     //double styleFactor = getStyleFactor();
+    patternOffset -= length;
 
     // simple style-less lines
     if ( !isSelected() && (
              getPen().getLineType()==RS2::SolidLine ||
              view->getDrawingMode()==RS2::ModePreview)) {
-
         painter->drawArc(cp,
                          ra,
                          getAngle1(), getAngle2(),
@@ -812,7 +813,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
         return;
     }
 
-    patternOffset=remainder(patternOffset - getLength()-0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
+//    patternOffset=remainder(patternOffset - length -0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
 
     if (ra<RS_TOLERANCE_ANGLE){
         return;

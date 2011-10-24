@@ -355,10 +355,10 @@ void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patter
         view->drawEntity(painter, e, patternOffset);
         //RS_DEBUG->print("offset: %f\nlength was: %f", offset, e->getLength());
 
-        e = nextEntity(RS2::ResolveNone));
+        e = nextEntity(RS2::ResolveNone);
         while(e!=NULL) {
             view->drawEntityPlain(painter, e, patternOffset);
-            e = nextEntity(RS2::ResolveNone));
+            e = nextEntity(RS2::ResolveNone);
             //RS_DEBUG->print("offset: %f\nlength was: %f", offset, e->getLength());
         }
     }
