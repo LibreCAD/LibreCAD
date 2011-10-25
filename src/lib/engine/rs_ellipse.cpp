@@ -125,9 +125,26 @@ void RS_Ellipse::calculateBorders() {
 }
 
 
+/**
+  * return the foci of ellipse
+  *
+  *@Author: Dongxu Li
+  */
+
+RS_VectorSolutions RS_Ellipse::getFoci() const {
+    RS_Vector vp(getMajorP()*sqrt(1.-getRatio()*getRatio()));
+    return RS_VectorSolutions(getCenter()+vp, getCenter()-vp);
+}
 
 RS_VectorSolutions RS_Ellipse::getRefPoints() {
-    RS_VectorSolutions ret(getStartpoint(), getEndpoint(), data.center);
+    RS_VectorSolutions ret;
+    if( std::isnormal(getAngle1()) || std::isnormal(getAngle2()) ){
+        //no start/end point for whole ellipse
+        ret.push_back(getStartpoint());
+        ret.push_back(getEndpoint());
+    }
+    ret.push_back(data.center);
+    ret.appendTo(getFoci());
     return ret;
 }
 
@@ -254,7 +271,7 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
         e.setReversed(false);
     }
     if(ra<RS_TOLERANCE) { //elipse too small
-        return(false);
+        return(RS_Vector(false));
     }
     if(getRatio()<RS_TOLERANCE) {
         //treat the ellipse as a line
@@ -1303,30 +1320,22 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patte
     }
     double ra(getMajorRadius()*view->getFactor().x);
     double rb(getRatio()*ra);
+    if(rb<RS_TOLERANCE) {//ellipse too small
+        painter->drawLine(view->toGui(minV),view->toGui(maxV));
+        return;
+    }
     double mAngle=getAngle();
     RS_Vector cp(view->toGui(getCenter()));
     if ( !isSelected() && (
              getPen().getLineType()==RS2::SolidLine ||
              view->getDrawingMode()==RS2::ModePreview)) {
         painter->drawEllipse(cp,
-                             ra,
-                             rb,
+                             ra, rb,
                              mAngle,
                              getAngle1(), getAngle2(),
                              isReversed());
         return;
     }
-//    double styleFactor = getStyleFactor(view);
-//    if (styleFactor<=0.0){
-//        painter->drawEllipse(cp,
-//                             ra,
-//                             rb,
-//                             mAngle,
-//                             getAngle1(), getAngle2(),
-//                             isReversed());
-//        RS_DEBUG->print(RS_Debug::D_WARNING,"RS_Ellipse::draw(): negative Style Factor, do not use pattern for drawing");
-//        return;
-//    }
 
     // Pattern:
     RS_LineTypePattern* pat;
@@ -1344,107 +1353,54 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patte
     // Pen to draw pattern is always solid:
     RS_Pen pen = painter->getPen();
     pen.setLineType(RS2::SolidLine);
-    painter->setPen(pen);
-    double* ds = new double[pat->num];
-    //normalize pattern
-//    double amin(2.);
-//    double patternLength=0.;
-
-    int i(0),j(0);
-    while( i<pat->num){
-//        ds[j]=pat->pattern[i++] * styleFactor;//pattern length
-        //fixme, styleFactor needed
-        ds[j]=pat->pattern[i++] ;//pattern length
-//        if(fabs(ds[j])<RS_TOLERANCE) continue;
-//        if(amin>fabs(ds[j])) amin=fabs(ds[j]);
-//        patternLength += fabs(ds[j]);
-        j++;
-    }
-//    if(amin>RS_TOLERANCE && j){
-//        amin=2./amin;
-//        patternLength *= amin;
-//        if (patternLength > 50.) {
-//            amin *= 50./patternLength;
-////            patternLength=100.;
-//        }
-//        for(i=0;i<j;i++){
-//            ds[i] *= amin;
-////            patternLength += ds[i];
-//        }
-//    }else
-if(!j) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "Invalid pattern");
-    }
-
-    //        double* da;     // array of distances in x.
-
-    //        double length = getAngleLength();
-
-    // create pattern:
-    //        da = new double[pat->num];
-
-    double tot=0.0;
     double a1(RS_Math::correctAngle(getAngle1()));
     double a2(RS_Math::correctAngle(getAngle2()));
     if (isReversed()) std::swap(a1,a2);
     if(a2 <a1+RS_TOLERANCE_ANGLE) a2 +=2.*M_PI;
+    painter->setPen(pen);
+    int i(0),j(0);
+    double* ds = new double[pat->num>0?pat->num:0];
+    if(pat->num>0){
+        while( i<pat->num){
+            ds[i]=pat->pattern[i] ;//pattern length
+            i++;
+        }
+        j=i;
+    }else {
+        delete[] ds;
+        RS_DEBUG->print(RS_Debug::D_WARNING,"Invalid pattern when drawing ellipse");
+        painter->drawEllipse(cp,
+                             ra, rb,
+                             mAngle,
+                             a1,
+                             a2,
+                             false);
+        return;
+    }
+
+    double tot=0.0;
     double curA(a1);
     double da,a3;
+    bool notDone(true);
 
-    for(i=0;;) {//draw patterned ellipse
-        //            RS_Vector vp0(ra,rb);
-        double curR=RS_Vector(ra*sin(curA),rb*cos(curA)).magnitude();
-        //            curR = sqrt(RS_Math::pow(ra*cos(curA), 2.0)
-        //                        + RS_Math::pow(rb*sin(curA), 2.0));
+    for(i=0;notDone;i=(i+1)%j) {//draw patterned ellipse
 
-        //std::cout<<"curR  "<<curR<<std::endl;
-        if (curR>1.0e-6) {
-            da = fabs(ds[i])/curR;
-            //                if(da<1) da=1.;
-            //                da /= curR;
-            //std::cout<<"pattern[i]  "<<pat->pattern[i]<<std::endl;
-            //            std::cout<<"da="<<da<<std::endl;
-            //std::cout<<"tot="<<tot<<std::endl;
-            a3=curA+da;
-            tot += da;
-                if(a3<=a2){
-                    //                std::cout<<"curA="<<curA<<"\ta2="<<a3<< "\t"<<(a3-curA)*curR<<std::endl;
-            if (ds[i]>0.){
-                    painter->drawEllipse(cp,
-                                         ra, rb,
-                                         mAngle,
-                                         curA,
-                                         a3,
-                                         false);
-            }
-                } else {
-            if (ds[i]>0.){
-                    painter->drawEllipse(cp,
-                                         ra, rb,
-                                         mAngle,
-                                         curA,
-                                         a2,
-                                         false);
-                }
-                    break;
-            }
-        }else{
-            //ellipse too small
+        a3 = curA + fabs(ds[i])/RS_Vector(ra*sin(curA),rb*cos(curA)).magnitude();
+        if(a3>a2){
+            a3=a2;
+            notDone=false;
+        }
+        tot += da;
+        if (ds[i]>0.){
             painter->drawEllipse(cp,
                                  ra, rb,
                                  mAngle,
                                  curA,
-                                 a2,
+                                 a3,
                                  false);
-            break;
         }
-        curA=a3;
 
-        i = (i+1) % j;//using pattern in cyclic
-        //            i++;
-        //            if (i>=pat->num) {
-        //                i=0;
-        //            }
+        curA=a3;
     }
 
     delete[] ds;

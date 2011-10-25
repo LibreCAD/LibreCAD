@@ -80,7 +80,7 @@ double RS_Circle::getLength() const {
  * @param r Radius
  */
 bool RS_Circle::createFromCR(const RS_Vector& c, double r) {
-    if (fabs(r)>RS_TOLERANCE) {
+    if (fabs(r)>RS_TOLERANCE && c.valid ) {
         data.radius = fabs(r);
         data.center = c;
         return true;
@@ -106,8 +106,8 @@ bool RS_Circle::createFrom2P(const RS_Vector& p1, const RS_Vector& p2) {
         data.center = (p1+p2)*0.5;
         return true;
     } else {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom2P(): "
-                        "Cannot create a circle with radius 0.0.");
+//        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom2P(): "
+//                        "Cannot create a circle with radius 0.0.");
         return false;
     }
 }
@@ -139,24 +139,28 @@ bool RS_Circle::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
         data.center += p1;
         return true;
 }
+//*create Circle from 3 points
+//Author: Dongxu Li
 bool RS_Circle::createFrom3P(const RS_VectorSolutions& sol) {
-    if(sol.getNumber() == 2) return createFrom2P(sol.get(0),sol.get(1));
     if(sol.getNumber() < 2) return false;
-        RS_Vector vra(sol.get(1) - sol.get(0));
-        RS_Vector vrb(sol.get(2) - sol.get(0));
-        double ra2=vra.squared()*0.5;
-        double rb2=vrb.squared()*0.5;
-        double crossp=vra.x * vrb.y - vra.y * vrb.x;
-        if (fabs(crossp)< RS_TOLERANCE*RS_TOLERANCE) {
-                RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
+    if(sol.getNumber() == 2) return createFrom2P(sol.get(0),sol.get(1));
+    if((sol.get(1)-sol.get(2)).squared() < RS_TOLERANCE*RS_TOLERANCE)
+        return createFrom2P(sol.get(0),sol.get(1));
+    RS_Vector vra(sol.get(1) - sol.get(0));
+    RS_Vector vrb(sol.get(2) - sol.get(0));
+    double ra2=vra.squared()*0.5;
+    double rb2=vrb.squared()*0.5;
+    double crossp=vra.x * vrb.y - vra.y * vrb.x;
+    if (fabs(crossp)< RS_TOLERANCE*RS_TOLERANCE) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
                         "Cannot create a circle with radius 0.0.");
-                return false;
-        }
-        crossp=1./crossp;
-        data.center.set((ra2*vrb.y - rb2*vra.y)*crossp,(rb2*vra.x - ra2*vrb.x)*crossp);
-        data.radius=data.center.magnitude();
-        data.center += sol.get(0);
-        return true;
+        return false;
+    }
+    crossp=1./crossp;
+    data.center.set((ra2*vrb.y - rb2*vra.y)*crossp,(rb2*vra.x - ra2*vrb.x)*crossp);
+    data.radius=data.center.magnitude();
+    data.center += sol.get(0);
+    return true;
 }
 //
 //    if (p1.distanceTo(p2)>RS_TOLERANCE &&
@@ -200,13 +204,18 @@ bool RS_Circle::createFrom3P(const RS_VectorSolutions& sol) {
 //        return false;
 //    }
 //}
+/**
+  *create circle inscribled in a triangle
+  *
+  *Author: Dongxu Li
+  */
 bool RS_Circle::createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& lines){
     if(lines.size()<3) return false;
     QVector<RS_Line*> tri(lines);
     RS_VectorSolutions sol=RS_Information::getIntersectionLineLine(tri[0],tri[1]);
     if(sol.getNumber() == 0 ) {//move parallel to opposite
         std::swap(tri[1],tri[2]);
-    sol=RS_Information::getIntersectionLineLine(tri[0],tri[1]);
+        sol=RS_Information::getIntersectionLineLine(tri[0],tri[1]);
     }
     if(sol.getNumber() == 0 ) return false;
     RS_Vector vp0(sol.get(0));
@@ -222,14 +231,14 @@ bool RS_Circle::createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& 
     a=dvp.angle();
     double angle0(0.5*(vl0.angle() + a));
     if( RS_Vector::dotP(vp,vl0) <0.) {
-                  angle0 += 0.5*M_PI;
+        angle0 += 0.5*M_PI;
     }
 
     RS_Line line0(vp0, vp0+RS_Vector(angle0));//first bisecting line
     vl0=(tri[2]->getEndpoint() - tri[2]->getStartpoint());
     angle0=0.5*(vl0.angle() + a+M_PI);
     if( RS_Vector::dotP(vp,vl0) <0.) {
-                  angle0 += 0.5*M_PI;
+        angle0 += 0.5*M_PI;
     }
     RS_Line line1(vp1, vp1+RS_Vector(angle0));//second bisection line
     sol=RS_Information::getIntersectionLineLine(&line0,&line1);
@@ -264,20 +273,14 @@ RS_Vector RS_Circle::getNearestEndpoint(const RS_Vector& /*coord*/, double* dist
 RS_Vector RS_Circle::getNearestPointOnEntity(const RS_Vector& coord,
         bool /*onEntity*/, double* dist, RS_Entity** entity)const {
 
-    RS_Vector vec(false);
     if (entity!=NULL) {
         *entity = const_cast<RS_Circle*>(this);
     }
-
-    double angle = (coord-data.center).angle();
-    vec.setPolar(data.radius, angle);
-    vec+=data.center;
-
-    if (dist!=NULL) {
-        *dist = fabs((vec-data.center).magnitude()-data.radius);
-    }
-
-    return vec;
+    RS_Vector vp(coord - data.center);
+    double d(vp.magnitude());
+    if( d < RS_TOLERANCE ) return RS_Vector(false);
+    vp *= data.radius/d;
+    return data.center + vp;
 }
 
 
@@ -296,6 +299,7 @@ RS_Vector RS_Circle::getMiddlePoint(void)const
 {
     return RS_Vector(false);
 }
+
 RS_Vector RS_Circle::getNearestMiddle(const RS_Vector& /*coord*/,
                                       double* dist,
                                       const int /*middlePoints*/
@@ -450,21 +454,17 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patter
     painter->setPen(pen);
 
     // create pattern:
-    double* da= new double[pat->num];
-     // array of distances in x.
-//    double k=2.;
-//    double patternLength=0.;
+    double* da=new double[pat->num>0?pat->num:0];
     int i(0),j(0);          // index counter
-    while(i<pat->num){
-//        da[j] = pat->pattern[i++] * styleFactor;
-        //fixme, styleFactor needed
-        da[j] = pat->pattern[i++]/ra ;
-//        if(fabs(da[j])<RS_TOLERANCE) continue;
-//        if(fabs(da[j])<k) k=fabs(da[j]);
-//        patternLength += fabs(da[j]);
-        j++;
-    }
-    if(!j){
+    if(pat->num>0){
+        while(i<pat->num){
+            //        da[j] = pat->pattern[i++] * styleFactor;
+            //fixme, styleFactor needed
+            da[i] = pat->pattern[i]/ra ;
+            i++;
+        }
+        j=i;
+    }else {
         //invalid pattern
         delete[] da;
         painter->drawArc(cp,
@@ -473,38 +473,24 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patter
                          false);
         return;
     }
-//    k= 2./k;
-//    patternLength *=k;
-//    if (patternLength>80.) k*=80./patternLength;
-//    for(i=0;i<j;i++) {
-//        da[i]*=k/ra; //normalize pattern
-//    }
 
     double curA ( 0.0);
     double a2;
-    //double cx = getCenter().x * factor.x + offsetX;
-    //double cy = - a->getCenter().y * factor.y + getHeight() - offsetY;
+    bool notDone=true;
 
-    for(i=0;;) {
+    for(i=0;notDone;i=(i+1)%j) {
         a2= curA+fabs(da[i]);
-        if (a2<2.*M_PI) {
-            if (da[i]>0.){
-                painter->drawArc(cp, ra,
-                                 curA,
-                                 a2,
-                                 false);
-            }
-        } else {
-            if (da[i]>0.){
-                painter->drawArc(cp, ra,
-                                 curA,
-                                 2*M_PI,
-                                 false);
-            }
-            break;
+        if(a2>2.*M_PI) {
+            a2=2.*M_PI;
+            notDone=false;
+        }
+        if (da[i]>0.){
+            painter->drawArc(cp, ra,
+                             curA,
+                             a2,
+                             false);
         }
         curA=a2;
-        i=(i+1)%j;
     }
 
     delete[] da;

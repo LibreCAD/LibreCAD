@@ -801,10 +801,16 @@ bool RS_VectorSolutions::hasValid() const {
     return false;
 }
 
-
+QList<RS_Vector> RS_VectorSolutions::getList() const {
+    return vector;
+}
 
 void RS_VectorSolutions::push_back(const RS_Vector& v) {
         vector.push_back(v);
+}
+RS_VectorSolutions RS_VectorSolutions::appendTo(const RS_VectorSolutions& v) {
+    vector += v.getList();
+    return *this;
 }
 
 /**

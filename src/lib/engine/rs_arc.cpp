@@ -774,13 +774,14 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     }
     RS_Vector cp=view->toGui(getCenter());
     double ra=getRadius()*view->getFactor().x;
+    double length=getLength()*view->getFactor().x;
     //double styleFactor = getStyleFactor();
+    patternOffset -= length;
 
     // simple style-less lines
     if ( !isSelected() && (
              getPen().getLineType()==RS2::SolidLine ||
              view->getDrawingMode()==RS2::ModePreview)) {
-
         painter->drawArc(cp,
                          ra,
                          getAngle1(), getAngle2(),
@@ -804,7 +805,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
         pat = view->getPattern(getPen().getLineType());
     }
 
-    if (pat==NULL) {
+    if (pat==NULL|| ra<0.5) {//avoid division by zero from small ra
         RS_DEBUG->print(RS_Debug::D_WARNING, "Invalid line pattern, drawing arc using solid line");
         painter->drawArc(cp, ra,
                          getAngle1(),getAngle2(),
@@ -812,7 +813,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
         return;
     }
 
-    patternOffset=(patternOffset - getLength()-0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
+//    patternOffset=remainder(patternOffset - length -0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
 
     if (ra<RS_TOLERANCE_ANGLE){
         return;
@@ -826,40 +827,28 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 
 
     // create scaled pattern:
-    double* da = new double[pat->num];
-  // array of distances in x.
-//    double k=2.;
+    double* da;
     double patternSegmentLength(pat->totalLength);
     int i(0);          // index counter
-    while(i<pat->num){
-//        da[j] = pat->pattern[i++] * styleFactor;
-        //fixme, stylefactor needed
-        da[i] =isReversed()? -fabs(pat->pattern[i]):fabs(pat->pattern[i]);
-//        if(fabs(da[j])<RS_TOLERANCE) continue;
-//        if(fabs(da[j]) > RS_TOLERANCE && fabs(da[j])<k) k=fabs(da[j]);
-//        patternSegmentLength += fabs(da[j]);
-        da[i]/=ra;
-//        std::cout<<"pattern("<<i-1<<")="<<da[j]<<std::endl;
-        i++;
-    }
-    if(!i){
+    if(pat->num>0) {
+        da=new double[pat->num];
+        while(i<pat->num){
+            //        da[j] = pat->pattern[i++] * styleFactor;
+            //fixme, stylefactor needed
+            da[i] =isReversed()? -fabs(pat->pattern[i]):fabs(pat->pattern[i]);
+            da[i]/=ra;
+            i++;
+        }
+    }else {
         //invalid pattern
 
-        delete[] da;
-        std::cout<<"RS_Arc::draw(): invalid pattern\n";
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Arc::draw(): invalid line pattern\n");
         painter->drawArc(cp,
                          ra,
                          getAngle1(), getAngle2(),
                          isReversed());
         return;
     }
-//    k= 2./k;
-//    patternLength *=k;
-//    if (patternLength>80.) k*=80./patternLength;
-//    for(i=0;i<j;i++) {
-//        da[i]*=k/ra; //normalize pattern
-//    }
-
 
     //    bool done = false;
     double total=remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength)-0.5*patternSegmentLength;
@@ -877,11 +866,8 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     double limit(fabs(a1-a2));
     double t2;
     double a11,a21;
-    //double cx = getCenter().x * factor.x + offsetX;
-    //double cy = - a->getCenter().y * factor.y + getHeight() - offsetY;
 
     for(int j=0; fabs(total-a1)<limit ;j=(j+1)%i) {
-//        std::cout<<"1\n";
         t2=total+da[j];
 
         if(pat->pattern[j]>0.0) {
@@ -889,7 +875,6 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
             if (fabs(t2-a2)<limit) {
                 a11=(fabs(total-a2)<limit)?total:a1;
                 a21=(fabs(t2-a1)<limit)?t2:a2;
-//                std::cout<<"drawing ("<<a1<<","<<a2<<")\n";
                 painter->drawArc(cp, ra,
                                  a11,
                                  a21,
@@ -898,8 +883,6 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
         }
         total=t2;
     }
-//    patternOffset=remainder(ra*(t2-a2)-0.5*patternSegmentLength,patternSegmentLength)+0.5*patternSegmentLength;
-//    patternOffset=ra*fabs(total-a2);
 
     delete[] da;
 }

@@ -112,7 +112,7 @@
     </message>
     <message>
         <source>&amp;Point</source>
-        <translation>&amp;Punkt</translation>
+        <translation type="obsolete">&amp;Punkt</translation>
     </message>
     <message>
         <source>&amp;Line</source>
@@ -387,10 +387,6 @@ Du kan gemme dit arbejde nu.</translation>
         <translation>&amp;Vindue</translation>
     </message>
     <message>
-        <source>&amp;Spline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Running script &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -467,6 +463,22 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning: File already opened : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot save the file </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> , please check the filename and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -687,7 +699,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Endpoints</source>
-        <translation>Slutpunkt&amp;er</translation>
+        <translation type="obsolete">Slutpunkt&amp;er</translation>
     </message>
     <message>
         <source>Snap to endpoints</source>
@@ -699,7 +711,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;On Entity</source>
-        <translation>&amp;På enhed</translation>
+        <translation type="obsolete">&amp;På enhed</translation>
     </message>
     <message>
         <source>Snap to nearest point on entity</source>
@@ -795,7 +807,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="obsolete">&amp;Vertikal begrænsning</translation>
+        <translation type="unfinished">&amp;Vertikal begrænsning</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -1026,11 +1038,15 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Restrict&amp;Vertically</source>
+        <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Selection pointer</source>
+        <source>&amp;Endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;OnEntity</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1046,7 +1062,11 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation>Mod uret</translation>
+        <translation type="obsolete">Mod uret</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1057,7 +1077,25 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Radius:</translation>
+        <translation type="obsolete">Radius:</translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">Vinkel</translation>
     </message>
 </context>
 <context>
@@ -1255,6 +1293,14 @@ i et nyt vindue</translation>
         <source>Concentric</source>
         <translation>Koncentrisk</translation>
     </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CadToolBarDim</name>
@@ -1298,6 +1344,10 @@ i et nyt vindue</translation>
         <source>Leader</source>
         <translation>Pil</translation>
     </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="unfinished">Koncentrisk</translation>
+    </message>
 </context>
 <context>
     <name>QG_CadToolBarEllipses</name>
@@ -1316,6 +1366,30 @@ i et nyt vindue</translation>
     <message>
         <source>Back to main menu</source>
         <translation>Tilbage til hovedmenu</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse by foci and a point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw Ellipse with by center and 3 points on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="unfinished">Koncentrisk</translation>
     </message>
 </context>
 <context>
@@ -1347,6 +1421,10 @@ i et nyt vindue</translation>
     <message>
         <source>Area of polygon</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="unfinished">Koncentrisk</translation>
     </message>
 </context>
 <context>
@@ -1419,6 +1497,10 @@ i et nyt vindue</translation>
         <source>Parallels through point</source>
         <translation>Paralleler gennem punkt</translation>
     </message>
+    <message>
+        <source>Tangents to a circle, orthogonal to a line</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CadToolBarMain</name>
@@ -1428,15 +1510,15 @@ i et nyt vindue</translation>
     </message>
     <message>
         <source>Show menu &quot;Lines&quot;</source>
-        <translation>Vis menu &quot;linier&quot;</translation>
+        <translation type="obsolete">Vis menu &quot;linier&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Arcs&quot;</source>
-        <translation>Vis menu &quot;buer&quot;</translation>
+        <translation type="obsolete">Vis menu &quot;buer&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Circles&quot;</source>
-        <translation>Vis menu &quot;cirkler&quot;</translation>
+        <translation type="obsolete">Vis menu &quot;cirkler&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Points&quot;</source>
@@ -1444,31 +1526,31 @@ i et nyt vindue</translation>
     </message>
     <message>
         <source>Show menu &quot;Measure&quot;</source>
-        <translation>Vis menu &quot;mål&quot;</translation>
+        <translation type="obsolete">Vis menu &quot;mål&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Ellipses&quot;</source>
-        <translation>Vis menu &quot;ellipser&quot;</translation>
+        <translation type="obsolete">Vis menu &quot;ellipser&quot;</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
-        <translation>Skraveringer / Udfyld med farve</translation>
+        <translation type="obsolete">Skraveringer / Udfyld med farve</translation>
     </message>
     <message>
         <source>Show menu &quot;Edit&quot;</source>
-        <translation>Vis menu &quot;Rediger&quot;</translation>
+        <translation type="obsolete">Vis menu &quot;Rediger&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Dimensions&quot;</source>
-        <translation>Vis menu &quot;målsæt&quot;</translation>
+        <translation type="obsolete">Vis menu &quot;målsæt&quot;</translation>
     </message>
     <message>
         <source>Texts</source>
-        <translation>Tekst</translation>
+        <translation type="obsolete">Tekst</translation>
     </message>
     <message>
         <source>Show menu &quot;Select&quot;</source>
-        <translation>Vis menu &quot;vælg&quot;</translation>
+        <translation type="obsolete">Vis menu &quot;vælg&quot;</translation>
     </message>
     <message>
         <source>Create Block</source>
@@ -1476,18 +1558,66 @@ i et nyt vindue</translation>
     </message>
     <message>
         <source>Raster Image</source>
-        <translation>Raster billed</translation>
+        <translation type="obsolete">Raster billed</translation>
     </message>
     <message>
         <source>Points</source>
         <translation type="unfinished">Punkter</translation>
     </message>
     <message>
-        <source>Splines</source>
+        <source>Show toolbar &quot;Lines&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Polylines</source>
+        <source>Show toolbar &quot;Arcs&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Circles&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Ellipses&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Polylines&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw Splines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw Points</source>
+        <translation type="unfinished">Tegner punkter</translation>
+    </message>
+    <message>
+        <source>Insert Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Dimensions&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Hatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Modify&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Info&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Select&quot;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1635,6 +1765,18 @@ i et nyt vindue</translation>
         <source>Append node</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Polyline equidistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Polyline from Existing Segments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="unfinished">Koncentrisk</translation>
+    </message>
 </context>
 <context>
     <name>QG_CadToolBarSelect</name>
@@ -1695,71 +1837,71 @@ i et nyt vindue</translation>
     <name>QG_CadToolBarSnap</name>
     <message>
         <source>Snap</source>
-        <translation>Bind til</translation>
+        <translation type="obsolete">Bind til</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Tilbage til hovedmenu</translation>
+        <translation type="obsolete">Tilbage til hovedmenu</translation>
     </message>
     <message>
         <source>Snap to grid</source>
-        <translation>Bind til gitter</translation>
+        <translation type="obsolete">Bind til gitter</translation>
     </message>
     <message>
         <source>Free positioning</source>
-        <translation>Fri position</translation>
+        <translation type="obsolete">Fri position</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
-        <translation>Bind til slutpunkter</translation>
+        <translation type="obsolete">Bind til slutpunkter</translation>
     </message>
     <message>
         <source>Snap to closest point on entity</source>
-        <translation>Bind til nærmeste punkt på enheden</translation>
+        <translation type="obsolete">Bind til nærmeste punkt på enheden</translation>
     </message>
     <message>
         <source>Snap to center points</source>
-        <translation>Bind til centrum</translation>
+        <translation type="obsolete">Bind til centrum</translation>
     </message>
     <message>
         <source>Snap to middle points</source>
-        <translation>Bind til midter punkt</translation>
+        <translation type="obsolete">Bind til midter punkt</translation>
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Bind til punkt med en given afstand fra slutpunkt</translation>
+        <translation type="obsolete">Bind til punkt med en given afstand fra slutpunkt</translation>
     </message>
     <message>
         <source>Snap to intersections automatically</source>
-        <translation>Bind til skæringspunkt automatisk</translation>
+        <translation type="obsolete">Bind til skæringspunkt automatisk</translation>
     </message>
     <message>
         <source>No Restriction</source>
-        <translation>Ingen begrænsning</translation>
+        <translation type="obsolete">Ingen begrænsning</translation>
     </message>
     <message>
         <source>Orthogonal Restriction</source>
-        <translation>Vinkelret begrænsning</translation>
+        <translation type="obsolete">Vinkelret begrænsning</translation>
     </message>
     <message>
         <source>Horizontal Restriction</source>
-        <translation>Horisontal begrænsning</translation>
+        <translation type="obsolete">Horisontal begrænsning</translation>
     </message>
     <message>
         <source>Vertical Restriction</source>
-        <translation>Vertikal begrænsning</translation>
+        <translation type="obsolete">Vertikal begrænsning</translation>
     </message>
     <message>
         <source>Move relative Zero</source>
-        <translation>Flyt det relative nul</translation>
+        <translation type="obsolete">Flyt det relative nul</translation>
     </message>
     <message>
         <source>Lock relative Zero</source>
-        <translation>Lås det relative nul</translation>
+        <translation type="obsolete">Lås det relative nul</translation>
     </message>
     <message>
         <source>Snap to intersections manually</source>
-        <translation>Bind til skæringspunkt manuelt</translation>
+        <translation type="obsolete">Bind til skæringspunkt manuelt</translation>
     </message>
 </context>
 <context>
@@ -1842,6 +1984,34 @@ i et nyt vindue</translation>
         <source>Others..</source>
         <translation>Andre..</translation>
     </message>
+    <message>
+        <source>Dark Red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Yellow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Green</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Cyan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Magenta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark Gray</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CommandWidget</name>
@@ -1852,6 +2022,10 @@ i et nyt vindue</translation>
     <message>
         <source>Command:</source>
         <translation>Komando:</translation>
+    </message>
+    <message>
+        <source>Unknown command: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2439,7 +2613,7 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     <name>QG_DlgMove</name>
     <message>
         <source>Moving Options</source>
-        <translation>Valg for flytning</translation>
+        <translation type="obsolete">Valg for flytning</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -2483,6 +2657,10 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     </message>
     <message>
         <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move/Copy Options</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2972,11 +3150,11 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     </message>
     <message>
         <source>#ffffff</source>
-        <translation>#ffffff</translation>
+        <translation type="obsolete">#ffffff</translation>
     </message>
     <message>
         <source>#c0c0c0</source>
-        <translation>#c0c0c0</translation>
+        <translation type="obsolete">#c0c0c0</translation>
     </message>
     <message>
         <source>#808080</source>
@@ -2992,7 +3170,7 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     </message>
     <message>
         <source>#a54747</source>
-        <translation>#a54747</translation>
+        <translation type="obsolete">#a54747</translation>
     </message>
     <message>
         <source>#739373</source>
@@ -3039,47 +3217,63 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Time between automatc saving of thedocument in minutes.</source>
+        <source>Auto save time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto save time:</source>
+        <source>#FFFFFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#C0C0C0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#A54747</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>400</source>
+        <translation type="unfinished">400</translation>
+    </message>
+    <message>
+        <source>800</source>
+        <translation type="unfinished">800</translation>
+    </message>
+    <message>
+        <source>Drawing unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time between automatic saving of the document in minutes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto backup</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsVariables</name>
     <message>
-        <source>Drawing Variables</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished">Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Afbryd</translation>
+        <translation type="obsolete">Afbryd</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -3115,6 +3309,41 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     <message>
         <source>Esc</source>
         <translation>Esc</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgPolyline</name>
+    <message>
+        <source>Polyline</source>
+        <translation type="unfinished">Polylinie</translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Lag:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometri</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="unfinished">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="unfinished">Alt+O</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Afbryd</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="unfinished">Esc</translation>
     </message>
 </context>
 <context>
@@ -3243,7 +3472,7 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     </message>
     <message>
         <source>&amp;Factor (f):</source>
-        <translation>&amp;Faktor (f):</translation>
+        <translation type="obsolete">&amp;Faktor (f):</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
@@ -3267,6 +3496,26 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     </message>
     <message>
         <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale by the same factor at both x- and y- directions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isotropic Scaling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1.0</source>
+        <translation type="unfinished">1.0</translation>
+    </message>
+    <message>
+        <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4292,7 +4541,7 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     <name>QG_LibraryWidget</name>
     <message>
         <source>Library Browser</source>
-        <translation>Biblioteks browser</translation>
+        <translation type="obsolete">Biblioteks browser</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -4378,6 +4627,14 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     <message>
         <source>Undo</source>
         <translation>Fortryd</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4597,6 +4854,25 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     </message>
 </context>
 <context>
+    <name>QG_PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Valg for linie med relativ vinkel</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Afstand:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
@@ -4693,11 +4969,35 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     </message>
     <message>
         <source>Selected Entities:</source>
-        <translation>Valgte enheder:</translation>
+        <translation type="obsolete">Valgte enheder:</translation>
     </message>
     <message>
         <source>0</source>
         <translation>0</translation>
+    </message>
+    <message>
+        <source>Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total Length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4709,6 +5009,76 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     <message>
         <source>Distance:</source>
         <translation>Afstand:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">Valg for bind til afstand</translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapToolBar</name>
+    <message>
+        <source>Snap</source>
+        <translation type="unfinished">Bind til</translation>
+    </message>
+    <message>
+        <source>Snap to Endpoints</source>
+        <translation type="unfinished">Bind til slutpunkter</translation>
+    </message>
+    <message>
+        <source>Snap to equidistant points of entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap to center points</source>
+        <translation type="unfinished">Bind til centrum</translation>
+    </message>
+    <message>
+        <source>Snap to intersections automatically</source>
+        <translation type="unfinished">Bind til skæringspunkt automatisk</translation>
+    </message>
+    <message>
+        <source>Snap to closest point on entity</source>
+        <translation type="unfinished">Bind til nærmeste punkt på enheden</translation>
+    </message>
+    <message>
+        <source>Snap to point with given distance to endpoint</source>
+        <translation type="unfinished">Bind til punkt med en given afstand fra slutpunkt</translation>
+    </message>
+    <message>
+        <source>Snap to intersections manually</source>
+        <translation type="unfinished">Bind til skæringspunkt manuelt</translation>
+    </message>
+    <message>
+        <source>Snap to grid</source>
+        <translation type="unfinished">Bind til gitter</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontally</source>
+        <translation type="unfinished">Horisontal begrænsning</translation>
+    </message>
+    <message>
+        <source>Restrict Vertically</source>
+        <translation type="unfinished">Vertikal begrænsning</translation>
+    </message>
+    <message>
+        <source>Move relative Zero</source>
+        <translation type="unfinished">Flyt det relative nul</translation>
+    </message>
+    <message>
+        <source>Lock relative Zero</source>
+        <translation type="unfinished">Lås det relative nul</translation>
     </message>
 </context>
 <context>
@@ -4769,7 +5139,19 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     </message>
     <message>
         <source>Amount:</source>
-        <translation>Størrelse:</translation>
+        <translation type="obsolete">Størrelse:</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Længde:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5155,6 +5537,14 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>enter text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LFF Font %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jww %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5714,6 +6104,10 @@ Vil du overskrive den?</translation>
         <source>Back</source>
         <translation type="unfinished">Tilbage</translation>
     </message>
+    <message>
+        <source>Specify end point</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle</name>
@@ -5860,6 +6254,64 @@ Vil du overskrive den?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawCircleInscribe</name>
+    <message>
+        <source>Circle &amp;Inscribed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the first line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Afbryd</translation>
+    </message>
+    <message>
+        <source>Specify the second line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Tilbage</translation>
+    </message>
+    <message>
+        <source>Specify the third line</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipse4Points</name>
+    <message>
+        <source>Ellipse &amp;4 Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the first point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Afbryd</translation>
+    </message>
+    <message>
+        <source>Specify the second point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Tilbage</translation>
+    </message>
+    <message>
+        <source>Specify the third point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the fourth point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
         <source>Ellipse Arc with Axis</source>
@@ -5867,7 +6319,7 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>&amp;Ellipse Arc (Axis)</source>
-        <translation>&amp;Ellipse bue (akse)</translation>
+        <translation type="obsolete">&amp;Ellipse bue (akse)</translation>
     </message>
     <message>
         <source>Draw Ellipse Arcs</source>
@@ -5916,6 +6368,103 @@ Vil du overskrive den?</translation>
     <message>
         <source>Specify end angle</source>
         <translation>Angiv slut vinkel</translation>
+    </message>
+    <message>
+        <source>Ellipse &amp;Arc (Axis)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseCenter3Points</name>
+    <message>
+        <source>Ellipse Center and &amp;3 Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the center of ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Afbryd</translation>
+    </message>
+    <message>
+        <source>Specify the first point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the second point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Tilbage</translation>
+    </message>
+    <message>
+        <source>Specify the third point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseFociPoint</name>
+    <message>
+        <source>Ellipse &amp;Foci Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify first focus of ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Afbryd</translation>
+    </message>
+    <message>
+        <source>Specify second focus of ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Tilbage</translation>
+    </message>
+    <message>
+        <source>Specify a point on ellipse or total distance to foci</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseInscribe</name>
+    <message>
+        <source>Ellipse &amp;Inscribed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the first line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Afbryd</translation>
+    </message>
+    <message>
+        <source>Specify the second line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Tilbage</translation>
+    </message>
+    <message>
+        <source>Specify the third line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the fourth line</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6192,6 +6741,29 @@ Vil du overskrive den?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawLineOrthTan</name>
+    <message>
+        <source>Tangent &amp;Orthogonal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Afbryd</translation>
+    </message>
+    <message>
+        <source>Select circle, arc or ellipse</source>
+        <translation type="unfinished">Vælg cirkel, bue eller ellipse</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Tilbage</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawLineParallel</name>
     <message>
         <source>Parallel</source>
@@ -6285,7 +6857,7 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>Pol&amp;ygon (Cen,Hjør)</translation>
+        <translation type="obsolete">Pol&amp;ygon (Cen,Hjør)</translation>
     </message>
     <message>
         <source>Draw polygon with center and corner</source>
@@ -6293,7 +6865,7 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation>Angiv centrum</translation>
+        <translation type="obsolete">Angiv centrum</translation>
     </message>
     <message>
         <source></source>
@@ -6301,19 +6873,19 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>Specify a corner</source>
-        <translation>Angiv et hjørne</translation>
+        <translation type="obsolete">Angiv et hjørne</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation>Angiv antal:</translation>
+        <translation type="obsolete">Angiv antal:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Det er ikke et gyldigt antal. prøv 1..9999</translation>
+        <translation type="obsolete">Det er ikke et gyldigt antal. prøv 1..9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Det er ikke et gydigt udtryk</translation>
+        <translation type="obsolete">Det er ikke et gydigt udtryk</translation>
     </message>
 </context>
 <context>
@@ -6324,7 +6896,7 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>Polygo&amp;n (Hjør,Hjør)</translation>
+        <translation type="obsolete">Polygo&amp;n (Hjør,Hjør)</translation>
     </message>
     <message>
         <source>Draw polygon with two corners</source>
@@ -6332,31 +6904,93 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>Specify first corner</source>
-        <translation>Angiv første hjørne</translation>
+        <translation type="obsolete">Angiv første hjørne</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Afbryd</translation>
+        <translation type="obsolete">Afbryd</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation>Angiv det andet hjørne</translation>
+        <translation type="obsolete">Angiv det andet hjørne</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Tilbage</translation>
+        <translation type="obsolete">Tilbage</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Antal:</translation>
+        <translation type="obsolete">Antal:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Det er ikke et gyldigt antal. prøv 1..9999</translation>
+        <translation type="obsolete">Det er ikke et gyldigt antal. prøv 1..9999</translation>
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation>Det er ikke et gydigt udtryk.</translation>
+        <translation type="obsolete">Det er ikke et gydigt udtryk.</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLinePolygonCenCor</name>
+    <message>
+        <source>Pol&amp;ygon (Cen,Cor)</source>
+        <translation type="unfinished">Pol&amp;ygon (Cen,Hjør)</translation>
+    </message>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Angiv centrum</translation>
+    </message>
+    <message>
+        <source>Specify a corner</source>
+        <translation type="unfinished">Angiv et hjørne</translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="unfinished">Angiv antal:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">Det er ikke et gyldigt antal. prøv 1..9999</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLinePolygonCorCor</name>
+    <message>
+        <source>Polygo&amp;n (Cor,Cor)</source>
+        <translation type="unfinished">Polygo&amp;n (Hjør,Hjør)</translation>
+    </message>
+    <message>
+        <source>Specify first corner</source>
+        <translation type="unfinished">Angiv første hjørne</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Afbryd</translation>
+    </message>
+    <message>
+        <source>Specify second corner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Tilbage</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Antal:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">Det er ikke et gyldigt antal. prøv 1..9999</translation>
+    </message>
+    <message>
+        <source>Not a valid expression.</source>
+        <translation type="unfinished">Det er ikke et gydigt udtryk.</translation>
     </message>
 </context>
 <context>
@@ -6607,10 +7241,6 @@ Vil du overskrive den?</translation>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation type="unfinished">Kan ikke fortryde: der er ikke defineret nok enheder endnu.</translation>
     </message>
-    <message>
-        <source>Undo disallowed due a fatal bug somewhere. Sorry.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawSpline</name>
@@ -6758,6 +7388,14 @@ Vil du overskrive den?</translation>
         <source>Redoes last action</source>
         <translation type="obsolete">Gendanner sidst udførte </translation>
     </message>
+    <message>
+        <source>Nothing to undo!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nothing to redo!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionFileNew</name>
@@ -6890,10 +7528,6 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>Specify next point of polygon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Terminate</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7532,6 +8166,14 @@ Vil du overskrive den?</translation>
         <source>Back</source>
         <translation>Tilbage</translation>
     </message>
+    <message>
+        <source>Specify rotation center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify target point to rotate to</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate2</name>
@@ -7855,6 +8497,14 @@ Vil du overskrive den?</translation>
         <source>Specify next point</source>
         <translation type="unfinished">Angiv næste punkt</translation>
     </message>
+    <message>
+        <source>Can not append nodes in a closed polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">Kan ikke fortryde: der er ikke defineret nok enheder endnu.</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
@@ -8067,6 +8717,57 @@ Vil du overskrive den?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionSelect</name>
+    <message>
+        <source>Select to modify attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Afbryd</translation>
+    </message>
+    <message>
+        <source>Select to delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to delete immediately</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to move</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to mirror</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to move and rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select for two axis rotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to explode text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionSelectAll</name>
     <message>
         <source>Select All</source>
@@ -8228,7 +8929,7 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>Choose first edge</source>
-        <translation>Vælg den første kant</translation>
+        <translation type="obsolete">Vælg den første kant</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8242,12 +8943,16 @@ Vil du overskrive den?</translation>
         <source>Back</source>
         <translation>Tilbage</translation>
     </message>
+    <message>
+        <source>Click and drag for the selection window</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionSetRelativeZero</name>
     <message>
         <source>Set Relative Zero</source>
-        <translation>Sæt et relativt nulpunkt</translation>
+        <translation type="obsolete">Sæt et relativt nulpunkt</translation>
     </message>
     <message>
         <source>&amp;Set Relative Zero</source>
@@ -8264,6 +8969,10 @@ Vil du overskrive den?</translation>
     <message>
         <source>Cancel</source>
         <translation>Afbryd</translation>
+    </message>
+    <message>
+        <source>Set &amp;Relative Zero</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8366,11 +9075,27 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>&amp;Pan Zoom</source>
-        <translation>&amp;Pan zoom</translation>
+        <translation type="obsolete">&amp;Pan zoom</translation>
     </message>
     <message>
         <source>Realtime Panning</source>
         <translation type="obsolete">Realtime panning</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;Panning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click and drag to pan zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Afbryd</translation>
+    </message>
+    <message>
+        <source>Zoom panning</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8381,11 +9106,15 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>&amp;Previous View</source>
-        <translation>&amp;Forrige visning</translation>
+        <translation type="obsolete">&amp;Forrige visning</translation>
     </message>
     <message>
         <source>Shows previous view</source>
         <translation type="obsolete">Viser den forrige visning</translation>
+    </message>
+    <message>
+        <source>Previous &amp;View</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9223,6 +9952,11 @@ Vil du overskrive den?</translation>
     <message>
         <source>b</source>
         <comment>back</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rp2</source>
+        <comment>regular polygon2</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -45,7 +45,7 @@ public:
 #else
     RS_Vector(double vx, double vy, double vz=0.0);
 #endif
-    RS_Vector(double angle);
+    explicit RS_Vector(double angle);
     //RS_Vector(double v[]);
     explicit RS_Vector(bool valid);
     ~RS_Vector();
@@ -150,12 +150,14 @@ public:
     bool hasValid() const;
     void set(int i, const RS_Vector& v);
     void push_back(const RS_Vector& v);
+    RS_VectorSolutions appendTo(const RS_VectorSolutions& v);
     void setTangent(bool t);
     bool isTangent() const;
     RS_Vector getClosest(const RS_Vector& coord,
                          double* dist=NULL, int* index=NULL) const;
     double getClosestDistance(const RS_Vector& coord,
                               int counts);
+    QList<RS_Vector> getList() const;
     void rotate(const double& ang);
     void rotate(const RS_Vector& angleVector);
     void rotate(const RS_Vector& center, const double& ang);

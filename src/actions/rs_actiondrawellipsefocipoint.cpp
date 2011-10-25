@@ -87,9 +87,9 @@ void RS_ActionDrawEllipseFociPoint::trigger() {
         document->endUndoCycle();
     }
 
-    RS_Vector rz = graphicView->getRelativeZero();
+//    RS_Vector rz = graphicView->getRelativeZero();
+    graphicView->moveRelativeZero(ellipse->getCenter());
     graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(rz);
     drawSnapper();
 
     setStatus(SetFocus1);
