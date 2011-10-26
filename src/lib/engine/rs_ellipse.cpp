@@ -171,6 +171,44 @@ RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist)co
     }
 }
 
+/**
+  *find the tangential points from a given point, i.e., the tangent lines should pass
+  * the given point and tangential points
+  *
+  *Author: Dongxu Li
+  */
+RS_VectorSolutions RS_Ellipse::getTangentPoint(const RS_Vector& point) const {
+    RS_Vector point2(point);
+    point2.move(-getCenter());
+    RS_Vector aV(-getAngle());
+    point2.rotate(aV);
+    RS_VectorSolutions sol;
+    double a=getMajorRadius();
+    if(a<RS_TOLERANCE || getRatio()<RS_TOLERANCE) return sol;
+    RS_Circle c(NULL, RS_CircleData(RS_Vector(0.,0.),a));
+    point2.y /=getRatio();
+    sol=c.getTangentPoint(point2);
+    sol.scale(RS_Vector(1.,getRatio()));
+    aV.y *= -1.;
+    sol.rotate(aV);
+    sol.move(getCenter());
+    return sol;
+}
+
+RS_Vector RS_Ellipse::getTangentDirection(const RS_Vector& point) const {
+    RS_Vector vp(point-getCenter());
+    RS_Vector aV(-getAngle());
+    vp.rotate(aV);
+    double a=getMajorRadius();
+    if(a<RS_TOLERANCE || getRatio()<RS_TOLERANCE) return RS_Vector(false);
+    RS_Circle c(NULL, RS_CircleData(RS_Vector(0.,0.),a));
+    RS_Vector direction=c.getTangentDirection(vp);
+    direction.y *= getRatio();
+    aV.y *= -1.;
+    direction.rotate(aV);
+    return direction;
+}
+
 #ifdef  HAS_BOOST
 /**
   * find total length of the ellipse (arc)

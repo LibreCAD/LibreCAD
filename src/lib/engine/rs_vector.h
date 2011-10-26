@@ -164,6 +164,7 @@ public:
     void rotate(const RS_Vector& center, const RS_Vector& angleVector);
     void move(const RS_Vector& vp);
     void scale(const RS_Vector& center, const RS_Vector& factor);
+    void scale(const RS_Vector& factor);
 
     RS_VectorSolutions operator = (const RS_VectorSolutions& s);
 

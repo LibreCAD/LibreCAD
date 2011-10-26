@@ -636,117 +636,20 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
             return NULL;
         }
 
-        if (circle->rtti()==RS2::EntityCircle) {
-            circleCenter = ((RS_Circle*)circle)->getCenter();
-        } else if (circle->rtti()==RS2::EntityArc) {
-            circleCenter = ((RS_Arc*)circle)->getCenter();
-        } else if (circle->rtti()==RS2::EntityEllipse) {
-            circleCenter = ((RS_Ellipse*)circle)->getCenter();
-        }
-
         // the two tangent points:
-        RS_VectorSolutions sol;
+        RS_VectorSolutions sol=circle->getTangentPoint(point);
 
-        // calculate tangent points for arcs / circles:
-        if (circle->rtti()!=RS2::EntityEllipse) {
-            // create temp. thales circle:
-            RS_Vector tCenter = (point + circleCenter)/2.0;
-            double tRadius = point.distanceTo(tCenter);
-
-            RS_Circle tmp(NULL, RS_CircleData(tCenter, tRadius));
-
-            // get the two intersection points which are the tangent points:
-            sol = RS_Information::getIntersection(&tmp, circle, false);
-        }
-
-        // calculate tangent points for ellipses:
-        else {
-            RS_Ellipse* el = (RS_Ellipse*)circle;
-            //sol.alloc(2);
-            //sol.set(0, circleCenter);
-            //sol.set(1, circleCenter);
-
-
-            double a = el->getMajorRadius();     // the length of the major axis / 2
-            double b = el->getMinorRadius();     // the length of the minor axis / 2
-
-            // rotate and move point:
-            RS_Vector point2 = point;
-            point2.move(-el->getCenter());
-            point2.rotate(-el->getAngle());
-
-            double xp = point2.x;             // coordinates of the given point
-            double yp = point2.y;
-
-            double xt1;                      // Tangent point 1
-            double yt1;
-            double xt2;                      // Tangent point 2
-            double yt2;
-
-            double a2 = a * a;
-            double b2 = b * b;
-            double d = a2 / b2 * yp / xp;
-            double e = a2 / xp;
-            double af = b2 * d * d + a2;
-            double bf = -b2 * d * e * 2.0;
-            double cf = b2 * e * e - a2 * b2;
-            double t = sqrt(bf * bf - af * cf * 4.0);
-            yt1 = (t - bf) / (af * 2.0);
-            xt1 = e - d * yt1;
-            yt2 = (-t - bf) / (af * 2.0);
-            xt2 = e - d * yt2;
-
-            RS_Vector s1 = RS_Vector(xt1, yt1);
-            RS_Vector s2 = RS_Vector(xt2, yt2);
-
-            s1.rotate(el->getAngle());
-            s1.move(el->getCenter());
-
-            s2.rotate(el->getAngle());
-            s2.move(el->getCenter());
-
-            sol.push_back(s1);
-            sol.push_back(s2);
-
-
-        }
-
-        if (sol.getNumber() < 2 ) {
-                return NULL;
-        }
-        if (!sol.get(0).valid || !sol.get(1).valid) {
-            return NULL;
-        }
-
-        // create all possible tangents:
-        RS_Line* poss[2];
-
+        if(sol.getNumber()==0) return NULL;
+        RS_Vector vp2(sol.getClosest(coord));
         RS_LineData d;
-
-        d = RS_LineData(sol.get(0), point);
-        poss[0] = new RS_Line(NULL, d);
-        d = RS_LineData(sol.get(1), point);
-        poss[1] = new RS_Line(NULL, d);
-
-        // find closest tangent:
-        double minDist = RS_MAXDOUBLE;
-        double dist;
-        int idx = -1;
-        for (int i=0; i<2; ++i) {
-            dist = poss[i]->getDistanceToPoint(coord);
-            if (dist<minDist) {
-                minDist = dist;
-                idx = i;
-            }
+        if( (vp2-point).squared() > RS_TOLERANCE*RS_TOLERANCE ) {
+            d=RS_LineData(vp2,point);
+        }else{//the given point is a tangential point
+            d=RS_LineData(point+circle->getTangentDirection(point),point);
         }
+
 
         // create the closest tangent:
-        if (idx!=-1) {
-            RS_LineData d = poss[idx]->getData();
-
-            for (int i=0; i<2; ++i) {
-                delete poss[i];
-            }
 
             if (document!=NULL && handleUndo) {
                 document->startUndoCycle();
@@ -765,9 +668,6 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
             if (graphicView!=NULL) {
                 graphicView->drawEntity(ret);
             }
-        } else {
-            ret = NULL;
-        }
 
         return ret;
     }
