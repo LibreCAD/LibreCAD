@@ -1066,9 +1066,8 @@ void RS_Ellipse::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
 
 void RS_Ellipse::rotate( const double& angle) {//rotate around origin
     RS_Vector aV(angle);
-    data.center.rotate(angle);
-    data.majorP.rotate(angle);
-    //calculateEndpoints();
+    data.center.rotate(aV);
+    data.majorP.rotate(aV);
     calculateBorders();
 }
 void RS_Ellipse::rotate( const RS_Vector& angleVector) {//rotate around origin
@@ -1257,9 +1256,9 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     b=vp.magnitude();
     setRatio( sqrt((a - b)/(a + b) ));
     if(   std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) )  {
-    //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
-    setAngle1(getEllipseAngle(vpStart));
-    setAngle2(getEllipseAngle(vpEnd));
+        //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
+        setAngle1(getEllipseAngle(vpStart));
+        setAngle2(getEllipseAngle(vpEnd));
     }
     correctAngles();//avoid extra 2.*M_PI in angles
     //calculateEndpoints();
@@ -1269,20 +1268,25 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
 
 
 /**
- * mirror by the axis defined by axisPoint1 and axisPoint2
+ * mirror by the axis of the line axisPoint1 and axisPoint2
+ *
+ *Author: Dongxu Li
  */
 void RS_Ellipse::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_Vector center=getCenter();
-    RS_Vector mp = center + getMajorP();
-    RS_Vector startpoint = getStartpoint();
-    RS_Vector endpoint = getEndpoint();
+    RS_Vector majorp = center + getMajorP();
+    RS_Vector startpoint,endpoint;
+    if(   std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) )  {
+        startpoint = getStartpoint();
+        endpoint = getEndpoint();
+    }
 
     center.mirror(axisPoint1, axisPoint2);
-    mp.mirror(axisPoint1, axisPoint2);
+    majorp.mirror(axisPoint1, axisPoint2);
 
     setCenter(center);
     setReversed(!isReversed());
-    setMajorP(mp - center);
+    setMajorP(majorp - center);
     if(   std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) )  {
         //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
         startpoint.mirror(axisPoint1, axisPoint2);
@@ -1290,23 +1294,6 @@ void RS_Ellipse::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2
         setAngle1( getEllipseAngle(startpoint));
         setAngle2( getEllipseAngle(endpoint));
     }
-    /*  old version
-    data.majorP = mp - data.center;
-
-    double a = axisPoint1.angleTo(axisPoint2);
-
-    RS_Vector vec;
-    vec.setPolar(1.0, data.angle1);
-    vec.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
-    data.angle1 = vec.angle() - 2*a;
-
-    vec.setPolar(1.0, data.angle2);
-    vec.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
-    data.angle2 = vec.angle() - 2*a;
-
-    data.reversed = (!data.reversed);
-*/
-    //calculateEndpoints();
     correctAngles();//avoid extra 2.*M_PI in angles
     calculateBorders();
 }
