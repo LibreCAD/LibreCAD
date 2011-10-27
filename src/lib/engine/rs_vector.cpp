@@ -649,11 +649,9 @@ RS_VectorSolutions::RS_VectorSolutions(int num) {
 #if QT_VERSION >= 0x040700
     vector.reserve(num);
 #else
-    if(vector.size() <num) {
         for(int i=vector.size();i<num;i++){
             vector.push_back(RS_Vector(false));
         }
-    }
 #endif
 }
 
@@ -908,6 +906,13 @@ void RS_VectorSolutions::scale(const RS_Vector& center, const RS_Vector& factor)
     for (int i=0; i<vector.size(); i++) {
         if (vector[i].valid) {
             vector[i].scale(center, factor);
+        }
+    }
+}
+void RS_VectorSolutions::scale( const RS_Vector& factor) {
+    for (int i=0; i<vector.size(); i++) {
+        if (vector[i].valid) {
+            vector[i].scale(factor);
         }
     }
 }

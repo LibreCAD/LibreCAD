@@ -139,7 +139,8 @@ public:
    }
 #endif
     static double ellipticIntegral_2(const double& k, const double& phi);//wrapper for elliptic integral
-
+    virtual RS_VectorSolutions getTangentPoint(const RS_Vector& point) const;//find the tangential points seeing from given point
+    virtual RS_Vector getTangentDirection(const RS_Vector& point)const;
     virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
                                      const RS_Vector& trimPoint);
 

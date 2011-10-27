@@ -584,17 +584,18 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
         return ret;
     }
     if (
-        (e1->getCenter() - e2 -> getCenter() ).magnitude() < RS_TOLERANCE &&
-        ( e1->getMajorP() - e2 ->getMajorP()).magnitude() < RS_TOLERANCE &&
-        fabs(e1->getMajorRadius() - e2 ->getMajorRadius()) < RS_TOLERANCE &&
-        fabs(e1->getMinorRadius() - e2 ->getMinorRadius()) < RS_TOLERANCE
+        (e1->getCenter() - e2 ->getCenter()).squared() < RS_TOLERANCE*RS_TOLERANCE &&
+        (e1->getMajorP() - e2 ->getMajorP()).squared() < RS_TOLERANCE*RS_TOLERANCE &&
+        fabs(e1->getRatio() - e2 ->getRatio()) < RS_TOLERANCE
     ) { // overlapped ellipses, do not do overlap
         return ret;
     }
+    RS_Ellipse ellipse01(NULL,e1->getData());
 
-    RS_Ellipse *e01= ( RS_Ellipse *) e1->clone();
+    RS_Ellipse *e01= & ellipse01;
     if( e01->getMajorRadius() < e01->getMinorRadius() ) e01->switchMajorMinor();
-    RS_Ellipse *e02= ( RS_Ellipse *) e2->clone();
+    RS_Ellipse ellipse02(NULL,e2->getData());
+    RS_Ellipse *e02= &ellipse02;
     if( e02->getMajorRadius() < e02->getMinorRadius() ) e02->switchMajorMinor();
     //transform ellipse2 to ellipse1's coordinates
     RS_Vector shiftc1=- e01->getCenter();
@@ -736,7 +737,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
         //double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
         double x,d=v0*y+v2;
 //        std::cout<<"d= "<<d<<std::endl;
-        if( fabs(d)>RS_TOLERANCE*sqrt(RS_TOLERANCE)) {//whether there's x^1 term in bezout determinant
+        if( fabs(d)>0.1*RS_TOLERANCE*sqrt(RS_TOLERANCE)) {//whether there's x^1 term in bezout determinant
             x=-((v1*y+v3)*y+v4 )/d;
             if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
                 vs0.push_back(RS_Vector(x,y));
