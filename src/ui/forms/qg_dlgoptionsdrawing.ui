@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab1">
       <attribute name="title">
@@ -414,180 +414,197 @@
       <attribute name="title">
        <string>&amp;Grid</string>
       </attribute>
-      <layout class="QVBoxLayout">
-       <item>
-        <widget class="QGroupBox" name="bgGrid">
-         <property name="title">
-          <string>Grid Settings</string>
-         </property>
-         <layout class="QVBoxLayout">
+      <widget class="QGroupBox" name="bgGrid">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>9</y>
+         <width>471</width>
+         <height>121</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="title">
+        <string>Grid Settings</string>
+       </property>
+       <layout class="QVBoxLayout">
+        <item>
+         <layout class="QHBoxLayout">
           <item>
-           <layout class="QHBoxLayout">
-            <item>
-             <widget class="QCheckBox" name="cbGridOn">
-              <property name="text">
-               <string>Show Grid</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="spacer16">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>221</width>
-                <height>21</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
+           <widget class="QCheckBox" name="cbGridOn">
+            <property name="text">
+             <string>Show Grid</string>
+            </property>
+           </widget>
           </item>
           <item>
-           <layout class="QGridLayout">
-            <item row="1" column="2">
-             <spacer name="spacer14_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>111</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="2">
-             <spacer name="spacer14">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>111</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="lXSpacing">
-              <property name="text">
-               <string>X Spacing:</string>
-              </property>
-              <property name="wordWrap">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QComboBox" name="cbYSpacing">
-              <property name="editable">
-               <bool>true</bool>
-              </property>
-              <item>
-               <property name="text">
-                <string>auto</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>0.01</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>0.1</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>1</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>10</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="lYSpacing">
-              <property name="text">
-               <string>Y Spacing:</string>
-              </property>
-              <property name="wordWrap">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QComboBox" name="cbXSpacing">
-              <property name="editable">
-               <bool>true</bool>
-              </property>
-              <item>
-               <property name="text">
-                <string>auto</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>0.01</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>0.1</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>1</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>10</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-           </layout>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbIsometricGrid">
+            <property name="toolTip">
+             <string>Use isometric grid</string>
+            </property>
+            <property name="text">
+             <string>Isometric Grid</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="spacer16">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>221</width>
+              <height>21</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer name="spacer17">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>71</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
+        </item>
+        <item>
+         <layout class="QGridLayout">
+          <item row="1" column="2">
+           <spacer name="spacer14_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>111</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="2">
+           <spacer name="spacer14">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>111</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="lXSpacing">
+            <property name="text">
+             <string>X Spacing:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="cbYSpacing">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>0.01</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>0.1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>10</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lYSpacing">
+            <property name="text">
+             <string>Y Spacing:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="cbXSpacing">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>0.01</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>0.1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>10</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
      <widget class="QWidget" name="tab4">
       <attribute name="title">

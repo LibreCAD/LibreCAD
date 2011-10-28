@@ -234,6 +234,8 @@ public:
 
         bool isGridOn();
         void setGridOn(bool on);
+        bool isIsometricGrid();
+        void setIsometricGrid(bool on);
 
         bool isDraftOn();
         void setDraftOn(bool on);

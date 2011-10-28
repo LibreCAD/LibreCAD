@@ -28,6 +28,7 @@
 #include <qmessagebox.h>
 #include "rs_graphic.h"
 #include "rs_filterdxf.h"
+#include "rs_settings.h"
 //#include "rs_units.h"
 
 /*
@@ -52,6 +53,9 @@ QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent, bool modal, Qt::Wind
 QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing()
 {
     // no need to delete child widgets, Qt does it all for us
+        RS_SETTINGS->beginGroup("/Appearance");
+        RS_SETTINGS->writeEntry("/IsometricGrid", cbIsometricGrid->isChecked()?QString("1"):QString("0"));
+        RS_SETTINGS->endGroup();
 }
 
 /*
@@ -199,6 +203,14 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
 
     // Grid:
     cbGridOn->setChecked(graphic->isGridOn());
+//    RS_SETTINGS->beginGroup("/Appearance");
+//    cbIsometricGrid->setChecked(static_cast<bool>(RS_SETTINGS->readNumEntry("/IsometricGrid", 0)));
+//    RS_SETTINGS->endGroup();
+
+//    graphic->setIsometricGrid(cbIsometricGrid->isChecked());
+    cbIsometricGrid->setChecked(graphic->isIsometricGrid());
+
+    cbIsometricGrid->setDisabled(!cbGridOn);
 
     RS_Vector spacing = graphic->getVariableVector("$GRIDUNIT",
                         RS_Vector(0.0,0.0));
@@ -575,3 +587,9 @@ void QG_DlgOptionsDrawing::updateUnitLabels() {
     updatePaperSize();
 }
 
+
+void QG_DlgOptionsDrawing::on_cbIsometricGrid_toggled(bool checked)
+{
+    graphic->setIsometricGrid(checked);
+
+}
