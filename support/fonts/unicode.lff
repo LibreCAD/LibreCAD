@@ -1,15 +1,18 @@
 # Format:            LibreCAD Font 1
 # Creator:           LibreCAD
-# Name:              WenQuanYi Micro Hei Mono Light
-# Name:              Chinese Simplified
+# Version:           master
+# Name:              Unicode
+# Name:              Japanese
 # Encoding:          UTF-8
 # LetterSpacing:     3
 # WordSpacing:       6.75
 # LineSpacingFactor: 1
-# Created:           2011-10-27
-# Last modified:     2011-10-27
-# Author:            WenQuanYi Project Contributors
-# License:           Apache2.0 or GPLv3
+# Created:           2011-09-25
+# Last modified:     2011-09-29
+# Author:            Rallaz <rallazz@gmail.com> (latin basic + 1 + extended-A)
+# Author:            Eugene Osintsev <osgene@omskelecom.ru> (Cyrillic)
+# Author:            Yoshimune Kobayashi <cfg47520@syd.odn.ne.jp> (Japanese)
+# License:           GPL v2 or later + unknown
 
 [0021] !
 0,0;0,.5
