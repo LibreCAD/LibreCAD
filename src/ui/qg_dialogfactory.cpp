@@ -552,7 +552,7 @@ QString QG_DialogFactory::requestImageOpenDialog() {
     //filters = QStringList::fromStrList(formats);
 
     foreach (QByteArray format, QImageReader::supportedImageFormats()) {
-                filters.append(format);
+                filters.append(QString("%1 (*.%1)").arg(QString(format)));
                 /* RVT_PORT
                  QString ext = (*it);
         QString st;
