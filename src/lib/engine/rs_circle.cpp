@@ -279,8 +279,11 @@ RS_Vector RS_Circle::getNearestPointOnEntity(const RS_Vector& coord,
     RS_Vector vp(coord - data.center);
     double d(vp.magnitude());
     if( d < RS_TOLERANCE ) return RS_Vector(false);
-    vp *= data.radius/d;
-    return data.center + vp;
+    vp =data.center+vp*(data.radius/d);
+    if(dist!=NULL){
+        *dist=coord.distanceTo(vp);
+    }
+    return vp;
 }
 
 
