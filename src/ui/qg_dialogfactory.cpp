@@ -552,7 +552,8 @@ QString QG_DialogFactory::requestImageOpenDialog() {
     //filters = QStringList::fromStrList(formats);
 
     foreach (QByteArray format, QImageReader::supportedImageFormats()) {
-                filters.append(QString("%1 (*.%1)").arg(QString(format)));
+                filters.append(QString("%1 (*.%1) ").arg(QString(format)));
+                all += QString(" *.%1").arg(QString(format));
                 /* RVT_PORT
                  QString ext = (*it);
         QString st;
@@ -575,17 +576,17 @@ QString QG_DialogFactory::requestImageOpenDialog() {
             all += QString("*.%1").arg(QString(*it).lower());
         } */
     }
-    filters.append(QObject::tr("All Image Files (%1)").arg(all));
+    filters.append(QObject::tr("All Image Files (%1) ").arg(all));
     filters.append(QObject::tr("All Files (*.*)"));
 
     //filters.append("Drawing Exchange (*.)");
     //filters.append("Font (*.cxf)");
 
-    fileDlg.setFilters(filters);
+    fileDlg.setNameFilters(filters);
     fileDlg.setFileMode(QFileDialog::ExistingFile);
     fileDlg.setWindowTitle(QObject::tr("Open Image"));
     fileDlg.setDirectory(defDir);
-    fileDlg.selectFilter(defFilter);
+    fileDlg.selectNameFilter(defFilter);
 
     if (fileDlg.exec()==QDialog::Accepted) {
 //        fn = fileDlg.selectedFile();
