@@ -50,6 +50,10 @@ public:
     RS_Vector* getPoints() {
         return pt;
     }
+    /**
+      *@return the closest grid point
+      */
+    RS_Vector snapGrid(const RS_Vector& coord) const;
 
         /**
          * @return Number of visible grid points.
@@ -127,6 +131,8 @@ protected:
 
     //! Pointer to array of grid points
     RS_Vector* pt;
+    RS_Vector baseGrid; // the left-bottom grid point
+    RS_Vector cellV;// (dx,dy)
     RS_Vector metaGridWidth;
     //! Number of points in the array
     int number;

@@ -261,38 +261,39 @@ RS_Vector RS_Snapper::snapEndpoint(RS_Vector coord) {
  * @param coord The mouse coordinate.
  * @return The coordinates of the point or an invalid vector.
  */
-RS_Vector RS_Snapper::snapGrid(RS_Vector coord) {
+RS_Vector RS_Snapper::snapGrid(const RS_Vector& coord) {
 
-    RS_DEBUG->print("RS_Snapper::snapGrid begin");
+//    RS_DEBUG->print("RS_Snapper::snapGrid begin");
 
-    RS_Vector vec(false);
-    double dist=0.0;
+//    RS_Vector vec(false);
+//    double dist=0.0;
 
-    RS_Grid* grid = graphicView->getGrid();
+//    RS_Grid* grid = graphicView->getGrid();
+    return  graphicView->getGrid()->snapGrid(coord);
 
 
-    if (grid!=NULL) {
-        RS_Vector* pts = grid->getPoints();
-        int closest = -1;
-        dist = 32000.00;
-        for (int i=0; i<grid->count(); ++i) {
-            double d = pts[i].distanceTo(coord);
-            if (d<dist) {
-                closest = i;
-                dist = d;
-            }
-        }
-        if (closest>=0) {
-            vec = pts[closest];
-        }
-    }else {
-        RS_DEBUG->print("RS_Snapper:: getGrid() returns NULL\n");
-    }
-    keyEntity = NULL;
+//    if (grid!=NULL) {
+//        RS_Vector* pts = grid->getPoints();
+//        int closest = -1;
+//        dist = 32000.00;
+//        for (int i=0; i<grid->count(); ++i) {
+//            double d = pts[i].distanceTo(coord);
+//            if (d<dist) {
+//                closest = i;
+//                dist = d;
+//            }
+//        }
+//        if (closest>=0) {
+//            vec = pts[closest];
+//        }
+//    }else {
+//        RS_DEBUG->print("RS_Snapper:: getGrid() returns NULL\n");
+//    }
+//    keyEntity = NULL;
 
-    RS_DEBUG->print("RS_Snapper::snapGrid end");
+//    RS_DEBUG->print("RS_Snapper::snapGrid end");
 
-    return vec;
+//    return vec;
 }
 
 

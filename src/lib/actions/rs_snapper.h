@@ -164,7 +164,7 @@ public:
 
     RS_Vector snapFree(RS_Vector coord);
     RS_Vector snapEndpoint(RS_Vector coord);
-    RS_Vector snapGrid(RS_Vector coord);
+    RS_Vector snapGrid(const RS_Vector& coord);
     RS_Vector snapOnEntity(RS_Vector coord);
     RS_Vector snapCenter(RS_Vector coord);
     RS_Vector snapMiddle(RS_Vector coord);
