@@ -591,5 +591,6 @@ void QG_DlgOptionsDrawing::updateUnitLabels() {
 void QG_DlgOptionsDrawing::on_cbIsometricGrid_toggled(bool checked)
 {
     graphic->setIsometricGrid(checked);
+    cbXSpacing->setDisabled(checked);
 
 }
