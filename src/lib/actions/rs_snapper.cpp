@@ -84,7 +84,7 @@ void RS_Snapper::finish() {
     deleteSnapper();
 }
 
-void RS_Snapper::setSnapMode(RS_SnapMode snapMode) {
+void RS_Snapper::setSnapMode(const RS_SnapMode& snapMode) {
     this->snapMode = snapMode;
     if (RS_DIALOGFACTORY==NULL) return;
     RS_DIALOGFACTORY->requestSnapDistOptions(distance, snapMode.snapDistance);
@@ -232,7 +232,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
  * @param coord The mouse coordinate.
  * @return The coordinates of the point or an invalid vector.
  */
-RS_Vector RS_Snapper::snapFree(RS_Vector coord) {
+RS_Vector RS_Snapper::snapFree(const RS_Vector& coord) {
     keyEntity = NULL;
     return coord;
 }
@@ -245,7 +245,7 @@ RS_Vector RS_Snapper::snapFree(RS_Vector coord) {
  * @param coord The mouse coordinate.
  * @return The coordinates of the point or an invalid vector.
  */
-RS_Vector RS_Snapper::snapEndpoint(RS_Vector coord) {
+RS_Vector RS_Snapper::snapEndpoint(const RS_Vector& coord) {
     RS_Vector vec(false);
 
     vec = container->getNearestEndpoint(coord,
@@ -304,7 +304,7 @@ RS_Vector RS_Snapper::snapGrid(const RS_Vector& coord) {
  * @param coord The mouse coordinate.
  * @return The coordinates of the point or an invalid vector.
  */
-RS_Vector RS_Snapper::snapOnEntity(RS_Vector coord) {
+RS_Vector RS_Snapper::snapOnEntity(const RS_Vector& coord) {
 
     RS_Vector vec(false);
     vec = container->getNearestPointOnEntity(coord, true, NULL, &keyEntity);
@@ -319,7 +319,7 @@ RS_Vector RS_Snapper::snapOnEntity(RS_Vector coord) {
  * @param coord The mouse coordinate.
  * @return The coordinates of the point or an invalid vector.
  */
-RS_Vector RS_Snapper::snapCenter(RS_Vector coord) {
+RS_Vector RS_Snapper::snapCenter(const RS_Vector& coord) {
     RS_Vector vec(false);
 
     vec = container->getNearestCenter(coord, NULL);
@@ -334,7 +334,7 @@ RS_Vector RS_Snapper::snapCenter(RS_Vector coord) {
  * @param coord The mouse coordinate.
  * @return The coordinates of the point or an invalid vector.
  */
-RS_Vector RS_Snapper::snapMiddle(RS_Vector coord) {
+RS_Vector RS_Snapper::snapMiddle(const RS_Vector& coord) {
 //std::cout<<"RS_Snapper::snapMiddle(): middlePoints="<<middlePoints<<std::endl;
     return container->getNearestMiddle(coord,static_cast<double *>(NULL),middlePoints);
 }
@@ -347,7 +347,7 @@ RS_Vector RS_Snapper::snapMiddle(RS_Vector coord) {
  * @param coord The mouse coordinate.
  * @return The coordinates of the point or an invalid vector.
  */
-RS_Vector RS_Snapper::snapDist(RS_Vector coord) {
+RS_Vector RS_Snapper::snapDist(const RS_Vector& coord) {
     RS_Vector vec;
 
 //std::cout<<" RS_Snapper::snapDist(RS_Vector coord): distance="<<distance<<std::endl;
@@ -365,7 +365,7 @@ RS_Vector RS_Snapper::snapDist(RS_Vector coord) {
  * @param coord The mouse coordinate.
  * @return The coordinates of the point or an invalid vector.
  */
-RS_Vector RS_Snapper::snapIntersection(RS_Vector coord) {
+RS_Vector RS_Snapper::snapIntersection(const RS_Vector& coord) {
     RS_Vector vec(false);
 
     vec = container->getNearestIntersection(coord,
@@ -382,7 +382,7 @@ RS_Vector RS_Snapper::snapIntersection(RS_Vector coord) {
  * @param coord The uncorrected coordinates.
  * @return The corrected coordinates.
  */
-RS_Vector RS_Snapper::restrictOrthogonal(RS_Vector coord) {
+RS_Vector RS_Snapper::restrictOrthogonal(const RS_Vector& coord) {
     RS_Vector rz = graphicView->getRelativeZero();
     RS_Vector ret(coord);
 
@@ -405,7 +405,7 @@ RS_Vector RS_Snapper::restrictOrthogonal(RS_Vector coord) {
  * @param coord The uncorrected coordinates.
  * @return The corrected coordinates.
  */
-RS_Vector RS_Snapper::restrictHorizontal(RS_Vector coord) {
+RS_Vector RS_Snapper::restrictHorizontal(const RS_Vector& coord) {
     RS_Vector rz = graphicView->getRelativeZero();
     RS_Vector ret = RS_Vector(coord.x, rz.y);
     return ret;
@@ -419,7 +419,7 @@ RS_Vector RS_Snapper::restrictHorizontal(RS_Vector coord) {
  * @param coord The uncorrected coordinates.
  * @return The corrected coordinates.
  */
-RS_Vector RS_Snapper::restrictVertical(RS_Vector coord) {
+RS_Vector RS_Snapper::restrictVertical(const RS_Vector& coord) {
     RS_Vector rz = graphicView->getRelativeZero();
     RS_Vector ret = RS_Vector(rz.x, coord.y);
     return ret;
@@ -576,7 +576,7 @@ void RS_Snapper::drawSnapper() {
 /**
   * snap mode to a flag integer
   */
-unsigned int RS_Snapper::snapModeToInt(RS_SnapMode s)
+unsigned int RS_Snapper::snapModeToInt(const RS_SnapMode& s)
 {
     unsigned int ret; //initial
     switch (s.restriction) {
