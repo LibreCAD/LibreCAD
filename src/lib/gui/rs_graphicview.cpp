@@ -1556,43 +1556,52 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
                RS2::DotLine);
     painter->setPen(pen);
 
+        RS_Vector dv=grid->getMetaGridWidth().scale(factor);
+        double dx=fabs(dv.x);
+        double dy=fabs(dv.y);
     // draw meta grid:
     double* mx = grid->getMetaX();
     if (mx!=NULL) {
         for (int i=0; i<grid->countMetaX(); ++i) {
             painter->drawLine(RS_Vector(toGuiX(mx[i]), 0),
                               RS_Vector(toGuiX(mx[i]), getHeight()));
+            painter->drawLine(RS_Vector(toGuiX(mx[i])+0.5*dx, 0),
+                              RS_Vector(toGuiX(mx[i])+0.5*dx, getHeight()));
         }
     }
     double* my = grid->getMetaY();
     if(grid->isIsometric()){
-        int cmx=grid->countMetaX()-1;
-        int cmy=grid->countMetaY()-1;
-        if(my==NULL || cmy<1) return;
-//        RS_Vector dv=grid->getMetaGridWidth().scale(factor);
-        double dx=toGuiX(mx[1])-toGuiX(mx[0]);
-        double dy=toGuiY(my[1])-toGuiY(my[0]);
-        RS_Vector base(toGuiX(mx[0]),toGuiY(my[0]));
-        RS_Vector vp0(toGuiX(mx[0]),toGuiY(my[cmy]));
+        int cmx=grid->countMetaX();
+        int cmy=grid->countMetaY();
+        if(my==NULL || cmy<1||cmx<1) return;
+        RS_Vector baseMeta(toGui(RS_Vector(mx[0],my[0])));
+        RS_Vector vp0(baseMeta.x,baseMeta.y+cmy*dy);
+        RS_Vector dvp0(0.,-dy);
         RS_Vector vp1(vp0);
-        RS_Vector vp2(toGuiX(mx[cmx]),toGuiY(my[cmy]));
+        RS_Vector dvp1(dx,0.);
+        RS_Vector vp2(baseMeta.x+cmx*dx,vp0.y);
+        RS_Vector dvp2(-dx,0.);
         RS_Vector vp3(vp2);
-        int i;
-        for(i=cmy;i>=0;i--){
+        RS_Vector dvp3(dvp0);
+        for(int i=cmx+cmy+2;i>=0;i--){
+            if ( (vp0 + dvp0).y < -dy-RS_TOLERANCE ) {
+                    dvp0.set(dx,0.);
+            }
+            vp0 += dvp0;
+            if ( (vp1 + dvp1).x > getWidth()+dx+RS_TOLERANCE ) {
+                    dvp1.set(0.,-dy);
+            }
+            vp1 += dvp1;
+            if ( (vp2 + dvp2).x < -dx-RS_TOLERANCE ) {
+                    dvp2.set(0.,-dy);
+            }
+            vp2 += dvp2;
+            if ( (vp3 + dvp3).y < -dy-RS_TOLERANCE ) {
+                    dvp3.set(-dx,0.);
+            }
+            vp3 += dvp3;
             painter->drawLine(vp0,vp1);
             painter->drawLine(vp2,vp3);
-            vp0.y -= dy;
-            vp1.x += dx;
-            vp2.x -= dx;
-            vp3.y -= dy;
-        }
-        for(i=0;i<=cmx;i++){
-            painter->drawLine(vp0,vp1);
-            painter->drawLine(vp2,vp3);
-            vp0.x += dx;
-            vp1.x += dx;
-            vp2.x -= dx;
-            vp3.x -= dx;
         }
 
     }else{

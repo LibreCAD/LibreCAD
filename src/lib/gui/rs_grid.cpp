@@ -344,19 +344,7 @@ void RS_Grid::updatePointArray() {
                     if (metaGridWidth.y>1.0e-6 &&
                             graphicView->toGuiDY(metaGridWidth.y)>2) {
 
-                        double mleft = (int)(graphicView->toGraphX(0) /
-                                             metaGridWidth.x) * metaGridWidth.x;
-                        double mright = (int)(graphicView->toGraphX(graphicView->getWidth()) /
-                                              metaGridWidth.x) * metaGridWidth.x;
-                        double mtop = (int)(graphicView->toGraphY(0) /
-                                            metaGridWidth.y) * metaGridWidth.y;
-                        double mbottom = (int)(graphicView->toGraphY(graphicView->getHeight()) /
-                                               metaGridWidth.y) * metaGridWidth.y;
                         metaGridWidth.x=sqrt(3.)*metaGridWidth.y;
-                        mleft -= metaGridWidth.x;
-                        mright += metaGridWidth.x;
-                        mtop += metaGridWidth.y;
-                        mbottom -= metaGridWidth.y;
 
                         // calculate number of visible meta grid lines:
                         numMetaX = (RS_Math::round((right-left) / metaGridWidth.x) + 1);
