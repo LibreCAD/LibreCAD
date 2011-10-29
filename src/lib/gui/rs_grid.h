@@ -106,8 +106,14 @@ public:
     int countMetaY() {
         return numMetaY;
     }
+    bool isIsometric() const{
+        return isometric;
+    }
     void setIsometric(bool b){
         isometric=b;
+    }
+    RS_Vector getMetaGridWidth() const {
+        return metaGridWidth;
     }
 
 protected:
@@ -121,6 +127,7 @@ protected:
 
     //! Pointer to array of grid points
     RS_Vector* pt;
+    RS_Vector metaGridWidth;
     //! Number of points in the array
     int number;
         //! Meta grid positions in X

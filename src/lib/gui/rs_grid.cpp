@@ -73,7 +73,7 @@ void RS_Grid::updatePointArray() {
         // auto scale grid?
         RS_SETTINGS->beginGroup("/Appearance");
         bool scaleGrid = (bool)RS_SETTINGS->readNumEntry("/ScaleGrid", 1);
-//        isometric = (bool)RS_SETTINGS->readNumEntry("/IsometricGrid", 0);
+        //        isometric = (bool)RS_SETTINGS->readNumEntry("/IsometricGrid", 0);
         int minGridSpacing = RS_SETTINGS->readNumEntry("/MinGridSpacing", 10);
         RS_SETTINGS->endGroup();
 
@@ -114,7 +114,7 @@ void RS_Grid::updatePointArray() {
         }
 
         RS_Vector gridWidth;
-        RS_Vector metaGridWidth;
+        //        RS_Vector metaGridWidth;
 
         //        RS_DEBUG->print("RS_Grid::update: 002");
 
@@ -340,10 +340,57 @@ void RS_Grid::updatePointArray() {
                             pt[i++] = RS_Vector(left+x*dx+hdx, bottom+y*gridWidth.y+hdy);
                         }
                     }
-                } else {
-                    number = 0;
-                    pt = NULL;
+                    //find metaGrid
+                    if (metaGridWidth.y>1.0e-6 &&
+                            graphicView->toGuiDY(metaGridWidth.y)>2) {
+
+                        double mleft = (int)(graphicView->toGraphX(0) /
+                                             metaGridWidth.x) * metaGridWidth.x;
+                        double mright = (int)(graphicView->toGraphX(graphicView->getWidth()) /
+                                              metaGridWidth.x) * metaGridWidth.x;
+                        double mtop = (int)(graphicView->toGraphY(0) /
+                                            metaGridWidth.y) * metaGridWidth.y;
+                        double mbottom = (int)(graphicView->toGraphY(graphicView->getHeight()) /
+                                               metaGridWidth.y) * metaGridWidth.y;
+                        metaGridWidth.x=sqrt(3.)*metaGridWidth.y;
+                        mleft -= metaGridWidth.x;
+                        mright += metaGridWidth.x;
+                        mtop += metaGridWidth.y;
+                        mbottom -= metaGridWidth.y;
+
+                        // calculate number of visible meta grid lines:
+                        numMetaX = (RS_Math::round((right-left) / metaGridWidth.x) + 1);
+                        numMetaY = (RS_Math::round((top-bottom) / metaGridWidth.y) + 1);
+
+                        if (numMetaX>0 && numMetaY>0) {
+                            // create meta grid arrays:
+                            metaX = new double[numMetaX];
+                            metaY = new double[numMetaY];
+
+                            int i=0;
+                            for (int x=0; x<numMetaX; ++x) {
+                                metaX[i++] = left+x*metaGridWidth.x;
+                            }
+                            i=0;
+                            for (int y=0; y<numMetaY; ++y) {
+                                metaY[i++] = bottom+y*metaGridWidth.y;
+                            }
+                            return;
+
+                        }
+                        numMetaX = 0;
+                        metaX = NULL;
+                        numMetaY = 0;
+                        metaY = NULL;
+                        return;
+                    }
                 }
+                number = 0;
+                pt = NULL;
+                numMetaX = 0;
+                metaX = NULL;
+                numMetaY = 0;
+                metaY = NULL;
             }else{
                 int numberX = (RS_Math::round((right-left) / gridWidth.x) + 1);
                 int numberY = (RS_Math::round((top-bottom) / gridWidth.y) + 1);
@@ -363,62 +410,67 @@ void RS_Grid::updatePointArray() {
                                                 bottom+y*gridWidth.y);
                         }
                     }
-                } else {
-                    number = 0;
-                    pt = NULL;
+                    // find meta grid boundaries
+                    if (metaGridWidth.x>1.0e-6 && metaGridWidth.y>1.0e-6 &&
+                            graphicView->toGuiDX(metaGridWidth.x)>2 &&
+                            graphicView->toGuiDY(metaGridWidth.y)>2) {
+
+                        double mleft = (int)(graphicView->toGraphX(0) /
+                                             metaGridWidth.x) * metaGridWidth.x;
+                        double mright = (int)(graphicView->toGraphX(graphicView->getWidth()) /
+                                              metaGridWidth.x) * metaGridWidth.x;
+                        double mtop = (int)(graphicView->toGraphY(0) /
+                                            metaGridWidth.y) * metaGridWidth.y;
+                        double mbottom = (int)(graphicView->toGraphY(graphicView->getHeight()) /
+                                               metaGridWidth.y) * metaGridWidth.y;
+
+                        mleft -= metaGridWidth.x;
+                        mright += metaGridWidth.x;
+                        mtop += metaGridWidth.y;
+                        mbottom -= metaGridWidth.y;
+
+                        // calculate number of visible meta grid lines:
+                        numMetaX = (RS_Math::round((mright-mleft) / metaGridWidth.x) + 1);
+                        numMetaY = (RS_Math::round((mtop-mbottom) / metaGridWidth.y) + 1);
+
+                        if (numMetaX>0 && numMetaY>0) {
+                            // create meta grid arrays:
+                            metaX = new double[numMetaX];
+                            metaY = new double[numMetaY];
+
+                            int i=0;
+                            for (int x=0; x<numMetaX; ++x) {
+                                metaX[i++] = mleft+x*metaGridWidth.x;
+                            }
+                            i=0;
+                            for (int y=0; y<numMetaY; ++y) {
+                                metaY[i++] = mbottom+y*metaGridWidth.y;
+                            }
+                            return;
+                        }
+                        numMetaX = 0;
+                        metaX = NULL;
+                        numMetaY = 0;
+                        metaY = NULL;
+                    }
+                    return;
+
                 }
+                number = 0;
+                pt = NULL;
+                numMetaX = 0;
+                metaX = NULL;
+                numMetaY = 0;
+                metaY = NULL;
             }
 
             //                RS_DEBUG->print("RS_Grid::update: 015");
         }
 
 
-        // find meta grid boundaries
-        if (metaGridWidth.x>1.0e-6 && metaGridWidth.y>1.0e-6 &&
-                graphicView->toGuiDX(metaGridWidth.x)>2 &&
-                graphicView->toGuiDY(metaGridWidth.y)>2) {
 
-            double mleft = (int)(graphicView->toGraphX(0) /
-                                 metaGridWidth.x) * metaGridWidth.x;
-            double mright = (int)(graphicView->toGraphX(graphicView->getWidth()) /
-                                  metaGridWidth.x) * metaGridWidth.x;
-            double mtop = (int)(graphicView->toGraphY(0) /
-                                metaGridWidth.y) * metaGridWidth.y;
-            double mbottom = (int)(graphicView->toGraphY(graphicView->getHeight()) /
-                                   metaGridWidth.y) * metaGridWidth.y;
-
-            mleft -= metaGridWidth.x;
-            mright += metaGridWidth.x;
-            mtop += metaGridWidth.y;
-            mbottom -= metaGridWidth.y;
-
-            // calculate number of visible meta grid lines:
-            numMetaX = (RS_Math::round((mright-mleft) / metaGridWidth.x) + 1);
-            numMetaY = (RS_Math::round((mtop-mbottom) / metaGridWidth.y) + 1);
-
-            if (numMetaX>0 && numMetaY>0) {
-                // create meta grid arrays:
-                metaX = new double[numMetaX];
-                metaY = new double[numMetaY];
-
-                int i=0;
-                for (int x=0; x<numMetaX; ++x) {
-                    metaX[i++] = mleft+x*metaGridWidth.x;
-                }
-                i=0;
-                for (int y=0; y<numMetaY; ++y) {
-                    metaY[i++] = mbottom+y*metaGridWidth.y;
-                }
-            }
-            else {
-                numMetaX = 0;
-                metaX = NULL;
-                numMetaY = 0;
-                metaY = NULL;
-            }
-        }
     }
-    RS_DEBUG->print("RS_Grid::update: OK");
+    //        RS_DEBUG->print("RS_Grid::update: OK");
 }
 
 
