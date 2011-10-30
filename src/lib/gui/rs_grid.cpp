@@ -66,10 +66,11 @@ RS_Grid::~RS_Grid() {
   *@coord: the given point
   */
 RS_Vector RS_Grid::snapGrid(const RS_Vector& coord) const {
-    if( fabs(cellV.x)<RS_TOLERANCE || fabs(cellV.y)<RS_TOLERANCE) return coord;
-        RS_Vector vp(coord-baseGrid);
+    if( cellV.x<RS_TOLERANCE || cellV.y<RS_TOLERANCE) return coord;
+    RS_Vector vp(coord-baseGrid);
     if(isometric){
-        RS_Vector vp1( vp - RS_Vector( fmod(vp.x,cellV.x), fmod(vp.y,cellV.y)));
+        //use remainder instead of fmod to locate the left-bottom corner for both positive and negative displacement
+        RS_Vector vp1( vp-RS_Vector( remainder(vp.x-0.5*cellV.x,cellV.x)+0.5*cellV.x, remainder(vp.y-0.5*cellV.y,cellV.y)+0.5*cellV.y));
         RS_VectorSolutions sol(vp1,vp1+cellV,vp1+cellV*0.5);
         sol.push_back(vp1+RS_Vector(cellV.x,0.));
         sol.push_back(vp1+RS_Vector(0.,cellV.y));
@@ -347,7 +348,7 @@ void RS_Grid::updatePointArray() {
 
                 int numberY = (RS_Math::round((top-bottom) / gridWidth.y) + 1);
                 double dx=sqrt(3.)*gridWidth.y;
-                cellV.set(dx,gridWidth.y);
+                cellV.set(fabs(dx),fabs(gridWidth.y));
                 double hdx=0.5*dx;
                 double hdy=0.5*gridWidth.y;
                 int numberX = (RS_Math::round((right-left) / dx) + 1);
@@ -410,7 +411,7 @@ void RS_Grid::updatePointArray() {
                 numMetaY = 0;
                 metaY = NULL;
             }else{
-                    cellV=gridWidth;
+                cellV.set(fabs(gridWidth.x),fabs(gridWidth.y));
                 int numberX = (RS_Math::round((right-left) / gridWidth.x) + 1);
                 int numberY = (RS_Math::round((top-bottom) / gridWidth.y) + 1);
                 number = numberX*numberY;
