@@ -352,11 +352,8 @@ void RS_Grid::updatePointArray() {
                 double hdy=0.5*gridWidth.y;
                 int numberX = (RS_Math::round((right-left) / dx) + 1);
                 number = 2*numberX*numberY;
-                if(baseGrid.valid){//align to previous grid
-                    baseGrid.set(left+remainder(baseGrid.x-left,dx),bottom+remainder(baseGrid.y-bottom,gridWidth.y));
-                }else{
-                    baseGrid.set(left,bottom);
-                }
+                baseGrid.set(left+remainder(-left,dx),bottom+remainder(-bottom,fabs(gridWidth.y)));
+
                 if (number>0 && number<1000000) {
 
                     pt = new RS_Vector[number];
@@ -376,7 +373,8 @@ void RS_Grid::updatePointArray() {
                     if (metaGridWidth.y>1.0e-6 &&
                             graphicView->toGuiDY(metaGridWidth.y)>2) {
 
-                        metaGridWidth.x=sqrt(3.)*metaGridWidth.y;
+                        metaGridWidth.x=(metaGridWidth.x<0.)?-sqrt(3.)*fabs(metaGridWidth.y):sqrt(3.)*fabs(metaGridWidth.y);
+                        RS_Vector baseMetaGrid(left+remainder(-left,metaGridWidth.x)-fabs(metaGridWidth.x),bottom+remainder(-bottom,metaGridWidth.y)-fabs(metaGridWidth.y));
 
                         // calculate number of visible meta grid lines:
                         numMetaX = (RS_Math::round((right-left) / metaGridWidth.x) + 1);
@@ -387,13 +385,13 @@ void RS_Grid::updatePointArray() {
                             metaX = new double[numMetaX];
                             metaY = new double[numMetaY];
 
-                            int i=0;
-                            for (int x=0; x<numMetaX; ++x) {
-                                metaX[i++] = baseGrid.x+x*metaGridWidth.x;
+                            double x0(baseMetaGrid.x);
+                            for (int i=0; i<numMetaX; x0 += metaGridWidth.x) {
+                                metaX[i++] = x0;
                             }
-                            i=0;
-                            for (int y=0; y<numMetaY; ++y) {
-                                metaY[i++] = baseGrid.y+y*metaGridWidth.y;
+                            x0=baseMetaGrid.y;
+                            for (int i=0; i<numMetaY; x0 += metaGridWidth.y) {
+                                metaY[i++] = x0;
                             }
                             return;
 
