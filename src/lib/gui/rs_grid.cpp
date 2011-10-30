@@ -34,7 +34,7 @@
 /**
  * Constructor.
  */
-RS_Grid::RS_Grid(RS_GraphicView* graphicView) {
+RS_Grid::RS_Grid(RS_GraphicView* graphicView): baseGrid(false) {
     this->graphicView = graphicView;
     pt = NULL;
     number = 0;
@@ -339,11 +339,12 @@ void RS_Grid::updatePointArray() {
             right += gridWidth.x;
             top += gridWidth.y;
             bottom -= gridWidth.y;
-            baseGrid.set(left,bottom);
+
 
 
             // calculate number of visible grid points
             if(isometric){
+
                 int numberY = (RS_Math::round((top-bottom) / gridWidth.y) + 1);
                 double dx=sqrt(3.)*gridWidth.y;
                 cellV.set(dx,gridWidth.y);
@@ -351,16 +352,25 @@ void RS_Grid::updatePointArray() {
                 double hdy=0.5*gridWidth.y;
                 int numberX = (RS_Math::round((right-left) / dx) + 1);
                 number = 2*numberX*numberY;
+                if(baseGrid.valid){//align to previous grid
+                    baseGrid.set(left+remainder(baseGrid.x-left,dx),bottom+remainder(baseGrid.y-bottom,gridWidth.y));
+                }else{
+                    baseGrid.set(left,bottom);
+                }
                 if (number>0 && number<1000000) {
 
                     pt = new RS_Vector[number];
 
                     int i=0;
+                    RS_Vector bp0(baseGrid),dbp1(hdx,hdy);
                     for (int y=0; y<numberY; ++y) {
+                        RS_Vector bp1(bp0);
                         for (int x=0; x<numberX; ++x) {
-                            pt[i++] = RS_Vector(left+x*dx, bottom+y*gridWidth.y);
-                            pt[i++] = RS_Vector(left+x*dx+hdx, bottom+y*gridWidth.y+hdy);
+                            pt[i++] = bp1;
+                            pt[i++] = bp1+dbp1;
+                            bp1.x += dx;
                         }
+                        bp0.y += gridWidth.y;
                     }
                     //find metaGrid
                     if (metaGridWidth.y>1.0e-6 &&
@@ -379,11 +389,11 @@ void RS_Grid::updatePointArray() {
 
                             int i=0;
                             for (int x=0; x<numMetaX; ++x) {
-                                metaX[i++] = left+x*metaGridWidth.x;
+                                metaX[i++] = baseGrid.x+x*metaGridWidth.x;
                             }
                             i=0;
                             for (int y=0; y<numMetaY; ++y) {
-                                metaY[i++] = bottom+y*metaGridWidth.y;
+                                metaY[i++] = baseGrid.y+y*metaGridWidth.y;
                             }
                             return;
 
@@ -407,6 +417,13 @@ void RS_Grid::updatePointArray() {
                 int numberY = (RS_Math::round((top-bottom) / gridWidth.y) + 1);
                 number = numberX*numberY;
                 //                RS_DEBUG->print("RS_Grid::update: 014");
+//                if(baseGrid.valid){//align to previous grid
+//                    baseGrid.set(left+remainder(baseGrid.x-left,dx),bottom+remainder(baseGrid.y-bottom,gridWidth.y));
+//                }else{
+//                    baseGrid.set(left,bottom);
+//                }
+                //todo, fix baseGrid for orthogonal grid
+                baseGrid.set(left,bottom);
 
                 // create grid array:
 
@@ -415,11 +432,14 @@ void RS_Grid::updatePointArray() {
                     pt = new RS_Vector[number];
 
                     int i=0;
+                    RS_Vector bp0(baseGrid);
                     for (int y=0; y<numberY; ++y) {
+                        RS_Vector bp1(bp0);
                         for (int x=0; x<numberX; ++x) {
-                            pt[i++] = RS_Vector(left+x*gridWidth.x,
-                                                bottom+y*gridWidth.y);
+                            pt[i++] = bp1;
+                            bp1.x += gridWidth.x;
                         }
+                        bp0.y += gridWidth.y;
                     }
                     // find meta grid boundaries
                     if (metaGridWidth.x>1.0e-6 && metaGridWidth.y>1.0e-6 &&
