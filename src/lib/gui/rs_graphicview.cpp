@@ -1560,15 +1560,17 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
         double dx=fabs(dv.x);
         double dy=fabs(dv.y);
     // draw meta grid:
-    double* mx = grid->getMetaX();
-    if (mx!=NULL) {
-        for (int i=0; i<grid->countMetaX(); ++i) {
-            painter->drawLine(RS_Vector(toGuiX(mx[i]), 0),
-                              RS_Vector(toGuiX(mx[i]), getHeight()));
-            painter->drawLine(RS_Vector(toGuiX(mx[i])+0.5*dx, 0),
-                              RS_Vector(toGuiX(mx[i])+0.5*dx, getHeight()));
+        double* mx = grid->getMetaX();
+        if (mx!=NULL) {
+            for (int i=0; i<grid->countMetaX(); ++i) {
+                painter->drawLine(RS_Vector(toGuiX(mx[i]), 0),
+                                  RS_Vector(toGuiX(mx[i]), getHeight()));
+                if(grid->isIsometric()){
+                    painter->drawLine(RS_Vector(toGuiX(mx[i])+0.5*dx, 0),
+                                      RS_Vector(toGuiX(mx[i])+0.5*dx, getHeight()));
+                }
+            }
         }
-    }
     double* my = grid->getMetaY();
     if(grid->isIsometric()){
         int cmx=grid->countMetaX();
