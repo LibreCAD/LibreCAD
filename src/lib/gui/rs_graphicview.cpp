@@ -1010,8 +1010,10 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
     if (!isPrintPreview()) {
 
         //only drawGrid updates the grid layout (updatePointArray())
-        drawGrid(painter);
         drawMetaGrid(painter);
+        //draw grid after metaGrid to avoid overwriting grid points by metaGrid lines
+        //bug# 3430258
+        drawGrid(painter);
 
     }
 
@@ -1518,7 +1520,7 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
     //painter->setPen(Qt::gray);
     painter->setPen(gridColor);
 
-    grid->updatePointArray();
+//    grid->updatePointArray();
     RS_Vector* pts = grid->getPoints();
     if (pts!=NULL) {
         for (int i=0; i<grid->count(); ++i) {
@@ -1551,6 +1553,9 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
         return;
     }
 
+    //draw grid after metaGrid to avoid overwriting grid points by metaGrid lines
+    //bug# 3430258
+    grid->updatePointArray();
     RS_Pen pen(metaGridColor,
                RS2::Width00,
                RS2::DotLine);
