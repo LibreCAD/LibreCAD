@@ -147,7 +147,7 @@ void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case SetLine: {
             success=false;
-            RS_Entity* en=catchEntity(e);
+            RS_Entity* en=catchEntity(e,RS2::EntityLine);
             if(en->rtti() == RS2::EntityLine) {
                     if (en->getLength() < RS_TOLERANCE) {
                             //ignore lines not long enough

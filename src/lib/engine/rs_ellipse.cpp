@@ -991,7 +991,8 @@ RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
         return RS_Vector(false);
     }
     //scale to ellipse angle
-    direction.rotate(-getAngle());
+    RS_Vector aV(-getAngle());
+    direction.rotate(aV);
     double angle=direction.scale(RS_Vector(1.,getRatio())).angle();
     double ra(getMajorRadius());
     direction.set(ra*cos(angle),getRatio()*ra*sin(angle));//relative to center
@@ -1007,19 +1008,22 @@ RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
         }
         angle=RS_Math::correctAngle(angle+M_PI);
     }
+    if(sol.size()<1) return RS_Vector(false);
+    aV.y*=-1.;
+    for(unsigned int i=0;i<sol.size();i++) sol[i].rotate(aV);
     RS_Vector vp;
     switch(sol.count()) {
     case 0:
         return RS_Vector(false);
     case 2:
-        if( RS_Vector::dotP(sol[1]-getCenter(),coord-getCenter())>0.) {
+        if( RS_Vector::dotP(sol[1],coord-getCenter())>0.) {
             vp=sol[1];
             break;
         }
     default:
         vp=sol[0];
     }
-    return getCenter() + vp.rotate(getAngle());
+    return getCenter() + vp;
 }
 
 
