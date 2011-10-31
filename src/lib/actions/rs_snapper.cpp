@@ -538,6 +538,30 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, RS2::EntityType enType,
                level);
 }
 
+RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const QVector<RS2::EntityType>& enTypeList,
+                                   RS2::ResolveLevel level) {
+    RS_Entity** pten(NULL);
+    RS_Vector coord(RS_Vector(graphicView->toGraphX(e->x()), graphicView->toGraphY(e->y())));
+    switch(enTypeList.size()<1) {
+    case 0:
+        return catchEntity(coord, level);
+    default:
+    {
+
+        RS_EntityContainer ec(NULL,false);
+        for(int i=0;i<enTypeList.size();i++){
+            RS_Entity* en=catchEntity(coord, enTypeList.at(i), level);
+            if(en!=NULL) ec.addEntity(en);
+        }
+        if(ec.count()>0){
+            ec.getDistanceToPoint(coord, pten, RS2::ResolveNone);
+        }
+        return *pten;
+    }
+
+    }
+
+}
 
 /**
  * Hides the snapper options. Default implementation does nothing.

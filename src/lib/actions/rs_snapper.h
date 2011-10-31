@@ -188,6 +188,8 @@ public:
                            RS2::ResolveLevel level=RS2::ResolveNone);
     RS_Entity* catchEntity(QMouseEvent* e, RS2::EntityType enType,
                            RS2::ResolveLevel level=RS2::ResolveNone);
+    RS_Entity* catchEntity(QMouseEvent* e, const QVector<RS2::EntityType>& enTypeList,
+                           RS2::ResolveLevel level=RS2::ResolveNone);
 
     /**
      * Suspends this snapper while another action takes place.
