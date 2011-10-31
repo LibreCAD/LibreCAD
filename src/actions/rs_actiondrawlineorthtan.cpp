@@ -46,7 +46,6 @@ RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(
     circleList.push_back(RS2::EntityArc);
     circleList.push_back(RS2::EntityCircle);
     circleList.push_back(RS2::EntityEllipse);
-    success=false;
 }
 
 
@@ -112,7 +111,6 @@ void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent* e) {
             if (tangent!=NULL) {
                 delete tangent;
                     tangent=NULL;
-                    success=true;
             }
             tangent = (RS_Line*)t->clone();
 
@@ -146,13 +144,12 @@ void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent* e) {
     } else {
         switch (getStatus()) {
         case SetLine: {
-            success=false;
             RS_Entity* en=catchEntity(e,RS2::EntityLine);
-            if(en->rtti() == RS2::EntityLine) {
-                    if (en->getLength() < RS_TOLERANCE) {
-                            //ignore lines not long enough
-                            break;
-                    }
+            if(en != NULL){
+                if (en->getLength() < RS_TOLERANCE) {
+                    //ignore lines not long enough
+                    break;
+                }
                 if(normal != NULL) {
                     normal->setHighlighted(false);
                     graphicView->drawEntity(normal);
@@ -163,11 +160,11 @@ void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent* e) {
                 setStatus(SetCircle);
             }
         }
-        break;
+            break;
 
         case SetCircle:
-            if(success){
-            trigger();
+            if(tangent!=NULL){
+                trigger();
             }
             break;
         default:

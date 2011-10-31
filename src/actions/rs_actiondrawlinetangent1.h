@@ -71,6 +71,7 @@ private:
     RS_Entity* circle;
     /** Data of new tangent */
     RS_LineData data;
+    QVector<RS2::EntityType> circleType;
 };
 
 #endif
