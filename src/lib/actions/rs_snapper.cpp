@@ -461,6 +461,46 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos,
 }
 
 
+/**
+ * Catches an entity which is close to the given position 'pos'.
+ *
+ * @param pos A graphic coordinate.
+ * @param level The level of resolving for iterating through the entity
+ *        container
+ * @enType, only search for a particular entity type
+ * @return Pointer to the entity or NULL.
+ */
+RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
+                                   RS2::ResolveLevel level) {
+
+    RS_DEBUG->print("RS_Snapper::catchEntity");
+
+        // set default distance for points inside solids
+    RS_EntityContainer ec(NULL,false);
+    for(RS_Entity* en= container->firstEntity(level);en!=NULL;en=container->nextEntity(level)){
+       if(en->rtti() == enType && en->isVisible() ) ec.addEntity(en);
+    }
+    if (ec.count() == 0 ) return NULL;
+    double dist = graphicView->toGraphDX(snapRange)*0.9;
+
+    RS_Entity* entity = ec.getNearestEntity(pos, &dist, RS2::ResolveNone);
+
+        int idx = -1;
+        if (entity!=NULL && entity->getParent()!=NULL) {
+                idx = entity->getParent()->findEntity(entity);
+        }
+
+    if (entity!=NULL && dist<=graphicView->toGraphDX(snapRange)) {
+        // highlight:
+        RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
+        return entity;
+    } else {
+        RS_DEBUG->print("RS_Snapper::catchEntity: not found");
+        return NULL;
+    }
+    RS_DEBUG->print("RS_Snapper::catchEntity: OK");
+}
+
 
 /**
  * Catches an entity which is close to the mouse cursor.
@@ -479,6 +519,24 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e,
                level);
 }
 
+
+/**
+ * Catches an entity which is close to the mouse cursor.
+ *
+ * @param e A mouse event.
+ * @param level The level of resolving for iterating through the entity
+ *        container
+ * @enType, only search for a particular entity type
+ * @return Pointer to the entity or NULL.
+ */
+RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, RS2::EntityType enType,
+                                   RS2::ResolveLevel level) {
+
+    return catchEntity(
+               RS_Vector(graphicView->toGraphX(e->x()),
+                         graphicView->toGraphY(e->y())), enType,
+               level);
+}
 
 
 /**
@@ -531,8 +589,8 @@ void RS_Snapper::drawSnapper() {
                         container->addEntity(circle);
 
                         // crosshairs:
-                        if (showCrosshairs==true) {//isometric crosshair
-                            if(graphicView->isGridIsometric()) {
+                        if (showCrosshairs==true) {
+                            if(graphicView->isGridIsometric()) {//isometric crosshair
                                 RS2::CrosshairType chType=graphicView->getCrosshairType();
                                 RS_Vector direction1;
                                 RS_Vector direction2(0.,1.);

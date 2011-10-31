@@ -104,7 +104,7 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent begin");
 
     if(getStatus() == SetLine3) {
-        RS_Entity*  en = catchEntity(e, RS2::ResolveAll);
+        RS_Entity*  en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
         if(en == NULL) return;
         if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
         for(int i=0;i<getStatus();i++) {
@@ -159,7 +159,7 @@ void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent* e) {
         if (e==NULL) {
             return;
         }
-        RS_Entity*  en = catchEntity(e, RS2::ResolveAll);
+        RS_Entity*  en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
         if(en == NULL) return;
         if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
         for(int i=0;i<getStatus();i++) {

@@ -183,6 +183,11 @@ public:
                            RS2::ResolveLevel level=RS2::ResolveNone);
     RS_Entity* catchEntity(QMouseEvent* e,
                            RS2::ResolveLevel level=RS2::ResolveNone);
+    // catch Entity closest to pos and of the given entity type of enType, only search for a particular entity type
+    RS_Entity* catchEntity(const RS_Vector& pos, RS2::EntityType enType,
+                           RS2::ResolveLevel level=RS2::ResolveNone);
+    RS_Entity* catchEntity(QMouseEvent* e, RS2::EntityType enType,
+                           RS2::ResolveLevel level=RS2::ResolveNone);
 
     /**
      * Suspends this snapper while another action takes place.
