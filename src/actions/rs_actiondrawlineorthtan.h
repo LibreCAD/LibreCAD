@@ -63,6 +63,9 @@ private:
     RS_Line* tangent; //holds the tangent line for preview
     /** arc/circle/ellipse to generate tangent */
     RS_Entity* circle;
+    QVector<RS2::EntityType> circleList; //this holds a list of entity types which supports tangent
+    bool success;
+
 };
 
 #endif
