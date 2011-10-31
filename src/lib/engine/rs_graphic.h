@@ -236,6 +236,8 @@ public:
         void setGridOn(bool on);
         bool isIsometricGrid();
         void setIsometricGrid(bool on);
+        void setCrosshairType(RS2::CrosshairType chType);
+        RS2::CrosshairType getCrosshairType();
 
         bool isDraftOn();
         void setDraftOn(bool on);
@@ -286,6 +288,7 @@ private:
         RS_LayerList layerList;
         RS_BlockList blockList;
         RS_VariableDict variableDict;
+        RS2::CrosshairType crosshairType; //corss hair type used by isometric grid
 };
 
 

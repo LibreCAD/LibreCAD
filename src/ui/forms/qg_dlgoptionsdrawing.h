@@ -53,6 +53,12 @@ protected slots:
 private slots:
     void on_cbIsometricGrid_toggled(bool checked);
 
+    void on_rbCrosshairLeft_toggled(bool checked);
+
+    void on_rbCrosshairTop_toggled(bool checked);
+
+    void on_rbCrosshairRight_toggled(bool checked);
+
 private:
     QStringList listPrec1;
     RS_Graphic* graphic;

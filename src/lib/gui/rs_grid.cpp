@@ -99,6 +99,7 @@ void RS_Grid::updatePointArray() {
         RS_SETTINGS->endGroup();
 
         isometric = static_cast<bool>(graphic->getVariableInt("$ISOMETRICGRID",0));
+        crosshairType=graphic->getCrosshairType();
         // get grid setting
         RS_Vector userGrid;
         if (graphic!=NULL) {

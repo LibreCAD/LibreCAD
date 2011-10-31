@@ -530,21 +530,48 @@ void RS_Snapper::drawSnapper() {
 
                         container->addEntity(circle);
 
-            // crosshairs:
-            if (showCrosshairs==true) {
+                        // crosshairs:
+                        if (showCrosshairs==true) {//isometric crosshair
+                            if(graphicView->isGridIsometric()) {
+                                RS2::CrosshairType chType=graphicView->getCrosshairType();
+                                RS_Vector direction1;
+                                RS_Vector direction2(0.,1.);
+                                double l=graphicView->getWidth()+graphicView->getHeight();
+                                switch(chType){
+                                case RS2::RightCrosshair:
+                                    direction1=RS_Vector(M_PI*5./6.)*l;
+                                    direction2*=l;
+                                    break;
+                                case RS2::LeftCrosshair:
+                                    direction1=RS_Vector(M_PI*1./6.)*l;
+                                    direction2*=l;
+                                    break;
+                                default:
+                                    direction1=RS_Vector(M_PI*1./6.)*l;
+                                    direction2=RS_Vector(M_PI*5./6.)*l;
+                                }
+                                RS_Vector center(graphicView->toGui(snapCoord));
+                                RS_OverlayLine *line=new RS_OverlayLine(NULL,RS_LineData(center-direction1,center+direction1));
+                                line->setPen(crossHairPen);
+                                container->addEntity(line);
+                                line=new RS_OverlayLine(NULL,RS_LineData(center-direction2,center+direction2));
+                                line->setPen(crossHairPen);
+                                container->addEntity(line);
+                            }else{//orthogonal crosshair
 
 
                                 RS_OverlayLine *line=new RS_OverlayLine(NULL, RS_LineData(RS_Vector(0, graphicView->toGuiY(snapCoord.y)),
-                                                                                                                RS_Vector(graphicView->getWidth(), graphicView->toGuiY(snapCoord.y))));
+                                                                                          RS_Vector(graphicView->getWidth(), graphicView->toGuiY(snapCoord.y))));
                                 line->setPen(crossHairPen);
                                 container->addEntity(line);
 
                                 line=new RS_OverlayLine(NULL, RS_LineData(RS_Vector(graphicView->toGuiX(snapCoord.x),0),
-                                                                                                                RS_Vector(graphicView->toGuiX(snapCoord.x), graphicView->getHeight())));
+                                                                          RS_Vector(graphicView->toGuiX(snapCoord.x), graphicView->getHeight())));
                                 line->setPen(crossHairPen);
                                 container->addEntity(line);
+                            }
 
-            }
+                        }
                         graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
                         RS_DEBUG->print("RS_Snapper::Snapped draw end");
         }

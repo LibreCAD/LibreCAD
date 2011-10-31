@@ -55,6 +55,15 @@ QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing()
     // no need to delete child widgets, Qt does it all for us
         RS_SETTINGS->beginGroup("/Appearance");
         RS_SETTINGS->writeEntry("/IsometricGrid", cbIsometricGrid->isChecked()?QString("1"):QString("0"));
+        RS2::CrosshairType chType;
+        if(rbCrosshairLeft->isChecked()) {
+            chType=RS2::LeftCrosshair;
+        }else if (rbCrosshairTop->isChecked()) {
+            chType=RS2::TopCrosshair;
+        }else if (rbCrosshairRight->isChecked()) {
+            chType=RS2::RightCrosshair;
+        }
+        RS_SETTINGS->writeEntry("/CrosshairType", QString::number(static_cast<int>(chType)));
         RS_SETTINGS->endGroup();
 }
 
@@ -210,7 +219,25 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
 //    graphic->setIsometricGrid(cbIsometricGrid->isChecked());
     cbIsometricGrid->setChecked(graphic->isIsometricGrid());
 
-    cbIsometricGrid->setDisabled(!cbGridOn);
+    cbIsometricGrid->setDisabled(!cbGridOn->isChecked());
+    RS2::CrosshairType chType=graphic->getCrosshairType();
+    switch(chType){
+    case RS2::LeftCrosshair:
+        rbCrosshairLeft->setChecked(true);
+        break;
+    case RS2::TopCrosshair:
+        rbCrosshairTop->setChecked(true);
+        break;
+//    case RS2::RightCrosshair:
+//        rbCrosshairRight->setChecked(true);
+//        break;
+        default:
+        rbCrosshairRight->setChecked(true);
+        break;
+    }
+    rbCrosshairLeft->setDisabled(!cbGridOn->isChecked());
+    rbCrosshairTop->setDisabled(!cbGridOn->isChecked());
+    rbCrosshairRight->setDisabled(!cbGridOn->isChecked());
 
     RS_Vector spacing = graphic->getVariableVector("$GRIDUNIT",
                         RS_Vector(0.0,0.0));
@@ -593,4 +620,19 @@ void QG_DlgOptionsDrawing::on_cbIsometricGrid_toggled(bool checked)
     graphic->setIsometricGrid(checked);
     cbXSpacing->setDisabled(checked);
 
+}
+
+void QG_DlgOptionsDrawing::on_rbCrosshairLeft_toggled(bool checked)
+{
+    if(checked) graphic->setCrosshairType(RS2::LeftCrosshair);
+}
+
+void QG_DlgOptionsDrawing::on_rbCrosshairTop_toggled(bool checked)
+{
+    if(checked) graphic->setCrosshairType(RS2::TopCrosshair);
+}
+
+void QG_DlgOptionsDrawing::on_rbCrosshairRight_toggled(bool checked)
+{
+    if(checked) graphic->setCrosshairType(RS2::RightCrosshair);
 }

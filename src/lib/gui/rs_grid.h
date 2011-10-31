@@ -61,6 +61,12 @@ public:
     int count() {
         return number;
     }
+    void setCrosshairType(RS2::CrosshairType chType){
+        crosshairType=chType;
+    }
+    RS2::CrosshairType getCrosshairType(){
+        return crosshairType;
+    }
 
         /**
          * @return Current grid spacing.
@@ -145,6 +151,8 @@ protected:
         //! Number of meta grid lines in Y
         int numMetaY;
     bool isometric;
+    RS2::CrosshairType crosshairType;
+
 };
 
 #endif

@@ -160,7 +160,23 @@ bool RS_GraphicView::isGridOn() {
     return true;
 }
 
+/**
+ * @return true if the grid is isometric
+ *
+ *@Author: Dongxu Li
+ */
+bool RS_GraphicView::isGridIsometric() {
+    return grid->isIsometric();
+}
 
+
+void RS_GraphicView::setCrosshairType(RS2::CrosshairType chType){
+    grid->setCrosshairType(chType);
+}
+
+RS2::CrosshairType RS_GraphicView::getCrosshairType(){
+    return grid->getCrosshairType();
+}
 
 
 /**
