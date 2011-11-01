@@ -94,17 +94,20 @@ void RS_Grid::updatePointArray() {
         // auto scale grid?
         RS_SETTINGS->beginGroup("/Appearance");
         bool scaleGrid = (bool)RS_SETTINGS->readNumEntry("/ScaleGrid", 1);
-        //        isometric = (bool)RS_SETTINGS->readNumEntry("/IsometricGrid", 0);
+        if(graphic == NULL){
+            isometric = (bool)RS_SETTINGS->readNumEntry("/IsometricGrid", 0);
+        }
         int minGridSpacing = RS_SETTINGS->readNumEntry("/MinGridSpacing", 10);
         RS_SETTINGS->endGroup();
 
-        isometric = static_cast<bool>(graphic->getVariableInt("$ISOMETRICGRID",0));
-        crosshairType=graphic->getCrosshairType();
         // get grid setting
         RS_Vector userGrid;
         if (graphic!=NULL) {
+            crosshairType=graphic->getCrosshairType();
             userGrid = graphic->getVariableVector("$GRIDUNIT",
                                                   RS_Vector(-1.0, -1.0));
+        }else{
+            isometric = false;
         }
         //std::cout<<"Grid userGrid="<<userGrid<<std::endl;
 
