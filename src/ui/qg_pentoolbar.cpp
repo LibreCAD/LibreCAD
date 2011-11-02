@@ -56,9 +56,9 @@ this->setMaximumWidth(360);
     currentPen.setWidth(widthBox->getWidth());
     currentPen.setLineType(lineTypeBox->getLineType());
 
-        addWidget(colorBox);
-        addWidget(widthBox);
-        addWidget(lineTypeBox);
+    addWidget(colorBox);
+    addWidget(widthBox);
+    addWidget(lineTypeBox);
 
 }
 
