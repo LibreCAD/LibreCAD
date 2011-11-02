@@ -41,6 +41,11 @@ RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
     tangent = NULL;
     circle1 = NULL;
     circle2 = NULL;
+
+    circleType.clear();
+    circleType.push_back(RS2::EntityArc);
+    circleType.push_back(RS2::EntityCircle);
+    circleType.push_back(RS2::EntityEllipse);
 }
 
 QAction* RS_ActionDrawLineTangent2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
@@ -94,8 +99,9 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
 
     switch (getStatus()) {
     case SetCircle1: {
-            RS_Entity* en = catchEntity(e, RS2::ResolveAll);
+            RS_Entity* en = catchEntity(e, circleType, RS2::ResolveAll);
             if (en!=NULL && (en->rtti()==RS2::EntityCircle ||
+                             en->rtti()==RS2::EntityEllipse ||
                              en->rtti()==RS2::EntityArc)) {
                 circle1 = en;
             }
@@ -103,8 +109,9 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetCircle2: {
-            RS_Entity* en = catchEntity(e, RS2::ResolveAll);
+            RS_Entity* en = catchEntity(e, circleType, RS2::ResolveAll);
             if (en!=NULL && (en->rtti()==RS2::EntityCircle ||
+                             en->rtti()==RS2::EntityEllipse ||
                              en->rtti()==RS2::EntityArc)) {
                 circle2 = en;
 

@@ -959,7 +959,7 @@ double RS_VectorSolutions::getClosestDistance(const RS_Vector& coord,
 {
     double ret=RS_MAXDOUBLE*RS_MAXDOUBLE;
     int i=vector.size();
-    if (counts<i) i=counts;
+    if (counts<i && counts>=0) i=counts;
     for(int j=0; j<i; j++) {
         if(vector[i].valid) {
             double d=(coord - vector[i]).squared();

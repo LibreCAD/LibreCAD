@@ -120,7 +120,7 @@ public:
     }
 
     /** @return The center point (x) of this arc */
-    RS_Vector getCenter() const {
+    virtual RS_Vector getCenter() const {
         return data.center;
     }
     /** Sets new center. */
@@ -129,7 +129,7 @@ public:
     }
 
     /** @return The radius of this arc */
-    double getRadius() const {
+    virtual double getRadius() const {
         return data.radius;
     }
     /** Sets new radius. */

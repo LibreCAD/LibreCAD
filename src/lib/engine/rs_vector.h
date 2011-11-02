@@ -156,7 +156,7 @@ public:
     RS_Vector getClosest(const RS_Vector& coord,
                          double* dist=NULL, int* index=NULL) const;
     double getClosestDistance(const RS_Vector& coord,
-                              int counts);
+                              int counts = -1); //default to search all
     QList<RS_Vector> getList() const;
     void rotate(const double& ang);
     void rotate(const RS_Vector& angleVector);

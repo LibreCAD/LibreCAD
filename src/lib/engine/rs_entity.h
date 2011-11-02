@@ -139,7 +139,14 @@ public:
     void setParent(RS_EntityContainer* p) {
         parent = p;
     }
-
+    /** @return The center point (x) of this arc */
+    //get center for entities: arc, circle and ellipse
+    virtual RS_Vector getCenter() const {
+        return RS_Vector(false);
+    }
+    virtual double getRadius() const {
+        return RS_MAXDOUBLE;
+    }
     RS_Graphic* getGraphic();
     RS_Block* getBlock();
     RS_Insert* getInsert();

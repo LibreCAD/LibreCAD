@@ -1240,26 +1240,39 @@ double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) const {
  * find the maximum and minimum of x^2 + y^2,
  */
 void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
+    RS_Vector vpStart;
+    RS_Vector vpEnd;
+    if(std::isnormal(getAngle1()) || std::isnormal(getAngle2())){
+        //only handle start/end points for ellipse arc
+        getStartpoint().scale(center,factor);
+        getEndpoint().scale(center,factor);
+    }
     data.center.scale(center, factor);
-    RS_Vector vpStart=getStartpoint().scale(center,factor);
-    RS_Vector vpEnd=getEndpoint().scale(center,factor);;
-    double ct=cos(getAngle());
+    RS_Vector vp1(getMajorP());
+    double a(vp1.magnitude());
+    if(a<RS_TOLERANCE) return; //ellipse too small
+    vp1 *= 1./a;
+    double ct=vp1.x;
     double ct2 = ct*ct; // cos^2 angle
-    double st=sin(getAngle());
+    double st=vp1.y;
     double st2=1.0 - ct2; // sin^2 angle
     double kx2= factor.x * factor.x;
     double ky2= factor.y * factor.y;
-    double a=getMajorRadius();
+//    double a=getMajorRadius();
     double b=getRatio()*a;
     double cA=0.5*a*a*(kx2*ct2+ky2*st2);
     double cB=0.5*b*b*(kx2*st2+ky2*ct2);
     double cC=a*b*ct*st*(ky2-kx2);
     RS_Vector vp(cA-cB,cC);
-    setMajorP(RS_Vector(a,b).scale(RS_Vector(vp.angle())).rotate(RS_Vector(ct,st)).scale(factor));
+    vp1.set(a,b);
+    vp1.scale(RS_Vector(0.5*vp.angle()));
+    vp1.rotate(RS_Vector(ct,st));
+    vp1.scale(factor);
+    setMajorP(vp1);
     a=cA+cB;
     b=vp.magnitude();
     setRatio( sqrt((a - b)/(a + b) ));
-    if(   std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) )  {
+    if( std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) ) {
         //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
         setAngle1(getEllipseAngle(vpStart));
         setAngle2(getEllipseAngle(vpEnd));
@@ -1267,7 +1280,8 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     correctAngles();//avoid extra 2.*M_PI in angles
     //calculateEndpoints();
     scaleBorders(center,factor);
-//    calculateBorders();
+// calculateBorders();
+
 }
 
 
