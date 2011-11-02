@@ -289,7 +289,6 @@ private:
         RS_BlockList blockList;
         RS_VariableDict variableDict;
         RS2::CrosshairType crosshairType; //corss hair type used by isometric grid
-        bool isometricGrid;
 };
 
 

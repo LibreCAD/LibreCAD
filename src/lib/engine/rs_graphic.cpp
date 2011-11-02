@@ -51,7 +51,7 @@ blockList(true)
     setUnit(RS_Units::stringToUnit(RS_SETTINGS->readEntry("/Unit", "None")));
     RS_SETTINGS->endGroup();
     RS_SETTINGS->beginGroup("/Appearance");
-    isometricGrid=static_cast<bool>(RS_SETTINGS->readNumEntry("/IsometricGrid", 0));
+    addVariable("$ISOMETRICGRID",static_cast<int>(RS_SETTINGS->readNumEntry("/IsometricGrid", 0)),70);
    crosshairType=static_cast<RS2::CrosshairType>(RS_SETTINGS->readNumEntry("/CrosshairType",0));
     RS_SETTINGS->endGroup();
     RS2::Unit unit = getUnit();
@@ -552,7 +552,8 @@ void RS_Graphic::setGridOn(bool on) {
  * @return true if the grid is switched on (visible).
  */
 bool RS_Graphic::isIsometricGrid() {
-        return isometricGrid;
+        int on = getVariableInt("$ISOMETRICGRID", 0);
+        return on!=0;
 }
 
 
@@ -561,7 +562,7 @@ bool RS_Graphic::isIsometricGrid() {
  * Enables / disables isometric grid.
  */
 void RS_Graphic::setIsometricGrid(bool on) {
-        isometricGrid=on;
+        addVariable("$ISOMETRICGRID", (int)on, 70);
 }
 
 void RS_Graphic::setCrosshairType(RS2::CrosshairType chType){

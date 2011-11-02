@@ -53,18 +53,18 @@ QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent, bool modal, Qt::Wind
 QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing()
 {
     // no need to delete child widgets, Qt does it all for us
-        RS_SETTINGS->beginGroup("/Appearance");
-        RS_SETTINGS->writeEntry("/IsometricGrid", cbIsometricGrid->isChecked()?QString("1"):QString("0"));
-        RS2::CrosshairType chType;
-        if(rbCrosshairLeft->isChecked()) {
-            chType=RS2::LeftCrosshair;
-        }else if (rbCrosshairTop->isChecked()) {
-            chType=RS2::TopCrosshair;
-        }else if (rbCrosshairRight->isChecked()) {
-            chType=RS2::RightCrosshair;
-        }
-        RS_SETTINGS->writeEntry("/CrosshairType", QString::number(static_cast<int>(chType)));
-        RS_SETTINGS->endGroup();
+    RS_SETTINGS->beginGroup("/Appearance");
+    RS_SETTINGS->writeEntry("/IsometricGrid", cbIsometricGrid->isChecked()?QString("1"):QString("0"));
+    RS2::CrosshairType chType;
+    if(rbCrosshairLeft->isChecked()) {
+        chType=RS2::LeftCrosshair;
+    }else if (rbCrosshairTop->isChecked()) {
+        chType=RS2::TopCrosshair;
+    }else if (rbCrosshairRight->isChecked()) {
+        chType=RS2::RightCrosshair;
+    }
+    RS_SETTINGS->writeEntry("/CrosshairType", QString::number(static_cast<int>(chType)));
+    RS_SETTINGS->endGroup();
 }
 
 /*
@@ -93,19 +93,19 @@ void QG_DlgOptionsDrawing::init() {
     // init units combobox:
     QStringList unitList;
     unitList << tr("Scientific")
-    << tr("Decimal")
-    << tr("Engineering")
-    << tr("Architectural")
-    << tr("Fractional");
+             << tr("Decimal")
+             << tr("Engineering")
+             << tr("Architectural")
+             << tr("Fractional");
     cbLengthFormat->insertItems(0, unitList);
 
     // init angle units combobox:
     QStringList aunitList;
     aunitList << tr("Decimal Degrees")
-    << tr("Deg/min/sec")
-    << tr("Gradians")
-    << tr("Radians")
-    << tr("Surveyor's units");
+              << tr("Deg/min/sec")
+              << tr("Gradians")
+              << tr("Radians")
+              << tr("Surveyor's units");
     cbAngleFormat->insertItems(0, aunitList);
 
     // Paper format:
@@ -177,7 +177,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     // main drawing unit:
     int insunits = graphic->getVariableInt("$INSUNITS", 0);
     cbUnit->setCurrentIndex( cbUnit->findText(
-            RS_Units::unitToString(RS_FilterDXF::numberToUnit(insunits))));
+                                 RS_Units::unitToString(RS_FilterDXF::numberToUnit(insunits))));
 
     // units / length format:
     int lunits = graphic->getVariableInt("$LUNITS", 2);
@@ -200,7 +200,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     // paper format:
     bool landscape;
     RS2::PaperFormat format = graphic->getPaperFormat(&landscape);
-        RS_DEBUG->print("QG_DlgOptionsDrawing::setGraphic: paper format is: %d", (int)format);
+    RS_DEBUG->print("QG_DlgOptionsDrawing::setGraphic: paper format is: %d", (int)format);
     cbPaperFormat->setCurrentIndex((int)format);
 
     // paper orientation:
@@ -212,14 +212,17 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
 
     // Grid:
     cbGridOn->setChecked(graphic->isGridOn());
-//    RS_SETTINGS->beginGroup("/Appearance");
-//    cbIsometricGrid->setChecked(static_cast<bool>(RS_SETTINGS->readNumEntry("/IsometricGrid", 0)));
-//    RS_SETTINGS->endGroup();
+    //    RS_SETTINGS->beginGroup("/Appearance");
+    //    cbIsometricGrid->setChecked(static_cast<bool>(RS_SETTINGS->readNumEntry("/IsometricGrid", 0)));
+    //    RS_SETTINGS->endGroup();
 
-//    graphic->setIsometricGrid(cbIsometricGrid->isChecked());
+    //    graphic->setIsometricGrid(cbIsometricGrid->isChecked());
     cbIsometricGrid->setChecked(graphic->isIsometricGrid());
+    cbOrthogonalGrid->setChecked(! cbIsometricGrid->isChecked());
+
 
     cbIsometricGrid->setDisabled(!cbGridOn->isChecked());
+    cbOrthogonalGrid->setDisabled(!cbGridOn->isChecked());
     RS2::CrosshairType chType=graphic->getCrosshairType();
     switch(chType){
     case RS2::LeftCrosshair:
@@ -228,19 +231,25 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     case RS2::TopCrosshair:
         rbCrosshairTop->setChecked(true);
         break;
-//    case RS2::RightCrosshair:
-//        rbCrosshairRight->setChecked(true);
-//        break;
-        default:
+        //    case RS2::RightCrosshair:
+        //        rbCrosshairRight->setChecked(true);
+        //        break;
+    default:
         rbCrosshairRight->setChecked(true);
         break;
     }
-    rbCrosshairLeft->setDisabled(!cbGridOn->isChecked());
-    rbCrosshairTop->setDisabled(!cbGridOn->isChecked());
-    rbCrosshairRight->setDisabled(!cbGridOn->isChecked());
+    if(cbOrthogonalGrid->isChecked() || ! cbGridOn->isChecked() ){
+        rbCrosshairLeft->setDisabled(true);
+        rbCrosshairTop->setDisabled(true);
+        rbCrosshairRight->setDisabled(true);
+    }else{
+        rbCrosshairLeft->setDisabled(false);
+        rbCrosshairTop->setDisabled(false);
+        rbCrosshairRight->setDisabled(false);
+    }
 
     RS_Vector spacing = graphic->getVariableVector("$GRIDUNIT",
-                        RS_Vector(0.0,0.0));
+                                                   RS_Vector(0.0,0.0));
     cbXSpacing->setEditText( QString("%1").arg(spacing.x));
     cbYSpacing->setEditText( QString("%1").arg(spacing.y));
 
@@ -250,42 +259,44 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     if (cbYSpacing->currentText()=="0") {
         cbYSpacing->setEditText(tr("auto"));
     }
+    cbXSpacing->setDisabled(!cbGridOn->isChecked());
+    cbYSpacing->setDisabled(!cbGridOn->isChecked());
 
     // dimension text height:
     RS2::Unit unit = (RS2::Unit)cbUnit->currentIndex();
 
     double dimtxt = graphic->getVariableDouble("$DIMTXT",
-                    RS_Units::convert(2.5, RS2::Millimeter, unit));
-//RLZ    cbDimTextHeight->setCurrentText(QString("%1").arg(dimtxt));
+                                               RS_Units::convert(2.5, RS2::Millimeter, unit));
+    //RLZ    cbDimTextHeight->setCurrentText(QString("%1").arg(dimtxt));
     cbDimTextHeight->setEditText(QString("%1").arg(dimtxt));
 
     // dimension extension line extension:
     double dimexe = graphic->getVariableDouble("$DIMEXE",
-                    RS_Units::convert(1.25, RS2::Millimeter, unit));
-//RLZ    cbDimExe->setCurrentText(QString("%1").arg(dimexe));
+                                               RS_Units::convert(1.25, RS2::Millimeter, unit));
+    //RLZ    cbDimExe->setCurrentText(QString("%1").arg(dimexe));
     cbDimExe->setEditText(QString("%1").arg(dimexe));
 
     // dimension extension line offset:
     double dimexo = graphic->getVariableDouble("$DIMEXO",
-                    RS_Units::convert(0.625, RS2::Millimeter, unit));
-//RLZ    cbDimExo->setCurrentText(QString("%1").arg(dimexo));
+                                               RS_Units::convert(0.625, RS2::Millimeter, unit));
+    //RLZ    cbDimExo->setCurrentText(QString("%1").arg(dimexo));
     cbDimExo->setEditText(QString("%1").arg(dimexo));
 
     // dimension line gap:
     double dimgap = graphic->getVariableDouble("$DIMGAP",
-                    RS_Units::convert(0.625, RS2::Millimeter, unit));
-//RLZ    cbDimGap->setCurrentText(QString("%1").arg(dimgap));
+                                               RS_Units::convert(0.625, RS2::Millimeter, unit));
+    //RLZ    cbDimGap->setCurrentText(QString("%1").arg(dimgap));
     cbDimGap->setEditText(QString("%1").arg(dimgap));
 
     // dimension arrow size:
     double dimasz = graphic->getVariableDouble("$DIMASZ",
-                    RS_Units::convert(2.5, RS2::Millimeter, unit));
-//RLZ    cbDimAsz->setCurrentText(QString("%1").arg(dimasz));
+                                               RS_Units::convert(2.5, RS2::Millimeter, unit));
+    //RLZ    cbDimAsz->setCurrentText(QString("%1").arg(dimasz));
     cbDimAsz->setEditText(QString("%1").arg(dimasz));
 
     // spline line segments per patch:
     int splinesegs = graphic->getVariableInt("$SPLINESEGS", 8);
-//RLZ    cbSplineSegs->setCurrentText(QString("%1").arg(splinesegs));
+    //RLZ    cbSplineSegs->setCurrentText(QString("%1").arg(splinesegs));
     cbSplineSegs->setEditText(QString("%1").arg(splinesegs));
 
     RS_DEBUG->print("QG_DlgOptionsDrawing::setGraphic: splinesegs is: %d",
@@ -336,17 +347,17 @@ void QG_DlgOptionsDrawing::validate() {
 
         // paper:
         graphic->setPaperFormat(
-            (RS2::PaperFormat)cbPaperFormat->currentIndex(),
-            rbLandscape->isChecked());
-                // custom paper size:
-                if ((RS2::PaperFormat)cbPaperFormat->currentIndex()==RS2::Custom) {
-                        graphic->setPaperSize(
-                              RS_Units::convert(
-                                        RS_Vector(RS_Math::eval(lePaperWidth->text()),
-                                          RS_Math::eval(lePaperHeight->text())),
-                                        (RS2::Unit) cbUnit->currentIndex(),
-                                        RS2::Millimeter));
-                }
+                    (RS2::PaperFormat)cbPaperFormat->currentIndex(),
+                    rbLandscape->isChecked());
+        // custom paper size:
+        if ((RS2::PaperFormat)cbPaperFormat->currentIndex()==RS2::Custom) {
+            graphic->setPaperSize(
+                        RS_Units::convert(
+                            RS_Vector(RS_Math::eval(lePaperWidth->text()),
+                                      RS_Math::eval(lePaperHeight->text())),
+                            (RS2::Unit) cbUnit->currentIndex(),
+                            RS2::Millimeter));
+        }
 
         // grid:
         //graphic->addVariable("$GRIDMODE", (int)cbGridOn->isChecked() , 70);
@@ -405,7 +416,7 @@ void QG_DlgOptionsDrawing::updateLengthPrecision() {
     cbLengthPrecision->clear();
 
     switch (cbLengthFormat->currentIndex()) {
-        // scientific
+    // scientific
     case 0:
         cbLengthPrecision->addItem("0E+01");
         cbLengthPrecision->addItem("0.0E+01");
@@ -480,7 +491,7 @@ void QG_DlgOptionsDrawing::updateAnglePrecision() {
     cbAnglePrecision->clear();
 
     switch (cbAngleFormat->currentIndex()) {
-        // decimal degrees:
+    // decimal degrees:
     case 0:
         cbAnglePrecision->insertItems(0, listPrec1);
         break;
@@ -566,27 +577,27 @@ void QG_DlgOptionsDrawing::updatePreview() {
 void  QG_DlgOptionsDrawing::updatePaperSize() {
     RS2::PaperFormat format = (RS2::PaperFormat)cbPaperFormat->currentIndex();
 
-        if (format==RS2::Custom) {
-            RS_Vector s = RS_Units::convert(
-                 graphic->getPaperSize(),
-                        RS2::Millimeter,
-                        (RS2::Unit) cbUnit->currentIndex()
-                        );
-                //RS_Vector plimmin = graphic->getVariableVector("$PLIMMIN", RS_Vector(0,0));
-                //RS_Vector plimmax = graphic->getVariableVector("$PLIMMAX", RS_Vector(100,100));
-                lePaperWidth->setText(QString("%1").arg(s.x));
-                lePaperHeight->setText(QString("%1").arg(s.y));
-        }
-        else {
-            //display paper size according to current units
-            RS_Vector s = RS_Units::convert(
-                        RS_Units::paperFormatToSize(format),
-                        RS2::Millimeter,
-                        (RS2::Unit) cbUnit->currentIndex()
-                        );
-            lePaperWidth->setText(QString("%1").setNum(s.x,'g',5));
-            lePaperHeight->setText(QString("%1").setNum(s.y,'g',5));
-        }
+    if (format==RS2::Custom) {
+        RS_Vector s = RS_Units::convert(
+                    graphic->getPaperSize(),
+                    RS2::Millimeter,
+                    (RS2::Unit) cbUnit->currentIndex()
+                    );
+        //RS_Vector plimmin = graphic->getVariableVector("$PLIMMIN", RS_Vector(0,0));
+        //RS_Vector plimmax = graphic->getVariableVector("$PLIMMAX", RS_Vector(100,100));
+        lePaperWidth->setText(QString("%1").arg(s.x));
+        lePaperHeight->setText(QString("%1").arg(s.y));
+    }
+    else {
+        //display paper size according to current units
+        RS_Vector s = RS_Units::convert(
+                    RS_Units::paperFormatToSize(format),
+                    RS2::Millimeter,
+                    (RS2::Unit) cbUnit->currentIndex()
+                    );
+        lePaperWidth->setText(QString("%1").setNum(s.x,'g',5));
+        lePaperHeight->setText(QString("%1").setNum(s.y,'g',5));
+    }
 
     if (cbPaperFormat->currentIndex()==0) {
         lePaperWidth->setEnabled(true);
@@ -619,7 +630,9 @@ void QG_DlgOptionsDrawing::on_cbIsometricGrid_toggled(bool checked)
 {
     graphic->setIsometricGrid(checked);
     cbXSpacing->setDisabled(checked);
-
+    if( checked == cbOrthogonalGrid->isChecked()) {
+        cbOrthogonalGrid->setChecked(!checked);
+    }
 }
 
 void QG_DlgOptionsDrawing::on_rbCrosshairLeft_toggled(bool checked)
@@ -636,3 +649,28 @@ void QG_DlgOptionsDrawing::on_rbCrosshairRight_toggled(bool checked)
 {
     if(checked) graphic->setCrosshairType(RS2::RightCrosshair);
 }
+
+void QG_DlgOptionsDrawing::on_cbOrthogonalGrid_toggled(bool checked)
+{
+    if(checked == cbIsometricGrid->isChecked()){
+        cbIsometricGrid->setChecked(!checked); //auto-exclusive should be auto though, fixme
+    }
+    rbCrosshairLeft->setDisabled(checked);
+    rbCrosshairTop->setDisabled(checked);
+    rbCrosshairRight->setDisabled(checked);
+    graphic->setIsometricGrid(!checked);
+
+
+}
+
+void QG_DlgOptionsDrawing::on_cbGridOn_toggled(bool checked)
+{
+    cbIsometricGrid->setDisabled(!checked);
+    cbOrthogonalGrid->setDisabled(!checked);
+    rbCrosshairLeft->setDisabled(!checked);
+    rbCrosshairTop->setDisabled(!checked);
+    rbCrosshairRight->setDisabled(!checked);
+    cbXSpacing->setDisabled(!checked);
+    cbYSpacing->setDisabled(!checked);
+}
+//EOF

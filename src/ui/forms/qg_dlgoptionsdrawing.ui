@@ -422,8 +422,8 @@
       <rect>
        <x>9</x>
        <y>9</y>
-       <width>397</width>
-       <height>136</height>
+       <width>414</width>
+       <height>126</height>
       </rect>
      </property>
      <property name="minimumSize">
@@ -445,7 +445,28 @@
       </item>
       <item row="3" column="1" colspan="2">
        <widget class="QWidget" name="widget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>250</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
          <item>
           <widget class="QLabel" name="lCrosshair">
            <property name="sizePolicy">
@@ -453,6 +474,12 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>70</width>
+             <height>0</height>
+            </size>
            </property>
            <property name="text">
             <string>Crosshair</string>
@@ -466,6 +493,12 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>55</width>
+             <height>0</height>
+            </size>
            </property>
            <property name="toolTip">
             <string>Left crosshair with isometric grid</string>
@@ -483,6 +516,12 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>50</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="toolTip">
             <string>Top crosshair with isometric grid</string>
            </property>
@@ -494,10 +533,16 @@
          <item>
           <widget class="QRadioButton" name="rbCrosshairRight">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>60</width>
+             <height>0</height>
+            </size>
            </property>
            <property name="toolTip">
             <string>Right crosshair with isometric grid</string>
@@ -544,7 +589,7 @@
        <x>10</x>
        <y>150</y>
        <width>375</width>
-       <height>56</height>
+       <height>58</height>
       </rect>
      </property>
      <layout class="QGridLayout">
@@ -1013,7 +1058,7 @@
      <x>290</x>
      <y>310</y>
      <width>194</width>
-     <height>27</height>
+     <height>29</height>
     </rect>
    </property>
    <layout class="QHBoxLayout">

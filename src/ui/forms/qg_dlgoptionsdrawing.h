@@ -59,6 +59,10 @@ private slots:
 
     void on_rbCrosshairRight_toggled(bool checked);
 
+    void on_cbOrthogonalGrid_toggled(bool checked);
+
+    void on_cbGridOn_toggled(bool checked);
+
 private:
     QStringList listPrec1;
     RS_Graphic* graphic;
