@@ -737,7 +737,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
         //double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
         double x,d=v0*y+v2;
 //        std::cout<<"d= "<<d<<std::endl;
-        if( fabs(d)>0.1*RS_TOLERANCE*sqrt(RS_TOLERANCE)) {//whether there's x^1 term in bezout determinant
+        if( fabs(d)>10.*RS_TOLERANCE*sqrt(RS_TOLERANCE)) {//whether there's x^1 term in bezout determinant
             x=-((v1*y+v3)*y+v4 )/d;
             if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
                 vs0.push_back(RS_Vector(x,y));
