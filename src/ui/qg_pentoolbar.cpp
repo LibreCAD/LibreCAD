@@ -36,16 +36,19 @@ this->setMinimumWidth(300);
 this->setMaximumWidth(360);
     colorBox = new QG_ColorBox(true, false, this, "colorbox");
     colorBox->setMinimumWidth(64);
+    colorBox->setToolTip(tr("Line color"));
     connect(colorBox, SIGNAL(colorChanged(const RS_Color&)),
             this, SLOT(slotColorChanged(const RS_Color&)));
 
     widthBox = new QG_WidthBox(true, false, this, "widthbox");
     widthBox->setMinimumWidth(64);
+    widthBox->setToolTip(tr("Line width"));
     connect(widthBox, SIGNAL(widthChanged(RS2::LineWidth)),
             this, SLOT(slotWidthChanged(RS2::LineWidth)));
 
     lineTypeBox = new QG_LineTypeBox(true, false, this, "lineTypebox");
     lineTypeBox->setMinimumWidth(64);
+    lineTypeBox->setToolTip(tr("Line type"));
     connect(lineTypeBox, SIGNAL(lineTypeChanged(RS2::LineType)),
             this, SLOT(slotLineTypeChanged(RS2::LineType)));
 
