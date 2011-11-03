@@ -805,7 +805,9 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
         return false;
     }
     RS_Vector center(sol.get(0));
-    //                std::cout<<"center: "<<center<<std::endl;
+//                    std::cout<<"line0: "<<*cl0<<std::endl;
+//                    std::cout<<"line1: "<<*cl1<<std::endl;
+//                    std::cout<<"center: "<<center<<std::endl;
     delete cl0;
     delete cl1;
 
@@ -834,7 +836,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
         //
         double ia2=1./(dx*dx);
         double ib2=1./(minorP.y*minorP.y);
-        //ellipse scaled:
+        //ellipse scaled:drawi
         // ia2*x'^2+ib2*y'^2=1
         // ia2*(x-y*minor.x/minor.y)^2+ib2*y^2=1
         // ia2*x^2 -2*ia2*minor.x/minor.y xy + ia2*minor.x^2*ib2 y^2 + ib2*y^2 =1
@@ -899,7 +901,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
 //    setAngle2(0.);
     if(angleVector.valid) {//need to rotate back, for the parallelogram case
         angleVector.y *= -1.;
-        rotate(angleVector);
+        rotate(center,angleVector);
     }
     return true;
 
