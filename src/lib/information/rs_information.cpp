@@ -854,10 +854,12 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseLine(RS_Line* line,
     double c = RS_Vector::dotP(diff, mDiff) - 1.0;
     double d = b*b - a*c;
 
-    if (d < 0) {
+//    std::cout<<"RS_Information::getIntersectionEllipseLine(): d="<<d<<std::endl;
+    if (d < - 100.*RS_TOLERANCE*sqrt(RS_TOLERANCE)) {
         RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: outside 0");
         return ret;
     }
+    if( d < 0. ) d=0.;
     double root = sqrt(d);
     double t_a = -b/a;
     double t_b = root/a;
