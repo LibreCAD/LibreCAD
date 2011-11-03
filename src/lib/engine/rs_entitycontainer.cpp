@@ -1404,7 +1404,7 @@ bool RS_EntityContainer::optimizeContours() {
     RS_Vector start(false);
     RS_EntityContainer tmp;
 
-    bool changed = false;
+    // bool changed = false;
     bool closed = true;
 
     for (uint ci=0; ci<count(); ++ci) {
@@ -1450,13 +1450,13 @@ bool RS_EntityContainer::optimizeContours() {
                             tmp.addEntity(cl);
                             current = cl->getEndpoint();
 
-                            changed = true;
+                            // changed = true;
                             done=false;
                         }
                     }
                 }
                 if (!done) {
-                    changed = true;
+      //              changed = true;
                 }
             } while (!done);
 

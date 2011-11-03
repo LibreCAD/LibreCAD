@@ -2300,7 +2300,9 @@ void RS_FilterJWW::writeImage(DL_WriterA& dw, RS_Image* i,
                                                                   i->getContrast(),
                                                                   i->getFade()),
                                          attrib);
-        i->setHandle(handle);
+        if(handle > 0) {
+            i->setHandle(handle);
+        }
 }
 
 
