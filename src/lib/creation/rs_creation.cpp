@@ -780,7 +780,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
         //circle2 is Ellipse
         RS_Ellipse* e2=(RS_Ellipse*)circle2->clone();
         RS_Vector m0(circle1->getCenter());
-        std::cout<<"translation: "<<-m0<<std::endl;
+//        std::cout<<"translation: "<<-m0<<std::endl;
         e2->move(-m0); //circle1 centered at origin
 
         double a,b;
@@ -892,7 +892,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
             double y=roots[i];
             //double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
             double x,d=v0*y+v2;
-                    std::cout<<"d= "<<d<<std::endl;
+//                    std::cout<<"d= "<<d<<std::endl;
             if( fabs(d)>10.*RS_TOLERANCE*sqrt(RS_TOLERANCE)) {//whether there's x^1 term in bezout determinant
                 x=-((v1*y+v3)*y+v4 )/d;
                 if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
@@ -911,8 +911,8 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
                     vs0.push_back(RS_Vector(x,y));
                 }
             }
-            std::cout<<"eq1="<<ma000*x*x+ma011*y*y-1.<<std::endl;
-            std::cout<<"eq2="<<ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1<<std::endl;
+//            std::cout<<"eq1="<<ma000*x*x+ma011*y*y-1.<<std::endl;
+//            std::cout<<"eq2="<<ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1<<std::endl;
             //            if (
             //                fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)< RS_TOLERANCE
             //            ) {//found
