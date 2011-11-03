@@ -27,6 +27,7 @@
 #include "rs_actiondrawimage.h"
 
 #include <QAction>
+// #include <QDebug>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
@@ -64,6 +65,7 @@ void RS_ActionDrawImage::init(int status) {
 
         if (!data.file.isEmpty()) {
         //std::cout << "file: " << data.file << "\n";
+        //qDebug() << "file: " << data.file;
 
         img = QImage(data.file);
         setStatus(SetTargetPoint);
