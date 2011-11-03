@@ -57,6 +57,11 @@ QAction* RS_ActionDrawLineTangent2::createGUIAction(RS2::ActionType /*type*/, QO
     return action;
 }
 
+void RS_ActionDrawLineTangent2::finish(bool updateTB){
+    circle1->setHighlighted(false);
+    graphicView->redraw(RS2::RedrawDrawing);
+    RS_PreviewActionInterface::finish(updateTB);
+}
 
 void RS_ActionDrawLineTangent2::trigger() {
     RS_PreviewActionInterface::trigger();
@@ -78,7 +83,9 @@ void RS_ActionDrawLineTangent2::trigger() {
                 document->addUndoable(newEntity);
                 document->endUndoCycle();
             }
-                        graphicView->redraw(RS2::RedrawDrawing);
+            circle1->setHighlighted(false);
+
+            graphicView->redraw(RS2::RedrawDrawing);
             setStatus(SetCircle1);
         }
         delete tangent;
@@ -151,7 +158,9 @@ void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e) {
     } else {
         switch (getStatus()) {
         case SetCircle1:
-            setStatus(SetCircle2);
+            circle1->setHighlighted(true);
+            setStatus(getStatus()+1);
+            graphicView->redraw(RS2::RedrawDrawing);
             break;
 
         case SetCircle2:
