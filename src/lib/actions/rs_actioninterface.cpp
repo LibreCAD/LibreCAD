@@ -265,13 +265,13 @@ void RS_ActionInterface::finish(bool updateTB) {
     if(!(rtti() == RS2::ActionDefault || rtti()==RS2::ActionFilePrintPreview) ) {//refuse to quit the default action
         status = -1;
         finished = true;
+        hideOptions();
+        RS_Snapper::finish();
+        if(updateTB) {
+            updateToolBar();
+        }
     }
     graphicView->setMouseCursor(RS2::ArrowCursor);
-    if(updateTB) {
-        updateToolBar();
-    }
-    hideOptions();
-    RS_Snapper::finish();
     RS_DEBUG->print("RS_ActionInterface::finish: OK");
 }
 

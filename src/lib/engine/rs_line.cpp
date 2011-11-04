@@ -373,6 +373,7 @@ bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
     if(RS_Vector::dotP(direction,vp)<0.) {
         direction *= -1.;
     }
+    direction*=distance;
     move(direction);
     moveBorders(direction);
     return true;

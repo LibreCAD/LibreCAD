@@ -38,7 +38,6 @@ RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Modify Offset",
                                container, graphicView) {
-    std::cout<<"RS_ActionModifyOffset::RS_ActionModifyOffset()\n";
 
     data.distance=0.;
     data.number=1;
@@ -71,13 +70,20 @@ void RS_ActionModifyOffset::trigger() {
 
 void RS_ActionModifyOffset::mouseMoveEvent(QMouseEvent* e) {
 //    RS_DEBUG->print("RS_ActionModifyOffset::mouseMoveEvent begin");
-    position=snapPoint(e);
+    data.coord=snapPoint(e);
+
+
+    RS_EntityContainer ec(NULL,true);
+    for(RS_Entity* en=container->firstEntity();en!=NULL;en=container->nextEntity()){
+        if(en->isSelected()) ec.addEntity(en->clone());
+    }
+    RS_Modification m(ec, NULL, false);
+    m.offset(data);
 
     deletePreview();
-    preview->addSelectionFrom(*container);
-    RS_Modification m(*preview, graphicView);
-    m.offset(data);
+    preview->addSelectionFrom(ec);
     drawPreview();
+
 }
 
 
@@ -110,7 +116,6 @@ void RS_ActionModifyOffset::updateMouseButtonHints() {
 
 void RS_ActionModifyOffset::showOptions() {
     RS_ActionInterface::showOptions();
-std::cout<<"O0\n";
     if (RS_DIALOGFACTORY!=NULL) {
         RS_DIALOGFACTORY->requestModifyOffsetOptions(data.distance, true);
     }
