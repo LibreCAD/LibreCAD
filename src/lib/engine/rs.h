@@ -297,6 +297,7 @@ public:
         ActionModifyBevel,
         ActionModifyRound,
         ActionModifyOffset,
+        ActionModifyOffsetNoSelect,
 
         ActionSnapFree,
         ActionSnapGrid,

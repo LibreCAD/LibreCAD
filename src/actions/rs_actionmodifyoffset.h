@@ -30,8 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONMODIFYOFFSET_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_arc.h"
-#include "rs_circle.h"
+#include "rs_modification.h"
 
 /**
  * This action class create entity by offset
@@ -45,7 +44,6 @@ public:
      * Action States.
      */
     enum Status {
-        SelectEntity,       /**< Select the entity*/
         SetPosition       /**< Setting the direction of offset*/
     };
 
@@ -62,7 +60,7 @@ public:
 
 //    void reset();
 
-    virtual void init(int status=0);
+//    virtual void init(int status=0);
     virtual void trigger();
 
     virtual void mouseMoveEvent(QMouseEvent* e);
@@ -83,8 +81,7 @@ public:
 
 protected:
 
-    double distance;
-    RS_Entity* entity;
-    RS_Entity* creation;
+    RS_OffsetData data;
+    RS_Vector position;
 };
 #endif

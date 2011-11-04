@@ -455,6 +455,10 @@ public:
                                  double tolerance=RS_TOLERANCE) const;
 
     /**
+     * Implementations must offset the entity by the given direction and distance.
+     */
+    virtual bool offset(const RS_Vector& /*coord*/, const double& /*distance*/) {return false;}
+    /**
      * Implementations must move the entity by the given vector.
      */
     virtual void move(const RS_Vector& offset) = 0;

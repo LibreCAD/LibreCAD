@@ -615,6 +615,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionModifyRound(*doc, *gv);
         break;
     case RS2::ActionModifyOffset:
+        a = new RS_ActionSelect(*doc, *gv,RS2::ActionModifyOffsetNoSelect);
+        break;
+    case RS2::ActionModifyOffsetNoSelect:
+        std::cout<<"1ok\n";
         a = new RS_ActionModifyOffset(*doc, *gv);
         break;
     case RS2::ActionModifyExplodeText:

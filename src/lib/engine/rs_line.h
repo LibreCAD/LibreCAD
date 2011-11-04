@@ -201,6 +201,7 @@ public:
                                       RS2::ResolveLevel level=RS2::ResolveNone,
                                       double solidDist = RS_MAXDOUBLE)const;
 
+    virtual bool offset(const RS_Vector& coord, const double& distance);
     virtual void move(const RS_Vector& offset);
     virtual void rotate(const double& angle);
     virtual void rotate(const RS_Vector& center, const double& angle);
