@@ -1012,7 +1012,7 @@ RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
     }
     if(sol.size()<1) return RS_Vector(false);
     aV.y*=-1.;
-    for(unsigned int i=0;i<sol.size();i++) sol[i].rotate(aV);
+    for(int i=0;i<sol.size();i++) sol[i].rotate(aV);
     RS_Vector vp;
     switch(sol.count()) {
     case 0:

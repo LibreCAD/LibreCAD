@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <property name="spacing">
-    <number>0</number>
+    <number>1</number>
    </property>
    <item row="0" column="0" colspan="2">
     <widget class="QToolButton" name="bBack">
@@ -289,6 +289,38 @@
        <width>32</width>
        <height>32</height>
       </size>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QToolButton" name="bOffset">
+     <property name="maximumSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Offset</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/arcspara.png</normaloff>:/extui/arcspara.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -873,6 +905,22 @@
     <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bOffset</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarModify</receiver>
+   <slot>modifyOffset()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>48</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>32</x>
+     <y>223</y>
     </hint>
    </hints>
   </connection>

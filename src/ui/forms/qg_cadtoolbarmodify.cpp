@@ -190,6 +190,11 @@ void QG_CadToolBarModify::modifyExplodeText() {
     }
 }
 
+void QG_CadToolBarModify::modifyOffset() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotModifyOffset();
+    }
+}
 void QG_CadToolBarModify::back() {
     if (cadToolBar!=NULL) {
         cadToolBar->back();
@@ -272,6 +277,10 @@ void QG_CadToolBarModify::restoreAction() {
     }
     if ( bEntityText ->isChecked() ) {
         actionHandler->slotModifyExplodeText();
+        return;
+    }
+    if ( bOffset ->isChecked() ) {
+        actionHandler->slotModifyOffset();
         return;
     }
     //clear all action
