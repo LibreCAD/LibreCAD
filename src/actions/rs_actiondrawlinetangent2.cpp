@@ -57,6 +57,12 @@ QAction* RS_ActionDrawLineTangent2::createGUIAction(RS2::ActionType /*type*/, QO
     return action;
 }
 
+//void RS_ActionDrawLineTangent2::init(int status) {
+//    RS_PreviewActionInterface::init(status);
+//    circle1->setHighlighted(false);
+//    graphicView->redraw(RS2::RedrawDrawing);
+//}
+
 void RS_ActionDrawLineTangent2::finish(bool updateTB){
     circle1->setHighlighted(false);
     graphicView->redraw(RS2::RedrawDrawing);
@@ -154,6 +160,11 @@ void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e) {
 
     if (e->button()==Qt::RightButton) {
         deletePreview();
+        if(getStatus()>0){
+            circle1->setHighlighted(false);
+            graphicView->redraw(RS2::RedrawDrawing);
+            deletePreview();
+        }
         init(getStatus()-1);
     } else {
         switch (getStatus()) {

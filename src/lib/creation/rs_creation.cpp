@@ -802,14 +802,16 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
             if(fabs(a)<RS_TOLERANCE || fabs(b)<RS_TOLERANCE) return NULL;
         }
         RS_Vector factor1(1./a,1./b);
-//        std::cout<<"scaling: "<<factor1<<std::endl;
+//        std::cout<<"scaling: factor1="<<factor1<<std::endl;
         e2->scale(RS_Vector(0.,0.),factor1);//circle1 is a unit circle
         factor1.set(a,b);
         double a2(e2->getAngle());
+//        std::cout<<"rotation: a2="<<-a2<<std::endl;
         e2->rotate(-a2); //ellipse2 with major axis in x-axis direction
-        a=e2->getMajorRadius();
+        a=e2->getMajorP().x;
         b=a*e2->getRatio();
         RS_Vector v(e2->getCenter());
+//        std::cout<<"Center: (x,y)="<<v<<std::endl;
 
 
         RS_VectorSolutions vs0; //to hold solutions
@@ -824,13 +826,13 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
         double ma000(1./(a*a));
         double ma011(1./(b*b));
         double ma100(v.y*v.y-1.);
-        double ma101(2.*v.x*v.y);
+        double ma101(v.x*v.y);
         double ma111(v.x*v.x-1.);
         double mb10(2.*a*b*v.y);
         double mb11(2.*a*b*v.x);
         double mc1(a*a*b*b);
-            std::cout<<"simplified e1: "<<ma000<<"*x^2 + "<<ma011<<"*y^2 -1 =0\n";
-            std::cout<<"simplified e2: "<<ma100<<"*x^2 + 2*("<<ma101<<")*x*y + "<<ma111<<"*y^2 "<<" + ("<<mb10<<")*x + ("<<mb11<<")*y + ("<<mc1<<") =0\n";
+//            std::cout<<"simplified e1: "<<ma000<<"*x^2 + "<<ma011<<"*y^2 -1 =0\n";
+//            std::cout<<"simplified e2: "<<ma100<<"*x^2 + 2*("<<ma101<<")*x*y + "<<ma111<<"*y^2 "<<" + ("<<mb10<<")*x + ("<<mb11<<")*y + ("<<mc1<<") =0\n";
         // construct the Bezout determinant
         double v0=2.*ma000*ma101;
         double v2=ma000*mb10;
@@ -851,11 +853,6 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
         double ce[4];
         double roots[4];
         unsigned int counts=0;
-        std::cout<<"u0="<<u0<<std::endl;
-        std::cout<<"u1="<<u1<<std::endl;
-        std::cout<<"u2="<<u2<<std::endl;
-        std::cout<<"u3="<<u3<<std::endl;
-        std::cout<<"u4="<<u4<<std::endl;
         if ( fabs(u4) < 1.0e-75) { // this should not happen
             if ( fabs(u3) < 1.0e-75) { // this should not happen
                 if ( fabs(u2) < 1.0e-75) { // this should not happen
@@ -883,7 +880,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
             ce[1]=u2/u4;
             ce[2]=u1/u4;
             ce[3]=u0/u4;
-            std::cout<<"ce[4]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<" }\n";
+//            std::cout<<"ce[4]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<" }\n";
             counts=RS_Math::quarticSolver(ce,roots);
         }
 
@@ -900,7 +897,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
             double y=roots[i];
             //double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
             double x,d=v0*y+v2;
-                    std::cout<<i<<": v="<<y<<"\td= "<<d<<std::endl;
+//                    std::cout<<i<<": v="<<y<<"\td= "<<d<<std::endl;
             if( fabs(d)>10.*RS_TOLERANCE*sqrt(RS_TOLERANCE)) {//whether there's x^1 term in bezout determinant
                 x=-((v1*y+v3)*y+v4 )/d;
                 if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
@@ -932,12 +929,24 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
         for(int i=0;i<vs0.getNumber();i++){
 //            std::cout<<"i="<<i<<"\n";
             RS_Vector vpec=vs0.get(i); //this holds ( a*sin(t), b*cos(t))
-            std::cout<<"solution "<<i<<" ="<<vpec<<std::endl;
+//            std::cout<<"solution "<<i<<" ="<<vpec<<std::endl;
             RS_Vector vpe2(e2->getCenter()+ RS_Vector(vpec.y/e2->getRatio(),vpec.x*e2->getRatio()));
+            vpec.x *= -1.;//direction vector of tangent
+            RS_Vector vpe1(vpe2 - vpec*(RS_Vector::dotP(vpec,vpe2)/vpec.squared()));
+//            std::cout<<"vpe1.squared()="<<vpe1.squared()<<std::endl;
+            RS_Line *l=new RS_Line(NULL,RS_LineData(vpe1,vpe2));
+            l->rotate(a2);
+            l->scale(factor1);
+            l->rotate(a0);
+            l->move(m0);
+            poss.push_back(l);
+            /*
+//iteration algorithm based on tangent1
             vpe2.rotate(a2);
             vpe2.scale(factor1);
             vpe2.rotate(a0);
             vpe2.move(m0);
+
             std::cout<<"vpe2 from equation solver: vpe2="<<vpe2<<std::endl;
 
             //fixme, this brutal force fallback should be fixed
@@ -989,6 +998,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 ////            std::cout<<"point on ellipse: "<<vpe2<<std::endl;
 //            RS_Line* l=createTangent1(coord,vpe2,circle1);//create tangent
 //            if(l != NULL) poss.push_back(l);
+*/
         }
         delete e2;
         //debugging

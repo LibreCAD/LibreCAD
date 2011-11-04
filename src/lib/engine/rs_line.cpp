@@ -409,6 +409,21 @@ void RS_Line::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     calculateBorders();
 }
 
+/*scale the line around origin (0,0)
+  *
+  */
+void RS_Line::scale(const RS_Vector& factor) {
+//    RS_DEBUG->print("RS_Line::scale1: sp: %f/%f, ep: %f/%f",
+//                    data.startpoint.x, data.startpoint.y,
+//                    data.endpoint.x, data.endpoint.y);
+    data.startpoint.scale(factor);
+    data.endpoint.scale(factor);
+//    RS_DEBUG->print("RS_Line::scale2: sp: %f/%f, ep: %f/%f",
+//                    data.startpoint.x, data.startpoint.y,
+//                    data.endpoint.x, data.endpoint.y);
+    calculateBorders();
+}
+
 
 void RS_Line::scale(const RS_Vector& center, const RS_Vector& factor) {
 //    RS_DEBUG->print("RS_Line::scale1: sp: %f/%f, ep: %f/%f",

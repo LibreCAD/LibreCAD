@@ -205,6 +205,7 @@ public:
     virtual void rotate(const double& angle);
     virtual void rotate(const RS_Vector& center, const double& angle);
     virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
+    virtual void scale(const RS_Vector& factor);
     virtual void scale(const RS_Vector& center, const RS_Vector& factor);
     virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
     virtual void stretch(const RS_Vector& firstCorner,
