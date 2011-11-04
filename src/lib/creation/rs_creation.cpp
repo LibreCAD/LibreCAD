@@ -779,6 +779,9 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
     }else{
         //circle2 is Ellipse
         RS_Ellipse* e2=(RS_Ellipse*)circle2->clone();
+//        RS_Ellipse* e2=new RS_Ellipse(NULL,RS_EllipseData(RS_Vector(4.,1.),RS_Vector(2.,0.),0.5,0.,0.,false));
+//        RS_Ellipse  e3(NULL,RS_EllipseData(RS_Vector(4.,1.),RS_Vector(2.,0.),0.5,0.,0.,false));
+//        RS_Ellipse* circle1=new RS_Ellipse(NULL,RS_EllipseData(RS_Vector(0.,0.),RS_Vector(1.,0.),1.,0.,0.,false));
         RS_Vector m0(circle1->getCenter());
 //        std::cout<<"translation: "<<-m0<<std::endl;
         e2->move(-m0); //circle1 centered at origin
@@ -818,8 +821,6 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
                   (1/a^2)*u^2 + (1/b^2)*v^2 - 1 =0
                   (y^2-1)*u^2 + (x^2 -1)*v^2 +2*x*y*u*v+2.*a*b*y*u + 2.*a*b*x*v + (a*b)^2 =0
                   */
-        //    std::cout<<"simplified e1: "<<ma000<<"*x^2 + "<<ma011<<"*y^2 -1 =0\n";
-        //    std::cout<<"simplified e2: "<<ma100<<"*x^2 + 2*("<<ma101<<")*x*y + "<<ma111<<"*y^2 "<<" + ("<<mb10<<")*x + ("<<mb11<<")*y + ("<<mc1<<") =0\n";
         double ma000(1./(a*a));
         double ma011(1./(b*b));
         double ma100(v.y*v.y-1.);
@@ -828,6 +829,8 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
         double mb10(2.*a*b*v.y);
         double mb11(2.*a*b*v.x);
         double mc1(a*a*b*b);
+            std::cout<<"simplified e1: "<<ma000<<"*x^2 + "<<ma011<<"*y^2 -1 =0\n";
+            std::cout<<"simplified e2: "<<ma100<<"*x^2 + 2*("<<ma101<<")*x*y + "<<ma111<<"*y^2 "<<" + ("<<mb10<<")*x + ("<<mb11<<")*y + ("<<mc1<<") =0\n";
         // construct the Bezout determinant
         double v0=2.*ma000*ma101;
         double v2=ma000*mb10;
@@ -848,6 +851,11 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
         double ce[4];
         double roots[4];
         unsigned int counts=0;
+        std::cout<<"u0="<<u0<<std::endl;
+        std::cout<<"u1="<<u1<<std::endl;
+        std::cout<<"u2="<<u2<<std::endl;
+        std::cout<<"u3="<<u3<<std::endl;
+        std::cout<<"u4="<<u4<<std::endl;
         if ( fabs(u4) < 1.0e-75) { // this should not happen
             if ( fabs(u3) < 1.0e-75) { // this should not happen
                 if ( fabs(u2) < 1.0e-75) { // this should not happen
@@ -875,7 +883,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
             ce[1]=u2/u4;
             ce[2]=u1/u4;
             ce[3]=u0/u4;
-            //std::cout<<"ce[4]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<" }\n";
+            std::cout<<"ce[4]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<" }\n";
             counts=RS_Math::quarticSolver(ce,roots);
         }
 
@@ -892,7 +900,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
             double y=roots[i];
             //double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
             double x,d=v0*y+v2;
-//                    std::cout<<"d= "<<d<<std::endl;
+                    std::cout<<i<<": v="<<y<<"\td= "<<d<<std::endl;
             if( fabs(d)>10.*RS_TOLERANCE*sqrt(RS_TOLERANCE)) {//whether there's x^1 term in bezout determinant
                 x=-((v1*y+v3)*y+v4 )/d;
                 if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
@@ -924,11 +932,13 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
         for(int i=0;i<vs0.getNumber();i++){
 //            std::cout<<"i="<<i<<"\n";
             RS_Vector vpec=vs0.get(i); //this holds ( a*sin(t), b*cos(t))
+            std::cout<<"solution "<<i<<" ="<<vpec<<std::endl;
             RS_Vector vpe2(e2->getCenter()+ RS_Vector(vpec.y/e2->getRatio(),vpec.x*e2->getRatio()));
             vpe2.rotate(a2);
-            vpe2.scale(RS_Vector(0.,0.),factor1);
+            vpe2.scale(factor1);
             vpe2.rotate(a0);
             vpe2.move(m0);
+            std::cout<<"vpe2 from equation solver: vpe2="<<vpe2<<std::endl;
 
             //fixme, this brutal force fallback should be fixed
 
@@ -953,6 +963,8 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
                                 solEnd.push_back(sol1.get(j));
                                 k=sol2.getNumber();
                                 j=sol1.getNumber();
+                                std::cout<<"Convergence after "<<i0+1<<" steps\n";
+            std::cout<<"vpe2 from iteration: vpe2="<<vpe2<<std::endl;
                                 i0=32;
                         }
                     }
