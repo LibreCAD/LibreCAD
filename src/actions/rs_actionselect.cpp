@@ -61,6 +61,9 @@ void RS_ActionSelect::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
         if (isFinished()) {
             if(container->countSelected()==0){
+                //some nextAction segfault with empty selection
+                //todo: make actions safe with empty selection
+                RS_DIALOGFACTORY->commandMessage(tr("No entity selected!"));
                 RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
             } else{
                 RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
