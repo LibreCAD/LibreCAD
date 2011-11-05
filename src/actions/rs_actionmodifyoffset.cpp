@@ -57,6 +57,14 @@ QAction* RS_ActionModifyOffset::createGUIAction(RS2::ActionType /*type*/, QObjec
 
 
 
+
+void RS_ActionModifyOffset::init(int status) {
+    RS_ActionInterface::init(status);
+    //finish, if nothing selected
+    if(container->countSelected()==0) finish();
+
+}
+
 void RS_ActionModifyOffset::trigger() {
     deletePreview();
     RS_Modification m(*container, graphicView);
@@ -77,6 +85,7 @@ void RS_ActionModifyOffset::mouseMoveEvent(QMouseEvent* e) {
     for(RS_Entity* en=container->firstEntity();en!=NULL;en=container->nextEntity()){
         if(en->isSelected()) ec.addEntity(en->clone());
     }
+    if(ec.isEmpty()) return;
     RS_Modification m(ec, NULL, false);
     m.offset(data);
 

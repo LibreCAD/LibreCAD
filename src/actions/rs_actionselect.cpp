@@ -60,7 +60,11 @@ void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
 void RS_ActionSelect::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
         if (isFinished()) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+            if(container->countSelected()==0){
+                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
+            } else{
+                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+            }
 //            switch(nextAction) {
 //            case RS2::ActionModifyAttributesNoSelect:
 //            case RS2::ActionModifyDeleteNoSelect:
@@ -110,6 +114,9 @@ void RS_ActionSelect::updateMouseButtonHints() {
         break;
     case RS2::ActionModifyMoveRotateNoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select to move and rotate"), tr("Cancel"));
+        break;
+    case RS2::ActionModifyOffsetNoSelect:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to create offset"), tr("Cancel"));
         break;
     case RS2::ActionModifyRotate2NoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select for two axis rotation"), tr("Cancel"));

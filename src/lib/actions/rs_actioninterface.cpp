@@ -261,7 +261,7 @@ void RS_ActionInterface::setFinished() {
  */
 void RS_ActionInterface::finish(bool updateTB) {
     RS_DEBUG->print("RS_ActionInterface::finish");
-//    if(rtti() != RS2::ActionDefault) {//refuse to quit the default action
+    //    if(rtti() != RS2::ActionDefault) {//refuse to quit the default action
     if(!(rtti() == RS2::ActionDefault || rtti()==RS2::ActionFilePrintPreview) ) {//refuse to quit the default action
         status = -1;
         finished = true;
@@ -270,8 +270,8 @@ void RS_ActionInterface::finish(bool updateTB) {
         if(updateTB) {
             updateToolBar();
         }
+        graphicView->setMouseCursor(RS2::ArrowCursor);
     }
-    graphicView->setMouseCursor(RS2::ArrowCursor);
     RS_DEBUG->print("RS_ActionInterface::finish: OK");
 }
 
