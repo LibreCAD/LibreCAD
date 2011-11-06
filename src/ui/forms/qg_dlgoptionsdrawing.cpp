@@ -259,7 +259,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     if (cbYSpacing->currentText()=="0") {
         cbYSpacing->setEditText(tr("auto"));
     }
-    cbXSpacing->setDisabled(!cbGridOn->isChecked());
+    cbXSpacing->setDisabled(cbGridOn->isChecked() || cbIsometricGrid->isChecked());
     cbYSpacing->setDisabled(!cbGridOn->isChecked());
 
     // dimension text height:
