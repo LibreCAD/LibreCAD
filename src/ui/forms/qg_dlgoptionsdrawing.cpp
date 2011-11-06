@@ -54,8 +54,13 @@ QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing()
 {
     // no need to delete child widgets, Qt does it all for us
     RS_SETTINGS->beginGroup("/Appearance");
+<<<<<<< HEAD
     RS_SETTINGS->writeEntry("/IsometricGrid", cbIsometricGrid->isChecked()?QString("1"):QString("0"));
     RS2::CrosshairType chType(RS2::TopCrosshair);
+=======
+    RS_SETTINGS->writeEntry("/IsometricGrid", rbIsometricGrid->isChecked()?QString("1"):QString("0"));
+    RS2::CrosshairType chType;
+>>>>>>> master
     if(rbCrosshairLeft->isChecked()) {
         chType=RS2::LeftCrosshair;
     }else if (rbCrosshairTop->isChecked()) {
@@ -217,12 +222,12 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     //    RS_SETTINGS->endGroup();
 
     //    graphic->setIsometricGrid(cbIsometricGrid->isChecked());
-    cbIsometricGrid->setChecked(graphic->isIsometricGrid());
-    cbOrthogonalGrid->setChecked(! cbIsometricGrid->isChecked());
+    rbIsometricGrid->setChecked(graphic->isIsometricGrid());
+    rbOrthogonalGrid->setChecked(! rbIsometricGrid->isChecked());
 
 
-    cbIsometricGrid->setDisabled(!cbGridOn->isChecked());
-    cbOrthogonalGrid->setDisabled(!cbGridOn->isChecked());
+    rbIsometricGrid->setDisabled(!cbGridOn->isChecked());
+    rbOrthogonalGrid->setDisabled(!cbGridOn->isChecked());
     RS2::CrosshairType chType=graphic->getCrosshairType();
     switch(chType){
     case RS2::LeftCrosshair:
@@ -238,7 +243,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
         rbCrosshairRight->setChecked(true);
         break;
     }
-    if(cbOrthogonalGrid->isChecked() || ! cbGridOn->isChecked() ){
+    if(rbOrthogonalGrid->isChecked() || ! cbGridOn->isChecked() ){
         rbCrosshairLeft->setDisabled(true);
         rbCrosshairTop->setDisabled(true);
         rbCrosshairRight->setDisabled(true);
@@ -259,8 +264,8 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     if (cbYSpacing->currentText()=="0") {
         cbYSpacing->setEditText(tr("auto"));
     }
-    cbXSpacing->setDisabled(!cbGridOn->isChecked());
-    cbYSpacing->setDisabled(!cbGridOn->isChecked());
+    cbXSpacing->setEnabled(cbGridOn->isChecked() && rbOrthogonalGrid->isChecked());
+    cbYSpacing->setEnabled(cbGridOn->isChecked());
 
     // dimension text height:
     RS2::Unit unit = (RS2::Unit)cbUnit->currentIndex();
@@ -626,12 +631,17 @@ void QG_DlgOptionsDrawing::updateUnitLabels() {
 }
 
 
-void QG_DlgOptionsDrawing::on_cbIsometricGrid_toggled(bool checked)
+void QG_DlgOptionsDrawing::on_rbIsometricGrid_clicked()
 {
-    graphic->setIsometricGrid(checked);
-    cbXSpacing->setDisabled(checked);
-    if( checked == cbOrthogonalGrid->isChecked()) {
-        cbOrthogonalGrid->setChecked(!checked);
+    if(rbIsometricGrid->isChecked()){
+        rbOrthogonalGrid->setChecked(false);
+        graphic->setIsometricGrid(true);
+        cbXSpacing->setDisabled(true);
+        rbCrosshairLeft->setDisabled(false);
+        rbCrosshairTop->setDisabled(false);
+        rbCrosshairRight->setDisabled(false);
+    }else{
+        rbIsometricGrid->setChecked(true);
     }
 }
 
@@ -650,27 +660,28 @@ void QG_DlgOptionsDrawing::on_rbCrosshairRight_toggled(bool checked)
     if(checked) graphic->setCrosshairType(RS2::RightCrosshair);
 }
 
-void QG_DlgOptionsDrawing::on_cbOrthogonalGrid_toggled(bool checked)
+void QG_DlgOptionsDrawing::on_rbOrthogonalGrid_clicked()
 {
-    if(checked == cbIsometricGrid->isChecked()){
-        cbIsometricGrid->setChecked(!checked); //auto-exclusive should be auto though, fixme
+    if( rbOrthogonalGrid->isChecked()) {
+        rbIsometricGrid->setChecked(false);
+        graphic->setIsometricGrid(false);
+        cbXSpacing->setDisabled(false);
+        rbCrosshairLeft->setDisabled(true);
+        rbCrosshairTop->setDisabled(true);
+        rbCrosshairRight->setDisabled(true);
+    }else{
+        rbOrthogonalGrid->setChecked(true);
     }
-    rbCrosshairLeft->setDisabled(checked);
-    rbCrosshairTop->setDisabled(checked);
-    rbCrosshairRight->setDisabled(checked);
-    graphic->setIsometricGrid(!checked);
-
-
 }
 
 void QG_DlgOptionsDrawing::on_cbGridOn_toggled(bool checked)
 {
-    cbIsometricGrid->setDisabled(!checked);
-    cbOrthogonalGrid->setDisabled(!checked);
-    rbCrosshairLeft->setDisabled(!checked);
-    rbCrosshairTop->setDisabled(!checked);
-    rbCrosshairRight->setDisabled(!checked);
-    cbXSpacing->setDisabled(!checked);
-    cbYSpacing->setDisabled(!checked);
+    rbIsometricGrid->setEnabled(checked);
+    rbOrthogonalGrid->setEnabled(checked);
+    rbCrosshairLeft->setEnabled(checked && rbIsometricGrid->isChecked());
+    rbCrosshairTop->setEnabled(checked && rbIsometricGrid->isChecked());
+    rbCrosshairRight->setEnabled(checked && rbIsometricGrid->isChecked());
+    cbXSpacing->setEnabled(checked && rbOrthogonalGrid->isChecked());
+    cbYSpacing->setEnabled(checked);
 }
 //EOF

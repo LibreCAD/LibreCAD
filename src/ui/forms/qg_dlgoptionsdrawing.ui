@@ -556,7 +556,7 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QRadioButton" name="cbOrthogonalGrid">
+       <widget class="QRadioButton" name="rbOrthogonalGrid">
         <property name="toolTip">
          <string>Use orthogonal grid</string>
         </property>
@@ -569,7 +569,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QRadioButton" name="cbIsometricGrid">
+       <widget class="QRadioButton" name="rbIsometricGrid">
         <property name="toolTip">
          <string>Use isometric grid</string>
         </property>
@@ -577,7 +577,7 @@
          <string>Isometric Grid</string>
         </property>
         <property name="autoExclusive">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>

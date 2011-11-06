@@ -51,7 +51,7 @@ protected slots:
     virtual void languageChange();
 
 private slots:
-    void on_cbIsometricGrid_toggled(bool checked);
+    void on_rbIsometricGrid_clicked();
 
     void on_rbCrosshairLeft_toggled(bool checked);
 
@@ -59,7 +59,7 @@ private slots:
 
     void on_rbCrosshairRight_toggled(bool checked);
 
-    void on_cbOrthogonalGrid_toggled(bool checked);
+    void on_rbOrthogonalGrid_clicked();
 
     void on_cbGridOn_toggled(bool checked);
 
