@@ -1445,6 +1445,71 @@ bool RS_Modification::move(RS_MoveData& data) {
 }
 
 
+/**
+ * Offset all selected entities with the given mouse position and distance
+ *
+ *@Author: Dongxu Li
+ */
+bool RS_Modification::offset(const RS_OffsetData& data) {
+    if (container==NULL) {
+        RS_DEBUG->print("RS_Modification::offset: no valid container",
+                        RS_Debug::D_WARNING);
+        return false;
+    }
+
+    QList<RS_Entity*> addList;
+
+    if (document!=NULL && handleUndo) {
+        document->startUndoCycle();
+    }
+
+    // Create new entites
+    for (int num=1;
+            num<=data.number || (data.number==0 && num<=1);
+            num++) {
+        // too slow:
+        //for (uint i=0; i<container->count(); ++i) {
+        //RS_Entity* e = container->entityAt(i);
+        for (RS_Entity* e=container->firstEntity();
+                e!=NULL;
+                e=container->nextEntity()) {
+            if (e!=NULL && e->isSelected()) {
+                RS_Entity* ec = e->clone();
+
+                if(! ec->offset(data.coord,num*data.distance)){
+                    delete ec;
+                    continue;
+                }
+                if (data.useCurrentLayer) {
+                    ec->setLayerToActive();
+                }
+                if (data.useCurrentAttributes) {
+                    ec->setPenToActive();
+                }
+                if (ec->rtti()==RS2::EntityInsert) {
+                    ((RS_Insert*)ec)->update();
+                }
+                // since 2.0.4.0: keep selection
+                ec->setSelected(true);
+                addList.append(ec);
+            }
+        }
+    }
+
+    deselectOriginals(data.number==0);
+    addNewEntities(addList);
+
+    if (document!=NULL && handleUndo) {
+        document->endUndoCycle();
+    }
+
+    if (graphicView!=NULL) {
+        graphicView->redraw(RS2::RedrawDrawing);
+    }
+    return true;
+}
+
+
 
 
 /**

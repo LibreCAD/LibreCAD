@@ -110,6 +110,7 @@
 #include "rs_actionmodifyrotate.h"
 #include "rs_actionmodifyrotate2.h"
 #include "rs_actionmodifyround.h"
+#include "rs_actionmodifyoffset.h"
 #include "rs_actionmodifyscale.h"
 #include "rs_actionmodifystretch.h"
 #include "rs_actionmodifytrim.h"
@@ -612,6 +613,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionModifyRound:
         a = new RS_ActionModifyRound(*doc, *gv);
+        break;
+    case RS2::ActionModifyOffset:
+        a = new RS_ActionSelect(*doc, *gv,RS2::ActionModifyOffsetNoSelect);
+        break;
+    case RS2::ActionModifyOffsetNoSelect:
+        a = new RS_ActionModifyOffset(*doc, *gv);
         break;
     case RS2::ActionModifyExplodeText:
         a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyExplodeTextNoSelect);
@@ -1336,6 +1343,9 @@ void QG_ActionHandler::slotModifyBevel() {
 
 void QG_ActionHandler::slotModifyRound() {
     setCurrentAction(RS2::ActionModifyRound);
+}
+void QG_ActionHandler::slotModifyOffset() {
+    setCurrentAction(RS2::ActionModifyOffset);
 }
 
 void QG_ActionHandler::slotModifyMirror() {

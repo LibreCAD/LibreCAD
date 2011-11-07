@@ -493,7 +493,7 @@ unsigned int RS_Math::quarticSolver(double * ce, double *roots)
     double p= ce[1] - (3./8)*a2;
     double q= ce[2] + ce[0]*((1./8)*a2 - 0.5*ce[1]);
     double r= ce[3] - shift*ce[2] + (ce[1] - 3.*shift2)*shift2;
-    //std::cout<<"quartic_solver:: p="<<p<<"\tq="<<q<<"\tr="<<r<<std::endl;
+//    std::cout<<"quartic_solver:: p="<<p<<"\tq="<<q<<"\tr="<<r<<std::endl;
     if (fabs(q) <= RS_TOLERANCE) {// Biquadratic equations
         double discriminant= 0.25*p*p -r;
         if (discriminant < 0.) {
@@ -502,16 +502,18 @@ unsigned int RS_Math::quarticSolver(double * ce, double *roots)
         double t2[2];
         t2[0]=-0.5*p-sqrt(discriminant);
         t2[1]= -p - t2[0];
+//        std::cout<<"t2[0]="<<t2[0]<<std::endl;
+//        std::cout<<"t2[1]="<<t2[1]<<std::endl;
         if ( t2[0] >= 0. ) {// four real roots
             roots[0]=sqrt(t2[0])-shift;
-            roots[1]= -roots[0]-shift;
+            roots[1]= -sqrt(t2[0])-shift;
             roots[2]=sqrt(t2[1])-shift;
-            roots[3]= -roots[2]-shift;
+            roots[3]= -sqrt(t2[1])-shift;
             return 4;
         }
         if ( t2[1] >= 0.) { // two real roots
             roots[0]=sqrt(t2[1])-shift;
-            roots[1]= -roots[0]-shift;
+            roots[1]= -sqrt(t2[1])-shift;
             return 2;
         }
         return 0;

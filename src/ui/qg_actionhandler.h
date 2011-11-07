@@ -171,6 +171,7 @@ public slots:
     void slotModifyStretch();
     void slotModifyBevel();
     void slotModifyRound();
+    void slotModifyOffset();
     void slotModifyExplodeText();
 
     void slotSetSnaps(RS_SnapMode);

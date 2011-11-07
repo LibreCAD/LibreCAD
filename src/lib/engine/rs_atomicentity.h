@@ -146,6 +146,12 @@ public:
     }
 
     /**
+     * Implementation must create offset of the entity to
+     * the given direction and distance
+     */
+    virtual bool offset(const RS_Vector& /*position*/, const double& /*distance*/) {return false;}
+
+    /**
      * Implementation must move the startpoint of the entity to
      * the given position.
      */

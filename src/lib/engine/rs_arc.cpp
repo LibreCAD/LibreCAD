@@ -556,7 +556,30 @@ void RS_Arc::moveEndpoint(const RS_Vector& pos) {
         calculateBorders();
     }*/
 }
-
+/**
+  * this function creates offset
+  *@coord, position indicates the direction of offset
+  *@distance, distance of offset
+  * return true, if success, otherwise, false
+  *
+  *Author: Dongxu Li
+  */
+bool RS_Arc::offset(const RS_Vector& coord, const double& distance) {
+    double r0(coord.distanceTo(getCenter()));
+    if(r0 > getRadius()){
+        //external
+        r0 = getRadius()+ fabs(distance);
+    }else{
+        r0 = getRadius()- fabs(distance);
+        if(r0<RS_TOLERANCE) {
+            return false;
+        }
+    }
+    setRadius(r0);
+    calculateEndpoints();
+    calculateBorders();
+    return true;
+}
 
 /**
  * make sure angleLength() is not more than 2*M_PI

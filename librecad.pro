@@ -393,6 +393,7 @@ HEADERS += src/actions/rs_actionblocksadd.h \
     src/actions/rs_actionmodifyrotate.h \
     src/actions/rs_actionmodifyrotate2.h \
     src/actions/rs_actionmodifyround.h \
+    src/actions/rs_actionmodifyoffset.h \
     src/actions/rs_actionmodifyscale.h \
     src/actions/rs_actionmodifystretch.h \
     src/actions/rs_actionmodifytrim.h \
@@ -516,6 +517,7 @@ SOURCES += src/actions/rs_actionblocksadd.cpp \
     src/actions/rs_actionmodifyrotate.cpp \
     src/actions/rs_actionmodifyrotate2.cpp \
     src/actions/rs_actionmodifyround.cpp \
+    src/actions/rs_actionmodifyoffset.cpp \
     src/actions/rs_actionmodifyscale.cpp \
     src/actions/rs_actionmodifystretch.cpp \
     src/actions/rs_actionmodifytrim.cpp \
@@ -632,6 +634,7 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_linebisectoroptions.h \
     src/ui/forms/qg_lineoptions.h \
     src/ui/forms/qg_lineparalleloptions.h \
+    src/ui/forms/qg_modifyoffsetoptions.h \
     src/ui/forms/qg_lineparallelthroughoptions.h \
     src/ui/forms/qg_linepolygon2options.h \
     src/ui/forms/qg_linepolygonoptions.h \
@@ -722,6 +725,7 @@ SOURCES += src/ui/qg_actionfactory.cpp \
     src/ui/forms/qg_linebisectoroptions.cpp \
     src/ui/forms/qg_lineoptions.cpp \
     src/ui/forms/qg_lineparalleloptions.cpp \
+    src/ui/forms/qg_modifyoffsetoptions.cpp \
     src/ui/forms/qg_lineparallelthroughoptions.cpp \
     src/ui/forms/qg_linepolygon2options.cpp \
     src/ui/forms/qg_linepolygonoptions.cpp \
@@ -795,6 +799,7 @@ FORMS = src/ui/forms/qg_commandwidget.ui \
     src/ui/forms/qg_linebisectoroptions.ui \
     src/ui/forms/qg_lineoptions.ui \
     src/ui/forms/qg_lineparalleloptions.ui \
+    src/ui/forms/qg_modifyoffsetoptions.ui \
     src/ui/forms/qg_lineparallelthroughoptions.ui \
     src/ui/forms/qg_linepolygon2options.ui \
     src/ui/forms/qg_linepolygonoptions.ui \
