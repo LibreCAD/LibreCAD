@@ -2753,11 +2753,6 @@ void QC_ApplicationWindow::slotFilePrint() {
     statusBar()->showMessage(tr("Printing..."));
     QPrinter printer(QPrinter::HighResolution);
 
-    // Try to set the printer to teh highest resolution
-    QList<int> res=printer.supportedResolutions ();
-    if (res.size()>0)
-        printer.setResolution(res.last());
-
     bool landscape = false;
     printer.setPaperSize(RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape)));
     if (landscape) {
@@ -2780,6 +2775,21 @@ void QC_ApplicationWindow::slotFilePrint() {
         //printer.setOutputToFile(true);
         //printer.setOutputFileName(outputFile);
 
+        // Try to set the printer to the highest resolution
+        //todo: handler printer resolution better
+        if(printer.outputFormat() == QPrinter::NativeFormat ){
+            QList<int> res=printer.supportedResolutions ();
+            if (res.size()>0)
+                printer.setResolution(res.last());
+            //        for(int i=0;i<res.size();i++){
+            //        std::cout<<"res.at(i)="<<res.at(i)<<std::endl;
+            //        }
+        }else{//pdf or postscript format
+            //fixme: user should be able to set resolution output to file
+            printer.setResolution(1200);
+        }
+
+//        std::cout<<"printer.resolution()="<<printer.resolution()<<std::endl;
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         printer.setFullPage(true);
 

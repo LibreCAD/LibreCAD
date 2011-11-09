@@ -855,7 +855,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseLine(RS_Line* line,
     double d = b*b - a*c;
 
 //    std::cout<<"RS_Information::getIntersectionEllipseLine(): d="<<d<<std::endl;
-    if (d < - 100.*RS_TOLERANCE*sqrt(RS_TOLERANCE)) {
+    if (d < - 1.e3*RS_TOLERANCE*sqrt(RS_TOLERANCE)) {
         RS_DEBUG->print("RS_Information::getIntersectionLineEllipse: outside 0");
         return ret;
     }

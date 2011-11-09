@@ -37,6 +37,7 @@
 #include <QImageWriter>
 
 #include "rs_system.h"
+#include "rs_settings.h"
 #include "rs_painterqt.h"
 #include "rs_staticgraphicview.h"
 #include "rs_actionlibraryinsert.h"
@@ -73,6 +74,14 @@ QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::Window
     for (int i = 0; i < directoryList.size(); ++i) {
         appendTree(NULL, directoryList.at(i));
      }
+
+    RS_SETTINGS->beginGroup("/Paths");
+    QString customPath=RS_SETTINGS->readEntry("/Library", "");
+    RS_SETTINGS->endGroup();
+    if(customPath.size()>0){
+            //todo: make the custom path more flexible
+            appendTree(NULL,customPath);
+    }
     dirView->setModel(dirModel);
     ivPreview->setModel(iconModel);
     dirModel->setHorizontalHeaderLabels ( QStringList(tr("Directories")));
