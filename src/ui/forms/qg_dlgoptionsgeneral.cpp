@@ -173,7 +173,7 @@ void QG_DlgOptionsGeneral::init() {
     lePathHatch->setText(RS_SETTINGS->readEntry("/Patterns", ""));
     lePathFonts->setText(RS_SETTINGS->readEntry("/Fonts", ""));
     lePathScripts->setText(RS_SETTINGS->readEntry("/Scripts", ""));
-    lePathLibrary->setText(RS_SETTINGS->readEntry("/Library", ""));
+    lePathLibrary->setText(RS_SETTINGS->readEntry("/Library", "").trimmed());
 
     RS_SETTINGS->endGroup();
 
