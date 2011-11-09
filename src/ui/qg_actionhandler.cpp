@@ -149,6 +149,9 @@
 #include "qg_mainwindowinterface.h"
 #include "qg_snaptoolbar.h"
 
+//a list of EntityTypes which support actionOffset
+QVector<RS2::EntityType> QG_ActionHandler::offsetEntities(0);
+
 /**
  * Constructor
  */
@@ -615,7 +618,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionModifyRound(*doc, *gv);
         break;
     case RS2::ActionModifyOffset:
-        a = new RS_ActionSelect(*doc, *gv,RS2::ActionModifyOffsetNoSelect);
+    if (offsetEntities.size() == 0){
+        offsetEntities.push_back(RS2::EntityArc);
+        offsetEntities.push_back(RS2::EntityCircle);
+        offsetEntities.push_back(RS2::EntityLine);
+    }
+        a = new RS_ActionSelect(*doc, *gv,RS2::ActionModifyOffsetNoSelect,&offsetEntities);
         break;
     case RS2::ActionModifyOffsetNoSelect:
         a = new RS_ActionModifyOffset(*doc, *gv);

@@ -292,7 +292,10 @@ private:
 
     QAction* lockRelativeZero;
     bool lockedRelZero;
+    // a list of entity types accepted by action offset
+    static QVector<RS2::EntityType> offsetEntities;
 };
+
 
 #endif
 

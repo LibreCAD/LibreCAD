@@ -46,8 +46,10 @@ QVector<RS2::EntityType>* entityTypeList)
 
 void RS_ActionSelect::init(int status) {
     RS_ActionInterface::init(status);
-    graphicView->setCurrentAction(
-        new RS_ActionSelectSingle(*container, *graphicView));
+    if(status >= 0 ) {
+        graphicView->setCurrentAction(
+                    new RS_ActionSelectSingle(*container, *graphicView));
+    }
 }
 
 

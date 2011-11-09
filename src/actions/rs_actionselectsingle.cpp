@@ -73,7 +73,7 @@ void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {
-        if(entityTypeList!=NULL){
+        if(entityTypeList!=NULL && entityTypeList->size()>0) {
             en = catchEntity(e,*entityTypeList);
         }else{
             en = catchEntity(e);
