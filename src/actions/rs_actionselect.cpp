@@ -33,8 +33,11 @@
 
 RS_ActionSelect::RS_ActionSelect(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView,
-                                 RS2::ActionType nextAction)
+                                 RS2::ActionType nextAction,
+QVector<RS2::EntityType>* entityTypeList)
+
     :RS_ActionInterface("Select Entities", container, graphicView) {
+    this->entityTypeList=entityTypeList;
 
     this->nextAction = nextAction;
 }

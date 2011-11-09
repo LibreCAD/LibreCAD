@@ -33,8 +33,10 @@
 
 
 RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
+        RS_GraphicView& graphicView,
+                                             QVector<RS2::EntityType>* entityTypeList)
         :RS_ActionInterface("Select Entities", container, graphicView) {
+    this->entityTypeList=entityTypeList;
 
     en = NULL;
 }
@@ -71,7 +73,11 @@ void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {
-        en = catchEntity(e);
+        if(entityTypeList!=NULL){
+            en = catchEntity(e,*entityTypeList);
+        }else{
+            en = catchEntity(e);
+        }
         trigger();
     }
 }
