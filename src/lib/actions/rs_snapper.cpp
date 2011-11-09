@@ -539,8 +539,7 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, RS2::EntityType enType,
 
 RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const QVector<RS2::EntityType>& enTypeList,
                                    RS2::ResolveLevel level) {
-    auto pointer= const_cast<QVector<RS2::EntityType>*>(& enTypeList);
-    if(pointer==NULL) return catchEntity(e,level);//catch all if the list is NULL
+    if(enTypeList.size()<1) return catchEntity(e,level);//catch all if the list is NULL
     RS_Entity** pten(NULL);
     RS_Vector coord(RS_Vector(graphicView->toGraphX(e->x()), graphicView->toGraphY(e->y())));
     switch(enTypeList.size()<1) {

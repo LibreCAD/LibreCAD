@@ -266,12 +266,12 @@ void RS_ActionInterface::finish(bool updateTB) {
         status = -1;
         finished = true;
         hideOptions();
-        RS_Snapper::finish();
         if(updateTB) {
             updateToolBar();
         }
-        graphicView->setMouseCursor(RS2::ArrowCursor);
+        RS_Snapper::finish();
     }
+    graphicView->setMouseCursor(RS2::ArrowCursor);
     RS_DEBUG->print("RS_ActionInterface::finish: OK");
 }
 
