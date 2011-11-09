@@ -60,7 +60,7 @@ public:
 
 //    void reset();
 
-//    virtual void init(int status=0);
+    virtual void init(int status=0);
     virtual void trigger();
 
     virtual void mouseMoveEvent(QMouseEvent* e);

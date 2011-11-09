@@ -58,12 +58,12 @@ QAction* RS_ActionModifyOffset::createGUIAction(RS2::ActionType /*type*/, QObjec
 
 
 
-//void RS_ActionModifyOffset::init(int status) {
-//    RS_ActionInterface::init(status);
-//    //finish, if nothing selected
-//    if(container->countSelected()==0) finish();
+void RS_ActionModifyOffset::init(int status) {
+    RS_ActionInterface::init(status);
+    //finish, if nothing selected
+    if(container->countSelected()==0) finish();
 
-//}
+}
 
 void RS_ActionModifyOffset::trigger() {
     deletePreview();

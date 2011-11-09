@@ -34,12 +34,16 @@
 RS_ActionSelect::RS_ActionSelect(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView,
                                  RS2::ActionType nextAction,
-QVector<RS2::EntityType>* entityTypeList)
+                                 QVector<RS2::EntityType>* entityTypeList)
 
     :RS_ActionInterface("Select Entities", container, graphicView) {
     this->entityTypeList=entityTypeList;
 
     this->nextAction = nextAction;
+    if(entityTypeList != NULL){
+//        std::cout<<"RS_ActionSelect::RS_ActionSelect(): "<<entityTypeList->size()<<std::endl;
+    }
+
 }
 
 
@@ -48,7 +52,7 @@ void RS_ActionSelect::init(int status) {
     RS_ActionInterface::init(status);
     if(status >= 0 ) {
         graphicView->setCurrentAction(
-                    new RS_ActionSelectSingle(*container, *graphicView));
+                    new RS_ActionSelectSingle(*container, *graphicView, entityTypeList));
     }
 }
 
@@ -71,6 +75,20 @@ void RS_ActionSelect::updateToolBar() {
                 RS_DIALOGFACTORY->commandMessage(tr("No entity selected!"));
                 RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
             } else{
+                if ( entityTypeList != NULL &&  entityTypeList->size() >= 1 ){
+                    //only select entity types from the given list
+                    //fixme, need to handle resolution level
+
+                    for (RS_Entity* e=container->firstEntity();
+                         e!=NULL;
+                         e=container->nextEntity()) {
+                        if (e!=NULL && e->isSelected()) {
+                            if ( entityTypeList->contains( e->rtti() ) == false ){
+                                e->setSelected(false);
+                            }
+                        }
+                    }
+                }
                 RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
             }
 //            switch(nextAction) {
