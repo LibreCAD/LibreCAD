@@ -619,6 +619,8 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionModifyOffset:
     if (offsetEntities.size() == 0){
+        //list all supported Entity types here
+        //fixme, handle this initialization better
         offsetEntities.push_back(RS2::EntityArc);
         offsetEntities.push_back(RS2::EntityCircle);
         offsetEntities.push_back(RS2::EntityLine);
