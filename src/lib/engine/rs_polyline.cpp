@@ -382,6 +382,16 @@ void RS_Polyline::reorder() {
 */
 
 
+/**
+  * this should handle modifyOffset
+  *@ coord, indicate direction of offset
+  *@ distance of offset
+  *
+  *@Author, Dongxu Li
+  */
+bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
+
+}
 
 void RS_Polyline::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
