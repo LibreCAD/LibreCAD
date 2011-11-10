@@ -38,6 +38,7 @@
 #include "rs_text.h"
 #include "rs_layer.h"
 
+#include "rs_dialogfactory.h"
 
 
 /**
@@ -428,7 +429,9 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
                     }
 
                     graphic->addBlock(bc);
-                }
+                } else
+                    RS_DIALOGFACTORY->commandMessage(
+                            "Block " + b->getName() + " already exist: Not redefined.");
             }
         }
     }
