@@ -534,15 +534,15 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
                 }
         }
 //connect and trim        RS_Modification m(*container, graphicView);
-
         for(i=1;i<length;i++){
-            RS_EntityContainer ec(NULL,false);
-            ec.addEntity(pnew->entityAt(i-1));
-            ec.addEntity(pnew->entityAt(i));
+            RS_EntityContainer ec(NULL,true);
+            ec.addEntity(pnew->entityAt(i-1)->clone());
+            ec.addEntity(pnew->entityAt(i)->clone());
             RS_Modification m(ec,NULL);
+            std::cout<<"RS_Polyline::offset(): intersections.at(i-1)="<<intersections.at(i-1)<<std::endl;
             m.trim(intersections.at(i-1),static_cast<RS_AtomicEntity*>(ec.entityAt(0)),intersections.at(i-1),ec.entityAt(1),true);
-            pnew->setEntityAt(i-1,ec.entityAt(0));
-            pnew->setEntityAt(i,ec.entityAt(1));
+            pnew->setEntityAt(i-1,ec.entityAt(0)->clone());
+            pnew->setEntityAt(i,ec.entityAt(1)->clone());
         }
 
         *this = *pnew;

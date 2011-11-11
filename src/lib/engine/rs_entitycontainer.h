@@ -96,6 +96,9 @@ public:
     virtual RS_Entity* prevEntity(RS2::ResolveLevel level=RS2::ResolveNone);
     virtual RS_Entity* entityAt(int index);
     virtual void setEntityAt(int index,RS_Entity* en){
+        if(autoDelete && entities.at(index) != NULL) {
+            delete entities.at(index);
+        }
         entities[index] = en;
     }
 //RLZ unused	virtual int entityAt();
