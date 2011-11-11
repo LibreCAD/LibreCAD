@@ -51,7 +51,7 @@ QAction* RS_ActionSelectSingle::createGUIAction(RS2::ActionType /*type*/, QObjec
 
 
 void RS_ActionSelectSingle::trigger() {
-    if (en!=NULL) {
+    if (en!=NULL && entityTypeList->contains(en->rtti())) {
         RS_Selection s(*container, graphicView);
         s.selectSingle(en);
 
@@ -74,6 +74,7 @@ void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     } else {
         if(entityTypeList!=NULL && entityTypeList->size()>0) {
+//            std::cout<<"RS_ActionSelectSingle::mouseReleaseEvent(): entityTypeList->size()="<< entityTypeList->size()<<std::endl;
             en = catchEntity(e,*entityTypeList);
         }else{
             en = catchEntity(e);

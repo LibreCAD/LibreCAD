@@ -292,5 +292,5 @@ void QG_CadToolBarModify::restoreAction() {
 
 void QG_CadToolBarModify::on_bBack_clicked()
 {
-   parentTB->showPreviousToolBar();
+   parentTB->showToolBar(RS2::ToolBarMain);
 }
