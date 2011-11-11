@@ -38,6 +38,7 @@
 #include "rs_text.h"
 #include "rs_layer.h"
 
+#include "rs_dialogfactory.h"
 
 
 /**
@@ -402,13 +403,32 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         graphic->activateLayer(layer);
     }
 
+    QHash<QString, QString>blname;
     // insert blocks:
     if (graphic!=NULL) {
         for(uint i=0; i<source->countBlocks(); ++i) {
             RS_Block* b = source->blockAt(i);
             if (b!=NULL) {
-                if (graphic->findBlock(b->getName())==NULL) {
+                QString newName = b->getName();
+                int i=0;
+                //find an unique name in graphic & source
+                while (graphic->findBlock(newName)!=NULL) {
+                    newName = QString("%1-%2").arg(b->getName()).arg(i);
+                    //if the new name already exist in source do not use
+                    if (source->findBlock(newName)!=NULL)
+                        newName = b->getName();
+                    i++;
+                }
+                blname[b->getName()] = newName;
+            }
+        }
+
+        for(uint i=0; i<source->countBlocks(); ++i) {
+            RS_Block* b = source->blockAt(i);
+            if (b!=NULL) {
+//                if (graphic->findBlock(b->getName())==NULL) {
                     RS_Block* bc = (RS_Block*)b->clone();
+                    bc->setName( blname.value(b->getName()) );
                     bc->reparent(container);
                     //bc->scale(bc->getBasePoint(), RS_Vector(factor, factor));
                     // scale block but don't scale inserts in block
@@ -419,6 +439,8 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
                             e->scale(bc->getBasePoint(),
                                      RS_Vector(factor, factor));
                         } else {
+                            RS_Insert *in = (RS_Insert*)e;
+                            in->setName( blname.value(in->getName()) );
                             RS_Vector ip = ((RS_Insert*)e)->getInsertionPoint();
                             ip.scale(bc->getBasePoint(),
                                      RS_Vector(factor, factor));
@@ -428,7 +450,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
                     }
 
                     graphic->addBlock(bc);
-                }
+//                }
             }
         }
     }
@@ -476,6 +498,8 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
             }
             // don't adjust insert factor - block was already adjusted to unit
             if (e2->rtti()==RS2::EntityInsert) {
+                RS_Insert *in = (RS_Insert*)e2;
+                in->setName( blname.value(in->getName()) );
                 RS_Vector ip = ((RS_Insert*)e2)->getInsertionPoint();
                 ip.scale(data.insertionPoint, RS_Vector(factor, factor));
                 ((RS_Insert*)e2)->setInsertionPoint(ip);
