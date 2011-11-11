@@ -71,7 +71,7 @@ void RS_ActionModifyOffset::trigger() {
     m.offset(data);
 
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
-    finish(false);
+    finish();
 }
 
 
@@ -151,7 +151,7 @@ void RS_ActionModifyOffset::updateMouseCursor() {
 void RS_ActionModifyOffset::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
         if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
+            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
         }
     }
 }

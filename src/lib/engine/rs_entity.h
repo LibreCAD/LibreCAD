@@ -274,6 +274,21 @@ public:
     int getGraphicVariableInt(const QString& key, int def);
     QString getGraphicVariableString(const QString& key,
                                      const QString& def);
+    virtual RS_Vector getStartpoint() const {
+        return RS_Vector(false);
+    }
+    virtual RS_Vector getEndpoint() const {
+        return RS_Vector(false);
+    }
+    //find the local direction at end points, derived entities
+    // must implement this if direction is supported by the entity type
+    virtual double getDirection1() const {
+        return 0.;
+    }
+    virtual double getDirection2() const {
+        return 0.;
+    }
+
     //find the tangential points seeing from given point
     virtual RS_VectorSolutions getTangentPoint(const RS_Vector& /*point*/) const {
         return RS_VectorSolutions();

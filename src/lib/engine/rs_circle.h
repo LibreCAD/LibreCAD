@@ -105,12 +105,13 @@ public:
 
         virtual RS_VectorSolutions getRefPoints();
 
-        virtual RS_Vector getStartpoint() const {
-                return data.center + RS_Vector(data.radius, 0.0);
-        }
-        virtual RS_Vector getEndpoint() const {
-                return data.center + RS_Vector(data.radius, 0.0);
-        }
+    //no start/end point for whole circle
+//        virtual RS_Vector getStartpoint() const {
+//                return data.center + RS_Vector(data.radius, 0.0);
+//        }
+//        virtual RS_Vector getEndpoint() const {
+//                return data.center + RS_Vector(data.radius, 0.0);
+//        }
         /**
          * @return Direction 1. The angle at which the arc starts at
          * the startpoint.

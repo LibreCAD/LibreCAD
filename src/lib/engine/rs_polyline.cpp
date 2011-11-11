@@ -31,6 +31,7 @@
 #include "rs_line.h"
 #include "rs_arc.h"
 #include "rs_graphicview.h"
+#include "rs_modification.h"
 
 
 /**
@@ -393,40 +394,159 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
         double dist;
         //find the nearest one
         RS_Entity* en= getNearestEntity(coord, &dist, RS2::ResolveNone);
-        std::cout<<"1\n";
         if(en==NULL) return false;
-        std::cout<<"2\n";
         int indexNearest=findEntity(en);
-        RS_Vector vp(en->getNearestPointOnEntity(coord,false));
-        RS_Vector direction(en->getTangentDirection(vp));
-        RS_Vector vp1(-direction.y,direction.x);//normal direction
-        double a2(vp1.squared());
-        if(a2<RS_TOLERANCE*RS_TOLERANCE) return false;
-        vp1 *= distance/sqrt(a2);
-        move(vp1);
-        return true;
+//        RS_Vector vp(en->getNearestPointOnEntity(coord,false));
+//        RS_Vector direction(en->getTangentDirection(vp));
+//        RS_Vector vp1(-direction.y,direction.x);//normal direction
+//        double a2(vp1.squared());
+//        if(a2<RS_TOLERANCE*RS_TOLERANCE) return false;
+//        vp1 *= distance/sqrt(a2);
+//        move(vp1);
+//        return true;
 
-//        RS_Polyline* pnew= this->clone();
-//        int length=count();
-//        bool* processed=new bool[length];
-//        int i;
-//        for(i=0;i<length;i++){
-//                processed[i]=false;
-//        }
-//        i=indexNearest;
-//        RS_Vector vp(coord);
-//        do{
-//                //offset all
-//                if( processed[i]==false){
+        RS_Polyline* pnew= static_cast<RS_Polyline*>(clone());
+        int length=count();
+        QVector<bool> processed(length);
+        QVector<RS_Vector> intersections(length);
+        int i;
+        for(i=0;i<length;i++){
+                processed[i]=false;
+        }
+        i=indexNearest;
+        int previousIndex(i);
+        RS_Vector vp(coord);
+                //offset all
+        //fixme, this is too ugly
+        for(i=indexNearest;i>=0;i--){
 
-//			//
+                if( processed[i]==false){
+                   if(processed[previousIndex]){
+                    double angleCurrent,anglePrevious;
+                    double ds2min(RS_MAXDOUBLE*RS_MAXDOUBLE);
+                    //start-start
+                    double ds2;
+                    RS_Vector pCurrent,pPrevious;
+                    //find the closest endpoints
+                    //fixme, this is ugly, could be done better
+                    ds2=( entityAt(i)->getStartpoint() - entityAt(previousIndex)->getStartpoint()).squared();
+                    if(ds2<ds2min){
+                        vp=pnew->entityAt(previousIndex)->getStartpoint();
+                        pCurrent=entityAt(i)->getStartpoint();
+                        pPrevious=entityAt(previousIndex)->getStartpoint();
+                        angleCurrent=entityAt(i)->getDirection1();
+                        anglePrevious=entityAt(previousIndex)->getDirection1();
+                        ds2min=ds2;
+                    }
+                    ds2=( entityAt(i)->getStartpoint() - entityAt(previousIndex)->getEndpoint()).squared();
+                    if(ds2<ds2min){
+                        vp=pnew->entityAt(previousIndex)->getEndpoint();
+                        pCurrent=entityAt(i)->getStartpoint();
+                        pPrevious=entityAt(previousIndex)->getEndpoint();
+                        angleCurrent=entityAt(i)->getDirection1();
+                        anglePrevious=entityAt(previousIndex)->getDirection2();
+                        ds2min=ds2;
+                    }
+                    ds2=( entityAt(i)->getEndpoint() - entityAt(previousIndex)->getEndpoint()).squared();
+                    if(ds2<ds2min){
+                        vp=pnew->entityAt(previousIndex)->getEndpoint();
+                        pCurrent=entityAt(i)->getEndpoint();
+                        pPrevious=entityAt(previousIndex)->getEndpoint();
+                        angleCurrent=entityAt(i)->getDirection2();
+                        anglePrevious=entityAt(previousIndex)->getDirection2();
+                        ds2min=ds2;
+                    }
+                    ds2=( entityAt(i)->getEndpoint() - entityAt(previousIndex)->getStartpoint()).squared();
+                    if(ds2<ds2min){
+                        vp=pnew->entityAt(previousIndex)->getStartpoint();
+                        pCurrent=entityAt(i)->getEndpoint();
+                        pPrevious=entityAt(previousIndex)->getStartpoint();
+                        angleCurrent=entityAt(i)->getDirection2();
+                        anglePrevious=entityAt(previousIndex)->getDirection1();
+                        ds2min=ds2;
+                    }
+                    intersections[i]=(pCurrent+pPrevious)*0.5;
+                    vp.rotate(intersections.at(i),angleCurrent-anglePrevious+M_PI);
+                   }
+
 //			RS_Vector vp0(entityAt(i).getNearestPointOnEntity(vp,true));
+                   pnew->entityAt(i)->offset(vp,distance);
+                   previousIndex=i;
+                   processed[i]=true;
+                }
+        }
+        previousIndex=indexNearest;
+        for(i=indexNearest+1;i<length;i++){
+                //offset all
+                if( processed[i]==false){
+                   if(processed[previousIndex]){
+                    double angleCurrent,anglePrevious;
+                    double ds2min(RS_MAXDOUBLE*RS_MAXDOUBLE);
+                    //start-start
+                    double ds2;
+                    RS_Vector pCurrent,pPrevious;
+                    //find the closest endpoints
+                    //fixme, this is ugly, could be done better
+                    ds2=( entityAt(i)->getStartpoint() - entityAt(previousIndex)->getStartpoint()).squared();
+                    if(ds2<ds2min){
+                        vp=pnew->entityAt(previousIndex)->getStartpoint();
+                        pCurrent=entityAt(i)->getStartpoint();
+                        pPrevious=entityAt(previousIndex)->getStartpoint();
+                        angleCurrent=entityAt(i)->getDirection1();
+                        anglePrevious=entityAt(previousIndex)->getDirection1();
+                        ds2min=ds2;
+                    }
+                    ds2=( entityAt(i)->getStartpoint() - entityAt(previousIndex)->getEndpoint()).squared();
+                    if(ds2<ds2min){
+                        vp=pnew->entityAt(previousIndex)->getEndpoint();
+                        pCurrent=entityAt(i)->getStartpoint();
+                        pPrevious=entityAt(previousIndex)->getEndpoint();
+                        angleCurrent=entityAt(i)->getDirection1();
+                        anglePrevious=entityAt(previousIndex)->getDirection2();
+                        ds2min=ds2;
+                    }
+                    ds2=( entityAt(i)->getEndpoint() - entityAt(previousIndex)->getEndpoint()).squared();
+                    if(ds2<ds2min){
+                        vp=pnew->entityAt(previousIndex)->getEndpoint();
+                        pCurrent=entityAt(i)->getEndpoint();
+                        pPrevious=entityAt(previousIndex)->getEndpoint();
+                        angleCurrent=entityAt(i)->getDirection2();
+                        anglePrevious=entityAt(previousIndex)->getDirection2();
+                        ds2min=ds2;
+                    }
+                    ds2=( entityAt(i)->getEndpoint() - entityAt(previousIndex)->getStartpoint()).squared();
+                    if(ds2<ds2min){
+                        vp=pnew->entityAt(previousIndex)->getStartpoint();
+                        pCurrent=entityAt(i)->getEndpoint();
+                        pPrevious=entityAt(previousIndex)->getStartpoint();
+                        angleCurrent=entityAt(i)->getDirection2();
+                        anglePrevious=entityAt(previousIndex)->getDirection1();
+                        ds2min=ds2;
+                    }
+                    intersections[i-1]=(pCurrent+pPrevious)*0.5;
+                    vp.rotate(intersections.at(i),angleCurrent-anglePrevious+M_PI);
+                   }
 
+//			RS_Vector vp0(entityAt(i).getNearestPointOnEntity(vp,true));
+                   pnew->entityAt(i)->offset(vp,distance);
+                   previousIndex=i;
+                   processed[i]=true;
+                }
+        }
+//connect and trim        RS_Modification m(*container, graphicView);
 
+        for(i=1;i<length;i++){
+            RS_EntityContainer ec(NULL,false);
+            ec.addEntity(pnew->entityAt(i-1));
+            ec.addEntity(pnew->entityAt(i));
+            RS_Modification m(ec,NULL);
+            m.trim(intersections.at(i-1),static_cast<RS_AtomicEntity*>(ec.entityAt(0)),intersections.at(i-1),ec.entityAt(1),true);
+            pnew->setEntityAt(i-1,ec.entityAt(0));
+            pnew->setEntityAt(i,ec.entityAt(1));
+        }
 
-//                }
-
-//        }while(i<length);
+        *this = *pnew;
+        return true;
 
 
 }
