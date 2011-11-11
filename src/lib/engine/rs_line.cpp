@@ -303,7 +303,9 @@ double RS_Line::getDistanceToPoint(const RS_Vector& coord,
 //    return dist;
 }
 
-
+RS_Vector  RS_Line::getTangentDirection(const RS_Vector& point)const{
+        return getEndpoint() - getStartpoint();
+}
 
 void RS_Line::moveStartpoint(const RS_Vector& pos) {
     data.startpoint = pos;

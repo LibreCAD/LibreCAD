@@ -116,7 +116,7 @@ void QG_CadToolBarEllipses::drawEllipseInscribe() {
 
 void QG_CadToolBarEllipses::back() {
     if (cadToolBar!=NULL) {
-        cadToolBar->back();
+        cadToolBar->showPreviousToolBar();
     }
 }
 //restore action from checked button

@@ -138,6 +138,8 @@ public:
     double getDirection2() const {
         return getAngle2();
     }
+    virtual RS_Vector getTangentDirection(const RS_Vector& point)const;
+
     virtual void moveStartpoint(const RS_Vector& pos);
     virtual void moveEndpoint(const RS_Vector& pos);
     virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord,

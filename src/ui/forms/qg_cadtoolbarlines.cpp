@@ -189,7 +189,7 @@ void QG_CadToolBarLines::drawLinePolygon2() {
 
 void QG_CadToolBarLines::back() {
     if (cadToolBar!=NULL) {
-        cadToolBar->back();
+        cadToolBar->showPreviousToolBar();
     }
 }
 

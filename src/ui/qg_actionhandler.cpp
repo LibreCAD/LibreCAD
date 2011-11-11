@@ -624,6 +624,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         offsetEntities.push_back(RS2::EntityArc);
         offsetEntities.push_back(RS2::EntityCircle);
         offsetEntities.push_back(RS2::EntityLine);
+        offsetEntities.push_back(RS2::EntityPolyline);
     }
         a = new RS_ActionSelect(*doc, *gv,RS2::ActionModifyOffsetNoSelect,&offsetEntities);
         break;
