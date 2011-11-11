@@ -142,8 +142,19 @@ public:
         EntityHatch,        /**< Hatch */
         EntityImage,        /**< Image */
         EntitySpline,       /**< Spline */
-                EntityOverlayBox    /**< OverlayBox */
+        EntityOverlayBox    /**< OverlayBox */
     };
+
+    static bool isContainer(const EntityType enType){
+        switch(enType){
+        case EntityPolyline:
+        case EntityContainer:
+        case EntitySpline:
+            return true;
+        default:
+            return false;
+        }
+    }
 
     /**
      * Action types used by action factories.

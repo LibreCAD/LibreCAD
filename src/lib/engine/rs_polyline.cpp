@@ -390,6 +390,44 @@ void RS_Polyline::reorder() {
   *@Author, Dongxu Li
   */
 bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
+        double dist;
+        //find the nearest one
+        RS_Entity* en= getNearestEntity(coord, &dist, RS2::ResolveNone);
+        std::cout<<"1\n";
+        if(en==NULL) return false;
+        std::cout<<"2\n";
+        int indexNearest=findEntity(en);
+        RS_Vector vp(en->getNearestPointOnEntity(coord,false));
+        RS_Vector direction(en->getTangentDirection(vp));
+        RS_Vector vp1(-direction.y,direction.x);//normal direction
+        double a2(vp1.squared());
+        if(a2<RS_TOLERANCE*RS_TOLERANCE) return false;
+        vp1 *= distance/sqrt(a2);
+        move(vp1);
+        return true;
+
+//        RS_Polyline* pnew= this->clone();
+//        int length=count();
+//        bool* processed=new bool[length];
+//        int i;
+//        for(i=0;i<length;i++){
+//                processed[i]=false;
+//        }
+//        i=indexNearest;
+//        RS_Vector vp(coord);
+//        do{
+//                //offset all
+//                if( processed[i]==false){
+
+//			//
+//			RS_Vector vp0(entityAt(i).getNearestPointOnEntity(vp,true));
+
+
+
+//                }
+
+//        }while(i<length);
+
 
 }
 
