@@ -66,12 +66,14 @@ void RS_ActionModifyOffset::init(int status) {
 }
 
 void RS_ActionModifyOffset::trigger() {
-    deletePreview();
     RS_Modification m(*container, graphicView);
     m.offset(data);
-
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
-    finish();
+    if (RS_DIALOGFACTORY!=NULL) {
+        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+    }
+    deletePreview();
+    finish(false);
 }
 
 

@@ -156,7 +156,7 @@ public:
         virtual void setNextBulge(double bulge) {
                 nextBulge = bulge;
         }
-//    virtual void addEntity(RS_Entity* entity);
+    virtual void addEntity(RS_Entity* entity);
     //virtual void addSegment(RS_Entity* entity);
     virtual void removeLastVertex();
     virtual void endPolyline();

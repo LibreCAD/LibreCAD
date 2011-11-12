@@ -318,15 +318,15 @@ void RS_Polyline::updateEndpoints() {
  *
  * To add entities use addVertex() or addSegment() instead.
  */
-//void RS_Polyline::addEntity(RS_Entity* entity) {
-//    RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Polyline::addEntity:"
-//                    " should never be called");
+void RS_Polyline::addEntity(RS_Entity* entity) {
+    RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Polyline::addEntity:"
+                    " should never be called");
 
-//    if (entity==NULL) {
-//        return;
-//    }
-//    delete entity;
-//}
+    if (entity==NULL) {
+        return;
+    }
+    delete entity;
+}
 
 
 /**
@@ -416,13 +416,15 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
         }
         i=indexNearest;
         int previousIndex(i);
-        RS_Vector vp(coord);
+        RS_Entity* enOffset=en->clone();
+        enOffset->offset(coord,distance);
+        RS_Vector vp(enOffset->getNearestEndpoint(coord));
+        delete enOffset;
         QVector<RS_Vector> vpList(length);
                 //offset all
         //fixme, this is too ugly
         for(i=indexNearest;i>=0;i--){
 
-                if( processed[i]==false){
                    if(processed[previousIndex]){
                     double angleCurrent,anglePrevious;
                     double ds2min(RS_MAXDOUBLE*RS_MAXDOUBLE);
@@ -476,12 +478,10 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
                    pnew->entityAt(i)->offset(vp,distance);
                    previousIndex=i;
                    processed[i]=true;
-                }
         }
         previousIndex=indexNearest;
         for(i=indexNearest+1;i<length;i++){
                 //offset all
-                if( processed[i]==false){
                    if(processed[previousIndex]){
                     double angleCurrent,anglePrevious;
                     double ds2min(RS_MAXDOUBLE*RS_MAXDOUBLE);
@@ -533,9 +533,9 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 
 //			RS_Vector vp0(entityAt(i).getNearestPointOnEntity(vp,true));
                    pnew->entityAt(i)->offset(vp,distance);
+                   vpList[i]=vp;
                    previousIndex=i;
                    processed[i]=true;
-                }
         }
 //connect and trim        RS_Modification m(*container, graphicView);
         for(i=0;i<length-1;i++){
