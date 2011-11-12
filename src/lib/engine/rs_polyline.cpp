@@ -408,24 +408,17 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 
         RS_Polyline* pnew= static_cast<RS_Polyline*>(clone());
         int length=count();
-        QVector<bool> processed(length);
         QVector<RS_Vector> intersections(length);
         int i;
-        for(i=0;i<length;i++){
-                processed[i]=false;
-        }
         i=indexNearest;
         int previousIndex(i);
-        RS_Entity* enOffset=en->clone();
-        enOffset->offset(coord,distance);
-        RS_Vector vp(enOffset->getNearestEndpoint(coord));
-        delete enOffset;
+        pnew->entityAt(i)->offset(coord,distance);
+        RS_Vector vp;
         QVector<RS_Vector> vpList(length);
                 //offset all
         //fixme, this is too ugly
-        for(i=indexNearest;i>=0;i--){
+        for(i=indexNearest-1;i>=0;i--){
 
-                   if(processed[previousIndex]){
                     double angleCurrent,anglePrevious;
                     double ds2min(RS_MAXDOUBLE*RS_MAXDOUBLE);
                     //start-start
@@ -472,17 +465,14 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
                     intersections[i]=(pCurrent+pPrevious)*0.5;
                     vp.rotate(intersections.at(i),angleCurrent-anglePrevious+M_PI);
                     vpList[i]=vp;
-                   }
 
 //			RS_Vector vp0(entityAt(i).getNearestPointOnEntity(vp,true));
                    pnew->entityAt(i)->offset(vp,distance);
                    previousIndex=i;
-                   processed[i]=true;
         }
         previousIndex=indexNearest;
         for(i=indexNearest+1;i<length;i++){
                 //offset all
-                   if(processed[previousIndex]){
                     double angleCurrent,anglePrevious;
                     double ds2min(RS_MAXDOUBLE*RS_MAXDOUBLE);
                     //start-start
@@ -527,15 +517,13 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
                         ds2min=ds2;
                     }
                     intersections[i-1]=(pCurrent+pPrevious)*0.5;
-                    vp.rotate(intersections.at(i),angleCurrent-anglePrevious+M_PI);
+                    vp.rotate(intersections.at(i),anglePrevious-angleCurrent+M_PI);
                     vpList[i]=vp;
-                   }
 
 //			RS_Vector vp0(entityAt(i).getNearestPointOnEntity(vp,true));
                    pnew->entityAt(i)->offset(vp,distance);
                    vpList[i]=vp;
                    previousIndex=i;
-                   processed[i]=true;
         }
 //connect and trim        RS_Modification m(*container, graphicView);
         for(i=0;i<length-1;i++){
