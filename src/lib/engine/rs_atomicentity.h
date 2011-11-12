@@ -32,8 +32,8 @@
 
 
 /**
- * Class representing a tree of entities.
- * Typical entity containers are graphics, polylines, groups, texts, ...)
+ * Class representing an atomic entity
+ * Typical atomic entities: RS_Line, RS_Arc, RS_Circle, RS_Ellipse
  *
  * @author Andrew Mustun
  */
@@ -144,6 +144,8 @@ public:
     bool isEndpointSelected() const {
         return getFlag(RS2::FlagSelected2);
     }
+
+    virtual void revertDirection(){}
 
     /**
      * Implementation must create offset of the entity to

@@ -580,7 +580,14 @@ bool RS_Arc::offset(const RS_Vector& coord, const double& distance) {
     calculateBorders();
     return true;
 }
-
+/**
+      * implementations must revert the direction of an atomic entity
+      */
+void RS_Arc::revertDirection(){
+    std::swap(data.angle1,data.angle2);
+    std::swap(startpoint,endpoint);
+    data.reversed = ! data.reversed;
+}
 /**
  * make sure angleLength() is not more than 2*M_PI
  */

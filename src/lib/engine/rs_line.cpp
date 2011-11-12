@@ -381,6 +381,13 @@ bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
     return true;
 }
 
+/**
+  * revert the direction of line
+  */
+void RS_Line::revertDirection(){
+    std::swap(data.startpoint,data.endpoint);
+}
+
 void RS_Line::move(const RS_Vector& offset) {
 //    RS_DEBUG->print("RS_Line::move1: sp: %f/%f, ep: %f/%f",
 //                    data.startpoint.x, data.startpoint.y,

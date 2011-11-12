@@ -202,7 +202,13 @@ public:
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
                                       double solidDist = RS_MAXDOUBLE)const;
-
+    /**
+          * implementations must revert the direction of an atomic entity
+          */
+    virtual void revertDirection();
+    /**
+      * the modify offset action
+      */
     virtual bool offset(const RS_Vector& coord, const double& distance);
     virtual void move(const RS_Vector& offset);
     virtual void rotate(const double& angle);
