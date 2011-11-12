@@ -31,7 +31,8 @@
 #include "rs_line.h"
 #include "rs_arc.h"
 #include "rs_graphicview.h"
-#include "rs_modification.h"
+//#include "rs_modification.h"
+#include "rs_information.h"
 
 
 /**
@@ -317,15 +318,15 @@ void RS_Polyline::updateEndpoints() {
  *
  * To add entities use addVertex() or addSegment() instead.
  */
-void RS_Polyline::addEntity(RS_Entity* entity) {
-    RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Polyline::addEntity:"
-                    " should never be called");
+//void RS_Polyline::addEntity(RS_Entity* entity) {
+//    RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Polyline::addEntity:"
+//                    " should never be called");
 
-    if (entity==NULL) {
-        return;
-    }
-    delete entity;
-}
+//    if (entity==NULL) {
+//        return;
+//    }
+//    delete entity;
+//}
 
 
 /**
@@ -416,6 +417,7 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
         i=indexNearest;
         int previousIndex(i);
         RS_Vector vp(coord);
+        QVector<RS_Vector> vpList(length);
                 //offset all
         //fixme, this is too ugly
         for(i=indexNearest;i>=0;i--){
@@ -467,6 +469,7 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
                     }
                     intersections[i]=(pCurrent+pPrevious)*0.5;
                     vp.rotate(intersections.at(i),angleCurrent-anglePrevious+M_PI);
+                    vpList[i]=vp;
                    }
 
 //			RS_Vector vp0(entityAt(i).getNearestPointOnEntity(vp,true));
@@ -525,6 +528,7 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
                     }
                     intersections[i-1]=(pCurrent+pPrevious)*0.5;
                     vp.rotate(intersections.at(i),angleCurrent-anglePrevious+M_PI);
+                    vpList[i]=vp;
                    }
 
 //			RS_Vector vp0(entityAt(i).getNearestPointOnEntity(vp,true));
@@ -534,15 +538,36 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
                 }
         }
 //connect and trim        RS_Modification m(*container, graphicView);
-        for(i=1;i<length;i++){
-            RS_EntityContainer ec(NULL,true);
-            ec.addEntity(pnew->entityAt(i-1)->clone());
-            ec.addEntity(pnew->entityAt(i)->clone());
-            RS_Modification m(ec,NULL);
-            std::cout<<"RS_Polyline::offset(): intersections.at(i-1)="<<intersections.at(i-1)<<std::endl;
-            m.trim(intersections.at(i-1),static_cast<RS_AtomicEntity*>(ec.entityAt(0)),intersections.at(i-1),ec.entityAt(1),true);
-            pnew->setEntityAt(i-1,ec.entityAt(0)->clone());
-            pnew->setEntityAt(i,ec.entityAt(1)->clone());
+        for(i=0;i<length-1;i++){
+            RS_VectorSolutions sol0=RS_Information::getIntersection(pnew->entityAt(i),pnew->entityAt(i+1));
+            if(sol0.getNumber()==0) continue;
+            RS_Vector vp0(pnew->entityAt(i)->getNearestPointOnEntity(intersections.at(i)));
+            RS_Vector vp1(pnew->entityAt(i+1)->getNearestPointOnEntity(intersections.at(i)));
+            double a0(intersections.at(i).angleTo(vp0));
+            double a1(intersections.at(i).angleTo(vp1));
+            RS_VectorSolutions sol1;
+            for(int j=0;j<sol0.getNumber();j++){
+                if(RS_Math::isAngleBetween(intersections.at(i).angleTo(sol0.get(j)),a0,a1,false)){
+                    sol1.push_back(sol0.get(j));
+                }
+            }
+            if(sol1.getNumber()==0) continue;
+            RS_Vector trimP(sol1.getClosest(intersections.at(i)));
+            if((intersections.at(i) - entityAt(i)->getStartpoint()).squared() < RS_TOLERANCE*RS_TOLERANCE) {
+                static_cast<RS_AtomicEntity*>(pnew->entityAt(i))->trimStartpoint(trimP);
+            }else{
+                if((intersections.at(i) - entityAt(i)->getEndpoint()).squared() < RS_TOLERANCE*RS_TOLERANCE) {
+                    static_cast<RS_AtomicEntity*>(pnew->entityAt(i))->trimEndpoint(trimP);
+                }
+            }
+            if((intersections.at(i) - entityAt(i+1)->getStartpoint()).squared() < RS_TOLERANCE*RS_TOLERANCE) {
+                static_cast<RS_AtomicEntity*>(pnew->entityAt(i+1))->trimStartpoint(trimP);
+            }else{
+                if((intersections.at(i) - entityAt(i+1)->getEndpoint()).squared() < RS_TOLERANCE*RS_TOLERANCE) {
+                    static_cast<RS_AtomicEntity*>(pnew->entityAt(i+1))->trimEndpoint(trimP);
+                }
+            }
+
         }
 
         *this = *pnew;
