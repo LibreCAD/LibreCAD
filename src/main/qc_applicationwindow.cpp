@@ -1242,6 +1242,10 @@ void QC_ApplicationWindow::initActions(void)
     action = actionFactory.createAction(RS2::ActionLayersEdit, actionHandler);
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionLayersToggleLock,
+                                        actionHandler);
+    menu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionLayersToggleView,
                                         actionHandler);
     menu->addAction(action);
