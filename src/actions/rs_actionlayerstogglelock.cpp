@@ -44,7 +44,7 @@ QAction* RS_ActionLayersToggleLock::createGUIAction(RS2::ActionType /*type*/, QO
 /* RVT_PORT    QAction* action = new QAction(tr("Toggle Layer Lock"),
                                   tr("&Toggle Lock"),
                                   QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Toggle Layer Lock"), NULL);
+    QAction* action = new QAction(tr("Toggle Layer Loc&k"), NULL);
     //action->zetStatusTip(tr("Toggle Lock"));
     return action;
 }
