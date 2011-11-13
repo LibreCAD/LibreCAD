@@ -1,0 +1,218 @@
+#Artistic Style file options for LibreCAD
+#Use:
+#first install Artistic Style: http://astyle.sourceforge.net/
+#change to the top directory of LibreCAD sources (the dir containing this file)
+#exec: astyle --options=./librecad.astylerc src/*.cpp
+#exec: astyle --options=./librecad.astylerc src/*.h
+#or
+#exec: astyle --options=./librecad.astylerc path_to_some_source_file/source_file
+
+
+#Indent a C/C++, file.
+--mode=c
+
+# Bracket Style
+--style=attach
+
+# Indent using # spaces per indent
+--indent=spaces=4
+
+# Indent 'class' and 'struct' blocks so that the blocks 'public:',
+# 'protected:' and 'private:' are indented.
+#--indent-classes
+
+# Indent 'switch' blocks so that the 'case X:' statements are
+# indented in the switch block.
+--indent-switches
+
+# Indent 'case X:' blocks from the 'case X:' headers.
+# Case statements not enclosed in blocks are NOT indented.
+#--indent-cases
+
+# Add extra indentation to namespace blocks. 
+#--indent-namespaces
+
+# Add extra indentation to labels so they appear 1 indent less than
+# the current indentation, rather than being flushed to the left.
+#--indent-labels
+
+# Indent multi-line preprocessor definitions ending with a backslash.
+# Should be used with --convert-tabs for proper results.
+--indent-preprocessor
+
+# Indent C++ comments beginning in column one.
+--indent-col1-comments
+
+# Set the minimal indent that is added when a header is built of multiple lines.
+--min-conditional-indent=0
+
+# Set the  maximum of # spaces to indent a continuation line.
+# The # indicates a number of columns and must not be greater than 120.
+--max-instatement-indent=60
+
+# Pad empty lines around header blocks (e.g. 'if', 'for', 'while'...).
+--break-blocks
+
+# Pad empty lines around header blocks (e.g. 'if', 'for', 'while'...).
+# Treat closing header blocks (e.g. 'else', 'catch') as stand-alone blocks.
+#--break-blocks=all
+
+# Insert space padding around operators.
+# Note that there is no option to unpad. Once padded, they stay padded.
+--pad-oper
+
+# Insert space padding around parenthesis on both the outside and the inside.
+#--pad-paren
+
+# Insert space padding around parenthesis on the outside only. 
+# This can be used with unpad-paren below to remove unwanted spaces.
+#--pad-paren-out
+
+# Insert space padding around parenthesis on the inside only. 
+# This can be used with unpad-paren below to remove unwanted spaces.
+#--pad-paren-in
+
+# Insert space padding after paren headers only (e.g. 'if', 'for', 'while'...). 
+# This can be used with unpad-paren below to remove unwanted spaces.
+--pad-header
+
+# Remove extra space padding around parenthesis on the inside and outside.
+# This option can be used in combination with the paren padding options pad‑paren,
+# pad‑paren‑out, pad‑paren‑in, and pad‑header above. Only padding that has not
+# been requested by other options will be removed.
+# For example, if a source has parens padded on both the inside and outside,
+# and you want inside only. You need to use unpad-paren to remove the outside
+# padding, and pad‑paren‑in to retain the inside padding.
+# Using only pad‑paren‑in would not remove the outside padding.
+--unpad-paren
+
+# Delete empty lines within a function or method. Empty lines outside of functions
+# or methods are NOT deleted. If used with break-blocks or break-blocks=all it will
+# delete all lines EXCEPT the lines added by the break-blocks options.
+--delete-empty-lines
+
+# Fill empty lines with the white space of the previous line.
+#--fill-empty-lines
+
+# When used with --style=attach, --style=linux, or --style=stroustrup,
+# this breaks closing headers (e.g. 'else', 'catch', ...) from their immediately
+# preceding closing brackets. Closing header brackets are always broken with
+# broken brackets, horstmann brackets, indented blocks, and indented brackets.
+#--break-closing-brackets
+
+# Break "else if" header combinations into separate lines. This option has no effect
+# if keep-one-line-statements is used, the "else if" statements will remain as they are.
+# If this option is NOT used, "else if" header combinations will be placed on a single line.
+#--break-elseifs
+
+# Don't break one-line blocks.
+#--keep-one-line-blocks
+
+# Don't break complex statements and multiple statements residing on a single line.
+#--keep-one-line-statements
+
+#Add brackets to unbracketed one line conditional statements (e.g. 'if', 'for', 'while'...).
+# The statement must be on a single line. The brackets will be added according to the
+# currently requested predefined style. If no style is requested the brackets will be attached.
+# If --add-one-line-brackets is also used the result will be one line brackets.
+--add-brackets
+
+
+# Add one line brackets to unbracketed one line conditional statements 
+# (e.g. 'if', 'for', 'while'...). The statement must be on a single line.
+# The option implies --keep-one-line-blocks and will not break the one line blocks.
+#--add-one-line-brackets
+
+#Converts tabs into spaces in the non-indentation part of the line. The number of spaces
+# inserted will maintain the spacing of the tab. The current setting for spaces per tab is used.
+# It may not produce the expected results if convert-tabs is used when changing spaces per tab.
+# Tabs are not replaced in quotes.
+--convert-tabs
+
+# Attach a pointer or reference operator (* or &) to either the variable type (left) or variable
+# name (right), or place it in middle (between the type and name). The spacing between the type and
+# name will be preserved, if possible. To format references separately use the following
+# align-reference option.
+--align-pointer=type
+
+# This option will align references separate from pointers. Pointers are not changes by this option.
+# If pointers and references are to be aligned the same, use the previous align-pointer option.
+# The option align-reference=none will not change the reference alignment. The other options are
+# the same as for align-pointer. 
+--align-reference=type
+
+######################### File Options #########################################
+
+#Append the suffix #### instead of '.orig' to original filename (e.g. --suffix=.bak).
+# If this is to be a file extension, the dot '.' must be included. Otherwise the suffix will be
+# appended to the current file extension.
+#--suffix=.orig
+
+# Do not retain a backup of the original file. The original file is purged after it is formatted.
+#--suffix=none
+
+# For each directory in the command line, process all subdirectories recursively. When using the
+# recursive option the file name statement should contain a wildcard. Linux users should place the
+# filepath and name in double quotes so the shell will not resolve the wildcards (e.g. "$HOME/src/*.cpp").
+# Windows users should place the filepath and name in double quotes if the path or name contains spaces.
+--recursive
+
+#Specify a file or sub directory #### to be excluded from processing. 
+# Excludes are matched from the end of the filepath. An exclude option of "templates" will exclude ALL
+# directories named "templates". An exclude option of "cpp/templates" will exclude ALL "cpp/templates"
+# directories. You may proceed backwards in the directory tree to exclude only the required directories.
+# Specific files may be excluded in the same manner. An exclude option of "default.cpp" will exclude ALL
+# files named "default.cpp". An exclude option of "python/default.cpp" will exclude ALL files named
+# "default.cpp" contained in a "python" subdirectory. You may proceed backwards in the directory tree to
+# exclude only the required files.
+# Wildcards are NOT allowed. There may be more than one exclude statement.
+# The filepath and name may be placed in double quotes (e.g. ‑‑exclude="foo bar.cpp").
+#--exclude=####
+
+
+# Allow processing to continue if there are errors in the "exclude=###" options.
+# This option lets the excludes for several projects be entered in a single option file. This option may
+# be placed in the same option file as the excludes. It will display the unmatched excludes.
+# The following option will not display the unmatched excludes.
+#ignore-exclude-errors
+
+# Allow processing to continue if there are errors in the "exclude=###" options.
+# This option lets the excludes for several projects be entered in a single option file. This option may
+# be placed in the same option file as the excludes. It will NOT display the unmatched excludes.
+# The preceding option will display the unmatched excludes.
+#ignore-exclude-errors-x
+
+# Print errors to standard-output rather than to standard-error.
+# This option should be helpful for systems/shells that do not have this option, such as in Windows95.
+#--errors-to-stdout
+
+# Preserve the original file's date and time modified. The date and time modified will not be changed
+# in the formatted file. This option is not effective if redirection is used to rename the input file.
+--preserve-date
+
+# Verbose display mode. Display optional information, such as release number and statistical data.
+#--verbose
+
+# Formatted files display mode. Display only the files that have been formatted. Do not display files that are unchanged.
+--formatted
+
+# Quiet display mode. Suppress all output except error messages.
+#--quiet
+
+# Force use of the specified line end style. Valid options are windows (CRLF), linux (LF), and macold (CR).
+# MacOld style is the format for OS 9 and earlier. Mac OS X uses the Linux style. If one of these options
+# is not used the line ends will be determined automatically from the input file.
+#--lineend=windows
+--lineend=linux
+#--lineend=macold
+
+
+
+
+
+
+
+
+
+
+
