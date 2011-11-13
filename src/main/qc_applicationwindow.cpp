@@ -746,10 +746,14 @@ void QC_ApplicationWindow::initActions(void)
     // RVT_PORT menu->insertItem(tr("Tool&bars"), createDockWindowMenu(OnlyToolBars));
 
 
-        // tr("Focus on Command Line")
-        action = new QAction(tr("Focus on &Command Line"), this);
-        action->setIcon(QIcon(":/main/editclear.png"));
-        action->setShortcut(tr("CTRL+M"));
+    // tr("Focus on Command Line")
+    action = new QAction(tr("Focus on &Command Line"), this);
+    action->setIcon(QIcon(":/main/editclear.png"));
+    {//added commandline shortcuts, feature request# 3437106
+        QList<QKeySequence> commandLineShortcuts;
+        commandLineShortcuts<<QKeySequence(Qt::CTRL + Qt::Key_M)<<QKeySequence( Qt::Key_Colon)<<QKeySequence(Qt::Key_Space);
+        action->setShortcuts(commandLineShortcuts);
+    }
         //action->zetStatusTip(tr("Focus on Command Line"));
 
     connect(action, SIGNAL(triggered()),
