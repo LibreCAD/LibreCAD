@@ -420,58 +420,91 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
         }
 
     }
-    RS_Entity* en= getNearestEntity(coord, &dist, RS2::ResolveNone);
-        if(en==NULL) return false;
-        int indexNearest=findEntity(en);
-//        RS_Vector vp(en->getNearestPointOnEntity(coord,false));
-//        RS_Vector direction(en->getTangentDirection(vp));
-//        RS_Vector vp1(-direction.y,direction.x);//normal direction
-//        double a2(vp1.squared());
-//        if(a2<RS_TOLERANCE*RS_TOLERANCE) return false;
-//        vp1 *= distance/sqrt(a2);
-//        move(vp1);
-//        return true;
+    RS_Entity* en(getNearestEntity(coord, &dist, RS2::ResolveNone));
+    if(en==NULL) return false;
+    int indexNearest=findEntity(en);
+    //        RS_Vector vp(en->getNearestPointOnEntity(coord,false));
+    //        RS_Vector direction(en->getTangentDirection(vp));
+    //        RS_Vector vp1(-direction.y,direction.x);//normal direction
+    //        double a2(vp1.squared());
+    //        if(a2<RS_TOLERANCE*RS_TOLERANCE) return false;
+    //        vp1 *= distance/sqrt(a2);
+    //        move(vp1);
+    //        return true;
 
-        RS_Polyline* pnew= static_cast<RS_Polyline*>(clone());
-        int i;
-        i=indexNearest;
-        int previousIndex(i);
-        pnew->entityAt(i)->offset(coord,distance);
-        RS_Vector vp;
-        QVector<RS_Vector> vpList(length);
-                //offset all
-        //fixme, this is too ugly
-        for(i=indexNearest-1;i>=0;i--){
-                    vp=entityAt(previousIndex)->getStartpoint();
-                    vp.rotate(intersections.at(i),entityAt(previousIndex)->getDirection2()-entityAt(i)->getDirection1()+M_PI);
-                    vpList[i]=vp;
+    RS_Polyline* pnew= static_cast<RS_Polyline*>(clone());
+    int i;
+    i=indexNearest;
+    int previousIndex(i);
+    pnew->entityAt(i)->offset(coord,distance);
+    RS_Vector vp;
+    //offset all
+    //fixme, this is too ugly
+    for(i=indexNearest-1;i>=0;i--){
+        RS_VectorSolutions sol0=RS_Information::getIntersection(pnew->entityAt(previousIndex),entityAt(i),true);
+        RS_VectorSolutions sol1;
+        double dmax(1.e6*RS_TOLERANCE*RS_TOLERANCE);
+        RS_Vector trimP(false);
+        for(int j=0;j<sol0.getNumber();j++){
 
-//			RS_Vector vp0(entityAt(i).getNearestPointOnEntity(vp,true));
-                   pnew->entityAt(i)->offset(vp,distance);
-                   previousIndex=i;
+            double d0( (sol0.get(j) - pnew->entityAt(previousIndex)->getStartpoint()).squared());//potential bug, need to trim better
+            if(d0>dmax) {
+                dmax=d0;
+                trimP=sol0.get(j);
+            }
         }
-
-        previousIndex=indexNearest;
-        for(i=indexNearest+1;i<length;i++){
-            vp=entityAt(previousIndex)->getEndpoint();
-            vp.rotate(intersections.at(i-1),entityAt(i)->getDirection1()-entityAt(previousIndex)->getDirection2()+M_PI);
-            vpList[i]=vp;
-
-//			RS_Vector vp0(entityAt(i).getNearestPointOnEntity(vp,true));
-           pnew->entityAt(i)->offset(vp,distance);
-           previousIndex=i;
+        if(trimP.valid){
+            static_cast<RS_AtomicEntity*>(pnew->entityAt(previousIndex))->trimStartpoint(trimP);
+            static_cast<RS_AtomicEntity*>(pnew->entityAt(i))->trimEndpoint(trimP);
+            vp=pnew->entityAt(previousIndex)->getMiddlePoint();
+        }else{
+            vp=pnew->entityAt(previousIndex)->getStartpoint();
+            vp.rotate(entityAt(previousIndex)->getStartpoint(),entityAt(i)->getDirection2()-entityAt(previousIndex)->getDirection1()+M_PI);
         }
-//connect and trim        RS_Modification m(*container, graphicView);
-        for(i=0;i<length-1;i++){
-            RS_VectorSolutions sol0=RS_Information::getIntersection(pnew->entityAt(i),pnew->entityAt(i+1));
-            if(sol0.getNumber()==0) continue;
+        pnew->entityAt(i)->offset(vp,distance);
+        previousIndex=i;
+    }
+
+    previousIndex=indexNearest;
+    for(i=indexNearest+1;i<length;i++){
+        RS_VectorSolutions sol0=RS_Information::getIntersection(pnew->entityAt(previousIndex),entityAt(i),true);
+        RS_VectorSolutions sol1;
+        double dmax(1.e3*RS_TOLERANCE);
+        RS_Vector trimP(false);
+        for(int j=0;j<sol0.getNumber();j++){
+            double d0( (sol0.get(j) - pnew->entityAt(previousIndex)->getEndpoint()).squared());//potential bug, need to trim better
+            if(d0>dmax) {
+                dmax=d0;
+                trimP=sol0.get(j);
+            }
+        }
+        if(trimP.valid){
+            static_cast<RS_AtomicEntity*>(pnew->entityAt(previousIndex))->trimEndpoint(trimP);
+            static_cast<RS_AtomicEntity*>(pnew->entityAt(i))->trimStartpoint(trimP);
+            vp=pnew->entityAt(previousIndex)->getMiddlePoint();
+        }else{
+            vp=pnew->entityAt(previousIndex)->getEndpoint();
+            vp.rotate(entityAt(previousIndex)->getEndpoint(),entityAt(i)->getDirection1()-entityAt(previousIndex)->getDirection2()+M_PI);
+        }
+        pnew->entityAt(i)->offset(vp,distance);
+        previousIndex=i;
+    }
+    //trim
+    //connect and trim        RS_Modification m(*container, graphicView);
+    for(i=0;i<length-1;i++){
+        RS_VectorSolutions sol0=RS_Information::getIntersection(pnew->entityAt(i),pnew->entityAt(i+1),true);
+        if(sol0.getNumber()==0) {
+            sol0=RS_Information::getIntersection(pnew->entityAt(i),pnew->entityAt(i+1));
             RS_Vector vp0(pnew->entityAt(i)->getEndpoint());
             RS_Vector vp1(pnew->entityAt(i+1)->getStartpoint());
             double a0(intersections.at(i).angleTo(vp0));
             double a1(intersections.at(i).angleTo(vp1));
             RS_VectorSolutions sol1;
             for(int j=0;j<sol0.getNumber();j++){
-                if(RS_Math::isAngleBetween(intersections.at(i).angleTo(sol0.get(j)),a0,a1,false)){
+                if(RS_Math::isAngleBetween(intersections.at(i).angleTo(sol0.get(j)),
+                                           pnew->entityAt(i)->getDirection2(),
+                                           pnew->entityAt(i+1)->getDirection1(),
+                                           false)==false){
                     sol1.push_back(sol0.get(j));
                 }
             }
@@ -479,10 +512,16 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
             RS_Vector trimP(sol1.getClosest(intersections.at(i)));
             static_cast<RS_AtomicEntity*>(pnew->entityAt(i))->trimEndpoint(trimP);
             static_cast<RS_AtomicEntity*>(pnew->entityAt(i+1))->trimStartpoint(trimP);
+        }else{
+            RS_Vector trimP(sol0.getClosest(pnew->entityAt(i)->getStartpoint()));
+            static_cast<RS_AtomicEntity*>(pnew->entityAt(i))->trimEndpoint(trimP);
+            static_cast<RS_AtomicEntity*>(pnew->entityAt(i+1))->trimStartpoint(trimP);
         }
 
-        *this = *pnew;
-        return true;
+    }
+
+    *this = *pnew;
+    return true;
 
 
 }
