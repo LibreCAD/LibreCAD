@@ -1114,7 +1114,7 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
     case RS2::ActionLayersToggleLock:
 		action = RS_ActionLayersToggleLock::createGUIAction(id, mw);
         connect(action, SIGNAL(activated()),
-                obj, SLOT(slotLayersToggleView()));
+                obj, SLOT(slotLayersToggleLock()));
         break;
 
     case RS2::ActionLayersToggleView:
