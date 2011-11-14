@@ -112,6 +112,12 @@ void RS_ActionSelect::updateMouseButtonHints() {
     case RS2::ActionModifyMoveNoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select to move"), tr("Cancel"));
         break;
+    case RS2::ActionEditCopyNoSelect:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to copy"), tr("Cancel"));
+        break;
+    case RS2::ActionEditCutNoSelect:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to cut"), tr("Cancel"));
+        break;
     case RS2::ActionModifyRotateNoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select to rotate"), tr("Cancel"));
         break;
