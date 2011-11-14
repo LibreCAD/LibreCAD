@@ -69,6 +69,7 @@ protected slots:
 private:
     int nextAction;
     RS_ActionInterface* selectAction;
+    QG_CadToolBar* parentTB;
 
     void init();
 
