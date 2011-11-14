@@ -37,6 +37,7 @@ RS_ActionSelect::RS_ActionSelect(RS_EntityContainer& container,
         :RS_ActionInterface("Select Entities", container, graphicView) {
 
     this->nextAction = nextAction;
+    selectSingle=true;
 }
 
 
@@ -44,9 +45,20 @@ RS_ActionSelect::RS_ActionSelect(RS_EntityContainer& container,
 void RS_ActionSelect::init(int status) {
 	RS_ActionInterface::init(status);
 	graphicView->setCurrentAction(
-		new RS_ActionSelectSingle(*container, *graphicView));
+		new RS_ActionSelectSingle(*container, *graphicView,this));
 }
 
+ 
+void RS_ActionSelect::resume(){
+    RS_ActionInterface::resume();
+    if(selectSingle==false){
+        finish();
+    }
+}
+
+void RS_ActionSelect::requestFinish(){
+    selectSingle=false;
+}
 
 
 void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
@@ -125,4 +137,13 @@ void RS_ActionSelect::updateMouseButtonHints() {
 }
 
 
+void RS_ActionSelect::updateMouseCursor() {
+    if(graphicView!=NULL){
+        if(isFinished()){
+            graphicView->setMouseCursor(RS2::ArrowCursor);
+        }else{
+            graphicView->setMouseCursor(RS2::SelectCursor);
+        }
+    }
+}
 // EOF
