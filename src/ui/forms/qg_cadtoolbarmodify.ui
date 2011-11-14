@@ -49,7 +49,7 @@
    <property name="geometry">
     <rect>
      <x>28</x>
-     <y>206</y>
+     <y>188</y>
      <width>28</width>
      <height>28</height>
     </rect>
@@ -69,7 +69,7 @@
    <property name="geometry">
     <rect>
      <x>28</x>
-     <y>172</y>
+     <y>160</y>
      <width>28</width>
      <height>28</height>
     </rect>
@@ -89,7 +89,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>172</y>
+     <y>160</y>
      <width>28</width>
      <height>28</height>
     </rect>
@@ -109,7 +109,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>138</y>
+     <y>132</y>
      <width>28</width>
      <height>28</height>
     </rect>
@@ -129,7 +129,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>110</y>
+     <y>104</y>
      <width>28</width>
      <height>28</height>
     </rect>
@@ -149,7 +149,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>268</y>
+     <y>244</y>
      <width>28</width>
      <height>28</height>
     </rect>
@@ -169,7 +169,7 @@
    <property name="geometry">
     <rect>
      <x>28</x>
-     <y>240</y>
+     <y>216</y>
      <width>28</width>
      <height>28</height>
     </rect>
@@ -255,7 +255,7 @@
     </rect>
    </property>
    <property name="toolTip">
-	 <string>Move / Copy</string>
+    <string>Move / Copy</string>
    </property>
    <property name="text">
     <string/>
@@ -309,7 +309,7 @@
    <property name="geometry">
     <rect>
      <x>28</x>
-     <y>110</y>
+     <y>104</y>
      <width>28</width>
      <height>28</height>
     </rect>
@@ -329,7 +329,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>206</y>
+     <y>188</y>
      <width>28</width>
      <height>28</height>
     </rect>
@@ -349,7 +349,7 @@
    <property name="geometry">
     <rect>
      <x>28</x>
-     <y>268</y>
+     <y>244</y>
      <width>28</width>
      <height>28</height>
     </rect>
@@ -369,7 +369,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>302</y>
+     <y>272</y>
      <width>28</width>
      <height>28</height>
     </rect>
@@ -389,7 +389,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>240</y>
+     <y>216</y>
      <width>28</width>
      <height>28</height>
     </rect>
@@ -409,7 +409,7 @@
    <property name="geometry">
     <rect>
      <x>28</x>
-     <y>302</y>
+     <y>272</y>
      <width>28</width>
      <height>28</height>
     </rect>
