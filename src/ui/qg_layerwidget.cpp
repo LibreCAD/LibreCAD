@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -38,8 +38,8 @@
 QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
     layerVisible = QIcon(":/ui/visibleblock.png");
     layerHidden = QIcon(":/ui/hiddenblock.png");
-    layerDefreeze = QIcon(":/ui/unlokedlayer.png");
-    layerFreeze = QIcon(":/ui/lokedlayer.png");
+    layerDefreeze = QIcon(":/ui/unlockedlayer.png");
+    layerFreeze = QIcon(":/ui/lockedlayer.png");
 }
 
 QG_LayerModel::~QG_LayerModel() {
@@ -250,7 +250,7 @@ void QG_LayerWidget::update() {
         RS_DEBUG->print("QG_LayerWidget::update() abort");
         return;
     }
-	
+
     RS_DEBUG->print("QG_LayerWidget::update() reactivating current layer");
 
     RS_Layer* l = lastLayer;
@@ -355,11 +355,11 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
  */
 void QG_LayerWidget::keyPressEvent(QKeyEvent* e) {
     switch (e->key()) {
-    
+
     case Qt::Key_Escape:
         emit escape();
         break;
-        
+
     default:
         QWidget::keyPressEvent(e);
         break;
