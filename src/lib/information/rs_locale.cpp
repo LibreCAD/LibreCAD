@@ -38,7 +38,7 @@ void RS_Locale::setCanonical(const QString &_canonical) {
 QString RS_Locale::toCanonical(const QString &canonical){
     QString languageCode("C");
     int i1=canonical.indexOf('_');
-    if(i1 == 2 ) {
+    if(i1 >= 2 ) {
         languageCode= canonical.mid(0,i1).toLower();
         i1++;
         if(canonical.size() == i1+2 ){
