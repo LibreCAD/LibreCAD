@@ -86,7 +86,7 @@ void RS_System::initLanguageList() {
         RS_DEBUG->print("RS_System::initLanguageList: qm file: %s",
                         (*it).toLatin1().data());
 
-        int i1 = (*it).lastIndexOf('_');
+        int i1 = (*it).indexOf('_');
         int i2 = (*it).indexOf('.', i1);
         QString l = (*it).mid(i1+1, i2-i1-1);
 
