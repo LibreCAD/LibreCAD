@@ -52,7 +52,7 @@ QAction* RS_ActionBlocksFreezeAll::createGUIAction(RS2::ActionType type, QObject
         }
         else if (type==RS2::ActionBlocksDefreezeAll) {
                 // tr("&Defreeze all")
-                action = new QAction(tr("&Unhide all"), NULL);
+                action = new QAction(tr("&Show all"), NULL);
         //action->zetStatusTip(tr("Defreeze all blocks"));
                 action->setIcon(QIcon(":/ui/blockdefreeze.png"));
 
