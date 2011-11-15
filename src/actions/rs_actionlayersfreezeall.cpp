@@ -51,7 +51,7 @@ QAction* RS_ActionLayersFreezeAll::createGUIAction(RS2::ActionType type, QObject
         }
         else if (type==RS2::ActionLayersDefreezeAll) {
                 // tr("Defreeze all")
-        action = new QAction(tr("&Unhide all"),   NULL);
+        action = new QAction(tr("&Show all"),   NULL);
         //action->zetStatusTip(tr("Defreeze all layers"));
                 action->setIcon(QIcon(":/ui/visibleblock.png"));
         }
