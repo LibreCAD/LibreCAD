@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="zh_CN">
 <context>
@@ -48,13 +47,13 @@
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="376"/>
-        <source>Running script &apos;%1&apos;</source>
-        <translation>运行脚本 &apos;%1&apos;</translation>
+        <source>Running script '%1'</source>
+        <translation>运行脚本 '%1'</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="418"/>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation>插入图块 &apos;%1&apos;</translation>
+        <source>Inserting block '%1'</source>
+        <translation>插入图块 '%1'</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="548"/>
@@ -227,7 +226,7 @@
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1785"/>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1968"/>
@@ -251,8 +250,8 @@
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2133"/>
-        <source>Block &apos;%1&apos;</source>
-        <translation>图块 &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>图块 '%1'</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2135"/>
@@ -272,7 +271,7 @@
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2306"/>
         <source>Warning: File already opened : </source>
-        <translation type="unfinished"></translation>
+        <translation>警告: 文件已被打开.</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2332"/>
@@ -307,12 +306,12 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2407"/>
         <source>Cannot save the file </source>
-        <translation type="unfinished"></translation>
+        <translation>无法保存文件 </translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2409"/>
         <source> , please check the filename and permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation> , 请检查文件名及操作权限.</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2455"/>
@@ -453,7 +452,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3169"/>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it's website.</source>
         <translation>请捐助LibreCAD项目以帮助维护源码和网站.</translation>
     </message>
     <message>
@@ -463,7 +462,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3221"/>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
         <translation>错误,无法自文件系统找到帮助文件.</translation>
     </message>
 </context>
@@ -533,17 +532,17 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/qg_actionfactory.cpp" line="979"/>
         <source>&amp;Endpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>终点(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionfactory.cpp" line="992"/>
         <source>&amp;OnEntity</source>
-        <translation type="unfinished"></translation>
+        <translation>在实体上(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionfactory.cpp" line="1108"/>
         <source>Restrict &amp;Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直约束(&amp;V)</translation>
     </message>
     <message>
         <source>&amp;back</source>
@@ -552,7 +551,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/qg_actionfactory.cpp" line="398"/>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/ui/qg_actionfactory.cpp" line="957"/>
@@ -642,7 +641,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/forms/qg_arcoptions.ui" line="85"/>
         <source>Counterclockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>逆时针</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
@@ -659,24 +658,24 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
         <source>Radius of the tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation>切线弧半径</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation>切线弧的圆心角</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>半径</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="120"/>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished">角度</translation>
+        <translation>角度</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -750,8 +749,8 @@ Auto-save disabled.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_blockdialog.cpp" line="98"/>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>无法命名图块. 图块名&quot;%1&quot;已存在.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>无法命名图块. 图块名"%1"已存在.</translation>
     </message>
 </context>
 <context>
@@ -915,12 +914,16 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarcircles.ui" line="271"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Circle inscribed in a triangle, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;绘制三角形的内切圆, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, 与三边相切&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarcircles.ui" line="44"/>
@@ -989,7 +992,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbardim.ui" line="339"/>
         <source>Concentric</source>
-        <translation type="unfinished">同心</translation>
+        <translation>同心</translation>
     </message>
 </context>
 <context>
@@ -1007,31 +1010,35 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarellipses.ui" line="140"/>
         <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>指定焦点及椭圆上一点绘制椭圆</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarellipses.ui" line="172"/>
         <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">四顶点绘制椭圆</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarellipses.ui" line="204"/>
         <source>Draw Ellipse with by center and 3 points on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>指定中心及椭圆上三点绘制椭圆</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarellipses.ui" line="236"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;绘制四边形内切椭圆, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, 与四边相切&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarellipses.ui" line="285"/>
         <source>Concentric</source>
-        <translation type="unfinished">同心</translation>
+        <translation>同心</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarellipses.ui" line="76"/>
@@ -1084,7 +1091,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarinfo.ui" line="243"/>
         <source>Concentric</source>
-        <translation type="unfinished">同心</translation>
+        <translation>同心</translation>
     </message>
 </context>
 <context>
@@ -1148,7 +1155,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarlines.ui" line="396"/>
         <source>Tangents to a circle, orthogonal to a line</source>
-        <translation type="unfinished"></translation>
+        <translation>相切于圆,垂直于直线</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarlines.ui" line="428"/>
@@ -1190,81 +1197,81 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="56"/>
-        <source>Show toolbar &quot;Lines&quot;</source>
-        <translation type="unfinished"></translation>
+        <source>Show toolbar "Lines"</source>
+        <translation>显示"直线"工具栏</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="94"/>
-        <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation type="unfinished"></translation>
+        <source>Show toolbar "Arcs"</source>
+        <translation>显示"圆弧"工具栏</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="120"/>
-        <source>Show toolbar &quot;Circles&quot;</source>
-        <translation type="unfinished"></translation>
+        <source>Show toolbar "Circles"</source>
+        <translation>显示"圆"工具栏</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="146"/>
-        <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation type="unfinished"></translation>
+        <source>Show toolbar "Ellipses"</source>
+        <translation>显示"椭圆"工具栏</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="172"/>
-        <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation type="unfinished"></translation>
+        <source>Show toolbar "Polylines"</source>
+        <translation>显示"多段线"工具栏</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="198"/>
         <source>Draw Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>绘制样条曲线</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="230"/>
         <source>Draw Points</source>
-        <translation type="unfinished"></translation>
+        <translation>绘制点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="262"/>
         <source>Insert Text</source>
-        <translation type="unfinished"></translation>
+        <translation>插入文本</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="294"/>
-        <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation type="unfinished"></translation>
+        <source>Show toolbar "Dimensions"</source>
+        <translation>显示"尺寸标注"工具栏</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="320"/>
         <source>Create Hatch</source>
-        <translation type="unfinished"></translation>
+        <translation>创建填充</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="346"/>
         <source>Insert Image</source>
-        <translation type="unfinished">插入图像</translation>
+        <translation>插入图像</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="378"/>
-        <source>Show toolbar &quot;Modify&quot;</source>
-        <translation type="unfinished"></translation>
+        <source>Show toolbar "Modify"</source>
+        <translation>显示"修改"工具栏</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="404"/>
-        <source>Show toolbar &quot;Info&quot;</source>
-        <translation type="unfinished"></translation>
+        <source>Show toolbar "Info"</source>
+        <translation>显示"查询"工具栏</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="456"/>
-        <source>Show toolbar &quot;Select&quot;</source>
-        <translation type="unfinished"></translation>
+        <source>Show toolbar "Select"</source>
+        <translation>显示"选择"工具栏</translation>
     </message>
     <message>
-        <source>Show menu &quot;Lines&quot;</source>
-        <translation type="obsolete">显示&quot;直线&quot;菜单</translation>
+        <source>Show menu "Lines"</source>
+        <translation type="obsolete">显示"直线"菜单</translation>
     </message>
     <message>
-        <source>Show menu &quot;Arcs&quot;</source>
-        <translation type="obsolete">显示&quot;圆弧&quot;菜单</translation>
+        <source>Show menu "Arcs"</source>
+        <translation type="obsolete">显示"圆弧"菜单</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="489"/>
@@ -1276,20 +1283,20 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">样条曲线</translation>
     </message>
     <message>
-        <source>Show menu &quot;Ellipses&quot;</source>
-        <translation type="obsolete">显示&quot;椭圆&quot;菜单</translation>
+        <source>Show menu "Ellipses"</source>
+        <translation type="obsolete">显示"椭圆"菜单</translation>
     </message>
     <message>
-        <source>Show menu &quot;Circles&quot;</source>
-        <translation type="obsolete">显示&quot;圆&quot;菜单</translation>
+        <source>Show menu "Circles"</source>
+        <translation type="obsolete">显示"圆"菜单</translation>
     </message>
     <message>
         <source>Texts</source>
         <translation type="obsolete">文本</translation>
     </message>
     <message>
-        <source>Show menu &quot;Dimensions&quot;</source>
-        <translation type="obsolete">显示&quot;标注&quot;菜单</translation>
+        <source>Show menu "Dimensions"</source>
+        <translation type="obsolete">显示"标注"菜单</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
@@ -1300,12 +1307,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">光栅图像</translation>
     </message>
     <message>
-        <source>Show menu &quot;Edit&quot;</source>
-        <translation type="obsolete">显示&quot;编辑&quot;菜单</translation>
+        <source>Show menu "Edit"</source>
+        <translation type="obsolete">显示"编辑"菜单</translation>
     </message>
     <message>
-        <source>Show menu &quot;Measure&quot;</source>
-        <translation type="obsolete">显示&quot;测量&quot;菜单</translation>
+        <source>Show menu "Measure"</source>
+        <translation type="obsolete">显示"测量"菜单</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmain.ui" line="430"/>
@@ -1313,8 +1320,8 @@ p, li { white-space: pre-wrap; }
         <translation>创建图块</translation>
     </message>
     <message>
-        <source>Show menu &quot;Select&quot;</source>
-        <translation type="obsolete">显示&quot;选择&quot;菜单</translation>
+        <source>Show menu "Select"</source>
+        <translation type="obsolete">显示"选择"菜单</translation>
     </message>
     <message>
         <source>Polylines</source>
@@ -1391,7 +1398,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="200"/>
         <source>Rotate Two</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Move</source>
@@ -1480,17 +1487,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarpolylines.ui" line="274"/>
         <source>Polyline equidistant</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarpolylines.ui" line="306"/>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished">从现有分段创建多段线</translation>
+        <translation>从现有分段创建多段线</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarpolylines.ui" line="351"/>
         <source>Concentric</source>
-        <translation type="unfinished">同心</translation>
+        <translation>同心</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarpolylines.ui" line="210"/>
@@ -1709,7 +1716,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="93"/>
         <source>Dark Red</source>
-        <translation type="unfinished"></translation>
+        <translation>深红</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="94"/>
@@ -1719,7 +1726,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="95"/>
         <source>Dark Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>深黄</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="96"/>
@@ -1729,7 +1736,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="97"/>
         <source>Dark Green</source>
-        <translation type="unfinished"></translation>
+        <translation>深绿</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="98"/>
@@ -1739,7 +1746,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="99"/>
         <source>Dark Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>深青</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="100"/>
@@ -1749,7 +1756,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="101"/>
         <source>Dark Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>深蓝</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="102"/>
@@ -1759,7 +1766,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="103"/>
         <source>Dark Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>紫红</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="104"/>
@@ -1774,7 +1781,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="108"/>
         <source>Dark Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>深灰</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="109"/>
@@ -1803,7 +1810,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="109"/>
         <source>Unknown command: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>未知命令: %1</translation>
     </message>
 </context>
 <context>
@@ -2303,12 +2310,12 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="64"/>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;欢迎使用QCad&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;欢迎使用QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 请选择新图纸的绘图单位及环境语言.&lt;br&gt;
@@ -2528,7 +2535,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="26"/>
         <source>Move/Copy Options</source>
-        <translation type="unfinished"></translation>
+        <translation>移动/复制选项</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="32"/>
@@ -2976,7 +2983,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="95"/>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>勘测单位</translation>
     </message>
     <message>
@@ -2986,8 +2993,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="277"/>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>在&apos;工程&apos;和&apos;建筑&apos;长度格式下,单位需设为英寸.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>在'工程'和'建筑'长度格式下,单位需设为英寸.</translation>
     </message>
 </context>
 <context>
@@ -3078,19 +3085,19 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="145"/>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="190"/>
         <source>#FFFFFF</source>
-        <translation type="unfinished"></translation>
+        <translation>#FFFFFF</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="123"/>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="140"/>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="195"/>
         <source>#C0C0C0</source>
-        <translation type="unfinished"></translation>
+        <translation>#C0C0C0</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="225"/>
         <source>#A54747</source>
-        <translation type="unfinished"></translation>
+        <translation>#A54747</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="237"/>
@@ -3215,12 +3222,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="491"/>
         <source>400</source>
-        <translation type="unfinished">400</translation>
+        <translation>400</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="496"/>
         <source>800</source>
-        <translation type="unfinished">800</translation>
+        <translation>800</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="504"/>
@@ -3290,7 +3297,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="747"/>
         <source>Drawing unit.</source>
-        <translation type="unfinished"></translation>
+        <translation>绘图单位</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="798"/>
@@ -3309,17 +3316,17 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="813"/>
         <source>Time between automatic saving of the document in minutes.</source>
-        <translation type="unfinished"></translation>
+        <translation>自动保存时间间隔,以分钟为单位</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="828"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>若设置, LibreCAD会自动生成当前图形的备份.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="831"/>
         <source>Auto backup</source>
-        <translation type="unfinished"></translation>
+        <translation>自动备份</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="863"/>
@@ -3435,42 +3442,42 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="26"/>
         <source>Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>多段线</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
         <source>Layer:</source>
-        <translation type="unfinished">图层:</translation>
+        <translation>图层:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="77"/>
         <source>Geometry</source>
-        <translation type="unfinished">几何</translation>
+        <translation>几何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="115"/>
         <source>Closed</source>
-        <translation type="unfinished">闭合</translation>
+        <translation>闭合</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="145"/>
         <source>&amp;OK</source>
-        <translation type="unfinished">确定(&amp;O)</translation>
+        <translation>确定(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="148"/>
         <source>Alt+O</source>
-        <translation type="unfinished">Alt+O</translation>
+        <translation>Alt+O</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="158"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="161"/>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation>Esc</translation>
     </message>
 </context>
 <context>
@@ -3629,28 +3636,28 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="203"/>
         <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="unfinished"></translation>
+        <translation>x向和y向等比例缩放</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="206"/>
         <source>Isotropic Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>各向等比例缩放</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="254"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="264"/>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="294"/>
         <source>1.0</source>
-        <translation type="unfinished">1.0</translation>
+        <translation>1.0</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="284"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <source>&amp;Factor (f):</source>
@@ -5035,7 +5042,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="44"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="47"/>
@@ -5045,7 +5052,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="63"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>撤消上一段绘制直线</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="66"/>
@@ -5328,18 +5335,18 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="59"/>
         <source>Spacing:</source>
-        <translation type="unfinished">间距:</translation>
+        <translation>间距:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="122"/>
         <source>Distance from original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
         <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>副本:</translation>
     </message>
 </context>
 <context>
@@ -5456,30 +5463,38 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="65"/>
         <source>Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>选择</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="99"/>
         <source>Total Length</source>
-        <translation type="unfinished"></translation>
+        <translation>总长</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="124"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;选中实体数&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="162"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;选中实体总长&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Selected Entities:</source>
@@ -5510,17 +5525,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation type="unfinished">距离捕捉选项</translation>
+        <translation>距离捕捉选项</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
         <source>Middle Points:</source>
-        <translation type="unfinished"></translation>
+        <translation>中点:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="63"/>
         <source>Number of equidistant division points</source>
-        <translation type="unfinished"></translation>
+        <translation>等分点数</translation>
     </message>
 </context>
 <context>
@@ -5528,67 +5543,67 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation type="unfinished">捕捉</translation>
+        <translation>捕捉</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation type="unfinished">捕捉端点</translation>
+        <translation>捕捉端点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation type="unfinished"></translation>
+        <translation>捕捉实体等分点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation type="unfinished">捕捉中心点</translation>
+        <translation>捕捉中心点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation type="unfinished">自动捕捉交点</translation>
+        <translation>自动捕捉交点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation type="unfinished">捕捉实体上最近点</translation>
+        <translation>捕捉实体上最近点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation type="unfinished">捕捉距端点指定距离点</translation>
+        <translation>捕捉距端点指定距离点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation type="unfinished">手动捕捉交点</translation>
+        <translation>手动捕捉交点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation type="unfinished">捕捉网格</translation>
+        <translation>捕捉网格</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
         <source>Restrict Horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>水平约束</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="200"/>
         <source>Restrict Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直约束</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
         <source>Move relative Zero</source>
-        <translation type="unfinished">相对原点移动</translation>
+        <translation>相对原点移动</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
         <source>Lock relative Zero</source>
-        <translation type="unfinished">相对原点锁定</translation>
+        <translation>相对原点锁定</translation>
     </message>
 </context>
 <context>
@@ -5662,17 +5677,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="53"/>
         <source>Length:</source>
-        <translation type="unfinished">长度:</translation>
+        <translation>长度:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="81"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished"></translation>
+        <translation>距离. 负值修剪, 正值延伸. 当修剪至总长终值时负号忽略.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="100"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished"></translation>
+        <translation>输入长度为修剪后的总长, 而非长度增量</translation>
     </message>
     <message>
         <source>Amount:</source>
@@ -5864,8 +5879,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="89"/>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>图层&quot;%1&quot;已存在. 请另选名称.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>图层"%1"已存在. 请另选名称.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="242"/>
@@ -5875,13 +5890,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="243"/>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation>图层&quot;%1&quot;及其上所有实体将被删除.</translation>
+        <source>Layer "%1" and all entities on it will be removed.</source>
+        <translation>图层"%1"及其上所有实体将被删除.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="254"/>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>图层&quot;%1&quot;无法删除.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>图层"%1"无法删除.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="299"/>
@@ -5895,8 +5910,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="415"/>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>图块&quot;%1&quot;及其所有实体将被删除.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>图块"%1"及其所有实体将被删除.</translation>
     </message>
 </context>
 <context>
@@ -6136,7 +6151,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="185"/>
         <source>LFF Font %1</source>
-        <translation type="unfinished"></translation>
+        <translation>LFF字体 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="186"/>
@@ -6146,7 +6161,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="187"/>
         <source>Jww %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Jww %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="208"/>
@@ -6701,7 +6716,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="275"/>
         <source>Specify end point</source>
-        <translation type="unfinished"></translation>
+        <translation>指定终点</translation>
     </message>
 </context>
 <context>
@@ -6847,33 +6862,33 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="53"/>
         <source>Circle &amp;Inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation>内切圆</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="298"/>
         <source>Specify the first line</source>
-        <translation type="unfinished"></translation>
+        <translation>指定第一根直线</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="299"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="303"/>
         <source>Specify the second line</source>
-        <translation type="unfinished"></translation>
+        <translation>指定第二根直线</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="304"/>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="309"/>
         <source>Back</source>
-        <translation type="unfinished">返回</translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="308"/>
         <source>Specify the third line</source>
-        <translation type="unfinished"></translation>
+        <translation>指定第三根直线</translation>
     </message>
 </context>
 <context>
@@ -6881,39 +6896,39 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="55"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation type="unfinished"></translation>
+        <translation>四点椭圆(&amp;4)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="297"/>
         <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>指定椭圆上第一点</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="298"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="302"/>
         <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>指定椭圆上第二点</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="303"/>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="308"/>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="313"/>
         <source>Back</source>
-        <translation type="unfinished">返回</translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="307"/>
         <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>指定椭圆上第三点</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="312"/>
         <source>Specify the fourth point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>指定椭圆上第四点</translation>
     </message>
 </context>
 <context>
@@ -6925,7 +6940,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="65"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation type="unfinished"></translation>
+        <translation>椭圆弧(轴)(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="70"/>
@@ -6983,39 +6998,39 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="56"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation type="unfinished"></translation>
+        <translation>中心及三点绘制椭圆</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="294"/>
         <source>Specify the center of ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>指定椭圆中心</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="295"/>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="300"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="299"/>
         <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>指定椭圆上第一点</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="303"/>
         <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>指定椭圆上第二点</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="304"/>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="309"/>
         <source>Back</source>
-        <translation type="unfinished">返回</translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="308"/>
         <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>指定椭圆上第三点</translation>
     </message>
 </context>
 <context>
@@ -7023,38 +7038,38 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="54"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation type="unfinished"></translation>
+        <translation>焦点绘制椭圆</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="250"/>
         <source>Not a valid expression</source>
-        <translation type="unfinished">无效表达式</translation>
+        <translation>无效表达式</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="273"/>
         <source>Specify first focus of ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>指定椭圆第一个焦点</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="274"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="278"/>
         <source>Specify second focus of ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>指定椭圆第二个焦点</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="279"/>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="285"/>
         <source>Back</source>
-        <translation type="unfinished">返回</translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="284"/>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation type="unfinished"></translation>
+        <translation>指定椭圆上一点或到两焦点的距离之和</translation>
     </message>
 </context>
 <context>
@@ -7062,39 +7077,39 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="53"/>
         <source>Ellipse &amp;Inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="296"/>
         <source>Specify the first line</source>
-        <translation type="unfinished"></translation>
+        <translation>指定第一根直线</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="297"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="301"/>
         <source>Specify the second line</source>
-        <translation type="unfinished"></translation>
+        <translation>指定第二根直线</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="302"/>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="307"/>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="312"/>
         <source>Back</source>
-        <translation type="unfinished">返回</translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="306"/>
         <source>Specify the third line</source>
-        <translation type="unfinished"></translation>
+        <translation>指定第三根直线</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="311"/>
         <source>Specify the fourth line</source>
-        <translation type="unfinished"></translation>
+        <translation>指定第四根直线</translation>
     </message>
 </context>
 <context>
@@ -7340,27 +7355,27 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="49"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="177"/>
         <source>Select a line</source>
-        <translation type="unfinished"></translation>
+        <translation>选择一直线</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="178"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="181"/>
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished">选择圆, 圆弧或椭圆</translation>
+        <translation>选择圆, 圆弧或椭圆</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="182"/>
         <source>Back</source>
-        <translation type="unfinished">返回</translation>
+        <translation>返回</translation>
     </message>
 </context>
 <context>
@@ -7514,32 +7529,32 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="50"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="unfinished">多边形(中心,角点)(&amp;y)</translation>
+        <translation>多边形(中心,角点)(&amp;y)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="143"/>
         <source>Specify center</source>
-        <translation type="unfinished">指定中心</translation>
+        <translation>指定中心</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="148"/>
         <source>Specify a corner</source>
-        <translation type="unfinished">指定角点</translation>
+        <translation>指定角点</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="152"/>
         <source>Enter number:</source>
-        <translation type="unfinished">输入数值:</translation>
+        <translation>输入数值:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="213"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">无效数值. 请输入1..9999</translation>
+        <translation>无效数值. 请输入1..9999</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="219"/>
         <source>Not a valid expression</source>
-        <translation type="unfinished">无效表达式</translation>
+        <translation>无效表达式</translation>
     </message>
 </context>
 <context>
@@ -7547,43 +7562,43 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="50"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="unfinished">多边形(角点,角点)(&amp;n)</translation>
+        <translation>多边形(角点,角点)(&amp;n)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="143"/>
         <source>Specify first corner</source>
-        <translation type="unfinished">指定第一角点</translation>
+        <translation>指定第一角点</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="144"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="148"/>
         <source>Specify second corner</source>
-        <translation type="unfinished">指定第二角点</translation>
+        <translation>指定第二角点</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="149"/>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="153"/>
         <source>Back</source>
-        <translation type="unfinished">返回</translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="153"/>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>数值:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="214"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">无效数值. 请输入1..9999</translation>
+        <translation>无效数值. 请输入1..9999</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="220"/>
         <source>Not a valid expression.</source>
-        <translation type="unfinished">无效表达式</translation>
+        <translation>无效表达式</translation>
     </message>
 </context>
 <context>
@@ -7903,12 +7918,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actioneditundo.cpp" line="90"/>
         <source>Nothing to undo!</source>
-        <translation type="unfinished"></translation>
+        <translation>无操作可撤销!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioneditundo.cpp" line="96"/>
         <source>Nothing to redo!</source>
-        <translation type="unfinished"></translation>
+        <translation>无操作可重做!</translation>
     </message>
 </context>
 <context>
@@ -8198,8 +8213,8 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="78"/>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>无法打开文件 &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>无法打开文件 '%1'</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="194"/>
@@ -8554,7 +8569,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="154"/>
         <source>Specify rotation center</source>
-        <translation type="unfinished"></translation>
+        <translation>指定旋转中心</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="159"/>
@@ -8564,7 +8579,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="163"/>
         <source>Specify target point to rotate to</source>
-        <translation type="unfinished"></translation>
+        <translation>指定旋转目标点</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="155"/>
@@ -8799,7 +8814,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="47"/>
-        <source>Add polyline&apos;s node</source>
+        <source>Add polyline's node</source>
         <translation>添加多段线节点</translation>
     </message>
     <message>
@@ -8835,7 +8850,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="168"/>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>指定添加节点点位</translation>
     </message>
     <message>
@@ -8853,7 +8868,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="43"/>
-        <source>Append polyline&apos;s node</source>
+        <source>Append polyline's node</source>
         <translation>追加多段线节点</translation>
     </message>
     <message>
@@ -8869,7 +8884,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="99"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法向闭合多段线追加节点.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="118"/>
@@ -8917,7 +8932,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="47"/>
-        <source>Delete polyline&apos;s node</source>
+        <source>Delete polyline's node</source>
         <translation>删除多段线节点</translation>
     </message>
     <message>
@@ -8953,7 +8968,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="164"/>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>指定删除节点点位</translation>
     </message>
     <message>
@@ -9104,7 +9119,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="47"/>
-        <source>Trim polyline&apos;s segments</source>
+        <source>Trim polyline's segments</source>
         <translation>修剪多段线分段</translation>
     </message>
     <message>
@@ -9171,7 +9186,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="91"/>
         <source>Select to modify attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>选择实体修改属性</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="91"/>
@@ -9186,57 +9201,57 @@ Do you want to replace it?</source>
         <location filename="../src/actions/rs_actionselect.cpp" line="118"/>
         <location filename="../src/actions/rs_actionselect.cpp" line="121"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="94"/>
         <source>Select to delete</source>
-        <translation type="unfinished"></translation>
+        <translation>选择实体进行删除</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="97"/>
         <source>Select to delete immediately</source>
-        <translation type="unfinished"></translation>
+        <translation>选择实体立即删除</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="100"/>
         <source>Select to move</source>
-        <translation type="unfinished"></translation>
+        <translation>选择实体进行移动</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="103"/>
         <source>Select to rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>选择实体进行旋转</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="106"/>
         <source>Select to scale</source>
-        <translation type="unfinished"></translation>
+        <translation>选择实体进行缩放</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="109"/>
         <source>Select to mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>选择实体进行镜像</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="112"/>
         <source>Select to move and rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>选择实体进行移动和旋转</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="115"/>
         <source>Select for two axis rotation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="118"/>
         <source>Select to explode text</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="121"/>
         <source>Select to create block</source>
-        <translation type="unfinished"></translation>
+        <translation>选择实体创建图块</translation>
     </message>
 </context>
 <context>
@@ -9351,7 +9366,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="172"/>
         <source>Click and drag for the selection window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="175"/>
@@ -9373,7 +9388,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actionsetrelativezero.cpp" line="44"/>
         <source>Set &amp;Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsetrelativezero.cpp" line="95"/>
@@ -9458,23 +9473,23 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="43"/>
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished"></translation>
+        <translation>缩放和平移(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="118"/>
         <source>Click and drag to pan zoom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="119"/>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="124"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="123"/>
         <source>Zoom panning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9486,7 +9501,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actionzoomprevious.cpp" line="45"/>
         <source>Previous &amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -10065,7 +10080,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="274"/>
         <source>rp2</source>
         <comment>regular polygon2</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="276"/>
