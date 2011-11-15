@@ -106,8 +106,8 @@ bool RS_Circle::createFrom2P(const RS_Vector& p1, const RS_Vector& p2) {
         data.center = (p1+p2)*0.5;
         return true;
     } else {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom2P(): "
-                        "Cannot create a circle with radius 0.0.");
+//        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom2P(): "
+//                        "Cannot create a circle with radius 0.0.");
         return false;
     }
 }
@@ -279,11 +279,55 @@ RS_Vector RS_Circle::getNearestPointOnEntity(const RS_Vector& coord,
     RS_Vector vp(coord - data.center);
     double d(vp.magnitude());
     if( d < RS_TOLERANCE ) return RS_Vector(false);
-    vp *= data.radius/d;
-    return data.center + vp;
+    vp =data.center+vp*(data.radius/d);
+    if(dist!=NULL){
+        *dist=coord.distanceTo(vp);
+    }
+    return vp;
 }
 
 
+/**
+  *find the tangential points from a given point, i.e., the tangent lines should pass
+  * the given point and tangential points
+  *
+  *Author: Dongxu Li
+  */
+RS_VectorSolutions RS_Circle::getTangentPoint(const RS_Vector& point) const {
+    RS_VectorSolutions ret;
+    double r2(getRadius()*getRadius());
+    if(r2<RS_TOLERANCE*RS_TOLERANCE) return ret; //circle too small
+    RS_Vector vp(point-getCenter());
+    double c2(vp.squared());
+    if(c2<r2-getRadius()*2.*RS_TOLERANCE) {
+        //inside point, no tangential point
+        return ret;
+    }
+    if(c2>r2+getRadius()*2.*RS_TOLERANCE) {
+        //external point
+        RS_Vector vp1(-vp.y,vp.x);
+        vp1*=getRadius()*sqrt(c2-r2)/c2;
+        vp *= r2/c2;
+        vp += getCenter();
+        if(vp1.squared()>RS_TOLERANCE*RS_TOLERANCE) {
+            ret.push_back(vp+vp1);
+            ret.push_back(vp-vp1);
+            return ret;
+        }
+    }
+    ret.push_back(point);
+    return ret;
+}
+RS_Vector RS_Circle::getTangentDirection(const RS_Vector& point) const {
+    RS_Vector vp(point-getCenter());
+//    double c2(vp.squared());
+//    if(c2<r2-getRadius()*2.*RS_TOLERANCE) {
+//        //inside point, no tangential point
+//        return RS_Vector(false);
+//    }
+    return RS_Vector(-vp.y,vp.x);
+
+}
 
 RS_Vector RS_Circle::getNearestCenter(const RS_Vector& coord,
                                       double* dist) {

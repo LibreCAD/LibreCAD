@@ -346,21 +346,21 @@ void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patter
         return;
     }
 
-    double offset(0.0);
 
-//    if (e!=NULL) {
-//        view->drawEntity(painter, e);
-//        offset+=e->getLength();
-//        //RS_DEBUG->print("offset: %f\nlength was: %f", offset, e->getLength());
-//    }
-
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-            e!=NULL;
-            e = nextEntity(RS2::ResolveNone)) {
-
-        view->drawEntity(painter, e, offset);
-//        offset+=e->getLength();
+    RS_Entity* e=firstEntity(RS2::ResolveNone);
+    if (e!=NULL) {
+        RS_Pen p=this->getPen(true);
+        e->setPen(p);
+        double patternOffset(0.0);
+        view->drawEntity(painter, e, patternOffset);
         //RS_DEBUG->print("offset: %f\nlength was: %f", offset, e->getLength());
+
+        e = nextEntity(RS2::ResolveNone);
+        while(e!=NULL) {
+            view->drawEntityPlain(painter, e, patternOffset);
+            e = nextEntity(RS2::ResolveNone);
+            //RS_DEBUG->print("offset: %f\nlength was: %f", offset, e->getLength());
+        }
     }
 }
 

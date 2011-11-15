@@ -150,18 +150,21 @@ public:
     bool hasValid() const;
     void set(int i, const RS_Vector& v);
     void push_back(const RS_Vector& v);
+    RS_VectorSolutions appendTo(const RS_VectorSolutions& v);
     void setTangent(bool t);
     bool isTangent() const;
     RS_Vector getClosest(const RS_Vector& coord,
                          double* dist=NULL, int* index=NULL) const;
     double getClosestDistance(const RS_Vector& coord,
-                              int counts);
+                              int counts = -1); //default to search all
+    QList<RS_Vector> getList() const;
     void rotate(const double& ang);
     void rotate(const RS_Vector& angleVector);
     void rotate(const RS_Vector& center, const double& ang);
     void rotate(const RS_Vector& center, const RS_Vector& angleVector);
     void move(const RS_Vector& vp);
     void scale(const RS_Vector& center, const RS_Vector& factor);
+    void scale(const RS_Vector& factor);
 
     RS_VectorSolutions operator = (const RS_VectorSolutions& s);
 

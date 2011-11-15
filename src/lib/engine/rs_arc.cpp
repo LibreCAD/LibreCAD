@@ -262,6 +262,48 @@ RS_Vector RS_Arc::getNearestEndpoint(const RS_Vector& coord, double* dist) const
 }
 
 
+/**
+  *find the tangential points from a given point, i.e., the tangent lines should pass
+  * the given point and tangential points
+  *
+  *Author: Dongxu Li
+  */
+RS_VectorSolutions RS_Arc::getTangentPoint(const RS_Vector& point) const {
+    RS_VectorSolutions ret;
+    double r2(getRadius()*getRadius());
+    if(r2<RS_TOLERANCE*RS_TOLERANCE) return ret; //circle too small
+    RS_Vector vp(point-getCenter());
+    double c2(vp.squared());
+    if(c2<r2-getRadius()*2.*RS_TOLERANCE) {
+        //inside point, no tangential point
+        return ret;
+    }
+    if(c2>r2+getRadius()*2.*RS_TOLERANCE) {
+        //external point
+        RS_Vector vp1(-vp.y,vp.x);
+        vp1*=getRadius()*sqrt(c2-r2)/c2;
+        vp *= r2/c2;
+        vp += getCenter();
+        if(vp1.squared()>RS_TOLERANCE*RS_TOLERANCE) {
+            ret.push_back(vp+vp1);
+            ret.push_back(vp-vp1);
+            return ret;
+        }
+    }
+    ret.push_back(point);
+    return ret;
+}
+
+RS_Vector RS_Arc::getTangentDirection(const RS_Vector& point) const {
+    RS_Vector vp(point-getCenter());
+//    double c2(vp.squared());
+//    if(c2<r2-getRadius()*2.*RS_TOLERANCE) {
+//        //inside point, no tangential point
+//        return RS_Vector(false);
+//    }
+    return RS_Vector(-vp.y,vp.x);
+
+}
 
 RS_Vector RS_Arc::getNearestPointOnEntity(const RS_Vector& coord,
         bool onEntity, double* dist, RS_Entity** entity)const {
@@ -774,13 +816,14 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     }
     RS_Vector cp=view->toGui(getCenter());
     double ra=getRadius()*view->getFactor().x;
+    double length=getLength()*view->getFactor().x;
     //double styleFactor = getStyleFactor();
+    patternOffset -= length;
 
     // simple style-less lines
     if ( !isSelected() && (
              getPen().getLineType()==RS2::SolidLine ||
              view->getDrawingMode()==RS2::ModePreview)) {
-
         painter->drawArc(cp,
                          ra,
                          getAngle1(), getAngle2(),
@@ -812,7 +855,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
         return;
     }
 
-    patternOffset=remainder(patternOffset - getLength()-0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
+//    patternOffset=remainder(patternOffset - length -0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
 
     if (ra<RS_TOLERANCE_ANGLE){
         return;

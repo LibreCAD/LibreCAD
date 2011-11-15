@@ -151,7 +151,7 @@ void RS_ActionDrawPolyline::mouseReleaseEvent(QMouseEvent* e) {
 
 double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 
-    double b;
+    double b(0.);
     bool suc;
     RS_Arc arc(NULL, RS_ArcData());
     RS_Line line(NULL,RS_LineData());
@@ -160,9 +160,9 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
     calculatedSegment=false;
 
     switch (Mode){
-     case Line:
-        b=0.0;
-        break;
+//     case Line:
+//        b=0.0;
+//        break;
      case Tangential:
         if (polyline!=NULL){
             lastentity = (RS_AtomicEntity*)polyline->lastEntity();
@@ -171,23 +171,32 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
             line.setStartpoint(point);
             line.setEndpoint(mouse);
             direction2=RS_Math::correctAngle(line.getDirection2()+M_PI);
-            delta=fabs(direction-direction2);
-            if(delta<RS_TOLERANCE_ANGLE ||
-                (delta<M_PI+RS_TOLERANCE_ANGLE &&
-                delta>M_PI-RS_TOLERANCE_ANGLE))
-                b=0;
-            else{
-                b=tan((direction2-direction)/2);
+            delta=direction2-direction;
+            if( fabs(remainder(delta,M_PI))>RS_TOLERANCE_ANGLE ) {
+                b=tan(delta/2);
                 suc = arc.createFrom2PBulge(point,mouse,b);
                 if (suc)
                     arc_data = arc.getData();
                 else
                     b=0;
             }
+            break;
+//            if(delta<RS_TOLERANCE_ANGLE ||
+//                (delta<M_PI+RS_TOLERANCE_ANGLE &&
+//                delta>M_PI-RS_TOLERANCE_ANGLE))
+//                b=0;
+//            else{
+//                b=tan((direction2-direction)/2);
+//                suc = arc.createFrom2PBulge(point,mouse,b);
+//                if (suc)
+//                    arc_data = arc.getData();
+//                else
+//                    b=0;
+//            }
         }
-        else
-            b=0;
-        break;
+//        else
+//            b=0;
+//        break;
      case TanRad:
         if (polyline!=NULL){
             lastentity = (RS_AtomicEntity*)polyline->lastEntity();
@@ -202,11 +211,11 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
                 calculatedSegment=true;
 
             }
-            else
-                b=0;
+//            else
+//                b=0;
         }
-        else
-          b=0;
+//        else
+//          b=0;
         break;
 /*     case TanAng:
         b=tan(Reversed*Angle*M_PI/720.0);
@@ -214,15 +223,17 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
      case TanRadAng:
         b=tan(Reversed*Angle*M_PI/720.0);
         break;*/
-     case Ang:
+    case Ang:
         b=tan(Reversed*Angle*M_PI/720.0);
         suc = arc.createFrom2PBulge(point,mouse,b);
         if (suc)
-          arc_data = arc.getData();
+            arc_data = arc.getData();
         else
-          b=0;
+            b=0;
         break;
-/*     case RadAngEndp:
+    default:
+        break;
+        /*     case RadAngEndp:
         b=tan(Reversed*Angle*M_PI/720.0);
         break;
      case RadAngCenp:

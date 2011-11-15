@@ -9,13 +9,19 @@ DEFINES += QC_VERSION="\"master\""
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 #uncomment to use 2D rs_vector instead of 3D
 #DEFINES += RS_VECTOR2D=1
+HAS_CPP11 =
+#HAS_CPP11 += 1
+count(HAS_CPP11, 1) {
+    DEFINES += HAS_CPP11=1
+    QMAKE_CXXFLAGS_DEBUG += -std=c++0x
+    QMAKE_CXXFLAGS += -std=c++0x
+}
 
 
 CONFIG += qt \
     warn_on \
     link_prl \
     help
-
 QMAKE_CXXFLAGS_DEBUG +=
 QMAKE_CXXFLAGS +=
 

@@ -41,6 +41,10 @@ RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
     tangent = NULL;
     point = RS_Vector(false);
     circle = NULL;
+    circleType.clear();
+    circleType.push_back(RS2::EntityArc);
+    circleType.push_back(RS2::EntityCircle);
+    circleType.push_back(RS2::EntityEllipse);
 }
 
 
@@ -99,7 +103,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetCircle: {
-            RS_Entity* en = catchEntity(e, RS2::ResolveAll);
+            RS_Entity* en = catchEntity(e, circleType, RS2::ResolveAll);
             if (en!=NULL && (en->rtti()==RS2::EntityCircle ||
                              en->rtti()==RS2::EntityArc ||
                              en->rtti()==RS2::EntityEllipse)) {
@@ -141,13 +145,15 @@ void RS_ActionDrawLineTangent1::mouseReleaseEvent(QMouseEvent* e) {
     } else {
         switch (getStatus()) {
         case SetPoint: {
-                RS_CoordinateEvent ce(snapPoint(e));
-                coordinateEvent(&ce);
-            }
+            RS_CoordinateEvent ce(snapPoint(e));
+            coordinateEvent(&ce);
+        }
             break;
 
         case SetCircle:
-            trigger();
+            if(tangent != NULL){
+                trigger();
+            }
             break;
         }
     }

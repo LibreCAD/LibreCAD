@@ -409,6 +409,21 @@ void RS_Line::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     calculateBorders();
 }
 
+/*scale the line around origin (0,0)
+  *
+  */
+void RS_Line::scale(const RS_Vector& factor) {
+//    RS_DEBUG->print("RS_Line::scale1: sp: %f/%f, ep: %f/%f",
+//                    data.startpoint.x, data.startpoint.y,
+//                    data.endpoint.x, data.endpoint.y);
+    data.startpoint.scale(factor);
+    data.endpoint.scale(factor);
+//    RS_DEBUG->print("RS_Line::scale2: sp: %f/%f, ep: %f/%f",
+//                    data.startpoint.x, data.startpoint.y,
+//                    data.endpoint.x, data.endpoint.y);
+    calculateBorders();
+}
+
 
 void RS_Line::scale(const RS_Vector& center, const RS_Vector& factor) {
 //    RS_DEBUG->print("RS_Line::scale1: sp: %f/%f, ep: %f/%f",
@@ -474,11 +489,11 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     //    std::cout<<"draw line: "<<pStart<<" to "<<pEnd<<std::endl;
     RS_Vector direction=pEnd-pStart;
     double  length=direction.magnitude();
+    patternOffset -= length;
     if (( !isSelected() && (
               getPen().getLineType()==RS2::SolidLine ||
               view->getDrawingMode()==RS2::ModePreview)) ) {
         //if length is too small, attempt to draw the line, could be a potential bug
-        patternOffset -= length;
         painter->drawLine(pStart,pEnd);
         return;
     }
@@ -494,13 +509,13 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
         pat = view->getPattern(getPen().getLineType());
     }
     if (pat==NULL) {
-        patternOffset -= length;
+//        patternOffset -= length;
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Line::draw: Invalid line pattern");
         painter->drawLine(pStart,pEnd);
         return;
     }
-    patternOffset = remainder(patternOffset - length-0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
+//    patternOffset = remainder(patternOffset - length-0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
     if(length<=RS_TOLERANCE){
         painter->drawLine(pStart,pEnd);
         return; //avoid division by zero
@@ -536,7 +551,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
                           view->toGui(getEndpoint()));
         return;
     }
-    double total= -0.5*patternSegmentLength +remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength);
+    double total= remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength) -0.5*patternSegmentLength;
     //    double total= patternOffset-patternSegmentLength;
 
     RS_Vector p1,p2,p3;

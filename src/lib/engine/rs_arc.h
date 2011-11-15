@@ -120,7 +120,7 @@ public:
     }
 
     /** @return The center point (x) of this arc */
-    RS_Vector getCenter() const {
+    virtual RS_Vector getCenter() const {
         return data.center;
     }
     /** Sets new center. */
@@ -129,7 +129,7 @@ public:
     }
 
     /** @return The radius of this arc */
-    double getRadius() const {
+    virtual double getRadius() const {
         return data.radius;
     }
     /** Sets new radius. */
@@ -244,7 +244,8 @@ public:
     virtual RS_Vector getNearestOrthTan(const RS_Vector& coord,
                     const RS_Line& normal,
                     bool onEntity = false);
-
+    virtual RS_VectorSolutions getTangentPoint(const RS_Vector& point) const;//find the tangential points seeing from given point
+    virtual RS_Vector getTangentDirection(const RS_Vector& point)const;
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,

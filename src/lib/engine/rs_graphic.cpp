@@ -50,7 +50,10 @@ blockList(true)
     RS_SETTINGS->beginGroup("/Defaults");
     setUnit(RS_Units::stringToUnit(RS_SETTINGS->readEntry("/Unit", "None")));
     RS_SETTINGS->endGroup();
-
+    RS_SETTINGS->beginGroup("/Appearance");
+    addVariable("$ISOMETRICGRID",static_cast<int>(RS_SETTINGS->readNumEntry("/IsometricGrid", 0)),70);
+   crosshairType=static_cast<RS2::CrosshairType>(RS_SETTINGS->readNumEntry("/CrosshairType",0));
+    RS_SETTINGS->endGroup();
     RS2::Unit unit = getUnit();
 
     if (unit==RS2::Inch) {
@@ -545,7 +548,30 @@ void RS_Graphic::setGridOn(bool on) {
         addVariable("$GRIDMODE", (int)on, 70);
 }
 
+/**
+ * @return true if the grid is switched on (visible).
+ */
+bool RS_Graphic::isIsometricGrid() {
+        int on = getVariableInt("$ISOMETRICGRID", 0);
+        return on!=0;
+}
 
+
+
+/**
+ * Enables / disables isometric grid.
+ */
+void RS_Graphic::setIsometricGrid(bool on) {
+        addVariable("$ISOMETRICGRID", (int)on, 70);
+}
+
+void RS_Graphic::setCrosshairType(RS2::CrosshairType chType){
+    crosshairType=chType;
+}
+
+RS2::CrosshairType RS_Graphic::getCrosshairType(){
+    return crosshairType;
+}
 
 /**
  * Sets the unit of this graphic to 'u'

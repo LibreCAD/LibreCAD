@@ -139,7 +139,14 @@ public:
     void setParent(RS_EntityContainer* p) {
         parent = p;
     }
-
+    /** @return The center point (x) of this arc */
+    //get center for entities: arc, circle and ellipse
+    virtual RS_Vector getCenter() const {
+        return RS_Vector(false);
+    }
+    virtual double getRadius() const {
+        return RS_MAXDOUBLE;
+    }
     RS_Graphic* getGraphic();
     RS_Block* getBlock();
     RS_Insert* getInsert();
@@ -266,8 +273,14 @@ public:
     double getGraphicVariableDouble(const QString& key, double def);
     int getGraphicVariableInt(const QString& key, int def);
     QString getGraphicVariableString(const QString& key,
-                                       const QString& def);
-
+                                     const QString& def);
+    //find the tangential points seeing from given point
+    virtual RS_VectorSolutions getTangentPoint(const RS_Vector& /*point*/) const {
+        return RS_VectorSolutions();
+    }
+    virtual RS_Vector getTangentDirection(const RS_Vector& /*point*/)const{
+        return RS_Vector(false);
+    }
         RS2::Unit getGraphicUnit();
 
     /**

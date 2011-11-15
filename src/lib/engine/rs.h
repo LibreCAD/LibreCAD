@@ -578,6 +578,16 @@ public:
     };
 
     /**
+     * Crosshair type
+     */
+    enum CrosshairType {
+        LeftCrosshair,         /**< Left type isometric Crosshair */
+        TopCrosshair,         /**< Top type isometric Crosshair */
+        RightCrosshair,         /**< Right type isometric Crosshair */
+        OrthogonalCrosshair         /**< Orthogonal Crosshair */
+    };
+
+    /**
      * Snapping modes
      */
     enum SnapMode {

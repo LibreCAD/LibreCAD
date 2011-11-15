@@ -28,7 +28,7 @@
 #include <boost/math/special_functions/ellint_2.hpp>
 #include <boost/math/tools/roots.hpp>
 #include <boost/tuple/tuple.hpp>
-//#include <boost/fusion/tuple.hpp>
+#include <boost/fusion/tuple.hpp>
 
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
@@ -125,9 +125,26 @@ void RS_Ellipse::calculateBorders() {
 }
 
 
+/**
+  * return the foci of ellipse
+  *
+  *@Author: Dongxu Li
+  */
+
+RS_VectorSolutions RS_Ellipse::getFoci() const {
+    RS_Vector vp(getMajorP()*sqrt(1.-getRatio()*getRatio()));
+    return RS_VectorSolutions(getCenter()+vp, getCenter()-vp);
+}
 
 RS_VectorSolutions RS_Ellipse::getRefPoints() {
-    RS_VectorSolutions ret(getStartpoint(), getEndpoint(), data.center);
+    RS_VectorSolutions ret;
+    if( std::isnormal(getAngle1()) || std::isnormal(getAngle2()) ){
+        //no start/end point for whole ellipse
+        ret.push_back(getStartpoint());
+        ret.push_back(getEndpoint());
+    }
+    ret.push_back(data.center);
+    ret.appendTo(getFoci());
     return ret;
 }
 
@@ -152,6 +169,44 @@ RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist)co
         }
         return startpoint;
     }
+}
+
+/**
+  *find the tangential points from a given point, i.e., the tangent lines should pass
+  * the given point and tangential points
+  *
+  *Author: Dongxu Li
+  */
+RS_VectorSolutions RS_Ellipse::getTangentPoint(const RS_Vector& point) const {
+    RS_Vector point2(point);
+    point2.move(-getCenter());
+    RS_Vector aV(-getAngle());
+    point2.rotate(aV);
+    RS_VectorSolutions sol;
+    double a=getMajorRadius();
+    if(a<RS_TOLERANCE || getRatio()<RS_TOLERANCE) return sol;
+    RS_Circle c(NULL, RS_CircleData(RS_Vector(0.,0.),a));
+    point2.y /=getRatio();
+    sol=c.getTangentPoint(point2);
+    sol.scale(RS_Vector(1.,getRatio()));
+    aV.y *= -1.;
+    sol.rotate(aV);
+    sol.move(getCenter());
+    return sol;
+}
+
+RS_Vector RS_Ellipse::getTangentDirection(const RS_Vector& point) const {
+    RS_Vector vp(point-getCenter());
+    RS_Vector aV(-getAngle());
+    vp.rotate(aV);
+    double a=getMajorRadius();
+    if(a<RS_TOLERANCE || getRatio()<RS_TOLERANCE) return RS_Vector(false);
+    RS_Circle c(NULL, RS_CircleData(RS_Vector(0.,0.),a));
+    RS_Vector direction=c.getTangentDirection(vp);
+    direction.y *= getRatio();
+    aV.y *= -1.;
+    direction.rotate(aV);
+    return direction;
 }
 
 #ifdef  HAS_BOOST
@@ -713,7 +768,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
         return false;
     }
     RS_Vector centerProjection(sol.get(0));
-    //    std::cout<<"RS_Ellipse::createInscribe(): centerProjection="<<centerProjection<<std::endl;
+//        std::cout<<"RS_Ellipse::createInscribe(): centerProjection="<<centerProjection<<std::endl;
 
     QVector<RS_Line> edge; //form the closed quadrilateral with ordered edges
     edge.push_back(RS_Line(ip[0].getStartpoint(),ip[1].getStartpoint()));
@@ -750,7 +805,9 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
         return false;
     }
     RS_Vector center(sol.get(0));
-    //                std::cout<<"center: "<<center<<std::endl;
+//                    std::cout<<"line0: "<<*cl0<<std::endl;
+//                    std::cout<<"line1: "<<*cl1<<std::endl;
+//                    std::cout<<"center: "<<center<<std::endl;
     delete cl0;
     delete cl1;
 
@@ -758,17 +815,46 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
     //        std::cout<<"dn="<<dn[0]<<' '<<dn[1]<<' '<<dn[2]<<std::endl;
     QVector<double> dn(3);
     RS_Vector angleVector(false);
-    if((center-centerProjection).squared()<RS_TOLERANCE*RS_TOLERANCE) {// the quadrilateral is a parallelogram
-        //avoid division by zero, if already in square form
+
+    for(int i=0;i<tangent.size();i++) {
+        tangent[i] -= center;//relative to ellipse center
+    }
+    QVector<QVector<double> > mt;
+    mt.clear();
+    for(int i=0;i<tangent.size();i++){//form the linear equation
+        RS_Vector vp(tangent[i]);
+//        std::cout<<"point "<<i<<" : "<<vp<<std::endl;
+        QVector<double> mtRow;
+        mtRow.push_back(vp.x*vp.x);
+        mtRow.push_back(vp.x*vp.y);
+        mtRow.push_back(vp.y*vp.y);
+        bool addRow(true);
+        for(int j=0;j<mt.size();j++){
+            if(  fabs(mtRow[0]-mt[j][0])<RS_TOLERANCE &&
+                 fabs(mtRow[1]-mt[j][1])<RS_TOLERANCE &&
+                 fabs(mtRow[2]-mt[j][2])<RS_TOLERANCE){
+                //symmetric
+                addRow=false;
+                break;
+            }
+        }
+        if(addRow) {
+            mtRow.push_back(1.);
+            mt.push_back(mtRow);
+        }
+    }
+//    std::cout<<"mt.size()="<<mt.size()<<std::endl;
+    switch(mt.size()){
+    case 2:{// the quadrilateral is a parallelogram
         //fixme, need to handle degenerate case better
         //        double angle(center.angleTo(tangent[0]));
-        RS_Vector majorP(tangent[0]-center);
+        RS_Vector majorP(tangent[0]);
         double dx(majorP.magnitude());
         if(dx<RS_TOLERANCE*RS_TOLERANCE) return false; //refuse to return zero size ellipse
         angleVector.set(majorP.x/dx,-majorP.y/dx);
-        for(int i=0;i<4;i++)tangent[i].rotate(center,angleVector);
+        for(int i=0;i<tangent.size();i++)tangent[i].rotate(angleVector);
 
-        RS_Vector minorP(tangent[2]-center);
+        RS_Vector minorP(tangent[2]);
         double dy2(minorP.squared());
         if(fabs(minorP.y)<RS_TOLERANCE || dy2<RS_TOLERANCE*RS_TOLERANCE) return false; //refuse to return zero size ellipse
         // y'= y
@@ -779,72 +865,30 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
         //
         double ia2=1./(dx*dx);
         double ib2=1./(minorP.y*minorP.y);
-        //ellipse scaled:
+        //ellipse scaled:drawi
         // ia2*x'^2+ib2*y'^2=1
         // ia2*(x-y*minor.x/minor.y)^2+ib2*y^2=1
         // ia2*x^2 -2*ia2*minor.x/minor.y xy + ia2*minor.x^2*ib2 y^2 + ib2*y^2 =1
         dn[0]=ia2;
         dn[1]=-2.*ia2*minorP.x/minorP.y;
         dn[2]=ib2*ia2*minorP.x*minorP.x+ib2;
-        //        RS_Vector vp(tangent[0].x,tangent[2].y);
-
-        ////        RS_Vector vp0(dx-minor.x,minor.y);//scaled minor
-        //        double idy2=1./(minor.y*minor.y);
-        //        double idx2=1./(dx*dx);
-        //        vp.scale(1./sqrt(vp.x*vp.x*idx2+vp.y*vp.y*idy2));
-        ////        minor/=sqrt(dy2);
-        //        vp.x+=vp.y*minor.x/minor.y;
-        //        tangent[1]=vp;
-        //        angleVector.y = -angleVector.y;
-        //        for(int i=0;i<4;i++)tangent[i].rotate(center,angleVector);
-
-        //        // x'^2/dx^2 + y'^2/dy^2=1
-        //        // (x-y cos)^2/dx^2 + y^2*sin^2/dy^2=1
-        //        dn[0]=idx2;
-        //        dn[1]=-2.*minor.x*idx2;
-        //        dn[2]=minor.x*minor.x*idx2+minor.y*minor.y*idy2;
-
-    }else{
-        QVector<QVector<double> > mt;
-        int mSize(3);
-        mt.resize(mSize);
-        for(int i=0;i<mSize;i++){//form the linear equation
-            mt[i].resize(4);
-            RS_Vector vp(tangent[i]-center);
-            mt[i][0]=vp.x*vp.x;
-            mt[i][1]=vp.x*vp.y;
-            mt[i][2]=vp.y*vp.y;
-            mt[i][3]=1.;
-        }
+    }
+        break;
+    case 4:
+        mt.pop_back(); //only 3 points needed to form the qudratic form
         if ( ! RS_Math::linearSolver(mt,dn) ) return false;
+        break;
+    default:
+        RS_DEBUG->print(RS_Debug::D_WARNING,"No inscribed ellipse for non isosceles trapezoid");
+        return false; //invalid quadrilateral
     }
 
-//    if(fabs(dn[0]) <RS_TOLERANCE*RS_TOLERANCE || fabs(dn[2])<RS_TOLERANCE*RS_TOLERANCE) return false; //invalid quadratic form
-//    //eigenvalue and eigen vectors of quadratic form
-//    // (dn[0] 0.5*dn[1])
-//    // (0.5*dn[1] dn[2])
-//    double d(dn[0]-dn[2]);
-//    double s(sqrt(d*d+dn[1]*dn[1]));
-//    //        std::cout<<"d="<<d<<std::endl;
-//    //        std::cout<<"s="<<s<<std::endl;
-//    double lambda1(0.5*(s+dn[0]+dn[2]));
-//    double lambda2(0.5*(-s+dn[0]+dn[2]));
-//    //        std::cout<<"lambda1="<<lambda1<<std::endl;
-//    //        std::cout<<"lambda2="<<lambda2<<std::endl;
-//    if(lambda1<RS_TOLERANCE*RS_TOLERANCE) return false;
-//    if(lambda2<RS_TOLERANCE*RS_TOLERANCE) return false;
-//    major.set(-dn[1]/(s+d),1.);
-//    major /= sqrt(major.squared()*lambda2);
-//    ratio=sqrt(lambda2/lambda1);
     setCenter(center);
     if(! createFromQuadratic(dn)) return false;
-//    setMajorP(major);
-//    setRatio(ratio);
-//    setAngle1(0.);
-//    setAngle2(0.);
+
     if(angleVector.valid) {//need to rotate back, for the parallelogram case
         angleVector.y *= -1.;
-        rotate(angleVector);
+        rotate(center,angleVector);
     }
     return true;
 
@@ -936,7 +980,8 @@ RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
         return RS_Vector(false);
     }
     //scale to ellipse angle
-    direction.rotate(-getAngle());
+    RS_Vector aV(-getAngle());
+    direction.rotate(aV);
     double angle=direction.scale(RS_Vector(1.,getRatio())).angle();
     double ra(getMajorRadius());
     direction.set(ra*cos(angle),getRatio()*ra*sin(angle));//relative to center
@@ -952,19 +997,22 @@ RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
         }
         angle=RS_Math::correctAngle(angle+M_PI);
     }
+    if(sol.size()<1) return RS_Vector(false);
+    aV.y*=-1.;
+    for(unsigned int i=0;i<sol.size();i++) sol[i].rotate(aV);
     RS_Vector vp;
     switch(sol.count()) {
     case 0:
         return RS_Vector(false);
     case 2:
-        if( RS_Vector::dotP(sol[1]-getCenter(),coord-getCenter())>0.) {
+        if( RS_Vector::dotP(sol[1],coord-getCenter())>0.) {
             vp=sol[1];
             break;
         }
     default:
         vp=sol[0];
     }
-    return getCenter() + vp.rotate(getAngle());
+    return getCenter() + vp;
 }
 
 
@@ -1009,12 +1057,14 @@ void RS_Ellipse::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     calculateBorders();
 }
 
-void RS_Ellipse::rotate( const double& angle) {//rotate around ellipse center
-    data.majorP.rotate(angle);
-    //calculateEndpoints();
+void RS_Ellipse::rotate( const double& angle) {//rotate around origin
+    RS_Vector aV(angle);
+    data.center.rotate(aV);
+    data.majorP.rotate(aV);
     calculateBorders();
 }
-void RS_Ellipse::rotate( const RS_Vector& angleVector) {//rotate around center
+void RS_Ellipse::rotate( const RS_Vector& angleVector) {//rotate around origin
+    data.center.rotate(angleVector);
     data.majorP.rotate(angleVector);
     //calculateEndpoints();
     calculateBorders();
@@ -1179,52 +1229,71 @@ double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) const {
  * find the maximum and minimum of x^2 + y^2,
  */
 void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
+    RS_Vector vpStart;
+    RS_Vector vpEnd;
+    if(std::isnormal(getAngle1()) || std::isnormal(getAngle2())){
+        //only handle start/end points for ellipse arc
+        getStartpoint().scale(center,factor);
+        getEndpoint().scale(center,factor);
+    }
     data.center.scale(center, factor);
-    RS_Vector vpStart=getStartpoint().scale(center,factor);
-    RS_Vector vpEnd=getEndpoint().scale(center,factor);;
-    double ct=cos(getAngle());
+    RS_Vector vp1(getMajorP());
+    double a(vp1.magnitude());
+    if(a<RS_TOLERANCE) return; //ellipse too small
+    vp1 *= 1./a;
+    double ct=vp1.x;
     double ct2 = ct*ct; // cos^2 angle
-    double st=sin(getAngle());
+    double st=vp1.y;
     double st2=1.0 - ct2; // sin^2 angle
     double kx2= factor.x * factor.x;
     double ky2= factor.y * factor.y;
-    double a=getMajorRadius();
+//    double a=getMajorRadius();
     double b=getRatio()*a;
     double cA=0.5*a*a*(kx2*ct2+ky2*st2);
     double cB=0.5*b*b*(kx2*st2+ky2*ct2);
     double cC=a*b*ct*st*(ky2-kx2);
     RS_Vector vp(cA-cB,cC);
-    setMajorP(RS_Vector(a,b).scale(RS_Vector(vp.angle())).rotate(RS_Vector(ct,st)).scale(factor));
+    vp1.set(a,b);
+    vp1.scale(RS_Vector(0.5*vp.angle()));
+    vp1.rotate(RS_Vector(ct,st));
+    vp1.scale(factor);
+    setMajorP(vp1);
     a=cA+cB;
     b=vp.magnitude();
     setRatio( sqrt((a - b)/(a + b) ));
-    if(   std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) )  {
-    //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
-    setAngle1(getEllipseAngle(vpStart));
-    setAngle2(getEllipseAngle(vpEnd));
+    if( std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) ) {
+        //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
+        setAngle1(getEllipseAngle(vpStart));
+        setAngle2(getEllipseAngle(vpEnd));
     }
     correctAngles();//avoid extra 2.*M_PI in angles
     //calculateEndpoints();
     scaleBorders(center,factor);
-//    calculateBorders();
+// calculateBorders();
+
 }
 
 
 /**
- * mirror by the axis defined by axisPoint1 and axisPoint2
+ * mirror by the axis of the line axisPoint1 and axisPoint2
+ *
+ *Author: Dongxu Li
  */
 void RS_Ellipse::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_Vector center=getCenter();
-    RS_Vector mp = center + getMajorP();
-    RS_Vector startpoint = getStartpoint();
-    RS_Vector endpoint = getEndpoint();
+    RS_Vector majorp = center + getMajorP();
+    RS_Vector startpoint,endpoint;
+    if(   std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) )  {
+        startpoint = getStartpoint();
+        endpoint = getEndpoint();
+    }
 
     center.mirror(axisPoint1, axisPoint2);
-    mp.mirror(axisPoint1, axisPoint2);
+    majorp.mirror(axisPoint1, axisPoint2);
 
     setCenter(center);
     setReversed(!isReversed());
-    setMajorP(mp - center);
+    setMajorP(majorp - center);
     if(   std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) )  {
         //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
         startpoint.mirror(axisPoint1, axisPoint2);
@@ -1232,23 +1301,6 @@ void RS_Ellipse::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2
         setAngle1( getEllipseAngle(startpoint));
         setAngle2( getEllipseAngle(endpoint));
     }
-    /*  old version
-    data.majorP = mp - data.center;
-
-    double a = axisPoint1.angleTo(axisPoint2);
-
-    RS_Vector vec;
-    vec.setPolar(1.0, data.angle1);
-    vec.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
-    data.angle1 = vec.angle() - 2*a;
-
-    vec.setPolar(1.0, data.angle2);
-    vec.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
-    data.angle2 = vec.angle() - 2*a;
-
-    data.reversed = (!data.reversed);
-*/
-    //calculateEndpoints();
     correctAngles();//avoid extra 2.*M_PI in angles
     calculateBorders();
 }

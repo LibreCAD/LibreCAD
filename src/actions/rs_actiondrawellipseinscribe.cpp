@@ -104,7 +104,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawEllipse4Line::mouseMoveEvent begin");
 
     if(getStatus() == SetLine4) {
-        RS_Entity*  en = catchEntity(e, RS2::ResolveAll);
+        RS_Entity*  en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
         if(en == NULL) return;
         if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
         for(int i=0;i<3;i++) {
@@ -157,7 +157,7 @@ void RS_ActionDrawEllipseInscribe::mouseReleaseEvent(QMouseEvent* e) {
         if (e==NULL) {
             return;
         }
-        RS_Entity*  en = catchEntity(e, RS2::ResolveAll);
+        RS_Entity*  en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
         if(en == NULL) return;
         if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
         for(int i=0;i<getStatus();i++) {

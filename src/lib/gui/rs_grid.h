@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -43,91 +43,116 @@ public:
     ~RS_Grid();
 
     void updatePointArray();
-	
-	/**
-	 * @return Array of all visible grid points.
-	 */
+
+        /**
+         * @return Array of all visible grid points.
+         */
     RS_Vector* getPoints() {
         return pt;
     }
-	
-	/**
-	 * @return Number of visible grid points.
-	 */
+    /**
+      *@return the closest grid point
+      */
+    RS_Vector snapGrid(const RS_Vector& coord) const;
+
+        /**
+         * @return Number of visible grid points.
+         */
     int count() {
         return number;
     }
+    void setCrosshairType(RS2::CrosshairType chType){
+        crosshairType=chType;
+    }
+    RS2::CrosshairType getCrosshairType(){
+        return crosshairType;
+    }
 
-	/**
-	 * @return Current grid spacing.
-	 */
-	//double getSpacing() {
-	//	return spacing;
-	//}
-	
-	/**
-	 * @return Current meta grid spacing.
-	 */
-	//double getMetaSpacing() {
-	//	return metaSpacing;
-	//}
+        /**
+         * @return Current grid spacing.
+         */
+        //double getSpacing() {
+        //	return spacing;
+        //}
 
-	/**
-	 * @return Grid info for status widget.
-	 */
+        /**
+         * @return Current meta grid spacing.
+         */
+        //double getMetaSpacing() {
+        //	return metaSpacing;
+        //}
+
+        /**
+         * @return Grid info for status widget.
+         */
         QString getInfo() {
                 return QString("%1 / %2").arg(spacing).arg(metaSpacing);
-	}
+        }
 
-	/**
-	 * @return Meta grid positions in X.
-	 */
-	double* getMetaX() {
-		return metaX;
-	}
-	
-	/**
-	 * @return Number of visible meta grid lines in X.
-	 */
+        /**
+         * @return Meta grid positions in X.
+         */
+        double* getMetaX() {
+                return metaX;
+        }
+
+        /**
+         * @return Number of visible meta grid lines in X.
+         */
     int countMetaX() {
         return numMetaX;
     }
-	
-	/**
-	 * @return Meta grid positions in Y.
-	 */
-	double* getMetaY() {
-		return metaY;
-	}
-	
-	/**
-	 * @return Number of visible meta grid lines in Y.
-	 */
+
+        /**
+         * @return Meta grid positions in Y.
+         */
+        double* getMetaY() {
+                return metaY;
+        }
+
+        /**
+         * @return Number of visible meta grid lines in Y.
+         */
     int countMetaY() {
         return numMetaY;
+    }
+    bool isIsometric() const{
+        return isometric;
+    }
+    void setIsometric(bool b){
+        isometric=b;
+    }
+    RS_Vector getMetaGridWidth() const {
+        return metaGridWidth;
     }
 
 protected:
     //! Graphic view this grid is connected to.
     RS_GraphicView* graphicView;
-	
-	//! Current grid spacing
-	double spacing;
-	//! Current meta grid spacing
-	double metaSpacing;
-	
+
+        //! Current grid spacing
+        double spacing;
+        //! Current meta grid spacing
+        double metaSpacing;
+
     //! Pointer to array of grid points
     RS_Vector* pt;
+    RS_Vector baseGrid; // the left-bottom grid point
+    RS_Vector cellV;// (dx,dy)
+    RS_Vector metaGridWidth;
     //! Number of points in the array
     int number;
-	//! Meta grid positions in X
-	double* metaX;
-	//! Number of meta grid lines in X
-	int numMetaX;
-	//! Meta grid positions in Y
-	double* metaY;
-	//! Number of meta grid lines in Y
-	int numMetaY;
+        //! Meta grid positions in X
+        double* metaX;
+        //! Number of meta grid lines in X
+        int numMetaX;
+        //! Meta grid positions in Y
+        double* metaY;
+        //! Number of meta grid lines in Y
+        int numMetaY;
+    bool isometric;
+    RS2::CrosshairType crosshairType;
+
 };
 
 #endif

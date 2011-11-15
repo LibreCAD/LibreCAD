@@ -140,7 +140,7 @@ public:
     }
 
     /** Sets a new snap mode. */
-    void setSnapMode(RS_SnapMode snapMode);
+    void setSnapMode(const RS_SnapMode& snapMode);
 
     RS_SnapMode *getSnapMode(void) {
         return &this->snapMode;
@@ -162,25 +162,33 @@ public:
     RS_Vector snapPoint(QMouseEvent* e);
     RS_Vector snapFree(QMouseEvent* e);
 
-    RS_Vector snapFree(RS_Vector coord);
-    RS_Vector snapEndpoint(RS_Vector coord);
-    RS_Vector snapGrid(RS_Vector coord);
-    RS_Vector snapOnEntity(RS_Vector coord);
-    RS_Vector snapCenter(RS_Vector coord);
-    RS_Vector snapMiddle(RS_Vector coord);
-    RS_Vector snapDist(RS_Vector coord);
-    RS_Vector snapIntersection(RS_Vector coord);
+    RS_Vector snapFree(const RS_Vector& coord);
+    RS_Vector snapGrid(const RS_Vector& coord);
+    RS_Vector snapEndpoint(const RS_Vector& coord);
+    RS_Vector snapOnEntity(const RS_Vector& coord);
+    RS_Vector snapCenter(const RS_Vector& coord);
+    RS_Vector snapMiddle(const RS_Vector& coord);
+    RS_Vector snapDist(const RS_Vector& coord);
+    RS_Vector snapIntersection(const RS_Vector& coord);
     //RS_Vector snapDirect(RS_Vector coord, bool abs);
 
-    RS_Vector restrictOrthogonal(RS_Vector coord);
-    RS_Vector restrictHorizontal(RS_Vector coord);
-    RS_Vector restrictVertical(RS_Vector coord);
+    RS_Vector restrictOrthogonal(const RS_Vector& coord);
+    RS_Vector restrictHorizontal(const RS_Vector& coord);
+    RS_Vector restrictVertical(const RS_Vector& coord);
+
 
     //RS_Entity* catchLeafEntity(const RS_Vector& pos);
     //RS_Entity* catchLeafEntity(QMouseEvent* e);
     RS_Entity* catchEntity(const RS_Vector& pos,
                            RS2::ResolveLevel level=RS2::ResolveNone);
     RS_Entity* catchEntity(QMouseEvent* e,
+                           RS2::ResolveLevel level=RS2::ResolveNone);
+    // catch Entity closest to pos and of the given entity type of enType, only search for a particular entity type
+    RS_Entity* catchEntity(const RS_Vector& pos, RS2::EntityType enType,
+                           RS2::ResolveLevel level=RS2::ResolveNone);
+    RS_Entity* catchEntity(QMouseEvent* e, RS2::EntityType enType,
+                           RS2::ResolveLevel level=RS2::ResolveNone);
+    RS_Entity* catchEntity(QMouseEvent* e, const QVector<RS2::EntityType>& enTypeList,
                            RS2::ResolveLevel level=RS2::ResolveNone);
 
     /**
@@ -203,7 +211,7 @@ public:
     virtual void showOptions();
 
     void drawSnapper();
-    static unsigned int snapModeToInt(RS_SnapMode s);
+    static unsigned int snapModeToInt(const RS_SnapMode& s);
     static RS_SnapMode intToSnapMode(unsigned int);
 
 protected:

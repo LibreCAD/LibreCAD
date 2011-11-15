@@ -35,6 +35,7 @@ QG_CadToolBarSelect::QG_CadToolBarSelect(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
 {
     setupUi(this);
+    parentTB=static_cast<QG_CadToolBar*>(parent);
 
     init();
 }
@@ -171,7 +172,7 @@ void QG_CadToolBarSelect::runNextAction() {
 }
 
 void QG_CadToolBarSelect::back() {
-    if (cadToolBar!=NULL) {
-        cadToolBar->back();
+    if(parentTB != NULL){
+        parentTB->showPreviousToolBar();
     }
 }

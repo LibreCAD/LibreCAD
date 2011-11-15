@@ -649,11 +649,9 @@ RS_VectorSolutions::RS_VectorSolutions(int num) {
 #if QT_VERSION >= 0x040700
     vector.reserve(num);
 #else
-    if(vector.size() <num) {
         for(int i=vector.size();i<num;i++){
             vector.push_back(RS_Vector(false));
         }
-    }
 #endif
 }
 
@@ -801,10 +799,16 @@ bool RS_VectorSolutions::hasValid() const {
     return false;
 }
 
-
+QList<RS_Vector> RS_VectorSolutions::getList() const {
+    return vector;
+}
 
 void RS_VectorSolutions::push_back(const RS_Vector& v) {
         vector.push_back(v);
+}
+RS_VectorSolutions RS_VectorSolutions::appendTo(const RS_VectorSolutions& v) {
+    vector += v.getList();
+    return *this;
 }
 
 /**
@@ -905,6 +909,13 @@ void RS_VectorSolutions::scale(const RS_Vector& center, const RS_Vector& factor)
         }
     }
 }
+void RS_VectorSolutions::scale( const RS_Vector& factor) {
+    for (int i=0; i<vector.size(); i++) {
+        if (vector[i].valid) {
+            vector[i].scale(factor);
+        }
+    }
+}
 
 
 /**
@@ -948,7 +959,7 @@ double RS_VectorSolutions::getClosestDistance(const RS_Vector& coord,
 {
     double ret=RS_MAXDOUBLE*RS_MAXDOUBLE;
     int i=vector.size();
-    if (counts<i) i=counts;
+    if (counts<i && counts>=0) i=counts;
     for(int j=0; j<i; j++) {
         if(vector[i].valid) {
             double d=(coord - vector[i]).squared();

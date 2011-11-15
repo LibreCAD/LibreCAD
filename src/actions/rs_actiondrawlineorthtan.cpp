@@ -42,6 +42,10 @@ RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(
     normal = NULL;
     tangent = NULL;
     circle = NULL;
+    circleList.clear();
+    circleList.push_back(RS2::EntityArc);
+    circleList.push_back(RS2::EntityCircle);
+    circleList.push_back(RS2::EntityEllipse);
 }
 
 
@@ -92,7 +96,7 @@ void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent* e) {
                     graphicView->toGraphY(e->y()));
 
     RS_Entity* en ;
-    en = catchEntity(e, RS2::ResolveAll);
+    en = catchEntity(e, circleList, RS2::ResolveAll);
     if (en!=NULL && (en->rtti()==RS2::EntityCircle ||
                      en->rtti()==RS2::EntityArc ||
                      en->rtti()==RS2::EntityEllipse)) {
@@ -140,12 +144,12 @@ void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent* e) {
     } else {
         switch (getStatus()) {
         case SetLine: {
-            RS_Entity* en=catchEntity(e);
-            if(en->rtti() == RS2::EntityLine) {
-                    if (en->getLength() < RS_TOLERANCE) {
-                            //ignore lines not long enough
-                            break;
-                    }
+            RS_Entity* en=catchEntity(e,RS2::EntityLine);
+            if(en != NULL){
+                if (en->getLength() < RS_TOLERANCE) {
+                    //ignore lines not long enough
+                    break;
+                }
                 if(normal != NULL) {
                     normal->setHighlighted(false);
                     graphicView->drawEntity(normal);
@@ -156,10 +160,12 @@ void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent* e) {
                 setStatus(SetCircle);
             }
         }
-        break;
+            break;
 
         case SetCircle:
-            trigger();
+            if(tangent!=NULL){
+                trigger();
+            }
             break;
         default:
             break;

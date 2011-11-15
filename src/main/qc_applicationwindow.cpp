@@ -746,10 +746,14 @@ void QC_ApplicationWindow::initActions(void)
     // RVT_PORT menu->insertItem(tr("Tool&bars"), createDockWindowMenu(OnlyToolBars));
 
 
-        // tr("Focus on Command Line")
-        action = new QAction(tr("Focus on &Command Line"), this);
-        action->setIcon(QIcon(":/main/editclear.png"));
-        action->setShortcut(tr("CTRL+M"));
+    // tr("Focus on Command Line")
+    action = new QAction(tr("Focus on &Command Line"), this);
+    action->setIcon(QIcon(":/main/editclear.png"));
+    {//added commandline shortcuts, feature request# 3437106
+        QList<QKeySequence> commandLineShortcuts;
+        commandLineShortcuts<<QKeySequence(Qt::CTRL + Qt::Key_M)<<QKeySequence( Qt::Key_Colon)<<QKeySequence(Qt::Key_Space);
+        action->setShortcuts(commandLineShortcuts);
+    }
         //action->zetStatusTip(tr("Focus on Command Line"));
 
     connect(action, SIGNAL(triggered()),
@@ -1236,6 +1240,10 @@ void QC_ApplicationWindow::initActions(void)
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionLayersEdit, actionHandler);
+    menu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionLayersToggleLock,
+                                        actionHandler);
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionLayersToggleView,
@@ -2753,11 +2761,6 @@ void QC_ApplicationWindow::slotFilePrint() {
     statusBar()->showMessage(tr("Printing..."));
     QPrinter printer(QPrinter::HighResolution);
 
-    // Try to set the printer to teh highest resolution
-    QList<int> res=printer.supportedResolutions ();
-    if (res.size()>0)
-        printer.setResolution(res.last());
-
     bool landscape = false;
     printer.setPaperSize(RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape)));
     if (landscape) {
@@ -2780,6 +2783,21 @@ void QC_ApplicationWindow::slotFilePrint() {
         //printer.setOutputToFile(true);
         //printer.setOutputFileName(outputFile);
 
+        // Try to set the printer to the highest resolution
+        //todo: handler printer resolution better
+        if(printer.outputFormat() == QPrinter::NativeFormat ){
+            QList<int> res=printer.supportedResolutions ();
+            if (res.size()>0)
+                printer.setResolution(res.last());
+            //        for(int i=0;i<res.size();i++){
+            //        std::cout<<"res.at(i)="<<res.at(i)<<std::endl;
+            //        }
+        }else{//pdf or postscript format
+            //fixme: user should be able to set resolution output to file
+            printer.setResolution(1200);
+        }
+
+//        std::cout<<"printer.resolution()="<<printer.resolution()<<std::endl;
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         printer.setFullPage(true);
 
@@ -3166,7 +3184,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
                        "</font></p>" +
                        "<br>" +
                        "<center>" +
-                       tr("Please donate to LibreCAD to help maintain the sourcecode and it's website.") +
+                       tr("Please consider donating to LibreCAD to help maintain the source code and website.") +
                        "<br>" +
                        "<br>" +
                        "<a href=\"http://librecad.org/donate.html\" alt=\"Donate to LibreCAD\">" +

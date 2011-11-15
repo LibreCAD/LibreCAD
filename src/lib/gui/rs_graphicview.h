@@ -341,6 +341,9 @@ public:
     //    gridVisible = on;
     //}
     bool isGridOn();
+    bool isGridIsometric();
+    void setCrosshairType(RS2::CrosshairType chType);
+    RS2::CrosshairType getCrosshairType();
 
     RS_Vector toGui(RS_Vector v);
     double toGuiX(double x);

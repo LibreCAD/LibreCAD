@@ -31,8 +31,12 @@
 #ifdef  HAS_BOOST
 #include <boost/math/special_functions/ellint_2.hpp>
 #include <boost/math/tools/roots.hpp>
-//#include <boost/fusion/tuple.hpp>
+
+#ifndef HAS_CPP11
+#include <boost/fusion/tuple.hpp>
 #include <boost/tuple/tuple.hpp>
+#endif
+
 #endif
 
 #include "rs_atomicentity.h"
@@ -115,6 +119,7 @@ public:
      * @return Start point of the entity.
      */
     virtual RS_Vector getStartpoint() const;
+    virtual RS_VectorSolutions getFoci() const;
 
     /**
      * @return End point of the entity.
@@ -134,7 +139,8 @@ public:
    }
 #endif
     static double ellipticIntegral_2(const double& k, const double& phi);//wrapper for elliptic integral
-
+    virtual RS_VectorSolutions getTangentPoint(const RS_Vector& point) const;//find the tangential points seeing from given point
+    virtual RS_Vector getTangentDirection(const RS_Vector& point)const;
     virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
                                      const RS_Vector& trimPoint);
 
@@ -186,7 +192,7 @@ public:
 
 
     /** @return The center point (x) of this arc */
-    RS_Vector getCenter() const {
+    virtual RS_Vector getCenter() const {
         return data.center;
     }
     /** Sets new center. */
@@ -305,14 +311,21 @@ public:
     void setDistance(const double& target){
         distance=target;
     }
-
+#ifndef HAS_CPP11
     boost::fusion::tuple <double, double, double> operator()(double const& z) const {
+#else
+    std::tuple <double, double, double> operator()(double const& z) const {
+#endif
         double cz=cos(z);
         double sz=sin(z);
         //delta amplitude
         double d=sqrt(1-k2*sz*sz);
         // return f(x), f'(x) and f''(x)
+#ifndef HAS_CPP11
         return boost::fusion::make_tuple(
+#else
+        return std::make_tuple(
+#endif
                     e->getEllipseLength(z)-distance,
                     ra*d,
                     k2*ra*sz*cz/d
