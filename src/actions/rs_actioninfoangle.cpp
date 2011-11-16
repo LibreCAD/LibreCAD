@@ -27,6 +27,7 @@
 #include "rs_actioninfoangle.h"
 
 #include <QAction>
+#include <cmath>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
