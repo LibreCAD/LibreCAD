@@ -65,10 +65,6 @@
         <translation>指令枠に焦点を合わせる(&amp;C)</translation>
     </message>
     <message>
-        <source>CTRL+M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Select</source>
         <translation>選択(&amp;S)</translation>
     </message>
@@ -336,10 +332,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -353,6 +345,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -524,7 +520,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="unfinished">垂直制限(&amp;V)</translation>
+        <translation>垂直制限(&amp;V)</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -1162,7 +1158,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Points</source>
-        <translation>点</translation>
+        <translation type="obsolete">点</translation>
     </message>
     <message>
         <source>Splines</source>
@@ -1387,7 +1383,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished">既存セグメントからポリライン作成</translation>
+        <translation>既存セグメントからポリライン作成</translation>
     </message>
     <message>
         <source>Polyline equidistant</source>
@@ -2633,6 +2629,50 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>10</source>
         <translation>10</translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">左</translation>
+    </message>
+    <message>
+        <source>Top crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">右</translation>
+    </message>
+    <message>
+        <source>Use orthogonal grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4539,6 +4579,21 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
 </context>
 <context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Polyline Equidistant Options</source>
@@ -5108,7 +5163,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>全イメージ形式 (%1)</translation>
+        <translation type="obsolete">全イメージ形式 (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -5252,6 +5307,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Jww %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block %1 already exist, renamed to: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6042,7 +6105,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation type="unfinished">軸で楕円弧(&amp;A)</translation>
+        <translation>軸で楕円弧(&amp;A)</translation>
     </message>
     <message>
         <source>Draw Ellipse Arcs</source>
@@ -7359,11 +7422,11 @@ Do you want to replace it?</source>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation>画層追加</translation>
+        <translation type="obsolete">画層追加</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="obsolete">画層追加(&amp;A)</translation>
+        <translation type="unfinished">画層追加(&amp;A)</translation>
     </message>
 </context>
 <context>
@@ -7408,18 +7471,18 @@ Do you want to replace it?</source>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation>画層削除</translation>
+        <translation type="obsolete">画層削除</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="obsolete">画層削除(&amp;R)</translation>
+        <translation type="unfinished">画層削除(&amp;R)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation>画層ロック切り替え</translation>
+        <translation type="obsolete">画層ロック切り替え</translation>
     </message>
     <message>
         <source>&amp;Toggle Lock</source>
@@ -7428,6 +7491,10 @@ Do you want to replace it?</source>
     <message>
         <source>Toggle Lock</source>
         <translation type="obsolete">ロック切り替え</translation>
+    </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7438,11 +7505,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation>画層表示切替(&amp;T)</translation>
+        <translation type="obsolete">画層表示切替(&amp;T)</translation>
     </message>
     <message>
         <source>Toggle Layer</source>
         <translation type="obsolete">画層切替</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8511,6 +8582,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

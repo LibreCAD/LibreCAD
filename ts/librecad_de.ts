@@ -452,10 +452,6 @@ Sie können Ihre Arbeit jetzt speichern.</translation>
         <translation>&amp;Polylinie</translation>
     </message>
     <message>
-        <source>CTRL+M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Insert Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -511,10 +507,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -528,6 +520,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1669,7 +1665,7 @@ wirklich schliessen?</translation>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="unfinished">&amp;Vertikal einschränken</translation>
+        <translation>&amp;Vertikal einschränken</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -2768,7 +2764,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Points</source>
-        <translation>Punkte</translation>
+        <translation type="obsolete">Punkte</translation>
     </message>
     <message>
         <source>Splines</source>
@@ -4346,6 +4342,50 @@ Sie können diese Einstellungen auch später im Optionen Dialog von QCad ändern
     <message>
         <source>10</source>
         <translation>10</translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Links</translation>
+    </message>
+    <message>
+        <source>Top crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Rechts</translation>
+    </message>
+    <message>
+        <source>Use orthogonal grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6408,6 +6448,21 @@ Sie können diese Einstellungen auch später im Optionen Dialog von QCad ändern
     </message>
 </context>
 <context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
@@ -6951,7 +7006,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>Alle Bilddateien (%1)</translation>
+        <translation type="obsolete">Alle Bilddateien (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -7099,6 +7154,14 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Jww %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block %1 already exist, renamed to: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9369,11 +9432,11 @@ Wollen Sie die Datei überschreiben?</translation>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation>Layer hinzufügen</translation>
+        <translation type="obsolete">Layer hinzufügen</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="obsolete">Layer &amp;hinzufügen</translation>
+        <translation type="unfinished">Layer &amp;hinzufügen</translation>
     </message>
 </context>
 <context>
@@ -9418,18 +9481,18 @@ Wollen Sie die Datei überschreiben?</translation>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation>Layer löschen</translation>
+        <translation type="obsolete">Layer löschen</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="obsolete">Layer &amp;löschen</translation>
+        <translation type="unfinished">Layer &amp;löschen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation>Layer Sperre umschalten</translation>
+        <translation type="obsolete">Layer Sperre umschalten</translation>
     </message>
     <message>
         <source>&amp;Toggle Lock</source>
@@ -9438,6 +9501,10 @@ Wollen Sie die Datei überschreiben?</translation>
     <message>
         <source>Toggle Lock</source>
         <translation type="obsolete">Sperre umschalten</translation>
+    </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9448,11 +9515,15 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation>&amp;Sichtbarkeit des Layers ändern</translation>
+        <translation type="obsolete">&amp;Sichtbarkeit des Layers ändern</translation>
     </message>
     <message>
         <source>Toggle Layer</source>
         <translation type="obsolete">Sichtbarkeit des Layers ändern</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10663,6 +10734,14 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

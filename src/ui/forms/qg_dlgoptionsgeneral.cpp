@@ -83,8 +83,8 @@ void QG_DlgOptionsGeneral::init() {
         QString l = RS_SYSTEM->symbolToLanguage(*it);
 	if (l.isEmpty()==false) {
                 RS_DEBUG->print("QG_DlgOptionsGeneral::init: %s", l.toLatin1().data());
-                cbLanguage->addItem(l);
-                cbLanguageCmd->addItem(l);
+                cbLanguage->addItem(l,*it);
+                cbLanguageCmd->addItem(l,*it);
 	}
     }
 
@@ -210,10 +210,8 @@ void QG_DlgOptionsGeneral::setRestartNeeded() {
 void QG_DlgOptionsGeneral::ok() {
     //RS_SYSTEM->loadTranslation(cbLanguage->currentText());
     RS_SETTINGS->beginGroup("/Appearance");
-    RS_SETTINGS->writeEntry("/Language",
-                            RS_SYSTEM->languageToSymbol(cbLanguage->currentText()));
-    RS_SETTINGS->writeEntry("/LanguageCmd",
-                            RS_SYSTEM->languageToSymbol(cbLanguageCmd->currentText()));
+    RS_SETTINGS->writeEntry("/Language",cbLanguage->itemData(cbLanguage->currentIndex()));
+    RS_SETTINGS->writeEntry("/LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
     RS_SETTINGS->writeEntry("/ShowCrosshairs",
                             QString("%1").arg((int)cbShowCrosshairs->isChecked()));
     RS_SETTINGS->writeEntry("/ScaleGrid",

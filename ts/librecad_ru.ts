@@ -35,7 +35,7 @@
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите объект:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -46,7 +46,7 @@
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
-        <translation type="unfinished"></translation>
+        <translation>Укажите точку</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -57,7 +57,7 @@
     <name>QC_ActionGetSelect</name>
     <message>
         <source>Select objects:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите объекты:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -388,97 +388,104 @@ You can save your work now.</source>
     </message>
     <message>
         <source>Running script &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Запуск сценария &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Inserting block &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставка блока &apos;%1&apos;</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished">&amp;Полилиния</translation>
+        <translation>&amp;Ломаная</translation>
     </message>
     <message>
         <source>CTRL+M</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">CTRL+M</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить изображение</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Автосохранение чертежа...</translation>
     </message>
     <message>
         <source>Auto-saved drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Чертеж автоматически сохранен</translation>
     </message>
     <message>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Автосохранение невозмозможно
+%1
+Пожалуйста, проверьте права доступа к файлу.
+Автосохранение отключено.</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Справка</translation>
     </message>
     <message>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
-        <translation type="unfinished"></translation>
+        <translation>Упс, файлы помощи не найдены.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Панели инструментов</translation>
     </message>
     <message>
         <source>Compiled on: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Собран: %1</translation>
     </message>
     <message>
         <source>Program Icons Supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation>Дизайн иконок</translation>
     </message>
     <message>
         <source>Splash and Logo supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation>Логотип и заставка</translation>
     </message>
     <message>
         <source>Main Website : </source>
-        <translation type="unfinished"></translation>
+        <translation>Официальный сайт:</translation>
     </message>
     <message>
         <source>Version: %1</source>
-        <translation type="unfinished">Версия: %1</translation>
+        <translation>Версия: %1</translation>
     </message>
     <message>
         <source>SCM Revision: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Версия VCS: %1</translation>
     </message>
     <message>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Пожалуйста сделайте пожертвование на поддержку исходного кода и сайта.</translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
-        <translation type="unfinished"></translation>
+        <translation>Предупреждение: Файл уже открыт:</translation>
     </message>
     <message>
         <source>Cannot save the file </source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно сохранить файл</translation>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
+        <translation>. Проверте правильность имени и права доступа.</translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1471,7 +1478,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="unfinished">Ограничить &amp;вертикально</translation>
+        <translation>Ограничить &amp;вертикально</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -1991,19 +1998,19 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>CTRL-G</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL-G</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Выбор указателя</translation>
     </message>
     <message>
         <source>&amp;Endpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Конечная точка</translation>
     </message>
     <message>
         <source>&amp;OnEntity</source>
-        <translation type="unfinished"></translation>
+        <translation>На к&amp;ривой</translation>
     </message>
 </context>
 <context>
@@ -2022,14 +2029,14 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Против часовой стрелке</translation>
     </message>
 </context>
 <context>
     <name>QG_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметры касательной дуги</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -2037,21 +2044,21 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Радиус касательной дуги</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Total subtending angle of касательной дуги</translation>
     </message>
     <message>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Радиус</translation>
     </message>
     <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished">Угол</translation>
+        <translation>Угол</translation>
     </message>
 </context>
 <context>
@@ -2255,7 +2262,7 @@ in a separate window</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Построить окружность, вписанную в треугольник, т.е. касательно к 3 линиям</translation>
     </message>
 </context>
 <context>
@@ -2302,7 +2309,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Концентрическая</translation>
     </message>
 </context>
 <context>
@@ -2325,11 +2332,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Эллипс по фокусам и точке на эллипсе</translation>
     </message>
     <message>
         <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Эллипс с осями в направлении x/y и четырём точкам на эллипсе</translation>
     </message>
     <message>
         <source>Draw Ellipse with by center and 3 points on ellipse</source>
@@ -2341,11 +2348,11 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Построить элипс, вписанный в четырёхугольник, т.е. касательно к четырем прямым.</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation>Концентрично</translation>
     </message>
 </context>
 <context>
@@ -2376,11 +2383,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Area of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Площадь полигона</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation>Концентрично</translation>
     </message>
 </context>
 <context>
@@ -2455,7 +2462,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Tangents to a circle, orthogonal to a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Касательная к окружности, перпендикулярно отрезку</translation>
     </message>
 </context>
 <context>
@@ -2518,70 +2525,70 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Points</source>
-        <translation type="unfinished">Точки</translation>
+        <translation type="obsolete">Точки</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Lines&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать панель &quot;Точки&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать панель &quot;Дуги&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Circles&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать панель &quot;Окружности&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать панель &quot;Эллипсы&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать панель &quot;Ломаные&quot;</translation>
     </message>
     <message>
         <source>Draw Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>Начертить сплайны</translation>
     </message>
     <message>
         <source>Draw Points</source>
-        <translation type="unfinished">Начертить точки</translation>
+        <translation>Начертить точки</translation>
     </message>
     <message>
         <source>Insert Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить текст</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать панель &quot;Размеры&quot;</translation>
     </message>
     <message>
         <source>Create Hatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать штриховку</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить изображение</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Modify&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать панель &quot;Редактирование&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Info&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать панель &quot;Инфо&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Select&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать панель &quot;Выделение&quot;</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarModify</name>
     <message>
         <source>Modify</source>
-        <translation>Изменить</translation>
+        <translation>Редактирование</translation>
     </message>
     <message>
         <source>Back to main menu</source>
@@ -2695,47 +2702,47 @@ p, li { white-space: pre-wrap; }
     <name>QG_CadToolBarPolylines</name>
     <message>
         <source>Polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Ломаные</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="unfinished">Назад в главное меню</translation>
+        <translation>Назад в главное меню</translation>
     </message>
     <message>
         <source>Create Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать ломаную</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить между двумя узлами</translation>
     </message>
     <message>
         <source>Add node</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить узел</translation>
     </message>
     <message>
         <source>Delete node</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить узел</translation>
     </message>
     <message>
         <source>Trim segments</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрезать сегменты</translation>
     </message>
     <message>
         <source>Append node</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить узел</translation>
     </message>
     <message>
         <source>Polyline equidistant</source>
-        <translation type="unfinished"></translation>
+        <translation>Эквидистанта ломаной</translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать ломаную из существующих отрезков</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation>Концентрично</translation>
     </message>
 </context>
 <context>
@@ -2868,7 +2875,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_CadToolBarSplines</name>
     <message>
         <source>Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>Сплайны</translation>
     </message>
     <message>
         <source>Back to main menu</source>
@@ -2876,7 +2883,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Сплайн</translation>
     </message>
 </context>
 <context>
@@ -2894,7 +2901,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_ColorBox</name>
     <message>
         <source>By Layer</source>
-        <translation> По слою</translation>
+        <translation>По слою</translation>
     </message>
     <message>
         <source>By Block</source>
@@ -2938,7 +2945,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Others..</source>
-        <translation>Другие..</translation>
+        <translation>Другие...</translation>
     </message>
     <message>
         <source>Unchanged</source>
@@ -2946,31 +2953,31 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Dark Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Тёмно-красный</translation>
     </message>
     <message>
         <source>Dark Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>Тёмно-жёлтый</translation>
     </message>
     <message>
         <source>Dark Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Тёмно-зелёный</translation>
     </message>
     <message>
         <source>Dark Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Тёмно-голубой</translation>
     </message>
     <message>
         <source>Dark Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Тёмно-синий</translation>
     </message>
     <message>
         <source>Dark Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Тёмно-пурпурный</translation>
     </message>
     <message>
         <source>Dark Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>Тёмно-серый</translation>
     </message>
 </context>
 <context>
@@ -2985,7 +2992,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Unknown command: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестная команда: %1</translation>
     </message>
 </context>
 <context>
@@ -3018,31 +3025,31 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>ø</source>
-        <translation></translation>
+        <translation>ø</translation>
     </message>
     <message utf8="true">
         <source>°</source>
-        <translation></translation>
+        <translation>°</translation>
     </message>
     <message utf8="true">
         <source>±</source>
-        <translation></translation>
+        <translation>±</translation>
     </message>
     <message utf8="true">
         <source>¶</source>
-        <translation></translation>
+        <translation>¶</translation>
     </message>
     <message utf8="true">
         <source>×</source>
-        <translation></translation>
+        <translation>×</translation>
     </message>
     <message utf8="true">
         <source>÷</source>
-        <translation></translation>
+        <translation>÷</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">...</translation>
     </message>
 </context>
 <context>
@@ -3276,7 +3283,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер</translation>
     </message>
 </context>
 <context>
@@ -3346,7 +3353,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_DlgHatch</name>
     <message>
         <source>Choose Hatch Attributes</source>
-        <translation>выберите атрибуты штриховки</translation>
+        <translation>Выберите атрибуты штриховки</translation>
     </message>
     <message>
         <source>Pattern</source>
@@ -3566,7 +3573,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">...</translation>
     </message>
 </context>
 <context>
@@ -3617,7 +3624,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">...</translation>
     </message>
     <message>
         <source>Move/Copy Options</source>
@@ -3672,11 +3679,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
 </context>
 <context>
@@ -3891,43 +3898,87 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>Сплайны</translation>
     </message>
     <message>
         <source>Number of line segments per spline patch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество сегментов по длине сплайна</translation>
     </message>
     <message>
         <source>4</source>
-        <translation type="unfinished">4</translation>
+        <translation>4</translation>
     </message>
     <message>
         <source>8</source>
-        <translation type="unfinished">8</translation>
+        <translation>8</translation>
     </message>
     <message>
         <source>16</source>
-        <translation type="unfinished">16</translation>
+        <translation>16</translation>
     </message>
     <message>
         <source>32</source>
-        <translation type="unfinished">32</translation>
+        <translation>32</translation>
     </message>
     <message>
         <source>64</source>
-        <translation type="unfinished">64</translation>
+        <translation>64</translation>
     </message>
     <message>
         <source>0.01</source>
-        <translation type="unfinished">0.01</translation>
+        <translation>0.01</translation>
     </message>
     <message>
         <source>0.1</source>
-        <translation type="unfinished">0.1</translation>
+        <translation>0.1</translation>
     </message>
     <message>
         <source>10</source>
-        <translation type="unfinished">10</translation>
+        <translation>10</translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Левая</translation>
+    </message>
+    <message>
+        <source>Top crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Правая</translation>
+    </message>
+    <message>
+        <source>Use orthogonal grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4074,7 +4125,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#404040</source>
-        <translation type="unfinished"></translation>
+        <translation>#404040</translation>
     </message>
     <message>
         <source>Fontsize</source>
@@ -4122,11 +4173,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#000000</source>
-        <translation type="unfinished"></translation>
+        <translation>#000000</translation>
     </message>
     <message>
         <source>#808080</source>
-        <translation type="unfinished"></translation>
+        <translation>#808080</translation>
     </message>
     <message>
         <source>A&amp;utomatically scale grid</source>
@@ -4138,7 +4189,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#739373</source>
-        <translation type="unfinished"></translation>
+        <translation>#739373</translation>
     </message>
     <message>
         <source>&amp;Highlighted Color:</source>
@@ -4170,55 +4221,55 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Alt+U</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+U</translation>
     </message>
     <message>
         <source>Minimal Grid Spacing (px):</source>
-        <translation type="unfinished"></translation>
+        <translation>Минимальный шаг сетки (px):</translation>
     </message>
     <message>
         <source>Program Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки по умолчанию</translation>
     </message>
     <message>
         <source>Auto save time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Промежуток автосохранения:</translation>
     </message>
     <message>
         <source>#FFFFFF</source>
-        <translation type="unfinished"></translation>
+        <translation>#FFFFFF</translation>
     </message>
     <message>
         <source>#C0C0C0</source>
-        <translation type="unfinished"></translation>
+        <translation>#C0C0C0</translation>
     </message>
     <message>
         <source>#A54747</source>
-        <translation type="unfinished"></translation>
+        <translation>#A54747</translation>
     </message>
     <message>
         <source>400</source>
-        <translation type="unfinished">400</translation>
+        <translation>400</translation>
     </message>
     <message>
         <source>800</source>
-        <translation type="unfinished">800</translation>
+        <translation>800</translation>
     </message>
     <message>
         <source>Drawing unit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Модуль черчение.</translation>
     </message>
     <message>
         <source>Time between automatic saving of the document in minutes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Время между автоматическими сохранениями документа в минутах.</translation>
     </message>
     <message>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматически создавать резервную копию текущего чертежа.</translation>
     </message>
     <message>
         <source>Auto backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Создавать резервную копию</translation>
     </message>
 </context>
 <context>
@@ -4279,35 +4330,35 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <name>QG_DlgPolyline</name>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished">Полилиния</translation>
+        <translation>Ломаная</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Слой:</translation>
+        <translation>Слой:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Геометрия</translation>
+        <translation>Геометрия</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыто</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished">Alt+O</translation>
+        <translation>Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Отмена</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation>Esc</translation>
     </message>
 </context>
 <context>
@@ -4358,7 +4409,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -4409,7 +4460,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -4460,78 +4511,78 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="unfinished"></translation>
+        <translation>Одинаковый коэффициент масштабирования в x- и y- направлении</translation>
     </message>
     <message>
         <source>Isotropic Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Изотропное масштабирование</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>1.0</source>
-        <translation type="unfinished">1.0</translation>
+        <translation>1.0</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgSpline</name>
     <message>
         <source>Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Сплайн</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Слой:</translation>
+        <translation>Слой:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Геометрия</translation>
+        <translation>Геометрия</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation type="unfinished"></translation>
+        <translation>Угол:</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрытый</translation>
     </message>
     <message>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation>1</translation>
     </message>
     <message>
         <source>2</source>
-        <translation type="unfinished">2</translation>
+        <translation>2</translation>
     </message>
     <message>
         <source>3</source>
-        <translation type="unfinished">3</translation>
+        <translation>3</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished">Alt+O</translation>
+        <translation>Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Отмена</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation>Esc</translation>
     </message>
 </context>
 <context>
@@ -4694,435 +4745,435 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>[0000-007F] Basic Latin</source>
-        <translation type="unfinished"></translation>
+        <translation>[0000-007F] Основная латиница</translation>
     </message>
     <message>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation type="unfinished"></translation>
+        <translation>[0080-00FF] Латиница-1</translation>
     </message>
     <message>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[0100-017F] Расширенная латиница-A</translation>
     </message>
     <message>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[0180-024F] Расширенная латиница-B</translation>
     </message>
     <message>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>[0250-02AF] Фонетические знаки</translation>
     </message>
     <message>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation type="unfinished"></translation>
+        <translation>[02B0-02FF] Символы изменения пробела</translation>
     </message>
     <message>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation type="unfinished"></translation>
+        <translation>[0300-036F] Дополняющие диакритические знаки</translation>
     </message>
     <message>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation type="unfinished"></translation>
+        <translation>[0370-03FF] Греческий и египетский (коптский)</translation>
     </message>
     <message>
         <source>[0400-04FF] Cyrillic</source>
-        <translation type="unfinished"></translation>
+        <translation>[0400-04FF] Кириллица</translation>
     </message>
     <message>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation type="unfinished"></translation>
+        <translation>[0500-052F] Дополнительная кириллица</translation>
     </message>
     <message>
         <source>[0530-058F] Armenian</source>
-        <translation type="unfinished"></translation>
+        <translation>[0530-058F] Армянский</translation>
     </message>
     <message>
         <source>[0590-05FF] Hebrew</source>
-        <translation type="unfinished"></translation>
+        <translation>[0590-05FF] Иврит</translation>
     </message>
     <message>
         <source>[0600-06FF] Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>[0600-06FF] Арабский</translation>
     </message>
     <message>
         <source>[0700-074F] Syriac</source>
-        <translation type="unfinished"></translation>
+        <translation>[0700-074F] Сирийский</translation>
     </message>
     <message>
         <source>[0780-07BF] Thaana</source>
-        <translation type="unfinished"></translation>
+        <translation>[0780-07BF] Тана (Мальдивский)</translation>
     </message>
     <message>
         <source>[0900-097F] Devanagari</source>
-        <translation type="unfinished"></translation>
+        <translation>[0900-097F] Деванагари</translation>
     </message>
     <message>
         <source>[0980-09FF] Bengali</source>
-        <translation type="unfinished"></translation>
+        <translation>[0980-09FF] Бенгальская письменность</translation>
     </message>
     <message>
         <source>[0A00-0A7F] Gurmukhi</source>
-        <translation type="unfinished"></translation>
+        <translation>[0A00-0A7F] Гурмукхи</translation>
     </message>
     <message>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation type="unfinished"></translation>
+        <translation>[0A80-0AFF] Гуджарати</translation>
     </message>
     <message>
         <source>[0B00-0B7F] Oriya</source>
-        <translation type="unfinished"></translation>
+        <translation>[0B00-0B7F] Ория</translation>
     </message>
     <message>
         <source>[0B80-0BFF] Tamil</source>
-        <translation type="unfinished"></translation>
+        <translation>[0B80-0BFF] Тамильская письменность</translation>
     </message>
     <message>
         <source>[0C00-0C7F] Telugu</source>
-        <translation type="unfinished"></translation>
+        <translation>[0C00-0C7F] Телугу</translation>
     </message>
     <message>
         <source>[0C80-0CFF] Kannada</source>
-        <translation type="unfinished"></translation>
+        <translation>[0C80-0CFF] Каннада</translation>
     </message>
     <message>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation type="unfinished"></translation>
+        <translation>[0D00-0D7F] Малаялам</translation>
     </message>
     <message>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation type="unfinished"></translation>
+        <translation>[0D80-0DFF] Сингальская письменность</translation>
     </message>
     <message>
         <source>[0E00-0E7F] Thai</source>
-        <translation type="unfinished"></translation>
+        <translation>[0E00-0E7F] Тайская письменность</translation>
     </message>
     <message>
         <source>[0E80-0EFF] Lao</source>
-        <translation type="unfinished"></translation>
+        <translation>[0E80-0EFF] Лаосская письменность</translation>
     </message>
     <message>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation type="unfinished"></translation>
+        <translation>[0F00-0FFF] Тибетская письменность</translation>
     </message>
     <message>
         <source>[1000-109F] Myanmar</source>
-        <translation type="unfinished"></translation>
+        <translation>[1000-109F] Мьянманская письменность</translation>
     </message>
     <message>
         <source>[10A0-10FF] Georgian</source>
-        <translation type="unfinished"></translation>
+        <translation>[10A0-10FF] Грузинский алфавит</translation>
     </message>
     <message>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation type="unfinished"></translation>
+        <translation>[1100-11FF] Хангыль (корейская письменность)</translation>
     </message>
     <message>
         <source>[1200-137F] Ethiopic</source>
-        <translation type="unfinished"></translation>
+        <translation>[1200-137F] Эфиопская слоговая письменность</translation>
     </message>
     <message>
         <source>[13A0-13FF] Cherokee</source>
-        <translation type="unfinished"></translation>
+        <translation>[13A0-13FF] Письменность чероки</translation>
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation type="unfinished"></translation>
+        <translation>[1400-167F] Канадское слоговое письмо</translation>
     </message>
     <message>
         <source>[1680-169F] Ogham</source>
-        <translation type="unfinished"></translation>
+        <translation>[1680-169F] Огам</translation>
     </message>
     <message>
         <source>[16A0-16FF] Runic</source>
-        <translation type="unfinished"></translation>
+        <translation>[16A0-16FF] Руническая письменность</translation>
     </message>
     <message>
         <source>[1700-171F] Tagalog</source>
-        <translation type="unfinished"></translation>
+        <translation>[1700-171F] Тагальская (байбайин)</translation>
     </message>
     <message>
         <source>[1720-173F] Hanunoo</source>
-        <translation type="unfinished"></translation>
+        <translation>[1720-173F] Хануноо</translation>
     </message>
     <message>
         <source>[1740-175F] Buhid</source>
-        <translation type="unfinished"></translation>
+        <translation>[1740-175F] Бухид</translation>
     </message>
     <message>
         <source>[1760-177F] Tagbanwa</source>
-        <translation type="unfinished"></translation>
+        <translation>[1760-177F] Тагбанва</translation>
     </message>
     <message>
         <source>[1780-17FF] Khmer</source>
-        <translation type="unfinished"></translation>
+        <translation>[1780-17FF] Кхмерская письменность</translation>
     </message>
     <message>
         <source>[1800-18AF] Mongolian</source>
-        <translation type="unfinished"></translation>
+        <translation>[1800-18AF] Старомонгольская письменность</translation>
     </message>
     <message>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation type="unfinished"></translation>
+        <translation>[1E00-1EFF] Дополнительная расширенная латиница</translation>
     </message>
     <message>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation type="unfinished"></translation>
+        <translation>[1F00-1FFF] Расширенный греческий</translation>
     </message>
     <message>
         <source>[2000-206F] General Punctuation</source>
-        <translation type="unfinished"></translation>
+        <translation>[2000-206F] Знаки пунктуации</translation>
     </message>
     <message>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation type="unfinished"></translation>
+        <translation>[2070-209F] Надстрочные и подстрочные знаки</translation>
     </message>
     <message>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[20A0-20CF] Символы валют</translation>
     </message>
     <message>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[20D0-20FF] Комбинируемые диакритические знаки для символов</translation>
     </message>
     <message>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[2100-214F] Буквоподобные символы</translation>
     </message>
     <message>
         <source>[2150-218F] Number Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>[2150-218F] Числовые формы</translation>
     </message>
     <message>
         <source>[2190-21FF] Arrows</source>
-        <translation type="unfinished"></translation>
+        <translation>[2190-21FF] Стрелки</translation>
     </message>
     <message>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation type="unfinished"></translation>
+        <translation>[2200-22FF] Математические операторы</translation>
     </message>
     <message>
         <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation type="unfinished"></translation>
+        <translation>[2300-23FF] Технические символы</translation>
     </message>
     <message>
         <source>[2400-243F] Control Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>[2400-243F] Значки управляющих кодов </translation>
     </message>
     <message>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation type="unfinished"></translation>
+        <translation>[2440-245F] Символы оптического распознавания</translation>
     </message>
     <message>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation type="unfinished"></translation>
+        <translation>[2460-24FF] Вложенные буквы и цифры</translation>
     </message>
     <message>
         <source>[2500-257F] Box Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>[2500-257F] Символы для рисования рамок</translation>
     </message>
     <message>
         <source>[2580-259F] Block Elements</source>
-        <translation type="unfinished"></translation>
+        <translation>[2580-259F] Блочные элементы</translation>
     </message>
     <message>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation type="unfinished"></translation>
+        <translation>[25A0-25FF] Геометрические фигуры</translation>
     </message>
     <message>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[2600-26FF] Разнообразные символы</translation>
     </message>
     <message>
         <source>[2700-27BF] Dingbats</source>
-        <translation type="unfinished"></translation>
+        <translation>[2700-27BF] Дингбаты (орнаменты)</translation>
     </message>
     <message>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[27C0-27EF] Разнообразные математические символы-A</translation>
     </message>
     <message>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[27F0-27FF] Дополнительные стрелки-A</translation>
     </message>
     <message>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation type="unfinished"></translation>
+        <translation>[2800-28FF] Азбука Брайля</translation>
     </message>
     <message>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[2900-297F] Дополнительные стрелки-B</translation>
     </message>
     <message>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[2980-29FF] Разнообразные математические символы-B</translation>
     </message>
     <message>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation type="unfinished"></translation>
+        <translation>[2A00-2AFF] Дополнительные математические операторы</translation>
     </message>
     <message>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation type="unfinished"></translation>
+        <translation>[2E80-2EFF] Дополнительные иероглифические ключи ККЯ</translation>
     </message>
     <message>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation type="unfinished"></translation>
+        <translation>[2F00-2FDF] Иероглифические ключи словаря Канси</translation>
     </message>
     <message>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation type="unfinished"></translation>
+        <translation>[2FF0-2FFF] Символы описания иероглифов</translation>
     </message>
     <message>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation type="unfinished"></translation>
+        <translation>[3000-303F] Символы и пунктуация ККЯ</translation>
     </message>
     <message>
         <source>[3040-309F] Hiragana</source>
-        <translation type="unfinished"></translation>
+        <translation>[3040-309F] Хирагана</translation>
     </message>
     <message>
         <source>[30A0-30FF] Katakana</source>
-        <translation type="unfinished"></translation>
+        <translation>[30A0-30FF] Катакана</translation>
     </message>
     <message>
         <source>[3100-312F] Bopomofo</source>
-        <translation type="unfinished"></translation>
+        <translation>Чжуинь (бопомофо)</translation>
     </message>
     <message>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation type="unfinished"></translation>
+        <translation>[3130-318F] Чамо, комбинируемое с хангылем</translation>
     </message>
     <message>
         <source>[3190-319F] Kanbun</source>
-        <translation type="unfinished"></translation>
+        <translation>[3190-319F] Камбун</translation>
     </message>
     <message>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation type="unfinished"></translation>
+        <translation>[31A0-31BF] Расширенный набор символов бопомофо</translation>
     </message>
     <message>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation type="unfinished"></translation>
+        <translation>[3200-32FF] Вложенные буквы и месяцы ККЯ</translation>
     </message>
     <message>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation type="unfinished"></translation>
+        <translation>[3300-33FF] Знаки совместимости ККЯ</translation>
     </message>
     <message>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation type="unfinished"></translation>
+        <translation>[3400-4DBF] Унифицированные иероглифы ККЯ (расширение А)</translation>
     </message>
     <message>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation type="unfinished"></translation>
+        <translation>[4E00-9FAF] Унифицированные идеограммы ККЯ</translation>
     </message>
     <message>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation type="unfinished"></translation>
+        <translation>[A000-A48F] Слоги и</translation>
     </message>
     <message>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation type="unfinished"></translation>
+        <translation>[A490-A4CF] Радикалы и</translation>
     </message>
     <message>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation type="unfinished"></translation>
+        <translation>[AC00-D7AF] Слоги хангыля</translation>
     </message>
     <message>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation type="unfinished"></translation>
+        <translation>[D800-DBFF] Верхняя часть суррогатных пар</translation>
     </message>
     <message>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation type="unfinished"></translation>
+        <translation>[DC00-DFFF] Нижняя часть суррогатных пар </translation>
     </message>
     <message>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation type="unfinished"></translation>
+        <translation>[E000-F8FF] Область для частного использования</translation>
     </message>
     <message>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation type="unfinished"></translation>
+        <translation>[F900-FAFF] Совместимые иероглифы ККЯ</translation>
     </message>
     <message>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>[FB00-FB4F] Алфавитные формы представления</translation>
     </message>
     <message>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[FB50-FDFF] Формы представления арабских букв-A</translation>
     </message>
     <message>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE00-FE0F] Селекторы вариантов начертания</translation>
     </message>
     <message>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE20-FE2F] Комбинируемые половинки символов</translation>
     </message>
     <message>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE30-FE4F] Формы совместимости ККЯ</translation>
     </message>
     <message>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE50-FE6F] Варианты малого размера</translation>
     </message>
     <message>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[FE70-FEFF] Формы представления арабских букв-B</translation>
     </message>
     <message>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation type="unfinished"></translation>
+        <translation>[FF00-FFEF] Полуширинные и полноширинные формы</translation>
     </message>
     <message>
         <source>[FFF0-FFFF] Specials</source>
-        <translation type="unfinished"></translation>
+        <translation>[FFF0-FFFF] Специальные символы</translation>
     </message>
     <message>
         <source>[10300-1032F] Old Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>[10300-1032F] Старый курсив</translation>
     </message>
     <message>
         <source>[10330-1034F] Gothic</source>
-        <translation type="unfinished"></translation>
+        <translation>[10330-1034F] Готический</translation>
     </message>
     <message>
         <source>[10400-1044F] Deseret</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[10400-1044F] Десерет</translation>
     </message>
     <message>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[1D000-1D0FF] Византийские музыкальные символы</translation>
     </message>
     <message>
         <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[1D100-1D1FF] Музыкальные символы</translation>
     </message>
     <message>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>[1D400-1D7FF] Математические буквенно-цифровые символы</translation>
     </message>
     <message>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation type="unfinished"></translation>
+        <translation>[20000-2A6DF] Унифицированные иероглифы ККЯ (расширение B)</translation>
     </message>
     <message>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation type="unfinished"></translation>
+        <translation>[2F800-2FA1F] Дополнение совместимых иероглифов ККЯ</translation>
     </message>
     <message>
         <source>[E0000-E007F] Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>[E0000-E007F] Символы тегов</translation>
     </message>
     <message>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation type="unfinished"></translation>
+        <translation>[F0000-FFFFD] Дополнительные плоскости-А</translation>
     </message>
     <message>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation type="unfinished"></translation>
+        <translation>[100000-10FFFD] Дополнительные плоскости-B</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
@@ -5150,7 +5201,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Alt+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+D</translation>
     </message>
 </context>
 <context>
@@ -5189,7 +5240,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>again Still No Text supplied.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не введен текст</translation>
     </message>
 </context>
 <context>
@@ -5594,11 +5645,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать замкнутый контур из существующих линий</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Отменить последную начерченную линию</translation>
     </message>
 </context>
 <context>
@@ -5803,7 +5854,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -5818,6 +5869,21 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
 </context>
 <context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
@@ -5829,11 +5895,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Расстояние от базовой полилинии</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>Копий:</translation>
     </message>
 </context>
 <context>
@@ -5864,27 +5930,27 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation>Касательно</translation>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Радиус касательной</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">Угол</translation>
+        <translation>Угол</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Угол:</translation>
+        <translation>Угол:</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="unfinished">По часовой стрелке</translation>
+        <translation>По часовой стрелке</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation type="unfinished">Против часовой стрелки</translation>
+        <translation>Против часовой стрелки</translation>
     </message>
 </context>
 <context>
@@ -5941,11 +6007,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбранные</translation>
     </message>
     <message>
         <source>Total Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Полная длина</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -5953,7 +6019,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Число выбранных объектов</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -5961,14 +6027,14 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Суммарная длина выбранных объектов</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Параметры привязки на расстоянии</translation>
+        <translation>Параметры расстояния привязки</translation>
     </message>
     <message>
         <source>Distance:</source>
@@ -5979,38 +6045,38 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished">Параметры привязки на расстоянии</translation>
+        <translation>Параметры расстояния привязки</translation>
     </message>
     <message>
         <source>Middle Points:</source>
-        <translation type="unfinished"></translation>
+        <translation>Средних точек:</translation>
     </message>
     <message>
         <source>Number of equidistant division points</source>
-        <translation type="unfinished"></translation>
+        <translation>Число точек разделяющих кривую на равные отрезки</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation type="unfinished">Привязка</translation>
+        <translation>Привязка</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
-        <translation type="unfinished">Привязка к конечным точкам объекта</translation>
+        <translation>Привязка к вершинам кривых</translation>
     </message>
     <message>
         <source>Snap to equidistant points of entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Привязка к равноудаленным точкам объекта</translation>
     </message>
     <message>
         <source>Snap to center points</source>
-        <translation type="unfinished">Привязка к точкам центра</translation>
+        <translation>Привязка к точкам центра</translation>
     </message>
     <message>
         <source>Snap to intersections automatically</source>
-        <translation type="unfinished">Привязка к точкам пересечения автоматически</translation>
+        <translation>Привязка к точкам пересечения автоматически</translation>
     </message>
     <message>
         <source>Snap to closest point on entity</source>
@@ -6018,7 +6084,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
-        <translation type="unfinished">Привязка на заданном расстоянии от точки</translation>
+        <translation>Привязка на заданном расстоянии от вершины</translation>
     </message>
     <message>
         <source>Snap to intersections manually</source>
@@ -6026,34 +6092,34 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap to grid</source>
-        <translation type="unfinished">Привязка к сетке</translation>
+        <translation>Привязка к сетке</translation>
     </message>
     <message>
         <source>Restrict Horizontally</source>
-        <translation type="unfinished">Ограничить горизонтально</translation>
+        <translation>Ограничить горизонтально</translation>
     </message>
     <message>
         <source>Restrict Vertically</source>
-        <translation type="unfinished">Ограничить вериткально</translation>
+        <translation>Ограничить вериткально</translation>
     </message>
     <message>
         <source>Move relative Zero</source>
-        <translation type="unfinished">Переместить относительный ноль</translation>
+        <translation>Переместить относительный ноль</translation>
     </message>
     <message>
         <source>Lock relative Zero</source>
-        <translation type="unfinished">Вкл. относительный ноль</translation>
+        <translation>Зафиксировать относительный ноль</translation>
     </message>
 </context>
 <context>
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметры сплайна</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation type="unfinished"></translation>
+        <translation>Степень:</translation>
     </message>
     <message>
         <source>1</source>
@@ -6069,11 +6135,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыто</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Отменить</translation>
+        <translation>Отменить</translation>
     </message>
 </context>
 <context>
@@ -6107,15 +6173,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Длина:</translation>
+        <translation>Длина:</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished"></translation>
+        <translation>Расстояние. Отрицательные значения для обрезки, положительные для удлинения. Отрицательный знак не учитывается, когда установлена окончательная длина отрезка.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать введенную длину как окончательную длину отрезка после обрезки, вместо размера увеличения.</translation>
     </message>
 </context>
 <context>
@@ -6141,7 +6207,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidthBox</name>
     <message>
         <source>By Layer</source>
-        <translation> По слою</translation>
+        <translation>По слою</translation>
     </message>
     <message>
         <source>By Block</source>
@@ -6329,47 +6395,47 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Joint Photographic Experts Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Joint Photographic Experts Group</translation>
     </message>
     <message>
         <source>Multiple-image Network Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Multiple-image Network Graphics</translation>
     </message>
     <message>
         <source>Portable Bit Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable Bit Map</translation>
     </message>
     <message>
         <source>Portable Grey Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable Grey Map</translation>
     </message>
     <message>
         <source>Portable Network Graphic</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable Network Graphic</translation>
     </message>
     <message>
         <source>Portable Pixel Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable Pixel Map</translation>
     </message>
     <message>
         <source>X Bitmap Format</source>
-        <translation type="unfinished"></translation>
+        <translation>X Bitmap Format</translation>
     </message>
     <message>
         <source>X Pixel Map</source>
-        <translation type="unfinished"></translation>
+        <translation>X Pixel Map</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>Все файлы изображений (%1)</translation>
+        <translation type="obsolete">Все файлы изображений (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Graphics Interchange Format</translation>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Drawing Exchange %1</translation>
     </message>
     <message>
         <source>QCad 1.x file %1</source>
@@ -6385,87 +6451,87 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Нет</translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <source>Inch</source>
-        <translation type="unfinished"></translation>
+        <translation>Дюйм</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation type="unfinished"></translation>
+        <translation>Фут</translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation type="unfinished"></translation>
+        <translation>Миля</translation>
     </message>
     <message>
         <source>Millimeter</source>
-        <translation type="unfinished"></translation>
+        <translation>Миллиметр</translation>
     </message>
     <message>
         <source>Centimeter</source>
-        <translation type="unfinished"></translation>
+        <translation>Сантиметр</translation>
     </message>
     <message>
         <source>Meter</source>
-        <translation type="unfinished"></translation>
+        <translation>Метр</translation>
     </message>
     <message>
         <source>Kilometer</source>
-        <translation type="unfinished"></translation>
+        <translation>Километр</translation>
     </message>
     <message>
         <source>Microinch</source>
-        <translation type="unfinished"></translation>
+        <translation>Микродюйм</translation>
     </message>
     <message>
         <source>Mil</source>
-        <translation type="unfinished"></translation>
+        <translation>Мил</translation>
     </message>
     <message>
         <source>Yard</source>
-        <translation type="unfinished"></translation>
+        <translation>Ярд</translation>
     </message>
     <message>
         <source>Angstrom</source>
-        <translation type="unfinished"></translation>
+        <translation>Ангстрем</translation>
     </message>
     <message>
         <source>Nanometer</source>
-        <translation type="unfinished"></translation>
+        <translation>Нанометр</translation>
     </message>
     <message>
         <source>Micron</source>
-        <translation type="unfinished"></translation>
+        <translation>Микрон</translation>
     </message>
     <message>
         <source>Decimeter</source>
-        <translation type="unfinished"></translation>
+        <translation>Дециметр</translation>
     </message>
     <message>
         <source>Decameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Декаметр</translation>
     </message>
     <message>
         <source>Hectometer</source>
-        <translation type="unfinished"></translation>
+        <translation>Гектометр</translation>
     </message>
     <message>
         <source>Gigameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Гигаметр</translation>
     </message>
     <message>
         <source>Astro</source>
-        <translation type="unfinished"></translation>
+        <translation>Астрономическая единица</translation>
     </message>
     <message>
         <source>Lightyear</source>
-        <translation type="unfinished"></translation>
+        <translation>Световой год</translation>
     </message>
     <message>
         <source>Parsec</source>
-        <translation type="unfinished"></translation>
+        <translation>Парсек</translation>
     </message>
     <message>
         <source>Export Image</source>
@@ -6485,30 +6551,38 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка...</translation>
     </message>
     <message>
         <source>enter an integer number</source>
-        <translation type="unfinished"></translation>
+        <translation>введите целое число</translation>
     </message>
     <message>
         <source>LibreCAD query</source>
-        <translation type="unfinished"></translation>
+        <translation>Запрос LibreCAD</translation>
     </message>
     <message>
         <source>enter a number</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите число</translation>
     </message>
     <message>
         <source>enter text</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите текст</translation>
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Шрифт LFF %1</translation>
     </message>
     <message>
         <source>Jww %1</source>
+        <translation>Jww %1</translation>
+    </message>
+    <message>
+        <source>Block %1 already exist, renamed to: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7000,7 +7074,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify included angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Укажите внутренний угол:</translation>
     </message>
 </context>
 <context>
@@ -7046,27 +7120,27 @@ Do you want to replace it?</source>
     <name>RS_ActionDrawArcTangential</name>
     <message>
         <source>Arc: Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation>Дуга: Касательна</translation>
     </message>
     <message>
         <source>Specify base entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Укажите базовый объект</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Отмена</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation type="unfinished">Укажите конечный угол</translation>
+        <translation>Укажите конечный угол</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <source>Specify end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Укажите конечную точку</translation>
     </message>
 </context>
 <context>
@@ -8615,11 +8689,11 @@ Do you want to replace it?</source>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation>Добавить слой</translation>
+        <translation type="obsolete">Добавить слой</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;Добавить слой</translation>
+        <translation type="unfinished">&amp;Добавить слой</translation>
     </message>
 </context>
 <context>
@@ -8664,18 +8738,18 @@ Do you want to replace it?</source>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation>Удалить слой</translation>
+        <translation type="obsolete">Удалить слой</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="obsolete">&amp;Удалить слой</translation>
+        <translation type="unfinished">&amp;Удалить слой</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation>Переключить защиту слоя</translation>
+        <translation type="obsolete">Переключить защиту слоя</translation>
     </message>
     <message>
         <source>&amp;Toggle Lock</source>
@@ -8684,6 +8758,10 @@ Do you want to replace it?</source>
     <message>
         <source>Toggle Lock</source>
         <translation type="obsolete">Защита слоя</translation>
+    </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8694,11 +8772,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation>&amp;Видимость слоя</translation>
+        <translation type="obsolete">&amp;Видимость слоя</translation>
     </message>
     <message>
         <source>Toggle Layer</source>
         <translation type="obsolete">Видимость слоя</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9537,7 +9619,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Удалить между двумя узлами</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -9607,7 +9689,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Создать ломаную из существующих отрезков</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -9736,6 +9818,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

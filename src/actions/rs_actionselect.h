@@ -45,15 +45,19 @@ public:
                     QVector<RS2::EntityType>* entityTypeList=NULL);
     ~RS_ActionSelect() {}
 
-    void init(int status);
+    virtual void init(int status);
+    virtual void resume();
     //virtual void keyPressEvent(QKeyEvent* e);
-    void mouseReleaseEvent(QMouseEvent* e);
-    void updateToolBar();
-    void updateMouseButtonHints();
+    virtual void mouseReleaseEvent(QMouseEvent* e);
+    virtual void updateToolBar();
+    virtual void updateMouseButtonHints();
+    virtual void updateMouseCursor();
+    void requestFinish();
 
 private:
     QVector<RS2::EntityType>* entityTypeList;
     RS2::ActionType nextAction;
+    bool selectSingle;
 };
 
 #endif

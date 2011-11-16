@@ -60,7 +60,7 @@
         <file>width10.png</file>
         <file>width11.png</file>
         <file>width12.png</file>
-        <file>lokedlayer.png</file>
-        <file>unlokedlayer.png</file>
+        <file>lockedlayer.png</file>
+        <file>unlockedlayer.png</file>
     </qresource>
 </RCC>

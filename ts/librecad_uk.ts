@@ -58,7 +58,7 @@
     </message>
     <message>
         <source>CTRL+M</source>
-        <translation>CTRL+M</translation>
+        <translation type="obsolete">CTRL+M</translation>
     </message>
     <message>
         <source>&amp;View</source>
@@ -352,22 +352,26 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation>Будь ласка, пожертвуйте кошти на підтримку й розвиток джерельного коду та сайту LibreCAD.</translation>
+        <translation type="obsolete">Будь ласка, пожертвуйте кошти на підтримку й розвиток джерельного коду та сайту LibreCAD.</translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
-        <translation type="unfinished"></translation>
+        <translation>Попередження: файл вже відкритий: </translation>
     </message>
     <message>
         <source>Cannot save the file </source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо зберегти файл</translation>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
+        <translation>. Перевірте правильність назви файлу та права доступу.</translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1356,7 +1360,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="unfinished">Обмежити &amp;вертикально</translation>
+        <translation>Обмежити &amp;вертикально</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -1892,11 +1896,11 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Endpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Кінцева точка</translation>
     </message>
     <message>
         <source>&amp;OnEntity</source>
-        <translation type="unfinished"></translation>
+        <translation>На к&amp;ривій</translation>
     </message>
 </context>
 <context>
@@ -1915,7 +1919,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Проти годинникової стрілки</translation>
     </message>
 </context>
 <context>
@@ -1930,7 +1934,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус дотичної дуги</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
@@ -1939,12 +1943,12 @@ Auto-save disabled.</source>
     <message>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Радіус</translation>
     </message>
     <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished">Кут</translation>
+        <translation>Кут</translation>
     </message>
 </context>
 <context>
@@ -2148,7 +2152,11 @@ in a separate window</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Побудувати коло, вписане в трикутник, &lt;span style=&quot; font-style:italic;&quot;&gt;тобто&lt;/span&gt; дотичне до 3 ліній&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -2218,15 +2226,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Намалювати еліпс за фокусами та точці на еліпсі</translation>
     </message>
     <message>
         <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Намалювати еліпс з осями у напрямку X/Y та чотирьом точкам на еліпсі</translation>
     </message>
     <message>
         <source>Draw Ellipse with by center and 3 points on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Намалювати еліпс за центром та 3 точкам на еліпсі</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -2234,11 +2242,15 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Побудувати еліпс, вписаний у чотирикутник, &lt;span style=&quot; font-style:italic;&quot;&gt;тобто&lt;/span&gt; дотичний до чотирьох прямих.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Концентрична</translation>
+        <translation>Концентрично</translation>
     </message>
 </context>
 <context>
@@ -2273,7 +2285,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Концентрична</translation>
+        <translation>Концентрично</translation>
     </message>
 </context>
 <context>
@@ -2348,7 +2360,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Tangents to a circle, orthogonal to a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Дотична до кола, перпендикулярно відрізку</translation>
     </message>
 </context>
 <context>
@@ -2411,7 +2423,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Points</source>
-        <translation>Точки</translation>
+        <translation type="obsolete">Точки</translation>
     </message>
     <message>
         <source>Splines</source>
@@ -2424,59 +2436,59 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show toolbar &quot;Lines&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати панель інструментів „Лінії“</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати панель інструментів „Дуги“</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Circles&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати панель інструментів „Кола“</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати панель інструментів „Еліпси“</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати панель інструментів „Ламані“</translation>
     </message>
     <message>
         <source>Draw Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>Намалювати сплайни</translation>
     </message>
     <message>
         <source>Draw Points</source>
-        <translation type="unfinished">Накреслити точки</translation>
+        <translation>Накреслити точки</translation>
     </message>
     <message>
         <source>Insert Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставити текст</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати панель інструментів „Розміри“</translation>
     </message>
     <message>
         <source>Create Hatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити штрихування</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished">Вставити зображення</translation>
+        <translation>Вставити зображення</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Modify&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати панель інструментів „Правка“</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Info&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати панель інструментів „Інформація“</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Select&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати панель інструментів „Вибір“</translation>
     </message>
 </context>
 <context>
@@ -2571,7 +2583,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Move / Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити / копіювати</translation>
     </message>
     <message>
         <source>Rotate Two</source>
@@ -2632,11 +2644,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Polyline equidistant</source>
-        <translation type="unfinished"></translation>
+        <translation>Еквідістанта ламаної</translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished">Створити ламану лінію з існуючих відрізків</translation>
+        <translation>Створити ламану з існуючих відрізків</translation>
     </message>
     <message>
         <source>Concentric</source>
@@ -2851,31 +2863,31 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Dark Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Темно-червоний</translation>
     </message>
     <message>
         <source>Dark Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>Темно-жовтий</translation>
     </message>
     <message>
         <source>Dark Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Темно-зелений</translation>
     </message>
     <message>
         <source>Dark Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Темно-блакитний</translation>
     </message>
     <message>
         <source>Dark Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Темно-синій</translation>
     </message>
     <message>
         <source>Dark Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Темно-пурпурний</translation>
     </message>
     <message>
         <source>Dark Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>Темно-сірий</translation>
     </message>
 </context>
 <context>
@@ -2890,7 +2902,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Unknown command: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Невідома команда: %1</translation>
     </message>
 </context>
 <context>
@@ -3539,7 +3551,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Move/Copy Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри переміщення/копіювання</translation>
     </message>
 </context>
 <context>
@@ -3852,6 +3864,50 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>P&amp;recision:</source>
         <translation>То&amp;чність: </translation>
     </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Ліва</translation>
+    </message>
+    <message>
+        <source>Top crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Права</translation>
+    </message>
+    <message>
+        <source>Use orthogonal grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgOptionsGeneral</name>
@@ -4113,7 +4169,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Program Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування за умовчанням</translation>
     </message>
     <message>
         <source>Time between automatc saving of thedocument in minutes.</source>
@@ -4125,39 +4181,39 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#FFFFFF</source>
-        <translation type="unfinished"></translation>
+        <translation>#FFFFFF</translation>
     </message>
     <message>
         <source>#C0C0C0</source>
-        <translation type="unfinished"></translation>
+        <translation>#C0C0C0</translation>
     </message>
     <message>
         <source>#A54747</source>
-        <translation type="unfinished"></translation>
+        <translation>#A54747</translation>
     </message>
     <message>
         <source>400</source>
-        <translation type="unfinished">400</translation>
+        <translation>400</translation>
     </message>
     <message>
         <source>800</source>
-        <translation type="unfinished">800</translation>
+        <translation>800</translation>
     </message>
     <message>
         <source>Drawing unit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Модуль креслення.</translation>
     </message>
     <message>
         <source>Time between automatic saving of the document in minutes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Час між автоматичними збереженнями документа в хвилинах.</translation>
     </message>
     <message>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Якщо встановлено, LibreCAD буде автоматично генерувати резервну копію поточного креслення.</translation>
     </message>
     <message>
         <source>Auto backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматична резервна копія</translation>
     </message>
 </context>
 <context>
@@ -4234,15 +4290,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <name>QG_DlgPolyline</name>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Ламана</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Шар:</translation>
+        <translation>Шар: </translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Геометрія</translation>
+        <translation>Геометрія</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -4250,19 +4306,19 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Гаразд</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Відміна</translation>
+        <translation>Відміна</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation>Esc</translation>
     </message>
 </context>
 <context>
@@ -4419,23 +4475,23 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="unfinished"></translation>
+        <translation>Однаковий коефіцієнт масштабування в X- та Y- напрямках</translation>
     </message>
     <message>
         <source>Isotropic Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Ізотропне масштабування</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>1.0</source>
-        <translation type="unfinished">1.0</translation>
+        <translation>1.0</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
 </context>
 <context>
@@ -5553,11 +5609,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити замкнений контур з існуючих ліній</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Скасувати останню накреслену лінію</translation>
     </message>
 </context>
 <context>
@@ -5777,6 +5833,21 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
 </context>
 <context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
@@ -5788,11 +5859,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Відстань від базової ламаної</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>Копій: </translation>
     </message>
 </context>
 <context>
@@ -5828,7 +5899,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус дотичної</translation>
     </message>
     <message>
         <source>Angle</source>
@@ -5901,11 +5972,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрані</translation>
     </message>
     <message>
         <source>Total Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Повна довжина</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -5913,7 +5984,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Число обраних об’єктів&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -5921,7 +5996,11 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Сумарна довжина вибраних об’єктів&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -5943,18 +6022,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Middle Points:</source>
-        <translation type="unfinished"></translation>
+        <translation>Середніх точок: </translation>
     </message>
     <message>
         <source>Number of equidistant division points</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість точок, що розділяють криву на рівні відрізки</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation type="unfinished">Прив’язка</translation>
+        <translation>Прив’язка</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
@@ -5986,23 +6065,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap to grid</source>
-        <translation type="unfinished">Прив’язка до сітки</translation>
+        <translation>Прив’язка до сітки</translation>
     </message>
     <message>
         <source>Restrict Horizontally</source>
-        <translation type="unfinished">Обмежити горизонтально</translation>
+        <translation>Обмежити горизонтально</translation>
     </message>
     <message>
         <source>Restrict Vertically</source>
-        <translation type="unfinished">Обмежити вертикально</translation>
+        <translation>Обмежити вертикально</translation>
     </message>
     <message>
         <source>Move relative Zero</source>
-        <translation type="unfinished">Перемістити відносний нуль</translation>
+        <translation>Перемістити відносний нуль</translation>
     </message>
     <message>
         <source>Lock relative Zero</source>
-        <translation type="unfinished">Увімк. відносний нуль</translation>
+        <translation>Зафіксувати відносний нуль</translation>
     </message>
 </context>
 <context>
@@ -6067,15 +6146,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Довжина:</translation>
+        <translation>Довжина: </translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished"></translation>
+        <translation>Відстань. Негативні значення для обрізки, позитивні для подовження. Негативний знак не враховується, коли встановлена ​​остаточна довжина відрізка.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовувати введену довжину як остаточну довжину відрізка після обрізки, замість розміру збільшення.</translation>
     </message>
 </context>
 <context>
@@ -6321,7 +6400,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>Усі файли зображень (%1)</translation>
+        <translation type="obsolete">Усі файли зображень (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -6457,10 +6536,18 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Шрифт LFF %1</translation>
     </message>
     <message>
         <source>Jww %1</source>
+        <translation>Jww %1</translation>
+    </message>
+    <message>
+        <source>Block %1 already exist, renamed to: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6594,7 +6681,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify first extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть точку прив’язки першої розмірної лінії</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6602,7 +6689,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть точку прив’язки другої розмірної лінії</translation>
     </message>
     <message>
         <source>Back</source>
@@ -6637,7 +6724,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify dimension arc line location</source>
-        <translation type="unfinished">Вкажіть розташування розмірної дуги</translation>
+        <translation>Вкажіть положення розмірної дуги</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
@@ -6679,7 +6766,7 @@ Do you want to replace it?</source>
     <name>RS_ActionDimLeader</name>
     <message>
         <source>&amp;Leader</source>
-        <translation type="unfinished">П&amp;оличка-виноска</translation>
+        <translation>П&amp;оличка-виноска</translation>
     </message>
     <message>
         <source>Specify target point</source>
@@ -6695,7 +6782,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Завершити</translation>
     </message>
 </context>
 <context>
@@ -6718,7 +6805,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify first extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть точку прив’язки першої розмірної лінії</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6726,7 +6813,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть точку прив’язки другої розмірної лінії</translation>
     </message>
     <message>
         <source>Back</source>
@@ -6742,7 +6829,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Enter dimension line angle:</source>
-        <translation type="unfinished">Введіть кут розмірного напису:</translation>
+        <translation>Введіть кут розмірного напису: </translation>
     </message>
 </context>
 <context>
@@ -6773,7 +6860,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation type="unfinished">Введіть текст розмірного напису:</translation>
+        <translation>Введіть текст розмірного напису: </translation>
     </message>
 </context>
 <context>
@@ -6816,7 +6903,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify included angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Зазначте внутрішній кут: </translation>
     </message>
     <message>
         <source>Specify chord length:</source>
@@ -6858,11 +6945,11 @@ Do you want to replace it?</source>
     <name>RS_ActionDrawArcTangential</name>
     <message>
         <source>Arc: Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation>Дуга: дотична</translation>
     </message>
     <message>
         <source>Specify base entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть базовий об’єкт</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6878,7 +6965,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть кінцеву точку</translation>
     </message>
 </context>
 <context>
@@ -7001,23 +7088,23 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify the first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть першу лінію</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Відміна</translation>
+        <translation>Відміна</translation>
     </message>
     <message>
         <source>Specify the second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть другу лінію</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <source>Specify the third line</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть третю лінію</translation>
     </message>
 </context>
 <context>
@@ -7028,27 +7115,27 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть першу точку на еліпсі</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Відміна</translation>
+        <translation>Відміна</translation>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть другу точку на еліпсі</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть третю точку на еліпсі</translation>
     </message>
     <message>
         <source>Specify the fourth point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть четверту точку на еліпсі</translation>
     </message>
 </context>
 <context>
@@ -7106,27 +7193,27 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify the center of ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть центр еліпса</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Відміна</translation>
+        <translation>Відміна</translation>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть першу точку на еліпсі</translation>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть другу точку на еліпсі</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть третю точку на еліпсі</translation>
     </message>
 </context>
 <context>
@@ -7137,27 +7224,27 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Не коректний вираз</translation>
     </message>
     <message>
         <source>Specify first focus of ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть перший фокус еліпса</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Відміна</translation>
+        <translation>Відміна</translation>
     </message>
     <message>
         <source>Specify second focus of ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть другий фокус еліпса</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть точку на еліпсі чи повну відстань до фокуса</translation>
     </message>
 </context>
 <context>
@@ -7168,27 +7255,27 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify the first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть першу лінію</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Відміна</translation>
+        <translation>Відміна</translation>
     </message>
     <message>
         <source>Specify the second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть другу лінію</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <source>Specify the third line</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть третю лінію</translation>
     </message>
     <message>
         <source>Specify the fourth line</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть четверту лінію</translation>
     </message>
 </context>
 <context>
@@ -7388,19 +7475,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Select a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть лінію</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Відміна</translation>
+        <translation>Відміна</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished">Виділіть коло, дугу чи еліпс</translation>
+        <translation>Виберіть коло, дугу чи еліпс</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -7539,11 +7626,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished">Вкажіть центр</translation>
+        <translation>Вкажіть центр</translation>
     </message>
     <message>
         <source>Specify a corner</source>
-        <translation type="unfinished">Вкажіть кут</translation>
+        <translation>Вкажіть кут</translation>
     </message>
     <message>
         <source>Enter number:</source>
@@ -7555,7 +7642,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Не коректний вираз</translation>
     </message>
 </context>
 <context>
@@ -7566,19 +7653,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify first corner</source>
-        <translation type="unfinished">Вкажіть перший кут</translation>
+        <translation>Вкажіть перший кут</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Відміна</translation>
+        <translation>Відміна</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished">Вкажіть другий кут</translation>
+        <translation>Вкажіть другий кут</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -7655,7 +7742,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished">Вкажіть точку</translation>
+        <translation>Вкажіть точку</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7851,11 +7938,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Nothing to undo!</source>
-        <translation type="unfinished"></translation>
+        <translation>Немає що скасовувати!</translation>
     </message>
     <message>
         <source>Nothing to redo!</source>
-        <translation type="unfinished"></translation>
+        <translation>Немає що переробляти!</translation>
     </message>
 </context>
 <context>
@@ -8048,7 +8135,11 @@ Do you want to replace it?</source>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation>Додати шар</translation>
+        <translation type="obsolete">Додати шар</translation>
+    </message>
+    <message>
+        <source>&amp;Add Layer</source>
+        <translation type="unfinished">&amp;Додати шар</translation>
     </message>
 </context>
 <context>
@@ -8066,28 +8157,40 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation type="unfinished">&amp;Розморозити усі</translation>
+        <translation>&amp;Розморозити усі</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation>Вилучити шар</translation>
+        <translation type="obsolete">Вилучити шар</translation>
+    </message>
+    <message>
+        <source>&amp;Remove Layer</source>
+        <translation type="unfinished">&amp;Вилучити шар</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation>Перемкнути захист шару</translation>
+        <translation type="obsolete">Перемкнути захист шару</translation>
+    </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleView</name>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation>&amp;Перемикач шару</translation>
+        <translation type="obsolete">&amp;Перемикач шару</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8140,7 +8243,7 @@ Do you want to replace it?</source>
     <message>
         <source>&amp;Bevel</source>
         <translatorcomment>скіс; скісна́ лі́нія</translatorcomment>
-        <translation type="unfinished">&amp;Фаска</translation>
+        <translation>&amp;Фаска</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -8176,7 +8279,7 @@ Do you want to replace it?</source>
     <message>
         <source>&amp;Divide</source>
         <translatorcomment>поділ, ділення</translatorcomment>
-        <translation type="unfinished">&amp;Частка</translation>
+        <translation>&amp;Поділ</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -8395,11 +8498,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify rotation center</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть центр обертання</translation>
     </message>
     <message>
         <source>Specify target point to rotate to</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть цільову точку, щоб повернути до</translation>
     </message>
 </context>
 <context>
@@ -8662,11 +8765,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо додати вузли у замкнутій ламаній.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдається скасувати: ще недостатньо об’єктів визначено.</translation>
     </message>
 </context>
 <context>
@@ -8882,35 +8985,35 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Відміна</translation>
+        <translation>Відміна</translation>
     </message>
     <message>
         <source>Select to delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть для вилучення</translation>
     </message>
     <message>
         <source>Select to delete immediately</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть для вилучення відразу</translation>
     </message>
     <message>
         <source>Select to move</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть для переміщення</translation>
     </message>
     <message>
         <source>Select to rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть, щоб повернути</translation>
     </message>
     <message>
         <source>Select to scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть для масштабування</translation>
     </message>
     <message>
         <source>Select to mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть для віддзеркалення</translation>
     </message>
     <message>
         <source>Select to move and rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть, щоб переміщати і повертати</translation>
     </message>
     <message>
         <source>Select for two axis rotation</source>
@@ -8922,6 +9025,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Select to create block</source>
+        <translation>Виберіть, щоб створити блок</translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8956,12 +9067,12 @@ Do you want to replace it?</source>
     <message>
         <source>Select Intersected Entities</source>
         <translatorcomment>Вибрати об’єкти які перетинаються</translatorcomment>
-        <translation type="unfinished">Вибрати об’єкти січною</translation>
+        <translation>Вибрати об’єкти, що перетинаються</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
         <translatorcomment>Зняти вибір об’єктів, які перетинаються</translatorcomment>
-        <translation type="unfinished">Скасувати вибір січної</translation>
+        <translation>Прибрати вибір з об’єктів, що перетинаються</translation>
     </message>
     <message>
         <source>Choose first point of intersection line</source>
@@ -9048,7 +9159,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Set &amp;Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити &amp;відносний нуль</translation>
     </message>
 </context>
 <context>
@@ -9119,7 +9230,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Відміна</translation>
+        <translation>Відміна</translation>
     </message>
     <message>
         <source>Zoom panning</source>
@@ -9134,7 +9245,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Previous &amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>Попередній &amp;вигляд</translation>
     </message>
 </context>
 <context>
@@ -9175,7 +9286,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>po</source>
-        <translation type="unfinished"></translation>
+        <translation>тчк</translation>
     </message>
     <message>
         <source>line</source>
@@ -9183,11 +9294,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>ln</source>
-        <translation type="unfinished"></translation>
+        <translation>л-я</translation>
     </message>
     <message>
         <source>l</source>
-        <translation type="unfinished"></translation>
+        <translation>л</translation>
     </message>
     <message>
         <source>polyline</source>
@@ -9195,12 +9306,12 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>offset</source>
-        <translation type="unfinished"></translation>
+        <translation>зміщення</translation>
     </message>
     <message>
         <source>o</source>
         <comment>offset</comment>
-        <translation type="unfinished"></translation>
+        <translation>зм</translation>
     </message>
     <message>
         <source>parallel</source>
@@ -9209,7 +9320,7 @@ Do you want to replace it?</source>
     <message>
         <source>par</source>
         <comment>parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>пар</translation>
     </message>
     <message>
         <source>arc</source>
@@ -9217,7 +9328,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>a</source>
-        <translation type="unfinished"></translation>
+        <translation>д</translation>
     </message>
     <message>
         <source>circle</source>
@@ -9225,7 +9336,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>ci</source>
-        <translation type="unfinished"></translation>
+        <translation>ко</translation>
     </message>
     <message>
         <source>rectangle</source>
@@ -9233,7 +9344,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>rec</source>
-        <translation type="unfinished"></translation>
+        <translation>прк</translation>
     </message>
     <message>
         <source>rectang</source>
@@ -9284,7 +9395,7 @@ Do you want to replace it?</source>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation type="unfinished"></translation>
+        <translation>с</translation>
     </message>
     <message>
         <source>redo</source>
@@ -9292,7 +9403,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>r</source>
-        <translation type="unfinished"></translation>
+        <translation>п</translation>
     </message>
     <message>
         <source>da</source>
@@ -9544,7 +9655,7 @@ Do you want to replace it?</source>
     <message>
         <source>po</source>
         <comment>point</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">тчк</translation>
     </message>
     <message>
         <source>li</source>
@@ -9569,7 +9680,7 @@ Do you want to replace it?</source>
     <message>
         <source>ci</source>
         <comment>circle</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ко</translation>
     </message>
     <message>
         <source>c2</source>
@@ -9699,12 +9810,12 @@ Do you want to replace it?</source>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>кут</translation>
     </message>
     <message>
         <source>a</source>
         <comment>angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>к</translation>
     </message>
     <message>
         <source>center</source>
@@ -9713,12 +9824,12 @@ Do you want to replace it?</source>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation type="unfinished"></translation>
+        <translation>цтр</translation>
     </message>
     <message>
         <source>c</source>
         <comment>center</comment>
-        <translation type="unfinished"></translation>
+        <translation>ц</translation>
     </message>
     <message>
         <source>length</source>
@@ -9728,12 +9839,12 @@ Do you want to replace it?</source>
     <message>
         <source>l</source>
         <comment>chord length</comment>
-        <translation type="unfinished"></translation>
+        <translation>д</translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ц</translation>
     </message>
     <message>
         <source>cols</source>
@@ -9743,7 +9854,7 @@ Do you want to replace it?</source>
     <message>
         <source>c</source>
         <comment>columns</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ц</translation>
     </message>
     <message>
         <source>columnspacing</source>
@@ -9763,12 +9874,12 @@ Do you want to replace it?</source>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation type="unfinished"></translation>
+        <translation>множник</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation type="unfinished"></translation>
+        <translation>м</translation>
     </message>
     <message>
         <source>help</source>
@@ -9787,12 +9898,12 @@ Do you want to replace it?</source>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation type="unfinished"></translation>
+        <translation>дов</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation type="unfinished"></translation>
+        <translation>д</translation>
     </message>
     <message>
         <source>length1</source>
@@ -9847,12 +9958,12 @@ Do you want to replace it?</source>
     <message>
         <source>rev</source>
         <comment>reversed arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>звр</translation>
     </message>
     <message>
         <source>r</source>
         <comment>reversed arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>з</translation>
     </message>
     <message>
         <source>r</source>

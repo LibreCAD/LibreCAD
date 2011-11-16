@@ -393,7 +393,7 @@ Możesz teraz zapisać Twoją pracę.
     </message>
     <message>
         <source>CTRL+M</source>
-        <translation>CTRL+M</translation>
+        <translation type="obsolete">CTRL+M</translation>
     </message>
     <message>
         <source>Insert Image</source>
@@ -467,22 +467,26 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation>Prosimy o dotację, która umożliwi rozwój programu LibreCAD i strony internetowej. </translation>
+        <translation type="obsolete">Prosimy o dotację, która umożliwi rozwój programu LibreCAD i strony internetowej. </translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
-        <translation type="unfinished"></translation>
+        <translation>Uwaga: plik jest już otwarty :</translation>
     </message>
     <message>
         <source>Cannot save the file </source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można zapisać pliku</translation>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
+        <translation>   , proszę sprawdzić nazwę pliku i uprawnienia. </translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1475,7 +1479,7 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="unfinished">Ograniczenie &amp;pionowo</translation>
+        <translation>Ograniczenie &amp;pionowo</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -2007,7 +2011,7 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>&amp;Endpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Punkt końcowy</translation>
     </message>
     <message>
         <source>&amp;OnEntity</source>
@@ -2045,7 +2049,7 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Promień stycznego łuku</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
@@ -2054,12 +2058,12 @@ Autozapis wyłączony.</translation>
     <message>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Promień</translation>
     </message>
     <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished">Kąt</translation>
+        <translation>Kąt</translation>
     </message>
 </context>
 <context>
@@ -2310,7 +2314,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Koncentryczny</translation>
+        <translation>Koncentryczny</translation>
     </message>
 </context>
 <context>
@@ -2353,7 +2357,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Koncentryczny</translation>
+        <translation>Koncentryczny</translation>
     </message>
 </context>
 <context>
@@ -2388,7 +2392,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Koncentryczny</translation>
+        <translation>Koncentryczny</translation>
     </message>
 </context>
 <context>
@@ -2463,7 +2467,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Tangents to a circle, orthogonal to a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Styczne do okręgu, prostopadłe do linii</translation>
     </message>
 </context>
 <context>
@@ -2526,7 +2530,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Points</source>
-        <translation>Punkty</translation>
+        <translation type="obsolete">Punkty</translation>
     </message>
     <message>
         <source>Splines</source>
@@ -2538,59 +2542,59 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show toolbar &quot;Lines&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż pasek narzędzi &quot;Linie&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż pasek narzędzi &quot;Łuki&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Circles&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż pasek narzędzi &quot;Okręgi&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż pasek narzędzi &quot;Elipsy&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż pasek narzędzi &quot;Polilinie&quot;</translation>
     </message>
     <message>
         <source>Draw Splines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rysuj splajn</translation>
     </message>
     <message>
         <source>Draw Points</source>
-        <translation type="unfinished">Rysuj punkty</translation>
+        <translation>Rysuj punkty</translation>
     </message>
     <message>
         <source>Insert Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Wstaw tekst</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż pasek narzędzi &quot;Wymiary&quot;</translation>
     </message>
     <message>
         <source>Create Hatch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tworzenie wypełnienia</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished">Wstaw obraz</translation>
+        <translation>Wstaw obraz</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Modify&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż pasek narzędzi &quot;Modyfikuj&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Info&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż pasek narzędzi &quot;Info&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Select&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż pasek narzędzi &quot;Zaznacz&quot;</translation>
     </message>
 </context>
 <context>
@@ -2743,15 +2747,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Polyline equidistant</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Polilinie równoodległe</translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished">Utwórz linię łamaną z istniejących obiektów</translation>
+        <translation>Utwórz linię łamaną z istniejących obiektów</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Koncentryczny</translation>
+        <translation>Koncentryczny</translation>
     </message>
 </context>
 <context>
@@ -2962,31 +2966,31 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Dark Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciemnoczerwony</translation>
     </message>
     <message>
         <source>Dark Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciemnożółty</translation>
     </message>
     <message>
         <source>Dark Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciemnozielony</translation>
     </message>
     <message>
         <source>Dark Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciemny Cyan</translation>
     </message>
     <message>
         <source>Dark Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciemnoniebieski</translation>
     </message>
     <message>
         <source>Dark Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciemna Magenta</translation>
     </message>
     <message>
         <source>Dark Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciemnoszary</translation>
     </message>
 </context>
 <context>
@@ -3001,7 +3005,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Unknown command: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieznane polecenie: %1</translation>
     </message>
 </context>
 <context>
@@ -3637,7 +3641,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>Move/Copy Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opcje przenieś/kopiuj</translation>
     </message>
 </context>
 <context>
@@ -3941,6 +3945,50 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
         <source>10</source>
         <translation>10</translation>
     </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Lewo</translation>
+    </message>
+    <message>
+        <source>Top crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Prawo</translation>
+    </message>
+    <message>
+        <source>Use orthogonal grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgOptionsGeneral</name>
@@ -4214,39 +4262,39 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>#FFFFFF</source>
-        <translation type="unfinished"></translation>
+        <translation>#FFFFFF</translation>
     </message>
     <message>
         <source>#C0C0C0</source>
-        <translation type="unfinished"></translation>
+        <translation>#C0C0C0</translation>
     </message>
     <message>
         <source>#A54747</source>
-        <translation type="unfinished"></translation>
+        <translation>#A54747</translation>
     </message>
     <message>
         <source>400</source>
-        <translation type="unfinished">400</translation>
+        <translation>400</translation>
     </message>
     <message>
         <source>800</source>
-        <translation type="unfinished">800</translation>
+        <translation>800</translation>
     </message>
     <message>
         <source>Drawing unit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jednostka rysunku.</translation>
     </message>
     <message>
         <source>Time between automatic saving of the document in minutes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Czas pomiędzy autozapisem dokumentu w minutach.</translation>
     </message>
     <message>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Po włączeniu LibreCAD będzie automatycznie tworzył kopie zapasowe rysunku.</translation>
     </message>
     <message>
         <source>Auto backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopia zapasowa</translation>
     </message>
 </context>
 <context>
@@ -4323,35 +4371,35 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     <name>QG_DlgPolyline</name>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished">Linia łamana</translation>
+        <translation>Linia łamana</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Warstwa:</translation>
+        <translation>Warstwa:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Geometria</translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished">Zamknięta</translation>
+        <translation>Zamknięta</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished">Alt+O</translation>
+        <translation>Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation>Esc</translation>
     </message>
 </context>
 <context>
@@ -4516,15 +4564,15 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <source>1.0</source>
-        <translation type="unfinished">1.0</translation>
+        <translation>1.0</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
 </context>
 <context>
@@ -5642,7 +5690,7 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Cofnij ostatnią narysowaną linię</translation>
     </message>
 </context>
 <context>
@@ -5862,22 +5910,37 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
 </context>
 <context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Opcje linii z kątem względnym</translation>
+        <translation>Opcje linii z kątem względnym</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation type="unfinished">Odstęp:</translation>
+        <translation>Odstęp:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Odległość od początkowej polilinii</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopie:</translation>
     </message>
 </context>
 <context>
@@ -5985,11 +6048,11 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
     <message>
         <source>Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaznaczony</translation>
     </message>
     <message>
         <source>Total Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Całkowita długość</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -6027,7 +6090,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Middle Points:</source>
-        <translation type="unfinished"></translation>
+        <translation>Punkty centralne:</translation>
     </message>
     <message>
         <source>Number of equidistant division points</source>
@@ -6038,11 +6101,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapToolBar</name>
     <message>
         <source>Snap</source>
-        <translation type="unfinished">Przyciągaj</translation>
+        <translation>Przyciągaj</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
-        <translation type="unfinished">Przyciągaj do punktów końcowych</translation>
+        <translation>Przyciągaj do punktów końcowych</translation>
     </message>
     <message>
         <source>Snap to equidistant points of entity</source>
@@ -6050,15 +6113,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap to center points</source>
-        <translation type="unfinished">Przyciągaj do punktów centralnych</translation>
+        <translation>Przyciągaj do punktów centralnych</translation>
     </message>
     <message>
         <source>Snap to intersections automatically</source>
-        <translation type="unfinished">Lokalizuj punkty przecięcia automatycznie</translation>
+        <translation>Automatycznie lokalizuj punkty przecięcia</translation>
     </message>
     <message>
         <source>Snap to closest point on entity</source>
-        <translation type="unfinished">Przyciągaj do najbliższego punktu lub obiektu</translation>
+        <translation>Przyciągaj do najbliższego punktu lub obiektu</translation>
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
@@ -6405,7 +6468,7 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>Wszystkie pliki obrazów (%1)</translation>
+        <translation type="obsolete">Wszystkie pliki obrazów (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -6553,6 +6616,14 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>Jww %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block %1 already exist, renamed to: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8707,11 +8778,11 @@ Czy chcesz zastąpić?</translation>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation>Dodaj warstwę</translation>
+        <translation type="obsolete">Dodaj warstwę</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;Dodaj warstwę</translation>
+        <translation type="unfinished">&amp;Dodaj warstwę</translation>
     </message>
 </context>
 <context>
@@ -8756,18 +8827,18 @@ Czy chcesz zastąpić?</translation>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation>Usuń warstwę</translation>
+        <translation type="obsolete">Usuń warstwę</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="obsolete">&amp;Usuń warstwę</translation>
+        <translation type="unfinished">&amp;Usuń warstwę</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation>Przełącz blokadę warstwy</translation>
+        <translation type="obsolete">Przełącz blokadę warstwy</translation>
     </message>
     <message>
         <source>&amp;Toggle Lock</source>
@@ -8776,6 +8847,10 @@ Czy chcesz zastąpić?</translation>
     <message>
         <source>Toggle Lock</source>
         <translation type="obsolete">Przełącz blokadę</translation>
+    </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8786,11 +8861,15 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation>&amp;Przełącz warstwę</translation>
+        <translation type="obsolete">&amp;Przełącz warstwę</translation>
     </message>
     <message>
         <source>Toggle Layer</source>
         <translation type="obsolete">Przełącz warstwę</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9820,6 +9899,14 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

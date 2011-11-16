@@ -33,10 +33,10 @@
 
 
 RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
-        RS_GraphicView& graphicView,
-                                             QVector<RS2::EntityType>* entityTypeList)
-        :RS_ActionInterface("Select Entities", container, graphicView) {
+                                             RS_GraphicView& graphicView,RS_ActionSelect* actionSelect,  QVector<RS2::EntityType>* entityTypeList)
+    :RS_ActionInterface("Select Entities", container, graphicView) {
     this->entityTypeList=entityTypeList;
+    this->actionSelect=actionSelect;
 
     en = NULL;
 }
@@ -71,6 +71,8 @@ void RS_ActionSelectSingle::keyPressEvent(QKeyEvent* e) {
 
 void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
+            //need to finish the parent RS_ActionSelect as well, bug#3437138
+        actionSelect->requestFinish();
         init(getStatus()-1);
     } else {
         if(entityTypeList!=NULL && entityTypeList->size()>0) {

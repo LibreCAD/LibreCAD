@@ -746,10 +746,14 @@ void QC_ApplicationWindow::initActions(void)
     // RVT_PORT menu->insertItem(tr("Tool&bars"), createDockWindowMenu(OnlyToolBars));
 
 
-        // tr("Focus on Command Line")
-        action = new QAction(tr("Focus on &Command Line"), this);
-        action->setIcon(QIcon(":/main/editclear.png"));
-        action->setShortcut(tr("CTRL+M"));
+    // tr("Focus on Command Line")
+    action = new QAction(tr("Focus on &Command Line"), this);
+    action->setIcon(QIcon(":/main/editclear.png"));
+    {//added commandline shortcuts, feature request# 3437106
+        QList<QKeySequence> commandLineShortcuts;
+        commandLineShortcuts<<QKeySequence(Qt::CTRL + Qt::Key_M)<<QKeySequence( Qt::Key_Colon)<<QKeySequence(Qt::Key_Space);
+        action->setShortcuts(commandLineShortcuts);
+    }
         //action->zetStatusTip(tr("Focus on Command Line"));
 
     connect(action, SIGNAL(triggered()),
@@ -1238,6 +1242,10 @@ void QC_ApplicationWindow::initActions(void)
     action = actionFactory.createAction(RS2::ActionLayersEdit, actionHandler);
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionLayersToggleLock,
+                                        actionHandler);
+    menu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionLayersToggleView,
                                         actionHandler);
     menu->addAction(action);
@@ -1252,6 +1260,10 @@ void QC_ApplicationWindow::initActions(void)
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionBlocksFreezeAll,
+                                        actionHandler);
+    menu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionBlocksToggleView,
                                         actionHandler);
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -3176,7 +3188,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
                        "</font></p>" +
                        "<br>" +
                        "<center>" +
-                       tr("Please donate to LibreCAD to help maintain the sourcecode and it's website.") +
+                       tr("Please consider donating to LibreCAD to help maintain the source code and website.") +
                        "<br>" +
                        "<br>" +
                        "<a href=\"http://librecad.org/donate.html\" alt=\"Donate to LibreCAD\">" +

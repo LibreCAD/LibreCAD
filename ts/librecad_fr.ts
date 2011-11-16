@@ -352,7 +352,7 @@ Vous pouvez enregistrer votre travail maintenant.</translation>
     </message>
     <message>
         <source>CTRL+M</source>
-        <translation>CTRL+M</translation>
+        <translation type="obsolete">CTRL+M</translation>
     </message>
     <message>
         <source>Insert Image</source>
@@ -426,7 +426,7 @@ Sauvegarde automatique désactivée.</translation>
     </message>
     <message>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation>Merci de faire un don à LibreCAD pour soutenir le développement et aider au maintient du site web.</translation>
+        <translation type="obsolete">Merci de faire un don à LibreCAD pour soutenir le développement et aider au maintient du site web.</translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
@@ -442,6 +442,10 @@ Sauvegarde automatique désactivée.</translation>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -609,7 +613,7 @@ Sauvegarde automatique désactivée.</translation>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="unfinished">Restriction &amp;Verticale</translation>
+        <translation>Restriction &amp;Verticale</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -1263,7 +1267,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Points</source>
-        <translation>Points</translation>
+        <translation type="obsolete">Points</translation>
     </message>
     <message>
         <source>Splines</source>
@@ -2673,6 +2677,50 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     <message>
         <source>10</source>
         <translation>10</translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Gauche</translation>
+    </message>
+    <message>
+        <source>Top crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Droite</translation>
+    </message>
+    <message>
+        <source>Use orthogonal grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4563,6 +4611,21 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
 </context>
 <context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
@@ -5102,7 +5165,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>Tous les Fichiers Image (%1)</translation>
+        <translation type="obsolete">Tous les Fichiers Image (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -5250,6 +5313,14 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Jww %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block %1 already exist, renamed to: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7376,11 +7447,11 @@ Voulez-vous le remplacer ?</translation>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation>Ajouter Calque</translation>
+        <translation type="obsolete">Ajouter Calque</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;Ajouter Calque</translation>
+        <translation type="unfinished">&amp;Ajouter Calque</translation>
     </message>
 </context>
 <context>
@@ -7425,18 +7496,18 @@ Voulez-vous le remplacer ?</translation>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation>Effacer Calque</translation>
+        <translation type="obsolete">Effacer Calque</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="obsolete">&amp;Effacer Calque</translation>
+        <translation type="unfinished">&amp;Effacer Calque</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation>Verrouillage Calque</translation>
+        <translation type="obsolete">Verrouillage Calque</translation>
     </message>
     <message>
         <source>&amp;Toggle Lock</source>
@@ -7445,6 +7516,10 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Toggle Lock</source>
         <translation type="obsolete">Verrouillage Calque</translation>
+    </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7455,11 +7530,15 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation>&amp;Calque Courant</translation>
+        <translation type="obsolete">&amp;Calque Courant</translation>
     </message>
     <message>
         <source>Toggle Layer</source>
         <translation type="obsolete">Calque Courant</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8481,6 +8560,14 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

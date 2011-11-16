@@ -172,12 +172,14 @@ void QG_CadToolBarSelect::runNextAction() {
 }
 
 void QG_CadToolBarSelect::back() {
-
+    if(parentTB != NULL){
+        parentTB->showPreviousToolBar();
+    }
 }
 
 void QG_CadToolBarSelect::on_bBack_clicked()
 {
-    if (parentTB!=NULL) {
+    if(parentTB != NULL){
         parentTB->showPreviousToolBar();
     }
 }

@@ -399,10 +399,6 @@ Nyní můžete uložit svou práci.</translation>
         <translation type="unfinished">&amp;Lomená čára</translation>
     </message>
     <message>
-        <source>CTRL+M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Insert Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -462,10 +458,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -479,6 +471,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1471,7 +1467,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="unfinished">Pouze sv&amp;isle</translation>
+        <translation>Pouze sv&amp;isle</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -2526,7 +2522,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Points</source>
-        <translation type="unfinished">Body</translation>
+        <translation type="obsolete">Body</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Lines&quot;</source>
@@ -3936,6 +3932,50 @@ Toto nastavení můžete později změnit v menu Nastavení QCADu.</translation>
     <message>
         <source>10</source>
         <translation type="unfinished">10</translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Levé</translation>
+    </message>
+    <message>
+        <source>Top crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Pravé</translation>
+    </message>
+    <message>
+        <source>Use orthogonal grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5838,6 +5878,21 @@ Toto nastavení můžete později změnit v menu Nastavení QCADu.</translation>
     </message>
 </context>
 <context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
@@ -6381,7 +6436,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>Všechny soubory s obrázky (%1)</translation>
+        <translation type="obsolete">Všechny soubory s obrázky (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -6529,6 +6584,14 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>Jww %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block %1 already exist, renamed to: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8651,11 +8714,11 @@ Přejete si ho přepsat?</translation>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation>Přidat hladinu</translation>
+        <translation type="obsolete">Přidat hladinu</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="obsolete">Přida&amp;t hladinu</translation>
+        <translation type="unfinished">Přida&amp;t hladinu</translation>
     </message>
 </context>
 <context>
@@ -8700,18 +8763,18 @@ Přejete si ho přepsat?</translation>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation>Odstranit hladinu</translation>
+        <translation type="obsolete">Odstranit hladinu</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="obsolete">&amp;Odstranit hladinu</translation>
+        <translation type="unfinished">&amp;Odstranit hladinu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation>Přepne zámek hladiny</translation>
+        <translation type="obsolete">Přepne zámek hladiny</translation>
     </message>
     <message>
         <source>&amp;Toggle Lock</source>
@@ -8720,6 +8783,10 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>Toggle Lock</source>
         <translation type="obsolete">Přepnout zámek</translation>
+    </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8730,11 +8797,15 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation>Přep&amp;nout hladinu</translation>
+        <translation type="obsolete">Přep&amp;nout hladinu</translation>
     </message>
     <message>
         <source>Toggle Layer</source>
         <translation type="obsolete">Přepnout hladinu</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9776,6 +9847,14 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
