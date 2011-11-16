@@ -68,15 +68,18 @@ void QG_ModifyOffsetOptions::destroy() {
 
 void QG_ModifyOffsetOptions::setDist(double& d, bool initial) {
     dist = &d;
+        bool ok;
     if(initial) {
         RS_SETTINGS->beginGroup("/Draw");
         QString r = RS_SETTINGS->readEntry("/ModifyOffsetDistance", "1.0");
         RS_SETTINGS->endGroup();
 
         leDist->setText(r);
-        *dist=r.toDouble();
+        *dist=RS_Math::eval(r,&ok);
+        if(ok==false) *dist=1.;
     } else {
-        *dist=leDist->text().toDouble();
+        *dist=RS_Math::eval(leDist->text(),&ok);
+        if(ok==false) *dist=1.;
     }
 }
 
