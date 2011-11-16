@@ -48,12 +48,16 @@ void RS_ActionSelect::init(int status) {
         graphicView->setCurrentAction(
                     new RS_ActionSelectSingle(*container, *graphicView,this));
     }
+    deleteSnapper();
+
 }
 
 void RS_ActionSelect::resume(){
     RS_ActionInterface::resume();
     if(selectSingle==false){
         finish();
+    }else{
+        deleteSnapper();
     }
 }
 
