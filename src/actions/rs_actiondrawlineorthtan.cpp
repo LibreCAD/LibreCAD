@@ -49,6 +49,14 @@ RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(
 }
 
 
+void RS_ActionDrawLineOrthTan::finish(bool updateTB){
+    normal->setHighlighted(false);
+    if(graphicView==NULL){
+        graphicView->drawEntity(normal);
+    }
+    RS_PreviewActionInterface::finish(updateTB);
+}
+
 QAction* RS_ActionDrawLineOrthTan::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action = new QAction(tr("Tangent &Orthogonal"), NULL);
     action->setIcon(QIcon(":/extui/linesorthtan.png"));
