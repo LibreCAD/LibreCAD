@@ -277,10 +277,6 @@ Please check the permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>CTRL+M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Insert Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -340,10 +336,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -357,6 +349,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -926,10 +922,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Create Block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2240,6 +2232,50 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use orthogonal grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric Grid</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4064,6 +4100,21 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
 </context>
 <context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
@@ -4581,10 +4632,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All Image Files (%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Graphics Interchange Format</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4722,6 +4769,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Jww %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block %1 already exist, renamed to: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6249,7 +6304,7 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionLayersAdd</name>
     <message>
-        <source>Add Layer</source>
+        <source>&amp;Add Layer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6274,21 +6329,21 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionLayersRemove</name>
     <message>
-        <source>Remove Layer</source>
+        <source>&amp;Remove Layer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
-        <source>Toggle Layer Lock</source>
+        <source>Toggle Layer Loc&amp;k</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleView</name>
     <message>
-        <source>&amp;Toggle Layer</source>
+        <source>&amp;Toggle Layer Visibility</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7123,6 +7178,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

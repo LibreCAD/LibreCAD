@@ -175,7 +175,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">
-       <normaloff>:/extui/dlgmodifymove.png</normaloff>:/extui/dlgmodifymove.png</iconset>
+       <normaloff>:/extui/dlgmove1.png</normaloff>:/extui/dlgmove1.png</iconset>
      </property>
      <property name="iconSize">
       <size>

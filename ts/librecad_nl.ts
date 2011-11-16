@@ -404,7 +404,7 @@ U kunt nu uw werk bewaren.</translation>
     </message>
     <message>
         <source>CTRL+M</source>
-        <translation>ctrl+m</translation>
+        <translation type="obsolete">ctrl+m</translation>
     </message>
     <message>
         <source>Insert Image</source>
@@ -475,7 +475,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation>Ondersteun LibreCAD financieel voor het onderhoud van sourcecode en website. </translation>
+        <translation type="obsolete">Ondersteun LibreCAD financieel voor het onderhoud van sourcecode en website. </translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
@@ -483,7 +483,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Warning: File already opened : </source>
-        <translation type="unfinished"></translation>
+        <translation>Waarschuwing: Deze file is al geopend.</translation>
     </message>
     <message>
         <source>Cannot save the file </source>
@@ -491,6 +491,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1483,7 +1487,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="unfinished">Beperk &amp;Vertikaal</translation>
+        <translation>Beperk &amp;Vertikaal</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -2530,7 +2534,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Points</source>
-        <translation>Punten</translation>
+        <translation type="obsolete">Punten</translation>
     </message>
     <message>
         <source>Splines</source>
@@ -3948,6 +3952,50 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     <message>
         <source>10</source>
         <translation>10</translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Links</translation>
+    </message>
+    <message>
+        <source>Top crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Rechts</translation>
+    </message>
+    <message>
+        <source>Use orthogonal grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5870,6 +5918,21 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
 </context>
 <context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
@@ -6413,7 +6476,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>Alle Afbeelding Bestanden (%1)</translation>
+        <translation type="obsolete">Alle Afbeelding Bestanden (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -6561,6 +6624,14 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Jww %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block %1 already exist, renamed to: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8715,11 +8786,11 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation>Voeg laag toe</translation>
+        <translation type="obsolete">Voeg laag toe</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;Voeg laag toe</translation>
+        <translation type="unfinished">&amp;Voeg laag toe</translation>
     </message>
 </context>
 <context>
@@ -8764,18 +8835,18 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation>Wis Laag</translation>
+        <translation type="obsolete">Wis Laag</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="obsolete">&amp;Wis Laag</translation>
+        <translation type="unfinished">&amp;Wis Laag</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation>Schakel Laag Zichtbaarheids Slot</translation>
+        <translation type="obsolete">Schakel Laag Zichtbaarheids Slot</translation>
     </message>
     <message>
         <source>&amp;Toggle Lock</source>
@@ -8784,6 +8855,10 @@ Wilt u het vervangen?</translation>
     <message>
         <source>Toggle Lock</source>
         <translation type="obsolete">Schakel Slot</translation>
+    </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8794,11 +8869,15 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation>&amp;Schakel Laag Zichtbaarheid</translation>
+        <translation type="obsolete">&amp;Schakel Laag Zichtbaarheid</translation>
     </message>
     <message>
         <source>Toggle Layer</source>
         <translation type="obsolete">Schakel Laag Zichtbaarheid</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9840,6 +9919,14 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

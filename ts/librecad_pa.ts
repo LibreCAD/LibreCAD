@@ -351,10 +351,6 @@ You can save your work now.</source>
         <translation>ਬਹੁਭੁਜ(&amp;P)</translation>
     </message>
     <message>
-        <source>CTRL+M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Insert Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -414,10 +410,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -431,6 +423,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -599,7 +595,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="unfinished">ਲੰਬਕਾਰੀ ਪਾਬੰਦੀ(&amp;V)</translation>
+        <translation>ਲੰਬਕਾਰੀ ਪਾਬੰਦੀ(&amp;V)</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -1238,7 +1234,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Points</source>
-        <translation>ਬਿੰਦੂ</translation>
+        <translation type="obsolete">ਬਿੰਦੂ</translation>
     </message>
     <message>
         <source>Splines</source>
@@ -2644,6 +2640,50 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>10</source>
         <translation>10</translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">ਖੱਬਾ</translation>
+    </message>
+    <message>
+        <source>Top crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">ਸੱਜਾ</translation>
+    </message>
+    <message>
+        <source>Use orthogonal grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4510,6 +4550,21 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
 </context>
 <context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
@@ -5049,7 +5104,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>ਸਭ ਚਿੱਤਰ ਫਾਇਲਾਂ (%1)</translation>
+        <translation type="obsolete">ਸਭ ਚਿੱਤਰ ਫਾਇਲਾਂ (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -5197,6 +5252,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Jww %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block %1 already exist, renamed to: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7292,11 +7355,11 @@ Do you want to replace it?</source>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation>ਪਰਤ ਸ਼ਾਮਿਲ</translation>
+        <translation type="obsolete">ਪਰਤ ਸ਼ਾਮਿਲ</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="obsolete">ਪਰਤ ਸ਼ਾਮਿਲ(&amp;A)</translation>
+        <translation type="unfinished">ਪਰਤ ਸ਼ਾਮਿਲ(&amp;A)</translation>
     </message>
 </context>
 <context>
@@ -7341,18 +7404,18 @@ Do you want to replace it?</source>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation>ਪਰਤ ਹਟਾਓ</translation>
+        <translation type="obsolete">ਪਰਤ ਹਟਾਓ</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="obsolete">ਪਰਤ ਹਟਾਓ(&amp;R)</translation>
+        <translation type="unfinished">ਪਰਤ ਹਟਾਓ(&amp;R)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation>ਪਰਤ ਤਾਲਾ ਤਬਦੀਲ</translation>
+        <translation type="obsolete">ਪਰਤ ਤਾਲਾ ਤਬਦੀਲ</translation>
     </message>
     <message>
         <source>&amp;Toggle Lock</source>
@@ -7361,6 +7424,10 @@ Do you want to replace it?</source>
     <message>
         <source>Toggle Lock</source>
         <translation type="obsolete">ਤਾਲਾ ਤਬਦੀਲ</translation>
+    </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7371,11 +7438,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation>ਪਰਤ ਤਬਦੀਲ(&amp;T)</translation>
+        <translation type="obsolete">ਪਰਤ ਤਬਦੀਲ(&amp;T)</translation>
     </message>
     <message>
         <source>Toggle Layer</source>
         <translation type="obsolete">ਪਰਤ ਤਬਦੀਲ</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8397,6 +8468,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

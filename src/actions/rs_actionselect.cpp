@@ -40,10 +40,7 @@ RS_ActionSelect::RS_ActionSelect(RS_EntityContainer& container,
     this->entityTypeList=entityTypeList;
 
     this->nextAction = nextAction;
-    if(entityTypeList != NULL){
-//        std::cout<<"RS_ActionSelect::RS_ActionSelect(): "<<entityTypeList->size()<<std::endl;
-    }
-
+    selectSingle=true;
 }
 
 
@@ -52,10 +49,20 @@ void RS_ActionSelect::init(int status) {
     RS_ActionInterface::init(status);
     if(status >= 0 ) {
         graphicView->setCurrentAction(
-                    new RS_ActionSelectSingle(*container, *graphicView, entityTypeList));
+                    new RS_ActionSelectSingle(*container, *graphicView, this, entityTypeList));
     }
 }
 
+void RS_ActionSelect::resume(){
+    RS_ActionInterface::resume();
+    if(selectSingle==false){
+        finish();
+    }
+}
+
+void RS_ActionSelect::requestFinish(){
+    selectSingle=false;
+}
 
 
 void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
@@ -129,6 +136,12 @@ void RS_ActionSelect::updateMouseButtonHints() {
     case RS2::ActionModifyMoveNoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select to move"), tr("Cancel"));
         break;
+    case RS2::ActionEditCopyNoSelect:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to copy"), tr("Cancel"));
+        break;
+    case RS2::ActionEditCutNoSelect:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to cut"), tr("Cancel"));
+        break;
     case RS2::ActionModifyRotateNoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select to rotate"), tr("Cancel"));
         break;
@@ -160,4 +173,13 @@ void RS_ActionSelect::updateMouseButtonHints() {
 }
 
 
+void RS_ActionSelect::updateMouseCursor() {
+    if(graphicView!=NULL){
+        if(isFinished()){
+            graphicView->setMouseCursor(RS2::ArrowCursor);
+        }else{
+            graphicView->setMouseCursor(RS2::SelectCursor);
+        }
+    }
+}
 // EOF

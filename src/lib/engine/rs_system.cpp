@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+//#include <iostream>
 #include <QMap>
 #include <qapplication.h>
 #include <QTextCodec>
@@ -85,10 +86,14 @@ void RS_System::initLanguageList() {
 
         RS_DEBUG->print("RS_System::initLanguageList: qm file: %s",
                         (*it).toLatin1().data());
+//        std::cout<<"RS_System::initLanguageList: qm file: "<<(*it).toLatin1().data()<<std::endl;
 
-        int i1 = (*it).lastIndexOf('_');
+        int i0 = (*it).lastIndexOf(QString("librecad"),-1,Qt::CaseInsensitive);
+        int i1 = (*it).indexOf('_',i0);
         int i2 = (*it).indexOf('.', i1);
+        if( i1 == -1 || i2 == -1 ) continue;
         QString l = (*it).mid(i1+1, i2-i1-1);
+//        std::cout<<"RS_System::initLanguageList: l: "<<qPrintable(l)<<std::endl;
 
         if ( !(languageList.contains(l)) ) {
             RS_DEBUG->print("RS_System::initLanguageList: append language: %s",
@@ -554,16 +559,21 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
  * Languages taken from RFC3066
  */
 QString RS_System::languageToSymbol(const QString& lang) {
-    QString l = lang.toLower();
-
-    RS_Locale *locale;
-    foreach (locale, *RS_SYSTEM->allKnownLocales) {
-        if (locale->getName().toLower()==l) {
-            return locale->getCanonical();
+        int i1=lang.indexOf(' ');
+    QString l = lang;
+        if(i1 >= 2){
+                l=lang.mid(0,i1);
         }
-    }
+        return l;
 
-    return "";
+//    RS_Locale *locale;
+//    foreach (locale, *RS_SYSTEM->allKnownLocales) {
+//        if (locale->getName().toLower()==l) {
+//            return locale->getCanonical();
+//        }
+//    }
+
+//    return "";
 }
 
 
@@ -573,16 +583,21 @@ QString RS_System::languageToSymbol(const QString& lang) {
  * (e.g. 'de' to Deutsch)
  */
 QString RS_System::symbolToLanguage(const QString& symb) {
+        return RS_Locale(symb).name();
+        /* testing new language names, Dongxu Li
     QString l = symb.toLower();
 
+                std::cout<<"symb="<<qPrintable(symb)<<" name="<<qPrintable(RS_Locale(symb).name())<<std::endl;
     RS_Locale *locale;
     foreach (locale, *RS_SYSTEM->allKnownLocales) {
         QString canon=locale->getCanonical().toLower();
         if (canon==l || canon==l+"_"+l.toUpper() || canon.mid(0,2)==l) {
+                std::cout<<"symb="<<qPrintable(symb)<<" name="<<qPrintable(locale->getName())<<std::endl;
             return locale->getName();
         }
     }
     return "";
+    */
 }
 
 

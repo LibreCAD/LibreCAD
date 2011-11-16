@@ -399,10 +399,6 @@ Teraz môžete uložiť svoju prácu.</translation>
         <translation type="unfinished">&amp;Lomená čiara</translation>
     </message>
     <message>
-        <source>CTRL+M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Insert Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -462,10 +458,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -479,6 +471,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -787,7 +783,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="unfinished">&amp;Vertikálne ohraničenie</translation>
+        <translation>&amp;Vertikálne ohraničenie</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -1554,7 +1550,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Points</source>
-        <translation type="unfinished">Body</translation>
+        <translation type="obsolete">Body</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Lines&quot;</source>
@@ -2960,6 +2956,50 @@ Tieto nastavenia môžete neskôr zmeniť v dialógovom okne Nastavenia.</transl
     <message>
         <source>10</source>
         <translation type="unfinished">10</translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Ľavé</translation>
+    </message>
+    <message>
+        <source>Top crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Pravé</translation>
+    </message>
+    <message>
+        <source>Use orthogonal grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4846,6 +4886,21 @@ Tieto nastavenia môžete neskôr zmeniť v dialógovom okne Nastavenia.</transl
     </message>
 </context>
 <context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
@@ -5389,7 +5444,7 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>Všetky typy obrázkov (%1)</translation>
+        <translation type="obsolete">Všetky typy obrázkov (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -5537,6 +5592,14 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>Jww %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block %1 already exist, renamed to: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7651,11 +7714,11 @@ Chcete ho nahradiť?</translation>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation>Pridaj hladinu</translation>
+        <translation type="obsolete">Pridaj hladinu</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;Pridaj hladinu</translation>
+        <translation type="unfinished">&amp;Pridaj hladinu</translation>
     </message>
 </context>
 <context>
@@ -7700,18 +7763,18 @@ Chcete ho nahradiť?</translation>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation>Vymaž hladinu</translation>
+        <translation type="obsolete">Vymaž hladinu</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="obsolete">&amp;Vymaž hladinu</translation>
+        <translation type="unfinished">&amp;Vymaž hladinu</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation>Prepne uzmaknutie hladiny</translation>
+        <translation type="obsolete">Prepne uzmaknutie hladiny</translation>
     </message>
     <message>
         <source>&amp;Toggle Lock</source>
@@ -7720,6 +7783,10 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Toggle Lock</source>
         <translation type="obsolete">Prepni uzamknutie</translation>
+    </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7730,11 +7797,15 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation>&amp;Prepni hladinu</translation>
+        <translation type="obsolete">&amp;Prepni hladinu</translation>
     </message>
     <message>
         <source>Toggle Layer</source>
         <translation type="obsolete">Prepni hladinu</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8768,6 +8839,14 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -28,6 +28,7 @@
 #define RS_ACTIONSELECTSINGLE_H
 
 #include "rs_actioninterface.h"
+#include "rs_actionselect.h"
 
 
 /**
@@ -36,28 +37,28 @@
  * @author Andrew Mustun
  */
 class RS_ActionSelectSingle : public RS_ActionInterface {
-        Q_OBJECT
+    Q_OBJECT
 public:
     RS_ActionSelectSingle(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView,
-                          QVector<RS2::EntityType>* entityTypeList=NULL);
-//    ~RS_ActionSelectSingle() {}
+                          RS_GraphicView& graphicView,RS_ActionSelect* actionSelect=NULL, QVector<RS2::EntityType>* entityTypeList=NULL);
+    ~RS_ActionSelectSingle() {}
 
-        static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-        virtual RS2::ActionType rtti() {
-                return RS2::ActionSelectSingle;
-        }
+    virtual RS2::ActionType rtti() {
+        return RS2::ActionSelectSingle;
+    }
 
-        virtual void trigger();
-        virtual void keyPressEvent(QKeyEvent* e);
-        virtual void mouseReleaseEvent(QMouseEvent* e);
-        virtual void updateMouseCursor();
+    virtual void trigger();
+    virtual void keyPressEvent(QKeyEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
+    virtual void updateMouseCursor();
 
 private:
-        QVector<RS2::EntityType>* entityTypeList;
+    QVector<RS2::EntityType>* entityTypeList;
 
     RS_Entity* en;
+    RS_ActionSelect* actionSelect;
 };
 
 #endif

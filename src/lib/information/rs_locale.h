@@ -26,7 +26,7 @@
 #ifndef RS_LOCALE_H
 #define RS_LOCALE_H
 
-#include <QString>
+#include <QLocale>
 #include "rs.h"
 
 /**
@@ -34,20 +34,23 @@
   * (c) 2011 R. van Twisk
   *
   **/
-class RS_Locale {
+class RS_Locale :public QLocale {
 public:
     RS_Locale();
+    RS_Locale(const QString &_canonical);
 
     virtual void setCanonical(const QString &_canonical);
     virtual void setDirection(RS2::TextLocaleDirection direction);
     virtual void setName(const QString &_name);
+    virtual QString name() const;
+    static QString toCanonical(const QString &canonical);
 
     QString getCanonical();
     QString getName();
 
 protected:
     QString canonical;
-    QString name;
+    QString localeName;
     int direction;
 };
 

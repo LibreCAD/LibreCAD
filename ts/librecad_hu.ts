@@ -405,10 +405,6 @@ Most elmentheti a munkáját.</translation>
         <translation type="unfinished">&amp;Szakaszok sorozata</translation>
     </message>
     <message>
-        <source>CTRL+M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Insert Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -468,10 +464,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -485,6 +477,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1661,7 +1657,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="unfinished">&amp;Függőleges korlátozás</translation>
+        <translation>&amp;Függőleges korlátozás</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -2572,7 +2568,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Points</source>
-        <translation type="unfinished">Pontok</translation>
+        <translation type="obsolete">Pontok</translation>
     </message>
     <message>
         <source>Splines</source>
@@ -4128,6 +4124,50 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     <message>
         <source>10</source>
         <translation type="unfinished">10</translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Bal</translation>
+    </message>
+    <message>
+        <source>Top crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Jobb</translation>
+    </message>
+    <message>
+        <source>Use orthogonal grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6210,6 +6250,21 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
 </context>
 <context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
@@ -6683,7 +6738,7 @@ p, li { white-space: pre-wrap; }
     <name>QObject</name>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>Minden kép (%1)</translation>
+        <translation type="obsolete">Minden kép (%1)</translation>
     </message>
     <message>
         <source>Open Image</source>
@@ -6897,6 +6952,14 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Jww %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block %1 already exist, renamed to: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9035,11 +9098,11 @@ Lecseréli?</translation>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation>Új fólia hozzáadása</translation>
+        <translation type="obsolete">Új fólia hozzáadása</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;Új fólia</translation>
+        <translation type="unfinished">&amp;Új fólia</translation>
     </message>
 </context>
 <context>
@@ -9084,18 +9147,18 @@ Lecseréli?</translation>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation>Fólia törlése</translation>
+        <translation type="obsolete">Fólia törlése</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="obsolete">Fólia &amp;törlése</translation>
+        <translation type="unfinished">Fólia &amp;törlése</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation>Fóliazár váltás</translation>
+        <translation type="obsolete">Fóliazár váltás</translation>
     </message>
     <message>
         <source>&amp;Toggle Lock</source>
@@ -9105,12 +9168,16 @@ Lecseréli?</translation>
         <source>Toggle Lock</source>
         <translation type="obsolete">Fóliazár váltás</translation>
     </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleView</name>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation>Lá&amp;thatóság váltása</translation>
+        <translation type="obsolete">Lá&amp;thatóság váltása</translation>
     </message>
     <message>
         <source>Toggle Layer</source>
@@ -9119,6 +9186,10 @@ Lecseréli?</translation>
     <message>
         <source>Toggle Layer Visibility</source>
         <translation type="obsolete">Láthatóság váltása (ki/be)</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10168,6 +10239,14 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

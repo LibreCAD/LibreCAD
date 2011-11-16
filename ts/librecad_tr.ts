@@ -369,10 +369,6 @@ adresinden temin edin. Şimdi çalışmanızı kaydedin.</translation>
         <translation type="unfinished">&amp;Yamuk</translation>
     </message>
     <message>
-        <source>CTRL+M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Insert Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -432,10 +428,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -449,6 +441,10 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -656,7 +652,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="unfinished">D&amp;üşeyle Sınırla</translation>
+        <translation>D&amp;üşeyle Sınırla</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -1260,7 +1256,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Points</source>
-        <translation type="unfinished">Noktalar</translation>
+        <translation type="obsolete">Noktalar</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Lines&quot;</source>
@@ -2662,6 +2658,50 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     <message>
         <source>10</source>
         <translation type="unfinished">10</translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Sol</translation>
+    </message>
+    <message>
+        <source>Top crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right crosshair with isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Sağ</translation>
+    </message>
+    <message>
+        <source>Use orthogonal grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orthogonal Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use isometric grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4544,6 +4584,21 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
 </context>
 <context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
@@ -5021,7 +5076,7 @@ p, li { white-space: pre-wrap; }
     <name>QObject</name>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>Tüm Resim Dosyaları (%1)</translation>
+        <translation type="obsolete">Tüm Resim Dosyaları (%1)</translation>
     </message>
     <message>
         <source>All Files (*.*)</source>
@@ -5234,6 +5289,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Jww %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block %1 already exist, renamed to: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7336,11 +7399,11 @@ Do you want to replace it?</source>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation>Katman Ekle</translation>
+        <translation type="obsolete">Katman Ekle</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="obsolete">Katman &amp;Ekle</translation>
+        <translation type="unfinished">Katman &amp;Ekle</translation>
     </message>
 </context>
 <context>
@@ -7385,18 +7448,18 @@ Do you want to replace it?</source>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation>Katmanı Sil</translation>
+        <translation type="obsolete">Katmanı Sil</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="obsolete">Katmanı &amp;Sil</translation>
+        <translation type="unfinished">Katmanı &amp;Sil</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation>Kilidi Aç/Kapa</translation>
+        <translation type="obsolete">Kilidi Aç/Kapa</translation>
     </message>
     <message>
         <source>&amp;Toggle Lock</source>
@@ -7405,6 +7468,10 @@ Do you want to replace it?</source>
     <message>
         <source>Toggle Lock</source>
         <translation type="obsolete">Kilidi Aç/Kapa</translation>
+    </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7415,11 +7482,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation>Kat&amp;manı Gizle/Göster</translation>
+        <translation type="obsolete">Kat&amp;manı Gizle/Göster</translation>
     </message>
     <message>
         <source>Toggle Layer</source>
         <translation type="obsolete">Katmanı Gizle/Göster</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8437,6 +8508,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
