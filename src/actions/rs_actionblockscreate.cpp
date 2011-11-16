@@ -95,12 +95,15 @@ void RS_ActionBlocksCreate::trigger() {
         }
     }
 
-        graphicView->redraw(RS2::RedrawDrawing);
+    graphicView->redraw(RS2::RedrawDrawing);
 
     setStatus(getStatus()+1); // clear mouse button hints
     updateMouseButtonHints();
-    finish(false);
+//    if(RS_DIALOGFACTORY!=NULL){
+//        RS_DIALOGFACTORY->requestPreviousToolBar();
+//    }
     graphicView->killSelectActions();
+    finish(false);
 }
 
 
@@ -178,15 +181,12 @@ void RS_ActionBlocksCreate::updateMouseCursor() {
 
 
 
-void RS_ActionBlocksCreate::updateToolBar() {
-        //not needed any more
-        return;
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-    }
-}
+//void RS_ActionBlocksCreate::updateToolBar() {
+//    if (isFinished()) {
+//        RS_DIALOGFACTORY->requestPreviousToolBar();
+//        RS_DIALOGFACTORY->requestPreviousToolBar();
+//    }
+//}
 
 
 // EOF

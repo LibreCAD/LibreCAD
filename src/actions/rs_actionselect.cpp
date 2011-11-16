@@ -51,12 +51,16 @@ void RS_ActionSelect::init(int status) {
         graphicView->setCurrentAction(
                     new RS_ActionSelectSingle(*container, *graphicView, this, entityTypeList));
     }
+    deleteSnapper();
+
 }
 
 void RS_ActionSelect::resume(){
     RS_ActionInterface::resume();
     if(selectSingle==false){
         finish();
+    }else{
+        deleteSnapper();
     }
 }
 
@@ -75,12 +79,14 @@ void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionSelect::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
+        if (selectSingle&& !isFinished()){
+            RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
+        }else{
             if(container->countSelected()==0){
                 //some nextAction segfault with empty selection
                 //todo: make actions safe with empty selection
                 RS_DIALOGFACTORY->commandMessage(tr("No entity selected!"));
-                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
+                RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
             } else{
                 if ( entityTypeList != NULL &&  entityTypeList->size() >= 1 ){
                     //only select entity types from the given list
@@ -96,27 +102,9 @@ void RS_ActionSelect::updateToolBar() {
                         }
                     }
                 }
-                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+                RS_DIALOGFACTORY->requestPreviousToolBar();
             }
-//            switch(nextAction) {
-//            case RS2::ActionModifyAttributesNoSelect:
-//            case RS2::ActionModifyDeleteNoSelect:
-//            case RS2::ActionModifyDeleteQuick:
-//            case RS2::ActionModifyMoveNoSelect:
-//            case RS2::ActionModifyRotateNoSelect:
-//            case RS2::ActionModifyScaleNoSelect:
-//            case RS2::ActionModifyMirrorNoSelect:
-//            case RS2::ActionModifyMoveRotateNoSelect:
-//            case RS2::ActionModifyRotate2NoSelect:
-//            case RS2::ActionModifyExplodeTextNoSelect:
-//                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//                break;
-//                //case RS2::ActionBlocksCreateNoSelect:
-//            default:
-//                break;
-//                //            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-//            }
-        } else {
+
             RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
         }
     }

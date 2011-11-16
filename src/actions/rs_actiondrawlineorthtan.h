@@ -48,6 +48,7 @@ public:
         static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
     virtual void trigger();
+    virtual void finish(bool updateTB = true);
 
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);

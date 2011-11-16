@@ -272,6 +272,7 @@ void RS_ActionInterface::finish(bool updateTB) {
         RS_Snapper::finish();
     }
     graphicView->setMouseCursor(RS2::ArrowCursor);
+
     RS_DEBUG->print("RS_ActionInterface::finish: OK");
 }
 

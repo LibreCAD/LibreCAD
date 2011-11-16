@@ -292,7 +292,9 @@ void RS_ActionDrawLine::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
         if (isFinished()) {
             RS_DIALOGFACTORY->resetToolBar();
-        }
+        }/*else{
+            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarLines);
+        }*/
     }
 }
 
