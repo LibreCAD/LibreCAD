@@ -180,14 +180,15 @@ void QG_CadToolBar::createSubToolBars(QG_ActionHandler* ah) {
 
 
 void QG_CadToolBar::showPreviousToolBar() {
-    if(previousID != RS2::ToolBarNone) {
-        showToolBar(previousID);
-    }
+
     if(actionHandler != NULL) {
         RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
         if(currentAction != NULL) {
             currentAction->finish(false); //finish the action, but do not update toolBar
         }
+    }
+    if(previousID != RS2::ToolBarNone) {
+        showToolBar(previousID);
     }
 }
 
