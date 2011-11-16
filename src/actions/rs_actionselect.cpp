@@ -78,6 +78,8 @@ void RS_ActionSelect::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
         if (selectSingle&& !isFinished()){
             RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
+        }else{
+            RS_DIALOGFACTORY->requestPreviousToolBar();
         }
     }
 }

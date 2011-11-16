@@ -103,7 +103,7 @@ void RS_ActionBlocksCreate::trigger() {
 //        RS_DIALOGFACTORY->requestPreviousToolBar();
 //    }
     graphicView->killSelectActions();
-    finish();
+    finish(false);
 }
 
 
