@@ -72,7 +72,7 @@ void RS_ActionInfoAngle::trigger() {
             if (intersection.valid && point1.valid && point2.valid) {
                 double angle1 = intersection.angleTo(point1);
                 double angle2 = intersection.angleTo(point2);
-                double angle = RS_Math::rad2deg(std::remainder(angle2-angle1,2.*M_PI));
+                double angle = RS_Math::rad2deg(remainder(angle2-angle1,2.*M_PI));
 
                 QString str;
                 str.setNum(angle);
