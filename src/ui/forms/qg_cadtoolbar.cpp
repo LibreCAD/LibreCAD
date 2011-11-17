@@ -62,7 +62,7 @@ void QG_CadToolBar::init() {
     setCursor(Qt::ArrowCursor);
     actionHandler = NULL;
     currentTb = NULL;
-    previousID = RS2::ToolBarNone;
+//    previousID = RS2::ToolBarNone;
     savedID = RS2::ToolBarNone;
 
     tbMain = NULL;
@@ -301,7 +301,7 @@ void QG_CadToolBar::showToolBar(RS2::ToolBarId id) {
     //    //    savedID=id;
     currentTb = newTb;
     if (currentTb!=NULL) {
-        if(id != toolbarIDs.last()) {
+        if(!( toolbarIDs.size()>0 && id == toolbarIDs.last())) {
             toolbarIDs.push_back(id);
             toolbars.push_back(currentTb);
             if(toolbars.last()!=NULL) toolbars.last()->setVisible(false);
