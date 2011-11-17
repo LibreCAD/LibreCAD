@@ -36,6 +36,7 @@ QG_CadToolBar::QG_CadToolBar(QWidget* parent, const char* name, Qt::WindowFlags 
     setObjectName(name);
     setupUi(this);
 toolbars.clear();
+toolbarIDs.clear();
     init();
 }
 
@@ -358,7 +359,6 @@ void QG_CadToolBar::showToolBarMain() {
 
 void QG_CadToolBar::showToolBarPoints() {
 //not needed
-        return;
     //showToolBar(RS2::ToolBarPoints);
 }
 
