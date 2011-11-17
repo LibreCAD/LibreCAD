@@ -75,7 +75,7 @@ public slots:
     virtual void showToolBarDim();
     virtual void showToolBarSelect();
     virtual void showToolBarSelect( RS_ActionInterface * selectAction, int nextAction );
-    virtual void showPreviousToolBar();
+    virtual void showPreviousToolBar(bool cleanup = true);
     virtual void setSnapFree();
     virtual void resetToolBar();
 
@@ -88,6 +88,8 @@ protected:
     QG_CadToolBarInfo* tbInfo;
     QG_ActionHandler* actionHandler;
     QWidget* currentTb;
+    QVector<RS2::ToolBarId> toolbarIDs;
+    QVector<QWidget*> toolbars;
     RS2::ToolBarId previousID;
     RS2::ToolBarId savedID;
     QG_CadToolBarMain* tbMain;

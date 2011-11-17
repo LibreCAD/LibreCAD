@@ -181,12 +181,18 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
     RS_DEBUG->print("defFilter: %s", defFilter.toLatin1().data());
 
     QString fDxf(QObject::tr("Drawing Exchange %1").arg("(*.dxf *.DXF)"));
+#ifdef USE_DXFRW
+    QString fDxfrw(QObject::tr("New Drawing Exchange %1").arg("(*.dxf)"));
+#endif
     QString fDxf1(QObject::tr("QCad 1.x file %1").arg("(*.dxf *.DXF)"));
     QString fLff(QObject::tr("LFF Font %1").arg("(*.lff)"));
     QString fCxf(QObject::tr("Font %1").arg("(*.cxf)"));
     QString fJww(QObject::tr("Jww %1").arg("(*.jww)"));
 
     RS_DEBUG->print("fDxf: %s", fDxf.toLatin1().data());
+#ifdef USE_DXFRW
+    RS_DEBUG->print("fDxfrw: %s", fDxfrw.toLatin1().data());
+#endif
     RS_DEBUG->print("fDxf1: %s", fDxf1.toLatin1().data());
     RS_DEBUG->print("fCxf: %s", fCxf.toLatin1().data());
     RS_DEBUG->print("fJww: %s", fJww.toLatin1().data());
@@ -197,17 +203,20 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
     QFileDialog* fileDlg = new QFileDialog(parent, "File Dialog");
 
     QStringList filters;
+#ifdef USE_DXFRW
+    filters.append(fDxfrw);
+#endif
     filters.append(fDxf);
     filters.append(fDxf1);
     filters.append(fLff);
     filters.append(fCxf);
     filters.append(fJww);
 
-    fileDlg->setFilters(filters);
+    fileDlg->setNameFilters(filters);
     fileDlg->setFileMode(QFileDialog::ExistingFile);
     fileDlg->setWindowTitle(QObject::tr("Open Drawing"));
     fileDlg->setDirectory(defDir);
-    fileDlg->selectFilter(defFilter);
+    fileDlg->selectNameFilter(defFilter);
 
     /** preview RVT PORT preview is currently not supported by QT4
     RS_Graphic* gr = new RS_Graphic;
@@ -224,13 +233,17 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
             fn = fl[0];
         fn = QDir::convertSeparators( QFileInfo(fn).absoluteFilePath() );
         if (type!=NULL) {
-            if (fileDlg->selectedFilter()==fDxf1) {
+            if (fileDlg->selectedNameFilter()==fDxf1) {
                 *type = RS2::FormatDXF1;
-            } else if (fileDlg->selectedFilter()==fDxf) {
+            } else if (fileDlg->selectedNameFilter()==fDxf) {
                 *type = RS2::FormatDXF;
-            } else if (fileDlg->selectedFilter()==fCxf) {
+#ifdef USE_DXFRW
+            } else if (fileDlg->selectedNameFilter()==fDxfrw) {
+                *type = RS2::FormatDXFRW;
+#endif
+            } else if (fileDlg->selectedNameFilter()==fCxf) {
                 *type = RS2::FormatCXF;
-            } else if (fileDlg->selectedFilter()==fJww) {
+            } else if (fileDlg->selectedNameFilter()==fJww) {
                 *type = RS2::FormatJWW;
             }
         }

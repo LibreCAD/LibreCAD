@@ -1404,6 +1404,12 @@ void QG_DialogFactory::requestToolBar(RS2::ToolBarId id) {
     }
 }
 
+void QG_DialogFactory::requestPreviousToolBar() {
+    if (cadToolBar!=NULL) {
+        cadToolBar->showPreviousToolBar(false);
+    }
+}
+
 
 void QG_DialogFactory::resetToolBar() {
     if (cadToolBar!=NULL) {

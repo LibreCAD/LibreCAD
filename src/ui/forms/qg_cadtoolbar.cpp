@@ -23,6 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+//#include <iostream>
 #include "qg_cadtoolbar.h"
 
 /*
@@ -34,7 +35,8 @@ QG_CadToolBar::QG_CadToolBar(QWidget* parent, const char* name, Qt::WindowFlags 
 {
     setObjectName(name);
     setupUi(this);
-
+toolbars.clear();
+toolbarIDs.clear();
     init();
 }
 
@@ -60,7 +62,7 @@ void QG_CadToolBar::init() {
     setCursor(Qt::ArrowCursor);
     actionHandler = NULL;
     currentTb = NULL;
-    previousID = RS2::ToolBarNone;
+//    previousID = RS2::ToolBarNone;
     savedID = RS2::ToolBarNone;
 
     tbMain = NULL;
@@ -179,15 +181,45 @@ void QG_CadToolBar::createSubToolBars(QG_ActionHandler* ah) {
 }
 
 
-void QG_CadToolBar::showPreviousToolBar() {
-    if(previousID != RS2::ToolBarNone) {
-        showToolBar(previousID);
+void QG_CadToolBar::showPreviousToolBar(bool cleanup) {
+    if (currentTb!=NULL) {
+        currentTb->setVisible(false);
     }
-    if(actionHandler != NULL) {
-        RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
-        if(currentAction != NULL) {
-            currentAction->finish(false); //finish the action, but do not update toolBar
+    if(cleanup){
+        if(actionHandler != NULL) {
+            RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+            if(currentAction != NULL) {
+                currentAction->finish(false); //finish the action, but do not update toolBar
+            }
         }
+        if(toolbars.size()>1){
+            if(toolbars.last() != NULL) toolbars.last() ->setVisible(false);
+            toolbars.pop_back();
+            toolbarIDs.pop_back();
+        }
+        showToolBar(toolbarIDs.last());
+    }else{
+
+        if(toolbars.size()>1){
+            if(toolbars.last()== NULL) toolbars.last()->setVisible(false);
+            toolbars.pop_back();
+            toolbarIDs.pop_back();
+
+            currentTb=toolbars.last();
+            if (currentTb!=NULL) {
+                //shift down to show the handle to move the toolbar
+                //has to be 20, 10 is not enough
+                currentTb->move(0,20);
+                currentTb->show();
+//                savedID=previousID;
+            }
+        }
+
+    }
+//    std::cout<<"toolbars.size()="<<toolbars.size()<<std::endl;
+    //fixme, hiding should be auto
+    for(int i1=0;i1<toolbars.size();i1++){
+        if(i1<toolbars.size()-1) toolbars[i1]->setVisible(false);
     }
 }
 
@@ -251,21 +283,38 @@ void QG_CadToolBar::showToolBar(RS2::ToolBarId id) {
         newTb = tbSelect;
         break;
     }
-
-    if (currentTb==newTb) {
-        return;
+    int i0=toolbarIDs.indexOf(id)+1;
+    if(i0>0 && i0<toolbarIDs.size()){
+        for(int i1=i0;i1<toolbars.size();i1++){
+            if(toolbars[i1] != NULL) toolbars[i1]->setVisible(false);
+        }
+        toolbars.erase(toolbars.begin()+i0,toolbars.end());
+        toolbarIDs.erase(toolbarIDs.begin()+i0,toolbarIDs.end());
     }
-    if (currentTb!=NULL) {
-        currentTb->hide();
-    }
-    previousID=savedID;
-    savedID=id;
+    //    if (currentTb==newTb) {
+    //        return;
+    //    }
+        if (currentTb!=NULL) {
+            currentTb->setVisible(false);
+        }
+    //    //    previousID=savedID;
+    //    //    savedID=id;
     currentTb = newTb;
     if (currentTb!=NULL) {
+        if(!( toolbarIDs.size()>0 && id == toolbarIDs.last())) {
+            toolbarIDs.push_back(id);
+            toolbars.push_back(currentTb);
+            if(toolbars.last()!=NULL) toolbars.last()->setVisible(false);
+        }
         //shift down to show the handle to move the toolbar
         //has to be 20, 10 is not enough
         currentTb->move(0,20);
         currentTb->show();
+    }
+//    std::cout<<"toolbars.size()="<<toolbars.size()<<std::endl;
+    //fixme, hiding should be auto
+    for(int i1=0;i1<toolbars.size();i1++){
+        if(i1<toolbars.size()-1) toolbars[i1]->setVisible(false);
     }
 }
 
@@ -310,7 +359,6 @@ void QG_CadToolBar::showToolBarMain() {
 
 void QG_CadToolBar::showToolBarPoints() {
 //not needed
-        return;
     //showToolBar(RS2::ToolBarPoints);
 }
 

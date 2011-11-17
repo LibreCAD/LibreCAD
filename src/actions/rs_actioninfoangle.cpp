@@ -27,6 +27,7 @@
 #include "rs_actioninfoangle.h"
 
 #include <QAction>
+#include <cmath>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
@@ -43,7 +44,7 @@ QAction* RS_ActionInfoAngle::createGUIAction(RS2::ActionType /*type*/, QObject* 
                                   tr("&Angle between two lines"),
                                   QKeySequence(), NULL); */
 
-    QAction* action = new QAction(tr("Angle between two lines"), NULL);
+    QAction* action = new QAction(tr("An&gle between two lines"), NULL);
     //action->zetStatusTip(tr("Measures the angle between two lines"));
         action->setIcon(QIcon(":/extui/infoangle.png"));
     return action;
@@ -71,12 +72,17 @@ void RS_ActionInfoAngle::trigger() {
             if (intersection.valid && point1.valid && point2.valid) {
                 double angle1 = intersection.angleTo(point1);
                 double angle2 = intersection.angleTo(point2);
-                double angle = fabs(angle2-angle1);
+                double angle = RS_Math::rad2deg(remainder(angle2-angle1,2.*M_PI));
 
                 QString str;
-                str.sprintf("%.6f", RS_Math::rad2deg(angle));
-                RS_DIALOGFACTORY->commandMessage(tr("Angle: %1%2")
-                                                 .arg(str).arg(QChar(0xB0)));
+                str.setNum(angle);
+                str += QChar(0xB0);
+                if(angle<0.){
+                    QString str2;
+                    str2.setNum(angle+360.); //positive value
+                    str += QString(" or %1%2").arg(str2).arg(QChar(0xB0));
+                }
+                RS_DIALOGFACTORY->commandMessage(tr("Angle: %1").arg(str));
             }
         } else {
             RS_DIALOGFACTORY->commandMessage(tr("Lines are parallel"));

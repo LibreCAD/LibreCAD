@@ -96,7 +96,7 @@ void RS_ActionDrawLine::trigger() {
         document->endUndoCycle();
     }
 
-        graphicView->redraw(RS2::RedrawDrawing);
+    graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(line->getEndpoint());
     RS_DEBUG->print("RS_ActionDrawLine::trigger(): line added: %d",
                     line->getId());
@@ -105,11 +105,11 @@ void RS_ActionDrawLine::trigger() {
 
 
 void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
-    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent begin");
+//    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent begin");
 
-    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point");
+//    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point");
     RS_Vector mouse = snapPoint(e);
-    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point: OK");
+//    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point: OK");
     if (getStatus()==SetEndpoint && data.startpoint.valid) {
         RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: update preview");
         deletePreview();
@@ -119,7 +119,7 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
         drawPreview();
     }
 
-    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent end");
+//    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent end");
 }
 
 
@@ -144,6 +144,7 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
     }
 
     RS_Vector mouse = e->getCoordinate();
+    if(data.startpoint.valid == false && getStatus()==SetEndpoint) setStatus(SetStartpoint);
 
     switch (getStatus()) {
     case SetStartpoint:
@@ -157,11 +158,14 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
         break;
 
     case SetEndpoint:
-        data.endpoint = mouse;
-        history.append(mouse);
-        trigger();
-        data.startpoint = data.endpoint;
-        updateMouseButtonHints();
+        if((mouse-data.startpoint).squared() > RS_TOLERANCE*RS_TOLERANCE) {
+            //refuse zero length lines
+            data.endpoint = mouse;
+            history.append(mouse);
+            trigger();
+            data.startpoint = data.endpoint;
+            if(history.size()>=2) updateMouseButtonHints();
+        }
         //graphicView->moveRelativeZero(mouse);
         break;
 
@@ -292,13 +296,16 @@ void RS_ActionDrawLine::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
         if (isFinished()) {
             RS_DIALOGFACTORY->resetToolBar();
-        }
+        }/*else{
+            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarLines);
+        }*/
     }
 }
 
 void RS_ActionDrawLine::close() {
     if (history.size()>2 && start.valid) {
         data.endpoint = start;
+        history.append(data.endpoint);
         trigger();
         setStatus(SetStartpoint);
         graphicView->moveRelativeZero(start);
@@ -319,8 +326,13 @@ void RS_ActionDrawLine::undo() {
         graphicView->moveRelativeZero(data.startpoint);
     } else {
         RS_DIALOGFACTORY->commandMessage(
-            tr("Cannot undo: "
-               "Not enough entities defined yet."));
+                    tr("Cannot undo: "
+                       "Not enough entities defined yet."));
+    }
+    if(history.size()>=1) {
+        setStatus(SetEndpoint);
+    }else{
+        setStatus(SetStartpoint);
     }
 }
 

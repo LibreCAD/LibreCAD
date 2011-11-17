@@ -48,12 +48,16 @@ void RS_ActionSelect::init(int status) {
         graphicView->setCurrentAction(
                     new RS_ActionSelectSingle(*container, *graphicView,this));
     }
+    deleteSnapper();
+
 }
 
 void RS_ActionSelect::resume(){
     RS_ActionInterface::resume();
     if(selectSingle==false){
         finish();
+    }else{
+        deleteSnapper();
     }
 }
 
@@ -72,28 +76,10 @@ void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionSelect::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//            switch(nextAction) {
-//            case RS2::ActionModifyAttributesNoSelect:
-//            case RS2::ActionModifyDeleteNoSelect:
-//            case RS2::ActionModifyDeleteQuick:
-//            case RS2::ActionModifyMoveNoSelect:
-//            case RS2::ActionModifyRotateNoSelect:
-//            case RS2::ActionModifyScaleNoSelect:
-//            case RS2::ActionModifyMirrorNoSelect:
-//            case RS2::ActionModifyMoveRotateNoSelect:
-//            case RS2::ActionModifyRotate2NoSelect:
-//            case RS2::ActionModifyExplodeTextNoSelect:
-//                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//                break;
-//                //case RS2::ActionBlocksCreateNoSelect:
-//            default:
-//                break;
-//                //            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-//            }
-        } else {
+        if (selectSingle&& !isFinished()){
             RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
+        }else{
+            RS_DIALOGFACTORY->requestPreviousToolBar();
         }
     }
 }
