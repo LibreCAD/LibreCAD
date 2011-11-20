@@ -40,7 +40,7 @@ class RS_ActionSelectSingle : public RS_ActionInterface {
 	Q_OBJECT
 public:
     RS_ActionSelectSingle(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView,RS_ActionSelect* actionSelect=NULL);
+                          RS_GraphicView& graphicView,RS_ActionInterface* actionSelect=NULL);
     ~RS_ActionSelectSingle() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);

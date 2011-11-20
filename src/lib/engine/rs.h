@@ -201,6 +201,7 @@ public:
         ActionZoomRedraw,
         ActionZoomPrevious,
 
+        ActionSelect,
         ActionSelectSingle,
         ActionSelectContour,
         ActionSelectWindow,

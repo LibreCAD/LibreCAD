@@ -44,13 +44,16 @@ public:
     ~RS_ActionSelect() {}
 
     virtual void init(int status);
+    virtual RS2::ActionType rtti(){
+            return RS2::ActionSelect;
+    }
     virtual void resume();
     //virtual void keyPressEvent(QKeyEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateToolBar();
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    void requestFinish();
+    void requestFinish(bool keep=false);
 
 private:
     RS2::ActionType nextAction;
