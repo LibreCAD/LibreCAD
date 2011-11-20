@@ -76,8 +76,10 @@ void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionSelect::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
-        if (selectSingle&& !isFinished()){
-            RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
+        if (!isFinished()){
+            if(selectSingle){
+                RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
+            }
         }else{
             RS_DIALOGFACTORY->requestPreviousToolBar();
         }

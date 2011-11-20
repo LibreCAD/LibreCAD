@@ -62,21 +62,18 @@ public slots:
     virtual void createSubToolBars( QG_ActionHandler * ah );
     virtual void showToolBar(RS2::ToolBarId id );
     virtual void showToolBarMain();
-    virtual void showToolBarPoints();
     virtual void showToolBarLines();
     virtual void showToolBarArcs();
     virtual void showToolBarEllipses();
-    virtual void showToolBarSplines();
+//    virtual void showToolBarSplines();
     virtual void showToolBarPolylines();
     virtual void showToolBarCircles();
     virtual void showToolBarInfo();
     virtual void showToolBarModify();
-    virtual void showToolBarSnap();
     virtual void showToolBarDim();
     virtual void showToolBarSelect();
     virtual void showToolBarSelect( RS_ActionInterface * selectAction, int nextAction );
     virtual void showPreviousToolBar(bool cleanup = true);
-    virtual void setSnapFree();
     virtual void resetToolBar();
 
 signals:
@@ -84,28 +81,29 @@ signals:
     void signalNext();
 
 protected:
-    QG_CadToolBarSplines* tbSplines;
+    //    QG_CadToolBarSplines* tbSplines;
     QG_CadToolBarInfo* tbInfo;
     QG_ActionHandler* actionHandler;
-    QWidget* currentTb;
     QVector<RS2::ToolBarId> toolbarIDs;
     QVector<QWidget*> toolbars;
-    RS2::ToolBarId previousID;
-    RS2::ToolBarId savedID;
+    //    RS2::ToolBarId previousID;
+    //    RS2::ToolBarId savedID;
     QG_CadToolBarMain* tbMain;
     QG_CadToolBarDim* tbDim;
     QG_CadToolBarLines* tbLines;
-    QG_CadToolBarPoints* tbPoints;
+    //    QG_CadToolBarPoints* tbPoints;
     QG_CadToolBarEllipses* tbEllipses;
     QG_CadToolBarArcs* tbArcs;
     QG_CadToolBarModify* tbModify;
     QG_CadToolBarCircles* tbCircles;
-    QG_SnapToolBar* tbSnap;
+    //    QG_SnapToolBar* tbSnap;
     QG_CadToolBarSelect* tbSelect;
     QG_CadToolBarPolylines* tbPolylines;
 
 protected slots:
     virtual void languageChange();
+    void hideSubToolBars();
+    void showSubToolBar();
 
 private:
     void init();

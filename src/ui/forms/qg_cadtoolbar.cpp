@@ -35,8 +35,8 @@ QG_CadToolBar::QG_CadToolBar(QWidget* parent, const char* name, Qt::WindowFlags 
 {
     setObjectName(name);
     setupUi(this);
-toolbars.clear();
-toolbarIDs.clear();
+    toolbars.clear();
+    toolbarIDs.clear();
     init();
 }
 
@@ -61,18 +61,18 @@ void QG_CadToolBar::languageChange()
 void QG_CadToolBar::init() {
     setCursor(Qt::ArrowCursor);
     actionHandler = NULL;
-    currentTb = NULL;
-//    previousID = RS2::ToolBarNone;
-    savedID = RS2::ToolBarNone;
+    //    currentTb = NULL;
+    //    previousID = RS2::ToolBarNone;
+    //    savedID = RS2::ToolBarNone;
 
     tbMain = NULL;
 
-    tbPoints = NULL;
+    //    tbPoints = NULL;
     tbLines = NULL;
     tbArcs = NULL;
     tbCircles = NULL;
     tbEllipses = NULL;
-    tbSplines = NULL;
+    //    tbSplines = NULL;
     tbPolylines = NULL;
 
     tbDim = NULL;
@@ -80,8 +80,7 @@ void QG_CadToolBar::init() {
     tbModify = NULL;
     tbInfo = NULL;
     tbSelect = NULL;
-
-    tbSnap = NULL;
+    //    tbSnap = NULL;
 }
 
 /**
@@ -95,14 +94,16 @@ QG_ActionHandler* QG_CadToolBar::getActionHandler() {
  * Called from the sub toolbar
  */
 void QG_CadToolBar::back() {
-    emit(signalBack());
+    showPreviousToolBar(true);
+    //    emit(signalBack());
 }
 
 /**
  * Called from the application.
  */
 void QG_CadToolBar::forceNext() {
-    if (currentTb!=NULL && currentTb==tbSelect) {
+    if(toolbars.size()==0) return;
+    if (toolbars.last()!=NULL && toolbars.last()==tbSelect) {
         tbSelect->runNextAction();
     }
 }
@@ -128,9 +129,9 @@ void QG_CadToolBar::createSubToolBars(QG_ActionHandler* ah) {
     tbMain = new QG_CadToolBarMain(this);
     tbMain->setCadToolBar(this);
 
-    tbPoints = new QG_CadToolBarPoints(this);
-    tbPoints->setCadToolBar(this);
-    tbPoints->hide();
+    //    tbPoints = new QG_CadToolBarPoints(this);
+    //    tbPoints->setCadToolBar(this);
+    //    tbPoints->hide();
 
     tbLines = new QG_CadToolBarLines(this);
     tbLines->setCadToolBar(this);
@@ -148,9 +149,9 @@ void QG_CadToolBar::createSubToolBars(QG_ActionHandler* ah) {
     tbEllipses->setCadToolBar(this);
     tbEllipses->hide();
 
-    tbSplines = new QG_CadToolBarSplines(this);
-    tbSplines->setCadToolBar(this);
-    tbSplines->hide();
+    //    tbSplines = new QG_CadToolBarSplines(this);
+    //    tbSplines->setCadToolBar(this);
+    //    tbSplines->hide();
 
     tbPolylines = new QG_CadToolBarPolylines(this);
     tbPolylines->setCadToolBar(this);
@@ -168,7 +169,7 @@ void QG_CadToolBar::createSubToolBars(QG_ActionHandler* ah) {
     tbModify->setCadToolBar(this);
     tbModify->hide();
 
-    tbSnap = NULL;
+    //    tbSnap = NULL;
     //tbSnap = new QG_CadToolBarSnap(this);
     //tbSnap->setCadToolBar(this);
     //tbSnap->hide();
@@ -180,11 +181,18 @@ void QG_CadToolBar::createSubToolBars(QG_ActionHandler* ah) {
     showToolBarMain();
 }
 
-
-void QG_CadToolBar::showPreviousToolBar(bool cleanup) {
-    if (currentTb!=NULL) {
-        currentTb->setVisible(false);
+void QG_CadToolBar::hideSubToolBars(){
+    for(auto it=toolbars.begin();it != toolbars.end();it++){
+        (*it)->hide();
     }
+}
+void QG_CadToolBar::showSubToolBar(){
+    //shift down to show the handle to move the toolbar
+    //has to be 20, 10 is not enough
+    toolbars.last()->move(0,20);
+    toolbars.last()->show();
+}
+void QG_CadToolBar::showPreviousToolBar(bool cleanup) {
     if(cleanup){
         if(actionHandler != NULL) {
             RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
@@ -197,35 +205,26 @@ void QG_CadToolBar::showPreviousToolBar(bool cleanup) {
             toolbars.pop_back();
             toolbarIDs.pop_back();
         }
+        //        std::cout<<"QG_CadToolBar::showPreviousToolBar(true): toolbars.size()="<<toolbars.size()<<std::endl;
         showToolBar(toolbarIDs.last());
     }else{
-
+        hideSubToolBars();
+        //        std::cout<<"QG_CadToolBar::showPreviousToolBar(false): toolbars.size()="<<toolbars.size()<<std::endl;
         if(toolbars.size()>1){
+            //            std::cout<<"QG_CadToolBar::showPreviousToolBar(false): hide:"<<toolbarIDs[toolbars.size()-1]<<std::endl;
             if(toolbars.last()== NULL) toolbars.last()->setVisible(false);
             toolbars.pop_back();
             toolbarIDs.pop_back();
 
-            currentTb=toolbars.last();
-            if (currentTb!=NULL) {
-                //shift down to show the handle to move the toolbar
-                //has to be 20, 10 is not enough
-                currentTb->move(0,20);
-                currentTb->show();
-//                savedID=previousID;
-            }
         }
 
-    }
-//    std::cout<<"toolbars.size()="<<toolbars.size()<<std::endl;
-    //fixme, hiding should be auto
-    for(int i1=0;i1<toolbars.size();i1++){
-        if(i1<toolbars.size()-1) toolbars[i1]->setVisible(false);
+        //        std::cout<<"QG_CadToolBar::showPreviousToolBar(false): toolbars.size()="<<toolbars.size()<<std::endl;
+        showSubToolBar();
     }
 }
 
 void QG_CadToolBar::showToolBar(RS2::ToolBarId id) {
     QWidget* newTb = NULL;
-
     switch (id) {
     default:
     case RS2::ToolBarMain:
@@ -283,42 +282,34 @@ void QG_CadToolBar::showToolBar(RS2::ToolBarId id) {
         newTb = tbSelect;
         break;
     }
+    hideSubToolBars();
     int i0=toolbarIDs.indexOf(id)+1;
     if(i0>0 && i0<toolbarIDs.size()){
-        for(int i1=i0;i1<toolbars.size();i1++){
-            if(toolbars[i1] != NULL) toolbars[i1]->setVisible(false);
-        }
         toolbars.erase(toolbars.begin()+i0,toolbars.end());
         toolbarIDs.erase(toolbarIDs.begin()+i0,toolbarIDs.end());
     }
     //    if (currentTb==newTb) {
     //        return;
     //    }
-        if (currentTb!=NULL) {
-            currentTb->setVisible(false);
-        }
+    //        if (currentTb!=NULL) {
+    //            currentTb->setVisible(false);
+    //        }
     //    //    previousID=savedID;
     //    //    savedID=id;
-    currentTb = newTb;
-    if (currentTb!=NULL) {
+    //    currentTb = newTb;
+    if (newTb!=NULL) {
         if(!( toolbarIDs.size()>0 && id == toolbarIDs.last())) {
+            //            if(toolbars.last()!=NULL) toolbars.last()->setVisible(false);
             toolbarIDs.push_back(id);
-            toolbars.push_back(currentTb);
-            if(toolbars.last()!=NULL) toolbars.last()->setVisible(false);
+            toolbars.push_back(newTb);
         }
-        //shift down to show the handle to move the toolbar
-        //has to be 20, 10 is not enough
-        currentTb->move(0,20);
-        currentTb->show();
     }
-//    std::cout<<"toolbars.size()="<<toolbars.size()<<std::endl;
-    //fixme, hiding should be auto
-    for(int i1=0;i1<toolbars.size();i1++){
-        if(i1<toolbars.size()-1) toolbars[i1]->setVisible(false);
-    }
+    //        std::cout<<"QG_CadToolBar::showToolBar(): toolbars.size()="<<toolbars.size()<<std::endl;
+    showSubToolBar();
 }
 
 void QG_CadToolBar::resetToolBar() {
+    QWidget* currentTb=toolbars.last();
     if(currentTb == tbMain) {
         tbMain->resetToolBar();
         return;
@@ -357,10 +348,10 @@ void QG_CadToolBar::showToolBarMain() {
     showToolBar(RS2::ToolBarMain);
 }
 
-void QG_CadToolBar::showToolBarPoints() {
-//not needed
-    //showToolBar(RS2::ToolBarPoints);
-}
+//void QG_CadToolBar::showToolBarPoints() {
+//    //not needed
+//    //showToolBar(RS2::ToolBarPoints);
+//}
 
 void QG_CadToolBar::showToolBarLines() {
     showToolBar(RS2::ToolBarLines);
@@ -374,9 +365,9 @@ void QG_CadToolBar::showToolBarEllipses() {
     showToolBar(RS2::ToolBarEllipses);
 }
 
-void QG_CadToolBar::showToolBarSplines() {
-    showToolBar(RS2::ToolBarSplines);
-}
+//void QG_CadToolBar::showToolBarSplines() {
+//    showToolBar(RS2::ToolBarSplines);
+//}
 
 void QG_CadToolBar::showToolBarPolylines() {
     showToolBar(RS2::ToolBarPolylines);
@@ -394,9 +385,9 @@ void QG_CadToolBar::showToolBarModify() {
     showToolBar(RS2::ToolBarModify);
 }
 
-void QG_CadToolBar::showToolBarSnap() {
-    showToolBar(RS2::ToolBarSnap);
-}
+//void QG_CadToolBar::showToolBarSnap() {
+//    showToolBar(RS2::ToolBarSnap);
+//}
 
 void QG_CadToolBar::showToolBarDim() {
     showToolBar(RS2::ToolBarDim);
@@ -414,10 +405,4 @@ void QG_CadToolBar::showToolBarSelect(RS_ActionInterface* selectAction,
     showToolBar(RS2::ToolBarSelect);
 }
 
-void QG_CadToolBar::setSnapFree() {
-    //not needed any more, will be removed
-//    return;
-//        if (tbSnap != NULL ) {
-//                tbSnap->snapFree();
-//        }
-}
+
