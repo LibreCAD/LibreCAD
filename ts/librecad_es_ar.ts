@@ -6591,6 +6591,10 @@ Do you want to replace it?</source>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -6656,11 +6660,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>Desagrupar</translation>
+        <translation type="obsolete">Desagrupar</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Descomponer bloques y otros grupos de objetos</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6671,7 +6679,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Bloquear todo</translation>
+        <translation type="obsolete">&amp;Bloquear todo</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -6683,11 +6691,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Desbloquear todo</translation>
+        <translation type="obsolete">&amp;Desbloquear todo</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Desbloquear todos los bloques</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6756,7 +6772,7 @@ Do you want to replace it?</source>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Tecla conmutador de visibilidad de bloque</translation>
+        <translation type="obsolete">Tecla conmutador de visibilidad de bloque</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -6766,6 +6782,10 @@ Do you want to replace it?</source>
         <source>Toggle Block</source>
         <translation type="obsolete">Tecla de bloque
 </translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8526,7 +8546,7 @@ Do you want to replace it?</source>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle between two lines</source>
-        <translation>Angulo entre dos líneas</translation>
+        <translation type="obsolete">Angulo entre dos líneas</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -8538,7 +8558,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Angulo: %1%2</translation>
+        <translation type="obsolete">Angulo: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -8560,12 +8580,20 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>Atrás</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Angulo: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation>Área poligonal</translation>
+        <translation type="obsolete">Área poligonal</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
@@ -8602,6 +8630,10 @@ Do you want to replace it?</source>
     <message>
         <source>Terminate</source>
         <translation type="obsolete">Finalizar</translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8736,7 +8768,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Añadir capa</translation>
+        <translation>&amp;Añadir capa</translation>
     </message>
 </context>
 <context>
@@ -8758,7 +8790,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Bloquear todo</translation>
+        <translation type="obsolete">&amp;Bloquear todo</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -8770,11 +8802,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Desbloquear todo</translation>
+        <translation type="obsolete">&amp;Desbloquear todo</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Desbloquear todas las capas</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8785,7 +8825,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Quitar capa</translation>
+        <translation>&amp;Quitar capa</translation>
     </message>
 </context>
 <context>

@@ -6550,6 +6550,10 @@ Do you want to replace it?</source>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -6591,18 +6595,30 @@ Do you want to replace it?</source>
     <name>RS_ActionBlocksExplode</name>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Розбити</translation>
+        <translation type="obsolete">&amp;Розбити</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksFreezeAll</name>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Заморозити усі</translation>
+        <translation type="obsolete">&amp;Заморозити усі</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Розморозити усі</translation>
+        <translation type="obsolete">&amp;Розморозити усі</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6659,7 +6675,11 @@ Do you want to replace it?</source>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Перемкнути видимість блоку</translation>
+        <translation type="obsolete">Перемкнути видимість блоку</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7977,11 +7997,11 @@ Do you want to replace it?</source>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle between two lines</source>
-        <translation>Кут між двома лініями</translation>
+        <translation type="obsolete">Кут між двома лініями</translation>
     </message>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Кут: %1%2</translation>
+        <translation type="obsolete">Кут: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -8003,12 +8023,20 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Кут: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation>Площа багатокутника</translation>
+        <translation type="obsolete">Площа багатокутника</translation>
     </message>
     <message>
         <source>Area: %1</source>
@@ -8037,6 +8065,10 @@ Do you want to replace it?</source>
     <message>
         <source>Terminate</source>
         <translation type="obsolete">Припинити</translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8153,11 +8185,19 @@ Do you want to replace it?</source>
     <name>RS_ActionLayersFreezeAll</name>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Заморозити усі</translation>
+        <translation type="obsolete">&amp;Заморозити усі</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Розморозити усі</translation>
+        <translation type="obsolete">&amp;Розморозити усі</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

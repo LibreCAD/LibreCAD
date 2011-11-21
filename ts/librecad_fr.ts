@@ -5323,6 +5323,10 @@ Voulez-vous le remplacer ?</translation>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -5388,11 +5392,15 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Dissocier</translation>
+        <translation type="obsolete">&amp;Dissocier</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Dissocier Blocs et autres Objets Groupés</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5403,7 +5411,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Cacher tout</translation>
+        <translation type="obsolete">&amp;Cacher tout</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -5415,11 +5423,19 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Tout Voir</translation>
+        <translation type="obsolete">&amp;Tout Voir</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Voir tous les blocs</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5488,7 +5504,7 @@ Voulez-vous le remplacer ?</translation>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Visibilité Bloc Courant</translation>
+        <translation type="obsolete">Visibilité Bloc Courant</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -5497,6 +5513,10 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Bloc Courant</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7241,7 +7261,7 @@ Voulez-vous le remplacer ?</translation>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle between two lines</source>
-        <translation>Angle formé entre deux lignes</translation>
+        <translation type="obsolete">Angle formé entre deux lignes</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -7253,7 +7273,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Angle : %1%2</translation>
+        <translation type="obsolete">Angle : %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -7275,12 +7295,20 @@ Voulez-vous le remplacer ?</translation>
         <source>Back</source>
         <translation>Précédent</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Angle : %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation>Aire Polygonale</translation>
+        <translation type="obsolete">Aire Polygonale</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
@@ -7317,6 +7345,10 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Terminate</source>
         <translation type="obsolete">Terminer</translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7451,7 +7483,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Ajouter Calque</translation>
+        <translation>&amp;Ajouter Calque</translation>
     </message>
 </context>
 <context>
@@ -7473,7 +7505,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Cacher tout</translation>
+        <translation type="obsolete">&amp;Cacher tout</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -7485,11 +7517,19 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Tout Voir</translation>
+        <translation type="obsolete">&amp;Tout Voir</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Voir tous les calques</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7500,7 +7540,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Effacer Calque</translation>
+        <translation>&amp;Effacer Calque</translation>
     </message>
 </context>
 <context>

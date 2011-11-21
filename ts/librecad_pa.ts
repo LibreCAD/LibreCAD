@@ -5262,6 +5262,10 @@ Do you want to replace it?</source>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -5327,11 +5331,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>ਫੈਲਾਓ(&amp;E)</translation>
+        <translation type="obsolete">ਫੈਲਾਓ(&amp;E)</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">ਬਲਾਕ ਅਤੇ ਹੋਹ ਇੰਦਰਾਜ਼ ਗਰੁੱਪ ਸੋਧੋ</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5342,7 +5350,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>ਸਭ ਜਮਾਉ(&amp;F)</translation>
+        <translation type="obsolete">ਸਭ ਜਮਾਉ(&amp;F)</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -5354,11 +5362,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>ਸਭ ਵੱਖ ਕਰੋ(&amp;D)</translation>
+        <translation type="obsolete">ਸਭ ਵੱਖ ਕਰੋ(&amp;D)</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">ਸਭ ਬਲਾਕ ਵੱਖ ਕਰੋ</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5427,7 +5443,7 @@ Do you want to replace it?</source>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>ਬਲਾਕ ਦਿੱਖ ਤਬਦੀਲ ਕਰੋ</translation>
+        <translation type="obsolete">ਬਲਾਕ ਦਿੱਖ ਤਬਦੀਲ ਕਰੋ</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -5436,6 +5452,10 @@ Do you want to replace it?</source>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">ਬਲਾਕ ਤਬਦੀਲ</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7149,7 +7169,7 @@ Do you want to replace it?</source>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle between two lines</source>
-        <translation>ਦੋ ਰੇਖਾਵਾਂ ਵਿੱਚ ਕੋਣ</translation>
+        <translation type="obsolete">ਦੋ ਰੇਖਾਵਾਂ ਵਿੱਚ ਕੋਣ</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -7161,7 +7181,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Angle: %1%2</source>
-        <translation>ਕੋਣ: %1%2</translation>
+        <translation type="obsolete">ਕੋਣ: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -7183,12 +7203,20 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>ਪਿੱਛੇ</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">ਕੋਣ: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation>ਬਹੁਭੁਜ ਖੇਤਰ</translation>
+        <translation type="obsolete">ਬਹੁਭੁਜ ਖੇਤਰ</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
@@ -7225,6 +7253,10 @@ Do you want to replace it?</source>
     <message>
         <source>Terminate</source>
         <translation type="obsolete">ਖਤਮ</translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7359,7 +7391,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">ਪਰਤ ਸ਼ਾਮਿਲ(&amp;A)</translation>
+        <translation>ਪਰਤ ਸ਼ਾਮਿਲ(&amp;A)</translation>
     </message>
 </context>
 <context>
@@ -7381,7 +7413,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>ਸਭ ਜਮਾਉ(&amp;F)</translation>
+        <translation type="obsolete">ਸਭ ਜਮਾਉ(&amp;F)</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -7393,11 +7425,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>ਸਭ ਵੱਖ ਕਰੋ(&amp;D)</translation>
+        <translation type="obsolete">ਸਭ ਵੱਖ ਕਰੋ(&amp;D)</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">ਸਭ ਪਰਤਾਂ ਵੱਖ ਕਰੋ</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7408,7 +7448,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">ਪਰਤ ਹਟਾਓ(&amp;R)</translation>
+        <translation>ਪਰਤ ਹਟਾਓ(&amp;R)</translation>
     </message>
 </context>
 <context>

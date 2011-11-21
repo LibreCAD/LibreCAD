@@ -28,6 +28,8 @@ CONFIG += qt \
 QMAKE_CXXFLAGS_DEBUG +=
 QMAKE_CXXFLAGS +=
 
+PRE_TARGETDEPS = ../intermediate/libdxfrw.a
+
 # Make translations at the end of the process
 unix {
     # Get SVN revision number

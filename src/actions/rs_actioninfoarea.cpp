@@ -42,7 +42,7 @@ QAction* RS_ActionInfoArea::createGUIAction(RS2::ActionType /*type*/, QObject* /
 /*    QAction* action = new QAction(tr("Polygonal Area"),
                                   tr("&Polygonal Area"),
                                   QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Polygonal Area"), NULL);
+    QAction* action = new QAction(tr("Polygonal &Area"), NULL);
     //action->zetStatusTip(tr("Measures the area of a polygon"));
     action->setIcon(QIcon(":/extui/infoarea.png"));
     return action;

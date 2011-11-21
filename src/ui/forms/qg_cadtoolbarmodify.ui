@@ -301,10 +301,10 @@
       </size>
      </property>
      <property name="toolTip">
-      <string>Offset</string>
+      <string>Offset (Experimental Feature, work in progress)</string>
      </property>
      <property name="text">
-      <string/>
+      <string notr="true"/>
      </property>
      <property name="icon">
       <iconset resource="../../../res/extui/extui.qrc">

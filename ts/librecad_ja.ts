@@ -5317,6 +5317,10 @@ Do you want to replace it?</source>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -5382,11 +5386,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>分解(&amp;E)</translation>
+        <translation type="obsolete">分解(&amp;E)</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">部品、その他の部品を分解</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5397,7 +5405,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>全てを非表示(&amp;F)</translation>
+        <translation type="obsolete">全てを非表示(&amp;F)</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -5409,11 +5417,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>全て表示(&amp;D)</translation>
+        <translation type="obsolete">全て表示(&amp;D)</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">全部品の表示</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5482,7 +5498,7 @@ Do you want to replace it?</source>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>部品非／表示</translation>
+        <translation type="obsolete">部品非／表示</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -5491,6 +5507,10 @@ Do you want to replace it?</source>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">部品表示切り替え</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7216,7 +7236,7 @@ Do you want to replace it?</source>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle between two lines</source>
-        <translation>角度</translation>
+        <translation type="obsolete">角度</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -7228,7 +7248,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Angle: %1%2</source>
-        <translation>角度: %1%2</translation>
+        <translation type="obsolete">角度: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -7250,12 +7270,20 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>戻る</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">角度: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation>ポリゴンの面積</translation>
+        <translation type="obsolete">ポリゴンの面積</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
@@ -7292,6 +7320,10 @@ Do you want to replace it?</source>
     <message>
         <source>Terminate</source>
         <translation type="obsolete">終了</translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7426,7 +7458,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">画層追加(&amp;A)</translation>
+        <translation>画層追加(&amp;A)</translation>
     </message>
 </context>
 <context>
@@ -7448,7 +7480,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>全て非表示(&amp;F)</translation>
+        <translation type="obsolete">全て非表示(&amp;F)</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -7460,11 +7492,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>全て表示(&amp;D)</translation>
+        <translation type="obsolete">全て表示(&amp;D)</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">全画層表示</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7475,7 +7515,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">画層削除(&amp;R)</translation>
+        <translation>画層削除(&amp;R)</translation>
     </message>
 </context>
 <context>

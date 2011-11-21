@@ -6585,6 +6585,10 @@ Do you want to replace it?</source>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -6650,11 +6654,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Разрушить</translation>
+        <translation type="obsolete">&amp;Разрушить</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Разрушить блок и другие группы объектов</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6665,7 +6673,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Заморозить все</translation>
+        <translation type="obsolete">&amp;Заморозить все</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -6677,11 +6685,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Разморозить все</translation>
+        <translation type="obsolete">&amp;Разморозить все</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Разморозить все блоки</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6746,7 +6762,7 @@ Do you want to replace it?</source>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Переключить видимость блока</translation>
+        <translation type="obsolete">Переключить видимость блока</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -6755,6 +6771,10 @@ Do you want to replace it?</source>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Видимость блока</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8495,7 +8515,7 @@ Do you want to replace it?</source>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Угол: %1%2</translation>
+        <translation type="obsolete">Угол: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -8519,7 +8539,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Angle between two lines</source>
-        <translation>Угол между двумя линиями</translation>
+        <translation type="obsolete">Угол между двумя линиями</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -8529,13 +8549,17 @@ Do you want to replace it?</source>
         <source>Measures the angle between two lines</source>
         <translation type="obsolete">Измеряет угол между двумя линиями</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Угол: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
-    <message>
-        <source>Polygonal Area</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Area: %1</source>
         <translation type="unfinished"></translation>
@@ -8558,6 +8582,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify next point of polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8693,7 +8721,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Добавить слой</translation>
+        <translation>&amp;Добавить слой</translation>
     </message>
 </context>
 <context>
@@ -8715,7 +8743,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Заморозить все</translation>
+        <translation type="obsolete">&amp;Заморозить все</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -8727,11 +8755,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Разморозить все</translation>
+        <translation type="obsolete">&amp;Разморозить все</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Разморозить все слои</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8742,7 +8778,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Удалить слой</translation>
+        <translation>&amp;Удалить слой</translation>
     </message>
 </context>
 <context>

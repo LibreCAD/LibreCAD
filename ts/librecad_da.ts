@@ -5610,6 +5610,10 @@ Vil du overskrive den?</translation>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -5675,11 +5679,15 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Eksploder</translation>
+        <translation type="obsolete">&amp;Eksploder</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Eksplodere blokke og andre gruperede enheder</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5690,7 +5698,7 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Fastfrys alt</translation>
+        <translation type="obsolete">&amp;Fastfrys alt</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -5702,11 +5710,19 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>Fri&amp;gør alt</translation>
+        <translation type="obsolete">Fri&amp;gør alt</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Frigørere alle blokke</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5775,7 +5791,7 @@ Vil du overskrive den?</translation>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Tilpas synlighed for blok</translation>
+        <translation type="obsolete">Tilpas synlighed for blok</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -5784,6 +5800,10 @@ Vil du overskrive den?</translation>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Tilpas blok</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7528,7 +7548,7 @@ Vil du overskrive den?</translation>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle between two lines</source>
-        <translation>Vinkel mellem to linier</translation>
+        <translation type="obsolete">Vinkel mellem to linier</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -7540,7 +7560,7 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Vinkel: %1%2</translation>
+        <translation type="obsolete">Vinkel: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -7562,13 +7582,17 @@ Vil du overskrive den?</translation>
         <source>Back</source>
         <translation>Tilbage</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Vinkel: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
-    <message>
-        <source>Polygonal Area</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Area: %1</source>
         <translation type="unfinished"></translation>
@@ -7591,6 +7615,10 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>Specify next point of polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7726,7 +7754,7 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">Tilføj l&amp;ag</translation>
+        <translation>Tilføj l&amp;ag</translation>
     </message>
 </context>
 <context>
@@ -7748,7 +7776,7 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Fastfrys alt</translation>
+        <translation type="obsolete">&amp;Fastfrys alt</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -7760,11 +7788,19 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>Fri&amp;gør alt</translation>
+        <translation type="obsolete">Fri&amp;gør alt</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Frigør alle lag</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7775,7 +7811,7 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">Fje&amp;rn lag</translation>
+        <translation>Fje&amp;rn lag</translation>
     </message>
 </context>
 <context>

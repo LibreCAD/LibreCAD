@@ -5608,6 +5608,10 @@ Tahad sa seda asendada?</translation>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -5673,11 +5677,15 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>Lamm&amp;uta</translation>
+        <translation type="obsolete">Lamm&amp;uta</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Lammuta plokid ja teised elementide rühmad</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5688,7 +5696,7 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Külmuta kõik</translation>
+        <translation type="obsolete">&amp;Külmuta kõik</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -5700,11 +5708,19 @@ Tahad sa seda asendada?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Sulata kõik</translation>
+        <translation type="obsolete">&amp;Sulata kõik</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Sulata kõik plokid</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5773,7 +5789,7 @@ Tahad sa seda asendada?</translation>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Lülita ploki nähtavust</translation>
+        <translation type="obsolete">Lülita ploki nähtavust</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -5782,6 +5798,10 @@ Tahad sa seda asendada?</translation>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Lülita plokk sisse/välja</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7535,7 +7555,7 @@ Määra alguspunkt või [keskpunkt]</translation>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle between two lines</source>
-        <translation>Nurk kahe joone vahel</translation>
+        <translation type="obsolete">Nurk kahe joone vahel</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -7547,7 +7567,7 @@ Määra alguspunkt või [keskpunkt]</translation>
     </message>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Nurk: %1%2</translation>
+        <translation type="obsolete">Nurk: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -7569,12 +7589,20 @@ Määra alguspunkt või [keskpunkt]</translation>
         <source>Back</source>
         <translation>Tagasi</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Nurk: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation>Hulknurkne ala</translation>
+        <translation type="obsolete">Hulknurkne ala</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
@@ -7611,6 +7639,10 @@ Määra alguspunkt või [keskpunkt]</translation>
     <message>
         <source>Terminate</source>
         <translation type="obsolete">Lõpeta</translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7745,7 +7777,7 @@ Määra alguspunkt või [keskpunkt]</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Lisa kile</translation>
+        <translation>&amp;Lisa kile</translation>
     </message>
 </context>
 <context>
@@ -7767,7 +7799,7 @@ Määra alguspunkt või [keskpunkt]</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Külmuta kõik</translation>
+        <translation type="obsolete">&amp;Külmuta kõik</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -7779,11 +7811,19 @@ Määra alguspunkt või [keskpunkt]</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Sulata kõik</translation>
+        <translation type="obsolete">&amp;Sulata kõik</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Sulata kõik kiled</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7794,7 +7834,7 @@ Määra alguspunkt või [keskpunkt]</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Eemalda kile</translation>
+        <translation>&amp;Eemalda kile</translation>
     </message>
 </context>
 <context>

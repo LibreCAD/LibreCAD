@@ -300,7 +300,11 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         //
     case RS2::ActionSelectSingle:
         gv->killSelectActions();
-        a = new RS_ActionSelectSingle(*doc, *gv);
+        if(getCurrentAction()->rtti() != RS2::ActionSelectSingle) {
+            a = new RS_ActionSelectSingle(*doc, *gv,getCurrentAction());
+        }else{
+            a=NULL;
+        }
         break;
     case RS2::ActionSelectContour:
         gv->killSelectActions();

@@ -33,10 +33,17 @@
 
 
 RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
-                                             RS_GraphicView& graphicView,RS_ActionSelect* actionSelect,  QVector<RS2::EntityType>* entityTypeList)
+                                             RS_GraphicView& graphicView,RS_ActionInterface* actionSelect,  QVector<RS2::EntityType>* entityTypeList)
     :RS_ActionInterface("Select Entities", container, graphicView) {
     this->entityTypeList=entityTypeList;
-    this->actionSelect=actionSelect;
+    if(actionSelect != NULL){
+        if(actionSelect->rtti() == RS2::ActionSelect) {
+            this->actionSelect=static_cast<RS_ActionSelect*>(actionSelect);
+                this->actionSelect->requestFinish(true);
+        }else{
+            this->actionSelect=NULL;
+        }
+    }
 
     en = NULL;
 }
@@ -44,7 +51,7 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
 
 QAction* RS_ActionSelectSingle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action = new QAction(tr("Select Entity"),  NULL);
-        action->setIcon(QIcon(":/extui/selectsingle.png"));
+    action->setIcon(QIcon(":/extui/selectsingle.png"));
     //action->zetStatusTip(tr("Selects single Entities"));
     return action;
 }
@@ -71,8 +78,11 @@ void RS_ActionSelectSingle::keyPressEvent(QKeyEvent* e) {
 
 void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
-            //need to finish the parent RS_ActionSelect as well, bug#3437138
-        actionSelect->requestFinish();
+        //need to finish the parent RS_ActionSelect as well, bug#3437138
+            //need to check actionSelect is set, bug#3437138
+        if(actionSelect != NULL) {
+            actionSelect->requestFinish(false);
+        }
         init(getStatus()-1);
     } else {
         if(entityTypeList!=NULL && entityTypeList->size()>0) {

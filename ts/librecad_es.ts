@@ -493,7 +493,7 @@ Guardado automático desactivado.</translation>
     </message>
     <message>
         <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, considere donar a LibreCAD para ayudar a mantener el código y la página web</translation>
     </message>
 </context>
 <context>
@@ -3962,47 +3962,47 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>Crosshair</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntero en cruz</translation>
     </message>
     <message>
         <source>Left crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntero en cruz izquierdo con rejilla isométrica</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished">Izquierdo</translation>
+        <translation>Izquierdo</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntero en cruz superior con rejilla isométrica</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Arriba</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntero en cruz derecho con rejilla isométrica</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished">Derecho</translation>
+        <translation>Derecho</translation>
     </message>
     <message>
         <source>Use orthogonal grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar rejilla ortogonal</translation>
     </message>
     <message>
         <source>Orthogonal Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejilla ortogonal</translation>
     </message>
     <message>
         <source>Use isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar rejilla isométrica</translation>
     </message>
     <message>
         <source>Isometric Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejilla isométrica</translation>
     </message>
 </context>
 <context>
@@ -5932,15 +5932,15 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation type="unfinished"></translation>
+        <translation>Color de línea</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation type="unfinished"></translation>
+        <translation>Grosor de línea</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de línea</translation>
     </message>
 </context>
 <context>
@@ -6647,10 +6647,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Block %1 already exist, renamed to: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloque %1 ya existe, renombrado a: %2</translation>
     </message>
     <message>
         <source>All Image Files (%1) </source>
+        <translation>Todos los archivos de imágen (%1) </translation>
+    </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6718,11 +6722,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>Des&amp;componer</translation>
+        <translation type="obsolete">Des&amp;componer</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Descomponer bloques y otros grupos de objetos</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6733,7 +6741,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Bloquear todo</translation>
+        <translation type="obsolete">&amp;Bloquear todo</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -6745,11 +6753,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Desbloquear todo</translation>
+        <translation type="obsolete">&amp;Desbloquear todo</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Desbloquear todos los bloques</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6818,7 +6834,7 @@ Do you want to replace it?</source>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Alternar visibilidad de bloque</translation>
+        <translation type="obsolete">Alternar visibilidad de bloque</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -6828,6 +6844,10 @@ Do you want to replace it?</source>
         <source>Toggle Block</source>
         <translation type="obsolete">Tecla de bloque
 </translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8592,7 +8612,7 @@ Do you want to replace it?</source>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle between two lines</source>
-        <translation>Angulo entre dos líneas</translation>
+        <translation type="obsolete">Angulo entre dos líneas</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -8604,7 +8624,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Ángulo: %1%2</translation>
+        <translation type="obsolete">Ángulo: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -8626,12 +8646,20 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>Atrás</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Ángulo: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation>Área poligonal</translation>
+        <translation type="obsolete">Área poligonal</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
@@ -8668,6 +8696,10 @@ Do you want to replace it?</source>
     <message>
         <source>Terminate</source>
         <translation type="obsolete">Finalizar</translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8802,7 +8834,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Añadir capa</translation>
+        <translation>&amp;Añadir capa</translation>
     </message>
 </context>
 <context>
@@ -8824,7 +8856,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Bloquear todo</translation>
+        <translation type="obsolete">&amp;Bloquear todo</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -8836,11 +8868,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Desbloquear todo</translation>
+        <translation type="obsolete">&amp;Desbloquear todo</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Desbloquear todas las capas</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8851,7 +8891,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Quitar capa</translation>
+        <translation>&amp;Quitar capa</translation>
     </message>
 </context>
 <context>
@@ -8870,7 +8910,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished"></translation>
+        <translation>Invertir &amp;Bloqueo de Capas</translation>
     </message>
 </context>
 <context>
@@ -8889,7 +8929,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Invertir &amp;Visibilidad de Capas</translation>
     </message>
 </context>
 <context>
@@ -9927,11 +9967,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Select to copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar para copiar</translation>
     </message>
     <message>
         <source>Select to cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar para cortar</translation>
     </message>
 </context>
 <context>

@@ -6594,6 +6594,10 @@ Přejete si ho přepsat?</translation>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -6659,11 +6663,15 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Rozložit</translation>
+        <translation type="obsolete">&amp;Rozložit</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Rozloží bloky a jiné skupiny prvků</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6674,7 +6682,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Zmrazit vše</translation>
+        <translation type="obsolete">&amp;Zmrazit vše</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -6686,11 +6694,19 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Rozmrazit vše</translation>
+        <translation type="obsolete">&amp;Rozmrazit vše</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Rozmrazí všechny bloky</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6759,7 +6775,7 @@ Přejete si ho přepsat?</translation>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Přepnout viditelnost bloku</translation>
+        <translation type="obsolete">Přepnout viditelnost bloku</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -6768,6 +6784,10 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Přepnout blok</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8520,7 +8540,7 @@ Přejete si ho přepsat?</translation>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Úhel: %1%2</translation>
+        <translation type="obsolete">Úhel: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -8544,7 +8564,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>Angle between two lines</source>
-        <translation>Úhel mezi dvěma čarami</translation>
+        <translation type="obsolete">Úhel mezi dvěma čarami</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -8554,13 +8574,17 @@ Přejete si ho přepsat?</translation>
         <source>Measures the angle between two lines</source>
         <translation type="obsolete">Změří úhel mezi dvěma čarami</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Úhel: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
-    <message>
-        <source>Polygonal Area</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Area: %1</source>
         <translation type="unfinished"></translation>
@@ -8583,6 +8607,10 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>Specify next point of polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8718,7 +8746,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">Přida&amp;t hladinu</translation>
+        <translation>Přida&amp;t hladinu</translation>
     </message>
 </context>
 <context>
@@ -8740,7 +8768,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Zmrazit vše</translation>
+        <translation type="obsolete">&amp;Zmrazit vše</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -8752,11 +8780,19 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Rozmrazit vše</translation>
+        <translation type="obsolete">&amp;Rozmrazit vše</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Rozmrazí všechny hladiny</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8767,7 +8803,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Odstranit hladinu</translation>
+        <translation>&amp;Odstranit hladinu</translation>
     </message>
 </context>
 <context>

@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 #include "qg_printpreviewoptions.h"
@@ -35,7 +35,7 @@ QG_PrintPreviewOptions::QG_PrintPreviewOptions(QWidget* parent, Qt::WindowFlags 
     : QWidget(parent, fl)
 {
     setupUi(this);
-
+    defaultScales=0;
     init();
 }
 
@@ -60,30 +60,30 @@ void QG_PrintPreviewOptions::languageChange()
 void QG_PrintPreviewOptions::init() {
     updateDisabled = false;
     imperialScales
-    << "1\" = 1\""
-    << "1\" = 2\""
-    << "1\" = 4\""
-    << "1\" = 8\""
-    << "1\" = 16\""
-    << "1\" = 32\""
-    << "1\" = 64\""
-    << "1\" = 128\""
-    << "1\" = 256\"";
+            << "1\" = 1\""
+            << "1\" = 2\""
+            << "1\" = 4\""
+            << "1\" = 8\""
+            << "1\" = 16\""
+            << "1\" = 32\""
+            << "1\" = 64\""
+            << "1\" = 128\""
+            << "1\" = 256\"";
 
     metricScales
-    << "1:1" << "1:2" << "1:5" << "1:10"
-    << "1:20" << "1:25" << "1:50" << "1:75" << "1:100"
-    << "1:125" << "1:150" << "1:175" << "1:200"
-    << "1:250" << "1:500" << "1:750" << "1:1000"
-    << "1:2500" << "1:5000" << "1:7500" << "1:10000"
-    << "1:25000" << "1:50000" << "1:75000" << "1:100000"
-    << "2:1" << "5:1" << "10:1"
-    << "20:1" << "25:1" << "50:1" << "75:1" << "100:1"
-    << "125:1" << "150:1" << "175:1" << "200:1"
-    << "250:1" << "500:1" << "750:1" << "1000:1"
-    << "2500:1" << "5000:1" << "7500:1" << "10000:1"
-    << "25000:1" << "50000:1" << "75000:1" << "100000:1";   
-    
+            << "1:1" << "1:2" << "1:5" << "1:10"
+            << "1:20" << "1:25" << "1:50" << "1:75" << "1:100"
+            << "1:125" << "1:150" << "1:175" << "1:200"
+            << "1:250" << "1:500" << "1:750" << "1:1000"
+            << "1:2500" << "1:5000" << "1:7500" << "1:10000"
+            << "1:25000" << "1:50000" << "1:75000" << "1:100000"
+            << "2:1" << "5:1" << "10:1"
+            << "20:1" << "25:1" << "50:1" << "75:1" << "100:1"
+            << "125:1" << "150:1" << "175:1" << "200:1"
+            << "250:1" << "500:1" << "750:1" << "1000:1"
+            << "2500:1" << "5000:1" << "7500:1" << "10000:1"
+            << "25000:1" << "50000:1" << "75000:1" << "100000:1";
+
 }
 
 void QG_PrintPreviewOptions::destroy() {
@@ -106,13 +106,20 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
         } else {
             cbScale->insertItems(0,metricScales);
         }
-        
+        defaultScales=cbScale->count();
+        updateScaleBox();
         //if (update) {
-        QString s;
-        s.setNum(action->getScale());
-        cbScale->setCurrentIndex( cbScale->findText(s) );
-    //}
-        
+        //        QString s;
+        //        s.setNum(action->getScale());
+        //        int index=cbScale->findText(s);
+        //        //add the current sccale, bug#343794
+        //        if(index<0){
+        //            cbScale->addItem(s);
+        //            index=cbScale->count()-1;
+        //        }
+        //        cbScale->setCurrentIndex(index);
+        //}
+
         updateDisabled = false;
 
         /*
@@ -132,8 +139,8 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
         updateData();
         */
     } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR, 
-			"QG_PrintPreviewOptions::setAction: wrong action type");
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                        "QG_PrintPreviewOptions::setAction: wrong action type");
         action = NULL;
     }
 }
@@ -163,13 +170,14 @@ void QG_PrintPreviewOptions::fit() {
     if (action!=NULL) {
         action->fit();
     }
+    updateScaleBox();
 }
 
 void QG_PrintPreviewOptions::scale(const QString& s) {
     if (updateDisabled) {
         return;
     }
-    
+
     if (s.contains(':')) {
         bool ok1 = false;
         bool ok2 = false;
@@ -179,6 +187,7 @@ void QG_PrintPreviewOptions::scale(const QString& s) {
         if (ok1 && ok2 && d>1.0e-6 && n>0.0) {
             action->setScale(n/d);
         }
+        updateScaleBox(s);
     } else if (s.contains('=')) {
         bool ok = false;
         int i = s.indexOf('=');
@@ -186,12 +195,61 @@ void QG_PrintPreviewOptions::scale(const QString& s) {
         if (ok && d>1.0e-6) {
             action->setScale(1.0/d);
         }
+        updateScaleBox();
     } else {
         bool ok = false;
         double f = RS_Math::eval(s, &ok);
         if (ok) {
             action->setScale(f);
+            updateScaleBox();
+
         }
     }
 }
 
+//update the scalebox to
+
+void QG_PrintPreviewOptions::updateScaleBox(){
+    double f=action->getScale();
+    //std::cout<<"void QG_PrintPreviewOptions::updateScaleBox() f="<<f<<std::endl;
+    int j=std::min(defaultScales,cbScale->count());
+    int i;
+    for(i=0;i<j;i++){
+        QString s=cbScale->itemText(i);
+        int i0 = s.indexOf(':');
+        bool ok1,ok2;
+        double n = s.left(i0).toDouble(&ok1);
+        double d = s.mid(i0+1).toDouble(&ok2);
+        if(! (ok1 && ok2)|| fabs(d)<RS_TOLERANCE) continue;
+
+        if(fabs(f-n/d)<RS_TOLERANCE) break;
+    }
+    if(i<j){
+        cbScale->setCurrentIndex(i);
+        return;
+    }
+    QString s("Unknown");
+    if(f>1.){
+        s=QString("%1:1").arg(f);
+    }else{
+        if(fabs(f)>RS_TOLERANCE) s=QString("1:%1").arg(1./f);
+    }
+    updateScaleBox(s);
+}
+
+void QG_PrintPreviewOptions::updateScaleBox(const QString& s) {
+
+    //std::cout<<"void QG_PrintPreviewOptions::updateScaleBox() s="<<qPrintable(s)<<std::endl;
+    int index=cbScale->findText(s);
+    //add the current sccale, bug#343794
+    if(index<0 || index>defaultScales){
+        if(cbScale->count()>defaultScales){
+            index=defaultScales;
+            cbScale->setItemText(index,s);
+        }else{
+            cbScale->addItem(s);
+            index=cbScale->count() -1;
+        }
+    }
+    cbScale->setCurrentIndex(index);
+}

@@ -7274,6 +7274,10 @@ Do you want to replace it?</source>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtBoolPropertyManager</name>
@@ -7368,18 +7372,22 @@ Do you want to replace it?</source>
     <name>RS_ActionBlocksExplode</name>
     <message>
         <source>&amp;Explode</source>
-        <translation type="unfinished">&amp;Fragmente</translation>
+        <translation type="obsolete">&amp;Fragmente</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksFreezeAll</name>
     <message>
-        <source>&amp;Freeze all</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished">&amp;Oculte Todos</translation>
     </message>
     <message>
-        <source>&amp;Defreeze all</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Show all</source>
+        <translation type="unfinished">&amp;Mostre todos</translation>
     </message>
 </context>
 <context>
@@ -7473,7 +7481,7 @@ Do you want to replace it?</source>
         <translation type="obsolete">Comute &amp;Visibilidade</translation>
     </message>
     <message>
-        <source>Toggle Block Visibility</source>
+        <source>Toggle Block &amp;Visibility</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9356,7 +9364,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Ângulo: %1%2</translation>
+        <translation type="obsolete">Ângulo: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -9367,8 +9375,12 @@ Do you want to replace it?</source>
         <translation type="obsolete">Ângulo entre duas &amp;linhas</translation>
     </message>
     <message>
-        <source>Angle between two lines</source>
+        <source>An&amp;gle between two lines</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Ângulo: %1</translation>
     </message>
 </context>
 <context>
@@ -9410,7 +9422,7 @@ Do you want to replace it?</source>
         <translation>Ponto: %1/%2</translation>
     </message>
     <message>
-        <source>Polygonal Area</source>
+        <source>Polygonal &amp;Area</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9530,7 +9542,7 @@ Do you want to replace it?</source>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Adicione Camada</translation>
+        <translation>&amp;Adicione Camada</translation>
     </message>
     <message>
         <source>Adds a new layer</source>
@@ -9562,12 +9574,12 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionLayersFreezeAll</name>
     <message>
-        <source>&amp;Freeze all</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished">&amp;Oculte Todos</translation>
     </message>
     <message>
-        <source>&amp;Defreeze all</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Show all</source>
+        <translation type="unfinished">&amp;Mostre todos</translation>
     </message>
 </context>
 <context>
@@ -9589,7 +9601,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Remova Camada</translation>
+        <translation>&amp;Remova Camada</translation>
     </message>
     <message>
         <source>Remove Layer</source>

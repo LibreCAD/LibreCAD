@@ -4779,6 +4779,10 @@ Do you want to replace it?</source>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -4819,18 +4823,18 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksExplode</name>
     <message>
-        <source>&amp;Explode</source>
+        <source>Ex&amp;plode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksFreezeAll</name>
     <message>
-        <source>&amp;Freeze all</source>
+        <source>&amp;Hide all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Defreeze all</source>
+        <source>&amp;Show all</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4891,7 +4895,7 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionBlocksToggleView</name>
     <message>
-        <source>Toggle Block Visibility</source>
+        <source>Toggle Block &amp;Visibility</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6150,14 +6154,6 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionInfoAngle</name>
     <message>
-        <source>Angle between two lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Angle: %1%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Lines are parallel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6177,13 +6173,17 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
-    <message>
-        <source>Polygonal Area</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Area: %1</source>
         <translation type="unfinished"></translation>
@@ -6206,6 +6206,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify next point of polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6318,11 +6322,11 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionLayersFreezeAll</name>
     <message>
-        <source>&amp;Freeze all</source>
+        <source>&amp;Hide all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Defreeze all</source>
+        <source>&amp;Show all</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

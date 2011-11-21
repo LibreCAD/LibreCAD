@@ -40,7 +40,7 @@ RS_ActionSelect::RS_ActionSelect(RS_EntityContainer& container,
     this->entityTypeList=entityTypeList;
 
     this->nextAction = nextAction;
-    selectSingle=true;
+    selectSingle=false;
 }
 
 
@@ -64,8 +64,8 @@ void RS_ActionSelect::resume(){
     }
 }
 
-void RS_ActionSelect::requestFinish(){
-    selectSingle=false;
+void RS_ActionSelect::requestFinish(bool keep){
+    selectSingle=keep;
 }
 
 
@@ -79,9 +79,7 @@ void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionSelect::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
-        if (selectSingle&& !isFinished()){
-            RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
-        }else{
+        if (isFinished()){
             if(container->countSelected()==0){
                 //some nextAction segfault with empty selection
                 //todo: make actions safe with empty selection
@@ -104,9 +102,10 @@ void RS_ActionSelect::updateToolBar() {
                 }
                 RS_DIALOGFACTORY->requestPreviousToolBar();
             }
-
+        }else{
             RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
         }
+
     }
 }
 

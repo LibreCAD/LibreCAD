@@ -6613,6 +6613,10 @@ Vuoi sostituirlo?</translation>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -6678,11 +6682,15 @@ Vuoi sostituirlo?</translation>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Esplodi</translation>
+        <translation type="obsolete">&amp;Esplodi</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Esplodi Blocchi ed altri Oggetti Raggruppati</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6693,7 +6701,7 @@ Vuoi sostituirlo?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Congela tutto</translation>
+        <translation type="obsolete">&amp;Congela tutto</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -6705,11 +6713,19 @@ Vuoi sostituirlo?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Scongela tutto</translation>
+        <translation type="obsolete">&amp;Scongela tutto</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Scongela tutti i blocchi</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6778,7 +6794,7 @@ Vuoi sostituirlo?</translation>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Interruttore Visibilità Blocco</translation>
+        <translation type="obsolete">Interruttore Visibilità Blocco</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -6787,6 +6803,10 @@ Vuoi sostituirlo?</translation>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Interruttore Blocco</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8548,7 +8568,7 @@ Vuoi sostituirlo?</translation>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Angolo: %1%2</translation>
+        <translation type="obsolete">Angolo: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -8572,7 +8592,7 @@ Vuoi sostituirlo?</translation>
     </message>
     <message>
         <source>Angle between two lines</source>
-        <translation>Angolo fra due linee</translation>
+        <translation type="obsolete">Angolo fra due linee</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -8582,12 +8602,20 @@ Vuoi sostituirlo?</translation>
         <source>Measures the angle between two lines</source>
         <translation type="obsolete">Misura l&apos;angolo fra due linee</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Angolo: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation>Area Poligonale</translation>
+        <translation type="obsolete">Area Poligonale</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
@@ -8624,6 +8652,10 @@ Vuoi sostituirlo?</translation>
     <message>
         <source>Terminate</source>
         <translation type="obsolete">Termina</translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8758,7 +8790,7 @@ Vuoi sostituirlo?</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Aggiungi Layer</translation>
+        <translation>&amp;Aggiungi Layer</translation>
     </message>
 </context>
 <context>
@@ -8780,7 +8812,7 @@ Vuoi sostituirlo?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Congela tutto</translation>
+        <translation type="obsolete">&amp;Congela tutto</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -8792,11 +8824,19 @@ Vuoi sostituirlo?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Scongela tutto</translation>
+        <translation type="obsolete">&amp;Scongela tutto</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Scongela tutti i layer</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8807,7 +8847,7 @@ Vuoi sostituirlo?</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Cancella Layer</translation>
+        <translation>&amp;Cancella Layer</translation>
     </message>
 </context>
 <context>

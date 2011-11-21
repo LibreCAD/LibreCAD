@@ -6634,6 +6634,10 @@ Wilt u het vervangen?</translation>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -6699,11 +6703,15 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Explodeer</translation>
+        <translation type="obsolete">&amp;Explodeer</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Explodeer Blokken en andere Elementen Groupen</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6714,7 +6722,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>Ver&amp;grendel alles</translation>
+        <translation type="obsolete">Ver&amp;grendel alles</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -6726,11 +6734,19 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Ontgrendel alles</translation>
+        <translation type="obsolete">&amp;Ontgrendel alles</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Ontgrendel alle blokken</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6799,7 +6815,7 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Schakel Blok Zichtbaarheid</translation>
+        <translation type="obsolete">Schakel Blok Zichtbaarheid</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -6808,6 +6824,10 @@ Wilt u het vervangen?</translation>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Schakel Blok</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8580,7 +8600,7 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Hoek: %1%2</translation>
+        <translation type="obsolete">Hoek: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -8604,7 +8624,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Angle between two lines</source>
-        <translation>Hoek tussen twee lijnen</translation>
+        <translation type="obsolete">Hoek tussen twee lijnen</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -8614,12 +8634,20 @@ Wilt u het vervangen?</translation>
         <source>Measures the angle between two lines</source>
         <translation type="obsolete">Meet de afstand tussen twee lijnen</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Hoek: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation>Veelhoekig gebied</translation>
+        <translation type="obsolete">Veelhoekig gebied</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
@@ -8656,6 +8684,10 @@ Wilt u het vervangen?</translation>
     <message>
         <source>Terminate</source>
         <translation type="obsolete">Beëindig</translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8790,7 +8822,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Voeg laag toe</translation>
+        <translation>&amp;Voeg laag toe</translation>
     </message>
 </context>
 <context>
@@ -8812,7 +8844,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>Ver&amp;grendel alles</translation>
+        <translation type="obsolete">Ver&amp;grendel alles</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -8824,11 +8856,19 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Ontgrendel alles</translation>
+        <translation type="obsolete">&amp;Ontgrendel alles</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Ontgrendel alle lagen</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8839,7 +8879,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Wis Laag</translation>
+        <translation>&amp;Wis Laag</translation>
     </message>
 </context>
 <context>

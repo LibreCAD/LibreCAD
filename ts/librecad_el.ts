@@ -6598,6 +6598,10 @@ Do you want to replace it?</source>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -6663,11 +6667,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Διαχωρισμός</translation>
+        <translation type="obsolete">&amp;Διαχωρισμός</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Διαχωρισμός Μπλόκ και άλλων Ομάδων Στοιχείων</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6678,7 +6686,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>Α&amp;πόκρυψη όλων</translation>
+        <translation type="obsolete">Α&amp;πόκρυψη όλων</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -6690,11 +6698,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>Εμ&amp;φάνιση όλων</translation>
+        <translation type="obsolete">Εμ&amp;φάνιση όλων</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Εμφάνιση όλων των μπλόκ</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6763,7 +6779,7 @@ Do you want to replace it?</source>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Εναλλαγή ορατότητας Μπλόκ</translation>
+        <translation type="obsolete">Εναλλαγή ορατότητας Μπλόκ</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -6772,6 +6788,10 @@ Do you want to replace it?</source>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Εναλλαγή Μπλόκ</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8520,7 +8540,7 @@ Do you want to replace it?</source>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle between two lines</source>
-        <translation>Γωνία μεταξύ δύο γραμμών</translation>
+        <translation type="obsolete">Γωνία μεταξύ δύο γραμμών</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -8532,7 +8552,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Γωνία: %1%2</translation>
+        <translation type="obsolete">Γωνία: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -8554,12 +8574,20 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>Πίσω</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Γωνία: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation>Πολυγωνική περιοχή</translation>
+        <translation type="obsolete">Πολυγωνική περιοχή</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
@@ -8596,6 +8624,10 @@ Do you want to replace it?</source>
     <message>
         <source>Terminate</source>
         <translation type="obsolete">Τερματισμός</translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8730,7 +8762,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Πρόσθεση στρώμματος</translation>
+        <translation>&amp;Πρόσθεση στρώμματος</translation>
     </message>
 </context>
 <context>
@@ -8752,7 +8784,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>Α&amp;πόκρυψη όλων</translation>
+        <translation type="obsolete">Α&amp;πόκρυψη όλων</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -8764,11 +8796,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>Εμ&amp;φάνιση όλων</translation>
+        <translation type="obsolete">Εμ&amp;φάνιση όλων</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Εμφάνιση όλων των στρωμμάτων</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8779,7 +8819,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">Α&amp;φαίρεση Στρώμματος</translation>
+        <translation>Α&amp;φαίρεση Στρώμματος</translation>
     </message>
 </context>
 <context>

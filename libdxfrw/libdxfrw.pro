@@ -35,12 +35,7 @@ HEADERS += \
     src/drw_entities.h \
     src/drw_interface.h
 
-win32 {
-        DLLDESTDIR = ../intermediate
-}
-unix {
-        DESTDIR = ../intermediate
-}
+DESTDIR = ../intermediate
 
 # Store intermedia stuff somewhere else
 OBJECTS_DIR = ../intermediate/obj

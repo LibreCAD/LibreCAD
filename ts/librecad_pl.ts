@@ -6626,6 +6626,10 @@ Czy chcesz zastąpić?</translation>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -6691,11 +6695,15 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Rozbij</translation>
+        <translation type="obsolete">&amp;Rozbij</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Rozbij bloki oraz inne grupy obiektów</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6706,7 +6714,7 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Zablokuj wszystko</translation>
+        <translation type="obsolete">&amp;Zablokuj wszystko</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -6718,11 +6726,19 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Odblokuj wszystko</translation>
+        <translation type="obsolete">&amp;Odblokuj wszystko</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Odblokuj wszystkie bloki</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6791,7 +6807,7 @@ Czy chcesz zastąpić?</translation>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Zmień widoczność bloku</translation>
+        <translation type="obsolete">Zmień widoczność bloku</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -6800,6 +6816,10 @@ Czy chcesz zastąpić?</translation>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Przełącz blok</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8572,7 +8592,7 @@ Czy chcesz zastąpić?</translation>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Kąt: %1%2</translation>
+        <translation type="obsolete">Kąt: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -8596,7 +8616,7 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>Angle between two lines</source>
-        <translation>Kąt pomiędzy dwoma liniami</translation>
+        <translation type="obsolete">Kąt pomiędzy dwoma liniami</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -8606,12 +8626,20 @@ Czy chcesz zastąpić?</translation>
         <source>Measures the angle between two lines</source>
         <translation type="obsolete">Mierzy kąt pomiędzy dwoma liniami</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Kąt: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation>Obszar wieloboczny</translation>
+        <translation type="obsolete">Obszar wieloboczny</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
@@ -8648,6 +8676,10 @@ Czy chcesz zastąpić?</translation>
     <message>
         <source>Terminate</source>
         <translation type="obsolete">Zakończ</translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8782,7 +8814,7 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Dodaj warstwę</translation>
+        <translation>&amp;Dodaj warstwę</translation>
     </message>
 </context>
 <context>
@@ -8804,7 +8836,7 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Zablokuj wszystko</translation>
+        <translation type="obsolete">&amp;Zablokuj wszystko</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -8816,11 +8848,19 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Odblokuj wszystko</translation>
+        <translation type="obsolete">&amp;Odblokuj wszystko</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Odblokuj wszystkie warstwy</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8831,7 +8871,7 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Usuń warstwę</translation>
+        <translation>&amp;Usuń warstwę</translation>
     </message>
 </context>
 <context>

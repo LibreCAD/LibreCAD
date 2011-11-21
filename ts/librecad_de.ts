@@ -7164,6 +7164,10 @@ Wollen Sie die Datei überschreiben?</translation>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -7233,11 +7237,15 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Aufbrechen</translation>
+        <translation type="obsolete">&amp;Aufbrechen</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Blöcke und andere Objekt-Gruppen aufbrechen</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7248,7 +7256,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>Alle ein&amp;frieren</translation>
+        <translation type="obsolete">Alle ein&amp;frieren</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -7260,11 +7268,19 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>Alle auf&amp;tauen</translation>
+        <translation type="obsolete">Alle auf&amp;tauen</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Alle Blöcke auftauen</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7382,7 +7398,7 @@ Wollen Sie die Datei überschreiben?</translation>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Sichtbareit umschalten</translation>
+        <translation type="obsolete">Sichtbareit umschalten</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -7391,6 +7407,10 @@ Wollen Sie die Datei überschreiben?</translation>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Sichtbarkeit umschalten</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9226,7 +9246,7 @@ Wollen Sie die Datei überschreiben?</translation>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Winkel: %1%2</translation>
+        <translation type="obsolete">Winkel: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -9250,7 +9270,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Angle between two lines</source>
-        <translation>Winkel zwischen zwei Linien</translation>
+        <translation type="obsolete">Winkel zwischen zwei Linien</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -9260,12 +9280,20 @@ Wollen Sie die Datei überschreiben?</translation>
         <source>Measures the angle between two lines</source>
         <translation type="obsolete">Misst den Winkel zwischen zwei Linien</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Winkel: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation>Polygon Fläche</translation>
+        <translation type="obsolete">Polygon Fläche</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
@@ -9302,6 +9330,10 @@ Wollen Sie die Datei überschreiben?</translation>
     <message>
         <source>Terminate</source>
         <translation type="obsolete">Beenden</translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9436,7 +9468,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">Layer &amp;hinzufügen</translation>
+        <translation>Layer &amp;hinzufügen</translation>
     </message>
 </context>
 <context>
@@ -9458,7 +9490,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>Alle ein&amp;frieren</translation>
+        <translation type="obsolete">Alle ein&amp;frieren</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -9470,11 +9502,19 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>Alle auf&amp;tauen</translation>
+        <translation type="obsolete">Alle auf&amp;tauen</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Alle Layer auftauen</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9485,7 +9525,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">Layer &amp;löschen</translation>
+        <translation>Layer &amp;löschen</translation>
     </message>
 </context>
 <context>

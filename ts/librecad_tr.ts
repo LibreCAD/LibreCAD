@@ -5299,6 +5299,10 @@ Do you want to replace it?</source>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -5364,11 +5368,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Patlat</translation>
+        <translation type="obsolete">&amp;Patlat</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Blokları ve öğe gruplarını öğelerine ayırır</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5379,7 +5387,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>Tümünü &amp;Dondur</translation>
+        <translation type="obsolete">Tümünü &amp;Dondur</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -5391,11 +5399,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>Tümünü &amp;Çöz</translation>
+        <translation type="obsolete">Tümünü &amp;Çöz</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Bütün blokları çözer</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5460,7 +5476,7 @@ Do you want to replace it?</source>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Gizle/Göster</translation>
+        <translation type="obsolete">Gizle/Göster</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -5469,6 +5485,10 @@ Do you want to replace it?</source>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Bir bloktan diğerine geçer</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7205,7 +7225,7 @@ Do you want to replace it?</source>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle between two lines</source>
-        <translation>İki çizgi arasındaki açı</translation>
+        <translation type="obsolete">İki çizgi arasındaki açı</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -7217,7 +7237,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Açı: %1 %2</translation>
+        <translation type="obsolete">Açı: %1 %2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -7239,13 +7259,17 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>Geri</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Açı: %1 %2 {1?}</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
-    <message>
-        <source>Polygonal Area</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Area: %1</source>
         <translation type="unfinished"></translation>
@@ -7268,6 +7292,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify next point of polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7403,7 +7431,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">Katman &amp;Ekle</translation>
+        <translation>Katman &amp;Ekle</translation>
     </message>
 </context>
 <context>
@@ -7425,7 +7453,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>Tümünü &amp;Dondur</translation>
+        <translation type="obsolete">Tümünü &amp;Dondur</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -7437,11 +7465,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>Tümünü &amp;Çöz</translation>
+        <translation type="obsolete">Tümünü &amp;Çöz</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Tüm katmanları çöz</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7452,7 +7488,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">Katmanı &amp;Sil</translation>
+        <translation>Katmanı &amp;Sil</translation>
     </message>
 </context>
 <context>

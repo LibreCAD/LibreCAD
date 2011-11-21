@@ -6962,6 +6962,10 @@ Lecseréli?</translation>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -7027,11 +7031,15 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Felbontás</translation>
+        <translation type="obsolete">&amp;Felbontás</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Blokkok és elem csoportok felbontása</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7042,7 +7050,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>Összes &amp;lezárása</translation>
+        <translation type="obsolete">Összes &amp;lezárása</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -7054,11 +7062,19 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>Összes &amp;feloldása</translation>
+        <translation type="obsolete">Összes &amp;feloldása</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Összes blokk feloldása</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7127,7 +7143,7 @@ Lecseréli?</translation>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Láthatóság váltása</translation>
+        <translation type="obsolete">Láthatóság váltása</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -7136,6 +7152,10 @@ Lecseréli?</translation>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Ki/Be kapcsolás</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8892,7 +8912,7 @@ Lecseréli?</translation>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Szög: %1%2</translation>
+        <translation type="obsolete">Szög: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -8916,7 +8936,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Angle between two lines</source>
-        <translation>Közbezárt szög</translation>
+        <translation type="obsolete">Közbezárt szög</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -8926,12 +8946,20 @@ Lecseréli?</translation>
         <source>Measures the angle between two lines</source>
         <translation type="obsolete">Egyenesek közbezárt szögének mérése</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Szög: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation>Sokszög terület</translation>
+        <translation type="obsolete">Sokszög terület</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
@@ -8968,6 +8996,10 @@ Lecseréli?</translation>
     <message>
         <source>Terminate</source>
         <translation type="obsolete">Befejezés</translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9102,7 +9134,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Új fólia</translation>
+        <translation>&amp;Új fólia</translation>
     </message>
 </context>
 <context>
@@ -9124,7 +9156,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>Összes &amp;lezárása</translation>
+        <translation type="obsolete">Összes &amp;lezárása</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -9136,11 +9168,19 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>Összes &amp;feloldása</translation>
+        <translation type="obsolete">Összes &amp;feloldása</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Minden lezárt fólia feloldása</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9151,7 +9191,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">Fólia &amp;törlése</translation>
+        <translation>Fólia &amp;törlése</translation>
     </message>
 </context>
 <context>

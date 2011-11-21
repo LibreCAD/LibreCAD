@@ -5602,6 +5602,10 @@ Chcete ho nahradiť?</translation>
         <source>All Image Files (%1) </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -5667,11 +5671,15 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Rozbi</translation>
+        <translation type="obsolete">&amp;Rozbi</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
         <translation type="obsolete">Rozbi blok a ostatné skupiny objektov</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5682,7 +5690,7 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Zamkni všetky</translation>
+        <translation type="obsolete">&amp;Zamkni všetky</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
@@ -5694,11 +5702,19 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Odomkni všetky</translation>
+        <translation type="obsolete">&amp;Odomkni všetky</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
         <translation type="obsolete">Odomkne všetky bloky</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5767,7 +5783,7 @@ Chcete ho nahradiť?</translation>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Prepne viditeľnosť bloku</translation>
+        <translation type="obsolete">Prepne viditeľnosť bloku</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
@@ -5776,6 +5792,10 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Prepni blok</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7520,7 +7540,7 @@ Chcete ho nahradiť?</translation>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle between two lines</source>
-        <translation>Uhol medzi dvomi čiarami</translation>
+        <translation type="obsolete">Uhol medzi dvomi čiarami</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
@@ -7532,7 +7552,7 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Uhol: %1%2</translation>
+        <translation type="obsolete">Uhol: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -7554,13 +7574,17 @@ Chcete ho nahradiť?</translation>
         <source>Back</source>
         <translation>Späť</translation>
     </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle: %1</source>
+        <translation type="unfinished">Uhol: %1</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
-    <message>
-        <source>Polygonal Area</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Area: %1</source>
         <translation type="unfinished"></translation>
@@ -7583,6 +7607,10 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>Specify next point of polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7718,7 +7746,7 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Pridaj hladinu</translation>
+        <translation>&amp;Pridaj hladinu</translation>
     </message>
 </context>
 <context>
@@ -7740,7 +7768,7 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Zamkni všetky</translation>
+        <translation type="obsolete">&amp;Zamkni všetky</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
@@ -7752,11 +7780,19 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Odomkni všetky</translation>
+        <translation type="obsolete">&amp;Odomkni všetky</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
         <translation type="obsolete">Odomkne všetky hladiny</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7767,7 +7803,7 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Vymaž hladinu</translation>
+        <translation>&amp;Vymaž hladinu</translation>
     </message>
 </context>
 <context>
