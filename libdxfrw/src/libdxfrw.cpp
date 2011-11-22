@@ -15,6 +15,7 @@
 //#include <math.h>
 #include <fstream>
 #include "dxfreader.h"
+#include "dxfwriter.h"
 
 
 using namespace std;
@@ -38,6 +39,7 @@ enum sections {
 dxfRW::dxfRW(const char* name){
     fileName = name;
     reader = NULL;
+    writer = NULL;
 }
 dxfRW::~dxfRW(){
     if (reader != NULL)
@@ -51,9 +53,9 @@ bool dxfRW::read(DRW_Interface *interface){
     DBG("dxfRW::read 1def\n");
     filestr.open (fileName.c_str(), ios_base::in);
     if (!filestr.is_open())
-        return 1;
+        return isOk;
     if (!filestr.good())
-        return 1;
+        return isOk;
 
     char line[256];
     filestr.getline (line,256, '\n');
@@ -75,13 +77,133 @@ bool dxfRW::read(DRW_Interface *interface){
     }
 
     isOk = processDxf();
-//    delete reader;
     filestr.close();
+    delete reader;
+    reader = NULL;
     return isOk;
 }
 
-bool dxfRW::write(){
-return true;
+bool dxfRW::write(DRW_Interface *interface, DRW::Version ver, bool bin){
+    bool isOk = false;
+    ofstream filestr;
+    version = ver;
+    binary = bin;
+    iface = interface;
+    if (binary) {
+        filestr.open (fileName.c_str(), ios_base::out | ios::binary | ios::trunc);
+        //write sentinel
+        filestr << "AutoCAD Binary DXF\r\n" << (char)26 << '\0';
+//        string str ("AutoCAD Binary DXF\r");
+        writer = new dxfWriterBinary(&filestr);
+        DBG("dxfRW::read binary file\n");
+    } else {
+        filestr.open (fileName.c_str(), ios_base::out | ios::trunc);
+        writer = new dxfWriterAscii(&filestr);
+        std::string comm = std::string("dxfrw ") + std::string(DRW_VERSION);
+        writer->writeString(999, comm);
+    }
+    iface->writeHeader();
+    writer->writeString(0, "SECTION");
+    writer->writeString(2, "HEADER");
+    writer->writeString(9, "$ACADVER");
+    switch (version) {
+    case DRW::AC1009:
+        writer->writeString(1, "AC1009");
+        break;
+    case DRW::AC1012:
+        writer->writeString(1, "AC1012");
+        break;
+    case DRW::AC1014:
+        writer->writeString(1, "AC1014");
+        break;
+//    case DRW::AC1015:
+//acad2000 default version
+    default:
+        writer->writeString(1, "AC1015");
+        break;
+    }
+
+    if (version> DRW::AC1014) {
+        writer->writeString(9, "$HANDSEED");
+//RLZ        dxfHex(5, 0xFFFF);
+        writer->writeString(5, "0xFFFF");
+    }
+
+    writer->writeString(9, "$DWGCODEPAGE");
+    writer->writeString(3, "ANSI_1252");
+    writer->writeString(0, "ENDSEC");/*
+    writer->writeString(0, "SECTION");
+    writer->writeString(2, "CLASSES");
+    writer->writeString(0, "ENDSEC");
+    writer->writeString(0, "SECTION");
+    writer->writeString(2, "TABLES");
+    writer->writeString(0, "ENDSEC");
+    writer->writeString(0, "SECTION");
+    writer->writeString(2, "BLOCKS");
+    writer->writeString(0, "ENDSEC");*/
+
+    writer->writeString(0, "SECTION");
+    writer->writeString(2, "ENTITIES");
+    entCount =100;
+    iface->writeEntity();
+    writer->writeString(0, "ENDSEC");
+
+/*    writer->writeString(0, "SECTION");
+    writer->writeString(2, "OBJECTS");
+    writer->writeString(0, "ENDSEC");*/
+    writer->writeString(0, "EOF");
+    filestr.flush();
+    filestr.close();
+    isOk = true;
+    delete writer;
+    writer = NULL;
+    return isOk;
+}
+
+bool dxfRW::writeEntity(DRW_Entity *ent) {
+    char buffer[5];
+    entCount = 1+entCount;
+    sprintf(buffer, "%X", entCount);
+    writer->writeString(5, buffer);
+    writer->writeString(100, "AcDbEntity");
+    writer->writeString(8, ent->layer);
+    writer->writeInt16(370, ent->lWeight);
+    writer->writeString(6, ent->lineType);
+    writer->writeInt16(62, ent->color);
+    return true;
+}
+
+bool dxfRW::writeLine(DRW_Line *ent) {
+    writer->writeString(0, "LINE");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbLine");
+    writer->writeDouble(10, ent->x);
+    writer->writeDouble(20, ent->y);
+    if (ent->z != 0.0 || ent->bz != 0.0) {
+        writer->writeDouble(30, ent->z);
+        writer->writeDouble(11, ent->bx);
+        writer->writeDouble(21, ent->by);
+        writer->writeDouble(31, ent->bz);
+    } else {
+        writer->writeDouble(11, ent->bx);
+        writer->writeDouble(21, ent->by);
+    }
+    return true;
+}
+
+bool dxfRW::writeArc(DRW_Arc *ent) {
+    writer->writeString(0, "ARC");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbArc");
+    writer->writeDouble(10, ent->x);
+    writer->writeDouble(20, ent->y);
+    if (ent->z != 0.0) {
+        writer->writeDouble(30, ent->z);
+    }
+    writer->writeDouble(40, ent->radious);
+    writer->writeDouble(50, ent->staangle);
+    writer->writeDouble(51, ent->endangle);
+    return true;
 }
 
 bool dxfRW::processDxf() {
