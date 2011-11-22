@@ -76,7 +76,8 @@ public:
 protected:
 	RS_GraphicView* graphicView;
 	RS_ActionInterface* defaultAction;
-    RS_ActionInterface* currentActions[RS_MAXACTIONS];
+//    RS_ActionInterface* currentActions[RS_MAXACTIONS];
+    QVector<RS_ActionInterface*> currentActions;
     int actionIndex;
 	bool coordinateInputEnabled;
 };
