@@ -135,6 +135,9 @@ public:
     // Export:
     virtual bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type);
 
+    virtual void writeHeader();
+    virtual DRW_Entity* writeEntity();
+
     void writeVariables(DL_WriterA& dw);
     void writeLayer(DL_WriterA& dw, RS_Layer* l);
     void writeLineType(DL_WriterA& dw, RS2::LineType t);
@@ -142,14 +145,14 @@ public:
     void writeBlock(DL_WriterA& dw, RS_Block* blk);
     void writeEntity(DL_WriterA& dw, RS_Entity* e);
     void writeEntity(DL_WriterA& dw, RS_Entity* e, const DRW_Entity& attrib);
-        void writePoint(DL_WriterA& dw, RS_Point* p, const DRW_Entity& attrib);
-        void writeLine(DL_WriterA& dw, RS_Line* l, const DRW_Entity& attrib);
-	void writePolyline(DL_WriterA& dw, 
+    void writePoint(DL_WriterA& dw, RS_Point* p, const DRW_Entity& attrib);
+    void writeLine(RS_Line* l);
+    void writeCircle(DL_WriterA& dw, RS_Circle* c, const DRW_Entity& attrib);
+    void writeArc(RS_Arc* a);
+    void writePolyline(DL_WriterA& dw,
                 RS_Polyline* l, const DRW_Entity& attrib);
 	void writeSpline(DL_WriterA& dw, 
                 RS_Spline* s, const DRW_Entity& attrib);
-        void writeCircle(DL_WriterA& dw, RS_Circle* c, const DRW_Entity& attrib);
-        void writeArc(DL_WriterA& dw, RS_Arc* a, const DRW_Entity& attrib);
         void writeEllipse(DL_WriterA& dw, RS_Ellipse* s, const DRW_Entity& attrib);
         void writeInsert(DL_WriterA& dw, RS_Insert* i, const DRW_Entity& attrib);
         void writeText(DL_WriterA& dw, RS_Text* t, const DRW_Entity& attrib);
@@ -167,14 +170,14 @@ public:
     void writeImageDef(DL_WriterA& dw, RS_Image* i);
 
     void setEntityAttributes(RS_Entity* entity, const DRW_Entity& attrib);
-    DRW_Entity getEntityAttributes(RS_Entity* entity);
+    void getEntityAttributes(DRW_Entity* ent, const RS_Entity* entity);
 
     static QString toDxfString(const QString& string);
     static QString toNativeString(const char* data, const QString& encoding);
     QString getDXFEncoding();
 
 public:
-    RS_Pen attributesToPen(const DRW_Entity& attrib) const;
+    RS_Pen attributesToPen(const DRW_Entity* att) const;
 
     static RS_Color numberToColor(int num, bool comp=false);
     static int colorToNumber(const RS_Color& col);
@@ -197,8 +200,8 @@ public:
 private:
     /** Pointer to the graphic we currently operate on. */
     RS_Graphic* graphic;
-	/** File name. Used to find out the full path of images. */
-        QString file;
+    /** File name. Used to find out the full path of images. */
+    QString file;
     /** string for concatinating text parts of MTEXT entities. */
     QString mtext;
     /** Pointer to current polyline entity we're adding vertices to. */
@@ -218,6 +221,7 @@ private:
     dxfRW *dxf;
     RS_VariableDict variables;
     bool omitHatchLoop;
+//    bool started;
 }
 ;
 
