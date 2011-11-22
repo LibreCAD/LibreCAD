@@ -530,6 +530,13 @@ void RS_EventHandler::killAllActions() {
 
 
 /**
+ * @return true if the action is within currentActions
+ */
+bool RS_EventHandler::isValid(RS_ActionInterface* action){
+        return currentActions.indexOf(action) >= 0;
+}
+
+/**
  * @return true if there is at least one action in the action stack.
  */
 bool RS_EventHandler::hasAction() {

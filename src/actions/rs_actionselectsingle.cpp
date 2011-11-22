@@ -58,6 +58,9 @@ QAction* RS_ActionSelectSingle::createGUIAction(RS2::ActionType /*type*/, QObjec
 
 
 void RS_ActionSelectSingle::trigger() {
+//        if(entityTypeList != NULL){
+//                std::cout<<"RS_ActionSelectSingle::trigger(): entityTypeList->contains(en->rtti())="<<entityTypeList->contains(en->rtti())<<std::endl;
+//        }
     if (en!=NULL && (entityTypeList== NULL || entityTypeList->contains(en->rtti()))) {
         RS_Selection s(*container, graphicView);
         s.selectSingle(en);

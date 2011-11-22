@@ -63,6 +63,7 @@ public:
 
     void setCurrentAction(RS_ActionInterface* action);
     RS_ActionInterface* getCurrentAction();
+    bool isValid(RS_ActionInterface* action);
 
     void killSelectActions();
     void killAllActions();
