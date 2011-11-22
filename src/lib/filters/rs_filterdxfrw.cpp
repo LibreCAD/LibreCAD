@@ -29,9 +29,9 @@
 
 #include <stdio.h>
 
-#include "dl_attributes.h"
+//#include "dl_attributes.h"
 #include "dl_codes.h"
-#include "dl_writer_ascii.h"
+//#include "dl_writer_ascii.h"
 
 #include "rs_dimaligned.h"
 #include "rs_dimangular.h"
@@ -58,7 +58,7 @@ RS_FilterDXFRW::RS_FilterDXFRW()
     RS_DEBUG->print("RS_FilterDXF::RS_FilterDXF()");
 
     addImportFormat(RS2::FormatDXFRW);
-//    addExportFormat(RS2::FormatDXF);
+    addExportFormat(RS2::FormatDXFRW);
 //    addExportFormat(RS2::FormatDXF12);
 
     mtext = "";
@@ -132,8 +132,8 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
     RS_DEBUG->print("RS_FilterDXF::fileImport: updating inserts: OK");
 
     RS_DEBUG->print("RS_FilterDXF::fileImport OK");
-    //RS_DEBUG->timestamp();
-delete dxf;
+
+    delete dxf;
     return true;
 }
 
@@ -171,7 +171,7 @@ void RS_FilterDXFRW::addLayer(const DRW_Entity& data) {
 
     RS_Layer* layer = new RS_Layer(toNativeString(data.layer.c_str(),getDXFEncoding()));
     RS_DEBUG->print("RS_FilterDXF::addLayer: set pen");
-//RLZ    layer->setPen(attributesToPen(attributes));
+    layer->setPen(attributesToPen(&data));
     //layer->setFlags(data.flags&0x07);
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: flags");
@@ -1169,11 +1169,11 @@ void RS_FilterDXFRW::setVariableDouble(const char* key, double value, int code) 
  *
  * @param file Full path to the DXF file that will be written.
  */
-bool RS_FilterDXFRW::fileExport(RS_Graphic& /*g*/, const QString& /*file*/, RS2::FormatType /*type*/) {
+bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type) {
 
-/*    RS_DEBUG->print("RS_FilterDXF::fileExport: exporting file '%s'...",
+    RS_DEBUG->print("RS_FilterDXFDW::fileExport: exporting file '%s'...",
                     (const char*)QFile::encodeName(file));
-    RS_DEBUG->print("RS_FilterDXF::fileExport: file type '%d'", (int)type);
+    RS_DEBUG->print("RS_FilterDXFDW::fileExport: file type '%d'", (int)type);
 
     this->graphic = &g;
 
@@ -1182,7 +1182,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& /*g*/, const QString& /*file*/, RS2:
 
     QString path = QFileInfo(file).absolutePath();
     if (QFileInfo(path).isWritable()==false) {
-        RS_DEBUG->print("RS_FilterDXF::fileExport: can't write file: "
+        RS_DEBUG->print("RS_FilterDXFDW::fileExport: can't write file: "
                         "no permission");
         return false;
     }
@@ -1190,23 +1190,25 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& /*g*/, const QString& /*file*/, RS2:
 #endif
 
     // set version for DXF filter:
-    DL_Codes::version exportVersion;
+    DRW::Version exportVersion;
     if (type==RS2::FormatDXF12) {
-        exportVersion = DL_Codes::AC1009;
+        exportVersion = DRW::AC1009;
     } else {
-        exportVersion = DL_Codes::AC1015;
+        exportVersion = DRW::AC1015;
     }
 
     //DL_WriterA* dw = dxf.out(file, VER_R12);
-    DL_WriterA* dw = dxf.out((const char*)QFile::encodeName(file), exportVersion);
+    dxf = new dxfRW(QFile::encodeName(file));
+//    bool success = dxf->write(this, exportVersion, false); //ascii
+    bool success = dxf->write(this, exportVersion, true); //binary
 
-    if (dw==NULL) {
-        RS_DEBUG->print("RS_FilterDXF::fileExport: can't write file");
+    if (!success) {
+        RS_DEBUG->print("RS_FilterDXFDW::fileExport: can't write file");
         return false;
     }
-
+/*RLZ pte*/
     // Header
-    RS_DEBUG->print("writing headers...");
+/*    RS_DEBUG->print("writing headers...");
     dxf.writeHeader(*dw);
 
     // Variables
@@ -1380,11 +1382,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& /*g*/, const QString& /*file*/, RS2:
         RS_DEBUG->print("RS_FilterDXF::fileExport: file could not be written");
         return false;
     }
-
-    return true;*/
+*/
+    return success;
 }
-
-
 
 /**
  * Writes all known variable settings to the DXF file.
@@ -1527,6 +1527,84 @@ void RS_FilterDXFRW::writeEntity(DL_WriterA& /*dw*/, RS_Entity* /*e*/) {
 }
 
 
+void RS_FilterDXFRW::writeHeader(){
+}
+
+DRW_Entity* RS_FilterDXFRW::writeEntity(){
+    DRW_Entity *went = new DRW_Entity();
+//    RS_Entity *ent;
+    for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
+         e != NULL; e = graphic->nextEntity(RS2::ResolveNone)) {
+
+/*    if (!started) {
+        ent = graphic->firstEntity(RS2::ResolveNone);
+        strated = true;
+    } else {
+        ent = graphic->nextEntity(RS2::ResolveNone);
+    }*/
+        switch (e->rtti()) {
+        case RS2::EntityPoint:
+/*        writePoint(dw, (RS_Point*)e, attrib);
+        break;*/
+        case RS2::EntityLine:
+            writeLine(/*dw,*/ (RS_Line*)e/*, attrib*/);
+            break;
+        case RS2::EntityCircle:
+//            writeCircle(dw, (RS_Circle*)e, attrib);
+            break;
+        case RS2::EntityArc:
+            writeArc((RS_Arc*)e);
+            break;
+/*    case RS2::EntityPolyline:
+        writePolyline(dw, (RS_Polyline*)e, attrib);
+        break;
+    case RS2::EntitySpline:
+        writeSpline(dw, (RS_Spline*)e, attrib);
+        break;
+    case RS2::EntityVertex:
+        break;
+    case RS2::EntityEllipse:
+        writeEllipse(dw, (RS_Ellipse*)e, attrib);
+        break;
+    case RS2::EntityInsert:
+        writeInsert(dw, (RS_Insert*)e, attrib);
+        break;
+    case RS2::EntityText:
+        writeText(dw, (RS_Text*)e, attrib);
+        break;
+
+    case RS2::EntityDimAligned:
+    case RS2::EntityDimAngular:
+    case RS2::EntityDimLinear:
+    case RS2::EntityDimRadial:
+    case RS2::EntityDimDiametric:
+        writeDimension(dw, (RS_Dimension*)e, attrib);
+        break;
+    case RS2::EntityDimLeader:
+        writeLeader(dw, (RS_Leader*)e, attrib);
+        break;
+    case RS2::EntityHatch:
+        writeHatch(dw, (RS_Hatch*)e, attrib);
+        break;
+    case RS2::EntityImage:
+        writeImage(dw, (RS_Image*)e, attrib);
+        break;
+    case RS2::EntitySolid:
+        writeSolid(dw, (RS_Solid*)e, attrib);
+        break;
+    case RS2::EntityContainer:
+        writeEntityContainer(dw, (RS_EntityContainer*)e, attrib);
+        break;
+#endif
+*/
+        default:
+            break;
+        }
+    }
+    return went;
+
+}
+
 /**
  * Writes the given entity to the DXF file.
  */
@@ -1620,19 +1698,51 @@ void RS_FilterDXFRW::writePoint(DL_WriterA& /*dw*/, RS_Point* /*p*/,
 /**
  * Writes the given Line( entity to the file.
  */
-void RS_FilterDXFRW::writeLine(DL_WriterA& /*dw*/, RS_Line* /*l*/,
-                             const DRW_Entity& /*attrib*/) {
-/*    dxf.writeLine(
-        dw,
-        DL_LineData(l->getStartpoint().x,
-                    l->getStartpoint().y,
-                    0.0,
-                    l->getEndpoint().x,
-                    l->getEndpoint().y,
-                    0.0),
-        attrib);*/
+void RS_FilterDXFRW::writeLine(RS_Line* l) {
+    DRW_Line line;
+    getEntityAttributes(&line, l);
+    line.x = l->getStartpoint().x;
+    line.y = l->getStartpoint().y;
+    line.bx = l->getEndpoint().x;
+    line.by = l->getEndpoint().y;
+    dxf->writeLine(&line);
 }
 
+
+/**
+ * Writes the given circle entity to the file.
+ */
+void RS_FilterDXFRW::writeCircle(DL_WriterA& /*dw*/, RS_Circle* /*c*/,
+                               const DRW_Entity& /*attrib*/) {
+/*    dxf.writeCircle(
+        dw,
+        DL_CircleData(c->getCenter().x,
+                      c->getCenter().y,
+                      0.0,
+                      c->getRadius()),
+        attrib);*/
+
+}
+
+
+/**
+ * Writes the given arc entity to the file.
+ */
+void RS_FilterDXFRW::writeArc(RS_Arc* a) {
+    DRW_Arc arc;
+    getEntityAttributes(&arc, a);
+    arc.x = a->getCenter().x;
+    arc.y = a->getCenter().y;
+    arc.radious = a->getRadius();
+    if (a->isReversed()) {
+        arc.staangle = a->getAngle2()*ARAD;
+        arc.endangle = a->getAngle1()*ARAD;
+    } else {
+        arc.staangle = a->getAngle1()*ARAD;
+        arc.endangle = a->getAngle2()*ARAD;
+    }
+    dxf->writeArc(&arc);
+}
 
 
 /**
@@ -1775,44 +1885,6 @@ void RS_FilterDXFRW::writeSpline(DL_WriterA& /*dw*/,
     }*/
 }
 
-
-
-/**
- * Writes the given circle entity to the file.
- */
-void RS_FilterDXFRW::writeCircle(DL_WriterA& /*dw*/, RS_Circle* /*c*/,
-                               const DRW_Entity& /*attrib*/) {
-/*    dxf.writeCircle(
-        dw,
-        DL_CircleData(c->getCenter().x,
-                      c->getCenter().y,
-                      0.0,
-                      c->getRadius()),
-        attrib);*/
-
-}
-
-
-
-void RS_FilterDXFRW::writeArc(DL_WriterA& /*dw*/, RS_Arc* /*a*/,
-                            const DRW_Entity& /*attrib*/) {
-/*    double a1, a2;
-    if (a->isReversed()) {
-        a1 = a->getAngle2()*ARAD;
-        a2 = a->getAngle1()*ARAD;
-    } else {
-        a1 = a->getAngle1()*ARAD;
-        a2 = a->getAngle2()*ARAD;
-    }
-    dxf.writeArc(
-        dw,
-        DL_ArcData(a->getCenter().x,
-                   a->getCenter().y,
-                   0.0,
-                   a->getRadius(),
-                   a1, a2),
-        attrib);*/
-}
 
 
 void RS_FilterDXFRW::writeEllipse(DL_WriterA& /*dw*/, RS_Ellipse* /*s*/,
@@ -2389,15 +2461,16 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
 /**
  * Gets the entities attributes as a DL_Attributes object.
  */
-DRW_Entity RS_FilterDXFRW::getEntityAttributes(RS_Entity* /*entity*/) {
+void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entity) {
+//DRW_Entity RS_FilterDXFRW::getEntityAttributes(RS_Entity* /*entity*/) {
 
     // Layer:
-/*    RS_Layer* layer = entity->getLayer();
+    RS_Layer* layer = entity->getLayer();
     QString layerName;
     if (layer!=NULL) {
         layerName = layer->getName();
     } else {
-        layerName = "NULL";
+        layerName = "0";
     }
 
     RS_Pen pen = entity->getPen(false);
@@ -2412,12 +2485,10 @@ DRW_Entity RS_FilterDXFRW::getEntityAttributes(RS_Entity* /*entity*/) {
     // Width:
     int width = widthToNumber(pen.getWidth());
 
-    DL_Attributes attrib(layerName.toLatin1().data(),
-                         color,
-                         width,
-                         lineType.toLatin1().data());
-
-    return attrib;*/
+    ent->layer = layerName.toLatin1().data();
+    ent->color = color;
+    ent->lWeight = width;
+    ent->lineType = lineType.toLatin1().data();
 }
 
 
@@ -2425,12 +2496,12 @@ DRW_Entity RS_FilterDXFRW::getEntityAttributes(RS_Entity* /*entity*/) {
 /**
  * @return Pen with the same attributes as 'attrib'.
  */
-RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Entity& /*attrib*/) const {
+RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Entity* att) const {
 
-/*    RS_Pen pen(numberToColor(attrib.getColor()),
-               numberToWidth(attrib.getWidth()),
-               nameToLineType(attrib.getLineType().c_str()));
-    return pen;*/
+    RS_Pen pen(numberToColor(att->color),
+               numberToWidth(att->lWeight),
+               nameToLineType(att->lineType.c_str()) );
+    return pen;
 }
 
 

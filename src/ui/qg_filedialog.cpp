@@ -61,6 +61,9 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     QString fn = "";
 
     filters.append("Drawing Exchange DXF 2000 (*.dxf)");
+#ifdef USE_DXFRW
+    filters.append("New Drawing Exchange DXF 2000 (*.DXF)");
+#endif
     filters.append("Drawing Exchange DXF R12 (*.dxf)");
     filters.append("LFF Font (*.lff)");
     filters.append("Font (*.cxf)");
@@ -103,6 +106,10 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
                     *type = RS2::FormatCXF;
                 } else if (fileDlg->selectedFilter()=="Drawing Exchange DXF R12 (*.dxf)") {
                     *type = RS2::FormatDXF12;
+#ifdef USE_DXFRW
+                } else if (fileDlg->selectedNameFilter()=="New Drawing Exchange DXF 2000 (*.DXF)") {
+                    *type = RS2::FormatDXFRW;
+#endif
                 } else if (fileDlg->selectedFilter()=="JWW (*.jww)") {
                     *type = RS2::FormatJWW;
                 } else {
