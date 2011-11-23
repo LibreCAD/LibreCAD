@@ -12,6 +12,9 @@ CONFIG += ordered
 
 SUBDIRS     = \
         ../libdxfrw \
+        ../dxflib \
+        ../jwwlib \
+        ../fparser \
         ../src \
         ../plugins
 
