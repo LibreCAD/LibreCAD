@@ -24,6 +24,9 @@ win32 {
     COPY = cp
 }
 
+INCLUDEPATH += \
+    ../dxflib/src
+
 SOURCES += \
     src/dl_jww.cpp \
     src/jwwdoc.cpp
