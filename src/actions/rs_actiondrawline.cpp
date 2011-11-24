@@ -208,13 +208,21 @@ void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
     default:
         break;
     }
-    RS_DEBUG->print("RS_ActionDrawLine::commandEvent: OK");
+    if (checkCommand("redo", c)) {
+        redo();
+        updateMouseButtonHints();
+        return;
+    }
+    //    RS_DEBUG->print("RS_ActionDrawLine::commandEvent: OK");
 }
 
 
 
 QStringList RS_ActionDrawLine::getAvailableCommands() {
     QStringList cmd;
+    if(historyIndex+1<history.size()) {
+        cmd += command("redo");
+    }
 
     switch (getStatus()) {
     case SetStartpoint:
@@ -248,9 +256,13 @@ void RS_ActionDrawLine::updateMouseButtonHints() {
 
             if (historyIndex>=2) {
                 msg += RS_COMMANDS->command("close");
-                msg += "/";
             }
-            if (historyIndex==1) {
+            if(historyIndex+1<history.size()) {
+                if(msg.size()>0)  msg += "/";
+                msg += RS_COMMANDS->command("redo");
+            }
+            if (historyIndex>=1) {
+                if(msg.size()>0)  msg += "/";
                 msg += RS_COMMANDS->command("undo");
             }
 
@@ -315,7 +327,7 @@ void RS_ActionDrawLine::close() {
         addHistory(data.endpoint);
         trigger();
         setStatus(SetStartpoint);
-//        graphicView->moveRelativeZero(start);
+        //        graphicView->moveRelativeZero(start);
     } else {
         if (RS_DIALOGFACTORY!=NULL) {
             RS_DIALOGFACTORY->commandMessage(

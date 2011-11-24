@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -35,14 +35,14 @@ RS_Commands* RS_Commands::uniqueInstance = NULL;
  * Constructor. Initiates main command dictionary.
  */
 RS_Commands::RS_Commands() {
-	// draw:
+        // draw:
         mainCommands.insert(tr("point"), RS2::ActionDrawPoint);
         shortCommands.insert(tr("po"), RS2::ActionDrawPoint);
-	
+
         mainCommands.insert(tr("line"), RS2::ActionDrawLine);
         shortCommands.insert(tr("ln"), RS2::ActionDrawLine);
         shortCommands.insert(tr("l"), RS2::ActionDrawLine);
-	
+
         mainCommands.insert(tr("polyline"), RS2::ActionDrawPolyline);
 
     mainCommands.insert(tr("offset"), RS2::ActionDrawLineParallel);
@@ -52,48 +52,48 @@ RS_Commands::RS_Commands() {
 
         mainCommands.insert(tr("arc"), RS2::ActionDrawArc3P);
         shortCommands.insert(tr("a"), RS2::ActionDrawArc3P);
-	
+
         mainCommands.insert(tr("circle"), RS2::ActionDrawCircle);
         shortCommands.insert(tr("ci"), RS2::ActionDrawCircle);
-	
+
         mainCommands.insert(tr("rectangle"), RS2::ActionDrawLineRectangle);
         shortCommands.insert(tr("rec"), RS2::ActionDrawLineRectangle);
         shortCommands.insert(tr("rectang"), RS2::ActionDrawLineRectangle);
-	
+
         mainCommands.insert(tr("polyline"), RS2::ActionDrawPolyline);
-	
+
         mainCommands.insert(tr("text"), RS2::ActionDrawText);
 
-	// zoom:
+        // zoom:
         mainCommands.insert(tr("regen"), RS2::ActionZoomRedraw);
         shortCommands.insert(tr("rg", "zoom - redraw"), RS2::ActionZoomRedraw);
         shortCommands.insert(tr("zr", "zoom - redraw"), RS2::ActionZoomRedraw);
-	
+
         mainCommands.insert(tr("zw", "zoom - window"), RS2::ActionZoomWindow);
-	
+
         mainCommands.insert(tr("za", "zoom - auto"), RS2::ActionZoomAuto);
-	
+
         mainCommands.insert(tr("zp", "zoom - pan"), RS2::ActionZoomPan);
-	
+
         mainCommands.insert(tr("zv", "zoom - previous"), RS2::ActionZoomPrevious);
 
-	// edit:
+        // edit:
         mainCommands.insert(tr("kill"), RS2::ActionEditKillAllActions);
         shortCommands.insert(tr("k"), RS2::ActionEditKillAllActions);
 
         mainCommands.insert(tr("undo"), RS2::ActionEditUndo);
         shortCommands.insert(tr("u", "undo"), RS2::ActionEditUndo);
-	
+
         mainCommands.insert(tr("redo"), RS2::ActionEditRedo);
         shortCommands.insert(tr("r"), RS2::ActionEditRedo);
 
     // dimensions:
     mainCommands.insert(tr("da", "dimension - aligned"), RS2::ActionDimAligned);
     shortCommands.insert(tr("da"), RS2::ActionDimAligned);
-    
+
     mainCommands.insert(tr("dh", "dimension - horizontal"), RS2::ActionDimLinearHor);
     shortCommands.insert(tr("dh"), RS2::ActionDimLinearHor);
-    
+
     mainCommands.insert(tr("dr", "dimension - linear"), RS2::ActionDimLinear);
     shortCommands.insert(tr("dr"), RS2::ActionDimLinear);
 
@@ -103,7 +103,7 @@ RS_Commands::RS_Commands() {
     mainCommands.insert(tr("ld", "dimension - leader"), RS2::ActionDimLeader);
     shortCommands.insert(tr("ld"), RS2::ActionDimLeader);
 
-	// tools:
+        // tools:
         mainCommands.insert(tr("dimregen"), RS2::ActionToolRegenerateDimensions);
 
     // modify:
@@ -176,7 +176,7 @@ RS_Commands::RS_Commands() {
     shortCommands.insert(tr("tn"), RS2::ActionDeselectAll);
 }
 
-	
+
 
 /**
  * Tries to complete the given command (e.g. when tab is pressed).
@@ -190,9 +190,9 @@ QStringList RS_Commands::complete(const QString& cmd) {
         }
         ++it;
     }
-	ret.sort();
+        ret.sort();
 
-	return ret;
+        return ret;
 }
 
 
@@ -219,35 +219,35 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd) {
         } else
         if ( shortCommands.contains(cmd) ) {
                 ret = shortCommands.value(cmd);
-	}
+        }
 
         // find full command to confirm to user:
 
         QHash<QString, RS2::ActionType>::const_iterator it = mainCommands.constBegin();
         while (it != mainCommands.constEnd()) {
                 if (it.value()==ret) {
-			if (RS_DialogFactory::instance()!=NULL) {
-				//if (RS_DIALOGFACTORY!=NULL) {
-					RS_DEBUG->print("RS_Commands::cmdToAction: "
-						"commandMessage");
-					//RS_DIALOGFACTORY->commandMessage(tr("Command: %1")
-					//	.arg(full));
-					RS_DialogFactory::instance()->commandMessage(
-						tr("Command: %1").arg(full));
-					RS_DEBUG->print("RS_Commands::cmdToAction: "
-						"commandMessage: ok");
-				//}
-			}
-			else {
-				RS_DEBUG->print("RS_Commands::cmdToAction: dialog "
-				  "factory instance is NULL");
-			}
+                        if (RS_DialogFactory::instance()!=NULL) {
+                                //if (RS_DIALOGFACTORY!=NULL) {
+                                        RS_DEBUG->print("RS_Commands::cmdToAction: "
+                                                "commandMessage");
+                                        //RS_DIALOGFACTORY->commandMessage(tr("Command: %1")
+                                        //	.arg(full));
+                                        RS_DialogFactory::instance()->commandMessage(
+                                                tr("Command: %1").arg(full));
+                                        RS_DEBUG->print("RS_Commands::cmdToAction: "
+                                                "commandMessage: ok");
+                                //}
+                        }
+                        else {
+                                RS_DEBUG->print("RS_Commands::cmdToAction: dialog "
+                                  "factory instance is NULL");
+                        }
                         break;
                 }
             ++it;
         }
 
-	return ret;
+        return ret;
 }
 
 
@@ -289,7 +289,7 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
         ret = RS2::ActionDrawText;
     }
 
-	// dimensions:
+        // dimensions:
     else if (c==tr("da", "dimension - aligned")) {
         ret = RS2::ActionDimAligned;
     } else if (c==tr("dh", "dimension - horizontal")) {
@@ -300,7 +300,7 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
         ret = RS2::ActionDimLinear;
     } else if (c==tr("ld", "dimension - leader")) {
         ret = RS2::ActionDimLeader;
-	}
+        }
 
     // zoom:
     else if (c==tr("rd", "redraw")) {
@@ -319,66 +319,66 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
         ret = RS2::ActionZoomPrevious;
     }
 
-	// snap:
-	else if (c==tr("os", "snap - none")) {
-		ret = RS2::ActionSnapFree;
-	} else if (c==tr("sg", "snap - grid")) {
-		ret = RS2::ActionSnapGrid;
-	} else if (c==tr("se", "snap - end")) {
-		ret = RS2::ActionSnapEndpoint;
-	} else if (c==tr("si", "snap - intersection")) {
-		ret = RS2::ActionSnapIntersection;
-	} else if (c==tr("sn", "snap - center")) {
-		ret = RS2::ActionSnapCenter;
-	} else if (c==tr("sm", "snap - middle")) {
-		ret = RS2::ActionSnapMiddle;
-	} else if (c==tr("sn", "snap - nearest")) {
-		ret = RS2::ActionSnapMiddle;
-	} else if (c==tr("np", "snap - nearest point")) {
-		ret = RS2::ActionSnapOnEntity;
-	}
+        // snap:
+        else if (c==tr("os", "snap - none")) {
+                ret = RS2::ActionSnapFree;
+        } else if (c==tr("sg", "snap - grid")) {
+                ret = RS2::ActionSnapGrid;
+        } else if (c==tr("se", "snap - end")) {
+                ret = RS2::ActionSnapEndpoint;
+        } else if (c==tr("si", "snap - intersection")) {
+                ret = RS2::ActionSnapIntersection;
+        } else if (c==tr("sn", "snap - center")) {
+                ret = RS2::ActionSnapCenter;
+        } else if (c==tr("sm", "snap - middle")) {
+                ret = RS2::ActionSnapMiddle;
+        } else if (c==tr("sn", "snap - nearest")) {
+                ret = RS2::ActionSnapMiddle;
+        } else if (c==tr("np", "snap - nearest point")) {
+                ret = RS2::ActionSnapOnEntity;
+        }
 
-	// layer:
-	else if (c==tr("fr*", "layers - freeze all")) {
-		ret = RS2::ActionLayersFreezeAll;
-	} else if (c==tr("th*", "layers - defreeze all")) {
-		ret = RS2::ActionLayersDefreezeAll;
-	}
+        // layer:
+        else if (c==tr("fr*", "layers - freeze all")) {
+                ret = RS2::ActionLayersFreezeAll;
+        } else if (c==tr("th*", "layers - defreeze all")) {
+                ret = RS2::ActionLayersDefreezeAll;
+        }
 
-	// selection:
-	else if (c==tr("tn", "Deselect all")) {
-		ret = RS2::ActionDeselectAll;
-	}
+        // selection:
+        else if (c==tr("tn", "Deselect all")) {
+                ret = RS2::ActionDeselectAll;
+        }
 
-	// modify:
-	else if (c==tr("ch", "modify - bevel (chamfer)")) {
-		ret = RS2::ActionModifyBevel;
-	} else if (c==tr("tm", "modify - multi trim (extend)")) {
-		ret = RS2::ActionModifyTrim2;
-	} else if (c==tr("xt", "modify - trim (extend)")) {
-		ret = RS2::ActionModifyTrim;
-	} else if (c==tr("rm", "modify - trim")) {
-		ret = RS2::ActionModifyTrim;
-	} else if (c==tr("mv", "modify - move")) {
-		ret = RS2::ActionModifyMove;
-	} else if (c==tr("mi", "modify - mirror")) {
-		ret = RS2::ActionModifyMirror;
-	} else if (c==tr("ro", "modify - rotate")) {
-		ret = RS2::ActionModifyRotate;
-	} else if (c==tr("sz", "modify - scale")) {
-		ret = RS2::ActionModifyMove;
-	} else if (c==tr("ss", "modify - stretch")) {
-		ret = RS2::ActionModifyStretch;
-	} else if (c==tr("er", "modify - delete (erase)")) {
-		ret = RS2::ActionModifyDelete;
-	} else if (c==tr("oo", "modify - undo (oops)")) {
-		ret = RS2::ActionEditUndo;
-	} else if (c==tr("uu", "modify - redo")) {
-		ret = RS2::ActionEditRedo;
-	} else if (c==tr("xp", "modify - explode") || 
-			c==tr("ex", "modify - explode")) {
-		ret = RS2::ActionBlocksExplode;
-	}
+        // modify:
+        else if (c==tr("ch", "modify - bevel (chamfer)")) {
+                ret = RS2::ActionModifyBevel;
+        } else if (c==tr("tm", "modify - multi trim (extend)")) {
+                ret = RS2::ActionModifyTrim2;
+        } else if (c==tr("xt", "modify - trim (extend)")) {
+                ret = RS2::ActionModifyTrim;
+        } else if (c==tr("rm", "modify - trim")) {
+                ret = RS2::ActionModifyTrim;
+        } else if (c==tr("mv", "modify - move")) {
+                ret = RS2::ActionModifyMove;
+        } else if (c==tr("mi", "modify - mirror")) {
+                ret = RS2::ActionModifyMirror;
+        } else if (c==tr("ro", "modify - rotate")) {
+                ret = RS2::ActionModifyRotate;
+        } else if (c==tr("sz", "modify - scale")) {
+                ret = RS2::ActionModifyMove;
+        } else if (c==tr("ss", "modify - stretch")) {
+                ret = RS2::ActionModifyStretch;
+        } else if (c==tr("er", "modify - delete (erase)")) {
+                ret = RS2::ActionModifyDelete;
+        } else if (c==tr("oo", "modify - undo (oops)")) {
+                ret = RS2::ActionEditUndo;
+        } else if (c==tr("uu", "modify - redo")) {
+                ret = RS2::ActionEditRedo;
+        } else if (c==tr("xp", "modify - explode") ||
+                        c==tr("ex", "modify - explode")) {
+                ret = RS2::ActionBlocksExplode;
+        }
 
     return ret;
 }
@@ -422,6 +422,8 @@ QString RS_Commands::command(const QString& cmd) {
         return tr("trim");
     } else if (cmd=="undo") {
         return tr("undo");
+    } else if (cmd=="redo") {
+        return tr("redo");
     } else if (cmd=="back") {
         return tr("back");
     }
@@ -543,6 +545,11 @@ bool RS_Commands::checkCommand(const QString& cmd, const QString& str,
     } else if (cmd=="undo") {
         if (strl==tr("undo") ||
                 strl==tr("u", "undo")) {
+            return true;
+        }
+    } else if (cmd=="redo") {
+        if (strl==tr("redo") ||
+                strl==tr("r", "redo")) {
             return true;
         }
     } else if (cmd=="back") {
