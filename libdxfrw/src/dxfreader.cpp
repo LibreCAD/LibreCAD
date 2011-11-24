@@ -191,7 +191,7 @@ bool dxfReaderAscii::readString(std::string *text) {
 
 bool dxfReaderAscii::readString() {
     std::getline(*filestr, strData);
-    if (strData.at(strData.size()-1) == '\r')
+    if (!strData.empty() && strData.at(strData.size()-1) == '\r')
         strData.erase(strData.size()-1);
     DBG(strData); DBG("\n");
     return (filestr->good());

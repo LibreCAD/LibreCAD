@@ -42,14 +42,13 @@ private:
     bool processEntities();
     bool processObjects();
 
+    bool processLayer();
+
     bool processPoint();
     bool processLine();
     bool processCircle();
     bool processArc();
-    /*    virtual PluginCapabilities getCapabilities() const;
-    virtual QString name() const;
-    virtual void execComm(Document_Interface *doc,
-                                       QWidget *parent, QString cmd);*/
+
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);
 
@@ -60,7 +59,7 @@ private:
     dxfReader *reader;
     dxfWriter *writer;
     DRW_Interface *iface;
-    int section;
+//    int section;
     string nextentity;
     int entCount;
 

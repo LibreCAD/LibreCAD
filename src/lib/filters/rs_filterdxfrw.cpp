@@ -163,24 +163,23 @@ QString RS_FilterDXFRW::getDXFEncoding() {
  * Implementation of the method which handles layers.
  */
 /*TODO basic implementation for test, pending to write readLayer in libdxfrw*/
-void RS_FilterDXFRW::addLayer(const DRW_Entity& data) {
+void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
     RS_DEBUG->print("RS_FilterDXF::addLayer");
-    RS_DEBUG->print("  adding layer: %s", data.layer.c_str());
+    RS_DEBUG->print("  adding layer: %s", data.name.c_str());
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: creating layer");
 
-    RS_Layer* layer = new RS_Layer(toNativeString(data.layer.c_str(),getDXFEncoding()));
+    RS_Layer* layer = new RS_Layer(toNativeString(data.name.c_str(),getDXFEncoding()));
     RS_DEBUG->print("RS_FilterDXF::addLayer: set pen");
     layer->setPen(attributesToPen(&data));
-    //layer->setFlags(data.flags&0x07);
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: flags");
-/*RLZ    if (data.flags&0x01) {
+    if (data.flags&0x01) {
         layer->freeze(true);
     }
     if (data.flags&0x04) {
         layer->lock(true);
-    }*/
+    }
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: add layer to graphic");
     graphic->addLayer(layer);
@@ -2439,7 +2438,9 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
 
     if (graphic->findLayer(QString::fromUtf8(attrib.layer.c_str()))==NULL) {
 //        addLayer(DL_LayerData(attrib.layer, 0));
-        addLayer(attrib);
+        DRW_Layer lay;
+        lay.name = attrib.layer;
+        addLayer(lay);
     }
     entity->setLayer(QString::fromUtf8(attrib.layer.c_str()));
 
@@ -2496,7 +2497,7 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entit
 /**
  * @return Pen with the same attributes as 'attrib'.
  */
-RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Entity* att) const {
+RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Layer* att) const {
 
     RS_Pen pen(numberToColor(att->color),
                numberToWidth(att->lWeight),

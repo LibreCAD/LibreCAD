@@ -79,7 +79,7 @@ public:
     virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/);
 
     // Methods from DL_CreationInterface:
-    virtual void addLayer(const DRW_Entity& data);
+    virtual void addLayer(const DRW_Layer& data);
     virtual void addBlock(const DRW_Entity& data);
     virtual void endBlock();
     virtual void addPoint(const DRW_Point& data);
@@ -177,7 +177,7 @@ public:
     QString getDXFEncoding();
 
 public:
-    RS_Pen attributesToPen(const DRW_Entity* att) const;
+    RS_Pen attributesToPen(const DRW_Layer* att) const;
 
     static RS_Color numberToColor(int num, bool comp=false);
     static int colorToNumber(const RS_Color& col);
