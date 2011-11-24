@@ -27,14 +27,14 @@ using namespace std;
 #define DBG(a)
 #endif
 
-enum sections {
+/*enum sections {
     secUnknown,
     secHeader,
     secTables,
     secBlocks,
     secEntities,
     secObjects
-};
+};*/
 
 dxfRW::dxfRW(const char* name){
     fileName = name;
@@ -131,8 +131,8 @@ bool dxfRW::write(DRW_Interface *interface, DRW::Version ver, bool bin){
 
     writer->writeString(9, "$DWGCODEPAGE");
     writer->writeString(3, "ANSI_1252");
-    writer->writeString(0, "ENDSEC");/*
-    writer->writeString(0, "SECTION");
+    writer->writeString(0, "ENDSEC");
+/*    writer->writeString(0, "SECTION");
     writer->writeString(2, "CLASSES");
     writer->writeString(0, "ENDSEC");
     writer->writeString(0, "SECTION");
@@ -206,12 +206,14 @@ bool dxfRW::writeArc(DRW_Arc *ent) {
     return true;
 }
 
+/********* Reader Process *********/
+
 bool dxfRW::processDxf() {
     DBG("dxfRW::processDxf()\n");
     int code;
     bool more = true;
     string sectionstr;
-    section = secUnknown;
+//    section = secUnknown;
     while (reader->readRec(&code, !binary)) {
         DBG(code); DBG("\n");
         if (code == 0) {
@@ -231,6 +233,8 @@ bool dxfRW::processDxf() {
                 //found section, process it
                     if (sectionstr == "HEADER") {
                         processHeader();
+                    } else if (sectionstr == "CLASSES") {
+//                        processClasses();
                     } else if (sectionstr == "TABLES") {
                         processTables();
                     } else if (sectionstr == "BLOCKS") {
@@ -249,6 +253,8 @@ bool dxfRW::processDxf() {
     return true;
 }
 
+/********* Header Section *********/
+
 bool dxfRW::processHeader() {
     DBG("dxfRW::processHeader\n");
     int code;
@@ -265,22 +271,82 @@ bool dxfRW::processHeader() {
     }
     return true;
 }
+
+/********* Tables Section *********/
+
 bool dxfRW::processTables() {
     DBG("dxfRW::processTables\n");
     int code;
     string sectionstr;
+    bool more = true;
     while (reader->readRec(&code, !binary)) {
         DBG(code); DBG("\n");
         if (code == 0) {
             sectionstr = reader->getString();
             DBG(sectionstr); DBG("\n");
-            if (sectionstr == "ENDSEC") {
+            if (sectionstr == "TABLE") {
+                more = reader->readRec(&code, !binary);
+                DBG(code); DBG("\n");
+                if (!more)
+                    return false; //wrong dxf file
+                if (code == 2) {
+                    sectionstr = reader->getString();
+                    DBG(sectionstr); DBG("\n");
+                //found section, process it
+                    if (sectionstr == "VPORT") {
+//                        processVPort();
+                    } else if (sectionstr == "LTYPE") {
+//                        processLType();
+                    } else if (sectionstr == "LAYER") {
+                        processLayer();
+                    } else if (sectionstr == "STYLE") {
+//                        processStyle();
+                    } else if (sectionstr == "VIEW") {
+//                        processView();
+                    } else if (sectionstr == "UCS") {
+//                        processUCS();
+                    } else if (sectionstr == "APPID") {
+//                        processAppId();
+                    } else if (sectionstr == "DIMSTYLE") {
+//                        processDimStyle();
+                    } else if (sectionstr == "BLOCK_RECORD") {
+//                        processBlockRecord();
+                    }
+                }
+            } else if (sectionstr == "ENDSEC") {
                 return true;  //found ENDSEC terminate
             }
         }
     }
     return true;
 }
+
+bool dxfRW::processLayer() {
+    DBG("dxfRW::processLayer\n");
+    int code;
+    string sectionstr;
+    bool reading = false;
+    DRW_Layer layer;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        if (code == 0) {
+            if (reading)
+                iface->addLayer(layer);
+            sectionstr = reader->getString();
+            DBG(sectionstr); DBG("\n");
+            if (sectionstr == "LAYER") {
+                reading = true;
+            } else if (sectionstr == "ENDTAB") {
+                return true;  //found ENDTAB terminate
+            }
+        } else if (reading)
+            layer.parseCode(code, reader);
+    }
+    return true;
+}
+
+
+/********* Block Section *********/
 
 bool dxfRW::processBlocks() {
     DBG("dxfRW::processBlocks\n");
@@ -298,6 +364,8 @@ bool dxfRW::processBlocks() {
     }
     return true;
 }
+
+/********* Entities Section *********/
 
 bool dxfRW::processEntities() {
     DBG("dxfRW::processEntities\n");
@@ -328,23 +396,6 @@ bool dxfRW::processEntities() {
             }
 
         } while (next);
-    }
-    return true;
-}
-
-bool dxfRW::processObjects() {
-    DBG("dxfRW::processObjects\n");
-    int code;
-    string sectionstr;
-    while (reader->readRec(&code, !binary)) {
-        DBG(code); DBG("\n");
-        if (code == 0) {
-            sectionstr = reader->getString();
-            DBG(sectionstr); DBG("\n");
-            if (sectionstr == "ENDSEC") {
-                return true;  //found ENDSEC terminate
-            }
-        }
     }
     return true;
 }
@@ -432,3 +483,23 @@ bool dxfRW::processArc() {
     }
     return true;
 }
+
+/********* Objects Section *********/
+
+bool dxfRW::processObjects() {
+    DBG("dxfRW::processObjects\n");
+    int code;
+    string sectionstr;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        if (code == 0) {
+            sectionstr = reader->getString();
+            DBG(sectionstr); DBG("\n");
+            if (sectionstr == "ENDSEC") {
+                return true;  //found ENDSEC terminate
+            }
+        }
+    }
+    return true;
+}
+
