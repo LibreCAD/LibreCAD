@@ -57,7 +57,7 @@ void QG_RecentFiles::add(const QString& filename) {
     // append
     //files.push_back(filename);
     files.append(filename);
-    if (files.size() > number) {
+    while (files.size() > number) {
         // keep the list short
         files.pop_front();
     }
