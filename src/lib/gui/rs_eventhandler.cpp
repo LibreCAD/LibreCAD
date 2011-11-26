@@ -36,7 +36,7 @@
  */
 RS_EventHandler::RS_EventHandler(RS_GraphicView* graphicView) {
     this->graphicView = graphicView;
-    actionIndex=-1;
+//    actionIndex=-1;
     currentActions.clear();
     //    for (int i=0; i<RS_MAXACTIONS; ++i) {
     //        currentActions[i] = NULL;
@@ -60,7 +60,7 @@ RS_EventHandler::~RS_EventHandler() {
 
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: Deleting all actions..");
     for(int i=0; i< currentActions.size();i++){
-//        currentActions[i]->finish(false);
+        //        currentActions[i]->finish(false);
         delete currentActions[i];
     }
     //    for (int i=0; i<RS_MAXACTIONS; ++i) {
@@ -262,7 +262,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         RS_DEBUG->print("RS_EventHandler::commandEvent: 005");
                         RS_CoordinateEvent ce(RS_Vector(x,y));
                         RS_DEBUG->print("RS_EventHandler::commandEvent: 006");
-                        currentActions[actionIndex]->coordinateEvent(&ce);
+                        currentActions.last()->coordinateEvent(&ce);
                     } else {
                         if (RS_DIALOGFACTORY!=NULL) {
                             RS_DIALOGFACTORY->commandMessage(
@@ -283,7 +283,9 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         if (ok1 && ok2) {
                             RS_CoordinateEvent ce(RS_Vector(x,y) +
                                                   graphicView->getRelativeZero());
-                            currentActions[actionIndex]->coordinateEvent(&ce);
+
+                            currentActions.last()->coordinateEvent(&ce);
+                            //                            currentActions[actionIndex]->coordinateEvent(&ce);
                         } else {
                             if (RS_DIALOGFACTORY!=NULL) {
                                 RS_DIALOGFACTORY->commandMessage(
@@ -306,7 +308,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                             RS_Vector pos;
                             pos.setPolar(r,RS_Math::deg2rad(a));
                             RS_CoordinateEvent ce(pos);
-                            currentActions[actionIndex]->coordinateEvent(&ce);
+                            currentActions.last()->coordinateEvent(&ce);
                         } else {
                             if (RS_DIALOGFACTORY!=NULL) {
                                 RS_DIALOGFACTORY->commandMessage(
@@ -330,7 +332,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                             pos.setPolar(r,RS_Math::deg2rad(a));
                             RS_CoordinateEvent ce(pos +
                                                   graphicView->getRelativeZero());
-                            currentActions[actionIndex]->coordinateEvent(&ce);
+                            currentActions.last()->coordinateEvent(&ce);
                         } else {
                             if (RS_DIALOGFACTORY!=NULL) {
                                 RS_DIALOGFACTORY->commandMessage(
@@ -524,7 +526,7 @@ void RS_EventHandler::killAllActions() {
         delete currentActions.first();
         currentActions.pop_front();
     }
-//cleanUp();
+    //cleanUp();
 }
 
 
@@ -533,7 +535,7 @@ void RS_EventHandler::killAllActions() {
  * @return true if the action is within currentActions
  */
 bool RS_EventHandler::isValid(RS_ActionInterface* action){
-        return currentActions.indexOf(action) >= 0;
+    return currentActions.indexOf(action) >= 0;
 }
 
 /**
@@ -628,17 +630,17 @@ void RS_EventHandler::setSnapRestriction(RS2::SnapRestriction sr) {
 
 
 void RS_EventHandler::debugActions() {
-//        std::cout<<"action queue size=:"<<currentActions.size()<<std::endl;
+    //        std::cout<<"action queue size=:"<<currentActions.size()<<std::endl;
     RS_DEBUG->print("---");
     for(int i=0;i<currentActions.size();i++){
 
         if (i == currentActions.size() - 1 ) {
             RS_DEBUG->print("Current");
         }
-            RS_DEBUG->print("Action %03d: %s [%s]",
-                            i, currentActions.at(i)->getName().toLatin1().data(),
-                            currentActions.at(i)->isFinished() ? "finished" : "active");
-        }
+        RS_DEBUG->print("Action %03d: %s [%s]",
+                        i, currentActions.at(i)->getName().toLatin1().data(),
+                        currentActions.at(i)->isFinished() ? "finished" : "active");
+    }
 }
 
 // EOF
