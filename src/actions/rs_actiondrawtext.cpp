@@ -68,8 +68,7 @@ void RS_ActionDrawText::init(int status) {
                     showOptions();
                 } else {
                     hideOptions();
-                    finish(false);
-                updateMouseButtonHints();
+                    setFinished();
                 }
             }
             break;

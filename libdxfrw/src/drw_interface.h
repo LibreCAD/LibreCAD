@@ -39,7 +39,7 @@ public:
     /**
      * Called for every layer.
      */
-    virtual void addLayer(const DRW_Entity& data) = 0;
+    virtual void addLayer(const DRW_Layer& data) = 0;
 
     /**
      * Called for every block. Note: all entities added after this
@@ -230,6 +230,9 @@ public:
 //    DL_Extrusion* getExtrusion() {
 //        return extrusion;
 //    }
+
+    virtual void writeHeader() = 0;
+    virtual DRW_Entity* writeEntity() = 0;
 
 protected:
 //    DL_Attributes attributes;

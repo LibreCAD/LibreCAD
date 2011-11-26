@@ -21,7 +21,19 @@ class dxfReader;
 using std::string;
 
 namespace DRW {
-    //! Vertical alignments.
+//! Version numbers for the DXF Format.
+enum Version {
+    AC1006,       /*!< R10. */
+    AC1009,       /*!< R11 & R12. */
+    AC1012,       /*!< R13. */
+    AC1014,       /*!< R14. */
+    AC1015,       /*!< ACAD 2000. */
+    AC1018,       /*!< ACAD 2004. */
+    AC1021,       /*!< ACAD 2007. */
+    AC1024        /*!< ACAD 2010. */
+};
+
+//! Vertical alignments.
     enum VAlign {
         VAlignTop,      /*!< Top. */
         VAlignMiddle,   /*!< Middle */
@@ -61,6 +73,14 @@ namespace DRW {
         UNKNOWN
     };
 
+    //! Table entries type.
+     enum TTYPE {
+         LAYER,
+         BLOCK_RECORD,
+         LTYPE,
+         UNKNOWNT
+     };
+
     enum LWEIGHT {
         L0=0,
         L1,
@@ -74,6 +94,58 @@ namespace DRW {
 
 }
 
+//! Base class for tables entries
+/*!
+*  Base class for tables entries
+*  @author Rallaz
+*/
+class DRW_TableEntry {
+public:
+    //initializes default values
+    DRW_TableEntry() {
+        tType = DRW::UNKNOWNT;
+        flags = 0;
+    }
+
+protected:
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    enum DRW::TTYPE tType;     /*!< enum: entity type, code 0 */
+    string handle;             /*!< entity identifier, code 5 */
+    string handleBlock;        /*!< Soft-pointer ID/handle to owner BLOCK_RECORD object, code 330 */
+    string name;               /*!< entry name, code 2 */
+    int flags;                 /*!< Flags relevant to entry, code 70 */
+};
+
+
+//! Class to handle layer entries
+/*!
+*  Class to handle layer symbol table entries
+*  @author Rallaz
+*/
+class DRW_Layer : public DRW_TableEntry {
+public:
+    DRW_Layer() {
+        tType = DRW::LAYER;
+        lineType = "BYLAYER";
+        color = 256; // default BYLAYER (256)
+        plotF = true; // default TRUE (plot yes)
+        lWeight = -1; // default BYLAYER (-1)
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    string lineType;           /*!< line type, code 6 */
+    int color;                 /*!< entity color, code 62 */
+    bool plotF;                 /*!< Plot flag, code 290 */
+    int lWeight;               /*!< entity lineweight, code 370 */
+    string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
+    string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
+};
+
+
 //! Base class for entities
 /*!
 *  Base class for entities
@@ -83,11 +155,13 @@ class DRW_Entity {
 public:
     //initializes default values
     DRW_Entity() {
+        eType = DRW::UNKNOWN;
         lineType = "BYLAYER";
         color = 256; // default BYLAYER (256)
         ltypeScale = 1.0;
         visible = true;
         layer = "0";
+        lWeight = -1; // default BYLAYER (-1)
     }
 
 protected:
@@ -170,7 +244,7 @@ public:
     void parseCode(int code, dxfReader *reader);
 
 public:
-    double radious;                 /*!< x coordinate, code 11 */
+    double radious;                 /*!< x coordinate, code 40 */
 };
 
 //! Class to handle arc entity

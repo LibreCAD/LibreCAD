@@ -11,12 +11,12 @@ TEMPLATE = lib
 CONFIG += static \
     warn_on
 
-VERSION = 0.0.1
+VERSION = 4.3
 
-DLL_NAME = dxfrw
+DLL_NAME = fparser
 TARGET = $$DLL_NAME
 
-DEFINES += DRW_DBG
+# DEFINES +=
 
 win32 {
     COPY = copy /y
@@ -25,17 +25,11 @@ win32 {
 }
 
 SOURCES += \
-    src/libdxfrw.cpp \
-    src/drw_entities.cpp \
-    src/dxfreader.cpp \
-    src/dxfwriter.cpp
+    fparser.cc
 
 HEADERS += \
-    src/libdxfrw.h \
-    src/drw_entities.h \
-    src/dxfreader.h \
-    src/dxfwriter.h \
-    src/drw_interface.h
+    fparser.hh
+
 
 DESTDIR = ../intermediate
 

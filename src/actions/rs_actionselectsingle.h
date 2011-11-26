@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -37,17 +37,17 @@
  * @author Andrew Mustun
  */
 class RS_ActionSelectSingle : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
     RS_ActionSelectSingle(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView,RS_ActionSelect* actionSelect=NULL);
+                          RS_GraphicView& graphicView,RS_ActionInterface* actionSelect=NULL, QVector<RS2::EntityType>* entityTypeList=NULL);
     ~RS_ActionSelectSingle() {}
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionSelectSingle;
-	}
+    virtual RS2::ActionType rtti() {
+        return RS2::ActionSelectSingle;
+    }
 
     virtual void trigger();
     virtual void keyPressEvent(QKeyEvent* e);
@@ -55,6 +55,8 @@ public:
     virtual void updateMouseCursor();
 
 private:
+    QVector<RS2::EntityType>* entityTypeList;
+
     RS_Entity* en;
     RS_ActionSelect* actionSelect;
 };

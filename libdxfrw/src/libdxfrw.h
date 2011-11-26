@@ -17,7 +17,10 @@
 #include "drw_entities.h"
 #include "drw_interface.h"
 
+#define DRW_VERSION     "0.0.1"
+
 class dxfReader;
+class dxfWriter;
 
 class dxfRW {
 public:
@@ -25,8 +28,11 @@ public:
     ~dxfRW();
     //read: return 0 if all ok
     bool read(DRW_Interface *interface);
-    bool write();
     void setBinary(bool b) {binary = b;}
+
+    bool write(DRW_Interface *interface, DRW::Version ver, bool bin);
+    bool writeLine(DRW_Line *ent);
+    bool writeArc(DRW_Arc *ent);
 
 private:
     bool processDxf();
@@ -36,21 +42,27 @@ private:
     bool processEntities();
     bool processObjects();
 
+    bool processLayer();
+
     bool processPoint();
     bool processLine();
     bool processCircle();
     bool processArc();
-    /*    virtual PluginCapabilities getCapabilities() const;
-    virtual QString name() const;
-    virtual void execComm(Document_Interface *doc,
-                                       QWidget *parent, QString cmd);*/
+
+//    bool writeHeader();
+    bool writeEntity(DRW_Entity *ent);
+
 private:
+    DRW::Version version;
     std::string fileName;
     bool binary;
     dxfReader *reader;
+    dxfWriter *writer;
     DRW_Interface *iface;
-    int section;
+//    int section;
     string nextentity;
+    int entCount;
+
 };
 
 #endif // LIBDXFRW_H

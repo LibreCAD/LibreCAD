@@ -110,6 +110,7 @@
 #include "rs_actionmodifyrotate.h"
 #include "rs_actionmodifyrotate2.h"
 #include "rs_actionmodifyround.h"
+#include "rs_actionmodifyoffset.h"
 #include "rs_actionmodifyscale.h"
 #include "rs_actionmodifystretch.h"
 #include "rs_actionmodifytrim.h"
@@ -147,6 +148,9 @@
 
 #include "qg_mainwindowinterface.h"
 #include "qg_snaptoolbar.h"
+
+//a list of EntityTypes which support actionOffset
+QVector<RS2::EntityType> QG_ActionHandler::offsetEntities(0);
 
 /**
  * Constructor
@@ -295,8 +299,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         // Selecting actions:
         //
     case RS2::ActionSelectSingle:
-        gv->killSelectActions();
-        a = new RS_ActionSelectSingle(*doc, *gv);
+//        gv->killSelectActions();
+        if(getCurrentAction()->rtti() != RS2::ActionSelectSingle) {
+            a = new RS_ActionSelectSingle(*doc, *gv,getCurrentAction());
+        }else{
+            a=NULL;
+        }
         break;
     case RS2::ActionSelectContour:
         gv->killSelectActions();
@@ -612,6 +620,20 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionModifyRound:
         a = new RS_ActionModifyRound(*doc, *gv);
+        break;
+    case RS2::ActionModifyOffset:
+    if (offsetEntities.size() == 0){
+        //list all supported Entity types here
+        //fixme, handle this initialization better
+        offsetEntities.push_back(RS2::EntityArc);
+        offsetEntities.push_back(RS2::EntityCircle);
+        offsetEntities.push_back(RS2::EntityLine);
+        offsetEntities.push_back(RS2::EntityPolyline);
+    }
+        a = new RS_ActionSelect(*doc, *gv,RS2::ActionModifyOffsetNoSelect,&offsetEntities);
+        break;
+    case RS2::ActionModifyOffsetNoSelect:
+        a = new RS_ActionModifyOffset(*doc, *gv);
         break;
     case RS2::ActionModifyExplodeText:
         a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyExplodeTextNoSelect);
@@ -1336,6 +1358,9 @@ void QG_ActionHandler::slotModifyBevel() {
 
 void QG_ActionHandler::slotModifyRound() {
     setCurrentAction(RS2::ActionModifyRound);
+}
+void QG_ActionHandler::slotModifyOffset() {
+    setCurrentAction(RS2::ActionModifyOffset);
 }
 
 void QG_ActionHandler::slotModifyMirror() {

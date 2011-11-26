@@ -147,7 +147,7 @@ void QG_CadToolBarArcs::on_bBack_clicked()
 }
 void QG_CadToolBarArcs::back() {
     if (cadToolBar!=NULL) {
-        cadToolBar->back();
+        cadToolBar->showPreviousToolBar();
     }
 }
 //EOF

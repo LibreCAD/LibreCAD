@@ -105,12 +105,13 @@ public:
 
         virtual RS_VectorSolutions getRefPoints();
 
-        virtual RS_Vector getStartpoint() const {
-                return data.center + RS_Vector(data.radius, 0.0);
-        }
-        virtual RS_Vector getEndpoint() const {
-                return data.center + RS_Vector(data.radius, 0.0);
-        }
+    //no start/end point for whole circle
+//        virtual RS_Vector getStartpoint() const {
+//                return data.center + RS_Vector(data.radius, 0.0);
+//        }
+//        virtual RS_Vector getEndpoint() const {
+//                return data.center + RS_Vector(data.radius, 0.0);
+//        }
         /**
          * @return Direction 1. The angle at which the arc starts at
          * the startpoint.
@@ -177,6 +178,7 @@ public:
                                       RS2::ResolveLevel level=RS2::ResolveNone,
                                                                           double solidDist = RS_MAXDOUBLE) const;
 
+    virtual bool offset(const RS_Vector& coord, const double& distance);
     virtual RS_VectorSolutions getTangentPoint(const RS_Vector& point) const;//find the tangential points seeing from given point
     virtual RS_Vector getTangentDirection(const RS_Vector& point)const;
     virtual void move(const RS_Vector& offset);

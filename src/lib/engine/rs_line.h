@@ -138,6 +138,8 @@ public:
     double getDirection2() const {
         return getAngle2();
     }
+    virtual RS_Vector getTangentDirection(const RS_Vector& point)const;
+
     virtual void moveStartpoint(const RS_Vector& pos);
     virtual void moveEndpoint(const RS_Vector& pos);
     virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
@@ -200,7 +202,14 @@ public:
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
                                       double solidDist = RS_MAXDOUBLE)const;
-
+    /**
+          * implementations must revert the direction of an atomic entity
+          */
+    virtual void revertDirection();
+    /**
+      * the modify offset action
+      */
+    virtual bool offset(const RS_Vector& coord, const double& distance);
     virtual void move(const RS_Vector& offset);
     virtual void rotate(const double& angle);
     virtual void rotate(const RS_Vector& center, const double& angle);

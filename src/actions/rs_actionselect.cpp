@@ -33,20 +33,23 @@
 
 RS_ActionSelect::RS_ActionSelect(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView,
-                                 RS2::ActionType nextAction)
+                                 RS2::ActionType nextAction,
+                                 QVector<RS2::EntityType>* entityTypeList)
+
     :RS_ActionInterface("Select Entities", container, graphicView) {
+    this->entityTypeList=entityTypeList;
 
     this->nextAction = nextAction;
-    selectSingle=true;
+    selectSingle=false;
 }
 
 
 
 void RS_ActionSelect::init(int status) {
     RS_ActionInterface::init(status);
-    if(status>=0){
+    if(status >= 0 ) {
         graphicView->setCurrentAction(
-                    new RS_ActionSelectSingle(*container, *graphicView,this));
+                    new RS_ActionSelectSingle(*container, *graphicView, this, entityTypeList));
     }
     deleteSnapper();
 
@@ -61,8 +64,8 @@ void RS_ActionSelect::resume(){
     }
 }
 
-void RS_ActionSelect::requestFinish(){
-    selectSingle=false;
+void RS_ActionSelect::requestFinish(bool keep){
+    selectSingle=keep;
 }
 
 
@@ -76,11 +79,33 @@ void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionSelect::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
-        if (selectSingle&& !isFinished()){
-            RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
+        if (isFinished()){
+            if(container->countSelected()==0){
+                //some nextAction segfault with empty selection
+                //todo: make actions safe with empty selection
+                RS_DIALOGFACTORY->commandMessage(tr("No entity selected!"));
+                RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
+            } else{
+                if ( entityTypeList != NULL &&  entityTypeList->size() >= 1 ){
+                    //only select entity types from the given list
+                    //fixme, need to handle resolution level
+
+                    for (RS_Entity* e=container->firstEntity();
+                         e!=NULL;
+                         e=container->nextEntity()) {
+                        if (e!=NULL && e->isSelected()) {
+                            if ( entityTypeList->contains( e->rtti() ) == false ){
+                                e->setSelected(false);
+                            }
+                        }
+                    }
+                }
+                RS_DIALOGFACTORY->requestPreviousToolBar();
+            }
         }else{
-            RS_DIALOGFACTORY->requestPreviousToolBar();
+            RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
         }
+
     }
 }
 
@@ -115,6 +140,9 @@ void RS_ActionSelect::updateMouseButtonHints() {
         break;
     case RS2::ActionModifyMoveRotateNoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select to move and rotate"), tr("Cancel"));
+        break;
+    case RS2::ActionModifyOffsetNoSelect:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to create offset"), tr("Cancel"));
         break;
     case RS2::ActionModifyRotate2NoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select for two axis rotation"), tr("Cancel"));
