@@ -38,8 +38,8 @@
  */
 RS_ActionDrawImage::RS_ActionDrawImage(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Image",
-                           container, graphicView) {
+    :RS_PreviewActionInterface("Image",
+                               container, graphicView) {
 }
 
 
@@ -48,11 +48,11 @@ RS_ActionDrawImage::~RS_ActionDrawImage() {}
 
 
 QAction* RS_ActionDrawImage::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Image")
-        QAction* action = new QAction(tr("&Image"),  NULL);
-        action->setIcon(QIcon(":/extui/menuimage.png"));
-        //action->zetStatusTip(tr("Insert Image (Bitmap)"));
-        return action;
+    // tr("Image")
+    QAction* action = new QAction(tr("&Image"),  NULL);
+    action->setIcon(QIcon(":/extui/menuimage.png"));
+    //action->zetStatusTip(tr("Insert Image (Bitmap)"));
+    return action;
 }
 
 void RS_ActionDrawImage::init(int status) {
@@ -61,20 +61,18 @@ void RS_ActionDrawImage::init(int status) {
     reset();
 
     data.file = RS_DIALOGFACTORY->requestImageOpenDialog();
-        // RVT_PORT should we really redarw here?? graphicView->redraw();
+    // RVT_PORT should we really redarw here?? graphicView->redraw();
 
-        if (!data.file.isEmpty()) {
+    if (!data.file.isEmpty()) {
         //std::cout << "file: " << data.file << "\n";
         //qDebug() << "file: " << data.file;
 
         img = QImage(data.file);
         setStatus(SetTargetPoint);
-        }
-        else {
-                finish(false);
-                updateToolBar();
+    } else {
+        setFinished();
         //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-        }
+    }
 }
 
 
@@ -99,11 +97,11 @@ void RS_ActionDrawImage::trigger() {
         creation.createImage(data);
     }
 
-        graphicView->redraw(RS2::RedrawDrawing);
+    graphicView->redraw(RS2::RedrawDrawing);
 
     //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
     finish(false);
-        updateToolBar();
+    updateToolBar();
 }
 
 
@@ -153,7 +151,7 @@ void RS_ActionDrawImage::mouseReleaseEvent(QMouseEvent* e) {
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         //init(getStatus()-1);
-                finish(false);
+        finish(false);
     }
 }
 
@@ -193,29 +191,29 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
         break;
 
     case SetAngle: {
-            bool ok;
-            double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
-                setAngle(RS_Math::deg2rad(a));
-            } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
-            setStatus(lastStatus);
+        bool ok;
+        double a = RS_Math::eval(c, &ok);
+        if (ok==true) {
+            setAngle(RS_Math::deg2rad(a));
+        } else {
+            RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
+        RS_DIALOGFACTORY->requestOptions(this, true, true);
+        setStatus(lastStatus);
+    }
         break;
 
     case SetFactor: {
-            bool ok;
-            double f = RS_Math::eval(c, &ok);
-            if (ok==true) {
-                setFactor(f);
-            } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
-            setStatus(lastStatus);
+        bool ok;
+        double f = RS_Math::eval(c, &ok);
+        if (ok==true) {
+            setFactor(f);
+        } else {
+            RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
+        RS_DIALOGFACTORY->requestOptions(this, true, true);
+        setStatus(lastStatus);
+    }
         break;
 
     default:
