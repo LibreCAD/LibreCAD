@@ -198,9 +198,14 @@ public:
     virtual RS_Vector getEndpoint() const {
         return endpoint;
     }
+    /**
+          * implementations must revert the direction of an atomic entity
+          */
+    virtual void revertDirection();
     virtual void correctAngles();//make sure angleLength() is not more than 2*M_PI
     virtual void moveStartpoint(const RS_Vector& pos);
     virtual void moveEndpoint(const RS_Vector& pos);
+    virtual bool offset(const RS_Vector& position, const double& distance);
 
     virtual void trimStartpoint(const RS_Vector& pos);
     virtual void trimEndpoint(const RS_Vector& pos);

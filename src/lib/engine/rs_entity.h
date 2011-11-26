@@ -118,13 +118,13 @@ public:
     virtual unsigned int countDeep() = 0;
 
 
-        /**
+    /**
          * Implementations must return the total length of the entity
          * or a negative number if the entity has no length (e.g. a text or hatch).
          */
-        virtual double getLength() const {
-                return -1.0;
-        }
+    virtual double getLength() const {
+        return -1.0;
+    }
 
     /**
      * @return Parent of this entity or NULL if this is a root entity.
@@ -202,7 +202,7 @@ public:
     virtual bool setSelected(bool select);
     virtual bool toggleSelected();
     virtual bool isSelected() const;
-        virtual bool isParentSelected();
+    virtual bool isParentSelected();
     virtual bool isProcessed() const;
     virtual void setProcessed(bool on);
     virtual bool isInWindow(RS_Vector v1, RS_Vector v2);
@@ -217,8 +217,8 @@ public:
             delFlag(RS2::FlagVisible);
         }
     }
-        virtual void setHighlighted(bool on);
-        virtual bool isHighlighted();
+    virtual void setHighlighted(bool on);
+    virtual bool isHighlighted();
 
     virtual bool isLocked();
 
@@ -233,8 +233,8 @@ public:
     virtual void update() {}
 
     virtual void setUpdateEnabled(bool on) {
-                updateEnabled = on;
-        }
+        updateEnabled = on;
+    }
 
     /**
      * This method doesn't do any calculations.
@@ -274,6 +274,21 @@ public:
     int getGraphicVariableInt(const QString& key, int def);
     QString getGraphicVariableString(const QString& key,
                                      const QString& def);
+    virtual RS_Vector getStartpoint() const {
+        return RS_Vector(false);
+    }
+    virtual RS_Vector getEndpoint() const {
+        return RS_Vector(false);
+    }
+    //find the local direction at end points, derived entities
+    // must implement this if direction is supported by the entity type
+    virtual double getDirection1() const {
+        return 0.;
+    }
+    virtual double getDirection2() const {
+        return 0.;
+    }
+
     //find the tangential points seeing from given point
     virtual RS_VectorSolutions getTangentPoint(const RS_Vector& /*point*/) const {
         return RS_VectorSolutions();
@@ -281,15 +296,15 @@ public:
     virtual RS_Vector getTangentDirection(const RS_Vector& /*point*/)const{
         return RS_Vector(false);
     }
-        RS2::Unit getGraphicUnit();
+    RS2::Unit getGraphicUnit();
 
     /**
      * Must be overwritten to get all reference points of the entity.
      */
     virtual RS_VectorSolutions getRefPoints() {
-                RS_VectorSolutions ret;
-                return ret;
-        }
+        RS_VectorSolutions ret;
+        return ret;
+    }
 
 
     /**
@@ -319,8 +334,8 @@ public:
      * @return The closest coordinate.
      */
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& /*coord*/,
-            bool onEntity = true, double* dist = NULL,
-            RS_Entity** entity = NULL) const = 0;
+                                              bool onEntity = true, double* dist = NULL,
+                                              RS_Entity** entity = NULL) const = 0;
 
     /**
      * Must be overwritten to get the (nearest) center point to the
@@ -350,12 +365,12 @@ public:
      * @return The closest middle point.
      */
     virtual RS_Vector getMiddlePoint(void)const{
-            return RS_Vector(false);
+        return RS_Vector(false);
     }
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
                                        double* dist = NULL,
                                        int middlePoints = 1
-                                       ) const= 0;
+            ) const= 0;
 
     /**
      * Must be overwritten to get the nearest point with a given
@@ -385,8 +400,8 @@ public:
      */
     virtual RS_Vector getNearestDist(double /*distance*/,
                                      bool /*startp*/) {
-                return RS_Vector(false);
-        }
+        return RS_Vector(false);
+    }
 
     /**
      * Must be overwritten to get the nearest reference point for this entity.
@@ -400,11 +415,11 @@ public:
      * @return The closest point with the given distance to the endpoint.
      */
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                     double* dist = NULL) {
-                RS_VectorSolutions s = getRefPoints();
+                                    double* dist = NULL) {
+        RS_VectorSolutions s = getRefPoints();
 
-                return s.getClosest(coord, dist);
-        }
+        return s.getClosest(coord, dist);
+    }
 
     /**
      * Gets the nearest reference point of this entity if it is selected.
@@ -420,14 +435,14 @@ public:
      * @return The closest point with the given distance to the endpoint.
      */
     virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
-                                     double* dist = NULL) {
-                if (isSelected()) {
-                        return getNearestRef(coord, dist);
-                }
-                else {
-                        return RS_Vector(false);
-                }
+                                            double* dist = NULL) {
+        if (isSelected()) {
+            return getNearestRef(coord, dist);
         }
+        else {
+            return RS_Vector(false);
+        }
+    }
 
     /**
      * Must be overwritten to get the shortest distance between this
@@ -444,16 +459,24 @@ public:
      * @return The measured distance between \p coord and the entity.
      */
     virtual RS_Vector getNearestOrthTan(const RS_Vector& /*coord*/,
-                    const RS_Line& /*normal*/,
-                    bool onEntity = false);
+                                        const RS_Line& /*normal*/,
+                                        bool onEntity = false);
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity = NULL,
                                       RS2::ResolveLevel level = RS2::ResolveNone,
-                                                                          double solidDist = RS_MAXDOUBLE) const = 0;
+                                      double solidDist = RS_MAXDOUBLE) const = 0;
 
     virtual bool isPointOnEntity(const RS_Vector& coord,
                                  double tolerance=RS_TOLERANCE) const;
 
+    /**
+     * Implementations must offset the entity by the given direction and distance.
+     */
+    virtual bool offset(const RS_Vector& /*coord*/, const double& /*distance*/) {return false;}
+    /**
+          * implementations must revert the direction of an atomic entity
+          */
+    virtual void revertDirection(){}
     /**
      * Implementations must move the entity by the given vector.
      */
@@ -488,36 +511,36 @@ public:
                          const RS_Vector& secondCorner,
                          const RS_Vector& offset);
 
-        /**
+    /**
          * Implementations must drag the reference point(s) of all
          * (sub-)entities that are very close to ref by offset.
          */
-        virtual void moveRef(const RS_Vector& /*ref*/,
-                const RS_Vector& /*offset*/) {
-                return;
-        }
+    virtual void moveRef(const RS_Vector& /*ref*/,
+                         const RS_Vector& /*offset*/) {
+        return;
+    }
 
-        /**
+    /**
          * Implementations must drag the reference point(s) of selected
          * (sub-)entities that are very close to ref by offset.
          */
-        virtual void moveSelectedRef(const RS_Vector& /*ref*/,
-                const RS_Vector& /*offset*/) {
-                return;
-        }
+    virtual void moveSelectedRef(const RS_Vector& /*ref*/,
+                                 const RS_Vector& /*offset*/) {
+        return;
+    }
 
     /**
      * Implementations must draw the entity on the given device.
      */
     virtual void draw(RS_Painter* painter, RS_GraphicView* view,
-                double& patternOffset ) = 0;
+                      double& patternOffset ) = 0;
 
-        double getStyleFactor(RS_GraphicView* view);
+    double getStyleFactor(RS_GraphicView* view);
 
-        QString getUserDefVar(const QString& key) const;
-        QList<QString> getAllKeys();
-        void setUserDefVar(QString key, QString val);
-        void delUserDefVar(QString key);
+    QString getUserDefVar(const QString& key) const;
+    QList<QString> getAllKeys();
+    void setUserDefVar(QString key, QString val);
+    void delUserDefVar(QString key);
 
     friend std::ostream& operator << (std::ostream& os, RS_Entity& e);
 
@@ -541,11 +564,11 @@ protected:
     //! pen (attributes) for this entity
     RS_Pen pen;
 
-        //! auto updating enabled?
-        bool updateEnabled;
+    //! auto updating enabled?
+    bool updateEnabled;
 
 private:
-        QMultiHash<QString, QString> varList;
+    QMultiHash<QString, QString> varList;
 };
 
 #endif

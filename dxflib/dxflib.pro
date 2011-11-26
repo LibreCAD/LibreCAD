@@ -11,12 +11,12 @@ TEMPLATE = lib
 CONFIG += static \
     warn_on
 
-VERSION = 0.0.1
+VERSION = 2.2.0.0
 
-DLL_NAME = dxfrw
+DLL_NAME = dxflib
 TARGET = $$DLL_NAME
 
-DEFINES += DRW_DBG
+# DEFINES +=
 
 win32 {
     COPY = copy /y
@@ -25,17 +25,21 @@ win32 {
 }
 
 SOURCES += \
-    src/libdxfrw.cpp \
-    src/drw_entities.cpp \
-    src/dxfreader.cpp \
-    src/dxfwriter.cpp
+    src/dl_dxf.cpp \
+    src/dl_writer_ascii.cpp
 
 HEADERS += \
-    src/libdxfrw.h \
-    src/drw_entities.h \
-    src/dxfreader.h \
-    src/dxfwriter.h \
-    src/drw_interface.h
+    src/dl_attributes.h \
+    src/dl_codes.h \
+    src/dl_creationadapter.h \
+    src/dl_creationinterface.h \
+    src/dl_dxf.h \
+    src/dl_entities.h \
+    src/dl_exception.h \
+    src/dl_extrusion.h \
+    src/dl_writer.h \
+    src/dl_writer_ascii.h
+
 
 DESTDIR = ../intermediate
 

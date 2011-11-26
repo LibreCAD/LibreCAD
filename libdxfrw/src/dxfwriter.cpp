@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <fstream>
 #include <string>
-#include "dxfreader.h"
+#include "dxfwriter.h"
 
 #ifdef DRW_DBG
 #include <iostream> //for debug
@@ -22,14 +22,13 @@
 #define DBG(a)
 #endif
 
-bool dxfReader::readRec(int *codeData, bool skip) {
+//RLZ TODO change std::endl to x0D x0A (13 10)
+/*bool dxfWriter::readRec(int *codeData, bool skip) {
 //    std::string text;
     int code;
 
 #ifdef DRW_DBG
     count = count+2; //DBG
-/*    if (count > 10250)
-        DBG("line 10256");*/
 #endif
 
     if (!readCode(&code))
@@ -96,9 +95,18 @@ bool dxfReader::readRec(int *codeData, bool skip) {
         return false;
 
     return (filestr->good());
+}*/
+
+bool dxfWriterBinary::writeString(int code, std::string text) {
+    char bufcode[2];
+    bufcode[0] =code & 0xFF;
+    bufcode[1] =code  >> 8;
+    filestr->write(bufcode, 2);
+    *filestr << text << '\0';
+    return (filestr->good());
 }
 
-bool dxfReaderBinary::readCode(int *code) {
+/*bool dxfWriterBinary::readCode(int *code) {
     unsigned short *int16p;
     char buffer[2];
     filestr->read(buffer,2);
@@ -114,125 +122,139 @@ bool dxfReaderBinary::readCode(int *code) {
     DBG(*code); DBG("\n");
 
     return (filestr->good());
-}
+}*/
 
-bool dxfReaderBinary::readString() {
+/*bool dxfWriterBinary::readString() {
     std::getline(*filestr, strData, '\0');
     DBG(strData); DBG("\n");
     return (filestr->good());
-}
+}*/
 
-bool dxfReaderBinary::readString(std::string *text) {
+/*bool dxfWriterBinary::readString(std::string *text) {
     std::getline(*filestr, *text, '\0');
     DBG(*text); DBG("\n");
     return (filestr->good());
-}
+}*/
 
-bool dxfReaderBinary::readInt() {
+bool dxfWriterBinary::writeInt16(int code, int data) {
+    char bufcode[2];
     char buffer[2];
-    filestr->read(buffer,2);
-    intData = (int)((buffer[1] << 8) | buffer[0]);
-    DBG(intData); DBG("\n");
+    bufcode[0] =code & 0xFF;
+    bufcode[1] =code  >> 8;
+    buffer[0] =data & 0xFF;
+    buffer[1] =data  >> 8;
+    filestr->write(bufcode, 2);
+    filestr->write(buffer, 2);
     return (filestr->good());
 }
 
-bool dxfReaderBinary::readInt32() {
-    unsigned int *int32p;
-    char buffer[4];
-    filestr->read(buffer,4);
-    int32p = (unsigned int *) buffer;
-    intData = *int32p;
-    DBG(intData); DBG("\n");
+bool dxfWriterBinary::writeInt32(int code, int data) {
+    char bufcode[2];
+    bufcode[0] =code & 0xFF;
+    bufcode[1] =code  >> 8;
+    filestr->write(bufcode, 2);
+
+/*    char buffer[4];
+    for (int i=0; i<4; i++) {
+        buffer[i] =0;
+    }
+    *buffer = data;
+    filestr->write(buffer, 4);*/
     return (filestr->good());
 }
 
-bool dxfReaderBinary::readInt64() {
-    unsigned long long int *int64p; //64 bits integer pointer
+bool dxfWriterBinary::writeInt64(int code, unsigned long long int data) {
+    char bufcode[2];
+    bufcode[0] =code & 0xFF;
+    bufcode[1] =code  >> 8;
+    filestr->write(bufcode, 2);
+
+/*    char buffer[8];
+    for (int i=0; i<8; i++) {
+        buffer[i] =0;
+    }
+    *buffer = data;
+    filestr->write(buffer, 8);*/
+    return (filestr->good());
+}
+
+bool dxfWriterBinary::writeDouble(int code, double data) {
+    char bufcode[2];
     char buffer[8];
-    filestr->read(buffer,8);
-    int64p = (unsigned long long int *) buffer;
-    int64 = *int64p;
-    DBG(int64); DBG(" int64\n");
-    return (filestr->good());
-}
+    bufcode[0] =code & 0xFF;
+    bufcode[1] =code  >> 8;
+    filestr->write(bufcode, 2);
 
-bool dxfReaderBinary::readDouble() {
-    double *result;
-    char buffer[8];
-    filestr->read(buffer,8);
-    result = (double *) buffer;
-    doubleData = *result;
-    DBG(doubleData); DBG("\n");
+    unsigned char *val;
+    val = (unsigned char *) &data;
+    for (int i=0; i<8; i++) {
+        buffer[i] =val[i];
+    }
+    filestr->write(buffer, 8);
     return (filestr->good());
 }
 
 //saved as int or add a bool member??
-bool dxfReaderBinary::readBool() {
+bool dxfWriterBinary::writeBool(int code, bool data) {
     char buffer[1];
-    filestr->read(buffer,1);
+/*    filestr->read(buffer,1);
     intData = (int)(buffer[0]);
-    DBG(intData); DBG("\n");
+    DBG(intData); DBG("\n");*/
     return (filestr->good());
 }
 
-bool dxfReaderAscii::readCode(int *code) {
+bool dxfWriterAscii::writeString(int code, std::string text) {
+    *filestr << code << std::endl << text << std::endl ;
+    /*    std::getline(*filestr, strData, '\0');
+    DBG(strData); DBG("\n");*/
+    return (filestr->good());
+}
+
+/*bool dxfWriterAscii::readCode(int *code) {
     std::string text;
     std::getline(*filestr, text);
     *code = atoi(text.c_str());
     DBG(*code); DBG("\n");
     return (filestr->good());
-}
-bool dxfReaderAscii::readString(std::string *text) {
+}*/
+/*bool dxfWriterAscii::readString(std::string *text) {
     std::getline(*filestr, *text);
     if (text->at(text->size()-1) == '\r')
         text->erase(text->size()-1);
     return (filestr->good());
-}
+}*/
 
-bool dxfReaderAscii::readString() {
+/*bool dxfWriterAscii::readString() {
     std::getline(*filestr, strData);
-    if (!strData.empty() && strData.at(strData.size()-1) == '\r')
+    if (strData.at(strData.size()-1) == '\r')
         strData.erase(strData.size()-1);
     DBG(strData); DBG("\n");
     return (filestr->good());
+}*/
+
+bool dxfWriterAscii::writeInt16(int code, int data) {
+//    *filestr << code << "\r\n" << data << "\r\n";
+    *filestr << code << std::endl << data << std::endl;
+    return (filestr->good());
 }
 
-bool dxfReaderAscii::readInt() {
-    std::string text;
-    if (readString(&text)){
-        intData = atoi(text.c_str());
-        DBG(intData); DBG("\n");
-        return true;
-    } else
-        return false;
+bool dxfWriterAscii::writeInt32(int code, int data) {
+    return writeInt16(code, data);
 }
 
-bool dxfReaderAscii::readInt32() {
-    return readInt();
+bool dxfWriterAscii::writeInt64(int code, unsigned long long int data) {
+    *filestr << code << std::endl << data << std::endl;
+    return (filestr->good());
 }
 
-bool dxfReaderAscii::readInt64() {
-    return readInt();
-}
-
-bool dxfReaderAscii::readDouble() {
-    std::string text;
-    if (readString(&text)){
-        doubleData = strtod(text.c_str(), NULL);
-        DBG(doubleData); DBG("\n");
-        return true;
-    } else
-        return false;
+bool dxfWriterAscii::writeDouble(int code, double data) {
+    *filestr << code << std::endl << data << std::endl;
+    return (filestr->good());
 }
 
 //saved as int or add a bool member??
-bool dxfReaderAscii::readBool() {
-    std::string text;
-    if (readString(&text)){
-        intData = atoi(text.c_str());
-        DBG(intData); DBG("\n");
-        return true;
-    } else
-        return false;
+bool dxfWriterAscii::writeBool(int code, bool data) {
+    *filestr << code << std::endl << data << std::endl;
+    return (filestr->good());
 }
 

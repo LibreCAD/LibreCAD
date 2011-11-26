@@ -65,6 +65,7 @@ public:
                 bool , bool = false) {}
     virtual void requestSnapDistOptions(double& , bool ) {}
     virtual void requestSnapMiddleOptions(int& , bool ) {}
+    virtual void requestModifyOffsetOptions(double& , bool ) {}
     virtual bool requestAttributesDialog(RS_AttributesData& ,
                 RS_LayerList& ) { return false; }
     virtual bool requestMoveDialog(RS_MoveData& ) { return false; }

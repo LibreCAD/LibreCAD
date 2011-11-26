@@ -474,11 +474,27 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
                                    RS2::ResolveLevel level) {
 
     RS_DEBUG->print("RS_Snapper::catchEntity");
+                    std::cout<<"RS_Snapper::catchEntity(): enType= "<<enType<<std::endl;
 
-        // set default distance for points inside solids
+    // set default distance for points inside solids
     RS_EntityContainer ec(NULL,false);
     for(RS_Entity* en= container->firstEntity(level);en!=NULL;en=container->nextEntity(level)){
-       if(en->rtti() == enType && en->isVisible() ) ec.addEntity(en);
+        if(en->isVisible()==false) continue;
+        if(en->rtti() != enType && RS2::isContainer(enType)){
+            //whether this entity is a member of member of the type enType
+            RS_Entity* parent(en->getParent());
+            bool matchFound(false);
+            while(parent != NULL) {
+                    std::cout<<"RS_Snapper::catchEntity(): parent->rtti()="<<parent->rtti()<<" enType= "<<enType<<std::endl;
+                if(parent->rtti() == enType) {
+                    matchFound=true;
+                    break;
+                }
+                parent=parent->getParent();
+            }
+            if(matchFound==false) continue;
+        }
+        ec.addEntity(en);
     }
     if (ec.count() == 0 ) return NULL;
     double dist = graphicView->toGraphDX(snapRange)*0.9;
@@ -531,7 +547,6 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e,
  */
 RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, RS2::EntityType enType,
                                    RS2::ResolveLevel level) {
-
     return catchEntity(
                RS_Vector(graphicView->toGraphX(e->x()),
                          graphicView->toGraphY(e->y())), enType,

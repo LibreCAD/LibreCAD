@@ -303,7 +303,9 @@ double RS_Line::getDistanceToPoint(const RS_Vector& coord,
 //    return dist;
 }
 
-
+RS_Vector  RS_Line::getTangentDirection(const RS_Vector& point)const{
+        return getEndpoint() - getStartpoint();
+}
 
 void RS_Line::moveStartpoint(const RS_Vector& pos) {
     data.startpoint = pos;
@@ -354,6 +356,37 @@ bool RS_Line::hasEndpointsWithinWindow(const RS_Vector& firstCorner, const RS_Ve
 
 }
 
+/**
+  * this function creates offset
+  *@coord, position indicates the direction of offset
+  *@distance, distance of offset
+  * return true, if success, otherwise, false
+  *
+  *Author: Dongxu Li
+  */
+bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
+    RS_Vector direction(getEndpoint()-getStartpoint());
+    double ds(direction.magnitude());
+    if(ds< RS_TOLERANCE) return false;
+    direction /= ds;
+    RS_Vector vp(coord-getStartpoint());
+    RS_Vector vp1(getStartpoint() + direction*(RS_Vector::dotP(direction,vp))); //projection
+    direction.set(-direction.y,direction.x); //rotate pi/2
+    if(RS_Vector::dotP(direction,vp)<0.) {
+        direction *= -1.;
+    }
+    direction*=distance;
+    move(direction);
+    moveBorders(direction);
+    return true;
+}
+
+/**
+  * revert the direction of line
+  */
+void RS_Line::revertDirection(){
+    std::swap(data.startpoint,data.endpoint);
+}
 
 void RS_Line::move(const RS_Vector& offset) {
 //    RS_DEBUG->print("RS_Line::move1: sp: %f/%f, ep: %f/%f",

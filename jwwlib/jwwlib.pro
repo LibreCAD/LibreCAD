@@ -13,10 +13,10 @@ CONFIG += static \
 
 VERSION = 0.0.1
 
-DLL_NAME = dxfrw
+DLL_NAME = jwwlib
 TARGET = $$DLL_NAME
 
-DEFINES += DRW_DBG
+# DEFINES +=
 
 win32 {
     COPY = copy /y
@@ -24,18 +24,18 @@ win32 {
     COPY = cp
 }
 
+INCLUDEPATH += \
+    ../dxflib/src
+
 SOURCES += \
-    src/libdxfrw.cpp \
-    src/drw_entities.cpp \
-    src/dxfreader.cpp \
-    src/dxfwriter.cpp
+    src/dl_jww.cpp \
+    src/jwwdoc.cpp
 
 HEADERS += \
-    src/libdxfrw.h \
-    src/drw_entities.h \
-    src/dxfreader.h \
-    src/dxfwriter.h \
-    src/drw_interface.h
+    ../jwwlib/src/dl_jww.h \
+    ../jwwlib/src/jwtype.h \
+    ../jwwlib/src/jwwdoc.h
+
 
 DESTDIR = ../intermediate
 

@@ -63,6 +63,7 @@ public slots:
     virtual void modifyStretch();
     virtual void modifyExplode();
     virtual void modifyExplodeText();
+    virtual void modifyOffset();
     virtual void back();
 
 protected:

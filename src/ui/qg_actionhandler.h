@@ -171,6 +171,7 @@ public slots:
     void slotModifyStretch();
     void slotModifyBevel();
     void slotModifyRound();
+    void slotModifyOffset();
     void slotModifyExplodeText();
 
     void slotSetSnaps(RS_SnapMode);
@@ -291,7 +292,10 @@ private:
 
     QAction* lockRelativeZero;
     bool lockedRelZero;
+    // a list of entity types accepted by action offset
+    static QVector<RS2::EntityType> offsetEntities;
 };
+
 
 #endif
 

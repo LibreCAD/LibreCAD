@@ -55,7 +55,7 @@ QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing()
     // no need to delete child widgets, Qt does it all for us
     RS_SETTINGS->beginGroup("/Appearance");
     RS_SETTINGS->writeEntry("/IsometricGrid", rbIsometricGrid->isChecked()?QString("1"):QString("0"));
-    RS2::CrosshairType chType;
+    RS2::CrosshairType chType(RS2::TopCrosshair);
     if(rbCrosshairLeft->isChecked()) {
         chType=RS2::LeftCrosshair;
     }else if (rbCrosshairTop->isChecked()) {

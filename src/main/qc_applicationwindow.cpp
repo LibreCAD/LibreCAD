@@ -1794,9 +1794,13 @@ void QC_ApplicationWindow::updateRecentFilesMenu() {
     int numRecentFiles = qMin(recentFiles->count(), recentFiles->getNumber());
 
     for (int i = 0; i < numRecentFiles; ++i) {
-        QString text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(i));
+        //oldest on top
+//        QString text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(i));
+        //newest on top
+        QString text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(numRecentFiles-i-1));
         recentFilesAction[i]->setText(text);
-        recentFilesAction[i]->setData(recentFiles->get(i));
+        //newest on top
+        recentFilesAction[i]->setData(recentFiles->get(numRecentFiles-i-1));
         recentFilesAction[i]->setVisible(true);
     }
     for (int j = numRecentFiles; j < recentFiles->getNumber(); ++j)

@@ -163,7 +163,7 @@ public:
 
     //virtual void reorder();
 
-
+    virtual bool offset(const RS_Vector& coord, const double& distance);
     virtual void move(const RS_Vector& offset);
     virtual void rotate(const RS_Vector& center, const double& angle);
     virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);

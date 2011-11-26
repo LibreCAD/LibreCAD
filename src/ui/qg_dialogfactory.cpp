@@ -84,6 +84,7 @@
 #include "qg_linepolygon2options.h"
 #include "qg_linepolygonoptions.h"
 #include "qg_linerelangleoptions.h"
+#include "qg_modifyoffsetoptions.h"
 #include "qg_mousewidget.h"
 #include "qg_moverotateoptions.h"
 #include "qg_printpreviewoptions.h"
@@ -128,6 +129,7 @@ QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
     polylineEquidistantOptions=NULL;
     snapMiddleOptions=NULL;
     snapDistOptions=NULL;
+    modifyOffsetOptions=NULL;
         RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory: OK");
 }
 
@@ -1367,6 +1369,31 @@ void QG_DialogFactory::requestRoundOptions(RS_ActionInterface* action,
             toolWidget->setAction(action, update);
             toolWidget->show();
         }
+    }
+}
+
+
+/**
+ * Shows a widget for offset options.
+ */
+void QG_DialogFactory::requestModifyOffsetOptions(double& dist, bool on) {
+    if(!on) {
+        if (modifyOffsetOptions!=NULL) {
+            delete modifyOffsetOptions;
+            modifyOffsetOptions = NULL;
+        }
+        return;
+    }
+    if (optionWidget!=NULL ) {
+        if ( modifyOffsetOptions==NULL) {
+            modifyOffsetOptions = new QG_ModifyOffsetOptions();
+            optionWidget->addWidget(modifyOffsetOptions);
+            modifyOffsetOptions->setDist(dist);
+        }else {
+            modifyOffsetOptions->setDist(dist,false);
+        }
+        //std::cout<<"QG_DialogFactory::requestSnapDistOptions(): dist="<<dist<<std::endl;
+        modifyOffsetOptions->show();
     }
 }
 

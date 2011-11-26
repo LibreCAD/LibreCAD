@@ -45,6 +45,7 @@
 #include "qg_polylineequidistantoptions.h"
 #include "qg_snapmiddleoptions.h"
 #include "qg_snapdistoptions.h"
+#include "qg_modifyoffsetoptions.h"
 
 class QG_CadToolBar;
 class QToolBar;
@@ -245,6 +246,7 @@ public:
     virtual bool requestRotate2Dialog(RS_Rotate2Data& data);
 
     virtual bool requestModifyEntityDialog(RS_Entity* entity);
+    virtual void requestModifyOffsetOptions(double& dist, bool on);
     virtual bool requestTextDialog(RS_Text* text);
     virtual bool requestHatchDialog(RS_Hatch* hatch);
     virtual void requestOptionsGeneralDialog();
@@ -292,6 +294,7 @@ private:
     // pointers to snap option widgets
     QG_SnapMiddleOptions* snapMiddleOptions;
     QG_SnapDistOptions* snapDistOptions;
+    QG_ModifyOffsetOptions* modifyOffsetOptions;
 };
 
 #endif

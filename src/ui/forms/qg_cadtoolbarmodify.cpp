@@ -190,6 +190,11 @@ void QG_CadToolBarModify::modifyExplodeText() {
     }
 }
 
+void QG_CadToolBarModify::modifyOffset() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotModifyOffset();
+    }
+}
 void QG_CadToolBarModify::back() {
     if (cadToolBar!=NULL) {
         cadToolBar->back();
@@ -274,6 +279,10 @@ void QG_CadToolBarModify::restoreAction() {
         actionHandler->slotModifyExplodeText();
         return;
     }
+    if ( bOffset ->isChecked() ) {
+        actionHandler->slotModifyOffset();
+        return;
+    }
     //clear all action
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
     if(currentAction != NULL) {
@@ -283,5 +292,5 @@ void QG_CadToolBarModify::restoreAction() {
 
 void QG_CadToolBarModify::on_bBack_clicked()
 {
-   parentTB->showPreviousToolBar();
+   parentTB->showToolBar(RS2::ToolBarMain);
 }

@@ -28,6 +28,11 @@ CONFIG += qt \
 QMAKE_CXXFLAGS_DEBUG +=
 QMAKE_CXXFLAGS +=
 
+PRE_TARGETDEPS += ../intermediate/libdxfrw.a
+PRE_TARGETDEPS += ../intermediate/libdxflib.a
+PRE_TARGETDEPS += ../intermediate/libjwwlib.a
+PRE_TARGETDEPS += ../intermediate/libfparser.a
+
 # Make translations at the end of the process
 unix {
     # Get SVN revision number
@@ -82,7 +87,7 @@ win32 {
 # Store intermedia stuff somewhere else
 #LIBS += -lboost
 LIBS += \
- -L../intermediate -ldxfrw
+ -L../intermediate -ldxfrw -ldxflib -ljwwlib -lfparser
 
 OBJECTS_DIR = ../intermediate/obj
 MOC_DIR = ../intermediate/moc
@@ -122,20 +127,6 @@ DEPENDPATH = $$INCLUDEPATH
 # ################################################################################
 # Library
 HEADERS = \
-    ../dxflib/src/dl_attributes.h \
-    ../dxflib/src/dl_codes.h \
-    ../dxflib/src/dl_creationadapter.h \
-    ../dxflib/src/dl_creationinterface.h \
-    ../dxflib/src/dl_dxf.h \
-    ../dxflib/src/dl_entities.h \
-    ../dxflib/src/dl_exception.h \
-    ../dxflib/src/dl_extrusion.h \
-    ../dxflib/src/dl_writer.h \
-    ../dxflib/src/dl_writer_ascii.h \
-    ../jwwlib/src/dl_jww.h \
-    ../jwwlib/src/jwtype.h \
-    ../jwwlib/src/jwwdoc.h \
-    ../fparser/fparser.hh \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
@@ -230,11 +221,6 @@ HEADERS = \
     ui/forms/qg_snaptoolbar.h
 
 SOURCES = \
-    ../dxflib/src/dl_dxf.cpp \
-    ../dxflib/src/dl_writer_ascii.cpp \
-    ../jwwlib/src/dl_jww.cpp \
-    ../jwwlib/src/jwwdoc.cpp \
-    ../fparser/fparser.cc \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \
@@ -399,6 +385,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionmodifymirror.h \
     actions/rs_actionmodifymove.h \
     actions/rs_actionmodifymoverotate.h \
+    actions/rs_actionmodifyoffset.h \
     actions/rs_actionmodifyrotate.h \
     actions/rs_actionmodifyrotate2.h \
     actions/rs_actionmodifyround.h \
@@ -522,6 +509,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionmodifymirror.cpp \
     actions/rs_actionmodifymove.cpp \
     actions/rs_actionmodifymoverotate.cpp \
+    actions/rs_actionmodifyoffset.cpp \
     actions/rs_actionmodifyrotate.cpp \
     actions/rs_actionmodifyrotate2.cpp \
     actions/rs_actionmodifyround.cpp \
@@ -645,6 +633,7 @@ HEADERS += ui/qg_actionfactory.h \
     ui/forms/qg_linepolygon2options.h \
     ui/forms/qg_linepolygonoptions.h \
     ui/forms/qg_linerelangleoptions.h \
+    ui/forms/qg_modifyoffsetoptions.h \
     ui/forms/qg_mousewidget.h \
     ui/forms/qg_moverotateoptions.h \
     ui/forms/qg_polylineoptions.h \
@@ -735,6 +724,7 @@ SOURCES += ui/qg_actionfactory.cpp \
     ui/forms/qg_linepolygon2options.cpp \
     ui/forms/qg_linepolygonoptions.cpp \
     ui/forms/qg_linerelangleoptions.cpp \
+    ui/forms/qg_modifyoffsetoptions.cpp \
     ui/forms/qg_mousewidget.cpp \
     ui/forms/qg_moverotateoptions.cpp \
     ui/forms/qg_polylineoptions.cpp \
@@ -808,6 +798,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_linepolygon2options.ui \
     ui/forms/qg_linepolygonoptions.ui \
     ui/forms/qg_linerelangleoptions.ui \
+    ui/forms/qg_modifyoffsetoptions.ui \
     ui/forms/qg_mousewidget.ui \
     ui/forms/qg_moverotateoptions.ui \
     ui/forms/qg_polylineoptions.ui \
