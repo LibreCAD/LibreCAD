@@ -143,6 +143,8 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
                         "QG_PrintPreviewOptions::setAction: wrong action type");
         action = NULL;
     }
+    //fit to page by default, bug#3442277
+    fit();
 }
 
 void QG_PrintPreviewOptions::updateData() {
@@ -211,7 +213,7 @@ void QG_PrintPreviewOptions::scale(const QString& s) {
 
 void QG_PrintPreviewOptions::updateScaleBox(){
     double f=action->getScale();
-    //std::cout<<"void QG_PrintPreviewOptions::updateScaleBox() f="<<f<<std::endl;
+//    std::cout<<"void QG_PrintPreviewOptions::updateScaleBox() f="<<f<<std::endl;
     int j=std::min(defaultScales,cbScale->count());
     int i;
     for(i=0;i<j;i++){
