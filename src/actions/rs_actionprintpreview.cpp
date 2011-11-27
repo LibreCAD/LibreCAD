@@ -35,9 +35,9 @@
  * Constructor.
  */
 RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Print Preview",
-                    container, graphicView) {
+                                             RS_GraphicView& graphicView)
+    :RS_ActionInterface("Print Preview",
+                        container, graphicView) {
     showOptions();
 }
 
@@ -48,15 +48,15 @@ RS_ActionPrintPreview::~RS_ActionPrintPreview() {
 
 
 QAction* RS_ActionPrintPreview::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Print Preview")
-        QAction* action = new QAction(tr("Print Pre&view"), NULL);
+    // tr("Print Preview")
+    QAction* action = new QAction(tr("Print Pre&view"), NULL);
 #if QT_VERSION >= 0x040600
-        action->setIcon(QIcon::fromTheme("document-print-preview", QIcon(":/actions/fileprintpreview.png")));
+    action->setIcon(QIcon::fromTheme("document-print-preview", QIcon(":/actions/fileprintpreview.png")));
 #else
-        action->setIcon(QIcon(":/actions/fileprintpreview.png"));
+    action->setIcon(QIcon(":/actions/fileprintpreview.png"));
 #endif
-        //action->zetStatusTip(tr("Shows a preview of a print"));
-        return action;
+    //action->zetStatusTip(tr("Shows a preview of a print"));
+    return action;
 }
 
 
@@ -73,23 +73,23 @@ void RS_ActionPrintPreview::trigger() {}
 
 
 void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
-        switch (getStatus()) {
-        case Moving:
-                v2 = graphicView->toGraph(e->x(), e->y());
-                if (graphic!=NULL) {
-                        RS_Vector pinsbase = graphic->getPaperInsertionBase();
+    switch (getStatus()) {
+    case Moving:
+        v2 = graphicView->toGraph(e->x(), e->y());
+        if (graphic!=NULL) {
+            RS_Vector pinsbase = graphic->getPaperInsertionBase();
 
-                        double scale = graphic->getPaperScale();
+            double scale = graphic->getPaperScale();
 
-                        graphic->setPaperInsertionBase(pinsbase-v2*scale+v1*scale);
-                }
-                v1 = v2;
-                        graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
-                break;
-
-        default:
-                break;
+            graphic->setPaperInsertionBase(pinsbase-v2*scale+v1*scale);
         }
+        v1 = v2;
+        graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
+        break;
+
+    default:
+        break;
+    }
 }
 
 
@@ -110,16 +110,16 @@ void RS_ActionPrintPreview::mousePressEvent(QMouseEvent* e) {
 
 
 void RS_ActionPrintPreview::mouseReleaseEvent(QMouseEvent* e) {
-        switch (getStatus()) {
-        case Moving:
-                setStatus(Neutral);
-                break;
+    switch (getStatus()) {
+    case Moving:
+        setStatus(Neutral);
+        break;
 
     default:
         RS_DIALOGFACTORY->requestPreviousMenu();
         e->accept();
         break;
-        }
+    }
 }
 
 
@@ -183,6 +183,7 @@ void RS_ActionPrintPreview::center() {
 void RS_ActionPrintPreview::fit() {
     if (graphic!=NULL) {
         graphic->fitToPage();
+        graphicView->zoomPage();
         graphicView->redraw();
     }
 }
@@ -190,19 +191,19 @@ void RS_ActionPrintPreview::fit() {
 
 void RS_ActionPrintPreview::setScale(double f) {
     if (graphic!=NULL) {
-                graphic->setPaperScale(f);
+        graphic->setPaperScale(f);
         graphicView->redraw();
-        }
+    }
 }
 
 
 
 double RS_ActionPrintPreview::getScale() {
-        double ret = 1.0;
+    double ret = 1.0;
     if (graphic!=NULL) {
-                ret = graphic->getPaperScale();
-        }
-        return ret;
+        ret = graphic->getPaperScale();
+    }
+    return ret;
 }
 
 
@@ -211,20 +212,20 @@ void RS_ActionPrintPreview::setBlackWhite(bool bw) {
     if (bw) {
         graphicView->setDrawingMode(RS2::ModeBW);
     }
-        else {
+    else {
         graphicView->setDrawingMode(RS2::ModeFull);
-        }
-        graphicView->redraw();
+    }
+    graphicView->redraw();
 }
 
 
 RS2::Unit RS_ActionPrintPreview::getUnit() {
     if (graphic!=NULL) {
-                return graphic->getUnit();
-        }
-        else {
-                return RS2::None;
-        }
+        return graphic->getUnit();
+    }
+    else {
+        return RS2::None;
+    }
 }
 
 

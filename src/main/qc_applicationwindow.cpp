@@ -2695,8 +2695,6 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                     // Link the block list to the block widget
                     graphic->addBlockListListener(blockWidget);
 
-                    // Center by default:
-                    graphic->centerToPage();
                 }
 
                 // Link the graphic view to the mouse widget:
@@ -2717,6 +2715,10 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                     w->showMaximized();
                 } else {
                     w->show();
+                }
+
+                if(graphic!=NULL){
+                    graphic->fitToPage();
                 }
                 w->getGraphicView()->zoomPage();
                 setFocus();

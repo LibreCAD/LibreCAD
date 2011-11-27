@@ -801,19 +801,14 @@ void RS_GraphicView::zoomWindow(RS_Vector v1, RS_Vector v2,
 
     double zoomX=480.0;    // Zoom for X-Axis
     double zoomY=640.0;    // Zoom for Y-Axis   (Set smaller one)
-    double dum;            // Dummy for switching values
     int zoomBorder = 0;
 
     // Switch left/right and top/bottom is necessary:
     if(v1.x>v2.x) {
-        dum=v1.x;
-        v1.x=v2.x;
-        v2.x=dum;
+        std::swap(v1.x,v2.x);
     }
     if(v1.y>v2.y) {
-        dum=v1.y;
-        v1.y=v2.y;
-        v2.y=dum;
+        std::swap(v1.y,v2.y);
     }
 
     // Get zoom in X and zoom in Y:
@@ -839,12 +834,8 @@ void RS_GraphicView::zoomWindow(RS_Vector v1, RS_Vector v2,
         }
     }
 
-    if(zoomX<0.0) {
-        zoomX*=-1;
-    }
-    if(zoomY<0.0) {
-        zoomY*=-1;
-    }
+    zoomX=fabs(zoomX);
+    zoomY=fabs(zoomY);
 
     // Borders in pixel after zoom
     int pixLeft  =(int)(v1.x*zoomX);
@@ -928,8 +919,7 @@ void RS_GraphicView::zoomPage() {
         return;
     }
 
-    RS_Vector s = graphic->getPaperSize();
-    RS_Vector pinsbase = graphic->getPaperInsertionBase();
+    RS_Vector s = graphic->getPaperSize()/graphic->getPaperScale();
 
     double fx, fy;
 
