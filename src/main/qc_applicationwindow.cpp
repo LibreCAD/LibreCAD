@@ -2923,7 +2923,6 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
 
                     // Link the block list to the block widget
                     graphic->addBlockListListener(blockWidget);
-                    graphic->centerToPage();
 
                 }
 
@@ -2947,6 +2946,9 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                     w->show();
                 }
 
+                if(graphic!=NULL){
+                    graphic->fitToPage();
+                }
                 w->getGraphicView()->zoomPage();
                 setFocus();
 
