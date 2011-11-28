@@ -143,8 +143,6 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool /*update*/) {
                         "QG_PrintPreviewOptions::setAction: wrong action type");
         action = NULL;
     }
-    //fit to page by default, bug#3442277
-    fit();
 }
 
 void QG_PrintPreviewOptions::updateData() {
@@ -179,7 +177,7 @@ void QG_PrintPreviewOptions::scale(const QString& s) {
     if (updateDisabled) {
         return;
     }
-    double sc(1.);
+//    std::cout<<"QG_PrintPreviewOptions::scale(const QString& s): s="<<qPrintable(s)<<std::endl;
 
     if (s.contains(':')) {
         bool ok1 = false;
@@ -188,37 +186,37 @@ void QG_PrintPreviewOptions::scale(const QString& s) {
         double n = s.left(i).toDouble(&ok1);
         double d = s.mid(i+1).toDouble(&ok2);
         if (ok1 && ok2 && d>1.0e-6 && n>0.0) {
-                sc=n/d;
+            action->setScale(n/d);
+            updateScaleBox(n/d);
         }
-//        updateScaleBox();
     } else if (s.contains('=')) {
         bool ok = false;
         int i = s.indexOf('=');
         double d = s.mid(i+2, s.length()-i-3).toDouble(&ok);
         if (ok && d>1.0e-6) {
-                sc=1.0/d;
+            action->setScale(1.0/d);
+            updateScaleBox(1.0/d);
         }
-//        updateScaleBox();
     } else {
         bool ok = false;
         double f = RS_Math::eval(s, &ok);
         if (ok) {
-                sc=f;
-//            updateScaleBox();
+            action->setScale(f);
+            updateScaleBox(f);
 
         }
     }
-    action->setScale(sc);
 }
 
 //update the scalebox to
-
 void QG_PrintPreviewOptions::updateScaleBox(){
-    double f=action->getScale();
+    updateScaleBox(action->getScale());
+}
+
+void QG_PrintPreviewOptions::updateScaleBox(const double& f){
 //    std::cout<<"void QG_PrintPreviewOptions::updateScaleBox() f="<<f<<std::endl;
-    int j=std::min(defaultScales,cbScale->count());
     int i;
-    for(i=0;i<j;i++){
+    for(i=0;i<cbScale->count();i++){
         QString s=cbScale->itemText(i);
         int i0 = s.indexOf(':');
         bool ok1,ok2;
@@ -228,32 +226,43 @@ void QG_PrintPreviewOptions::updateScaleBox(){
 
         if(fabs(f-n/d)<RS_TOLERANCE) break;
     }
-    if(i<j){
+    if(i<cbScale->count()){
         cbScale->setCurrentIndex(i);
+//        std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): old: "<<qPrintable(cbScale->currentText())<<std::endl;
         return;
     }
-    QString s("Unknown");
+    QString s("");
     if(f>1.){
         s=QString("%1:1").arg(f);
     }else{
         if(fabs(f)>RS_TOLERANCE) s=QString("1:%1").arg(1./f);
     }
-    updateScaleBox(s);
-}
-
-void QG_PrintPreviewOptions::updateScaleBox(const QString& s) {
-
-    //std::cout<<"void QG_PrintPreviewOptions::updateScaleBox() s="<<qPrintable(s)<<std::endl;
-    int index=cbScale->findText(s);
-    //add the current sccale, bug#343794
-    if(index<0 || index>defaultScales){
-        if(cbScale->count()>defaultScales){
-            index=defaultScales;
-            cbScale->setItemText(index,s);
-        }else{
-            cbScale->addItem(s);
-            index=cbScale->count() -1;
-        }
+    if(cbScale->count()>defaultScales){
+        i=defaultScales;
+        cbScale->setItemText(defaultScales,s);
+    }else{
+        cbScale->addItem(s);
+        i=cbScale->count()-1;
     }
-    cbScale->setCurrentIndex(index);
+    cbScale->setCurrentIndex(i);
+//    std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): new: "<<qPrintable(cbScale->currentText())<<std::endl;
 }
+
+//void QG_PrintPreviewOptions::updateScaleBox(const QString& s) {
+//    if(cbScale->count()>defaultScales) std::cout<<"cbScale->last()="<<qPrintable(cbScale->itemText(defaultScales))<<std::endl;
+//    std::cout<<"void QG_PrintPreviewOptions::updateScaleBox(QString) s="<<qPrintable(s)<<std::endl;
+//    int index=cbScale->findText(s);
+//    std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): cbScale->findText(s)="<<index<<std::endl;
+//    //add the current sccale, bug#343794
+//    if(index>=defaultScales){
+//        index=defaultScales;
+//        cbScale->setItemText(defaultScales,s);
+//    }else{
+//        if(index<0){
+//            cbScale->addItem(s);
+//            index=cbScale->count() -1;
+//        }
+//    }
+
+//    cbScale->setCurrentIndex(index);
+//}

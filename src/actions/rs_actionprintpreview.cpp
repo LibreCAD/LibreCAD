@@ -194,12 +194,10 @@ void RS_ActionPrintPreview::fit() {
 
 void RS_ActionPrintPreview::setScale(double f) {
     if (graphic!=NULL) {
-        double f0=graphic->getPaperScale();
+        if( fabs(f - graphic->getPaperScale()) < RS_TOLERANCE ) return;
         graphic->setPaperScale(f);
         graphic->centerToPage();
-        if(fabs(f0-graphic->getPaperScale())>RS_TOLERANCE){
-            graphicView->zoomPage();
-        }
+        graphicView->zoomPage();
         graphicView->redraw();
     }
 }

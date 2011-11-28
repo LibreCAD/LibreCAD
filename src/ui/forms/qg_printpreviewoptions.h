@@ -47,7 +47,8 @@ public slots:
     virtual void fit();
     virtual void scale( const QString & s );
     virtual void updateScaleBox();
-    virtual void updateScaleBox(const QString& s);
+    virtual void updateScaleBox(const double& f);
+//    virtual void updateScaleBox(const QString& s);
 
 protected:
     RS_ActionPrintPreview* action;
