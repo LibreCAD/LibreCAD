@@ -1507,8 +1507,8 @@ void QC_ApplicationWindow::initToolBar() {
 
 
     optionWidget = new QToolBar("Tool Options", this);
-        QSizePolicy optionWidgetBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
-        optionWidget->setMinimumSize(440,30);
+        QSizePolicy optionWidgetBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+//        optionWidget->setMinimumSize(440,30);
         optionWidget->setSizePolicy(optionWidgetBarPolicy);
         optionWidget->setObjectName ( "ToolTB" );
 
