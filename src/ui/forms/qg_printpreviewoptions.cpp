@@ -95,7 +95,7 @@ void QG_PrintPreviewOptions::destroy() {
     */
 }
 
-void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
+void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool /*update*/) {
     if (a!=NULL && a->rtti()==RS2::ActionPrintPreview) {
         action = (RS_ActionPrintPreview*)a;
 
@@ -171,14 +171,15 @@ void QG_PrintPreviewOptions::setBlackWhite(bool on) {
 void QG_PrintPreviewOptions::fit() {
     if (action!=NULL) {
         action->fit();
+        updateScaleBox();
     }
-    updateScaleBox();
 }
 
 void QG_PrintPreviewOptions::scale(const QString& s) {
     if (updateDisabled) {
         return;
     }
+    double sc(1.);
 
     if (s.contains(':')) {
         bool ok1 = false;
@@ -187,26 +188,27 @@ void QG_PrintPreviewOptions::scale(const QString& s) {
         double n = s.left(i).toDouble(&ok1);
         double d = s.mid(i+1).toDouble(&ok2);
         if (ok1 && ok2 && d>1.0e-6 && n>0.0) {
-            action->setScale(n/d);
+                sc=n/d;
         }
-        updateScaleBox(s);
+//        updateScaleBox();
     } else if (s.contains('=')) {
         bool ok = false;
         int i = s.indexOf('=');
         double d = s.mid(i+2, s.length()-i-3).toDouble(&ok);
         if (ok && d>1.0e-6) {
-            action->setScale(1.0/d);
+                sc=1.0/d;
         }
-        updateScaleBox();
+//        updateScaleBox();
     } else {
         bool ok = false;
         double f = RS_Math::eval(s, &ok);
         if (ok) {
-            action->setScale(f);
-            updateScaleBox();
+                sc=f;
+//            updateScaleBox();
 
         }
     }
+    action->setScale(sc);
 }
 
 //update the scalebox to

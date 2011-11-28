@@ -1,153 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui version="4.0" stdsetdef="1">
-  <resources><include location="../../../res/extui/extui.qrc"/></resources><author></author>
-  <class>QG_CommandWidget</class>
-  <widget class="QWidget" name="QG_CommandWidget">
-    <property name="geometry">
-      <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>639</width>
-        <height>102</height>
-      </rect>
-    </property>
-    <property name="windowTitle">
-      <string>Command Line</string>
-    </property>
-    <layout class="QVBoxLayout">
-      <property name="margin">
-        <number>0</number>
-      </property>
-      <property name="spacing">
-        <number>0</number>
-      </property>
-      <item>
-        <widget class="QTextEdit" name="teHistory">
-          <property name="minimumSize">
-            <size>
-              <width>0</width>
-              <height>23</height>
-            </size>
-          </property>
-          <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="lineWidth">
-            <number>0</number>
-          </property>
-          <property name="horizontalScrollBarPolicy">
-            <enum>Qt::ScrollBarAlwaysOff</enum>
-          </property>
-          <property name="linkUnderline" stdset="0">
-            <bool>false</bool>
-          </property>
-          <property name="documentTitle">
-            <string notr="true"/>
-          </property>
-          <property name="readOnly">
-            <bool>true</bool>
-          </property>
-          <property name="undoRedoEnabled">
-            <bool>false</bool>
-          </property>
-          <property name="html">
-            <string notr="true"></string>
-          </property>
-          <property name="acceptRichText">
-            <bool>false</bool>
-          </property>
-        </widget>
-      </item>
-      <item>
-        <widget class="Line" name="line1">
-          <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-            </sizepolicy>
-          </property>
-          <property name="frameShape">
-            <enum>QFrame::HLine</enum>
-          </property>
-          <property name="frameShadow">
-            <enum>QFrame::Sunken</enum>
-          </property>
-        </widget>
-      </item>
-      <item>
-        <layout class="QHBoxLayout">
-          <item>
-            <widget class="QLabel" name="lCommand">
-              <property name="text">
-                <string>Command:</string>
-              </property>
-              <property name="wordWrap">
-                <bool>false</bool>
-              </property>
-            </widget>
-          </item>
-          <item>
-            <widget class="QG_CommandEdit" name="leCommand">
-              <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                </sizepolicy>
-              </property>
-            </widget>
-          </item>
-        </layout>
-      </item>
-    </layout>
-  </widget>
-  <layoutdefault spacing="6" margin="11"/>
-  <customwidgets>
-    <customwidget>
-      <class>QG_CommandEdit</class>
-      <extends>QWidget</extends>
-      <header location="local">qg_commandedit.h</header>
-      <sizehint>
-        <width>-1</width>
-        <height>12</height>
-      </sizehint>
-      <container>0</container>
-      <sizepolicy>
-        <hordata>5</hordata>
-        <verdata>5</verdata>
+<ui version="4.0">
+ <class>QG_CommandWidget</class>
+ <widget class="QWidget" name="QG_CommandWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>639</width>
+    <height>102</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Command Line</string>
+  </property>
+  <layout class="QVBoxLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QTextEdit" name="teHistory">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>23</height>
+      </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="toolTip">
+      <string>Command history and output</string>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="documentTitle">
+      <string notr="true"/>
+     </property>
+     <property name="undoRedoEnabled">
+      <bool>false</bool>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="html">
+      <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="acceptRichText">
+      <bool>false</bool>
+     </property>
+     <property name="linkUnderline" stdset="0">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line1">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
       </sizepolicy>
-    </customwidget>
-  </customwidgets>
-  <resources/>
-  <connections>
-    <connection>
-      <sender>leCommand</sender>
-      <signal>returnPressed()</signal>
-      <receiver>QG_CommandWidget</receiver>
-      <slot>trigger()</slot>
-    </connection>
-    <connection>
-      <sender>leCommand</sender>
-      <signal>tabPressed()</signal>
-      <receiver>QG_CommandWidget</receiver>
-      <slot>tabPressed()</slot>
-    </connection>
-    <connection>
-      <sender>leCommand</sender>
-      <signal>escape()</signal>
-      <receiver>QG_CommandWidget</receiver>
-      <slot>escape()</slot>
-    </connection>
-    <connection>
-      <sender>leCommand</sender>
-      <signal>focusIn()</signal>
-      <receiver>QG_CommandWidget</receiver>
-      <slot>setCommandMode()</slot>
-    </connection>
-    <connection>
-      <sender>leCommand</sender>
-      <signal>focusOut()</signal>
-      <receiver>QG_CommandWidget</receiver>
-      <slot>setNormalMode()</slot>
-    </connection>
-  </connections>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::HLine</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QLabel" name="lCommand">
+       <property name="text">
+        <string>Command:</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QG_CommandEdit" name="leCommand" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QG_CommandEdit</class>
+   <extends>QWidget</extends>
+   <header>qg_commandedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>leCommand</sender>
+   <signal>returnPressed()</signal>
+   <receiver>QG_CommandWidget</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leCommand</sender>
+   <signal>tabPressed()</signal>
+   <receiver>QG_CommandWidget</receiver>
+   <slot>tabPressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leCommand</sender>
+   <signal>escape()</signal>
+   <receiver>QG_CommandWidget</receiver>
+   <slot>escape()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leCommand</sender>
+   <signal>focusIn()</signal>
+   <receiver>QG_CommandWidget</receiver>
+   <slot>setCommandMode()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leCommand</sender>
+   <signal>focusOut()</signal>
+   <receiver>QG_CommandWidget</receiver>
+   <slot>setNormalMode()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

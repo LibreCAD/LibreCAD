@@ -87,7 +87,7 @@ public:
 	RS2::Unit getUnit();
 
 protected:
-	//bool blackWhite;
+        //bool blackWhite;
 	RS_Vector v1;
 	RS_Vector v2;
 };

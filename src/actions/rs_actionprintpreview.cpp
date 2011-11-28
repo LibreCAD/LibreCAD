@@ -37,7 +37,7 @@
 RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView)
     :RS_ActionInterface("Print Preview",
-                        container, graphicView) {
+                        container, graphicView){
     showOptions();
 }
 
@@ -182,16 +182,24 @@ void RS_ActionPrintPreview::center() {
 
 void RS_ActionPrintPreview::fit() {
     if (graphic!=NULL) {
+        double f0=graphic->getPaperScale();
         graphic->fitToPage();
-        graphicView->zoomPage();
+        if(fabs(f0-graphic->getPaperScale())>RS_TOLERANCE){
+                //only zoomPage when scale changed
+            graphicView->zoomPage();
+        }
         graphicView->redraw();
     }
 }
 
-
 void RS_ActionPrintPreview::setScale(double f) {
     if (graphic!=NULL) {
+        double f0=graphic->getPaperScale();
         graphic->setPaperScale(f);
+        graphic->centerToPage();
+        if(fabs(f0-graphic->getPaperScale())>RS_TOLERANCE){
+            graphicView->zoomPage();
+        }
         graphicView->redraw();
     }
 }
