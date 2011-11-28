@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -46,7 +46,7 @@ RS_Text::RS_Text(RS_EntityContainer* parent,
 
 
 /**
- * Sets a new text. The entities representing the 
+ * Sets a new text. The entities representing the
  * text are updated.
  */
 void RS_Text::setText(const QString& t) {
@@ -146,7 +146,7 @@ void RS_Text::setAlignment(int a) {
 
 
 /**
- * @return Number of lines in this text entity. 
+ * @return Number of lines in this text entity.
  */
 int RS_Text::getNumberOfLines() {
     int c=1;
@@ -164,7 +164,7 @@ int RS_Text::getNumberOfLines() {
 
 
 /**
- * Updates the Inserts (letters) of this text. Called when the 
+ * Updates the Inserts (letters) of this text. Called when the
  * text or it's data, position, alignment, .. changes.
  * This method also updates the usedTextWidth / usedTextHeight property.
  */
@@ -240,21 +240,21 @@ void RS_Text::update() {
                         // get upper string:
                         i++;
                         while (data.text.at(i).unicode()!='^' &&
-						       //data.text.at(i).unicode()!='/' &&
-						       data.text.at(i).unicode()!='\\' &&
-						       //data.text.at(i).unicode()!='#' &&
+                                                       //data.text.at(i).unicode()!='/' &&
+                                                       data.text.at(i).unicode()!='\\' &&
+                                                       //data.text.at(i).unicode()!='#' &&
                                 i<(int)data.text.length()) {
                             up += data.text.at(i);
                             i++;
                         }
-						
+
                         i++;
-						
-						if (data.text.at(i-1).unicode()=='^' &&
-						     data.text.at(i).unicode()==' ') {
-							i++;
-						}
-						
+
+                                                if (data.text.at(i-1).unicode()=='^' &&
+                                                     data.text.at(i).unicode()==' ') {
+                                                        i++;
+                                                }
+
                         // get lower string:
                         while (data.text.at(i).unicode()!=';' &&
                                 i<(int)data.text.length()) {
@@ -267,26 +267,26 @@ void RS_Text::update() {
                             new RS_Text(
                                 oneLine,
                                 RS_TextData(letterPos + RS_Vector(0.0,9.0),
-                                            4.0, 100.0, RS2::VAlignTop, 
-											RS2::HAlignLeft,
+                                            4.0, 100.0, RS2::VAlignTop,
+                                                                                        RS2::HAlignLeft,
                                             RS2::LeftToRight, RS2::Exact,
                                             1.0, up, data.style,
                                             0.0, RS2::Update));
-						upper->setLayer(NULL);
-                    	upper->setPen(RS_Pen(RS2::FlagInvalid));
-						oneLine->addEntity(upper);
+                                                upper->setLayer(NULL);
+                        upper->setPen(RS_Pen(RS2::FlagInvalid));
+                                                oneLine->addEntity(upper);
 
                         RS_Text* lower =
                             new RS_Text(
                                 oneLine,
                                 RS_TextData(letterPos+RS_Vector(0.0,4.0),
-                                            4.0, 100.0, RS2::VAlignTop, 
-											RS2::HAlignLeft,
+                                            4.0, 100.0, RS2::VAlignTop,
+                                                                                        RS2::HAlignLeft,
                                             RS2::LeftToRight, RS2::Exact,
                                             1.0, dw, data.style,
                                             0.0, RS2::Update));
-						lower->setLayer(NULL);
-                    	lower->setPen(RS_Pen(RS2::FlagInvalid));
+                                                lower->setLayer(NULL);
+                        lower->setPen(RS_Pen(RS2::FlagInvalid));
                         oneLine->addEntity(lower);
 
                         // move cursor:
@@ -318,9 +318,9 @@ void RS_Text::update() {
         default: {
                 // One Letter:
                 if (font->findLetter(QString(data.text.at(i))) != NULL) {
-				
-					RS_DEBUG->print("RS_Text::update: insert a "
-					  "letter at pos: %f/%f", letterPos.x, letterPos.y);
+
+                                        RS_DEBUG->print("RS_Text::update: insert a "
+                                          "letter at pos: %f/%f", letterPos.x, letterPos.y);
 
                     RS_InsertData d(QString(data.text.at(i)),
                                     letterPos,
@@ -328,17 +328,17 @@ void RS_Text::update() {
                                     0.0,
                                     1,1, RS_Vector(0.0,0.0),
                                     font->getLetterList(), RS2::NoUpdate);
-					
+
                     RS_Insert* letter = new RS_Insert(this, d);
                     RS_Vector letterWidth;
                     letter->setPen(RS_Pen(RS2::FlagInvalid));
                     letter->setLayer(NULL);
                     letter->update();
                     letter->forcedCalculateBorders();
-					
-					// until 2.0.4.5:
+
+                                        // until 2.0.4.5:
                     //letterWidth = RS_Vector(letter->getSize().x, 0.0);
-					// from 2.0.4.6:
+                                        // from 2.0.4.6:
                     letterWidth = RS_Vector(letter->getMax().x-letterPos.x, 0.0);
                     if (letterWidth.x < 0)
                         letterWidth.x = -letterSpace.x;
@@ -348,6 +348,8 @@ void RS_Text::update() {
                     // next letter position:
                     letterPos += letterWidth;
                     letterPos += letterSpace;
+                }else{
+                    RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Text::update: missing font for letter( %s )",qPrintable(QString(data.text.at(i))));
                 }
             }
             break;
@@ -358,14 +360,14 @@ void RS_Text::update() {
     usedTextHeight -= data.height*data.lineSpacingFactor*1.6
                       - data.height;
     forcedCalculateBorders();
-	
+
     RS_DEBUG->print("RS_Text::update: OK");
 }
 
 
 
 /**
- * Used internally by update() to add a text line created with 
+ * Used internally by update() to add a text line created with
  * default values and alignment to this text container.
  *
  * @param textLine The text line.
@@ -374,22 +376,22 @@ void RS_Text::update() {
 void RS_Text::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
     RS_DEBUG->print("RS_Text::updateAddLine: width: %f", textLine->getSize().x);
 
-	//textLine->forcedCalculateBorders();
+        //textLine->forcedCalculateBorders();
     //RS_DEBUG->print("RS_Text::updateAddLine: width 2: %f", textLine->getSize().x);
 
     // Move to correct line position:
     textLine->move(RS_Vector(0.0, -9.0 * lineCounter
                              * data.lineSpacingFactor * 1.6));
 
-	textLine->forcedCalculateBorders();
-	RS_Vector textSize = textLine->getSize();
-    
-	RS_DEBUG->print("RS_Text::updateAddLine: width 2: %f", textSize.x);
+        textLine->forcedCalculateBorders();
+        RS_Vector textSize = textLine->getSize();
+
+        RS_DEBUG->print("RS_Text::updateAddLine: width 2: %f", textSize.x);
 
     // Horizontal Align:
     switch (data.halign) {
     case RS2::HAlignCenter:
-		RS_DEBUG->print("RS_Text::updateAddLine: move by: %f", -textSize.x/2.0);
+                RS_DEBUG->print("RS_Text::updateAddLine: move by: %f", -textSize.x/2.0);
         textLine->move(RS_Vector(-textSize.x/2.0, 0.0));
         break;
 
@@ -446,16 +448,16 @@ void RS_Text::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
 
 
 RS_VectorSolutions RS_Text::getRefPoints() {
-	RS_VectorSolutions ret(data.insertionPoint);
-	return ret;
+        RS_VectorSolutions ret(data.insertionPoint);
+        return ret;
 }
-    
-	
+
+
 RS_Vector RS_Text::getNearestRef(const RS_Vector& coord,
                                      double* dist) {
 
-	//return getRefPoints().getClosest(coord, dist);
-	return RS_Entity::getNearestRef(coord, dist);
+        //return getRefPoints().getClosest(coord, dist);
+        return RS_Entity::getNearestRef(coord, dist);
 }
 
 
@@ -521,7 +523,7 @@ bool RS_Text::hasEndpointsWithinWindow(RS_Vector /*v1*/, RS_Vector /*v2*/) {
 
 
 /**
- * Implementations must stretch the given range of the entity 
+ * Implementations must stretch the given range of the entity
  * by the given offset.
  */
 void RS_Text::stretch(RS_Vector firstCorner,
