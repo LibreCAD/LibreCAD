@@ -319,6 +319,7 @@ void RS_Text::update() {
                 // One Letter:
                 QString letterText = QString(data.text.at(i));
                 if (font->findLetter(letterText) == NULL) {
+                    RS_DEBUG->print("RS_Text::update: missing font for letter( %s ), replaced it with QChar(0xfffd)",qPrintable(letterText));
                     letterText = QChar(0xfffd);
                 }
 //                if (font->findLetter(QString(data.text.at(i))) != NULL) {
