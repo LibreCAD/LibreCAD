@@ -32,6 +32,7 @@ public:
 
     bool write(DRW_Interface *interface, DRW::Version ver, bool bin);
     bool writeLine(DRW_Line *ent);
+    bool writeCircle(DRW_Circle *ent);
     bool writeArc(DRW_Arc *ent);
 
 private:
@@ -51,6 +52,9 @@ private:
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);
+    bool writeTables();
+    bool writeBlocks();
+    bool writeObjects();
 
 private:
     DRW::Version version;

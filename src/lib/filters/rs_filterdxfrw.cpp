@@ -162,7 +162,6 @@ QString RS_FilterDXFRW::getDXFEncoding() {
 /**
  * Implementation of the method which handles layers.
  */
-/*TODO basic implementation for test, pending to write readLayer in libdxfrw*/
 void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
     RS_DEBUG->print("RS_FilterDXF::addLayer");
     RS_DEBUG->print("  adding layer: %s", data.name.c_str());
@@ -1529,7 +1528,7 @@ void RS_FilterDXFRW::writeEntity(DL_WriterA& /*dw*/, RS_Entity* /*e*/) {
 void RS_FilterDXFRW::writeHeader(){
 }
 
-DRW_Entity* RS_FilterDXFRW::writeEntity(){
+DRW_Entity* RS_FilterDXFRW::writeEntities(){
     DRW_Entity *went = new DRW_Entity();
 //    RS_Entity *ent;
     for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
