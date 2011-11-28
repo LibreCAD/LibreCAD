@@ -154,12 +154,16 @@ bool dxfWriterBinary::writeInt32(int code, int data) {
     bufcode[1] =code  >> 8;
     filestr->write(bufcode, 2);
 
-/*    char buffer[4];
-    for (int i=0; i<4; i++) {
+    char buffer[4];
+    bufcode[0] =code & 0xFF;
+    bufcode[1] =code  >> 8;
+    bufcode[1] =code  >> 16;
+    bufcode[1] =code  >> 24;
+/*    for (int i=0; i<4; i++) {
         buffer[i] =0;
     }
-    *buffer = data;
-    filestr->write(buffer, 4);*/
+    *buffer = data;*/
+    filestr->write(buffer, 4);
     return (filestr->good());
 }
 
@@ -197,9 +201,12 @@ bool dxfWriterBinary::writeDouble(int code, double data) {
 //saved as int or add a bool member??
 bool dxfWriterBinary::writeBool(int code, bool data) {
     char buffer[1];
-/*    filestr->read(buffer,1);
-    intData = (int)(buffer[0]);
-    DBG(intData); DBG("\n");*/
+    char bufcode[2];
+    bufcode[0] =code & 0xFF;
+    bufcode[1] =code  >> 8;
+    filestr->write(bufcode, 2);
+    buffer[0] = data;
+    filestr->write(buffer, 1);
     return (filestr->good());
 }
 
