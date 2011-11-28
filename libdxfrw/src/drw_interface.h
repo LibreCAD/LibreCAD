@@ -232,7 +232,7 @@ public:
 //    }
 
     virtual void writeHeader() = 0;
-    virtual DRW_Entity* writeEntity() = 0;
+    virtual DRW_Entity* writeEntities() = 0;
 
 protected:
 //    DL_Attributes attributes;

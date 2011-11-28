@@ -27,6 +27,8 @@ using namespace std;
 #define DBG(a)
 #endif
 
+#define FIRSTHANDLE 48
+
 /*enum sections {
     secUnknown,
     secHeader,
@@ -126,31 +128,34 @@ bool dxfRW::write(DRW_Interface *interface, DRW::Version ver, bool bin){
     if (version> DRW::AC1014) {
         writer->writeString(9, "$HANDSEED");
 //RLZ        dxfHex(5, 0xFFFF);
-        writer->writeString(5, "0xFFFF");
+        writer->writeString(5, "20000");
     }
 
+    entCount =FIRSTHANDLE;
     writer->writeString(9, "$DWGCODEPAGE");
     writer->writeString(3, "ANSI_1252");
     writer->writeString(0, "ENDSEC");
-/*    writer->writeString(0, "SECTION");
+    writer->writeString(0, "SECTION");
     writer->writeString(2, "CLASSES");
     writer->writeString(0, "ENDSEC");
     writer->writeString(0, "SECTION");
     writer->writeString(2, "TABLES");
+    writeTables();
     writer->writeString(0, "ENDSEC");
     writer->writeString(0, "SECTION");
     writer->writeString(2, "BLOCKS");
-    writer->writeString(0, "ENDSEC");*/
+    writeBlocks();
+    writer->writeString(0, "ENDSEC");
 
     writer->writeString(0, "SECTION");
     writer->writeString(2, "ENTITIES");
-    entCount =100;
-    iface->writeEntity();
+    iface->writeEntities();
     writer->writeString(0, "ENDSEC");
 
-/*    writer->writeString(0, "SECTION");
+    writer->writeString(0, "SECTION");
     writer->writeString(2, "OBJECTS");
-    writer->writeString(0, "ENDSEC");*/
+    writeObjects();
+    writer->writeString(0, "ENDSEC");
     writer->writeString(0, "EOF");
     filestr.flush();
     filestr.close();
@@ -167,9 +172,9 @@ bool dxfRW::writeEntity(DRW_Entity *ent) {
     writer->writeString(5, buffer);
     writer->writeString(100, "AcDbEntity");
     writer->writeString(8, ent->layer);
-    writer->writeInt16(370, ent->lWeight);
     writer->writeString(6, ent->lineType);
     writer->writeInt16(62, ent->color);
+    writer->writeInt16(370, ent->lWeight);
     return true;
 }
 
@@ -191,19 +196,333 @@ bool dxfRW::writeLine(DRW_Line *ent) {
     return true;
 }
 
-bool dxfRW::writeArc(DRW_Arc *ent) {
-    writer->writeString(0, "ARC");
+bool dxfRW::writeCircle(DRW_Circle *ent) {
+    writer->writeString(0, "CIRCLE");
     writeEntity(ent);
-    writer->writeString(100, "AcDbArc");
+    writer->writeString(100, "AcDbCircle");
     writer->writeDouble(10, ent->x);
     writer->writeDouble(20, ent->y);
     if (ent->z != 0.0) {
         writer->writeDouble(30, ent->z);
     }
     writer->writeDouble(40, ent->radious);
+    return true;
+}
+
+bool dxfRW::writeArc(DRW_Arc *ent) {
+    writer->writeString(0, "ARC");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbCircle");
+    writer->writeDouble(10, ent->x);
+    writer->writeDouble(20, ent->y);
+    if (ent->z != 0.0) {
+        writer->writeDouble(30, ent->z);
+    }
+    writer->writeDouble(40, ent->radious);
+    writer->writeString(100, "AcDbArc");
     writer->writeDouble(50, ent->staangle);
     writer->writeDouble(51, ent->endangle);
     return true;
+}
+
+bool dxfRW::writeTables() {
+    char buffer[5];
+    writer->writeString(0, "TABLE");
+    writer->writeString(2, "VPORT");
+    writer->writeString(5, "8");
+    writer->writeString(330, "0");
+    writer->writeString(100, "AcDbSymbolTable");
+    writer->writeInt16(70, 1); //end table def
+    writer->writeString(0, "VPORT");
+    entCount = 1+entCount;
+    sprintf(buffer, "%X", entCount);
+    writer->writeString(5, buffer);
+    writer->writeString(330, "8");
+    writer->writeString(100, "AcDbSymbolTableRecord");
+    writer->writeString(100, "AcDbViewportTableRecord");
+    writer->writeString(2, "*Active");
+    writer->writeInt16(70, 0);
+    writer->writeDouble(10, 0.0);
+    writer->writeDouble(20, 0.0);
+    writer->writeDouble(11, 1.0);
+    writer->writeDouble(21, 1.0);
+    writer->writeDouble(12, 0.651828);
+    writer->writeDouble(22, -0.16);
+    writer->writeDouble(13, 0.0);
+    writer->writeDouble(23, 0.0);
+    writer->writeDouble(14, 10.0);
+    writer->writeDouble(24, 10.0);
+    writer->writeDouble(15, 10.0);
+    writer->writeDouble(25, 10.0);
+    writer->writeDouble(16, 0.0);
+    writer->writeDouble(26, 0.0);
+    writer->writeDouble(36, 1.0);
+    writer->writeDouble(17, 0.0);
+    writer->writeDouble(27, 0.0);
+    writer->writeDouble(37, 0.0);
+    writer->writeDouble(40, 5.13732);
+    writer->writeDouble(41, 2.4426877);
+    writer->writeDouble(42, 50.0);
+    writer->writeDouble(43, 0.0);
+    writer->writeDouble(44, 0.0);
+    writer->writeDouble(50, 0.0);
+    writer->writeDouble(51, 0.0);
+    writer->writeInt16(71, 0);
+    writer->writeInt16(72, 100);
+    writer->writeInt16(73, 1);
+    writer->writeInt16(74, 3);
+    writer->writeInt16(75, 0);
+    writer->writeInt16(76, 1);
+    writer->writeInt16(77, 0);
+    writer->writeInt16(78, 0);
+    writer->writeInt16(281, 0);
+    writer->writeInt16(65, 1);
+    writer->writeDouble(110, 0.0);
+    writer->writeDouble(120, 0.0);
+    writer->writeDouble(130, 0.0);
+    writer->writeDouble(111, 1.0);
+    writer->writeDouble(121, 0.0);
+    writer->writeDouble(131, 0.0);
+    writer->writeDouble(112, 0.0);
+    writer->writeDouble(122, 1.0);
+    writer->writeDouble(132, 0.0);
+    writer->writeInt16(79, 0);
+    writer->writeDouble(146, 0.0);
+    writer->writeString(348, "10020");
+    writer->writeInt16(60, 3);
+    writer->writeInt16(61, 5);
+    writer->writeBool(292, 1);
+    writer->writeInt16(282, 1);
+    writer->writeDouble(141, 0.0);
+    writer->writeDouble(142, 0.0);
+    writer->writeInt16(63, 250);
+    writer->writeInt32(421, 3358443);
+    writer->writeString(0, "ENDTAB");
+/*** LTYPE ***/
+    writer->writeString(0, "TABLE");
+    writer->writeString(2, "LTYPE");
+    writer->writeString(5, "5");
+    writer->writeString(330, "0");
+    writer->writeString(100, "AcDbSymbolTable");
+    writer->writeInt16(70, 4); //end table def
+
+    writer->writeString(0, "LTYPE");
+    writer->writeString(5, "14");
+    writer->writeString(330, "5");
+    writer->writeString(100, "AcDbSymbolTableRecord");
+    writer->writeString(100, "AcDbLinetypeTableRecord");
+    writer->writeString(2, "ByBlock");
+    writer->writeInt16(70, 0);
+    writer->writeString(3, "");
+    writer->writeInt16(72, 65);
+    writer->writeInt16(73, 0);
+    writer->writeDouble(40, 0.0);
+
+    writer->writeString(0, "LTYPE");
+    writer->writeString(5, "15");
+    writer->writeString(330, "5");
+    writer->writeString(100, "AcDbSymbolTableRecord");
+    writer->writeString(100, "AcDbLinetypeTableRecord");
+    writer->writeString(2, "ByLayer");
+    writer->writeInt16(70, 0);
+    writer->writeString(3, "");
+    writer->writeInt16(72, 65);
+    writer->writeInt16(73, 0);
+    writer->writeDouble(40, 0.0);
+
+    writer->writeString(0, "LTYPE");
+    writer->writeString(5, "16");
+    writer->writeString(330, "5");
+    writer->writeString(100, "AcDbSymbolTableRecord");
+    writer->writeString(100, "AcDbLinetypeTableRecord");
+    writer->writeString(2, "CONTINUOUS");
+    writer->writeInt16(70, 0);
+    writer->writeString(3, "Solid line");
+    writer->writeInt16(72, 65);
+    writer->writeInt16(73, 0);
+    writer->writeDouble(40, 0.0);
+
+    writer->writeString(0, "LTYPE");
+    entCount = 1+entCount;
+    sprintf(buffer, "%X", entCount);
+    writer->writeString(5, buffer);
+    writer->writeString(330, "5");
+    writer->writeString(100, "AcDbSymbolTableRecord");
+    writer->writeString(100, "AcDbLinetypeTableRecord");
+    writer->writeString(2, "DASHDOT");
+    writer->writeInt16(70, 0);
+    writer->writeString(3, "Dash dot __ . __ . __ . __ . __ . __ . __ . __");
+    writer->writeInt16(72, 65);
+    writer->writeInt16(73, 4);
+    writer->writeDouble(40, 25.4);
+    writer->writeDouble(49, 12.7);
+    writer->writeInt16(74, 0);
+    writer->writeDouble(49, -6.35);
+    writer->writeInt16(74, 0);
+    writer->writeDouble(49, 0.0);
+    writer->writeInt16(74, 0);
+    writer->writeDouble(49, -6.35);
+    writer->writeInt16(74, 0);
+    writer->writeString(0, "ENDTAB");
+
+    writer->writeString(0, "TABLE");
+    writer->writeString(2, "LAYER");
+    writer->writeString(5, "2");
+    writer->writeString(330, "0");
+    writer->writeString(100, "AcDbSymbolTable");
+    writer->writeInt16(70, 1); //end table def
+    writer->writeString(0, "LAYER");
+    writer->writeString(5, "10");
+    writer->writeString(330, "2");
+    writer->writeString(100, "AcDbSymbolTableRecord");
+    writer->writeString(100, "AcDbLayerTableRecord");
+    writer->writeString(2, "0");
+    writer->writeInt16(70, 0);
+    writer->writeInt16(62, 7);
+    writer->writeString(6, "CONTINUOUS");
+    writer->writeInt16(370, -3);
+    writer->writeString(390, "F");
+//    writer->writeString(347, "10012");
+    writer->writeString(0, "ENDTAB");
+
+    writer->writeString(0, "TABLE");
+    writer->writeString(2, "STYLE");
+    writer->writeString(5, "3");
+    writer->writeString(330, "0");
+    writer->writeString(100, "AcDbSymbolTable");
+    writer->writeInt16(70, 0); //end table def
+    writer->writeString(0, "ENDTAB");
+
+    writer->writeString(0, "TABLE");
+    writer->writeString(2, "VIEW");
+    writer->writeString(5, "6");
+    writer->writeString(330, "0");
+    writer->writeString(100, "AcDbSymbolTable");
+    writer->writeInt16(70, 0); //end table def
+    writer->writeString(0, "ENDTAB");
+
+    writer->writeString(0, "TABLE");
+    writer->writeString(2, "UCS");
+    writer->writeString(5, "7");
+    writer->writeString(330, "0");
+    writer->writeString(100, "AcDbSymbolTable");
+    writer->writeInt16(70, 0); //end table def
+    writer->writeString(0, "ENDTAB");
+
+    writer->writeString(0, "TABLE");
+    writer->writeString(2, "APPID");
+    writer->writeString(5, "9");
+    writer->writeString(330, "0");
+    writer->writeString(100, "AcDbSymbolTable");
+    writer->writeInt16(70, 1); //end table def
+    writer->writeString(0, "APPID");
+    writer->writeString(5, "12");
+    writer->writeString(330, "9");
+    writer->writeString(100, "AcDbSymbolTableRecord");
+    writer->writeString(100, "AcDbRegAppTableRecord");
+    writer->writeString(2, "ACAD");
+    writer->writeInt16(70, 0);
+    writer->writeString(0, "ENDTAB");
+
+    writer->writeString(0, "TABLE");
+    writer->writeString(2, "DIMSTYLE");
+    writer->writeString(5, "A");
+    writer->writeString(330, "0");
+    writer->writeString(100, "AcDbSymbolTable");
+    writer->writeInt16(70, 0); //end table def
+    writer->writeString(100, "AcDbDimStyleTable");
+    writer->writeInt16(71, 0); //end table def
+    writer->writeString(0, "ENDTAB");
+
+    writer->writeString(0, "TABLE");
+    writer->writeString(2, "BLOCK_RECORD");
+    writer->writeString(5, "1");
+    writer->writeString(330, "0");
+    writer->writeString(100, "AcDbSymbolTable");
+    writer->writeInt16(70, 2); //end table def
+    writer->writeString(0, "BLOCK_RECORD");
+    writer->writeString(5, "1F");
+    writer->writeString(330, "1");
+    writer->writeString(100, "AcDbSymbolTableRecord");
+    writer->writeString(100, "AcDbBlockTableRecord");
+    writer->writeString(2, "*Model_Space");
+//    writer->writeInt16(340, 22);
+    writer->writeInt16(70, 0);
+    writer->writeInt16(280, 1);
+    writer->writeInt16(281, 0);
+    writer->writeString(0, "BLOCK_RECORD");
+    writer->writeString(5, "1E");
+    writer->writeString(330, "1");
+    writer->writeString(100, "AcDbSymbolTableRecord");
+    writer->writeString(100, "AcDbBlockTableRecord");
+    writer->writeString(2, "*Paper_Space");
+//    writer->writeInt16(340, 22);
+    writer->writeInt16(70, 0);
+    writer->writeInt16(280, 1);
+    writer->writeInt16(281, 0);
+    writer->writeString(0, "ENDTAB");
+}
+
+bool dxfRW::writeBlocks() {
+    writer->writeString(0, "BLOCK");
+    writer->writeString(5, "20");
+    writer->writeString(330, "1F");
+    writer->writeString(100, "AcDbEntity");
+    writer->writeString(8, "0");
+    writer->writeString(100, "AcDbBlockBegin");
+    writer->writeString(2, "*Model_Space");
+    writer->writeInt16(70, 0);
+    writer->writeDouble(10, 0.0);
+    writer->writeDouble(20, 0.0);
+    writer->writeDouble(30, 0.0);
+    writer->writeString(3, "*Model_Space");
+    writer->writeString(1, "");
+    writer->writeString(0, "ENDBLK");
+    writer->writeString(5, "21");
+    writer->writeString(330, "1F");
+    writer->writeString(100, "AcDbEntity");
+    writer->writeString(8, "0");
+    writer->writeString(100, "AcDbBlockEnd");
+
+    writer->writeString(0, "BLOCK");
+    writer->writeString(5, "1C");
+    writer->writeString(330, "1B");
+    writer->writeString(100, "AcDbEntity");
+    writer->writeString(8, "0");
+    writer->writeString(100, "AcDbBlockBegin");
+    writer->writeString(2, "*Paper_Space");
+    writer->writeInt16(70, 0);
+    writer->writeDouble(10, 0.0);
+    writer->writeDouble(20, 0.0);
+    writer->writeDouble(30, 0.0);
+    writer->writeString(3, "*Paper_Space");
+    writer->writeString(1, "");
+    writer->writeString(0, "ENDBLK");
+    writer->writeString(5, "1D");
+    writer->writeString(330, "1F");
+    writer->writeString(100, "AcDbEntity");
+    writer->writeString(8, "0");
+    writer->writeString(100, "AcDbBlockEnd");
+}
+
+bool dxfRW::writeObjects() {
+    writer->writeString(0, "DICTIONARY");
+    char buffer[5];
+    entCount = 1+entCount;
+    sprintf(buffer, "%X", entCount);
+    writer->writeString(5, "C");
+    writer->writeString(330, "0");
+    writer->writeString(100, "AcDbDictionary");
+    writer->writeInt16(281, 1);
+    writer->writeString(3, "ACAD_GROUP");
+    writer->writeString(350, "D");
+    entCount = 1+entCount;
+    sprintf(buffer, "%X", entCount);
+    writer->writeString(0, "DICTIONARY");
+    writer->writeString(5, "D");
+    writer->writeString(330, "C");
+    writer->writeString(100, "AcDbDictionary");
+    writer->writeInt16(281, 1);
 }
 
 /********* Reader Process *********/

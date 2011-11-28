@@ -19,7 +19,12 @@
 
 class dxfReader {
 public:
-    dxfReader(std::ifstream *stream){filestr = stream; count =0;}
+    dxfReader(std::ifstream *stream){
+        filestr = stream;
+#ifdef DRW_DBG
+        count =0;
+#endif
+    }
     virtual ~dxfReader(){}
     virtual bool readCode(int *code) = 0; //return true if sucesful (not EOF)
     virtual bool readString(std::string *text) = 0;
