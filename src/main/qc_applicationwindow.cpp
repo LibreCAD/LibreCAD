@@ -1729,8 +1729,9 @@ void QC_ApplicationWindow::initView() {
 
 
     RS_DEBUG->print("  command widget..");
-    dw = new QDockWidget("Command", this);
-        dw->setObjectName ( "CommandDW" );
+    dw = new QDockWidget(tr("Command line"), this);
+    dw->setFeatures(QDockWidget::DockWidgetVerticalTitleBar|QDockWidget::AllDockWidgetFeatures);
+    dw->setObjectName ( "CommandDW" );
     // dw->setResizeEnabled(true);
     commandWidget = new QG_CommandWidget(dw, "Command");
     commandWidget->setActionHandler(actionHandler);
@@ -1746,7 +1747,7 @@ void QC_ApplicationWindow::initView() {
     dw->setWidget(commandWidget);
     //dw->setFixedExtentWidth(120);
     //dw->setFixedExtentHeight(45);
-    dw->setWindowTitle(tr("Command line"));
+//    dw->setWindowTitle();
     // dw->setCloseMode(QDockWidget::Always);
     commandDockWindow = dw;
         addDockWidget(Qt::BottomDockWidgetArea, dw);
