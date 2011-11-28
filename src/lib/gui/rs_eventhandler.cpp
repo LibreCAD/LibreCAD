@@ -568,7 +568,7 @@ void RS_EventHandler::cleanUp() {
 #endif
 
         if( (*it)->isFinished()){
-            (*it)->finish();
+//            (*it)->finish();
             delete *it;
             it= currentActions.erase(it);
         }else{
