@@ -13,60 +13,6 @@
 #include "drw_entities.h"
 #include "dxfreader.h"
 
-//! Base class for tables entries
-/*!
-*  Base class for tables entries
-*  @author Rallaz
-*/
-void DRW_TableEntry::parseCode(int code, dxfReader *reader){
-    switch (code) {
-    case 5:
-        handle = reader->getString();
-        break;
-    case 330:
-        handleBlock = reader->getString();
-        break;
-    case 2:
-        name = reader->getString();
-        break;
-    case 70:
-        flags = reader->getInt32();
-        break;
-    default:
-        break;
-    }
-}
-
-//! Class to handle layer entries
-/*!
-*  Class to handle layer symbol table entries
-*  @author Rallaz
-*/
-void DRW_Layer::parseCode(int code, dxfReader *reader){
-    switch (code) {
-    case 6:
-        lineType = reader->getString();
-        break;
-    case 62:
-        color = reader->getInt32();
-        break;
-    case 290:
-        plotF = reader->getBool();
-        break;
-    case 370:
-        lWeight = reader->getInt32();
-        break;
-    case 390:
-        handlePlotS = reader->getString();
-        break;
-    case 347:
-        handlePlotM = reader->getString();
-        break;
-    default:
-        DRW_TableEntry::parseCode(code, reader);
-        break;
-    }
-}
 
 //! Base class for entities
 /*!

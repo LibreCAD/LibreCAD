@@ -18,6 +18,7 @@
 /*#include "dl_attributes.h"
 #include "dl_codes.h"*/
 #include "drw_entities.h"
+#include "drw_objects.h"
 //#include "dl_extrusion.h"
 
 /**
@@ -36,9 +37,9 @@ public:
 //        delete extrusion;
     }
 
-    /**
-     * Called for every layer.
-     */
+    /** Called for every line Type.  */
+    virtual void addLType(const DRW_LType& data) = 0;
+    /** Called for every layer. */
     virtual void addLayer(const DRW_Layer& data) = 0;
 
     /**
@@ -232,7 +233,9 @@ public:
 //    }
 
     virtual void writeHeader() = 0;
-    virtual DRW_Entity* writeEntities() = 0;
+    virtual void writeEntities() = 0;
+    virtual void writeLTypes() = 0;
+    virtual void writeLayers() = 0;
 
 protected:
 //    DL_Attributes attributes;

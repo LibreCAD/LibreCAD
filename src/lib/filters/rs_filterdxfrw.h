@@ -79,6 +79,7 @@ public:
     virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/);
 
     // Methods from DL_CreationInterface:
+    virtual void addLType(const DRW_LType& /*data*/){}
     virtual void addLayer(const DRW_Layer& data);
     virtual void addBlock(const DRW_Entity& data);
     virtual void endBlock();
@@ -136,19 +137,20 @@ public:
     virtual bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type);
 
     virtual void writeHeader();
-    virtual DRW_Entity* writeEntities();
+    virtual void writeEntities();
+    virtual void writeLTypes();
+    virtual void writeLayers();
 
     void writeVariables(DL_WriterA& dw);
     void writeLayer(DL_WriterA& dw, RS_Layer* l);
-    void writeLineType(DL_WriterA& dw, RS2::LineType t);
     void writeAppid(DL_WriterA& dw, const char* appid);
     void writeBlock(DL_WriterA& dw, RS_Block* blk);
-    void writeEntity(DL_WriterA& dw, RS_Entity* e);
-    void writeEntity(DL_WriterA& dw, RS_Entity* e, const DRW_Entity& attrib);
-    void writePoint(DL_WriterA& dw, RS_Point* p, const DRW_Entity& attrib);
+
+    void writePoint(RS_Point* p);
     void writeLine(RS_Line* l);
-    void writeCircle(DL_WriterA& dw, RS_Circle* c, const DRW_Entity& attrib);
+    void writeCircle(RS_Circle* c);
     void writeArc(RS_Arc* a);
+
     void writePolyline(DL_WriterA& dw,
                 RS_Polyline* l, const DRW_Entity& attrib);
 	void writeSpline(DL_WriterA& dw, 
