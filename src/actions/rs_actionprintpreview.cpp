@@ -37,7 +37,7 @@
 RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView)
     :RS_ActionInterface("Print Preview",
-                        container, graphicView){
+                        container, graphicView), hasOptions(false){
     showOptions();
 }
 
@@ -137,11 +137,17 @@ QStringList RS_ActionPrintPreview::getAvailableCommands() {
     return cmd;
 }
 
+void RS_ActionPrintPreview::resume() {
+    RS_ActionInterface::resume();
+    showOptions();
+}
 
 void RS_ActionPrintPreview::showOptions() {
     RS_ActionInterface::showOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, true);
+    if(RS_DIALOGFACTORY != NULL && ! isFinished() ) {
+        RS_DIALOGFACTORY->requestOptions(this, true,hasOptions);
+        hasOptions=true;
+    }
 }
 
 
@@ -185,7 +191,7 @@ void RS_ActionPrintPreview::fit() {
         double f0=graphic->getPaperScale();
         graphic->fitToPage();
         if(fabs(f0-graphic->getPaperScale())>RS_TOLERANCE){
-                //only zoomPage when scale changed
+            //only zoomPage when scale changed
             graphicView->zoomPage();
         }
         graphicView->redraw();

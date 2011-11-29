@@ -53,6 +53,7 @@ class QG_CoordinateWidget;
 class QG_SelectionWidget;
 class QG_MouseWidget;
 class QG_ArcTangentialOptions;
+class QG_PrintPreviewOptions;
 //class PrintPreviewOptions;
 class QG_CommandWidget;
 class QG_MainWindowInterface;
@@ -295,6 +296,7 @@ private:
     QG_SnapMiddleOptions* snapMiddleOptions;
     QG_SnapDistOptions* snapDistOptions;
     QG_ModifyOffsetOptions* modifyOffsetOptions;
+    QG_PrintPreviewOptions* printPreviewOptions;
 };
 
 #endif

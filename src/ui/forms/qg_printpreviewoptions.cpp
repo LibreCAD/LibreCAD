@@ -95,11 +95,14 @@ void QG_PrintPreviewOptions::destroy() {
     */
 }
 
-void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool /*update*/) {
+void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
     if (a!=NULL && a->rtti()==RS2::ActionPrintPreview) {
-        action = (RS_ActionPrintPreview*)a;
-
+        action = static_cast<RS_ActionPrintPreview*>(a);
+        if(update==false){
+            fit();
+        }
         updateDisabled = true;
+        cbScale->setDuplicatesEnabled(false);
         RS2::Unit u = action->getUnit();
         if (u==RS2::Inch) {
             cbScale->insertItems(0,imperialScales);

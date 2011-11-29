@@ -130,6 +130,7 @@ QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
     snapMiddleOptions=NULL;
     snapDistOptions=NULL;
     modifyOffsetOptions=NULL;
+    printPreviewOptions=NULL;
         RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory: OK");
 }
 
@@ -753,20 +754,23 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestPrintPreviewOptions(RS_ActionInterface* action,
         bool on, bool update) {
 
-    static QG_PrintPreviewOptions* toolWidget = NULL;
-
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
-            delete toolWidget;
-            toolWidget = NULL;
+    if(!on) {
+        if (printPreviewOptions!=NULL) {
+            delete printPreviewOptions;
+            printPreviewOptions = NULL;
         }
-        if (on==true) {
-            toolWidget = new QG_PrintPreviewOptions();
-            optionWidget->addWidget(toolWidget);
-            toolWidget->setAction(action, update);
-                        toolWidget->show();
-        }
+        return;
     }
+    if (optionWidget!=NULL ) {
+        if (printPreviewOptions==NULL) {
+            printPreviewOptions = new QG_PrintPreviewOptions();
+
+            optionWidget->addWidget(printPreviewOptions);
+        }
+        printPreviewOptions ->setAction(action, update);
+        printPreviewOptions->show();
+    }
+
 }
 
 

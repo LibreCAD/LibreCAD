@@ -57,6 +57,7 @@ public:
 	}
 
     virtual void init(int status=0);
+    virtual void resume();
 
     virtual void trigger();
 
@@ -88,7 +89,8 @@ public:
 
 protected:
         //bool blackWhite;
-	RS_Vector v1;
+        bool hasOptions;
+        RS_Vector v1;
 	RS_Vector v2;
 };
 
