@@ -73,14 +73,6 @@ enum Version {
         UNKNOWN
     };
 
-    //! Table entries type.
-     enum TTYPE {
-         LAYER,
-         BLOCK_RECORD,
-         LTYPE,
-         UNKNOWNT
-     };
-
     enum LWEIGHT {
         L0=0,
         L1,
@@ -93,58 +85,6 @@ enum Version {
     };
 
 }
-
-//! Base class for tables entries
-/*!
-*  Base class for tables entries
-*  @author Rallaz
-*/
-class DRW_TableEntry {
-public:
-    //initializes default values
-    DRW_TableEntry() {
-        tType = DRW::UNKNOWNT;
-        flags = 0;
-    }
-
-protected:
-    void parseCode(int code, dxfReader *reader);
-
-public:
-    enum DRW::TTYPE tType;     /*!< enum: entity type, code 0 */
-    string handle;             /*!< entity identifier, code 5 */
-    string handleBlock;        /*!< Soft-pointer ID/handle to owner BLOCK_RECORD object, code 330 */
-    string name;               /*!< entry name, code 2 */
-    int flags;                 /*!< Flags relevant to entry, code 70 */
-};
-
-
-//! Class to handle layer entries
-/*!
-*  Class to handle layer symbol table entries
-*  @author Rallaz
-*/
-class DRW_Layer : public DRW_TableEntry {
-public:
-    DRW_Layer() {
-        tType = DRW::LAYER;
-        lineType = "BYLAYER";
-        color = 256; // default BYLAYER (256)
-        plotF = true; // default TRUE (plot yes)
-        lWeight = -1; // default BYLAYER (-1)
-    }
-
-    void parseCode(int code, dxfReader *reader);
-
-public:
-    string lineType;           /*!< line type, code 6 */
-    int color;                 /*!< entity color, code 62 */
-    bool plotF;                 /*!< Plot flag, code 290 */
-    int lWeight;               /*!< entity lineweight, code 370 */
-    string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
-    string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
-};
-
 
 //! Base class for entities
 /*!

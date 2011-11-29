@@ -27,12 +27,14 @@ win32 {
 SOURCES += \
     src/libdxfrw.cpp \
     src/drw_entities.cpp \
+    src/drw_objects.cpp \
     src/dxfreader.cpp \
     src/dxfwriter.cpp
 
 HEADERS += \
     src/libdxfrw.h \
     src/drw_entities.h \
+    src/drw_objects.h \
     src/dxfreader.h \
     src/dxfwriter.h \
     src/drw_interface.h
