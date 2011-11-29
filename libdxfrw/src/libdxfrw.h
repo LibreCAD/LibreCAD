@@ -15,6 +15,7 @@
 
 #include <string>
 #include "drw_entities.h"
+#include "drw_objects.h"
 #include "drw_interface.h"
 
 #define DRW_VERSION     "0.0.1"
@@ -31,6 +32,9 @@ public:
     void setBinary(bool b) {binary = b;}
 
     bool write(DRW_Interface *interface, DRW::Version ver, bool bin);
+    bool writeLineType(DRW_LType *ent);
+    bool writeLayer(DRW_Layer *ent);
+    bool writePoint(DRW_Point *ent);
     bool writeLine(DRW_Line *ent);
     bool writeCircle(DRW_Circle *ent);
     bool writeArc(DRW_Arc *ent);
@@ -43,6 +47,7 @@ private:
     bool processEntities();
     bool processObjects();
 
+    bool processLType();
     bool processLayer();
 
     bool processPoint();
@@ -66,6 +71,7 @@ private:
 //    int section;
     string nextentity;
     int entCount;
+    bool wlayer0;
 
 };
 

@@ -1463,18 +1463,6 @@ void RS_FilterDXFRW::writeLayer(DL_WriterA& /*dw*/, RS_Layer* /*l*/) {
 }
 
 
-
-/**
- * Writes a line type to the DXF file.
- */
-void RS_FilterDXFRW::writeLineType(DL_WriterA& /*dw*/, RS2::LineType /*t*/) {
-/*    dxf.writeLineType(
-        dw,
-        DL_LineTypeData((const char*)lineTypeToName(t).toLocal8Bit(), 0));*/
-}
-
-
-
 /**
  * Writes an application id to the DXF file.
  *
@@ -1516,21 +1504,218 @@ void RS_FilterDXFRW::writeBlock(DL_WriterA& /*dw*/, RS_Block* /*blk*/) {
 }
 
 
-
-/**
- * Writes the given entity to the DXF file.
- */
-void RS_FilterDXFRW::writeEntity(DL_WriterA& /*dw*/, RS_Entity* /*e*/) {
-//    writeEntity(dw, e, getEntityAttributes(e));
-}
-
-
 void RS_FilterDXFRW::writeHeader(){
 }
 
-DRW_Entity* RS_FilterDXFRW::writeEntities(){
-    DRW_Entity *went = new DRW_Entity();
-//    RS_Entity *ent;
+void RS_FilterDXFRW::writeLTypes(){
+    DRW_LType ltype;
+    // Standard linetypes for LibreCAD / AutoCAD
+    ltype.name = "CONTINUOUS";
+    ltype.desc = "Solid line";
+    dxf->writeLineType(&ltype);
+    ltype.name = "ByLayer";
+    dxf->writeLineType(&ltype);
+    ltype.name = "ByBlock";
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "DOT";
+    ltype.desc = "Dot . . . . . . . . . . . . . . . . . . . . . .";
+    ltype.size = 2;
+    ltype.length = 6.35;
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-6.35);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "DOT2";
+    ltype.desc = "Dot (.5x) .....................................";
+    ltype.size = 2;
+    ltype.length = 3.175;
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-3.175);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "DOTX2";
+    ltype.desc = "Dot (2x) .  .  .  .  .  .  .  .  .  .  .  .  .";
+    ltype.size = 2;
+    ltype.length = 12.7;
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-12.7);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "DASHED";
+    ltype.desc = "Dot . . . . . . . . . . . . . . . . . . . . . .";
+    ltype.size = 2;
+    ltype.length = 19.05;
+    ltype.path.push_back(12.7);
+    ltype.path.push_back(-6.35);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "DASHED2";
+    ltype.desc = "Dashed (.5x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _";
+    ltype.size = 2;
+    ltype.length = 9.525;
+    ltype.path.push_back(6.35);
+    ltype.path.push_back(-3.175);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "DASHEDX2";
+    ltype.desc = "Dashed (2x) ____  ____  ____  ____  ____  ___";
+    ltype.size = 2;
+    ltype.length = 38.1;
+    ltype.path.push_back(25.4);
+    ltype.path.push_back(-12.7);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "DASHDOT";
+    ltype.desc = "Dash dot __ . __ . __ . __ . __ . __ . __ . __";
+    ltype.size = 4;
+    ltype.length = 25.4;
+    ltype.path.push_back(12.7);
+    ltype.path.push_back(-6.35);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-6.35);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "DASHDOT2";
+    ltype.desc = "Dash dot (.5x) _._._._._._._._._._._._._._._.";
+    ltype.size = 4;
+    ltype.length = 12.7;
+    ltype.path.push_back(6.35);
+    ltype.path.push_back(-3.175);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-3.175);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "DASHDOTX2";
+    ltype.desc = "Dash dot (2x) ____  .  ____  .  ____  .  ___";
+    ltype.size = 4;
+    ltype.length = 50.8;
+    ltype.path.push_back(25.4);
+    ltype.path.push_back(-12.7);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-12.7);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "DIVIDE";
+    ltype.desc = "Divide ____ . . ____ . . ____ . . ____ . . ____";
+    ltype.size = 6;
+    ltype.length = 31.75;
+    ltype.path.push_back(12.7);
+    ltype.path.push_back(-6.35);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-6.35);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-6.35);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "DIVIDE2";
+    ltype.desc = "Divide (.5x) __..__..__..__..__..__..__..__.._";
+    ltype.size = 6;
+    ltype.length = 15.875;
+    ltype.path.push_back(6.35);
+    ltype.path.push_back(-3.175);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-3.175);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-3.175);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "DIVIDEX2";
+    ltype.desc = "Divide (2x) ________  .  .  ________  .  .  _";
+    ltype.size = 6;
+    ltype.length = 63.5;
+    ltype.path.push_back(25.4);
+    ltype.path.push_back(-12.7);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-12.7);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-12.7);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "BORDER";
+    ltype.desc = "Border __ __ . __ __ . __ __ . __ __ . __ __ .";
+    ltype.size = 6;
+    ltype.length = 44.45;
+    ltype.path.push_back(12.7);
+    ltype.path.push_back(-6.35);
+    ltype.path.push_back(12.7);
+    ltype.path.push_back(-6.35);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-6.35);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "BORDER2";
+    ltype.desc = "Border (.5x) __.__.__.__.__.__.__.__.__.__.__.";
+    ltype.size = 6;
+    ltype.length = 22.225;
+    ltype.path.push_back(6.35);
+    ltype.path.push_back(-3.175);
+    ltype.path.push_back(6.35);
+    ltype.path.push_back(-3.175);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-3.175);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "BORDERX2";
+    ltype.desc = "Border (2x) ____  ____  .  ____  ____  .  ___";
+    ltype.size = 6;
+    ltype.length = 88.9;
+    ltype.path.push_back(25.4);
+    ltype.path.push_back(-12.7);
+    ltype.path.push_back(25.4);
+    ltype.path.push_back(-12.7);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-12.7);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "CENTER";
+    ltype.desc = "Center ____ _ ____ _ ____ _ ____ _ ____ _ ____";
+    ltype.size = 4;
+    ltype.length = 50.8;
+    ltype.path.push_back(31.75);
+    ltype.path.push_back(-6.35);
+    ltype.path.push_back(6.35);
+    ltype.path.push_back(-6.35);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "CENTER2";
+    ltype.desc = "Center (.5x) ___ _ ___ _ ___ _ ___ _ ___ _ ___";
+    ltype.size = 4;
+    ltype.length = 28.575;
+    ltype.path.push_back(19.05);
+    ltype.path.push_back(-3.175);
+    ltype.path.push_back(3.175);
+    ltype.path.push_back(-3.175);
+    dxf->writeLineType(&ltype);
+
+    ltype.name = "CENTERX2";
+    ltype.desc = "Center (2x) ________  __  ________  __  _____";
+    ltype.size = 4;
+    ltype.length = 101.6;
+    ltype.path.push_back(63.5);
+    ltype.path.push_back(-12.7);
+    ltype.path.push_back(12.7);
+    ltype.path.push_back(-12.7);
+    dxf->writeLineType(&ltype);
+}
+
+void RS_FilterDXFRW::writeLayers(){
+    DRW_Layer lay;
+    RS_LayerList* ll = graphic->getLayerList();
+    for (int i = 0; i < ll->count(); i++) {
+        RS_Layer* l = ll->at(i);
+        RS_Pen pen = l->getPen();
+        lay.name = l->getName().toStdString();
+        lay.color = colorToNumber(pen.getColor());
+        lay.lWeight = widthToNumber(pen.getWidth());
+        lay.lineType = lineTypeToName(pen.getLineType()).toStdString();
+//        lay.lineType = lineType.toStdString(); //.toLatin1().data();
+        dxf->writeLayer(&lay);
+    }
+}
+
+
+void RS_FilterDXFRW::writeEntities(){
     for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
          e != NULL; e = graphic->nextEntity(RS2::ResolveNone)) {
 
@@ -1542,13 +1727,13 @@ DRW_Entity* RS_FilterDXFRW::writeEntities(){
     }*/
         switch (e->rtti()) {
         case RS2::EntityPoint:
-/*        writePoint(dw, (RS_Point*)e, attrib);
-        break;*/
+            writePoint((RS_Point*)e);
+            break;
         case RS2::EntityLine:
-            writeLine(/*dw,*/ (RS_Line*)e/*, attrib*/);
+            writeLine((RS_Line*)e);
             break;
         case RS2::EntityCircle:
-//            writeCircle(dw, (RS_Circle*)e, attrib);
+            writeCircle((RS_Circle*)e);
             break;
         case RS2::EntityArc:
             writeArc((RS_Arc*)e);
@@ -1599,97 +1784,18 @@ DRW_Entity* RS_FilterDXFRW::writeEntities(){
             break;
         }
     }
-    return went;
-
 }
-
-/**
- * Writes the given entity to the DXF file.
- */
-void RS_FilterDXFRW::writeEntity(DL_WriterA& /*dw*/, RS_Entity* /*e*/,
-                               const DRW_Entity& /*attrib*/) {
-
-/*    if (e==NULL || e->getFlag(RS2::FlagUndone)) {
-        return;
-    }
-    RS_DEBUG->print("writing Entity");
-
-    switch (e->rtti()) {
-    case RS2::EntityPoint:
-        writePoint(dw, (RS_Point*)e, attrib);
-        break;
-    case RS2::EntityLine:
-        writeLine(dw, (RS_Line*)e, attrib);
-        break;
-    case RS2::EntityPolyline:
-        writePolyline(dw, (RS_Polyline*)e, attrib);
-        break;
-    case RS2::EntitySpline:
-        writeSpline(dw, (RS_Spline*)e, attrib);
-        break;
-    case RS2::EntityVertex:
-        break;
-    case RS2::EntityCircle:
-        writeCircle(dw, (RS_Circle*)e, attrib);
-        break;
-    case RS2::EntityArc:
-        writeArc(dw, (RS_Arc*)e, attrib);
-        break;
-    case RS2::EntityEllipse:
-        writeEllipse(dw, (RS_Ellipse*)e, attrib);
-        break;
-    case RS2::EntityInsert:
-        writeInsert(dw, (RS_Insert*)e, attrib);
-        break;
-    case RS2::EntityText:
-        writeText(dw, (RS_Text*)e, attrib);
-        break;
-
-    case RS2::EntityDimAligned:
-    case RS2::EntityDimAngular:
-    case RS2::EntityDimLinear:
-    case RS2::EntityDimRadial:
-    case RS2::EntityDimDiametric:
-        writeDimension(dw, (RS_Dimension*)e, attrib);
-        break;
-    case RS2::EntityDimLeader:
-        writeLeader(dw, (RS_Leader*)e, attrib);
-        break;
-    case RS2::EntityHatch:
-        writeHatch(dw, (RS_Hatch*)e, attrib);
-        break;
-    case RS2::EntityImage:
-        writeImage(dw, (RS_Image*)e, attrib);
-        break;
-    case RS2::EntitySolid:
-        writeSolid(dw, (RS_Solid*)e, attrib);
-        break;
-
-#ifndef RS_NO_COMPLEX_ENTITIES
-
-    case RS2::EntityContainer:
-        writeEntityContainer(dw, (RS_EntityContainer*)e, attrib);
-        break;
-#endif
-
-    default:
-        break;
-    }*/
-}
-
 
 
 /**
  * Writes the given Point entity to the file.
  */
-void RS_FilterDXFRW::writePoint(DL_WriterA& /*dw*/, RS_Point* /*p*/,
-                              const DRW_Entity& /*attrib*/) {
-/*    dxf.writePoint(
-        dw,
-        DL_PointData(p->getPos().x,
-                     p->getPos().y,
-                     0.0),
-        attrib);*/
+void RS_FilterDXFRW::writePoint(RS_Point* p) {
+    DRW_Point point;
+    getEntityAttributes(&point, p);
+    point.x = p->getStartpoint().x;
+    point.y = p->getStartpoint().y;
+    dxf->writePoint(&point);
 }
 
 
@@ -1710,16 +1816,13 @@ void RS_FilterDXFRW::writeLine(RS_Line* l) {
 /**
  * Writes the given circle entity to the file.
  */
-void RS_FilterDXFRW::writeCircle(DL_WriterA& /*dw*/, RS_Circle* /*c*/,
-                               const DRW_Entity& /*attrib*/) {
-/*    dxf.writeCircle(
-        dw,
-        DL_CircleData(c->getCenter().x,
-                      c->getCenter().y,
-                      0.0,
-                      c->getRadius()),
-        attrib);*/
-
+void RS_FilterDXFRW::writeCircle(RS_Circle* c) {
+    DRW_Circle circle;
+    getEntityAttributes(&circle, c);
+    circle.x = c->getCenter().x;
+    circle.y = c->getCenter().y;
+    circle.radious = c->getRadius();
+    dxf->writeCircle(&circle);
 }
 
 
@@ -2810,7 +2913,6 @@ QString RS_FilterDXFRW::lineTypeToName(RS2::LineType lineType) {
     case RS2::BorderLineX2:
         return "BORDERX2";
         break;
-
 
     case RS2::LineByLayer:
         return "ByLayer";
