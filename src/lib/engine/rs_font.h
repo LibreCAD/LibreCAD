@@ -92,6 +92,8 @@ public:
 
     bool loadFont();
 
+    void generateAllFonts();
+
 	// Wrappers for block list (letters) functions
 	RS_BlockList* getLetterList() {
 		return &letterList;
