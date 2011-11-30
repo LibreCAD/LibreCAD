@@ -89,6 +89,7 @@ bool RS_FilterLFF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         g.addVariable("Encoding", font.getEncoding(), 0);
     }
 
+    font.generateAllFonts();
     RS_BlockList* letterList = font.getLetterList();
     for (uint i=0; i<font.countLetters(); ++i) {
         RS_Block* ch = font.letterAt(i);
