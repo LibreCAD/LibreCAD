@@ -129,3 +129,50 @@ void DRW_Arc::parseCode(int code, dxfReader *reader){
     }
 }
 
+void DRW_Ellipse::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 40:
+        ratio = reader->getDouble();
+        break;
+    case 41:
+        staparam = reader->getDouble();
+        break;
+    case 42:
+        endparam = reader->getDouble();
+        break;
+    default:
+        DRW_Line::parseCode(code, reader);
+        break;
+    }
+}
+
+void DRW_Trace::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 12:
+        cx = reader->getDouble();
+        break;
+    case 22:
+        cy = reader->getDouble();
+        break;
+    case 32:
+        cz = reader->getDouble();
+        break;
+    case 13:
+        dx = reader->getDouble();
+        break;
+    case 23:
+        dy = reader->getDouble();
+        break;
+    case 33:
+        dz = reader->getDouble();
+        break;
+    default:
+        DRW_Line::parseCode(code, reader);
+        break;
+    }
+}
+
+void DRW_Solid::parseCode(int code, dxfReader *reader){
+        DRW_Trace::parseCode(code, reader);
+}
+

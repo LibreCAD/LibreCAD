@@ -54,11 +54,12 @@ enum Version {
         LINE,
         CIRCLE,
         ARC,
-        CONSTRUCTIONLINE,
         ELLIPSE,
+        TRACE,
+        SOLID,
         IMAGE,
         OVERLAYBOX,
-        SOLID,
+        CONSTRUCTIONLINE,
         TEXT,
         INSERT,
         POLYLINE,
@@ -184,7 +185,7 @@ public:
     void parseCode(int code, dxfReader *reader);
 
 public:
-    double radious;                 /*!< x coordinate, code 40 */
+    double radious;                 /*!< radius, code 40 */
 };
 
 //! Class to handle arc entity
@@ -205,7 +206,63 @@ public:
     double endangle;               /*!< x coordinate, code 51 */
 };
 
+//! Class to handle ellipse entity
+/*!
+*  Class to handle ellipse and elliptic arc entity
+*  @author Rallaz
+*/
+class DRW_Ellipse : public DRW_Line {
+public:
+    DRW_Ellipse() {
+        eType = DRW::ELLIPSE;
+        bz = 0;
+    }
 
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    double ratio;           /*!< ratio, code 40 */
+    double staparam;      /*!< start parameter, code 41 */
+    double endparam;     /*!< z coordinate, code 42 */
+};
+
+//! Class to handle trace entity
+/*!
+*  Class to handle trace entity
+*  @author Rallaz
+*/
+class DRW_Trace : public DRW_Line {
+public:
+    DRW_Trace() {
+        eType = DRW::TRACE;
+        cz = 0;
+        dz = 0;
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    double cx;                 /*!< x coordinate, code 12 */
+    double cy;                 /*!< y coordinate, code 22 */
+    double cz;                 /*!< z coordinate, code 32 */
+    double dx;                 /*!< x coordinate, code 13 */
+    double dy;                 /*!< y coordinate, code 23 */
+    double dz;                 /*!< z coordinate, code 33 */
+};
+
+//! Class to handle solid entity
+/*!
+*  Class to handle solid entity
+*  @author Rallaz
+*/
+class DRW_Solid : public DRW_Trace {
+public:
+    DRW_Solid() {
+        eType = DRW::SOLID;
+    }
+
+    void parseCode(int code, dxfReader *reader);
+};
 
 #endif
 
