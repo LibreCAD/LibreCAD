@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 #include "qg_dlgtext.h"
@@ -41,7 +41,7 @@
  *  true to construct a modal dialog.
  */
 QG_DlgText::QG_DlgText(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+    : QDialog(parent, fl), saveSettings(true)
 {
     setModal(modal);
     setupUi(this);
@@ -92,8 +92,14 @@ void QG_DlgText::updateUniCharComboBox(int) {
     }
 }
 
+//set saveText to false, so, settings won't be saved during destory, feature request#3445306
+void QG_DlgText::reject() {
+    saveSettings=false;
+    QDialog::reject();
+}
+
 void QG_DlgText::destroy() {
-    if (isNew) {
+    if (isNew&&saveSettings) {
         RS_SETTINGS->beginGroup("/Draw");
         RS_SETTINGS->writeEntry("/TextHeight", leHeight->text());
         RS_SETTINGS->writeEntry("/TextFont", cbFont->currentText());
@@ -146,7 +152,7 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
              fon = RS_SETTINGS->readEntry("/TextFont", "cyrillic_ii");
         } else {
              fon = RS_SETTINGS->readEntry("/TextFont", "standard");
-		}
+                }
         height = RS_SETTINGS->readEntry("/TextHeight", "1.0");
         def = RS_SETTINGS->readEntry("/TextDefault", "1");
         alignment = RS_SETTINGS->readEntry("/TextAlignment", "1");
@@ -175,7 +181,7 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
         lineSpacingFactor = QString("%1").arg(text->getLineSpacingFactor());
 
 /* // Doesn't make sense. We don't want to show native DXF strings in the Dialog.
-#if defined(OOPL_VERSION) && defined(Q_WS_WIN) 
+#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
         QCString iso = RS_System::localeToISO( QTextCodec::locale() );
         QTextCodec *codec = QTextCodec::codecForName(iso);
         if (codec!=NULL) {
@@ -225,7 +231,7 @@ void QG_DlgText::updateText() {
 /*#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
         QCString iso = RS_System::localeToISO( QTextCodec::locale() );
         text->setText(
-            RS_FilterDXF::toNativeString( 
+            RS_FilterDXF::toNativeString(
              QString::fromLocal8Bit( QTextCodec::codecForName( iso )->fromUnicode( teText->text() ) )
             )
         );
@@ -366,7 +372,7 @@ void QG_DlgText::setShape(int s) {
         break;
     }
 }
- 
+
 int QG_DlgText::getShape() {
     if (rbStraight->isOn()) {
         return 0;
@@ -382,7 +388,7 @@ int QG_DlgText::getShape() {
 void QG_DlgText::defaultChanged(bool) {
     if (cbDefault->isChecked() && font!=NULL) {
         leLineSpacingFactor->setText(
-			QString("%1").arg(font->getLineSpacingFactor()));
+                        QString("%1").arg(font->getLineSpacingFactor()));
     }
 }
 
