@@ -356,6 +356,14 @@ void RS_Font::readLFF(QString path) {
     f.close();
 }
 
+bool RS_Font::generateAllFonts(){
+    QMap<QString, QStringList>::const_iterator i = rawLffFontList.constBegin();
+    while (i != rawLffFontList.constEnd()) {
+        generateLffFont(i.key());
+        ++i;
+    }
+}
+
 RS_Block* RS_Font::generateLffFont(const QString& ch){
         if(rawLffFontList.contains(ch) == false ){
                 RS_DEBUG->print("RS_Font::generateLffFont(QChar %s ) : can not find the letter in given lff font file",qPrintable(ch));
@@ -384,6 +392,10 @@ RS_Block* RS_Font::generateLffFont(const QString& ch){
             int uCode = line.toInt(NULL, 16);
             QChar ch = QChar(uCode);
             RS_Block* bk = letterList.find(ch);
+            if (bk == NULL && rawLffFontList.contains(ch) == true) {
+                generateLffFont(ch);
+                bk = letterList.find(ch);
+            }
             if (bk != NULL) {
                 RS_Entity* bk2 = bk->clone();
                 bk2->setPen(RS_Pen(RS2::FlagInvalid));
