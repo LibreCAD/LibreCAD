@@ -356,7 +356,7 @@ void RS_Font::readLFF(QString path) {
     f.close();
 }
 
-bool RS_Font::generateAllFonts(){
+void RS_Font::generateAllFonts(){
     QMap<QString, QStringList>::const_iterator i = rawLffFontList.constBegin();
     while (i != rawLffFontList.constEnd()) {
         generateLffFont(i.key());
