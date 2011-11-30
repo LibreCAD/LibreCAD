@@ -91,7 +91,7 @@
            </layout>
           </item>
           <item>
-           <layout class="QGridLayout">
+           <layout class="QGridLayout" name="gridLayout_3">
             <item row="2" column="2">
              <spacer name="spacer8">
               <property name="orientation">
@@ -218,7 +218,7 @@
              <property name="title">
               <string>Length</string>
              </property>
-             <layout class="QGridLayout">
+             <layout class="QGridLayout" name="gridLayout_4">
               <item row="0" column="0">
                <widget class="QLabel" name="lLengthFormat">
                 <property name="text">
@@ -314,7 +314,7 @@
              <property name="title">
               <string>Angle</string>
              </property>
-             <layout class="QGridLayout">
+             <layout class="QGridLayout" name="gridLayout_5">
               <item row="0" column="0">
                <widget class="QLabel" name="lAngleFormat">
                 <property name="text">
@@ -429,7 +429,7 @@
        <property name="title">
         <string>Grid Settings</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout">
+       <layout class="QGridLayout" name="gridLayout_1">
         <item row="0" column="0">
          <widget class="QCheckBox" name="cbGridOn">
           <property name="text">
@@ -690,7 +690,7 @@
       <attribute name="title">
        <string>&amp;Dimensions</string>
       </attribute>
-      <layout class="QGridLayout">
+      <layout class="QGridLayout" name="gridLayout_6">
        <item row="0" column="0">
         <widget class="QLabel" name="lDimTextHeight">
          <property name="text">
