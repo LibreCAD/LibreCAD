@@ -76,13 +76,20 @@ void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 
+int RS_ActionSelect::countSelected() {
+        int ret=container->countSelected();
+        if(ret==0 || RS_DIALOGFACTORY!=NULL){
+            RS_DIALOGFACTORY->commandMessage(tr("No entity selected!"));
+        }
+        return ret;
+}
 
 void RS_ActionSelect::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
         if (isFinished()){
             if(container->countSelected()==0){
                 //some nextAction segfault with empty selection
-                //todo: make actions safe with empty selection
+                //todo: make actions safe with empty selection, issue#235
                 RS_DIALOGFACTORY->commandMessage(tr("No entity selected!"));
                 RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
             } else{

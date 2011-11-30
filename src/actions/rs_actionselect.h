@@ -55,6 +55,7 @@ public:
     virtual void updateToolBar();
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
+    virtual int countSelected();
     void requestFinish(bool keep=false);
 
 private:
