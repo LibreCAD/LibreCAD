@@ -348,6 +348,30 @@ void RS_FilterDXFRW::addEllipse(const DRW_Ellipse& data) {
 }
 
 
+/**
+ * Implementation of the method which handles trace entities.
+ */
+void RS_FilterDXFRW::addTrace(const DRW_Trace& data) {
+    RS_Solid* entity;
+    RS_Vector v1(data.x, data.y);
+    RS_Vector v2(data.bx, data.by);
+    RS_Vector v3(data.cx, data.cy);
+    RS_Vector v4(data.dx, data.dy);
+    if (v3 == v4)
+        entity = new RS_Solid(currentContainer, RS_SolidData(v1, v2, v3));
+    else
+        entity = new RS_Solid(currentContainer, RS_SolidData(v1, v2, v3,v4));
+
+    setEntityAttributes(entity, data);
+    currentContainer->addEntity(entity);
+}
+
+/**
+ * Implementation of the method which handles solid entities.
+ */
+void RS_FilterDXFRW::addSolid(const DRW_Solid& data) {
+    addTrace(data);
+}
 
 /**
  * Implementation of the method which handles polyline entities.
@@ -1526,6 +1550,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-6.35);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "DOT2";
     ltype.desc = "Dot (.5x) .....................................";
     ltype.size = 2;
@@ -1534,6 +1559,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-3.175);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "DOTX2";
     ltype.desc = "Dot (2x) .  .  .  .  .  .  .  .  .  .  .  .  .";
     ltype.size = 2;
@@ -1542,6 +1568,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-12.7);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "DASHED";
     ltype.desc = "Dot . . . . . . . . . . . . . . . . . . . . . .";
     ltype.size = 2;
@@ -1550,6 +1577,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-6.35);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "DASHED2";
     ltype.desc = "Dashed (.5x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _";
     ltype.size = 2;
@@ -1558,6 +1586,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-3.175);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "DASHEDX2";
     ltype.desc = "Dashed (2x) ____  ____  ____  ____  ____  ___";
     ltype.size = 2;
@@ -1566,6 +1595,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-12.7);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "DASHDOT";
     ltype.desc = "Dash dot __ . __ . __ . __ . __ . __ . __ . __";
     ltype.size = 4;
@@ -1576,6 +1606,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-6.35);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "DASHDOT2";
     ltype.desc = "Dash dot (.5x) _._._._._._._._._._._._._._._.";
     ltype.size = 4;
@@ -1586,6 +1617,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-3.175);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "DASHDOTX2";
     ltype.desc = "Dash dot (2x) ____  .  ____  .  ____  .  ___";
     ltype.size = 4;
@@ -1596,6 +1628,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-12.7);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "DIVIDE";
     ltype.desc = "Divide ____ . . ____ . . ____ . . ____ . . ____";
     ltype.size = 6;
@@ -1608,6 +1641,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-6.35);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "DIVIDE2";
     ltype.desc = "Divide (.5x) __..__..__..__..__..__..__..__.._";
     ltype.size = 6;
@@ -1620,6 +1654,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-3.175);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "DIVIDEX2";
     ltype.desc = "Divide (2x) ________  .  .  ________  .  .  _";
     ltype.size = 6;
@@ -1632,6 +1667,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-12.7);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "BORDER";
     ltype.desc = "Border __ __ . __ __ . __ __ . __ __ . __ __ .";
     ltype.size = 6;
@@ -1644,6 +1680,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-6.35);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "BORDER2";
     ltype.desc = "Border (.5x) __.__.__.__.__.__.__.__.__.__.__.";
     ltype.size = 6;
@@ -1656,6 +1693,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-3.175);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "BORDERX2";
     ltype.desc = "Border (2x) ____  ____  .  ____  ____  .  ___";
     ltype.size = 6;
@@ -1668,6 +1706,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-12.7);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "CENTER";
     ltype.desc = "Center ____ _ ____ _ ____ _ ____ _ ____ _ ____";
     ltype.size = 4;
@@ -1678,6 +1717,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-6.35);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "CENTER2";
     ltype.desc = "Center (.5x) ___ _ ___ _ ___ _ ___ _ ___ _ ___";
     ltype.size = 4;
@@ -1688,6 +1728,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-3.175);
     dxf->writeLineType(&ltype);
 
+    ltype.path.clear();
     ltype.name = "CENTERX2";
     ltype.desc = "Center (2x) ________  __  ________  __  _____";
     ltype.size = 4;

@@ -53,20 +53,22 @@ bool dxfRW::read(DRW_Interface *interface){
     bool isOk = false;
     ifstream filestr;
     DBG("dxfRW::read 1def\n");
-    filestr.open (fileName.c_str(), ios_base::in);
+    filestr.open (fileName.c_str(), ios_base::in | ios::binary);
     if (!filestr.is_open())
         return isOk;
     if (!filestr.good())
         return isOk;
 
-    char line[256];
-    filestr.getline (line,256, '\n');
-    string str ("AutoCAD Binary DXF\r");
+    char line[22];
+    char line2[22] = "AutoCAD Binary DXF\r\n";
+    line2[20] = (char)26;
+    line2[21] = '\0';
+    filestr.read (line, 22);
     filestr.close();
     iface = interface;
     DBG("dxfRW::read 2\n");
-    if (str.compare(line) == 0) {
-        filestr.open (fileName.c_str(), ios_base::out | ios::binary);
+    if (strcmp(line, line2) == 0) {
+        filestr.open (fileName.c_str(), ios_base::in | ios::binary);
         binary = true;
         //skip sentinel
         filestr.seekg (22, ios::beg);
@@ -74,7 +76,7 @@ bool dxfRW::read(DRW_Interface *interface){
         DBG("dxfRW::read binary file\n");
     } else {
         binary = false;
-        filestr.open (fileName.c_str(), ios_base::out);
+        filestr.open (fileName.c_str(), ios_base::in);
         reader = new dxfReaderAscii(&filestr);
     }
 
@@ -95,7 +97,6 @@ bool dxfRW::write(DRW_Interface *interface, DRW::Version ver, bool bin){
         filestr.open (fileName.c_str(), ios_base::out | ios::binary | ios::trunc);
         //write sentinel
         filestr << "AutoCAD Binary DXF\r\n" << (char)26 << '\0';
-//        string str ("AutoCAD Binary DXF\r");
         writer = new dxfWriterBinary(&filestr);
         DBG("dxfRW::read binary file\n");
     } else {
@@ -182,11 +183,11 @@ bool dxfRW::writeLineType(DRW_LType *ent){
     char buffer[5];
     string strname = ent->name;
     transform(strname.begin(), strname.end(), strname.begin(),::toupper);
-    writer->writeString(0, "LTYPE");
 //do not write linetypes handled by library
     if (strname == "BYLAYER" || strname == "BYBLOCK" || strname == "CONTINUOUS") {
         return true;
     }
+    writer->writeString(0, "LTYPE");
     ++entCount;
     sprintf(buffer, "%X", entCount);
     writer->writeString(5, buffer);
