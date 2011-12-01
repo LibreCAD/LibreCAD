@@ -87,15 +87,15 @@ public:
     virtual void addLine(const DRW_Line& data);
     virtual void addCircle(const DRW_Circle& data);
     virtual void addArc(const DRW_Arc& data);
-    virtual void addEllipse(const DRW_Entity& data);
+    virtual void addEllipse(const DRW_Ellipse& data);
     virtual void addPolyline(const DRW_Entity& data);
     virtual void addVertex(const DRW_Entity& data);
     virtual void addSpline(const DRW_Entity& data);
     virtual void addKnot(const DRW_Entity&) {}
     virtual void addControlPoint(const DRW_Entity& data);
     virtual void addInsert(const DRW_Entity& data);
-    virtual void addTrace(const DRW_Entity& ) {}
-    virtual void addSolid(const DRW_Entity& ) {}
+    virtual void addTrace(const DRW_Trace& ) {}
+    virtual void addSolid(const DRW_Solid& ) {}
     virtual void addMTextChunk(const char* text);
     virtual void addMText(const DRW_Entity& data);
     virtual void addText(const DRW_Entity& data);
@@ -150,19 +150,19 @@ public:
     void writeLine(RS_Line* l);
     void writeCircle(RS_Circle* c);
     void writeArc(RS_Arc* a);
+    void writeEllipse(RS_Ellipse* s);
+    void writeSolid(RS_Solid* s);
 
     void writePolyline(DL_WriterA& dw,
                 RS_Polyline* l, const DRW_Entity& attrib);
 	void writeSpline(DL_WriterA& dw, 
                 RS_Spline* s, const DRW_Entity& attrib);
-        void writeEllipse(DL_WriterA& dw, RS_Ellipse* s, const DRW_Entity& attrib);
         void writeInsert(DL_WriterA& dw, RS_Insert* i, const DRW_Entity& attrib);
         void writeText(DL_WriterA& dw, RS_Text* t, const DRW_Entity& attrib);
 	void writeDimension(DL_WriterA& dw, RS_Dimension* d, 
                 const DRW_Entity& attrib);
         void writeLeader(DL_WriterA& dw, RS_Leader* l, const DRW_Entity& attrib);
         void writeHatch(DL_WriterA& dw, RS_Hatch* h, const DRW_Entity& attrib);
-        void writeSolid(DL_WriterA& dw, RS_Solid* s, const DRW_Entity& attrib);
         void writeImage(DL_WriterA& dw, RS_Image* i, const DRW_Entity& attrib);
 	void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con, 
                 const DRW_Entity& attrib);

@@ -66,7 +66,7 @@ public:
     virtual void addCircle(const DRW_Circle& data) = 0;
 
     /** Called for every ellipse */
-    virtual void addEllipse(const DRW_Entity& data) = 0;
+    virtual void addEllipse(const DRW_Ellipse& data) = 0;
 
     /** Called for every polyline start */
     virtual void addPolyline(const DRW_Entity& data) = 0;
@@ -87,13 +87,13 @@ public:
     virtual void addInsert(const DRW_Entity& data) = 0;
     
     /** Called for every trace start */
-    virtual void addTrace(const DRW_Entity& data) = 0;
+    virtual void addTrace(const DRW_Trace& data) = 0;
     
     /** Called for every 3dface start */
     virtual void add3dFace(const DRW_Entity& data) = 0;
 
     /** Called for every solid start */
-    virtual void addSolid(const DRW_Entity& data) = 0;
+    virtual void addSolid(const DRW_Solid& data) = 0;
 
 
     /** Called for every Multi Text entity. */

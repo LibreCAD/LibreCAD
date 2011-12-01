@@ -330,21 +330,21 @@ void RS_FilterDXFRW::addArc(const DRW_Arc& data) {
  * @param angle1 Start angle in rad (!)
  * @param angle2 End angle in rad (!)
  */
-void RS_FilterDXFRW::addEllipse(const DRW_Entity& /*data*/) {
+void RS_FilterDXFRW::addEllipse(const DRW_Ellipse& data) {
     RS_DEBUG->print("RS_FilterDXF::addEllipse");
 
-/*    RS_Vector v1(data.cx, data.cy);
-    RS_Vector v2(data.mx, data.my);
+    RS_Vector v1(data.x, data.y);
+    RS_Vector v2(data.bx, data.by);
 
     RS_EllipseData ed(v1, v2,
                       data.ratio,
-                      data.angle1,
-                      data.angle2,
+                      data.staparam,
+                      data.endparam,
                       false);
     RS_Ellipse* entity = new RS_Ellipse(currentContainer, ed);
-    setEntityAttributes(entity, attributes);
+    setEntityAttributes(entity, data);
 
-    currentContainer->addEntity(entity);*/
+    currentContainer->addEntity(entity);
 }
 
 
@@ -1702,7 +1702,7 @@ void RS_FilterDXFRW::writeLTypes(){
 void RS_FilterDXFRW::writeLayers(){
     DRW_Layer lay;
     RS_LayerList* ll = graphic->getLayerList();
-    for (int i = 0; i < ll->count(); i++) {
+    for (unsigned int i = 0; i < ll->count(); i++) {
         RS_Layer* l = ll->at(i);
         RS_Pen pen = l->getPen();
         lay.name = l->getName().toStdString();
@@ -1719,12 +1719,6 @@ void RS_FilterDXFRW::writeEntities(){
     for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
          e != NULL; e = graphic->nextEntity(RS2::ResolveNone)) {
 
-/*    if (!started) {
-        ent = graphic->firstEntity(RS2::ResolveNone);
-        strated = true;
-    } else {
-        ent = graphic->nextEntity(RS2::ResolveNone);
-    }*/
         switch (e->rtti()) {
         case RS2::EntityPoint:
             writePoint((RS_Point*)e);
@@ -1738,6 +1732,12 @@ void RS_FilterDXFRW::writeEntities(){
         case RS2::EntityArc:
             writeArc((RS_Arc*)e);
             break;
+        case RS2::EntitySolid:
+            writeSolid((RS_Solid*)e);
+            break;
+        case RS2::EntityEllipse:
+            writeEllipse((RS_Ellipse*)e);
+            break;
 /*    case RS2::EntityPolyline:
         writePolyline(dw, (RS_Polyline*)e, attrib);
         break;
@@ -1745,9 +1745,6 @@ void RS_FilterDXFRW::writeEntities(){
         writeSpline(dw, (RS_Spline*)e, attrib);
         break;
     case RS2::EntityVertex:
-        break;
-    case RS2::EntityEllipse:
-        writeEllipse(dw, (RS_Ellipse*)e, attrib);
         break;
     case RS2::EntityInsert:
         writeInsert(dw, (RS_Insert*)e, attrib);
@@ -1771,9 +1768,6 @@ void RS_FilterDXFRW::writeEntities(){
         break;
     case RS2::EntityImage:
         writeImage(dw, (RS_Image*)e, attrib);
-        break;
-    case RS2::EntitySolid:
-        writeSolid(dw, (RS_Solid*)e, attrib);
         break;
     case RS2::EntityContainer:
         writeEntityContainer(dw, (RS_EntityContainer*)e, attrib);
@@ -1987,39 +1981,26 @@ void RS_FilterDXFRW::writeSpline(DL_WriterA& /*dw*/,
 }
 
 
-
-void RS_FilterDXFRW::writeEllipse(DL_WriterA& /*dw*/, RS_Ellipse* /*s*/,
-                                const DRW_Entity& /*attrib*/) {
-/*    if (s->isReversed()) {
-        dxf.writeEllipse(
-            dw,
-            DL_EllipseData(s->getCenter().x,
-                           s->getCenter().y,
-                           0.0,
-                           s->getMajorP().x,
-                           s->getMajorP().y,
-                           0.0,
-                           s->getRatio(),
-                           s->getAngle2(),
-                           s->getAngle1()),
-            attrib);
+/**
+ * Writes the given Ellipse entity to the file.
+ */
+void RS_FilterDXFRW::writeEllipse(RS_Ellipse* s) {
+    DRW_Ellipse el;
+    getEntityAttributes(&el, s);
+    el.x = s->getCenter().x;
+    el.y = s->getCenter().y;
+    el.bx = s->getMajorP().x;
+    el.by = s->getMajorP().y;
+    el.ratio = s->getRatio();
+    if (s->isReversed()) {
+        el.staparam = s->getAngle2();
+        el.endparam = s->getAngle1();
     } else {
-        dxf.writeEllipse(
-            dw,
-            DL_EllipseData(s->getCenter().x,
-                           s->getCenter().y,
-                           0.0,
-                           s->getMajorP().x,
-                           s->getMajorP().y,
-                           0.0,
-                           s->getRatio(),
-                           s->getAngle1(),
-                           s->getAngle2()),
-            attrib);
-    }*/
+        el.staparam = s->getAngle1();
+        el.endparam = s->getAngle2();
+    }
+    dxf->writeEllipse(&el);
 }
-
-
 
 void RS_FilterDXFRW::writeInsert(DL_WriterA& /*dw*/, RS_Insert* /*i*/,
                                const DRW_Entity& /*attrib*/) {
@@ -2385,25 +2366,32 @@ void RS_FilterDXFRW::writeHatch(DL_WriterA& /*dw*/, RS_Hatch* /*h*/,
 }
 
 
-
-void RS_FilterDXFRW::writeSolid(DL_WriterA& /*dw*/, RS_Solid* /*s*/,
-                              const DRW_Entity& /*attrib*/) {
-
-    // split solid into line entities:
-    //if (dxf.getVersion()==VER_R12) {
-/*        for (int i=0; i<3; ++i) {
-            dxf.writeLine(
-                dw,
-                DL_LineData(s->getCorner(i).x,
-                            s->getCorner(i).y,
-                            0.0,
-                            s->getCorner((i+1)%3).x,
-                            s->getCorner((i+1)%3).y,
-                            0.0),
-                attrib);
-        }
-        //return;
-    //}*/
+/**
+ * Writes the given Solid( entity to the file.
+ */
+void RS_FilterDXFRW::writeSolid(RS_Solid* s) {
+    RS_SolidData data;
+    DRW_Solid solid;
+    RS_Vector corner;
+    getEntityAttributes(&solid, s);
+    corner = s->getCorner(0);
+    solid.x = corner.x;
+    solid.y = corner.y;
+    corner = s->getCorner(1);
+    solid.bx = corner.x;
+    solid.by = corner.y;
+    corner = s->getCorner(2);
+    solid.cx = corner.x;
+    solid.cy = corner.y;
+    if (s->isTriangle()) {
+        solid.dx = solid.cx;
+        solid.dy = solid.dx;
+    } else {
+        corner = s->getCorner(3);
+        solid.dx = corner.x;
+        solid.dy = corner.y;
+    }
+    dxf->writeSolid(&solid);
 }
 
 
