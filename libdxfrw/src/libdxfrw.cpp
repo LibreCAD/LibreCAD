@@ -292,6 +292,60 @@ bool dxfRW::writeArc(DRW_Arc *ent) {
     return true;
 }
 
+bool dxfRW::writeEllipse(DRW_Ellipse *ent){
+    writer->writeString(0, "ELLIPSE");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbEllipse");
+    writer->writeDouble(10, ent->x);
+    writer->writeDouble(20, ent->y);
+    writer->writeDouble(30, ent->z);
+    writer->writeDouble(11, ent->bx);
+    writer->writeDouble(21, ent->by);
+    writer->writeDouble(31, ent->bz);
+    writer->writeDouble(40, ent->ratio);
+    writer->writeDouble(41, ent->staparam);
+    writer->writeDouble(42, ent->endparam);
+    return true;
+}
+
+bool dxfRW::writeTrace(DRW_Trace *ent){
+    writer->writeString(0, "TRACE");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbTrace");
+    writer->writeDouble(10, ent->x);
+    writer->writeDouble(20, ent->y);
+    writer->writeDouble(30, ent->z);
+    writer->writeDouble(11, ent->bx);
+    writer->writeDouble(21, ent->by);
+    writer->writeDouble(31, ent->bz);
+    writer->writeDouble(12, ent->cx);
+    writer->writeDouble(22, ent->cy);
+    writer->writeDouble(32, ent->cz);
+    writer->writeDouble(13, ent->dx);
+    writer->writeDouble(23, ent->dy);
+    writer->writeDouble(33, ent->dz);
+    return true;
+}
+
+bool dxfRW::writeSolid(DRW_Solid *ent){
+    writer->writeString(0, "SOLID");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbTrace");
+    writer->writeDouble(10, ent->x);
+    writer->writeDouble(20, ent->y);
+    writer->writeDouble(30, ent->z);
+    writer->writeDouble(11, ent->bx);
+    writer->writeDouble(21, ent->by);
+    writer->writeDouble(31, ent->bz);
+    writer->writeDouble(12, ent->cx);
+    writer->writeDouble(22, ent->cy);
+    writer->writeDouble(32, ent->cz);
+    writer->writeDouble(13, ent->dx);
+    writer->writeDouble(23, ent->dy);
+    writer->writeDouble(33, ent->dz);
+    return true;
+}
+
 bool dxfRW::writeTables() {
     char buffer[5];
     writer->writeString(0, "TABLE");
@@ -777,6 +831,12 @@ bool dxfRW::processEntities() {
                 processCircle();
             } else if (nextentity == "ARC") {
                 processArc();
+            } else if (nextentity == "ELLIPSE") {
+                processEllipse();
+            } else if (nextentity == "TRACE") {
+                processTrace();
+            } else if (nextentity == "SOLID") {
+                processSolid();
             } else {
                 if (reader->readRec(&code, !binary)){
                     if (code == 0)
@@ -786,6 +846,69 @@ bool dxfRW::processEntities() {
             }
 
         } while (next);
+    }
+    return true;
+}
+
+bool dxfRW::processEllipse() {
+    DBG("dxfRW::processEllipse");
+    int code;
+    DRW_Ellipse ellipse;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addEllipse(ellipse);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            ellipse.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
+bool dxfRW::processTrace() {
+    DBG("dxfRW::processTrace");
+    int code;
+    DRW_Trace trace;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addTrace(trace);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            trace.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
+bool dxfRW::processSolid() {
+    DBG("dxfRW::processSolid");
+    int code;
+    DRW_Solid solid;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addSolid(solid);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            solid.parseCode(code, reader);
+            break;
+        }
     }
     return true;
 }
