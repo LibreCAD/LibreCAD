@@ -1046,7 +1046,7 @@ void RS_GraphicView::drawLayer3(RS_Painter *painter) {
  *
  *	Author(s):		..., Claude Sylvain
  *	Created:			?
- *	Last modified:	24 July 2011
+ *	Last modified:	17 November 2011
  *
  *	Parameters:		RS_Painter *painter:
  *							...
@@ -1061,62 +1061,98 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 {
     if (draftMode) {
         painter->setPen(RS_Pen(foreground,
-                                                           RS2::Width00, RS2::SolidLine));
+                               RS2::Width00, RS2::SolidLine));
     }
 
-        // Getting pen from entity (or layer)
-        RS_Pen pen = e->getPen(true);
+    // Getting pen from entity (or layer)
+    RS_Pen pen = e->getPen(true);
 
-        int w = pen.getWidth();
-        if (w<0) {
-            w = 0;
-        }
+    int w = pen.getWidth();
+    if (w<0) {
+        w = 0;
+    }
 
-                // Scale pen width.
-                //	----------------
-                if (!draftMode)
+#if TRUE
+        // - Scale pen width.
+        // - Notes: pen width is not scaled on print and print preview.
+        //   This is the standard (AutoCAD like) behaviour.
+    // bug# 3437941
+        // ------------------------------------------------------------
+        if (!draftMode)
+        {
+                double	uf = 1.0;	// Unit factor.
+                double	wf = 1.0;	// Width factor.
+
+                RS_Graphic* graphic = container->getGraphic();
+
+                if (graphic != NULL)
                 {
-                        double uf = 1.0;	//	Unit factor.
+                        uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
 
-                        RS_Graphic* graphic = container->getGraphic();
-
-                        if (graphic != NULL)
-                                uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
-
-                                pen.setScreenWidth(toGuiDX(w / 100.0 * uf));
+                        if (	(isPrinting() || isPrintPreview()) &&
+                                        graphic->getPaperScale() > RS_TOLERANCE )
+                        {
+                                wf = 1.0 / graphic->getPaperScale();
+                        }
                 }
-                else
-                        pen.setScreenWidth(0);
 
-        // prevent drawing with 1-width which is slow:
-        if (RS_Math::round(pen.getScreenWidth())==1) {
-            pen.setScreenWidth(0.0);
+                pen.setScreenWidth(toGuiDX(w / 100.0 * uf * wf));
+        }
+        else
+        {
+//		pen.setWidth(RS2::Width00);
+                pen.setScreenWidth(0);
         }
 
-        // prevent background color on background drawing:
-        if (pen.getColor().stripFlags()==background.stripFlags()) {
-            pen.setColor(foreground);
-        }
+#else
 
-        // this entity is selected:
-        if (e->isSelected()) {
-            pen.setLineType(RS2::DotLine);
-            pen.setColor(selectedColor);
-        }
+        // - Scale pen width.
+        // - Notes: pen width is scaled on print and print preview.
+        //   This is not the standard (AutoCAD like) behaviour.
+        // --------------------------------------------------------
+        if (!draftMode)
+        {
+                double	uf = 1.0;	//	Unit factor.
 
-        // this entity is highlighted:
-        if (e->isHighlighted()) {
-            pen.setColor(highlightedColor);
-        }
+                RS_Graphic* graphic = container->getGraphic();
 
-        // deleting not drawing:
-        if (getDeleteMode()) {
-            pen.setColor(background);
-        }
+                if (graphic != NULL)
+                        uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
 
-        painter->setPen(pen);
+                pen.setScreenWidth(toGuiDX(w / 100.0 * uf));
+        }
+        else
+                pen.setScreenWidth(0);
+#endif
+
+    // prevent drawing with 1-width which is slow:
+    if (RS_Math::round(pen.getScreenWidth())==1) {
+        pen.setScreenWidth(0.0);
+    }
+
+    // prevent background color on background drawing:
+    if (pen.getColor().stripFlags()==background.stripFlags()) {
+        pen.setColor(foreground);
+    }
+
+    // this entity is selected:
+    if (e->isSelected()) {
+        pen.setLineType(RS2::DotLine);
+        pen.setColor(selectedColor);
+    }
+
+    // this entity is highlighted:
+    if (e->isHighlighted()) {
+        pen.setColor(highlightedColor);
+    }
+
+    // deleting not drawing:
+    if (getDeleteMode()) {
+        pen.setColor(background);
+    }
+
+    painter->setPen(pen);
 }
-
 
 /**
  * Draws an entity. Might be recusively called e.g. for polylines.
