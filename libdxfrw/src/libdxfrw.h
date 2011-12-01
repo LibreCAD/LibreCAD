@@ -18,7 +18,7 @@
 #include "drw_objects.h"
 #include "drw_interface.h"
 
-#define DRW_VERSION     "0.0.1"
+#define DRW_VERSION     "0.1.0"
 
 class dxfReader;
 class dxfWriter;

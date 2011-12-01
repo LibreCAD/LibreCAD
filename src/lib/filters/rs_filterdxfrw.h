@@ -94,8 +94,8 @@ public:
     virtual void addKnot(const DRW_Entity&) {}
     virtual void addControlPoint(const DRW_Entity& data);
     virtual void addInsert(const DRW_Entity& data);
-    virtual void addTrace(const DRW_Trace& ) {}
-    virtual void addSolid(const DRW_Solid& ) {}
+    virtual void addTrace(const DRW_Trace& data);
+    virtual void addSolid(const DRW_Solid& data);
     virtual void addMTextChunk(const char* text);
     virtual void addMText(const DRW_Entity& data);
     virtual void addText(const DRW_Entity& data);
