@@ -57,20 +57,21 @@ enum Version {
         ELLIPSE,
         TRACE,
         SOLID,
-        IMAGE,
-        OVERLAYBOX,
-        CONSTRUCTIONLINE,
-        TEXT,
+        BLOCK,
         INSERT,
         POLYLINE,
         SPLINE,
         HATCH,
+        TEXT,
+        IMAGE,
         DIMLEADER,
         DIMALIGNED,
         DIMLINEAR,
         DIMRADIAL,
         DIMDIAMETRIC,
         DIMANGULAR,
+        OVERLAYBOX,
+        CONSTRUCTIONLINE,
         UNKNOWN
     };
 
@@ -103,6 +104,7 @@ public:
         visible = true;
         layer = "0";
         lWeight = -1; // default BYLAYER (-1)
+        space = 0; // default ModelSpace (0)
     }
 
 protected:
@@ -122,6 +124,7 @@ public:
     bool visible;              /*!< entity visibility, code 60 */
     int color24;               /*!< 24-bit color, code 420 */
     string colorName;          /*!< color name, code 430 */
+    int space;                  /*!< space indicator 0 = model, 1 paper , code 67*/
 };
 
 
@@ -263,6 +266,62 @@ public:
 
     void parseCode(int code, dxfReader *reader);
 };
+
+//! Class to handle block entries
+/*!
+*  Class to handle block entries
+*  @author Rallaz
+*/
+class DRW_Block : public DRW_Point {
+public:
+    DRW_Block() {
+        eType = DRW::BLOCK;
+        layer = "0";
+        flags = 0;
+        name = "caca";
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    string name;             /*!< block name, code 2 */
+    int flags;                   /*!< block type, code 70 */
+};
+
+
+//! Class to handle insert entries
+/*!
+*  Class to handle insert entries
+*  @author Rallaz
+*/
+class DRW_Insert : public DRW_Point {
+public:
+    DRW_Insert() {
+        eType = DRW::INSERT;
+        xscale = 1;
+        yscale = 1;
+        zscale = 1;
+        angle = 0;
+        colcount = 1;
+        rowcount = 1;
+        colspace = 0;
+        rowspace = 0;
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    string name;             /*!< block name, code 2 */
+    double xscale;           /*!< x scale factor, code 41 */
+    double yscale;           /*!< y scale factor, code 42 */
+    double zscale;           /*!< z scale factor, code 43 */
+    double angle;            /*!< rotation angle, code 50 */
+    int colcount;            /*!< column count, code 70 */
+    int rowcount;            /*!< row count, code 71 */
+    double colspace;         /*!< column space, code 44 */
+    double rowspace;         /*!< row space, code 45 */
+};
+
 
 #endif
 

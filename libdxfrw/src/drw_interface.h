@@ -48,10 +48,10 @@ public:
     *
      * @see endBlock()
      */
-    virtual void addBlock(const DRW_Entity& data) = 0;
+    virtual void addBlock(const DRW_Block& data) = 0;
 
     /** Called to end the current block */
-//    virtual void endBlock() = 0;
+    virtual void endBlock() = 0;
 
     /** Called for every point */
     virtual void addPoint(const DRW_Point& data) = 0;
@@ -84,7 +84,7 @@ public:
     virtual void addKnot(const DRW_Entity& data) = 0;
 
     /** Called for every insert. */
-    virtual void addInsert(const DRW_Entity& data) = 0;
+    virtual void addInsert(const DRW_Insert& data) = 0;
     
     /** Called for every trace start */
     virtual void addTrace(const DRW_Trace& data) = 0;
