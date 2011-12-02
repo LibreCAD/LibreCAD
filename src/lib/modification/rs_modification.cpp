@@ -1989,6 +1989,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::trim: limitEntity is not atomic");
     }
+    if(trimEntity->isLocked()|| !trimEntity->isVisible()) return false;
 
     RS_VectorSolutions sol;
     if (limitEntity->isAtomic()) {
@@ -2075,7 +2076,8 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     }
 
     // remove limit entity from view:
-    if (both) {
+    bool trimBoth= both && !limitEntity->isLocked() && limitEntity->isVisible();
+    if (trimBoth) {
         trimmed2 = (RS_AtomicEntity*)limitEntity->clone();
         trimmed2->setHighlighted(false);
         if (graphicView!=NULL) {
@@ -2096,7 +2098,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     }
 
     // trim limit entity:
-    if (both) {
+    if (trimBoth) {
         RS_Vector is = sol.getClosest(limitCoord);
 
         RS2::Ending ending = trimmed2->getTrimPoint(limitCoord, is);
@@ -2120,7 +2122,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     }
 
     // add new trimmed limit entity:
-    if (both) {
+    if (trimBoth) {
         container->addEntity(trimmed2);
         if (graphicView!=NULL) {
             graphicView->drawEntity(trimmed2);
@@ -2132,7 +2134,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
         document->addUndoable(trimmed1);
         trimEntity->setUndoState(true);
         document->addUndoable(trimEntity);
-        if (both) {
+        if (trimBoth) {
             document->addUndoable(trimmed2);
             limitEntity->setUndoState(true);
             document->addUndoable(limitEntity);
@@ -2162,6 +2164,7 @@ bool RS_Modification::trimAmount(const RS_Vector& trimCoord,
                         "RS_Modification::trimAmount: Entity is NULL");
         return false;
     }
+    if(trimEntity->isLocked() || ! trimEntity->isVisible()) return false;
 
     RS_AtomicEntity* trimmed = NULL;
 
@@ -2211,6 +2214,7 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
                         "RS_Modification::cut: Entity is NULL");
         return false;
     }
+    if(cutEntity->isLocked() || ! cutEntity->isVisible()) return false;
 
     if (!cutCoord.valid) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -2381,6 +2385,8 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
                         "RS_Modification::bevel: At least one entity is NULL");
         return false;
     }
+    if(entity1->isLocked() || ! entity1->isVisible()) return false;
+    if(entity2->isLocked() || ! entity2->isVisible()) return false;
 
     RS_EntityContainer* baseContainer = container;
     bool isPolyline = false;
@@ -2640,6 +2646,8 @@ bool RS_Modification::round(const RS_Vector& coord,
                         "RS_Modification::round: At least one entity is NULL");
         return false;
     }
+    if(entity1->isLocked() || ! entity1->isVisible()) return false;
+    if(entity2->isLocked() || ! entity2->isVisible()) return false;
 
     RS_EntityContainer* baseContainer = container;
     bool isPolyline = false;
@@ -2872,6 +2880,7 @@ bool RS_Modification::explode() {
                         RS_Debug::D_WARNING);
         return false;
     }
+    if(container->isLocked() || ! container->isVisible()) return false;
 
     QList<RS_Entity*> addList;
 
@@ -2982,6 +2991,7 @@ bool RS_Modification::explodeTextIntoLetters() {
                         RS_Debug::D_WARNING);
         return false;
     }
+    if(container->isLocked() || ! container->isVisible()) return false;
 
     QList<RS_Entity*> addList;
 
@@ -3024,6 +3034,8 @@ bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& a
     if (text==NULL) {
         return false;
     }
+
+    if(text->isLocked() || ! text->isVisible()) return false;
 
     // iterate though lines:
     for (RS_Entity* e2 = text->firstEntity(); e2!=NULL;
@@ -3094,6 +3106,7 @@ bool RS_Modification::moveRef(RS_MoveRefData& data) {
                         RS_Debug::D_WARNING);
         return false;
     }
+    if(container->isLocked() || ! container->isVisible()) return false;
 
     QList<RS_Entity*> addList;
 
