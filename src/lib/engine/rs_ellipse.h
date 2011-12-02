@@ -33,8 +33,13 @@
 #include <boost/math/tools/roots.hpp>
 
 #ifndef HAS_CPP11
+
 #include <boost/fusion/tuple.hpp>
 #include <boost/tuple/tuple.hpp>
+
+#else
+
+#include <tuple>
 #endif
 
 #endif
