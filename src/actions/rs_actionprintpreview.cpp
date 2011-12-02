@@ -190,6 +190,8 @@ void RS_ActionPrintPreview::fit() {
 
 
 void RS_ActionPrintPreview::setScale(double f) {
+    f=fabs(f);
+    if( f<1.0e-6 || f>1.0e6 ) return;
     if (graphic!=NULL) {
         graphic->setPaperScale(f);
         graphic->centerToPage();
