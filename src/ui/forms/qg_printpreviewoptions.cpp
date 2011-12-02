@@ -180,35 +180,43 @@ void QG_PrintPreviewOptions::scale(const QString& s) {
     if (updateDisabled) {
         return;
     }
-//    std::cout<<"QG_PrintPreviewOptions::scale(const QString& s): s="<<qPrintable(s)<<std::endl;
+    //    std::cout<<"QG_PrintPreviewOptions::scale(const QString& s): s="<<qPrintable(s)<<std::endl;
+    double factor(1.);
 
     if (s.contains(':')) {
         bool ok1 = false;
         bool ok2 = false;
         int i = s.indexOf(':');
-        double n = s.left(i).toDouble(&ok1);
-        double d = s.mid(i+1).toDouble(&ok2);
-        if (ok1 && ok2 && d>1.0e-6 && n>0.0) {
-            action->setScale(n/d);
-            updateScaleBox(n/d);
+        double n = RS_Math::eval(s.left(i),&ok1);
+        double d = RS_Math::eval(s.mid(i+1),&ok2);
+        if (ok1 && ok2 && d>1.0e-6 ){
+            factor=n/d;
         }
     } else if (s.contains('=')) {
         bool ok = false;
         int i = s.indexOf('=');
-        double d = s.mid(i+2, s.length()-i-3).toDouble(&ok);
+        double d = RS_Math::eval(s.mid(i+2, s.length()-i-3),&ok);
         if (ok && d>1.0e-6) {
-            action->setScale(1.0/d);
-            updateScaleBox(1.0/d);
+            factor=1.0/d;
         }
     } else {
         bool ok = false;
         double f = RS_Math::eval(s, &ok);
         if (ok) {
-            action->setScale(f);
-            updateScaleBox(f);
-
+            factor=f;
         }
     }
+    factor=fabs(factor); // do we need negative factor at all?
+    if(factor<1.0e-6 || factor>1.0e6) {
+        if(factor>1.0e6){
+            action->printWarning(tr("Paper scale factor larger than 1.0e6"));
+        }else{
+            action->printWarning(tr("Paper scale factor smaller than 1.0e-6"));
+        }
+        return;
+    }
+    action->setScale(factor);
+    updateScaleBox(factor);
 }
 
 //update the scalebox to
@@ -217,7 +225,7 @@ void QG_PrintPreviewOptions::updateScaleBox(){
 }
 
 void QG_PrintPreviewOptions::updateScaleBox(const double& f){
-//    std::cout<<"void QG_PrintPreviewOptions::updateScaleBox() f="<<f<<std::endl;
+    //    std::cout<<"void QG_PrintPreviewOptions::updateScaleBox() f="<<f<<std::endl;
     int i;
     for(i=0;i<cbScale->count();i++){
         QString s=cbScale->itemText(i);
@@ -231,7 +239,7 @@ void QG_PrintPreviewOptions::updateScaleBox(const double& f){
     }
     if(i<cbScale->count()){
         cbScale->setCurrentIndex(i);
-//        std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): old: "<<qPrintable(cbScale->currentText())<<std::endl;
+        //        std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): old: "<<qPrintable(cbScale->currentText())<<std::endl;
         return;
     }
     QString s("");
@@ -248,7 +256,7 @@ void QG_PrintPreviewOptions::updateScaleBox(const double& f){
         i=cbScale->count()-1;
     }
     cbScale->setCurrentIndex(i);
-//    std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): new: "<<qPrintable(cbScale->currentText())<<std::endl;
+    //    std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): new: "<<qPrintable(cbScale->currentText())<<std::endl;
 }
 
 //void QG_PrintPreviewOptions::updateScaleBox(const QString& s) {

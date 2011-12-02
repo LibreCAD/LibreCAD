@@ -79,7 +79,10 @@ public:
 	void center();
 	void fit();
 	void setScale(double f);
-	double getScale();
+        double getScale();
+        //print warning message to command widget
+        //should we add this as virtual function to rs_actioninterface?
+        void printWarning(const QString& s);
 
 	void setBlackWhite(bool bw);
 	//bool isBlackWhite() {
