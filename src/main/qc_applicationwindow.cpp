@@ -2577,9 +2577,14 @@ void QC_ApplicationWindow::slotFilePrint() {
         // Try to set the printer to the highest resolution
         //todo: handler printer resolution better
         if(printer.outputFormat() == QPrinter::NativeFormat ){
-            QList<int> res=printer.supportedResolutions ();
-            if (res.size()>0)
-                printer.setResolution(res.last());
+            //bug#3448560
+            //fixme: supportedResolutions() only reports resolution of 72dpi
+            //this seems to be a Qt bug up to Qt-4.7.4
+            //we might be ok to keep the default resolution
+
+//            QList<int> res=printer.supportedResolutions ();
+//            if (res.size()>0)
+//                printer.setResolution(res.last());
             //        for(int i=0;i<res.size();i++){
             //        std::cout<<"res.at(i)="<<res.at(i)<<std::endl;
             //        }
