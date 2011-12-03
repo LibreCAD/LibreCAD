@@ -88,6 +88,7 @@ public:
     virtual void addCircle(const DRW_Circle& data);
     virtual void addArc(const DRW_Arc& data);
     virtual void addEllipse(const DRW_Ellipse& data);
+    virtual void addLWPolyline(const DRW_LWPolyline& data);
     virtual void addPolyline(const DRW_Entity& data);
     virtual void addVertex(const DRW_Entity& data);
     virtual void addSpline(const DRW_Entity& data);

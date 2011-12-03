@@ -15,6 +15,7 @@
 
 
 #include <string>
+#include <vector>
 
 class dxfReader;
 
@@ -59,6 +60,7 @@ enum Version {
         SOLID,
         BLOCK,
         INSERT,
+        LWPOLYLINE,
         POLYLINE,
         SPLINE,
         HATCH,
@@ -320,6 +322,61 @@ public:
     int rowcount;            /*!< row count, code 71 */
     double colspace;         /*!< column space, code 44 */
     double rowspace;         /*!< row space, code 45 */
+};
+
+//! Class to handle vertex
+/*!
+*  Class to handle vertex for lwpolyline entity
+*  @author Rallaz
+*/
+class DRW_Vertex {
+public:
+    DRW_Vertex() {
+//        eType = DRW::LWPOLYLINE;
+        stawidth = endwidth = bulge = 0;
+    }
+
+//    void parseCode(int code, dxfReader *reader);
+
+public:
+    double x;                 /*!< x coordinate, code 10 */
+    double y;                 /*!< y coordinate, code 20 */
+//    double z;                 /*!< z coordinate, code 30 */
+    double stawidth;          /*!< Start width, code 40 */
+    double endwidth;          /*!< End width, code 41 */
+    double bulge;             /*!< bulge, code 42 */
+};
+//! Class to handle lwpolyline entity
+/*!
+*  Class to handle lwpolyline entity
+*  @author Rallaz
+*/
+class DRW_LWPolyline : public DRW_Entity {
+public:
+    DRW_LWPolyline() {
+        eType = DRW::LWPOLYLINE;
+        width = ex = ey = 0;
+        ez = 1;
+        elevation = 0;
+    }
+    ~DRW_LWPolyline() {
+        while (!vertlist.empty()) {
+           vertlist.pop_back();
+         }
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    int vertexnum;            /*!< number of vertex, code 90 */
+    int flags;                /*!< polyline flag, code 70 */
+    double width;             /*!< constant width, code 43 */
+    double elevation;         /*!< elevation, code 38 */
+    double ex;                /*!< x extrusion coordinate, code 210 */
+    double ey;                /*!< y extrusion coordinate, code 220 */
+    double ez;                /*!< z extrusion coordinate, code 230 */
+    DRW_Vertex *vertex;       /*!< current vertex to add data */
+    std::vector<DRW_Vertex *> vertlist;  /*!< vertex list */
 };
 
 

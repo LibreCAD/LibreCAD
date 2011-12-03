@@ -228,3 +228,53 @@ void DRW_Insert::parseCode(int code, dxfReader *reader){
     }
 }
 
+void DRW_LWPolyline::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 10: {
+        vertex = new DRW_Vertex();
+        vertlist.push_back(vertex);
+        vertex->x = reader->getDouble();
+        break; }
+    case 20:
+        if(vertex != NULL)
+            vertex->y = reader->getDouble();
+        break;
+    case 40:
+        if(vertex != NULL)
+            vertex->y = reader->getDouble();
+        break;
+    case 41:
+        if(vertex != NULL)
+            vertex->y = reader->getDouble();
+        break;
+    case 42:
+        if(vertex != NULL)
+            vertex->y = reader->getDouble();
+        break;
+    case 38:
+        elevation = reader->getDouble();
+        break;
+    case 43:
+        width = reader->getDouble();
+        break;
+    case 70:
+        flags = reader->getInt32();
+        break;
+    case 90:
+        vertexnum = reader->getInt32();
+        vertlist.reserve(vertexnum);
+        break;
+    case 210:
+        ex = reader->getDouble();
+        break;
+    case 220:
+        ey = reader->getDouble();
+        break;
+    case 230:
+        ez = reader->getDouble();
+        break;
+    default:
+        DRW_Entity::parseCode(code, reader);
+        break;
+    }
+}
