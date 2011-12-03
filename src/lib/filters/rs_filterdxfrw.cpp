@@ -313,7 +313,7 @@ void RS_FilterDXFRW::addArc(const DRW_Arc& data) {
  * @param angle2 End angle in rad (!)
  */
 void RS_FilterDXFRW::addEllipse(const DRW_Ellipse& data) {
-    RS_DEBUG->print("RS_FilterDXF::addEllipse");
+    RS_DEBUG->print("RS_FilterDXFRW::addEllipse");
 
     RS_Vector v1(data.x, data.y);
     RS_Vector v2(data.bx, data.by);
@@ -354,6 +354,27 @@ void RS_FilterDXFRW::addTrace(const DRW_Trace& data) {
 void RS_FilterDXFRW::addSolid(const DRW_Solid& data) {
     addTrace(data);
 }
+
+/**
+ * Implementation of the method which handles lightweight polyline entities.
+ */
+void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addLWPolyline");
+    RS_PolylineData d(RS_Vector(false),
+                      RS_Vector(false),
+                      data.flags&0x1);
+    polyline = new RS_Polyline(currentContainer, d);
+    setEntityAttributes(polyline, data);
+
+    for (unsigned int i=0; i<data.vertlist.size(); i++) {
+        DRW_Vertex *vert = data.vertlist.at(i);
+        RS_Vector v(vert->x, vert->y);
+        polyline->addVertex(v, vert->bulge);
+    }
+
+    currentContainer->addEntity(polyline);
+}
+
 
 /**
  * Implementation of the method which handles polyline entities.

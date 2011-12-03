@@ -876,6 +876,8 @@ bool dxfRW::processEntities(bool isblock) {
             processSolid();
         } else if (nextentity == "INSERT") {
             processInsert();
+        } else if (nextentity == "LWPOLYLINE") {
+            processLWPolyline();
         } else {
             if (reader->readRec(&code, !binary)){
                 if (code == 0)
@@ -1050,6 +1052,27 @@ bool dxfRW::processInsert() {
         }
         default:
             insert.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
+bool dxfRW::processLWPolyline() {
+    DBG("dxfRW::processLWPolyline");
+    int code;
+    DRW_LWPolyline pl;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addLWPolyline(pl);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            pl.parseCode(code, reader);
             break;
         }
     }
