@@ -47,7 +47,8 @@ private:
     bool processHeader();
     bool processTables();
     bool processBlocks();
-    bool processEntities();
+    bool processBlock();
+    bool processEntities(bool isblock);
     bool processObjects();
 
     bool processLType();
@@ -60,6 +61,7 @@ private:
     bool processEllipse();
     bool processTrace();
     bool processSolid();
+    bool processInsert();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);

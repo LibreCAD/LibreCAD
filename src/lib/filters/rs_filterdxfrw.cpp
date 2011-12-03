@@ -190,32 +190,19 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
  *
  * @todo Adding blocks to blocks (stack for currentContainer)
  */
-void RS_FilterDXFRW::addBlock(const DRW_Entity& /*data*/) {
+void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addBlock");
 
-/*    RS_DEBUG->print("  adding block: %s", data.name.c_str());
+    RS_DEBUG->print("  adding block: %s", data.name.c_str());
+/*TODO correct handle of model-space*/
 
+    QString name = QString::fromStdString (data.name);
+    QString mid = name.mid(1,11);
+// Prevent special blocks (paper_space, model_space) from being added:
+    if (mid.toLower() != "paper_space" && mid.toLower() != "model_space") {
 
-    // Prevent special blocks (paper_space, model_space) from being added:
-    if (QString(QString::fromUtf8(data.name.c_str())).toLower()!="*paper_space0" &&
-            QString(QString::fromUtf8(data.name.c_str())).toLower()!="*paper_space" &&
-            QString(QString::fromUtf8(data.name.c_str())).toLower()!="*model_space" &&
-            QString(QString::fromUtf8(data.name.c_str())).toLower()!="$paper_space0" &&
-            QString(QString::fromUtf8(data.name.c_str())).toLower()!="$paper_space" &&
-            QString(QString::fromUtf8(data.name.c_str())).toLower()!="$model_space") {
-
-#ifndef RS_NO_COMPLEX_ENTITIES
-        if (QString(QString::fromUtf8(data.name.c_str())).startsWith("__CE")) {
-            RS_EntityContainer* ec = new RS_EntityContainer();
-            ec->setLayer("0");
-            currentContainer = ec;
-            graphic->addEntity(ec);
-            //currentContainer->setLayer(graphic->findLayer("0"));
-        }
-        else {
-#endif
-            RS_Vector bp(data.bpx, data.bpy);
+            RS_Vector bp(data.x, data.y);
             RS_Block* block =
                 new RS_Block(graphic,
                              RS_BlockData(QString::fromUtf8(data.name.c_str()), bp, false));
@@ -224,12 +211,7 @@ void RS_FilterDXFRW::addBlock(const DRW_Entity& /*data*/) {
             if (graphic->addBlock(block)) {
                 currentContainer = block;
             }
-#ifndef RS_NO_COMPLEX_ENTITIES
-
-        }
-#endif
-
-    }*/
+    }
 }
 
 
@@ -445,31 +427,25 @@ void RS_FilterDXFRW::addControlPoint(const DRW_Entity& /*data*/) {
 /**
  * Implementation of the method which handles inserts.
  */
-void RS_FilterDXFRW::addInsert(const DRW_Entity& /*data*/) {
+void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addInsert");
-/*
-    if (QString(data.name.c_str()).left(3)=="A$C") {
-        return;
-    }
 
-    RS_Vector ip(data.ipx, data.ipy);
-    RS_Vector sc(data.sx, data.sy);
-    RS_Vector sp(data.colSp, data.rowSp);
+    RS_Vector ip(data.x, data.y);
+    RS_Vector sc(data.xscale, data.yscale);
+    RS_Vector sp(data.colspace, data.rowspace);
 
     //cout << "Insert: " << name << " " << ip << " " << cols << "/" << rows << endl;
 
     RS_InsertData d(data.name.c_str(),
                     ip, sc, data.angle/ARAD,
-                    data.cols, data.rows,
-                    sp,
-                    NULL,
-                    RS2::NoUpdate);
+                    data.colcount, data.rowcount,
+                    sp, NULL, RS2::NoUpdate);
     RS_Insert* entity = new RS_Insert(currentContainer, d);
-    setEntityAttributes(entity, attributes);
+    setEntityAttributes(entity, data);
     RS_DEBUG->print("  id: %d", entity->getId());
-    //entity->update();
-    currentContainer->addEntity(entity);*/
+//    entity->update();
+    currentContainer->addEntity(entity);
 }
 
 
