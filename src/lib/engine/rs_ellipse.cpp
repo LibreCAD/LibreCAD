@@ -136,7 +136,7 @@ RS_VectorSolutions RS_Ellipse::getFoci() const {
 
 RS_VectorSolutions RS_Ellipse::getRefPoints() {
     RS_VectorSolutions ret;
-    if( std::isnormal(getAngle1()) || std::isnormal(getAngle2()) ){
+    if(isArc()){
         //no start/end point for whole ellipse
         ret.push_back(getStartpoint());
         ret.push_back(getEndpoint());
@@ -293,7 +293,7 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
                                      const RS_Vector& coord,
                                      double* dist) {
 //    RS_DEBUG->print("RS_Ellipse::getNearestDist() begin\n");
-    if( ! ( std::isnormal(getAngle1()) || std::isnormal(getAngle2())) ) {
+    if( ! isArc() ) {
         // both angles being 0, whole ellipse
         // no end points for whole ellipse, therefore, no snap by distance from end points.
         return RS_Vector(false);
@@ -377,10 +377,10 @@ bool RS_Ellipse::switchMajorMinor(void)
     RS_Vector vp=getMajorP();
     setMajorP(RS_Vector(- data.ratio*vp.y, data.ratio*vp.x)); //direction pi/2 relative to old MajorP;
     setRatio(1./data.ratio);
-    if(   std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) )  {
-    //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
-    setAngle1(getEllipseAngle(vp_start));
-    setAngle2(getEllipseAngle(vp_end));
+    if( isArc() )  {
+        //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
+        setAngle1(getEllipseAngle(vp_start));
+        setAngle2(getEllipseAngle(vp_end));
     }
     return true;
 }
@@ -908,7 +908,7 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
                                        int middlePoints
                                        ) const{
     RS_DEBUG->print("RS_Ellpse::getNearestMiddle(): begin\n");
-    if ( ! ( std::isnormal(getAngle1()) || std::isnormal(getAngle2()))) {
+    if ( ! isArc() ) {
         //no middle point for whole ellipse, angle1=angle2=0
         if (dist!=NULL) {
             *dist = RS_MAXDOUBLE;
@@ -1206,7 +1206,7 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
 double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) const {
     RS_Vector m = pos-data.center;
     m.rotate(-data.majorP.angle());
-    m.scale(RS_Vector(data.ratio, 1.0));
+    m.x *= data.ratio;
     return m.angle();
 }
 
@@ -1229,7 +1229,7 @@ double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) const {
 void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_Vector vpStart;
     RS_Vector vpEnd;
-    if(std::isnormal(getAngle1()) || std::isnormal(getAngle2())){
+    if(isArc()){
         //only handle start/end points for ellipse arc
         getStartpoint().scale(center,factor);
         getEndpoint().scale(center,factor);
@@ -1259,7 +1259,7 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     a=cA+cB;
     b=vp.magnitude();
     setRatio( sqrt((a - b)/(a + b) ));
-    if( std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) ) {
+    if( isArc() ) {
         //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
         setAngle1(getEllipseAngle(vpStart));
         setAngle2(getEllipseAngle(vpEnd));
@@ -1273,6 +1273,15 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
 
 
 /**
+ * is the Ellipse an Arc
+ * @return false, if both angle1/angle2 are zero
+ *
+ *Author: Dongxu Li
+ */
+bool RS_Ellipse::isArc() const{
+    return std::isnormal(getAngle1()) || std::isnormal(getAngle2());
+}
+/**
  * mirror by the axis of the line axisPoint1 and axisPoint2
  *
  *Author: Dongxu Li
@@ -1281,7 +1290,7 @@ void RS_Ellipse::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2
     RS_Vector center=getCenter();
     RS_Vector majorp = center + getMajorP();
     RS_Vector startpoint,endpoint;
-    if(   std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) )  {
+    if( isArc() )  {
         startpoint = getStartpoint();
         endpoint = getEndpoint();
     }
@@ -1292,7 +1301,7 @@ void RS_Ellipse::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2
     setCenter(center);
     setReversed(!isReversed());
     setMajorP(majorp - center);
-    if(   std::isnormal(getAngle1()) || std::isnormal(getAngle2() ) )  {
+    if( isArc() )  {
         //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
         startpoint.mirror(axisPoint1, axisPoint2);
         endpoint.mirror(axisPoint1, axisPoint2);
