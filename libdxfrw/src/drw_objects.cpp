@@ -50,7 +50,7 @@ void DRW_LType::parseCode(int code, dxfReader *reader){
         break;
     case 73:
         size = reader->getInt32();
-        path.resize(size);
+        path.reserve(size);
         break;
     case 40:
         length = reader->getDouble();

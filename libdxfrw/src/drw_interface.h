@@ -68,6 +68,9 @@ public:
     /** Called for every ellipse */
     virtual void addEllipse(const DRW_Ellipse& data) = 0;
 
+    /** Called for every lwpolyline */
+    virtual void addLWPolyline(const DRW_LWPolyline& data) = 0;
+
     /** Called for every polyline start */
     virtual void addPolyline(const DRW_Entity& data) = 0;
 

@@ -62,6 +62,7 @@ private:
     bool processTrace();
     bool processSolid();
     bool processInsert();
+    bool processLWPolyline();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);
