@@ -15,6 +15,7 @@
 
 
 #include <string>
+#include <vector>
 
 class dxfReader;
 
@@ -57,20 +58,22 @@ enum Version {
         ELLIPSE,
         TRACE,
         SOLID,
-        IMAGE,
-        OVERLAYBOX,
-        CONSTRUCTIONLINE,
-        TEXT,
+        BLOCK,
         INSERT,
+        LWPOLYLINE,
         POLYLINE,
         SPLINE,
         HATCH,
+        TEXT,
+        IMAGE,
         DIMLEADER,
         DIMALIGNED,
         DIMLINEAR,
         DIMRADIAL,
         DIMDIAMETRIC,
         DIMANGULAR,
+        OVERLAYBOX,
+        CONSTRUCTIONLINE,
         UNKNOWN
     };
 
@@ -103,6 +106,7 @@ public:
         visible = true;
         layer = "0";
         lWeight = -1; // default BYLAYER (-1)
+        space = 0; // default ModelSpace (0)
     }
 
 protected:
@@ -122,6 +126,7 @@ public:
     bool visible;              /*!< entity visibility, code 60 */
     int color24;               /*!< 24-bit color, code 420 */
     string colorName;          /*!< color name, code 430 */
+    int space;                  /*!< space indicator 0 = model, 1 paper , code 67*/
 };
 
 
@@ -263,6 +268,117 @@ public:
 
     void parseCode(int code, dxfReader *reader);
 };
+
+//! Class to handle block entries
+/*!
+*  Class to handle block entries
+*  @author Rallaz
+*/
+class DRW_Block : public DRW_Point {
+public:
+    DRW_Block() {
+        eType = DRW::BLOCK;
+        layer = "0";
+        flags = 0;
+        name = "caca";
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    string name;             /*!< block name, code 2 */
+    int flags;                   /*!< block type, code 70 */
+};
+
+
+//! Class to handle insert entries
+/*!
+*  Class to handle insert entries
+*  @author Rallaz
+*/
+class DRW_Insert : public DRW_Point {
+public:
+    DRW_Insert() {
+        eType = DRW::INSERT;
+        xscale = 1;
+        yscale = 1;
+        zscale = 1;
+        angle = 0;
+        colcount = 1;
+        rowcount = 1;
+        colspace = 0;
+        rowspace = 0;
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    string name;             /*!< block name, code 2 */
+    double xscale;           /*!< x scale factor, code 41 */
+    double yscale;           /*!< y scale factor, code 42 */
+    double zscale;           /*!< z scale factor, code 43 */
+    double angle;            /*!< rotation angle, code 50 */
+    int colcount;            /*!< column count, code 70 */
+    int rowcount;            /*!< row count, code 71 */
+    double colspace;         /*!< column space, code 44 */
+    double rowspace;         /*!< row space, code 45 */
+};
+
+//! Class to handle vertex
+/*!
+*  Class to handle vertex for lwpolyline entity
+*  @author Rallaz
+*/
+class DRW_Vertex {
+public:
+    DRW_Vertex() {
+//        eType = DRW::LWPOLYLINE;
+        stawidth = endwidth = bulge = 0;
+    }
+
+//    void parseCode(int code, dxfReader *reader);
+
+public:
+    double x;                 /*!< x coordinate, code 10 */
+    double y;                 /*!< y coordinate, code 20 */
+//    double z;                 /*!< z coordinate, code 30 */
+    double stawidth;          /*!< Start width, code 40 */
+    double endwidth;          /*!< End width, code 41 */
+    double bulge;             /*!< bulge, code 42 */
+};
+//! Class to handle lwpolyline entity
+/*!
+*  Class to handle lwpolyline entity
+*  @author Rallaz
+*/
+class DRW_LWPolyline : public DRW_Entity {
+public:
+    DRW_LWPolyline() {
+        eType = DRW::LWPOLYLINE;
+        width = ex = ey = 0;
+        ez = 1;
+        elevation = 0;
+    }
+    ~DRW_LWPolyline() {
+        while (!vertlist.empty()) {
+           vertlist.pop_back();
+         }
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    int vertexnum;            /*!< number of vertex, code 90 */
+    int flags;                /*!< polyline flag, code 70 */
+    double width;             /*!< constant width, code 43 */
+    double elevation;         /*!< elevation, code 38 */
+    double ex;                /*!< x extrusion coordinate, code 210 */
+    double ey;                /*!< y extrusion coordinate, code 220 */
+    double ez;                /*!< z extrusion coordinate, code 230 */
+    DRW_Vertex *vertex;       /*!< current vertex to add data */
+    std::vector<DRW_Vertex *> vertlist;  /*!< vertex list */
+};
+
 
 #endif
 

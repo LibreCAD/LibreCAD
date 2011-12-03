@@ -81,19 +81,20 @@ public:
     // Methods from DL_CreationInterface:
     virtual void addLType(const DRW_LType& /*data*/){}
     virtual void addLayer(const DRW_Layer& data);
-    virtual void addBlock(const DRW_Entity& data);
+    virtual void addBlock(const DRW_Block& data);
     virtual void endBlock();
     virtual void addPoint(const DRW_Point& data);
     virtual void addLine(const DRW_Line& data);
     virtual void addCircle(const DRW_Circle& data);
     virtual void addArc(const DRW_Arc& data);
     virtual void addEllipse(const DRW_Ellipse& data);
+    virtual void addLWPolyline(const DRW_LWPolyline& data);
     virtual void addPolyline(const DRW_Entity& data);
     virtual void addVertex(const DRW_Entity& data);
     virtual void addSpline(const DRW_Entity& data);
     virtual void addKnot(const DRW_Entity&) {}
     virtual void addControlPoint(const DRW_Entity& data);
-    virtual void addInsert(const DRW_Entity& data);
+    virtual void addInsert(const DRW_Insert& data);
     virtual void addTrace(const DRW_Trace& data);
     virtual void addSolid(const DRW_Solid& data);
     virtual void addMTextChunk(const char* text);

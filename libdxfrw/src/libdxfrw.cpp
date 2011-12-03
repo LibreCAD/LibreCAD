@@ -91,6 +91,8 @@ bool dxfRW::write(DRW_Interface *interface, DRW::Version ver, bool bin){
     bool isOk = false;
     ofstream filestr;
     version = ver;
+//TODO allow to write more versions than 2000
+    version = DRW::AC1015;
     binary = bin;
     iface = interface;
     if (binary) {
@@ -659,7 +661,7 @@ bool dxfRW::processDxf() {
                     } else if (sectionstr == "BLOCKS") {
                         processBlocks();
                     } else if (sectionstr == "ENTITIES") {
-                        processEntities();
+                        processEntities(false);
                     } else if (sectionstr == "OBJECTS") {
                         processObjects();
                     }
@@ -802,7 +804,9 @@ bool dxfRW::processBlocks() {
         if (code == 0) {
             sectionstr = reader->getString();
             DBG(sectionstr); DBG("\n");
-            if (sectionstr == "ENDSEC") {
+            if (sectionstr == "BLOCK") {
+                processBlock();
+            } else if (sectionstr == "ENDSEC") {
                 return true;  //found ENDSEC terminate
             }
         }
@@ -810,44 +814,79 @@ bool dxfRW::processBlocks() {
     return true;
 }
 
+bool dxfRW::processBlock() {
+    DBG("dxfRW::processBlock");
+    int code;
+    DRW_Block block;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addBlock(block);
+            if (nextentity == "ENDBLK") {
+                iface->endBlock();
+                return true;  //found ENDBLK, terminate
+            } else {
+                processEntities(true);
+                iface->endBlock();
+                return true;  //found ENDBLK, terminate
+            }
+        }
+        default:
+            block.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
+
 /********* Entities Section *********/
 
-bool dxfRW::processEntities() {
+bool dxfRW::processEntities(bool isblock) {
     DBG("dxfRW::processEntities\n");
     int code;
-    if (reader->readRec(&code, !binary)){
-        bool next = true;
-        if (code == 0) {
-            nextentity = reader->getString();
-        } else
-            return false;  //first record in entities is 0
-        do {
-            if (nextentity == "ENDSEC") {
-                return true;  //found ENDSEC terminate
-            } else if (nextentity == "POINT") {
-                processPoint();
-            } else if (nextentity == "LINE") {
-                processLine();
-            } else if (nextentity == "CIRCLE") {
-                processCircle();
-            } else if (nextentity == "ARC") {
-                processArc();
-            } else if (nextentity == "ELLIPSE") {
-                processEllipse();
-            } else if (nextentity == "TRACE") {
-                processTrace();
-            } else if (nextentity == "SOLID") {
-                processSolid();
-            } else {
-                if (reader->readRec(&code, !binary)){
-                    if (code == 0)
-                        nextentity = reader->getString();
-                } else
-                    return false; //end of file without ENDSEC
-            }
-
-        } while (next);
+    if (!reader->readRec(&code, !binary)){
+        return false;
     }
+    bool next = true;
+    if (code == 0) {
+            nextentity = reader->getString();
+    } else if (!isblock) {
+            return false;  //first record in entities is 0
+   }
+    do {
+        if (nextentity == "ENDSEC" || nextentity == "ENDBLK") {
+            return true;  //found ENDSEC or ENDBLK terminate
+        } else if (nextentity == "POINT") {
+            processPoint();
+        } else if (nextentity == "LINE") {
+            processLine();
+        } else if (nextentity == "CIRCLE") {
+            processCircle();
+        } else if (nextentity == "ARC") {
+            processArc();
+        } else if (nextentity == "ELLIPSE") {
+            processEllipse();
+        } else if (nextentity == "TRACE") {
+            processTrace();
+        } else if (nextentity == "SOLID") {
+            processSolid();
+        } else if (nextentity == "INSERT") {
+            processInsert();
+        } else if (nextentity == "LWPOLYLINE") {
+            processLWPolyline();
+        } else {
+            if (reader->readRec(&code, !binary)){
+                if (code == 0)
+                    nextentity = reader->getString();
+            } else
+                return false; //end of file without ENDSEC
+        }
+
+    } while (next);
     return true;
 }
 
@@ -997,6 +1036,49 @@ bool dxfRW::processArc() {
     }
     return true;
 }
+
+bool dxfRW::processInsert() {
+    DBG("dxfRW::processInsert");
+    int code;
+    DRW_Insert insert;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addInsert(insert);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            insert.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
+bool dxfRW::processLWPolyline() {
+    DBG("dxfRW::processLWPolyline");
+    int code;
+    DRW_LWPolyline pl;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addLWPolyline(pl);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            pl.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
 
 /********* Objects Section *********/
 

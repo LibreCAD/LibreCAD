@@ -53,6 +53,9 @@ void DRW_Entity::parseCode(int code, dxfReader *reader){
     case 430:
         colorName = reader->getString();
         break;
+    case 67:
+        space = reader->getInt32();
+        break;
     default:
         break;
     }
@@ -176,3 +179,102 @@ void DRW_Solid::parseCode(int code, dxfReader *reader){
         DRW_Trace::parseCode(code, reader);
 }
 
+void DRW_Block::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 2:
+        name = reader->getString();
+        break;
+    case 70:
+        flags = reader->getInt32();
+        break;
+    default:
+        DRW_Point::parseCode(code, reader);
+        break;
+    }
+}
+
+void DRW_Insert::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 2:
+        name = reader->getString();
+        break;
+    case 41:
+        xscale = reader->getDouble();
+        break;
+    case 42:
+        yscale = reader->getDouble();
+        break;
+    case 43:
+        zscale = reader->getDouble();
+        break;
+    case 50:
+        angle = reader->getDouble();
+        break;
+    case 70:
+        colcount = reader->getInt32();
+        break;
+    case 71:
+        rowcount = reader->getInt32();
+        break;
+    case 44:
+        colspace = reader->getDouble();
+        break;
+    case 45:
+        rowspace = reader->getDouble();
+        break;
+    default:
+        DRW_Point::parseCode(code, reader);
+        break;
+    }
+}
+
+void DRW_LWPolyline::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 10: {
+        vertex = new DRW_Vertex();
+        vertlist.push_back(vertex);
+        vertex->x = reader->getDouble();
+        break; }
+    case 20:
+        if(vertex != NULL)
+            vertex->y = reader->getDouble();
+        break;
+    case 40:
+        if(vertex != NULL)
+            vertex->y = reader->getDouble();
+        break;
+    case 41:
+        if(vertex != NULL)
+            vertex->y = reader->getDouble();
+        break;
+    case 42:
+        if(vertex != NULL)
+            vertex->y = reader->getDouble();
+        break;
+    case 38:
+        elevation = reader->getDouble();
+        break;
+    case 43:
+        width = reader->getDouble();
+        break;
+    case 70:
+        flags = reader->getInt32();
+        break;
+    case 90:
+        vertexnum = reader->getInt32();
+        vertlist.reserve(vertexnum);
+        break;
+    case 210:
+        ex = reader->getDouble();
+        break;
+    case 220:
+        ey = reader->getDouble();
+        break;
+    case 230:
+        ez = reader->getDouble();
+        break;
+    default:
+        DRW_Entity::parseCode(code, reader);
+        break;
+    }
+}
