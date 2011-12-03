@@ -128,6 +128,10 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
         graphicView->moveRelativeZero(targetPoint);
         setStatus(ShowDialog);
         if (RS_DIALOGFACTORY->requestMoveDialog(data)) {
+            if(data.number<0){
+                data.number=abs(data.number);
+                RS_DIALOGFACTORY->commandMessage(QString(tr("Invalid number of copies, use %1 ")).arg(data.number));
+            }
             data.offset = targetPoint - referencePoint;
             trigger();
         }

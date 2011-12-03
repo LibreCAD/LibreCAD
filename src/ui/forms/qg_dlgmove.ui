@@ -90,7 +90,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="leNumber"/>
+       <widget class="QLineEdit" name="leNumber">
+        <property name="toolTip">
+         <string>Number of copies. Maximum 100</string>
+        </property>
+       </widget>
       </item>
       <item>
        <spacer name="spacer7">

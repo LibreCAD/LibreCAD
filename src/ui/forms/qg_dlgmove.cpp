@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,14 +15,15 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include "rs_math.h"
 #include "qg_dlgmove.h"
 
 #include "rs_settings.h"
@@ -118,7 +119,16 @@ void QG_DlgMove::updateData() {
     } else if (rbCopy->isChecked()) {
         data->number = 1;
     } else {
-        data->number = leNumber->text().toInt();
+        bool ok;
+        data->number = static_cast<int>(fabs(RS_Math::eval(leNumber->text(),&ok)));
+        if ( ok==false || data->number<1 || data->number>100){
+            if(ok && data->number > 100) {
+                data->number=-100;//max number of copies set to 100
+            }else{
+                data->number=-1;
+            }
+            leNumber->setText(QString::number(abs(data->number)));
+        }
     }
     data->useCurrentAttributes = cbCurrentAttributes->isChecked();
     data->useCurrentLayer = cbCurrentLayer->isChecked();
