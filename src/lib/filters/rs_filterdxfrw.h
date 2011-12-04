@@ -153,6 +153,7 @@ public:
     void writeArc(RS_Arc* a);
     void writeEllipse(RS_Ellipse* s);
     void writeSolid(RS_Solid* s);
+    void writeLWPolyline(RS_Polyline* l);
 
     void writePolyline(DL_WriterA& dw,
                 RS_Polyline* l, const DRW_Entity& attrib);

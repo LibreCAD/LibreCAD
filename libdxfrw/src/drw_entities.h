@@ -335,6 +335,12 @@ public:
 //        eType = DRW::LWPOLYLINE;
         stawidth = endwidth = bulge = 0;
     }
+    DRW_Vertex(double sx, double sy, double b) {
+        stawidth = endwidth = 0;
+        x = sx;
+        y =sy;
+        bulge = b;
+    }
 
 //    void parseCode(int code, dxfReader *reader);
 
@@ -357,19 +363,29 @@ public:
         eType = DRW::LWPOLYLINE;
         width = ex = ey = 0;
         ez = 1;
-        elevation = 0;
+        elevation = flags = 0;
+        vertex = NULL;
     }
     ~DRW_LWPolyline() {
         while (!vertlist.empty()) {
            vertlist.pop_back();
          }
     }
+    void addVertex (DRW_Vertex v) {
+        DRW_Vertex *vert = new DRW_Vertex();
+        vert->x = v.x;
+        vert->y = v.y;
+        vert->stawidth = v.stawidth;
+        vert->endwidth = v.endwidth;
+        vert->bulge = v.bulge;
+        vertlist.push_back(vert);
+    }
 
     void parseCode(int code, dxfReader *reader);
 
 public:
     int vertexnum;            /*!< number of vertex, code 90 */
-    int flags;                /*!< polyline flag, code 70 */
+    int flags;                /*!< polyline flag, code 70, default 0 */
     double width;             /*!< constant width, code 43 */
     double elevation;         /*!< elevation, code 38 */
     double ex;                /*!< x extrusion coordinate, code 210 */

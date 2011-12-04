@@ -349,6 +349,28 @@ bool dxfRW::writeSolid(DRW_Solid *ent){
     return true;
 }
 
+bool dxfRW::writeLWPolyline(DRW_LWPolyline *ent){
+    writer->writeString(0, "LWPOLYLINE");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbPolyline");
+    ent->vertexnum = ent->vertlist.size();
+    writer->writeInt32(90, ent->vertexnum);
+    writer->writeInt16(70, ent->flags);
+    writer->writeDouble(43, ent->width);
+    for (int i = 0;  i< ent->vertexnum; i++){
+        DRW_Vertex *v = ent->vertlist.at(i);
+        writer->writeDouble(10, v->x);
+        writer->writeDouble(20, v->y);
+        if (v->stawidth != 0)
+            writer->writeDouble(40, v->stawidth);
+        if (v->endwidth != 0)
+            writer->writeDouble(41, v->endwidth);
+        if (v->bulge != 0)
+            writer->writeDouble(42, v->bulge);
+    }
+    return true;
+}
+
 bool dxfRW::writeTables() {
     char buffer[5];
     writer->writeString(0, "TABLE");

@@ -1218,8 +1218,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
 
     //DL_WriterA* dw = dxf.out(file, VER_R12);
     dxf = new dxfRW(QFile::encodeName(file));
-//    bool success = dxf->write(this, exportVersion, false); //ascii
-    bool success = dxf->write(this, exportVersion, true); //binary
+    bool success = dxf->write(this, exportVersion, false); //ascii
+//    bool success = dxf->write(this, exportVersion, true); //binary
 
     if (!success) {
         RS_DEBUG->print("RS_FilterDXFDW::fileExport: can't write file");
@@ -1776,10 +1776,10 @@ void RS_FilterDXFRW::writeEntities(){
         case RS2::EntityEllipse:
             writeEllipse((RS_Ellipse*)e);
             break;
-/*    case RS2::EntityPolyline:
-        writePolyline(dw, (RS_Polyline*)e, attrib);
+    case RS2::EntityPolyline:
+        writeLWPolyline((RS_Polyline*)e);
         break;
-    case RS2::EntitySpline:
+/*    case RS2::EntitySpline:
         writeSpline(dw, (RS_Spline*)e, attrib);
         break;
     case RS2::EntityVertex:
@@ -1877,6 +1877,50 @@ void RS_FilterDXFRW::writeArc(RS_Arc* a) {
     dxf->writeArc(&arc);
 }
 
+
+/**
+ * Writes the given polyline entity to the file as lwpolyline.
+ */
+void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
+    DRW_LWPolyline pol;
+    RS_Entity* currEntity = 0;
+    RS_Entity* nextEntity = 0;
+    RS_AtomicEntity* ae = NULL;
+    double bulge=0.0;
+
+    for (RS_Entity* e=l->firstEntity(RS2::ResolveNone);
+         e!=NULL; e=nextEntity) {
+
+        currEntity = e;
+        nextEntity = l->nextEntity(RS2::ResolveNone);
+
+        if (!e->isAtomic()) {
+            continue;
+        }
+        ae = (RS_AtomicEntity*)e;
+
+        // Write vertex:
+            if (e->rtti()==RS2::EntityArc) {
+                bulge = ((RS_Arc*)e)->getBulge();
+            }
+            pol.addVertex( DRW_Vertex(ae->getStartpoint().x,
+                                      ae->getStartpoint().y, bulge));
+    }
+    if (l->isClosed()) {
+        pol.flags = 1;
+    } else {
+        ae = (RS_AtomicEntity*)currEntity;
+        if (ae->rtti()==RS2::EntityArc) {
+            bulge = ((RS_Arc*)ae)->getBulge();
+        }
+        pol.addVertex( DRW_Vertex(ae->getEndpoint().x,
+                                  ae->getEndpoint().y, bulge));
+    }
+    pol.vertexnum = pol.vertlist.size();
+    getEntityAttributes(&pol, l);
+    dxf->writeLWPolyline(&pol);
+
+}
 
 /**
  * Writes the given polyline entity to the file.
