@@ -41,6 +41,7 @@ public:
     bool writeEllipse(DRW_Ellipse *ent);
     bool writeTrace(DRW_Trace *ent);
     bool writeSolid(DRW_Solid *ent);
+    bool writeLWPolyline(DRW_LWPolyline *ent);
 
 private:
     bool processDxf();
