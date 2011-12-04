@@ -173,6 +173,13 @@ void RS_ActionModifyTrim::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 
+void RS_ActionModifyTrim::finish(bool updateTB) {
+    if (limitEntity->isHighlighted()){
+        limitEntity->setHighlighted(false);
+        graphicView->drawEntity(limitEntity);
+    }
+    RS_ActionInterface::finish(updateTB);
+}
 
 void RS_ActionModifyTrim::updateMouseButtonHints() {
     switch (getStatus()) {
