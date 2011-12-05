@@ -210,10 +210,10 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
     QFileDialog* fileDlg = new QFileDialog(parent, "File Dialog");
 
     QStringList filters;
+    filters.append(fDxf);
 #ifdef USE_DXFRW
     filters.append(fDxfrw);
 #endif
-    filters.append(fDxf);
     filters.append(fDxf1);
     filters.append(fLff);
     filters.append(fCxf);

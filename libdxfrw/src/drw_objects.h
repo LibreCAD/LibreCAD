@@ -121,6 +121,26 @@ public:
 };
 
 
+//! Class to handle header entries
+/*!
+*  Class to handle layer symbol table entries
+*  @author Rallaz
+*/
+class DRW_Header {
+public:
+    DRW_Header() {
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    string version;
+    string codepage;
+private:
+    string name;
+    string data;
+};
+
 
 #endif
 
