@@ -639,12 +639,16 @@ void RS_FilterDXFRW::addText(const DRW_Text& data) {
     text.x = refPoint.x;
     text.y = refPoint.y;
     text.widthscale = 100.0;
+    text.height = data.height;
     text.textgen = attachmentPoint;
     text.alignH = (DRW::HAlign)5;
     text.interlin = 1.0;
     text.text = data.text;
     text.style = data.style;
     text.angle = angle;
+    text.color = data.color;
+    text.layer = data.layer;
+    text.lineType = data.lineType;
 //    text.by = attachmentPoint.y;
 //    mtext = "";
 /*    addMText(DL_MTextData(
