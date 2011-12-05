@@ -89,6 +89,7 @@ public:
     virtual void addArc(const DRW_Arc& data);
     virtual void addEllipse(const DRW_Ellipse& data);
     virtual void addLWPolyline(const DRW_LWPolyline& data);
+    virtual void addText(const DRW_Text& data);
     virtual void addPolyline(const DRW_Entity& data);
     virtual void addVertex(const DRW_Entity& data);
     virtual void addSpline(const DRW_Entity& data);
@@ -97,9 +98,7 @@ public:
     virtual void addInsert(const DRW_Insert& data);
     virtual void addTrace(const DRW_Trace& data);
     virtual void addSolid(const DRW_Solid& data);
-    virtual void addMTextChunk(const char* text);
-    virtual void addMText(const DRW_Entity& data);
-    virtual void addText(const DRW_Entity& data);
+    virtual void addMText(const DRW_MText& data);
     //virtual void addDimension(const DL_DimensionData& data);
     RS_DimensionData convDimensionData(const DRW_Entity& data);
     virtual void addDimAlign(const DRW_Entity& data,
@@ -207,7 +206,7 @@ private:
     /** File name. Used to find out the full path of images. */
     QString file;
     /** string for concatinating text parts of MTEXT entities. */
-    QString mtext;
+//    QString mtext;
     /** Pointer to current polyline entity we're adding vertices to. */
     RS_Polyline* polyline;
     /** Pointer to current spline entity we're adding control points to. */

@@ -32,7 +32,7 @@ copy support\library\templates\*.dxf %RESOURCEDIR%\library\templates
 
 REM Generate translations
 echo "Generating Translations"
-lrelease librecad.pro
+lrelease src/src.pro
 mkdir %RESOURCEDIR%\qm 
 
 cd %TSDIR%

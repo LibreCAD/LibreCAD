@@ -113,3 +113,26 @@ void DRW_Layer::parseCode(int code, dxfReader *reader){
         break;
     }
 }
+
+void DRW_Header::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 9:
+        name = reader->getString();
+        break;
+    case 1:
+        data = reader->getString();
+        break;
+    case 3:
+        data = reader->getString();
+        break;
+    default:
+        break;
+    }
+    if (name == "$ACADVER") {
+        version = reader->getString();
+    } else if (name == "$DWGCODEPAGE") {
+        codepage = reader->getString();
+    }
+
+}
+

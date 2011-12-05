@@ -710,7 +710,7 @@ bool dxfRW::processHeader() {
             if (sectionstr == "ENDSEC") {
                 return true;  //found ENDSEC terminate
             }
-        }
+        } else header.parseCode(code, reader);
     }
     return true;
 }
@@ -900,6 +900,8 @@ bool dxfRW::processEntities(bool isblock) {
             processInsert();
         } else if (nextentity == "LWPOLYLINE") {
             processLWPolyline();
+        } else if (nextentity == "TEXT") {
+            processText();
         } else {
             if (reader->readRec(&code, !binary)){
                 if (code == 0)
@@ -1095,6 +1097,27 @@ bool dxfRW::processLWPolyline() {
         }
         default:
             pl.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
+bool dxfRW::processText() {
+    DBG("dxfRW::processText");
+    int code;
+    DRW_Text txt;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addText(txt);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            txt.parseCode(code, reader);
             break;
         }
     }

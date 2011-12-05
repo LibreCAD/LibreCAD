@@ -8,7 +8,7 @@ QT       -= core
 
 QT       -= gui
 
-TARGET = ttf2lff
+TARGET = ../unix/ttf2lff
 CONFIG   += console
 CONFIG   -= app_bundle
 
@@ -23,3 +23,5 @@ INCLUDEPATH += /usr/include/freetype2
 # LIBS += -L/usr/lib64 -lfreetype
 
 LIBS += -lfreetype
+
+OBJECTS_DIR = ../intermediate/lff/obj

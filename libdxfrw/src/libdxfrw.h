@@ -64,12 +64,15 @@ private:
     bool processSolid();
     bool processInsert();
     bool processLWPolyline();
+    bool processText();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);
     bool writeTables();
     bool writeBlocks();
     bool writeObjects();
+
+    DRW_Header header;
 
 private:
     DRW::Version version;
