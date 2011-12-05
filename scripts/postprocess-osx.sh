@@ -26,7 +26,7 @@ find support/library -type f -iname *.dxf -not -path "*.svn*"  | sed s/support//
 cp -r /Developer/Applications/Qt/plugins/sqldrivers $RESOURCEDIR/PlugIns/sqldrivers
 
 # Generate translations
-lrelease librecad.pro
+lrelease src/src.pro
 mkdir -p $RESOURCEDIR/Resources/qm
  
 # Go into translations directory
