@@ -48,6 +48,7 @@
 
 #include <qtextcodec.h>
 
+
 /**
  * Default constructor.
  *
@@ -61,7 +62,7 @@ RS_FilterDXFRW::RS_FilterDXFRW()
     addExportFormat(RS2::FormatDXFRW);
 //    addExportFormat(RS2::FormatDXF12);
 
-    mtext = "";
+//    mtext = "";
     polyline = NULL;
     leader = NULL;
     hatch = NULL;
@@ -472,25 +473,13 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
 
 
 /**
- * Implementation of the method which handles text
- * chunks for MText entities.
- */
-void RS_FilterDXFRW::addMTextChunk(const char* text) {
-    RS_DEBUG->print("RS_FilterDXF::addMTextChunk: %s", text);
-    mtext+=text;
-
-}
-
-
-
-/**
  * Implementation of the method which handles
  * multi texts (MTEXT).
  */
-void RS_FilterDXFRW::addMText(const DRW_Entity& /*data*/) {
-/*    RS_DEBUG->print("RS_FilterDXF::addMText: %s", data.text.c_str());
+void RS_FilterDXFRW::addMText(const DRW_MText& data) {
+    RS_DEBUG->print("RS_FilterDXF::addMText: %s", data.text.c_str());
 
-    RS_Vector ip(data.ipx, data.ipy);
+    RS_Vector ip(data.x, data.y);
     RS2::VAlign valign;
     RS2::HAlign halign;
     RS2::TextDrawingDirection dir;
@@ -498,37 +487,37 @@ void RS_FilterDXFRW::addMText(const DRW_Entity& /*data*/) {
     QString sty = QString::fromUtf8(data.style.c_str());
     sty=sty.toLower();
 
-    if (data.attachmentPoint<=3) {
+    if (data.textgen<=3) {
         valign=RS2::VAlignTop;
-    } else if (data.attachmentPoint<=6) {
+    } else if (data.textgen<=6) {
         valign=RS2::VAlignMiddle;
     } else {
         valign=RS2::VAlignBottom;
     }
 
-    if (data.attachmentPoint%3==1) {
+    if (data.textgen%3==1) {
         halign=RS2::HAlignLeft;
-    } else if (data.attachmentPoint%3==2) {
+    } else if (data.textgen%3==2) {
         halign=RS2::HAlignCenter;
     } else {
         halign=RS2::HAlignRight;
     }
 
-    if (data.drawingDirection==1) {
+    if (data.alignH==1) {
         dir = RS2::LeftToRight;
-    } else if (data.drawingDirection==3) {
+    } else if (data.alignH==3) {
         dir = RS2::TopToBottom;
     } else {
         dir = RS2::ByStyle;
     }
 
-    if (data.lineSpacingStyle==1) {
+    if (data.alignV==1) {
         lss = RS2::AtLeast;
     } else {
         lss = RS2::Exact;
     }
 
-    mtext+=data.text.c_str();
+    QString mtext = data.text.c_str();
     mtext = toNativeString(mtext.toLocal8Bit().data(), getDXFEncoding());
 
     // use default style for the drawing:
@@ -551,19 +540,25 @@ void RS_FilterDXFRW::addMText(const DRW_Entity& /*data*/) {
     RS_DEBUG->print("Text as unicode:");
     RS_DEBUG->printUnicode(mtext);
 
-    RS_TextData d(ip, data.height, data.width,
+    double interlin = 1.0;
+    if (data.eType == DRW::MTEXT) {
+        DRW_MText *ppp = (DRW_MText*)&data;
+        interlin = ppp->interlin;
+    }
+
+    RS_TextData d(ip, data.height, data.widthscale,
                   valign, halign,
                   dir, lss,
-                  data.lineSpacingFactor,
+                  interlin,
                   mtext, sty, data.angle,
                   RS2::NoUpdate);
     RS_Text* entity = new RS_Text(currentContainer, d);
 
-    setEntityAttributes(entity, attributes);
+    setEntityAttributes(entity, data);
     entity->update();
     currentContainer->addEntity(entity);
 
-    mtext = "";*/
+//    mtext = "";
 }
 
 
@@ -572,53 +567,53 @@ void RS_FilterDXFRW::addMText(const DRW_Entity& /*data*/) {
  * Implementation of the method which handles
  * texts (TEXT).
  */
-void RS_FilterDXFRW::addText(const DRW_Entity& /*data*/) {
-/*    RS_DEBUG->print("RS_FilterDXF::addText");
+void RS_FilterDXFRW::addText(const DRW_Text& data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addText");
     int attachmentPoint;
     RS_Vector refPoint;
     double angle = data.angle;
-
+    DRW_MText text;
     // TODO: check, maybe implement a separate TEXT instead of using MTEXT
 
     // baseline has 5 vertical alignment modes:
-    if (data.vJustification!=0 || data.hJustification!=0) {
-        switch (data.hJustification) {
+    if (data.alignV !=0 || data.alignH!=0) {
+        switch (data.alignH) {
         default:
         case 0: // left aligned
             attachmentPoint = 1;
-            refPoint = RS_Vector(data.apx, data.apy);
+            refPoint = RS_Vector(data.bx, data.by);
             break;
         case 1: // centered
             attachmentPoint = 2;
-            refPoint = RS_Vector(data.apx, data.apy);
+            refPoint = RS_Vector(data.bx, data.by);
             break;
         case 2: // right aligned
             attachmentPoint = 3;
-            refPoint = RS_Vector(data.apx, data.apy);
+            refPoint = RS_Vector(data.bx, data.by);
             break;
         case 3: // aligned (TODO)
             attachmentPoint = 2;
-            refPoint = RS_Vector((data.ipx+data.apx)/2.0,
-                                 (data.ipy+data.apy)/2.0);
+            refPoint = RS_Vector((data.x+data.bx)/2.0,
+                                 (data.y+data.by)/2.0);
             angle =
-                RS_Vector(data.ipx, data.ipy).angleTo(
-                    RS_Vector(data.apx, data.apy));
+                RS_Vector(data.x, data.y).angleTo(
+                    RS_Vector(data.bx, data.by));
             break;
         case 4: // Middle (TODO)
             attachmentPoint = 2;
-            refPoint = RS_Vector(data.apx, data.apy);
+            refPoint = RS_Vector(data.bx, data.by);
             break;
         case 5: // fit (TODO)
             attachmentPoint = 2;
-            refPoint = RS_Vector((data.ipx+data.apx)/2.0,
-                                 (data.ipy+data.apy)/2.0);
+            refPoint = RS_Vector((data.x+data.bx)/2.0,
+                                 (data.y+data.by)/2.0);
             angle =
-                RS_Vector(data.ipx, data.ipy).angleTo(
-                    RS_Vector(data.apx, data.apy));
+                RS_Vector(data.x, data.y).angleTo(
+                    RS_Vector(data.bx, data.by));
             break;
         }
 
-        switch (data.vJustification) {
+        switch (data.alignV) {
         default:
         case 0: // baseline
         case 1: // bottom
@@ -635,14 +630,24 @@ void RS_FilterDXFRW::addText(const DRW_Entity& /*data*/) {
     } else {
         //attachmentPoint = (data.hJustification+1)+(3-data.vJustification)*3;
         attachmentPoint = 7;
-        refPoint = RS_Vector(data.ipx, data.ipy);
+        refPoint = RS_Vector(data.x, data.y);
     }
 
-    int drawingDirection = 5;
-    double width = 100.0;
+//    int drawingDirection = 5;
+//    double width = 100.0;
 
-    mtext = "";
-    addMText(DL_MTextData(
+    text.x = refPoint.x;
+    text.y = refPoint.y;
+    text.widthscale = 100.0;
+    text.textgen = attachmentPoint;
+    text.alignH = (DRW::HAlign)5;
+    text.interlin = 1.0;
+    text.text = data.text;
+    text.style = data.style;
+    text.angle = angle;
+//    text.by = attachmentPoint.y;
+//    mtext = "";
+/*    addMText(DL_MTextData(
                  refPoint.x,
                  refPoint.y,
 #ifdef  RS_VECTOR2D
@@ -656,7 +661,8 @@ void RS_FilterDXFRW::addText(const DRW_Entity& /*data*/) {
                  RS2::Exact,
                  1.0,
                  data.text.c_str(), data.style,
-                 angle));*/
+                 angle), data);*/
+    addMText(text);
 }
 
 

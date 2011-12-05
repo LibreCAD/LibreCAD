@@ -15,8 +15,6 @@
 
 #include <string.h>
 
-/*#include "dl_attributes.h"
-#include "dl_codes.h"*/
 #include "drw_entities.h"
 #include "drw_objects.h"
 //#include "dl_extrusion.h"
@@ -100,17 +98,10 @@ public:
 
 
     /** Called for every Multi Text entity. */
-    virtual void addMText(const DRW_Entity& data) = 0;
-
-    /**
-     * Called for additional text chunks for MTEXT entities.
-     * The chunks come at 250 character in size each. Note that 
-     * those chunks come <b>before</b> the actual MTEXT entity.
-     */
-    virtual void addMTextChunk(const char* text) = 0;
+    virtual void addMText(const DRW_MText& data) = 0;
 
     /** Called for every Text entity. */
-    virtual void addText(const DRW_Entity& data) = 0;
+    virtual void addText(const DRW_Text& data) = 0;
 
     /**
      * Called for every aligned dimension entity. 

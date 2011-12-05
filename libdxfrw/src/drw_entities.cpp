@@ -241,15 +241,15 @@ void DRW_LWPolyline::parseCode(int code, dxfReader *reader){
         break;
     case 40:
         if(vertex != NULL)
-            vertex->y = reader->getDouble();
+            vertex->stawidth = reader->getDouble();
         break;
     case 41:
         if(vertex != NULL)
-            vertex->y = reader->getDouble();
+            vertex->endwidth = reader->getDouble();
         break;
     case 42:
         if(vertex != NULL)
-            vertex->y = reader->getDouble();
+            vertex->bulge = reader->getDouble();
         break;
     case 38:
         elevation = reader->getDouble();
@@ -275,6 +275,61 @@ void DRW_LWPolyline::parseCode(int code, dxfReader *reader){
         break;
     default:
         DRW_Entity::parseCode(code, reader);
+        break;
+    }
+}
+
+void DRW_Text::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 40:
+        height = reader->getDouble();
+        break;
+    case 41:
+        widthscale = reader->getDouble();
+        break;
+    case 50:
+            angle = reader->getDouble();
+        break;
+    case 51:
+            oblique = reader->getDouble();
+        break;
+    case 71:
+        textgen = reader->getInt32();
+        break;
+    case 72:
+        alignH = (DRW::HAlign)reader->getInt32();
+        break;
+    case 73:
+        alignV = (DRW::VAlign)reader->getInt32();
+        break;
+    case 1:
+        text = reader->getString();
+        break;
+    case 7:
+        style = reader->getString();
+        break;
+    default:
+        DRW_Line::parseCode(code, reader);
+        break;
+    }
+}
+
+void DRW_MText::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 1:
+        text += reader->getString();
+        break;
+    case 3:
+        text += reader->getString();
+        break;
+    case 44:
+        height = reader->getDouble();
+        break;
+    case 73:
+        alignV = (DRW::VAlign)reader->getInt32();
+        break;
+    default:
+        DRW_Text::parseCode(code, reader);
         break;
     }
 }
