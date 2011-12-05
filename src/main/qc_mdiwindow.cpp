@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -48,7 +48,7 @@ int QC_MDIWindow::idCounter = 0;
 /**
  * Constructor.
  *
- * @param doc Pointer to an existing document of NULL if a new 
+ * @param doc Pointer to an existing document of NULL if a new
  *   document shall be created for this window.
  * @param parent Parent widget. Usually a workspace.
  */
@@ -58,7 +58,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
 
     setAttribute(Qt::WA_DeleteOnClose);
     owner = false;
-	forceClosing = false;
+        forceClosing = false;
     initDoc(doc);
     initView();
     id = idCounter++;
@@ -138,14 +138,14 @@ void QC_MDIWindow::removeChildWindow(QC_MDIWindow* w) {
  * @return pointer to the print preview of this drawing or NULL.
  */
 QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
-	while (!childWindows.isEmpty()) {
-		QC_MDIWindow *tmp=childWindows.takeFirst();
+        while (!childWindows.isEmpty()) {
+                QC_MDIWindow *tmp=childWindows.takeFirst();
         if (tmp->getGraphicView()->isPrintPreview()) {
-			return tmp;
-		}
-	}
+                        return tmp;
+                }
+        }
 
-	return NULL;
+        return NULL;
 }
 
 
@@ -183,10 +183,10 @@ bool QC_MDIWindow::closeMDI(bool force, bool ask) {
     else if (!ask || slotFileClose(force)) {
         RS_DEBUG->print("  closing graphic");
         // close all child windows:
-		while (!childWindows.isEmpty()) {
-			QC_MDIWindow *tmp=childWindows.takeFirst();
-			tmp->close();
-		}
+                while (!childWindows.isEmpty()) {
+                        QC_MDIWindow *tmp=childWindows.takeFirst();
+                        tmp->close();
+                }
 
         emit(signalClosing());
 
@@ -297,10 +297,10 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
     if (document!=NULL && !fileName.isEmpty()) {
         document->newDoc();
 
-		// cosmetics..
+                // cosmetics..
                 // RVT_PORT qApp->processEvents(1000);
                 qApp->processEvents(QEventLoop::AllEvents, 1000);
-		
+
         ret = document->open(fileName, type);
 
         if (ret) {
@@ -359,7 +359,7 @@ void QC_MDIWindow::drawChars() {
  *                    false if this is "Save" operation requested
  *                    by the user.
  * @return true if the file was saved successfully.
- *         false if the file could not be saved or the document 
+ *         false if the file could not be saved or the document
  *         is invalid.
  */
 bool QC_MDIWindow::slotFileSave(bool &cancelled, bool isAutoSave) {
@@ -368,19 +368,19 @@ bool QC_MDIWindow::slotFileSave(bool &cancelled, bool isAutoSave) {
     cancelled = false;
 
     if (document!=NULL) {
-	if (isAutoSave) {
-	    // Autosave filename is always supposed to be present.
-	    // Autosave does not change the cursor.
+        if (isAutoSave) {
+            // Autosave filename is always supposed to be present.
+            // Autosave does not change the cursor.
             ret = document->save(true);
         } else {
-	    if (document->getFilename().isEmpty()) {
-		ret = slotFileSaveAs(cancelled);
-	    } else {
-		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-		ret = document->save();
-		QApplication::restoreOverrideCursor();
-	    }
-	}
+            if (document->getFilename().isEmpty()) {
+                ret = slotFileSaveAs(cancelled);
+            } else {
+                QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+                ret = document->save();
+                QApplication::restoreOverrideCursor();
+            }
+        }
     }
 
     return ret;
@@ -389,11 +389,11 @@ bool QC_MDIWindow::slotFileSave(bool &cancelled, bool isAutoSave) {
 
 
 /**
- * Saves the current file. The user is asked for a new filename 
+ * Saves the current file. The user is asked for a new filename
  * and format.
  *
  * @return true if the file was saved successfully or the user cancelled.
- *         false if the file could not be saved or the document 
+ *         false if the file could not be saved or the document
  *         is invalid.
  */
 bool QC_MDIWindow::slotFileSaveAs(bool &cancelled) {
@@ -476,6 +476,16 @@ bool QC_MDIWindow::slotFileClose(bool force) {
     return succ;
 }
 
+//zoom graphicView after windows changed
+void QC_MDIWindow::zoomGraphicView() {
+    if(graphicView != NULL) {
+        if(graphicView->isPrintPreview()){
+            graphicView->zoomPage();
+        }else{
+            graphicView->zoomAuto();
+        }
+    }
+}
 
 void QC_MDIWindow::slotFilePrint() {
 
@@ -510,13 +520,13 @@ std::ostream& operator << (std::ostream& os, QC_MDIWindow& w) {
         os << "  parentWindow: NULL\n";
     }
 
-	int i=0;
-	while (!w.childWindows.isEmpty()) {
-		QC_MDIWindow *tmp=w.childWindows.takeFirst();
+        int i=0;
+        while (!w.childWindows.isEmpty()) {
+                QC_MDIWindow *tmp=w.childWindows.takeFirst();
         os << "  childWindow[" << i << "]: "
         << tmp->getId() << "\n";
-		i++;
-	}
+                i++;
+        }
     return os;
 }
 

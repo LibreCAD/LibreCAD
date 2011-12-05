@@ -102,6 +102,7 @@ public slots:
     void slotWindowActivated(QWidget* w);
     void slotWindowsMenuAboutToShow();
     void slotWindowsMenuActivated(bool);
+    void slotCascadeSubWindows();
     void slotTileHorizontal();
     void slotTileVertical();
 
