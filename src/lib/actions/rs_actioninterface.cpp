@@ -201,13 +201,10 @@ QStringList RS_ActionInterface::getAvailableCommands() {
  */
 void RS_ActionInterface::setStatus(int status) {
     this->status = status;
-    if (status<0) {
-        finish();
-        status=0;
-    }
     updateMouseButtonHints();
     updateToolBar();
     updateMouseCursor();
+    if(status<0) finish();
 }
 
 /**

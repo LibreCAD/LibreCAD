@@ -46,12 +46,6 @@ QAction* RS_ActionModifyMove::createGUIAction(RS2::ActionType /*type*/, QObject*
     return action;
 }
 
-void RS_ActionModifyMove::init(int status) {
-    RS_ActionInterface::init(status);
-}
-
-
-
 void RS_ActionModifyMove::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyMove::trigger()");
@@ -144,29 +138,33 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionModifyMove::updateMouseButtonHints() {
-    switch (getStatus()) {
+    if(RS_DIALOGFACTORY != NULL) {
+        switch (getStatus()) {
         /*case Select:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Pick entities to move"),
                                            tr("Cancel"));
             break;*/
-    case SetReferencePoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                            tr("Cancel"));
-        break;
-    case SetTargetPoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
-                                            tr("Back"));
-        break;
-    default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
-        break;
+        case SetReferencePoint:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
+                                                tr("Cancel"));
+            break;
+        case SetTargetPoint:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
+                                                tr("Back"));
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            break;
+        }
     }
 }
 
 
 
 void RS_ActionModifyMove::updateMouseCursor() {
+        if(graphicView != NULL){
     graphicView->setMouseCursor(RS2::CadCursor);
+        }
 }
 
 

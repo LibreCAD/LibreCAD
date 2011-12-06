@@ -45,24 +45,7 @@ RS_ActionInterface(name, container, graphicView) {
     // preview is linked to the container for getting access to
     //   document settings / dictionary variables
     preview = new RS_Preview(&container);
-
-    /*
-    //extension by ST for handling locked layers
-    // 20040101: by andrew: only the selection of entities is
-    // disabled for locked layers
-    RS_Document* doc = container.getDocument();
-    if (doc!=NULL) {
-        RS_LayerList* layerList = doc->getLayerList();
-        if (layerList!=NULL) {
-                RS_Layer* activeLayer = layerList->getActive();
-                if (activeLayer!=NULL) {
-                        if (activeLayer->isLocked()) {
-                                finish();
-                        }
-                }
-        }
-}
-    */
+    hasPreview = true;
 
     RS_DEBUG->print("RS_PreviewActionInterface::RS_PreviewActionInterface: Setting up action with preview: \"%s\": OK", name);
 }
@@ -71,22 +54,23 @@ RS_ActionInterface(name, container, graphicView) {
 
 /** Destructor */
 RS_PreviewActionInterface::~RS_PreviewActionInterface() {
-        graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
-        delete preview;
+    deletePreview();
+    delete preview;
+    preview=NULL;
 }
 
 
 
 void RS_PreviewActionInterface::init(int status) {
+    deletePreview();
     RS_ActionInterface::init(status);
-    //deletePreview();
 }
 
 
 
 void RS_PreviewActionInterface::finish(bool updateTB) {
-    RS_ActionInterface::finish(updateTB);
     deletePreview();
+    RS_ActionInterface::finish(updateTB);
 }
 
 
@@ -116,9 +100,10 @@ void RS_PreviewActionInterface::trigger() {
  */
 void RS_PreviewActionInterface::deletePreview() {
         graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
-        if (preview!=NULL && !preview->isEmpty()) {
+        if (hasPreview && preview!= NULL ){
                 //avoid deletiong NULL or empty preview
             preview->clear();
+            hasPreview=false;
         }
         graphicView->redraw(RS2::RedrawOverlay);
 }
@@ -129,13 +114,14 @@ void RS_PreviewActionInterface::deletePreview() {
  * Draws / deletes the current preview.
  */
 void RS_PreviewActionInterface::drawPreview() {
-    if (preview!=NULL && !preview->isEmpty()) {
+    if (preview!=NULL){
                 // RVT_PORT How does offset work??        painter->setOffset(offset);
                 RS_EntityContainer *container=graphicView->getOverlayContainer(RS2::ActionPreviewEntity);
                 container->clear();
                 container->setOwner(false); // Little hack for now so we don't delete teh preview twice
                 container->addEntity(preview);
                 graphicView->redraw(RS2::RedrawOverlay);
+                hasPreview=true;
     }
 }
 

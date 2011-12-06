@@ -523,8 +523,9 @@ void RS_EventHandler::killAllActions() {
         if ( ! currentActions.first()->isFinished() ){
             currentActions.first()->finish();
         }
-        delete currentActions.first();
-        currentActions.pop_front();
+        //need to check the size again after finish(), bug#3451525, 3451415
+        if(currentActions.size()==0) return;
+        delete currentActions.takeFirst();
     }
     //cleanUp();
 }
