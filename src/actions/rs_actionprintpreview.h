@@ -77,7 +77,7 @@ public:
 
 	void center();
 	void fit();
-	void setScale(double f);
+        bool setScale(double f);
 	double getScale();
 
 	void setBlackWhite(bool bw);
