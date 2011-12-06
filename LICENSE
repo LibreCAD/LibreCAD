@@ -1,4 +1,6 @@
-The original QCad code, downloaded from http://www.qcad.org/qcad_downloads.html, is licensed GPLv2, which can be seen in the file gpl-2.0.txt. Copyright is predominately Andrew Mustain/RibbonSoft, but see individual files for copyright information.
+The original QCad code, downloaded from http://www.qcad.org/qcad_downloads.html, is licensed GPLv2,
+ which can be seen in the file gpl-2.0.txt. Copyright is predominately Andrew Mustain/RibbonSoft, but see
+ individual files for copyright information.
 
 New code, additions/edits to the QCad code base are Copyright 2010-2011:
 R. van Twisk <ries@vantwisk.nl>
@@ -8,6 +10,9 @@ Claude Sylvain <csylvain@electro-technica.com>
 Scott Howard <showard@debian.org>
 Lisandro Damián Nicanor Pérez Meyer <perezmeyer@gmail.com
 
-The new code, additions/edits to the QCad code base are licensed GPLv2 or any later version. The text of this license is stored in gpl-2.0greater.txt.
+The new code, additions/edits to the QCad code base are licensed GPLv2 or any later version. The text of this
+ license is stored in gpl-2.0greater.txt.
+
+WenQuanYi fonts (wqy-unicode.lff) are covered by Apache2 or GPLv3, the text of which is in the base directory.
 
 Additional information is in the header of each source code file.
