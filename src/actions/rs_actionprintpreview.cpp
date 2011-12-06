@@ -204,14 +204,30 @@ void RS_ActionPrintPreview::fit() {
     }
 }
 
-void RS_ActionPrintPreview::setScale(double f) {
+bool RS_ActionPrintPreview::setScale(double f) {
+    bool ret=false;
     if (graphic!=NULL) {
-        if( fabs(f - graphic->getPaperScale()) < RS_TOLERANCE ) return;
+        double oldFactor= graphic->getPaperScale();
+        if( fabs(f -oldFactor) < RS_TOLERANCE ) return false;
         graphic->setPaperScale(f);
-        graphic->centerToPage();
         graphicView->zoomPage();
+        RS_Vector vp= graphicView->toGui(graphic->getPaperSize()/graphic->getPaperScale());
+        if(std::max(fabs(vp.x),fabs(vp.y))>1e6){
+            //scale too large, bug#3450333
+            graphic->setPaperScale(oldFactor);
+            graphicView->zoomPage();
+            if(RS_DIALOGFACTORY != NULL ){
+                RS_DIALOGFACTORY->commandMessage(tr("Scale ratio too large. Keep the old scale"));
+            }
+        }else{
+            ret=true;
+        }
+        graphic->centerToPage();
+        //        std::cout<<"RS_ActionPrintPreview::setScale("<<f<<"): papersize in Gui="<<vp<<std::endl;
+
         graphicView->redraw();
     }
+    return ret;
 }
 
 

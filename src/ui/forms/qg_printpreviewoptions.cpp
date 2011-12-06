@@ -215,8 +215,9 @@ void QG_PrintPreviewOptions::scale(const QString& s) {
         }
         return;
     }
-    action->setScale(factor);
-    updateScaleBox(factor);
+    if(action->setScale(factor)){
+        updateScaleBox(factor);
+    }
 }
 
 //update the scalebox to
