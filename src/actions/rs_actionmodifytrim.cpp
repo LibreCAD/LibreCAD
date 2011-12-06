@@ -178,7 +178,7 @@ void RS_ActionModifyTrim::finish(bool updateTB) {
         limitEntity->setHighlighted(false);
         graphicView->drawEntity(limitEntity);
     }
-    RS_ActionInterface::finish(updateTB);
+    RS_PreviewActionInterface::finish(updateTB);
 }
 
 void RS_ActionModifyTrim::updateMouseButtonHints() {
