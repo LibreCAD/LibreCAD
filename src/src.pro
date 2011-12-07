@@ -76,7 +76,7 @@ win32 {
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
 
     RC_FILE = ..\\res\\main\\librecad.rc
-    DESTDIR = ..
+    DESTDIR = ..\\windows
     QMAKE_POST_LINK = cd .. && scripts\\postprocess-win.bat
 }
 
