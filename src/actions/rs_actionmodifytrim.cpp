@@ -47,6 +47,15 @@ RS_ActionModifyTrim::RS_ActionModifyTrim(RS_EntityContainer& container,
     this->both = both;
 }
 
+RS_ActionModifyTrim::~RS_ActionModifyTrim(){
+    if (graphicView != NULL){
+        if (limitEntity->isHighlighted()){
+            limitEntity->setHighlighted(false);
+            graphicView->drawEntity(limitEntity);
+        }
+    }
+}
+
 QAction* RS_ActionModifyTrim::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
     QAction* action;
 
@@ -172,14 +181,13 @@ void RS_ActionModifyTrim::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-void RS_ActionModifyTrim::finish(bool updateTB) {
-    if (limitEntity->isHighlighted()){
-        limitEntity->setHighlighted(false);
-        graphicView->drawEntity(limitEntity);
-    }
-    RS_PreviewActionInterface::finish(updateTB);
-}
+//void RS_ActionModifyTrim::finish(bool updateTB) {
+//    if (limitEntity->isHighlighted()){
+//        limitEntity->setHighlighted(false);
+//        graphicView->drawEntity(limitEntity);
+//    }
+//    RS_PreviewActionInterface::finish(updateTB);
+//}
 
 void RS_ActionModifyTrim::updateMouseButtonHints() {
     switch (getStatus()) {
