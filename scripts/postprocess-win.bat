@@ -3,7 +3,7 @@
 cd > PWD
 set /p PWD= < PWD
 
-set RESOURCEDIR=%PWD%\release\resources
+set RESOURCEDIR=%PWD%\windows\resources
 set TSDIR=%PWD%\ts
 set DOCDIR=%PWD%\support\doc
 

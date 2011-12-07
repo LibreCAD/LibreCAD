@@ -14,14 +14,8 @@ SOURCES += asciifile.cpp
 HEADERS += asciifile.h
 
 win32 {
-    Debug {
-        DLLDESTDIR = ../../debug/resources/plugins
+        DLLDESTDIR = ../../windows/resources/plugins
         TARGET = $$PLUGIN_NAME
-
-    } else {
-        DLLDESTDIR = ../../release/resources/plugins
-        TARGET = $$PLUGIN_NAME
-    }
 }
 unix {
     macx { 
