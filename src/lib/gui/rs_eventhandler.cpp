@@ -494,7 +494,7 @@ void RS_EventHandler::killSelectActions() {
 #ifdef HAS_CPP11
     for (auto it=currentActions.begin();it != currentActions.end();){
 #else
-    for (QVector<RS_ActionInterface*>::iterator it=currentActions.begin();it != currentActions.end();){
+    for (QList<RS_ActionInterface*>::iterator it=currentActions.begin();it != currentActions.end();){
 #endif
         if ((*it)->rtti()==RS2::ActionSelectSingle ||
                 (*it)->rtti()==RS2::ActionSelectContour ||
@@ -565,7 +565,7 @@ void RS_EventHandler::cleanUp() {
 #ifdef HAS_CPP11
     for (auto it=currentActions.begin();it != currentActions.end();){
 #else
-    for (QVector<RS_ActionInterface*>::iterator it=currentActions.begin();it != currentActions.end();){
+    for (QList<RS_ActionInterface*>::iterator it=currentActions.begin();it != currentActions.end();){
 #endif
 
         if( (*it)->isFinished()){
@@ -597,7 +597,7 @@ void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
 #ifdef HAS_CPP11
     for (auto it=currentActions.begin();it != currentActions.end();it++){
 #else
-    for (QVector<RS_ActionInterface*>::iterator it=currentActions.begin();it != currentActions.end();it++){
+    for (QList<RS_ActionInterface*>::iterator it=currentActions.begin();it != currentActions.end();it++){
 #endif
         if(! (*it)->isFinished()){
             (*it)->setSnapMode(sm);
@@ -617,7 +617,7 @@ void RS_EventHandler::setSnapRestriction(RS2::SnapRestriction sr) {
 #ifdef HAS_CPP11
     for (auto it=currentActions.begin();it != currentActions.end();it++){
 #else
-    for (QVector<RS_ActionInterface*>::iterator it=currentActions.begin();it != currentActions.end();it++){
+    for (QList<RS_ActionInterface*>::iterator it=currentActions.begin();it != currentActions.end();it++){
 #endif
         if(! (*it)->isFinished()){
             (*it)->setSnapRestriction(sr);
