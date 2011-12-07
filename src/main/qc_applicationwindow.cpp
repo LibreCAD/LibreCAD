@@ -1983,7 +1983,7 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
 
     windowsMenu->clear();
     QAction *cascadeId = windowsMenu->addAction(tr("&Cascade"),
-                                            this, SLOT(slotCascadeSubWindows()));
+                                            workspace, SLOT(cascade()));
     QAction *tileId = windowsMenu->addAction(tr("&Tile"),
                                          this, SLOT(slotTileVertical()));
     QAction *horTileId = windowsMenu->addAction(tr("Tile &Horizontally"),
@@ -2007,65 +2007,6 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
 
 
 /**
- * Called to cascade sub-windows
- */
-void QC_ApplicationWindow::slotCascadeSubWindows() {
-    QWidgetList windows = workspace->windowList();
-//    std::cout<<"windows.size()="<<windows.size()<<std::endl;
-    switch(windows.size()){
-    case 1:
-        windows.first()->showMaximized();
-    case 0:
-        return;
-    default: {
-//        int active=windows.indexOf(mdiArea->activeWindow());
-//        if(active<0) active=windows.size()-1;
-        workspace->cascade();
-//        //find displacement by linear-regression
-//        double mi=0.,mi2=0.,mw=0.,miw=0.,mh=0.,mih=0.;
-//        for (int i=0; i<windows.size(); ++i) {
-//                mi += i;
-//                mi2 += i*i;
-//                double w=windows.at(i)->frameGeometry().x();
-//                mw += w;
-//                miw += i*w;
-//                double h=windows.at(i)->frameGeometry().y();
-//                mh += h;
-//                mih += i*h;
-//        }
-//        mi /= windows.size();
-//        mi2 /= windows.size();
-//        mw /= windows.size();
-//        miw /= windows.size();
-//        mh /= windows.size();
-//        mih /= windows.size();
-//        double d=1./(mi2 - mi*mi);
-//        double disX=(miw-mi*mw)*d;
-//        double disY=(mih-mi*mh)*d;
-//        //End of Linear Regression
-//        //
-        QWidget* window = windows.first();
-        QRect geo=window->geometry();
-        QRect frame=window->frameGeometry();
-//        std::cout<<"Frame=:"<<( frame.height() - geo.height())<<std::endl;
-//        std::cout<<"disX=:"<<disX<<std::endl;
-//        std::cout<<"disY=:"<<disY<<std::endl;
-        int width= workspace->width() -( frame.width() - geo.width())- 20*(windows.size()-1);
-        int height= workspace->height() -( frame.width() - geo.width())- 40*(windows.size()-1);
-        for (int i=0; i<windows.size(); ++i) {
-            window = windows.at(i);
-//            std::cout<<"window:("<<i<<"): pos()="<<(window->pos().x())<<" "<<(window->pos().y())<<std::endl;
-            geo=window->geometry();
-            window->setGeometry(geo.x(),geo.y(),width,height);
-            //autozoom gv, this should be auto
-            static_cast<QC_MDIWindow*>(window)->zoomGraphicView();
-        }
-//        windows.at(active)->activateWindow();
-//        windows.at(active)->raise();
-    }
-    }
-}
-/**
  * Called when the user selects a document window from the
  * window list.
  */
@@ -2073,12 +2014,11 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
     RS_DEBUG->print("QC_ApplicationWindow::slotWindowsMenuActivated");
 
     int ii = ((QAction*)sender())->data().toInt();
-    QC_MDIWindow* w = static_cast<QC_MDIWindow*>(workspace->windowList().at(ii));
+    QWidget* w = workspace->windowList().at(ii);
     if (w!=NULL) {
         // to avoid showing by tile(), bug#3418133
         // todo, is showNormal() indeed the proper way?
 //        w->showNormal();
-        w->zoomGraphicView();
         w->showMaximized();
         w->setFocus();
         workspace->setActiveWindow(w);
@@ -2103,23 +2043,21 @@ void QC_ApplicationWindow::slotTileHorizontal() {
 
     int heightForEach = workspace->height() / windows.count();
     int y = 0;
-    for (int i=0; i<windows.count(); ++i) {
-        QC_MDIWindow* w = static_cast<QC_MDIWindow*>(windows.at(i));
-
+    for (int i=0; i<int(windows.count()); ++i) {
+        QWidget *window = windows.at(i);
 /* RVT_PORT
                 if (window->testWState(WState_Maximized)) {
             // prevent flicker
             window->hide();
             window->showNormal();
         } */
-        int preferredHeight = w->minimumHeight()
-                              + w->parentWidget()->baseSize().height();
+        int preferredHeight = window->minimumHeight()
+                              + window->parentWidget()->baseSize().height();
         int actHeight = qMax(heightForEach, preferredHeight);
 
         //window->parentWidget()->resize(workspace->width(), actHeight);
-        w->parentWidget()->setGeometry(0, y,
+        window->parentWidget()->setGeometry(0, y,
                                             workspace->width(), actHeight);
-        w->zoomGraphicView();
         y+=actHeight;
     }
 }
@@ -2130,21 +2068,7 @@ void QC_ApplicationWindow::slotTileHorizontal() {
  * Tiles MDI windows vertically.
  */
 void QC_ApplicationWindow::slotTileVertical() {
-    QWidgetList windows = workspace->windowList();
-    switch(windows.size()){
-    case 1:
-        windows.first()->showMaximized();
-    case 0:
-        return;
-    default:
-        workspace->tile();
-        for (int i=0; i<windows.size(); ++i) {
-            QC_MDIWindow* w=static_cast<QC_MDIWindow*>(windows.at(i));
-            //            std::cout<<"window:("<<i<<"): pos()="<<(window->pos().x())<<" "<<(window->pos().y())<<std::endl;
-            //autozoom gv, this should be auto
-            w->zoomGraphicView();
-        }
-    }
+    workspace->tile();
 
     /*
        QWidgetList windows = workspace->windowList();
