@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -60,34 +60,35 @@ void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
  * Closes all windows that are editing the given block.
  */
 void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
-	RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow");
-	
-	QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
+        RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow");
+
+        QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
         QMdiArea* mdiAreaCAD = appWindow->getMdiArea();
 
     if (mdiAreaCAD!=NULL) {
-		RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: workspace found");
-		
+                RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: workspace found");
+
         QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
         for (int i = 0; i <windows.size(); ++i) {
-			RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: window: %d",
-				i);
+                        RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: window: %d",
+                                i);
             QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
             if (m!=NULL) {
-				RS_DEBUG->print(
-					"QC_DialogFactory::closeEditBlockWindow: got mdi");
-				if (m->getDocument()==block) {
-					RS_DEBUG->print(
-						"QC_DialogFactory::closeEditBlockWindow: closing mdi");
-					//m->closeMDI(true, false);
+                                RS_DEBUG->print(
+                                        "QC_DialogFactory::closeEditBlockWindow: got mdi");
+                                if (m->getDocument()==block) {
+                                        RS_DEBUG->print(
+                                                "QC_DialogFactory::closeEditBlockWindow: closing mdi");
+                                        //m->closeMDI(true, false);
                                         m->setAttribute(Qt::WA_DeleteOnClose);//RLZ: to ensure the window is deleted
                                         m->close();
-				}
-			}
-		}
-	}
-	appWindow->slotWindowActivated(NULL);
-	
-	RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: OK");
+                                }
+                        }
+                }
+        }
+    QMdiSubWindow* subWindow=NULL;
+        appWindow->slotWindowActivated(subWindow);
+
+        RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: OK");
 }
 

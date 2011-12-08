@@ -98,6 +98,7 @@ public slots:
     void slotFocusCommandLine();
         void slotError(const QString& msg);
 
+    void slotWindowActivated(int);
     void slotWindowActivated(QMdiSubWindow* w);
     void slotWindowsMenuAboutToShow();
     void slotWindowsMenuActivated(bool);
