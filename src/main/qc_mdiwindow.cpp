@@ -525,14 +525,13 @@ std::ostream& operator << (std::ostream& os, QC_MDIWindow& w) {
     } else {
         os << "  parentWindow: NULL\n";
     }
-
-        int i=0;
-        while (!w.childWindows.isEmpty()) {
-                QC_MDIWindow *tmp=w.childWindows.takeFirst();
+    for(int i=0;i<w.childWindows.size();i++){
+        QC_MDIWindow *tmp=w.childWindows.at(i);
         os << "  childWindow[" << i << "]: "
-        << tmp->getId() << "\n";
-                i++;
-        }
+           << tmp->getId() << "\n";
+    }
+
+
     return os;
 }
 
