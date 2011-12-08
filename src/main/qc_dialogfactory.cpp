@@ -25,7 +25,8 @@
 **********************************************************************/
 
 #include "qc_dialogfactory.h"
-
+#include <QMdiArea>
+#include <QMdiSubWindow>
 #include "qc_applicationwindow.h"
 #include "rs_blocklist.h"
 
@@ -62,16 +63,16 @@ void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
 	RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow");
 	
 	QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
-	QWorkspace* workspace = appWindow->getWorkspace();
+        QMdiArea* mdiAreaCAD = appWindow->getMdiArea();
 
-    if (workspace!=NULL) {
+    if (mdiAreaCAD!=NULL) {
 		RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: workspace found");
 		
-        QWidgetList windows = workspace->windowList();
-        for (int i = 0; i < int(windows.count()); ++i) {
+        QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
+        for (int i = 0; i <windows.size(); ++i) {
 			RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: window: %d",
 				i);
-            QC_MDIWindow* m = (QC_MDIWindow*)windows.at(i);
+            QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
             if (m!=NULL) {
 				RS_DEBUG->print(
 					"QC_DialogFactory::closeEditBlockWindow: got mdi");

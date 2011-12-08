@@ -36,7 +36,7 @@
 #include "rs_insert.h"
 #include "rs_text.h"
 
-#include <qapplication.h>
+#include <QMainWindow>
 #include <qcursor.h>
 #include <qpainter.h>
 #include <QMessageBox>
@@ -75,6 +75,8 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
             document->getBlockList()->addListener(graphicView);
         }
     }
+    setFocusPolicy(Qt::ClickFocus);
+    showMaximized();
 }
 
 
@@ -123,12 +125,18 @@ void QC_MDIWindow::addChildWindow(QC_MDIWindow* w) {
  * @see addChildWindow
  */
 void QC_MDIWindow::removeChildWindow(QC_MDIWindow* w) {
-    RS_DEBUG->print("RS_MDIWindow::removeChildWindow()");
+//    RS_DEBUG->print("RS_MDIWindoqapplication.h>w::removeChildWindow()");
+    if(childWindows.size()>0 ){
+        if(childWindows.contains(w)){
+            childWindows.removeAll(w);
+//            suc=true;
+        }
+    }
 
-    bool suc = childWindows.removeAll(w);
-    RS_DEBUG->print("successfully removed child window: %d", (int)suc);
+//    bool suc = childWindows.removeAll(w);
+//    RS_DEBUG->print("successfully removed child window: %d", (int)suc);
 
-    RS_DEBUG->print("children: %d", childWindows.count());
+//    RS_DEBUG->print("children: %d", childWindows.count());
 
 }
 
@@ -253,7 +261,7 @@ void QC_MDIWindow::initView() {
 
     graphicView = new QC_GraphicView(document, this);
     setCentralWidget(graphicView);
-    graphicView->setFocus();
+//    graphicView->setFocus();
 }
 
 
@@ -325,7 +333,15 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
 
     return ret;
 }
-
+void QC_MDIWindow::zoomAuto() {
+    if(graphicView!=NULL){
+        if(graphicView->isPrintPreview()){
+            graphicView->zoomPage();
+        }else{
+            graphicView->zoomAuto();
+        }
+    }
+}
 void QC_MDIWindow::drawChars() {
 
     RS_BlockList* bl = document->getBlockList();
