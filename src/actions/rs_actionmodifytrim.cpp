@@ -49,9 +49,11 @@ RS_ActionModifyTrim::RS_ActionModifyTrim(RS_EntityContainer& container,
 
 RS_ActionModifyTrim::~RS_ActionModifyTrim(){
     if (graphicView != NULL){
-        if (limitEntity->isHighlighted()){
-            limitEntity->setHighlighted(false);
-            graphicView->drawEntity(limitEntity);
+        if (limitEntity!= NULL){
+            if(limitEntity->isHighlighted()){
+                limitEntity->setHighlighted(false);
+                graphicView->drawEntity(limitEntity);
+            }
         }
     }
 }
