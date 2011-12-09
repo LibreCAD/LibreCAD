@@ -70,13 +70,13 @@ public:
     virtual void addLWPolyline(const DRW_LWPolyline& data) = 0;
 
     /** Called for every polyline start */
-    virtual void addPolyline(const DRW_Entity& data) = 0;
+    virtual void addPolyline(const DRW_Polyline& data) = 0;
 
     /** Called for every polyline vertex */
-    virtual void addVertex(const DRW_Entity& data) = 0;
+//    virtual void addVertex(const DRW_Entity& data) = 0;
 	
     /** Called for every spline */
-    virtual void addSpline(const DRW_Entity& data) = 0;
+    virtual void addSpline(const DRW_Spline& data) = 0;
 	
 	/** Called for every spline control point */
     virtual void addControlPoint(const DRW_Entity& data) = 0;
@@ -157,7 +157,7 @@ public:
 	/** 
 	 * Called for every hatch entity. 
 	 */
-    virtual void addHatch(const DRW_Entity& data) = 0;
+    virtual void addHatch(const DRW_Hatch& data) = 0;
 	
 	/** 
 	 * Called for every image entity. 

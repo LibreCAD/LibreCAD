@@ -29,10 +29,6 @@
 
 #include <stdio.h>
 
-//#include "dl_attributes.h"
-#include "dl_codes.h"
-//#include "dl_writer_ascii.h"
-
 #include "rs_dimaligned.h"
 #include "rs_dimangular.h"
 #include "rs_dimdiametric.h"
@@ -368,7 +364,7 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
     setEntityAttributes(polyline, data);
 
     for (unsigned int i=0; i<data.vertlist.size(); i++) {
-        DRW_Vertex *vert = data.vertlist.at(i);
+        DRW_Vertex2D *vert = data.vertlist.at(i);
         RS_Vector v(vert->x, vert->y);
         polyline->addVertex(v, vert->bulge);
     }
@@ -380,16 +376,26 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
 /**
  * Implementation of the method which handles polyline entities.
  */
-void RS_FilterDXFRW::addPolyline(const DRW_Entity& /*data*/) {
-    RS_DEBUG->print("RS_FilterDXF::addPolyline");
-    //RS_DEBUG->print("RS_FilterDXF::addPolyline()");
-/*    RS_PolylineData d(RS_Vector(false),
+void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addPolyline");
+    if ( data.flags&0x10)
+        return; //the polyline is a polygon mesh, not handled
+
+    if ( data.flags&0x40)
+        return; //the polyline is a poliface mesh, TODO convert
+
+    RS_PolylineData d(RS_Vector(false),
                       RS_Vector(false),
                       data.flags&0x1);
     polyline = new RS_Polyline(currentContainer, d);
-    setEntityAttributes(polyline, attributes);
+    setEntityAttributes(polyline, data);
+    for (unsigned int i=0; i<data.vertlist.size(); i++) {
+        DRW_Vertex *vert = data.vertlist.at(i);
+        RS_Vector v(vert->x, vert->y);
+        polyline->addVertex(v, vert->bulge);
+    }
 
-    currentContainer->addEntity(polyline);*/
+    currentContainer->addEntity(polyline);
 }
 
 
@@ -397,23 +403,23 @@ void RS_FilterDXFRW::addPolyline(const DRW_Entity& /*data*/) {
 /**
  * Implementation of the method which handles polyline vertices.
  */
-void RS_FilterDXFRW::addVertex(const DRW_Entity& /*data*/) {
-/*    RS_DEBUG->print("RS_FilterDXF::addVertex(): %f/%f bulge: %f",
+/*void RS_FilterDXFRW::addVertex(const DRW_Entity& data) {
+    RS_DEBUG->print("RS_FilterDXF::addVertex(): %f/%f bulge: %f",
                     data.x, data.y, data.bulge);
 
     RS_Vector v(data.x, data.y);
 
     if (polyline!=NULL) {
         polyline->addVertex(v, data.bulge);
-    }*/
-}
+    }
+}*/
 
 
 
 /**
  * Implementation of the method which handles splines.
  */
-void RS_FilterDXFRW::addSpline(const DRW_Entity& /*data*/) {
+void RS_FilterDXFRW::addSpline(const DRW_Spline& data) {
 /*    RS_DEBUG->print("RS_FilterDXF::addSpline: degree: %d", data.degree);
 
     if (data.degree>=1 && data.degree<=3) {
@@ -915,7 +921,7 @@ void RS_FilterDXFRW::addLeaderVertex(const DRW_Entity& /*data*/) {
 /**
  * Implementation of the method which handles hatch entities.
  */
-void RS_FilterDXFRW::addHatch(const DRW_Entity& /*data*/) {
+void RS_FilterDXFRW::addHatch(const DRW_Hatch& data) {
     RS_DEBUG->print("RS_FilterDXF::addHatch()");
 
 /*    hatch = new RS_Hatch(currentContainer,
@@ -1913,7 +1919,7 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
             if (e->rtti()==RS2::EntityArc) {
                 bulge = ((RS_Arc*)e)->getBulge();
             }
-            pol.addVertex( DRW_Vertex(ae->getStartpoint().x,
+            pol.addVertex( DRW_Vertex2D(ae->getStartpoint().x,
                                       ae->getStartpoint().y, bulge));
     }
     if (l->isClosed()) {
@@ -1923,7 +1929,7 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
         if (ae->rtti()==RS2::EntityArc) {
             bulge = ((RS_Arc*)ae)->getBulge();
         }
-        pol.addVertex( DRW_Vertex(ae->getEndpoint().x,
+        pol.addVertex( DRW_Vertex2D(ae->getEndpoint().x,
                                   ae->getEndpoint().y, bulge));
     }
     pol.vertexnum = pol.vertlist.size();
@@ -2757,9 +2763,9 @@ RS_Color RS_FilterDXFRW::numberToColor(int num, bool comp) {
         } else if (num==256) {
             return RS_Color(RS2::FlagByLayer);
         } else if (num<=255 && num>=0) {
-            return RS_Color((int)(dxfColors[num][0]*255),
-                            (int)(dxfColors[num][1]*255),
-                            (int)(dxfColors[num][2]*255));
+            return RS_Color((int)(DRW::dxfColors[num][0]*255),
+                            (int)(DRW::dxfColors[num][1]*255),
+                            (int)(DRW::dxfColors[num][2]*255));
         } else {
             RS_DEBUG->print(RS_Debug::D_WARNING,
                                 "RS_FilterDXF::numberToColor: Invalid color number given.");
@@ -2802,9 +2808,9 @@ int RS_FilterDXFRW::colorToNumber(const RS_Color& col) {
 
         // Run through the whole table and compare
         for (int i=1; i<=255; i++) {
-            int d = abs(col.red()-(int)(dxfColors[i][0]*255))
-                    + abs(col.green()-(int)(dxfColors[i][1]*255))
-                    + abs(col.blue()-(int)(dxfColors[i][2]*255));
+            int d = abs(col.red()-(int)(DRW::dxfColors[i][0]*255))
+                    + abs(col.green()-(int)(DRW::dxfColors[i][1]*255))
+                    + abs(col.blue()-(int)(DRW::dxfColors[i][2]*255));
 
             if (d<diff) {
                 /*

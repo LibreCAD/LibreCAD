@@ -90,9 +90,8 @@ public:
     virtual void addEllipse(const DRW_Ellipse& data);
     virtual void addLWPolyline(const DRW_LWPolyline& data);
     virtual void addText(const DRW_Text& data);
-    virtual void addPolyline(const DRW_Entity& data);
-    virtual void addVertex(const DRW_Entity& data);
-    virtual void addSpline(const DRW_Entity& data);
+    virtual void addPolyline(const DRW_Polyline& data);
+    virtual void addSpline(const DRW_Spline& data);
     virtual void addKnot(const DRW_Entity&) {}
     virtual void addControlPoint(const DRW_Entity& data);
     virtual void addInsert(const DRW_Insert& data);
@@ -115,7 +114,7 @@ public:
                                  const DRW_Entity& edata);
     virtual void addLeader(const DRW_Entity& data);
     virtual void addLeaderVertex(const DRW_Entity& data);
-    virtual void addHatch(const DRW_Entity& data);
+    virtual void addHatch(const DRW_Hatch& data);
     virtual void addHatchLoop(const DRW_Entity& data);
     virtual void addHatchEdge(const DRW_Entity& data);
     virtual void addImage(const DRW_Entity& data);

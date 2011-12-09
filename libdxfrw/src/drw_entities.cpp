@@ -231,7 +231,7 @@ void DRW_Insert::parseCode(int code, dxfReader *reader){
 void DRW_LWPolyline::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 10: {
-        vertex = new DRW_Vertex();
+        vertex = new DRW_Vertex2D();
         vertlist.push_back(vertex);
         vertex->x = reader->getDouble();
         break; }
@@ -333,3 +333,74 @@ void DRW_MText::parseCode(int code, dxfReader *reader){
         break;
     }
 }
+
+void DRW_Polyline::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 70:
+        flags = reader->getInt32();
+        break;
+    case 40:
+        defstawidth = reader->getDouble();
+        break;
+    case 41:
+        defendwidth = reader->getDouble();
+        break;
+    case 71:
+        vertexcount = reader->getInt32();
+        break;
+    case 72:
+        facecount = reader->getInt32();
+        break;
+    case 73:
+        smoothM = reader->getInt32();
+        break;
+    case 74:
+        smoothN = reader->getInt32();
+        break;
+    case 75:
+        curvetype = reader->getInt32();
+        break;
+    default:
+        DRW_Point::parseCode(code, reader);
+        break;
+    }
+}
+
+void DRW_Vertex::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 70:
+        flags = reader->getInt32();
+        break;
+    case 40:
+        stawidth = reader->getDouble();
+        break;
+    case 41:
+        endwidth = reader->getDouble();
+        break;
+    case 42:
+        bulge = reader->getDouble();
+        break;
+    case 50:
+        tgdir = reader->getDouble();
+        break;
+    case 71:
+        vindex1 = reader->getInt32();
+        break;
+    case 72:
+        vindex2 = reader->getInt32();
+        break;
+    case 73:
+        vindex3 = reader->getInt32();
+        break;
+    case 74:
+        vindex4 = reader->getInt32();
+        break;
+    case 91:
+        identifier = reader->getInt32();
+        break;
+    default:
+        DRW_Point::parseCode(code, reader);
+        break;
+    }
+}
+
