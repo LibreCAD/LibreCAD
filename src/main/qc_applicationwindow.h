@@ -103,9 +103,11 @@ public slots:
     void slotWindowsMenuAboutToShow();
     void slotWindowsMenuActivated(bool);
     void slotCascade();
+    void slotTile();
     void slotTileHorizontal();
     void slotTileVertical();
     void slotToggleTab();
+    void slotZoomAuto();
 
     void slotPenChanged(RS_Pen p);
     void slotSnapsChanged(RS_SnapMode s);

@@ -2027,7 +2027,8 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
                                              this, SLOT(slotToggleTab()));
         }else{
             windowsMenu->addAction(tr("&Cascade"), this, SLOT(slotCascade()));
-            windowsMenu->addAction(tr("&Tile"), mdiAreaCAD, SLOT(tileSubWindows()));
+//            windowsMenu->addAction(tr("&Tile"), mdiAreaCAD, SLOT(tileSubWindows()));
+            windowsMenu->addAction(tr("&Tile"), this, SLOT(slotTile()));
             windowsMenu->addAction(tr("Tile &Vertically"), this, SLOT(slotTileVertical()));
             windowsMenu->addAction(tr("Tile &Horizontally"), this, SLOT(slotTileHorizontal()));
             windowsMenu->addAction(tr("Ta&b mode"), this, SLOT(slotToggleTab()));
@@ -2094,7 +2095,21 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
     }
 }
 
-
+/**
+ * Cascade MDI windows
+ */
+void QC_ApplicationWindow::slotTile() {
+        mdiAreaCAD->tileSubWindows();
+        slotZoomAuto();
+}
+//auto zoom the graphicView of sub-windows
+void QC_ApplicationWindow::slotZoomAuto() {
+    QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
+    for(int i=0;i<windows.size();i++){
+        QMdiSubWindow *window = windows.at(i);
+        qobject_cast<QC_MDIWindow*>(window->widget())->zoomAuto();
+    }
+}
 /**
  * Cascade MDI windows
  */
