@@ -2914,10 +2914,11 @@ void QC_ApplicationWindow::slotFileClose() {
     QC_MDIWindow* w = getMDIWindow();
 
     if(w!=NULL){
-        int pos=openedFiles.indexOf(w->getDocument()->getFilename());
-        if(pos>=0) {
-            openedFiles.erase(openedFiles.begin()+pos);
-        }
+            openedFiles.removeAll(w->getDocument()->getFilename());
+//        int pos=openedFiles.indexOf(w->getDocument()->getFilename());
+//        if(pos>=0) {
+//            openedFiles.erase(openedFiles.begin()+pos);
+//        }
     }
     mdiAreaCAD->closeActiveSubWindow();
 }
