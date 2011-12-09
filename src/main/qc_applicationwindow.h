@@ -27,10 +27,7 @@
 #ifndef QC_APPLICATIONWINDOW_H
 #define QC_APPLICATIONWINDOW_H
 
-
-#undef QT_NO_WORKSPACE
-#include <qworkspace.h>
-
+#include <QMdiSubWindow>
 #include "qc_mdiwindow.h"
 #include "qg_mainwindowinterface.h"
 
@@ -39,6 +36,8 @@
 #include <qsproject.h>
 #endif
 
+class QMdiArea;
+class QC_MDIWindow;
 class QG_LibraryWidget;
 class QG_CadToolBar;
 class QG_SnapToolBar;
@@ -99,11 +98,14 @@ public slots:
     void slotFocusCommandLine();
         void slotError(const QString& msg);
 
-    void slotWindowActivated(QWidget* w);
+    void slotWindowActivated(int);
+    void slotWindowActivated(QMdiSubWindow* w);
     void slotWindowsMenuAboutToShow();
     void slotWindowsMenuActivated(bool);
+    void slotCascade();
     void slotTileHorizontal();
     void slotTileVertical();
+    void slotToggleTab();
 
     void slotPenChanged(RS_Pen p);
     void slotSnapsChanged(RS_SnapMode s);
@@ -208,24 +210,17 @@ public:
     }
 
     /**
-     * @return Pointer to workspace.
+     * @return Pointer to MdiArea.
      */
-    QWorkspace* getWorkspace() {
-        return workspace;
+    QMdiArea* getMdiArea() {
+        return mdiAreaCAD;
     }
 
     /**
      * @return Pointer to the currently active MDI Window or NULL if no
      * MDI Window is active.
      */
-    QC_MDIWindow* getMDIWindow() {
-                if (workspace!=NULL) {
-                return (QC_MDIWindow*)workspace->activeWindow();
-                }
-                else {
-                        return NULL;
-                }
-    }
+    QC_MDIWindow* getMDIWindow();
 
     /**
      * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
@@ -325,8 +320,9 @@ private:
     static QC_ApplicationWindow* appWindow;
     QTimer *autosaveTimer;
 
-    /** Workspace for MDI */
-    QWorkspace* workspace;
+    /** MdiArea for MDI */
+    QMdiArea* mdiAreaCAD;
+    bool mdiAreaTab;
 
         /** Dialog factory */
         QC_DialogFactory* dialogFactory;
