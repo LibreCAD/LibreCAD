@@ -43,6 +43,12 @@ RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
 
 
 RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe() {
+    if(lines.size()>0){
+        for(int i=0;i<lines.size();i++) {
+            if(lines.at(i) != NULL) lines.at(i)->setHighlighted(false);
+        }
+        graphicView->redraw(RS2::RedrawDrawing);
+    }
     lines.clear();
 }
 
@@ -57,18 +63,21 @@ QAction* RS_ActionDrawCircleInscribe::createGUIAction(RS2::ActionType /*type*/, 
 
 void RS_ActionDrawCircleInscribe::init(int status) {
     RS_PreviewActionInterface::init(status);
+    if(status>=0) {
+        RS_Snapper::suspend();
+    }
 
     if (status==SetLine1) {
         lines.clear();
     }
 }
 
-void RS_ActionDrawCircleInscribe::finish(bool updateTB){
-    for(int i=0;i<lines.size();i++) lines[i]->setHighlighted(false);
-    graphicView->redraw(RS2::RedrawDrawing);
-    lines.clear();
-    RS_PreviewActionInterface::finish(updateTB);
-}
+//void RS_ActionDrawCircleInscribe::finish(bool updateTB){
+////    for(int i=0;i<lines.size();i++) lines[i]->setHighlighted(false);
+////    graphicView->redraw(RS2::RedrawDrawing);
+////    lines.clear();
+//    RS_PreviewActionInterface::finish(updateTB);
+//}
 
 
 void RS_ActionDrawCircleInscribe::trigger() {
@@ -124,8 +133,7 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
                 return;
             }
         }
-        coord=snapPoint(e);
-        deleteSnapper();
+        coord= graphicView->toGraph(e->x(), e->y());
         lines.resize(getStatus());
         lines.push_back(static_cast<RS_Line*>(en));
 //        lines[getStatus()]=static_cast<RS_Line*>(en);
@@ -181,8 +189,7 @@ void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent* e) {
         }
         lines.resize(getStatus());
         lines.push_back(static_cast<RS_Line*>(en));
-coord=snapPoint(e);
-        deleteSnapper();
+        coord= graphicView->toGraph(e->x(), e->y());
         switch (getStatus()) {
         case SetLine1:
         case SetLine2:
