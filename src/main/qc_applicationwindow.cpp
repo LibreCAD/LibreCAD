@@ -528,8 +528,6 @@ void QC_ApplicationWindow::initMDI() {
     setCentralWidget(vb);
     connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
             this, SLOT(slotWindowActivated(QMdiSubWindow*)));
-//    connect(mdiAreaCAD, SIGNAL(currentChanged(int)),
-//            this, SLOT(slotWindowActivated(int)));
 
     RS_DEBUG->print("QC_ApplicationWindow::initMDI() end");
 }
@@ -2261,17 +2259,20 @@ void QC_ApplicationWindow::slotToggleTab() {
 
         }else{
             mdiAreaCAD->setViewMode(QMdiArea::SubWindowView);
-            QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
-            QMdiSubWindow* active=mdiAreaCAD->activeSubWindow();
-            for(int i=0;i<windows.size();i++){
-                QMdiSubWindow* m=windows.at(i);
-                m->show();
-                if(m!=active){
-                    m->lower();
-                }else{
-                    m->raise();
-                }
-            }
+            slotCascade();
+//            mdiAreaCAD->setViewMode(QMdiArea::SubWindowView);
+//            QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
+//            QMdiSubWindow* active=mdiAreaCAD->activeSubWindow();
+//            for(int i=0;i<windows.size();i++){
+//                QMdiSubWindow* m=windows.at(i);
+//                m->show();
+//                if(m!=active){
+//                    m->lower();
+//                }else{
+//                    m->showMaximized();
+//                    m->raise();
+//                }
+//            }
         }
 }
 /**
