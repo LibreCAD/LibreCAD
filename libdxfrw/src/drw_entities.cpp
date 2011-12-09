@@ -404,3 +404,79 @@ void DRW_Vertex::parseCode(int code, dxfReader *reader){
     }
 }
 
+void DRW_Hatch::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 2:
+        name = reader->getString();
+        break;
+    case 70:
+        flags = reader->getInt32();
+        break;
+    case 71:
+        associative = reader->getInt32();
+        break;
+    case 72:        /*edge type*/
+        if (reader->getInt32() == 1){ //line
+            addLine();
+        } else if (reader->getInt32() == 2){ //arc
+            addArc();
+        } else if (reader->getInt32() == 3){ //elliptic arc
+            addEllipse();
+        } else if (reader->getInt32() == 4){ //spline
+            addSpline();
+        }
+        break;
+    case 10:
+        if (pt) pt->x = reader->getDouble();
+        break;
+    case 11:
+        if (pt) pt->y = reader->getDouble();
+        break;
+    case 20:
+        if (line) line->bx = reader->getDouble();
+        else if (ellipse) ellipse->bx = reader->getDouble();
+        break;
+    case 21:
+        if (line) line->by = reader->getDouble();
+        else if (ellipse) ellipse->by = reader->getDouble();
+        break;
+/*    case 40:
+        stawidth = reader->getDouble();
+        break;
+    case 41:
+        endwidth = reader->getDouble();
+        break;
+    case 42:
+        bulge = reader->getDouble();
+        break;
+    case 50:
+        tgdir = reader->getDouble();
+        break;
+    case 71:
+        vindex1 = reader->getInt32();
+        break;
+    case 72:
+        vindex2 = reader->getInt32();
+        break;
+    case 73:
+        vindex3 = reader->getInt32();
+        break;
+    case 74:
+        vindex4 = reader->getInt32();
+        break;*/
+    case 91:
+        loopsnum = reader->getInt32();
+        looplist.reserve(loopsnum);
+        break;
+    case 92:
+        loop = new DRW_HatchLoop(reader->getInt32());
+        looplist.push_back(loop);
+        break;
+    case 93:
+        loop->numedges = reader->getInt32();
+        break;
+    default:
+        DRW_Point::parseCode(code, reader);
+        break;
+    }
+}

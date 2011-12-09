@@ -1182,24 +1182,25 @@ bool dxfRW::processText() {
 
 bool dxfRW::processHatch() {
     DBG("dxfRW::processHatch");
-/*    int code;
-    DRW_Text txt;
+    int code;
+    DRW_Hatch hatch;
     while (reader->readRec(&code, !binary)) {
         DBG(code); DBG("\n");
         switch (code) {
         case 0: {
             nextentity = reader->getString();
             DBG(nextentity); DBG("\n");
-            iface->addText(txt);
+            iface->addHatch(hatch);
             return true;  //found new entity or ENDSEC, terminate
         }
         default:
-            txt.parseCode(code, reader);
+            hatch.parseCode(code, reader);
             break;
         }
-    }*/
+    }
     return true;
 }
+
 
 bool dxfRW::processSpline() {
     DBG("dxfRW::processSpline");

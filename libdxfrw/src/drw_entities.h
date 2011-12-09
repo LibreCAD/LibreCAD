@@ -557,123 +557,6 @@ public:
     std::vector<DRW_Vertex *> vertlist;  /*!< vertex list */
 };
 
-//! Class to handle hatch loop
-/*!
-*  Class to handle hatch loop
-*  @author Rallaz
-*/
-class DRW_HatchLoop /*: public DRW_Point*/ {
-public:
-    DRW_HatchLoop() {
-/*        eType = DRW::HATCH;
-        loopsnum = angle = scale = 0;
-        hstyle = ex = ey = 0;
-        ez = flags = hpattern = 1;
-        deflines = doubleflag = 0;*/
-//        smoothM = smoothN = 0;
-//        vertex = NULL;
-    }
-    ~DRW_HatchLoop() {
-        while (!pollist.empty()) {
-           pollist.pop_back();
-         }
-        while (!objlist.empty()) {
-           objlist.pop_back();
-         }
-    }
-/*    void addVertex (DRW_Vertex v) {
-        DRW_Vertex *vert = new DRW_Vertex();
-        vert->x = v.x;
-        vert->y = v.y;
-        vert->z = v.z;
-        vert->stawidth = v.stawidth;
-        vert->endwidth = v.endwidth;
-        vert->bulge = v.bulge;
-        vertlist.push_back(vert);
-    }
-    void appendVertex (DRW_Vertex *v) {
-        vertlist.push_back(v);
-    }*/
-
-//    void parseCode(int code, dxfReader *reader);
-
-public:
-    string name;               /*!< hatch pattern name, code 2 */
-    int flags;                     /*!< solid fill flag, code 70, solid=1, pattern=0 */
-    int associative;           /*!< associativity, code 71, associatve=1, non-assoc.=0 */
-    int hstyle;                   /*!< hatch style, code 75 */
-    int hpattern;               /*!< hatch pattern, code 76 */
-    int doubleflag;           /*!< hatch pattern double flag, code 76, double=1, single=0 */
-    int loopsnum;             /*!< namber of boundary paths (loops), code 91 */
-    double angle;             /*!< hatch pattern angle, code 52 */
-    double scale;              /*!< hatch pattern scale, code 41 */
-    int deflines;                /*!< number of pattern definition lines, code 78 */
-//    int facecount;            /*!< polygon mesh N vertex or  polyface face num, code 72, default 0 */
-//    int smoothM;             /*!< smooth surface M density, code 73, default 0 */
-//    int smoothN;             /*!< smooth surface M density, code 74, default 0 */
-
-//    DRW_Vertex *vertex;       /*!< current vertex to add data */
-    std::vector<DRW_LWPolyline *> pollist;  /*!< polyline list */
-    std::vector<DRW_Entity *> objlist;          /*!< entities list */
-};
-
-//! Class to handle hatch entity
-/*!
-*  Class to handle hatch entity
-*  @author Rallaz
-*/
-class DRW_Hatch : public DRW_Point {
-public:
-    DRW_Hatch() {
-        eType = DRW::HATCH;
-        loopsnum = angle = scale = 0;
-        hstyle = ex = ey = 0;
-        ez = flags = hpattern = 1;
-        deflines = doubleflag = 0;
-//        smoothM = smoothN = 0;
-//        vertex = NULL;
-    }
-    ~DRW_Hatch() {
-        while (!looplist.empty()) {
-           looplist.pop_back();
-         }
-    }
-/*    void addVertex (DRW_Vertex v) {
-        DRW_Vertex *vert = new DRW_Vertex();
-        vert->x = v.x;
-        vert->y = v.y;
-        vert->z = v.z;
-        vert->stawidth = v.stawidth;
-        vert->endwidth = v.endwidth;
-        vert->bulge = v.bulge;
-        vertlist.push_back(vert);
-    }*/
-    void appendLoop (DRW_HatchLoop *v) {
-        looplist.push_back(v);
-    }
-
-    void parseCode(int code, dxfReader *reader);
-
-public:
-    string name;               /*!< hatch pattern name, code 2 */
-    int flags;                     /*!< solid fill flag, code 70, solid=1, pattern=0 */
-    int associative;           /*!< associativity, code 71, associatve=1, non-assoc.=0 */
-    int hstyle;                   /*!< hatch style, code 75 */
-    int hpattern;               /*!< hatch pattern, code 76 */
-    int doubleflag;           /*!< hatch pattern double flag, code 76, double=1, single=0 */
-    int loopsnum;             /*!< namber of boundary paths (loops), code 91 */
-    double angle;             /*!< hatch pattern angle, code 52 */
-    double scale;              /*!< hatch pattern scale, code 41 */
-    int deflines;                /*!< number of pattern definition lines, code 78 */
-//    int facecount;            /*!< polygon mesh N vertex or  polyface face num, code 72, default 0 */
-//    int smoothM;             /*!< smooth surface M density, code 73, default 0 */
-//    int smoothN;             /*!< smooth surface M density, code 74, default 0 */
-
-//    DRW_Vertex *vertex;       /*!< current vertex to add data */
-    std::vector<DRW_HatchLoop *> looplist;  /*!< polyline list */
-//    std::vector<DRW_Entity *> objlist;          /*!< entities list */
-};
-
 //! Class to handle spline entity
 /*!
 *  Class to handle spline entity
@@ -723,6 +606,148 @@ public:
 
 //    DRW_Vertex *vertex;       /*!< current vertex to add data */
     std::vector<DRW_Vertex *> vertlist;  /*!< vertex list */
+};
+
+//! Class to handle hatch loop
+/*!
+*  Class to handle hatch loop
+*  @author Rallaz
+*/
+class DRW_HatchLoop /*: public DRW_Point*/ {
+public:
+    DRW_HatchLoop(int t) {
+        type = t;
+        numedges = 0;
+    }
+
+    ~DRW_HatchLoop() {
+        while (!pollist.empty()) {
+           pollist.pop_back();
+         }
+        while (!objlist.empty()) {
+           objlist.pop_back();
+         }
+    }
+/*    void addVertex (DRW_Vertex v) {
+        DRW_Vertex *vert = new DRW_Vertex();
+        vert->x = v.x;
+        vert->y = v.y;
+        vert->z = v.z;
+        vert->stawidth = v.stawidth;
+        vert->endwidth = v.endwidth;
+        vert->bulge = v.bulge;
+        vertlist.push_back(vert);
+    }
+    void appendVertex (DRW_Vertex *v) {
+        vertlist.push_back(v);
+    }*/
+
+//    void parseCode(int code, dxfReader *reader);
+
+public:
+    int type;               /*!< boundary path type, code 92, polyline=2, default=0 */
+    int numedges;           /*!< number of edges (if not a polyline), code 93 */
+
+    std::vector<DRW_LWPolyline *> pollist;  /*!< polyline list */
+    std::vector<DRW_Entity *> objlist;      /*!< entities list */
+};
+
+//! Class to handle hatch entity
+/*!
+*  Class to handle hatch entity
+*  @author Rallaz
+*/
+class DRW_Hatch : public DRW_Point {
+public:
+    DRW_Hatch() {
+        eType = DRW::HATCH;
+        loopsnum = angle = scale = 0;
+        hstyle = ex = ey = 0;
+        ez = flags = hpattern = 1;
+        deflines = doubleflag = 0;
+        loop = NULL;
+        clearEntities();
+//        smoothM = smoothN = 0;
+//        vertex = NULL;
+    }
+    ~DRW_Hatch() {
+        while (!looplist.empty()) {
+           looplist.pop_back();
+         }
+    }
+
+/*    void addVertex (DRW_Vertex v) {
+        DRW_Vertex *vert = new DRW_Vertex();
+        vert->x = v.x;
+        vert->y = v.y;
+        vert->z = v.z;
+        vert->stawidth = v.stawidth;
+        vert->endwidth = v.endwidth;
+        vert->bulge = v.bulge;
+        vertlist.push_back(vert);
+    }*/
+    void appendLoop (DRW_HatchLoop *v) {
+        looplist.push_back(v);
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    string name;               /*!< hatch pattern name, code 2 */
+    int flags;                 /*!< solid fill flag, code 70, solid=1, pattern=0 */
+    int associative;           /*!< associativity, code 71, associatve=1, non-assoc.=0 */
+    int hstyle;                /*!< hatch style, code 75 */
+    int hpattern;              /*!< hatch pattern, code 76 */
+    int doubleflag;            /*!< hatch pattern double flag, code 76, double=1, single=0 */
+    int loopsnum;              /*!< namber of boundary paths (loops), code 91 */
+    double angle;              /*!< hatch pattern angle, code 52 */
+    double scale;              /*!< hatch pattern scale, code 41 */
+    int deflines;              /*!< number of pattern definition lines, code 78 */
+//    int facecount;            /*!< polygon mesh N vertex or  polyface face num, code 72, default 0 */
+//    int smoothM;             /*!< smooth surface M density, code 73, default 0 */
+//    int smoothN;             /*!< smooth surface M density, code 74, default 0 */
+
+    std::vector<DRW_HatchLoop *> looplist;  /*!< polyline list */
+//    std::vector<DRW_Entity *> objlist;          /*!< entities list */
+
+private:
+    void clearEntities(){
+        line = NULL;
+        arc = NULL;
+        ellipse = NULL;
+        spline = NULL;
+    }
+
+    void addLine() {
+        clearEntities();
+        pt = line = new DRW_Line;
+        if (loop) loop->objlist.push_back(line);
+    }
+
+    void addArc() {
+        clearEntities();
+        pt = arc = new DRW_Arc;
+        if (loop) loop->objlist.push_back(arc);
+    }
+
+    void addEllipse() {
+        clearEntities();
+        pt = ellipse = new DRW_Ellipse;
+        if (loop) loop->objlist.push_back(ellipse);
+    }
+
+    void addSpline() {
+        clearEntities();
+        pt = spline = new DRW_Spline;
+        if (loop) loop->objlist.push_back(spline);
+    }
+
+    DRW_HatchLoop *loop;       /*!< current loop to add data */
+    DRW_Line *line;
+    DRW_Arc *arc;
+    DRW_Ellipse *ellipse;
+    DRW_Spline *spline;
+    DRW_Point *pt;
 };
 
 
