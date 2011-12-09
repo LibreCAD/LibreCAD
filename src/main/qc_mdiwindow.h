@@ -27,9 +27,8 @@
 #ifndef QC_MDIWINDOW_H
 #define QC_MDIWINDOW_H
 
-#include <qmainwindow.h>
-
-#include <qlist.h>
+#include <QList>
+#include <QMainWindow>
 
 #include "qc_graphicview.h"
 
@@ -38,6 +37,7 @@
 #include <QCloseEvent>
 
 #include "rs_document.h"
+
 
 
 /**
@@ -67,6 +67,8 @@ public slots:
     bool slotFileSaveAs(bool &cancelled);
     bool slotFileClose(bool force);
     void slotFilePrint();
+    void zoomAuto();
+
 
 public:
     /** @return Pointer to graphic view */

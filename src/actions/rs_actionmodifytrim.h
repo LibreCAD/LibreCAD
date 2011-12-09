@@ -50,7 +50,7 @@ public:
     RS_ActionModifyTrim(RS_EntityContainer& container,
                         RS_GraphicView& graphicView,
                         bool both=false);
-    ~RS_ActionModifyTrim() {}
+    ~RS_ActionModifyTrim();
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
@@ -61,7 +61,7 @@ public:
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
     virtual void updateToolBar();
-    virtual void finish(bool updateTB = true );
+//    virtual void finish(bool updateTB = true );
 
 
 private:

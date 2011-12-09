@@ -43,6 +43,12 @@ RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
 
 
 RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe() {
+    if(lines.size()>0){
+        for(int i=0;i<lines.size();i++) {
+            if(lines.at(i) != NULL) lines.at(i)->setHighlighted(false);
+        }
+        graphicView->redraw(RS2::RedrawDrawing);
+    }
     lines.clear();
 }
 
@@ -57,18 +63,20 @@ QAction* RS_ActionDrawEllipseInscribe::createGUIAction(RS2::ActionType /*type*/,
 
 void RS_ActionDrawEllipseInscribe::init(int status) {
     RS_PreviewActionInterface::init(status);
-
+    if(status>=0) {
+        RS_Snapper::suspend();
+    }
     if (status==SetLine1) {
         lines.clear();
     }
 }
 
-void RS_ActionDrawEllipseInscribe::finish(bool updateTB){
-    for(int i=0;i<lines.size();i++) lines[i]->setHighlighted(false);
-    graphicView->redraw(RS2::RedrawDrawing);
-    lines.clear();
-    RS_PreviewActionInterface::finish(updateTB);
-}
+//void RS_ActionDrawEllipseInscribe::finish(bool updateTB){
+//    for(int i=0;i<lines.size();i++) lines[i]->setHighlighted(false);
+//    graphicView->redraw(RS2::RedrawDrawing);
+//    lines.clear();
+//    RS_PreviewActionInterface::finish(updateTB);
+//}
 
 
 void RS_ActionDrawEllipseInscribe::trigger() {

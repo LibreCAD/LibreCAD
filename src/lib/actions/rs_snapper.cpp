@@ -474,7 +474,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
                                    RS2::ResolveLevel level) {
 
     RS_DEBUG->print("RS_Snapper::catchEntity");
-                    std::cout<<"RS_Snapper::catchEntity(): enType= "<<enType<<std::endl;
+//                    std::cout<<"RS_Snapper::catchEntity(): enType= "<<enType<<std::endl;
 
     // set default distance for points inside solids
     RS_EntityContainer ec(NULL,false);
@@ -485,7 +485,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
             RS_Entity* parent(en->getParent());
             bool matchFound(false);
             while(parent != NULL) {
-                    std::cout<<"RS_Snapper::catchEntity(): parent->rtti()="<<parent->rtti()<<" enType= "<<enType<<std::endl;
+//                    std::cout<<"RS_Snapper::catchEntity(): parent->rtti()="<<parent->rtti()<<" enType= "<<enType<<std::endl;
                 if(parent->rtti() == enType) {
                     matchFound=true;
                     break;
