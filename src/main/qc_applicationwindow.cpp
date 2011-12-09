@@ -509,6 +509,7 @@ void QC_ApplicationWindow::initMDI() {
     RS_DEBUG->print("QC_ApplicationWindow::initMDI() begin");
 
     QFrame *vb = new QFrame(this);
+    vb->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
     QVBoxLayout *layout = new QVBoxLayout;
     vb->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     layout->setContentsMargins ( 0, 0, 0, 0 );
@@ -519,7 +520,7 @@ void QC_ApplicationWindow::initMDI() {
     mdiAreaCAD->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     mdiAreaCAD->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     mdiAreaCAD->setFocusPolicy(Qt::StrongFocus);
-    mdiAreaCAD->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
+    mdiAreaCAD->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 #if QT_VERSION >= 0x040800
     mdiAreaCAD->setTabsClosable(true);
 #endif
@@ -2376,14 +2377,15 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
 
     RS_DEBUG->print("  showing MDI window");
-    if (mdiAreaCAD->subWindowList().isEmpty()) {
-        w->showMaximized();
-        w->setFocus();
-    } else {
+//    if (mdiAreaCAD->subWindowList().isEmpty()) {
+//        w->showMaximized();
+//        w->setFocus();
+//    } else {
         w->show();
+        w->zoomAuto();
         subWindow->showMaximized();
         subWindow->setFocus();
-    }
+//    }
 //    slotWindowActivated(subWindow);
     statusBar()->showMessage(tr("New Drawing created."), 2000);
 
