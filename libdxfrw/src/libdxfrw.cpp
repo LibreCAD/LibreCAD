@@ -358,7 +358,7 @@ bool dxfRW::writeLWPolyline(DRW_LWPolyline *ent){
     writer->writeInt16(70, ent->flags);
     writer->writeDouble(43, ent->width);
     for (int i = 0;  i< ent->vertexnum; i++){
-        DRW_Vertex *v = ent->vertlist.at(i);
+        DRW_Vertex2D *v = ent->vertlist.at(i);
         writer->writeDouble(10, v->x);
         writer->writeDouble(20, v->y);
         if (v->stawidth != 0)
@@ -900,8 +900,14 @@ bool dxfRW::processEntities(bool isblock) {
             processInsert();
         } else if (nextentity == "LWPOLYLINE") {
             processLWPolyline();
+        } else if (nextentity == "POLYLINE") {
+            processPolyline();
         } else if (nextentity == "TEXT") {
             processText();
+        } else if (nextentity == "HATCH") {
+            processHatch();
+        } else if (nextentity == "SPLINE") {
+            processSpline();
         } else {
             if (reader->readRec(&code, !binary)){
                 if (code == 0)
@@ -1103,6 +1109,56 @@ bool dxfRW::processLWPolyline() {
     return true;
 }
 
+bool dxfRW::processPolyline() {
+    DBG("dxfRW::processPolyline");
+    int code;
+    DRW_Polyline pl;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            if (nextentity != "VERTEX") {
+            iface->addPolyline(pl);
+            return true;  //found new entity or ENDSEC, terminate
+            } else {
+                processVertex(&pl);
+            }
+        }
+        default:
+            pl.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
+bool dxfRW::processVertex(DRW_Polyline *pl) {
+    DBG("dxfRW::processVertex");
+    int code;
+    DRW_Vertex *v = new DRW_Vertex();
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            pl->appendVertex(v);
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            if (nextentity == "SEQEND") {
+            return true;  //found SEQEND no more vertex, terminate
+            } else if (nextentity == "VERTEX"){
+                v = new DRW_Vertex(); //another vertex
+            }
+        }
+        default:
+            v->parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
 bool dxfRW::processText() {
     DBG("dxfRW::processText");
     int code;
@@ -1121,6 +1177,49 @@ bool dxfRW::processText() {
             break;
         }
     }
+    return true;
+}
+
+bool dxfRW::processHatch() {
+    DBG("dxfRW::processHatch");
+    int code;
+    DRW_Hatch hatch;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addHatch(&hatch);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            hatch.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
+
+bool dxfRW::processSpline() {
+    DBG("dxfRW::processSpline");
+/*    int code;
+    DRW_Text txt;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addText(txt);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            txt.parseCode(code, reader);
+            break;
+        }
+    }*/
     return true;
 }
 

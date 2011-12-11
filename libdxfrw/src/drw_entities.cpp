@@ -231,7 +231,7 @@ void DRW_Insert::parseCode(int code, dxfReader *reader){
 void DRW_LWPolyline::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 10: {
-        vertex = new DRW_Vertex();
+        vertex = new DRW_Vertex2D();
         vertlist.push_back(vertex);
         vertex->x = reader->getDouble();
         break; }
@@ -330,6 +330,165 @@ void DRW_MText::parseCode(int code, dxfReader *reader){
         break;
     default:
         DRW_Text::parseCode(code, reader);
+        break;
+    }
+}
+
+void DRW_Polyline::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 70:
+        flags = reader->getInt32();
+        break;
+    case 40:
+        defstawidth = reader->getDouble();
+        break;
+    case 41:
+        defendwidth = reader->getDouble();
+        break;
+    case 71:
+        vertexcount = reader->getInt32();
+        break;
+    case 72:
+        facecount = reader->getInt32();
+        break;
+    case 73:
+        smoothM = reader->getInt32();
+        break;
+    case 74:
+        smoothN = reader->getInt32();
+        break;
+    case 75:
+        curvetype = reader->getInt32();
+        break;
+    default:
+        DRW_Point::parseCode(code, reader);
+        break;
+    }
+}
+
+void DRW_Vertex::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 70:
+        flags = reader->getInt32();
+        break;
+    case 40:
+        stawidth = reader->getDouble();
+        break;
+    case 41:
+        endwidth = reader->getDouble();
+        break;
+    case 42:
+        bulge = reader->getDouble();
+        break;
+    case 50:
+        tgdir = reader->getDouble();
+        break;
+    case 71:
+        vindex1 = reader->getInt32();
+        break;
+    case 72:
+        vindex2 = reader->getInt32();
+        break;
+    case 73:
+        vindex3 = reader->getInt32();
+        break;
+    case 74:
+        vindex4 = reader->getInt32();
+        break;
+    case 91:
+        identifier = reader->getInt32();
+        break;
+    default:
+        DRW_Point::parseCode(code, reader);
+        break;
+    }
+}
+
+void DRW_Hatch::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 2:
+        name = reader->getString();
+        break;
+    case 70:
+        solid = reader->getInt32();
+        break;
+    case 71:
+        associative = reader->getInt32();
+        break;
+    case 72:        /*edge type*/
+        if (reader->getInt32() == 1){ //line
+            addLine();
+        } else if (reader->getInt32() == 2){ //arc
+            addArc();
+        } else if (reader->getInt32() == 3){ //elliptic arc
+            addEllipse();
+        } else if (reader->getInt32() == 4){ //spline
+            addSpline();
+        }
+        break;
+    case 10:
+        if (pt) pt->x = reader->getDouble();
+        break;
+    case 20:
+        if (pt) pt->y = reader->getDouble();
+        break;
+    case 11:
+        if (line) line->bx = reader->getDouble();
+        else if (ellipse) ellipse->bx = reader->getDouble();
+        break;
+    case 21:
+        if (line) line->by = reader->getDouble();
+        else if (ellipse) ellipse->by = reader->getDouble();
+        break;
+    case 40:
+        if (arc) arc->radious = reader->getDouble();
+        else if (ellipse) ellipse->ratio = reader->getDouble();
+        break;
+    case 41:
+        scale = reader->getDouble();
+        break;
+    case 50:
+        if (arc) arc->staangle = reader->getDouble();
+        else if (ellipse) ellipse->staparam = reader->getDouble();
+        break;
+    case 51:
+        if (arc) arc->endangle = reader->getDouble();
+        else if (ellipse) ellipse->endparam = reader->getDouble();
+        break;
+    case 52:
+        angle = reader->getDouble();
+        break;
+    case 73:
+        if (arc) arc->isccw = reader->getInt32();
+        break;
+    case 75:
+        hstyle = reader->getInt32();
+        break;
+    case 76:
+        hpattern = reader->getInt32();
+        break;
+    case 77:
+        doubleflag = reader->getInt32();
+        break;
+    case 78:
+        deflines = reader->getInt32();
+        break;
+    case 91:
+        loopsnum = reader->getInt32();
+        looplist.reserve(loopsnum);
+        break;
+    case 92:
+        loop = new DRW_HatchLoop(reader->getInt32());
+        looplist.push_back(loop);
+        break;
+    case 93:
+        loop->numedges = reader->getInt32();//aqui reserve
+        break;
+    case 98: //seed points ??
+        clearEntities();
+        break;
+    default:
+        DRW_Point::parseCode(code, reader);
         break;
     }
 }
