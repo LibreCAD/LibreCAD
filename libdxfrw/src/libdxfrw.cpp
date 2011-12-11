@@ -349,6 +349,26 @@ bool dxfRW::writeSolid(DRW_Solid *ent){
     return true;
 }
 
+bool dxfRW::write3dface(DRW_3Dface *ent){
+    writer->writeString(0, "3DFACE");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbFace");
+    writer->writeDouble(10, ent->x);
+    writer->writeDouble(20, ent->y);
+    writer->writeDouble(30, ent->z);
+    writer->writeDouble(11, ent->bx);
+    writer->writeDouble(21, ent->by);
+    writer->writeDouble(31, ent->bz);
+    writer->writeDouble(12, ent->cx);
+    writer->writeDouble(22, ent->cy);
+    writer->writeDouble(32, ent->cz);
+    writer->writeDouble(13, ent->dx);
+    writer->writeDouble(23, ent->dy);
+    writer->writeDouble(33, ent->dz);
+    writer->writeInt16(70, ent->invisibleflag);
+    return true;
+}
+
 bool dxfRW::writeLWPolyline(DRW_LWPolyline *ent){
     writer->writeString(0, "LWPOLYLINE");
     writeEntity(ent);
@@ -908,6 +928,8 @@ bool dxfRW::processEntities(bool isblock) {
             processHatch();
         } else if (nextentity == "SPLINE") {
             processSpline();
+        } else if (nextentity == "3DFACE") {
+            process3dface();
         } else {
             if (reader->readRec(&code, !binary)){
                 if (code == 0)
@@ -977,6 +999,27 @@ bool dxfRW::processSolid() {
         }
         default:
             solid.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
+bool dxfRW::process3dface() {
+    DBG("dxfRW::process3dface");
+    int code;
+    DRW_3Dface face;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->add3dFace(face);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            face.parseCode(code, reader);
             break;
         }
     }

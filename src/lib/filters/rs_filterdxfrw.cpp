@@ -2785,9 +2785,26 @@ int RS_FilterDXFRW::colorToNumber(const RS_Color& col) {
     }
 }
 
-void RS_FilterDXFRW::add3dFace(const DRW_Entity& /*data*/) {
-    RS_DEBUG->print("RS_FilterDXF::add3dFace(const DL_3dFaceData& data) not yet implemented");
+void RS_FilterDXFRW::add3dFace(const DRW_3Dface& data) {
+    RS_DEBUG->print("RS_FilterDXFRW::add3dFace");
+    RS_PolylineData d(RS_Vector(false),
+                      RS_Vector(false),
+                      !data.invisibleflag);
+    RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
+    setEntityAttributes(polyline, &data);
+    RS_Vector v1(data.x, data.y);
+    RS_Vector v2(data.bx, data.by);
+    RS_Vector v3(data.cx, data.cy);
+    RS_Vector v4(data.dx, data.dy);
+
+    polyline->addVertex(v1, 0.0);
+    polyline->addVertex(v2, 0.0);
+    polyline->addVertex(v3, 0.0);
+    polyline->addVertex(v4, 0.0);
+
+    currentContainer->addEntity(polyline);
 }
+
 void RS_FilterDXFRW::addDimOrdinate(const DRW_Entity&, const DRW_Entity&) {
     RS_DEBUG->print("RS_FilterDXF::addDimOrdinate(const DL_DimensionData&, const DL_DimOrdinateData&) not yet implemented");
 }
