@@ -71,6 +71,7 @@ enum Version {
         HATCH,
         TEXT,
         MTEXT,
+        E3DFACE,
         IMAGE,
         DIMLEADER,
         DIMALIGNED,
@@ -275,6 +276,25 @@ public:
     }
 
     void parseCode(int code, dxfReader *reader);
+};
+
+//! Class to handle 3dface entity
+/*!
+*  Class to handle 3dface entity
+*  @author Rallaz
+*/
+class DRW_3Dface : public DRW_Trace {
+public:
+    DRW_3Dface() {
+        eType = DRW::E3DFACE;
+        invisibleflag = 0;
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    int invisibleflag;       /*!< invisible edge flag, code 70 */
+
 };
 
 //! Class to handle block entries

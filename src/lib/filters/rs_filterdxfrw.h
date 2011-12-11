@@ -119,7 +119,7 @@ public:
     virtual void linkImage(const DRW_Entity& data);
     virtual void endSequence() {}
 
-    virtual void add3dFace(const DRW_Entity& data);
+    virtual void add3dFace(const DRW_3Dface& data);
     virtual void addDimOrdinate(const DRW_Entity&, const DRW_Entity&);
     virtual void addComment(const char*);
 

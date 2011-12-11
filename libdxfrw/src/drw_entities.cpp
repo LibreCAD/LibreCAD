@@ -179,6 +179,17 @@ void DRW_Solid::parseCode(int code, dxfReader *reader){
         DRW_Trace::parseCode(code, reader);
 }
 
+void DRW_3Dface::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 70:
+        invisibleflag = reader->getDouble();
+        break;
+    default:
+        DRW_Trace::parseCode(code, reader);
+        break;
+    }
+}
+
 void DRW_Block::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 2:
