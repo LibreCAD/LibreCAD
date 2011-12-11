@@ -517,8 +517,8 @@ void QC_ApplicationWindow::initMDI() {
     mdiAreaTab = false;
     layout->addWidget(mdiAreaCAD);
 //    mdiAreaCAD->setScrollBarsEnabled(false);
-    mdiAreaCAD->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    mdiAreaCAD->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    mdiAreaCAD->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    mdiAreaCAD->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     mdiAreaCAD->setFocusPolicy(Qt::StrongFocus);
     mdiAreaCAD->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 #if QT_VERSION >= 0x040800
