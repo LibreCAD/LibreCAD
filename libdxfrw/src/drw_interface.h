@@ -91,7 +91,7 @@ public:
     virtual void addTrace(const DRW_Trace& data) = 0;
     
     /** Called for every 3dface start */
-    virtual void add3dFace(const DRW_Entity& data) = 0;
+    virtual void add3dFace(const DRW_3Dface& data) = 0;
 
     /** Called for every solid start */
     virtual void addSolid(const DRW_Solid& data) = 0;
