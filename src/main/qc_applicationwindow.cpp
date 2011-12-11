@@ -482,6 +482,14 @@ void QC_ApplicationWindow::closeEvent(QCloseEvent* ce) {
     if (!queryExit(false)) {
         ce->ignore();
     }
+    if(mdiAreaCAD!=NULL){
+        mdiAreaCAD->closeAllSubWindows();
+    }
+    if (mdiAreaCAD->currentSubWindow()) {
+        ce->ignore();
+    } else {
+        ce->accept();
+    }
 //we shouldn't need this; saving should be done within ~QG_SnapToolBar()
     //snapToolBar->saveSnapMode();
 
@@ -1977,7 +1985,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
         // Update all inserts in this graphic (blocks might have changed):
         m->getDocument()->updateInserts();
-        m->zoomAuto();
+//        m->zoomAuto();
         m->getGraphicView()->redraw();
 
         // set snapmode from snap toolbar
@@ -2027,7 +2035,8 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
                                              this, SLOT(slotToggleTab()));
         }else{
             windowsMenu->addAction(tr("&Cascade"), this, SLOT(slotCascade()));
-            windowsMenu->addAction(tr("&Tile"), mdiAreaCAD, SLOT(tileSubWindows()));
+//            windowsMenu->addAction(tr("&Tile"), mdiAreaCAD, SLOT(tileSubWindows()));
+            windowsMenu->addAction(tr("&Tile"), this, SLOT(slotTile()));
             windowsMenu->addAction(tr("Tile &Vertically"), this, SLOT(slotTileVertical()));
             windowsMenu->addAction(tr("Tile &Horizontally"), this, SLOT(slotTileHorizontal()));
             windowsMenu->addAction(tr("Ta&b mode"), this, SLOT(slotToggleTab()));
@@ -2094,7 +2103,21 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
     }
 }
 
-
+/**
+ * Cascade MDI windows
+ */
+void QC_ApplicationWindow::slotTile() {
+        mdiAreaCAD->tileSubWindows();
+        slotZoomAuto();
+}
+//auto zoom the graphicView of sub-windows
+void QC_ApplicationWindow::slotZoomAuto() {
+    QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
+    for(int i=0;i<windows.size();i++){
+        QMdiSubWindow *window = windows.at(i);
+        qobject_cast<QC_MDIWindow*>(window->widget())->zoomAuto();
+    }
+}
 /**
  * Cascade MDI windows
  */
@@ -2241,28 +2264,28 @@ void QC_ApplicationWindow::slotTileVertical() {
 }
 
 void QC_ApplicationWindow::slotToggleTab() {
-        mdiAreaTab = ! mdiAreaTab;
-        if(mdiAreaTab){
-            mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
-            QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
-            QMdiSubWindow* active=mdiAreaCAD->activeSubWindow();
-            for(int i=0;i<windows.size();i++){
-                QMdiSubWindow* m=windows.at(i);
-                if(m!=active){
-                    m->lower();
-                }else{
-                    m->showMaximized();
-                    m->raise();
-                     qobject_cast<QC_MDIWindow*>(m->widget())->zoomAuto();
-                }
+    mdiAreaTab = ! mdiAreaTab;
+    if(mdiAreaTab){
+        mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
+        QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
+        QMdiSubWindow* active=mdiAreaCAD->activeSubWindow();
+        for(int i=0;i<windows.size();i++){
+            QMdiSubWindow* m=windows.at(i);
+            m->showMaximized();
+            if(m!=active){
+                m->lower();
+            }else{
+                m->raise();
             }
+            qobject_cast<QC_MDIWindow*>(m->widget())->zoomAuto();
+        }
 
-        }else{
-            mdiAreaCAD->setViewMode(QMdiArea::SubWindowView);
-            slotCascade();
-//            mdiAreaCAD->setViewMode(QMdiArea::SubWindowView);
-//            QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
-//            QMdiSubWindow* active=mdiAreaCAD->activeSubWindow();
+    }else{
+        mdiAreaCAD->setViewMode(QMdiArea::SubWindowView);
+        slotCascade();
+        //            mdiAreaCAD->setViewMode(QMdiArea::SubWindowView);
+        //            QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
+        //            QMdiSubWindow* active=mdiAreaCAD->activeSubWindow();
 //            for(int i=0;i<windows.size();i++){
 //                QMdiSubWindow* m=windows.at(i);
 //                m->show();
@@ -2885,21 +2908,19 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
  * Menu file -> close.
  */
 void QC_ApplicationWindow::slotFileClose() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileClose()");
+    RS_DEBUG->print("QC_ApplicationWindow::slotFileClose(): begin");
 
-    QC_MDIWindow* m = getMDIWindow();
-    if (m!=NULL) {
-        m->close();
+    RS_DEBUG->print("QC_ApplicationWindow::slotFileClose(): detaching lists");
+    QC_MDIWindow* w = getMDIWindow();
+
+    if(w!=NULL){
+            openedFiles.removeAll(w->getDocument()->getFilename());
+//        int pos=openedFiles.indexOf(w->getDocument()->getFilename());
+//        if(pos>=0) {
+//            openedFiles.erase(openedFiles.begin()+pos);
+//        }
     }
-
-
-        /*
-        m = getMDIWindow();
-    if (m!=NULL) {
-                //m->showMaximized();
-                m->setWindowState(WindowMaximized);
-        }
-        */
+    mdiAreaCAD->closeActiveSubWindow();
 }
 
 
@@ -2911,13 +2932,6 @@ void QC_ApplicationWindow::slotFileClose() {
 void QC_ApplicationWindow::slotFileClosing() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
 
-    RS_DEBUG->print("detaching lists");
-    QC_MDIWindow* w = getMDIWindow();
-
-    int pos=openedFiles.indexOf(w->getDocument()->getFilename());
-    if(pos>=0) {
-        openedFiles.erase(openedFiles.begin()+pos);
-    }
     layerWidget->setLayerList(NULL, false);
     blockWidget->setBlockList(NULL);
     coordinateWidget->setGraphic(NULL);
