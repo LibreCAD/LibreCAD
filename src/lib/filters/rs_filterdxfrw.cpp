@@ -58,11 +58,7 @@ RS_FilterDXFRW::RS_FilterDXFRW()
     addExportFormat(RS2::FormatDXFRW);
 //    addExportFormat(RS2::FormatDXF12);
 
-//    mtext = "";
-    polyline = NULL;
     leader = NULL;
-    hatch = NULL;
-    hatchLoop = NULL;
     currentContainer = NULL;
     graphic = NULL;
     //exportVersion = DL_Codes::VER_2002;
@@ -230,7 +226,7 @@ void RS_FilterDXFRW::addPoint(const DRW_Point& data) {
 
     RS_Point* entity = new RS_Point(currentContainer,
                                     RS_PointData(v));
-    setEntityAttributes(entity, data);
+    setEntityAttributes(entity, &data);
 
     currentContainer->addEntity(entity);
 }
@@ -255,7 +251,7 @@ void RS_FilterDXFRW::addLine(const DRW_Line& data) {
     RS_Line* entity = new RS_Line(currentContainer,
                                   RS_LineData(v1, v2));
     RS_DEBUG->print("RS_FilterDXF::addLine: set attributes");
-    setEntityAttributes(entity, data);
+    setEntityAttributes(entity, &data);
 
     RS_DEBUG->print("RS_FilterDXF::addLine: add entity");
 
@@ -275,7 +271,7 @@ void RS_FilterDXFRW::addCircle(const DRW_Circle& data) {
     RS_Vector v(data.x, data.y);
     RS_CircleData d(v, data.radious);
     RS_Circle* entity = new RS_Circle(currentContainer, d);
-    setEntityAttributes(entity, data);
+    setEntityAttributes(entity, &data);
 
     currentContainer->addEntity(entity);
 }
@@ -296,7 +292,7 @@ void RS_FilterDXFRW::addArc(const DRW_Arc& data) {
                  data.endangle/ARAD,
                  false);
     RS_Arc* entity = new RS_Arc(currentContainer, d);
-    setEntityAttributes(entity, data);
+    setEntityAttributes(entity, &data);
 
     currentContainer->addEntity(entity);
 }
@@ -321,7 +317,7 @@ void RS_FilterDXFRW::addEllipse(const DRW_Ellipse& data) {
                       data.endparam,
                       false);
     RS_Ellipse* entity = new RS_Ellipse(currentContainer, ed);
-    setEntityAttributes(entity, data);
+    setEntityAttributes(entity, &data);
 
     currentContainer->addEntity(entity);
 }
@@ -341,7 +337,7 @@ void RS_FilterDXFRW::addTrace(const DRW_Trace& data) {
     else
         entity = new RS_Solid(currentContainer, RS_SolidData(v1, v2, v3,v4));
 
-    setEntityAttributes(entity, data);
+    setEntityAttributes(entity, &data);
     currentContainer->addEntity(entity);
 }
 
@@ -360,8 +356,8 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
     RS_PolylineData d(RS_Vector(false),
                       RS_Vector(false),
                       data.flags&0x1);
-    polyline = new RS_Polyline(currentContainer, d);
-    setEntityAttributes(polyline, data);
+    RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
+    setEntityAttributes(polyline, &data);
 
     for (unsigned int i=0; i<data.vertlist.size(); i++) {
         DRW_Vertex2D *vert = data.vertlist.at(i);
@@ -387,8 +383,8 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
     RS_PolylineData d(RS_Vector(false),
                       RS_Vector(false),
                       data.flags&0x1);
-    polyline = new RS_Polyline(currentContainer, d);
-    setEntityAttributes(polyline, data);
+    RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
+    setEntityAttributes(polyline, &data);
     for (unsigned int i=0; i<data.vertlist.size(); i++) {
         DRW_Vertex *vert = data.vertlist.at(i);
         RS_Vector v(vert->x, vert->y);
@@ -397,23 +393,6 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
 
     currentContainer->addEntity(polyline);
 }
-
-
-
-/**
- * Implementation of the method which handles polyline vertices.
- */
-/*void RS_FilterDXFRW::addVertex(const DRW_Entity& data) {
-    RS_DEBUG->print("RS_FilterDXF::addVertex(): %f/%f bulge: %f",
-                    data.x, data.y, data.bulge);
-
-    RS_Vector v(data.x, data.y);
-
-    if (polyline!=NULL) {
-        polyline->addVertex(v, data.bulge);
-    }
-}*/
-
 
 
 /**
@@ -470,7 +449,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
                     data.colcount, data.rowcount,
                     sp, NULL, RS2::NoUpdate);
     RS_Insert* entity = new RS_Insert(currentContainer, d);
-    setEntityAttributes(entity, data);
+    setEntityAttributes(entity, &data);
     RS_DEBUG->print("  id: %d", entity->getId());
 //    entity->update();
     currentContainer->addEntity(entity);
@@ -560,7 +539,7 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
                   RS2::NoUpdate);
     RS_Text* entity = new RS_Text(currentContainer, d);
 
-    setEntityAttributes(entity, data);
+    setEntityAttributes(entity, &data);
     entity->update();
     currentContainer->addEntity(entity);
 
@@ -921,93 +900,91 @@ void RS_FilterDXFRW::addLeaderVertex(const DRW_Entity& /*data*/) {
 /**
  * Implementation of the method which handles hatch entities.
  */
-void RS_FilterDXFRW::addHatch(const DRW_Hatch& data) {
+void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
     RS_DEBUG->print("RS_FilterDXF::addHatch()");
+    RS_Hatch* hatch;
+    RS_EntityContainer* hatchLoop;
 
-/*    hatch = new RS_Hatch(currentContainer,
-                         RS_HatchData(data.solid,
-                                      data.scale,
-                                      data.angle,
-                                      QString(QString::fromUtf8(data.pattern.c_str()))));
-    setEntityAttributes(hatch, attributes);
-    omitHatchLoop = false;
+    hatch = new RS_Hatch(currentContainer,
+                         RS_HatchData(data->solid, data->scale, data->angle,
+                                      QString(QString::fromUtf8(data->name.c_str()))));
+    setEntityAttributes(hatch, data);
+    currentContainer->addEntity(hatch);
 
-    currentContainer->addEntity(hatch);*/
-}
-
-
-
-/**
- * Implementation of the method which handles hatch loops.
- */
-void RS_FilterDXFRW::addHatchLoop(const DRW_Entity& /*data*/) {
-    RS_DEBUG->print("RS_FilterDXF::addHatchLoop()");
-/*    if ( (data.pathType & 32) == 32)
-        omitHatchLoop = true;
-    else
-        omitHatchLoop = false;
-    if (hatch!=NULL && !omitHatchLoop) {
+    for (unsigned int i=0; i < data->looplist.size(); i++) {
+        DRW_HatchLoop *loop = data->looplist.at(i);
+        if ((loop->type & 32) == 32) continue;
         hatchLoop = new RS_EntityContainer(hatch);
         hatchLoop->setLayer(NULL);
         hatch->addEntity(hatchLoop);
-    }*/
-}
 
-
-
-/**
- * Implementation of the method which handles hatch edge entities.
- */
-void RS_FilterDXFRW::addHatchEdge(const DRW_Entity& /*data*/) {
-    RS_DEBUG->print("RS_FilterDXF::addHatchEdge()");
-/*
-    if (hatchLoop!=NULL && !omitHatchLoop) {
         RS_Entity* e = NULL;
-        switch (data.type) {
-        case 1:
-            RS_DEBUG->print("RS_FilterDXF::addHatchEdge(): "
-                            "line: %f,%f %f,%f",
-                            data.x1, data.y1, data.x2, data.y2);
-            e = new RS_Line(hatchLoop,
-                            RS_LineData(RS_Vector(data.x1, data.y1),
-                                        RS_Vector(data.x2, data.y2)));
-            break;
-        case 2:
-            if (data.ccw && data.angle1<1.0e-6 && data.angle2>2*M_PI-1.0e-6) {
-                e = new RS_Circle(hatchLoop,
-                                  RS_CircleData(RS_Vector(data.cx, data.cy),
-                                                data.radius));
-            } else {
-                if (data.ccw) {
-                    e = new RS_Arc(
-                            hatchLoop,
-                            RS_ArcData(RS_Vector(data.cx, data.cy),
-                                       data.radius,
-                                       RS_Math::correctAngle(data.angle1),
-                                       RS_Math::correctAngle(data.angle2),
-                                       false));
-                } else {
-                    e = new RS_Arc(
-                            hatchLoop,
-                            RS_ArcData(RS_Vector(data.cx, data.cy),
-                                       data.radius,
-                                       RS_Math::correctAngle(2*M_PI-data.angle1),
-                                       RS_Math::correctAngle(2*M_PI-data.angle2),
-                                       true));
+        if ((loop->type & 2) == 2){
+            //polyline
+            /*polyline = new RS_Polyline(hatchLoop,
+                            RS_LineData(RS_Vector(e2->x, e2->y),
+                                        RS_Vector(e2->bx, e2->by)));
+                for (unsigned int j=0; j<loop->pollist.size(); j++) {
+                    DRW_Vertex *vert = data.vertlist.at(j);
+                    RS_Vector v(vert->x, vert->y);
+                    polyline->addVertex(v, vert->bulge);
+                }*/
+        } else {
+            for (unsigned int j=0; j<loop->objlist.size(); j++) {
+                DRW_Entity *ent = loop->objlist.at(j);
+                switch (ent->eType) {
+                case DRW::LINE: {
+                    DRW_Line *e2 = (DRW_Line *)ent;
+                    e = new RS_Line(hatchLoop,
+                                    RS_LineData(RS_Vector(e2->x, e2->y),
+                                                RS_Vector(e2->bx, e2->by)));
+                    break;
+                }
+                case DRW::ARC: {
+                    DRW_Arc *e2 = (DRW_Arc *)ent;
+                    if (e2->isccw && e2->staangle<1.0e-6 && e2->endangle>360-1.0e-6) {
+                        e = new RS_Circle(hatchLoop,
+                                          RS_CircleData(RS_Vector(e2->x, e2->y),
+                                                        e2->radious));
+                    } else {
+
+                        if (e2->isccw) {
+                            e = new RS_Arc(hatchLoop,
+                                        RS_ArcData(RS_Vector(e2->x, e2->y), e2->radious,
+                                                   RS_Math::correctAngle(RS_Math::deg2rad(e2->staangle)),
+                                                   RS_Math::correctAngle(RS_Math::deg2rad(e2->endangle)),
+                                                   false));
+                        } else {
+                            e = new RS_Arc(hatchLoop,
+                                        RS_ArcData(RS_Vector(e2->x, e2->y), e2->radious,
+                                                   RS_Math::correctAngle(2*M_PI-RS_Math::deg2rad(e2->staangle)),
+                                                   RS_Math::correctAngle(2*M_PI-RS_Math::deg2rad(e2->endangle)),
+                                                   true));
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+                }
+                if (e!=NULL) {
+                    e->setLayer(NULL);
+                    hatchLoop->addEntity(e);
                 }
             }
-            break;
-        default:
-            break;
         }
 
-        if (e!=NULL) {
-            e->setLayer(NULL);
-            hatchLoop->addEntity(e);
-        }
-    }*/
+    }
+
+    RS_DEBUG->print("hatch->update()");
+    if (hatch->validate()) {
+        hatch->update();
+    } else {
+        graphic->removeEntity(hatch);
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                    "RS_FilterDXFRW::endEntity(): updating hatch failed: invalid hatch area");
+    }
 }
-
 
 
 /**
@@ -1101,29 +1078,6 @@ void RS_FilterDXFRW::linkImage(const DRW_Entity& /*data*/) {
         }
     }
     RS_DEBUG->print("linking image: OK");*/
-}
-
-
-
-/**
- * Finishes a hatch entity.
- */
-void RS_FilterDXFRW::endEntity() {
-    RS_DEBUG->print("RS_FilterDXF::endEntity");
-
-    if (hatch!=NULL) {
-
-        RS_DEBUG->print("hatch->update()");
-
-        if (hatch->validate()) {
-            hatch->update();
-        } else {
-            graphic->removeEntity(hatch);
-            RS_DEBUG->print(RS_Debug::D_ERROR,
-                            "RS_FilterDXF::endEntity(): updating hatch failed: invalid hatch area");
-        }
-        hatch=NULL;
-    }
 }
 
 
@@ -2615,7 +2569,7 @@ void RS_FilterDXFRW::writeImageDef(DL_WriterA& /*dw*/, RS_Image* i) {
  * that come from a DXF file.
  */
 void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
-                                       const DRW_Entity& attrib) {
+                                       const DRW_Entity* attrib) {
     RS_DEBUG->print("RS_FilterDXF::setEntityAttributes");
 
     RS_Pen pen;
@@ -2624,22 +2578,22 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
 
     // Layer: add layer in case it doesn't exist:
 
-    if (graphic->findLayer(QString::fromUtf8(attrib.layer.c_str()))==NULL) {
+    if (graphic->findLayer(QString::fromUtf8(attrib->layer.c_str()))==NULL) {
 //        addLayer(DL_LayerData(attrib.layer, 0));
         DRW_Layer lay;
-        lay.name = attrib.layer;
+        lay.name = attrib->layer;
         addLayer(lay);
     }
-    entity->setLayer(QString::fromUtf8(attrib.layer.c_str()));
+    entity->setLayer(QString::fromUtf8(attrib->layer.c_str()));
 
     // Color:
-    pen.setColor(numberToColor(attrib.color));
+    pen.setColor(numberToColor(attrib->color));
 
     // Linetype:
-    pen.setLineType(nameToLineType(attrib.lineType.c_str()));
+    pen.setLineType(nameToLineType(attrib->lineType.c_str()));
 
     // Width:
-    pen.setWidth(numberToWidth(attrib.lWeight));
+    pen.setWidth(numberToWidth(attrib->lWeight));
 
     entity->setPen(pen);
     RS_DEBUG->print("RS_FilterDXF::setEntityAttributes: OK");

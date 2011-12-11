@@ -410,7 +410,7 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
         name = reader->getString();
         break;
     case 70:
-        flags = reader->getInt32();
+        solid = reader->getInt32();
         break;
     case 71:
         associative = reader->getInt32();
@@ -429,10 +429,10 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
     case 10:
         if (pt) pt->x = reader->getDouble();
         break;
-    case 11:
+    case 20:
         if (pt) pt->y = reader->getDouble();
         break;
-    case 20:
+    case 11:
         if (line) line->bx = reader->getDouble();
         else if (ellipse) ellipse->bx = reader->getDouble();
         break;
@@ -440,30 +440,39 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
         if (line) line->by = reader->getDouble();
         else if (ellipse) ellipse->by = reader->getDouble();
         break;
-/*    case 40:
-        stawidth = reader->getDouble();
+    case 40:
+        if (arc) arc->radious = reader->getDouble();
+        else if (ellipse) ellipse->ratio = reader->getDouble();
         break;
     case 41:
-        endwidth = reader->getDouble();
-        break;
-    case 42:
-        bulge = reader->getDouble();
+        scale = reader->getDouble();
         break;
     case 50:
-        tgdir = reader->getDouble();
+        if (arc) arc->staangle = reader->getDouble();
+        else if (ellipse) ellipse->staparam = reader->getDouble();
         break;
-    case 71:
-        vindex1 = reader->getInt32();
+    case 51:
+        if (arc) arc->endangle = reader->getDouble();
+        else if (ellipse) ellipse->endparam = reader->getDouble();
         break;
-    case 72:
-        vindex2 = reader->getInt32();
+    case 52:
+        angle = reader->getDouble();
         break;
     case 73:
-        vindex3 = reader->getInt32();
+        if (arc) arc->isccw = reader->getInt32();
         break;
-    case 74:
-        vindex4 = reader->getInt32();
-        break;*/
+    case 75:
+        hstyle = reader->getInt32();
+        break;
+    case 76:
+        hpattern = reader->getInt32();
+        break;
+    case 77:
+        doubleflag = reader->getInt32();
+        break;
+    case 78:
+        deflines = reader->getInt32();
+        break;
     case 91:
         loopsnum = reader->getInt32();
         looplist.reserve(loopsnum);
@@ -473,7 +482,10 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
         looplist.push_back(loop);
         break;
     case 93:
-        loop->numedges = reader->getInt32();
+        loop->numedges = reader->getInt32();//aqui reserve
+        break;
+    case 98: //seed points ??
+        clearEntities();
         break;
     default:
         DRW_Point::parseCode(code, reader);

@@ -157,7 +157,7 @@ public:
 	/** 
 	 * Called for every hatch entity. 
 	 */
-    virtual void addHatch(const DRW_Hatch& data) = 0;
+    virtual void addHatch(const DRW_Hatch *data) = 0;
 	
 	/** 
 	 * Called for every image entity. 
@@ -169,21 +169,6 @@ public:
 	 */
         virtual void linkImage(const DRW_Entity& data) = 0;
 
-	/** 
-	 * Called for every hatch loop. 
-	 */
-    virtual void addHatchLoop(const DRW_Entity& data) = 0;
-
-	/** 
-	 * Called for every hatch edge entity. 
-	 */
-    virtual void addHatchEdge(const DRW_Entity& data) = 0;
-	
-	/** 
-	 * Called after an entity has been completed.  
-	 */
-    virtual void endEntity() = 0;
-    
     /**
      * Called for every comment in the DXF file (code 999).
      */

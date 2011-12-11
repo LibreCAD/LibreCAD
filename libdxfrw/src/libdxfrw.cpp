@@ -1190,7 +1190,7 @@ bool dxfRW::processHatch() {
         case 0: {
             nextentity = reader->getString();
             DBG(nextentity); DBG("\n");
-            iface->addHatch(hatch);
+            iface->addHatch(&hatch);
             return true;  //found new entity or ENDSEC, terminate
         }
         default:
