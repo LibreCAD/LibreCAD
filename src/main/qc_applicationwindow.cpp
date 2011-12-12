@@ -2118,6 +2118,7 @@ void QC_ApplicationWindow::slotZoomAuto() {
         qobject_cast<QC_MDIWindow*>(window->widget())->zoomAuto();
     }
 }
+
 /**
  * Cascade MDI windows
  */
