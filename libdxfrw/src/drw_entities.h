@@ -579,55 +579,78 @@ public:
     std::vector<DRW_Vertex *> vertlist;  /*!< vertex list */
 };
 
+//! Class to handle spline point
+/*!
+*  Class to handle spline point
+*  @author Rallaz
+*/
+class DRW_SpPoint {
+public:
+    DRW_SpPoint() {
+        z = 0;
+    }
+    ~DRW_SpPoint() {}
+
+//    void parseCode(int code, dxfReader *reader);
+
+public:
+    double x;
+    double y;
+    double z;
+};
+
 //! Class to handle spline entity
 /*!
 *  Class to handle spline entity
 *  @author Rallaz
 */
-class DRW_Spline : public DRW_Point {
+class DRW_Spline : public DRW_Entity {
 public:
     DRW_Spline() {
         eType = DRW::SPLINE;
-        flags = defstawidth = defendwidth = 0;
-        curvetype = ex = ey = 0;
+        flags = nknots = ncontrol = 0;
+        nfit = ex = ey = 0;
         ez = 1;
-        vertexcount = facecount = 0;
-        smoothM = smoothN = 0;
-//        vertex = NULL;
+        tolknot = tolcontrol = tolfit = 0.0000001;
+
     }
     ~DRW_Spline() {
-        while (!vertlist.empty()) {
-           vertlist.pop_back();
-         }
-    }
-    void addVertex (DRW_Vertex v) {
-        DRW_Vertex *vert = new DRW_Vertex();
-        vert->x = v.x;
-        vert->y = v.y;
-        vert->z = v.z;
-        vert->stawidth = v.stawidth;
-        vert->endwidth = v.endwidth;
-        vert->bulge = v.bulge;
-        vertlist.push_back(vert);
-    }
-    void appendVertex (DRW_Vertex *v) {
-        vertlist.push_back(v);
+        while (!controllist.empty()) {
+           controllist.pop_back();
+        }
+        while (!fitlist.empty()) {
+           fitlist.pop_back();
+        }
     }
 
     void parseCode(int code, dxfReader *reader);
 
 public:
-    int flags;                     /*!< polyline flag, code 70, default 0 */
-    double defstawidth;   /*!< Start width, code 40, default 0 */
-    double defendwidth;  /*!< End width, code 41, default 0 */
-    int vertexcount;          /*!< polygon mesh M vertex or  polyface vertex num, code 71, default 0 */
-    int facecount;             /*!< polygon mesh N vertex or  polyface face num, code 72, default 0 */
-    int smoothM;             /*!< smooth surface M density, code 73, default 0 */
-    int smoothN;             /*!< smooth surface M density, code 74, default 0 */
-    int curvetype;            /*!< curves & smooth surface type, code 75, default 0 */
+    double ex;                /*!< normal vector x coordinate, code 210 */
+    double ey;                /*!< normal vector y coordinate, code 220 */
+    double ez;                /*!< normal vector z coordinate, code 230 */
+    double tgsx;              /*!< start tangent x coordinate, code 12 */
+    double tgsy;              /*!< start tangent y coordinate, code 22 */
+    double tgsz;              /*!< start tangent z coordinate, code 32 */
+    double tgex;              /*!< end tangent x coordinate, code 13 */
+    double tgey;              /*!< end tangent y coordinate, code 23 */
+    double tgez;              /*!< end tangent z coordinate, code 33 */
+    int flags;                /*!< spline flag, code 70 */
+    int degree;               /*!< degree of the spline, code 71 */
+    int nknots;               /*!< number of knots, code 72, default 0 */
+    int ncontrol;             /*!< number of control points, code 73, default 0 */
+    int nfit;                 /*!< number of fit points, code 74, default 0 */
+    double tolknot;           /*!< knot tolerance, code 42, default 0.0000001 */
+    double tolcontrol;        /*!< control point tolerance, code 43, default 0.0000001 */
+    double tolfit;            /*!< fit point tolerance, code 44, default 0.0000001 */
 
-//    DRW_Vertex *vertex;       /*!< current vertex to add data */
-    std::vector<DRW_Vertex *> vertlist;  /*!< vertex list */
+    std::vector<double> knotslist;           /*!< knots list, code 40 */
+    std::vector<DRW_SpPoint *> controllist;  /*!< control points list, code 10, 20 & 30 */
+    std::vector<DRW_SpPoint *> fitlist;      /*!< fit points list, code 11, 21 & 31 */
+
+private:
+    DRW_SpPoint *controlpoint;   /*!< current control point to add data */
+    DRW_SpPoint *fitpoint;       /*!< current fit point to add data */
 };
 
 //! Class to handle hatch loop
@@ -739,7 +762,8 @@ private:
     void addSpline() {
         clearEntities();
         if (loop) {
-            pt = spline = new DRW_Spline;
+            pt = NULL;
+            spline = new DRW_Spline;
             loop->objlist.push_back(spline);
         }
     }

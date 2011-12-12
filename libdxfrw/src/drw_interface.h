@@ -72,14 +72,8 @@ public:
     /** Called for every polyline start */
     virtual void addPolyline(const DRW_Polyline& data) = 0;
 
-    /** Called for every polyline vertex */
-//    virtual void addVertex(const DRW_Entity& data) = 0;
-	
     /** Called for every spline */
-    virtual void addSpline(const DRW_Spline& data) = 0;
-	
-	/** Called for every spline control point */
-    virtual void addControlPoint(const DRW_Entity& data) = 0;
+    virtual void addSpline(const DRW_Spline* data) = 0;
 	
 	/** Called for every spline knot value */
     virtual void addKnot(const DRW_Entity& data) = 0;
