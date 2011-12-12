@@ -66,10 +66,12 @@ enum Version {
         INSERT,
         LWPOLYLINE,
         POLYLINE,
+        VERTEX,
         SPLINE,
         HATCH,
         TEXT,
         MTEXT,
+        E3DFACE,
         IMAGE,
         DIMLEADER,
         DIMALIGNED,
@@ -207,6 +209,7 @@ class DRW_Arc : public DRW_Circle {
 public:
     DRW_Arc() {
         eType = DRW::ARC;
+        isccw = 1;
     }
 
     void parseCode(int code, dxfReader *reader);
@@ -214,6 +217,7 @@ public:
 public:
     double staangle;               /*!< x coordinate, code 50 */
     double endangle;               /*!< x coordinate, code 51 */
+    double isccw;                  /*!< is counter clockwise arc?, only used in hatch, code 73 */
 };
 
 //! Class to handle ellipse entity
@@ -272,6 +276,25 @@ public:
     }
 
     void parseCode(int code, dxfReader *reader);
+};
+
+//! Class to handle 3dface entity
+/*!
+*  Class to handle 3dface entity
+*  @author Rallaz
+*/
+class DRW_3Dface : public DRW_Trace {
+public:
+    DRW_3Dface() {
+        eType = DRW::E3DFACE;
+        invisibleflag = 0;
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    int invisibleflag;       /*!< invisible edge flag, code 70 */
+
 };
 
 //! Class to handle block entries
@@ -334,13 +357,13 @@ public:
 *  Class to handle vertex for lwpolyline entity
 *  @author Rallaz
 */
-class DRW_Vertex {
+class DRW_Vertex2D {
 public:
-    DRW_Vertex() {
+    DRW_Vertex2D() {
 //        eType = DRW::LWPOLYLINE;
         stawidth = endwidth = bulge = 0;
     }
-    DRW_Vertex(double sx, double sy, double b) {
+    DRW_Vertex2D(double sx, double sy, double b) {
         stawidth = endwidth = 0;
         x = sx;
         y =sy;
@@ -357,6 +380,7 @@ public:
     double endwidth;          /*!< End width, code 41 */
     double bulge;             /*!< bulge, code 42 */
 };
+
 //! Class to handle lwpolyline entity
 /*!
 *  Class to handle lwpolyline entity
@@ -376,8 +400,8 @@ public:
            vertlist.pop_back();
          }
     }
-    void addVertex (DRW_Vertex v) {
-        DRW_Vertex *vert = new DRW_Vertex();
+    void addVertex (DRW_Vertex2D v) {
+        DRW_Vertex2D *vert = new DRW_Vertex2D();
         vert->x = v.x;
         vert->y = v.y;
         vert->stawidth = v.stawidth;
@@ -396,8 +420,8 @@ public:
     double ex;                /*!< x extrusion coordinate, code 210 */
     double ey;                /*!< y extrusion coordinate, code 220 */
     double ez;                /*!< z extrusion coordinate, code 230 */
-    DRW_Vertex *vertex;       /*!< current vertex to add data */
-    std::vector<DRW_Vertex *> vertlist;  /*!< vertex list */
+    DRW_Vertex2D *vertex;       /*!< current vertex to add data */
+    std::vector<DRW_Vertex2D *> vertlist;  /*!< vertex list */
 };
 
 //! Class to handle insert entries
@@ -463,6 +487,270 @@ public:
 //    enum DRW::HAlign alignH;   /*!< horizontal align, code 72 */
 //    enum DRW::VAlign alignV;    /*!< vertical align, code 73 */
     double interlin;     /*!< width factor, code 44 */
+};
+
+//! Class to handle vertex
+/*!
+*  Class to handle vertex  for polyline entity
+*  @author Rallaz
+*/
+class DRW_Vertex : public DRW_Point {
+public:
+    DRW_Vertex() {
+        eType = DRW::VERTEX;
+        stawidth = endwidth = bulge = 0;
+        vindex1 = vindex2 = vindex3 = vindex4 = 0;
+        flags = identifier = z = 0;
+    }
+    DRW_Vertex(double sx, double sy, double sz, double b) {
+        stawidth = endwidth = 0;
+        vindex1 = vindex2 = vindex3 = vindex4 = 0;
+        flags = identifier = 0;
+        x = sx;
+        y =sy;
+        z =sz;
+        bulge = b;
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    double stawidth;          /*!< Start width, code 40 */
+    double endwidth;          /*!< End width, code 41 */
+    double bulge;             /*!< bulge, code 42 */
+
+    int flags;                 /*!< vertex flag, code 70, default 0 */
+    double tgdir;           /*!< curve fit tangent direction, code 50 */
+    int vindex1;             /*!< polyface mesh vertex index, code 71, default 0 */
+    int vindex2;             /*!< polyface mesh vertex index, code 72, default 0 */
+    int vindex3;             /*!< polyface mesh vertex index, code 73, default 0 */
+    int vindex4;             /*!< polyface mesh vertex index, code 74, default 0 */
+    int identifier;           /*!< vertex identifier, code 91, default 0 */
+};
+
+//! Class to handle polyline entity
+/*!
+*  Class to handle polyline entity
+*  @author Rallaz
+*/
+class DRW_Polyline : public DRW_Point {
+public:
+    DRW_Polyline() {
+        eType = DRW::POLYLINE;
+        flags = defstawidth = defendwidth = 0;
+        curvetype = ex = ey = 0;
+        ez = 1;
+        vertexcount = facecount = 0;
+        smoothM = smoothN = 0;
+//        vertex = NULL;
+    }
+    ~DRW_Polyline() {
+        while (!vertlist.empty()) {
+           vertlist.pop_back();
+         }
+    }
+    void addVertex (DRW_Vertex v) {
+        DRW_Vertex *vert = new DRW_Vertex();
+        vert->x = v.x;
+        vert->y = v.y;
+        vert->z = v.z;
+        vert->stawidth = v.stawidth;
+        vert->endwidth = v.endwidth;
+        vert->bulge = v.bulge;
+        vertlist.push_back(vert);
+    }
+    void appendVertex (DRW_Vertex *v) {
+        vertlist.push_back(v);
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    int flags;                     /*!< polyline flag, code 70, default 0 */
+    double defstawidth;   /*!< Start width, code 40, default 0 */
+    double defendwidth;  /*!< End width, code 41, default 0 */
+    int vertexcount;          /*!< polygon mesh M vertex or  polyface vertex num, code 71, default 0 */
+    int facecount;             /*!< polygon mesh N vertex or  polyface face num, code 72, default 0 */
+    int smoothM;             /*!< smooth surface M density, code 73, default 0 */
+    int smoothN;             /*!< smooth surface M density, code 74, default 0 */
+    int curvetype;            /*!< curves & smooth surface type, code 75, default 0 */
+
+//    DRW_Vertex *vertex;       /*!< current vertex to add data */
+    std::vector<DRW_Vertex *> vertlist;  /*!< vertex list */
+};
+
+//! Class to handle spline entity
+/*!
+*  Class to handle spline entity
+*  @author Rallaz
+*/
+class DRW_Spline : public DRW_Point {
+public:
+    DRW_Spline() {
+        eType = DRW::SPLINE;
+        flags = defstawidth = defendwidth = 0;
+        curvetype = ex = ey = 0;
+        ez = 1;
+        vertexcount = facecount = 0;
+        smoothM = smoothN = 0;
+//        vertex = NULL;
+    }
+    ~DRW_Spline() {
+        while (!vertlist.empty()) {
+           vertlist.pop_back();
+         }
+    }
+    void addVertex (DRW_Vertex v) {
+        DRW_Vertex *vert = new DRW_Vertex();
+        vert->x = v.x;
+        vert->y = v.y;
+        vert->z = v.z;
+        vert->stawidth = v.stawidth;
+        vert->endwidth = v.endwidth;
+        vert->bulge = v.bulge;
+        vertlist.push_back(vert);
+    }
+    void appendVertex (DRW_Vertex *v) {
+        vertlist.push_back(v);
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    int flags;                     /*!< polyline flag, code 70, default 0 */
+    double defstawidth;   /*!< Start width, code 40, default 0 */
+    double defendwidth;  /*!< End width, code 41, default 0 */
+    int vertexcount;          /*!< polygon mesh M vertex or  polyface vertex num, code 71, default 0 */
+    int facecount;             /*!< polygon mesh N vertex or  polyface face num, code 72, default 0 */
+    int smoothM;             /*!< smooth surface M density, code 73, default 0 */
+    int smoothN;             /*!< smooth surface M density, code 74, default 0 */
+    int curvetype;            /*!< curves & smooth surface type, code 75, default 0 */
+
+//    DRW_Vertex *vertex;       /*!< current vertex to add data */
+    std::vector<DRW_Vertex *> vertlist;  /*!< vertex list */
+};
+
+//! Class to handle hatch loop
+/*!
+*  Class to handle hatch loop
+*  @author Rallaz
+*/
+class DRW_HatchLoop {
+public:
+    DRW_HatchLoop(int t) {
+        type = t;
+        numedges = 0;
+    }
+
+    ~DRW_HatchLoop() {
+/*        while (!pollist.empty()) {
+           pollist.pop_back();
+         }*/
+        while (!objlist.empty()) {
+           objlist.pop_back();
+         }
+    }
+
+public:
+    int type;               /*!< boundary path type, code 92, polyline=2, default=0 */
+    int numedges;           /*!< number of edges (if not a polyline), code 93 */
+//TODO: store lwpolylines as entities
+//    std::vector<DRW_LWPolyline *> pollist;  /*!< polyline list */
+    std::vector<DRW_Entity *> objlist;      /*!< entities list */
+};
+
+//! Class to handle hatch entity
+/*!
+*  Class to handle hatch entity
+*  @author Rallaz
+*/
+//TODO: handle lwpolylines, splines and ellipses
+class DRW_Hatch : public DRW_Point {
+public:
+    DRW_Hatch() {
+        eType = DRW::HATCH;
+        loopsnum = angle = scale = 0;
+        hstyle = ex = ey = x = y = 0;
+        ez = solid = hpattern = 1;
+        deflines = doubleflag = 0;
+        loop = NULL;
+        clearEntities();
+    }
+
+    ~DRW_Hatch() {
+        while (!looplist.empty()) {
+           looplist.pop_back();
+         }
+    }
+
+    void appendLoop (DRW_HatchLoop *v) {
+        looplist.push_back(v);
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    string name;               /*!< hatch pattern name, code 2 */
+    int solid;                 /*!< solid fill flag, code 70, solid=1, pattern=0 */
+    int associative;           /*!< associativity, code 71, associatve=1, non-assoc.=0 */
+    int hstyle;                /*!< hatch style, code 75 */
+    int hpattern;              /*!< hatch pattern type, code 76 */
+    int doubleflag;            /*!< hatch pattern double flag, code 77, double=1, single=0 */
+    int loopsnum;              /*!< namber of boundary paths (loops), code 91 */
+    double angle;              /*!< hatch pattern angle, code 52 */
+    double scale;              /*!< hatch pattern scale, code 41 */
+    int deflines;              /*!< number of pattern definition lines, code 78 */
+
+    std::vector<DRW_HatchLoop *> looplist;  /*!< polyline list */
+
+private:
+    void clearEntities(){
+        pt = line = NULL;
+        pline = NULL;
+        arc = NULL;
+        ellipse = NULL;
+        spline = NULL;
+    }
+
+    void addLine() {
+        clearEntities();
+        if (loop) {
+            pt = line = new DRW_Line;
+            loop->objlist.push_back(line);
+        }
+    }
+
+    void addArc() {
+        clearEntities();
+        if (loop) {
+            pt = arc = new DRW_Arc;
+            loop->objlist.push_back(arc);
+        }
+    }
+
+    void addEllipse() {
+        clearEntities();
+        if (loop) {
+            pt = ellipse = new DRW_Ellipse;
+            loop->objlist.push_back(ellipse);
+        }
+    }
+
+    void addSpline() {
+        clearEntities();
+        if (loop) {
+            pt = spline = new DRW_Spline;
+            loop->objlist.push_back(spline);
+        }
+    }
+
+    DRW_HatchLoop *loop;       /*!< current loop to add data */
+    DRW_Line *line;
+    DRW_Arc *arc;
+    DRW_Ellipse *ellipse;
+    DRW_Spline *spline;
+    DRW_LWPolyline *pline;
+    DRW_Point *pt;
 };
 
 

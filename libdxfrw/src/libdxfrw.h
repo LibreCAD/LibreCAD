@@ -41,6 +41,7 @@ public:
     bool writeEllipse(DRW_Ellipse *ent);
     bool writeTrace(DRW_Trace *ent);
     bool writeSolid(DRW_Solid *ent);
+    bool write3dface(DRW_3Dface *ent);
     bool writeLWPolyline(DRW_LWPolyline *ent);
 
 private:
@@ -64,7 +65,12 @@ private:
     bool processSolid();
     bool processInsert();
     bool processLWPolyline();
+    bool processPolyline();
+    bool processVertex(DRW_Polyline* pl);
     bool processText();
+    bool processHatch();
+    bool processSpline();
+    bool process3dface();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);
