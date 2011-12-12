@@ -1247,22 +1247,22 @@ bool dxfRW::processHatch() {
 
 bool dxfRW::processSpline() {
     DBG("dxfRW::processSpline");
-/*    int code;
-    DRW_Text txt;
+    int code;
+    DRW_Spline sp;
     while (reader->readRec(&code, !binary)) {
         DBG(code); DBG("\n");
         switch (code) {
         case 0: {
             nextentity = reader->getString();
             DBG(nextentity); DBG("\n");
-            iface->addText(txt);
+            iface->addSpline(&sp);
             return true;  //found new entity or ENDSEC, terminate
         }
         default:
-            txt.parseCode(code, reader);
+            sp.parseCode(code, reader);
             break;
         }
-    }*/
+    }
     return true;
 }
 

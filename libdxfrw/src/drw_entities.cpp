@@ -503,3 +503,93 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
         break;
     }
 }
+
+void DRW_Spline::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 210:
+        ex = reader->getDouble();
+        break;
+    case 220:
+        ey = reader->getDouble();
+        break;
+    case 230:
+        ez = reader->getDouble();
+        break;
+    case 12:
+        tgsx = reader->getDouble();
+        break;
+    case 22:
+        tgsy = reader->getDouble();
+        break;
+    case 32:
+        tgsz = reader->getDouble();
+        break;
+    case 13:
+        tgex = reader->getDouble();
+        break;
+    case 23:
+        tgey = reader->getDouble();
+        break;
+    case 33:
+        tgez = reader->getDouble();
+        break;
+    case 70:
+        flags = reader->getInt32();
+        break;
+    case 71:
+        degree = reader->getInt32();
+        break;
+    case 72:
+        nknots = reader->getInt32();
+        break;
+    case 73:
+        ncontrol = reader->getInt32();
+        break;
+    case 74:
+        nfit = reader->getInt32();
+        break;
+    case 42:
+        tolknot = reader->getDouble();
+        break;
+    case 43:
+        tolcontrol = reader->getDouble();
+        break;
+    case 44:
+        tolfit = reader->getDouble();
+        break;
+    case 10: {
+        controlpoint = new DRW_SpPoint();
+        controllist.push_back(controlpoint);
+        controlpoint->x = reader->getDouble();
+        break; }
+    case 20:
+        if(controlpoint != NULL)
+            controlpoint->y = reader->getDouble();
+        break;
+    case 30:
+        if(controlpoint != NULL)
+            controlpoint->z = reader->getDouble();
+        break;
+    case 11: {
+        fitpoint = new DRW_SpPoint();
+        fitlist.push_back(fitpoint);
+        fitpoint->x = reader->getDouble();
+        break; }
+    case 21:
+        if(fitpoint != NULL)
+            fitpoint->y = reader->getDouble();
+        break;
+    case 31:
+        if(fitpoint != NULL)
+            fitpoint->z = reader->getDouble();
+        break;
+    case 40:
+        knotslist.push_back(reader->getDouble());
+        break;
+//    case 41:
+//        break;
+    default:
+        DRW_Entity::parseCode(code, reader);
+        break;
+    }
+}
