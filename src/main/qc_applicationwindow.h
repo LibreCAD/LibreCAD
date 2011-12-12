@@ -324,6 +324,7 @@ private:
 
     /** MdiArea for MDI */
     QMdiArea* mdiAreaCAD;
+    QMdiSubWindow* activedMdiSubWindow;
     bool mdiAreaTab;
 
         /** Dialog factory */
