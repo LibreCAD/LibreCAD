@@ -2269,12 +2269,12 @@ void QC_ApplicationWindow::slotToggleTab() {
         for(int i=0;i<windows.size();i++){
             QMdiSubWindow* m=windows.at(i);
             m->hide();
-            m->showMaximized();
             if(m!=active){
                 m->lower();
             }else{
                 m->raise();
             }
+            m->showMaximized();
             qobject_cast<QC_MDIWindow*>(m->widget())->zoomAuto();
         }
 
