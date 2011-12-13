@@ -71,6 +71,8 @@ private:
     bool processHatch();
     bool processSpline();
     bool process3dface();
+    bool processImage();
+    bool processImageDef();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);

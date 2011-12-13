@@ -908,16 +908,23 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
         hatch->addEntity(hatchLoop);
 
         RS_Entity* e = NULL;
-        if ((loop->type & 2) == 2){
-            //polyline
-            /*polyline = new RS_Polyline(hatchLoop,
-                            RS_LineData(RS_Vector(e2->x, e2->y),
-                                        RS_Vector(e2->bx, e2->by)));
-                for (unsigned int j=0; j<loop->pollist.size(); j++) {
-                    DRW_Vertex *vert = data.vertlist.at(j);
-                    RS_Vector v(vert->x, vert->y);
-                    polyline->addVertex(v, vert->bulge);
-                }*/
+        if ((loop->type & 2) == 2){   //polyline, convert to lines & arcs
+            DRW_LWPolyline *pline = (DRW_LWPolyline *)loop->objlist.at(0);
+            RS_Polyline *polyline = new RS_Polyline(NULL,
+                    RS_PolylineData(RS_Vector(false), RS_Vector(false), pline->flags) );
+            for (unsigned int j=0; j < pline->vertlist.size(); j++) {
+                    DRW_Vertex2D *vert = pline->vertlist.at(j);
+                    polyline->addVertex(RS_Vector(vert->x, vert->y), vert->bulge);
+            }
+            for (RS_Entity* e=polyline->firstEntity(); e!=NULL;
+                    e=polyline->nextEntity()) {
+                RS_Entity* tmp = e->clone();
+                tmp->reparent(hatchLoop);
+                tmp->setLayer(NULL);
+                hatchLoop->addEntity(tmp);
+            }
+            delete polyline;
+
         } else {
             for (unsigned int j=0; j<loop->objlist.size(); j++) {
                 DRW_Entity *ent = loop->objlist.at(j);
@@ -979,27 +986,22 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
 /**
  * Implementation of the method which handles image entities.
  */
-void RS_FilterDXFRW::addImage(const DRW_Entity& /*data*/) {
+void RS_FilterDXFRW::addImage(const DRW_Image *data) {
     RS_DEBUG->print("RS_FilterDXF::addImage");
 
-/*    RS_Vector ip(data.ipx, data.ipy);
-    RS_Vector uv(data.ux, data.uy);
-    RS_Vector vv(data.vx, data.vy);
-    RS_Vector size(data.width, data.height);
+    RS_Vector ip(data->x, data->y);
+    RS_Vector uv(data->bx, data->by);
+    RS_Vector vv(data->vx, data->vy);
+    RS_Vector size(data->sizeu, data->sizev);
 
-    RS_Image* image =
-        new RS_Image(
-            currentContainer,
-            RS_ImageData(QString(data.ref.c_str()).toInt(NULL, 16),
-                         ip, uv, vv,
-                         size,
-                         QString(""),
-                         data.brightness,
-                         data.contrast,
-                         data.fade));
+    RS_Image* image = new RS_Image( currentContainer,
+            RS_ImageData(QString(data->ref.c_str()).toInt(NULL, 16),
+                         ip, uv, vv, size,
+                         QString(""), data->brightness,
+                         data->contrast, data->fade));
 
-    setEntityAttributes(image, attributes);
-    currentContainer->addEntity(image);*/
+    setEntityAttributes(image, data);
+    currentContainer->addEntity(image);
 }
 
 
@@ -1007,11 +1009,11 @@ void RS_FilterDXFRW::addImage(const DRW_Entity& /*data*/) {
 /**
  * Implementation of the method which links image entities to image files.
  */
-void RS_FilterDXFRW::linkImage(const DRW_Entity& /*data*/) {
-    RS_DEBUG->print("RS_FilterDXF::linkImage");
+void RS_FilterDXFRW::linkImage(const DRW_ImageDef *data) {
+    RS_DEBUG->print("RS_FilterDXFRW::linkImage");
 
-/*    int handle = QString(data.ref.c_str()).toInt(NULL, 16);
-    QString sfile(QString::fromUtf8(data.file.c_str()));
+    int handle = QString(data->handle.c_str()).toInt(NULL, 16);
+    QString sfile(QString::fromUtf8(data->name.c_str()));
     QFileInfo fiDxf(file);
     QFileInfo fiBitmap(sfile);
 
@@ -1066,7 +1068,7 @@ void RS_FilterDXFRW::linkImage(const DRW_Entity& /*data*/) {
             }
         }
     }
-    RS_DEBUG->print("linking image: OK");*/
+    RS_DEBUG->print("linking image: OK");
 }
 
 

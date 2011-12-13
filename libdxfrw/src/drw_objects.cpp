@@ -114,6 +114,38 @@ void DRW_Layer::parseCode(int code, dxfReader *reader){
     }
 }
 
+void DRW_ImageDef::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 1:
+        name = reader->getString();
+        break;
+    case 5:
+        handle = reader->getString();
+        break;
+    case 10:
+        u = reader->getDouble();
+        break;
+    case 20:
+        v = reader->getDouble();
+        break;
+    case 11:
+        up = reader->getDouble();
+        break;
+    case 12:
+        vp = reader->getDouble();
+        break;
+    case 280:
+        loaded = reader->getInt32();
+        break;
+    case 281:
+        resolution = reader->getInt32();
+        break;
+    default:
+        break;
+    }
+}
+
+
 void DRW_Header::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 9:
