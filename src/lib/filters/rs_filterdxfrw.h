@@ -112,9 +112,9 @@ public:
     virtual void addLeader(const DRW_Entity& data);
     virtual void addLeaderVertex(const DRW_Entity& data);
     virtual void addHatch(const DRW_Hatch* data);
-    virtual void addImage(const DRW_Entity& data);
-    virtual void linkImage(const DRW_Entity& data);
-    virtual void endSequence() {}
+    virtual void addImage(const DRW_Image* data);
+    virtual void linkImage(const DRW_ImageDef* data);
+//    virtual void endSequence() {}
 
     virtual void add3dFace(const DRW_3Dface& data);
     virtual void addDimOrdinate(const DRW_Entity&, const DRW_Entity&);

@@ -427,7 +427,9 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
         associative = reader->getInt32();
         break;
     case 72:        /*edge type*/
-        if (reader->getInt32() == 1){ //line
+        if (ispol){ //if is polyline is a as_bulge flag
+            break;
+        } else if (reader->getInt32() == 1){ //line
             addLine();
         } else if (reader->getInt32() == 2){ //arc
             addArc();
@@ -439,9 +441,14 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
         break;
     case 10:
         if (pt) pt->x = reader->getDouble();
+        else if (pline) {
+            plvert = pline->addVertex();
+            plvert->x = reader->getDouble();
+        }
         break;
     case 20:
         if (pt) pt->y = reader->getDouble();
+        else if (plvert) plvert ->y = reader->getDouble();
         break;
     case 11:
         if (line) line->bx = reader->getDouble();
@@ -458,6 +465,9 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
     case 41:
         scale = reader->getDouble();
         break;
+    case 42:
+        if (plvert) plvert ->bulge = reader->getDouble();
+        break;
     case 50:
         if (arc) arc->staangle = reader->getDouble();
         else if (ellipse) ellipse->staparam = reader->getDouble();
@@ -471,6 +481,7 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
         break;
     case 73:
         if (arc) arc->isccw = reader->getInt32();
+        else if (pline) pline->flags = reader->getInt32();
         break;
     case 75:
         hstyle = reader->getInt32();
@@ -491,9 +502,16 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
     case 92:
         loop = new DRW_HatchLoop(reader->getInt32());
         looplist.push_back(loop);
+        if (reader->getInt32() & 2) {
+            ispol = true;
+            clearEntities();
+            pline = new DRW_LWPolyline;
+            loop->objlist.push_back(pline);
+        } else ispol = false;
         break;
     case 93:
-        loop->numedges = reader->getInt32();//aqui reserve
+        if (pline) pline->vertexnum = reader->getInt32();
+        else loop->numedges = reader->getInt32();//aqui reserve
         break;
     case 98: //seed points ??
         clearEntities();
@@ -590,6 +608,44 @@ void DRW_Spline::parseCode(int code, dxfReader *reader){
 //        break;
     default:
         DRW_Entity::parseCode(code, reader);
+        break;
+    }
+}
+
+void DRW_Image::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 12:
+        vx = reader->getDouble();
+        break;
+    case 22:
+        vy = reader->getDouble();
+        break;
+    case 32:
+        vz = reader->getDouble();
+        break;
+    case 13:
+        sizeu = reader->getDouble();
+        break;
+    case 23:
+        sizev = reader->getDouble();
+        break;
+    case 340:
+        ref = reader->getString();
+        break;
+    case 280:
+        clip = reader->getInt32();
+        break;
+    case 281:
+        brightness = reader->getInt32();
+        break;
+    case 282:
+        contrast = reader->getInt32();
+        break;
+    case 283:
+        fade = reader->getInt32();
+        break;
+    default:
+        DRW_Line::parseCode(code, reader);
         break;
     }
 }

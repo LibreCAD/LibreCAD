@@ -156,12 +156,12 @@ public:
 	/** 
 	 * Called for every image entity. 
 	 */
-    virtual void addImage(const DRW_Entity& data) = 0;
+    virtual void addImage(const DRW_Image *data) = 0;
 
 	/**
 	 * Called for every image definition.
 	 */
-        virtual void linkImage(const DRW_Entity& data) = 0;
+        virtual void linkImage(const DRW_ImageDef *data) = 0;
 
     /**
      * Called for every comment in the DXF file (code 999).
@@ -192,7 +192,7 @@ public:
      /**
       * Called when a SEQEND occurs (when a POLYLINE or ATTRIB is done)
       */
-     virtual void endSequence() = 0;
+//     virtual void endSequence() = 0;
 
     /** Sets the current attributes for entities. */
 /*    void setExtrusion(double dx, double dy, double dz, double elevation) {
