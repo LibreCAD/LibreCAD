@@ -155,10 +155,10 @@ bool dxfWriterBinary::writeInt32(int code, int data) {
     filestr->write(bufcode, 2);
 
     char buffer[4];
-    bufcode[0] =code & 0xFF;
-    bufcode[1] =code  >> 8;
-    bufcode[1] =code  >> 16;
-    bufcode[1] =code  >> 24;
+    bufcode[0] =data & 0xFF;
+    bufcode[1] =data  >> 8;
+    bufcode[2] =data  >> 16;
+    bufcode[3] =data  >> 24;
 /*    for (int i=0; i<4; i++) {
         buffer[i] =0;
     }

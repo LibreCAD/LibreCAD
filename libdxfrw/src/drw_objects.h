@@ -113,11 +113,36 @@ public:
 
 public:
     string lineType;           /*!< line type, code 6 */
-    int color;                 /*!< entity color, code 62 */
+    int color;                 /*!< layer color, code 62 */
     bool plotF;                 /*!< Plot flag, code 290 */
-    int lWeight;               /*!< entity lineweight, code 370 */
+    int lWeight;               /*!< layer lineweight, code 370 */
     string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
     string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
+};
+
+
+//! Class to handle imagedef entries
+/*!
+*  Class to handle image definitions object entries
+*  @author Rallaz
+*/
+class DRW_ImageDef {
+public:
+    DRW_ImageDef() {
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    string handle;            /*!< entity identifier, code 5 */
+    string name;              /*!< File name of image, code 1 */
+    int version;              /*!< class version, code 90, 0=R14 version */
+    double u;                 /*!< image size in pixels U value, code 10 */
+    double v;                 /*!< image size in pixels V value, code 20 */
+    double up;                /*!< default size of one pixel U value, code 11 */
+    double vp;                /*!< default size of one pixel V value, code 12 */
+    int loaded;               /*!< image is loaded flag, code 280, 0=unloaded, 1=loaded */
+    int resolution;           /*!< resolution units, code 281, 0=no, 2=centimeters, 5=inch */
 };
 
 

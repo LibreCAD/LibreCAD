@@ -930,6 +930,8 @@ bool dxfRW::processEntities(bool isblock) {
             processSpline();
         } else if (nextentity == "3DFACE") {
             process3dface();
+        } else if (nextentity == "IMAGE") {
+            processImage();
         } else {
             if (reader->readRec(&code, !binary)){
                 if (code == 0)
@@ -1267,20 +1269,75 @@ bool dxfRW::processSpline() {
 }
 
 
+bool dxfRW::processImage() {
+    DBG("dxfRW::processImage");
+    int code;
+    DRW_Image img;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addImage(&img);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            img.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
+
 /********* Objects Section *********/
 
 bool dxfRW::processObjects() {
     DBG("dxfRW::processObjects\n");
     int code;
-    string sectionstr;
+    if (!reader->readRec(&code, !binary)){
+        return false;
+    }
+    bool next = true;
+    if (code == 0) {
+            nextentity = reader->getString();
+    } else {
+            return false;  //first record in objects is 0
+   }
+    do {
+        if (nextentity == "ENDSEC") {
+            return true;  //found ENDSEC terminate
+        } else if (nextentity == "IMAGEDEF") {
+            processImageDef();
+        } else {
+            if (reader->readRec(&code, !binary)){
+                if (code == 0)
+                    nextentity = reader->getString();
+            } else
+                return false; //end of file without ENDSEC
+        }
+
+    } while (next);
+    return true;
+}
+
+bool dxfRW::processImageDef() {
+    DBG("dxfRW::processImageDef");
+    int code;
+    DRW_ImageDef img;
     while (reader->readRec(&code, !binary)) {
         DBG(code); DBG("\n");
-        if (code == 0) {
-            sectionstr = reader->getString();
-            DBG(sectionstr); DBG("\n");
-            if (sectionstr == "ENDSEC") {
-                return true;  //found ENDSEC terminate
-            }
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->linkImage(&img);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            img.parseCode(code, reader);
+            break;
         }
     }
     return true;
