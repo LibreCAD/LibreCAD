@@ -2153,12 +2153,9 @@ void QC_ApplicationWindow::slotCascade() {
                 mh += h;
                 mih += i*h;
         }
-        mi /= windows.size();
-        mi2 /= windows.size();
-        mw /= windows.size();
-        miw /= windows.size();
-        mh /= windows.size();
-        mih /= windows.size();
+        mi2 *= windows.size();
+        miw *= windows.size();
+        mih *= windows.size();
         double d=1./(mi2 - mi*mi);
         double disX=(miw-mi*mw)*d;
         double disY=(mih-mi*mh)*d;
