@@ -2916,6 +2916,7 @@ void QC_ApplicationWindow::slotFileClose() {
 //        }
     }
     mdiAreaCAD->closeActiveSubWindow();
+    activedMdiSubWindow=NULL;
 }
 
 
