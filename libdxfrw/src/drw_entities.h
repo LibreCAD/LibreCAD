@@ -73,14 +73,15 @@ enum Version {
         MTEXT,
         E3DFACE,
         IMAGE,
-        DIMLEADER,
+        LEADER,
+        DIMENSION,
         DIMALIGNED,
         DIMLINEAR,
         DIMRADIAL,
         DIMDIAMETRIC,
         DIMANGULAR,
-        OVERLAYBOX,
-        CONSTRUCTIONLINE,
+//        OVERLAYBOX,
+//        CONSTRUCTIONLINE,
         UNKNOWN
     };
 
@@ -817,6 +818,109 @@ public:
     int fade;                   /*!< Brightness value, code 283, (0-100) default 0 */
 
 };
+
+
+//! Base class for dimension entity
+/*!
+*  Base class for dimension entity
+*  @author Rallaz
+*/
+class DRW_Dimension : public DRW_Line {
+public:
+    DRW_Dimension() {
+        eType = DRW::DIMENSION;
+        linesty = linefactor = 1;
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    string name;               /*!< Name of the block that contains the entities, code 2 */
+    string text;               /*!< Dimension text explicitly entered by the user, code 1 */
+    string style;              /*!< Dimension style, code 3 */
+    int type;                  /*!< Dimension type, code 70 */
+    int align;                 /*!< attachment point, code 71 */
+    int linesty;               /*!< Dimension text line spacing style, code 72, default 1 */
+    double linefactor;         /*!< Dimension text line spacing factor, code 41, default 1? */
+    double rot;                /*!< rotation angle of the dimension text, code 53 */
+//    double hdir;               /*!< horizontal direction for the dimension, code 51, default ? */
+
+};
+
+
+//! Class to handle  aligned, linear or rotated dimension entity
+/*!
+*  Class to handle aligned, linear or rotated dimension entity
+*  @author Rallaz
+*/
+class DRW_DimLinear : public DRW_Dimension {
+public:
+    DRW_DimLinear() {
+//Note: the type is defined in code 100 (AcDbAlignedDimension only: DIMALIGNED
+//        AcDbAlignedDimension and AcDbRotatedDimension: DIMLINEAR
+        eType = DRW::DIMALIGNED;
+//        eType = DRW::DIMLINEAR;
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    double dx1;                /*!< Definition point 1, x coordinate, code 13 */
+    double dy1;                /*!< Definition point 1, y coordinate, code 23 */
+    double dz1;                /*!< Definition point 1, z coordinate, code 33 */
+    double dx2;                /*!< Definition point 2, x coordinate, code 14 */
+    double dy2;                /*!< Definition point 2, y coordinate, code 24 */
+    double dz2;                /*!< Definition point 2, z coordinate, code 34 */
+    double angle;              /*!< Angle of rotated, horizontal, or vertical dimensions, code 50 */
+    double rotline;            /*!< oblique angle, code 52 */
+};
+
+//! Class to handle radial dimension entity
+/*!
+*  Class to handle aligned, linear or rotated dimension entity
+*  @author Rallaz
+*/
+class DRW_DimRadial : public DRW_Dimension {
+public:
+    DRW_DimRadial() {
+        //Note: the type is defined in code 100 (AcDbRadialDimension: DIMRADIAL
+        //                                    AcDbDiametricDimension: DIMDIAMETRIC
+        eType = DRW::DIMRADIAL;
+//        eType = DRW::DIMDIAMETRIC;
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    double cenx;                /*!< Definition point for diameter, x coordinate, code 15 */
+    double ceny;                /*!< Definition point for diameter, code 25 */
+    double cenz;                /*!< Definition point for diameter, code 35 */
+    double length;            /*!< Leader length, code 40 */
+};
+
+//! Class to handle angular dimension entity
+/*!
+*  Class to handle angular dimension entity
+*  @author Rallaz
+*/
+class DRW_DimAngular : public DRW_DimLinear {
+public:
+    DRW_DimAngular() {
+        eType = DRW::DIMANGULAR;
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    double cenx;                /*!< Definition point for center, x coordinate, code 15 */
+    double ceny;                /*!< Definition point for center, code 25 */
+    double cenz;                /*!< Definition point for center, code 35 */
+    double arcx;                /*!< Point defining dimension arc, x coordinate, code 16 */
+    double arcy;                /*!< Point defining dimension arc, code 26 */
+    double arcz;                /*!< Point defining dimension arc, code 36 */
+
+};
+
 
 
 #endif
