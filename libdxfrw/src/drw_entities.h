@@ -80,6 +80,8 @@ enum Version {
         DIMRADIAL,
         DIMDIAMETRIC,
         DIMANGULAR,
+        DIMANGULAR3P,
+        DIMORDINATE,
 //        OVERLAYBOX,
 //        CONSTRUCTIONLINE,
         UNKNOWN
@@ -97,6 +99,25 @@ enum Version {
     };
 
 }
+
+//! Class to handle 3D coordinate point
+/*!
+*  Class to handle 3D coordinate point
+*  @author Rallaz
+*/
+class DRW_Coord {
+public:
+    DRW_Coord() { z = 0; }
+    DRW_Coord(double ix, double iy, double iz) {
+        x = ix; y = iy; z = iz;
+    }
+
+public:
+    double x;
+    double y;
+    double z;
+};
+
 
 //! Base class for entities
 /*!
@@ -588,25 +609,6 @@ public:
     std::vector<DRW_Vertex *> vertlist;  /*!< vertex list */
 };
 
-//! Class to handle spline point
-/*!
-*  Class to handle spline point
-*  @author Rallaz
-*/
-class DRW_SpPoint {
-public:
-    DRW_SpPoint() {
-        z = 0;
-    }
-    ~DRW_SpPoint() {}
-
-//    void parseCode(int code, dxfReader *reader);
-
-public:
-    double x;
-    double y;
-    double z;
-};
 
 //! Class to handle spline entity
 /*!
@@ -654,12 +656,12 @@ public:
     double tolfit;            /*!< fit point tolerance, code 44, default 0.0000001 */
 
     std::vector<double> knotslist;           /*!< knots list, code 40 */
-    std::vector<DRW_SpPoint *> controllist;  /*!< control points list, code 10, 20 & 30 */
-    std::vector<DRW_SpPoint *> fitlist;      /*!< fit points list, code 11, 21 & 31 */
+    std::vector<DRW_Coord *> controllist;  /*!< control points list, code 10, 20 & 30 */
+    std::vector<DRW_Coord *> fitlist;      /*!< fit points list, code 11, 21 & 31 */
 
 private:
-    DRW_SpPoint *controlpoint;   /*!< current control point to add data */
-    DRW_SpPoint *fitpoint;       /*!< current fit point to add data */
+    DRW_Coord *controlpoint;   /*!< current control point to add data */
+    DRW_Coord *fitpoint;       /*!< current fit point to add data */
 };
 
 //! Class to handle hatch loop
@@ -820,19 +822,21 @@ public:
 };
 
 
-//! Base class for dimension entity
+//! Class for parse dimension entity
 /*!
-*  Base class for dimension entity
+*  Class for parse dimension entity
 *  @author Rallaz
 */
-class DRW_Dimension : public DRW_Line {
+class DRW_DimensionData : public DRW_Line {
 public:
-    DRW_Dimension() {
+    DRW_DimensionData() {
         eType = DRW::DIMENSION;
         linesty = linefactor = 1;
     }
 
     void parseCode(int code, dxfReader *reader);
+
+    DRW_Coord getTextPoint(){return DRW_Coord(bx, by, bz);} /*!< Middle point of dimension text, code 11, 21 & 31 */
 
 public:
     string name;               /*!< Name of the block that contains the entities, code 2 */
@@ -844,35 +848,99 @@ public:
     double linefactor;         /*!< Dimension text line spacing factor, code 41, default 1? */
     double rot;                /*!< rotation angle of the dimension text, code 53 */
 //    double hdir;               /*!< horizontal direction for the dimension, code 51, default ? */
-
+//protected:
+    DRW_Coord clonePoint;      /*!< Insertion point for clones (Baseline & Continue), code 12, 22 & 32 */
+    DRW_Coord def1;            /*!< Definition point 1, code 13, 23 & 33 */
+    DRW_Coord def2;            /*!< Definition point 2, code 14, 24 & 34 */
+    DRW_Coord circlePoint;     /*!< Definition point for center, diameter & radius, code 15, 25 & 35 */
+    DRW_Coord arcPoint;        /*!< Point defining dimension arc, x coordinate, code 16, 26 & 36 */
+    double angle;              /*!< Angle of rotated, horizontal, or vertical dimensions, code 50 */
+    double oblique;            /*!< oblique angle, code 52 */
+    double length;             /*!< Leader length, code 40 */
 };
 
 
-//! Class to handle  aligned, linear or rotated dimension entity
+//! Base class for dimension entity
 /*!
-*  Class to handle aligned, linear or rotated dimension entity
+*  Base class for dimension entity
 *  @author Rallaz
 */
-class DRW_DimLinear : public DRW_Dimension {
+class DRW_Dimension : public DRW_Entity {
 public:
-    DRW_DimLinear() {
-//Note: the type is defined in code 100 (AcDbAlignedDimension only: DIMALIGNED
-//        AcDbAlignedDimension and AcDbRotatedDimension: DIMLINEAR
-        eType = DRW::DIMALIGNED;
-//        eType = DRW::DIMLINEAR;
+    DRW_Dimension(DRW_DimensionData d) {
+        eType = DRW::DIMENSION;
+        dim = d;
+        handle = d.handle;
+        handleBlock = d.handleBlock;
+        layer = d.layer;
+        lineType = d.lineType;
+        color = d.color;
+        lWeight = d.lWeight;
+        ltypeScale = d.ltypeScale;
+        visible = d.visible;
+        color24 = d.color24;
+        colorName = d.colorName;
+        space = d.space;
     }
 
-    void parseCode(int code, dxfReader *reader);
+    DRW_Coord getTextPoint(){return DRW_Coord(dim.bx, dim.by, dim.bz);} /*!< Middle point of text, code 11, 21 & 31 */
+    DRW_Coord getBasePoint(){return DRW_Coord(dim.x, dim.y, dim.z);}
+    DRW_Coord getExtrusion(){return DRW_Coord(dim.ex, dim.ey, dim.ez);} /*!< extrusion, code 210, 220 & 230 */
+    string getName(){return dim.name;}                    /*!< Name of the block that contains the entities, code 2 */
+    string getText(){return dim.text;}                    /*!< Dimension text explicitly entered by the user, code 1 */
+    string getStyle(){return dim.style;}                  /*!< Dimension style, code 3 */
+    int getType(){ return dim.type;}                      /*!< Dimension type, code 70 */
+    int getAlign(){ return dim.align;}                    /*!< attachment point, code 71 */
+    int getTextLineStyle(){ return dim.linesty;}          /*!< Dimension text line spacing style, code 72, default 1 */
+    double getTextLineFactor(){ return dim.linefactor;}   /*!< Dimension text line spacing factor, code 41, default 1? */
+    double getDir(){ return dim.rot;}                     /*!< rotation angle of the dimension text, code 53 */
 
+protected:
+    DRW_Coord getBasepoint(){return DRW_Coord(dim.x, dim.y, dim.z);} /*!< Definition point, code 10, 20 & 30 */
+    DRW_Coord getClonepoint(){return dim.clonePoint;}               /*!< Insertion for clones (Baseline & Continue), 12, 22 & 32 */
+    DRW_Coord getDef1point(){return dim.def1;}                      /*!< Definition point 1, code 13, 23 & 33 */
+    DRW_Coord getDef2point(){return dim.def2;}                      /*!< Definition point 2, code 14, 24 & 34 */
+    DRW_Coord getCenArcpoint(){return dim.circlePoint;}             /*!< Definition point for center, diameter & radius, code 15, 25 & 35 */
+    DRW_Coord getArcpoint(){return dim.arcPoint;}                   /*!< Point defining dimension arc, x coordinate, code 16, 26 & 36 */
+    double getangle(){return dim.angle;}                   /*!< Angle of rotated, horizontal, or vertical dimensions, code 50 */
+    double getoblique(){return dim.oblique;}                        /*!< oblique angle, code 52 */
+    double getleader(){return dim.length;}                          /*!< Leader length, code 40 */
+
+private:
+    DRW_DimensionData dim;
+};
+
+
+//! Class to handle  aligned dimension entity
+/*!
+*  Class to handle aligned dimension entity
+*  @author Rallaz
+*/
+class DRW_DimAligned : public DRW_Dimension {
 public:
-    double dx1;                /*!< Definition point 1, x coordinate, code 13 */
-    double dy1;                /*!< Definition point 1, y coordinate, code 23 */
-    double dz1;                /*!< Definition point 1, z coordinate, code 33 */
-    double dx2;                /*!< Definition point 2, x coordinate, code 14 */
-    double dy2;                /*!< Definition point 2, y coordinate, code 24 */
-    double dz2;                /*!< Definition point 2, z coordinate, code 34 */
-    double angle;              /*!< Angle of rotated, horizontal, or vertical dimensions, code 50 */
-    double rotline;            /*!< oblique angle, code 52 */
+    DRW_DimAligned(DRW_DimensionData d): DRW_Dimension(d){
+        eType = DRW::DIMALIGNED;
+    }
+
+    DRW_Coord getDimPoint(){return getBasepoint();}        /*!< Definition point, code 10, 20 & 30 */
+    DRW_Coord getClonePoint(){return getClonepoint();}     /*!< Insertion for clones (Baseline & Continue), 12, 22 & 32 */
+    DRW_Coord getDef1Point(){return getDef1point();}       /*!< Definition point 1, code 13, 23 & 33 */
+    DRW_Coord getDef2Point(){return getDef2point();}       /*!< Definition point 2, code 14, 24 & 34 */
+};
+
+//! Class to handle  linear or rotated dimension entity
+/*!
+*  Class to handle linear or rotated dimension entity
+*  @author Rallaz
+*/
+class DRW_DimLinear : public DRW_DimAligned {
+public:
+    DRW_DimLinear(DRW_DimensionData d): DRW_DimAligned(d) {
+        eType = DRW::DIMLINEAR;
+    }
+
+    double getAngle(){return getangle();}          /*!< Angle of rotated, horizontal, or vertical dimensions, code 50 */
+    double getOblique(){return getoblique();}      /*!< oblique angle, code 52 */
 };
 
 //! Class to handle radial dimension entity
@@ -882,20 +950,29 @@ public:
 */
 class DRW_DimRadial : public DRW_Dimension {
 public:
-    DRW_DimRadial() {
-        //Note: the type is defined in code 100 (AcDbRadialDimension: DIMRADIAL
-        //                                    AcDbDiametricDimension: DIMDIAMETRIC
+    DRW_DimRadial(DRW_DimensionData d): DRW_Dimension(d) {
         eType = DRW::DIMRADIAL;
-//        eType = DRW::DIMDIAMETRIC;
     }
 
-    void parseCode(int code, dxfReader *reader);
+    DRW_Coord getCenterPoint(){return getBasepoint();}            /*!< center point, code 10, 20 & 30 */
+    DRW_Coord getDiameter2Point(){return getCenArcpoint();}      /*!< Definition point for radius, code 15, 25 & 35 */
+    double getLeaderLength(){return getleader();}                /*!< Leader length, code 40 */
+};
 
+//! Class to handle radial dimension entity
+/*!
+*  Class to handle aligned, linear or rotated dimension entity
+*  @author Rallaz
+*/
+class DRW_DimDiametric : public DRW_Dimension {
 public:
-    double cenx;                /*!< Definition point for diameter, x coordinate, code 15 */
-    double ceny;                /*!< Definition point for diameter, code 25 */
-    double cenz;                /*!< Definition point for diameter, code 35 */
-    double length;            /*!< Leader length, code 40 */
+    DRW_DimDiametric(DRW_DimensionData d): DRW_Dimension(d) {
+        eType = DRW::DIMDIAMETRIC;
+    }
+
+    DRW_Coord getDiameter1Point(){return getCenArcpoint();}      /*!< Definition point for diameter, code 15, 25 & 35 */
+    DRW_Coord getDiameter2Point(){return getBasepoint();}         /*!< Opposite diameter point, code 10, 20 & 30 */
+    double getLeaderLength(){return getleader();}                /*!< Leader length, code 40 */
 };
 
 //! Class to handle angular dimension entity
@@ -905,20 +982,49 @@ public:
 */
 class DRW_DimAngular : public DRW_DimLinear {
 public:
-    DRW_DimAngular() {
+    DRW_DimAngular(DRW_DimensionData d): DRW_DimLinear(d) {
         eType = DRW::DIMANGULAR;
     }
 
-    void parseCode(int code, dxfReader *reader);
+    DRW_Coord getFirstLine1(){return getDef1point();}         /*!< Definition point line 1-1, code 13, 23 & 33 */
+    DRW_Coord getFirstLine2(){return getDef2point();}         /*!< Definition point line 1-2, code 14, 24 & 34 */
+    DRW_Coord getSecondLine1(){return getCenArcpoint();}      /*!< Definition point line 2-1, code 15, 25 & 35 */
+    DRW_Coord getSecondLine2(){return getBasepoint();}        /*!< Definition point line 2-2, code 10, 20 & 30 */
+    DRW_Coord getDimPoint(){return getArcpoint();}            /*!< Dimension definition point, code 16, 26 & 36 */
+};
 
+
+//! Class to handle angular 3p dimension entity
+/*!
+*  Class to handle angular 3p dimension entity
+*  @author Rallaz
+*/
+class DRW_DimAngular3p : public DRW_DimLinear {
 public:
-    double cenx;                /*!< Definition point for center, x coordinate, code 15 */
-    double ceny;                /*!< Definition point for center, code 25 */
-    double cenz;                /*!< Definition point for center, code 35 */
-    double arcx;                /*!< Point defining dimension arc, x coordinate, code 16 */
-    double arcy;                /*!< Point defining dimension arc, code 26 */
-    double arcz;                /*!< Point defining dimension arc, code 36 */
+    DRW_DimAngular3p(DRW_DimensionData d): DRW_DimLinear(d) {
+        eType = DRW::DIMANGULAR3P;
+    }
 
+    DRW_Coord getVertex(){return getCenArcpoint();}          /*!< Vertex point, code 15, 25 & 35 */
+    DRW_Coord getDimPoint(){return getBasepoint();}          /*!< Dimension definition point, code 10, 20 & 30 */
+    DRW_Coord getFirstLine(){return getDef1point();}         /*!< Definition point line 1, code 13, 23 & 33 */
+    DRW_Coord getSecondLine(){return getDef2point();}        /*!< Definition point line 2, code 14, 24 & 34 */
+};
+
+//! Class to handle angular 3p dimension entity
+/*!
+*  Class to handle angular 3p dimension entity
+*  @author Rallaz
+*/
+class DRW_DimOrdinate : public DRW_DimLinear {
+public:
+    DRW_DimOrdinate(DRW_DimensionData d): DRW_DimLinear(d) {
+        eType = DRW::DIMORDINATE;
+    }
+
+    DRW_Coord getOriginPoint(){return getBasepoint();}       /*!< Origin definition point, code 10, 20 & 30 */
+    DRW_Coord getFirstLine(){return getDef1point();}         /*!< Feature location point, code 13, 23 & 33 */
+    DRW_Coord getSecondLine(){return getDef2point();}        /*!< Leader end point, code 14, 24 & 34 */
 };
 
 

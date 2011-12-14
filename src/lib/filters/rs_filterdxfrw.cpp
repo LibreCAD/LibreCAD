@@ -412,7 +412,7 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
         return;
     }
     for (unsigned int i=0; i<data->controllist.size(); i++) {
-        DRW_SpPoint *vert = data->controllist.at(i);
+        DRW_Coord *vert = data->controllist.at(i);
         RS_Vector v(vert->x, vert->y);
         spline->addControlPoint(v);
     }
@@ -650,47 +650,49 @@ void RS_FilterDXFRW::addText(const DRW_Text& data) {
  * dimensions (DIMENSION).
  */
 RS_DimensionData RS_FilterDXFRW::convDimensionData(
-    const DRW_Entity& /*data*/) {
+    DRW_Dimension* data) {
 
-/*    RS_Vector defP(data.dpx, data.dpy);
-    RS_Vector midP(data.mpx, data.mpy);
+    DRW_Coord crd = data->getBasePoint();
+    RS_Vector defP(crd.x, crd.y);
+    crd = data->getTextPoint();
+    RS_Vector midP(crd.x, crd.y);
     RS2::VAlign valign;
     RS2::HAlign halign;
     RS2::TextLineSpacingStyle lss;
-    QString sty = QString::fromUtf8(data.style.c_str());
+    QString sty = QString::fromUtf8(data->getStyle().c_str());
 
     QString t; //= data.text;
 
     // middlepoint of text can be 0/0 which is considered to be invalid (!):
     //  0/0 because older QCad versions save the middle of the text as 0/0
     //  althought they didn't suport saving of the middle of the text.
-    if (fabs(data.mpx)<1.0e-6 && fabs(data.mpy)<1.0e-6) {
+    if (fabs(crd.x)<1.0e-6 && fabs(crd.y)<1.0e-6) {
         midP = RS_Vector(false);
     }
 
-    if (data.attachmentPoint<=3) {
+    if (data->getAlign()<=3) {
         valign=RS2::VAlignTop;
-    } else if (data.attachmentPoint<=6) {
+    } else if (data->getAlign()<=6) {
         valign=RS2::VAlignMiddle;
     } else {
         valign=RS2::VAlignBottom;
     }
 
-    if (data.attachmentPoint%3==1) {
+    if (data->getAlign()%3==1) {
         halign=RS2::HAlignLeft;
-    } else if (data.attachmentPoint%3==2) {
+    } else if (data->getAlign()%3==2) {
         halign=RS2::HAlignCenter;
     } else {
         halign=RS2::HAlignRight;
     }
 
-    if (data.lineSpacingStyle==1) {
+    if (data->getTextLineStyle()==1) {
         lss = RS2::AtLeast;
     } else {
         lss = RS2::Exact;
     }
 
-    t = toNativeString(data.text.c_str(), getDXFEncoding());
+    t = toNativeString(data->getText().c_str(), getDXFEncoding());
 
     if (sty.isEmpty()) {
         sty = variables.getString("$DIMSTYLE", "Standard");
@@ -703,8 +705,8 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(
     return RS_DimensionData(defP, midP,
                             valign, halign,
                             lss,
-                            data.lineSpacingFactor,
-                            t, sty, data.angle);*/
+                            data->getTextLineFactor(),
+                            t, sty, data->getDir());
 }
 
 
@@ -713,22 +715,21 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(
  * Implementation of the method which handles
  * aligned dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimAlign(const DRW_Entity& /*data*/,
-                               const DRW_Entity& /*edata*/) {
-    RS_DEBUG->print("RS_FilterDXF::addDimAligned");
-/*
-    RS_DimensionData dimensionData = convDimensionData(data);
+void RS_FilterDXFRW::addDimAlign(DRW_DimAligned data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addDimAligned");
 
-    RS_Vector ext1(edata.epx1, edata.epy1);
-    RS_Vector ext2(edata.epx2, edata.epy2);
+    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)&data);
+
+    RS_Vector ext1(data.getDef1Point().x, data.getDef1Point().y);
+    RS_Vector ext2(data.getDef2Point().x, data.getDef2Point().y);
 
     RS_DimAlignedData d(ext1, ext2);
 
     RS_DimAligned* entity = new RS_DimAligned(currentContainer,
                             dimensionData, d);
-    setEntityAttributes(entity, attributes);
+    setEntityAttributes(entity, &data);
     entity->update();
-    currentContainer->addEntity(entity);*/
+    currentContainer->addEntity(entity);
 }
 
 
@@ -737,23 +738,22 @@ void RS_FilterDXFRW::addDimAlign(const DRW_Entity& /*data*/,
  * Implementation of the method which handles
  * linear dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimLinear(const DRW_Entity& /*data*/,
-                                const DRW_Entity& /*edata*/) {
-    RS_DEBUG->print("RS_FilterDXF::addDimLinear");
+void RS_FilterDXFRW::addDimLinear(DRW_DimLinear data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addDimLinear");
 
-/*    RS_DimensionData dimensionData = convDimensionData(data);
+    RS_DimensionData dimensionData = convDimensionData((DRW_Dimension*)&data);
 
-    RS_Vector dxt1(edata.dpx1, edata.dpy1);
-    RS_Vector dxt2(edata.dpx2, edata.dpy2);
+    RS_Vector dxt1(data.getDef1Point().x, data.getDef1Point().y);
+    RS_Vector dxt2(data.getDef2Point().x, data.getDef2Point().y);
 
-    RS_DimLinearData d(dxt1, dxt2, RS_Math::deg2rad(edata.angle),
-                       RS_Math::deg2rad(edata.oblique));
+    RS_DimLinearData d(dxt1, dxt2, RS_Math::deg2rad(data.getAngle()),
+                       RS_Math::deg2rad(data.getOblique()));
 
     RS_DimLinear* entity = new RS_DimLinear(currentContainer,
                                             dimensionData, d);
-    setEntityAttributes(entity, attributes);
+    setEntityAttributes(entity, &data);
     entity->update();
-    currentContainer->addEntity(entity);*/
+    currentContainer->addEntity(entity);
 }
 
 
@@ -762,8 +762,7 @@ void RS_FilterDXFRW::addDimLinear(const DRW_Entity& /*data*/,
  * Implementation of the method which handles
  * radial dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimRadial(const DRW_Entity& /*data*/,
-                                const DRW_Entity& /*edata*/) {
+void RS_FilterDXFRW::addDimRadial(const DRW_DimRadial& data) {
     RS_DEBUG->print("RS_FilterDXF::addDimRadial");
 
 /*    RS_DimensionData dimensionData = convDimensionData(data);
@@ -785,8 +784,7 @@ void RS_FilterDXFRW::addDimRadial(const DRW_Entity& /*data*/,
  * Implementation of the method which handles
  * diametric dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimDiametric(const DRW_Entity& /*data*/,
-                                   const DRW_Entity& /*edata*/) {
+void RS_FilterDXFRW::addDimDiametric(const DRW_DimDiametric& data) {
     RS_DEBUG->print("RS_FilterDXF::addDimDiametric");
 
 /*    RS_DimensionData dimensionData = convDimensionData(data);
@@ -808,8 +806,7 @@ void RS_FilterDXFRW::addDimDiametric(const DRW_Entity& /*data*/,
  * Implementation of the method which handles
  * angular dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimAngular(const DRW_Entity& /*data*/,
-                                 const DRW_Entity& /*edata*/) {
+void RS_FilterDXFRW::addDimAngular(const DRW_DimAngular& data) {
     RS_DEBUG->print("RS_FilterDXF::addDimAngular");
 
 /*    RS_DimensionData dimensionData = convDimensionData(data);
@@ -834,8 +831,7 @@ void RS_FilterDXFRW::addDimAngular(const DRW_Entity& /*data*/,
  * Implementation of the method which handles
  * angular dimensions (DIMENSION).
  */
-void RS_FilterDXFRW::addDimAngular3P(const DRW_Entity& /*data*/,
-                                   const DRW_Entity& /*edata*/) {
+void RS_FilterDXFRW::addDimAngular3P(const DRW_DimAngular3p& data) {
     RS_DEBUG->print("RS_FilterDXF::addDimAngular3P");
 
 /*    RS_DimensionData dimensionData = convDimensionData(data);
@@ -855,6 +851,11 @@ void RS_FilterDXFRW::addDimAngular3P(const DRW_Entity& /*data*/,
     currentContainer->addEntity(entity);*/
 }
 
+
+
+void RS_FilterDXFRW::addDimOrdinate(const DRW_DimOrdinate& /*data*/) {
+    RS_DEBUG->print("RS_FilterDXF::addDimOrdinate(const DL_DimensionData&, const DL_DimOrdinateData&) not yet implemented");
+}
 
 
 /**
@@ -2796,9 +2797,6 @@ void RS_FilterDXFRW::add3dFace(const DRW_3Dface& data) {
     currentContainer->addEntity(polyline);
 }
 
-void RS_FilterDXFRW::addDimOrdinate(const DRW_Entity&, const DRW_Entity&) {
-    RS_DEBUG->print("RS_FilterDXF::addDimOrdinate(const DL_DimensionData&, const DL_DimOrdinateData&) not yet implemented");
-}
 void RS_FilterDXFRW::addComment(const char*) {
     RS_DEBUG->print("RS_FilterDXF::addComment(const char*) not yet implemented.");
 }

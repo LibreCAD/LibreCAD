@@ -576,7 +576,7 @@ void DRW_Spline::parseCode(int code, dxfReader *reader){
         tolfit = reader->getDouble();
         break;
     case 10: {
-        controlpoint = new DRW_SpPoint();
+        controlpoint = new DRW_Coord();
         controllist.push_back(controlpoint);
         controlpoint->x = reader->getDouble();
         break; }
@@ -589,7 +589,7 @@ void DRW_Spline::parseCode(int code, dxfReader *reader){
             controlpoint->z = reader->getDouble();
         break;
     case 11: {
-        fitpoint = new DRW_SpPoint();
+        fitpoint = new DRW_Coord();
         fitlist.push_back(fitpoint);
         fitpoint->x = reader->getDouble();
         break; }
@@ -649,3 +649,93 @@ void DRW_Image::parseCode(int code, dxfReader *reader){
         break;
     }
 }
+
+void DRW_DimensionData::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 1:
+        text = reader->getString();
+        break;
+    case 2:
+        name = reader->getString();
+        break;
+    case 3:
+        style = reader->getString();
+        break;
+    case 70:
+        type = reader->getInt32();
+        break;
+    case 71:
+        align = reader->getInt32();
+        break;
+    case 72:
+        linesty = reader->getInt32();
+        break;
+    case 12:
+        clonePoint.x = reader->getDouble();
+        break;
+    case 22:
+        clonePoint.y = reader->getDouble();
+        break;
+    case 32:
+        clonePoint.z = reader->getDouble();
+        break;
+    case 13:
+        def1.x = reader->getDouble();
+        break;
+    case 23:
+        def1.y = reader->getDouble();
+        break;
+    case 33:
+        def1.z = reader->getDouble();
+        break;
+    case 14:
+        def2.x = reader->getDouble();
+        break;
+    case 24:
+        def2.y = reader->getDouble();
+        break;
+    case 34:
+        def2.z = reader->getDouble();
+        break;
+    case 15:
+        circlePoint.x = reader->getDouble();
+        break;
+    case 25:
+        circlePoint.y = reader->getDouble();
+        break;
+    case 35:
+        circlePoint.z = reader->getDouble();
+        break;
+    case 16:
+        arcPoint.x = reader->getDouble();
+        break;
+    case 26:
+        arcPoint.y = reader->getDouble();
+        break;
+    case 36:
+        arcPoint.z = reader->getDouble();
+        break;
+    case 41:
+        linefactor = reader->getDouble();
+        break;
+    case 53:
+        rot = reader->getDouble();
+        break;
+    case 50:
+        angle = reader->getDouble();
+        break;
+    case 52:
+        oblique = reader->getDouble();
+        break;
+    case 40:
+        length = reader->getDouble();
+        break;
+/*    case 51:
+        hdir = reader->getDouble();
+        break;*/
+    default:
+        DRW_Line::parseCode(code, reader);
+        break;
+    }
+}
+
