@@ -932,6 +932,10 @@ bool dxfRW::processEntities(bool isblock) {
             process3dface();
         } else if (nextentity == "IMAGE") {
             processImage();
+        } else if (nextentity == "DIMENSION") {
+            processDimension();
+        } else if (nextentity == "LEADER") {
+            processLeader();
         } else {
             if (reader->readRec(&code, !binary)){
                 if (code == 0)
@@ -1291,6 +1295,72 @@ bool dxfRW::processImage() {
 }
 
 
+bool dxfRW::processDimension() {
+    DBG("dxfRW::processDimension");
+    int code;
+    DRW_DimensionData dim;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            int type = dim.type & 0x0F;
+            switch (type) {
+            case 0:
+                iface->addDimLinear(DRW_DimLinear(dim));
+                break;
+            case 1:
+                iface->addDimAlign(DRW_DimAligned(dim));
+                break;
+            case 2:
+                iface->addDimAngular(DRW_DimAngular(dim));
+                break;
+            case 3:
+                iface->addDimDiametric(DRW_DimDiametric(dim));
+                break;
+            case 4:
+                iface->addDimRadial(DRW_DimRadial(dim));
+                break;
+            case 5:
+                iface->addDimAngular3P(DRW_DimAngular3p(dim));
+                break;
+            case 6:
+                iface->addDimOrdinate(DRW_DimOrdinate(dim));
+                break;
+            }
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            dim.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
+bool dxfRW::processLeader() {
+    DBG("dxfRW::processLeader");
+/*    int code;
+    DRW_Image img;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addImage(&img);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            img.parseCode(code, reader);
+            break;
+        }
+    }*/
+    return true;
+}
+
+
 /********* Objects Section *********/
 
 bool dxfRW::processObjects() {
@@ -1342,4 +1412,3 @@ bool dxfRW::processImageDef() {
     }
     return true;
 }
-
