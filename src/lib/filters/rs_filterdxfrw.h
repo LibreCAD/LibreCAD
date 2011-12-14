@@ -96,8 +96,8 @@ public:
     virtual void addSolid(const DRW_Solid& data);
     virtual void addMText(const DRW_MText& data);
     //virtual void addDimension(const DL_DimensionData& data);
-    RS_DimensionData convDimensionData(const DRW_Entity& data);
-    virtual void addDimAlign(const DRW_Entity& data,
+    RS_DimensionData convDimensionData(DRW_Dimension* data);
+/*    virtual void addDimAlign(const DRW_Entity& data,
                              const DRW_Entity& edata);
     virtual void addDimLinear(const DRW_Entity& data,
                               const DRW_Entity& edata);
@@ -109,6 +109,14 @@ public:
                                const DRW_Entity& edata);
     virtual void addDimAngular3P(const DRW_Entity& data,
                                  const DRW_Entity& edata);
+    virtual void addDimOrdinate(const DRW_Entity&, const DRW_Entity&);*/
+    virtual void addDimAlign(DRW_DimAligned data);
+    virtual void addDimLinear(DRW_DimLinear data);
+    virtual void addDimRadial(const DRW_DimRadial& data);
+    virtual void addDimDiametric(const DRW_DimDiametric& data);
+    virtual void addDimAngular(const DRW_DimAngular& data);
+    virtual void addDimAngular3P(const DRW_DimAngular3p& data);
+    virtual void addDimOrdinate(const DRW_DimOrdinate& data);
     virtual void addLeader(const DRW_Entity& data);
     virtual void addLeaderVertex(const DRW_Entity& data);
     virtual void addHatch(const DRW_Hatch* data);
@@ -117,7 +125,6 @@ public:
 //    virtual void endSequence() {}
 
     virtual void add3dFace(const DRW_3Dface& data);
-    virtual void addDimOrdinate(const DRW_Entity&, const DRW_Entity&);
     virtual void addComment(const char*);
 
     virtual void setVariableVector(const char* key,

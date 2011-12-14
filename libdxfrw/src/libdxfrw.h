@@ -73,6 +73,8 @@ private:
     bool process3dface();
     bool processImage();
     bool processImageDef();
+    bool processDimension();
+    bool processLeader();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);
