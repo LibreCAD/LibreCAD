@@ -100,36 +100,36 @@ public:
     /**
      * Called for every aligned dimension entity. 
      */
-    virtual void addDimAlign(DRW_DimAligned data) = 0;
+    virtual void addDimAlign(const DRW_DimAligned *data) = 0;
     /**
      * Called for every linear or rotated dimension entity. 
      */
-    virtual void addDimLinear(DRW_DimLinear data) = 0;
+    virtual void addDimLinear(const DRW_DimLinear *data) = 0;
 
 	/**
      * Called for every radial dimension entity. 
      */
-    virtual void addDimRadial(const DRW_DimRadial& data) = 0;
+    virtual void addDimRadial(const DRW_DimRadial *data) = 0;
 
 	/**
      * Called for every diametric dimension entity. 
      */
-    virtual void addDimDiametric(const DRW_DimDiametric& data) = 0;
+    virtual void addDimDiametric(const DRW_DimDiametric *data) = 0;
 
 	/**
      * Called for every angular dimension (2 lines version) entity. 
      */
-    virtual void addDimAngular(const DRW_DimAngular& data) = 0;
+    virtual void addDimAngular(const DRW_DimAngular *data) = 0;
 
 	/**
      * Called for every angular dimension (3 points version) entity. 
      */
-    virtual void addDimAngular3P(const DRW_DimAngular3p& data) = 0;
+    virtual void addDimAngular3P(const DRW_DimAngular3p *data) = 0;
 	
     /**
      * Called for every ordinate dimension entity. 
      */
-    virtual void addDimOrdinate(const DRW_DimOrdinate& data) = 0;
+    virtual void addDimOrdinate(const DRW_DimOrdinate *data) = 0;
     
     /** 
 	 * Called for every leader start. 
