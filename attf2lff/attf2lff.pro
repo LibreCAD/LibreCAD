@@ -25,3 +25,5 @@ INCLUDEPATH += /usr/include/freetype2
 LIBS += -lfreetype
 
 OBJECTS_DIR = ../intermediate/lff/obj
+
+

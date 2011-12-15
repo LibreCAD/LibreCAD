@@ -1307,27 +1307,34 @@ bool dxfRW::processDimension() {
             DBG(nextentity); DBG("\n");
             int type = dim.type & 0x0F;
             switch (type) {
-            case 0:
-                iface->addDimLinear(DRW_DimLinear(dim));
-                break;
-            case 1:
-                iface->addDimAlign(DRW_DimAligned(dim));
-                break;
-            case 2:
-                iface->addDimAngular(DRW_DimAngular(dim));
-                break;
-            case 3:
-                iface->addDimDiametric(DRW_DimDiametric(dim));
-                break;
-            case 4:
-                iface->addDimRadial(DRW_DimRadial(dim));
-                break;
-            case 5:
-                iface->addDimAngular3P(DRW_DimAngular3p(dim));
-                break;
-            case 6:
-                iface->addDimOrdinate(DRW_DimOrdinate(dim));
-                break;
+            case 0: {
+                DRW_DimLinear d(dim);
+                iface->addDimLinear(&d);
+                break; }
+            case 1: {
+                DRW_DimAligned d(dim);
+                iface->addDimAlign(&d);
+                break; }
+            case 2:  {
+                DRW_DimAngular d(dim);
+                iface->addDimAngular(&d);
+                break;}
+            case 3: {
+                DRW_DimDiametric d(dim);
+                iface->addDimDiametric(&d);
+                break; }
+            case 4: {
+                DRW_DimRadial d(dim);
+                iface->addDimRadial(&d);
+                break; }
+            case 5: {
+                DRW_DimAngular3p d(dim);
+                iface->addDimAngular3P(&d);
+                break; }
+            case 6: {
+                DRW_DimOrdinate d(dim);
+                iface->addDimOrdinate(&d);
+                break; }
             }
             return true;  //found new entity or ENDSEC, terminate
         }

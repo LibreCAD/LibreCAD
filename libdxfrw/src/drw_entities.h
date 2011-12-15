@@ -112,6 +112,11 @@ public:
         x = ix; y = iy; z = iz;
     }
 
+     DRW_Coord operator = (const DRW_Coord& data) {
+        x = data.x;  y = data.y;  z = data.z;
+        return *this;
+    }
+
 public:
     double x;
     double y;
@@ -832,6 +837,7 @@ public:
     DRW_DimensionData() {
         eType = DRW::DIMENSION;
         linesty = linefactor = 1;
+        angle = oblique = 0;
     }
 
     void parseCode(int code, dxfReader *reader);
@@ -883,28 +889,28 @@ public:
         space = d.space;
     }
 
-    DRW_Coord getTextPoint(){return DRW_Coord(dim.bx, dim.by, dim.bz);} /*!< Middle point of text, code 11, 21 & 31 */
-    DRW_Coord getBasePoint(){return DRW_Coord(dim.x, dim.y, dim.z);}
+    DRW_Coord getTextPoint() const {return DRW_Coord(dim.bx, dim.by, dim.bz);} /*!< Middle point of text, code 11, 21 & 31 */
+    DRW_Coord getBasePoint() const {return DRW_Coord(dim.x, dim.y, dim.z);}
     DRW_Coord getExtrusion(){return DRW_Coord(dim.ex, dim.ey, dim.ez);} /*!< extrusion, code 210, 220 & 230 */
     string getName(){return dim.name;}                    /*!< Name of the block that contains the entities, code 2 */
-    string getText(){return dim.text;}                    /*!< Dimension text explicitly entered by the user, code 1 */
-    string getStyle(){return dim.style;}                  /*!< Dimension style, code 3 */
+    string getText() const {return dim.text;}                    /*!< Dimension text explicitly entered by the user, code 1 */
+    string getStyle() const {return dim.style;}                  /*!< Dimension style, code 3 */
     int getType(){ return dim.type;}                      /*!< Dimension type, code 70 */
-    int getAlign(){ return dim.align;}                    /*!< attachment point, code 71 */
-    int getTextLineStyle(){ return dim.linesty;}          /*!< Dimension text line spacing style, code 72, default 1 */
-    double getTextLineFactor(){ return dim.linefactor;}   /*!< Dimension text line spacing factor, code 41, default 1? */
-    double getDir(){ return dim.rot;}                     /*!< rotation angle of the dimension text, code 53 */
+    int getAlign() const { return dim.align;}                    /*!< attachment point, code 71 */
+    int getTextLineStyle() const { return dim.linesty;}          /*!< Dimension text line spacing style, code 72, default 1 */
+    double getTextLineFactor() const { return dim.linefactor;}   /*!< Dimension text line spacing factor, code 41, default 1? */
+    double getDir() const { return dim.rot;}                     /*!< rotation angle of the dimension text, code 53 */
 
 protected:
-    DRW_Coord getBasepoint(){return DRW_Coord(dim.x, dim.y, dim.z);} /*!< Definition point, code 10, 20 & 30 */
-    DRW_Coord getClonepoint(){return dim.clonePoint;}               /*!< Insertion for clones (Baseline & Continue), 12, 22 & 32 */
-    DRW_Coord getDef1point(){return dim.def1;}                      /*!< Definition point 1, code 13, 23 & 33 */
-    DRW_Coord getDef2point(){return dim.def2;}                      /*!< Definition point 2, code 14, 24 & 34 */
-    DRW_Coord getCenArcpoint(){return dim.circlePoint;}             /*!< Definition point for center, diameter & radius, code 15, 25 & 35 */
-    DRW_Coord getArcpoint(){return dim.arcPoint;}                   /*!< Point defining dimension arc, x coordinate, code 16, 26 & 36 */
-    double getangle(){return dim.angle;}                   /*!< Angle of rotated, horizontal, or vertical dimensions, code 50 */
-    double getoblique(){return dim.oblique;}                        /*!< oblique angle, code 52 */
-    double getleader(){return dim.length;}                          /*!< Leader length, code 40 */
+    DRW_Coord getBasepoint() const {return DRW_Coord(dim.x, dim.y, dim.z);} /*!< Definition point, code 10, 20 & 30 */
+    DRW_Coord getClonepoint() const {return dim.clonePoint;}               /*!< Insertion for clones (Baseline & Continue), 12, 22 & 32 */
+    DRW_Coord getDef1point() const {return dim.def1;}                      /*!< Definition point 1, code 13, 23 & 33 */
+    DRW_Coord getDef2point() const {return dim.def2;}                      /*!< Definition point 2, code 14, 24 & 34 */
+    DRW_Coord getCenArcpoint() const {return dim.circlePoint;}             /*!< Definition point for center, diameter & radius, code 15, 25 & 35 */
+    DRW_Coord getArcpoint() const {return dim.arcPoint;}                   /*!< Point defining dimension arc, x coordinate, code 16, 26 & 36 */
+    double getangle() const {return dim.angle;}                   /*!< Angle of rotated, horizontal, or vertical dimensions, code 50 */
+    double getoblique() const {return dim.oblique;}                        /*!< oblique angle, code 52 */
+    double getleader() const {return dim.length;}                          /*!< Leader length, code 40 */
 
 private:
     DRW_DimensionData dim;
@@ -924,8 +930,8 @@ public:
 
     DRW_Coord getDimPoint(){return getBasepoint();}        /*!< Definition point, code 10, 20 & 30 */
     DRW_Coord getClonePoint(){return getClonepoint();}     /*!< Insertion for clones (Baseline & Continue), 12, 22 & 32 */
-    DRW_Coord getDef1Point(){return getDef1point();}       /*!< Definition point 1, code 13, 23 & 33 */
-    DRW_Coord getDef2Point(){return getDef2point();}       /*!< Definition point 2, code 14, 24 & 34 */
+    DRW_Coord getDef1Point() const {return getDef1point();}       /*!< Definition point 1, code 13, 23 & 33 */
+    DRW_Coord getDef2Point() const {return getDef2point();}       /*!< Definition point 2, code 14, 24 & 34 */
 };
 
 //! Class to handle  linear or rotated dimension entity
@@ -939,8 +945,8 @@ public:
         eType = DRW::DIMLINEAR;
     }
 
-    double getAngle(){return getangle();}          /*!< Angle of rotated, horizontal, or vertical dimensions, code 50 */
-    double getOblique(){return getoblique();}      /*!< oblique angle, code 52 */
+    double getAngle() const {return getangle();}          /*!< Angle of rotated, horizontal, or vertical dimensions, code 50 */
+    double getOblique() const {return getoblique();}      /*!< oblique angle, code 52 */
 };
 
 //! Class to handle radial dimension entity
@@ -954,9 +960,9 @@ public:
         eType = DRW::DIMRADIAL;
     }
 
-    DRW_Coord getCenterPoint(){return getBasepoint();}            /*!< center point, code 10, 20 & 30 */
-    DRW_Coord getDiameter2Point(){return getCenArcpoint();}      /*!< Definition point for radius, code 15, 25 & 35 */
-    double getLeaderLength(){return getleader();}                /*!< Leader length, code 40 */
+    DRW_Coord getCenterPoint() const {return getBasepoint();}            /*!< center point, code 10, 20 & 30 */
+    DRW_Coord getDiameterPoint() const {return getCenArcpoint();}      /*!< Definition point for radius, code 15, 25 & 35 */
+    double getLeaderLength() const {return getleader();}                /*!< Leader length, code 40 */
 };
 
 //! Class to handle radial dimension entity
@@ -970,9 +976,9 @@ public:
         eType = DRW::DIMDIAMETRIC;
     }
 
-    DRW_Coord getDiameter1Point(){return getCenArcpoint();}      /*!< Definition point for diameter, code 15, 25 & 35 */
-    DRW_Coord getDiameter2Point(){return getBasepoint();}         /*!< Opposite diameter point, code 10, 20 & 30 */
-    double getLeaderLength(){return getleader();}                /*!< Leader length, code 40 */
+    DRW_Coord getDiameter1Point() const {return getCenArcpoint();}      /*!< Definition point for diameter, code 15, 25 & 35 */
+    DRW_Coord getDiameter2Point() const {return getBasepoint();}         /*!< Opposite diameter point, code 10, 20 & 30 */
+    double getLeaderLength() const {return getleader();}                /*!< Leader length, code 40 */
 };
 
 //! Class to handle angular dimension entity
@@ -986,11 +992,11 @@ public:
         eType = DRW::DIMANGULAR;
     }
 
-    DRW_Coord getFirstLine1(){return getDef1point();}         /*!< Definition point line 1-1, code 13, 23 & 33 */
-    DRW_Coord getFirstLine2(){return getDef2point();}         /*!< Definition point line 1-2, code 14, 24 & 34 */
-    DRW_Coord getSecondLine1(){return getCenArcpoint();}      /*!< Definition point line 2-1, code 15, 25 & 35 */
-    DRW_Coord getSecondLine2(){return getBasepoint();}        /*!< Definition point line 2-2, code 10, 20 & 30 */
-    DRW_Coord getDimPoint(){return getArcpoint();}            /*!< Dimension definition point, code 16, 26 & 36 */
+    DRW_Coord getFirstLine1() const {return getDef1point();}         /*!< Definition point line 1-1, code 13, 23 & 33 */
+    DRW_Coord getFirstLine2() const {return getDef2point();}         /*!< Definition point line 1-2, code 14, 24 & 34 */
+    DRW_Coord getSecondLine1() const {return getCenArcpoint();}      /*!< Definition point line 2-1, code 15, 25 & 35 */
+    DRW_Coord getSecondLine2() const {return getBasepoint();}        /*!< Definition point line 2-2, code 10, 20 & 30 */
+    DRW_Coord getDimPoint() const {return getArcpoint();}            /*!< Dimension definition point, code 16, 26 & 36 */
 };
 
 
@@ -1005,10 +1011,10 @@ public:
         eType = DRW::DIMANGULAR3P;
     }
 
-    DRW_Coord getVertex(){return getCenArcpoint();}          /*!< Vertex point, code 15, 25 & 35 */
-    DRW_Coord getDimPoint(){return getBasepoint();}          /*!< Dimension definition point, code 10, 20 & 30 */
-    DRW_Coord getFirstLine(){return getDef1point();}         /*!< Definition point line 1, code 13, 23 & 33 */
-    DRW_Coord getSecondLine(){return getDef2point();}        /*!< Definition point line 2, code 14, 24 & 34 */
+    DRW_Coord getVertex() const {return getCenArcpoint();}          /*!< Vertex point, code 15, 25 & 35 */
+    DRW_Coord getDimPoint() const {return getBasepoint();}          /*!< Dimension definition point, code 10, 20 & 30 */
+    DRW_Coord getFirstLine() const {return getDef1point();}         /*!< Definition point line 1, code 13, 23 & 33 */
+    DRW_Coord getSecondLine() const {return getDef2point();}        /*!< Definition point line 2, code 14, 24 & 34 */
 };
 
 //! Class to handle angular 3p dimension entity
