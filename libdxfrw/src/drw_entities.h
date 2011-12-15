@@ -842,8 +842,6 @@ public:
 
     void parseCode(int code, dxfReader *reader);
 
-    DRW_Coord getTextPoint(){return DRW_Coord(bx, by, bz);} /*!< Middle point of dimension text, code 11, 21 & 31 */
-
 public:
     string name;               /*!< Name of the block that contains the entities, code 2 */
     string text;               /*!< Dimension text explicitly entered by the user, code 1 */
@@ -1033,6 +1031,56 @@ public:
     DRW_Coord getSecondLine(){return getDef2point();}        /*!< Leader end point, code 14, 24 & 34 */
 };
 
+
+//! Class to handle leader entity
+/*!
+*  Class to handle leader entity
+*  @author Rallaz
+*/
+class DRW_Leader : public DRW_Entity {
+public:
+    DRW_Leader() {
+        eType = DRW::LEADER;
+        flag = 3;
+        hookflag = vertnum = 0;
+/*        nfit = ex = ey = 0;
+        ez = 1;
+        tolknot = tolcontrol = tolfit = 0.0000001;*/
+
+    }
+    ~DRW_Leader() {
+/*        while (!controllist.empty()) {
+           controllist.pop_back();
+        }
+        while (!fitlist.empty()) {
+           fitlist.pop_back();
+        }*/
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    string style;              /*!< Dimension style name, code 3 */
+    int arrow;                 /*!< Arrowhead flag, code 71, 0=Disabled; 1=Enabled */
+    int leadertype;            /*!< Leader path type, code 72, 0=Straight line segments; 1=Spline */
+    int flag;                  /*!< Leader creation flag, code 73, default 3 */
+    int hookline;              /*!< Hook line direction flag, code 74, default 1 */
+    int hookflag;              /*!< Hook line flag, code 75 */
+    double textheight;         /*!< Text annotation height, code 40 */
+    double textwidth;          /*!< Text annotation width, code 41 */
+    int vertnum;               /*!< Number of vertices, code 76 */
+    int coloruse;              /*!< Color to use if leader's DIMCLRD = BYBLOCK, code 77 */
+    string handle;             /*!< Hard reference to associated annotation, code 340 */
+    DRW_Coord extrusionPoint;  /*!< Normal vector, code 210, 220 & 230 */
+    DRW_Coord horizdir;        /*!< "Horizontal" direction for leader, code 211, 221 & 231 */
+    DRW_Coord offsetblock;     /*!< Offset of last leader vertex from block, code 212, 222 & 232 */
+    DRW_Coord offsettext;      /*!< Offset of last leader vertex from annotation, code 213, 223 & 233 */
+
+    std::vector<DRW_Coord *> vertexlist;  /*!< vertex points list, code 10, 20 & 30 */
+
+private:
+    DRW_Coord *vertexpoint;   /*!< current control point to add data */
+};
 
 
 #endif
