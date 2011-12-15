@@ -11,6 +11,8 @@
         </keywords>
         <files>
             <file>index.html</file>
+            <file>img/librecadlogo.png</file>
+            <file>style.css</file>
         </files>
     </filterSection>
 </QtHelpProject>

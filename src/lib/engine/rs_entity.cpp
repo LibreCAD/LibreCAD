@@ -287,8 +287,13 @@ bool RS_Entity::isVisible() {
     //if (rtti()==RS2::EntityInsert) {
     //	return true;
     //}
+    // blocks are visible in editting window, issue#253
+    if( isDocument() && (rtti()==RS2::EntityBlock || rtti()==RS2::EntityInsert)) {
+        return true;
+    }
 
     if (layer!=NULL /*&& layer->getName()!="ByBlock"*/) {
+
         if (!layer->isFrozen()) {
             return true;
         } else {
