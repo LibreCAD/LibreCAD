@@ -21,7 +21,7 @@ SUBDIRS     = \
 unix {
     macx {   }
     else {
-        SUBDIRS += ttf2lff
+        SUBDIRS += attf2lff
     }
 }
 
