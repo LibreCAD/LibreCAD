@@ -50,18 +50,15 @@
 RS_FilterDXFRW::RS_FilterDXFRW()
     :RS_FilterInterface(),DRW_Interface() {
 
-    RS_DEBUG->print("RS_FilterDXF::RS_FilterDXF()");
+    RS_DEBUG->print("RS_FilterDXFRW::RS_FilterDXFRW()");
 
     addImportFormat(RS2::FormatDXFRW);
     addExportFormat(RS2::FormatDXFRW);
 //    addExportFormat(RS2::FormatDXF12);
 
-    leader = NULL;
     currentContainer = NULL;
     graphic = NULL;
-    //exportVersion = DL_Codes::VER_2002;
-    //systemVariables.setAutoDelete(true);
-    RS_DEBUG->print("RS_FilterDXF::RS_FilterDXF(): OK");
+    RS_DEBUG->print("RS_FilterDXFRW::RS_FilterDXFRW(): OK");
 }
 
 
@@ -70,8 +67,7 @@ RS_FilterDXFRW::RS_FilterDXFRW()
  * Destructor.
  */
 RS_FilterDXFRW::~RS_FilterDXFRW() {
-    RS_DEBUG->print("RS_FilterDXF::~RS_FilterDXF()");
-    RS_DEBUG->print("RS_FilterDXF::~RS_FilterDXF(): OK");
+    RS_DEBUG->print("RS_FilterDXFRW::~RS_FilterDXFRW(): OK");
 }
 
 
@@ -85,10 +81,9 @@ RS_FilterDXFRW::~RS_FilterDXFRW() {
  * taken to be stored in a file.
  */
 bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) {
-    RS_DEBUG->print("RS_FilterDXF::fileImport");
-    //RS_DEBUG->timestamp();
+    RS_DEBUG->print("RS_FilterDXFRW::fileImport");
 
-    RS_DEBUG->print("DXF Filter: importing file '%s'...", (const char*)QFile::encodeName(file));
+    RS_DEBUG->print("DXFRW Filter: importing file '%s'...", (const char*)QFile::encodeName(file));
 
     variables.clear();
     graphic = &g;
@@ -96,10 +91,9 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
     this->file = file;
     dxf = new dxfRW(QFile::encodeName(file));
 
-    RS_DEBUG->print("RS_FilterDXF::fileImport: reading file");
-//    bool success = dxf.in((const char*)QFile::encodeName(file), this);
+    RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file");
     bool success = dxf->read(this);
-    RS_DEBUG->print("RS_FilterDXF::fileImport: reading file: OK");
+    RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file: OK");
     //graphic->setAutoUpdateBorders(true);
 
     if (success==false) {
@@ -108,21 +102,18 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
         return false;
     }
 
-    RS_DEBUG->print("RS_FilterDXF::fileImport: adding variables");
+    RS_DEBUG->print("RS_FilterDXFRW::fileImport: adding variables");
 
     // add some variables that need to be there for DXF drawings:
     if (graphic->getVariableString("$DIMSTYLE", "").isEmpty()) {
-        RS_DEBUG->print("RS_FilterDXF::fileImport: adding DIMSTYLE");
+        RS_DEBUG->print("RS_FilterDXFRW::fileImport: adding DIMSTYLE");
         graphic->addVariable("$DIMSTYLE", "Standard", 2);
-        RS_DEBUG->print("RS_FilterDXF::fileImport: adding DIMSTYLE: OK");
     }
-    RS_DEBUG->print("RS_FilterDXF::fileImport: adding variables: OK");
 
-    RS_DEBUG->print("RS_FilterDXF::fileImport: updating inserts");
+    RS_DEBUG->print("RS_FilterDXFRW::fileImport: updating inserts");
     graphic->updateInserts();
-    RS_DEBUG->print("RS_FilterDXF::fileImport: updating inserts: OK");
 
-    RS_DEBUG->print("RS_FilterDXF::fileImport OK");
+    RS_DEBUG->print("RS_FilterDXFRW::fileImport OK");
 
     delete dxf;
     return true;
@@ -213,7 +204,8 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
 void RS_FilterDXFRW::endBlock() {
     if (currentContainer->rtti() == RS2::EntityBlock) {
         RS_Block *bk = (RS_Block *)currentContainer;
-        graphic->removeBlock(bk);
+        if (bk->getName().startsWith("*D") )
+            graphic->removeBlock(bk);
     }
     currentContainer = graphic;
 }
@@ -403,7 +395,8 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
 void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
     RS_DEBUG->print("RS_FilterDXFRW::addSpline: degree: %d", data->degree);
 
-    if (data->degree>=1 && data->degree<=3) {
+        RS_Spline* spline;
+        if (data->degree>=1 && data->degree<=3) {
         RS_SplineData d(data->degree, ((data->flags&0x1)==0x1));
         spline = new RS_Spline(currentContainer, d);
         setEntityAttributes(spline, data);
@@ -864,28 +857,19 @@ void RS_FilterDXFRW::addDimOrdinate(const DRW_DimOrdinate* /*data*/) {
 /**
  * Implementation of the method which handles leader entities.
  */
-void RS_FilterDXFRW::addLeader(const DRW_Entity& /*data*/) {
-    RS_DEBUG->print("RS_FilterDXF::addDimLeader");
-/*    RS_LeaderData d(data.arrowHeadFlag==1);
-    leader = new RS_Leader(currentContainer, d);
-    setEntityAttributes(leader, attributes);
+void RS_FilterDXFRW::addLeader(const DRW_Leader *data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addDimLeader");
+    RS_LeaderData d(data->arrow!=0);
+    RS_Leader* leader = new RS_Leader(currentContainer, d);
+    setEntityAttributes(leader, data);
 
-    currentContainer->addEntity(leader);*/
-}
+    currentContainer->addEntity(leader);
 
-
-
-/**
- * Implementation of the method which handles leader vertices.
- */
-void RS_FilterDXFRW::addLeaderVertex(const DRW_Entity& /*data*/) {
-    RS_DEBUG->print("RS_FilterDXF::addLeaderVertex");
-
-/*    RS_Vector v(data.x, data.y);
-
-    if (leader!=NULL) {
+    for (unsigned int i=0; i<data->vertexlist.size(); i++) {
+        DRW_Coord *vert = data->vertexlist.at(i);
+        RS_Vector v(vert->x, vert->y);
         leader->addVertex(v);
-    }*/
+    }
 }
 
 
