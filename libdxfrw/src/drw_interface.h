@@ -134,12 +134,7 @@ public:
     /** 
 	 * Called for every leader start. 
 	 */
-    virtual void addLeader(const DRW_Entity& data) = 0;
-	
-	/** 
-	 * Called for every leader vertex 
-	 */
-    virtual void addLeaderVertex(const DRW_Entity& data) = 0;
+    virtual void addLeader(const DRW_Leader *data) = 0;
 	
 	/** 
 	 * Called for every hatch entity. 

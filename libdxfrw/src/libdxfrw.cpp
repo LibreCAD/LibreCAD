@@ -924,6 +924,8 @@ bool dxfRW::processEntities(bool isblock) {
             processPolyline();
         } else if (nextentity == "TEXT") {
             processText();
+        } else if (nextentity == "MTEXT") {
+            processMText();
         } else if (nextentity == "HATCH") {
             processHatch();
         } else if (nextentity == "SPLINE") {
@@ -1229,6 +1231,27 @@ bool dxfRW::processText() {
     return true;
 }
 
+bool dxfRW::processMText() {
+    DBG("dxfRW::processMText");
+    int code;
+    DRW_MText txt;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addMText(txt);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            txt.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
 bool dxfRW::processHatch() {
     DBG("dxfRW::processHatch");
     int code;
@@ -1348,22 +1371,22 @@ bool dxfRW::processDimension() {
 
 bool dxfRW::processLeader() {
     DBG("dxfRW::processLeader");
-/*    int code;
-    DRW_Image img;
+    int code;
+    DRW_Leader leader;
     while (reader->readRec(&code, !binary)) {
         DBG(code); DBG("\n");
         switch (code) {
         case 0: {
             nextentity = reader->getString();
             DBG(nextentity); DBG("\n");
-            iface->addImage(&img);
+            iface->addLeader(&leader);
             return true;  //found new entity or ENDSEC, terminate
         }
         default:
-            img.parseCode(code, reader);
+            leader.parseCode(code, reader);
             break;
         }
-    }*/
+    }
     return true;
 }
 

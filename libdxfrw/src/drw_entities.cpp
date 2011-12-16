@@ -334,10 +334,7 @@ void DRW_MText::parseCode(int code, dxfReader *reader){
         text += reader->getString();
         break;
     case 44:
-        height = reader->getDouble();
-        break;
-    case 73:
-        alignV = (DRW::VAlign)reader->getInt32();
+        interlin = reader->getDouble();
         break;
     default:
         DRW_Text::parseCode(code, reader);
@@ -739,3 +736,92 @@ void DRW_DimensionData::parseCode(int code, dxfReader *reader){
     }
 }
 
+void DRW_Leader::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 3:
+        style = reader->getString();
+        break;
+    case 71:
+        arrow = reader->getInt32();
+        break;
+    case 72:
+        leadertype = reader->getInt32();
+        break;
+    case 73:
+        flag = reader->getInt32();
+        break;
+    case 74:
+        hookline = reader->getInt32();
+        break;
+    case 75:
+        hookflag = reader->getInt32();
+        break;
+    case 76:
+        vertnum = reader->getInt32();
+        break;
+    case 77:
+        coloruse = reader->getInt32();
+        break;
+    case 40:
+        textheight = reader->getDouble();
+        break;
+    case 41:
+        textwidth = reader->getDouble();
+        break;
+    case 10: {
+        vertexpoint = new DRW_Coord();
+        vertexlist.push_back(vertexpoint);
+        vertexpoint->x = reader->getDouble();
+        break; }
+    case 20:
+        if(vertexpoint != NULL)
+            vertexpoint->y = reader->getDouble();
+        break;
+    case 30:
+        if(vertexpoint != NULL)
+            vertexpoint->z = reader->getDouble();
+        break;
+    case 340:
+        handle = reader->getString();
+        break;
+    case 210:
+        extrusionPoint.x = reader->getDouble();
+        break;
+    case 220:
+        extrusionPoint.y = reader->getDouble();
+        break;
+    case 230:
+        extrusionPoint.z = reader->getDouble();
+        break;
+    case 211:
+        horizdir.x = reader->getDouble();
+        break;
+    case 221:
+        horizdir.y = reader->getDouble();
+        break;
+    case 231:
+        horizdir.z = reader->getDouble();
+        break;
+    case 212:
+        offsetblock.x = reader->getDouble();
+        break;
+    case 222:
+        offsetblock.y = reader->getDouble();
+        break;
+    case 232:
+        offsetblock.z = reader->getDouble();
+        break;
+    case 213:
+        offsettext.x = reader->getDouble();
+        break;
+    case 223:
+        offsettext.y = reader->getDouble();
+        break;
+    case 233:
+        offsettext.z = reader->getDouble();
+        break;
+    default:
+        DRW_Entity::parseCode(code, reader);
+        break;
+    }
+}
