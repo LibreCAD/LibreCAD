@@ -500,27 +500,13 @@ class DRW_MText : public DRW_Text {
 public:
     DRW_MText() {
         eType = DRW::MTEXT;
-/*        angle = 0;
-        widthscale = 1;
-        oblique = 0;
-        style = "STANDARD";
-        textgen = 0;
-        alignH = DRW::HAlignLeft;*/
+        interlin = 1;
         alignV = (DRW::VAlign)2;
     }
 
     void parseCode(int code, dxfReader *reader);
 
 public:
-//    double height;           /*!< height text, code 40 */
-//    string text;                 /*!< text string, code 1 */
-//    double angle;             /*!< rotation angle, code 50 */
-//    double widthscale;     /*!< width factor, code 41 */
-//    double oblique;          /*!< oblique angle, code 51 */
-//    string style;                /*!< stile name, code 7 */
-//    int textgen;                 /*!< text generation, code 71 */
-//    enum DRW::HAlign alignH;   /*!< horizontal align, code 72 */
-//    enum DRW::VAlign alignV;    /*!< vertical align, code 73 */
     double interlin;     /*!< width factor, code 44 */
 };
 
@@ -1043,18 +1029,13 @@ public:
         eType = DRW::LEADER;
         flag = 3;
         hookflag = vertnum = 0;
-/*        nfit = ex = ey = 0;
-        ez = 1;
-        tolknot = tolcontrol = tolfit = 0.0000001;*/
-
+        leadertype = extrusionPoint.x = extrusionPoint.y = 0;
+        arrow = extrusionPoint.z = 1;
     }
     ~DRW_Leader() {
-/*        while (!controllist.empty()) {
-           controllist.pop_back();
+        while (!vertexlist.empty()) {
+           vertexlist.pop_back();
         }
-        while (!fitlist.empty()) {
-           fitlist.pop_back();
-        }*/
     }
 
     void parseCode(int code, dxfReader *reader);

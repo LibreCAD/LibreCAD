@@ -50,7 +50,7 @@ class DL_WriterA;
  * This format filter class can import and export DXF files.
  * It depends on the dxflib library.
  *
- * @author Andrew Mustun
+ * @author Rallaz
  */
 class RS_FilterDXFRW : public RS_FilterInterface, DRW_Interface {
 public:
@@ -103,12 +103,10 @@ public:
     virtual void addDimAngular(const DRW_DimAngular *data);
     virtual void addDimAngular3P(const DRW_DimAngular3p *data);
     virtual void addDimOrdinate(const DRW_DimOrdinate *data);
-    virtual void addLeader(const DRW_Entity& data);
-    virtual void addLeaderVertex(const DRW_Entity& data);
+    virtual void addLeader(const DRW_Leader *data);
     virtual void addHatch(const DRW_Hatch* data);
     virtual void addImage(const DRW_Image* data);
     virtual void linkImage(const DRW_ImageDef* data);
-//    virtual void endSequence() {}
 
     virtual void add3dFace(const DRW_3Dface& data);
     virtual void addComment(const char*);
@@ -191,18 +189,11 @@ private:
     RS_Graphic* graphic;
     /** File name. Used to find out the full path of images. */
     QString file;
-    /** Pointer to current spline entity we're adding control points to. */
-    RS_Spline* spline;
-    /** Pointer to current leader entity we're adding vertices to. */
-    RS_Leader* leader;
     /** Pointer to current entity container (either block or graphic) */
     RS_EntityContainer* currentContainer;
 
     dxfRW *dxf;
     RS_VariableDict variables;
-    bool omitHatchLoop;
-//    bool started;
-}
-;
+};
 
 #endif
