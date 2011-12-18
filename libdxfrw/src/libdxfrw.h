@@ -83,8 +83,6 @@ private:
     bool writeBlocks();
     bool writeObjects();
 
-    DRW_Header header;
-
 private:
     DRW::Version version;
     std::string fileName;
@@ -92,6 +90,7 @@ private:
     dxfReader *reader;
     dxfWriter *writer;
     DRW_Interface *iface;
+    DRW_Header header;
 //    int section;
     string nextentity;
     int entCount;

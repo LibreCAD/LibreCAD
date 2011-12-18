@@ -728,6 +728,7 @@ bool dxfRW::processHeader() {
             sectionstr = reader->getString();
             DBG(sectionstr); DBG("\n");
             if (sectionstr == "ENDSEC") {
+                iface->addHeader(&header);
                 return true;  //found ENDSEC terminate
             }
         } else header.parseCode(code, reader);

@@ -149,22 +149,84 @@ void DRW_ImageDef::parseCode(int code, dxfReader *reader){
 void DRW_Header::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 9:
+        curr = new DRW_Variant();
         name = reader->getString();
+        vars[name]=curr;
         break;
     case 1:
-        data = reader->getString();
+        curr->addString(reader->getString());
+        curr->code = code;
+        break;
+    case 2:
+        curr->addString(reader->getString());
+        curr->code = code;
         break;
     case 3:
-        data = reader->getString();
+        curr->addString(reader->getString());
+        curr->code = code;
+        break;
+    case 6:
+        curr->addString(reader->getString());
+        curr->code = code;
+        break;
+    case 7:
+        curr->addString(reader->getString());
+        curr->code = code;
+        break;
+    case 8:
+        curr->addString(reader->getString());
+        curr->code = code;
+        break;
+    case 10:
+        curr->addCoord(new DRW_Coord());
+        curr->setCoordX(reader->getDouble());
+        curr->code = code;
+        break;
+    case 20:
+        curr->setCoordY(reader->getDouble());
+        break;
+    case 30:
+        curr->setCoordZ(reader->getDouble());
+        curr->code = code;
+        break;
+    case 40:
+        curr->addDouble(reader->getDouble());
+        curr->code = code;
+        break;
+    case 50:
+        curr->addDouble(reader->getDouble());
+        curr->code = code;
+        break;
+    case 62:
+        curr->addInt(reader->getInt32());
+        curr->code = code;
+        break;
+    case 70:
+        curr->addInt(reader->getInt32());
+        curr->code = code;
+        break;
+    case 280:
+        curr->addInt(reader->getInt32());
+        curr->code = code;
+        break;
+    case 290:
+        curr->addInt(reader->getInt32());
+        curr->code = code;
+        break;
+    case 370:
+        curr->addInt(reader->getInt32());
+        curr->code = code;
+        break;
+    case 380:
+        curr->addInt(reader->getInt32());
+        curr->code = code;
+        break;
+    case 390:
+        curr->addString(reader->getString());
+        curr->code = code;
         break;
     default:
         break;
     }
-    if (name == "$ACADVER") {
-        version = reader->getString();
-    } else if (name == "$DWGCODEPAGE") {
-        codepage = reader->getString();
-    }
-
 }
 

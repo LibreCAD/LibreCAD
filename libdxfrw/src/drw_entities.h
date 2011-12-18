@@ -16,6 +16,7 @@
 
 #include <string>
 #include <vector>
+#include "drw_base.h"
 
 class dxfReader;
 
@@ -99,30 +100,6 @@ enum Version {
     };
 
 }
-
-//! Class to handle 3D coordinate point
-/*!
-*  Class to handle 3D coordinate point
-*  @author Rallaz
-*/
-class DRW_Coord {
-public:
-    DRW_Coord() { z = 0; }
-    DRW_Coord(double ix, double iy, double iz) {
-        x = ix; y = iy; z = iz;
-    }
-
-     DRW_Coord operator = (const DRW_Coord& data) {
-        x = data.x;  y = data.y;  z = data.z;
-        return *this;
-    }
-
-public:
-    double x;
-    double y;
-    double z;
-};
-
 
 //! Base class for entities
 /*!
@@ -377,35 +354,6 @@ public:
     int rowcount;            /*!< row count, code 71 */
     double colspace;         /*!< column space, code 44 */
     double rowspace;         /*!< row space, code 45 */
-};
-
-//! Class to handle vertex
-/*!
-*  Class to handle vertex for lwpolyline entity
-*  @author Rallaz
-*/
-class DRW_Vertex2D {
-public:
-    DRW_Vertex2D() {
-//        eType = DRW::LWPOLYLINE;
-        stawidth = endwidth = bulge = 0;
-    }
-    DRW_Vertex2D(double sx, double sy, double b) {
-        stawidth = endwidth = 0;
-        x = sx;
-        y =sy;
-        bulge = b;
-    }
-
-//    void parseCode(int code, dxfReader *reader);
-
-public:
-    double x;                 /*!< x coordinate, code 10 */
-    double y;                 /*!< y coordinate, code 20 */
-//    double z;                 /*!< z coordinate, code 30 */
-    double stawidth;          /*!< Start width, code 40 */
-    double endwidth;          /*!< End width, code 41 */
-    double bulge;             /*!< bulge, code 42 */
 };
 
 //! Class to handle lwpolyline entity
