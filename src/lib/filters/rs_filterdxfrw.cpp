@@ -26,6 +26,7 @@
 #include "rs_filterdxfrw.h"
 
 #include <stdio.h>
+//#include <map>
 
 #include "rs_dimaligned.h"
 #include "rs_dimangular.h"
@@ -85,10 +86,15 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
 
     RS_DEBUG->print("DXFRW Filter: importing file '%s'...", (const char*)QFile::encodeName(file));
 
-    variables.clear();
     graphic = &g;
     currentContainer = graphic;
     this->file = file;
+    // add some variables that need to be there for DXF drawings:
+    graphic->addVariable("$DIMSTYLE", "Standard", 2);
+    dimStyle = "Standard";
+    codePage = "ANSI_1252";
+    textStyle = "Standard";
+
     dxf = new dxfRW(QFile::encodeName(file));
 
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file");
@@ -100,14 +106,6 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "Cannot open DXF file '%s'.", (const char*)QFile::encodeName(file));
         return false;
-    }
-
-    RS_DEBUG->print("RS_FilterDXFRW::fileImport: adding variables");
-
-    // add some variables that need to be there for DXF drawings:
-    if (graphic->getVariableString("$DIMSTYLE", "").isEmpty()) {
-        RS_DEBUG->print("RS_FilterDXFRW::fileImport: adding DIMSTYLE");
-        graphic->addVariable("$DIMSTYLE", "Standard", 2);
     }
 
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: updating inserts");
@@ -125,18 +123,12 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
  */
 QString RS_FilterDXFRW::getDXFEncoding() {
 
-    QString acadver=variables.getString("$ACADVER", "");
-    acadver.replace(QRegExp("[a-zA-Z]"), "");
-    bool ok;
-    int version=acadver.toInt(&ok);
-
     // >= ACAD2007
-    if (ok && version >= 1021) {
+    if (version >= 1021) {
         return RS_System::getEncoding("UTF-8");
     }
 
     // < ACAD2007
-    QString codePage=variables.getString("$DWGCODEPAGE", "ANSI_1252");
     return RS_System::getEncoding(codePage);
 }
 
@@ -494,11 +486,10 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     // use default style for the drawing:
     if (sty.isEmpty()) {
         // japanese, cyrillic:
-        QString codepage = variables.getString("$DWGCODEPAGE", "ANSI_1252");
-        if (codepage=="ANSI_932" || codepage=="ANSI_1251") {
+        if (codePage=="ANSI_932" || codePage=="ANSI_1251") {
             sty = "Unicode";
         } else {
-            sty = variables.getString("$TEXTSTYLE", "Standard");
+            sty = textStyle;
         }
     } else {
         // Change the QCAD "normal" style to the more correct ISO-3059
@@ -691,7 +682,7 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data) {
     t = toNativeString(data->getText().c_str(), getDXFEncoding());
 
     if (sty.isEmpty()) {
-        sty = variables.getString("$DIMSTYLE", "Standard");
+        sty = dimStyle;
     }
 
     RS_DEBUG->print("Text as unicode:");
@@ -1059,76 +1050,53 @@ void RS_FilterDXFRW::linkImage(const DRW_ImageDef *data) {
     RS_DEBUG->print("linking image: OK");
 }
 
-
-
+using std::map;
 /**
- * Sets a vector variable from the DXF file.
+ * Sets the header variables from the DXF file.
  */
-void RS_FilterDXFRW::setVariableVector(const char* key,
-                                     double v1, double v2, double v3, int code) {
-    RS_DEBUG->print("RS_FilterDXF::setVariableVector");
-
-    // update document's variable list:
+void RS_FilterDXFRW::addHeader(const DRW_Header* data){
+    RS_Graphic* container = NULL;
     if (currentContainer->rtti()==RS2::EntityGraphic) {
-        ((RS_Graphic*)currentContainer)->addVariable(QString(key),
+        container = (RS_Graphic*)currentContainer;
+    } else return;
+
+    map<std::string,DRW_Variant *>::const_iterator it;
+    for ( it=data->vars.begin() ; it != data->vars.end(); it++ ){
+        QString key = QString::fromStdString((*it).first);
+        DRW_Variant *var = (*it).second;
+        switch (var->type) {
+        case DRW_Variant::COORD:
+            container->addVariable(key,
 #ifdef  RS_VECTOR2D
-                RS_Vector(v1, v2), code);
+            RS_Vector(var->content.v->x, var->content.v->y), var->code);
 #else
-                RS_Vector(v1, v2, v3), code);
+            RS_Vector(var->content.v->x, var->content.v->y, var->content.v->z), var->code);
 #endif
+            break;
+        case DRW_Variant::STRING:
+            container->addVariable(key, QString::fromStdString(*var->content.s), var->code);
+            break;
+        case DRW_Variant::INTEGER:
+            container->addVariable(key, var->content.i, var->code);
+            break;
+        case DRW_Variant::DOUBLE:
+            container->addVariable(key, var->content.d, var->code);
+            break;
+        default:
+            break;
+        }
+
     }
+    codePage = graphic->getVariableString("$DWGCODEPAGE", "ANSI_1252");
+    textStyle = graphic->getVariableString("$TEXTSTYLE", "Standard");
+    dimStyle = graphic->getVariableString("$DIMSTYLE", "Standard");
+
+    QString acadver = versionStr = graphic->getVariableString("$ACADVER", "");
+    acadver.replace(QRegExp("[a-zA-Z]"), "");
+    bool ok;
+    version=acadver.toInt(&ok);
+    if (!ok) { version = 1015;}
 }
-
-
-
-/**
- * Sets a string variable from the DXF file.
- */
-void RS_FilterDXFRW::setVariableString(const char* key,
-                                     const char* value, int code) {
-    RS_DEBUG->print("RS_FilterDXF::setVariableString");
-
-    // update local DXF variable list:
-    variables.add(QString(key), QString(value), code);
-
-    // update document's variable list:
-    if (currentContainer->rtti()==RS2::EntityGraphic) {
-        ((RS_Graphic*)currentContainer)->addVariable(QString(key),
-                QString(value), code);
-    }
-}
-
-
-
-/**
- * Sets an int variable from the DXF file.
- */
-void RS_FilterDXFRW::setVariableInt(const char* key, int value, int code) {
-    RS_DEBUG->print("RS_FilterDXF::setVariableInt");
-
-    // update document's variable list:
-    if (currentContainer->rtti()==RS2::EntityGraphic) {
-        ((RS_Graphic*)currentContainer)->addVariable(QString(key),
-                value, code);
-    }
-}
-
-
-
-/**
- * Sets a double variable from the DXF file.
- */
-void RS_FilterDXFRW::setVariableDouble(const char* key, double value, int code) {
-    RS_DEBUG->print("RS_FilterDXF::setVariableDouble");
-
-    // update document's variable list:
-    if (currentContainer->rtti()==RS2::EntityGraphic) {
-        ((RS_Graphic*)currentContainer)->addVariable(QString(key),
-                value, code);
-    }
-
-}
-
 
 
 /**

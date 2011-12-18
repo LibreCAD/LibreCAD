@@ -35,6 +35,9 @@ public:
 //        delete extrusion;
     }
 
+    /** Called when header is parsed.  */
+    virtual void addHeader(const DRW_Header* data) = 0;
+
     /** Called for every line Type.  */
     virtual void addLType(const DRW_LType& data) = 0;
     /** Called for every layer. */
@@ -155,32 +158,6 @@ public:
      * Called for every comment in the DXF file (code 999).
      */
     virtual void addComment(const char* comment) = 0;
-
-    /**
-     * Called for every vector variable in the DXF file (e.g. "$EXTMIN").
-     */
-    virtual void setVariableVector(const char* key, 
-	               double v1, double v2, double v3, int code) = 0;
-	
-    /**
-     * Called for every string variable in the DXF file (e.g. "$ACADVER").
-     */
-    virtual void setVariableString(const char* key, const char* value, int code) = 0;
-	
-    /**
-     * Called for every int variable in the DXF file (e.g. "$ACADMAINTVER").
-     */
-    virtual void setVariableInt(const char* key, int value, int code) = 0;
-	
-    /**
-     * Called for every double variable in the DXF file (e.g. "$DIMEXO").
-     */
-    virtual void setVariableDouble(const char* key, double value, int code) = 0;
-	
-     /**
-      * Called when a SEQEND occurs (when a POLYLINE or ATTRIB is done)
-      */
-//     virtual void endSequence() = 0;
 
     /** Sets the current attributes for entities. */
 /*    void setExtrusion(double dx, double dy, double dz, double elevation) {
