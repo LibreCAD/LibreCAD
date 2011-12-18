@@ -16,6 +16,8 @@
 
 #include <string>
 #include <vector>
+#include <map>
+#include "drw_base.h"
 
 class dxfReader;
 
@@ -155,15 +157,17 @@ class DRW_Header {
 public:
     DRW_Header() {
     }
+    ~DRW_Header() {
+        vars.clear();
+    }
 
     void parseCode(int code, dxfReader *reader);
 
 public:
-    string version;
-    string codepage;
+    std::map<string,DRW_Variant*> vars;
 private:
     string name;
-    string data;
+    DRW_Variant *curr;
 };
 
 namespace DRW {

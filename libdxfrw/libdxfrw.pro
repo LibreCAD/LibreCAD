@@ -33,6 +33,7 @@ SOURCES += \
 
 HEADERS += \
     src/libdxfrw.h \
+    src/drw_base.h \
     src/drw_entities.h \
     src/drw_objects.h \
     src/dxfreader.h \
