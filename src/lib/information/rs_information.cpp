@@ -430,7 +430,7 @@ RS_VectorSolutions RS_Information::getIntersectionLineArc(RS_Line* line,
     nearest = line->getNearestPointOnEntity(arc->getCenter(), false, &dist);
 
     // special case: arc touches line (tangent):
-    if (fabs(dist - arc->getRadius()) < 1.0e-4) {
+    if (nearest.valid && fabs(dist - arc->getRadius()) < 1.0e-4) {
         ret = RS_VectorSolutions(nearest);
         ret.setTangent(true);
         return ret;
@@ -438,60 +438,92 @@ RS_VectorSolutions RS_Information::getIntersectionLineArc(RS_Line* line,
 
     RS_Vector p = line->getStartpoint();
     RS_Vector d = line->getEndpoint() - line->getStartpoint();
-    if (d.magnitude()<1.0e-6) {
-        return ret;
-    }
-
+    double d2=d.squared();
     RS_Vector c = arc->getCenter();
     double r = arc->getRadius();
     RS_Vector delta = p - c;
-
-    // root term:
-    double term = RS_Math::pow(RS_Vector::dotP(d, delta), 2.0)
-                  - RS_Math::pow(d.magnitude(), 2.0)
-                  * (RS_Math::pow(delta.magnitude(), 2.0) - RS_Math::pow(r, 2.0));
-
-    // no intersection:
-    if (term<0.0) {
-        RS_VectorSolutions s;
-        ret = s;
+    if (d2<RS_TOLERANCE*RS_TOLERANCE) {
+        //line too short, still check the whether the line touches the arc
+        if ( fabs(delta.squared() - r*r) < 2.*RS_TOLERANCE*r ){
+            return RS_VectorSolutions(line->getMiddlepoint());
+        }
+        return ret;
     }
 
-    // one or two intersections:
-    else {
-        double t1 = (- RS_Vector::dotP(d, delta) + sqrt(term))
-                    / RS_Math::pow(d.magnitude(), 2.0);
-        double t2;
-        bool tangent = false;
 
-        // only one intersection:
-        if (fabs(term)<RS_TOLERANCE) {
-            t2 = t1;
-            tangent = true;
-        }
-
-        // two intersections
-        else {
-            t2 = (-RS_Vector::dotP(d, delta) - sqrt(term))
-                 / RS_Math::pow(d.magnitude(), 2.0);
-        }
-
-        RS_Vector sol1;
-        RS_Vector sol2(false);
-
-        sol1 = p + d * t1;
-
-        if (!tangent) {
-            sol2 = p + d * t2;
-        }
-
-        ret = RS_VectorSolutions(sol1, sol2);
-        ret.setTangent(tangent);
-    }
-
+    //intersection
+    // solution = p + t d;
+    //| p -c+ t d|^2 = r^2
+    // |d|^2 t^2 + 2 (p-c).d t + |p-c|^2 -r^2 = 0
+    double a1 = RS_Vector::dotP(delta,d);
+    double term1 = a1*a1 - d2*(delta.squared()-r*r);
+//        std::cout<<" discriminant= "<<term1<<std::endl;
+    if( term1 < - RS_TOLERANCE) {
+//        std::cout<<"no intersection\n";
     return ret;
-}
+    }else{
+        term1=fabs(term1);
+//        std::cout<< "term1="<<term1 <<" threshold: "<< RS_TOLERANCE * d2 <<std::endl;
+        if( term1 < RS_TOLERANCE * d2 ) {
+            //tangential;
+//            ret=RS_VectorSolutions(p - d*(a1/d2));
+            ret=RS_VectorSolutions(line->getNearestPointOnEntity(c, false));
+            ret.setTangent(true);
+//        std::cout<<"Tangential point: "<<ret<<std::endl;
+            return ret;
+        }
+        double t = sqrt(fabs(term1));
+    //two intersections
+     return RS_VectorSolutions( p + d*(t-a1)/d2, p -d*(t+a1)/d2);
+    }
 
+//    // root term:
+//    term1 = r*r - delta.squared() + term1*term1/d.squared();
+//    double term = RS_Math::pow(RS_Vector::dotP(d, delta), 2.0)
+//                  - RS_Math::pow(d.magnitude(), 2.0)
+//                  * (RS_Math::pow(delta.magnitude(), 2.0) - RS_Math::pow(r, 2.0));
+//    std::cout<<"old term= "<<term<<"\tnew term= "<<term1<<std::endl;
+
+//    // no intersection:
+//    if (term<0.0) {
+//        ret = RS_VectorSolutions() ;
+//    }
+
+//    // one or two intersections:
+//    else {
+//        double t1 = (- RS_Vector::dotP(d, delta) + sqrt(term))
+//                    / RS_Math::pow(d.magnitude(), 2.0);
+//        double t2;
+//        bool tangent = false;
+
+//        // only one intersection:
+//        if (fabs(term)<RS_TOLERANCE) {
+//            t2 = t1;
+//            tangent = true;
+//        }
+
+//        // two intersections
+//        else {
+//            t2 = (-RS_Vector::dotP(d, delta) - sqrt(term))
+//                 / RS_Math::pow(d.magnitude(), 2.0);
+//        }
+
+//        RS_Vector sol1;
+//        RS_Vector sol2(false);
+
+//        sol1 = p + d * t1;
+
+//        if (!tangent) {
+//            sol2 = p + d * t2;
+//        }
+
+//        ret = RS_VectorSolutions(sol1, sol2);
+//        ret.setTangent(tangent);
+//    }
+
+//    std::cout<<"ret= "<<ret<<std::endl;
+//    return ret;
+}
 
 
 /**

@@ -151,6 +151,13 @@ double RS_Vector::angleTo(const RS_Vector& v) const {
 
 
 /**
+ * @return length squared of the vector.
+ */
+double RS_Vector::squared() const {
+    return x*x+y*y;
+}
+
+/**
  * @return Magnitude (length) of the vector.
  */
 double RS_Vector::magnitude() const {

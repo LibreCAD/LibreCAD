@@ -51,6 +51,7 @@ public:
     double distanceTo(const RS_Vector& v) const;
     double angle() const;
     double angleTo(const RS_Vector& v) const;
+    double squared() const;
     double magnitude() const;
     RS_Vector lerp(const RS_Vector& v, double t) const;
 
