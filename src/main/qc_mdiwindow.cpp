@@ -441,6 +441,9 @@ bool QC_MDIWindow::slotFileSaveAs(bool &cancelled) {
 bool QC_MDIWindow::slotFileClose(bool force) {
     RS_DEBUG->print("QC_MDIWindow::slotFileClose()");
 
+    //return immediately, if forceClosing is set
+    if(forceClosing) return true;
+
     bool succ = true;
     int exit = 0;
 
@@ -451,10 +454,10 @@ bool QC_MDIWindow::slotFileClose(bool force) {
         if (document->getFilename().isEmpty()) {
             dlg.setText(tr("Do you really want to close the drawing?"));
         } else {
-                        QString fn = document->getFilename();
-                        if (fn.length() > 50) {
-                                fn = QString("%1...%2").arg(fn.left(24)).arg(fn.right(24));
-                        }
+            QString fn = document->getFilename();
+            if (fn.length() > 50) {
+                fn = QString("%1...%2").arg(fn.left(24)).arg(fn.right(24));
+            }
             dlg.setText(tr("Do you really want to close the file\n%1?")
                         .arg(fn));
         }
@@ -469,9 +472,11 @@ bool QC_MDIWindow::slotFileClose(bool force) {
             switch (exit) {
             case 0: // cancel
                 succ = false;
+                forceClosing=false;
                 break;
             case 1: // leave
                 succ = true;
+                forceClosing=true;
                 break;
             case 2: // save
                 succ = slotFileSave(cancelled);
@@ -482,6 +487,7 @@ bool QC_MDIWindow::slotFileClose(bool force) {
                 again = !succ || cancelled;
                 break;
             default:
+                forceClosing=false;
                 break;
             }
         } while (again);
@@ -489,7 +495,7 @@ bool QC_MDIWindow::slotFileClose(bool force) {
         succ = true;
     }
 
-    return succ;
+    return forceClosing || succ;
 }
 
 
