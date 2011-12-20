@@ -15,8 +15,7 @@
 
 
 #include <string>
-/*#include <vector>
-#include <map>*/
+#include <cmath>
 
 using std::string;
 
@@ -36,6 +35,16 @@ public:
      DRW_Coord operator = (const DRW_Coord& data) {
         x = data.x;  y = data.y;  z = data.z;
         return *this;
+    }
+/*!< convert to unitary vector */
+    void unitize(){
+        double dist;
+        dist = sqrt(x*x + y*y + z*z);
+        if (dist > 0.0) {
+            x= x/dist;
+            y= y/dist;
+            z= z/dist;
+        }
     }
 
 public:
