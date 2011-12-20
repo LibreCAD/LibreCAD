@@ -52,12 +52,14 @@ public:
                          RS_GraphicView& graphicView);
     ~RS_ActionModifyScale() {}
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
     virtual void init(int status=0);
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
+    virtual void coordinateEvent(RS_CoordinateEvent* e);
+
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
     virtual void updateToolBar();

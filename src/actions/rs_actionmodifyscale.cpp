@@ -88,20 +88,9 @@ void RS_ActionModifyScale::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionModifyScale::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_Vector mouse = snapPoint(e);
-
-        switch (getStatus()) {
-        case SetReferencePoint:
-            setStatus(ShowDialog);
-            if (RS_DIALOGFACTORY->requestScaleDialog(data)) {
-                data.referencePoint = referencePoint;
-                trigger();
-                finish(false);
-            }
-            break;
-
-        default:
-            break;
+        if (getStatus()== SetReferencePoint){
+             RS_CoordinateEvent ce(snapPoint(e));
+             coordinateEvent(&ce);
         }
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
@@ -109,7 +98,20 @@ void RS_ActionModifyScale::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
+void RS_ActionModifyScale::coordinateEvent(RS_CoordinateEvent* e) {
 
+    if (e==NULL || getStatus() != SetReferencePoint) {
+        return;
+    }
+
+    RS_Vector mouse = e->getCoordinate();
+    setStatus(ShowDialog);
+    if (RS_DIALOGFACTORY->requestScaleDialog(data)) {
+        data.referencePoint = mouse;
+        trigger();
+        finish();
+    }
+}
 
 void RS_ActionModifyScale::updateMouseButtonHints() {
     switch (getStatus()) {
