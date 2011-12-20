@@ -98,7 +98,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
     dxf = new dxfRW(QFile::encodeName(file));
 
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file");
-    bool success = dxf->read(this);
+    bool success = dxf->read(this, true);
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file: OK");
     //graphic->setAutoUpdateBorders(true);
 
@@ -176,7 +176,7 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
 // Prevent special blocks (paper_space, model_space) from being added:
     if (mid.toLower() != "paper_space" && mid.toLower() != "model_space") {
 
-            RS_Vector bp(data.x, data.y);
+            RS_Vector bp(data.basePoint.x, data.basePoint.y);
             RS_Block* block =
                 new RS_Block(graphic,
                              RS_BlockData(QString::fromUtf8(data.name.c_str()), bp, false));
@@ -208,7 +208,7 @@ void RS_FilterDXFRW::endBlock() {
  * Implementation of the method which handles point entities.
  */
 void RS_FilterDXFRW::addPoint(const DRW_Point& data) {
-    RS_Vector v(data.x, data.y);
+    RS_Vector v(data.basePoint.x, data.basePoint.y);
 
     RS_Point* entity = new RS_Point(currentContainer,
                                     RS_PointData(v));
@@ -225,8 +225,8 @@ void RS_FilterDXFRW::addPoint(const DRW_Point& data) {
 void RS_FilterDXFRW::addLine(const DRW_Line& data) {
     RS_DEBUG->print("RS_FilterDXF::addLine");
 
-    RS_Vector v1(data.x, data.y);
-    RS_Vector v2(data.bx, data.by);
+    RS_Vector v1(data.basePoint.x, data.basePoint.y);
+    RS_Vector v2(data.secPoint.x, data.secPoint.y);
 
     RS_DEBUG->print("RS_FilterDXF::addLine: create line");
 
@@ -254,7 +254,7 @@ void RS_FilterDXFRW::addLine(const DRW_Line& data) {
 void RS_FilterDXFRW::addCircle(const DRW_Circle& data) {
     RS_DEBUG->print("RS_FilterDXF::addCircle");
 
-    RS_Vector v(data.x, data.y);
+    RS_Vector v(data.basePoint.x, data.basePoint.y);
     RS_CircleData d(v, data.radious);
     RS_Circle* entity = new RS_Circle(currentContainer, d);
     setEntityAttributes(entity, &data);
@@ -272,7 +272,7 @@ void RS_FilterDXFRW::addCircle(const DRW_Circle& data) {
  */
 void RS_FilterDXFRW::addArc(const DRW_Arc& data) {
     RS_DEBUG->print("RS_FilterDXF::addArc");
-    RS_Vector v(data.x, data.y);
+    RS_Vector v(data.basePoint.x, data.basePoint.y);
     RS_ArcData d(v, data.radious,
                  data.staangle/ARAD,
                  data.endangle/ARAD,
@@ -294,8 +294,8 @@ void RS_FilterDXFRW::addArc(const DRW_Arc& data) {
 void RS_FilterDXFRW::addEllipse(const DRW_Ellipse& data) {
     RS_DEBUG->print("RS_FilterDXFRW::addEllipse");
 
-    RS_Vector v1(data.x, data.y);
-    RS_Vector v2(data.bx, data.by);
+    RS_Vector v1(data.basePoint.x, data.basePoint.y);
+    RS_Vector v2(data.secPoint.x, data.secPoint.y);
 
     RS_EllipseData ed(v1, v2,
                       data.ratio,
@@ -314,10 +314,10 @@ void RS_FilterDXFRW::addEllipse(const DRW_Ellipse& data) {
  */
 void RS_FilterDXFRW::addTrace(const DRW_Trace& data) {
     RS_Solid* entity;
-    RS_Vector v1(data.x, data.y);
-    RS_Vector v2(data.bx, data.by);
-    RS_Vector v3(data.cx, data.cy);
-    RS_Vector v4(data.dx, data.dy);
+    RS_Vector v1(data.basePoint.x, data.basePoint.y);
+    RS_Vector v2(data.secPoint.x, data.secPoint.y);
+    RS_Vector v3(data.thirdPoint.x, data.thirdPoint.y);
+    RS_Vector v4(data.fourPoint.x, data.fourPoint.y);
     if (v3 == v4)
         entity = new RS_Solid(currentContainer, RS_SolidData(v1, v2, v3));
     else
@@ -373,7 +373,7 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
     setEntityAttributes(polyline, &data);
     for (unsigned int i=0; i<data.vertlist.size(); i++) {
         DRW_Vertex *vert = data.vertlist.at(i);
-        RS_Vector v(vert->x, vert->y);
+        RS_Vector v(vert->basePoint.x, vert->basePoint.y);
         polyline->addVertex(v, vert->bulge);
     }
 
@@ -416,7 +416,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addInsert");
 
-    RS_Vector ip(data.x, data.y);
+    RS_Vector ip(data.basePoint.x, data.basePoint.y);
     RS_Vector sc(data.xscale, data.yscale);
     RS_Vector sp(data.colspace, data.rowspace);
 
@@ -442,7 +442,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
 void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     RS_DEBUG->print("RS_FilterDXF::addMText: %s", data.text.c_str());
 
-    RS_Vector ip(data.x, data.y);
+    RS_Vector ip(data.basePoint.x, data.basePoint.y);
     RS2::VAlign valign;
     RS2::HAlign halign;
     RS2::TextDrawingDirection dir;
@@ -543,35 +543,35 @@ void RS_FilterDXFRW::addText(const DRW_Text& data) {
         default:
         case 0: // left aligned
             attachmentPoint = 1;
-            refPoint = RS_Vector(data.bx, data.by);
+            refPoint = RS_Vector(data.secPoint.x, data.secPoint.y);
             break;
         case 1: // centered
             attachmentPoint = 2;
-            refPoint = RS_Vector(data.bx, data.by);
+            refPoint = RS_Vector(data.secPoint.x, data.secPoint.y);
             break;
         case 2: // right aligned
             attachmentPoint = 3;
-            refPoint = RS_Vector(data.bx, data.by);
+            refPoint = RS_Vector(data.secPoint.x, data.secPoint.y);
             break;
         case 3: // aligned (TODO)
             attachmentPoint = 2;
-            refPoint = RS_Vector((data.x+data.bx)/2.0,
-                                 (data.y+data.by)/2.0);
+            refPoint = RS_Vector((data.basePoint.x+data.secPoint.x)/2.0,
+                                 (data.basePoint.y+data.secPoint.y)/2.0);
             angle =
-                RS_Vector(data.x, data.y).angleTo(
-                    RS_Vector(data.bx, data.by));
+                RS_Vector(data.basePoint.x, data.basePoint.y).angleTo(
+                    RS_Vector(data.secPoint.x, data.secPoint.y));
             break;
         case 4: // Middle (TODO)
             attachmentPoint = 2;
-            refPoint = RS_Vector(data.bx, data.by);
+            refPoint = RS_Vector(data.secPoint.x, data.secPoint.y);
             break;
         case 5: // fit (TODO)
             attachmentPoint = 2;
-            refPoint = RS_Vector((data.x+data.bx)/2.0,
-                                 (data.y+data.by)/2.0);
+            refPoint = RS_Vector((data.basePoint.x+data.secPoint.x)/2.0,
+                                 (data.basePoint.y+data.secPoint.y)/2.0);
             angle =
-                RS_Vector(data.x, data.y).angleTo(
-                    RS_Vector(data.bx, data.by));
+                RS_Vector(data.basePoint.x, data.basePoint.y).angleTo(
+                    RS_Vector(data.secPoint.x, data.secPoint.y));
             break;
         }
 
@@ -592,14 +592,14 @@ void RS_FilterDXFRW::addText(const DRW_Text& data) {
     } else {
         //attachmentPoint = (data.hJustification+1)+(3-data.vJustification)*3;
         attachmentPoint = 7;
-        refPoint = RS_Vector(data.x, data.y);
+        refPoint = RS_Vector(data.basePoint.x, data.basePoint.y);
     }
 
 //    int drawingDirection = 5;
 //    double width = 100.0;
 
-    text.x = refPoint.x;
-    text.y = refPoint.y;
+    text.basePoint.x = refPoint.x;
+    text.basePoint.y = refPoint.y;
     text.widthscale = 100.0;
     text.height = data.height;
     text.textgen = attachmentPoint;
@@ -911,27 +911,27 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                 case DRW::LINE: {
                     DRW_Line *e2 = (DRW_Line *)ent;
                     e = new RS_Line(hatchLoop,
-                                    RS_LineData(RS_Vector(e2->x, e2->y),
-                                                RS_Vector(e2->bx, e2->by)));
+                                    RS_LineData(RS_Vector(e2->basePoint.x, e2->basePoint.y),
+                                                RS_Vector(e2->secPoint.x, e2->secPoint.y)));
                     break;
                 }
                 case DRW::ARC: {
                     DRW_Arc *e2 = (DRW_Arc *)ent;
                     if (e2->isccw && e2->staangle<1.0e-6 && e2->endangle>360-1.0e-6) {
                         e = new RS_Circle(hatchLoop,
-                                          RS_CircleData(RS_Vector(e2->x, e2->y),
+                                          RS_CircleData(RS_Vector(e2->basePoint.x, e2->basePoint.y),
                                                         e2->radious));
                     } else {
 
                         if (e2->isccw) {
                             e = new RS_Arc(hatchLoop,
-                                        RS_ArcData(RS_Vector(e2->x, e2->y), e2->radious,
+                                        RS_ArcData(RS_Vector(e2->basePoint.x, e2->basePoint.y), e2->radious,
                                                    RS_Math::correctAngle(RS_Math::deg2rad(e2->staangle)),
                                                    RS_Math::correctAngle(RS_Math::deg2rad(e2->endangle)),
                                                    false));
                         } else {
                             e = new RS_Arc(hatchLoop,
-                                        RS_ArcData(RS_Vector(e2->x, e2->y), e2->radious,
+                                        RS_ArcData(RS_Vector(e2->basePoint.x, e2->basePoint.y), e2->radious,
                                                    RS_Math::correctAngle(2*M_PI-RS_Math::deg2rad(e2->staangle)),
                                                    RS_Math::correctAngle(2*M_PI-RS_Math::deg2rad(e2->endangle)),
                                                    true));
@@ -968,8 +968,8 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
 void RS_FilterDXFRW::addImage(const DRW_Image *data) {
     RS_DEBUG->print("RS_FilterDXF::addImage");
 
-    RS_Vector ip(data->x, data->y);
-    RS_Vector uv(data->bx, data->by);
+    RS_Vector ip(data->basePoint.x, data->basePoint.y);
+    RS_Vector uv(data->secPoint.x, data->secPoint.y);
     RS_Vector vv(data->vx, data->vy);
     RS_Vector size(data->sizeu, data->sizev);
 
@@ -1742,8 +1742,8 @@ void RS_FilterDXFRW::writeEntities(){
 void RS_FilterDXFRW::writePoint(RS_Point* p) {
     DRW_Point point;
     getEntityAttributes(&point, p);
-    point.x = p->getStartpoint().x;
-    point.y = p->getStartpoint().y;
+    point.basePoint.x = p->getStartpoint().x;
+    point.basePoint.y = p->getStartpoint().y;
     dxf->writePoint(&point);
 }
 
@@ -1754,10 +1754,10 @@ void RS_FilterDXFRW::writePoint(RS_Point* p) {
 void RS_FilterDXFRW::writeLine(RS_Line* l) {
     DRW_Line line;
     getEntityAttributes(&line, l);
-    line.x = l->getStartpoint().x;
-    line.y = l->getStartpoint().y;
-    line.bx = l->getEndpoint().x;
-    line.by = l->getEndpoint().y;
+    line.basePoint.x = l->getStartpoint().x;
+    line.basePoint.y = l->getStartpoint().y;
+    line.secPoint.x = l->getEndpoint().x;
+    line.secPoint.y = l->getEndpoint().y;
     dxf->writeLine(&line);
 }
 
@@ -1768,8 +1768,8 @@ void RS_FilterDXFRW::writeLine(RS_Line* l) {
 void RS_FilterDXFRW::writeCircle(RS_Circle* c) {
     DRW_Circle circle;
     getEntityAttributes(&circle, c);
-    circle.x = c->getCenter().x;
-    circle.y = c->getCenter().y;
+    circle.basePoint.x = c->getCenter().x;
+    circle.basePoint.y = c->getCenter().y;
     circle.radious = c->getRadius();
     dxf->writeCircle(&circle);
 }
@@ -1781,8 +1781,8 @@ void RS_FilterDXFRW::writeCircle(RS_Circle* c) {
 void RS_FilterDXFRW::writeArc(RS_Arc* a) {
     DRW_Arc arc;
     getEntityAttributes(&arc, a);
-    arc.x = a->getCenter().x;
-    arc.y = a->getCenter().y;
+    arc.basePoint.x = a->getCenter().x;
+    arc.basePoint.y = a->getCenter().y;
     arc.radious = a->getRadius();
     if (a->isReversed()) {
         arc.staangle = a->getAngle2()*ARAD;
@@ -1986,10 +1986,10 @@ void RS_FilterDXFRW::writeSpline(DL_WriterA& /*dw*/,
 void RS_FilterDXFRW::writeEllipse(RS_Ellipse* s) {
     DRW_Ellipse el;
     getEntityAttributes(&el, s);
-    el.x = s->getCenter().x;
-    el.y = s->getCenter().y;
-    el.bx = s->getMajorP().x;
-    el.by = s->getMajorP().y;
+    el.basePoint.x = s->getCenter().x;
+    el.basePoint.y = s->getCenter().y;
+    el.secPoint.x = s->getMajorP().x;
+    el.secPoint.y = s->getMajorP().y;
     el.ratio = s->getRatio();
     if (s->isReversed()) {
         el.staparam = s->getAngle2();
@@ -2374,21 +2374,21 @@ void RS_FilterDXFRW::writeSolid(RS_Solid* s) {
     RS_Vector corner;
     getEntityAttributes(&solid, s);
     corner = s->getCorner(0);
-    solid.x = corner.x;
-    solid.y = corner.y;
+    solid.basePoint.x = corner.x;
+    solid.basePoint.y = corner.y;
     corner = s->getCorner(1);
-    solid.bx = corner.x;
-    solid.by = corner.y;
+    solid.secPoint.x = corner.x;
+    solid.secPoint.y = corner.y;
     corner = s->getCorner(2);
-    solid.cx = corner.x;
-    solid.cy = corner.y;
+    solid.thirdPoint.x = corner.x;
+    solid.thirdPoint.y = corner.y;
     if (s->isTriangle()) {
-        solid.dx = solid.cx;
-        solid.dy = solid.dx;
+        solid.fourPoint.x = solid.thirdPoint.x;
+        solid.fourPoint.y = solid.thirdPoint.y;
     } else {
         corner = s->getCorner(3);
-        solid.dx = corner.x;
-        solid.dy = corner.y;
+        solid.fourPoint.x = corner.x;
+        solid.fourPoint.y = corner.y;
     }
     dxf->writeSolid(&solid);
 }
@@ -2739,10 +2739,10 @@ void RS_FilterDXFRW::add3dFace(const DRW_3Dface& data) {
                       !data.invisibleflag);
     RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
     setEntityAttributes(polyline, &data);
-    RS_Vector v1(data.x, data.y);
-    RS_Vector v2(data.bx, data.by);
-    RS_Vector v3(data.cx, data.cy);
-    RS_Vector v4(data.dx, data.dy);
+    RS_Vector v1(data.basePoint.x, data.basePoint.y);
+    RS_Vector v2(data.secPoint.x, data.secPoint.y);
+    RS_Vector v3(data.thirdPoint.x, data.thirdPoint.y);
+    RS_Vector v4(data.fourPoint.x, data.fourPoint.y);
 
     polyline->addVertex(v1, 0.0);
     polyline->addVertex(v2, 0.0);

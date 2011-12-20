@@ -28,7 +28,7 @@ public:
     dxfRW(const char* name);
     ~dxfRW();
     //read: return 0 if all ok
-    bool read(DRW_Interface *interface);
+    bool read(DRW_Interface *interface, bool ext);
     void setBinary(bool b) {binary = b;}
 
     bool write(DRW_Interface *interface, DRW::Version ver, bool bin);
@@ -95,6 +95,7 @@ private:
     string nextentity;
     int entCount;
     bool wlayer0;
+    bool applyExt;
 
 };
 
