@@ -2081,32 +2081,27 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
     int ii = qobject_cast<QAction*>(sender())->data().toInt();
     QMdiSubWindow* w = mdiAreaCAD->subWindowList().at(ii);
     if (w!=NULL) {
-            if(w==mdiAreaCAD->activeSubWindow()) {
-                    return;
-            }
+        if(w==mdiAreaCAD->activeSubWindow()) {
+            return;
+        }
         // to avoid showing by tile(), bug#3418133
         // todo, is showNormal() indeed the proper way?
-//        w->showNormal();
-//        w->showMaximized();
-            mdiAreaCAD->setActiveSubWindow(w);
-//                w->activateWindow();
-                w->raise();
-                w->showMaximized();
-                w->setFocus();
-                qobject_cast<QC_MDIWindow*>(w->widget())->zoomAuto();
-            for(int i=0;i<mdiAreaCAD->subWindowList().size();i++){
-                QMdiSubWindow* m=mdiAreaCAD->subWindowList().at(i);
-                if( m != w){
-                    if(mdiAreaTab){
-                        m->hide();
-                    }else{
-                        m->lower();
-//                        m->widget()->lower();
-                    }
-                }
-//                qobject_cast<QC_MDIWindow*>(m)->zoomAuto();
+        //        w->showNormal();
+        //        w->showMaximized();
+        mdiAreaCAD->setActiveSubWindow(w);
+        //                w->activateWindow();
+        w->raise();
+        w->showMaximized();
+        w->setFocus();
+        qobject_cast<QC_MDIWindow*>(w->widget())->zoomAuto();
+        for(int i=0;i<mdiAreaCAD->subWindowList().size();i++){
+            QMdiSubWindow* m=mdiAreaCAD->subWindowList().at(i);
+            if( m != w){
+                m->hide();
             }
-            // RVT_PORT need to reset/cleanup current menu here to avoid menu clutter
+            //                qobject_cast<QC_MDIWindow*>(m)->zoomAuto();
+        }
+        // RVT_PORT need to reset/cleanup current menu here to avoid menu clutter
     }
 }
 
@@ -2526,6 +2521,14 @@ void QC_ApplicationWindow::
             statusBar()->showMessage(message, 2000);
         }
         // Create new document window:
+        QMdiSubWindow* old=activedMdiSubWindow;
+        QRect geo;
+        bool maximized=false;
+        if(old !=NULL) {//save old geometry
+            geo=activedMdiSubWindow->geometry();
+            maximized=activedMdiSubWindow->isMaximized();
+        }
+
         QC_MDIWindow* w = slotFileNew();
         // RVT_PORT qApp->processEvents(1000);
         qApp->processEvents(QEventLoop::AllEvents, 1000);
@@ -2544,16 +2547,33 @@ void QC_ApplicationWindow::
 
         // open the file in the new view:
         if (w->slotFileOpen(fileName, type)==false) {
-            // error
-            QApplication::restoreOverrideCursor();
-            QMessageBox::information(this, QMessageBox::tr("Warning"),
-                                     tr("Cannot open the file\n%1\nPlease "
-                                        "check the permissions.")
-                                     .arg(fileName),
-                                     QMessageBox::Ok);
-            w->setForceClosing(true);
-            w->close();
-            return;
+               // error
+               QApplication::restoreOverrideCursor();
+               QString msg=tr("Cannot open the file\n%1\nPlease "
+                              "check the permissions.")
+                       .arg(fileName);
+               commandWidget->appendHistory(msg);
+               QMessageBox::information(this, QMessageBox::tr("Warning"),
+                                        msg,
+                                        QMessageBox::Ok);
+           //file opening failed, clean up QC_MDIWindow and QMdiSubWindow
+               w->setForceClosing(true);
+               mdiAreaCAD->removeSubWindow(mdiAreaCAD->currentSubWindow());
+               w->closeMDI(true,false); //force closing, without asking user for confirmation
+               QMdiSubWindow* active=mdiAreaCAD->currentSubWindow();
+               activedMdiSubWindow=NULL; //to allow reactivate the previous active
+               if( active != NULL ){//restore old geometry
+                   mdiAreaCAD->setActiveSubWindow(active);
+                   active->raise();
+                   active->setFocus();
+                   if(old==NULL || maximized){
+                       active->showMaximized();
+                   }else{
+                       active->setGeometry(geo);
+                   }
+                   qobject_cast<QC_MDIWindow*>(active->widget())->zoomAuto();
+               }
+               return;
         }
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: open file: OK");
