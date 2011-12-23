@@ -181,6 +181,9 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     //plugin load
     loadPlugins();
+    QMenu *importMenu = findMenu("/File/Import", menuBar()->children(), "");
+    if (importMenu && importMenu->isEmpty())
+        importMenu->setDisabled(true);
 
     statusBar()->showMessage(XSTR(QC_APPNAME) " Ready", 2000);
     //setFocusPolicy(WheelFocus);
