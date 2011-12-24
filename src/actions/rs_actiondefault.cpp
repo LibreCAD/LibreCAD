@@ -206,20 +206,21 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
             break;
 
         case Moving: {
-                        v2 = snapPoint(e);
-                deletePreview();
-                RS_Modification m(*container, graphicView);
-                RS_MoveData data;
-                data.number = 0;
-                data.useCurrentLayer = false;
-                data.useCurrentAttributes = false;
-                data.offset = v2-v1;
-                m.move(data);
-                setStatus(Neutral);
-                RS_DIALOGFACTORY->updateSelectionWidget(
+            v2 = snapPoint(e);
+            deletePreview();
+            RS_Modification m(*container, graphicView);
+            RS_MoveData data;
+            data.number = 0;
+            data.useCurrentLayer = false;
+            data.useCurrentAttributes = false;
+            data.offset = v2-v1;
+            m.move(data);
+            setStatus(Neutral);
+            RS_DIALOGFACTORY->updateSelectionWidget(
                         container->countSelected(),container->totalSelectedLength());
-                                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-            }
+            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+            deleteSnapper();
+        }
             break;
 
         case MovingRef: {
