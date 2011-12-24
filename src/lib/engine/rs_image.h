@@ -175,18 +175,7 @@ public:
 
 
         /** @return The four corners. **/
-        RS_VectorSolutions getCorners() {
-                RS_VectorSolutions sol(4);
-
-                sol.set(0, data.insertionPoint);
-                sol.set(1,
-                        data.insertionPoint + data.uVector*RS_Math::round(data.size.x));
-                sol.set(3,
-                        data.insertionPoint + data.vVector*RS_Math::round(data.size.y));
-                sol.set(2, sol.get(3) + data.uVector*RS_Math::round(data.size.x));
-
-                return sol;
-        }
+        RS_VectorSolutions getCorners() const;
 
         /**
          * @return image with in graphic units.
@@ -238,6 +227,8 @@ public:
     friend std::ostream& operator << (std::ostream& os, const RS_Image& l);
 
     virtual void calculateBorders();
+    // whether the the point is within image
+    virtual bool containsPoint(const RS_Vector& coord) const;
 
 protected:
     RS_ImageData data;

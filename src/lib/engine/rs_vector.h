@@ -66,8 +66,8 @@ public:
     double squared() const; //return square of length
     RS_Vector lerp(const RS_Vector& v, double t) const;
 
-    bool isInWindow(const RS_Vector& firstCorner, const RS_Vector& secondCorner);
-    bool isInWindowOrdered(const RS_Vector& vLow, const RS_Vector& vHigh);
+    bool isInWindow(const RS_Vector& firstCorner, const RS_Vector& secondCorner) const;
+    bool isInWindowOrdered(const RS_Vector& vLow, const RS_Vector& vHigh) const;
 
     RS_Vector toInteger();
 

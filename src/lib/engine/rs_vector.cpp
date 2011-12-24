@@ -278,7 +278,7 @@ double RS_Vector::distanceTo(const RS_Vector& v) const {
  * @return true is this vector is within the given range.
  */
 bool RS_Vector::isInWindow(const RS_Vector& firstCorner,
-                           const RS_Vector& secondCorner) {
+                           const RS_Vector& secondCorner) const {
     RS_Vector vLow( std::min(firstCorner.x, secondCorner.x), std::min(firstCorner.y, secondCorner.y));
     RS_Vector vHigh( std::max(firstCorner.x, secondCorner.x), std::max(firstCorner.y, secondCorner.y));
 
@@ -290,7 +290,7 @@ bool RS_Vector::isInWindow(const RS_Vector& firstCorner,
  * of ordered vectors
  */
 bool RS_Vector::isInWindowOrdered(const RS_Vector& vLow,
-                           const RS_Vector& vHigh) {
+                           const RS_Vector& vHigh) const {
 
     return (x>=vLow.x && x<=vHigh.x && y>=vLow.y && y<=vHigh.y);
 }

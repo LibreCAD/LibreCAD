@@ -132,11 +132,37 @@ void RS_Image::calculateBorders() {
                     );
 }
 
+RS_VectorSolutions RS_Image::getCorners() const {
+        RS_VectorSolutions sol(4);
 
+        sol.set(0, data.insertionPoint);
+        sol.set(1,
+                data.insertionPoint + data.uVector*RS_Math::round(data.size.x));
+        sol.set(3,
+                data.insertionPoint + data.vVector*RS_Math::round(data.size.y));
+        sol.set(2, sol.get(3) + data.uVector*RS_Math::round(data.size.x));
+
+        return sol;
+}
+
+/**
+  * whether a given point is within image region
+  *@ coord, a point
+  *@ returns true, if the point is within borders of image
+  */
+bool RS_Image::containsPoint(const RS_Vector& coord) const{
+    QPolygonF paf;
+    RS_VectorSolutions corners =getCorners();
+    for(int i=0;i<corners.getNumber();i++){
+        paf.push_back(QPointF(corners.get(i).x,corners.get(i).y));
+    }
+    paf.push_back(paf.at(0));
+    return paf.containsPoint(QPointF(coord.x,coord.y),Qt::OddEvenFill);
+}
 
 RS_Vector RS_Image::getNearestEndpoint(const RS_Vector& coord,
                                        double* dist) const {
-    RS_VectorSolutions corners = const_cast<RS_Image*>(this)->getCorners();
+    RS_VectorSolutions corners =getCorners();
     return corners.getClosest(coord, dist);
 }
 
@@ -149,7 +175,13 @@ RS_Vector RS_Image::getNearestPointOnEntity(const RS_Vector& coord,
         *entity = const_cast<RS_Image*>(this);
     }
 
-    RS_VectorSolutions corners = const_cast<RS_Image*>(this)->getCorners();
+    RS_VectorSolutions corners =getCorners();
+    //allow selecting image by clicking within images, bug#3464626
+    if(containsPoint(coord)){
+        //if coord is within image
+        if(dist!=NULL) *dist=0.;
+        return coord;
+    }
     RS_VectorSolutions points(4);
 
     RS_Line l[] =
@@ -174,6 +206,11 @@ RS_Vector RS_Image::getNearestCenter(const RS_Vector& coord,
 
     RS_VectorSolutions points(4);
     RS_VectorSolutions corners = getCorners();
+    if(containsPoint(coord)){
+        //if coord is within image
+        if(dist!=NULL) *dist=0.;
+        return coord;
+    }
 
     points.set(0, (corners.get(0) + corners.get(1))/2.0);
     points.set(1, (corners.get(1) + corners.get(2))/2.0);
@@ -227,7 +264,14 @@ double RS_Image::getDistanceToPoint(const RS_Vector& coord,
         *entity = const_cast<RS_Image*>(this);
     }
 
-    RS_VectorSolutions corners =const_cast<RS_Image*>(this)-> getCorners();
+    RS_VectorSolutions corners = getCorners();
+
+    //allow selecting image by clicking within images, bug#3464626
+    if(containsPoint(coord)){
+        //if coord is on image
+        return double(0.);
+    }
+    //continue to allow selecting by image edges
     double dist;
     double minDist = RS_MAXDOUBLE;
 
