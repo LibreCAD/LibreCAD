@@ -496,6 +496,8 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         return;
     }
 
+    QList<QPolygon> paStack;
+    QList<QPolygon> paClosed;
     QPolygon pa;
     QPolygon jp;   // jump points
 
@@ -547,7 +549,8 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 //                        pa.clear();
 //                    }
 
-                    if (! (pa.size()>0 && pa.last() == pt1)) {
+                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
+
                         jp<<pt1;
                     }
 
@@ -558,7 +561,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                 case RS2::EntityArc: {
                     QPoint pt1(RS_Math::round(view->toGuiX(e->getStartpoint().x)),
                                RS_Math::round(view->toGuiY(e->getStartpoint().y)));
-                    if (! (pa.size()>0 && pa.last() == pt1)) {
+                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
                         jp<<pt1;
                     }
 
@@ -578,7 +581,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                     RS_Circle* circle = static_cast<RS_Circle*>(e);
                     QPoint pt1(RS_Math::round(view->toGuiX(circle->getCenter().x+circle->getRadius())),
                                RS_Math::round(view->toGuiY(circle->getCenter().y)));
-                    if (! (pa.size()>0 && pa.last() == pt1)) {
+                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
                         jp<<pt1;
                     }
 
@@ -604,7 +607,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
     painter->setBrush(painter->getPen().getColor());
     painter->disablePen();
-    painter->drawPolygon(pa,Qt::OddEvenFill);
+    painter->drawPolygon(pa);
 
 }
 
