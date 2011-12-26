@@ -39,14 +39,13 @@ void RS_Painter::createArc(QPolygon& pa,
         return;
     }
 
-    double aStart=a1;
-    double aEnd=a2;
-    if(a2<a1) a2 += 2.*M_PI;
     double aStep=fabs(2.0/radius);         // Angle Step (rad)
     if(aStep>=0.5) aStep=0.5;
     if(reversed) {
-        std::swap(aStart,aEnd);
+        if(a1<=a2+RS_TOLERANCE) a1+=2.*M_PI;
         aStep *= -1;
+    }else{
+        if(a2<=a1+RS_TOLERANCE) a2+=2.*M_PI;
     }
     double a;             // Current Angle (rad)
 
@@ -62,13 +61,14 @@ void RS_Painter::createArc(QPolygon& pa,
 
     //QPointArray pa;
     pa.clear();
-    pa<<QPoint(toScreenX(cp.x+cos(aStart)*radius), toScreenY(cp.y-sin(aStart)*radius));
-
-    for(a=aStart+aStep; fabs(a-aStart)<fabs(aEnd-aStart); a+=aStep) {
+    //    pa<<QPoint(toScreenX(cp.x+cos(aStart)*radius), toScreenY(cp.y-sin(aStart)*radius));
+    double da=fabs(a2-a1);
+    for(a=a1; fabs(a-a1)<da; a+=aStep) {
         pa<<QPoint(toScreenX(cp.x+cos(a)*radius), toScreenY(cp.y-sin(a)*radius));
     }
 
-    pa<<QPoint(toScreenX(cp.x+cos(aEnd)*radius), toScreenY(cp.y-sin(aEnd)*radius));
+    QPoint pt2(toScreenX(cp.x+cos(a2)*radius), toScreenY(cp.y-sin(a2)*radius));
+    if(pa.size()>0 && pa.last() != pt2) pa<<pt2;
 }
 
 

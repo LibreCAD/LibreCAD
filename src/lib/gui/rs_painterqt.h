@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -43,23 +43,23 @@ public:
     RS_PainterQt( QPaintDevice* pd);
     virtual ~RS_PainterQt();
 
-	virtual void moveTo(int x, int y);
-	virtual void lineTo(int x, int y);
+    virtual void moveTo(int x, int y);
+    virtual void lineTo(int x, int y);
     virtual void drawGridPoint(const RS_Vector& p);
     virtual void drawPoint(const RS_Vector& p);
     virtual void drawLine(const RS_Vector& p1, const RS_Vector& p2);
     //virtual void drawRect(const RS_Vector& p1, const RS_Vector& p2);
-	virtual void fillRect ( const QRectF & rectangle, const RS_Color & color );
-	virtual void fillRect ( const QRectF & rectangle, const QBrush & brush );
+    virtual void fillRect ( const QRectF & rectangle, const RS_Color & color );
+    virtual void fillRect ( const QRectF & rectangle, const QBrush & brush );
     virtual void drawArc(const RS_Vector& cp, double radius,
                          double a1, double a2,
                          const RS_Vector& p1, const RS_Vector& p2,
                          bool reversed);
-    
-	virtual void drawArc(const RS_Vector& cp, double radius,
+
+    virtual void drawArc(const RS_Vector& cp, double radius,
                          double a1, double a2,
                          bool reversed);
-	virtual void drawArcMac(const RS_Vector& cp, double radius,
+    virtual void drawArcMac(const RS_Vector& cp, double radius,
                          double a1, double a2,
                          bool reversed);
     virtual void drawCircle(const RS_Vector&, double radius);
@@ -69,8 +69,8 @@ public:
                              double a1, double a2,
                              bool reversed);
         virtual void drawImg(QImage& img, const RS_Vector& pos,
-			double angle, const RS_Vector& factor,
-			int sx, int sy, int sw, int sh);
+            double angle, const RS_Vector& factor,
+            int sx, int sy, int sw, int sh);
     virtual void drawTextH(int x1, int y1, int x2, int y2,
                            const QString& text);
     virtual void drawTextV(int x1, int y1, int x2, int y2,
@@ -83,10 +83,10 @@ public:
                               const RS_Vector& p2,
                               const RS_Vector& p3);
 
-    virtual void drawPolygon(const QPolygon& a);
-	virtual void erase();
-	virtual int getWidth();
-	virtual int getHeight();
+    virtual void drawPolygon(const QPolygon& a,Qt::FillRule rule=Qt::WindingFill);
+    virtual void erase();
+    virtual int getWidth();
+    virtual int getHeight();
 
     virtual RS_Pen getPen();
     virtual void setPen(const RS_Pen& pen);
@@ -100,9 +100,9 @@ public:
     virtual void resetClipping();
 
 protected:
-	RS_Pen lpen;
-	long rememberX; // Used for the moment because QPainter doesn't support moveTo anymore, thus we need to remember ourselve the moveTo positions
-	long rememberY;
+    RS_Pen lpen;
+    long rememberX; // Used for the moment because QPainter doesn't support moveTo anymore, thus we need to remember ourselve the moveTo positions
+    long rememberY;
 };
 
 #endif
