@@ -32,8 +32,7 @@
 #include "rs_math.h"
 #include "rs_pen.h"
 #include "rs_vector.h"
-#include <qpolygon.h>
-
+#include <QPainterPath>
 
 
 /**
@@ -119,6 +118,7 @@ public:
                               const RS_Vector& p2,
                               const RS_Vector& p3) = 0;
 
+    virtual void drawPath ( const QPainterPath & path ) = 0;
     virtual void drawHandle(const RS_Vector& p, const RS_Color& c, int size=-1);
 
     virtual RS_Pen getPen() = 0;

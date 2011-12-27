@@ -34,6 +34,9 @@
 #include "rs_patternlist.h"
 
 #include <QPolygon>
+#include <QStack>
+#include <QPainterPath>
+
 
 /**
  * Constructor.
@@ -496,7 +499,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         return;
     }
 
-    QList<QPolygon> paStack;
+    QStack<QPolygon> paStack;
     QList<QPolygon> paClosed;
     QPolygon pa;
     QPolygon jp;   // jump points
@@ -550,7 +553,8 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 //                    }
 
                     if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
-
+//                        paStack.push(pa);
+//                        pa.clear();
                         jp<<pt1;
                     }
 
@@ -562,6 +566,8 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                     QPoint pt1(RS_Math::round(view->toGuiX(e->getStartpoint().x)),
                                RS_Math::round(view->toGuiY(e->getStartpoint().y)));
                     if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
+//                        paStack.push(pa);
+//                        pa.clear();
                         jp<<pt1;
                     }
 
@@ -582,6 +588,8 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                     QPoint pt1(RS_Math::round(view->toGuiX(circle->getCenter().x+circle->getRadius())),
                                RS_Math::round(view->toGuiY(circle->getCenter().y)));
                     if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
+//                        paStack.push(pa);
+//                        pa.clear();
                         jp<<pt1;
                     }
 
@@ -598,16 +606,38 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                 default:
                     break;
                 }
+                if( pa.size()>2 && pa.first() == pa.last()) {
+                    paClosed<<pa;
+                    pa.clear();
+                }
+//                if( pa.size()>2 && pa.first() == pa.last()) {
+//                    //closed
+//                    paClosed<<pa;
+//                    if(paStack.size()>0){
+//                        pa=paStack
+//                    }
+//                }
             }
 
         }
     }
+    if(pa.size()>2){
+        pa<<pa.first();
+        paClosed<<pa;
+    }
+       QPainterPath path;
+    for(int i=0;i<paClosed.size();i++){
+        path.addPolygon(paClosed.at(i));
+    }
+        painter->setBrush(painter->getPen().getColor());
+        painter->disablePen();
+        painter->drawPath(path);
 
-    pa<<jp;
+//    pa<<jp;
 
-    painter->setBrush(painter->getPen().getColor());
-    painter->disablePen();
-    painter->drawPolygon(pa);
+//    painter->setBrush(painter->getPen().getColor());
+//    painter->disablePen();
+//    painter->drawPolygon(pa);
 
 }
 

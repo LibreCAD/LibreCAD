@@ -84,6 +84,7 @@ public:
                               const RS_Vector& p3);
 
     virtual void drawPolygon(const QPolygon& a,Qt::FillRule rule=Qt::WindingFill);
+    virtual void drawPath ( const QPainterPath & path );
     virtual void erase();
     virtual int getWidth();
     virtual int getHeight();
