@@ -497,6 +497,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         return;
     }
 
+    QPainterPath path;
     QList<QPolygon> paClosed;
     QPolygon pa;
 //    QPolygon jp;   // jump points
@@ -568,19 +569,22 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
                 case RS2::EntityCircle: {
                     RS_Circle* circle = static_cast<RS_Circle*>(e);
-                    QPoint pt1(RS_Math::round(view->toGuiX(circle->getCenter().x+circle->getRadius())),
-                               RS_Math::round(view->toGuiY(circle->getCenter().y)));
+//                    QPoint pt1(RS_Math::round(view->toGuiX(circle->getCenter().x+circle->getRadius())),
+//                               RS_Math::round(view->toGuiY(circle->getCenter().y)));
 //                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
 //                        jp<<pt1;
 //                    }
 
-                    QPolygon pa2;
-                    painter->createArc(pa2, view->toGui(circle->getCenter()),
-                                       view->toGuiDX(circle->getRadius()),
-                                       0.0,
-                                       2*M_PI,
-                                       false);
-                    pa<<pa2;
+                    RS_Vector c=view->toGui(circle->getCenter());
+                    double r=view->toGuiDX(circle->getRadius());
+                    path.addEllipse(QPoint(c.x,c.y),r,r);
+//                    QPolygon pa2;
+//                    painter->createArc(pa2, view->toGui(circle->getCenter()),
+//                                       view->toGuiDX(circle->getRadius()),
+//                                       0.0,
+//                                       2*M_PI,
+//                                       false);
+//                    pa<<pa2;
                 }
                     break;
 
@@ -600,7 +604,6 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         pa<<pa.first();
         paClosed<<pa;
     }
-       QPainterPath path;
     for(int i=0;i<paClosed.size();i++){
         path.addPolygon(paClosed.at(i));
     }
