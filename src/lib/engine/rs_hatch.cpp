@@ -33,8 +33,6 @@
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
 
-#include <QPolygon>
-#include <QStack>
 #include <QPainterPath>
 
 
@@ -499,10 +497,9 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         return;
     }
 
-    QStack<QPolygon> paStack;
     QList<QPolygon> paClosed;
     QPolygon pa;
-    QPolygon jp;   // jump points
+//    QPolygon jp;   // jump points
 
     // loops:
     if (needOptimization==true) {
@@ -541,35 +538,21 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                                RS_Math::round(view->toGuiY(e->getStartpoint().y)));
                     QPoint pt2(RS_Math::round(view->toGuiX(e->getEndpoint().x)),
                                RS_Math::round(view->toGuiY(e->getEndpoint().y)));
-//                    if (pa.size()>1 && (pa.last() != pt1)) {
-//                        if( pa.first() != pa.last() ){
-//                            pa<<pa.first();
-//                        }
-//                        painter->moveTo(pa.first().x(),pa.first().y());
-//                        painter->setBrush(painter->getPen().getColor());
-//                        painter->disablePen();
-//                        painter->drawPolygon(pa);
-//                        pa.clear();
-//                    }
 
-                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
-//                        paStack.push(pa);
-//                        pa.clear();
-                        jp<<pt1;
-                    }
+//                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
+//                        jp<<pt1;
+//                    }
 
                     pa<<pt1<<pt2;
                 }
                     break;
 
                 case RS2::EntityArc: {
-                    QPoint pt1(RS_Math::round(view->toGuiX(e->getStartpoint().x)),
-                               RS_Math::round(view->toGuiY(e->getStartpoint().y)));
-                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
-//                        paStack.push(pa);
-//                        pa.clear();
-                        jp<<pt1;
-                    }
+//                    QPoint pt1(RS_Math::round(view->toGuiX(e->getStartpoint().x)),
+//                               RS_Math::round(view->toGuiY(e->getStartpoint().y)));
+//                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
+//                        jp<<pt1;
+//                    }
 
                     QPolygon pa2;
                     RS_Arc* arc=static_cast<RS_Arc*>(e);
@@ -587,11 +570,9 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                     RS_Circle* circle = static_cast<RS_Circle*>(e);
                     QPoint pt1(RS_Math::round(view->toGuiX(circle->getCenter().x+circle->getRadius())),
                                RS_Math::round(view->toGuiY(circle->getCenter().y)));
-                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
-//                        paStack.push(pa);
-//                        pa.clear();
-                        jp<<pt1;
-                    }
+//                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
+//                        jp<<pt1;
+//                    }
 
                     QPolygon pa2;
                     painter->createArc(pa2, view->toGui(circle->getCenter()),
@@ -610,13 +591,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                     paClosed<<pa;
                     pa.clear();
                 }
-//                if( pa.size()>2 && pa.first() == pa.last()) {
-//                    //closed
-//                    paClosed<<pa;
-//                    if(paStack.size()>0){
-//                        pa=paStack
-//                    }
-//                }
+
             }
 
         }
