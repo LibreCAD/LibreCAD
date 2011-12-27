@@ -33,7 +33,8 @@
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
 
-#include <QPolygon>
+#include <QPainterPath>
+
 
 /**
  * Constructor.
@@ -496,13 +497,9 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         return;
     }
 
+    QList<QPolygon> paClosed;
     QPolygon pa;
-    QPolygon jp;   // jump points
-    uint s=0;
-    uint sj=0;
-    int lastX=0;
-    int lastY=0;
-    bool lastValid=false;
+//    QPolygon jp;   // jump points
 
     // loops:
     if (needOptimization==true) {
@@ -521,8 +518,8 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
     // loops:
     for (RS_Entity* l=firstEntity(RS2::ResolveNone);
-            l!=NULL;
-            l=nextEntity(RS2::ResolveNone)) {
+         l!=NULL;
+         l=nextEntity(RS2::ResolveNone)) {
 
         l->setLayer(getLayer());
 
@@ -531,135 +528,91 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
             // edges:
             for (RS_Entity* e=loop->firstEntity(RS2::ResolveNone);
-                    e!=NULL;
-                    e=loop->nextEntity(RS2::ResolveNone)) {
+                 e!=NULL;
+                 e=loop->nextEntity(RS2::ResolveNone)) {
 
                 e->setLayer(getLayer());
                 switch (e->rtti()) {
                 case RS2::EntityLine: {
-                        RS_Line* line = (RS_Line*)e;
+                    QPoint pt1(RS_Math::round(view->toGuiX(e->getStartpoint().x)),
+                               RS_Math::round(view->toGuiY(e->getStartpoint().y)));
+                    QPoint pt2(RS_Math::round(view->toGuiX(e->getEndpoint().x)),
+                               RS_Math::round(view->toGuiY(e->getEndpoint().y)));
 
-                        int x1 = RS_Math::round(
-                                     view->toGuiX(line->getStartpoint().x));
-                        int y1 = RS_Math::round(
-                                     view->toGuiY(line->getStartpoint().y));
-                        int x2 = RS_Math::round(
-                                     view->toGuiX(line->getEndpoint().x));
-                        int y2 = RS_Math::round(
-                                     view->toGuiY(line->getEndpoint().y));
+//                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
+//                        jp<<pt1;
+//                    }
 
-                        if (lastValid && (lastX!=x1 || lastY!=y1)) {
-                            jp.resize(++sj);
-                            jp.setPoint(sj-1, x1, y1);
-                        }
-
-                        pa.resize(++s);
-                        pa.setPoint(s-1, x1, y1);
-
-                        pa.resize(++s);
-                        pa.setPoint(s-1, x2, y2);
-
-                        lastX = x2;
-                        lastY = y2;
-                        lastValid=true;
-                    }
+                    pa<<pt1<<pt2;
+                }
                     break;
 
                 case RS2::EntityArc: {
-                        RS_Arc* arc = (RS_Arc*)e;
+//                    QPoint pt1(RS_Math::round(view->toGuiX(e->getStartpoint().x)),
+//                               RS_Math::round(view->toGuiY(e->getStartpoint().y)));
+//                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
+//                        jp<<pt1;
+//                    }
 
-                        int x1 = RS_Math::round(
-                                     view->toGuiX(arc->getStartpoint().x));
-                        int y1 = RS_Math::round(
-                                     view->toGuiY(arc->getStartpoint().y));
-                        int x2 = RS_Math::round(
-                                     view->toGuiX(arc->getEndpoint().x));
-                        int y2 = RS_Math::round(
-                                     view->toGuiY(arc->getEndpoint().y));
+                    QPolygon pa2;
+                    RS_Arc* arc=static_cast<RS_Arc*>(e);
+                    painter->createArc(pa2, view->toGui(arc->getCenter()),
+                                       view->toGuiDX(arc->getRadius()),
+                                       arc->getAngle1(),
+                                       arc->getAngle2(),
+                                       arc->isReversed());
+                    pa<<pa2;
 
-                        if (lastValid && (lastX!=x1 || lastY!=y1)) {
-                            jp.resize(++sj);
-                            jp.setPoint(sj-1, x1, y1);
-                        }
-
-                        pa.resize(++s);
-                        pa.setPoint(s-1, x1, y1);
-
-                        QPolygon pa2;
-                        painter->createArc(pa2, view->toGui(arc->getCenter()),
-                                           view->toGuiDX(arc->getRadius()),
-                                           arc->getAngle1(),
-                                           arc->getAngle2(),
-                                           arc->isReversed());
-
-                        pa.resize(s+pa2.size());
-                        pa.putPoints(s, pa2.size(), pa2);
-                        s+=pa2.size()-1;
-
-                        pa.resize(++s);
-                        pa.setPoint(s-1, x2, y2);
-
-                        lastX = x2;
-                        lastY = y2;
-                        lastValid=true;
-                    }
+                }
                     break;
 
                 case RS2::EntityCircle: {
-                        RS_Circle* circle = (RS_Circle*)e;
+                    RS_Circle* circle = static_cast<RS_Circle*>(e);
+                    QPoint pt1(RS_Math::round(view->toGuiX(circle->getCenter().x+circle->getRadius())),
+                               RS_Math::round(view->toGuiY(circle->getCenter().y)));
+//                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
+//                        jp<<pt1;
+//                    }
 
-                        int x1 = RS_Math::round(
-                                     view->toGuiX(circle->getCenter().x
-                                                  + circle->getRadius()));
-                        int y1 = RS_Math::round(
-                                     view->toGuiY(circle->getCenter().y));
-                        int x2 = x1;
-                        int y2 = y1;
-
-                        if (lastValid && (lastX!=x1 || lastY!=y1)) {
-                            jp.resize(++sj);
-                            jp.setPoint(sj-1, x1, y1);
-                        }
-
-                        pa.resize(++s);
-                        pa.setPoint(s-1, x1, y1);
-
-                        QPolygon pa2;
-                        painter->createArc(pa2, view->toGui(circle->getCenter()),
-                                           view->toGuiDX(circle->getRadius()),
-                                           0.0,
-                                           2*M_PI,
-                                           false);
-
-                        pa.resize(s+pa2.size());
-                        pa.putPoints(s, pa2.size(), pa2);
-                        s+=pa2.size()-1;
-
-                        pa.resize(++s);
-                        pa.setPoint(s-1, x2, y2);
-
-                        lastX = x2;
-                        lastY = y2;
-                        lastValid=true;
-                    }
+                    QPolygon pa2;
+                    painter->createArc(pa2, view->toGui(circle->getCenter()),
+                                       view->toGuiDX(circle->getRadius()),
+                                       0.0,
+                                       2*M_PI,
+                                       false);
+                    pa<<pa2;
+                }
                     break;
 
                 default:
                     break;
                 }
+                if( pa.size()>2 && pa.first() == pa.last()) {
+                    paClosed<<pa;
+                    pa.clear();
+                }
+
             }
 
         }
     }
-
-    for (int i=(int)jp.count()-1; i>=0; --i) {
-        pa.resize(++s);
-        pa.setPoint(s-1, jp.point(i));
+    if(pa.size()>2){
+        pa<<pa.first();
+        paClosed<<pa;
     }
+       QPainterPath path;
+    for(int i=0;i<paClosed.size();i++){
+        path.addPolygon(paClosed.at(i));
+    }
+        painter->setBrush(painter->getPen().getColor());
+        painter->disablePen();
+        painter->drawPath(path);
 
-    painter->setBrush(painter->getPen().getColor());
-    painter->disablePen();
-    painter->drawPolygon(pa);
+//    pa<<jp;
+
+//    painter->setBrush(painter->getPen().getColor());
+//    painter->disablePen();
+//    painter->drawPolygon(pa);
 
 }
 
