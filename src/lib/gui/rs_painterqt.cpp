@@ -603,9 +603,14 @@ void RS_PainterQt::setBrush(const RS_Color& color) {
 }
 
 
-void RS_PainterQt::drawPolygon(const QPolygon& a) {
-    QPainter::drawPolygon(a);
+void RS_PainterQt::drawPolygon(const QPolygon& a, Qt::FillRule rule) {
+    QPainter::drawPolygon(a,rule);
 }
+
+void RS_PainterQt::drawPath ( const QPainterPath & path ) {
+    QPainter::drawPath(path);
+}
+
 
 void RS_PainterQt::setClipRect(int x, int y, int w, int h) {
     QPainter::setClipRect(x, y, w, h);
