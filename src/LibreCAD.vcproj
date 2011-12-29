@@ -39,7 +39,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies="c:\Qt-4.3.1\lib\qtmaind.lib dxfrw.lib dxflib.lib jwwlib.lib fparser.lib c:\Qt-4.3.1\lib\QtAssistantClientd4.lib c:\Qt-4.3.1\lib\QtGuid4.lib c:\Qt-4.3.1\lib\QtNetworkd4.lib c:\Qt-4.3.1\lib\QtCored4.lib"
+				AdditionalDependencies="c:\Qt-4.3.1\lib\qtmaind.lib ../intermediate\dxfrw.lib ../intermediate\dxflib.lib ../intermediate\jwwlib.lib ../intermediate\fparser.lib c:\Qt-4.3.1\lib\QtAssistantClientd4.lib c:\Qt-4.3.1\lib\QtGuid4.lib c:\Qt-4.3.1\lib\QtNetworkd4.lib c:\Qt-4.3.1\lib\QtCored4.lib"
 				OutputFile="..\windows\LibreCAD.exe"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="c:\Qt-4.3.1\lib,../intermediate"
@@ -102,7 +102,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies="c:\Qt-4.3.1\lib\qtmain.lib dxfrw.lib dxflib.lib jwwlib.lib fparser.lib c:\Qt-4.3.1\lib\QtAssistantClient4.lib c:\Qt-4.3.1\lib\QtGui4.lib c:\Qt-4.3.1\lib\QtNetwork4.lib c:\Qt-4.3.1\lib\QtCore4.lib"
+				AdditionalDependencies="c:\Qt-4.3.1\lib\qtmain.lib ../intermediate\dxfrw.lib ../intermediate\dxflib.lib ../intermediate\jwwlib.lib ../intermediate\fparser.lib c:\Qt-4.3.1\lib\QtAssistantClient4.lib c:\Qt-4.3.1\lib\QtGui4.lib c:\Qt-4.3.1\lib\QtNetwork4.lib c:\Qt-4.3.1\lib\QtCore4.lib"
 				OutputFile="..\windows\LibreCAD.exe"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="c:\Qt-4.3.1\lib,../intermediate"
