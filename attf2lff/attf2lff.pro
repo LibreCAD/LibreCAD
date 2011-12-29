@@ -26,4 +26,6 @@ LIBS += -lfreetype
 
 OBJECTS_DIR = ../intermediate/lff/obj
 
+# Include any custom.pro files for personal/special builds
+exists( ../custom.pro ):include( ../custom.pro )
 

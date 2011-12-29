@@ -897,7 +897,7 @@ TRANSLATIONS = ../ts/librecad_cs.ts \
     ../ts/librecad_zh_tw.ts
 
 # Include any custom.pro files for personal/special builds
-exists( custom.pro ):include( custom.pro )
+exists( ../custom.pro ):include( ../custom.pro )
 
 
 

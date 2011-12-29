@@ -33,6 +33,10 @@
 #include "rs_math.h"
 #include "rs_constructionline.h"
 
+#ifdef EMU_C99
+#include "emu_c99.h" /* remainder() */
+#endif
+
 /**
  * Constructor for a point with default coordinates.
  */

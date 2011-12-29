@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding = "Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="sample"
+	ProjectGUID="{D41D8CD9-8F00-3204-A980-0998ECF8427E}">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="."
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			ConfigurationType="2"
+			IntermediateDirectory="..\intermediate\obj\"
+			UseOfMfc="0">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\..\..\..\Qt-4.3.1\include\QtCore,..\..\..\..\Qt-4.3.1\include\QtCore,..\..\..\..\Qt-4.3.1\include\QtGui,..\..\..\..\Qt-4.3.1\include\QtGui,..\..\..\..\Qt-4.3.1\include,..\..\src\plugins,..\..\..\..\Qt-4.3.1\include\ActiveQt,..\intermediate\moc,..\intermediate\ui,..\..\..\..\Qt-4.3.1\mkspecs\default"
+				AdditionalOptions="-Zm200 -EHsc"
+				AssemblerListingLocation="..\intermediate\obj\"
+				BufferSecurityCheck="false"
+				DebugInformationFormat="4"
+				ExceptionHandling="true"
+				GeneratePreprocessedFile="0"
+				MinimalRebuild="true"
+				ObjectFile="..\intermediate\obj\"
+				Optimization ="0"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,QT_LARGEFILE_SUPPORT,WIN32,EMU_C99,_USE_MATH_DEFINES,QT_DLL,QT_PLUGIN,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
+				ProgramDataBaseFileName=".\"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				WarningLevel="3"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="c:\Qt-4.3.1\lib\QtGuid4.lib c:\Qt-4.3.1\lib\QtCored4.lib"
+				AdditionalLibraryDirectories="c:\Qt-4.3.1\lib"
+				GenerateDebugInformation="true"
+				IgnoreImportLibrary="true"
+				OutputFile="debug\sample1.dll"
+				ProgramDatabaseFile=""
+				SubSystem="2"
+				SuppressStartupBanner="true"
+				Version="1.01"/>
+			<Tool
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0"/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\windows\resources\plugins&quot;"
+				Description="Copy sample1.dll to ..\..\windows\resources\plugins"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="."
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			ConfigurationType="2"
+			IntermediateDirectory="..\intermediate\obj\"
+			UseOfMfc="0">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\..\..\..\Qt-4.3.1\include\QtCore,..\..\..\..\Qt-4.3.1\include\QtCore,..\..\..\..\Qt-4.3.1\include\QtGui,..\..\..\..\Qt-4.3.1\include\QtGui,..\..\..\..\Qt-4.3.1\include,..\..\src\plugins,..\..\..\..\Qt-4.3.1\include\ActiveQt,..\intermediate\moc,..\intermediate\ui,..\..\..\..\Qt-4.3.1\mkspecs\default"
+				AdditionalOptions="-Zm200 -EHsc"
+				AssemblerListingLocation="..\intermediate\obj\"
+				BufferSecurityCheck="false"
+				DebugInformationFormat="0"
+				ExceptionHandling="true"
+				GeneratePreprocessedFile="0"
+				ObjectFile="..\intermediate\obj\"
+				Optimization ="1"
+				PreprocessorDefinitions="NDEBUG,_WINDOWS,UNICODE,QT_LARGEFILE_SUPPORT,WIN32,EMU_C99,_USE_MATH_DEFINES,QT_DLL,QT_NO_DEBUG,QT_PLUGIN,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
+				ProgramDataBaseFileName=".\"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				WarningLevel="3"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="c:\Qt-4.3.1\lib\QtGui4.lib c:\Qt-4.3.1\lib\QtCore4.lib"
+				AdditionalLibraryDirectories="c:\Qt-4.3.1\lib"
+				GenerateDebugInformation="false"
+				IgnoreImportLibrary="true"
+				OutputFile="release\sample1.dll"
+				ProgramDatabaseFile=""
+				SubSystem="2"
+				SuppressStartupBanner="true"
+				Version="1.01"/>
+			<Tool
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0"/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\windows\resources\plugins&quot;"
+				Description="Copy sample1.dll to ..\..\windows\resources\plugins"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"/>
+		</Configuration>
+	</Configurations>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx">
+			<File
+				RelativePath="sample.cpp"/>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd">
+			<File
+				RelativePath="sample.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="${QMAKE_FUNC_mocCmd}"
+						CommandLine="c:\Qt-4.3.1\bin\moc.exe -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DWIN32 -DEMU_C99 -D_USE_MATH_DEFINES -DQT_DLL -DQT_PLUGIN -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT  -I &quot;..\..\..\..\Qt-4.3.1\include\QtCore&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\QtCore&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\QtGui&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\QtGui&quot; -I &quot;..\..\..\..\Qt-4.3.1\include&quot; -I &quot;..\..\src\plugins&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\ActiveQt&quot; -I &quot;..\intermediate\moc&quot; -I &quot;..\intermediate\ui&quot; -I&quot;..\..\..\..\Qt-4.3.1\mkspecs\default&quot; sample.h -o ..\intermediate\moc\moc_sample.cpp"
+						Description="MOC sample.h"
+						Outputs="..\intermediate\moc\moc_sample.cpp"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="${QMAKE_FUNC_mocCmd}"
+						CommandLine="c:\Qt-4.3.1\bin\moc.exe -DNDEBUG -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DWIN32 -DEMU_C99 -D_USE_MATH_DEFINES -DQT_DLL -DQT_NO_DEBUG -DQT_PLUGIN -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT  -I &quot;..\..\..\..\Qt-4.3.1\include\QtCore&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\QtCore&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\QtGui&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\QtGui&quot; -I &quot;..\..\..\..\Qt-4.3.1\include&quot; -I &quot;..\..\src\plugins&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\ActiveQt&quot; -I &quot;..\intermediate\moc&quot; -I &quot;..\intermediate\ui&quot; -I&quot;..\..\..\..\Qt-4.3.1\mkspecs\default&quot; sample.h -o ..\intermediate\moc\moc_sample.cpp"
+						Description="MOC sample.h"
+						Outputs="..\intermediate\moc\moc_sample.cpp"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Generated Files"
+			Filter="cpp;c;cxx;moc;h;qrc;def;odl;idl;res">
+			<File
+				RelativePath="..\intermediate\moc\moc_sample.cpp"/>
+		</Filter>
+		<Filter
+			Name="Resource Files">
+			<File
+				RelativePath="sample_resource.rc"/>
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

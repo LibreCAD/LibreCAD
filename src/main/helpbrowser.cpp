@@ -36,6 +36,8 @@
 **
 ****************************************************************************/
 
+#if QT_VERSION >= 0x040400
+
 #include <QHelpEngine>
 #include "helpbrowser.h"
 
@@ -51,3 +53,5 @@ QVariant HelpBrowser::loadResource(int type, const QUrl &url)
     else
         return QTextBrowser::loadResource(type, url);
 }
+
+#endif // QT_VERSION >= 0x040400
