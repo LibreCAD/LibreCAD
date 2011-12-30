@@ -3,7 +3,8 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="sample"
-	ProjectGUID="{D41D8CD9-8F00-3204-A980-0998ECF8427E}">
+	ProjectGUID="{EAFD43C8-E618-30B8-83E5-0919135D5DC3}"
+	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -18,17 +19,16 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\..\Qt-4.3.1\include\QtCore,..\..\..\..\Qt-4.3.1\include\QtCore,..\..\..\..\Qt-4.3.1\include\QtGui,..\..\..\..\Qt-4.3.1\include\QtGui,..\..\..\..\Qt-4.3.1\include,..\..\src\plugins,..\..\..\..\Qt-4.3.1\include\ActiveQt,..\intermediate\moc,..\intermediate\ui,..\..\..\..\Qt-4.3.1\mkspecs\default"
-				AdditionalOptions="-Zm200 -EHsc"
+				AdditionalIncludeDirectories="&quot;..\..\..\..\Qt-4.5.3\include\QtCore&quot;,&quot;..\..\..\..\Qt-4.5.3\include\QtGui&quot;,&quot;..\..\..\..\Qt-4.5.3\include&quot;,&quot;..\..\src\plugins&quot;,&quot;..\..\..\..\Qt-4.5.3\include\ActiveQt&quot;,&quot;..\intermediate\moc&quot;,..\..\..\..\Qt-4.5.3\mkspecs\win32-msvc2003"
+				AdditionalOptions="-Zm300 -w34100 -w34189 -w34100 -w34189"
 				AssemblerListingLocation="..\intermediate\obj\"
 				BufferSecurityCheck="false"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 				ExceptionHandling="true"
 				GeneratePreprocessedFile="0"
-				MinimalRebuild="true"
 				ObjectFile="..\intermediate\obj\"
-				Optimization ="0"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,QT_LARGEFILE_SUPPORT,WIN32,EMU_C99,_USE_MATH_DEFINES,QT_DLL,QT_PLUGIN,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
+				Optimization ="4"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,EMU_C99,_USE_MATH_DEFINES,QT_DLL,QT_PLUGIN,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
 				ProgramDataBaseFileName=".\"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
@@ -38,10 +38,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="c:\Qt-4.3.1\lib\QtGuid4.lib c:\Qt-4.3.1\lib\QtCored4.lib"
-				AdditionalLibraryDirectories="c:\Qt-4.3.1\lib"
+				AdditionalDependencies="c:\Qt-4.5.3\lib\QtGuid4.lib c:\Qt-4.5.3\lib\QtCored4.lib"
+				AdditionalLibraryDirectories="c:\Qt-4.5.3\lib"
 				GenerateDebugInformation="true"
 				IgnoreImportLibrary="true"
+				LinkTimeCodeGeneration="0"
 				OutputFile="debug\sample1.dll"
 				ProgramDatabaseFile=""
 				SubSystem="2"
@@ -62,7 +63,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"/>
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,EMU_C99,_USE_MATH_DEFINES,QT_DLL,QT_PLUGIN,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT,_DEBUG"/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -73,16 +74,16 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\..\Qt-4.3.1\include\QtCore,..\..\..\..\Qt-4.3.1\include\QtCore,..\..\..\..\Qt-4.3.1\include\QtGui,..\..\..\..\Qt-4.3.1\include\QtGui,..\..\..\..\Qt-4.3.1\include,..\..\src\plugins,..\..\..\..\Qt-4.3.1\include\ActiveQt,..\intermediate\moc,..\intermediate\ui,..\..\..\..\Qt-4.3.1\mkspecs\default"
-				AdditionalOptions="-Zm200 -EHsc"
+				AdditionalIncludeDirectories="&quot;..\..\..\..\Qt-4.5.3\include\QtCore&quot;,&quot;..\..\..\..\Qt-4.5.3\include\QtGui&quot;,&quot;..\..\..\..\Qt-4.5.3\include&quot;,&quot;..\..\src\plugins&quot;,&quot;..\..\..\..\Qt-4.5.3\include\ActiveQt&quot;,&quot;..\intermediate\moc&quot;,..\..\..\..\Qt-4.5.3\mkspecs\win32-msvc2003"
+				AdditionalOptions="-Zm300 -w34100 -w34189 -w34100 -w34189"
 				AssemblerListingLocation="..\intermediate\obj\"
 				BufferSecurityCheck="false"
 				DebugInformationFormat="0"
 				ExceptionHandling="true"
 				GeneratePreprocessedFile="0"
 				ObjectFile="..\intermediate\obj\"
-				Optimization ="1"
-				PreprocessorDefinitions="NDEBUG,_WINDOWS,UNICODE,QT_LARGEFILE_SUPPORT,WIN32,EMU_C99,_USE_MATH_DEFINES,QT_DLL,QT_NO_DEBUG,QT_PLUGIN,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
+				Optimization ="2"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,EMU_C99,_USE_MATH_DEFINES,QT_DLL,QT_NO_DEBUG,QT_PLUGIN,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT,NDEBUG"
 				ProgramDataBaseFileName=".\"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
@@ -92,10 +93,12 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="c:\Qt-4.3.1\lib\QtGui4.lib c:\Qt-4.3.1\lib\QtCore4.lib"
-				AdditionalLibraryDirectories="c:\Qt-4.3.1\lib"
+				AdditionalDependencies="c:\Qt-4.5.3\lib\QtGui4.lib c:\Qt-4.5.3\lib\QtCore4.lib"
+				AdditionalLibraryDirectories="c:\Qt-4.5.3\lib"
 				GenerateDebugInformation="false"
 				IgnoreImportLibrary="true"
+				LinkIncremental="1"
+				LinkTimeCodeGeneration="0"
 				OutputFile="release\sample1.dll"
 				ProgramDatabaseFile=""
 				SubSystem="2"
@@ -116,52 +119,56 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"/>
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,EMU_C99,_USE_MATH_DEFINES,QT_DLL,QT_NO_DEBUG,QT_PLUGIN,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"/>
 		</Configuration>
 	</Configurations>
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx">
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
 				RelativePath="sample.cpp"/>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd">
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
 				RelativePath="sample.h">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						AdditionalDependencies="${QMAKE_FUNC_mocCmd}"
-						CommandLine="c:\Qt-4.3.1\bin\moc.exe -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DWIN32 -DEMU_C99 -D_USE_MATH_DEFINES -DQT_DLL -DQT_PLUGIN -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT  -I &quot;..\..\..\..\Qt-4.3.1\include\QtCore&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\QtCore&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\QtGui&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\QtGui&quot; -I &quot;..\..\..\..\Qt-4.3.1\include&quot; -I &quot;..\..\src\plugins&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\ActiveQt&quot; -I &quot;..\intermediate\moc&quot; -I &quot;..\intermediate\ui&quot; -I&quot;..\..\..\..\Qt-4.3.1\mkspecs\default&quot; sample.h -o ..\intermediate\moc\moc_sample.cpp"
+						AdditionalDependencies="C:\Qt-4.5.3\bin\moc.exe;sample.h"
+						CommandLine="C:\Qt-4.5.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DEMU_C99 -D_USE_MATH_DEFINES -DQT_DLL -DQT_PLUGIN -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt-4.5.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt-4.5.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt-4.5.3\include&quot; -I&quot;..\..\src\plugins&quot; -I&quot;..\..\..\..\Qt-4.5.3\include\ActiveQt&quot; -I&quot;..\intermediate\moc&quot; -I..\..\..\..\Qt-4.5.3\mkspecs\win32-msvc2003 -D_MSC_VER=1310 -DWIN32 sample.h -o ..\intermediate\moc\moc_sample.cpp"
 						Description="MOC sample.h"
-						Outputs="..\intermediate\moc\moc_sample.cpp"/>
+						Outputs="..\intermediate\moc\moc_sample.cpp"
+						Path="c:\Qt-4.5.3\bin"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						AdditionalDependencies="${QMAKE_FUNC_mocCmd}"
-						CommandLine="c:\Qt-4.3.1\bin\moc.exe -DNDEBUG -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DWIN32 -DEMU_C99 -D_USE_MATH_DEFINES -DQT_DLL -DQT_NO_DEBUG -DQT_PLUGIN -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT  -I &quot;..\..\..\..\Qt-4.3.1\include\QtCore&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\QtCore&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\QtGui&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\QtGui&quot; -I &quot;..\..\..\..\Qt-4.3.1\include&quot; -I &quot;..\..\src\plugins&quot; -I &quot;..\..\..\..\Qt-4.3.1\include\ActiveQt&quot; -I &quot;..\intermediate\moc&quot; -I &quot;..\intermediate\ui&quot; -I&quot;..\..\..\..\Qt-4.3.1\mkspecs\default&quot; sample.h -o ..\intermediate\moc\moc_sample.cpp"
+						AdditionalDependencies="C:\Qt-4.5.3\bin\moc.exe;sample.h"
+						CommandLine="C:\Qt-4.5.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DEMU_C99 -D_USE_MATH_DEFINES -DQT_DLL -DQT_NO_DEBUG -DQT_PLUGIN -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt-4.5.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt-4.5.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt-4.5.3\include&quot; -I&quot;..\..\src\plugins&quot; -I&quot;..\..\..\..\Qt-4.5.3\include\ActiveQt&quot; -I&quot;..\intermediate\moc&quot; -I..\..\..\..\Qt-4.5.3\mkspecs\win32-msvc2003 -D_MSC_VER=1310 -DWIN32 sample.h -o ..\intermediate\moc\moc_sample.cpp"
 						Description="MOC sample.h"
-						Outputs="..\intermediate\moc\moc_sample.cpp"/>
+						Outputs="..\intermediate\moc\moc_sample.cpp"
+						Path="c:\Qt-4.5.3\bin"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Generated Files"
-			Filter="cpp;c;cxx;moc;h;qrc;def;odl;idl;res">
+			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
+			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
 			<File
 				RelativePath="..\intermediate\moc\moc_sample.cpp"/>
-		</Filter>
-		<Filter
-			Name="Resource Files">
 			<File
-				RelativePath="sample_resource.rc"/>
+				RelativePath="..\intermediate\obj\sample_resource.res"/>
 		</Filter>
+		<File
+			RelativePath="c:\Projects\LibreCAD\plugins\sample\sample_resource.rc"/>
 	</Files>
 	<Globals>
 	</Globals>

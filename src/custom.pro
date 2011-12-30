@@ -2,7 +2,7 @@
 # Build LibreCAD with VS .NET 2003, using Qt 4.3, emulate C99.
 
 DEFINES += EMU_C99 _USE_MATH_DEFINES
-CONFIG += assistant
+# CONFIG += assistant   # Only if QT_VERSION < 0x040500
 
 HEADERS += \
     main/emu_qt44.h \

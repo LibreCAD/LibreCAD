@@ -3,7 +3,8 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="fparser"
-	ProjectGUID="{D41D8CD9-8F00-3204-A980-0998ECF8427E}">
+	ProjectGUID="{A003E36B-827A-37EC-8724-9C34FAB7D3DA}"
+	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -18,17 +19,16 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\Qt-4.3.1\include,..\..\..\Qt-4.3.1\include\ActiveQt,..\intermediate\moc,..\intermediate\ui,..\..\..\Qt-4.3.1\mkspecs\default"
-				AdditionalOptions="-Zm200 -EHsc"
+				AdditionalIncludeDirectories="&quot;..\..\..\Qt-4.5.3\include&quot;,&quot;..\..\..\Qt-4.5.3\include\ActiveQt&quot;,&quot;..\intermediate\moc&quot;,..\..\..\Qt-4.5.3\mkspecs\win32-msvc2003"
+				AdditionalOptions="-Zm300 -w34100 -w34189 -w34100 -w34189"
 				AssemblerListingLocation="..\intermediate\obj\"
 				BufferSecurityCheck="false"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 				ExceptionHandling="true"
 				GeneratePreprocessedFile="0"
-				MinimalRebuild="true"
 				ObjectFile="..\intermediate\obj\"
-				Optimization ="0"
-				PreprocessorDefinitions="UNICODE,QT_LARGEFILE_SUPPORT,WIN32,EMU_C99,_USE_MATH_DEFINES,QT_THREAD_SUPPORT"
+				Optimization ="4"
+				PreprocessorDefinitions="UNICODE,WIN32,QT_LARGEFILE_SUPPORT,EMU_C99,_USE_MATH_DEFINES,QT_THREAD_SUPPORT"
 				ProgramDataBaseFileName=".\"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
@@ -53,7 +53,8 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"/>
+				PreprocessorDefinitions="UNICODE,WIN32,QT_LARGEFILE_SUPPORT,EMU_C99,_USE_MATH_DEFINES,QT_THREAD_SUPPORT,_DEBUG"
+				ResourceOutputFileName="..\intermediate\/$(InputName).res"/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -64,16 +65,16 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\Qt-4.3.1\include,..\..\..\Qt-4.3.1\include\ActiveQt,..\intermediate\moc,..\intermediate\ui,..\..\..\Qt-4.3.1\mkspecs\default"
-				AdditionalOptions="-Zm200 -EHsc"
+				AdditionalIncludeDirectories="&quot;..\..\..\Qt-4.5.3\include&quot;,&quot;..\..\..\Qt-4.5.3\include\ActiveQt&quot;,&quot;..\intermediate\moc&quot;,..\..\..\Qt-4.5.3\mkspecs\win32-msvc2003"
+				AdditionalOptions="-Zm300 -w34100 -w34189 -w34100 -w34189"
 				AssemblerListingLocation="..\intermediate\obj\"
 				BufferSecurityCheck="false"
 				DebugInformationFormat="0"
 				ExceptionHandling="true"
 				GeneratePreprocessedFile="0"
 				ObjectFile="..\intermediate\obj\"
-				Optimization ="1"
-				PreprocessorDefinitions="NDEBUG,UNICODE,QT_LARGEFILE_SUPPORT,WIN32,EMU_C99,_USE_MATH_DEFINES,QT_NO_DEBUG,QT_THREAD_SUPPORT"
+				Optimization ="2"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,EMU_C99,_USE_MATH_DEFINES,QT_NO_DEBUG,QT_THREAD_SUPPORT,NDEBUG"
 				ProgramDataBaseFileName=".\"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
@@ -98,19 +99,22 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"/>
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,EMU_C99,_USE_MATH_DEFINES,QT_NO_DEBUG,QT_THREAD_SUPPORT"
+				ResourceOutputFileName="..\intermediate\/$(InputName).res"/>
 		</Configuration>
 	</Configurations>
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx">
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
 				RelativePath="fparser.cc"/>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd">
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
 				RelativePath="fparser.hh"/>
 		</Filter>
