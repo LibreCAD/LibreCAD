@@ -218,7 +218,7 @@ void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
 
     RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
 
-    if (closeMDI(false, forceClosing)) {
+    if (forceClosing || closeMDI(false, forceClosing)) {
         ce->accept();
     } else {
         ce->ignore();
@@ -418,7 +418,8 @@ bool QC_MDIWindow::slotFileSaveAs(bool &cancelled) {
     cancelled = false;
     RS2::FormatType t = RS2::FormatDXF;
 
-    QString fn = QG_FileDialog::getSaveFileName(this, &t);
+    QG_FileDialog dlg(this);
+    QString fn = dlg.getSaveFile(&t);
     if (document!=NULL && !fn.isEmpty()) {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         ret = document->saveAs(fn, t);
