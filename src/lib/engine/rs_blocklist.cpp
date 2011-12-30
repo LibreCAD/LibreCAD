@@ -30,10 +30,6 @@
 #include "rs_block.h"
 #include "rs_blocklistlistener.h"
 
-#if QT_VERSION < 0x040400
-#include "emu_qt44.h"
-#endif
-
 /**
  * Constructor.
  * 
@@ -149,11 +145,7 @@ void RS_BlockList::remove(RS_Block* block) {
     RS_DEBUG->print("RS_BlockList::removeBlock()");
 
     // here the block is removed from the list but not deleted
-#if QT_VERSION < 0x040400
-    emu_qt44_removeOne(blocks, block);
-#else
     blocks.removeOne(block);
-#endif
 
     for (int i=0; i<blockListListeners.size(); ++i) {
         RS_BlockListListener* l = blockListListeners.at(i);
@@ -340,11 +332,7 @@ void RS_BlockList::addListener(RS_BlockListListener* listener) {
  * removes a BlockListListener from the list of listeners. 
  */
 void RS_BlockList::removeListener(RS_BlockListListener* listener) {
-#if QT_VERSION < 0x040400
-    emu_qt44_removeOne(blockListListeners, listener);
-#else
     blockListListeners.removeOne(listener);
-#endif
 }
 
 

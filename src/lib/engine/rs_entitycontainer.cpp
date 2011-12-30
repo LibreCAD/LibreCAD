@@ -36,10 +36,6 @@
 #include "rs_information.h"
 #include "rs_graphicview.h"
 
-#if QT_VERSION < 0x040400
-#include "emu_qt44.h"
-#endif
-
 bool RS_EntityContainer::autoUpdateBorders = true;
 
 /**
@@ -395,13 +391,7 @@ bool RS_EntityContainer::removeEntity(RS_Entity* entity) {
     //RLZ TODO: in Q3PtrList if 'entity' is NULL remove the current item-> at.(entIdx)
     //    and sets 'entIdx' in next() or last() if 'entity' is the last item in the list.
     //    in LibreCAD is never called with NULL
-    bool ret;
-#if QT_VERSION < 0x040400
-    ret = emu_qt44_removeOne(entities, entity);
-#else
-    ret = entities.removeOne(entity);
-#endif
-
+    bool ret = entities.removeOne(entity);
     if (autoDelete && ret) {
         delete entity;
     }

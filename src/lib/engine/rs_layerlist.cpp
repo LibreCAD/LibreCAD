@@ -30,10 +30,6 @@
 #include "rs_layer.h"
 #include "rs_layerlistlistener.h"
 
-#if QT_VERSION < 0x040400
-#include "emu_qt44.h"
-#endif
-
 /**
  * Default constructor.
  */
@@ -166,12 +162,7 @@ void RS_LayerList::remove(RS_Layer* layer) {
     }
 
     // here the layer is removed from the list but not deleted
-#if QT_VERSION < 0x040400
-    emu_qt44_removeOne(layers, layer);
-#else
     layers.removeOne(layer);
-#endif
-
 
     for (int i=0; i<layerListListeners.size(); ++i) {
         RS_LayerListListener* l = layerListListeners.at(i);
@@ -357,12 +348,7 @@ void RS_LayerList::addListener(RS_LayerListListener* listener) {
  * removes a LayerListListener from the list of listeners. 
  */
 void RS_LayerList::removeListener(RS_LayerListListener* listener) {
-#if QT_VERSION < 0x040400
-    emu_qt44_removeOne(layerListListeners, listener);
-#else
     layerListListeners.removeOne(listener);
-#endif
-
 }
 
 

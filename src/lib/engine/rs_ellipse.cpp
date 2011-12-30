@@ -43,10 +43,6 @@
 #include "rs_information.h"
 #include "rs_linetypepattern.h"
 
-#ifdef EMU_C99
-#include "emu_c99.h" /* C99 math */
-#endif
-
 /**
  * Constructor.
  */
@@ -1283,10 +1279,7 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
  *Author: Dongxu Li
  */
 bool RS_Ellipse::isArc() const{
-#ifndef EMU_C99
-    using std::isnormal
-#endif
-    return /*std::*/isnormal(getAngle1()) || /*std::*/isnormal(getAngle2());
+    return std::isnormal(getAngle1()) || std::isnormal(getAngle2());
 }
 /**
  * mirror by the axis of the line axisPoint1 and axisPoint2

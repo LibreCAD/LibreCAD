@@ -36,9 +36,7 @@
 #include "rs_settings.h"
 #include "rs_dialogfactory.h"
 
-#ifdef EMU_C99
-#include "emu_c99.h"
-#endif
+
 
 /**
  * Constructor.
@@ -1095,7 +1093,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
         w = 0;
     }
 
-#if 1 /*TRUE*/
+#if TRUE
 	// - Scale pen width.
 	// - Notes: pen width is not scaled on print and print preview.
         //   This is the standard (AutoCAD like) behaviour.

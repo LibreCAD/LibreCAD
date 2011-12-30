@@ -6,20 +6,6 @@ Info.plist
 # Unix generated directories (except Apple)
 unix/
 
-# Win/MSVC generated files and binaries
-windows/
-*.ncb
-*.suo
-*.idb
-*.pdb
-*.dll
-*.lib
-*.exe
-*.exp
-*.ilk
-*.rc
-
-
 #Doxygen
 html/
 
@@ -34,8 +20,6 @@ librecad2.pro.user*
 *.qhc
 plugins.pro.user*
 ttf2lff.pro.user*
-PWD
-scripts/PWD
 
 # Mac store files
 .DS_Store

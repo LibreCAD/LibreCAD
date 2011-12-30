@@ -816,24 +816,18 @@ void RS_Graphic::fitToPage() {
         RS_Vector s = getSize();
         double fx = RS_MAXDOUBLE;
         double fy = RS_MAXDOUBLE;
-        double fxy;
         //double factor = 1.0;
 
         //ps = RS_Units::convert(ps, getUnit(), RS2::Millimeter);
 
-        // tin-pot 2011-12-30: TODO: can s.x < 0.0 (==> fx < 0.0) happen? 
-        if (fabs(s.x) > 1.0e-6) {
+        if (fabs(s.x)>1.0e-6) {
                 fx = ps.x / s.x;
         }
-        if (fabs(s.y) > 1.0e-6) {
+        if (fabs(s.y)>1.0e-6) {
                 fy = ps.y / s.y;
         }
 
-        fxy = std::min(fx, fy);
-        if (fxy >= RS_MAXDOUBLE) {
-            fxy = 1.0; // Scale for empty drawing.
-        }
-        setPaperScale(fxy);
+        setPaperScale(std::min(fx, fy));
         centerToPage();
 }
 

@@ -27,12 +27,6 @@
 
 #include "rs_settings.h"
 
-#include <QDoubleValidator>
-
-#ifdef EMU_C99
-#include "emu_c99.h"
-#endif
-
 /*
  *  Constructs a QG_ArcTangentialOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
