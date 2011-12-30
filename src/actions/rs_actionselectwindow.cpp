@@ -74,21 +74,22 @@ void RS_ActionSelectWindow::init(int status) {
 
 
 void RS_ActionSelectWindow::trigger() {
-    RS_PreviewActionInterface::trigger();
+        RS_PreviewActionInterface::trigger();
 
-    if (v1.valid && v2.valid) {
-        if (graphicView->toGuiDX(v1.distanceTo(v2))>10) {
+        if (v1.valid && v2.valid) {
+            if (graphicView->toGuiDX(v1.distanceTo(v2))>10) {
 
-            bool cross = (v2.y>v1.y);
+                bool cross = (v2.y>v1.y);
 
-            RS_Selection s(*container, graphicView);
-            s.selectWindow(v1, v2, select, cross);
+                RS_Selection s(*container, graphicView);
+                s.selectWindow(v1, v2, select, cross);
 
-            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected());
+                RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected());
+                deleteSnapper();
 
-            init();
+                init();
+            }
         }
-    }
 }
 
 
@@ -190,9 +191,10 @@ void RS_ActionSelectWindow::updateToolBar() {
     if (!isFinished()) {
         //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
     }
+    /* else {
+        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
+    }*/
 }
 
 // EOF
