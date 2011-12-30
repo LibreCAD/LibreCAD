@@ -85,7 +85,7 @@ void RS_ActionDrawLineFree::trigger() {
 void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
     if (vertex.valid && polyline!=NULL) {
         RS_Vector v = snapPoint(e);
-        if( vertex.valid && graphicView->toGui(v - vertex).squared()< 1. ){
+        if( vertex.valid && (graphicView->toGui(v) - graphicView->toGui(vertex)).squared()< 1. ){
             //do not add the same mouse position
             return;
         }
