@@ -2422,7 +2422,8 @@ void QC_ApplicationWindow::slotFileOpen() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen() 001");
     RS2::FormatType type = RS2::FormatUnknown;
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen() 002");
-    QString fileName = QG_FileDialog::getOpenFileName(this, &type);
+    QG_FileDialog dlg(this);
+    QString fileName = dlg.getOpenFile(&type);
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen() 003");
     slotFileOpen(fileName, type);
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen(): OK");

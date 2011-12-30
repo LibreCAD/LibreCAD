@@ -27,20 +27,40 @@
 #ifndef QG_FILEDIALOG_H
 #define QG_FILEDIALOG_H
 
+#include <QFileDialog>
 #include "rs.h"
 
 /**
  * File Open / Save dialogs.
  */
-class QG_FileDialog {
+class QG_FileDialog : public QFileDialog {
+
 public:
-    //QG_FileDialog(QWidget* parent=0, const char* name=0, WFlags f=0);
-    //virtual ~QG_FileDialog();
+    QG_FileDialog(QWidget* parent=0, Qt::WindowFlags f=0);
+    virtual ~QG_FileDialog();
+
+    QString getOpenFile(RS2::FormatType* type=NULL);
+    QString getSaveFile(RS2::FormatType* type=NULL);
 
     static QString getOpenFileName(QWidget* parent, RS2::FormatType* type=NULL);
     static QString getSaveFileName(QWidget* parent, RS2::FormatType* type=NULL);
 
-	
+private:
+    void getType(const QString filter);
+    QString getExtension (RS2::FormatType type);
+    RS2::FormatType ftype;
+#ifdef USE_DXFRW
+    QString fDxfrw2000;
+    QString fDxfrw;
+#endif
+    QString fDxf2000;
+    QString fDxfR12;
+    QString fDxf;
+    QString fDxf1;
+    QString fLff;
+    QString fCxf;
+    QString fJww;
+
 };
 
 #endif
