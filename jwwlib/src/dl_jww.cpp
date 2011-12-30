@@ -972,6 +972,9 @@ void DL_Jww::addAttrib(DL_CreationInterface* creationInterface) {
  * @return dimension data from current values.
  */
 DL_DimensionData DL_Jww::getDimData() {
+    // tin-pot@gmx.net 2011-12-29: make compiler happy.
+    DL_DimensionData dummy(0.,0.,0.,0.,0.,0.,0,0,0,0.,"DUMMY","",0.);
+    return dummy;
 }
 
 
@@ -1082,6 +1085,7 @@ DL_WriterA* DL_Jww::out(const char* file, DL_Codes::version version) {
 #ifdef DEBUG
 //	jwdoc->Save();
 #endif
+    return NULL; // tin-pot@gmx.net 2011-12-29: Make compiler happy.
 }
 
 
@@ -1475,6 +1479,7 @@ int DL_Jww::writeImage(DL_WriterA& dw,
 					   const DL_ImageData& data,
 					   const DL_Attributes& attrib) {
 
+    return -1; // tin-pot@gmx.net 2011-12-29: Make compiler happy.
 }
 
 
@@ -1638,4 +1643,5 @@ bool DL_Jww::checkVariable(const char* var, DL_Codes::version version) {
  * e.g. if str = "2.0.2.0" getLibVersion returns 0x02000200
  */
 int DL_Jww::getLibVersion(const char* str) {
+    return -1; // tin-pot@gmx.net 2011-12-29: Make compiler happy.
 }

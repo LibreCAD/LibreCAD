@@ -31,6 +31,10 @@
 #include "rs_font.h"
 #include "rs_system.h"
 
+#if QT_VERSION < 0x040500
+#include "emu_qt45.h"
+#endif
+
 RS_FontList* RS_FontList::uniqueInstance = NULL;
 
 
@@ -51,7 +55,11 @@ void RS_FontList::init() {
     RS_DEBUG->print("RS_FontList::initFonts");
 
     QStringList list = RS_SYSTEM->getNewFontList();
+#if QT_VERSION < 0x040500
+    emu_qt45_QList_append(list, RS_SYSTEM->getFontList());
+#else
     list.append(RS_SYSTEM->getFontList());
+#endif
     QHash<QString, int> added; //used to remember added fonts (avoid duplication)
     RS_Font* font;
 

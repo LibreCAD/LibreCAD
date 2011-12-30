@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding = "Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="importshp"
+	ProjectGUID="{9B719FC4-7BED-3D39-8E01-4E942B0FE87C}"
+	Keyword="Qt4VSv1.0">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="."
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			ConfigurationType="2"
+			IntermediateDirectory="..\intermediate\obj\"
+			UseOfMfc="0">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;..\..\..\..\Qt-4.5.3\include\QtCore&quot;,&quot;..\..\..\..\Qt-4.5.3\include\QtGui&quot;,&quot;..\..\..\..\Qt-4.5.3\include&quot;,&quot;..\..\src\plugins&quot;,&quot;shapelib&quot;,&quot;..\..\..\..\Qt-4.5.3\include\ActiveQt&quot;,&quot;..\intermediate\moc&quot;,..\..\..\..\Qt-4.5.3\mkspecs\win32-msvc2003"
+				AdditionalOptions="-Zm300 -w34100 -w34189 -w34100 -w34189"
+				AssemblerListingLocation="..\intermediate\obj\"
+				BufferSecurityCheck="false"
+				DebugInformationFormat="3"
+				ExceptionHandling="true"
+				GeneratePreprocessedFile="0"
+				ObjectFile="..\intermediate\obj\"
+				Optimization ="4"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,EMU_C99,_USE_MATH_DEFINES,QT_DLL,QT_PLUGIN,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
+				ProgramDataBaseFileName=".\"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				WarningLevel="3"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="c:\Qt-4.5.3\lib\QtGuid4.lib c:\Qt-4.5.3\lib\QtCored4.lib"
+				AdditionalLibraryDirectories="c:\Qt-4.5.3\lib"
+				GenerateDebugInformation="true"
+				IgnoreImportLibrary="true"
+				LinkTimeCodeGeneration="0"
+				OutputFile="debug\importshp1.dll"
+				ProgramDatabaseFile=""
+				SubSystem="2"
+				SuppressStartupBanner="true"
+				Version="1.00"/>
+			<Tool
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0"/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\windows\resources\plugins&quot;"
+				Description="Copy importshp1.dll to ..\..\windows\resources\plugins"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,EMU_C99,_USE_MATH_DEFINES,QT_DLL,QT_PLUGIN,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT,_DEBUG"/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="."
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			ConfigurationType="2"
+			IntermediateDirectory="..\intermediate\obj\"
+			UseOfMfc="0">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;..\..\..\..\Qt-4.5.3\include\QtCore&quot;,&quot;..\..\..\..\Qt-4.5.3\include\QtGui&quot;,&quot;..\..\..\..\Qt-4.5.3\include&quot;,&quot;..\..\src\plugins&quot;,&quot;shapelib&quot;,&quot;..\..\..\..\Qt-4.5.3\include\ActiveQt&quot;,&quot;..\intermediate\moc&quot;,..\..\..\..\Qt-4.5.3\mkspecs\win32-msvc2003"
+				AdditionalOptions="-Zm300 -w34100 -w34189 -w34100 -w34189"
+				AssemblerListingLocation="..\intermediate\obj\"
+				BufferSecurityCheck="false"
+				DebugInformationFormat="0"
+				ExceptionHandling="true"
+				GeneratePreprocessedFile="0"
+				ObjectFile="..\intermediate\obj\"
+				Optimization ="2"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,EMU_C99,_USE_MATH_DEFINES,QT_DLL,QT_NO_DEBUG,QT_PLUGIN,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT,NDEBUG"
+				ProgramDataBaseFileName=".\"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				WarningLevel="3"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="c:\Qt-4.5.3\lib\QtGui4.lib c:\Qt-4.5.3\lib\QtCore4.lib"
+				AdditionalLibraryDirectories="c:\Qt-4.5.3\lib"
+				GenerateDebugInformation="false"
+				IgnoreImportLibrary="true"
+				LinkIncremental="1"
+				LinkTimeCodeGeneration="0"
+				OutputFile="release\importshp1.dll"
+				ProgramDatabaseFile=""
+				SubSystem="2"
+				SuppressStartupBanner="true"
+				Version="1.00"/>
+			<Tool
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0"/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\windows\resources\plugins&quot;"
+				Description="Copy importshp1.dll to ..\..\windows\resources\plugins"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,EMU_C99,_USE_MATH_DEFINES,QT_DLL,QT_NO_DEBUG,QT_PLUGIN,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"/>
+		</Configuration>
+	</Configurations>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			<File
+				RelativePath="shapelib\dbfopen.c"/>
+			<File
+				RelativePath="importshp.cpp"/>
+			<File
+				RelativePath="shapelib\safileio.c"/>
+			<File
+				RelativePath="shapelib\shpopen.c"/>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath="importshp.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt-4.5.3\bin\moc.exe;importshp.h"
+						CommandLine="C:\Qt-4.5.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DEMU_C99 -D_USE_MATH_DEFINES -DQT_DLL -DQT_PLUGIN -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt-4.5.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt-4.5.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt-4.5.3\include&quot; -I&quot;..\..\src\plugins&quot; -I&quot;shapelib&quot; -I&quot;..\..\..\..\Qt-4.5.3\include\ActiveQt&quot; -I&quot;..\intermediate\moc&quot; -I..\..\..\..\Qt-4.5.3\mkspecs\win32-msvc2003 -D_MSC_VER=1310 -DWIN32 importshp.h -o ..\intermediate\moc\moc_importshp.cpp"
+						Description="MOC importshp.h"
+						Outputs="..\intermediate\moc\moc_importshp.cpp"
+						Path="c:\Qt-4.5.3\bin"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt-4.5.3\bin\moc.exe;importshp.h"
+						CommandLine="C:\Qt-4.5.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DEMU_C99 -D_USE_MATH_DEFINES -DQT_DLL -DQT_NO_DEBUG -DQT_PLUGIN -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt-4.5.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt-4.5.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt-4.5.3\include&quot; -I&quot;..\..\src\plugins&quot; -I&quot;shapelib&quot; -I&quot;..\..\..\..\Qt-4.5.3\include\ActiveQt&quot; -I&quot;..\intermediate\moc&quot; -I..\..\..\..\Qt-4.5.3\mkspecs\win32-msvc2003 -D_MSC_VER=1310 -DWIN32 importshp.h -o ..\intermediate\moc\moc_importshp.cpp"
+						Description="MOC importshp.h"
+						Outputs="..\intermediate\moc\moc_importshp.cpp"
+						Path="c:\Qt-4.5.3\bin"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="shapelib\shapefil.h"/>
+		</Filter>
+		<Filter
+			Name="Generated Files"
+			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
+			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
+			<File
+				RelativePath="..\intermediate\obj\importshp_resource.res"/>
+			<File
+				RelativePath="..\intermediate\moc\moc_importshp.cpp"/>
+		</Filter>
+		<File
+			RelativePath="c:\Projects\LibreCAD\plugins\importshp\importshp_resource.rc"/>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>
