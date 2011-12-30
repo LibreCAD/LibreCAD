@@ -43,6 +43,10 @@
 #include "rs_actionlibraryinsert.h"
 #include "qg_actionhandler.h"
 
+#if QT_VERSION < 0x040400
+#include "emu_qt44.h"
+#endif
+
 /*
  *  Constructs a QG_LibraryWidget as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -371,7 +375,11 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
         const QString& dxfPath) {
 
     // the thumbnail must be created in the user's home.
+#if QT_VERSION < 0x040400
+    QString iconCacheLocation = emu_qt44_storageLocationData() + QDir::separator() + "iconCache" + QDir::separator();
+#else
     QString iconCacheLocation=QDesktopServices::storageLocation(QDesktopServices::DataLocation) + QDir::separator() + "iconCache" + QDir::separator();
+#endif
 
     RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: "
                     "dir: '%s' dxfFile: '%s' dxfPath: '%s'",

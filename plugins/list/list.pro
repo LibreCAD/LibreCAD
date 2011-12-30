@@ -39,4 +39,7 @@ UI_DIR = ../intermediate/ui
 UI_HERADERS_DIR = ../intermediate/ui
 UI_SOURCES_DIR = ../intermediate/ui
 
-#DEFINES += sample_LIBRARY
+#DEFINES += sample_LIBRAR
+
+# Include any custom.pro files for personal/special builds
+exists( custom.pro ):include( custom.pro )
