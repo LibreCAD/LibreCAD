@@ -418,7 +418,8 @@ bool QC_MDIWindow::slotFileSaveAs(bool &cancelled) {
     cancelled = false;
     RS2::FormatType t = RS2::FormatDXF;
 
-    QString fn = QG_FileDialog::getSaveFileName(this, &t);
+    QG_FileDialog dlg(this);
+    QString fn = dlg.getSaveFile(&t);
     if (document!=NULL && !fn.isEmpty()) {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         ret = document->saveAs(fn, t);
