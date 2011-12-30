@@ -357,7 +357,7 @@ void RS_LayerList::addListener(RS_LayerListListener* listener) {
  * removes a LayerListListener from the list of listeners. 
  */
 void RS_LayerList::removeListener(RS_LayerListListener* listener) {
-#ifdef QT_VERSION < 0x040400
+#if QT_VERSION < 0x040400
     emu_qt44_removeOne(layerListListeners, listener);
 #else
     layerListListeners.removeOne(listener);

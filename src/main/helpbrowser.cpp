@@ -36,10 +36,11 @@
 **
 ****************************************************************************/
 
+
+#include "helpbrowser.h"
 #if QT_VERSION >= 0x040400
 
 #include <QHelpEngine>
-#include "helpbrowser.h"
 
 HelpBrowser::HelpBrowser(QHelpEngine *helpEngine, QWidget *parent)
     : QTextBrowser(parent), helpEngine(helpEngine)

@@ -396,7 +396,7 @@ bool RS_EntityContainer::removeEntity(RS_Entity* entity) {
     //    and sets 'entIdx' in next() or last() if 'entity' is the last item in the list.
     //    in LibreCAD is never called with NULL
     bool ret;
-#ifdef QT_VERSION < 0x040400
+#if QT_VERSION < 0x040400
     ret = emu_qt44_removeOne(entities, entity);
 #else
     ret = entities.removeOne(entity);

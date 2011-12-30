@@ -2,12 +2,16 @@
  * Workaround: Emulate Qt 4.4 functions.
  */
 
+
+#include <QtGlobal>
+
 #if QT_VERSION < 0x040400
 
 #include <QList>
 #include <QString>
 #include <QFileDialog>
 #include <QPrinter>
+
 
 QString emu_qt44_storageLocationDocuments(void);
 QString emu_qt44_storageLocationData(void);

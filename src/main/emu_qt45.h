@@ -2,6 +2,8 @@
  * Workaround: Emulate Qt 4.5 functions.
  */
 
+#include <QtGlobal>
+
 #if QT_VERSION < 0x040500
 
 #include <QList>
