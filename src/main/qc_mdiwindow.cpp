@@ -218,7 +218,7 @@ void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
 
     RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
 
-    if (closeMDI(false, forceClosing)) {
+    if (forceClosing || closeMDI(false, forceClosing)) {
         ce->accept();
     } else {
         ce->ignore();
