@@ -9,7 +9,7 @@ set DOCDIR=%PWD%\support\doc
 
 REM Generate Help Files
 cd %DOCDIR%
-qcollectiongenerator LibreCADdoc.qhcp
+%QTDIR%\bin\qcollectiongenerator.exe LibreCADdoc.qhcp
 
 cd %PWD%
 
