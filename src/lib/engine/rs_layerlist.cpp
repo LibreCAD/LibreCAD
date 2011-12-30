@@ -30,7 +30,7 @@
 #include "rs_layer.h"
 #include "rs_layerlistlistener.h"
 
-#ifdef QT_VERSION < 0x040400
+#if QT_VERSION < 0x040400
 #include "emu_qt44.h"
 #endif
 
