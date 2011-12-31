@@ -11,9 +11,9 @@ DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 #DEFINES += RS_VECTOR2D=1
 
 DEFINES += USE_DXFRW=1
-# set USEQTDIALOG=1 to use QFileDialog instead "native" FileDialog
+# uncomment USEQTDIALOG=1 to use QFileDialog instead "native" FileDialog
 # KDE returns the first filter that match the pattern "*.dxf" instead the selected
-DEFINES += USEQTDIALOG=0
+# DEFINES += USEQTDIALOG=1
 HAS_CPP11 =
 #HAS_CPP11 += 1
 count(HAS_CPP11, 1) {
