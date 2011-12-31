@@ -142,7 +142,11 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: creating layer");
 
-    RS_Layer* layer = new RS_Layer(toNativeString(data.name.c_str(),getDXFEncoding()));
+    QString name = toNativeString(data.name.c_str(),getDXFEncoding());
+    if (graphic->findLayer(name)!=NULL) {
+        return;
+    }
+    RS_Layer* layer = new RS_Layer(name);
     RS_DEBUG->print("RS_FilterDXF::addLayer: set pen");
     layer->setPen(attributesToPen(&data));
 
@@ -179,7 +183,8 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
             RS_Vector bp(data.basePoint.x, data.basePoint.y);
             RS_Block* block =
                 new RS_Block(graphic,
-                             RS_BlockData(QString::fromUtf8(data.name.c_str()), bp, false));
+//                             RS_BlockData(QString::fromUtf8(data.name.c_str()), bp, false));
+                             RS_BlockData(toNativeString(data.name.c_str(),getDXFEncoding()), bp, false ));
             //block->setFlags(flags);
 
             if (graphic->addBlock(block)) {
@@ -422,7 +427,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
 
     //cout << "Insert: " << name << " " << ip << " " << cols << "/" << rows << endl;
 
-    RS_InsertData d(data.name.c_str(),
+    RS_InsertData d(toNativeString(data.name.c_str(),getDXFEncoding()),
                     ip, sc, data.angle/ARAD,
                     data.colcount, data.rowcount,
                     sp, NULL, RS2::NoUpdate);
@@ -447,7 +452,7 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     RS2::HAlign halign;
     RS2::TextDrawingDirection dir;
     RS2::TextLineSpacingStyle lss;
-    QString sty = QString::fromUtf8(data.style.c_str());
+    QString sty = toNativeString(data.style.c_str(),getDXFEncoding());
     sty=sty.toLower();
 
     if (data.textgen<=3) {
@@ -481,8 +486,7 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     }
 
     QString mtext = data.text.c_str();
-    mtext = toNativeString(mtext.toLocal8Bit().data(), getDXFEncoding());
-
+    mtext = toNativeString(data.text.c_str(),getDXFEncoding());
     // use default style for the drawing:
     if (sty.isEmpty()) {
         // japanese, cyrillic:
@@ -2522,16 +2526,15 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     RS_Pen pen;
     pen.setColor(Qt::black);
     pen.setLineType(RS2::SolidLine);
+    QString layName = toNativeString(attrib->layer.c_str(),getDXFEncoding());
 
     // Layer: add layer in case it doesn't exist:
-
-    if (graphic->findLayer(QString::fromUtf8(attrib->layer.c_str()))==NULL) {
-//        addLayer(DL_LayerData(attrib.layer, 0));
+    if (graphic->findLayer(layName)==NULL) {
         DRW_Layer lay;
         lay.name = attrib->layer;
         addLayer(lay);
     }
-    entity->setLayer(QString::fromUtf8(attrib->layer.c_str()));
+    entity->setLayer(layName);
 
     // Color:
     pen.setColor(numberToColor(attrib->color));
