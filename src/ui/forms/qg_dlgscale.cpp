@@ -28,6 +28,8 @@
 #include "rs_settings.h"
 #include "rs_modification.h"
 
+#include <QDoubleValidator>
+
 /*
  *  Constructs a QG_DlgScale as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
