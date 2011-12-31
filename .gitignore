@@ -45,3 +45,6 @@ scripts/PWD
 #vim files
 *.swp
 *.orig
+
+*.bak
+/plugins/plugins.sln
