@@ -7,7 +7,9 @@ Info.plist
 unix/
 
 # Win/MSVC generated files and binaries
+# (qmake generates plugins.sln, don't know why and what for.)
 windows/
+plugins/plugins.sln
 *.ncb
 *.suo
 *.idb
@@ -18,6 +20,7 @@ windows/
 *.exp
 *.ilk
 *.rc
+*.bak
 
 
 #Doxygen
@@ -46,5 +49,3 @@ scripts/PWD
 *.swp
 *.orig
 
-*.bak
-/plugins/plugins.sln
