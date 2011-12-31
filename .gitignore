@@ -6,6 +6,23 @@ Info.plist
 # Unix generated directories (except Apple)
 unix/
 
+# Win/MSVC generated files and binaries
+# (qmake generates plugins.sln, don't know why and what for.)
+windows/
+plugins/plugins.sln
+*.ncb
+*.suo
+*.idb
+*.pdb
+*.dll
+*.lib
+*.exe
+*.exp
+*.ilk
+*.rc
+*.bak
+
+
 #Doxygen
 html/
 
@@ -29,3 +46,4 @@ ttf2lff.pro.user*
 #vim files
 *.swp
 *.orig
+
