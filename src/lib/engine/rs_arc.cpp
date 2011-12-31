@@ -33,6 +33,9 @@
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 
+#ifdef EMU_C99
+#include "emu_c99.h"
+#endif
 
 /**
  * Default constructor.
@@ -349,11 +352,15 @@ RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
                                    double* dist,
                                    int middlePoints
                                    )const {
+#ifndef EMU_C99
+    using std::isnormal
+#endif
+
     RS_DEBUG->print("RS_Arc::getNearestMiddle(): begin\n");
         double amin=getAngle1();
         double amax=getAngle2();
         //std::cout<<"RS_Arc::getNearestMiddle(): middlePoints="<<middlePoints<<std::endl;
-        if( !(std::isnormal(amin) || std::isnormal(amax))){
+        if( !(/*std::*/isnormal(amin) || /*std::*/isnormal(amax))){
                 //whole circle, no middle point
                 if(dist != NULL) {
                         *dist=RS_MAXDOUBLE;

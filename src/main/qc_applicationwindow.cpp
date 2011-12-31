@@ -27,12 +27,20 @@
 #include <QStatusBar>
 #include <QMenuBar>
 #include <QDockWidget>
+
+#if QT_VERSION < 0x040400
+#include <QtAssistant/QAssistantClient>
+#include <QTime>
+#include "emu_qt44.h"
+#else
 #include <QtHelp>
+#include "helpbrowser.h"
+#endif // QT_VERSION 0x040400
+
 #include <QSplitter>
 #include <QMdiArea>
 
 #include "qc_applicationwindow.h"
-#include "helpbrowser.h"
 // RVT_PORT added
 #include <QImageWriter>
 
@@ -120,8 +128,12 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     setAttribute(Qt::WA_DeleteOnClose);
     appWindow = this;
+#if QT_VERSION < 0x040400
+    assistant = NULL;
+#else
     helpEngine = NULL;
     helpWindow = NULL;
+#endif // QT_VERSION 0x040400
 
     mdiAreaCAD = NULL;
 
@@ -318,12 +330,18 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
         "deleting assistant..");
+#if QT_VERSION < 0x040400
+    if (assistant != NULL) {
+        delete assistant;
+    }
+#else
     if (helpEngine!=NULL) {
         delete helpEngine;
     }
     if (helpWindow!=NULL) {
         delete helpWindow;
     }
+#endif // QT_VERSION 0x040400
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting assistant: OK");
@@ -1876,7 +1894,7 @@ void QC_ApplicationWindow::slotBack() {
 void QC_ApplicationWindow::slotKillAllActions() {
     RS_GraphicView* gv = getGraphicView();
     QC_MDIWindow* m = getMDIWindow();
-    if (gv!=NULL and m!=NULL and m->getDocument()!=NULL) {
+    if (gv!=NULL && m!=NULL && m->getDocument()!=NULL) {
         gv->killAllActions();
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
 
@@ -2258,7 +2276,9 @@ void QC_ApplicationWindow::slotTileVertical() {
 void QC_ApplicationWindow::slotToggleTab() {
     mdiAreaTab = ! mdiAreaTab;
     if(mdiAreaTab){
+#if QT_VERSION >= 0x040400
         mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
+#endif
         QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
         QMdiSubWindow* active=mdiAreaCAD->activeSubWindow();
         for(int i=0;i<windows.size();i++){
@@ -2274,7 +2294,9 @@ void QC_ApplicationWindow::slotToggleTab() {
         }
 
     }else{
+#if QT_VERSION >= 0x040400
         mdiAreaCAD->setViewMode(QMdiArea::SubWindowView);
+#endif
         slotCascade();
         //            mdiAreaCAD->setViewMode(QMdiArea::SubWindowView);
         //            QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
@@ -2985,7 +3007,11 @@ void QC_ApplicationWindow::slotFilePrint() {
     QPrinter printer(QPrinter::HighResolution);
 
     bool landscape = false;
+#if QT_VERSION < 0x040400
+    emu_qt44_QPrinter_setPaperSize(printer, RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape)));
+#else
     printer.setPaperSize(RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape)));
+#endif // QT_VERSION 0x040400
     if (landscape) {
         printer.setOrientation(QPrinter::Landscape);
     } else {
@@ -3449,6 +3475,27 @@ void QC_ApplicationWindow::slotHelpAbout() {
 void QC_ApplicationWindow::slotHelpManual() {
     RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual()");
 
+#if QT_VERSION < 0x040400
+    if (assistant == NULL) {
+        RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
+                        RS_SYSTEM->getAppDir().toLatin1().constData());
+        RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
+                        RS_SYSTEM->getAppDir().toLatin1().constData());
+        assistant = new QAssistantClient(RS_SYSTEM->getAppDir(), this);
+		connect(assistant, SIGNAL(error(const QString&)), 
+			this, SLOT(slotError(const QString&)));
+        QStringList args;
+        args << "-profile";
+        args << QDir::convertSeparators(RS_SYSTEM->getDocPath() + "/qcaddoc.adp");
+//        args << QString("doc") + QDir::separator() + QString("qcaddoc.adp");
+
+#if QT_VERSION >= 0x030200 
+        assistant->setArguments(args);
+#endif
+    }
+    assistant->openAssistant();
+    //assistant->showPage("index.html");
+#else // QT_VERSION 0x030200
     if (helpEngine==NULL) {
         RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
                         RS_SYSTEM->getAppDir().toLatin1().data());
@@ -3484,6 +3531,7 @@ void QC_ApplicationWindow::slotHelpManual() {
     if (helpWindow) {
         helpWindow->show();
     }
+#endif // QT_VERSION 0x040400
 }
 
 /**

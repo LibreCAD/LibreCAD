@@ -9,7 +9,7 @@ set DOCDIR=%PWD%\support\doc
 
 REM Generate Help Files
 cd %DOCDIR%
-qcollectiongenerator LibreCADdoc.qhcp
+%QTDIR%\bin\qcollectiongenerator.exe LibreCADdoc.qhcp
 
 cd %PWD%
 
@@ -32,7 +32,11 @@ copy support\library\templates\*.dxf %RESOURCEDIR%\library\templates
 
 REM Generate translations
 echo "Generating Translations"
-lrelease src/src.pro
+cd %TSDIR%
+for /f %%F in ('dir /b *.ts') do (
+  %QTDIR%\bin\lrelease.exe %%F
+)
+
 mkdir %RESOURCEDIR%\qm 
 
 cd %TSDIR%

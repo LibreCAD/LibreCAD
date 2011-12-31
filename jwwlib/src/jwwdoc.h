@@ -312,11 +312,16 @@ public:
 	const char* className(){return "CDataSen";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataSen&); 
 	friend inline std::istream& operator>>(std::istream&, CDataSen&); 
-	void Serialize(std::ofstream& ofstr){
+	void Serialize(std::ofstream& ofstr)
+#ifdef _MSC_VER // TODO VC 7.1 gives overload error.
+        ;
+#else
+        {
 	    CData::Serialize(ofstr);
 		ofstr	<< (double)m_start.x << (double)m_start.y 
 				<< (double)m_end.x << (double)m_end.y;
 	}
+#endif
 	void Serialize(std::ifstream& ifstr){
 	    CData::Serialize(ifstr);
 		ifstr	>> m_start.x >> m_start.y
@@ -354,9 +359,13 @@ public:
 	const char* className(){return "CDataEnko";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataEnko&); 
 	friend inline std::istream& operator>>(std::istream&, CDataEnko&); 
-	void Serialize(std::ofstream& ofstr){
+	void Serialize(std::ofstream& ofstr)
+#ifdef _MSC_VER
+        ;
+#else
+        {
 	    CData::Serialize(ofstr);
-        ofstr	<< (double)m_start.x << (double)m_start.y
+            ofstr	<< (double)m_start.x << (double)m_start.y
 				<< (double)m_dHankei
 				<< (double)m_radKaishiKaku
 				<< (double)m_radEnkoKaku
@@ -364,6 +373,7 @@ public:
 				<< (double)m_dHenpeiRitsu
 				<< (DWORD )m_bZenEnFlg;
 	}
+#endif
 	void Serialize(std::ifstream& ifstr){
 	    CData::Serialize(ifstr);
 		ifstr >> /*(double)*/m_start.x >> /*(double)*/m_start.y
@@ -414,20 +424,26 @@ public:
 	const char* className(){return "CDataTen";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataTen&); 
 	friend inline std::istream& operator>>(std::istream&, CDataTen&); 
-	void Serialize(std::ofstream& ofstr){
-        m_nPenStyle = 1;
-        if( nOldVersionSave >= 252 ){   //Ver.2.52以降
-            if( 0 != m_nCode ){ m_nPenStyle = 100; }
-        }
-	    CData::Serialize(ofstr);
-        ofstr << (double)m_start.x << (double)m_start.y;
-        ofstr << (DWORD)m_bKariten;
-        if( 100 == m_nPenStyle ){
-            ofstr << (DWORD )m_nCode;
-            ofstr << (double)m_radKaitenKaku;
-            ofstr << (double)m_dBairitsu;
-        }
+	void Serialize(std::ofstream& ofstr)
+#ifdef _MSC_VER
+        ;
+#else
+        {
+            m_nPenStyle = 1;
+            if( nOldVersionSave >= 252 ){   //Ver.2.52以降
+                if( 0 != m_nCode ){ m_nPenStyle = 100; }
+            }
+            CData::Serialize(ofstr);
+
+            ofstr << (double)m_start.x << (double)m_start.y;
+            ofstr << (DWORD)m_bKariten;
+            if( 100 == m_nPenStyle ){
+                ofstr << (DWORD )m_nCode;
+                ofstr << (double)m_radKaitenKaku;
+                ofstr << (double)m_dBairitsu;
+            }
 	}
+#endif
 	void Serialize(std::ifstream& ifstr){
 	    CData::Serialize(ifstr);
         ifstr >> m_start.x >> m_start.y;
@@ -475,13 +491,18 @@ public:
 	const char* className(){return "CDataEnko";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataMoji&); 
 	friend inline std::istream& operator>>(std::istream&, CDataMoji&); 
-	void Serialize(std::ofstream& ofstr){
+	void Serialize(std::ofstream& ofstr)
+#ifdef _MSC_VER
+        ;
+#else
+        {
 ////////////////////////////////////////////
 //SKIP        m_nPenWidth = m_nSunpouFlg; //  (寸法値設定のフラグ)ヘッダーメンバー
         CData::Serialize(ofstr);
         m_nPenWidth = 1;            //文字枠幅を1
 //SKIP        if( m_sMojiFlg & 0x0001 ){ m_nMojiShu += 10000; }  //斜体文字
 //SKIP        if( m_sMojiFlg & 0x0010 ){ m_nMojiShu += 20000; }  //ボールド
+
         ofstr << (double)m_start.x << (double)m_start.y 
            << (double)m_end.x << (double)m_end.y
            << (DWORD)m_nMojiShu
@@ -517,6 +538,7 @@ public:
 		}
         m_nMojiShu = (m_nMojiShu % 10000);
 	}
+#endif
 	void Serialize(std::ifstream& ifstr){
         CData::Serialize(ifstr);
         ifstr >> m_start.x >> m_start.y 
@@ -675,16 +697,21 @@ public:
 	const char* className(){return "CDataSolid";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataSolid&); 
 	friend inline std::istream& operator>>(std::istream&, CDataSolid&); 
-	void Serialize(std::ofstream& ofstr){
-	    CData::Serialize(ofstr);
-        ofstr << (double)m_start.x << (double)m_start.y 
-           << (double)m_end.x << (double)m_end.y
-           << (double)m_DPoint2.x << (double)m_DPoint2.y
-           << (double)m_DPoint3.x << (double)m_DPoint3.y;
-        if( 10 == m_nPenColor ){
-           ofstr << (DWORD)m_Color;//RGB
+	void Serialize(std::ofstream& ofstr)
+#ifdef _MSC_VER
+        ;
+#else
+        {
+            CData::Serialize(ofstr);
+            ofstr << (double)m_start.x << (double)m_start.y 
+                << (double)m_end.x << (double)m_end.y
+                << (double)m_DPoint2.x << (double)m_DPoint2.y
+                << (double)m_DPoint3.x << (double)m_DPoint3.y;
+            if( 10 == m_nPenColor ){
+                ofstr << (DWORD)m_Color;//RGB
+            }
         }
-	}
+#endif
 	void Serialize(std::ifstream& ifstr){
 	    CData::Serialize(ifstr);
         ifstr >> m_start.x >> m_start.y 
@@ -721,7 +748,11 @@ public:
 	const char* className(){return "CDataBlock";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataBlock&); 
 	friend inline std::istream& operator>>(std::istream&, CDataBlock&); 
-	void Serialize(std::ofstream& ofstr){
+	void Serialize(std::ofstream& ofstr)
+#ifdef _MSC_VER
+        ;
+#else
+        {
 	    CData::Serialize(ofstr);
         ofstr <<(double)m_DPKijunTen.x <<(double)m_DPKijunTen.y
            <<(double)m_dBairitsuX
@@ -729,6 +760,7 @@ public:
            <<(double)m_radKaitenKaku
            <</*(DWORD)m_pDataList->*/m_n_Number;//ポインタでなく通し番号を保存する
 	}
+#endif
 	void Serialize(std::ifstream& ifstr){
 	    CData::Serialize(ifstr);
         ifstr >> m_DPKijunTen.x >> m_DPKijunTen.y
