@@ -51,6 +51,3 @@ UI_DIR = ../intermediate/ui
 UI_HERADERS_DIR = ../intermediate/ui
 UI_SOURCES_DIR = ../intermediate/ui
 
-
-# Include any custom.pro files for personal/special builds
-exists( custom.pro ):include( custom.pro )

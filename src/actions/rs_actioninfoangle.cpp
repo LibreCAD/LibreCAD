@@ -32,9 +32,6 @@
 #include "rs_graphicview.h"
 #include "rs_information.h"
 
-#ifdef EMU_C99
-#include "emu_c99.h"
-#endif
 
 RS_ActionInfoAngle::RS_ActionInfoAngle(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)

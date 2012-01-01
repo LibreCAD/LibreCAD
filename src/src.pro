@@ -11,9 +11,9 @@ DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 #DEFINES += RS_VECTOR2D=1
 
 DEFINES += USE_DXFRW=1
-# set USEQTDIALOG=1 to use QFileDialog instead "native" FileDialog
+# uncomment USEQTDIALOG=1 to use QFileDialog instead "native" FileDialog
 # KDE returns the first filter that match the pattern "*.dxf" instead the selected
-DEFINES += USEQTDIALOG=0
+# DEFINES += USEQTDIALOG=1
 HAS_CPP11 =
 #HAS_CPP11 += 1
 count(HAS_CPP11, 1) {
@@ -80,7 +80,15 @@ win32 {
     RC_FILE = ..\\res\\main\\librecad.rc
     DESTDIR = ..\\windows
     QMAKE_POST_LINK = cd .. && scripts\\postprocess-win.bat
+    # Check for MSVC compilers - they need help on C99 features.
+
+    win32-msvc2003|win32-msvc2005|win32-msvc2008|win32-msvc2010 {
+       message( "Setting up C99 support for MSVC ..." )
+       DEFINES += EMU_C99=1
+    }
+
 }
+
 
 
 # Additional libraries to load
@@ -898,9 +906,9 @@ TRANSLATIONS = ../ts/librecad_cs.ts \
     ../ts/librecad_zh_cn.ts \
     ../ts/librecad_zh_tw.ts
 
-
-
-
-
 # Include any custom.pro files for personal/special builds
 exists( custom.pro ):include( custom.pro )
+
+
+
+

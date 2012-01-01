@@ -37,8 +37,6 @@ librecad2.pro.user*
 *.qhc
 plugins.pro.user*
 ttf2lff.pro.user*
-PWD
-scripts/PWD
 
 # Mac store files
 .DS_Store

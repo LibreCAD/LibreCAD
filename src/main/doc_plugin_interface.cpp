@@ -40,10 +40,6 @@
 #include "intern/qc_actiongetselect.h"
 #include "intern/qc_actiongetent.h"
 
-#if QT_VERSION < 0x040500
-#include "emu_qt45.h"
-#endif
-
 convLTW::convLTW(){
 //    QHash<int, QString> lType;
     lType.insert(RS2::LineByLayer, "BYLAYER");
@@ -790,12 +786,7 @@ bool Doc_plugin_interface::getInt(int *num, const QString& mesage, const QString
     else
         tit = title;
 
-#if QT_VERSION < 0x040500
-    int data = emu_qt45_QInputDialog_getInt(main, tit, msg, 0, -2147483647, 2147483647, 1, &ok);
-#else
     int data = QInputDialog::getInt(main, tit, msg, 0, -2147483647, 2147483647, 1, &ok);
-#endif
-
     if (ok)
         *num = data;
     return ok;

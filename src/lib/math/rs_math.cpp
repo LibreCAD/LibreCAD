@@ -33,9 +33,6 @@
 
 #include "rs_debug.h"
 
-#ifdef EMU_C99
-#include "emu_c99.h"
-#endif
 
 /**
  * Rounds the given double to the closest int.

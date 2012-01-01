@@ -100,10 +100,6 @@
 #include "qg_layerwidget.h"
 #include "qg_mainwindowinterface.h"
 
-#if QT_VERSION < 0x040400
-#include "emu_qt44.h"
-#endif
-
 //QG_DialogFactory* QG_DialogFactory::uniqueInstance = NULL;
 
 /**
@@ -589,18 +585,11 @@ QString QG_DialogFactory::requestImageOpenDialog() {
     //filters.append("Drawing Exchange (*.)");
     //filters.append("Font (*.cxf)");
 
-#if QT_VERSION < 0x040400
-    emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
-#else
     fileDlg.setNameFilters(filters);
-#endif
-
     fileDlg.setFileMode(QFileDialog::ExistingFile);
     fileDlg.setWindowTitle(QObject::tr("Open Image"));
     fileDlg.setDirectory(defDir);
-#if QT_VERSION >= 0x040400
     fileDlg.selectNameFilter(defFilter);
-#endif
 
     if (fileDlg.exec()==QDialog::Accepted) {
 //        fn = fileDlg.selectedFile();

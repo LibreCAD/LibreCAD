@@ -28,10 +28,10 @@ public:
     dxfRW(const char* name);
     ~dxfRW();
     //read: return 0 if all ok
-    bool read(DRW_Interface *interface_, bool ext);
+    bool read(DRW_Interface *interface, bool ext);
     void setBinary(bool b) {binary = b;}
 
-    bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+    bool write(DRW_Interface *interface, DRW::Version ver, bool bin);
     bool writeLineType(DRW_LType *ent);
     bool writeLayer(DRW_Layer *ent);
     bool writePoint(DRW_Point *ent);

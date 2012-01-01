@@ -32,9 +32,6 @@
 #include "rs_commands.h"
 #include "rs_commandevent.h"
 
-#ifdef EMU_C99
-#include "emu_c99.h"
-#endif
 
 RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)

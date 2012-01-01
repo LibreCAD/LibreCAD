@@ -29,10 +29,6 @@
 
 #include "rs_system.h"
 
-#if QT_VERSION < 0x040400
-#include "emu_qt44.h"
-#endif
-
 RS_PatternList* RS_PatternList::uniqueInstance = NULL;
 
 
@@ -91,12 +87,7 @@ void RS_PatternList::removePattern(RS_Pattern* pattern) {
     RS_DEBUG->print("RS_PatternList::removePattern()");
 
     // here the pattern is removed from the list but not deleted
-#if QT_VERSION < 0x040400
-    emu_qt44_removeOne(patterns, pattern);
-#else
     patterns.removeOne(pattern);
-#endif
-
 
     //for (uint i=0; i<patternListListeners.count(); ++i) {
     //    RS_PatternListListener* l = patternListListeners.at(i);

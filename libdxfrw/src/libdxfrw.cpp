@@ -50,7 +50,7 @@ dxfRW::~dxfRW(){
 
 }
 
-bool dxfRW::read(DRW_Interface *interface_, bool ext){
+bool dxfRW::read(DRW_Interface *interface, bool ext){
     bool isOk = false;
     applyExt = ext;
     ifstream filestr;
@@ -67,7 +67,7 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
     line2[21] = '\0';
     filestr.read (line, 22);
     filestr.close();
-    iface = interface_;
+    iface = interface;
     DBG("dxfRW::read 2\n");
     if (strcmp(line, line2) == 0) {
         filestr.open (fileName.c_str(), ios_base::in | ios::binary);
@@ -89,14 +89,14 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
     return isOk;
 }
 
-bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
+bool dxfRW::write(DRW_Interface *interface, DRW::Version ver, bool bin){
     bool isOk = false;
     ofstream filestr;
     version = ver;
 //TODO allow to write more versions than 2000
     version = DRW::AC1015;
     binary = bin;
-    iface = interface_;
+    iface = interface;
     if (binary) {
         filestr.open (fileName.c_str(), ios_base::out | ios::binary | ios::trunc);
         //write sentinel

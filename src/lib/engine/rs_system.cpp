@@ -35,10 +35,6 @@
 #include "rs_system.h"
 #include "rs.h"
 
-#if QT_VERSION < 0x040400
-#include "emu_qt44.h"
-#endif
-
 RS_System* RS_System::uniqueInstance = NULL;
 
 
@@ -481,18 +477,12 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 
     QString subDirectory=QDir::fromNativeSeparators(_subDirectory);
 
-#if QT_VERSION < 0x040400 && defined(_MSC_VER)
-        dirList.append(emu_qt44_storageLocationDocuments() + "/" + 
-                       appDirName + "/" + 
-                       subDirectory);
-#else
 #ifdef Q_OS_MAC
         dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif
 #ifdef Q_OS_WIN32
         dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif
-#endif // QT_VERSION < 0x040400 && defined(_MSC_VER)
 
         //local (application) directory has priority over other dirs:
         if (!appDir.isEmpty() && appDir!="/" && appDir!=getHomeDir()) {
