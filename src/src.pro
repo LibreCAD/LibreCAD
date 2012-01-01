@@ -80,7 +80,15 @@ win32 {
     RC_FILE = ..\\res\\main\\librecad.rc
     DESTDIR = ..\\windows
     QMAKE_POST_LINK = cd .. && scripts\\postprocess-win.bat
+    # Check for MSVC compilers - they need help on C99 features.
+
+    win32-msvc2003|win32-msvc2005|win32-msvc2008|win32-msvc2010 {
+       message( "Setting up C99 support for MSVC ..." )
+       DEFINES += EMU_C99=1
+    }
+
 }
+
 
 
 # Additional libraries to load
