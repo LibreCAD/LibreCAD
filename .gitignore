@@ -18,7 +18,9 @@ windows/
 *.exp
 *.ilk
 *.rc
-
+# Win/qmake generated project files
+*.vcproj
+*.sln
 
 #Doxygen
 html/
