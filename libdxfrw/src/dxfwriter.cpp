@@ -149,16 +149,15 @@ bool dxfWriterBinary::writeInt16(int code, int data) {
 }
 
 bool dxfWriterBinary::writeInt32(int code, int data) {
-    char bufcode[2];
-    bufcode[0] =code & 0xFF;
-    bufcode[1] =code  >> 8;
-    filestr->write(bufcode, 2);
-
     char buffer[4];
-    bufcode[0] =data & 0xFF;
-    bufcode[1] =data  >> 8;
-    bufcode[2] =data  >> 16;
-    bufcode[3] =data  >> 24;
+    buffer[0] =code & 0xFF;
+    buffer[1] =code  >> 8;
+    filestr->write(buffer, 2);
+
+    buffer[0] =data & 0xFF;
+    buffer[1] =data  >> 8;
+    buffer[2] =data  >> 16;
+    buffer[3] =data  >> 24;
 /*    for (int i=0; i<4; i++) {
         buffer[i] =0;
     }
