@@ -15,6 +15,9 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 DEFINES += VERSION="\"0.0.0.2\""
 
+# Use common project definitions.
+include(../common.pro)
+
 
 SOURCES += main.cpp
 

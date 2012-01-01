@@ -1,6 +1,7 @@
 # LibreCAD project file
 # (c) Ries van Twisk (librecad@rvt.dds.nl)
 TEMPLATE = app
+
 DEFINES += QC_APPKEY="\"/LibreCAD\""
 DEFINES += QC_APPNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYNAME="\"LibreCAD\""
@@ -26,7 +27,11 @@ count(HAS_CPP11, 1) {
 CONFIG += qt \
     warn_on \
     link_prl \
-    help
+    help verbose
+
+# Use common project definitions.
+include(../common.pro)
+
 QMAKE_CXXFLAGS_DEBUG +=
 QMAKE_CXXFLAGS +=
 
@@ -80,12 +85,6 @@ win32 {
     RC_FILE = ..\\res\\main\\librecad.rc
     DESTDIR = ..\\windows
     QMAKE_POST_LINK = cd .. && scripts\\postprocess-win.bat
-    # Check for MSVC compilers - they need help on C99 features.
-
-    win32-msvc2003|win32-msvc2005|win32-msvc2008|win32-msvc2010 {
-       message( "Setting up C99 support for MSVC ..." )
-       DEFINES += EMU_C99=1
-    }
 
 }
 
@@ -854,6 +853,37 @@ SOURCES += \
     plugins/intern/qc_actiongetent.cpp \
     main/main.cpp
 
+# If C99 emulation is needed, add the respective source files.
+contains(DEFINES, EMU_C99) {
+    verbose:message(Emulating C99 math features.)
+    SOURCES += main/emu_c99.cpp
+    HEADERS += main/emu_c99.h
+}
+
+# If Qt 4.3 or Qt 4.4 is used, add the respective workaround
+# source files.
+
+contains(QT_MINOR_VERSION, 0)|contains(QT_MINOR_VERSION, 1)|contains(QT_MINOR_VERSION, 3) {
+    error(Qt version $$[QT_VERSION] is too old.)
+}
+
+contains(QT_MINOR_VERSION, 3) {
+    verbose:message(Emulating Qt version 4.4 and 4.5.)
+    SOURCES += main/emu_qt44.cpp main/emu_qt45.cpp
+    HEADERS += main/emu_qt44.h   main/emu_qt45.h
+}
+
+contains(QT_MINOR_VERSION, 4) {
+    verbose:message(Emulating Qt version 4.5.)
+    SOURCES += main/emu_qt45.cpp
+    HEADERS += main/emu_qt45.h
+}
+
+contains(QT_MINOR_VERSION, 5)|contains(QT_MINOR_VERSION, 6)|contains(QT_MINOR_VERSION, 7) {
+    verbose:message(Using Qt version $$[QT_VERSION].)
+}
+
+
 RESOURCES += ../res/main/main.qrc
 
 # ################################################################################
@@ -906,9 +936,6 @@ TRANSLATIONS = ../ts/librecad_cs.ts \
     ../ts/librecad_zh_cn.ts \
     ../ts/librecad_zh_tw.ts
 
-
-
-
-
 # Include any custom.pro files for personal/special builds
 exists( custom.pro ):include( custom.pro )
+

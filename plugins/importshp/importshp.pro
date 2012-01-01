@@ -10,6 +10,9 @@ CONFIG += plugin
 VERSION = 1.0.0
 PLUGIN_NAME=importshp
 
+# Use common project definitions.
+include(../../common.pro)
+
 SOURCES += importshp.cpp \
            shapelib/shpopen.c \
            shapelib/safileio.c \
@@ -42,5 +45,3 @@ UI_DIR = ../intermediate/ui
 UI_HERADERS_DIR = ../intermediate/ui
 UI_SOURCES_DIR = ../intermediate/ui
 
-# Include any custom.pro files for personal/special builds
-exists( custom.pro ):include( custom.pro )

@@ -10,6 +10,9 @@ CONFIG += plugin
 VERSION = 1.0.0
 PLUGIN_NAME=asciifile
 
+# Use common project definitions.
+include(../../common.pro)
+
 SOURCES += asciifile.cpp
 HEADERS += asciifile.h
 
@@ -37,5 +40,3 @@ UI_DIR = ../intermediate/ui
 UI_HERADERS_DIR = ../intermediate/ui
 UI_SOURCES_DIR = ../intermediate/ui
 
-# Include any custom.pro files for personal/special builds
-exists( custom.pro ):include( custom.pro )

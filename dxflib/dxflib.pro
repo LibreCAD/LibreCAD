@@ -16,6 +16,9 @@ VERSION = 2.2.0.0
 DLL_NAME = dxflib
 TARGET = $$DLL_NAME
 
+# Use common project definitions.
+include(../common.pro)
+
 # DEFINES +=
 
 win32 {
@@ -52,6 +55,3 @@ UI_DIR = ../intermediate/ui
 UI_HERADERS_DIR = ../intermediate/ui
 UI_SOURCES_DIR = ../intermediate/ui
 
-
-# Include any custom.pro files for personal/special builds
-exists( custom.pro ):include( custom.pro )
