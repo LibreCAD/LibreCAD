@@ -31,6 +31,10 @@
 #include "rs_settings.h"
 #include "rs_system.h"
 
+#if QT_VERSION < 0x040400
+#include "emu_qt44.h"
+#endif
+
 //#define USEQTDIALOG 1
 
 void QG_FileDialog::getType(const QString filter) {
@@ -203,6 +207,7 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     return fn;
 }
 
+
 /**
  * Shows a dialog for choosing a file name. Saving the file is up to
  * the caller.
@@ -277,9 +282,11 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
                 } else if (fileDlg->selectedFilter()=="Drawing Exchange DXF R12 (*.dxf)") {
                     *type = RS2::FormatDXF12;
 #ifdef USE_DXFRW
+#if QT_VERSION >= 0x040400
                 } else if (fileDlg->selectedNameFilter()=="New Drawing Exchange DXF 2000 (*.DXF)") {
                     *type = RS2::FormatDXFRW;
-#endif
+#endif // QT_VERSION
+#endif // USE_DXFFRW
                 } else if (fileDlg->selectedFilter()=="JWW (*.jww)") {
                     *type = RS2::FormatJWW;
                 } else {
@@ -389,11 +396,17 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
     filters.append(fCxf);
     filters.append(fJww);
 
+#if QT_VERSION >= 0x040400
     fileDlg->setNameFilters(filters);
+#else
+    emu_qt44_QFileDialog_setNameFilters(*fileDlg, filters);
+#endif
     fileDlg->setFileMode(QFileDialog::ExistingFile);
     fileDlg->setWindowTitle(QObject::tr("Open Drawing"));
     fileDlg->setDirectory(defDir);
+#if QT_VERSION >= 0x040400
     fileDlg->selectNameFilter(defFilter);
+#endif
 
     /** preview RVT PORT preview is currently not supported by QT4
     RS_Graphic* gr = new RS_Graphic;
@@ -409,6 +422,7 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
         if (!fl.isEmpty())
             fn = fl[0];
         fn = QDir::convertSeparators( QFileInfo(fn).absoluteFilePath() );
+#if QT_VERSION >= 0x040400
         if (type!=NULL) {
             if (fileDlg->selectedNameFilter()==fDxf1) {
                 *type = RS2::FormatDXF1;
@@ -424,6 +438,7 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
                 *type = RS2::FormatJWW;
             }
         }
+#endif
         cancel = false;
     } else {
         cancel = true;

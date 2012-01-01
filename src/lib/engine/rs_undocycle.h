@@ -34,6 +34,10 @@
 #include "rs_entity.h"
 #include "rs_undoable.h"
 
+#if QT_VERSION < 0x040400
+#include "emu_qt44.h"
+#endif
+
 /**
  * An Undo Cycle represents an action that was triggered and can 
  * be undone. It stores all the pointers to the Undoables affected by 
@@ -68,7 +72,12 @@ public:
      * Removes an undoable from the list.
      */
     void removeUndoable(RS_Undoable* u) {
+#if QT_VERSION < 0x040400
+        emu_qt44_removeOne(undoables, u);
+#else
         undoables.removeOne(u);
+#endif
+
     }
 
     friend std::ostream& operator << (std::ostream& os,

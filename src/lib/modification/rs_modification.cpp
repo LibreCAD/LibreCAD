@@ -40,6 +40,9 @@
 
 #include "rs_dialogfactory.h"
 
+#ifdef EMU_C99
+#include "emu_c99.h"
+#endif
 
 /**
  * Default constructor.
@@ -2209,6 +2212,10 @@ bool RS_Modification::trimAmount(const RS_Vector& trimCoord,
 bool RS_Modification::cut(const RS_Vector& cutCoord,
                           RS_AtomicEntity* cutEntity) {
 
+#ifndef EMU_C99
+    using std::isnormal;
+#endif
+
     if (cutEntity==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::cut: Entity is NULL");
@@ -2258,8 +2265,8 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
                  static_cast<const RS_Ellipse*>(cutEntity) ->getAngle1(),
                  static_cast<const RS_Ellipse*>(cutEntity) ->getAngle2(),
                  RS_TOLERANCE_ANGLE)
-                 && ! std::isnormal(static_cast<const RS_Ellipse*>(cutEntity) ->getAngle1())
-                 && ! std::isnormal(static_cast<const RS_Ellipse*>(cutEntity) ->getAngle2())
+                 && ! /*std::*/isnormal(static_cast<const RS_Ellipse*>(cutEntity) ->getAngle1())
+                 && ! /*std::*/isnormal(static_cast<const RS_Ellipse*>(cutEntity) ->getAngle2())
                  ) {
         // whole ellipse, convert to a whole range elliptic arc
         a=static_cast<const RS_Ellipse*>(cutEntity) ->getEllipseAngle(cutCoord);
