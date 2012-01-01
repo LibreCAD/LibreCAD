@@ -59,12 +59,14 @@ void QG_FileDialog::getType(const QString filter) {
 
 QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f)
                             :QFileDialog(parent, f) {
+#if QT_VERSION >= 0x040500
 #ifdef USEQTDIALOG
     setOption ( QFileDialog::DontUseNativeDialog, true );
 #else
     setOption ( QFileDialog::DontUseNativeDialog, false );
 #endif
     setOption ( QFileDialog::HideNameFilterDetails, false );
+#endif // QT_VERSION
     ftype= RS2::FormatDXF;
     fDxf2000 = tr("Drawing Exchange DXF 2000 %1").arg("(*.dxf)");
 #ifdef USE_DXFRW
@@ -115,10 +117,14 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
 #endif
 
     setWindowTitle(tr("Open Drawing"));
+#if QT_VERSION >= 0x040400
     setNameFilters(filters);
+#endif
     setDirectory(defDir);
     setFileMode(QFileDialog::ExistingFile);
+#if QT_VERSION >= 0x040400
     selectNameFilter(fDxfrw);
+#endif
     ftype= RS2::FormatDXFRW;
     RS_DEBUG->print("defFilter: %s", fDxfrw.toLatin1().data());
 
@@ -180,7 +186,9 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     setFileMode(QFileDialog::AnyFile);
     setDirectory(defDir);
     setFilters(filters);
+#if QT_VERSION >= 0x040400
     selectNameFilter(fDxf2000);
+#endif
     ftype= RS2::FormatDXF;
     RS_DEBUG->print("defFilter: %s", fDxf2000.toLatin1().data());
 

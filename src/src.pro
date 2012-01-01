@@ -855,32 +855,35 @@ SOURCES += \
 
 # If C99 emulation is needed, add the respective source files.
 contains(DEFINES, EMU_C99) {
-    verbose:message(Emulating C99 math features.)
+    !build_pass:verbose:message(Emulating C99 math features.)
     SOURCES += main/emu_c99.cpp
     HEADERS += main/emu_c99.h
 }
 
 # If Qt 4.3 or Qt 4.4 is used, add the respective workaround
-# source files.
+# source files and defines.
 
-contains(QT_MINOR_VERSION, 0)|contains(QT_MINOR_VERSION, 1)|contains(QT_MINOR_VERSION, 3) {
-    error(Qt version $$[QT_VERSION] is too old.)
+contains(QT_MINOR_VERSION, 0)|contains(QT_MINOR_VERSION, 1)|contains(QT_MINOR_VERSION, 2) {
+    error(Qt version $$[QT_VERSION] is too old, should be version 4.3 or newer.)
 }
 
 contains(QT_MINOR_VERSION, 3) {
-    verbose:message(Emulating Qt version 4.4 and 4.5.)
+    !build_pass:verbose:message(Emulating Qt version 4.4 and 4.5.)
     SOURCES += main/emu_qt44.cpp main/emu_qt45.cpp
     HEADERS += main/emu_qt44.h   main/emu_qt45.h
+
+    !build_pass:verbose:message(Using QAssistantClient.)
+    CONFIG += assistant
 }
 
 contains(QT_MINOR_VERSION, 4) {
-    verbose:message(Emulating Qt version 4.5.)
+    !build_pass:verbose:message(Emulating Qt version 4.5.)
     SOURCES += main/emu_qt45.cpp
     HEADERS += main/emu_qt45.h
 }
 
 contains(QT_MINOR_VERSION, 5)|contains(QT_MINOR_VERSION, 6)|contains(QT_MINOR_VERSION, 7) {
-    verbose:message(Using Qt version $$[QT_VERSION].)
+    !build_pass:verbose:message(Using Qt version $$[QT_VERSION].)
 }
 
 

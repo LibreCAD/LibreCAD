@@ -6,8 +6,8 @@
 # features and a hint to povide M_PI et al.
 
 win32 {
-    win32-msvc2003|win32-msvc2005|win32-msvc2008|win32-msvc2010 {
-       verbose:message(Setting up support for MSVC.)
+    win32-msvc.net|win32-msvc2003|win32-msvc2005|win32-msvc2008|win32-msvc2010 {
+       !build_pass:verbose:message(Setting up support for MSVC.)
        DEFINES += EMU_C99 _USE_MATH_DEFINES
     }
 }
