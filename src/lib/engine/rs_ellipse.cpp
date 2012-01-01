@@ -1284,7 +1284,7 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
  */
 bool RS_Ellipse::isArc() const{
 #ifndef EMU_C99
-    using std::isnormal
+    using std::isnormal;
 #endif
     return /*std::*/isnormal(getAngle1()) || /*std::*/isnormal(getAngle2());
 }
