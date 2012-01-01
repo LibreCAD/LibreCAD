@@ -13,6 +13,9 @@ CONFIG += static \
 
 VERSION = 4.3
 
+# Use common project definitions.
+include(../common.pro)
+
 DLL_NAME = fparser
 TARGET = $$DLL_NAME
 

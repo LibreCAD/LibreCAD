@@ -7,9 +7,7 @@ Info.plist
 unix/
 
 # Win/MSVC generated files and binaries
-# (qmake generates plugins.sln, don't know why and what for.)
 windows/
-plugins/plugins.sln
 *.ncb
 *.suo
 *.idb
@@ -21,7 +19,9 @@ plugins/plugins.sln
 *.ilk
 *.rc
 *.bak
-
+# Win/qmake generated project files
+*.vcproj
+*.sln
 
 #Doxygen
 html/
@@ -37,6 +37,8 @@ librecad2.pro.user*
 *.qhc
 plugins.pro.user*
 ttf2lff.pro.user*
+PWD
+scripts/PWD
 
 # Mac store files
 .DS_Store

@@ -10,6 +10,9 @@ CONFIG += plugin
 VERSION = 1.0.0
 PLUGIN_NAME=asciifile
 
+# Use common project definitions.
+include(../../common.pro)
+
 SOURCES += asciifile.cpp
 HEADERS += asciifile.h
 

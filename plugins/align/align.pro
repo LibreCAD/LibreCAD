@@ -10,6 +10,9 @@ CONFIG += plugin
 VERSION = 1.0.1
 PLUGIN_NAME=align
 
+# Use common project definitions.
+include(../../common.pro)
+
 SOURCES += align.cpp
 
 HEADERS += align.h
