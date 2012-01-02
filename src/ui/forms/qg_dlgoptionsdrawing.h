@@ -29,6 +29,7 @@
 #include "ui_qg_dlgoptionsdrawing.h"
 
 class RS_Graphic;
+class RS_Vector;
 
 class QG_DlgOptionsDrawing : public QDialog, public Ui::QG_DlgOptionsDrawing
 {
@@ -66,6 +67,7 @@ private slots:
 private:
     QStringList listPrec1;
     RS_Graphic* graphic;
+    RS_Vector spacing;
 
     void init();
 

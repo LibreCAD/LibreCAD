@@ -64,6 +64,10 @@ QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing()
         chType=RS2::RightCrosshair;
     }
     RS_SETTINGS->writeEntry("/CrosshairType", QString::number(static_cast<int>(chType)));
+    if(spacing.valid){
+        RS_SETTINGS->writeEntry("/GridSpacingX", spacing.x);
+        RS_SETTINGS->writeEntry("/GridSpacingY", spacing.y);
+    }
     RS_SETTINGS->endGroup();
 }
 
@@ -171,6 +175,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     graphic = g;
 
     if (graphic==NULL) {
+        std::cout<<" QG_DlgOptionsDrawing::setGraphic(NULL)\n";
         return;
     }
 
@@ -248,7 +253,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
         rbCrosshairRight->setDisabled(false);
     }
 
-    RS_Vector spacing = graphic->getVariableVector("$GRIDUNIT",
+    spacing = graphic->getVariableVector("$GRIDUNIT",
                                                    RS_Vector(0.0,0.0));
     cbXSpacing->setEditText( QString("%1").arg(spacing.x));
     cbYSpacing->setEditText( QString("%1").arg(spacing.y));
@@ -363,9 +368,9 @@ void QG_DlgOptionsDrawing::validate() {
         //graphic->addVariable("$GRIDMODE", (int)cbGridOn->isChecked() , 70);
         graphic->setGridOn(cbGridOn->isChecked());
 #ifdef  RS_VECTOR2D
-        RS_Vector spacing(0.0,0.0);
+        spacing=RS_Vector(0.0,0.0);
 #else
-        RS_Vector spacing(0.0,0.0,0.0);
+        spacing=RS_Vector(0.0,0.0,0.0);
 #endif
         if (cbXSpacing->currentText()==tr("auto")) {
             spacing.x = 0.0;

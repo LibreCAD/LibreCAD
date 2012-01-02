@@ -94,14 +94,6 @@ void RS_Grid::updatePointArray() {
         // auto scale grid?
         RS_SETTINGS->beginGroup("/Appearance");
         bool scaleGrid = (bool)RS_SETTINGS->readNumEntry("/ScaleGrid", 1);
-        if(graphic==NULL){
-            isometric = (bool)RS_SETTINGS->readNumEntry("/IsometricGrid", 0);
-            crosshairType=static_cast<RS2::CrosshairType>(RS_SETTINGS->readNumEntry("/CrosshairType",0));
-
-        }
-        int minGridSpacing = RS_SETTINGS->readNumEntry("/MinGridSpacing", 10);
-        RS_SETTINGS->endGroup();
-
         // get grid setting
         RS_Vector userGrid;
         if (graphic!=NULL) {
@@ -109,8 +101,17 @@ void RS_Grid::updatePointArray() {
             crosshairType=graphic->getCrosshairType();
             userGrid = graphic->getVariableVector("$GRIDUNIT",
                                                   RS_Vector(-1.0, -1.0));
+        }else {
+            isometric = (bool)RS_SETTINGS->readNumEntry("/IsometricGrid", 0);
+            crosshairType=static_cast<RS2::CrosshairType>(RS_SETTINGS->readNumEntry("/CrosshairType",0));
+            userGrid.x = RS_SETTINGS->readEntry("/GridSpacingX",QString("-1")).toDouble();
+            userGrid.y = RS_SETTINGS->readEntry("/GridSpacingY",QString("-1")).toDouble();
         }
-        //std::cout<<"Grid userGrid="<<userGrid<<std::endl;
+        int minGridSpacing = RS_SETTINGS->readNumEntry("/MinGridSpacing", 10);
+        RS_SETTINGS->endGroup();
+
+
+        std::cout<<"Grid userGrid="<<userGrid<<std::endl;
 
         // delete old grid:
         if (pt!=NULL) {
@@ -153,20 +154,21 @@ void RS_Grid::updatePointArray() {
                 gridWidth.x = userGrid.x;
             }
             else {
-                gridWidth.x = 0.000001;
+                gridWidth.x = 1e-6;
             }
 
             if (userGrid.y>0.0) {
                 gridWidth.y = userGrid.y;
             }
             else {
-                gridWidth.y = 0.000001;
+                gridWidth.y = 1e-6;
             }
 
             //                RS_DEBUG->print("RS_Grid::update: 003");
 
             // auto scale grid
             //scale grid by drawing setting as well, bug#3416862
+            std::cout<<"RS_Grid::updatePointArray(): userGrid="<<userGrid<<std::endl;
             if (scaleGrid|| userGrid.x<=1e-6 || userGrid.y<=1e-6) {
                 if(scaleGrid || userGrid.x<=1e-6) {
                     while (graphicView->toGuiDX(gridWidth.x)<minGridSpacing) {
@@ -179,6 +181,7 @@ void RS_Grid::updatePointArray() {
                     }
                 }
             }
+            std::cout<<"RS_Grid::updatePointArray(): gridWidth="<<gridWidth<<std::endl;
             metaGridWidth.x = gridWidth.x*10;
             metaGridWidth.y = gridWidth.y*10;
 
