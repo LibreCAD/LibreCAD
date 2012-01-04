@@ -20,6 +20,7 @@
 #include "drw_base.h"
 
 class dxfReader;
+class dxfWriter;
 
 using std::string;
 
@@ -162,6 +163,12 @@ public:
     }
 
     void parseCode(int code, dxfReader *reader);
+    void write(dxfWriter *writer, DRW::Version ver);
+private:
+    bool getDouble(string key, double *varDouble);
+    bool getInt(string key, int *varInt);
+    bool getStr(string key, string *varStr);
+    bool getCoord(string key, DRW_Coord *varStr);
 
 public:
     std::map<string,DRW_Variant*> vars;

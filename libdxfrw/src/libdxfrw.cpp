@@ -109,36 +109,11 @@ bool dxfRW::write(DRW_Interface *interface, DRW::Version ver, bool bin){
         std::string comm = std::string("dxfrw ") + std::string(DRW_VERSION);
         writer->writeString(999, comm);
     }
-    iface->writeHeader();
+    DRW_Header header;
+    iface->writeHeader(header);
     writer->writeString(0, "SECTION");
-    writer->writeString(2, "HEADER");
-    writer->writeString(9, "$ACADVER");
-    switch (version) {
-    case DRW::AC1009:
-        writer->writeString(1, "AC1009");
-        break;
-    case DRW::AC1012:
-        writer->writeString(1, "AC1012");
-        break;
-    case DRW::AC1014:
-        writer->writeString(1, "AC1014");
-        break;
-//    case DRW::AC1015:
-//acad2000 default version
-    default:
-        writer->writeString(1, "AC1015");
-        break;
-    }
-
-    if (version> DRW::AC1014) {
-        writer->writeString(9, "$HANDSEED");
-//RLZ        dxfHex(5, 0xFFFF);
-        writer->writeString(5, "20000");
-    }
-
     entCount =FIRSTHANDLE;
-    writer->writeString(9, "$DWGCODEPAGE");
-    writer->writeString(3, "ANSI_1252");
+    header.write(writer, version);
     writer->writeString(0, "ENDSEC");
     writer->writeString(0, "SECTION");
     writer->writeString(2, "CLASSES");

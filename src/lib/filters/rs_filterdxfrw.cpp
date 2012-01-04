@@ -1446,7 +1446,44 @@ void RS_FilterDXFRW::writeBlock(DL_WriterA& /*dw*/, RS_Block* /*blk*/) {
 }
 
 
-void RS_FilterDXFRW::writeHeader(){
+void RS_FilterDXFRW::writeHeader(DRW_Header& data){
+    DRW_Variant *curr;
+/*TODO $ISOMETRICGRID and "GRID on/off" not handled because is part of
+ active vport to save is required read/write VPORT table */
+    QHash<QString, RS_Variable>vars = graphic->getVariableDict();
+    QHash<QString, RS_Variable>::iterator it = vars.begin();
+    while (it != vars.end()) {
+        curr = new DRW_Variant();
+
+            switch (it.value().getType()) {
+            case RS2::VariableInt:
+                curr->addInt(it.value().getInt());
+                curr->code = it.value().getCode();
+                break;
+            case RS2::VariableDouble:
+                curr->addDouble(it.value().getDouble());
+                curr->code = it.value().getCode();
+                break;
+            case RS2::VariableString:
+                curr->addString(it.value().getString().toStdString());
+                curr->code = it.value().getCode();
+                break;
+            case RS2::VariableVector:
+                curr->addCoord(new DRW_Coord());
+                curr->setCoordX(it.value().getVector().x);
+                curr->setCoordY(it.value().getVector().y);
+                curr->setCoordZ(it.value().getVector().z);
+                curr->code = it.value().getCode();
+#ifndef  RS_VECTOR2D
+                curr->setCoordZ(it.value().getVector().z);
+#endif
+                break;
+            default:
+                break;
+            }
+            data.vars[it.key().toStdString()] =curr;
+            ++it;
+    }
 }
 
 void RS_FilterDXFRW::writeLTypes(){

@@ -170,7 +170,7 @@ public:
 //        return extrusion;
 //    }
 
-    virtual void writeHeader() = 0;
+    virtual void writeHeader(DRW_Header& data) = 0;
     virtual void writeEntities() = 0;
     virtual void writeLTypes() = 0;
     virtual void writeLayers() = 0;
