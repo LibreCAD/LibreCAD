@@ -10,9 +10,11 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.    **
 ******************************************************************************/
 
+#include <iostream>
 #include <math.h>
 #include "drw_objects.h"
 #include "dxfreader.h"
+#include "dxfwriter.h"
 
 //! Base class for tables entries
 /*!
@@ -230,3 +232,181 @@ void DRW_Header::parseCode(int code, dxfReader *reader){
     }
 }
 
+void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
+/*TODO complete all vars to AC1024*/
+    double varDouble;
+    int varInt;
+    std::string varStr;
+    DRW_Coord varCoord;
+    writer->writeString(2, "HEADER");
+    writer->writeString(9, "$ACADVER");
+    switch (ver) {
+    case DRW::AC1009: //unsupported version
+    case DRW::AC1012:
+        writer->writeString(1, "AC1012");
+        break;
+    case DRW::AC1014:
+        writer->writeString(1, "AC1014");
+        break;
+    case DRW::AC1018:
+        writer->writeString(1, "AC1018");
+        break;
+    case DRW::AC1021:
+        writer->writeString(1, "AC1018");
+        break;
+    case DRW::AC1024:
+        writer->writeString(1, "AC1018");
+        break;
+//    case DRW::AC1015:
+//acad2000 default version
+    default:
+        writer->writeString(1, "AC1015");
+        break;
+    }
+
+    if (ver > DRW::AC1014) {
+        writer->writeString(9, "$HANDSEED");
+//RLZ        dxfHex(5, 0xFFFF);
+        writer->writeString(5, "20000");
+    }
+
+    if (getDouble("$DIMASZ", &varDouble)) {
+        writer->writeString(9, "$DIMASZ");
+        writer->writeDouble(40, varDouble);
+    }
+    if (getDouble("$DIMEXE", &varDouble)) {
+        writer->writeString(9, "$DIMEXE");
+        writer->writeDouble(40, varDouble);
+    }
+    if (getDouble("$DIMEXO", &varDouble)) {
+        writer->writeString(9, "$DIMEXO");
+        writer->writeDouble(40, varDouble);
+    }
+    if (getDouble("$DIMGAP", &varDouble)) {
+        writer->writeString(9, "$DIMGAP");
+        writer->writeDouble(40, varDouble);
+    }
+    if (getDouble("$DIMTXT", &varDouble)) {
+        writer->writeString(9, "$DIMTXT");
+        writer->writeDouble(40, varDouble);
+    }
+    if (getCoord("$INSBASE", &varCoord)) {
+        writer->writeString(9, "$INSBASE");
+        writer->writeDouble(10, varCoord.x);
+        writer->writeDouble(20, varCoord.y);
+        writer->writeDouble(30, varCoord.z);
+    }
+    if (getCoord("$EXTMIN", &varCoord)) {
+        writer->writeString(9, "$EXTMIN");
+        writer->writeDouble(10, varCoord.x);
+        writer->writeDouble(20, varCoord.y);
+        writer->writeDouble(30, varCoord.z);
+    }
+    if (getCoord("$EXTMAX", &varCoord)) {
+        writer->writeString(9, "$EXTMAX");
+        writer->writeDouble(10, varCoord.x);
+        writer->writeDouble(20, varCoord.y);
+        writer->writeDouble(30, varCoord.z);
+    }
+    if (getCoord("$LIMMIN", &varCoord)) {
+        writer->writeString(9, "$LIMMIN");
+        writer->writeDouble(10, varCoord.x);
+        writer->writeDouble(20, varCoord.y);
+    }
+    if (getCoord("$LIMMAX", &varCoord)) {
+        writer->writeString(9, "$LIMMAX");
+        writer->writeDouble(10, varCoord.x);
+        writer->writeDouble(20, varCoord.y);
+    }
+    if (getInt("$ORTHOMODE", &varInt)) {
+        writer->writeString(9, "$ORTHOMODE");
+        writer->writeInt16(70, varInt);
+    }
+    if (getStr("$DWGCODEPAGE", &varStr)) {
+        writer->writeString(9, "$DWGCODEPAGE");
+        writer->writeString(3, varStr);
+    }
+    if (getCoord("$PLIMMIN", &varCoord)) {
+        writer->writeString(9, "$PLIMMIN");
+        writer->writeDouble(10, varCoord.x);
+        writer->writeDouble(20, varCoord.y);
+    }
+    if (getCoord("$PLIMMAX", &varCoord)) {
+        writer->writeString(9, "$PLIMMAX");
+        writer->writeDouble(10, varCoord.x);
+        writer->writeDouble(20, varCoord.y);
+    }
+    if (ver > DRW::AC1014) {
+        if (getInt("$INSUNITS", &varInt)) {
+            writer->writeString(9, "$INSUNITS");
+            writer->writeInt16(70, varInt);
+        }
+    }
+
+    std::map<std::string,DRW_Variant *>::const_iterator it;
+    for ( it=vars.begin() ; it != vars.end(); it++ ){
+//        QString key = QString::fromStdString((*it).first);
+        std::cerr << (*it).first << std::endl;
+    }
+
+}
+
+bool DRW_Header::getDouble(string key, double *varDouble){
+    bool result = false;
+    std::map<std::string,DRW_Variant *>::iterator it;
+    it=vars.find( key);
+    if (it != vars.end()) {
+        DRW_Variant *var = (*it).second;
+        if (var->type == DRW_Variant::DOUBLE) {
+            *varDouble = var->content.d;
+            result = true;
+        }
+        vars.erase (it);
+    }
+    return result;
+}
+
+bool DRW_Header::getInt(string key, int *varInt){
+    bool result = false;
+    std::map<std::string,DRW_Variant *>::iterator it;
+    it=vars.find( key);
+    if (it != vars.end()) {
+        DRW_Variant *var = (*it).second;
+        if (var->type == DRW_Variant::INTEGER) {
+            *varInt = var->content.i;
+            result = true;
+        }
+        vars.erase (it);
+    }
+    return result;
+}
+
+bool DRW_Header::getStr(string key, std::string *varStr){
+    bool result = false;
+    std::map<std::string,DRW_Variant *>::iterator it;
+    it=vars.find( key);
+    if (it != vars.end()) {
+        DRW_Variant *var = (*it).second;
+        if (var->type == DRW_Variant::STRING) {
+            *varStr = *var->content.s;
+            result = true;
+        }
+        vars.erase (it);
+    }
+    return result;
+}
+
+bool DRW_Header::getCoord(string key, DRW_Coord *varCoord){
+    bool result = false;
+    std::map<std::string,DRW_Variant *>::iterator it;
+    it=vars.find( key);
+    if (it != vars.end()) {
+        DRW_Variant *var = (*it).second;
+        if (var->type == DRW_Variant::COORD) {
+            *varCoord = *var->content.v;
+            result = true;
+        }
+        vars.erase (it);
+    }
+    return result;
+}

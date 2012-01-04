@@ -115,7 +115,7 @@ public:
     // Export:
     virtual bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type);
 
-    virtual void writeHeader();
+    virtual void writeHeader(DRW_Header& data);
     virtual void writeEntities();
     virtual void writeLTypes();
     virtual void writeLayers();
