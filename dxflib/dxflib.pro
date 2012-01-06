@@ -16,6 +16,9 @@ VERSION = 2.2.0.0
 DLL_NAME = dxflib
 TARGET = $$DLL_NAME
 
+# Use common project definitions.
+include(../common.pro)
+
 # DEFINES +=
 
 win32 {

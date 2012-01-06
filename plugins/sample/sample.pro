@@ -10,6 +10,9 @@ CONFIG += plugin
 VERSION = 1.0.1
 PLUGIN_NAME=sample
 
+# Use common project definitions.
+include(../../common.pro)
+
 SOURCES += sample.cpp
 
 HEADERS += sample.h

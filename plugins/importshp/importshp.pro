@@ -10,6 +10,9 @@ CONFIG += plugin
 VERSION = 1.0.0
 PLUGIN_NAME=importshp
 
+# Use common project definitions.
+include(../../common.pro)
+
 SOURCES += importshp.cpp \
            shapelib/shpopen.c \
            shapelib/safileio.c \

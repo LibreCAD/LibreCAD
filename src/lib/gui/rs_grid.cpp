@@ -31,6 +31,10 @@
 #include "rs_graphic.h"
 #include "rs_settings.h"
 
+#ifdef EMU_C99
+#include "emu_c99.h"
+#endif
+
 /**
  * Constructor.
  */

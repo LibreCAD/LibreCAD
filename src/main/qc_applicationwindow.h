@@ -36,6 +36,10 @@
 #include <qsproject.h>
 #endif
 
+#if QT_VERSION < 0x040400
+class QAssistantClient;
+#endif
+
 class QMdiArea;
 class QC_MDIWindow;
 class QG_LibraryWidget;
@@ -390,8 +394,12 @@ private:
     // Toolbar for CAD tools
     QG_CadToolBar* cadToolBar;
 
+#if QT_VERSION < 0x040400
+    QAssistantClient *assistant;
+#else
     QHelpEngine* helpEngine;
     QDockWidget *helpWindow;
+#endif // QT_VERSION 0x040400
 
     QAction* scriptOpenIDE;
     QAction* scriptRun;
