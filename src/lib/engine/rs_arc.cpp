@@ -353,7 +353,7 @@ RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
                                    int middlePoints
                                    )const {
 #ifndef EMU_C99
-    using std::isnormal
+    using std::isnormal;
 #endif
 
     RS_DEBUG->print("RS_Arc::getNearestMiddle(): begin\n");
