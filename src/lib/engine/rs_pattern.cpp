@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -42,8 +42,8 @@ RS_Pattern::RS_Pattern(const QString& fileName)
 
     RS_DEBUG->print("RS_Pattern::RS_Pattern() ");
 
-	this->fileName = fileName;
-	loaded = false;
+    this->fileName = fileName;
+    loaded = false;
 }
 
 
@@ -51,16 +51,16 @@ RS_Pattern::RS_Pattern(const QString& fileName)
 /**
  * Constructor.
  *
- * @param fileName File name of a PAT file which defines this 
+ * @param fileName File name of a PAT file which defines this
  *         pattern among others.
  * @param name Pattern name.
  *
  */
 /*RS_Pattern::RS_Pattern(const QString& fileName, const QString& name)
         : RS_EntityContainer(NULL) {
-	this->fileName = fileName;
-	this->name = name;
-	loaded = false;
+    this->fileName = fileName;
+    this->name = name;
+    loaded = false;
 }*/
 
 
@@ -72,7 +72,7 @@ RS_Pattern::~RS_Pattern() {}
  * Loads the given pattern file into this pattern.
  * Entities other than lines are ignored.
  *
- * @param filename File name of the pattern file (without path and 
+ * @param filename File name of the pattern file (without path and
  * extension or full path.
  */
 bool RS_Pattern::loadPattern() {
@@ -80,7 +80,7 @@ bool RS_Pattern::loadPattern() {
         return true;
     }
 
-	RS_DEBUG->print("RS_Pattern::loadPattern");
+    RS_DEBUG->print("RS_Pattern::loadPattern");
 
     QString path;
 
@@ -111,27 +111,29 @@ bool RS_Pattern::loadPattern() {
         return false;
     }
 
-	RS_Graphic* gr = new RS_Graphic();
+    RS_Graphic* gr = new RS_Graphic();
 
-	// TODO: Find out why the new dxf filter doesn't work for patterns:
-	RS_FILEIO->fileImport(*gr, path, RS2::FormatDXF1);
+    // allow import patterns from all supported formats
+    // do not limit it to format dxf1
+//	RS_FILEIO->fileImport(*gr, path, RS2::FormatDXF1);
+    RS_FILEIO->fileImport(*gr, path);
 
-	for (RS_Entity* e=gr->firstEntity(); e!=NULL; e=gr->nextEntity()) {
-		if (e->rtti()==RS2::EntityLine || e->rtti()==RS2::EntityArc) {
-			RS_Layer* l = e->getLayer();
-			RS_Entity* cl = e->clone();
-			cl->reparent(this);
-			if (l!=NULL) {
-				cl->setLayer(l->getName());
-			}
-			addEntity(cl);
-		}
-	}
-	delete gr;
+    for (RS_Entity* e=gr->firstEntity(); e!=NULL; e=gr->nextEntity()) {
+        if (e->rtti()==RS2::EntityLine || e->rtti()==RS2::EntityArc) {
+            RS_Layer* l = e->getLayer();
+            RS_Entity* cl = e->clone();
+            cl->reparent(this);
+            if (l!=NULL) {
+                cl->setLayer(l->getName());
+            }
+            addEntity(cl);
+        }
+    }
+    delete gr;
 
     loaded = true;
-	RS_DEBUG->print("RS_Pattern::loadPattern: OK");
+    RS_DEBUG->print("RS_Pattern::loadPattern: OK");
 
-	return true;
+    return true;
 }
 
