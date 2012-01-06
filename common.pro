@@ -34,6 +34,8 @@ win32 {
         DEFINES += HAS_BOOST
         INCLUDEPATH += $${BOOST_DIR}
         LIBS += -L$${BOOST_DIR}/lib $${BOOST_LIBS}
+
+        !build_pass:verbose:message(Using boost libraries in $${BOOST_DIR}.)
     }
 
     # On windows, check for MSVC compilers - they need help on C99 
