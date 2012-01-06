@@ -29,6 +29,11 @@ CONFIG += qt \
     link_prl \
     help verbose
 
+# tin-pot 2012-01-06: Make using boost the default on win32-msvc2003.
+win32-msvc2003 {
+    CONFIG += boost
+}
+
 # Use common project definitions.
 include(../common.pro)
 
@@ -69,6 +74,7 @@ unix {
         DESTDIR = ../unix
 
 #fixme , boost, how to handle boost properly for win32 and unix
+# tin-pot 2012-01-06: See the boost stuff below and in `../common.pro` :-)
 #    CONFIG += link_pkgconfig
 #    PKGCONFIG += boost
 #
@@ -76,6 +82,7 @@ unix {
     }
 }
 win32 {
+    # TODO tin-pot 2012-01-06: I think this should be `QMAKE_CXXFLAGS_THREAD`?
     QMAKE_CFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
     TARGET = LibreCAD
@@ -85,7 +92,6 @@ win32 {
     RC_FILE = ..\\res\\main\\librecad.rc
     DESTDIR = ..\\windows
     QMAKE_POST_LINK = cd .. && scripts\\postprocess-win.bat
-
 }
 
 
@@ -97,6 +103,7 @@ win32 {
 #LIBS += -lboost
 LIBS += \
  -L../intermediate -ldxfrw -ldxflib -ljwwlib -lfparser
+
 
 OBJECTS_DIR = ../intermediate/obj
 MOC_DIR = ../intermediate/moc
