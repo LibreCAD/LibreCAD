@@ -27,9 +27,9 @@
 #define QG_DLGOPTIONSDRAWING_H
 
 #include "ui_qg_dlgoptionsdrawing.h"
+#include "rs_vector.h"
 
 class RS_Graphic;
-class RS_Vector;
 
 class QG_DlgOptionsDrawing : public QDialog, public Ui::QG_DlgOptionsDrawing
 {
