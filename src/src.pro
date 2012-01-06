@@ -79,7 +79,7 @@ win32 {
 
     RC_FILE = ..\\res\\main\\librecad.rc
     DESTDIR = ..\\windows
-    QMAKE_POST_LINK = cd .. && scripts\\postprocess-win.bat
+    QMAKE_POST_LINK = ..\\scripts\\postprocess-win.bat
 }
 
 
