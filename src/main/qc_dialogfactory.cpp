@@ -24,9 +24,10 @@
 **
 **********************************************************************/
 
-#include "qc_dialogfactory.h"
 #include <QMdiArea>
 #include <QMdiSubWindow>
+#include "rs_grid.h"
+#include "qc_dialogfactory.h"
 #include "qc_applicationwindow.h"
 #include "rs_blocklist.h"
 
@@ -36,6 +37,7 @@
  */
 void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
     RS_DEBUG->print("QC_DialogFactory::requestEditBlockWindow()");
+    RS_DEBUG->print(RS_Debug::D_WARNING, "QC_DialogFactory::requestEditBlockWindow()");
 
     QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
     QC_MDIWindow* parent = appWindow->getMDIWindow();
@@ -43,12 +45,15 @@ void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
         //RS_BlockList* blist = blockWidget->getBlockList();
         if (blockList!=NULL) {
             RS_Block* blk = blockList->getActive();
+            std::cout<<"QC_DialogFactory::requestEditBlockWindow(): blk==NULL: "<<(blk==NULL)<<std::endl;
             if (blk!=NULL) {
                 QC_MDIWindow* w = appWindow->slotFileNew(blk);
                 // the parent needs a pointer to the block window and
                 //   vice versa
                 parent->addChildWindow(w);
                 w->getGraphicView()->zoomAuto(false);
+                //update grid settings, bug#3443293
+                w->getGraphicView()->getGrid()->updatePointArray();
             }
         }
     }

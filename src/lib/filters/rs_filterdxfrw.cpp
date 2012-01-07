@@ -1472,11 +1472,10 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
                 curr->addCoord(new DRW_Coord());
                 curr->setCoordX(it.value().getVector().x);
                 curr->setCoordY(it.value().getVector().y);
-                curr->setCoordZ(it.value().getVector().z);
-                curr->code = it.value().getCode();
 #ifndef  RS_VECTOR2D
                 curr->setCoordZ(it.value().getVector().z);
 #endif
+                curr->code = it.value().getCode();
                 break;
             default:
                 break;

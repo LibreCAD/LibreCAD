@@ -81,7 +81,12 @@ int main(int argc, char** argv) {
         RS_DEBUG->print("param 0: %s", argv[0]);
 
         QCoreApplication::setApplicationName(XSTR(QC_APPNAME));
+#if QT_VERSION < 0x040400
+        /* No such property in Qt 4.3 */
+#else
         QCoreApplication::setApplicationVersion(XSTR(QC_VERSION));
+#endif
+
 
     QApplication app(argc, argv);
 

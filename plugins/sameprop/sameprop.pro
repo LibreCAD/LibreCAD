@@ -10,6 +10,9 @@ CONFIG += plugin
 VERSION = 1.0.1
 PLUGIN_NAME=sameprop
 
+# Use common project definitions.
+include(../../common.pro)
+
 SOURCES += sameprop.cpp
 
 HEADERS += sameprop.h

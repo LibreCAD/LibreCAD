@@ -10,6 +10,9 @@ CONFIG += plugin
 VERSION = 1.0.1
 PLUGIN_NAME=list
 
+# Use common project definitions.
+include(../../common.pro)
+
 SOURCES += list.cpp
 
 HEADERS += list.h

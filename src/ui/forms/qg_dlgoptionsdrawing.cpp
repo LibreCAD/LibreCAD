@@ -64,6 +64,10 @@ QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing()
         chType=RS2::RightCrosshair;
     }
     RS_SETTINGS->writeEntry("/CrosshairType", QString::number(static_cast<int>(chType)));
+    if(spacing.valid){
+        RS_SETTINGS->writeEntry("/GridSpacingX", spacing.x);
+        RS_SETTINGS->writeEntry("/GridSpacingY", spacing.y);
+    }
     RS_SETTINGS->endGroup();
 }
 
@@ -171,6 +175,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     graphic = g;
 
     if (graphic==NULL) {
+        std::cout<<" QG_DlgOptionsDrawing::setGraphic(NULL)\n";
         return;
     }
 
@@ -248,7 +253,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
         rbCrosshairRight->setDisabled(false);
     }
 
-    RS_Vector spacing = graphic->getVariableVector("$GRIDUNIT",
+    spacing = graphic->getVariableVector("$GRIDUNIT",
                                                    RS_Vector(0.0,0.0));
     cbXSpacing->setEditText( QString("%1").arg(spacing.x));
     cbYSpacing->setEditText( QString("%1").arg(spacing.y));
@@ -363,9 +368,9 @@ void QG_DlgOptionsDrawing::validate() {
         //graphic->addVariable("$GRIDMODE", (int)cbGridOn->isChecked() , 70);
         graphic->setGridOn(cbGridOn->isChecked());
 #ifdef  RS_VECTOR2D
-        RS_Vector spacing(0.0,0.0);
+        spacing=RS_Vector(0.0,0.0);
 #else
-        RS_Vector spacing(0.0,0.0,0.0);
+        spacing=RS_Vector(0.0,0.0,0.0);
 #endif
         if (cbXSpacing->currentText()==tr("auto")) {
             spacing.x = 0.0;
@@ -386,8 +391,14 @@ void QG_DlgOptionsDrawing::validate() {
                              RS_Math::eval(cbDimExe->currentText()), 40);
         graphic->addVariable("$DIMEXO",
                              RS_Math::eval(cbDimExo->currentText()), 40);
-        graphic->addVariable("$DIMGAP",
-                             RS_Math::eval(cbDimGap->currentText()), 40);
+        double oldGap=graphic->getVariableDouble("$DIMGAP",1);
+        bool ok;
+        double newGap=RS_Math::eval(cbDimGap->currentText(),&ok);
+        //only update text position if a valid new position is specified, bug#3470605
+        ok &= (fabs(oldGap-newGap)>RS_TOLERANCE);
+        if(ok){
+            graphic->addVariable("$DIMGAP",newGap , 40);
+        }
         graphic->addVariable("$DIMASZ",
                              RS_Math::eval(cbDimAsz->currentText()), 40);
 
@@ -399,7 +410,7 @@ void QG_DlgOptionsDrawing::validate() {
                         cbSplineSegs->currentText().toLatin1().data());
 
         // update all dimension and spline entities in the graphic to match the new settings:
-        graphic->updateDimensions(false);
+        graphic->updateDimensions(ok);
         graphic->updateSplines();
 
         graphic->setModified(true);

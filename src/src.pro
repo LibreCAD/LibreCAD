@@ -1,6 +1,7 @@
 # LibreCAD project file
 # (c) Ries van Twisk (librecad@rvt.dds.nl)
 TEMPLATE = app
+
 DEFINES += QC_APPKEY="\"/LibreCAD\""
 DEFINES += QC_APPNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYNAME="\"LibreCAD\""
@@ -26,7 +27,16 @@ count(HAS_CPP11, 1) {
 CONFIG += qt \
     warn_on \
     link_prl \
-    help
+    help verbose
+
+# tin-pot 2012-01-06: Make using boost the default on win32-msvc2003.
+win32-msvc2003 {
+    CONFIG += boost
+}
+
+# Use common project definitions.
+include(../common.pro)
+
 QMAKE_CXXFLAGS_DEBUG +=
 QMAKE_CXXFLAGS +=
 
@@ -64,6 +74,7 @@ unix {
         DESTDIR = ../unix
 
 #fixme , boost, how to handle boost properly for win32 and unix
+# tin-pot 2012-01-06: See the boost stuff below and in `../common.pro` :-)
 #    CONFIG += link_pkgconfig
 #    PKGCONFIG += boost
 #
@@ -71,6 +82,7 @@ unix {
     }
 }
 win32 {
+    # TODO tin-pot 2012-01-06: I think this should be `QMAKE_CXXFLAGS_THREAD`?
     QMAKE_CFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
     TARGET = LibreCAD
@@ -83,6 +95,7 @@ win32 {
 }
 
 
+
 # Additional libraries to load
 # LIBS += \
 # -Ldxflib/lib -ldxf \
@@ -90,6 +103,7 @@ win32 {
 #LIBS += -lboost
 LIBS += \
  -L../intermediate -ldxfrw -ldxflib -ljwwlib -lfparser
+
 
 OBJECTS_DIR = ../intermediate/obj
 MOC_DIR = ../intermediate/moc
@@ -846,6 +860,40 @@ SOURCES += \
     plugins/intern/qc_actiongetent.cpp \
     main/main.cpp
 
+# If C99 emulation is needed, add the respective source files.
+contains(DEFINES, EMU_C99) {
+    !build_pass:verbose:message(Emulating C99 math features.)
+    SOURCES += main/emu_c99.cpp
+    HEADERS += main/emu_c99.h
+}
+
+# If Qt 4.3 or Qt 4.4 is used, add the respective workaround
+# source files and defines.
+
+contains(QT_MINOR_VERSION, 0)|contains(QT_MINOR_VERSION, 1)|contains(QT_MINOR_VERSION, 2) {
+    error(Qt version $$[QT_VERSION] is too old, should be version 4.3 or newer.)
+}
+
+contains(QT_MINOR_VERSION, 3) {
+    !build_pass:verbose:message(Emulating Qt version 4.4 and 4.5.)
+    SOURCES += main/emu_qt44.cpp main/emu_qt45.cpp
+    HEADERS += main/emu_qt44.h   main/emu_qt45.h
+
+    !build_pass:verbose:message(Using QAssistantClient.)
+    CONFIG += assistant
+}
+
+contains(QT_MINOR_VERSION, 4) {
+    !build_pass:verbose:message(Emulating Qt version 4.5.)
+    SOURCES += main/emu_qt45.cpp
+    HEADERS += main/emu_qt45.h
+}
+
+contains(QT_MINOR_VERSION, 5)|contains(QT_MINOR_VERSION, 6)|contains(QT_MINOR_VERSION, 7) {
+    !build_pass:verbose:message(Using Qt version $$[QT_VERSION].)
+}
+
+
 RESOURCES += ../res/main/main.qrc
 
 # ################################################################################
@@ -900,7 +948,4 @@ TRANSLATIONS = ../ts/librecad_cs.ts \
 
 # Include any custom.pro files for personal/special builds
 exists( custom.pro ):include( custom.pro )
-
-
-
 

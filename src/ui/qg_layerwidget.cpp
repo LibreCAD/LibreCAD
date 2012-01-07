@@ -197,10 +197,8 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     lay->addLayout(layButtons);
     lay->addWidget(layerView);
 
-    connect(layerView, SIGNAL(clicked(QModelIndex)),
-            this, SLOT(slotActivated(QModelIndex)));
+    connect(layerView, SIGNAL(pressed(QModelIndex)), this, SLOT(slotActivated(QModelIndex)));
 
-    connect(layerView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotActivated(QModelIndex)));
 }
 
 

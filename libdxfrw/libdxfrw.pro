@@ -13,6 +13,9 @@ CONFIG += static \
 
 VERSION = 0.0.1
 
+# Use common project definitions.
+include(../common.pro)
+
 DLL_NAME = dxfrw
 TARGET = $$DLL_NAME
 
