@@ -595,7 +595,6 @@ void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
 
     RS_DEBUG->print("RS_GraphicView::zoomAuto");
 
-        saveView();
 
     if (container!=NULL) {
         container->calculateBorders();
@@ -603,61 +602,85 @@ void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
         double sx, sy;
         if (axis) {
             sx = std::max(container->getMax().x, 0.0)
-                 - std::min(container->getMin().x, 0.0);
+                    - std::min(container->getMin().x, 0.0);
             sy = std::max(container->getMax().y, 0.0)
-                 - std::min(container->getMin().y, 0.0);
+                    - std::min(container->getMin().y, 0.0);
         } else {
             sx = container->getSize().x;
             sy = container->getSize().y;
         }
+        //    std::cout<<" RS_GraphicView::zoomAuto("<<axis<<","<<keepAspectRatio<<")"<<std::endl;
 
         double fx, fy;
+        unsigned short fFlags=0;
 
         if (sx>RS_TOLERANCE) {
             fx = (getWidth()-borderLeft-borderRight) / sx;
         } else {
-            fx = 1.0;
+            fFlags += 1; //invalid x factor
         }
 
         if (sy>RS_TOLERANCE) {
             fy = (getHeight()-borderTop-borderBottom) / sy;
         } else {
-            fy = 1.0;
+            fFlags += 2; //invalid y factor
         }
+        //    std::cout<<"0: fx= "<<fx<<"\tfy="<<fy<<std::endl;
 
         RS_DEBUG->print("f: %f/%f", fx, fy);
 
-        if (keepAspectRatio) {
-            fx = fy = std::min(fx, fy);
+        switch(fFlags){
+        case 1:
+            fx=fy;
+            break;
+        case 2:
+            fy=fx;
+            break;
+        case 3:
+            return; //do not do anything, invalid factors
+        default:
+            if (keepAspectRatio) {
+                fx = fy = std::min(fx, fy);
+            }
+            //                break;
         }
+        //    std::cout<<"1: fx= "<<fx<<"\tfy="<<fy<<std::endl;
 
         RS_DEBUG->print("f: %f/%f", fx, fy);
-
-        if (fx<RS_TOLERANCE) {
-            fx=fy=1.0;
+        //exclude invalid factors
+        fFlags=0;
+        if (fx<RS_TOLERANCE||fx>RS_MAXDOUBLE) {
+            fx=1.0;
+            fFlags += 1;
         }
+        if (fy<RS_TOLERANCE||fy>RS_MAXDOUBLE) {
+            fy=1.0;
+            fFlags += 2;
+        }
+        if(fFlags == 3 ) return;
+        saveView();
+        //        std::cout<<"2: fx= "<<fx<<"\tfy="<<fy<<std::endl;
         setFactorX(fx);
         setFactorY(fy);
 
         RS_DEBUG->print("f: %f/%f", fx, fy);
 
 
-        RS_DEBUG->print("adjustOffsetControls");
+//        RS_DEBUG->print("adjustOffsetControls");
         adjustOffsetControls();
-        RS_DEBUG->print("adjustZoomControls");
+//        RS_DEBUG->print("adjustZoomControls");
         adjustZoomControls();
-        RS_DEBUG->print("centerOffsetX");
+//        RS_DEBUG->print("centerOffsetX");
         centerOffsetX();
-        RS_DEBUG->print("centerOffsetY");
+//        RS_DEBUG->print("centerOffsetY");
         centerOffsetY();
-        RS_DEBUG->print("updateGrid");
-                //    updateGrid();
+//        RS_DEBUG->print("updateGrid");
+        //    updateGrid();
 
         redraw();
     }
     RS_DEBUG->print("RS_GraphicView::zoomAuto OK");
 }
-
 
 
 /**
