@@ -115,7 +115,7 @@ void RS_Grid::updatePointArray() {
         RS_SETTINGS->endGroup();
 
 
-        std::cout<<"Grid userGrid="<<userGrid<<std::endl;
+//        std::cout<<"Grid userGrid="<<userGrid<<std::endl;
 
         // delete old grid:
         if (pt!=NULL) {
@@ -172,7 +172,7 @@ void RS_Grid::updatePointArray() {
 
             // auto scale grid
             //scale grid by drawing setting as well, bug#3416862
-            std::cout<<"RS_Grid::updatePointArray(): userGrid="<<userGrid<<std::endl;
+//            std::cout<<"RS_Grid::updatePointArray(): userGrid="<<userGrid<<std::endl;
             if (scaleGrid|| userGrid.x<=1e-6 || userGrid.y<=1e-6) {
                 if(scaleGrid || userGrid.x<=1e-6) {
                     while (graphicView->toGuiDX(gridWidth.x)<minGridSpacing) {
@@ -185,7 +185,7 @@ void RS_Grid::updatePointArray() {
                     }
                 }
             }
-            std::cout<<"RS_Grid::updatePointArray(): gridWidth="<<gridWidth<<std::endl;
+//            std::cout<<"RS_Grid::updatePointArray(): gridWidth="<<gridWidth<<std::endl;
             metaGridWidth.x = gridWidth.x*10;
             metaGridWidth.y = gridWidth.y*10;
 
