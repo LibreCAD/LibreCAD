@@ -391,8 +391,14 @@ void QG_DlgOptionsDrawing::validate() {
                              RS_Math::eval(cbDimExe->currentText()), 40);
         graphic->addVariable("$DIMEXO",
                              RS_Math::eval(cbDimExo->currentText()), 40);
-        graphic->addVariable("$DIMGAP",
-                             RS_Math::eval(cbDimGap->currentText()), 40);
+        double oldGap=graphic->getVariableDouble("$DIMGAP",1);
+        bool ok;
+        double newGap=RS_Math::eval(cbDimGap->currentText(),&ok);
+        //only update text position if a valid new position is specified, bug#3470605
+        ok &= (fabs(oldGap-newGap)>RS_TOLERANCE);
+        if(ok){
+            graphic->addVariable("$DIMGAP",newGap , 40);
+        }
         graphic->addVariable("$DIMASZ",
                              RS_Math::eval(cbDimAsz->currentText()), 40);
 
@@ -404,7 +410,7 @@ void QG_DlgOptionsDrawing::validate() {
                         cbSplineSegs->currentText().toLatin1().data());
 
         // update all dimension and spline entities in the graphic to match the new settings:
-        graphic->updateDimensions(false);
+        graphic->updateDimensions(ok);
         graphic->updateSplines();
 
         graphic->setModified(true);
