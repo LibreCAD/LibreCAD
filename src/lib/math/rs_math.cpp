@@ -206,17 +206,17 @@ double RS_Math::getAngleDifference(double a1, double a2) {
 double RS_Math::makeAngleReadable(double angle, bool readable,
                                   bool* corrected) {
 
-    double ret;
+    double ret=correctAngle(angle);
 
-    bool cor = isAngleReadable(angle) ^ readable;
+    bool cor = isAngleReadable(ret) ^ readable;
 
     // quadrant 1 & 4
-    if (!cor) {
-        ret = angle;
-    }
+    if (cor) {
+//        ret = angle;
+//    }
     // quadrant 2 & 3
-    else {
-        ret = angle+M_PI;
+//    else {
+        ret = correctAngle(angle+M_PI);
     }
 
     if (corrected!=NULL) {

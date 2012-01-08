@@ -385,20 +385,27 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->addVariable("$GRIDUNIT", spacing, 10);
 
         // dim:
-        graphic->addVariable("$DIMTXT",
-                             RS_Math::eval(cbDimTextHeight->currentText()), 40);
+        bool ok1;
+        double oldValue=graphic->getVariableDouble("$DIMTXT",1.);
+        double newValue=RS_Math::eval(cbDimTextHeight->currentText(),&ok1);
+        ok1 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
+        //only update text height if a valid new position is specified, bug#3470605
+        if(ok1){
+            graphic->addVariable("$DIMTXT",newValue, 40);
+        }
         graphic->addVariable("$DIMEXE",
                              RS_Math::eval(cbDimExe->currentText()), 40);
         graphic->addVariable("$DIMEXO",
                              RS_Math::eval(cbDimExo->currentText()), 40);
-        double oldGap=graphic->getVariableDouble("$DIMGAP",1);
-        bool ok;
-        double newGap=RS_Math::eval(cbDimGap->currentText(),&ok);
+        bool ok2;
+        oldValue=graphic->getVariableDouble("$DIMGAP",1);
+        newValue=RS_Math::eval(cbDimGap->currentText(),&ok2);
         //only update text position if a valid new position is specified, bug#3470605
-        ok &= (fabs(oldGap-newGap)>RS_TOLERANCE);
-        if(ok){
-            graphic->addVariable("$DIMGAP",newGap , 40);
+        ok2 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
+        if(ok2){
+            graphic->addVariable("$DIMGAP",newValue , 40);
         }
+        ok1 = ok1 || ok2;
         graphic->addVariable("$DIMASZ",
                              RS_Math::eval(cbDimAsz->currentText()), 40);
 
@@ -410,7 +417,8 @@ void QG_DlgOptionsDrawing::validate() {
                         cbSplineSegs->currentText().toLatin1().data());
 
         // update all dimension and spline entities in the graphic to match the new settings:
-        graphic->updateDimensions(ok);
+        // update text position when text height or text gap changed
+        graphic->updateDimensions(ok1);
         graphic->updateSplines();
 
         graphic->setModified(true);
