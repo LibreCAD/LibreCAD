@@ -516,7 +516,7 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
                   valign, halign,
                   dir, lss,
                   interlin,
-                  mtext, sty, data.angle,
+                  mtext, sty, data.angle*M_PI/180,
                   RS2::NoUpdate);
     RS_Text* entity = new RS_Text(currentContainer, d);
 
@@ -575,7 +575,7 @@ void RS_FilterDXFRW::addText(const DRW_Text& data) {
                                  (data.basePoint.y+data.secPoint.y)/2.0);
             angle =
                 RS_Vector(data.basePoint.x, data.basePoint.y).angleTo(
-                    RS_Vector(data.secPoint.x, data.secPoint.y));
+                    RS_Vector(data.secPoint.x, data.secPoint.y))*180/M_PI;
             break;
         }
 
