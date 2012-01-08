@@ -364,10 +364,10 @@ void DRW_Text::parseCode(int code, dxfReader *reader){
         widthscale = reader->getDouble();
         break;
     case 50:
-            angle = reader->getDouble();
+        angle = reader->getDouble();
         break;
     case 51:
-            oblique = reader->getDouble();
+        oblique = reader->getDouble();
         break;
     case 71:
         textgen = reader->getInt32();
@@ -395,6 +395,10 @@ void DRW_MText::parseCode(int code, dxfReader *reader){
     case 1:
         text += reader->getString();
         break;
+    case 11:
+        haveXAxis = true;
+        DRW_Text::parseCode(code, reader);
+        break;
     case 3:
         text += reader->getString();
         break;
@@ -404,6 +408,21 @@ void DRW_MText::parseCode(int code, dxfReader *reader){
     default:
         DRW_Text::parseCode(code, reader);
         break;
+    }
+}
+
+void DRW_MText::updateAngle(){
+    if (haveXAxis) {
+        if (fabs(secPoint.x)<1.0e-12) {
+            if (secPoint.y>0.0) {
+                angle = 90.0;
+            } else {
+                angle = 270.0;
+            }
+        } else {
+            angle = atan(secPoint.y/secPoint.x)*180/M_PI;
+        }
+
     }
 }
 
