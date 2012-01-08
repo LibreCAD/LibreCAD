@@ -3197,7 +3197,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
 
                 RS_DEBUG->print("  showing MDI window");
 
-                if (mdiAreaCAD->subWindowList().isEmpty()) {
+                if (mdiAreaCAD->subWindowList().size() <= 1 ) {
                     w->showMaximized();
                 } else {
                     w->show();
@@ -3207,7 +3207,6 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                     graphic->fitToPage();
                 }
 //                w->getGraphicView()->zoomPage();
-                showMaximized();
                 setFocus();
 
 //                slotWindowActivated(subWindow);
