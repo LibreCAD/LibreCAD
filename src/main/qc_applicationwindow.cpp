@@ -503,13 +503,16 @@ void QC_ApplicationWindow::closeEvent(QCloseEvent* ce) {
     if (!queryExit(false)) {
         ce->ignore();
     }
-    if(mdiAreaCAD!=NULL){
-        mdiAreaCAD->closeAllSubWindows();
-    }
-    if (mdiAreaCAD->currentSubWindow()) {
-        ce->ignore();
-    } else {
-        ce->accept();
+    else
+    {
+        if(mdiAreaCAD!=NULL){
+            mdiAreaCAD->closeAllSubWindows();
+        }
+        if (mdiAreaCAD->currentSubWindow()) {
+            ce->ignore();
+        } else {
+            ce->accept();
+        }
     }
 //we shouldn't need this; saving should be done within ~QG_SnapToolBar()
     //snapToolBar->saveSnapMode();
