@@ -426,7 +426,7 @@ public:
 public:
     double height;           /*!< height text, code 40 */
     string text;                 /*!< text string, code 1 */
-    double angle;             /*!< rotation angle, code 50 */
+    double angle;             /*!< rotation angle in degrees (360), code 50 */
     double widthscale;     /*!< width factor, code 41 */
     double oblique;          /*!< oblique angle, code 51 */
     string style;                /*!< stile name, code 7 */
@@ -446,12 +446,16 @@ public:
         eType = DRW::MTEXT;
         interlin = 1;
         alignV = (DRW::VAlign)2;
+        haveXAxis = false;    //if true needed to recalculate angle
     }
 
     void parseCode(int code, dxfReader *reader);
+    void updateAngle();    //recalculate angle if 'haveXAxis' is true
 
 public:
     double interlin;     /*!< width factor, code 44 */
+private:
+    bool haveXAxis;
 };
 
 //! Class to handle vertex
