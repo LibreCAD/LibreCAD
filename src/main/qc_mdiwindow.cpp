@@ -76,7 +76,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
         }
     }
 //    setFocusPolicy(Qt::ClickFocus);
-    showMaximized();
+    //showMaximized();
 }
 
 
