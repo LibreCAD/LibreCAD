@@ -43,6 +43,8 @@ public slots:
     virtual void setBlackWhite( bool on );
     virtual void fit();
     virtual void scale( const QString & s );
+    virtual void updateScaleBox();
+    virtual void updateScaleBox(const double& f);
 
 protected:
     RS_ActionPrintPreview* action;
@@ -54,6 +56,7 @@ private:
     QStringList imperialScales;
     QStringList metricScales;
     bool updateDisabled;
+    int defaultScales;
 
     void init();
     void destroy();

@@ -65,6 +65,12 @@ void RS_ActionPrintPreview::init(int status) {
     showOptions();
 }
 
+//printout warning in command widget
+void RS_ActionPrintPreview::printWarning(const QString& s) {
+    if(RS_DIALOGFACTORY != NULL ){
+        RS_DIALOGFACTORY->commandMessage(s);
+    }
+}
 
 
 

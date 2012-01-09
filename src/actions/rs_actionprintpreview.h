@@ -66,25 +66,26 @@ public:
 
     virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+    virtual QStringList getAvailableCommands();
 
-	virtual void showOptions();
-	virtual void hideOptions();
+    virtual void showOptions();
+    virtual void hideOptions();
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
     virtual void updateToolBar();
 
-	void center();
-	void fit();
-        bool setScale(double f);
-	double getScale();
+    void center();
+    void fit();
+    bool setScale(double f);
+    double getScale();
 
-	void setBlackWhite(bool bw);
-	//bool isBlackWhite() {
-	//	return blackWhite;
-	//}
-	RS2::Unit getUnit();
+    void setBlackWhite(bool bw);
+    //bool isBlackWhite() {
+    //	return blackWhite;
+    //}
+    RS2::Unit getUnit();
+    void printWarning(const QString& s);
 
 protected:
 	//bool blackWhite;

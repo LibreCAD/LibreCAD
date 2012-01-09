@@ -680,7 +680,6 @@ HEADERS += src/ui/qg_actionfactory.h \
     src/ui/forms/qg_mousewidget.ui.h \
     src/ui/forms/qg_moverotateoptions.ui.h \
     src/ui/forms/qg_polylineoptions.ui.h \
-    src/ui/forms/qg_printpreviewoptions.ui.h \
     src/ui/forms/qg_roundoptions.ui.h \
     src/ui/forms/qg_selectionwidget.ui.h \
     src/ui/forms/qg_snapdistoptions.ui.h \
