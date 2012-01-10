@@ -45,7 +45,9 @@ class RS_Preview : public RS_EntityContainer {
 public:
     RS_Preview(RS_EntityContainer* parent=NULL);
     ~RS_Preview();
-	
+    virtual RS2::EntityType rtti() const {
+        return RS2::EntityPreview;
+    }
     virtual void addEntity(RS_Entity* entity);
 	void addCloneOf(RS_Entity* entity);
     virtual void addSelectionFrom(RS_EntityContainer& container);

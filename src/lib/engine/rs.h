@@ -145,7 +145,8 @@ public:
         EntityHatch,        /**< Hatch */
         EntityImage,        /**< Image */
         EntitySpline,       /**< Spline */
-        EntityOverlayBox    /**< OverlayBox */
+        EntityOverlayBox,    /**< OverlayBox */
+        EntityPreview    /**< Preview Container */
     };
 
     static bool isContainer(const EntityType enType){
