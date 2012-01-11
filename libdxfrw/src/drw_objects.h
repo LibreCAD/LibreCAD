@@ -109,7 +109,7 @@ public:
         lineType = "BYLAYER";
         color = 256; // default BYLAYER (256)
         plotF = true; // default TRUE (plot yes)
-        lWeight = -1; // default BYLAYER (-1)
+        lWeight = -3; // default BYDEFAULT (-3)
     }
 
     void parseCode(int code, dxfReader *reader);
