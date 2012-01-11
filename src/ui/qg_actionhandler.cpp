@@ -1404,7 +1404,10 @@ void QG_ActionHandler::slotSetSnaps(RS_SnapMode s) {
     if(snapToolBar != NULL) {
         snapToolBar->setSnaps(s);
     }
-    mainWindow->getGraphicView()->setDefaultSnapMode(s);
+    RS_GraphicView* view=mainWindow->getGraphicView();
+    if(view != NULL) {
+        view->setDefaultSnapMode(s);
+    }
 }
 
 void QG_ActionHandler::slotSnapFree() {
