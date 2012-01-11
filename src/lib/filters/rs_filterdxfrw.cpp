@@ -143,7 +143,7 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
     RS_DEBUG->print("RS_FilterDXF::addLayer: creating layer");
 
     QString name = toNativeString(data.name.c_str(),getDXFEncoding());
-    if (graphic->findLayer(name)!=NULL) {
+    if (name != "0" && graphic->findLayer(name)!=NULL) {
         return;
     }
     RS_Layer* layer = new RS_Layer(name);
