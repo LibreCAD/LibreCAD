@@ -120,7 +120,10 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                                         v1 = vsol.get(0);
                                 }
                                 newPolyline->setStartpoint(v1);
-                                newPolyline->addVertex(v1, bulge);
+                                newPolyline->setNextBulge(bulge);
+                                if (en == lastEntity) {
+                                    newPolyline->addVertex(v2, bulge);
+                                }
                                 first = false;
                         }else{
                             line2.setStartpoint(v1);
