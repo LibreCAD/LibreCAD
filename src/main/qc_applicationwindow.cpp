@@ -2116,13 +2116,18 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
         w->raise();
         w->showMaximized();
         w->setFocus();
-        qobject_cast<QC_MDIWindow*>(w->widget())->zoomAuto();
-        for(int i=0;i<mdiAreaCAD->subWindowList().size();i++){
-            QMdiSubWindow* m=mdiAreaCAD->subWindowList().at(i);
-            if( m != w){
-                m->hide();
+
+        if (w->widget())
+        {
+
+            qobject_cast<QC_MDIWindow*>(w->widget())->zoomAuto();
+            for(int i=0;i<mdiAreaCAD->subWindowList().size();i++){
+                QMdiSubWindow* m=mdiAreaCAD->subWindowList().at(i);
+                if( m != w){
+                    m->hide();
+                }
+                //                qobject_cast<QC_MDIWindow*>(m)->zoomAuto();
             }
-            //                qobject_cast<QC_MDIWindow*>(m)->zoomAuto();
         }
         // RVT_PORT need to reset/cleanup current menu here to avoid menu clutter
     }
@@ -2960,12 +2965,20 @@ void QC_ApplicationWindow::slotFileClose() {
     QC_MDIWindow* w = getMDIWindow();
 
     if(w!=NULL){
-            openedFiles.removeAll(w->getDocument()->getFilename());
-//        int pos=openedFiles.indexOf(w->getDocument()->getFilename());
-//        if(pos>=0) {
-//            openedFiles.erase(openedFiles.begin()+pos);
-//        }
+        openedFiles.removeAll(w->getDocument()->getFilename());
+        //        int pos=openedFiles.indexOf(w->getDocument()->getFilename());
+        //        if(pos>=0) {
+        //            openedFiles.erase(openedFiles.begin()+pos);
+        //        }
+
+        //properly close print preview if exists
+        QC_MDIWindow *ppv = w->getPrintPreview();
+        if (ppv!=NULL) {
+            mdiAreaCAD->removeSubWindow(ppv->parentWidget());
+        }
     }
+
+
     mdiAreaCAD->closeActiveSubWindow();
     activedMdiSubWindow=NULL;
 }
@@ -3143,6 +3156,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
         QC_MDIWindow* ppv = parent->getPrintPreview();
         if (ppv!=NULL) {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): show existing");
+
+            /*
             QList<QMdiSubWindow*> windows=mdiAreaCAD->subWindowList();
             for(int i=0;i<windows.size();i++){
                 if( windows.at(i)->widget() == ppv){
@@ -3150,7 +3165,12 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                     mdiAreaCAD->setActiveSubWindow(windows.at(i));
                     break;
                 }
-            }
+            }*/
+
+            //no need to search, casting parentWindow works like a charm
+            ppv->parentWidget()->showMaximized();
+            mdiAreaCAD->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(ppv->parentWidget()));
+
         } else {
             if (!parent->getGraphicView()->isPrintPreview()) {
                 RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): create");
