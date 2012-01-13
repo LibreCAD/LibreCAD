@@ -89,6 +89,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                 RS_Entity* lastEntity = ((RS_Polyline*)originalEntity)->lastEntity();
                 for (RS_Entity* en=((RS_Polyline*)originalEntity)->firstEntity(); en!=NULL; en=((RS_Polyline*)originalEntity)->nextEntity()) {
                         double bulge = 0.0;
+                        if (en->getLength() < 1.0e-15) continue;
                         if (en->rtti()==RS2::EntityArc) {
                                 double r0 = ((RS_Arc*)en)->getRadius();
                                 double r = r0 - dist*neg;
@@ -217,7 +218,7 @@ void RS_ActionPolylineEquidistant::mouseReleaseEvent(QMouseEvent* e) {
                                 RS_DIALOGFACTORY->commandMessage(
                                         tr("Entity must be a polyline."));
                         } else {
-                                targetPoint = snapPoint(e);
+                                targetPoint = snapFree(e);
                                 originalEntity->setHighlighted(true);
                                 graphicView->drawEntity(originalEntity);
                                 double d = graphicView->toGraphDX(snapRange)*0.9;
