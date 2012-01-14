@@ -2071,6 +2071,8 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
             windowsMenu->addAction(tr("Tile &Horizontally"), this, SLOT(slotTileHorizontal()));
             windowsMenu->addAction(tr("Ta&b mode"), this, SLOT(slotToggleTab()));
         }
+    }else{
+        if(mdiAreaCAD->subWindowList().size() == 0) return; //no sub-window to show
     }
     windowsMenu->addSeparator();
     QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();

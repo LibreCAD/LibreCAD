@@ -26,7 +26,7 @@
 
 #include "qc_mdiwindow.h"
 
-#include <qprinter.h>
+#include <QPrinter>
 //Added by qt3to4:
 #include <QCloseEvent>
 
@@ -37,11 +37,12 @@
 #include "rs_text.h"
 
 #include <QMainWindow>
-#include <qcursor.h>
-#include <qpainter.h>
+#include <QCursor>
 #include <QMessageBox>
 #include <QPrintDialog>
 #include <QFileInfo>
+#include <QMdiArea>
+#include <QPainter>
 
 int QC_MDIWindow::idCounter = 0;
 
@@ -58,7 +59,8 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
 
     setAttribute(Qt::WA_DeleteOnClose);
     owner = false;
-        forceClosing = false;
+    cadMdiArea=qobject_cast<QMdiArea*>(parent);
+    forceClosing = false;
     initDoc(doc);
     initView();
     id = idCounter++;
@@ -191,8 +193,10 @@ bool QC_MDIWindow::closeMDI(bool force, bool ask) {
     else if (!ask || slotFileClose(force)) {
         RS_DEBUG->print("  closing graphic");
         // close all child windows:
+
                 while (!childWindows.isEmpty()) {
                         QC_MDIWindow *tmp=childWindows.takeFirst();
+                        cadMdiArea->removeSubWindow(tmp);
                         tmp->close();
                 }
 

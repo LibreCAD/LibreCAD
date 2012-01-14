@@ -38,7 +38,7 @@
 
 #include "rs_document.h"
 
-
+class QMdiArea;
 
 /**
  * MDI document window. Contains a document and a view (window).
@@ -152,6 +152,7 @@ private:
      * is closed or NULL.
      */
     QC_MDIWindow* parentWindow;
+    QMdiArea* cadMdiArea;
 
 	/**
 	 * If flag is set, the user will not be asked about closing this file.
