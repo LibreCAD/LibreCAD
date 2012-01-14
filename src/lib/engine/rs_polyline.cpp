@@ -266,10 +266,11 @@ void RS_Polyline::endPolyline() {
 //RLZ: rewrite this:
 void RS_Polyline::setClosed(bool cl, double bulge) {
     Q_UNUSED(bulge);
+    bool areClosed = isClosed();
     setClosed(cl);
     if (isClosed()) {
         endPolyline();
-    } else {
+    } else if (areClosed){
         removeLastVertex();
     }
 }
