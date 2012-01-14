@@ -73,6 +73,7 @@ bool RS_ActionPolylineSegment::convertPolyline(RS_Entity* selectedEntity) {
 
         int pos = container->findEntity(selectedEntity);
         RS_Entity* e1=container->entityAt(pos);
+        if (!e1) return false;
 
         if (document!=NULL) {
                 document->startUndoCycle();
