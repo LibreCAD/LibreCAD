@@ -2032,7 +2032,9 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         // update toggle button status:
         if (m->getGraphic()!=NULL) {
             emit(gridChanged(m->getGraphic()->isGridOn()));
-            std::cout<<"QC_ApplicationWindow::slotWindowActivated(): emit(printPreviewChanged("<<m->getGraphicView()->isPrintPreview()<<")"<<std::endl;
+        }
+        if (m->getGraphicView()!=NULL) {
+//            std::cout<<"QC_ApplicationWindow::slotWindowActivated(): emit(printPreviewChanged("<<m->getGraphicView()->isPrintPreview()<<")"<<std::endl;
 
             emit(printPreviewChanged(m->getGraphicView()->isPrintPreview()));
         }
@@ -3196,6 +3198,9 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
             //no need to search, casting parentWindow works like a charm
             ppv->parentWidget()->showMaximized();
             mdiAreaCAD->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(ppv->parentWidget()));
+            std::cout<<"QC_ApplicationWindow::slotFilePrintPreview(bool on): emit(printPreviewChanged(true))"<<std::endl;
+            emit(printPreviewChanged(true));
+
 
         } else {
             if (!parent->getGraphicView()->isPrintPreview()) {
@@ -3258,6 +3263,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
 //                setFocus();
 
                 slotWindowActivated(subWindow);
+//            std::cout<<"QC_ApplicationWindow::slotFilePrintPreview(bool on): new: emit(printPreviewChanged(true))"<<std::endl;
+            emit(printPreviewChanged(true));
             }
         }
     }
