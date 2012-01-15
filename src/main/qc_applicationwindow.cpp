@@ -2032,6 +2032,8 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         // update toggle button status:
         if (m->getGraphic()!=NULL) {
             emit(gridChanged(m->getGraphic()->isGridOn()));
+            std::cout<<"QC_ApplicationWindow::slotWindowActivated(): emit(printPreviewChanged("<<m->getGraphicView()->isPrintPreview()<<")"<<std::endl;
+
             emit(printPreviewChanged(m->getGraphicView()->isPrintPreview()));
         }
     }
@@ -3231,9 +3233,9 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                     graphic->fitToPage();
                 }
 //                w->getGraphicView()->zoomPage();
-                setFocus();
+//                setFocus();
 
-//                slotWindowActivated(subWindow);
+                slotWindowActivated(subWindow);
             }
         }
     }
@@ -3508,14 +3510,14 @@ void QC_ApplicationWindow::slotHelpManual() {
         RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
                         RS_SYSTEM->getAppDir().toLatin1().constData());
         assistant = new QAssistantClient(RS_SYSTEM->getAppDir(), this);
-		connect(assistant, SIGNAL(error(const QString&)), 
-			this, SLOT(slotError(const QString&)));
+        connect(assistant, SIGNAL(error(const QString&)),
+            this, SLOT(slotError(const QString&)));
         QStringList args;
         args << "-profile";
         args << QDir::convertSeparators(RS_SYSTEM->getDocPath() + "/qcaddoc.adp");
 //        args << QString("doc") + QDir::separator() + QString("qcaddoc.adp");
 
-#if QT_VERSION >= 0x030200 
+#if QT_VERSION >= 0x030200
         assistant->setArguments(args);
 #endif
     }
