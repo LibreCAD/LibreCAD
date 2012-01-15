@@ -2061,6 +2061,29 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
 //            delete windowsMenu->takeFirst();
 //    }
 
+    QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
+    for (int i=0; i<windows.size(); ) {
+        //clean up invalid sub-windows
+        //fixme, this should be auto, by
+        //setAttribute(Qt::WA_DeleteOnClose);
+
+        if(windows.at(i) != NULL && windows.at(i)->widget() != NULL){
+            i++;
+        }else{
+            mdiAreaCAD->removeSubWindow(windows.at(i));
+            windows = mdiAreaCAD->subWindowList();
+            if(windows.size() > 0){
+                QMdiSubWindow* active= mdiAreaCAD->currentSubWindow();
+                if(active != NULL) {
+                   mdiAreaCAD->setActiveSubWindow(active);
+                   active->raise();
+                   active->setFocus();
+                }
+
+            }
+            continue;
+        }
+    }
     if (mdiAreaCAD->subWindowList().size()>1) {
         if(mdiAreaTab) {
             windowsMenu->addAction(tr("Su&b-Window mode"),
@@ -2077,7 +2100,6 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
         if(mdiAreaCAD->subWindowList().size() == 0) return; //no sub-window to show
     }
     windowsMenu->addSeparator();
-    QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
     QMdiSubWindow* active= mdiAreaCAD->activeSubWindow();
 //    int active=windows.indexOf(mdiAreaCAD->activeSubWindow());
 //    std::cout<<" QC_ApplicationWindow::slotWindowsMenuAboutToShow(): has active: "<< (mdiAreaCAD->activeSubWindow() != NULL )<<" index="<<active<<std::endl;
