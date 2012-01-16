@@ -505,9 +505,11 @@ void QC_ApplicationWindow::closeEvent(QCloseEvent* ce) {
     }
     else
     {
-        if(mdiAreaCAD!=NULL){
-            mdiAreaCAD->closeAllSubWindows();
+        if(mdiAreaCAD==NULL){
+            ce->accept();
+            return;
         }
+        mdiAreaCAD->closeAllSubWindows();
         if (mdiAreaCAD->currentSubWindow()) {
             ce->ignore();
         } else {
@@ -570,7 +572,7 @@ void QC_ApplicationWindow::initMDI() {
  */
 QC_MDIWindow* QC_ApplicationWindow::getMDIWindow() {
     if (mdiAreaCAD!=NULL) {
-        QMdiSubWindow* w=mdiAreaCAD->activeSubWindow();
+        QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
         if(w!=NULL) {
 
             return qobject_cast<QC_MDIWindow*>(w->widget());
@@ -2460,8 +2462,11 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
 //    } else {
         w->show();
         w->zoomAuto();
+//        subWindow->showNormal();
+        //show new open maximized
         subWindow->showMaximized();
         subWindow->setFocus();
+        slotWindowActivated(subWindow);
 //    }
 //    slotWindowActivated(subWindow);
     statusBar()->showMessage(tr("New Drawing created."), 2000);
@@ -3009,6 +3014,11 @@ void QC_ApplicationWindow::slotFileClose() {
 
     mdiAreaCAD->closeActiveSubWindow();
     activedMdiSubWindow=NULL;
+    QMdiSubWindow* m=mdiAreaCAD->currentSubWindow();
+    if(m!=NULL){
+        slotWindowActivated(m);
+    }
+
 }
 
 
