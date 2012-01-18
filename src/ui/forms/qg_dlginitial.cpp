@@ -65,24 +65,25 @@ void QG_DlgInitial::languageChange()
 void QG_DlgInitial::init() {
     // Fill combobox with languages:
     QStringList languageList = RS_SYSTEM->getLanguageList();
+    QString defaultLanguage=RS_SYSTEM->symbolToLanguage(QString("en"));
     for (QStringList::Iterator it = languageList.begin();
         it!=languageList.end();
         it++) {
 
         QString l = RS_SYSTEM->symbolToLanguage(*it);
-        cbLanguage->addItem(l);
-        cbLanguageCmd->addItem(l);
+        cbLanguage->addItem(l,*it);
+        cbLanguageCmd->addItem(l,*it);
     }
 
 
         // units:
-        for (int i=RS2::None; i<RS2::LastUnit; i++) {
+        for (int i=RS2::None; i<RS2::LastUnit; i++) {http://www.tvbs.com.tw/NEWS/NEWS_LIST.asp?no=anita198920120118131525
         cbUnit->addItem(RS_Units::unitToString((RS2::Unit)i));
     }
 
         cbUnit->setCurrentIndex( cbUnit->findText("Millimeter") );
-        cbLanguage->setCurrentIndex( cbLanguage->findText("English") );
-        cbLanguageCmd->setCurrentIndex( cbLanguageCmd->findText("English") );
+        cbLanguage->setCurrentIndex( cbLanguage->findText(defaultLanguage) );
+        cbLanguageCmd->setCurrentIndex( cbLanguageCmd->findText(defaultLanguage) );
 }
 
 void QG_DlgInitial::setText(const QString& t) {
@@ -96,9 +97,9 @@ void QG_DlgInitial::setPixmap(const QPixmap& p) {
 void QG_DlgInitial::ok() {
     RS_SETTINGS->beginGroup("/Appearance");
     RS_SETTINGS->writeEntry("/Language",
-                            RS_SYSTEM->languageToSymbol(cbLanguage->currentText()));
+                            cbLanguage->itemData(cbLanguage->currentIndex()));
     RS_SETTINGS->writeEntry("/LanguageCmd",
-                            RS_SYSTEM->languageToSymbol(cbLanguageCmd->currentText()));
+                            cbLanguage->itemData(cbLanguage->currentIndex()));
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Defaults");
