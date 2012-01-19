@@ -356,13 +356,24 @@ void RS_System::initAllLanguagesList() {
 
 /**
  * Loads a different translation for the application GUI.
+ *
+ *fixme, need to support command language
  */
-void RS_System::loadTranslation(const QString& lang, const QString& langCmd) {
+void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/) {
 //unused    static RS_Translator* tQt = NULL;
     static QTranslator* tLibreCAD = NULL;
-
-    QString langFile;
-
+//make translation filenames case insensitive, #276
+    QString langFileLower;
+    QString langFileUpper;
+    int i0=lang.indexOf('_');
+    if(i0>=2 && lang.size() - i0 >= 2 ){
+        //contains region code
+        langFileLower=lang.left(i0)+'_'+lang.mid(i0+1).toLower();
+        langFileUpper=lang.left(i0)+'_'+lang.mid(i0+1).toUpper();
+    }else{
+        langFileLower=lang;
+        langFileUpper.clear();
+    }
     // search in various directories for translations
     QStringList lst = getDirectoryList("qm");
 
@@ -371,18 +382,26 @@ void RS_System::loadTranslation(const QString& lang, const QString& langCmd) {
     RS_SETTINGS->endGroup();
 
     for (QStringList::Iterator it = lst.begin();
-            it!=lst.end();
-            ++it) {
+         it!=lst.end();
+         ++it) {
 
-        langFile = "librecad_" + lang + ".qm";
+        QString langFile = "librecad_" + langFileLower + ".qm";
+
+        QTranslator* t = new QTranslator(0);
+        if ( t->load(langFile, *it)==false) {
+            langFile = "librecad_" + langFileUpper + ".qm";
+            if (langFileUpper.size()<5 || t->load(langFile, *it)==false) {
+                //both lower and upper filenames not found, doing nothing
+                continue;
+            }
+        }
         if (tLibreCAD!=NULL) {
             qApp->removeTranslator(tLibreCAD);
             delete tLibreCAD;
         }
-        tLibreCAD = new QTranslator(0);
-        if (tLibreCAD->load(langFile, (*it))) {
-            qApp->installTranslator(tLibreCAD);
-        }
+        tLibreCAD=t;
+        qApp->installTranslator(tLibreCAD);
+       break;
     }
 }
 
