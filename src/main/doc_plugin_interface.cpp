@@ -227,6 +227,7 @@ void Plugin_Entity::getData(QHash<int, QVariant> *data){
         data->insert(DPI::RADIUS, d.radius );
         data->insert(DPI::STARTANGLE, d.angle1 );
         data->insert(DPI::ENDANGLE, d.angle2 );
+        data->insert(DPI::REVERSED, d.reversed );
         break;}
     case RS2::EntityCircle: {
         data->insert(DPI::ETYPE, DPI::CIRCLE);
