@@ -99,7 +99,8 @@ namespace DPI {
         COLOR=62,       /*!< QColor: entity color */
         CLOSEPOLY=70,   /*!< int: closed polyline 0=open, 1=closed */
         TXTALIGNH=72,   /*!< enum: horizontal alignment for text */
-        TXTALIGNV=73    /*!< enum: vertical alignment for text */
+        TXTALIGNV=73,   /*!< enum: vertical alignment for text */
+        REVERSED=291 /*!< bool: true if arc is reversed (clockwise) */
     };
 
 }
