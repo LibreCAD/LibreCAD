@@ -44,19 +44,19 @@ public:
     enum Status {
         Neutral,        /**< we don't know what we do yet.  */
         Dragging,       /**< dragging (either an entity or the
-        		                     first part of a selection window) */
+                                     first part of a selection window) */
         SetCorner2,     /**< Setting the 2nd corner of a selection window. */
         Moving,         /**< Moving entities (drag'n'drop) */
         MovingRef       /**< Moving a reference point of one or more selected
-        		                     entities */
+                                     entities */
     };
 
 public:
     RS_ActionDefault(RS_EntityContainer& container,
                      RS_GraphicView& graphicView);
     virtual ~RS_ActionDefault();
-	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+
+    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
     virtual RS2::ActionType rtti() {
         return RS2::ActionDefault;
@@ -83,8 +83,10 @@ public:
 protected:
     RS_Vector v1;
     RS_Vector v2;
-	RS2::SnapRestriction restrBak;
-
+    RS2::SnapRestriction restrBak;
+private:
+    // cancel the current action and cleanup
+    void cleanUpAction(QMouseEvent* e);
 };
 
 #endif
