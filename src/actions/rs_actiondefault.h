@@ -56,7 +56,7 @@ public:
                      RS_GraphicView& graphicView);
     virtual ~RS_ActionDefault();
 
-        static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
     virtual RS2::ActionType rtti() {
         return RS2::ActionDefault;
@@ -78,13 +78,15 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
+    //    virtual void updateToolBar();
     virtual void resume();
 
 protected:
     RS_Vector v1;
     RS_Vector v2;
-        RS2::SnapRestriction restrBak;
+    RS2::SnapRestriction restrBak;
+private:
+    void  cleanUpAction(QMouseEvent* e); // cancel the current action and cleanup
 
 };
 
