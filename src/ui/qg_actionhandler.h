@@ -51,6 +51,9 @@ public:
         void killSelectActions();
 
         bool keycode(const QString& code);
+        //special handling of actions issued from command line, currently used for snap actions
+        //return true if handled
+        bool commandLineActions(RS2::ActionType id);
         bool command(const QString& cmd);
         QStringList getAvailableCommands();
     RS_SnapMode getSnaps();

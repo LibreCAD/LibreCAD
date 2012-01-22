@@ -646,48 +646,57 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         //
     case RS2::ActionSnapFree:
         a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapFree);
-        break;
-    case RS2::ActionSnapGrid:
-        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapGrid);
-        break;
-    case RS2::ActionSnapEndpoint:
-        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapEndpoint);
-        break;
-    case RS2::ActionSnapOnEntity:
-        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapOnEntity);
+        slotSnapFree();
         break;
     case RS2::ActionSnapCenter:
         a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapCenter);
-        break;
-    case RS2::ActionSnapMiddle:
-        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapMiddle);
+        slotSnapCenter();
         break;
     case RS2::ActionSnapDist:
-        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapDist);
+        slotSnapDist();
+//        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapDist);
+        break;
+    case RS2::ActionSnapEndpoint:
+        slotSnapEndpoint();
+//        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapEndpoint);
+        break;
+    case RS2::ActionSnapGrid:
+        slotSnapGrid();
+//        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapGrid);
         break;
     case RS2::ActionSnapIntersection:
-        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapIntersection);
+        slotSnapIntersection();
+//        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapIntersection);
         break;
-    case RS2::ActionSnapIntersectionManual:
-        a = new RS_ActionSnapIntersectionManual(*doc, *gv);
+    case RS2::ActionSnapMiddle:
+        slotSnapMiddle();
+//        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapMiddle);
         break;
+    case RS2::ActionSnapOnEntity:
+        slotSnapOnEntity();
+//        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapOnEntity);
+        break;
+//    case RS2::ActionSnapIntersectionManual:
+//        a = new RS_ActionSnapIntersectionManual(*doc, *gv);
+//        break;
 
         // Snap restriction actions:
         //
     case RS2::ActionRestrictNothing:
-        a = new RS_ActionSetSnapRestriction(*doc, *gv, RS2::RestrictNothing);
+        slotRestrictNothing();
+//        a = new RS_ActionSetSnapRestriction(*doc, *gv, RS2::RestrictNothing);
         break;
     case RS2::ActionRestrictOrthogonal:
-        a = new RS_ActionSetSnapRestriction(*doc, *gv,
-                                            RS2::RestrictOrthogonal);
+        slotRestrictOrthogonal();
+//        a = new RS_ActionSetSnapRestriction(*doc, *gv, RS2::RestrictOrthogonal);
         break;
     case RS2::ActionRestrictHorizontal:
-        a = new RS_ActionSetSnapRestriction(*doc, *gv,
-                                            RS2::RestrictHorizontal);
+        slotRestrictHorizontal();
+//        a = new RS_ActionSetSnapRestriction(*doc, *gv, RS2::RestrictHorizontal);
         break;
     case RS2::ActionRestrictVertical:
-        a = new RS_ActionSetSnapRestriction(*doc, *gv,
-                                            RS2::RestrictVertical);
+        slotRestrictVertical();
+//        a = new RS_ActionSetSnapRestriction(*doc, *gv, RS2::RestrictVertical);
         break;
 
         // Relative zero:
@@ -858,7 +867,7 @@ RS_SnapMode QG_ActionHandler::getSnaps()
  *            running action.
  */
 bool QG_ActionHandler::keycode(const QString& code) {
-    QString c = code.toLower();
+    RS_DEBUG->print("QG_ActionHandler::keycode()");
 
     // pass keycode on to running action:
     //RS_keycodeEvent e(cmd);
@@ -879,26 +888,26 @@ bool QG_ActionHandler::keycode(const QString& code) {
         case RS2::ActionSnapFree:
             slotSnapFree();
             break;
-        case RS2::ActionSnapGrid:
-            slotSnapGrid();
-            break;
-        case RS2::ActionSnapEndpoint:
-            slotSnapEndpoint();
-            break;
-        case RS2::ActionSnapOnEntity:
-            slotSnapOnEntity();
-            break;
         case RS2::ActionSnapCenter:
             slotSnapCenter();
-            break;
-        case RS2::ActionSnapMiddle:
-            slotSnapMiddle();
             break;
         case RS2::ActionSnapDist:
             slotSnapDist();
             break;
+        case RS2::ActionSnapEndpoint:
+            slotSnapEndpoint();
+            break;
+        case RS2::ActionSnapGrid:
+            slotSnapGrid();
+            break;
         case RS2::ActionSnapIntersection:
             slotSnapIntersection();
+            break;
+        case RS2::ActionSnapMiddle:
+            slotSnapMiddle();
+            break;
+        case RS2::ActionSnapOnEntity:
+            slotSnapOnEntity();
             break;
         case RS2::ActionSnapIntersectionManual:
             slotSnapIntersectionManual();
@@ -911,8 +920,8 @@ bool QG_ActionHandler::keycode(const QString& code) {
             slotRestrictOrthogonal();
             break;
         case RS2::ActionRestrictHorizontal:
-            //slotRestrictHorizontal();
-            //break;
+            slotRestrictHorizontal();
+            break;
         case RS2::ActionRestrictVertical:
             slotRestrictVertical();
             break;
@@ -928,7 +937,94 @@ bool QG_ActionHandler::keycode(const QString& code) {
     return false;
 }
 
+/**
+  * toggle snap modes when calling from command line
+  **/
+bool QG_ActionHandler::commandLineActions(RS2::ActionType type){
+    RS_DEBUG->print("QG_ActionHandler::commandLineSnap()");
 
+        // snap actions require special handling (GUI update)
+    //more special handling of actions can be added here
+        switch (type) {
+        case RS2::ActionSnapCenter:
+            if(snapCenter != NULL) {
+                snapCenter->toggle();
+            }
+            slotSnapCenter();
+            return true;
+        case RS2::ActionSnapDist:
+            if(snapDistance != NULL) {
+                snapDistance->toggle();
+            }
+            slotSnapDist();
+            return true;
+        case RS2::ActionSnapEndpoint:
+            if(snapEndpoint != NULL) {
+                snapEndpoint->toggle();
+            }
+            slotSnapEndpoint();
+            return true;
+        case RS2::ActionSnapGrid:
+            if(snapGrid != NULL) {
+                snapGrid->toggle();
+            }
+            slotSnapGrid();
+            return true;
+        case RS2::ActionSnapIntersection:
+            if(snapIntersection != NULL) {
+                snapIntersection->toggle();
+            }
+            slotSnapIntersection();
+            return true;
+        case RS2::ActionSnapMiddle:
+            if(snapMiddle != NULL) {
+                snapMiddle->toggle();
+            }
+            slotSnapMiddle();
+            return true;
+        case RS2::ActionSnapOnEntity:
+            if(snapOnEntity != NULL) {
+                snapOnEntity->toggle();
+            }
+            slotSnapOnEntity();
+            return true;
+
+        case RS2::ActionRestrictNothing:
+            if(restrictHorizontal != NULL) {
+                restrictHorizontal->setChecked(false);
+            }
+            if(restrictVertical != NULL) {
+                restrictVertical->setChecked(false);
+            }
+            slotRestrictNothing();
+            return true;
+        case RS2::ActionRestrictOrthogonal:
+            if(restrictHorizontal != NULL) {
+                restrictHorizontal->setChecked(true);
+            }
+            if(restrictVertical != NULL) {
+                restrictVertical->setChecked(true);
+            }
+            slotRestrictOrthogonal();
+            return true;
+        case RS2::ActionRestrictHorizontal:
+            if(restrictHorizontal != NULL) {
+                restrictHorizontal->setChecked(true);
+            }
+            slotRestrictHorizontal();
+            return true;
+        case RS2::ActionRestrictVertical:
+            if(restrictVertical != NULL) {
+                restrictVertical->setChecked(true);
+            }
+            slotRestrictVertical();
+            return true;
+
+        default:
+            return false;
+        }
+
+}
 
 /**
  * Launches the given command if possible.
@@ -938,7 +1034,7 @@ bool QG_ActionHandler::keycode(const QString& code) {
  *            running action.
  */
 bool QG_ActionHandler::command(const QString& cmd) {
-        RS_DEBUG->print("QG_ActionHandler::command: %s", cmd.toLatin1().data());
+    RS_DEBUG->print("QG_ActionHandler::command: %s", cmd.toLatin1().data());
     QString c = cmd.toLower();
 
     if (c=="\n") {
@@ -946,7 +1042,7 @@ bool QG_ActionHandler::command(const QString& cmd) {
         if (gv!=NULL) {
             gv->back();
         }
-                RS_DEBUG->print("QG_ActionHandler::command: back");
+        RS_DEBUG->print("QG_ActionHandler::command: back");
         return true;
     }
 
@@ -955,29 +1051,33 @@ bool QG_ActionHandler::command(const QString& cmd) {
 
     RS_GraphicView* gv = mainWindow->getGraphicView();
     if (gv!=NULL) {
-                RS_DEBUG->print("QG_ActionHandler::command: trigger command event in "
-                " graphic view");
+        RS_DEBUG->print("QG_ActionHandler::command: trigger command event in "
+                        " graphic view");
         gv->commandEvent(&e);
     }
 
     // if the current action can't deal with the command,
     //   it might be intended to launch a new command
-//    std::cout<<"QG_ActionHandler::command(): e.isAccepted()="<<e.isAccepted()<<std::endl;
+    //    std::cout<<"QG_ActionHandler::command(): e.isAccepted()="<<e.isAccepted()<<std::endl;
     if (!e.isAccepted()) {
-                RS_DEBUG->print("QG_ActionHandler::command: convert cmd to action type");
+        RS_DEBUG->print("QG_ActionHandler::command: convert cmd to action type");
         // command for new action:
         RS2::ActionType type = RS_COMMANDS->cmdToAction(cmd);
         if (type!=RS2::ActionNone) {
-                        RS_DEBUG->print("QG_ActionHandler::command: setting current action");
-            setCurrentAction(type);
-                        RS_DEBUG->print("QG_ActionHandler::command: current action set");
+            RS_DEBUG->print("QG_ActionHandler::command: setting current action");
+             //special handling, currently needed for snap actions
+            if( commandLineActions(type)==false){
+                //not handled yet
+                setCurrentAction(type);
+            }
+            RS_DEBUG->print("QG_ActionHandler::command: current action set");
             return true;
         }
     }else{
         return true;
     }
 
-        RS_DEBUG->print("QG_ActionHandler::command: current action not set");
+    RS_DEBUG->print("QG_ActionHandler::command: current action not set");
     return false;
 }
 
@@ -1400,14 +1500,19 @@ void QG_ActionHandler::slotModifyExplodeText() {
 }
 
 void QG_ActionHandler::slotSetSnaps(RS_SnapMode s) {
+    RS_DEBUG->print("QG_ActionHandler::slotSetSnaps()");
     updateSnapMode(s);
     if(snapToolBar != NULL) {
+    RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): set snapToolBar");
         snapToolBar->setSnaps(s);
+    }else{
+    RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): snapToolBar is NULL");
     }
     RS_GraphicView* view=mainWindow->getGraphicView();
     if(view != NULL) {
         view->setDefaultSnapMode(s);
     }
+    RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): ok");
 }
 
 void QG_ActionHandler::slotSnapFree() {
@@ -1439,10 +1544,10 @@ void QG_ActionHandler::slotSnapOnEntity() {
 }
 
 void QG_ActionHandler::slotSnapCenter() {
+//    std::cout<<" QG_ActionHandler::slotSnapCenter(): start"<<std::endl;
     if(snapCenter==NULL) return;
     RS_SnapMode s=getSnaps();
     s.snapCenter = snapCenter->isChecked();
-
     slotSetSnaps(s);
 }
 
@@ -1531,12 +1636,14 @@ void QG_ActionHandler::slotRestrictOrthogonal() {
 }
 
 void QG_ActionHandler::slotRestrictHorizontal() {
+    restrictHorizontal->setChecked(true);
     RS_SnapMode s=getSnaps();
     s.restriction=getSnapRestriction();
     slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotRestrictVertical() {
+    restrictVertical->setChecked(true);
     RS_SnapMode s=getSnaps();
     s.restriction=getSnapRestriction();
     slotSetSnaps(s);

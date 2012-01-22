@@ -53,25 +53,29 @@ void RS_ActionSetSnapMode::trigger() {
             s.clear();
             break;
 
+        case RS2::SnapCenter:
+            s.snapCenter = !s.snapCenter;
+            break;
+
+        case RS2::SnapDist:
+            s.snapDistance = !s.snapDistance;
+            break;
+
         case RS2::SnapEndpoint:
             s.snapEndpoint = !s.snapEndpoint;
+            break;
+
+        case RS2::SnapGrid:
+            s.snapGrid = !s.snapGrid;
             break;
 
         case RS2::SnapOnEntity:
             s.snapOnEntity = !s.snapOnEntity;
             break;
 
-        case RS2::SnapCenter:
-            s.snapCenter = !s.snapCenter;
-            break;
-
         case RS2::SnapMiddle:
             s.snapMiddle = !s.snapMiddle;
             break;
-
-       // case RS2::SnapDist:
-       //     snapSpot = snapDist(mouseCoord);
-       //     break;
 
         case RS2::SnapIntersection:
             s.snapIntersection = !s.snapIntersection;
