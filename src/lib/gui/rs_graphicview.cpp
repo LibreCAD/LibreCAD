@@ -35,6 +35,7 @@
 #include "rs_text.h"
 #include "rs_settings.h"
 #include "rs_dialogfactory.h"
+#include "rs_layer.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -1124,52 +1125,52 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 	// - Notes: pen width is not scaled on print and print preview.
         //   This is the standard (AutoCAD like) behaviour.
     // bug# 3437941
-	// ------------------------------------------------------------
-	if (!draftMode)
-  	{
-		double	uf = 1.0;	// Unit factor.
-		double	wf = 1.0;	// Width factor.
+    // ------------------------------------------------------------
+    if (!draftMode)
+    {
+        double	uf = 1.0;	// Unit factor.
+        double	wf = 1.0;	// Width factor.
 
-		RS_Graphic* graphic = container->getGraphic();
+        RS_Graphic* graphic = container->getGraphic();
 
-		if (graphic != NULL)
-	  	{
-			uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
+        if (graphic != NULL)
+        {
+            uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
 
-			if (	(isPrinting() || isPrintPreview()) &&
+            if (	(isPrinting() || isPrintPreview()) &&
                                         graphic->getPaperScale() > RS_TOLERANCE )
-		  	{
-				wf = 1.0 / graphic->getPaperScale();
-			}
-		}
+            {
+                wf = 1.0 / graphic->getPaperScale();
+            }
+        }
 
-		pen.setScreenWidth(toGuiDX(w / 100.0 * uf * wf));
-	}
-  	else
-  	{
+        pen.setScreenWidth(toGuiDX(w / 100.0 * uf * wf));
+    }
+    else
+    {
 //		pen.setWidth(RS2::Width00);
-		pen.setScreenWidth(0);
-	}
+        pen.setScreenWidth(0);
+    }
 
 #else
 
-	// - Scale pen width.
-	// - Notes: pen width is scaled on print and print preview.
-	//   This is not the standard (AutoCAD like) behaviour.
-	// --------------------------------------------------------
-	if (!draftMode)
-	{
-		double	uf = 1.0;	//	Unit factor.
+    // - Scale pen width.
+    // - Notes: pen width is scaled on print and print preview.
+    //   This is not the standard (AutoCAD like) behaviour.
+    // --------------------------------------------------------
+    if (!draftMode)
+    {
+        double	uf = 1.0;	//	Unit factor.
 
-		RS_Graphic* graphic = container->getGraphic();
+        RS_Graphic* graphic = container->getGraphic();
 
-		if (graphic != NULL)
-			uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
+        if (graphic != NULL)
+            uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
 
-		pen.setScreenWidth(toGuiDX(w / 100.0 * uf));
-	}
-	else
-		pen.setScreenWidth(0);
+        pen.setScreenWidth(toGuiDX(w / 100.0 * uf));
+    }
+    else
+        pen.setScreenWidth(0);
 #endif
 
     // prevent drawing with 1-width which is slow:
@@ -1244,6 +1245,10 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
     // entity is not visible:
     if (!e->isVisible()) {
         return;
+    }
+    if( isPrintPreview() ) {
+        //do not draw help layer on print preview
+            if(e->isHelpLayer()) return;
     }
 
     // test if the entity is in the viewport

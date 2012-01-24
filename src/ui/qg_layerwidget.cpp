@@ -40,6 +40,7 @@ QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
     layerHidden = QIcon(":/ui/hiddenblock.png");
     layerDefreeze = QIcon(":/ui/unlockedlayer.png");
     layerFreeze = QIcon(":/ui/lockedlayer.png");
+    helpLayer = QIcon(":/ui/fileprint.png");
 }
 
 QG_LayerModel::~QG_LayerModel() {
@@ -97,20 +98,29 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
     RS_Layer* lay = listLayer.at(index.row());
 
     if (role ==Qt::DecorationRole) {
-        if (index.column() == VISIBLE) {
+        switch(index.column()){
+        case VISIBLE:
             if (!lay->isFrozen()) {
                 return layerVisible;
             } else {
                 return layerHidden;
             }
-        }
-        if (index.column() == LOCKED) {
+            case LOCKED:
             if (!lay->isLocked()) {
                 return layerDefreeze;
             } else {
                 return layerFreeze;
             }
+        case HelpLayer:
+            return helpLayer.pixmap(QSize(20,20),lay->isHelpLayer() ?
+                                        QIcon::Disabled:
+                                        QIcon::Normal,
+                                    QIcon::On);
+        default:
+            break;
+
         }
+
     }
     if (role ==Qt::DisplayRole && index.column() == NAME) {
         return lay->getName();
@@ -140,8 +150,9 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layerView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     layerView->setFocusPolicy(Qt::NoFocus);
     layerView->setMinimumHeight(140);
-    layerView->setColumnWidth(QG_LayerModel::VISIBLE, 20);
-    layerView->setColumnWidth(QG_LayerModel::LOCKED, 20);
+    layerView->setColumnWidth(QG_LayerModel::VISIBLE, 16);
+    layerView->setColumnWidth(QG_LayerModel::LOCKED, 16);
+    layerView->setColumnWidth(QG_LayerModel::HelpLayer, 20);
     layerView->verticalHeader()->hide();
     layerView->horizontalHeader()->setStretchLastSection(true);
     layerView->horizontalHeader()->hide();
@@ -303,16 +314,21 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
 
     RS_Layer* l = layerList->getActive();
     layerList->activate(lay);
-    if (layerIdx.column() == QG_LayerModel::VISIBLE) {
+    switch(layerIdx.column()){
+    case QG_LayerModel::VISIBLE:
         actionHandler->slotLayersToggleView();
-    }
-    if (layerIdx.column() == QG_LayerModel::LOCKED) {
+        break;
+    case QG_LayerModel::LOCKED:
         actionHandler->slotLayersToggleLock();
+        break;
+    case QG_LayerModel::HelpLayer:
+        actionHandler->slotLayersTogglePrint();
+        break;
+    default:
+        break;
     }
+
     activateLayer(l);
-
-
-
 }
 
 /**

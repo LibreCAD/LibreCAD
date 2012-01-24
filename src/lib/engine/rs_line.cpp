@@ -32,6 +32,7 @@
 #include "rs_painter.h"
 #include "rs_graphic.h"
 #include "rs_linetypepattern.h"
+#include "rs_information.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -307,7 +308,7 @@ double RS_Line::getDistanceToPoint(const RS_Vector& coord,
 //    return dist;
 }
 
-RS_Vector  RS_Line::getTangentDirection(const RS_Vector& point)const{
+RS_Vector  RS_Line::getTangentDirection(const RS_Vector& /*point*/)const{
         return getEndpoint() - getStartpoint();
 }
 
@@ -523,8 +524,41 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     }
     RS_Vector pStart(view->toGui(getStartpoint()));
     RS_Vector pEnd(view->toGui(getEndpoint()));
+
     //    std::cout<<"draw line: "<<pStart<<" to "<<pEnd<<std::endl;
     RS_Vector direction=pEnd-pStart;
+    if(isHelpLayer(true) && direction.squared() > RS_TOLERANCE){
+        //extend line on a help layer to fill the whole view
+        RS_Vector lb(0,0);
+        RS_Vector rt(view->getWidth(),view->getHeight());
+        QList<RS_Vector> rect;
+        rect<<lb<<RS_Vector(rt.x,lb.y);
+        rect<<rt<<RS_Vector(lb.x,rt.y);
+        rect<<lb;
+        RS_VectorSolutions sol;
+        RS_Line dLine(pStart,pEnd);
+        for(int i=0;i<4;i++){
+            RS_Line bLine(rect.at(i),rect.at(i+1));
+            RS_VectorSolutions sol2=RS_Information::getIntersection(&bLine, &dLine);
+            if( sol2.getNumber()>0 && bLine.isPointOnEntity(sol2.get(0),RS_TOLERANCE)) {
+                sol.push_back(sol2.get(0));
+            }
+        }
+        switch(sol.getNumber()){
+        case 2:
+            pStart=sol.get(0);
+            pEnd=sol.get(1);
+            break;
+        case 3:
+        case 4:
+            pStart=sol.get(0);
+            pEnd=sol.get(2);
+            break;
+        default:
+            return;
+        }
+        direction=pEnd-pStart;
+    }
     double  length=direction.magnitude();
     patternOffset -= length;
     if (( !isSelected() && (

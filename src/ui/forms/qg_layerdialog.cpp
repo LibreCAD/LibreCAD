@@ -43,6 +43,7 @@ QG_LayerDialog::QG_LayerDialog(QWidget* parent, QString name, bool modal, Qt::Wi
     setObjectName(name);
     setupUi(this);
 
+
     init();
 }
 
@@ -77,6 +78,7 @@ void QG_LayerDialog::setLayer(RS_Layer* l) {
 void QG_LayerDialog::updateLayer() {
     layer->setName(leName->text().toLatin1().data());
     layer->setPen(wPen->getPen());
+    layer->setHelpLayer(cbHelpLayer->isChecked());
 }
 
 void QG_LayerDialog::validate() {

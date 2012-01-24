@@ -94,6 +94,7 @@
 #include "rs_actionlayersremove.h"
 #include "rs_actionlayerstogglelock.h"
 #include "rs_actionlayerstoggleview.h"
+#include "rs_actionlayerstoggleprint.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_actionlockrelativezero.h"
 #include "rs_actionmodifyattributes.h"
@@ -758,7 +759,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionLayersToggleLock:
         a = new RS_ActionLayersToggleLock(*doc, *gv);
         break;
-
+    case RS2::ActionLayersTogglePrint:
+        a = new RS_ActionLayersTogglePrint(*doc, *gv);
+        break;
         // Block actions:
         //
     case RS2::ActionBlocksDefreezeAll:
@@ -1799,6 +1802,10 @@ void QG_ActionHandler::slotLayersToggleView() {
 
 void QG_ActionHandler::slotLayersToggleLock() {
     setCurrentAction(RS2::ActionLayersToggleLock);
+}
+
+void QG_ActionHandler::slotLayersTogglePrint() {
+    setCurrentAction(RS2::ActionLayersTogglePrint);
 }
 
 

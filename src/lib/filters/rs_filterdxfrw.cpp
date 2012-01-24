@@ -157,6 +157,8 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
     if (data.flags&0x04) {
         layer->lock(true);
     }
+    //help layer doesn't appear in printing
+    layer->setHelpLayer(! data.plotF);
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: add layer to graphic");
     graphic->addLayer(layer);
@@ -1704,6 +1706,7 @@ void RS_FilterDXFRW::writeLayers(){
         lay.color = colorToNumber(pen.getColor());
         lay.lWeight = widthToNumber(pen.getWidth());
         lay.lineType = lineTypeToName(pen.getLineType()).toStdString();
+        lay.plotF = ! l->isHelpLayer(); // a help layer should not appear in print
 //        lay.lineType = lineType.toStdString(); //.toLatin1().data();
         dxf->writeLayer(&lay);
     }

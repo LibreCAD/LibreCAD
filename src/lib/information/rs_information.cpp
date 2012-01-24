@@ -222,7 +222,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
         return ret;
     }
     // a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
-    if (onEntities
+    if (onEntities &&
+            (! (e1 -> isHelpLayer() || e2 -> isHelpLayer() ))
             && (
                 e1 -> getMin().x > e2 -> getMax().x
                 || e1 -> getMax().x < e2 -> getMin().x
@@ -374,9 +375,12 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
     for(int i=0;i<ret.getNumber();i++) {
         if ( ! ret.get(i).valid) continue;
         if (onEntities==true) {
-                //ignore intersections not on entity
-            if (!(e1->isPointOnEntity(ret.get(i), tol) &&
-                  e2->isPointOnEntity(ret.get(i), tol))) {
+            //ignore intersections not on entity
+            if (!(
+                        (e1->isHelpLayer(true) || e1->isPointOnEntity(ret.get(i), tol)) &&
+                        (e2->isHelpLayer(true) || e2->isPointOnEntity(ret.get(i), tol))
+                        )
+                    ) {
 //                std::cout<<"Ignored intersection "<<ret.get(i)<<std::endl;
 //                std::cout<<"because: e1->isPointOnEntity(ret.get(i), tol)="<<e1->isPointOnEntity(ret.get(i), tol)
 //                    <<"\t(e2->isPointOnEntity(ret.get(i), tol)="<<e2->isPointOnEntity(ret.get(i), tol)<<std::endl;

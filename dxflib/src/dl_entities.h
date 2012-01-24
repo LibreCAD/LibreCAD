@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -45,12 +45,20 @@ struct DL_LayerData {
                  int lFlags) {
         name = lName;
         flags = lFlags;
+        plotF = true;
+    }
+    DL_LayerData(const string& lName,
+                 int lFlags,bool lPlotF) {
+        name = lName;
+        flags = lFlags;
+        plotF = lPlotF;//set help Layer, if plotF is false.
     }
 
     /** Layer name. */
     string name;
     /** Layer flags. (1 = frozen, 2 = frozen by default, 4 = locked) */
     int flags;
+    bool plotF;
 };
 
 
@@ -324,7 +332,7 @@ struct DL_TraceData {
             z[i] = 0.0;
         }
     }
-    
+
     /**
      * Constructor.
      * Parameters: see member variables.
@@ -344,11 +352,11 @@ struct DL_TraceData {
         x[1] = sx2;
         y[1] = sy2;
         z[1] = sz2;
-        
+
         x[2] = sx3;
         y[2] = sy3;
         z[2] = sz3;
-        
+
         x[3] = sx4;
         y[3] = sy4;
         z[3] = sz4;
@@ -356,7 +364,7 @@ struct DL_TraceData {
 
     /*! Thickness */
     double thickness;
-    
+
     /*! Points */
     double x[4];
     double y[4];
@@ -392,9 +400,9 @@ struct DL_SplineData {
      * Parameters: see member variables.
      */
     DL_SplineData(int pDegree, int pNKnots, int pNControl, int pFlags) {
-		degree = pDegree;
-		nKnots = pNKnots;
-		nControl = pNControl;
+        degree = pDegree;
+        nKnots = pNKnots;
+        nControl = pNControl;
         flags = pFlags;
     }
 
@@ -632,7 +640,7 @@ struct DL_MTextData {
      */
     int lineSpacingStyle;
     /**
-     * Line spacing factor. 0.25 .. 4.0  
+     * Line spacing factor. 0.25 .. 4.0
      */
     double lineSpacingFactor;
     /*! Text string. */
@@ -704,14 +712,14 @@ struct DL_TextData {
     int textGenerationFlags;
     /**
      * Horizontal justification.
-     * 
+     *
      * 0 = Left (default), 1 = Center, 2 = Right,
      * 3 = Aligned, 4 = Middle, 5 = Fit
      * For 3, 4, 5 the vertical alignment has to be 0.
      */
     int hJustification;
     /**
-     * Vertical justification. 
+     * Vertical justification.
      *
      * 0 = Baseline (default), 1 = Bottom, 2 = Middle, 3= Top
      */
@@ -779,20 +787,20 @@ struct DL_DimensionData {
     /**
      * Dimension type.
      *
-     * 0   Rotated, horizontal, or vertical            
-     * 1   Aligned                                     
-     * 2   Angular                                     
-     * 3   Diametric                                    
-     * 4   Radius                                      
-     * 5   Angular 3-point                             
-     * 6   Ordinate                                    
-     * 64  Ordinate type. This is a bit value (bit 7)  
-     *     used only with integer value 6. If set,     
-     *     ordinate is X-type; if not set, ordinate is 
-     *     Y-type                                      
-     * 128 This is a bit value (bit 8) added to the    
-     *     other group 70 values if the dimension text 
-     *     has been positioned at a user-defined       
+     * 0   Rotated, horizontal, or vertical
+     * 1   Aligned
+     * 2   Angular
+     * 3   Diametric
+     * 4   Radius
+     * 5   Angular 3-point
+     * 6   Ordinate
+     * 64  Ordinate type. This is a bit value (bit 7)
+     *     used only with integer value 6. If set,
+     *     ordinate is X-type; if not set, ordinate is
+     *     Y-type
+     * 128 This is a bit value (bit 8) added to the
+     *     other group 70 values if the dimension text
+     *     has been positioned at a user-defined
      *    location rather than at the default location
      */
     int type;
@@ -811,11 +819,11 @@ struct DL_DimensionData {
      */
     int lineSpacingStyle;
     /**
-     * Line spacing factor. 0.25 .. 4.0  
+     * Line spacing factor. 0.25 .. 4.0
      */
     double lineSpacingFactor;
     /**
-     * Text string. 
+     * Text string.
      *
      * Text string entered explicitly by user or null
      * or "<>" for the actual measurement or " " (one blank space).
@@ -1366,29 +1374,29 @@ struct DL_ImageData {
      */
     DL_ImageData(const string& iref,
                   double iipx, double iipy, double iipz,
-				  double iux, double iuy, double iuz,
-				  double ivx, double ivy, double ivz,
-				  int iwidth, int iheight,
-				  int ibrightness, int icontrast, int ifade) {
+                  double iux, double iuy, double iuz,
+                  double ivx, double ivy, double ivz,
+                  int iwidth, int iheight,
+                  int ibrightness, int icontrast, int ifade) {
         ref = iref;
         ipx = iipx;
         ipy = iipy;
         ipz = iipz;
-		ux = iux;
-		uy = iuy;
-		uz = iuz;
-		vx = ivx;
-		vy = ivy;
-		vz = ivz;
-		width = iwidth;
-		height = iheight;
-		brightness = ibrightness;
-		contrast = icontrast;
-		fade = ifade;
+        ux = iux;
+        uy = iuy;
+        uz = iuz;
+        vx = ivx;
+        vy = ivy;
+        vz = ivz;
+        width = iwidth;
+        height = iheight;
+        brightness = ibrightness;
+        contrast = icontrast;
+        fade = ifade;
     }
 
-    /*! Reference to the image file 
-	    (unique, used to refer to the image def object). */
+    /*! Reference to the image file
+        (unique, used to refer to the image def object). */
     string ref;
     /*! X Coordinate of insertion point. */
     double ipx;
@@ -1396,28 +1404,28 @@ struct DL_ImageData {
     double ipy;
     /*! Z Coordinate of insertion point. */
     double ipz;
-	/*! X Coordinate of u vector along bottom of image. */
-	double ux;
-	/*! Y Coordinate of u vector along bottom of image. */
-	double uy;
-	/*! Z Coordinate of u vector along bottom of image. */
-	double uz;
-	/*! X Coordinate of v vector along left side of image. */
-	double vx;
-	/*! Y Coordinate of v vector along left side of image. */
-	double vy;
-	/*! Z Coordinate of v vector along left side of image. */
-	double vz;
-	/*! Width of image in pixel. */
-	int width;
-	/*! Height of image in pixel. */
-	int height;
-	/*! Brightness (0..100, default = 50). */
-	int brightness;
-	/*! Contrast (0..100, default = 50). */
-	int contrast;
-	/*! Fade (0..100, default = 0). */
-	int fade;
+    /*! X Coordinate of u vector along bottom of image. */
+    double ux;
+    /*! Y Coordinate of u vector along bottom of image. */
+    double uy;
+    /*! Z Coordinate of u vector along bottom of image. */
+    double uz;
+    /*! X Coordinate of v vector along left side of image. */
+    double vx;
+    /*! Y Coordinate of v vector along left side of image. */
+    double vy;
+    /*! Z Coordinate of v vector along left side of image. */
+    double vz;
+    /*! Width of image in pixel. */
+    int width;
+    /*! Height of image in pixel. */
+    int height;
+    /*! Brightness (0..100, default = 50). */
+    int brightness;
+    /*! Contrast (0..100, default = 50). */
+    int contrast;
+    /*! Fade (0..100, default = 0). */
+    int fade;
 };
 
 
@@ -1433,17 +1441,17 @@ struct DL_ImageDefData {
      * Parameters: see member variables.
      */
     DL_ImageDefData(const string& iref,
-				 const string& ifile) {
+                 const string& ifile) {
         ref = iref;
-		file = ifile;
+        file = ifile;
     }
 
-    /*! Reference to the image file 
-	    (unique, used to refer to the image def object). */
+    /*! Reference to the image file
+        (unique, used to refer to the image def object). */
     string ref;
 
-	/*! Image file */
-	string file;
+    /*! Image file */
+    string file;
 };
 
 #endif

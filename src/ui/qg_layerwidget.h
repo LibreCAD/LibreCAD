@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -45,6 +45,7 @@ public:
     enum {
         VISIBLE,
         LOCKED,
+        HelpLayer,
         NAME,
         LAST
     };
@@ -67,11 +68,12 @@ private:
     QIcon layerHidden;
     QIcon layerDefreeze;
     QIcon layerFreeze;
+    QIcon helpLayer;
 };
 
 
 /**
- * This is the Qt implementation of a widget which can view a 
+ * This is the Qt implementation of a widget which can view a
  * layer list and provides a user interface for basic layer actions.
  */
 class QG_LayerWidget: public QWidget, public RS_LayerListListener {
@@ -106,7 +108,7 @@ public:
     }
 
 signals:
-	void escape();
+    void escape();
 
 public slots:
     void slotActivated(QModelIndex layerIdx);

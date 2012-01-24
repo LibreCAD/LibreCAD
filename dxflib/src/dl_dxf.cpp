@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -156,7 +156,7 @@ bool DL_Dxf::in(const string& file, DL_CreationInterface* creationInterface) {
 #ifndef __GCC2x__
 bool DL_Dxf::in(std::stringstream& stream,
                 DL_CreationInterface* creationInterface) {
-    
+
     int errorCounter = 0;
 
     if (stream.good()) {
@@ -186,7 +186,7 @@ bool DL_Dxf::in(std::stringstream& stream,
  * This function reads a couplet, determines the type of data, and
  * passes the value to the the appropriate handler function of
  * \p creationInterface.\n
- * 
+ *
  * \p fp is advanced so that the next call to \p readDXFGroups() reads
  * the next couplet in the file.
  *
@@ -271,7 +271,7 @@ bool DL_Dxf::readDxfGroups(std::stringstream& stream,
 
 
 /**
- * @brief Reads line from file & strips whitespace at start and newline 
+ * @brief Reads line from file & strips whitespace at start and newline
  * at end.
  *
  * @param s Output\n
@@ -373,7 +373,7 @@ bool DL_Dxf::stripWhiteSpace(char** s) {
     while ((*s)[0]==' ' || (*s)[0]=='\t') {
         ++(*s);
     }
-    
+
     return ((*s) ? true : false);
 }
 
@@ -409,7 +409,7 @@ bool DL_Dxf::processDXFGroup(DL_CreationInterface* creationInterface,
             if (!strncmp(groupValue, "dxflib", 6)) {
                 libVersion = getLibVersion(&groupValue[7]);
             }
-            
+
             addComment(creationInterface, groupValue);
         }
     }
@@ -556,7 +556,7 @@ bool DL_Dxf::processDXFGroup(DL_CreationInterface* creationInterface,
                 case 5:
                     addDimAngular3P(creationInterface);
                     break;
-                
+
                 case 6:
                     addDimOrdinate(creationInterface);
                     break;
@@ -586,7 +586,7 @@ bool DL_Dxf::processDXFGroup(DL_CreationInterface* creationInterface,
         case DL_ENTITY_TRACE:
             addTrace(creationInterface);
             break;
-        
+
         case DL_ENTITY_3DFACE:
             add3dFace(creationInterface);
             break;
@@ -598,7 +598,7 @@ bool DL_Dxf::processDXFGroup(DL_CreationInterface* creationInterface,
         case DL_ENTITY_SEQEND:
             endSequence(creationInterface);
             break;
-        
+
         default:
             break;
         }
@@ -616,7 +616,7 @@ bool DL_Dxf::processDXFGroup(DL_CreationInterface* creationInterface,
         // Last DXF entity or setting has been handled
         // Now determine what the next entity or setting type is
 
-		int prevEntity = currentEntity;
+        int prevEntity = currentEntity;
 
         // Read DXF settings:
         if (groupValue[0]=='$') {
@@ -685,10 +685,10 @@ bool DL_Dxf::processDXFGroup(DL_CreationInterface* creationInterface,
             currentEntity = DL_UNKNOWN;
         }
 
-		// end of old style POLYLINE entity
-		if (prevEntity==DL_ENTITY_VERTEX && currentEntity!=DL_ENTITY_VERTEX) {
-			endEntity(creationInterface);
-		}
+        // end of old style POLYLINE entity
+        if (prevEntity==DL_ENTITY_VERTEX && currentEntity!=DL_ENTITY_VERTEX) {
+            endEntity(creationInterface);
+        }
 
         return true;
 
@@ -816,8 +816,10 @@ void DL_Dxf::addLayer(DL_CreationInterface* creationInterface) {
     }
 
     // add layer
+    // 290 holds plotF flag, helpLayer holds (! plotF )
+//    std::cout<<"DL_Dxf::addLayer(): layer("<<values[2]<<"): toInt(values[290]) = "<<toInt(values[290])<<std::endl;
     creationInterface->addLayer(DL_LayerData(values[2],
-                                toInt(values[70])));
+                                toInt(values[70]),(toInt(values[290])!=0)));
 }
 
 
@@ -894,14 +896,14 @@ void DL_Dxf::addPolyline(DL_CreationInterface* creationInterface) {
 
             creationInterface->addVertex(d);
         }
-		creationInterface->endEntity();
+        creationInterface->endEntity();
     }
 }
 
 
 
 /**
- * Adds a polyline vertex entity that was read from the file 
+ * Adds a polyline vertex entity that was read from the file
  * via the creation interface.
  */
 void DL_Dxf::addVertex(DL_CreationInterface* creationInterface) {
@@ -922,9 +924,9 @@ void DL_Dxf::addVertex(DL_CreationInterface* creationInterface) {
  * Adds a spline entity that was read from the file via the creation interface.
  */
 void DL_Dxf::addSpline(DL_CreationInterface* creationInterface) {
-    DL_SplineData sd(toInt(values[71], 3), 
-                     maxKnots, 
-                     maxControlPoints, 
+    DL_SplineData sd(toInt(values[71], 3),
+                     maxKnots,
+                     maxControlPoints,
                      toInt(values[70], 4));
     /*DL_SplineData sd(toInt(values[71], 3), toInt(values[72], 0),
                      toInt(values[73], 0), toInt(values[70], 4));*/
@@ -1030,7 +1032,7 @@ void DL_Dxf::addInsert(DL_CreationInterface* creationInterface) {
  */
 void DL_Dxf::addTrace(DL_CreationInterface* creationInterface) {
     DL_TraceData td;
-    
+
     for (int k = 0; k < 4; k++) {
        td.x[k] = toReal(values[10 + k]);
        td.y[k] = toReal(values[20 + k]);
@@ -1046,7 +1048,7 @@ void DL_Dxf::addTrace(DL_CreationInterface* creationInterface) {
  */
 void DL_Dxf::add3dFace(DL_CreationInterface* creationInterface) {
     DL_3dFaceData td;
-    
+
     for (int k = 0; k < 4; k++) {
        td.x[k] = toReal(values[10 + k]);
        td.y[k] = toReal(values[20 + k]);
@@ -1059,12 +1061,12 @@ void DL_Dxf::add3dFace(DL_CreationInterface* creationInterface) {
 
 /**
  * Adds a solid entity (filled trace) that was read from the file via the creation interface.
- * 
+ *
  * @author AHM
  */
 void DL_Dxf::addSolid(DL_CreationInterface* creationInterface) {
     DL_SolidData sd;
-    
+
     for (int k = 0; k < 4; k++) {
        sd.x[k] = toReal(values[10 + k]);
        sd.y[k] = toReal(values[20 + k]);
@@ -1564,38 +1566,38 @@ bool DL_Dxf::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
                    break;
                    / *
                                case 42: {
-                   	// convert to arc:
-                   	double x1 = hatchEdges[hatchLoopIndex]
-                   		[hatchEdgeIndex[hatchLoopIndex]].x1;
-                   	double y1 = hatchEdges[hatchLoopIndex]
-                   		[hatchEdgeIndex[hatchLoopIndex]].y1;
-                   	double x2 = hatchEdges[hatchLoopIndex]
-                   		[hatchEdgeIndex[hatchLoopIndex]].x2;
-                   	double y2 = hatchEdges[hatchLoopIndex]
-                   		[hatchEdgeIndex[hatchLoopIndex]].y2;
+                    // convert to arc:
+                    double x1 = hatchEdges[hatchLoopIndex]
+                        [hatchEdgeIndex[hatchLoopIndex]].x1;
+                    double y1 = hatchEdges[hatchLoopIndex]
+                        [hatchEdgeIndex[hatchLoopIndex]].y1;
+                    double x2 = hatchEdges[hatchLoopIndex]
+                        [hatchEdgeIndex[hatchLoopIndex]].x2;
+                    double y2 = hatchEdges[hatchLoopIndex]
+                        [hatchEdgeIndex[hatchLoopIndex]].y2;
 
-                   	double bulge = toReal(groupValue);
+                    double bulge = toReal(groupValue);
 
-                   	bool reversed = (bulge<0.0);
-                   	double alpha = atan(bulge)*4.0;
-                   	double radius;
+                    bool reversed = (bulge<0.0);
+                    double alpha = atan(bulge)*4.0;
+                    double radius;
                              double cx;
                              double cy;
-                   	double a1;
-                   	double a2;
+                    double a1;
+                    double a2;
                              double mx = (x2+x1)/2.0;
                              double my = (y2+y1)/2.0;
-                   	double dist = sqrt(pow(x2-x1,2) + pow(y2-y1,2)) / 2.0;
+                    double dist = sqrt(pow(x2-x1,2) + pow(y2-y1,2)) / 2.0;
 
-                   	// alpha can't be 0.0 at this point
+                    // alpha can't be 0.0 at this point
                              radius = fabs(dist / sin(alpha/2.0));
 
                              double wu = fabs(pow(radius, 2.0) - pow(dist, 2.0));
                              double h = sqrt(wu);
-                   	double angle = acos((x2-x1) / dist);
+                    double angle = acos((x2-x1) / dist);
 
                              if (bulge>0.0) {
-                       		        angle+=M_PI/2.0;
+                                    angle+=M_PI/2.0;
                              } else {
                                  angle-=M_PI/2.0;
                              }
@@ -1604,21 +1606,21 @@ bool DL_Dxf::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
                                  h*=-1.0;
                              }
 
-                   	cx = mx + cos(angle) * h;
-                   	cy = my + sin(angle) * h;
+                    cx = mx + cos(angle) * h;
+                    cy = my + sin(angle) * h;
 
-                   	a1 = hatchEdges[hatchLoopIndex]
-                                   	[hatchEdgeIndex[hatchLoopIndex]].type = 2;
+                    a1 = hatchEdges[hatchLoopIndex]
+                                    [hatchEdgeIndex[hatchLoopIndex]].type = 2;
                                    hatchEdges[hatchLoopIndex]
-                                   	[hatchEdgeIndex[hatchLoopIndex]].ccw = (toReal(groupValue)>0.0);
+                                    [hatchEdgeIndex[hatchLoopIndex]].ccw = (toReal(groupValue)>0.0);
                                    hatchEdges[hatchLoopIndex]
-                                   	[hatchEdgeIndex[hatchLoopIndex]].cx = cx;
+                                    [hatchEdgeIndex[hatchLoopIndex]].cx = cx;
                                    hatchEdges[hatchLoopIndex]
-                                   	[hatchEdgeIndex[hatchLoopIndex]].cy = cy;
+                                    [hatchEdgeIndex[hatchLoopIndex]].cy = cy;
                                    hatchEdges[hatchLoopIndex]
-                                   	[hatchEdgeIndex[hatchLoopIndex]].radius = radius;
+                                    [hatchEdgeIndex[hatchLoopIndex]].radius = radius;
                                    } break;
-                   	* /
+                    * /
 
                default:
                    break;
@@ -2013,7 +2015,7 @@ void DL_Dxf::addImageDef(DL_CreationInterface* creationInterface) {
  * Ends some special entities like hatches or old style polylines.
  */
 void DL_Dxf::endEntity(DL_CreationInterface* creationInterface) {
-	creationInterface->endEntity();
+    creationInterface->endEntity();
 }
 
 
@@ -2085,7 +2087,7 @@ DL_WriterA* DL_Dxf::out(const char* file, DL_Codes::version version) {
 
 
 /**
- * @brief Writes a DXF header to the file currently opened 
+ * @brief Writes a DXF header to the file currently opened
  * by the given DXF writer object.
  */
 void DL_Dxf::writeHeader(DL_WriterA& dw) {
@@ -2184,7 +2186,7 @@ void DL_Dxf::writePolyline(DL_WriterA& dw,
     } else {
         dw.entity("POLYLINE");
         dw.entityAttributes(attrib);
-		polylineLayer = attrib.getLayer();
+        polylineLayer = attrib.getLayer();
         dw.dxfInt(66, 1);
         dw.dxfInt(70, data.flags);
         dw.coord(VERTEX_COORD_CODE, 0.0, 0.0);
@@ -2213,7 +2215,7 @@ void DL_Dxf::writeVertex(DL_WriterA& dw,
     } else {
         dw.entity("VERTEX");
         //dw.entityAttributes(attrib);
-    	dw.dxfString(8, polylineLayer);
+        dw.dxfString(8, polylineLayer);
         dw.coord(VERTEX_COORD_CODE, data.x, data.y);
         if (fabs(data.bulge)>1.0e-10) {
             dw.dxfReal(42, data.bulge);
@@ -2221,8 +2223,8 @@ void DL_Dxf::writeVertex(DL_WriterA& dw,
     }
 }
 
-    
-	
+
+
 /**
  * Writes the polyline end. Only needed for DXF R12.
  */
@@ -2369,8 +2371,8 @@ void DL_Dxf::writeEllipse(DL_WriterA& dw,
         dw.dxfReal(42, data.angle2);
     }
 }
-    
-    
+
+
 
 /**
  * Writes a solid entity to the file.
@@ -3254,8 +3256,8 @@ void DL_Dxf::writeImageDef(DL_WriterA& dw,
 
     dw.dxfString(0, "IMAGEDEF");
     if (version==VER_2000) {
-    	dw.dxfHex(5, handle);
-	}
+        dw.dxfHex(5, handle);
+    }
 
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbRasterImageDef");
@@ -3279,7 +3281,7 @@ void DL_Dxf::writeImageDef(DL_WriterA& dw,
 
 
 /**
- * Writes a layer to the file. Layers are stored in the 
+ * Writes a layer to the file. Layers are stored in the
  * tables section of a DXF file.
  *
  * @param dw DXF writer
@@ -3314,13 +3316,17 @@ void DL_Dxf::writeLayer(DL_WriterA& dw,
 
     dw.dxfString(6, (attrib.getLineType().length()==0 ?
                      string("CONTINUOUS") : attrib.getLineType()));
-
+//std::cout<<"DL_Dxf::writeLayer(): layer("<<data.name<<")"<<std::endl;
     if (version>=VER_2000) {
         // layer defpoints cannot be plotted
         std::string lstr = data.name;
         std::transform(lstr.begin(), lstr.end(), lstr.begin(), tolower);
-        if (lstr=="defpoints") {
+        if (lstr=="defpoints"|| ! data.plotF) {
+//            std::cout<<"DL_Dxf::writeLayer(): layer("<<data.name<<"): write(290)=0"<<std::endl;
             dw.dxfInt(290, 0);
+        }else{
+//            std::cout<<"DL_Dxf::writeLayer(): layer("<<data.name<<"): write(290)=1"<<std::endl;
+            dw.dxfInt(290, 1);
         }
     }
     if (version>=VER_2000 && attrib.getWidth()!=-1) {
@@ -3334,7 +3340,7 @@ void DL_Dxf::writeLayer(DL_WriterA& dw,
 
 
 /**
- * Writes a line type to the file. Line types are stored in the 
+ * Writes a line type to the file. Line types are stored in the
  * tables section of a DXF file.
  */
 void DL_Dxf::writeLineType(DL_WriterA& dw,
@@ -3349,15 +3355,15 @@ void DL_Dxf::writeLineType(DL_WriterA& dw,
         return;
     }
 
-	// ignore BYLAYER, BYBLOCK for R12
-	if (version<VER_2000) {
-		if (!strcasecmp(data.name.c_str(), "BYBLOCK") ||
-		    !strcasecmp(data.name.c_str(), "BYLAYER")) {
-			return;
-		}
-	}
+    // ignore BYLAYER, BYBLOCK for R12
+    if (version<VER_2000) {
+        if (!strcasecmp(data.name.c_str(), "BYBLOCK") ||
+            !strcasecmp(data.name.c_str(), "BYLAYER")) {
+            return;
+        }
+    }
 
-	// write id (not for R12)
+    // write id (not for R12)
     if (!strcasecmp(data.name.c_str(), "BYBLOCK")) {
         dw.tableLineTypeEntry(0x14);
     } else if (!strcasecmp(data.name.c_str(), "BYLAYER")) {
@@ -3369,9 +3375,9 @@ void DL_Dxf::writeLineType(DL_WriterA& dw,
     }
 
     dw.dxfString(2, data.name);
-	//if (version>=VER_2000) {
-    	dw.dxfInt(70, data.flags);
-	//}
+    //if (version>=VER_2000) {
+        dw.dxfInt(70, data.flags);
+    //}
 
     if (!strcasecmp(data.name.c_str(), "BYBLOCK")) {
         dw.dxfString(3, "");
@@ -3927,8 +3933,8 @@ void DL_Dxf::writeStyle(DL_WriterA& dw) {
     dw.dxfString(  0, "TABLE");
     dw.dxfString(  2, "STYLE");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 3);
-	}
+        dw.dxfHex(5, 3);
+    }
     //dw.dxfHex(330, 0);
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbSymbolTable");
@@ -3936,8 +3942,8 @@ void DL_Dxf::writeStyle(DL_WriterA& dw) {
     dw.dxfInt( 70, 1);
     dw.dxfString(  0, "STYLE");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 0x11);
-	}
+        dw.dxfHex(5, 0x11);
+    }
     //styleHandleStd = dw.handle();
     //dw.dxfHex(330, 3);
     if (version==VER_2000) {
@@ -3967,8 +3973,8 @@ void DL_Dxf::writeView(DL_WriterA& dw) {
     dw.dxfString(  0, "TABLE");
     dw.dxfString(  2, "VIEW");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 6);
-	}
+        dw.dxfHex(5, 6);
+    }
     //dw.dxfHex(330, 0);
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbSymbolTable");
@@ -3988,8 +3994,8 @@ void DL_Dxf::writeUcs(DL_WriterA& dw) {
     dw.dxfString(  0, "TABLE");
     dw.dxfString(  2, "UCS");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 7);
-	}
+        dw.dxfHex(5, 7);
+    }
     //dw.dxfHex(330, 0);
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbSymbolTable");
@@ -4005,8 +4011,8 @@ void DL_Dxf::writeUcs(DL_WriterA& dw) {
  * Note that this method currently only writes a faked DIMSTYLE section
  * to make the file readable by Aut*cad.
  */
-void DL_Dxf::writeDimStyle(DL_WriterA& dw, 
-					double dimasz, double dimexe, double dimexo,
+void DL_Dxf::writeDimStyle(DL_WriterA& dw,
+                    double dimasz, double dimexe, double dimexo,
                        double dimgap, double dimtxt) {
 
     dw.dxfString(  0, "TABLE");
@@ -4115,8 +4121,8 @@ void DL_Dxf::writeBlockRecord(DL_WriterA& dw) {
     dw.dxfString(  0, "TABLE");
     dw.dxfString(  2, "BLOCK_RECORD");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 1);
-	}
+        dw.dxfHex(5, 1);
+    }
     //dw.dxfHex(330, 0);
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbSymbolTable");
@@ -4125,8 +4131,8 @@ void DL_Dxf::writeBlockRecord(DL_WriterA& dw) {
 
     dw.dxfString(  0, "BLOCK_RECORD");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 0x1F);
-	}
+        dw.dxfHex(5, 0x1F);
+    }
     //int msh = dw.handle();
     //dw.setModelSpaceHandle(msh);
     //dw.dxfHex(330, 1);
@@ -4139,8 +4145,8 @@ void DL_Dxf::writeBlockRecord(DL_WriterA& dw) {
 
     dw.dxfString(  0, "BLOCK_RECORD");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 0x1B);
-	}
+        dw.dxfHex(5, 0x1B);
+    }
     //int psh = dw.handle();
     //dw.setPaperSpaceHandle(psh);
     //dw.dxfHex(330, 1);
@@ -4153,8 +4159,8 @@ void DL_Dxf::writeBlockRecord(DL_WriterA& dw) {
 
     dw.dxfString(  0, "BLOCK_RECORD");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 0x23);
-	}
+        dw.dxfHex(5, 0x23);
+    }
     //int ps0h = dw.handle();
     //dw.setPaperSpace0Handle(ps0h);
     //dw.dxfHex(330, 1);
@@ -4176,8 +4182,8 @@ void DL_Dxf::writeBlockRecord(DL_WriterA& dw) {
 void DL_Dxf::writeBlockRecord(DL_WriterA& dw, const string& name) {
     dw.dxfString(  0, "BLOCK_RECORD");
     if (version==VER_2000) {
-    	dw.handle();
-	}
+        dw.handle();
+    }
     //dw->dxfHex(330, 1);
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbSymbolTableRecord");
@@ -4522,7 +4528,7 @@ void DL_Dxf::writeObjectsEnd(DL_WriterA& dw) {
     dw.dxfString(  0, "ENDSEC");
 }
 
-    
+
 
 /**
  * Writes a comment to the DXF file.
