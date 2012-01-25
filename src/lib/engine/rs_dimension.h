@@ -190,6 +190,7 @@ public:
     }
 
     double getArrowSize();
+    double getTickSize();
     double getExtensionLineExtension();
     double getExtensionLineOffset();
     double getDimensionLineGap();

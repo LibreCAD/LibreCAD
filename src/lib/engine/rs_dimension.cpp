@@ -140,7 +140,9 @@ void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
         dimensionLine->setStartpoint(p1 + dir);
         dimensionLine->setEndpoint(p2 - dir);
     }
-
+double dimtsz=getTickSize();
+if(dimtsz < 0.01) {
+    //display arrow
     // Arrows:
     RS_SolidData sd;
     RS_Solid* arrow;
@@ -166,7 +168,30 @@ void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
         arrow->setLayer(NULL);
         addEntity(arrow);
     }
+}else{
+    //display ticks
+    // Arrows:
 
+    RS_Line* tick;
+    RS_Vector tickVector;
+    tickVector.setPolar(dimtsz,arrowAngle1 + M_PI*0.25); //tick is 45 degree away
+
+    if (arrow1) {
+        // tick 1
+        tick = new RS_Line(this, p1-tickVector, p1+tickVector);
+        tick->setPen(RS_Pen(RS2::FlagInvalid));
+        tick->setLayer(NULL);
+        addEntity(tick);
+    }
+
+    if (arrow2) {
+        // tick 2:
+        tick = new RS_Line(this, p2-tickVector, p2+tickVector);
+        tick->setPen(RS_Pen(RS2::FlagInvalid));
+        tick->setLayer(NULL);
+        addEntity(tick);
+    }
+}
     // Text label:
     RS_TextData textData;
     RS_Vector textPos;
@@ -232,6 +257,12 @@ double RS_Dimension::getArrowSize() {
     return getGraphicVariable("$DIMASZ", 2.5, 40);
 }
 
+/**
+ * @return tick size in drawing units.
+ */
+double RS_Dimension::getTickSize() {
+    return getGraphicVariable("$DIMTSZ", 0., 40);
+}
 
 
 /**
