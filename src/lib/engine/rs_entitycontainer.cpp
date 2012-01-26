@@ -1103,29 +1103,44 @@ RS_Vector RS_EntityContainer::getNearestPointOnEntity(const RS_Vector& coord,
 RS_Vector RS_EntityContainer::getNearestCenter(const RS_Vector& coord,
                                                double* dist) {
 
-    RS_Vector point(false);
+    double minDist = RS_MAXDOUBLE;  // minimum measured distance
+    double curDist = RS_MAXDOUBLE;                 // currently measured distance
+    RS_Vector closestPoint;         // closest found endpoint
+    RS_Vector point;                // endpoint found
+    //std::cout<<"RS_EntityContainer::getNearestMiddle() middlePoints="<<middlePoints<<std::endl;
 
-    //closestEntity = getNearestEntity(coord, NULL, RS2::ResolveAll);
-    RS_Entity* en = getNearestEntity(coord, NULL, RS2::ResolveNone);
+    for (RS_Entity* en =const_cast<RS_EntityContainer*>(this)-> firstEntity(RS2::ResolveAll);
+         en != NULL;
+         en =const_cast<RS_EntityContainer*>(this)-> nextEntity(RS2::ResolveAll)) {
 
-    if (en!=NULL) {
-        if ( en->isVisible()
-             && en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
-             //&& en->rtti() != RS2::EntityPoint         /**Point*/
-             && en->getParent()->rtti() != RS2::EntitySpline
-             && en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
-             && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
-             && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
-             && en->getParent()->rtti() != RS2::EntityDimRadial    /**< Radial Dimension */
-             && en->getParent()->rtti() != RS2::EntityDimDiametric /**< Diametric Dimension */
-             && en->getParent()->rtti() != RS2::EntityDimAngular   /**< Angular Dimension */
-             && en->getParent()->rtti() != RS2::EntityDimLeader    /**< Leader Dimension */
-             ){//no center point for Spline, Insert, text, Dim
-            point = en->getNearestCenter(coord, dist);
+        if (en->isVisible() && ! en->isContainer()) {
+            if (
+                    en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
+                    //|| en->rtti() == RS2::EntityPoint         /**Point*/
+                    || en->getParent()->rtti() == RS2::EntitySpline
+                    || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
+                    || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
+                    || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
+                    || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
+                    || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
+                    || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
+                    || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
+                    ){//no middle point for Spline, Insert, text, Dim
+                continue;
+            }
+            //std::cout<<"en->rtti()="<<en->rtti()<<"  en->getParent()->rtti()="<< en->getParent()->rtti() <<std::endl;
+            point = en->getNearestCenter(coord, &curDist);
+            if (curDist<minDist) {
+                closestPoint = point;
+                minDist = curDist;
+            }
         }
     }
+    if (dist!=NULL) {
+        *dist = curDist;
+    }
 
-    return point;
+    return closestPoint;
 }
 
 /** @return the nearest of equidistant middle points of the line. */

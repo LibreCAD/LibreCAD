@@ -47,7 +47,7 @@ public:
         this->endpoint = endpoint;
     }
 
-    friend class RS_Line;
+    friend class RS_Lane;
     friend class RS_ActionDrawLine;
 
     friend std::ostream& operator << (std::ostream& os, const RS_LineData& ld) {
@@ -72,7 +72,7 @@ class RS_Line : public RS_AtomicEntity {
 public:
     //RS_Line(RS_EntityContainer* parent);
     //RS_Line(const RS_Line& l);
-    RS_Line(){};
+    RS_Line(){}
     RS_Line(RS_EntityContainer* parent,
             const RS_LineData& d);
     RS_Line(RS_EntityContainer* parent, const RS_Vector& pStart, const RS_Vector& pEnd);
@@ -186,8 +186,8 @@ public:
                                          double* dist = NULL)const;
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
             bool onEntity=true, double* dist = NULL, RS_Entity** entity=NULL)const;
-    virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL);
+//    virtual RS_Vector getNearestCenter(const RS_Vector& coord,
+//                                       double* dist = NULL);
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
                                        double* dist = NULL,
                                        int middlePoints = 1
