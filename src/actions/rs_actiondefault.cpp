@@ -103,6 +103,9 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
     RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
 
     switch (getStatus()) {
+    case Neutral:
+        deleteSnapper();
+        break;
     case Dragging:
         //v2 = graphicView->toGraph(e->x(), e->y());
         v2 = mouse;
