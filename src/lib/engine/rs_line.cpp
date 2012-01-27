@@ -172,17 +172,17 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
     }
 
 
-RS_Vector RS_Line::getNearestCenter(const RS_Vector& coord,
-                                    double* dist) {
+//RS_Vector RS_Line::getNearestCenter(const RS_Vector& coord,
+//                                    double* dist) {
 
-    RS_Vector p = (data.startpoint + data.endpoint)*0.5;
+//    RS_Vector p = (data.startpoint + data.endpoint)*0.5;
 
-    if (dist!=NULL) {
-        *dist = p.distanceTo(coord);
-    }
+//    if (dist!=NULL) {
+//        *dist = p.distanceTo(coord);
+//    }
 
-    return p;
-}
+//    return p;
+//}
 
 
 RS_Vector RS_Line::getNearestDist(double distance,

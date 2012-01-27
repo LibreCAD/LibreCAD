@@ -110,6 +110,21 @@ public:
     }
 
     /**
+    * return the nearest center for snapping
+    * @param coord Coordinate (typically a mouse coordinate)
+    * @param dist Pointer to a value which will contain the measured
+    * distance between 'coord' and the closest center point. The passed
+    * pointer can also be NULL in which case the distance will be
+    * lost.
+    *
+    * @return The closest center point.
+    */
+   virtual RS_Vector getNearestCenter(const RS_Vector& /*coord*/,
+                                      double* /*dist*/) {
+        return RS_Vector(false);
+    }
+
+    /**
      * (De-)selects startpoint.
      */
     virtual void setStartpointSelected(bool select) {
