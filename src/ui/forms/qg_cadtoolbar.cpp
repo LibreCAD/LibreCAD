@@ -25,6 +25,7 @@
 **********************************************************************/
 //#include <iostream>
 #include "qg_cadtoolbar.h"
+#include "rs_dialogfactory.h"
 
 /*
  *  Constructs a QG_CadToolBar as a child of 'parent', with the
@@ -197,6 +198,8 @@ void QG_CadToolBar::showSubToolBar(){
     toolbars.last()->show();
 }
 void QG_CadToolBar::showPreviousToolBar(bool cleanup) {
+    // cleanup mouse hint when showing previous tool bar, bug#3480121
+    RS_DIALOGFACTORY->updateMouseWidget("","",false);
     if(cleanup){
         if(actionHandler != NULL) {
             RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
