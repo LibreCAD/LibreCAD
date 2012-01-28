@@ -375,14 +375,6 @@ void RS_ActionDefault::updateMouseButtonHints() {
     }
 }
 
-
-
-//resume the default action
-void RS_ActionDefault::resume() {
-    init(Neutral);
-    setStatus(Neutral);
-}
-
 void RS_ActionDefault::updateMouseCursor() {
         switch (getStatus()) {
         case Neutral:

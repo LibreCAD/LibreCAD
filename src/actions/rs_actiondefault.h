@@ -79,7 +79,7 @@ public:
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
     //    virtual void updateToolBar();
-    virtual void resume();
+//    virtual void resume();
 
 protected:
     RS_Vector v1;
