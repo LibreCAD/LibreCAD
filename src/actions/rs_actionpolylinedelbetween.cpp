@@ -206,18 +206,11 @@ void RS_ActionPolylineDelBetween::updateMouseCursor() {
 
 
 void RS_ActionPolylineDelBetween::updateToolBar() {
-    //not needed any more with new snap
-    return;
-        switch (getStatus()) {
-        case SetNodePoint1:
-        case SetNodePoint2:
-        case ChooseSegment:
-                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-                break;
-        default:
-                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarPolylines);
-                break;
+    if (RS_DIALOGFACTORY!=NULL) {
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
         }
+    }
 }
 
 

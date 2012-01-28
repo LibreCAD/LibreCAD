@@ -50,7 +50,7 @@ QAction* RS_ActionPolylineEquidistant::createGUIAction(RS2::ActionType /*type*/,
 }
 
 void RS_ActionPolylineEquidistant::init(int status) {
-        RS_ActionInterface::init(status);
+        RS_PreviewActionInterface::init(status);
         originalEntity = NULL;
         targetPoint = RS_Vector(false);
         bRightSide = false;
@@ -280,15 +280,10 @@ void RS_ActionPolylineEquidistant::updateMouseButtonHints() {
 }
 
 void RS_ActionPolylineEquidistant::updateToolBar() {
-    //not needed any more with new snap
-    return;
-        switch (getStatus()) {
-        case ChooseEntity:
-                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-                break;
-        default:
-                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarPolylines);
-                break;
+    if (RS_DIALOGFACTORY!=NULL) {
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
         }
+    }
 }
 // EOF

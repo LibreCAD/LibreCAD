@@ -183,17 +183,11 @@ void RS_ActionPolylineAdd::updateMouseCursor() {
 
 
 void RS_ActionPolylineAdd::updateToolBar() {
-    //not needed any more with new snap
-    return;
-        switch (getStatus()) {
-        case SetAddCoord:
-        case ChooseSegment:
-                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-                break;
-        default:
-                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarPolylines);
-                break;
+    if (RS_DIALOGFACTORY!=NULL) {
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
         }
+    }
 }
 
 
