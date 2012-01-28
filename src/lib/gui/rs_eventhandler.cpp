@@ -345,15 +345,17 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
 
                 // send command event directly to current action:
                 if (!e->isAccepted()) {
+//                    std::cout<<"RS_EventHandler::commandEvent(RS_CommandEvent* e): sending cmd("<<qPrintable(e->getCommand()) <<") to action: "<<currentActions.last()->rtti()<<std::endl;
                     currentActions.last()->commandEvent(e);
-                    e->accept();
                 }
-            }else {
+            }else{
+            //send the command to default action
                 if (defaultAction!=NULL) {
                     defaultAction->commandEvent(e);
-                    //e->accept();
                 }
             }
+            // do not accept command here. Actions themselves should be responsible to accept commands
+//            e->accept();
         }
     }
 
