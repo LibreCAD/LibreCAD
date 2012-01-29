@@ -3180,11 +3180,20 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
     }
 
     // close print preview:
-    if (!on) {
+    if (on==false) {
         RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): off");
         if (parent->getGraphicView()->isPrintPreview()) {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): close");
             slotFileClose();
+//            std::cout<<"QC_ApplicationWindow::slotFilePrintPreview(bool on): close"<<std::endl;
+            emit(printPreviewChanged(false));
+            if(mdiAreaCAD->subWindowList().size()>0){
+                QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
+                if(w != NULL){
+                    mdiAreaCAD->setActiveSubWindow(w);
+                }
+            }
+            return;
         }
     }
 
@@ -3208,12 +3217,13 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
             //no need to search, casting parentWindow works like a charm
             ppv->parentWidget()->showMaximized();
             mdiAreaCAD->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(ppv->parentWidget()));
-            std::cout<<"QC_ApplicationWindow::slotFilePrintPreview(bool on): emit(printPreviewChanged(true))"<<std::endl;
+//            std::cout<<"QC_ApplicationWindow::slotFilePrintPreview(bool on): emit(printPreviewChanged(true))"<<std::endl;
             emit(printPreviewChanged(true));
 
 
         } else {
             if (!parent->getGraphicView()->isPrintPreview()) {
+                //generate a new print preview
                 RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): create");
 
                 QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, 0);
@@ -3274,6 +3284,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
 
                 slotWindowActivated(subWindow);
 //            std::cout<<"QC_ApplicationWindow::slotFilePrintPreview(bool on): new: emit(printPreviewChanged(true))"<<std::endl;
+//            std::cout<<"QC_ApplicationWindow::slotFilePrintPreview(bool on): create"<<std::endl;
             emit(printPreviewChanged(true));
             }
         }
@@ -4586,12 +4597,14 @@ bool QC_ApplicationWindow::queryExit(bool force) {
 
          QList<QMdiSubWindow*> list = mdiAreaCAD->subWindowList();
 
-        while (!list.isEmpty()) {
-                QC_MDIWindow *tmp=qobject_cast<QC_MDIWindow*>(list.takeFirst()->widget());
-                succ = tmp->closeMDI(force);
-                if (!succ) {
-            break;
-        }
+         while (!list.isEmpty()) {
+             QC_MDIWindow *tmp=qobject_cast<QC_MDIWindow*>(list.takeFirst()->widget());
+             if( tmp != NULL){
+                 succ = tmp->closeMDI(force);
+                 if (!succ) {
+                     break;
+                 }
+             }
         }
 
     if (succ) {

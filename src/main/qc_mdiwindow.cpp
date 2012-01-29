@@ -148,14 +148,12 @@ void QC_MDIWindow::removeChildWindow(QC_MDIWindow* w) {
  * @return pointer to the print preview of this drawing or NULL.
  */
 QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
-        while (!childWindows.isEmpty()) {
-                QC_MDIWindow *tmp=childWindows.takeFirst();
-        if (tmp->getGraphicView()->isPrintPreview()) {
-                        return tmp;
-                }
+    for(int i=0;i<childWindows.size();i++){
+        if(childWindows.at(i)->getGraphicView()->isPrintPreview()){
+            return childWindows.at(i);
         }
-
-        return NULL;
+    }
+    return NULL;
 }
 
 
