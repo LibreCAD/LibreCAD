@@ -150,28 +150,37 @@ RS_Commands::RS_Commands() {
     mainCommands.insert(tr("os", "snap - none"), RS2::ActionSnapFree);
     shortCommands.insert(tr("os"), RS2::ActionSnapFree);
 
-    mainCommands.insert(tr("sg", "snap - grid"), RS2::ActionSnapGrid);
-    shortCommands.insert(tr("sg"), RS2::ActionSnapGrid);
+    mainCommands.insert(tr("sc", "snap - center"), RS2::ActionSnapCenter);
+    shortCommands.insert(tr("sc"), RS2::ActionSnapCenter);
+
+    mainCommands.insert(tr("sd", "snap - distance"), RS2::ActionSnapDist);
+    shortCommands.insert(tr("sd"), RS2::ActionSnapDist);
 
     mainCommands.insert(tr("se", "snap - end"), RS2::ActionSnapEndpoint);
     shortCommands.insert(tr("se"), RS2::ActionSnapEndpoint);
 
+    mainCommands.insert(tr("sf", "snap - free"), RS2::ActionSnapFree);
+    shortCommands.insert(tr("sf"), RS2::ActionSnapFree);
+
+    mainCommands.insert(tr("sg", "snap - grid"), RS2::ActionSnapGrid);
+    shortCommands.insert(tr("sg"), RS2::ActionSnapGrid);
+
     mainCommands.insert(tr("si", "snap - intersection"), RS2::ActionSnapIntersection);
     shortCommands.insert(tr("si"), RS2::ActionSnapIntersection);
-
-    mainCommands.insert(tr("sn", "snap - center"), RS2::ActionSnapCenter);
-    shortCommands.insert(tr("sn"), RS2::ActionSnapCenter);
 
     mainCommands.insert(tr("sm", "snap - middle"), RS2::ActionSnapMiddle);
     shortCommands.insert(tr("sm"), RS2::ActionSnapMiddle);
 
-    mainCommands.insert(tr("sn", "snap - nearest"), RS2::ActionSnapMiddle);
-    shortCommands.insert(tr("sn"), RS2::ActionSnapMiddle);
+    mainCommands.insert(tr("sn", "snap - nearest"), RS2::ActionSnapOnEntity);
+    shortCommands.insert(tr("sn"), RS2::ActionSnapOnEntity);
 
     mainCommands.insert(tr("np", "snap - nearest point"), RS2::ActionSnapOnEntity);
     shortCommands.insert(tr("np"), RS2::ActionSnapOnEntity);
 
     // selection:
+    mainCommands.insert(tr("sa", "Select all"), RS2::ActionSelectAll);
+    shortCommands.insert(tr("sa"), RS2::ActionSelectAll);
+
     mainCommands.insert(tr("tn", "Deselect all"), RS2::ActionDeselectAll);
     shortCommands.insert(tr("tn"), RS2::ActionDeselectAll);
 }
@@ -320,19 +329,21 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
 	// snap:
 	else if (c==tr("os", "snap - none")) {
 		ret = RS2::ActionSnapFree;
-	} else if (c==tr("sg", "snap - grid")) {
+    } else if (c==tr("sc", "snap - center")) {
+        ret = RS2::ActionSnapCenter;
+    } else if (c==tr("se", "snap - end")) {
+        ret = RS2::ActionSnapEndpoint;
+    }else if (c==tr("sf", "snap - free")) {
+        ret = RS2::ActionSnapFree;
+    } else if (c==tr("sg", "snap - grid")) {
 		ret = RS2::ActionSnapGrid;
-	} else if (c==tr("se", "snap - end")) {
-		ret = RS2::ActionSnapEndpoint;
 	} else if (c==tr("si", "snap - intersection")) {
 		ret = RS2::ActionSnapIntersection;
-	} else if (c==tr("sn", "snap - center")) {
-		ret = RS2::ActionSnapCenter;
 	} else if (c==tr("sm", "snap - middle")) {
 		ret = RS2::ActionSnapMiddle;
-	} else if (c==tr("sn", "snap - nearest")) {
-		ret = RS2::ActionSnapMiddle;
-	} else if (c==tr("np", "snap - nearest point")) {
+    } else if (c==tr("sn", "snap - nearest")) {
+        ret = RS2::ActionSnapOnEntity;
+    } else if (c==tr("np", "snap - nearest point")) {
 		ret = RS2::ActionSnapOnEntity;
 	}
 

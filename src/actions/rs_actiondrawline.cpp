@@ -188,12 +188,14 @@ void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
     case SetEndpoint:
         if (checkCommand("close", c)) {
             close();
+            e->accept();
             updateMouseButtonHints();
             return;
         }
 
         if (checkCommand("undo", c)) {
             undo();
+            e->accept();
             updateMouseButtonHints();
             return;
         }

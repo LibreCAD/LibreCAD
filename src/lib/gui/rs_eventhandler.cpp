@@ -353,7 +353,8 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
         if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
                 !currentActions[actionIndex]->isFinished()) {
             currentActions[actionIndex]->commandEvent(e);
-            e->accept();
+            //do not accept command here; actions should accept it instead
+//            e->accept();
         } else {
             if (defaultAction!=NULL) {
                 defaultAction->commandEvent(e);
