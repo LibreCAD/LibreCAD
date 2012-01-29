@@ -624,6 +624,7 @@ void RS_EventHandler::setSnapMode(RS2::SnapMode sm) {
     if (defaultAction!=NULL) {
         defaultAction->setSnapMode(sm);
     }
+    RS_DIALOGFACTORY->setCadToolBarSnapMode(sm);
 }
 
 

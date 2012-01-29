@@ -1755,6 +1755,14 @@ void QG_DialogFactory::commandMessage(const QString& message) {
 }
 
 
+/**
+ * Called to set the snap cadtoolbar status according to snap mode
+ */
+void QG_DialogFactory::setCadToolBarSnapMode( RS2::SnapMode snapMode){
+    if(cadToolBar != NULL) {
+        cadToolBar->setSnapMode(snapMode);
+    }
+}
 
 /**
  * Converts an extension to a format description.

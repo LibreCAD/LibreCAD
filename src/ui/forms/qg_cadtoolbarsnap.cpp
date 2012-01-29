@@ -232,7 +232,7 @@ void QG_CadToolBarSnap::disableRestrictions() {
     }
 }
 
-void QG_CadToolBarSnap::setSnapMode(int sm) {
+void QG_CadToolBarSnap::setSnapMode(RS2::SnapMode sm) {
     switch (sm) {
     case RS2::SnapFree:
         bFree->setChecked(true);

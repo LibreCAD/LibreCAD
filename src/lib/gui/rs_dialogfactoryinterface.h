@@ -404,7 +404,12 @@ public:
     virtual void commandMessage(const QString& message) = 0;
 
 
-	virtual bool isAdapter() = 0;
+    virtual bool isAdapter() = 0;
+    /**
+      * to set snap cad toolbar status according to snap mode
+      */
+    virtual void setCadToolBarSnapMode( RS2::SnapMode snapMode)=0;
+
 };
 
 #endif

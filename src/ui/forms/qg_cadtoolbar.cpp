@@ -299,3 +299,8 @@ void QG_CadToolBar::setSnapFree() {
                 tbSnap->snapFree();
         }
 }
+void QG_CadToolBar::setSnapMode( RS2::SnapMode snapMode){
+        if (tbSnap != NULL ) {
+                tbSnap->setSnapMode(snapMode);
+        }
+}

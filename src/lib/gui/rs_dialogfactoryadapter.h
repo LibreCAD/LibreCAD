@@ -87,7 +87,8 @@ public:
     virtual void restoreMouseWidget(void) {}
     virtual void updateSelectionWidget(int ) {}
     virtual void commandMessage(const QString& ) {}
-	virtual bool isAdapter() { return true; }
+    virtual bool isAdapter() { return true; }
+    virtual void setCadToolBarSnapMode( RS2::SnapMode ){}
 };
 
 #endif

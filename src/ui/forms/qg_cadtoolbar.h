@@ -76,6 +76,8 @@ public slots:
     virtual void showToolBarSelect();
     virtual void showToolBarSelect( RS_ActionInterface * selectAction, int nextAction );
     virtual void setSnapFree();
+    virtual void setSnapMode( RS2::SnapMode snapMode);
+
 
 signals:
     void signalBack();

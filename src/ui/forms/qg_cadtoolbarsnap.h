@@ -29,6 +29,7 @@
 class QG_CadToolBar;
 class QG_ActionHandler;
 
+#include "rs.h"
 #include "ui_qg_cadtoolbarsnap.h"
 
 class QG_CadToolBarSnap : public QWidget, public Ui::QG_CadToolBarSnap
@@ -57,7 +58,7 @@ public slots:
     virtual void restrictVertical();
     virtual void disableSnaps();
     virtual void disableRestrictions();
-    virtual void setSnapMode( int sm );
+    virtual void setSnapMode(RS2::SnapMode snapMode);
     virtual void setSnapRestriction( int sr );
     virtual void setRelativeZero();
     virtual void lockRelativeZero( bool on );
