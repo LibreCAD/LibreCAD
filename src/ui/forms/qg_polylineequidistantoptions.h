@@ -54,7 +54,7 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
+    void saveOptions();
 
 };
 

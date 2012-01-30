@@ -57,7 +57,7 @@ public:
 	
 	virtual void trigger();
 
-        virtual void mouseMoveEvent(QMouseEvent* e);
+//        virtual void mouseMoveEvent(QMouseEvent* e);
         virtual void mouseReleaseEvent(QMouseEvent* e);
 	
 	virtual void updateMouseButtonHints();
@@ -66,7 +66,7 @@ public:
 	virtual void showOptions();
 	virtual void hideOptions();
 
-	void setDist(double d) {
+    void setDist(const double& d) {
 		dist = d;
 	}
 
@@ -74,7 +74,7 @@ public:
 		return dist;
 	}
 
-	void setNumber(int n) {
+    void setNumber(unsigned n) {
 		number = n;
 	}
 

@@ -41,11 +41,7 @@ QG_PolylineEquidistantOptions::QG_PolylineEquidistantOptions(QWidget* parent, Qt
  */
 QG_PolylineEquidistantOptions::~QG_PolylineEquidistantOptions()
 {
-    RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/PolylineEquidisantDist", leDist->text());
-    RS_SETTINGS->writeEntry("/PolylineEquidisantCopies", leNumber->text());
-    RS_SETTINGS->endGroup();
-    destroy();
+    saveOptions();
     // no need to delete child widgets, Qt does it all for us
 }
 
@@ -73,8 +69,8 @@ void QG_PolylineEquidistantOptions::setAction(RS_ActionInterface* a, bool update
         // settings from config file:
         else {
             RS_SETTINGS->beginGroup("/Draw");
-            sd = RS_SETTINGS->readEntry("/PolylineEquidisantDist", "10.0");
-            sn = RS_SETTINGS->readEntry("/PolylineEquidisantCopies", "1");
+            sd = RS_SETTINGS->readEntry("/PolylineEquidistantDist", "10.0");
+            sn = RS_SETTINGS->readEntry("/PolylineEquidistantCopies", "1");
             RS_SETTINGS->endGroup();
         }
 
@@ -87,23 +83,32 @@ void QG_PolylineEquidistantOptions::setAction(RS_ActionInterface* a, bool update
     }
 }
 
-void QG_PolylineEquidistantOptions::destroy() {
-    if (action!=NULL) {
-        RS_SETTINGS->beginGroup("/Draw");
-        RS_SETTINGS->writeEntry("/PolylineEquidistantDist", action->getDist());
-        RS_SETTINGS->writeEntry("/PolylineEquidistantCopies", action->getNumber());
-        RS_SETTINGS->endGroup();
-    }
+void QG_PolylineEquidistantOptions::saveOptions() {
+    RS_SETTINGS->beginGroup("/Draw");
+//    std::cout<<"QG_PolylineEquidistantOptions::saveOptions(): saving /PolylineEquidistantDist="<<qPrintable(leDist->text())<<std::endl;
+    RS_SETTINGS->writeEntry("/PolylineEquidistantDist", leDist->text());
+    RS_SETTINGS->writeEntry("/PolylineEquidistantCopies", leNumber->text());
+    RS_SETTINGS->endGroup();
 }
 
 void QG_PolylineEquidistantOptions::updateDist(const QString& l) {
     if (action!=NULL) {
-        action->setDist(RS_Math::eval(l));
+        bool ok;
+        double dist=RS_Math::eval(l,&ok);
+        if(ok==false){
+            dist=10.;
+            leDist->setText(QString::number(dist,'g',3));
+        }
+        if (action!=NULL) {
+            action->setDist(dist);
+        }
     }
 }
+
 void QG_PolylineEquidistantOptions::updateNumber(const QString& l) {
-    int i=abs(l.toInt());
-    if(!i) {
+    bool ok;
+    unsigned i=static_cast<unsigned>(RS_Math::eval(l,&ok)+0.5);
+    if(ok==false || (i==0 && i>100)) {
         i=1;
         leNumber->setText(QString::number(i));
     }

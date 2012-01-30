@@ -71,9 +71,9 @@ void RS_ActionDrawPolyline::reset() {
 
 
 void RS_ActionDrawPolyline::init(int status) {
+    reset();
     RS_PreviewActionInterface::init(status);
 
-    reset();
 }
 
 

@@ -64,7 +64,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
         }
 
         RS_Vector offset(false);
-        QList<RS_Entity*> addList;
+//        QList<RS_Entity*> addList;
 
         if (document!=NULL) {
                 document->startUndoCycle();
@@ -190,19 +190,19 @@ void RS_ActionPolylineEquidistant::trigger() {
 
 
 
-void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent* e) {
-        RS_DEBUG->print("RS_ActionPolylineEquidistant::mouseMoveEvent begin");
+//void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent* e) {
+//        RS_DEBUG->print("RS_ActionPolylineEquidistant::mouseMoveEvent begin");
 
-        switch (getStatus()) {
-        case ChooseEntity:
-                snapPoint(e);
-                break;
-        default:
-                break;
-        }
+//        switch (getStatus()) {
+//        case ChooseEntity:
+////                snapPoint(e);
+//                break;
+//        default:
+//                break;
+//        }
 
-        RS_DEBUG->print("RS_ActionPolylineEquidistant::mouseMoveEvent end");
-}
+//        RS_DEBUG->print("RS_ActionPolylineEquidistant::mouseMoveEvent end");
+//}
 
 
 

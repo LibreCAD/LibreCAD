@@ -834,7 +834,7 @@ void QG_DialogFactory::requestPolylineOptions(RS_ActionInterface* action,
  * Shows a widget for options for the action: "draw equidistant polyline"
  */
 void QG_DialogFactory::requestPolylineEquidistantOptions(RS_ActionInterface* action,
-                                                         bool on, bool update ) {
+                                                         bool on, bool /*update*/ ) {
 
     if(!on) {
         if (polylineEquidistantOptions!=NULL) {
@@ -848,8 +848,12 @@ void QG_DialogFactory::requestPolylineEquidistantOptions(RS_ActionInterface* act
             polylineEquidistantOptions = new QG_PolylineEquidistantOptions();
 
             optionWidget->addWidget(polylineEquidistantOptions);
+            // settings from action
+            polylineEquidistantOptions -> setAction(action, false);
+        }else{
+            // settings from widget using saved config
+            polylineEquidistantOptions -> setAction(action, true);
         }
-        polylineEquidistantOptions -> setAction(action, update);
         polylineEquidistantOptions->show();
     }
 }
