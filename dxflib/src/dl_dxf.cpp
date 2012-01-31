@@ -819,7 +819,7 @@ void DL_Dxf::addLayer(DL_CreationInterface* creationInterface) {
     // 290 holds plotF flag, helpLayer holds (! plotF )
 //    std::cout<<"DL_Dxf::addLayer(): layer("<<values[2]<<"): toInt(values[290]) = "<<toInt(values[290])<<std::endl;
     creationInterface->addLayer(DL_LayerData(values[2],
-                                toInt(values[70]),(toInt(values[290])!=0)));
+                                toInt(values[70]),(toInt(values[290],1)!=0)));
 }
 
 
