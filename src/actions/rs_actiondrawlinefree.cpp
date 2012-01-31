@@ -34,7 +34,7 @@
 
 RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_ActionInterface("Draw freehand lines",
+        :RS_PreviewActionInterface("Draw freehand lines",
                     container, graphicView) {
     vertex = RS_Vector(false);
     polyline = NULL;
@@ -56,6 +56,8 @@ QAction* RS_ActionDrawLineFree::createGUIAction(RS2::ActionType /*type*/, QObjec
 
 void RS_ActionDrawLineFree::trigger() {
     if (polyline!=NULL) {
+        deletePreview();
+
             polyline->endPolyline();
             RS_VectorSolutions sol=polyline->getRefPoints();
             if(sol.getNumber() > 2 ) {
@@ -73,22 +75,25 @@ void RS_ActionDrawLineFree::trigger() {
 	    }
         polyline = NULL;
     }
+    setStatus(SetStartpoint);
 }
 
 /*
  * 11 Aug 2011, Dongxu Li
- * ToDo, show the line while drawing
  */
 
 void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
     if (vertex.valid && polyline!=NULL) {
         RS_Vector v = snapPoint(e);
+        if( vertex.valid && graphicView->toGui(v - vertex).squared()< 1. ){
+            //do not add the same mouse position
+            return;
+        }
         RS_Entity* ent = polyline->addVertex(v);
-        ent->setLayerToActive();
-        ent->setPenToActive();
-
-        graphicView->drawEntity(ent);
-        drawSnapper();
+        if (polyline->count() > 0){
+            preview->addCloneOf(ent);
+            drawPreview();
+        }
 
         vertex = v;
 
@@ -101,11 +106,20 @@ void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionDrawLineFree::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        vertex = snapPoint(e);
-        polyline = new RS_Polyline(container,
-                                   RS_PolylineData(vertex, vertex, 0));
-        polyline->setLayerToActive();
-        polyline->setPenToActive();
+        switch(getStatus()){
+        case SetStartpoint:
+            setStatus(Dragging);
+        case Dragging:
+            vertex = snapPoint(e);
+            polyline = new RS_Polyline(container,
+                                       RS_PolylineData(vertex, vertex, 0));
+            polyline->setLayerToActive();
+            polyline->setPenToActive();
+            break;
+        default:
+            break;
+
+        }
     }
     //else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton && !vertex.valid) {
     //}
@@ -115,8 +129,10 @@ void RS_ActionDrawLineFree::mousePressEvent(QMouseEvent* e) {
 
 void RS_ActionDrawLineFree::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
+        if(getStatus()==Dragging){
         vertex = RS_Vector(false);
         trigger();
+        }
     } else if (e->button()==Qt::RightButton) {
         if (polyline!=NULL) {
             delete polyline;
@@ -130,7 +146,8 @@ void RS_ActionDrawLineFree::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionDrawLineFree::updateMouseButtonHints() {
     switch (getStatus()) {
-    case 0:
+    case SetStartpoint:
+    case Dragging:
         RS_DIALOGFACTORY->updateMouseWidget(
             tr("Click and drag to draw a line"), tr("Cancel"));
         break;
