@@ -70,8 +70,11 @@ void RS_ActionSelectSingle::keyPressEvent(QKeyEvent* e) {
 
 void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
-            //need to finish the parent RS_ActionSelect as well, bug#3437138
-        actionSelect->requestFinish();
+        //need to finish the parent RS_ActionSelect as well, bug#3437138
+        //need to check actionSelect is set, bug#3437138, bug#3473462
+        if(actionSelect != NULL) {
+            actionSelect->requestFinish();
+        }
         init(getStatus()-1);
     } else {
         en = catchEntity(e);
