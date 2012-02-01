@@ -230,61 +230,46 @@ void QG_CadToolBar::showPreviousToolBar(bool cleanup) {
     }
 }
 
-void QG_CadToolBar::showToolBar(RS2::ToolBarId id) {
+void QG_CadToolBar::showToolBar(RS2::ToolBarId id, bool restoreAction ) {
     QWidget* newTb = NULL;
     switch (id) {
     default:
     case RS2::ToolBarMain:
-        tbMain->restoreAction();
+        if(restoreAction) tbMain->restoreAction();
         newTb = tbMain;
         break;
-        /* not needed any more
-    case RS2::ToolBarPoints:
-        newTb = tbPoints;
-        break;
-        */
     case RS2::ToolBarLines:
-        tbLines->restoreAction();
+        if(restoreAction) tbLines->restoreAction();
         newTb = tbLines;
         break;
     case RS2::ToolBarArcs:
-        tbArcs->restoreAction();
+        if(restoreAction) tbArcs->restoreAction();
         newTb = tbArcs;
         break;
     case RS2::ToolBarEllipses:
-        tbEllipses->restoreAction();
+        if(restoreAction) tbEllipses->restoreAction();
         newTb = tbEllipses;
         break;
-        /*
-    case RS2::ToolBarSplines:
-        newTb = tbSplines;
-        break;
-        */
     case RS2::ToolBarPolylines:
-        tbPolylines->restoreAction();
+        if(restoreAction) tbPolylines->restoreAction();
         newTb = tbPolylines;
         break;
     case RS2::ToolBarCircles:
-        tbCircles->restoreAction();
+        if(restoreAction) tbCircles->restoreAction();
         newTb = tbCircles;
         break;
     case RS2::ToolBarInfo:
-        tbInfo->restoreAction();
+        if(restoreAction) tbInfo->restoreAction();
         newTb = tbInfo;
         break;
     case RS2::ToolBarModify:
-        tbModify->restoreAction();
+        if(restoreAction) tbModify->restoreAction();
         newTb = tbModify;
         break;
     case RS2::ToolBarDim:
-        tbDim->restoreAction();
+        if(restoreAction) tbDim->restoreAction();
         newTb = tbDim;
         break;
-        /* not needed any more
-    case RS2::ToolBarSnap:
-        newTb = tbSnap;
-        break;
-        */
     case RS2::ToolBarSelect:
         newTb = tbSelect;
         break;
@@ -295,23 +280,12 @@ void QG_CadToolBar::showToolBar(RS2::ToolBarId id) {
         toolbars.erase(toolbars.begin()+i0,toolbars.end());
         toolbarIDs.erase(toolbarIDs.begin()+i0,toolbarIDs.end());
     }
-    //    if (currentTb==newTb) {
-    //        return;
-    //    }
-    //        if (currentTb!=NULL) {
-    //            currentTb->setVisible(false);
-    //        }
-    //    //    previousID=savedID;
-    //    //    savedID=id;
-    //    currentTb = newTb;
     if (newTb!=NULL) {
         if(!( toolbarIDs.size()>0 && id == toolbarIDs.last())) {
-            //            if(toolbars.last()!=NULL) toolbars.last()->setVisible(false);
             toolbarIDs.push_back(id);
             toolbars.push_back(newTb);
         }
     }
-    //        std::cout<<"QG_CadToolBar::showToolBar(): toolbars.size()="<<toolbars.size()<<std::endl;
     showSubToolBar();
 }
 
@@ -412,4 +386,218 @@ void QG_CadToolBar::showToolBarSelect(RS_ActionInterface* selectAction,
     showToolBar(RS2::ToolBarSelect);
 }
 
+void QG_CadToolBar::setToolBar(RS2::ActionType actionType, bool cleanup=false){
+    switch(actionType){
+    //no op
+    case RS2::ActionFileNew:
+    case RS2::ActionFileOpen:
+    case RS2::ActionFileSave:
+    case RS2::ActionFileSaveAs:
+    case RS2::ActionFileExport:
+    case RS2::ActionFileClose:
+    case RS2::ActionFilePrint:
+    case RS2::ActionFilePrintPreview:
+    case RS2::ActionFileQuit:
+    case RS2::ActionPrintPreview:
+    case RS2::ActionEditUndo:
+    case RS2::ActionEditRedo:
+    case RS2::ActionEditCut:
+    case RS2::ActionEditCutNoSelect:
+    case RS2::ActionEditCopy:
+    case RS2::ActionEditCopyNoSelect:
+    case RS2::ActionEditPaste:
+    case RS2::ActionViewStatusBar:
+    case RS2::ActionViewLayerList:
+    case RS2::ActionViewBlockList:
+    case RS2::ActionViewCommandLine:
+    case RS2::ActionViewLibrary:
+    case RS2::ActionViewPenToolbar:
+    case RS2::ActionViewOptionToolbar:
+    case RS2::ActionViewCadToolbar:
+    case RS2::ActionViewFileToolbar:
+    case RS2::ActionViewEditToolbar:
+    case RS2::ActionViewSnapToolbar:
+    case RS2::ActionViewGrid:
+    case RS2::ActionViewDraft:
+    case RS2::ActionZoomIn:
+    case RS2::ActionZoomOut:
+    case RS2::ActionZoomAuto:
+    case RS2::ActionZoomWindow:
+    case RS2::ActionZoomPan:
+    case RS2::ActionZoomRedraw:
+    case RS2::ActionZoomPrevious:
+    case RS2::ActionSelect:
+    case RS2::ActionSelectSingle:
+    case RS2::ActionSelectContour:
+    case RS2::ActionSelectWindow:
+    case RS2::ActionDeselectWindow:
+    case RS2::ActionSelectAll:
+    case RS2::ActionDeselectAll:
+    case RS2::ActionSelectIntersected:
+    case RS2::ActionDeselectIntersected:
+    case RS2::ActionSelectInvert:
+    case RS2::ActionSelectLayer:
+    case RS2::ActionSelectDouble:
+    case RS2::ActionDrawHatch:
+    case RS2::ActionDrawHatchNoSelect:
+    case RS2::ActionDefault:
+    case RS2::ActionEditKillAllActions:
+    case RS2::ActionSnapFree:
+    case RS2::ActionSnapGrid:
+    case RS2::ActionSnapEndpoint:
+    case RS2::ActionSnapOnEntity:
+    case RS2::ActionSnapCenter:
+    case RS2::ActionSnapMiddle:
+    case RS2::ActionSnapDist:
+    case RS2::ActionSnapIntersection:
+    case RS2::ActionSnapIntersectionManual:
+    case RS2::ActionRestrictNothing:
+    case RS2::ActionRestrictOrthogonal:
+    case RS2::ActionRestrictHorizontal:
+    case RS2::ActionRestrictVertical:
+    case RS2::ActionSetRelativeZero:
+    case RS2::ActionLockRelativeZero:
+    case RS2::ActionUnlockRelativeZero:
+    case RS2::ActionLayersDefreezeAll:
+    case RS2::ActionLayersFreezeAll:
+    case RS2::ActionLayersAdd:
+    case RS2::ActionLayersRemove:
+    case RS2::ActionLayersEdit:
+    case RS2::ActionLayersToggleView:
+    case RS2::ActionLayersToggleLock:
+    case RS2::ActionLayersTogglePrint:
+    case RS2::ActionBlocksDefreezeAll:
+    case RS2::ActionBlocksFreezeAll:
+    case RS2::ActionBlocksAdd:
+    case RS2::ActionBlocksRemove:
+    case RS2::ActionBlocksAttributes:
+    case RS2::ActionBlocksEdit:
+    case RS2::ActionBlocksInsert:
+    case RS2::ActionBlocksToggleView:
+    case RS2::ActionBlocksCreate:
+    case RS2::ActionBlocksCreateNoSelect:
+    case RS2::ActionBlocksExplode:
+    case RS2::ActionBlocksExplodeNoSelect:
+    case RS2::ActionModifyExplodeText:
+    default:
+        return;
+    case RS2::ActionDrawImage:
+    case RS2::ActionDrawPoint:
+    case RS2::ActionDrawSpline:
+    case RS2::ActionDrawText:
+        showToolBar(RS2::ToolBarMain, false);
+        break;
+    case RS2::ActionDrawArc:
+    case RS2::ActionDrawArc3P:
+    case RS2::ActionDrawArcParallel:
+    case RS2::ActionDrawArcTangential:
+        showToolBar(RS2::ToolBarArcs, false);
+        break;
+    case RS2::ActionDrawCircle:
+    case RS2::ActionDrawCircle2P:
+    case RS2::ActionDrawCircle3P:
+    case RS2::ActionDrawCircleCR:
+    case RS2::ActionDrawCircleParallel:
+    case RS2::ActionDrawCircleInscribe:
+        showToolBar(RS2::ToolBarCircles, false);
+        break;
+    case RS2::ActionDrawEllipseArcAxis:
+    case RS2::ActionDrawEllipseAxis:
+    case RS2::ActionDrawEllipseFociPoint:
+    case RS2::ActionDrawEllipse4Points:
+    case RS2::ActionDrawEllipseCenter3Points:
+    case RS2::ActionDrawEllipseInscribe:
+        showToolBar(RS2::ToolBarEllipses, false);
+        break;
+    case RS2::ActionDrawLine:
+    case RS2::ActionDrawLineAngle:
+    case RS2::ActionDrawLineBisector:
+    case RS2::ActionDrawLineFree:
+    case RS2::ActionDrawLineHorVert:
+    case RS2::ActionDrawLineHorizontal:
+    case RS2::ActionDrawLineOrthogonal:
+    case RS2::ActionDrawLineOrthTan:
+    case RS2::ActionDrawLineParallel:
+    case RS2::ActionDrawLineParallelThrough:
+    case RS2::ActionDrawLinePolygonCenCor:
+    case RS2::ActionDrawLinePolygonCorCor:
+    case RS2::ActionDrawLineRectangle:
+    case RS2::ActionDrawLineRelAngle:
+    case RS2::ActionDrawLineTangent1:
+    case RS2::ActionDrawLineTangent2:
+    case RS2::ActionDrawLineVertical:
+        showToolBar(RS2::ToolBarLines, false);
+        break;
+    case RS2::ActionDrawPolyline:
+    case RS2::ActionPolylineAdd:
+    case RS2::ActionPolylineAppend:
+    case RS2::ActionPolylineDel:
+    case RS2::ActionPolylineDelBetween:
+    case RS2::ActionPolylineTrim:
+    case RS2::ActionPolylineEquidistant:
+    case RS2::ActionPolylineSegment:
+        showToolBar(RS2::ToolBarPolylines, false);
+        break;
+    case RS2::ActionDimAligned:
+    case RS2::ActionDimLinear:
+    case RS2::ActionDimLinearVer:
+    case RS2::ActionDimLinearHor:
+    case RS2::ActionDimRadial:
+    case RS2::ActionDimDiametric:
+    case RS2::ActionDimAngular:
+    case RS2::ActionDimLeader:
+        showToolBar(RS2::ToolBarDim, false);
+        break;
+    case RS2::ActionModifyAttributes:
+    case RS2::ActionModifyAttributesNoSelect:
+    case RS2::ActionModifyDelete:
+    case RS2::ActionModifyDeleteNoSelect:
+    case RS2::ActionModifyDeleteQuick:
+    case RS2::ActionModifyDeleteFree:
+    case RS2::ActionModifyMove:
+    case RS2::ActionModifyMoveNoSelect:
+    case RS2::ActionModifyRotate:
+    case RS2::ActionModifyRotateNoSelect:
+    case RS2::ActionModifyScale:
+    case RS2::ActionModifyScaleNoSelect:
+    case RS2::ActionModifyMirror:
+    case RS2::ActionModifyMirrorNoSelect:
+    case RS2::ActionModifyMoveRotate:
+    case RS2::ActionModifyMoveRotateNoSelect:
+    case RS2::ActionModifyRotate2:
+    case RS2::ActionModifyRotate2NoSelect:
+    case RS2::ActionModifyEntity:
+    case RS2::ActionModifyTrim:
+    case RS2::ActionModifyTrim2:
+    case RS2::ActionModifyTrimAmount:
+    case RS2::ActionModifyCut:
+    case RS2::ActionModifyStretch:
+    case RS2::ActionModifyBevel:
+    case RS2::ActionModifyRound:
+    case RS2::ActionModifyOffset:
+    case RS2::ActionModifyOffsetNoSelect:
+        showToolBar(RS2::ToolBarModify, false);
+        break;
+    case RS2::ActionInfoInside:
+    case RS2::ActionInfoDist:
+    case RS2::ActionInfoDist2:
+    case RS2::ActionInfoAngle:
+    case RS2::ActionInfoTotalLength:
+    case RS2::ActionInfoTotalLengthNoSelect:
+    case RS2::ActionInfoArea:
+        showToolBar(RS2::ToolBarInfo, false);
+        break;
+
+
+
+    }
+    if(cleanup){
+        if(actionHandler != NULL) {
+            RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+            if(currentAction != NULL) {
+                currentAction->finish(false); //finish the action, but do not update toolBar
+            }
+        }
+    }
+}
 

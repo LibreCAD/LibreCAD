@@ -60,7 +60,10 @@ public slots:
     virtual void mouseReleaseEvent( QMouseEvent * e );
     virtual void contextMenuEvent( QContextMenuEvent * e );
     virtual void createSubToolBars( QG_ActionHandler * ah );
-    virtual void showToolBar(RS2::ToolBarId id );
+    /** show the toolbar by id
+      * if restoreAction is true, also, start the action specified by the checked button of the toolbar
+      **/
+    virtual void showToolBar(RS2::ToolBarId id, bool restoreAction = true );
     virtual void showToolBarMain();
     virtual void showToolBarLines();
     virtual void showToolBarArcs();
@@ -74,6 +77,7 @@ public slots:
     virtual void showToolBarSelect();
     virtual void showToolBarSelect( RS_ActionInterface * selectAction, int nextAction );
     virtual void showPreviousToolBar(bool cleanup = true);
+    virtual void setToolBar(RS2::ActionType actionType, bool cleanup=false);
     virtual void resetToolBar();
 
 signals:
