@@ -201,7 +201,7 @@
       </size>
      </property>
      <property name="toolTip">
-      <string>Draw Ellipse with by center and 3 points on ellipse</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
       <string/>
