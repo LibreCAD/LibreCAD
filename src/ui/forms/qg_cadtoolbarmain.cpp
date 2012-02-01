@@ -111,12 +111,12 @@ void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
 }
 
 //clear current action
-void QG_CadToolBarMain::finishCurrentAction()
+void QG_CadToolBarMain::finishCurrentAction(bool resetToolBar)
 {
     if(actionHandler==NULL) return;
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
     if(currentAction != NULL) {
-        currentAction->finish(false); //finish the action, but do not update toolBar
+        currentAction->finish(resetToolBar); //finish the action, but do not update toolBar
     }
 }
 
@@ -151,4 +151,10 @@ void QG_CadToolBarMain::restoreAction()
 void QG_CadToolBarMain::resetToolBar()
 {
     bHidden->setChecked(true);
+}
+
+void QG_CadToolBarMain::mouseReleaseEvent(QMouseEvent* e) {
+ if (e->button()==Qt::RightButton) {
+    finishCurrentAction(true);
+ }
 }
