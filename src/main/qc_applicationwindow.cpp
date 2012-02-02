@@ -954,6 +954,9 @@ void QC_ApplicationWindow::initActions(void)
     action = actionFactory.createAction(RS2::ActionDrawArcParallel, actionHandler);
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionDrawArcTangential, actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Circles:
     subMenu= menu->addMenu(tr("&Circle"));

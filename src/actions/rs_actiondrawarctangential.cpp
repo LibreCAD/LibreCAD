@@ -50,7 +50,7 @@ QAction* RS_ActionDrawArcTangential::createGUIAction(RS2::ActionType /*type*/, Q
     /*RVT_PORT    QAction* action = new QAction(tr("Arc: Tangential"),
                                   tr("&Tangential"),
                                   QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Arc: Tangential"), NULL);
+    QAction* action = new QAction(tr("Arc &Tangential"), NULL);
     //action->zetStatusTip(tr("Draw arcs tangential to base entity"));
     return action;
 }

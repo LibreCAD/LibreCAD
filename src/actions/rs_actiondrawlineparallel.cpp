@@ -54,15 +54,15 @@ QAction* RS_ActionDrawLineParallel::createGUIAction(RS2::ActionType type, QObjec
     QAction* action = NULL;
     switch(type){
     case RS2::ActionDrawLineParallel:
-        action = new QAction(tr("Parallel"), NULL);
+        action = new QAction(tr("&Parallel"), NULL);
         action->setIcon(QIcon(":/extui/linespara.png"));
         break;
     case RS2::ActionDrawArcParallel:
-        action = new QAction(tr("Concentric"), NULL);
+        action = new QAction(tr("&Concentric"), NULL);
         action->setIcon(QIcon(":/extui/arcspara.png"));
         break;
     case RS2::ActionDrawCircleParallel:
-        action = new QAction(tr("Concentric"), NULL);
+        action = new QAction(tr("&Concentric"), NULL);
         action->setIcon(QIcon(":/extui/circlespara.png"));
         break;
     default:
