@@ -289,13 +289,13 @@ void RS_ActionDrawArcTangential::updateMouseCursor() {
 
 
 
-void RS_ActionDrawArcTangential::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionDrawArcTangential::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }
+//    }
+//}
 
 
 // EOF

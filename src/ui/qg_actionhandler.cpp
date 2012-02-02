@@ -395,7 +395,8 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDrawLineFree(*doc, *gv);
         break;
     case RS2::ActionDrawLineParallel:
-        a = new RS_ActionDrawLineParallel(*doc, *gv);
+        a= new RS_ActionDrawLineParallel(*doc, *gv);
+        static_cast<RS_ActionDrawLineParallel*>(a)->setActionType(RS2::ActionDrawLineParallel);
         break;
     case RS2::ActionDrawLineParallelThrough:
         a = new RS_ActionDrawLineParallelThrough(*doc, *gv);
@@ -464,7 +465,8 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDrawCircle3P(*doc, *gv);
         break;
     case RS2::ActionDrawCircleParallel:
-        a = new RS_ActionDrawLineParallel(*doc, *gv);
+        a= new RS_ActionDrawLineParallel(*doc, *gv);
+        static_cast<RS_ActionDrawLineParallel*>(a)->setActionType(RS2::ActionDrawCircleParallel);
         break;
     case RS2::ActionDrawCircleInscribe:
         a = new RS_ActionDrawCircleInscribe(*doc, *gv);
@@ -476,7 +478,8 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDrawArc3P(*doc, *gv);
         break;
     case RS2::ActionDrawArcParallel:
-        a = new RS_ActionDrawLineParallel(*doc, *gv);
+        a= new RS_ActionDrawLineParallel(*doc, *gv);
+        static_cast<RS_ActionDrawLineParallel*>(a)->setActionType(RS2::ActionDrawArcParallel);
         break;
     case RS2::ActionDrawArcTangential:
         a = new RS_ActionDrawArcTangential(*doc, *gv);

@@ -46,24 +46,28 @@ RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
     distance = 1.0;
     number = 1;
     coord = RS_Vector(false);
+    actionType=RS2::ActionNone;
 }
 
 QAction* RS_ActionDrawLineParallel::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
 
     QAction* action = NULL;
-
-    if (type==RS2::ActionDrawLineParallel) {
-                // tr("Para&llel"),
+    switch(type){
+    case RS2::ActionDrawLineParallel:
         action = new QAction(tr("Parallel"), NULL);
-                action->setIcon(QIcon(":/extui/linespara.png"));
-    } else if (type==RS2::ActionDrawArcParallel) {
+        action->setIcon(QIcon(":/extui/linespara.png"));
+        break;
+    case RS2::ActionDrawArcParallel:
         action = new QAction(tr("Concentric"), NULL);
-                action->setIcon(QIcon(":/extui/arcspara.png"));
-    } else if (type==RS2::ActionDrawCircleParallel) {
+        action->setIcon(QIcon(":/extui/arcspara.png"));
+        break;
+    case RS2::ActionDrawCircleParallel:
         action = new QAction(tr("Concentric"), NULL);
-                action->setIcon(QIcon(":/extui/circlespara.png"));
+        action->setIcon(QIcon(":/extui/circlespara.png"));
+        break;
+    default:
+        action=NULL;
     }
-    //action->zetStatusTip(tr("Draw parallels to existing lines, arcs, "circles"));
     return action;
 }
 
@@ -262,13 +266,13 @@ void RS_ActionDrawLineParallel::updateMouseCursor() {
 
 
 
-void RS_ActionDrawLineParallel::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionDrawLineParallel::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }
+//    }
+//}
 
 
 // EOF

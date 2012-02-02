@@ -315,6 +315,7 @@ public:
     virtual void requestToolBar(RS2::ToolBarId id) = 0;
     virtual void requestPreviousToolBar() = 0;
     virtual void resetToolBar() = 0;
+    virtual void showCadToolBar(RS2::ActionType actionType) = 0;
 
     /**
      * This virtual method must be overwritten and must show

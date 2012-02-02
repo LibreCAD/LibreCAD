@@ -423,13 +423,15 @@ void RS_ActionDrawArc::updateMouseCursor() {
 
 
 
-void RS_ActionDrawArc::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionDrawArc::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }else{
+//            RS_DIALOGFACTORY->showCadToolBar(rtti());
+//        }
+//    }
+//}
 
 
 // EOF

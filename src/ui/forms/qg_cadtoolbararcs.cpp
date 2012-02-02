@@ -150,4 +150,23 @@ void QG_CadToolBarArcs::back() {
         cadToolBar->showPreviousToolBar();
     }
 }
+
+void QG_CadToolBarArcs::showCadToolBar(RS2::ActionType actionType) {
+    switch(actionType){
+    case RS2::ActionDrawArc:
+        bArc->setChecked(true);
+        return;
+    case RS2::ActionDrawArc3P:
+        bArc3P->setChecked(true);
+        return;
+    case RS2::ActionDrawArcParallel:
+        bArcParallel->setChecked(true);
+        return;
+    case RS2::ActionDrawArcTangential:
+        bArcTangential->setChecked(true);
+        return;
+        default:
+        return;
+    }
+}
 //EOF

@@ -115,6 +115,8 @@ public:
         return cadToolBar;
     }
 
+    virtual void showCadToolBar(RS2::ActionType actionType) ;
+
     /**
      * Links this dialog factory to a command widget.
      */

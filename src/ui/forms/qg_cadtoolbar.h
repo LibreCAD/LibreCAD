@@ -77,7 +77,7 @@ public slots:
     virtual void showToolBarSelect();
     virtual void showToolBarSelect( RS_ActionInterface * selectAction, int nextAction );
     virtual void showPreviousToolBar(bool cleanup = true);
-    virtual void setToolBar(RS2::ActionType actionType, bool cleanup=false);
+    virtual void showCadToolBar(RS2::ActionType actionType, bool cleanup=false);
     virtual void resetToolBar();
 
 signals:

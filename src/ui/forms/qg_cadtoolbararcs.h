@@ -49,7 +49,7 @@ public slots:
     virtual void drawArcTangential();
     virtual void back();
     virtual void resetToolBar();
-    virtual void setToolBar(RS2::ActionType actionType);
+    virtual void showCadToolBar(RS2::ActionType actionType);
 
 protected:
     QG_CadToolBar* cadToolBar;

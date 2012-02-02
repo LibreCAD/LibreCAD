@@ -54,7 +54,7 @@ public:
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 	
 	virtual RS2::ActionType rtti() {
-		return RS2::ActionDrawLineParallel;
+        return actionType;
 	}
 
     virtual void trigger();
@@ -70,7 +70,7 @@ public:
     virtual void showOptions();
 
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
 
 	double getDistance() {
 		return distance;
@@ -87,6 +87,10 @@ public:
 	void setNumber(int n) {
 		number = n;
 	}
+    /** Set action type **/
+    void setActionType(RS2::ActionType actionType){
+        this->actionType=actionType;
+    }
 
 private:
     /** Closest parallel. */
@@ -100,7 +104,8 @@ private:
 	/** Coordinate of the mouse. */
 	RS_Vector coord;
 	/** Original entity. */
-	RS_Entity* entity;
+    RS_Entity* entity;
+    RS2::ActionType actionType;
 	/**
 	 * Commands
 	 */

@@ -79,6 +79,7 @@ public:
     virtual void resetToolBar() {}
     virtual void requestToolBarSelect(RS_ActionInterface* ,
                                       RS2::ActionType ) {}
+    virtual void showCadToolBar(RS2::ActionType /*actionType*/){}
     virtual bool requestModifyEntityDialog(RS_Entity* ) { return false; }
     virtual bool requestTextDialog(RS_Text* ) { return false; }
     virtual bool requestHatchDialog(RS_Hatch* ) { return false; }

@@ -29,6 +29,7 @@
 
 #include "rs_graphicview.h"
 #include "rs_commands.h"
+#include "rs_dialogfactory.h"
 
 /**
  * Constructor.
@@ -235,7 +236,15 @@ void RS_ActionInterface::updateMouseCursor() {}
 /**
  * Should be overwritten to set the toolbar for this action.
  */
-void RS_ActionInterface::updateToolBar() {}
+void RS_ActionInterface::updateToolBar() {
+    if (RS_DIALOGFACTORY!=NULL) {
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
+        }else{
+            RS_DIALOGFACTORY->showCadToolBar(rtti());
+        }
+    }
+}
 
 /**
  * @return true, if the action is finished and can be deleted.

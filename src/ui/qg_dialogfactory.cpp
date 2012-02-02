@@ -1473,6 +1473,15 @@ void QG_DialogFactory::requestToolBarSelect(RS_ActionInterface* selectAction,
     }
 }
 
+/**
+  * Show the cad toolbar according to action type
+  * Author: Dongxu Li
+  **/
+void QG_DialogFactory::showCadToolBar(RS2::ActionType actionType) {
+if(cadToolBar != NULL){
+    cadToolBar->showCadToolBar(actionType);
+}
+}
 
 
 /**

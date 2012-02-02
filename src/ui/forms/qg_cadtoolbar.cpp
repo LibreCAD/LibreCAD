@@ -386,7 +386,7 @@ void QG_CadToolBar::showToolBarSelect(RS_ActionInterface* selectAction,
     showToolBar(RS2::ToolBarSelect);
 }
 
-void QG_CadToolBar::setToolBar(RS2::ActionType actionType, bool cleanup=false){
+void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     switch(actionType){
     //no op
     case RS2::ActionFileNew:
@@ -492,6 +492,9 @@ void QG_CadToolBar::setToolBar(RS2::ActionType actionType, bool cleanup=false){
     case RS2::ActionDrawArcParallel:
     case RS2::ActionDrawArcTangential:
         showToolBar(RS2::ToolBarArcs, false);
+       if(tbArcs != NULL){
+           tbArcs->showCadToolBar(actionType);
+       }
         break;
     case RS2::ActionDrawCircle:
     case RS2::ActionDrawCircle2P:
