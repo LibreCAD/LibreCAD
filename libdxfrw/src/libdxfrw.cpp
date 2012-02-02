@@ -167,13 +167,16 @@ bool dxfRW::writeLineType(DRW_LType *ent){
         return true;
     }
     writer->writeString(0, "LTYPE");
-    ++entCount;
-    sprintf(buffer, "%X", entCount);
-    writer->writeString(5, buffer);
-
-    writer->writeString(330, "5");
-    writer->writeString(100, "AcDbSymbolTableRecord");
-    writer->writeString(100, "AcDbLinetypeTableRecord");
+    if (version > DRW::AC1009) {
+        ++entCount;
+        sprintf(buffer, "%X", entCount);
+        writer->writeString(5, buffer);
+        if (version > DRW::AC1012) {
+            writer->writeString(330, "5");
+        }
+        writer->writeString(100, "AcDbSymbolTableRecord");
+        writer->writeString(100, "AcDbLinetypeTableRecord");
+    }
     writer->writeString(2, ent->name);
     writer->writeInt16(70, ent->flags);
     writer->writeString(3, ent->desc);
@@ -193,20 +196,30 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
     char buffer[5];
     writer->writeString(0, "LAYER");
     if (!wlayer0 && ent->name == "0") {
-            wlayer0 = true;
+        wlayer0 = true;
+        if (version > DRW::AC1009) {
             writer->writeString(5, "10");
+        }
     } else {
-        ++entCount;
-        sprintf(buffer, "%X", entCount);
-        writer->writeString(5, buffer);
+        if (version > DRW::AC1009) {
+            ++entCount;
+            sprintf(buffer, "%X", entCount);
+            writer->writeString(5, buffer);
+        }
     }
-    writer->writeString(330, "2");
-    writer->writeString(100, "AcDbSymbolTableRecord");
-    writer->writeString(100, "AcDbLayerTableRecord");
+    if (version > DRW::AC1012) {
+        writer->writeString(330, "2");
+    }
+    if (version > DRW::AC1009) {
+        writer->writeString(100, "AcDbSymbolTableRecord");
+        writer->writeString(100, "AcDbLayerTableRecord");
+    }
     writer->writeString(2, ent->name);
     writer->writeInt16(70, ent->flags);
     writer->writeInt16(62, ent->color);
     writer->writeString(6, ent->lineType);
+    if (! ent->plotF)
+        writer->writeBool(290, ent->plotF);
     writer->writeInt16(370, ent->lWeight);
     writer->writeString(390, "F");
 //    writer->writeString(347, "10012");
@@ -617,20 +630,28 @@ bool dxfRW::writeTables() {
     }
     writer->writeInt16(70, 2); //end table def
     writer->writeString(0, "BLOCK_RECORD");
-    writer->writeString(5, "1F");
-    writer->writeString(330, "1");
-    writer->writeString(100, "AcDbSymbolTableRecord");
-    writer->writeString(100, "AcDbBlockTableRecord");
+    if (version > DRW::AC1009) {
+        writer->writeString(5, "1F");
+        if (version > DRW::AC1012) {
+            writer->writeString(330, "1");
+        }
+        writer->writeString(100, "AcDbSymbolTableRecord");
+        writer->writeString(100, "AcDbBlockTableRecord");
+    }
     writer->writeString(2, "*Model_Space");
 //    writer->writeInt16(340, 22);
     writer->writeInt16(70, 0);
     writer->writeInt16(280, 1);
     writer->writeInt16(281, 0);
     writer->writeString(0, "BLOCK_RECORD");
-    writer->writeString(5, "1E");
-    writer->writeString(330, "1");
-    writer->writeString(100, "AcDbSymbolTableRecord");
-    writer->writeString(100, "AcDbBlockTableRecord");
+    if (version > DRW::AC1009) {
+        writer->writeString(5, "1E");
+        if (version > DRW::AC1012) {
+            writer->writeString(330, "1");
+        }
+        writer->writeString(100, "AcDbSymbolTableRecord");
+        writer->writeString(100, "AcDbBlockTableRecord");
+    }
     writer->writeString(2, "*Paper_Space");
 //    writer->writeInt16(340, 22);
     writer->writeInt16(70, 0);
@@ -861,6 +882,7 @@ bool dxfRW::processLayer() {
             DBG(sectionstr); DBG("\n");
             if (sectionstr == "LAYER") {
                 reading = true;
+                layer.plotF = true; //init for new entry
             } else if (sectionstr == "ENDTAB") {
                 return true;  //found ENDTAB terminate
             }
