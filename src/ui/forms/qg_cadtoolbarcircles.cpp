@@ -166,4 +166,29 @@ void QG_CadToolBarCircles::on_bBack_clicked()
 {
    parentTB->showPreviousToolBar();
 }
+
+void QG_CadToolBarCircles::showCadToolBar(RS2::ActionType actionType){
+    switch(actionType){
+    case RS2::ActionDrawCircle:
+        bCircle->setChecked(true);
+        return;
+    case RS2::ActionDrawCircle2P:
+        bCircle2P->setChecked(true);
+        return;
+    case RS2::ActionDrawCircle3P:
+        bCircle3P->setChecked(true);
+        return;
+    case RS2::ActionDrawCircleCR:
+        bCircleCR->setChecked(true);
+        return;
+    case RS2::ActionDrawCircleParallel:
+        bCircleParallel->setChecked(true);
+        return;
+    case RS2::ActionDrawCircleInscribe:
+        bCircleInscribe->setChecked(true);
+        return;
+    default:
+        return;
+    }
+}
 //EOF
