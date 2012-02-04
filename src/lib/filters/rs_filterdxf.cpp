@@ -2378,10 +2378,10 @@ void RS_FilterDXF::setEntityAttributes(RS_Entity* entity,
     } else {
         // add layer in case it doesn't exist:
 
-        if (graphic->findLayer(QString::fromUtf8(attrib.getLayer().c_str()))==NULL) {
+        if (graphic->findLayer(toNativeString(attrib.getLayer().c_str(),getDXFEncoding()))==NULL) {
             addLayer(DL_LayerData(attrib.getLayer(), 0));
         }
-        entity->setLayer(QString::fromUtf8(attrib.getLayer().c_str()));
+        entity->setLayer(toNativeString(attrib.getLayer().c_str(),getDXFEncoding()));
     }
 
     // Color:
