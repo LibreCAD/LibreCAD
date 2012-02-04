@@ -247,13 +247,13 @@ void RS_ActionDrawCircle::updateMouseCursor() {
 
 
 
-//void RS_ActionDrawCircle::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
+void RS_ActionDrawCircle::updateToolBar() {
+    if (RS_DIALOGFACTORY!=NULL) {
+        if (isFinished()) {
+            RS_DIALOGFACTORY->resetToolBar();
+        }
+    }
+}
 
 
 // EOF

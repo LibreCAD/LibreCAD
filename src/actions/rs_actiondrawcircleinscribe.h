@@ -51,9 +51,6 @@ public:
 
     static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 
-    virtual RS2::ActionType rtti(){
-        return  RS2::ActionDrawCircleInscribe;
-    }
     virtual void init(int status=0);
 
     virtual void trigger();
@@ -68,7 +65,7 @@ public:
 //    virtual void finish(bool updateTB=true);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
+    virtual void updateToolBar();
 
 protected:
     QVector<RS_Line*> lines;
