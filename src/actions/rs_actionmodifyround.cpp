@@ -322,13 +322,13 @@ void RS_ActionModifyRound::updateMouseCursor() {
 
 
 
-void RS_ActionModifyRound::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    if (RS_DIALOGFACTORY!=NULL) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-    }
-}
+//void RS_ActionModifyRound::updateToolBar() {
+//    //not needed any more with new snap
+//    return;
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+//    }
+//}
 
 
 // EOF

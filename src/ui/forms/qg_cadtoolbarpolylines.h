@@ -30,6 +30,7 @@ class QG_CadToolBar;
 class QG_ActionHandler;
 
 #include "ui_qg_cadtoolbarpolylines.h"
+#include "rs.h"
 
 class QG_CadToolBarPolylines : public QWidget, public Ui::QG_CadToolBarPolylines
 {
@@ -55,6 +56,7 @@ public slots:
     virtual void polylineSegment();
     virtual void back();
     virtual void resetToolBar();
+    virtual void showCadToolBar(RS2::ActionType actionType);
 
 protected:
     QG_ActionHandler* actionHandler;

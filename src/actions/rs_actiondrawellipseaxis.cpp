@@ -408,12 +408,12 @@ void RS_ActionDrawEllipseAxis::updateMouseCursor() {
 
 
 
-void RS_ActionDrawEllipseAxis::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionDrawEllipseAxis::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }
+//    }
+//}
 
 // EOF

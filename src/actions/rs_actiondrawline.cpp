@@ -315,13 +315,13 @@ void RS_ActionDrawLine::updateMouseCursor() {
 }
 
 
-void RS_ActionDrawLine::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionDrawLine::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }
+//    }
+//}
 
 void RS_ActionDrawLine::close() {
     if (historyIndex>2 && start.valid && (data.startpoint - start).squared() > RS_TOLERANCE*RS_TOLERANCE ) {

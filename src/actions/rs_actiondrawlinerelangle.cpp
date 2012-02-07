@@ -354,13 +354,13 @@ void RS_ActionDrawLineRelAngle::updateMouseCursor() {
 
 
 
-void RS_ActionDrawLineRelAngle::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionDrawLineRelAngle::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }
+//    }
+//}
 
 
 

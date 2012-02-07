@@ -44,13 +44,16 @@ public:
     ~RS_ActionInfoInside();
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+    virtual RS2::ActionType rtti(){
+        return RS2::ActionInfoInside;
+    }
 
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
 
 private:
     RS_Vector pt;

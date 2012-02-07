@@ -42,10 +42,14 @@ private:
 
 public:
     RS_ActionDrawLineOrthTan(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
+                             RS_GraphicView& graphicView);
     ~RS_ActionDrawLineOrthTan() {}
 
-        static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+
+    RS2::ActionType rtti(){
+        return RS2::ActionDrawLineOrthTan;
+    }
 
     virtual void trigger();
     virtual void finish(bool updateTB = true);
@@ -55,7 +59,7 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
 
 private:
     /** normal to tangent. */

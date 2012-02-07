@@ -256,13 +256,13 @@ void RS_ActionDrawLinePolygonCenCor::updateMouseCursor() {
 
 
 
-void RS_ActionDrawLinePolygonCenCor::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionDrawLinePolygonCenCor::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }
+//    }
+//}
 
 
 // EOF

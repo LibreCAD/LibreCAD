@@ -159,3 +159,26 @@ void QG_CadToolBarInfo::on_bBack_clicked()
 {
     parentTB->showPreviousToolBar();
 }
+
+void QG_CadToolBarInfo:: showCadToolBar(RS2::ActionType actionType){
+    switch(actionType){
+    case RS2::ActionInfoInside:
+    case RS2::ActionInfoDist:
+        bDist->setChecked(true);
+        return;
+    case RS2::ActionInfoAngle:
+        bAngle->setChecked(true);
+        return;
+    case RS2::ActionInfoTotalLength:
+        bTotalLength->setChecked(true);
+        return;
+        //    case RS2::ActionInfoTotalLengthNoSelect:
+    case RS2::ActionInfoArea:
+        bArea->setChecked(true);
+        return;
+    default:
+        bHidden->setChecked(true);
+    }
+}
+
+//EOF

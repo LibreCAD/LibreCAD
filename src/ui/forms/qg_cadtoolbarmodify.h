@@ -29,6 +29,7 @@
 class QG_CadToolBar;
 class QG_ActionHandler;
 
+#include "rs.h"
 #include "ui_qg_cadtoolbarmodify.h"
 
 class QG_CadToolBarModify : public QWidget, public Ui::QG_CadToolBarModify
@@ -40,6 +41,7 @@ public:
     ~QG_CadToolBarModify();
     //restore action from checked button
     void restoreAction();
+    virtual void showCadToolBar(RS2::ActionType actionType);
 
 public slots:
     virtual void mousePressEvent( QMouseEvent * e );
@@ -78,7 +80,9 @@ private slots:
 
 private:
     void init();
+    QList<QToolButton*> buttonList;
     QG_CadToolBar* parentTB;
+    QToolButton* bHidden;
 
 };
 

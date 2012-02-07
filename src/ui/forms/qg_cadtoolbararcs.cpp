@@ -166,6 +166,7 @@ void QG_CadToolBarArcs::showCadToolBar(RS2::ActionType actionType) {
         bArcTangential->setChecked(true);
         return;
         default:
+        bHidden->setChecked(true);
         return;
     }
 }

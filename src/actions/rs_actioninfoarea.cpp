@@ -150,31 +150,7 @@ void RS_ActionInfoArea::mouseReleaseEvent(QMouseEvent* e) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
-        //deletePreview();
 
-        // close the polygon (preview)
-//        if (getStatus()==SetNextPoint && prev.valid) {
-////            deletePreview();
-
-//            if (currentLine!=NULL) {
-//                preview->removeEntity(currentLine);
-//                currentLine = NULL;
-//            }
-//            if (closingLine!=NULL) {
-//                preview->removeEntity(closingLine);
-//                closingLine = NULL;
-//            }
-
-//            currentLine = new RS_Line(preview,
-//                                      RS_LineData(prev,
-//                                                  point1));
-
-//            preview->addEntity(currentLine);
-
-//            drawPreview();
-//        }
-
-//        trigger();
         init(getStatus()-1);
     }
 }
@@ -266,13 +242,13 @@ void RS_ActionInfoArea::updateMouseCursor() {
 
 
 
-void RS_ActionInfoArea::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionInfoArea::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }
+//    }
+//}
 
 
 // EOF

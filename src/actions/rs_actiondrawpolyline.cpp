@@ -419,13 +419,13 @@ void RS_ActionDrawPolyline::updateMouseCursor() {
 }
 
 
-void RS_ActionDrawPolyline::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionDrawPolyline::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }
+//    }
+//}
 
 void RS_ActionDrawPolyline::close() {
     if (history.size()>2 && start.valid) {

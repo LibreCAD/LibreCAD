@@ -205,11 +205,11 @@ void RS_ActionModifyTrimAmount::updateMouseCursor() {
 
 
 
-void RS_ActionModifyTrimAmount::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-}
+//void RS_ActionModifyTrimAmount::updateToolBar() {
+//    //not needed any more with new snap
+//    return;
+//    RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+//}
 
 
 // EOF

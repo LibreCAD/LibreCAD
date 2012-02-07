@@ -54,7 +54,9 @@ public:
     ~RS_ActionModifyMirror() {}
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
+    RS2::ActionType rtti(){
+        return RS2::ActionModifyMirror;
+    }
     virtual void init(int status=0);
     virtual void trigger();
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
@@ -62,7 +64,7 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
 
 private:
     RS_MirrorData data;

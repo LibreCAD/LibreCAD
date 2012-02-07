@@ -49,11 +49,10 @@ public:
 						RS_GraphicView& graphicView);
 //	~RS_ActionPolylineAppend();
 
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionPolylineAppend;
-	}
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
+    virtual RS2::ActionType rtti(){
+        return RS2::ActionPolylineAppend;
+    }
 //	void reset();
 
 //	virtual void init(int status=0);

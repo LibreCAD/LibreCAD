@@ -162,3 +162,30 @@ void QG_CadToolBarEllipses::on_bBack_clicked()
 {
     parentTB->showPreviousToolBar();
 }
+
+
+void QG_CadToolBarEllipses::showCadToolBar(RS2::ActionType actionType) {
+    switch(actionType){
+    case RS2::ActionDrawEllipseAxis:
+        bEllipseAxes ->setChecked(true);
+        return;
+    case RS2::ActionDrawEllipseArcAxis:
+        bEllipseArcAxes ->setChecked(true);
+        return;
+    case RS2::ActionDrawEllipseFociPoint:
+        bEllipseFociPoint ->setChecked(true);
+        return;
+    case RS2::ActionDrawEllipse4Points:
+        bEllipse4Points ->setChecked(true);
+        return;
+    case RS2::ActionDrawEllipseCenter3Points:
+        bEllipseCenter3Points ->setChecked(true);
+        return;
+    case RS2::ActionDrawEllipseInscribe:
+        bEllipseInscribe ->setChecked(true);
+        return;
+        default:
+        bHidden->setChecked(true);
+        return;
+    }
+}

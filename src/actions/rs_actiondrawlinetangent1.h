@@ -49,7 +49,11 @@ public:
                               RS_GraphicView& graphicView);
     ~RS_ActionDrawLineTangent1() {}
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+
+    virtual RS2::ActionType rtti(){
+        return RS2::ActionDrawLineTangent1;
+    }
 
     virtual void trigger();
 	
@@ -60,7 +64,7 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
 
 private:
     /** Closest tangent. */

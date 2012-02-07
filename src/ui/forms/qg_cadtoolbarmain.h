@@ -41,6 +41,7 @@ public:
     void restoreAction(); //restore action from checked button
     void finishCurrentAction(bool resetToolBar=false); //clear current action
     void resetToolBar();
+    virtual void showCadToolBar(RS2::ActionType actionType);
 
 public slots:
     virtual void init();

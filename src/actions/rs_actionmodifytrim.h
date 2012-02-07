@@ -60,7 +60,7 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
 //    virtual void finish(bool updateTB = true );
 
 

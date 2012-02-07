@@ -43,7 +43,9 @@ public:
     ~RS_ActionModifyEntity() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
+    RS2::ActionType rtti(){
+        return RS2::ActionModifyEntity;
+    }
     virtual void trigger();
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseCursor();

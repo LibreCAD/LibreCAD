@@ -75,7 +75,7 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
 //    virtual double getDistance();
 //    virtual void setDistance(const double& d);
 

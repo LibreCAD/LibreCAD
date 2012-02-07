@@ -53,6 +53,7 @@ public slots:
     virtual void drawEllipseInscribe();
     virtual void back();
     virtual void resetToolBar();
+    virtual void showCadToolBar(RS2::ActionType actionType);
 
 protected:
     QG_CadToolBar* cadToolBar;

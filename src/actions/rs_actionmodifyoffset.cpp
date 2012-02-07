@@ -149,13 +149,13 @@ void RS_ActionModifyOffset::updateMouseCursor() {
 
 
 
-void RS_ActionModifyOffset::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-        }
-    }
-}
+//void RS_ActionModifyOffset::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+//        }
+//    }
+//}
 
 
 // EOF

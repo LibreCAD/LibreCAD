@@ -247,19 +247,19 @@ void RS_ActionModifyMoveRotate::updateMouseCursor() {
 
 
 
-void RS_ActionModifyMoveRotate::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    switch (getStatus()) {
-    case SetReferencePoint:
-    case SetTargetPoint:
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        break;
-    default:
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-        break;
-    }
-}
+//void RS_ActionModifyMoveRotate::updateToolBar() {
+//    //not needed any more with new snap
+//    return;
+//    switch (getStatus()) {
+//    case SetReferencePoint:
+//    case SetTargetPoint:
+//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
+//        break;
+//    default:
+//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+//        break;
+//    }
+//}
 
 
 // EOF

@@ -46,11 +46,13 @@ public:
 
 public:
     RS_ActionDrawEllipse4Points(RS_EntityContainer& container,
-                             RS_GraphicView& graphicView);
+                                RS_GraphicView& graphicView);
     ~RS_ActionDrawEllipse4Points();
 
-        static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-
+    static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
+    RS2::ActionType rtti(){
+        return RS2::ActionDrawEllipse4Points;
+    }
     virtual void init(int status=0);
 
     virtual void trigger();
@@ -65,7 +67,7 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
 
 protected:
     // 4 points on ellipse

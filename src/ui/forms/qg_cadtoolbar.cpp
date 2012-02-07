@@ -486,6 +486,9 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     case RS2::ActionDrawSpline:
     case RS2::ActionDrawText:
         showToolBar(RS2::ToolBarMain, false);
+        if(tbMain != NULL){
+            tbMain->showCadToolBar(actionType);
+        }
         break;
     case RS2::ActionDrawArc:
     case RS2::ActionDrawArc3P:
@@ -503,6 +506,9 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     case RS2::ActionDrawCircleParallel:
     case RS2::ActionDrawCircleInscribe:
         showToolBar(RS2::ToolBarCircles, false);
+       if(tbCircles != NULL){
+           tbCircles->showCadToolBar(actionType);
+       }
         break;
     case RS2::ActionDrawEllipseArcAxis:
     case RS2::ActionDrawEllipseAxis:
@@ -511,6 +517,9 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     case RS2::ActionDrawEllipseCenter3Points:
     case RS2::ActionDrawEllipseInscribe:
         showToolBar(RS2::ToolBarEllipses, false);
+        if(tbEllipses != NULL){
+            tbEllipses->showCadToolBar(actionType);
+        }
         break;
     case RS2::ActionDrawLine:
     case RS2::ActionDrawLineAngle:
@@ -530,6 +539,9 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     case RS2::ActionDrawLineTangent2:
     case RS2::ActionDrawLineVertical:
         showToolBar(RS2::ToolBarLines, false);
+        if(tbLines != NULL){
+            tbLines->showCadToolBar(actionType);
+        }
         break;
     case RS2::ActionDrawPolyline:
     case RS2::ActionPolylineAdd:
@@ -540,6 +552,9 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     case RS2::ActionPolylineEquidistant:
     case RS2::ActionPolylineSegment:
         showToolBar(RS2::ToolBarPolylines, false);
+        if(tbPolylines != NULL){
+            tbPolylines->showCadToolBar(actionType);
+        }
         break;
     case RS2::ActionDimAligned:
     case RS2::ActionDimLinear:
@@ -550,6 +565,9 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     case RS2::ActionDimAngular:
     case RS2::ActionDimLeader:
         showToolBar(RS2::ToolBarDim, false);
+        if(tbDim != NULL){
+            tbDim->showCadToolBar(actionType);
+        }
         break;
     case RS2::ActionModifyAttributes:
     case RS2::ActionModifyAttributesNoSelect:
@@ -580,6 +598,9 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     case RS2::ActionModifyOffset:
     case RS2::ActionModifyOffsetNoSelect:
         showToolBar(RS2::ToolBarModify, false);
+        if(tbModify != NULL){
+            tbModify->showCadToolBar(actionType);
+        }
         break;
     case RS2::ActionInfoInside:
     case RS2::ActionInfoDist:
@@ -589,6 +610,9 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     case RS2::ActionInfoTotalLengthNoSelect:
     case RS2::ActionInfoArea:
         showToolBar(RS2::ToolBarInfo, false);
+        if(tbInfo != NULL){
+            tbInfo->showCadToolBar(actionType);
+        }
         break;
 
 

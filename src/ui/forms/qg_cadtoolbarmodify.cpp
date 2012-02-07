@@ -59,6 +59,39 @@ void QG_CadToolBarModify::languageChange()
 void QG_CadToolBarModify::init() {
     actionHandler = NULL;
     cadToolBar = NULL;
+    //button list
+    buttonList.push_back(bMove);
+    buttonList.push_back(bRotate);
+    buttonList.push_back(bScale);
+    buttonList.push_back(bMirror);
+    buttonList.push_back(bMoveRotate);
+    buttonList.push_back(bRotate2);
+    buttonList.push_back(bTrim);
+    buttonList.push_back(bTrim2);
+    buttonList.push_back(bTrimAmount);
+    buttonList.push_back(bBevel);
+    buttonList.push_back(bRound);
+    buttonList.push_back(bCut);
+    buttonList.push_back(bStretch);
+    buttonList.push_back(bEntity);
+    buttonList.push_back(bAttributes);
+    buttonList.push_back(bDelete);
+    buttonList.push_back(bExplode);
+    buttonList.push_back(bExplodeText);
+    buttonList.push_back(bEntityText);
+    buttonList.push_back(bOffset);
+    //add a bHidden button
+    bHidden=new QToolButton(buttonList.at(0)->parentWidget());
+    bHidden->hide();
+    bHidden->setMaximumSize(0,0); //zero size
+    buttonList.push_back(bHidden);
+    //set up auto-exclusive
+    for(QList<QToolButton*>::iterator it=buttonList.begin();it !=buttonList.end();it++){
+        (*it)->setCheckable(true);
+        (*it)->setAutoExclusive(true);
+    }
+    //initial status
+    bHidden->setChecked(true);
 }
 
 void QG_CadToolBarModify::mousePressEvent(QMouseEvent* e) {
@@ -283,6 +316,7 @@ void QG_CadToolBarModify::restoreAction() {
         actionHandler->slotModifyOffset();
         return;
     }
+    bHidden->setChecked(true);
     //clear all action
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
     if(currentAction != NULL) {
@@ -293,4 +327,71 @@ void QG_CadToolBarModify::restoreAction() {
 void QG_CadToolBarModify::on_bBack_clicked()
 {
    parentTB->showToolBar(RS2::ToolBarMain);
+}
+void QG_CadToolBarModify::showCadToolBar(RS2::ActionType actionType) {
+    switch(actionType){
+    case RS2::ActionModifyAttributes:
+        bAttributes->setChecked(true);
+        return;
+    case RS2::ActionModifyDelete:
+        bDelete->setChecked(true);
+        return;
+//    case RS2::ActionModifyDeleteQuick:
+//    case RS2::ActionModifyDeleteFree:
+    case RS2::ActionModifyMove:
+        bMove->setChecked(true);
+        return;
+//    case RS2::ActionModifyMoveNoSelect:
+    case RS2::ActionModifyRotate:
+        bRotate->setChecked(true);
+        return;
+//    case RS2::ActionModifyRotateNoSelect:
+    case RS2::ActionModifyScale:
+        bScale->setChecked(true);
+        return;
+//    case RS2::ActionModifyScaleNoSelect:
+    case RS2::ActionModifyMirror:
+        bMirror->setChecked(true);
+        return;
+//    case RS2::ActionModifyMirrorNoSelect:
+    case RS2::ActionModifyMoveRotate:
+        bMoveRotate->setChecked(true);
+        return;
+//    case RS2::ActionModifyMoveRotateNoSelect:
+    case RS2::ActionModifyRotate2:
+        bRotate2->setChecked(true);
+        return;
+//    case RS2::ActionModifyRotate2NoSelect:
+    case RS2::ActionModifyEntity:
+        bEntity->setChecked(true);
+        return;
+    case RS2::ActionModifyTrim:
+        bTrim->setChecked(true);
+        return;
+    case RS2::ActionModifyTrim2:
+        bTrim2->setChecked(true);
+        return;
+    case RS2::ActionModifyTrimAmount:
+        bTrimAmount->setChecked(true);
+        return;
+    case RS2::ActionModifyCut:
+        bCut->setChecked(true);
+        return;
+    case RS2::ActionModifyStretch:
+        bStretch->setChecked(true);
+        return;
+    case RS2::ActionModifyBevel:
+        bBevel->setChecked(true);
+        return;
+    case RS2::ActionModifyRound:
+        bRound->setChecked(true);
+        return;
+    case RS2::ActionModifyOffset:
+        bOffset->setChecked(true);
+        return;
+//    case RS2::ActionModifyOffsetNoSelect:
+        default:
+        bHidden->setChecked(true);
+        return;
+    }
 }

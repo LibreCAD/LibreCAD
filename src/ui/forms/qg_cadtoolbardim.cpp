@@ -186,3 +186,35 @@ void QG_CadToolBarDim::on_bBack_clicked()
 {
     parentTB->showPreviousToolBar();
 }
+
+void  QG_CadToolBarDim::showCadToolBar(RS2::ActionType actionType){
+    switch(actionType){
+    case RS2::ActionDimAligned:
+        bAligned->setChecked(true);
+        return;
+    case RS2::ActionDimLinear:
+        bLinear->setChecked(true);
+        return;
+    case RS2::ActionDimLinearVer:
+        bLinearVer->setChecked(true);
+        return;
+    case RS2::ActionDimLinearHor:
+        bLinearHor->setChecked(true);
+        return;
+    case RS2::ActionDimRadial:
+        bRadial->setChecked(true);
+        return;
+    case RS2::ActionDimDiametric:
+        bDiametric->setChecked(true);
+        return;
+    case RS2::ActionDimAngular:
+        bAngular->setChecked(true);
+        return;
+    case RS2::ActionDimLeader:
+        bLeader->setChecked(true);
+        return;
+    default:
+        bHidden->setChecked(true);
+        return;
+    }
+}

@@ -158,3 +158,22 @@ void QG_CadToolBarMain::mouseReleaseEvent(QMouseEvent* e) {
     finishCurrentAction(true);
  }
 }
+
+void QG_CadToolBarMain::showCadToolBar(RS2::ActionType actionType) {
+    switch(actionType){
+    case RS2::ActionDrawImage:
+        bMenuImage->setChecked(true);
+        break;
+    case RS2::ActionDrawPoint:
+        bMenuPoint->setChecked(true);
+        break;
+    case RS2::ActionDrawSpline:
+        bMenuSpline->setChecked(true);
+        break;
+    case RS2::ActionDrawText:
+        bMenuText->setChecked(true);
+        break;
+    default:
+        break;
+    }
+}

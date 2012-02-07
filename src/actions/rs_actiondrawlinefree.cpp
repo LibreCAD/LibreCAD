@@ -165,13 +165,12 @@ void RS_ActionDrawLineFree::updateMouseCursor() {
 
 
 
-void RS_ActionDrawLineFree::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        //reset toolbar button when finished
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionDrawLineFree::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }
+//    }
+//}
 
 // EOF

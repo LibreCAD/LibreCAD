@@ -335,12 +335,12 @@ void RS_ActionDrawEllipseInscribe::updateMouseCursor() {
 
 
 
-void RS_ActionDrawEllipseInscribe::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionDrawEllipseInscribe::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }
+//    }
+//}
 
 // EOF

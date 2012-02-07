@@ -286,21 +286,21 @@ void RS_ActionDrawImage::updateMouseCursor() {
 
 
 
-void RS_ActionDrawImage::updateToolBar() {
-    if(RS_DIALOGFACTORY==NULL) return;
-    if (isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-    }
-    /*
-    //not needed any more with new snap
-    return;
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-    }
-    */
-}
+//void RS_ActionDrawImage::updateToolBar() {
+//    if(RS_DIALOGFACTORY==NULL) return;
+//    if (isFinished()) {
+//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+//    }
+//    /*
+//    //not needed any more with new snap
+//    return;
+//    if (!isFinished()) {
+//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
+//    } else {
+//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+//    }
+//    */
+//}
 
 
 // EOF

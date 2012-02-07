@@ -288,27 +288,27 @@ void RS_ActionDrawText::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-void RS_ActionDrawText::updateToolBar() {
-    if(isFinished()) {
-        if (RS_DIALOGFACTORY!=NULL) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-        }
-    }
-    /*
-    //not needed any more with new snap
-    return;
-    if (RS_DIALOGFACTORY!=NULL) {
-        switch (getStatus()) {
-        case SetPos:
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-            break;
-        default:
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-            break;
-        }
-    }
-    */
-}
+//void RS_ActionDrawText::updateToolBar() {
+//    if(isFinished()) {
+//        if (RS_DIALOGFACTORY!=NULL) {
+//            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+//        }
+//    }
+//    /*
+//    //not needed any more with new snap
+//    return;
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        switch (getStatus()) {
+//        case SetPos:
+//            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
+//            break;
+//        default:
+//            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+//            break;
+//        }
+//    }
+//    */
+//}
 
 
 

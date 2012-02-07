@@ -85,6 +85,9 @@ public:
     virtual void resume();
     virtual void hideOptions();
     virtual void showOptions();
+    virtual void setActionType(RS2::ActionType actionType){
+        this->actionType=actionType;
+    }
     bool checkCommand(const QString& cmd, const QString& str,
                              RS2::ActionType action=RS2::ActionNone);
         QString command(const QString& cmd);
@@ -154,6 +157,7 @@ protected:
      */
     //static QString cmdNo;
     //static QString cmdNo2;
+    RS2::ActionType actionType;
 };
 
 

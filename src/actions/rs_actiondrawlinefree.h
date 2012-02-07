@@ -52,13 +52,16 @@ public:
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
+    virtual RS2::ActionType rtti(){
+        return RS2::ActionDrawLineFree;
+    }
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mousePressEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
 
 protected:
     RS_Vector vertex;

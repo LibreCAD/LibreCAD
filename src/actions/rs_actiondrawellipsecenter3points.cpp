@@ -324,12 +324,12 @@ void RS_ActionDrawEllipseCenter3Points::updateMouseCursor() {
 
 
 
-void RS_ActionDrawEllipseCenter3Points::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionDrawEllipseCenter3Points::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }
+//    }
+//}
 
 // EOF

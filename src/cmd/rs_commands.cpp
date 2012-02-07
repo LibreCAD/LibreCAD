@@ -40,7 +40,7 @@ RS_Commands::RS_Commands() {
         shortCommands.insert(tr("po"), RS2::ActionDrawPoint);
 
         mainCommands.insert(tr("line"), RS2::ActionDrawLine);
-        shortCommands.insert(tr("ln"), RS2::ActionDrawLine);
+        shortCommands.insert(tr("li"), RS2::ActionDrawLine);
         shortCommands.insert(tr("l"), RS2::ActionDrawLine);
 
         mainCommands.insert(tr("polyline"), RS2::ActionDrawPolyline);
@@ -51,6 +51,7 @@ RS_Commands::RS_Commands() {
         shortCommands.insert(tr("par", "parallel"), RS2::ActionDrawLineParallel);
 
         mainCommands.insert(tr("arc"), RS2::ActionDrawArc3P);
+        mainCommands.insert(tr("ar"), RS2::ActionDrawArc3P);
         shortCommands.insert(tr("a"), RS2::ActionDrawArc3P);
 
         mainCommands.insert(tr("circle"), RS2::ActionDrawCircle);

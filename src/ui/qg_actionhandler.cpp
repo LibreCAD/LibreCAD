@@ -396,7 +396,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionDrawLineParallel:
         a= new RS_ActionDrawLineParallel(*doc, *gv);
-        static_cast<RS_ActionDrawLineParallel*>(a)->setActionType(RS2::ActionDrawLineParallel);
+        a->setActionType(id);
         break;
     case RS2::ActionDrawLineParallelThrough:
         a = new RS_ActionDrawLineParallelThrough(*doc, *gv);
@@ -466,7 +466,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionDrawCircleParallel:
         a= new RS_ActionDrawLineParallel(*doc, *gv);
-        static_cast<RS_ActionDrawLineParallel*>(a)->setActionType(RS2::ActionDrawCircleParallel);
+        a->setActionType(id);
         break;
     case RS2::ActionDrawCircleInscribe:
         a = new RS_ActionDrawCircleInscribe(*doc, *gv);
@@ -479,16 +479,18 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionDrawArcParallel:
         a= new RS_ActionDrawLineParallel(*doc, *gv);
-        static_cast<RS_ActionDrawLineParallel*>(a)->setActionType(RS2::ActionDrawArcParallel);
+        a->setActionType(id);
         break;
     case RS2::ActionDrawArcTangential:
         a = new RS_ActionDrawArcTangential(*doc, *gv);
         break;
     case RS2::ActionDrawEllipseAxis:
         a = new RS_ActionDrawEllipseAxis(*doc, *gv, false);
+        a->setActionType(id);
         break;
     case RS2::ActionDrawEllipseArcAxis:
         a = new RS_ActionDrawEllipseAxis(*doc, *gv, true);
+        a->setActionType(id);
         break;
     case RS2::ActionDrawEllipseFociPoint:
         a = new RS_ActionDrawEllipseFociPoint(*doc, *gv);
@@ -606,9 +608,11 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionModifyTrim:
         a = new RS_ActionModifyTrim(*doc, *gv, false);
+        a->setActionType(id);
         break;
     case RS2::ActionModifyTrim2:
         a = new RS_ActionModifyTrim(*doc, *gv, true);
+        a->setActionType(id);
         break;
     case RS2::ActionModifyTrimAmount:
         a = new RS_ActionModifyTrimAmount(*doc, *gv);

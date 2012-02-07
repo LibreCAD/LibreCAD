@@ -51,7 +51,9 @@ public:
     ~RS_ActionPolylineDelBetween() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
+    virtual RS2::ActionType rtti(){
+        return RS2::ActionPolylineDelBetween;
+    }
     virtual void init(int status=0);
 	
     virtual void trigger();
@@ -61,7 +63,7 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
 
 private:
     RS_Entity* delEntity;

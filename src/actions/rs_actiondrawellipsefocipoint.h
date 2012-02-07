@@ -45,11 +45,13 @@ public:
 
 public:
     RS_ActionDrawEllipseFociPoint(RS_EntityContainer& container,
-                             RS_GraphicView& graphicView);
+                                  RS_GraphicView& graphicView);
     ~RS_ActionDrawEllipseFociPoint();
 
-        static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-
+    static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
+    RS2::ActionType rtti(){
+        return RS2::ActionDrawEllipseFociPoint;
+    }
     virtual void init(int status=0);
 
     virtual void trigger();
@@ -63,7 +65,7 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
 
 protected:
     // Foci of ellipse

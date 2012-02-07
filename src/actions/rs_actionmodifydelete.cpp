@@ -94,17 +94,9 @@ void RS_ActionModifyDelete::updateMouseCursor() {
 
 
 
-void RS_ActionModifyDelete::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (!isFinished()) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-        } else {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-        }
-    }
-}
+//void RS_ActionModifyDelete::updateToolBar() {
+//    //not needed any more with new snap
+//}
 
 
 // EOF

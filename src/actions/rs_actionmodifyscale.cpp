@@ -137,21 +137,21 @@ void RS_ActionModifyScale::updateMouseCursor() {
 
 
 
-void RS_ActionModifyScale::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    switch (getStatus()) {
-        /*case Select:
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
-            break;*/
-    case SetReferencePoint:
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        break;
-    default:
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-        break;
-    }
-}
+//void RS_ActionModifyScale::updateToolBar() {
+//    //not needed any more with new snap
+//    return;
+//    switch (getStatus()) {
+//        /*case Select:
+//            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
+//            break;*/
+//    case SetReferencePoint:
+//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
+//        break;
+//    default:
+//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+//        break;
+//    }
+//}
 
 
 // EOF

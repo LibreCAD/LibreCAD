@@ -300,12 +300,12 @@ void RS_ActionDrawEllipseFociPoint::updateMouseCursor() {
 
 
 
-void RS_ActionDrawEllipseFociPoint::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionDrawEllipseFociPoint::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }
+//    }
+//}
 
 // EOF

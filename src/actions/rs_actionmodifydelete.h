@@ -50,13 +50,16 @@ public:
                           RS_GraphicView& graphicView);
     ~RS_ActionModifyDelete() {}
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+    RS2::ActionType rtti(){
+        return RS2::ActionModifyDelete;
+    }
 
     virtual void init(int status=0);
     virtual void trigger();
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
 };
 
 #endif

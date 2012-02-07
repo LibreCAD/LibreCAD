@@ -186,4 +186,37 @@ void QG_CadToolBarPolylines::on_bBack_clicked()
 {
     parentTB->showPreviousToolBar();
 }
+
+void QG_CadToolBarPolylines::showCadToolBar(RS2::ActionType actionType){
+    switch(actionType){
+    case RS2::ActionDrawPolyline:
+        bPolyline->setChecked(true);
+        return;
+    case RS2::ActionPolylineAdd:
+        bPolylineAdd->setChecked(true);
+        return;
+    case RS2::ActionPolylineAppend:
+        bPolylineAppend->setChecked(true);
+        return;
+    case RS2::ActionPolylineDel:
+        bPolylineDel->setChecked(true);
+        return;
+    case RS2::ActionPolylineDelBetween:
+        bPolylineDelBetween->setChecked(true);
+        return;
+    case RS2::ActionPolylineTrim:
+        bPolylineTrim->setChecked(true);
+        return;
+    case RS2::ActionPolylineEquidistant:
+        bPolylineEquidistant->setChecked(true);
+        return;
+    case RS2::ActionPolylineSegment:
+        bPolylineSegment->setChecked(true);
+        return;
+        default:
+        bHidden->setChecked(true);
+        return;
+    }
+}
+
 //EOF

@@ -43,7 +43,10 @@ public:
                                RS_GraphicView& graphicView);
     ~RS_ActionModifyDeleteQuick() {}
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* parent);
+    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* parent);
+    RS2::ActionType rtti(){
+        return RS2::ActionModifyDeleteQuick;
+    }
 
     virtual void trigger();
     virtual void mouseReleaseEvent(QMouseEvent* e);

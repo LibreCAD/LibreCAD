@@ -265,17 +265,4 @@ void RS_ActionDimLeader::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-void RS_ActionDimLeader::updateToolBar() {
-    //not needed any more
-    return;
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (!isFinished()) {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        } else {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarDim);
-        }
-    }
-}
-
 // EOF

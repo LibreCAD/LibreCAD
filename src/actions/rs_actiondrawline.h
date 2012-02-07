@@ -75,7 +75,7 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
     void addHistory(const RS_Vector& v);//add history after the current point
 
         void close();

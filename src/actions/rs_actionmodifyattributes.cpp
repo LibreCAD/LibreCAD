@@ -104,12 +104,12 @@ void RS_ActionModifyAttributes::updateMouseCursor() {
 
 
 
-void RS_ActionModifyAttributes::updateToolBar() {
-//    if (isFinished()) {
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//    }
-//    return;
-}
+//void RS_ActionModifyAttributes::updateToolBar() {
+////    if (isFinished()) {
+////        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+////    }
+////    return;
+//}
 
 
 // EOF

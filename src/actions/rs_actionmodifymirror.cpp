@@ -185,21 +185,21 @@ void RS_ActionModifyMirror::updateMouseCursor() {
 
 
 
-void RS_ActionModifyMirror::updateToolBar() {
-    //not needed any more
-    return;
-    if (RS_DIALOGFACTORY!=NULL) {
-        switch (getStatus()) {
-        case SetAxisPoint1:
-        case SetAxisPoint2:
-            //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-            break;
-        default:
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-            break;
-        }
-    }
-}
+//void RS_ActionModifyMirror::updateToolBar() {
+//    //not needed any more
+//    return;
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        switch (getStatus()) {
+//        case SetAxisPoint1:
+//        case SetAxisPoint2:
+//            //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
+//            break;
+//        default:
+//            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
+//            break;
+//        }
+//    }
+//}
 
 
 // EOF

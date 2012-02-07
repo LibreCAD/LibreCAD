@@ -279,11 +279,11 @@ void RS_ActionPolylineEquidistant::updateMouseButtonHints() {
         }
 }
 
-void RS_ActionPolylineEquidistant::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionPolylineEquidistant::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }
+//    }
+//}
 // EOF

@@ -56,7 +56,10 @@ public:
                              bool isArc);
     ~RS_ActionDrawEllipseAxis();
 	
-	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
+    static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
+    RS2::ActionType rtti(){
+        return actionType;
+    }
 
     virtual void init(int status=0);
 	
@@ -71,7 +74,7 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
 
 protected:
     /** Center of ellipse */

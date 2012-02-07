@@ -87,10 +87,6 @@ public:
 	void setNumber(int n) {
 		number = n;
 	}
-    /** Set action type **/
-    void setActionType(RS2::ActionType actionType){
-        this->actionType=actionType;
-    }
 
 private:
     /** Closest parallel. */
@@ -105,7 +101,6 @@ private:
 	RS_Vector coord;
 	/** Original entity. */
     RS_Entity* entity;
-    RS2::ActionType actionType;
 	/**
 	 * Commands
 	 */

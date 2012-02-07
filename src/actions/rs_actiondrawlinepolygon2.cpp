@@ -257,13 +257,13 @@ void RS_ActionDrawLinePolygonCorCor::updateMouseCursor() {
 
 
 
-void RS_ActionDrawLinePolygonCorCor::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
+//void RS_ActionDrawLinePolygonCorCor::updateToolBar() {
+//    if (RS_DIALOGFACTORY!=NULL) {
+//        if (isFinished()) {
+//            RS_DIALOGFACTORY->resetToolBar();
+//        }
+//    }
+//}
 
 
 // EOF

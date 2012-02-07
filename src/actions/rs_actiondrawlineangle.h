@@ -79,7 +79,7 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+//    virtual void updateToolBar();
 
 	void setSnapPoint(int sp) {
 		snpPoint = sp;
