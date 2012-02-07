@@ -46,6 +46,8 @@ public:
         void calculate();
         void close(bool closePolygon=true);
         bool isValid();
+        //whether the point p is already in contour
+        bool duplicated(const RS_Vector& p);
         bool isClosed();
         void pop_back();
         double getArea() {
@@ -55,13 +57,13 @@ public:
                 return circumference;
         }
         int count() {
-                return thePoints.count();
+                return thePoints.size();
         }
 
 private:
         double calcSubArea(const RS_Vector& p1, const RS_Vector& p2);
 
-        QVector<RS_Vector> thePoints;
+        QList<RS_Vector> thePoints;
         double baseY;
         double area;
         double circumference;

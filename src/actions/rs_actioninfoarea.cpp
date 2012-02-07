@@ -29,6 +29,7 @@
 #include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_debug.h"
 
 
 
@@ -82,11 +83,11 @@ void RS_ActionInfoArea::trigger() {
 }
 
 void RS_ActionInfoArea::display() {
-    ia.close(true);
+//    ia.close(true);
     ia.calculate();
     double area = ia.getArea();
     double circ = ia.getCircumference();
-    ia.close(false); //undo close polygon action
+//    ia.close(false); //undo close polygon action
 
 //    RS_DEBUG->print("RS_ActionInfoArea::trigger: area: %f", area);
     RS_DIALOGFACTORY->commandMessage(tr("Circumference: %1").arg(circ));
@@ -97,9 +98,9 @@ void RS_ActionInfoArea::display() {
 void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
     //RS_DEBUG->print("RS_ActionInfoArea::mouseMoveEvent begin");
 
+        RS_Vector mouse = snapPoint(e);
     if ( getStatus()==SetNextPoint) {
 
-        RS_Vector mouse = snapPoint(e);
 
             if (prev.valid && point1.valid) {
                 //                deletePreview();
@@ -123,9 +124,15 @@ void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
                                                           point1));
 
                     preview->addEntity(closingLine);
-                    ia.addPoint(mouse);
+                    bool added=false;
+                    if(ia.duplicated(mouse) == false) {
+                        ia.addPoint(mouse);
+                        added=true;
+                    }
                     display();
-                    ia.pop_back();
+                    if(added){
+                        ia.pop_back();
+                    }
                 }
 
                 drawPreview();
@@ -180,6 +187,10 @@ void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent* e) {
     }
 
     RS_Vector mouse = e->getCoordinate();
+    if(ia.duplicated(mouse)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,"RS_ActionInfoArea::coordinateEvent(): duplicated point");
+        return;
+    }
     graphicView->moveRelativeZero(mouse);
 
     ia.addPoint(mouse);

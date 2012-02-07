@@ -79,7 +79,8 @@ void RS_InfoArea::reset() {
  */
 void RS_InfoArea::close(bool closePolygon ) {
     if( ! isClosed() && closePolygon){
-        thePoints.append(thePoints.first());
+        RS_Vector vp(thePoints.first());
+        thePoints.append(vp);
         RS_DEBUG->print("RS_InfoArea::close(): closed");
         return;
     }
@@ -97,10 +98,25 @@ void RS_InfoArea::close(bool closePolygon ) {
  * @retval false Otherwise.
  */
 bool RS_InfoArea::isClosed() {
-        return ((thePoints.first()-thePoints.last()).squared()<RS_TOLERANCE) ;
+    RS_Vector v0(thePoints.first());
+    v0 -= thePoints.last();
+        return (v0.squared()<RS_TOLERANCE) ;
 //	return (thePoints.first().distanceTo(thePoints.last())<1.0e-4);
 }
 
+/**
+  * whether a point is already in contour
+  * return true if the point is a duplicate
+  **/
+bool RS_InfoArea::duplicated(const RS_Vector& p){
+    if(thePoints.size()<1) return false;
+    for(int i=0;i<thePoints.size();i++){
+        if( (thePoints.at(i)-p).squared() < RS_TOLERANCE*RS_TOLERANCE) {
+            return true;
+        }
+    }
+    return false;
+}
 
 
 /**
@@ -108,8 +124,8 @@ bool RS_InfoArea::isClosed() {
  * @retval false If there are only two or less points.
  */
 bool RS_InfoArea::isValid() {
-        RS_DEBUG->print("RS_InfoArea::isValid: count: %d", thePoints.count());
-        return (thePoints.count()>2);
+        RS_DEBUG->print("RS_InfoArea::isValid: count: %d", thePoints.size());
+        return (thePoints.size()>2);
 }
 
 
@@ -120,36 +136,17 @@ bool RS_InfoArea::isValid() {
 void RS_InfoArea::calculate() {
         area = 0.0;
         circumference = 0.0;
-        RS_Vector ptFirst;
-        RS_Vector p1;
-        RS_Vector p2;
-        QVector<RS_Vector> pts(thePoints); //do not destroy the saved points
+        if(thePoints.size()<3) return;
 
-        // at least 3 points needed for an area
-        if (isValid()) {
-                ptFirst = pts.last();
-                pts.pop_back();
-
-                p1 = ptFirst;
-                while (!pts.empty()) {
-                        p2 = pts.last();
-                        pts.pop_back();
-
+        RS_Vector p1=thePoints.first();
+        for(int i=0;i<thePoints.size();i++){
+        RS_Vector p2=thePoints.at( (i+1)%thePoints.size());
                         area += calcSubArea(p1, p2);
                         circumference += p1.distanceTo(p2);
-                        //if (p1 != ptFirst) {
-                        //	delete p1;
-                        //}
-                        p1 = p2;
-                }
-                area += calcSubArea(p1, ptFirst);
-                circumference += p1.distanceTo(ptFirst);
-                //delete p1;
-                //delete ptFirst;
+                        p1=p2;
         }
 
-        //thePoints.clear();
-        area = fabs(area);
+        area = 0.5*fabs(area);
 }
 
 
@@ -164,7 +161,7 @@ double RS_InfoArea::calcSubArea(const RS_Vector& p1, const RS_Vector& p2) {
         double width = p2.x - p1.x;
         double height = (p1.y - baseY) + (p2.y - baseY);
 
-        return width * height / 2.0;
+        return width * height ; //move a factor of 0.5 to calculate()
 }
 
 
