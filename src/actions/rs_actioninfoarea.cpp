@@ -35,12 +35,12 @@
 
 RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Info Area",
-                           container, graphicView) {}
+    :RS_PreviewActionInterface("Info Area",
+                               container, graphicView) {}
 
 
 QAction* RS_ActionInfoArea::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/*    QAction* action = new QAction(tr("Polygonal Area"),
+    /*    QAction* action = new QAction(tr("Polygonal Area"),
                                   tr("&Polygonal Area"),
                                   QKeySequence(), NULL); */
     QAction* action = new QAction(tr("Polygonal &Area"), NULL);
@@ -53,13 +53,12 @@ QAction* RS_ActionInfoArea::createGUIAction(RS2::ActionType /*type*/, QObject* /
 void RS_ActionInfoArea::init(int status) {
     RS_ActionInterface::init(status);
 
-    currentLine = NULL;
-    closingLine = NULL;
-    deletePreview();
-    point1.valid=false;
-    ia.reset();
+    if(status==SetFirstPoint){
+        deletePreview();
+        ia.reset();
+    }
 
-    //std::cout << "RS_ActionInfoArea::init: " << status << "\n";
+    //RS_DEBUG->print( "RS_ActionInfoArea::init: %d" ,status );
 }
 
 
@@ -67,77 +66,46 @@ void RS_ActionInfoArea::init(int status) {
 void RS_ActionInfoArea::trigger() {
 
     RS_DEBUG->print("RS_ActionInfoArea::trigger()");
-    if (ia.isValid()) {
-        display();
-    }
+    display();
 
     init(SetFirstPoint);
-    /*
-    if (point1.valid && point2.valid) {
-        double dist = point1.distanceTo(point2);
-        QString str;
-        str.sprintf("%.6f", dist);
-        RS_DIALOGFACTORY->commandMessage(tr("Distance: %1").arg(str));
-}
-    */
 }
 
+//todo: we regenerate the whole preview, it's possible to generate needed lines only
+/** display area circumference and preview of polygon **/
 void RS_ActionInfoArea::display() {
-//    ia.close(true);
-    ia.calculate();
-    double area = ia.getArea();
-    double circ = ia.getCircumference();
-//    ia.close(false); //undo close polygon action
+    deletePreview();
+    if(ia.size() < 1) {
+        return;
+    }
+    switch(ia.size()){
+    case 2:
+        preview->addEntity(new RS_Line(preview,ia.at(0),ia.at(1)));
+        break;
+    default:
+        for(int i=0;i<ia.size();i++){
+            preview->addEntity(new RS_Line(preview,ia.at(i),ia.at((i+1) % ia.size())));
+        }
+        double area = ia.getArea();
+        double circ = ia.getCircumference();
 
-//    RS_DEBUG->print("RS_ActionInfoArea::trigger: area: %f", area);
-    RS_DIALOGFACTORY->commandMessage(tr("Circumference: %1").arg(circ));
-    RS_DIALOGFACTORY->commandMessage(tr("Area: %1").arg(area));
+        RS_DIALOGFACTORY->commandMessage(tr("Circumference: %1").arg(circ));
+        RS_DIALOGFACTORY->commandMessage(tr("Area: %1").arg(area));
+        break;
+    }
+    drawPreview();
+
 }
 
 
 void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
     //RS_DEBUG->print("RS_ActionInfoArea::mouseMoveEvent begin");
 
-        RS_Vector mouse = snapPoint(e);
+    RS_Vector mouse = snapPoint(e);
     if ( getStatus()==SetNextPoint) {
-
-
-            if (prev.valid && point1.valid) {
-                //                deletePreview();
-                if (currentLine!=NULL) {
-                    preview->removeEntity(currentLine);
-                    currentLine = NULL;
-                }
-                if (closingLine!=NULL) {
-                    preview->removeEntity(closingLine);
-                    closingLine = NULL;
-                }
-
-                currentLine = new RS_Line(preview,
-                                          RS_LineData(prev,
-                                                      mouse));
-                preview->addEntity(currentLine);
-
-                if (preview->count()>1) {
-                    closingLine = new RS_Line(preview,
-                                              RS_LineData(mouse,
-                                                          point1));
-
-                    preview->addEntity(closingLine);
-                    bool added=false;
-                    if(ia.duplicated(mouse) == false) {
-                        ia.addPoint(mouse);
-                        added=true;
-                    }
-                    display();
-                    if(added){
-                        ia.pop_back();
-                    }
-                }
-
-                drawPreview();
-            }
-
+        ia.push_back(mouse);
+        display();
+        ia.pop_back();
     }
 
     //RS_DEBUG->print("RS_ActionInfoArea::mouseMoveEvent end");
@@ -164,50 +132,23 @@ void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent* e) {
 
     RS_Vector mouse = e->getCoordinate();
     if(ia.duplicated(mouse)) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,"RS_ActionInfoArea::coordinateEvent(): duplicated point");
+        ia.push_back(mouse);
+        RS_DIALOGFACTORY->commandMessage(tr("Closing Point: %1/%2")
+                                         .arg(mouse.x).arg(mouse.y));
+        trigger();
         return;
     }
     graphicView->moveRelativeZero(mouse);
 
-    ia.addPoint(mouse);
-    prev = mouse;
-        RS_DIALOGFACTORY->commandMessage(tr("Point: %1/%2")
-                                         .arg(mouse.x).arg(mouse.y));
+    ia.push_back(mouse);
+    RS_DIALOGFACTORY->commandMessage(tr("Point: %1/%2")
+                                     .arg(mouse.x).arg(mouse.y));
     switch (getStatus()) {
     case SetFirstPoint:
-        point1=mouse;
-        deletePreview();
-
-
-
         setStatus(SetNextPoint);
         break;
-
     case SetNextPoint:
-        if( point1.valid ){
-        //point2 = mouse;
-            /*deletePreview();
-            */
-
-            currentLine = NULL;
-
-//            graphicView->moveRelativeZero(mouse);
-
-            // automatically detect that the polyline is now closed
-            if (ia.isClosed()) {
-//        deletePreview();
-                trigger();
-            }else{
-                if(ia.count()>=3) {
-                    display();
-                }
-            }
-        }else{
-            point1=mouse;
-        }
-
-            //trigger();
-            //setStatus(SetFirstPoint);
+        display();
         break;
 
     default:
@@ -220,8 +161,8 @@ void RS_ActionInfoArea::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetFirstPoint:
         RS_DIALOGFACTORY->updateMouseWidget(
-            tr("Specify first point of polygon"),
-            tr("Cancel"));
+                    tr("Specify first point of polygon"),
+                    tr("Cancel"));
         break;
     case SetNextPoint:
         RS_DIALOGFACTORY->updateMouseWidget(
@@ -239,16 +180,5 @@ void RS_ActionInfoArea::updateMouseButtonHints() {
 void RS_ActionInfoArea::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionInfoArea::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
 
 // EOF

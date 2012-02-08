@@ -38,7 +38,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionInfoArea : public RS_PreviewActionInterface {
-        Q_OBJECT
+    Q_OBJECT
 public:
     /**
      * Action States.
@@ -50,7 +50,7 @@ public:
 
 public:
     RS_ActionInfoArea(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
+                      RS_GraphicView& graphicView);
     ~RS_ActionInfoArea() {}
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
@@ -65,19 +65,13 @@ public:
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
 
-        virtual void coordinateEvent(RS_CoordinateEvent* e);
+    virtual void coordinateEvent(RS_CoordinateEvent* e);
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 private:
-    RS_Vector point1;
-    RS_Vector prev;
-        RS_Entity* currentLine;
-        RS_Entity* closingLine;
-    //RS_Vector point2;
-        RS_InfoArea ia;
+    RS_InfoArea ia;
 };
 
 #endif

@@ -38,35 +38,38 @@
  */
 class RS_InfoArea {
 public:
-        RS_InfoArea();
-        ~RS_InfoArea();
+    RS_InfoArea();
+    ~RS_InfoArea();
 
-        void reset();
-        void addPoint(const RS_Vector& p);
-        void calculate();
-        void close(bool closePolygon=true);
-        bool isValid();
-        //whether the point p is already in contour
-        bool duplicated(const RS_Vector& p);
-        bool isClosed();
-        void pop_back();
-        double getArea() {
-                return area;
-        }
-        double getCircumference() {
-                return circumference;
-        }
-        int count() {
-                return thePoints.size();
-        }
+    void reset();
+    void push_back(const RS_Vector& p);
+    //whether the point p is already in contour
+    bool duplicated(const RS_Vector& p);
+    void pop_back();
+    double getArea() {
+        return area;
+    }
+    double getCircumference() {
+        if(calculationNeeded) calculate();
+        return circumference;
+    }
+    int size() {
+        if(calculationNeeded) calculate();
+        return thePoints.size();
+    }
+    RS_Vector at(int i){
+        return thePoints.at(i);
+    }
 
 private:
-        double calcSubArea(const RS_Vector& p1, const RS_Vector& p2);
+    void calculate();
+    double calcSubArea(const RS_Vector& p1, const RS_Vector& p2);
 
-        QList<RS_Vector> thePoints;
-        double baseY;
-        double area;
-        double circumference;
+    QList<RS_Vector> thePoints;
+    double baseY;
+    double area;
+    double circumference;
+    bool calculationNeeded;
 };
 
 #endif
