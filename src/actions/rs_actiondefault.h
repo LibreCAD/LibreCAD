@@ -85,8 +85,6 @@ protected:
     RS_Vector v1;
     RS_Vector v2;
     RS2::SnapRestriction restrBak;
-private:
-    void  cleanUpAction(QMouseEvent* e); // cancel the current action and cleanup
 
 };
 

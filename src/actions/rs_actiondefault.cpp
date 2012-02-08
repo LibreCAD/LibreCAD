@@ -63,7 +63,10 @@ QAction* RS_ActionDefault::createGUIAction(RS2::ActionType /*type*/,
 
 void RS_ActionDefault::init(int status) {
         RS_DEBUG->print("RS_ActionDefault::init");
-
+if(status==Neutral){
+    deletePreview();
+    deleteSnapper();
+}
         RS_PreviewActionInterface::init(status);
     v1 = v2 = RS_Vector(false);
 //    snapMode.clear();
@@ -82,15 +85,29 @@ void RS_ActionDefault::trigger() {
 }
 
 void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {
-        if (e->key()==Qt::Key_Shift) {
-                restrBak = snapMode.restriction;
-                setSnapRestriction(RS2::RestrictOrthogonal);
-        }
+//        std::cout<<"RS_ActionDefault::keyPressEvent(): begin"<<std::endl;
+    switch(e->key()){
+    case Qt::Key_Shift:
+        restrBak = snapMode.restriction;
+        setSnapRestriction(RS2::RestrictOrthogonal);
+        e->accept();
+        //cleanup default action, issue#285
+    case Qt::Key_Escape:
+//        std::cout<<"RS_ActionDefault::keyPressEvent(): Qt::Key_Escape"<<std::endl;
+        deletePreview();
+        deleteSnapper();
+        setStatus(Neutral);
+        e->accept();
+    default:
+        e->ignore();
+    }
+
 }
 
 void RS_ActionDefault::keyReleaseEvent(QKeyEvent* e) {
         if (e->key()==Qt::Key_Shift) {
                 setSnapRestriction(restrBak);
+                e->accept();
         }
 }
 
@@ -247,7 +264,8 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
         }
     } else if (e->button()==Qt::RightButton) {
         //cleanup
-        cleanUpAction(e);
+        setStatus(Neutral);
+        e->accept();
     }
 }
 
@@ -309,27 +327,8 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
         }
     } else if (e->button()==Qt::RightButton) {
         //cleanup
-        cleanUpAction(e);
-    }
-}
-
- // cancel the current action and cleanup
-void RS_ActionDefault::cleanUpAction(QMouseEvent* e){
-    switch (getStatus()) {
-    case SetCorner2:
-    case Moving:
-    case MovingRef:
-        deletePreview();
-        deleteSnapper();
         setStatus(Neutral);
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
         e->accept();
-        break;
-
-    default:
-        RS_DIALOGFACTORY->requestPreviousMenu();
-        e->accept();
-        break;
     }
 }
 

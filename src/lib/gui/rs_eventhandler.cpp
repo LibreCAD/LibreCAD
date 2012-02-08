@@ -529,7 +529,11 @@ void RS_EventHandler::killAllActions() {
         if(currentActions.size()==0) return;
         delete currentActions.takeFirst();
     }
-    //cleanUp();
+//    if(defaultAction->rtti() == RS2::ActionDefault){
+
+//    }
+    //cleanup default action, issue#285
+    defaultAction->init(0);
 }
 
 
