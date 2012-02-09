@@ -9,7 +9,7 @@ CD into that directory and follow these instructions:
 
 # Build makefile and compile LibreCAD
 
-qmake
+qmake librecad.pro
 make
 
 ---- Ubuntu/Debian users ----
