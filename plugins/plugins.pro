@@ -35,12 +35,8 @@ win32 {
     INSTALLDIR = ../windows/resources/plugins
 }
 unix {
-    macx { 
-	INSTALLDIR = ../LibreCAD.app/Contents/Resources/plugins
-    }
-    else { 
-	INSTALLDIR = ../unix/resources/plugins
-    }
+     macx { 
+         INSTALLDIR = ../LibreCAD.app/Contents/Resources/plugins
+     }
 }
-
 

@@ -28,15 +28,13 @@ unix {
 TRANSLATIONS =
 
 # install
+INSTALLDIR = unix
 win32 {
     INSTALLDIR = release
 }
 unix {
     macx { 
         INSTALLDIR = LibreCAD.app/Contents
-    }
-    else { 
-#        INSTALLDIR = unix
     }
 }
 
