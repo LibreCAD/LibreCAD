@@ -49,7 +49,7 @@ RS_ActionDrawImage::~RS_ActionDrawImage() {}
 
 QAction* RS_ActionDrawImage::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     // tr("Image")
-    QAction* action = new QAction(tr("&Image"),  NULL);
+    QAction* action = new QAction(tr("Insert &Image"),  NULL);
     action->setIcon(QIcon(":/extui/menuimage.png"));
     //action->zetStatusTip(tr("Insert Image (Bitmap)"));
     return action;
