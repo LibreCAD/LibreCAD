@@ -27,6 +27,10 @@ win32 {
     COPY = cp
 }
 
+macx { 
+    CONFIG += x86 x86_64
+}
+
 SOURCES += \
     src/libdxfrw.cpp \
     src/drw_entities.cpp \

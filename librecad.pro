@@ -19,7 +19,9 @@ SUBDIRS     = \
         plugins
 
 unix {
-    macx {   }
+    macx {   
+	CONFIG += x86 x86_64
+    }
     else {
         SUBDIRS += attf2lff
     }
@@ -40,3 +42,5 @@ unix {
     }
 }
 
+
+exists( custom.pro ):include( custom.pro )

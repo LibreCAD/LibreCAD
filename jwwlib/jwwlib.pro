@@ -26,7 +26,9 @@ win32 {
 } else {
     COPY = cp
 }
-
+macx {
+    CONFIG += x86 x86_64
+}
 INCLUDEPATH += \
     ../dxflib/src
 

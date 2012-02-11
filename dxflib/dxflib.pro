@@ -26,7 +26,9 @@ win32 {
 } else {
     COPY = cp
 }
-
+macx {
+    CONFIG += x86 x86_64
+}
 SOURCES += \
     src/dl_dxf.cpp \
     src/dl_writer_ascii.cpp
