@@ -15,9 +15,7 @@ SUBDIRS     = \
         list \
         sameprop \
         importshp \
-        sample \
-	rvtcam
-
+        sample 
 
 TRANSLATIONS =
 
