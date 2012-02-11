@@ -51,7 +51,7 @@ unix {
     # SVNREVISION = $$system(svn info -R | grep -o \"Revision: [0-9]*\" | sed -e \"s/Revision: //\" | head -n1)
     # Temporary disabled getting SCM version
     #SCMREVISION=$$system(git describe --tags)
-    SCMREVISION=$$system([ "$(which git)x" != "x" -a -d .git ] && echo "$(git describe --tags)" || echo "2.0.0alpha1")
+    SCMREVISION=$$system([ "$(which git)x" != "x" -a -d ../.git ] && echo "$(git describe --tags)" || echo "2.0.0alpha2")
 
     DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
     macx {
