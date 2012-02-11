@@ -192,10 +192,12 @@ void QG_CadToolBar::hideSubToolBars(){
     }
 }
 void QG_CadToolBar::showSubToolBar(){
-    //shift down to show the handle to move the toolbar
-    //has to be 20, 10 is not enough
-    toolbars.last()->move(0,20);
-    toolbars.last()->show();
+    if (!toolbars.last()->isVisible()) { // On OSX, without this line LibreCAD wuld crash. Not sure if it's a Qt problem or 'somewhere' logic within LibreCAD
+        //shift down to show the handle to move the toolbar
+        //has to be 20, 10 is not enough
+        toolbars.last()->move(0,20);
+        toolbars.last()->show();
+    }
 }
 void QG_CadToolBar::showPreviousToolBar(bool cleanup) {
     // cleanup mouse hint when showing previous tool bar, bug#3480121
