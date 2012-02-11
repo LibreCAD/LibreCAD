@@ -21,6 +21,9 @@
 **
 **********************************************************************/
 
+#ifdef __APPLE__
+    #include <sys/types.h>
+#endif
 #include <iostream>
 #include <math.h>
 #include <ft2build.h>
