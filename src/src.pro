@@ -30,12 +30,7 @@ CONFIG += qt \
     help verbose
 
 # tin-pot 2012-01-06: Make using boost the default on win32-msvc2003.
-win32-msvc2003 {
-    CONFIG += boost
-}
 
-# Use common project definitions.
-include(../common.pro)
 
 QMAKE_CXXFLAGS_DEBUG +=
 QMAKE_CXXFLAGS +=
@@ -51,11 +46,16 @@ unix {
     # SVNREVISION = $$system(svn info -R | grep -o \"Revision: [0-9]*\" | sed -e \"s/Revision: //\" | head -n1)
     # Temporary disabled getting SCM version
     #SCMREVISION=$$system(git describe --tags)
-    SCMREVISION=$$system([ "$(which git)x" != "x" -a -d .git ] && echo "$(git describe --tags)" || echo "2.0.0alpha1")
+    SCMREVISION=$$system([ "$(which git)x" != "x" -a -d ../.git ] && echo "$(git describe --tags)" || echo "2.0.0alpha2")
 
     DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
     macx {
-        CONFIG += x86 x86_64
+	# test of boost exists
+	exists( /opt/local/lib/libboost* ) {
+    	    DEFINES += HAS_BOOST=1
+    	    CONFIG += boost
+	}
+	CONFIG += x86 x86_64
         TARGET = LibreCAD
         DEFINES += QC_APPDIR="\"LibreCAD\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
@@ -82,6 +82,9 @@ unix {
     }
 }
 win32 {
+    win32-msvc2003 {
+	CONFIG += boost
+    }
     # TODO tin-pot 2012-01-06: I think this should be `QMAKE_CXXFLAGS_THREAD`?
     QMAKE_CFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
@@ -94,7 +97,8 @@ win32 {
     QMAKE_POST_LINK = ..\\scripts\\postprocess-win.bat
 }
 
-
+# Use common project definitions.
+include(../common.pro)
 
 # Additional libraries to load
 # LIBS += \

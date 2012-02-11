@@ -53,3 +53,32 @@ win32 {
     }
 }
 
+macx {
+    boost {
+        # Use Boost on OSX
+	# Install boost with : sudo port install boost
+
+        # Specify where boost is installed (this should have the boost
+        # headers in ./boost/ and libraries in ./lib/).
+        BOOST_DIR = /opt/local/include/
+
+        # BOOST_LIBS may specifiy boost import libraries (this are the libraries
+        # without the `lib` prefix, which have a corresponding `.dll` file!).
+        # They are only needed when dynamically linking against boost, otherwise 
+        # leave it empty and the autolink process will take care of linking to
+        # the correct (static) boost library. (Most of the boost components are 
+        # header-only anyway.)
+        # 
+        # For example: `BOOST_LIBS = -lboost_regex-vc71-mt-1_47.lib`
+        BOOST_LIBS = 
+
+        # Make boost known to compiler and linker.
+        # This should also work on other platforms (but BOOST_LIBS may need
+        # to be set to the required boost *.sl/*.so/*.dylib/*.a).
+        DEFINES += HAS_BOOST
+        INCLUDEPATH += $${BOOST_DIR}
+        LIBS += -L/opt/local/lib $${BOOST_LIBS}
+        !build_pass:verbose:message(Using boost libraries in $${BOOST_DIR}.)
+    }
+}
+
