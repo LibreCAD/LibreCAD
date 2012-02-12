@@ -174,6 +174,7 @@ void QG_CadToolBarMain::showCadToolBar(RS2::ActionType actionType) {
         bMenuText->setChecked(true);
         break;
     default:
+        bHidden->setChecked(true);
         break;
     }
 }
