@@ -42,8 +42,6 @@
  * 
  */
 class RS_Settings {
-public:
-    RS_Settings();
 
 public:
     /**
@@ -84,6 +82,9 @@ public:
     ~RS_Settings();
 
 private:
+
+    RS_Settings();
+    RS_Settings(RS_Settings&) = delete;
         QVariant readEntryCache(const QString& key);
         void addToCache(const QString& key, const QVariant& value);
 

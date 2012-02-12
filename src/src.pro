@@ -15,13 +15,15 @@ DEFINES += USE_DXFRW=1
 # uncomment USEQTDIALOG=1 to use QFileDialog instead "native" FileDialog
 # KDE returns the first filter that match the pattern "*.dxf" instead the selected
 # DEFINES += USEQTDIALOG=1
-HAS_CPP11 =
+
+# C++11 is the default now for versions > 2.0.0alpha2
+# HAS_CPP11 =
 #HAS_CPP11 += 1
-count(HAS_CPP11, 1) {
+#count(HAS_CPP11, 1) {
     DEFINES += HAS_CPP11=1
     QMAKE_CXXFLAGS_DEBUG += -std=c++0x
     QMAKE_CXXFLAGS += -std=c++0x
-}
+#}
 
 
 CONFIG += qt \
