@@ -39,7 +39,7 @@ class RS_ActionBlocksEdit : public RS_ActionInterface {
 public:
     RS_ActionBlocksEdit(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionBlocksEdit() {}
+    ~RS_ActionBlocksEdit() = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

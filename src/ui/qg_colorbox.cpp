@@ -65,7 +65,7 @@ QG_ColorBox::QG_ColorBox(bool showByLayer, bool showUnchanged,
 /**
  * Destructor
  */
-QG_ColorBox::~QG_ColorBox() {}
+//QG_ColorBox::~QG_ColorBox() {}
 
 
 /**

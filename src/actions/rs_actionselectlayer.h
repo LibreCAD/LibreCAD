@@ -40,7 +40,7 @@ class RS_ActionSelectLayer : public RS_ActionInterface {
 public:
     RS_ActionSelectLayer(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~RS_ActionSelectLayer() {}
+    ~RS_ActionSelectLayer() = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

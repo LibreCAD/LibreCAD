@@ -49,7 +49,7 @@ private:
 public:
     RS_ActionDrawLineParallel(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineParallel() {}
+    ~RS_ActionDrawLineParallel() = default;
 
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 	

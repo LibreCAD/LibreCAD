@@ -49,7 +49,7 @@ public:
 public:
     RS_ActionSnapIntersectionManual(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionSnapIntersectionManual() {}
+    ~RS_ActionSnapIntersectionManual() = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

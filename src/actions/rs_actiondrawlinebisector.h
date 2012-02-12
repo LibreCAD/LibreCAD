@@ -48,7 +48,7 @@ private:
 public:
     RS_ActionDrawLineBisector(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineBisector() {}
+    ~RS_ActionDrawLineBisector() = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	

@@ -39,7 +39,7 @@ class QG_CommandEdit: public QLineEdit {
 
 public:
     QG_CommandEdit(QWidget* parent=0);
-    virtual ~QG_CommandEdit();
+    virtual ~QG_CommandEdit() {}
 
 protected:
 	virtual bool event(QEvent* e);

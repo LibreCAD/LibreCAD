@@ -43,7 +43,7 @@ public:
                     RS_GraphicView& graphicView,
                     RS2::ActionType nextAction,
                     QVector<RS2::EntityType>* entityTypeList=NULL);
-    ~RS_ActionSelect() {}
+    ~RS_ActionSelect()  = default;
 
     virtual void init(int status);
     virtual RS2::ActionType rtti(){

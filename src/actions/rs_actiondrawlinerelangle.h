@@ -51,7 +51,7 @@ public:
                               RS_GraphicView& graphicView,
                               double angle=0.0,
                               bool fixedAngle=false);
-    ~RS_ActionDrawLineRelAngle() {}
+    ~RS_ActionDrawLineRelAngle() = default;
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	

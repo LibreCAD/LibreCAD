@@ -47,7 +47,7 @@ private:
 public:
     RS_ActionDrawLineTangent2(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineTangent2() {}
+    ~RS_ActionDrawLineTangent2() = default;
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

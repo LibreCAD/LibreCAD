@@ -41,7 +41,7 @@ public:
     RS_ActionZoomAuto(RS_EntityContainer& container,
                       RS_GraphicView& graphicView,
                       bool keepAspectRatio=true);
-    ~RS_ActionZoomAuto() {}
+    ~RS_ActionZoomAuto()  = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

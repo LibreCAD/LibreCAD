@@ -40,7 +40,7 @@ class RS_ActionLayersRemove : public RS_ActionInterface {
 public:
     RS_ActionLayersRemove(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~RS_ActionLayersRemove() {}
+    ~RS_ActionLayersRemove() = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

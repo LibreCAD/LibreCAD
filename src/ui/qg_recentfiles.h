@@ -37,7 +37,7 @@ class QG_RecentFiles {
 
 public:
     QG_RecentFiles(int number);
-    virtual ~QG_RecentFiles();
+    virtual ~QG_RecentFiles() {}
 
     void add(const QString& filename);
 
@@ -46,7 +46,7 @@ public:
      * list at index i
      */
     QString get(int i) {
-        if (i<(int)files.count()) {
+        if (i>=0 && i<files.count()) {
             return files[i];
         } else {
             return QString("");

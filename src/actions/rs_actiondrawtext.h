@@ -51,7 +51,7 @@ public:
 public:
     RS_ActionDrawText(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~RS_ActionDrawText() {}
+    ~RS_ActionDrawText() = default;
 
         static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

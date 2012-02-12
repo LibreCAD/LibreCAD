@@ -50,7 +50,7 @@ public:
 public:
     RS_ActionZoomPan(RS_EntityContainer& container,
                      RS_GraphicView& graphicView);
-    ~RS_ActionZoomPan() {}
+    ~RS_ActionZoomPan()  = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

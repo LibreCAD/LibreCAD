@@ -46,7 +46,7 @@ public:
 public:
 	RS_ActionPolylineEquidistant(RS_EntityContainer& container,
 						RS_GraphicView& graphicView);
-	~RS_ActionPolylineEquidistant() {}
+    ~RS_ActionPolylineEquidistant() = default;
 	virtual RS2::ActionType rtti() {
 		return RS2::ActionPolylineEquidistant;
 	}
