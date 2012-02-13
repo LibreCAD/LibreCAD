@@ -24,16 +24,6 @@
 **
 **********************************************************************/
 
-#ifdef  HAS_BOOST
-#include <boost/math/special_functions/ellint_2.hpp>
-#include <boost/math/tools/roots.hpp>
-
-#include <boost/numeric/ublas/matrix.hpp>
-#include <boost/numeric/ublas/io.hpp>
-#include <boost/numeric/ublas/lu.hpp>
-
-#endif
-
 #include <QVector>
 #include "rs_ellipse.h"
 
