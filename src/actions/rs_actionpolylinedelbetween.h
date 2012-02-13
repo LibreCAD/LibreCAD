@@ -48,7 +48,7 @@ public:
 public:
     RS_ActionPolylineDelBetween(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionPolylineDelBetween()  = default;
+    ~RS_ActionPolylineDelBetween() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     virtual RS2::ActionType rtti(){

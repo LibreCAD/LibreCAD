@@ -40,7 +40,7 @@ class RS_ActionZoomAutoY : public RS_ActionInterface {
 public:
     RS_ActionZoomAutoY(RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
-    ~RS_ActionZoomAutoY() = default;
+    ~RS_ActionZoomAutoY() {}
 
     virtual void init(int status=0);
     virtual void trigger();

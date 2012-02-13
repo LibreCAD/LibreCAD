@@ -41,7 +41,7 @@ public:
     RS_ActionBlocksFreezeAll(bool freeze,
                              RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
-    ~RS_ActionBlocksFreezeAll() = default;
+    ~RS_ActionBlocksFreezeAll() {}
 
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 

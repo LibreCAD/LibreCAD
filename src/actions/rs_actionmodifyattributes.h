@@ -49,7 +49,7 @@ public:
 public:
     RS_ActionModifyAttributes(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~RS_ActionModifyAttributes() = default;
+    ~RS_ActionModifyAttributes() {}
 	
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     RS2::ActionType rtti(){

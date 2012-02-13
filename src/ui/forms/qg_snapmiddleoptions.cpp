@@ -2,8 +2,8 @@
 **
 Construct option widget for equidistant points on entity
 
-Copyright (C) 2011-2012 Dongxu Li (dongxuli2011@gmail.com)
-Copyright (C) 2011-2012 R. van Twisk (librecad@rvt.dds.nl)
+Copyright (C) 2011 Dongxu Li (dongxuli2011@gmail.com)
+Copyright (C) 2011 R. van Twisk (librecad@rvt.dds.nl)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

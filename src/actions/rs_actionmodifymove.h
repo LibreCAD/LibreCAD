@@ -51,7 +51,7 @@ public:
 public:
     RS_ActionModifyMove(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyMove()  = default;
+    ~RS_ActionModifyMove() {}
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     RS2::ActionType rtti(){

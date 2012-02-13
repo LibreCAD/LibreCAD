@@ -47,7 +47,7 @@ private:
 public:
     RS_ActionDrawLinePolygonCenCor(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLinePolygonCenCor() = default;
+    ~RS_ActionDrawLinePolygonCenCor() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	

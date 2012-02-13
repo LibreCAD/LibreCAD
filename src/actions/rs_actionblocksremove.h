@@ -40,7 +40,7 @@ class RS_ActionBlocksRemove : public RS_ActionInterface {
 public:
     RS_ActionBlocksRemove(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~RS_ActionBlocksRemove() = default;
+    ~RS_ActionBlocksRemove() {}
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

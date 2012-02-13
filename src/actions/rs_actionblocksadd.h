@@ -39,7 +39,7 @@ class RS_ActionBlocksAdd : public RS_ActionInterface {
 public:
     RS_ActionBlocksAdd(RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
-    ~RS_ActionBlocksAdd() = default;
+    ~RS_ActionBlocksAdd() {}
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

@@ -40,7 +40,7 @@ class RS_ActionDrawPoint : public RS_PreviewActionInterface {
 public:
     RS_ActionDrawPoint(RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
-    ~RS_ActionDrawPoint() = default;
+    ~RS_ActionDrawPoint() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

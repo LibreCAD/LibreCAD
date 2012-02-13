@@ -40,7 +40,7 @@ QG_RecentFiles::QG_RecentFiles(int number) {
 /**
  * Destructor
  */
-//QG_RecentFiles::~QG_RecentFiles() {}
+QG_RecentFiles::~QG_RecentFiles() {}
 
 /**
  * Adds a file to the list of recently loaded files if

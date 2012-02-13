@@ -1203,7 +1203,7 @@ void QC_ApplicationWindow::initActions(void)
     action = actionFactory.createAction(RS2::ActionSnapFree, actionHandler);
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-//    action->setChecked(true);
+    action->setChecked(true);
     action = actionFactory.createAction(RS2::ActionSnapGrid, actionHandler);
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));

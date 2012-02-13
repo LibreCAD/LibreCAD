@@ -50,7 +50,7 @@ public:
     RS_ActionSelectWindow(RS_EntityContainer& container,
                          RS_GraphicView& graphicView,
                          bool select);
-    ~RS_ActionSelectWindow()  = default;
+    ~RS_ActionSelectWindow() {}
 
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 

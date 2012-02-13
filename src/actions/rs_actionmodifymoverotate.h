@@ -53,7 +53,7 @@ public:
 public:
     RS_ActionModifyMoveRotate(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyMoveRotate()  = default;
+    ~RS_ActionModifyMoveRotate() {}
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	

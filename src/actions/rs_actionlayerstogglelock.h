@@ -40,7 +40,7 @@ class RS_ActionLayersToggleLock : public RS_ActionInterface {
 public:
     RS_ActionLayersToggleLock(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionLayersToggleLock() = default;
+    ~RS_ActionLayersToggleLock() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

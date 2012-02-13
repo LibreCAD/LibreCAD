@@ -49,7 +49,7 @@ private:
 public:
     RS_ActionDimAngular(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDimAngular() = default;
+    ~RS_ActionDimAngular() {}
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

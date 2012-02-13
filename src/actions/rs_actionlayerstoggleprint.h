@@ -39,7 +39,7 @@ class RS_ActionLayersTogglePrint : public RS_ActionInterface {
 public:
     RS_ActionLayersTogglePrint(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionLayersTogglePrint() = default;
+    ~RS_ActionLayersTogglePrint() {}
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

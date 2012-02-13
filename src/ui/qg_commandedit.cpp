@@ -39,7 +39,8 @@ QG_CommandEdit::QG_CommandEdit(QWidget* parent)
 /**
  * Destructor
  */
-//QG_CommandEdit::~QG_CommandEdit() { }
+QG_CommandEdit::~QG_CommandEdit() {
+}
 
 
 /**

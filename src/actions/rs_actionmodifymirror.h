@@ -51,7 +51,7 @@ public:
 public:
     RS_ActionModifyMirror(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyMirror()  = default;
+    ~RS_ActionModifyMirror() {}
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     RS2::ActionType rtti(){

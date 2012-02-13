@@ -42,7 +42,7 @@ class RS_ActionSetRelativeZero : public RS_PreviewActionInterface {
 public:
     RS_ActionSetRelativeZero(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
-    ~RS_ActionSetRelativeZero()  = default;
+    ~RS_ActionSetRelativeZero() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

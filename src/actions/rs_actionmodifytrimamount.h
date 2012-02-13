@@ -49,7 +49,7 @@ public:
 public:
     RS_ActionModifyTrimAmount(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyTrimAmount()  = default;
+    ~RS_ActionModifyTrimAmount() {}
 
         static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

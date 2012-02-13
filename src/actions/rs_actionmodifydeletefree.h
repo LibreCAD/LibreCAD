@@ -40,7 +40,7 @@ class RS_ActionModifyDeleteFree : public RS_ActionInterface {
 public:
     RS_ActionModifyDeleteFree(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionModifyDeleteFree()  = default;
+    ~RS_ActionModifyDeleteFree() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

@@ -47,7 +47,7 @@ public:
 public:
     RS_ActionPolylineDel(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionPolylineDel() = default;
+    ~RS_ActionPolylineDel() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     virtual RS2::ActionType rtti(){

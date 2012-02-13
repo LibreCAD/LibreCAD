@@ -46,7 +46,7 @@ public:
 public:
     RS_ActionPolylineSegment(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionPolylineSegment()  = default;
+    ~RS_ActionPolylineSegment() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     virtual RS2::ActionType rtti(){

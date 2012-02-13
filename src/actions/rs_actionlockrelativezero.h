@@ -43,7 +43,7 @@ public:
     RS_ActionLockRelativeZero(RS_EntityContainer& container,
                              RS_GraphicView& graphicView,
 							 bool on);
-    ~RS_ActionLockRelativeZero() = default;
+    ~RS_ActionLockRelativeZero() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

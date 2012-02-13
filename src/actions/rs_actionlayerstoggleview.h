@@ -40,7 +40,7 @@ class RS_ActionLayersToggleView : public RS_ActionInterface {
 public:
     RS_ActionLayersToggleView(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionLayersToggleView() = default;
+    ~RS_ActionLayersToggleView() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

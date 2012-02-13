@@ -41,7 +41,7 @@ public:
     QG_ColorBox(QWidget* parent=0, const char* name=0);
     QG_ColorBox(bool showByLayer, bool showUnchanged, 
 		QWidget* parent=0, const char* name=0);
-    virtual ~QG_ColorBox() {}
+    virtual ~QG_ColorBox();
 
     RS_Color getColor() {
         return currentColor;

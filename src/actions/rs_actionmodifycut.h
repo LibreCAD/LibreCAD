@@ -49,7 +49,7 @@ public:
 public:
     RS_ActionModifyCut(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyCut() = default;
+    ~RS_ActionModifyCut() {}
 	
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     RS2::ActionType rtti(){

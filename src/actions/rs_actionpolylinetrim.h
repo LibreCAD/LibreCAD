@@ -48,7 +48,7 @@ public:
 public:
     RS_ActionPolylineTrim(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionPolylineTrim() = default;
+    ~RS_ActionPolylineTrim() {}
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     virtual RS2::ActionType rtti(){

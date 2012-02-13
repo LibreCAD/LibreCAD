@@ -48,7 +48,7 @@ private:
 public:
     RS_ActionDrawLineParallelThrough(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineParallelThrough() = default;
+    ~RS_ActionDrawLineParallelThrough() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	

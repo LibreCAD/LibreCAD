@@ -48,7 +48,7 @@ public:
 public:
     RS_ActionModifyDelete(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~RS_ActionModifyDelete() = default;
+    ~RS_ActionModifyDelete() {}
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     RS2::ActionType rtti(){

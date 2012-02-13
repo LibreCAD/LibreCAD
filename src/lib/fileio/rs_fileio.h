@@ -2,8 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2012 Dongxu Li (dongxuli2011@gmail.com)
-** Copyright (C) 2010-2012 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -40,6 +39,8 @@
  * @author Andrew Mustun
  */
 class RS_FileIO {
+protected:
+    RS_FileIO() {}
 	
 public:
     /**
@@ -103,10 +104,7 @@ public:
 protected:
     static RS_FileIO* uniqueInstance;
     QList<RS_FilterInterface*> filterList;
-
-private:
-    RS_FileIO() = default;
-    RS_FileIO(RS_FileIO&)=delete;
-};
+}
+;
 
 #endif

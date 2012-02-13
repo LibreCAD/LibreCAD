@@ -41,7 +41,7 @@ public:
     RS_ActionSelectBase(const char* name,
                         RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionSelectBase() = default;
+    ~RS_ActionSelectBase() {}
 
     virtual void keyReleaseEvent(QKeyEvent* e);
     virtual void updateMouseCursor();

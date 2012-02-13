@@ -41,7 +41,7 @@ public:
     RS_ActionZoomScroll(RS2::Direction direction,
                         RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionZoomScroll()  = default;
+    ~RS_ActionZoomScroll() {}
 
     virtual void init(int status=0);
     virtual void trigger();

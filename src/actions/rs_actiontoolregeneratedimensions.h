@@ -40,7 +40,7 @@ class RS_ActionToolRegenerateDimensions : public RS_ActionInterface {
 public:
     RS_ActionToolRegenerateDimensions(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~RS_ActionToolRegenerateDimensions()  = default;
+    ~RS_ActionToolRegenerateDimensions() {}
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

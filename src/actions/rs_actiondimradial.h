@@ -48,7 +48,7 @@ private:
 public:
     RS_ActionDimRadial(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDimRadial() = default;
+    ~RS_ActionDimRadial() {}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	

@@ -51,7 +51,7 @@ public:
 public:
     RS_ActionInfoArea(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~RS_ActionInfoArea() = default;
+    ~RS_ActionInfoArea() {}
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     virtual RS2::ActionType rtti(){

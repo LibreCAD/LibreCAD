@@ -43,7 +43,7 @@ private:
 public:
     RS_ActionDrawLineOrthTan(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineOrthTan() = default;
+    ~RS_ActionDrawLineOrthTan() {}
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

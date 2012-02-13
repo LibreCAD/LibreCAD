@@ -41,7 +41,7 @@ class RS_ActionFileSaveAs : public RS_ActionInterface {
 public:
     RS_ActionFileSaveAs(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionFileSaveAs() = default;
+    ~RS_ActionFileSaveAs() {}
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
