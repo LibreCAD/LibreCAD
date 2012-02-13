@@ -30,6 +30,7 @@
 #define RS_ELLIPSE_H
 
 #ifdef  HAS_BOOST
+#include <boost/version.hpp>
 #include <boost/math/tools/roots.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
 
