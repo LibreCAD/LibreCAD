@@ -48,7 +48,7 @@ unix {
     macx {
 	# test of boost exists
         !exists( /opt/local/lib/libboost* ) {
-            error(Boost was not found, please install boost!(
+            error(Boost was not found, please install boost!)
         }
         DEFINES += HAS_BOOST=1
         CONFIG += boost
@@ -117,7 +117,7 @@ UI_HEADERS_DIR = ../intermediate/ui
 UI_SOURCES_DIR = ../intermediate/ui
 RESOURCES += ../res/extui/extui.qrc
 
-INCLUDEPATH += \
+DEPENDPATH += \
     ../dxflib/src \
     ../libdxfrw/src \
     ../jwwlib/src \
@@ -142,7 +142,7 @@ INCLUDEPATH += \
     res
 
 #depends check, bug#3411161
-DEPENDPATH = $$INCLUDEPATH
+INCLUDEPATH = $$DEPENDPATH
 # ################################################################################
 # Library
 HEADERS += \
