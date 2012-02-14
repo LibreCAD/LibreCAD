@@ -39,8 +39,9 @@
  * @author Andrew Mustun
  */
 class RS_FileIO {
-protected:
+private:
     RS_FileIO() {}
+    RS_FileIO(RS_FileIO&) = delete;
 	
 public:
     /**

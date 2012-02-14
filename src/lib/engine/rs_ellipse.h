@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2011-2012 Dongxu Li (dongxuli2011@gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -29,18 +30,9 @@
 #define RS_ELLIPSE_H
 
 #ifdef  HAS_BOOST
-#include <boost/math/special_functions/ellint_2.hpp>
+#include <boost/version.hpp>
 #include <boost/math/tools/roots.hpp>
-
-#ifndef HAS_CPP11
-
-#include <boost/fusion/tuple.hpp>
-#include <boost/tuple/tuple.hpp>
-
-#else
-
-#include <tuple>
-#endif
+#include <boost/math/special_functions/ellint_2.hpp>
 
 #endif
 
@@ -317,20 +309,20 @@ public:
     void setDistance(const double& target){
         distance=target;
     }
-#ifndef HAS_CPP11
-    boost::fusion::tuple <double, double, double> operator()(double const& z) const {
+#if BOOST_VERSION > 104500
+    boost::math::tuple<double, double, double> operator()(double const& z) const {
 #else
-    std::tuple <double, double, double> operator()(double const& z) const {
+    boost::fusion::tuple<double, double, double> operator()(double const& z) const {
 #endif
-        double cz=cos(z);
-        double sz=sin(z);
+    double cz=cos(z);
+    double sz=sin(z);
         //delta amplitude
-        double d=sqrt(1-k2*sz*sz);
+    double d=sqrt(1-k2*sz*sz);
         // return f(x), f'(x) and f''(x)
-#ifndef HAS_CPP11
-        return boost::fusion::make_tuple(
+#if BOOST_VERSION > 104500
+    return boost::math::make_tuple(
 #else
-        return std::make_tuple(
+    return boost::fusion::make_tuple(
 #endif
                     e->getEllipseLength(z)-distance,
                     ra*d,
