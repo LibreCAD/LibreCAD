@@ -16,25 +16,25 @@ win32 {
         # and
         #   http://www.boost.org/doc/libs/1_47_0/more/getting_started/windows.html
         # on getting and using a boost library prebuild for MSVC.
-        BOOST_DIR = $$(ProgramFiles)/boost/boost_1_47
+        BOOST_DIR = $$(ProgramFiles)/boost/boost_1_48_0
 
         # BOOST_LIBS may specifiy boost import libraries (this are the libraries
         # without the `lib` prefix, which have a corresponding `.dll` file!).
         # They are only needed when dynamically linking against boost, otherwise 
         # leave it empty and the autolink process will take care of linking to
-        # the correct (static) boost library. (Most of the boost components are 
+        # the correct (static) boost library. (Most of the boost components are
         # header-only anyway.)
-        # 
+        #
         # For example: `BOOST_LIBS = -lboost_regex-vc71-mt-1_47.lib`
-        BOOST_LIBS = 
+        BOOST_LIBS =
 
         # Make boost known to compiler and linker.
         # This should also work on other platforms (but BOOST_LIBS may need
         # to be set to the required boost *.sl/*.so/*.dylib/*.a).
         DEFINES += HAS_BOOST
-        INCLUDEPATH += $${BOOST_DIR}
-        LIBS += -L$${BOOST_DIR}/lib $${BOOST_LIBS}
-
+        INCLUDEPATH += "$${BOOST_DIR}"
+        LIBS += -L"$${BOOST_DIR}/lib" $${BOOST_LIBS}
+        HEADERS += "$${BOOST_DIR}"
         !build_pass:verbose:message(Using boost libraries in $${BOOST_DIR}.)
     }
 

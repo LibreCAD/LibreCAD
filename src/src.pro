@@ -31,12 +31,6 @@ CONFIG += qt \
     link_prl \
     help verbose
 
-# tin-pot 2012-01-06: Make using boost the default on win32-msvc2003.
-
-
-QMAKE_CXXFLAGS_DEBUG +=
-QMAKE_CXXFLAGS +=
-
 PRE_TARGETDEPS += ../intermediate/libdxfrw.a
 PRE_TARGETDEPS += ../intermediate/libdxflib.a
 PRE_TARGETDEPS += ../intermediate/libjwwlib.a
@@ -53,11 +47,12 @@ unix {
     DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
     macx {
 	# test of boost exists
-	exists( /opt/local/lib/libboost* ) {
-    	    DEFINES += HAS_BOOST=1
-    	    CONFIG += boost
-	}
-	CONFIG += x86 x86_64
+        !exists( /opt/local/lib/libboost* ) {
+            error(Boost was not found, please install boost!(
+        }
+        DEFINES += HAS_BOOST=1
+        CONFIG += boost
+        CONFIG += x86 x86_64
         TARGET = LibreCAD
         DEFINES += QC_APPDIR="\"LibreCAD\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
@@ -84,12 +79,14 @@ unix {
     }
 }
 win32 {
-    win32-msvc2003 {
-	CONFIG += boost
-    }
+    QMAKE_CXXFLAGS += -U__STRICT_ANSI__
+    CONFIG += boost
+    DEFINES += HAS_BOOST=1
     # TODO tin-pot 2012-01-06: I think this should be `QMAKE_CXXFLAGS_THREAD`?
     QMAKE_CFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
+    QMAKE_C++FLAGS_THREAD -= -mthreads
+    QMAKE_L++FLAGS_THREAD -= -mthreads
     TARGET = LibreCAD
     DEFINES += QC_APPDIR="\"LibreCAD\""
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
@@ -148,7 +145,7 @@ INCLUDEPATH += \
 DEPENDPATH = $$INCLUDEPATH
 # ################################################################################
 # Library
-HEADERS = \
+HEADERS += \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
@@ -242,7 +239,7 @@ HEADERS = \
     lib/scripting/rs_scriptlist.h \
     ui/forms/qg_snaptoolbar.h
 
-SOURCES = \
+SOURCES += \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \
