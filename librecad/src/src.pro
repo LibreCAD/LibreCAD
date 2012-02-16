@@ -6,122 +6,92 @@ DEFINES += QC_APPKEY="\"/LibreCAD\""
 DEFINES += QC_APPNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYKEY="\"LibreCAD\""
-DEFINES += QC_VERSION="\"master\""
+DEFINES += QC_VERSION="\"master\""4
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
-#uncomment to use 2D rs_vector instead of 3D
-#DEFINES += RS_VECTOR2D=1
+DEFINES += HAS_BOOST=1
+DEFINES += HAS_CPP11=1
 
 DEFINES += USE_DXFRW=1
+
 # uncomment USEQTDIALOG=1 to use QFileDialog instead "native" FileDialog
 # KDE returns the first filter that match the pattern "*.dxf" instead the selected
 # DEFINES += USEQTDIALOG=1
 
-# C++11 is the default now for versions > 2.0.0alpha2
-# HAS_CPP11 =
-#HAS_CPP11 += 1
-#count(HAS_CPP11, 1) {
+
+# Use common project definitions.
+include(../../settings.pro)
+include(../../common.pro)
+
+HAS_CPP11 =
+count(HAS_CPP11, 1) {
     DEFINES += HAS_CPP11=1
     QMAKE_CXXFLAGS_DEBUG += -std=c++0x
     QMAKE_CXXFLAGS += -std=c++0x
-#}
+}
 
+#uncomment to use 2D rs_vector instead of 3D
+#DEFINES += RS_VECTOR2D=1
 
 CONFIG += qt \
     warn_on \
     link_prl \
     help verbose
 
-PRE_TARGETDEPS += ../intermediate/libdxfrw.a
-PRE_TARGETDEPS += ../intermediate/libdxflib.a
-PRE_TARGETDEPS += ../intermediate/libjwwlib.a
-PRE_TARGETDEPS += ../intermediate/libfparser.a
+PRE_TARGETDEPS += ../../generated/lib/libdxfrw.a
+PRE_TARGETDEPS += ../../generated/lib/libdxflib.a
+PRE_TARGETDEPS += ../../generated/lib/libjwwlib.a
+PRE_TARGETDEPS += ../../generated/lib/libfparser.a
 
 # Make translations at the end of the process
 unix {
-    # Get SVN revision number
-    # SVNREVISION = $$system(svn info -R | grep -o \"Revision: [0-9]*\" | sed -e \"s/Revision: //\" | head -n1)
-    # Temporary disabled getting SCM version
-    #SCMREVISION=$$system(git describe --tags)
     SCMREVISION=$$system([ "$(which git)x" != "x" -a -d ../.git ] && echo "$(git describe --tags)" || echo "2.0.0alpha2")
 
     DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
     macx {
-	# test of boost exists
-        !exists( /opt/local/lib/libboost* ) {
-            error(Boost was not found, please install boost!)
-        }
-        DEFINES += HAS_BOOST=1
-        CONFIG += boost
         CONFIG += x86 x86_64
         TARGET = LibreCAD
         DEFINES += QC_APPDIR="\"LibreCAD\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
         RC_FILE = ../res/main/librecad.icns
-        DESTDIR = ..
-
+        DESTDIR = ../../
         QMAKE_POST_LINK = cd .. && scripts/postprocess-osx.sh
     }
     else {
         TARGET = librecad
 #fixme , need to detect whether boost is there
-        DEFINES += HAS_BOOST=1
         DEFINES += QC_APPDIR="\"librecad\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_librecad"
         RC_FILE = ../res/main/librecad.icns
-        DESTDIR = ../unix
-
-#fixme , boost, how to handle boost properly for win32 and unix
-# tin-pot 2012-01-06: See the boost stuff below and in `../common.pro` :-)
-#    CONFIG += link_pkgconfig
-#    PKGCONFIG += boost
-#
+        DESTDIR = ../../unix
         QMAKE_POST_LINK = cd .. && scripts/postprocess-unix.sh
     }
 }
 win32 {
     QMAKE_CXXFLAGS += -U__STRICT_ANSI__
-    CONFIG += boost
-    DEFINES += HAS_BOOST=1
-    # TODO tin-pot 2012-01-06: I think this should be `QMAKE_CXXFLAGS_THREAD`?
     QMAKE_CFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
     QMAKE_C++FLAGS_THREAD -= -mthreads
     QMAKE_L++FLAGS_THREAD -= -mthreads
+
     TARGET = LibreCAD
     DEFINES += QC_APPDIR="\"LibreCAD\""
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
 
-    RC_FILE = ..\\res\\main\\librecad.rc
-    DESTDIR = ..\\windows
-    QMAKE_POST_LINK = ..\\scripts\\postprocess-win.bat
+    RC_FILE = ../res/main/librecad.rc
+    DESTDIR = ../../windows
+    QMAKE_POST_LINK = ../scripts/postprocess-win.bat
 }
 
-# Use common project definitions.
-include(../common.pro)
+
 
 # Additional libraries to load
-# LIBS += \
-# -Ldxflib/lib -ldxf \
-# Store intermedia stuff somewhere else
-#LIBS += -lboost
-LIBS += \
- -L../intermediate -ldxfrw -ldxflib -ljwwlib -lfparser
-
-
-OBJECTS_DIR = ../intermediate/obj
-MOC_DIR = ../intermediate/moc
-RCC_DIR = ../intermediate/rcc
-TS_DIR = ../intermediate/ts
-UI_DIR = ../intermediate/ui
-UI_HEADERS_DIR = ../intermediate/ui
-UI_SOURCES_DIR = ../intermediate/ui
-RESOURCES += ../res/extui/extui.qrc
+LIBS += -L../generated -ldxfrw -ldxflib -ljwwlib -lfparser
 
 DEPENDPATH += \
-    ../dxflib/src \
-    ../libdxfrw/src \
-    ../jwwlib/src \
-    ../fparser \
+    ../../libraries/dxflib/src \
+    ../../libraries/libdxfrw/src \
+    ../../libraries/jwwlib/src \
+    ../../libraries/fparser \
     cmd \
     lib/actions \
     lib/creation \
@@ -142,7 +112,8 @@ DEPENDPATH += \
     res
 
 #depends check, bug#3411161
-INCLUDEPATH = $$DEPENDPATH
+INCLUDEPATH += $$DEPENDPATH
+
 # ################################################################################
 # Library
 HEADERS += \
@@ -950,7 +921,4 @@ TRANSLATIONS = ../ts/librecad_cs.ts \
     ../ts/librecad_uk.ts \
     ../ts/librecad_zh_cn.ts \
     ../ts/librecad_zh_tw.ts
-
-# Include any custom.pro files for personal/special builds
-exists( custom.pro ):include( custom.pro )
 

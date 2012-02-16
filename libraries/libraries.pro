@@ -5,13 +5,13 @@
 #-------------------------------------------------
 
 TEMPLATE = subdirs
-TARGET = librecad
 
-CONFIG += ordered
+TARGET = libraries
 
 SUBDIRS     = \
-    libraries \
-    librecad
-#        plugins
+        libdxfrw \
+        dxflib \
+        jwwlib \
+        fparser
 
-exists( custom.pro ):include( custom.pro )
+

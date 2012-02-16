@@ -7,9 +7,9 @@
 QT       -= core gui
 TEMPLATE = lib
 
-#CONFIG += dll \
-CONFIG += static \
-    warn_on
+CONFIG += static warn_on
+
+DESTDIR = ../../generated/lib
 
 VERSION = 2.2.0.0
 
@@ -17,18 +17,9 @@ DLL_NAME = dxflib
 TARGET = $$DLL_NAME
 
 # Use common project definitions.
-include(../common.pro)
+include(../../settings.pro)
+include(../../common.pro)
 
-# DEFINES +=
-
-win32 {
-    COPY = copy /y
-} else {
-    COPY = cp
-}
-macx {
-    CONFIG += x86 x86_64
-}
 SOURCES += \
     src/dl_dxf.cpp \
     src/dl_writer_ascii.cpp
@@ -45,15 +36,4 @@ HEADERS += \
     src/dl_writer.h \
     src/dl_writer_ascii.h
 
-
-DESTDIR = ../intermediate
-
-# Store intermedia stuff somewhere else
-OBJECTS_DIR = ../intermediate/obj
-MOC_DIR = ../intermediate/moc
-RCC_DIR = ../intermediate/rcc
-TS_DIR = ../intermediate/ts
-UI_DIR = ../intermediate/ui
-UI_HERADERS_DIR = ../intermediate/ui
-UI_SOURCES_DIR = ../intermediate/ui
 

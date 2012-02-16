@@ -1,11 +1,49 @@
 
-# Common project definitions for LibreCAD. This file gets
-# included from the various *.pro files.
+
+# Store intermedia stuff somewhere else
+OBJECTS_DIR = generated/obj
+MOC_DIR = generated/moc
+RCC_DIR = generated/rcc
+TS_DIR = generated/ts
+UI_DIR = generated/ui
+UI_HEADERS_DIR = generated/ui
+UI_SOURCES_DIR = generated/ui
+
+# Copy command
+win32 {
+    COPY = copy /y
+} else {
+    COPY = cp
+}
+
+# Compiler settings
+unix {
+    macx {   
+        CONFIG += x86 x86_64
+        SUBDIRS += attf2lff
+    }
+    else {
+        SUBDIRS += attf2lff
+    }
+}
+
+# Installation location
+win32 {
+    INSTALLDIR = windows
+}
+unix {
+    macx { 
+        INSTALLDIR = LibreCAD.app/Contents
+    }
+    else { 
+        INSTALLDIR = unix
+    }
+}
 
 
+# Boost
 win32 {
 
-    boost {
         # Use Boost on Windows.
 
         # Specify where boost is installed (this should have the boost
@@ -31,12 +69,10 @@ win32 {
         # Make boost known to compiler and linker.
         # This should also work on other platforms (but BOOST_LIBS may need
         # to be set to the required boost *.sl/*.so/*.dylib/*.a).
-        DEFINES += HAS_BOOST
         INCLUDEPATH += "$${BOOST_DIR}"
         LIBS += -L"$${BOOST_DIR}/lib" $${BOOST_LIBS}
         HEADERS += "$${BOOST_DIR}"
         !build_pass:verbose:message(Using boost libraries in $${BOOST_DIR}.)
-    }
 
     # On windows, check for MSVC compilers - they need help on C99 
     # features and a hint to povide M_PI et al.
@@ -54,7 +90,10 @@ win32 {
 }
 
 macx {
-    boost {
+        !exists( /opt/local/lib/libboost* ) {
+            error(Boost was not found, please install boost!)
+        }
+
         # Use Boost on OSX
 	# Install boost with : sudo port install boost
 
@@ -75,10 +114,10 @@ macx {
         # Make boost known to compiler and linker.
         # This should also work on other platforms (but BOOST_LIBS may need
         # to be set to the required boost *.sl/*.so/*.dylib/*.a).
-        DEFINES += HAS_BOOST
         INCLUDEPATH += $${BOOST_DIR}
+	# HEADERS += $${BOOST_DIR}
         LIBS += -L/opt/local/lib $${BOOST_LIBS}
-        !build_pass:verbose:message(Using boost libraries in $${BOOST_DIR}.)
-    }
+        # !build_pass:verbose:message(Using boost libraries in $${BOOST_DIR}.)
+        message(Using boost libraries in $${BOOST_DIR}.)
 }
 
