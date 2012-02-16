@@ -22,7 +22,7 @@ DEFINES += USE_DXFRW=1
 include(../../settings.pro)
 include(../../common.pro)
 
-HAS_CPP11 =
+HAS_CPP11 = 1
 count(HAS_CPP11, 1) {
     DEFINES += HAS_CPP11=1
     QMAKE_CXXFLAGS_DEBUG += -std=c++0x
@@ -85,7 +85,7 @@ win32 {
 
 
 # Additional libraries to load
-LIBS += -L../generated -ldxfrw -ldxflib -ljwwlib -lfparser
+LIBS += -L../../generated/lib -ldxfrw -ldxflib -ljwwlib -lfparser
 
 DEPENDPATH += \
     ../../libraries/dxflib/src \

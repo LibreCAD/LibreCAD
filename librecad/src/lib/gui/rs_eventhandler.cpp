@@ -493,11 +493,7 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
  */
 void RS_EventHandler::killSelectActions() {
 
-#ifdef HAS_CPP11
     for (auto it=currentActions.begin();it != currentActions.end();){
-#else
-    for (QList<RS_ActionInterface*>::iterator it=currentActions.begin();it != currentActions.end();){
-#endif
         if ((*it)->rtti()==RS2::ActionSelectSingle ||
                 (*it)->rtti()==RS2::ActionSelectContour ||
                 (*it)->rtti()==RS2::ActionSelectWindow ||
@@ -568,11 +564,7 @@ bool RS_EventHandler::hasAction() {
 void RS_EventHandler::cleanUp() {
     RS_DEBUG->print("RS_EventHandler::cleanUp");
 
-#ifdef HAS_CPP11
     for (auto it=currentActions.begin();it != currentActions.end();){
-#else
-    for (QList<RS_ActionInterface*>::iterator it=currentActions.begin();it != currentActions.end();){
-#endif
 
         if( (*it)->isFinished()){
 //            (*it)->finish();
@@ -600,11 +592,7 @@ void RS_EventHandler::cleanUp() {
  * Sets the snap mode for all currently active actions.
  */
 void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
-#ifdef HAS_CPP11
     for (auto it=currentActions.begin();it != currentActions.end();it++){
-#else
-    for (QList<RS_ActionInterface*>::iterator it=currentActions.begin();it != currentActions.end();it++){
-#endif
         if(! (*it)->isFinished()){
             (*it)->setSnapMode(sm);
         }
@@ -620,11 +608,7 @@ void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
  * Sets the snap restriction for all currently active actions.
  */
 void RS_EventHandler::setSnapRestriction(RS2::SnapRestriction sr) {
-#ifdef HAS_CPP11
     for (auto it=currentActions.begin();it != currentActions.end();it++){
-#else
-    for (QList<RS_ActionInterface*>::iterator it=currentActions.begin();it != currentActions.end();it++){
-#endif
         if(! (*it)->isFinished()){
             (*it)->setSnapRestriction(sr);
         }

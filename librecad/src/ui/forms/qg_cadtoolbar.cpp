@@ -183,14 +183,11 @@ void QG_CadToolBar::createSubToolBars(QG_ActionHandler* ah) {
 }
 
 void QG_CadToolBar::hideSubToolBars(){
-#ifdef HAS_CPP11
     for(auto it=toolbars.begin();it != toolbars.end();it++){
-#else
-    for(QVector<QWidget*>::iterator it=toolbars.begin();it != toolbars.end();it++){
-#endif
         (*it)->hide();
     }
 }
+
 void QG_CadToolBar::showSubToolBar(){
     if (!toolbars.last()->isVisible()) { // On OSX, without this line LibreCAD wuld crash. Not sure if it's a Qt problem or 'somewhere' logic within LibreCAD
         //shift down to show the handle to move the toolbar
