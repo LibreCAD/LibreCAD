@@ -3,9 +3,13 @@
 cd > PWD
 set /p PWD= < PWD
 
-set RESOURCEDIR=%PWD%\release\resources
-set TSDIR=%PWD%\ts
-set DOCDIR=%PWD%\support\doc
+
+set PWD=%PWD%\..\..
+
+
+set RESOURCEDIR=%PWD%\windows\resources
+set TSDIR=%PWD%\librecad\ts
+set DOCDIR=%PWD%\librecad\support\doc
 
 REM Generate Help Files
 cd "%DOCDIR%"
@@ -21,18 +25,18 @@ mkdir "%RESOURCEDIR%\library"
 mkdir "%RESOURCEDIR%\doc"
 mkdir "%RESOURCEDIR%\library\misc"
 mkdir "%RESOURCEDIR%\library\templates"
-copy "support\patterns\*.dxf" "%RESOURCEDIR%\patterns"
-copy "support\fonts\*.cxf" "%RESOURCEDIR%\fonts"
-copy "support\fonts\*.lff" "%RESOURCEDIR%\fonts"
-copy "support\doc\*.qhc" "%RESOURCEDIR%\doc"
-copy "support\doc\*.qch" "%RESOURCEDIR%\doc"
-copy "support\library\misc\*.dxf" "%RESOURCEDIR%\library\misc"
-copy "support\library\templates\*.dxf" "%RESOURCEDIR%\library\templates"
+
+copy "librecad\support\patterns\*.dxf" "%RESOURCEDIR%\patterns"
+copy "librecad\support\fonts\*.lff" "%RESOURCEDIR%\fonts"
+copy "librecad\support\doc\*.qhc" "%RESOURCEDIR%\doc"
+copy "librecad\support\doc\*.qch" "%RESOURCEDIR%\doc"
+copy "librecad\support\library\misc\*.dxf" "%RESOURCEDIR%\library\misc"
+copy "librecad\support\library\templates\*.dxf" "%RESOURCEDIR%\library\templates"
 
 
 REM Generate translations
 echo "Generating Translations"
-lrelease src\src.pro
+lrelease librecad\src\src.pro
 mkdir "%RESOURCEDIR%\qm"
 
 cd "%TSDIR%"

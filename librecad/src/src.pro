@@ -9,20 +9,19 @@ DEFINES += QC_COMPANYKEY="\"LibreCAD\""
 DEFINES += QC_VERSION="\"master\""4
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 DEFINES += HAS_BOOST=1
-DEFINES += HAS_CPP11=1
-
-DEFINES += USE_DXFRW=1
 
 # uncomment USEQTDIALOG=1 to use QFileDialog instead "native" FileDialog
 # KDE returns the first filter that match the pattern "*.dxf" instead the selected
 # DEFINES += USEQTDIALOG=1
+
+DEFINES += USE_DXFRW=1
+
 
 
 # Use common project definitions.
 include(../../settings.pro)
 include(../../common.pro)
 
-HAS_CPP11 = 1
 count(HAS_CPP11, 1) {
     DEFINES += HAS_CPP11=1
     QMAKE_CXXFLAGS_DEBUG += -std=c++0x
@@ -42,6 +41,8 @@ PRE_TARGETDEPS += ../../generated/lib/libdxflib.a
 PRE_TARGETDEPS += ../../generated/lib/libjwwlib.a
 PRE_TARGETDEPS += ../../generated/lib/libfparser.a
 
+DESTDIR = $${INSTALLDIR}
+
 # Make translations at the end of the process
 unix {
     SCMREVISION=$$system([ "$(which git)x" != "x" -a -d ../.git ] && echo "$(git describe --tags)" || echo "2.0.0alpha2")
@@ -53,16 +54,13 @@ unix {
         DEFINES += QC_APPDIR="\"LibreCAD\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
         RC_FILE = ../res/main/librecad.icns
-        DESTDIR = ../../
         QMAKE_POST_LINK = cd .. && scripts/postprocess-osx.sh
     }
     else {
         TARGET = librecad
-#fixme , need to detect whether boost is there
         DEFINES += QC_APPDIR="\"librecad\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_librecad"
         RC_FILE = ../res/main/librecad.icns
-        DESTDIR = ../../unix
         QMAKE_POST_LINK = cd .. && scripts/postprocess-unix.sh
     }
 }
@@ -78,14 +76,17 @@ win32 {
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
 
     RC_FILE = ../res/main/librecad.rc
-    DESTDIR = ../../windows
-    QMAKE_POST_LINK = ../scripts/postprocess-win.bat
+    QMAKE_POST_LINK = ..\\..\\scripts\\postprocess-win.bat
 }
 
 
 
 # Additional libraries to load
-LIBS += -L../../generated/lib -ldxfrw -ldxflib -ljwwlib -lfparser
+LIBS += -L../../generated/lib  \
+    -ldxflib \
+    -ldxfrw \
+    -ljwwlib \
+    -lfparser
 
 DEPENDPATH += \
     ../../libraries/dxflib/src \
