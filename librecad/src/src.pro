@@ -54,7 +54,7 @@ unix {
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
         RC_FILE = ../res/main/librecad.icns
         DESTDIR = ../../
-        QMAKE_POST_LINK = cd .. && scripts/postprocess-osx.sh
+        QMAKE_POST_LINK = cd ../.. && scripts/postprocess-osx.sh
     }
     else {
         TARGET = librecad
@@ -63,7 +63,7 @@ unix {
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_librecad"
         RC_FILE = ../res/main/librecad.icns
         DESTDIR = ../../unix
-        QMAKE_POST_LINK = cd .. && scripts/postprocess-unix.sh
+        QMAKE_POST_LINK = cd ../.. && scripts/postprocess-unix.sh
     }
 }
 win32 {
@@ -79,7 +79,7 @@ win32 {
 
     RC_FILE = ../res/main/librecad.rc
     DESTDIR = ../../windows
-    QMAKE_POST_LINK = ../scripts/postprocess-win.bat
+    QMAKE_POST_LINK = ../../scripts/postprocess-win.bat
 }
 
 
