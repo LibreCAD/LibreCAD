@@ -22,7 +22,8 @@ DEFINES += USE_DXFRW=1
 include(../../settings.pro)
 include(../../common.pro)
 
-count(HAS_CPP11, 1) {
+isEqual ( HAS_CPP11 , 1) {
+    message(We will be using CPP11 features)
     DEFINES += HAS_CPP11=1
     QMAKE_CXXFLAGS_DEBUG += -std=c++0x
     QMAKE_CXXFLAGS += -std=c++0x
