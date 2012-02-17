@@ -110,7 +110,9 @@ DEPENDPATH += \
     plugins \
     ui \
     ui/forms \
-    res
+    ../res
+
+RESOURCES += ../res/extui/extui.qrc
 
 #depends check, bug#3411161
 INCLUDEPATH += $$DEPENDPATH
