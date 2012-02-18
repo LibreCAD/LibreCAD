@@ -4,7 +4,8 @@ CONFIG += ordered
 
 SUBDIRS     = \
     libraries \
-    librecad
-#   plugins
+    librecad \
+    plugins \
+    tools
 
 exists( custom.pro ):include( custom.pro )

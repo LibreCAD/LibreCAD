@@ -8,7 +8,7 @@ QT       -= core
 
 QT       -= gui
 
-TARGET = ../unix/ttf2lff
+TARGET = LibreCAD.app/Contents/MacOS/ttf2lff
 CONFIG   += console
 CONFIG   -= app_bundle
 
@@ -16,10 +16,25 @@ TEMPLATE = app
 DEFINES += VERSION="\"0.0.0.2\""
 
 # Use common project definitions.
-include(../common.pro)
+include(../../settings.pro)
+include(../../common.pro)
 
 
 SOURCES += main.cpp
+
+unix {
+    macx {
+	TARGET=../../LibreCAD.app/Contents/MacOS/ttf2lff
+    } else {
+	TARGET=../../unix/ttf2lff
+    }
+}
+win32 {
+	TARGET=../../windows/ttf2lff
+}
+
+
+
 
 unix {
     macx {
@@ -36,7 +51,6 @@ unix {
 	}
 
 	contains (HAS_SDK , 10.7) {
-	    CONFIG += x86 x86_64
 	    INCLUDEPATH += /Developer/SDKs/MacOSX10.7.sdk/usr/X11/include/
 	    INCLUDEPATH += /Developer/SDKs/MacOSX10.7.sdk/usr/X11/include/freetype2
 	    LIBS+= -L/Developer/SDKs/MacOSX10.7.sdk/usr/X11/lib/
@@ -57,4 +71,3 @@ unix {
 
 LIBS += -lfreetype
 
-OBJECTS_DIR = ../intermediate/lff/obj
