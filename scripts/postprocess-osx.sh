@@ -2,8 +2,8 @@
 
 THISDIR="`pwd`"
 RESOURCEDIR="`pwd`/LibreCAD.app/Contents"
-TSDIR="`pwd`/ts"
-DOCDIR="`pwd`/support/doc"
+TSDIR="`pwd`/librecad/ts"
+DOCDIR="`pwd`/librecad/support/doc"
 
 # Generate Help Files
 cd "$DOCDIR"
@@ -16,15 +16,15 @@ mkdir -p $RESOURCEDIR/Resources/fonts
 mkdir -p $RESOURCEDIR/Resources/patterns
 mkdir -p $RESOURCEDIR/Resources/doc
 mkdir -p $RESOURCEDIR/PlugIns
-cp support/patterns/*.dxf $RESOURCEDIR/Resources/patterns
-cp support/fonts/*.lff $RESOURCEDIR/Resources/fonts
-cp support/doc/*.qhc $RESOURCEDIR/Resources/doc
-cp support/doc/*.qch $RESOURCEDIR/Resources/doc
+cp librecad/support/patterns/*.dxf $RESOURCEDIR/Resources/patterns
+cp librecad/support/fonts/*.lff $RESOURCEDIR/Resources/fonts
+cp librecad/support/doc/*.qhc $RESOURCEDIR/Resources/doc
+cp librecad/support/doc/*.qch $RESOURCEDIR/Resources/doc
 
-cp -r /Developer/Applications/Qt/plugins/sqldrivers $RESOURCEDIR/PlugIns/sqldrivers
+cp -r /opt/local/share/qt4/plugins/sqldrivers $RESOURCEDIR/PlugIns/sqldrivers
 
 # Generate translations
-lrelease src/src.pro
+lrelease librecad/src/src.pro
 mkdir -p $RESOURCEDIR/Resources/qm
  
 # Go into translations directory

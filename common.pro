@@ -9,6 +9,7 @@ UI_DIR = generated/ui
 UI_HEADERS_DIR = generated/ui
 UI_SOURCES_DIR = generated/ui
 
+
 # Copy command
 win32 {
     COPY = copy /y
@@ -16,20 +17,28 @@ win32 {
     COPY = cp
 }
 
+
 # Boost
 exists($${BOOST_DIR}){
-INCLUDEPATH += "$${BOOST_DIR}"
-LIBS += -L"$${BOOST_LIBDIR}" $${BOOST_LIBS}
-HEADERS += "$${BOOST_DIR}"
+    INCLUDEPATH += "$${BOOST_DIR}"
+    LIBS += -L"$${BOOST_LIBDIR}" $${BOOST_LIBS}
+    HEADERS += "$${BOOST_DIR}"
 }
 
 !exists($${BOOST_DIR}) {
    # error(Boost was not found, please install boost!)
 }
-!build_pass:verbose:message(Using boost libraries in $${BOOST_DIR}.)
+message(Using boost libraries in $${BOOST_DIR}.)
+
 
 # Windows compiler settings
 win32 {
+    QMAKE_CXXFLAGS += -U__STRICT_ANSI__
+    QMAKE_CFLAGS_THREAD -= -mthreads
+    QMAKE_LFLAGS_THREAD -= -mthreads
+    QMAKE_C++FLAGS_THREAD -= -mthreads
+    QMAKE_L++FLAGS_THREAD -= -mthreads
+
     # On windows, check for MSVC compilers - they need help on C99
     # features and a hint to povide M_PI et al.
     win32-msvc.net|win32-msvc2003|win32-msvc2005|win32-msvc2008|win32-msvc2010 {
@@ -44,3 +53,11 @@ win32 {
        QMAKE_CXXFLAGS += /wd4100
     }
 }
+
+
+# c++11 is now obligatory for LibreCAD
+message(We will be using CPP11 features)
+QMAKE_CXXFLAGS_DEBUG += -std=c++0x
+QMAKE_CXXFLAGS += -std=c++0x
+
+

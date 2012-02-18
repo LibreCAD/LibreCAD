@@ -27,7 +27,7 @@ win32 {
 }
 unix {
     macx { 
-	CONFIG += x86 x86_64
+#	CONFIG += x86 x86_64
 	INSTALLDIR = ../LibreCAD.app/Contents/Resources/plugins
     }
     else { 

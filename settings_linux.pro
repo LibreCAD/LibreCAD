@@ -1,7 +1,5 @@
 
 
-HAS_CPP11 = 1
-SUBDIRS += attf2lff
-
+SUBDIRS += ttff2lff
 INSTALLDIR = ../../unix
 

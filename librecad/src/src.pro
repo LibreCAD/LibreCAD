@@ -6,9 +6,11 @@ DEFINES += QC_APPKEY="\"/LibreCAD\""
 DEFINES += QC_APPNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYKEY="\"LibreCAD\""
-DEFINES += QC_VERSION="\"master\""4
+DEFINES += QC_VERSION="\"master\""
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 DEFINES += HAS_BOOST=1
+
+SCMREVISION="2.0.0alpha2"
 
 # uncomment USEQTDIALOG=1 to use QFileDialog instead "native" FileDialog
 # KDE returns the first filter that match the pattern "*.dxf" instead the selected
@@ -16,18 +18,9 @@ DEFINES += HAS_BOOST=1
 
 DEFINES += USE_DXFRW=1
 
-
-
 # Use common project definitions.
 include(../../settings.pro)
 include(../../common.pro)
-
-isEqual ( HAS_CPP11 , 1) {
-    message(We will be using CPP11 features)
-    DEFINES += HAS_CPP11=1
-    QMAKE_CXXFLAGS_DEBUG += -std=c++0x
-    QMAKE_CXXFLAGS += -std=c++0x
-}
 
 #uncomment to use 2D rs_vector instead of 3D
 #DEFINES += RS_VECTOR2D=1
@@ -46,11 +39,10 @@ DESTDIR = $${INSTALLDIR}
 
 # Make translations at the end of the process
 unix {
-    SCMREVISION=$$system([ "$(which git)x" != "x" -a -d ../.git ] && echo "$(git describe --tags)" || echo "2.0.0alpha2")
+    SCMREVISION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --tags)" || echo "$${SCMREVISION}")
 
     DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
     macx {
-        CONFIG += x86 x86_64
         TARGET = LibreCAD
         DEFINES += QC_APPDIR="\"LibreCAD\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
@@ -66,12 +58,6 @@ unix {
     }
 }
 win32 {
-    QMAKE_CXXFLAGS += -U__STRICT_ANSI__
-    QMAKE_CFLAGS_THREAD -= -mthreads
-    QMAKE_LFLAGS_THREAD -= -mthreads
-    QMAKE_C++FLAGS_THREAD -= -mthreads
-    QMAKE_L++FLAGS_THREAD -= -mthreads
-
     TARGET = LibreCAD
     DEFINES += QC_APPDIR="\"LibreCAD\""
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
@@ -79,8 +65,6 @@ win32 {
     RC_FILE = ../res/main/librecad.rc
     QMAKE_POST_LINK = ..\\..\\scripts\\postprocess-win.bat
 }
-
-
 
 # Additional libraries to load
 LIBS += -L../../generated/lib  \

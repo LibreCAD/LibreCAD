@@ -1,4 +1,5 @@
-HAS_CPP11 = 1
+
+
 
 BOOST_DIR = $$(ProgramFiles)/boost/boost_1_48_0
 BOOST_LIBDIR = $$(ProgramFiles)/boost/boost_1_48_0/
