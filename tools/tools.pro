@@ -6,7 +6,19 @@
 
 TEMPLATE = subdirs
 
-SUBDIRS     = \
-        ttf2lff \
+SUBDIRS     =
+
+win32 {
+    # ttf2lff needs  to be download, instructions follow
+}
+unix {
+    macx {
+        SUBDIRS += ttf2lff
+    } else {
+        SUBDIRS += ttf2lff
+    }
+}
+
+
 
 
