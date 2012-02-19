@@ -3,6 +3,20 @@ LibreCAD.app/
 LibreCAD.pbproj/
 Info.plist
 
+# globs, anywhere
+*.o
+*.lo
+*.la
+
+*~
+
+# filenames, anywhere
+Makefile.in
+Makefile
+.deps
+.libs
+generated/*
+
 # Unix generated directories (except Apple)
 unix/
 
@@ -28,8 +42,8 @@ html/
 
 # All platforms generated directories and files
 *.qm
-intermediate/
-Makefile
+*generated*
+Makefile*
 qmake_image_collection.cpp
 librecad.pro.user*
 librecad2.pro.user*
@@ -48,4 +62,3 @@ scripts/PWD
 #vim files
 *.swp
 *.orig
-
