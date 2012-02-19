@@ -1,0 +1,3 @@
+[submodule "gitmodules/libredwg"]
+	path = gitmodules/libredwg
+	url = git://git.sv.gnu.org/libredwg.git

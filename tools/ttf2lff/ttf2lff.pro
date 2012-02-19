@@ -37,7 +37,7 @@ unix {
         exists (/usr/X11/include/ft2build.h) {HAS_SDK=X11}
         exists (/Developer/SDKs/MacOSX10.6.sdk/usr/X11/include/*) {HAS_SDK=10.6}
         exists (/Developer/SDKs/MacOSX10.7.sdk/usr/X11/include/*) {HAS_SDK=10.7}
-        contains (HAS_SDK = none) {error(Freetype headers not found)}
+        contains (HAS_SDK, none) {error(Freetype headers not found)}
 
         contains (HAS_SDK , 10.6) {
             INCLUDEPATH += /Developer/SDKs/MacOSX10.6.sdk/usr/X11/include/

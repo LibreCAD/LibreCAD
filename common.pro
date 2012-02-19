@@ -4,7 +4,6 @@
 OBJECTS_DIR = generated/obj
 MOC_DIR = generated/moc
 RCC_DIR = generated/rcc
-TS_DIR = generated/ts
 UI_DIR = generated/ui
 UI_HEADERS_DIR = generated/ui
 UI_SOURCES_DIR = generated/ui
@@ -29,7 +28,6 @@ exists($${BOOST_DIR}){
    # error(Boost was not found, please install boost!)
 }
 message(Using boost libraries in $${BOOST_DIR}.)
-
 
 # Windows compiler settings
 win32 {
