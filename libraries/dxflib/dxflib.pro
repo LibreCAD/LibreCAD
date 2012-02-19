@@ -16,6 +16,7 @@ VERSION = 2.2.0.0
 DLL_NAME = dxflib
 TARGET = $$DLL_NAME
 
+GENERATED_DIR = ../../generated/lib/dxflib
 # Use common project definitions.
 include(../../settings.pro)
 include(../../common.pro)

@@ -10,6 +10,8 @@ CONFIG += plugin
 VERSION = 1.0.1
 PLUGIN_NAME=align
 
+# Store intermedia stuff somewhere else
+GENERATED_DIR = ../../generated/plugin/align
 # Use common project definitions.
 include(../../common.pro)
 
@@ -31,15 +33,5 @@ unix {
 	TARGET = ../../unix/resources/plugins/$$PLUGIN_NAME
     }
 }
-INCLUDEPATH    += ../../src/plugins
+INCLUDEPATH    += ../../librecad/src/plugins
 
-# Store intermedia stuff somewhere else
-OBJECTS_DIR = ../intermediate/obj
-MOC_DIR = ../intermediate/moc
-RCC_DIR = ../intermediate/rcc
-TS_DIR = ../intermediate/ts
-UI_DIR = ../intermediate/ui
-UI_HERADERS_DIR = ../intermediate/ui
-UI_SOURCES_DIR = ../intermediate/ui
-
-#DEFINES += sample_LIBRARY

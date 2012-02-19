@@ -28,7 +28,7 @@ html/
 
 # All platforms generated directories and files
 *.qm
-intermediate/
+generated/
 Makefile
 qmake_image_collection.cpp
 librecad.pro.user*
