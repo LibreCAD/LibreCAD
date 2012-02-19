@@ -33,6 +33,5 @@ unix {
 	TARGET = ../../unix/resources/plugins/$$PLUGIN_NAME
     }
 }
-INCLUDEPATH    += ../../src/plugins
+INCLUDEPATH    += ../../librecad/src/plugins
 
-#DEFINES += sample_LIBRARY
