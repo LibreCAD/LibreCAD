@@ -16,6 +16,7 @@ VERSION = 4.3
 DLL_NAME = fparser
 TARGET = $$DLL_NAME
 
+GENERATED_DIR = ../../generated/lib/fparser
 # Use common project definitions.
 include(../../settings.pro)
 include(../../common.pro)
