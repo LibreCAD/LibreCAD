@@ -18,6 +18,8 @@ SCMREVISION="2.0.0alpha2"
 
 DEFINES += USE_DXFRW=1
 
+# Store intermedia stuff somewhere else
+GENERATED_DIR = ../../generated/librecad
 # Use common project definitions.
 include(../../settings.pro)
 include(../../common.pro)

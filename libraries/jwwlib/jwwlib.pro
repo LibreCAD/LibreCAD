@@ -16,6 +16,7 @@ VERSION = 0.0.1
 DLL_NAME = jwwlib
 TARGET = $$DLL_NAME
 
+GENERATED_DIR = ../../generated/lib/jwwlib
 # Use common project definitions.
 include(../../settings.pro)
 include(../../common.pro)

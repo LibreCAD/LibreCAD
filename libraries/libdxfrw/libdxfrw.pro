@@ -16,6 +16,7 @@ VERSION = 0.0.1
 DLL_NAME = dxfrw
 TARGET = $$DLL_NAME
 
+GENERATED_DIR = ../../generated/lib/libdxfrw
 # Use common project definitions.
 include(../../settings.pro)
 include(../../common.pro)
