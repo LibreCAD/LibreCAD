@@ -10,6 +10,8 @@ CONFIG += plugin
 VERSION = 1.0.1
 PLUGIN_NAME=align
 
+# Store intermedia stuff somewhere else
+GENERATED_DIR = ../../generated/plugin/align
 # Use common project definitions.
 include(../../common.pro)
 

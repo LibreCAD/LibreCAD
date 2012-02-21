@@ -13,6 +13,7 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 DEFINES += VERSION="\"0.0.0.2\""
 
+GENERATED_DIR = ../../generated/tools/ttf2lff
 # Use common project definitions.
 include(../../settings.pro)
 include(../../common.pro)
