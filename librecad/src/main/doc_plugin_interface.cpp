@@ -237,17 +237,20 @@ void Plugin_Entity::getData(QHash<int, QVariant> *data){
         data->insert(DPI::STARTY, d.center.y );
         data->insert(DPI::RADIUS, d.radius );
         break;}
-    case RS2::EntityEllipse: { //TODO
+    case RS2::EntityEllipse: {
         data->insert(DPI::ETYPE, DPI::ELLIPSE);
 //        RS_EllipseData d = static_cast<RS_Ellipse*>(entity)->getData();
         RS_Ellipse *dd = static_cast<RS_Ellipse*>(entity);
         data->insert(DPI::STARTX, dd->getCenter().x );//10
         data->insert(DPI::STARTY, dd->getCenter().y );//20
-        data->insert(DPI::ENDX, dd->getMajorP().x );//11 pto final eje mayor
-        data->insert(DPI::ENDY, dd->getMajorP().y );//21 pto final eje mayor
-        data->insert(DPI::HEIGHT, dd->getRatio() );//40 ratio eje menor/mayor
+        data->insert(DPI::ENDX, dd->getMajorP().x );//11 endpoint major axis x
+        data->insert(DPI::ENDY, dd->getMajorP().y );//21 endpoint major axis y
+        data->insert(DPI::HEIGHT, dd->getRatio() );//40 major/minor axis ratio
+        data->insert(DPI::STARTANGLE, dd->getAngle1() );
+        data->insert(DPI::ENDANGLE, dd->getAngle2() );
+        data->insert(DPI::REVERSED, dd->isReversed() );
         break;}
-    case RS2::EntitySolid:
+    case RS2::EntitySolid: //TODO
         //Only used in dimensions ?
         data->insert(DPI::ETYPE, DPI::SOLID);
         break;
@@ -414,7 +417,7 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
             cir->setRadius( (hash.take(DPI::RADIUS)).toDouble() );
         }
         break;}
-    case RS2::EntityEllipse: { //TODO
+    case RS2::EntityEllipse: {
         RS_Ellipse *ellipse = static_cast<RS_Ellipse*>(entity);
         vec = ellipse->getCenter();
         if (hash.contains(DPI::STARTX)) {
@@ -440,12 +443,14 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         if (hash.contains(DPI::ENDANGLE)) {
             ellipse->setAngle2((hash.take(DPI::ENDANGLE)).toDouble());
         }
-
         if (hash.contains(DPI::HEIGHT)) {
             ellipse->setRatio((hash.take(DPI::HEIGHT)).toDouble());
         }
+        if (hash.contains(DPI::REVERSED)) {
+            ellipse->setReversed( (hash.take(DPI::REVERSED)).toBool());
+        }
         break;}
-    case RS2::EntitySolid:
+    case RS2::EntitySolid: //TODO
         //Only used in dimensions ?
         break;
     case RS2::EntityConstructionLine:
@@ -461,14 +466,18 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         break;}
     case RS2::EntityText: {
         RS_Text *txt = static_cast<RS_Text*>(entity);
+        bool move = false;
         vec = txt->getInsertionPoint();
         if (hash.contains(DPI::STARTX)) {
             vec.x = (hash.take(DPI::STARTX)).toDouble() - vec.x;
-        }
+            move = true;
+        } else vec.x = 0;
         if (hash.contains(DPI::STARTY)) {
             vec.y = (hash.take(DPI::STARTY)).toDouble() - vec.y;
-        }
-        txt->move(vec);
+            move = true;
+        } else vec.y = 0;
+        if (move)
+            txt->move(vec);
         if (hash.contains(DPI::TEXTCONTENT)) {
             txt->setText( (hash.take(DPI::TEXTCONTENT)).toString() );
         }
