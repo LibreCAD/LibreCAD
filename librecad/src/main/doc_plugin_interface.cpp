@@ -36,6 +36,7 @@
 #include "rs_image.h"
 #include "rs_insert.h"
 #include "rs_polyline.h"
+#include "rs_ellipse.h"
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetselect.h"
 #include "intern/qc_actiongetent.h"
@@ -140,9 +141,9 @@ Plugin_Entity::Plugin_Entity(RS_EntityContainer* parent, enum DPI::ETYPE type){
     case DPI::ARC:
         entity = new RS_Arc(parent, RS_ArcData());
         break;
-/*    case DPI::ELLIPSE:
-        entity = new RS_Ellipse(parent, RS_EllipseData());
-        break;*/
+    case DPI::ELLIPSE:
+        entity = new RS_Ellipse(parent, RS_EllipseData(RS_Vector(0,0), RS_Vector(0,0),0.0,0.0,0.0,false));
+        break;
     case DPI::IMAGE:
         entity = new RS_Image(parent, RS_ImageData());
         break;
@@ -414,6 +415,35 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         }
         break;}
     case RS2::EntityEllipse: { //TODO
+        RS_Ellipse *ellipse = static_cast<RS_Ellipse*>(entity);
+        vec = ellipse->getCenter();
+        if (hash.contains(DPI::STARTX)) {
+            vec.x = (hash.take(DPI::STARTX)).toDouble();
+        }
+        if (hash.contains(DPI::STARTY)) {
+            vec.y = (hash.take(DPI::STARTY)).toDouble();
+        }
+        ellipse->setCenter(vec);
+
+        vec = ellipse->getMajorP();
+        if (hash.contains(DPI::ENDX)) {
+            vec.x = (hash.take(DPI::ENDX)).toDouble();
+        }
+        if (hash.contains(DPI::ENDY)) {
+            vec.y = (hash.take(DPI::ENDY)).toDouble();
+        }
+        ellipse->setMajorP(vec);
+
+        if (hash.contains(DPI::STARTANGLE)) {
+            ellipse->setAngle1((hash.take(DPI::STARTANGLE)).toDouble());
+        }
+        if (hash.contains(DPI::ENDANGLE)) {
+            ellipse->setAngle2((hash.take(DPI::ENDANGLE)).toDouble());
+        }
+
+        if (hash.contains(DPI::HEIGHT)) {
+            ellipse->setRatio((hash.take(DPI::HEIGHT)).toDouble());
+        }
         break;}
     case RS2::EntitySolid:
         //Only used in dimensions ?
