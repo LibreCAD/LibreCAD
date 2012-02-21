@@ -481,6 +481,12 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         if (hash.contains(DPI::TEXTCONTENT)) {
             txt->setText( (hash.take(DPI::TEXTCONTENT)).toString() );
         }
+        if (hash.contains(DPI::STARTANGLE)) {
+            txt->setAngle( (hash.take(DPI::STARTANGLE)).toDouble() );
+        }
+        if (hash.contains(DPI::HEIGHT)) {
+            txt->setHeight( (hash.take(DPI::HEIGHT)).toDouble() );
+        }
         break;}
     case RS2::EntityHatch:
         break;
