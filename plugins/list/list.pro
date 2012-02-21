@@ -10,6 +10,7 @@ CONFIG += plugin
 VERSION = 1.0.1
 PLUGIN_NAME=list
 
+GENERATED_DIR = ../../generated/plugin/list
 # Use common project definitions.
 include(../../common.pro)
 
