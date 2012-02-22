@@ -44,11 +44,12 @@ RS_Commands::RS_Commands() {
         shortCommands.insert(tr("l"), RS2::ActionDrawLine);
 
         mainCommands.insert(tr("polyline"), RS2::ActionDrawPolyline);
+        shortCommands.insert(tr("pl"), RS2::ActionDrawPolyline);
 
     mainCommands.insert(tr("offset"), RS2::ActionDrawLineParallel);
         shortCommands.insert(tr("o", "offset"), RS2::ActionDrawLineParallel);
     mainCommands.insert(tr("parallel"), RS2::ActionDrawLineParallel);
-        shortCommands.insert(tr("par", "parallel"), RS2::ActionDrawLineParallel);
+        shortCommands.insert(tr("pa", "parallel"), RS2::ActionDrawLineParallel);
 
         mainCommands.insert(tr("arc"), RS2::ActionDrawArc3P);
         mainCommands.insert(tr("ar"), RS2::ActionDrawArc3P);
@@ -60,8 +61,6 @@ RS_Commands::RS_Commands() {
         mainCommands.insert(tr("rectangle"), RS2::ActionDrawLineRectangle);
         shortCommands.insert(tr("rec"), RS2::ActionDrawLineRectangle);
         shortCommands.insert(tr("rectang"), RS2::ActionDrawLineRectangle);
-
-        mainCommands.insert(tr("polyline"), RS2::ActionDrawPolyline);
 
         mainCommands.insert(tr("text"), RS2::ActionDrawText);
 
@@ -276,13 +275,15 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
     } else if (c==tr("li", "line")) {
         ret = RS2::ActionDrawLine;
     } else if (c==tr("pa", "parallel")) {
-        ret = RS2::ActionDrawLine;
+        ret = RS2::ActionDrawLineParallel;
     } else if (c==tr("re", "rectangle")) {
         ret = RS2::ActionDrawLineRectangle;
     } else if (c==tr("rp", "regular polygon")) {
         ret = RS2::ActionDrawLinePolygonCenCor;
     } else if (c==tr("rp2", "regular polygon2")) {
         ret = RS2::ActionDrawLinePolygonCorCor;
+    } else if (c==tr("pl", "polyline")) {
+        ret = RS2::ActionDrawPolyline;
     } else if (c==tr("ci", "circle")) {
         ret = RS2::ActionDrawCircle;
     } else if (c==tr("c2", "2 point circle")) {
