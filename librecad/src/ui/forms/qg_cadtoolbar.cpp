@@ -439,7 +439,6 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     case RS2::ActionSelectDouble:
     case RS2::ActionDrawHatch:
     case RS2::ActionDrawHatchNoSelect:
-    case RS2::ActionDefault:
     case RS2::ActionEditKillAllActions:
     case RS2::ActionSnapFree:
     case RS2::ActionSnapGrid:
@@ -480,6 +479,10 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     case RS2::ActionModifyExplodeText:
     default:
         return;
+        //default action resets toolbar, issue#295
+    case RS2::ActionDefault:
+        resetToolBar();
+        break;
     case RS2::ActionDrawImage:
     case RS2::ActionDrawPoint:
     case RS2::ActionDrawSpline:
