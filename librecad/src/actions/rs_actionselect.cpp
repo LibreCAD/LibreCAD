@@ -91,7 +91,9 @@ void RS_ActionSelect::updateToolBar() {
                 //some nextAction segfault with empty selection
                 //todo: make actions safe with empty selection, issue#235
                 RS_DIALOGFACTORY->commandMessage(tr("No entity selected!"));
-                RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
+                //do not keep toolbar select after this action finishes, issue#291
+//                RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
+                RS_DIALOGFACTORY->requestPreviousToolBar();
             } else{
                 if ( entityTypeList != NULL &&  entityTypeList->size() >= 1 ){
                     //only select entity types from the given list

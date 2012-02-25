@@ -164,12 +164,12 @@ void QG_CadToolBarSelect::setNextAction(int nextAction) {
 }
 
 void QG_CadToolBarSelect::runNextAction() {
-    if(selectAction->rtti() == RS2::ActionSelect){
+    if (selectAction!=NULL) {
+        if(selectAction->rtti() == RS2::ActionSelect){
             //refuse to run next action if no entity is selected, to avoid segfault by action upon empty selection
             //issue#235
-        if( static_cast<RS_ActionSelect*>(selectAction)->countSelected()==0) return;
-    }
-    if (selectAction!=NULL) {
+            if( static_cast<RS_ActionSelect*>(selectAction)->countSelected()==0) return;
+        }
         selectAction->finish();
         selectAction = NULL;
     }
