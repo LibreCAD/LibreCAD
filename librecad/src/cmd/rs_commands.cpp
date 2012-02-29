@@ -202,8 +202,8 @@ RS_Commands::RS_Commands() {
     shortCommands.insert(tr("xp"), RS2::ActionBlocksExplode);
 
     // snap:
-    cmdTranslation.insert("os", tr("os"));
-    mainCommands.insert(tr("os", "snap - none"), RS2::ActionSnapFree);
+    cmdTranslation.insert("os", tr("os", "snap - free"));
+    mainCommands.insert(tr("os", "snap - free"), RS2::ActionSnapFree);
     shortCommands.insert(tr("os"), RS2::ActionSnapFree);
 
     cmdTranslation.insert("sc", tr("sc"));
@@ -424,7 +424,10 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) {
  * of key-strokes that is entered like hotkeys.
  */
 RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
+    if(code.size()<1 || code.contains(QRegExp("^[a-z].*",Qt::CaseInsensitive)) == false ) return RS2::ActionNone;
     QString c = code.toLower();
+//    std::cout<<"regex: "<<qPrintable(c)<<" matches: "<< c.contains(QRegExp("^[a-z].*",Qt::CaseInsensitive))<<std::endl;
+//    std::cout<<"RS2::ActionType RS_Commands::keycodeToAction("<<qPrintable(c)<<")"<<std::endl;
     QMultiHash<QString, RS2::ActionType>::iterator it = shortCommands.find(c);
     if( it == shortCommands.end() ) {
 
@@ -438,6 +441,9 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
         }
     }
     //found
+    if (RS_DIALOGFACTORY!=NULL) {
+        RS_DIALOGFACTORY->commandMessage(tr("Accepted keycode: %1").arg(c));
+    }
     //fixme, need to handle multiple hits
     return it.value();
 }

@@ -1526,12 +1526,12 @@ void QG_ActionHandler::slotSetSnaps(RS_SnapMode s) {
 }
 
 void QG_ActionHandler::slotSnapFree() {
-    if ( snapFree == NULL) return;
+//    if ( snapFree == NULL) return;
     disableSnaps();
 }
 
 void QG_ActionHandler::slotSnapGrid() {
-    if(snapGrid==NULL) return;
+//    if(snapGrid==NULL) return;
     RS_SnapMode s=getSnaps();
     s.snapGrid = snapGrid->isChecked();
     slotSetSnaps(s);
