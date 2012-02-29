@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>110</width>
-    <height>29</height>
+    <width>116</width>
+    <height>32</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>100</width>
-    <height>27</height>
+    <width>112</width>
+    <height>29</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -32,20 +32,35 @@
    <string>Selection</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <property name="horizontalSpacing">
-    <number>6</number>
+    <number>1</number>
    </property>
    <property name="verticalSpacing">
     <number>0</number>
    </property>
-   <property name="margin">
-    <number>0</number>
-   </property>
    <item row="0" column="0">
     <widget class="QLabel" name="lLabel">
+     <property name="minimumSize">
+      <size>
+       <width>46</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
-       <width>42</width>
+       <width>50</width>
        <height>16777215</height>
       </size>
      </property>
