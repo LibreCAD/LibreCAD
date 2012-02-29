@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2012 Dongxu Li (dongxuli2011@gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -35,10 +36,10 @@
 #define RS_COMMANDS RS_Commands::instance()
 
 /**
- * Class which holds all commands for the command line. This 
+ * Class which holds all commands for the command line. This
  * is separated in this module to alow the use of different
  * languages for the gui and the command interface.
- * Implemented as singleton. 
+ * Implemented as singleton.
  *
  * @author Andrew Mustun
  */
@@ -56,8 +57,8 @@ public:
         return uniqueInstance;
     }
 
-        QStringList complete(const QString& cmd);
-    RS2::ActionType cmdToAction(const QString& cmd);
+    QStringList complete(const QString& cmd);
+    RS2::ActionType cmdToAction(const QString& cmd, bool verbose = true);
     RS2::ActionType keycodeToAction(const QString& code);
 
     static QString command(const QString& cmd);
@@ -65,15 +66,20 @@ public:
     static bool checkCommand(const QString& cmd, const QString& str,
                              RS2::ActionType action=RS2::ActionNone);
 
-        static QString msgAvailableCommands();
+    static QString msgAvailableCommands();
 
 protected:
     static RS_Commands* uniqueInstance;
 
 private:
-	RS_Commands();
-        QMultiHash<QString, RS2::ActionType> mainCommands;
-        QMultiHash<QString, RS2::ActionType> shortCommands;
+    RS_Commands() ;
+    RS_Commands(RS_Commands& ) = delete;
+    RS_Commands& operator = ( RS_Commands& ) = delete;
+
+    QMultiHash<QString, RS2::ActionType> mainCommands;
+    QMultiHash<QString, RS2::ActionType> shortCommands;
+    // key=english command , value = translated
+    QHash<QString, QString> cmdTranslation;
 };
 
 #endif
