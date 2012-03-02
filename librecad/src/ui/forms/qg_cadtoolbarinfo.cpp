@@ -162,9 +162,13 @@ void QG_CadToolBarInfo::on_bBack_clicked()
 
 void QG_CadToolBarInfo:: showCadToolBar(RS2::ActionType actionType){
     switch(actionType){
-    case RS2::ActionInfoInside:
+
+//    case RS2::ActionInfoInside:
     case RS2::ActionInfoDist:
         bDist->setChecked(true);
+        return;
+    case RS2::ActionInfoDist2:
+        bDist2->setChecked(true);
         return;
     case RS2::ActionInfoAngle:
         bAngle->setChecked(true);
