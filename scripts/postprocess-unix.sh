@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/sh
 
 THISDIR="`pwd`"
 LCDIR="${THISDIR}/librecad"
