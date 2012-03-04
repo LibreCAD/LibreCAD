@@ -53,16 +53,10 @@ RS_FilterDXFRW::RS_FilterDXFRW()
 
     RS_DEBUG->print("RS_FilterDXFRW::RS_FilterDXFRW()");
 
-    addImportFormat(RS2::FormatDXFRW);
-    addExportFormat(RS2::FormatDXFRW);
-//    addExportFormat(RS2::FormatDXF12);
-
     currentContainer = NULL;
     graphic = NULL;
     RS_DEBUG->print("RS_FilterDXFRW::RS_FilterDXFRW(): OK");
 }
-
-
 
 /**
  * Destructor.

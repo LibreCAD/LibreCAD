@@ -45,23 +45,21 @@ public:
 	/**
 	 * @return RS2::FormatCXF.
 	 */
-	//RS2::FormatType rtti() {
-	//	return RS2::FormatCXF;
-	//}
-	
-    /*virtual bool canImport(RS2::FormatType t) {
+	virtual bool canImport(const QString &fileName, RS2::FormatType t) const {
 		return (t==RS2::FormatCXF);
 	}
 	
-    virtual bool canExport(RS2::FormatType t) {
+	virtual bool canExport(const QString &fileName, RS2::FormatType t) const {
 		return (t==RS2::FormatCXF);
-	}*/
+    }
 
     virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/);
 
     virtual bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/);
 
     void stream(std::ofstream& fs, double value);
+
+    static RS_FilterInterface* createFilter(){return new RS_FilterCXF();}
 };
 
 #endif

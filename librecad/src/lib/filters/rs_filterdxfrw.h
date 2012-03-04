@@ -57,21 +57,13 @@ public:
     RS_FilterDXFRW();
     ~RS_FilterDXFRW();
 	
-	/**
-	 * @return RS2::FormatDXF.
-	 */
-	//RS2::FormatType rtti() {
-	//	return RS2::FormatDXF;
-	//}
-
-	/*
-    virtual bool canImport(RS2::FormatType t) {
-		return (t==RS2::FormatDXF);
+	virtual bool canImport(const QString &fileName, RS2::FormatType t) const {
+        return (t==RS2::FormatDXFRW);
 	}
 	
-    virtual bool canExport(RS2::FormatType t) {
-		return (t==RS2::FormatDXF || t==RS2::FormatDXF12);
-	}*/
+	virtual bool canExport(const QString &fileName, RS2::FormatType t) const {
+        return (t==RS2::FormatDXFRW || t==RS2::FormatDXF12);
+    }
 
     // Import:
     virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/);
@@ -178,6 +170,8 @@ public:
 	static int unitToNumber(RS2::Unit unit);
 	
         static bool isVariableTwoDimensional(const QString& var);
+
+    static RS_FilterInterface* createFilter(){return new RS_FilterDXFRW();}
 
 private:
     /** Pointer to the graphic we currently operate on. */
