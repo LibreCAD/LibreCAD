@@ -621,16 +621,17 @@ void QC_ApplicationWindow::initActions(void)
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionFileExport, this);
+    menu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+
+    subMenu = menu->addMenu(tr("Import"));
+    subMenu->setObjectName("Import");
+
     //insert images
     // Image:
     action = actionFactory.createAction(RS2::ActionDrawImage,
                                         actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-
-    menu->addAction(action);
-    subMenu = menu->addMenu(tr("Import"));
-    subMenu->setObjectName("Import");
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     menu->addSeparator();
