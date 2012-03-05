@@ -44,8 +44,6 @@ public:
      * Constructor.
      */
     RS_FilterInterface() {
-		//std::cout << "RS_FilterInterface\n";
-        //graphic = NULL;
     }
 
     /**
@@ -59,9 +57,7 @@ public:
      * @retval true if the filter can import the file type 
      * @retval false otherwise.
      */
-    virtual bool canImport(RS2::FormatType t) {
-        return importFormats.contains(t);
-    }
+    virtual bool canImport(const QString &fileName, RS2::FormatType t) const = 0;
 
     /**
      * Checks if this filter can export the given file type.
@@ -69,9 +65,7 @@ public:
      * @return true if the filter can export the file type, 
      *         false otherwise.
      */
-    virtual bool canExport(RS2::FormatType t) {
-        return exportFormats.contains(t);
-    }
+    virtual bool canExport(const QString &fileName, RS2::FormatType t) const = 0;
 
     /**
      * The implementation of this method in a inherited format
@@ -87,32 +81,7 @@ public:
      */
     virtual bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type) = 0;
 
-protected:
-    /**
-     * Adds a file extension which can be imported by this filter.
-     */
-    void addImportFormat(RS2::FormatType type) {
-        RS_DEBUG->print("Filter can import %d", (int)type);
-        importFormats += type;
-    }
-
-    /**
-     * Adds a file extension which can be exported by this filter.
-     */
-    void addExportFormat(RS2::FormatType type) {
-        RS_DEBUG->print("Filter can export %d", (int)type);
-        exportFormats += type;
-    }
-
-protected:
-    //! Pointer to the graphic we currently operate on.
-    //RS_Graphic* graphic;
-
-    //! Vector of file extensions this filter can import.
-    QList<RS2::FormatType> importFormats;
-
-    //! Vector of file extensions this filter can export.
-    QList<RS2::FormatType> exportFormats;
+    static RS_FilterInterface * createFilter(){return NULL;}
 };
 
 #endif

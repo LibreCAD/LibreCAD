@@ -196,6 +196,15 @@ public:
 	
 	static bool isVariableTwoDimensional(const QString& var);
 
+    virtual bool canImport(const QString &fileName, RS2::FormatType t) const {
+        return (t==RS2::FormatJWW);
+    }
+
+    virtual bool canExport(const QString &fileName, RS2::FormatType t) const {
+        return (t==RS2::FormatJWW);
+    }
+
+    static RS_FilterInterface *createFilter() {return new RS_FilterJWW();}
 private:
     /** Pointer to the graphic we currently operate on. */
     RS_Graphic* graphic;

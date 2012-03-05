@@ -94,7 +94,7 @@ bool RS_Pattern::loadPattern() {
 
             if (QFileInfo(*it).baseName().toLower()==fileName.toLower()) {
                 path = *it;
-                                RS_DEBUG->print("Pattern found: %s", path.toLatin1().data());
+                RS_DEBUG->print("Pattern found: %s", path.toLatin1().data());
                 break;
             }
         }
@@ -112,12 +112,7 @@ bool RS_Pattern::loadPattern() {
     }
 
     RS_Graphic* gr = new RS_Graphic();
-
-    // allow import patterns from all supported formats
-    // do not limit it to format dxf1
-//	RS_FILEIO->fileImport(*gr, path, RS2::FormatDXF1);
-    RS_FILEIO->fileImport(*gr, path);
-
+    RS_FileIO::instance()->fileImport(*gr, path);
     for (RS_Entity* e=gr->firstEntity(); e!=NULL; e=gr->nextEntity()) {
         if (e->rtti()==RS2::EntityLine || e->rtti()==RS2::EntityArc) {
             RS_Layer* l = e->getLayer();
