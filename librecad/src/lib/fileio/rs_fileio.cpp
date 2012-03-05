@@ -26,10 +26,14 @@
 
 #include <QFileInfo>
 #include <QTextStream>
+#include <memory>
 #include "rs_fileio.h"
 
 
-
+  RS_FileIO::RS_FileIO()
+  {
+      filters.clear();
+  }
 
 
 /**
@@ -46,8 +50,6 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
 
     RS_DEBUG->print("Trying to import file '%s'...", file.toLatin1().data());
 
-    RS_FilterInterface* filter = NULL;
-
 	RS2::FormatType t;
 	if (type == RS2::FormatUnknown) {
 		t = detectFormat(file);
@@ -56,20 +58,15 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
 		t = type;
 	}
 
-	filter = getImportFilter(file, t);
-
+    std::unique_ptr<RS_FilterInterface> filter(getImportFilter(file, t));
     if (filter!=NULL) {
-        bool returned=filter->fileImport(graphic, file, t);
-        delete filter;
-        return returned;
+        return filter->fileImport(graphic, file, t);
     }
-	else {
-		RS_DEBUG->print(RS_Debug::D_WARNING,
-			"RS_FileIO::fileImport: failed to import file: %s", 
-                        file.toLatin1().data());
-	}
-	
-	return false;
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "RS_FileIO::fileImport: failed to import file: %s",
+                    file.toLatin1().data());
+
+    return false;
 }
 
 
@@ -94,17 +91,14 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const QString& file,
 			type = RS2::FormatDXF;
 		}
 		else if (extension=="cxf") {
-			type = RS2::FormatCXF;
-		}
-	}
+            type = RS2::FormatCXF;
+        }
+    }
 
-	RS_FilterInterface* filter = getExportFilter(file, type);
-	if (filter!=NULL) {
-        bool returned=filter->fileExport(graphic, file, type);
-        delete filter;
-        return returned;
-	}
-	
+    std::unique_ptr<RS_FilterInterface> filter(getImportFilter(file, type));
+    if (filter!=NULL) {
+        return filter->fileImport(graphic, file, type);
+    }
     RS_DEBUG->print("RS_FileIO::fileExport: no filter found");
 
 	return false;
