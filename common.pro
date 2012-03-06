@@ -40,7 +40,12 @@ win32 {
     QMAKE_LFLAGS_THREAD -= -mthreads
     QMAKE_C++FLAGS_THREAD -= -mthreads
     QMAKE_L++FLAGS_THREAD -= -mthreads
-
+    #qt version check for mingw
+    win32-g++ {
+        contains(QT_VERSION, ^4\\.8\\.0) {
+            DEFINES += QT_NO_CONCURRENT=0
+        }
+    }
     # On windows, check for MSVC compilers - they need help on C99
     # features and a hint to povide M_PI et al.
     win32-msvc.net|win32-msvc2003|win32-msvc2005|win32-msvc2008|win32-msvc2010 {
