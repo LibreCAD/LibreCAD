@@ -28,7 +28,9 @@
 #include <QTextStream>
 #include "rs_fileio.h"
 
-RS_FileIO* RS_FileIO::uniqueInstance = NULL;
+
+
+
 
 /**
  * Calls the import method of the filter responsible for the format
@@ -54,29 +56,12 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
 		t = type;
 	}
 
-	filter = getImportFilter(t);
-
-	/*
-	switch (t) {
-	case RS2::FormatCXF:
-        filter = new RS_FilterCXF(graphic);
-		break;
-
-	case RS2::FormatDXF1:
-        filter = new RS_FilterDXF1(graphic);
-		break;
-
-	case RS2::FormatDXF:
-        filter = new RS_FilterDXF(graphic);
-		break;
-
-	default:
-		break;
-    }
-	*/
+	filter = getImportFilter(file, t);
 
     if (filter!=NULL) {
-        return filter->fileImport(graphic, file, t);
+        bool returned=filter->fileImport(graphic, file, t);
+        delete filter;
+        return returned;
     }
 	else {
 		RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -113,9 +98,11 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const QString& file,
 		}
 	}
 
-	RS_FilterInterface* filter = getExportFilter(type);
+	RS_FilterInterface* filter = getExportFilter(file, type);
 	if (filter!=NULL) {
-		return filter->fileExport(graphic, file, type);
+        bool returned=filter->fileExport(graphic, file, type);
+        delete filter;
+        return returned;
 	}
 	
     RS_DEBUG->print("RS_FileIO::fileExport: no filter found");

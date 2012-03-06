@@ -339,7 +339,7 @@ bool RS_Graphic::save(bool isAutoSave)
                         RS_DEBUG->print("RS_Graphic::save: Format: %d", (int) actualType);
                         RS_DEBUG->print("RS_Graphic::save: Export...");
 
-                        ret = RS_FILEIO->fileExport(*this, *actualName, actualType);
+                        ret = RS_FileIO::instance()->fileExport(*this, *actualName, actualType);
                     QFileInfo	*finfo				= new QFileInfo(*actualName);
                     modifiedTime=finfo->lastModified();
                     currentFileName=*actualName;
@@ -513,7 +513,7 @@ bool RS_Graphic::open(const QString &filename, RS2::FormatType type) {
     newDoc();
 
     // import file:
-    ret = RS_FILEIO->fileImport(*this, filename, type);
+    ret = RS_FileIO::instance()->fileImport(*this, filename, type);
 
         setModified(false);
         layerList.setModified(false);
