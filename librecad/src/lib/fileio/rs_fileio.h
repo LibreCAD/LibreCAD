@@ -40,15 +40,17 @@ typedef  RS_FilterInterface* (*createFilter)();
  */
 class RS_FileIO {
 private:
-    RS_FileIO() {}
+    //singleton
+    RS_FileIO();
     RS_FileIO(RS_FileIO&) = delete;
+    RS_FileIO& operator = (RS_FileIO&) = delete;
 	
 public:
     /**
      * @return Instance to the unique import object.
      */
     static RS_FileIO* instance() {
-         static RS_FileIO* uniqueInstance;
+         static RS_FileIO* uniqueInstance=NULL;
         if (uniqueInstance==NULL) {
             uniqueInstance = new RS_FileIO();
         }
@@ -58,7 +60,7 @@ public:
     /**
      * Registers a new import filter.
      */
-    void registerFilter(createFilter* f) {
+    void registerFilter(createFilter f) {
         filters.append(f);
     }
 
@@ -67,8 +69,7 @@ public:
 	 */
 	RS_FilterInterface* getImportFilter(const QString &fileName, RS2::FormatType t) {
         for (int i = 0; i < filters.size(); ++i) {
-            createFilter p=(createFilter)filters.at(i);
-            RS_FilterInterface *filter=p();
+            RS_FilterInterface *filter=(* (filters.at(i)))();
             if (filter!=NULL) {
                 if (filter->canImport(fileName, t))
                     return filter;
@@ -83,8 +84,7 @@ public:
 	 */
 	RS_FilterInterface* getExportFilter(const QString &fileName, RS2::FormatType t) {
         for (int i = 0; i < filters.size(); ++i) {
-            createFilter p=(createFilter)filters.at(i);
-            RS_FilterInterface *filter=p();
+            RS_FilterInterface *filter=(* (filters.at(i)))();
             if (filter!=NULL) {
                 if (filter->canExport(fileName, t))
                     return filter;
@@ -104,8 +104,8 @@ public:
 
 protected:
 
-
-    QList<createFilter *> filters;
+/** a list of pointers to static functions to create file filters **/
+    QList<createFilter> filters;
 };
 
 
