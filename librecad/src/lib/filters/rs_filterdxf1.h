@@ -46,21 +46,13 @@ public:
     RS_FilterDXF1();
     ~RS_FilterDXF1() {}
 
-	/**
-	 * @return RS2::FormatDXF1.
-	 */
-	//RS2::FormatType rtti() {
-	//	return RS2::FormatDXF1;
-	//}
-
-	/*
-    virtual bool canImport(RS2::FormatType t) {
+	virtual bool canImport(const QString &fileName, RS2::FormatType t) const {
 		return (t==RS2::FormatDXF1);
 	}
 	
-    virtual bool canExport(RS2::FormatType t) {
+	virtual bool canExport(const QString &fileName, RS2::FormatType t) const {
 		return false;
-	}*/
+    }
 
     virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/);
 
@@ -111,6 +103,8 @@ public:
 
     void     strDecodeDxfString(QString& str);
     bool     mtCompFloat(double _v1, double _v2, double _tol=1.0e-6);
+
+    static RS_FilterInterface* createFilter(){return new RS_FilterDXF1();}
 
 protected:
     /** Pointer to the graphic we currently operate on. */

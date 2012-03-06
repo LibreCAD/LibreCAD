@@ -109,14 +109,14 @@ int main(int argc, char** argv) {
     RS_SETTINGS->init(XSTR(QC_COMPANYKEY), XSTR(QC_APPKEY));
     RS_SYSTEM->init(XSTR(QC_APPNAME), XSTR(QC_VERSION), XSTR(QC_APPDIR), prgDir);
 
-        RS_FILEIO->registerFilter(new RS_FilterLFF());
-        RS_FILEIO->registerFilter(new RS_FilterCXF());
-        RS_FILEIO->registerFilter(new RS_FilterDXF());
+        RS_FileIO::instance()->registerFilter( (createFilter*)RS_FilterLFF::createFilter);
 #ifdef USE_DXFRW
-        RS_FILEIO->registerFilter(new RS_FilterDXFRW());
+        RS_FileIO::instance()->registerFilter( (createFilter*)RS_FilterDXFRW::createFilter);
 #endif
-        RS_FILEIO->registerFilter(new RS_FilterJWW());
-        RS_FILEIO->registerFilter(new RS_FilterDXF1());
+        RS_FileIO::instance()->registerFilter( (createFilter*)RS_FilterCXF::createFilter);
+        RS_FileIO::instance()->registerFilter( (createFilter*)RS_FilterDXF::createFilter);
+        RS_FileIO::instance()->registerFilter( (createFilter*)RS_FilterJWW::createFilter);
+        RS_FileIO::instance()->registerFilter( (createFilter*)RS_FilterDXF1::createFilter);
 
         // parse command line arguments that might not need a launched program:
         QStringList fileList = handleArgs(argc, argv);

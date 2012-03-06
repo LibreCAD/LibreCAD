@@ -57,10 +57,6 @@ RS_FilterDXF::RS_FilterDXF()
 
     RS_DEBUG->print("RS_FilterDXF::RS_FilterDXF()");
 
-    addImportFormat(RS2::FormatDXF);
-    addExportFormat(RS2::FormatDXF);
-    addExportFormat(RS2::FormatDXF12);
-
     mtext = "";
     polyline = NULL;
     leader = NULL;

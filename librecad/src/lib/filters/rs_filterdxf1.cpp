@@ -50,11 +50,7 @@ RS_FilterDXF1::RS_FilterDXF1()
     RS_DEBUG->print("Setting up DXF 1 filter...");
 
 	graphic = NULL;
-
-    addImportFormat(RS2::FormatDXF1);
 }
-
-
 
 /**
  * Implementation of the method used for RS_Import to communicate
