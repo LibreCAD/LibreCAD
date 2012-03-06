@@ -40,15 +40,17 @@ typedef  RS_FilterInterface* (*createFilter)();
  */
 class RS_FileIO {
 private:
+    //singleton
     RS_FileIO();
     RS_FileIO(RS_FileIO&) = delete;
+    RS_FileIO& operator = (RS_FileIO&) = delete;
 	
 public:
     /**
      * @return Instance to the unique import object.
      */
     static RS_FileIO* instance() {
-         static RS_FileIO* uniqueInstance;
+         static RS_FileIO* uniqueInstance=NULL;
         if (uniqueInstance==NULL) {
             uniqueInstance = new RS_FileIO();
         }
@@ -102,7 +104,7 @@ public:
 
 protected:
 
-
+/** a list of pointers to static functions to create file filters **/
     QList<createFilter> filters;
 };
 
