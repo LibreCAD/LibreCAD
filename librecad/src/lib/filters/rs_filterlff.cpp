@@ -43,14 +43,8 @@
  * Default constructor.
  */
 RS_FilterLFF::RS_FilterLFF() : RS_FilterInterface() {
-
     RS_DEBUG->print("Setting up LFF filter...");
-
-    addImportFormat(RS2::FormatLFF);
-    addExportFormat(RS2::FormatLFF);
 }
-
-
 
 /**
  * Implementation of the method used for RS_Import to communicate
@@ -112,6 +106,7 @@ bool RS_FilterLFF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
     g.addBlockNotification();
 	return true;
 }
+
 
 QString clearZeros(double num, int prec){
     QString str = QString::number(num, 'f', prec);

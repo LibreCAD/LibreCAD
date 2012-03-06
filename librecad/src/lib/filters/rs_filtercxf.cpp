@@ -43,12 +43,7 @@
 RS_FilterCXF::RS_FilterCXF() : RS_FilterInterface() {
 
     RS_DEBUG->print("Setting up CXF filter...");
-
-    addImportFormat(RS2::FormatCXF);
-    addExportFormat(RS2::FormatCXF);
 }
-
-
 
 /**
  * Implementation of the method used for RS_Import to communicate

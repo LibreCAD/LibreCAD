@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2012 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -30,7 +30,7 @@
 #include <QList>
 #include "rs_filterinterface.h"
 
-#define RS_FILEIO RS_FileIO::instance()
+typedef  RS_FilterInterface* (*createFilter)();
 
 //RLZ: TODO destructor for clear filterList
 /**
@@ -48,51 +48,51 @@ public:
      * @return Instance to the unique import object.
      */
     static RS_FileIO* instance() {
+         static RS_FileIO* uniqueInstance;
         if (uniqueInstance==NULL) {
             uniqueInstance = new RS_FileIO();
         }
         return uniqueInstance;
     }
-	
+
     /**
      * Registers a new import filter.
      */
-	void registerFilter(RS_FilterInterface* f) {
-		filterList.append(f);
-	}
-
-    /**
-     * @return List of registered filters.
-     */
-        QList<RS_FilterInterface*> getFilterList() {
-		return filterList;
-	}
+    void registerFilter(createFilter* f) {
+        filters.append(f);
+    }
 
 	/**
 	 * @return Filter which can import the given file type.
 	 */
-	RS_FilterInterface* getImportFilter(RS2::FormatType t) {
-                for (int i = 0; i < filterList.size(); ++i) {
-                    if (filterList.at(i)->canImport(t)) {
-                                return filterList.at(i);
-                        }
-                }
-
+	RS_FilterInterface* getImportFilter(const QString &fileName, RS2::FormatType t) {
+        for (int i = 0; i < filters.size(); ++i) {
+            createFilter p=(createFilter)filters.at(i);
+            RS_FilterInterface *filter=p();
+            if (filter!=NULL) {
+                if (filter->canImport(fileName, t))
+                    return filter;
+                delete filter;
+            }
+        }
 		return NULL;
 	}
 	
 	/**
 	 * @return Filter which can export the given file type.
 	 */
-	RS_FilterInterface* getExportFilter(RS2::FormatType t) {
-                for (int i = 0; i < filterList.size(); ++i) {
-                    if (filterList.at(i)->canExport(t)) {
-                                return filterList.at(i);
-                        }
-                }
-
-		return NULL;
-	}
+	RS_FilterInterface* getExportFilter(const QString &fileName, RS2::FormatType t) {
+        for (int i = 0; i < filters.size(); ++i) {
+            createFilter p=(createFilter)filters.at(i);
+            RS_FilterInterface *filter=p();
+            if (filter!=NULL) {
+                if (filter->canExport(fileName, t))
+                    return filter;
+                delete filter;
+            }
+        }
+        return NULL;
+    }
 
     bool fileImport(RS_Graphic& graphic, const QString& file,
 		RS2::FormatType type = RS2::FormatUnknown);
@@ -103,9 +103,10 @@ public:
         RS2::FormatType detectFormat(const QString& file);
 
 protected:
-    static RS_FileIO* uniqueInstance;
-    QList<RS_FilterInterface*> filterList;
-}
-;
+
+
+    QList<createFilter *> filters;
+};
+
 
 #endif

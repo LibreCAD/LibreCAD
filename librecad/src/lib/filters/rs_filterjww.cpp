@@ -54,10 +54,6 @@ RS_FilterJWW::RS_FilterJWW()
 
         RS_DEBUG->print("RS_FilterJWW::RS_FilterJWW()");
 
-        addImportFormat(RS2::FormatJWW);
-        addExportFormat(RS2::FormatJWW);
-//	addExportFormat(RS2::FormatJWC);
-
         mtext = "";
         polyline = NULL;
         leader = NULL;
@@ -69,8 +65,6 @@ RS_FilterJWW::RS_FilterJWW()
         //systemVariables.setAutoDelete(true);
         RS_DEBUG->print("RS_FilterJWW::RS_FilterJWW(): OK");
 }
-
-
 
 /**
  * Destructor.
