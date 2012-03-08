@@ -308,7 +308,13 @@ public:
 	 */
 	virtual void setFocus2() {
 		setFocus();
-	}
+    }
+    /** Block list widget */
+    QG_BlockWidget* getBlockWidget(void)
+    {
+        return blockWidget;
+    }
+
 
 protected:
     void closeEvent(QCloseEvent*);

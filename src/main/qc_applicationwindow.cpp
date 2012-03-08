@@ -2055,7 +2055,12 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         // Link the block list to the block widget
         graphic->addBlockListListener(blockWidget);
     }
-
+    // link the layer widget to the new document:
+    layerWidget->setLayerList(w->getDocument()->getLayerList(), false);
+    // link the block widget to the new document:
+    blockWidget->setBlockList(w->getDocument()->getBlockList());
+    // link coordinate widget to graphic
+    coordinateWidget->setGraphic(w->getGraphic());
     // Link the dialog factory to the mouse widget:
     QG_DIALOGFACTORY->setMouseWidget(mouseWidget);
     // Link the dialog factory to the coordinate widget:
