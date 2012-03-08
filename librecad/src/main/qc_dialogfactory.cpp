@@ -29,23 +29,26 @@
 #include "rs_grid.h"
 #include "qc_dialogfactory.h"
 #include "qc_applicationwindow.h"
+#include "qg_blockwidget.h"
+
 #include "rs_blocklist.h"
 
 
 /**
  * Provides a new window for editing the active block.
  */
-void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
+void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* /*blockList*/) {
     RS_DEBUG->print("QC_DialogFactory::requestEditBlockWindow()");
     RS_DEBUG->print(RS_Debug::D_WARNING, "QC_DialogFactory::requestEditBlockWindow()");
 
     QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
     QC_MDIWindow* parent = appWindow->getMDIWindow();
     if (parent!=NULL) {
-        //RS_BlockList* blist = blockWidget->getBlockList();
-        if (blockList!=NULL) {
-            RS_Block* blk = blockList->getActive();
-            std::cout<<"QC_DialogFactory::requestEditBlockWindow(): blk==NULL: "<<(blk==NULL)<<std::endl;
+        //get blocklist from block widget, bug#3497154
+        RS_BlockList* blist = appWindow->getBlockWidget() -> getBlockList();
+        if (blist !=NULL) {
+            RS_Block* blk = blist->getActive();
+//            std::cout<<"QC_DialogFactory::requestEditBlockWindow(): size()="<<((blk==NULL)?0:blk->count() )<<std::endl;
             if (blk!=NULL) {
                 QC_MDIWindow* w = appWindow->slotFileNew(blk);
                 // the parent needs a pointer to the block window and
