@@ -132,10 +132,10 @@ void RS_ActionDimRadial::mouseMoveEvent(QMouseEvent* e) {
             preparePreview();
 
             RS_DimRadial* d = new RS_DimRadial(preview, data, edata);
-            d->update();
 
             deletePreview();
             preview->addEntity(d);
+            d->update();
             drawPreview();
         }
         break;

@@ -135,10 +135,10 @@ void RS_ActionDimDiametric::mouseMoveEvent(QMouseEvent* e) {
 
             preparePreview();
             RS_DimDiametric* d = new RS_DimDiametric(preview, data, edata);
-            d->update();
 
             deletePreview();
             preview->addEntity(d);
+            d->update();
             drawPreview();
         }
         break;

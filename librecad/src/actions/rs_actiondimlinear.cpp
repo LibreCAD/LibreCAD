@@ -183,8 +183,8 @@ void RS_ActionDimLinear::mouseMoveEvent(QMouseEvent* e) {
             preparePreview();
 
             RS_DimLinear* dim = new RS_DimLinear(preview, data, edata);
-            dim->update();
             preview->addEntity(dim);
+            dim->update();
             drawPreview();
         }
         break;

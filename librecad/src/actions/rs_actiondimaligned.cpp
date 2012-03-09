@@ -145,8 +145,8 @@ void RS_ActionDimAligned::mouseMoveEvent(QMouseEvent* e) {
 
                         //data.text = getText();
             RS_DimAligned* dim = new RS_DimAligned(preview, data, edata);
-            dim->update();
             preview->addEntity(dim);
+            dim->update();
             drawPreview();
         }
         break;
