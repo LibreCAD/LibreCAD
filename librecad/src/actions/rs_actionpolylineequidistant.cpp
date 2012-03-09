@@ -88,6 +88,8 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                 bool first = true;
                 RS_Entity* lastEntity = ((RS_Polyline*)originalEntity)->lastEntity();
                 for (RS_Entity* en=((RS_Polyline*)originalEntity)->firstEntity(); en!=NULL; en=((RS_Polyline*)originalEntity)->nextEntity()) {
+                    RS_Vector v1;
+                    RS_Vector v2;
                         double bulge = 0.0;
                         if (en->getLength() < 1.0e-15) continue;
                         if (en->rtti()==RS2::EntityArc) {
@@ -97,15 +99,19 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                                         break;
                                 ((RS_Arc*)en)->setRadius(r);
                                 bulge = ((RS_Arc*)en)->getBulge();
+                                ((RS_Arc*)en)->calculateEndpoints();
+                                v1 = ((RS_AtomicEntity*)en)->getStartpoint();
+                                v2 = ((RS_AtomicEntity*)en)->getEndpoint();
                                 ((RS_Arc*)en)->setRadius(r0);
+                                ((RS_Arc*)en)->calculateEndpoints();
                         } else {
                                 bulge = 0.0;
+                                v1 = ((RS_AtomicEntity*)en)->getStartpoint();
+                                v2 = ((RS_AtomicEntity*)en)->getEndpoint();
+                                offset.set(dist * cos(v1.angleTo(v2)+M_PI*0.5*neg), dist * sin(v1.angleTo(v2)+M_PI*0.5*neg));
+                                v1.move(offset*num);
+                                v2.move(offset*num);
                         }
-                        RS_Vector v1 = ((RS_AtomicEntity*)en)->getStartpoint();
-                        RS_Vector v2 = ((RS_AtomicEntity*)en)->getEndpoint();
-                        offset.set(dist * cos(v1.angleTo(v2)+M_PI*0.5*neg), dist * sin(v1.angleTo(v2)+M_PI*0.5*neg));
-                        v1.move(offset*num);
-                        v2.move(offset*num);
                         if (first) {
                                 line1.setStartpoint(v1);
                                 line1.setEndpoint(v2);

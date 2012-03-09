@@ -95,9 +95,9 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const QString& file,
         }
     }
 
-    std::unique_ptr<RS_FilterInterface> filter(getImportFilter(file, type));
+    std::unique_ptr<RS_FilterInterface> filter(getExportFilter(file, type));
     if (filter!=NULL) {
-        return filter->fileImport(graphic, file, type);
+        return filter->fileExport(graphic, file, type);
     }
     RS_DEBUG->print("RS_FileIO::fileExport: no filter found");
 
