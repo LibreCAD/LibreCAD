@@ -2430,13 +2430,6 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     if(blockWidget) {
         blockWidget->setBlockList(w->getDocument()->getBlockList());
     }
-    if(layerWidget) {
-        layerWidget->setLayerList(w->getDocument()->getLayerList(), false);
-    }
-
-    if(blockWidget) {
-        blockWidget->setBlockList(w->getDocument()->getBlockList());
-    }
     if (graphic!=NULL) {
         // Link the graphic's layer list to the pen tool bar
         graphic->addLayerListListener(penToolBar);
