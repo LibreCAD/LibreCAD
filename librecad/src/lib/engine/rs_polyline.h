@@ -108,7 +108,7 @@ public:
     }
 
     /** @return Start point of the entity */
-    RS_Vector getStartpoint() {
+    virtual RS_Vector getStartpoint() const {
         return data.startpoint;
     }
 
@@ -118,7 +118,7 @@ public:
     }
 
     /** @return End point of the entity */
-    RS_Vector getEndpoint() {
+    virtual RS_Vector getEndpoint() const {
         return data.endpoint;
     }
 
