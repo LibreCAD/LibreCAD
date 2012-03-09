@@ -206,7 +206,6 @@ bool RS_ActionPolylineSegment::convertPolyline(RS_Entity* selectedEntity) {
             } else
                 bulge = 0.0;
             if (e2->rtti()==RS2::EntityPolyline) {
-                //aqui polilinea si la ent lo es
                 newPolyline->addVertex(start, bulge);
                 end = appendPol(newPolyline, (RS_Polyline*)e2, revert);
             } else
