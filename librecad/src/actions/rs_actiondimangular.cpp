@@ -121,10 +121,10 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e) {
             edata.definitionPoint4 = mouse;
 
             RS_DimAngular* d = new RS_DimAngular(preview, data, edata);
-            d->update();
 
             deletePreview();
             preview->addEntity(d);
+            d->update();
             drawPreview();
         }
         break;
