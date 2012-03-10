@@ -185,6 +185,7 @@ bool RS_ActionPolylineSegment::convertPolyline(RS_Entity* selectedEntity) {
         newPolyline->setPenToActive();
 
 //complete polyline
+        end =start;
         while (!completed.isEmpty()) {
             RS_Entity* e2= completed.takeFirst();
             e2->setUndoState(true);
