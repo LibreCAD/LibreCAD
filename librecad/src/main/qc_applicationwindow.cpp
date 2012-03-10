@@ -2423,6 +2423,13 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     // only graphics offer block lists, blocks don't
     RS_DEBUG->print("  adding listeners");
     RS_Graphic* graphic = w->getDocument()->getGraphic();
+    if(layerWidget) {
+        layerWidget->setLayerList(w->getDocument()->getLayerList(), false);
+    }
+
+    if(blockWidget) {
+        blockWidget->setBlockList(w->getDocument()->getBlockList());
+    }
     if (graphic!=NULL) {
         // Link the graphic's layer list to the pen tool bar
         graphic->addLayerListListener(penToolBar);
@@ -2432,10 +2439,12 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         // Link the block list to the block widget
         graphic->addBlockListListener(blockWidget);
     }
-
     // Link the dialog factory to the mouse widget:
     QG_DIALOGFACTORY->setMouseWidget(mouseWidget);
     // Link the dialog factory to the coordinate widget:
+    if( coordinateWidget){
+        coordinateWidget->setGraphic(graphic );
+    }
     QG_DIALOGFACTORY->setCoordinateWidget(coordinateWidget);
     QG_DIALOGFACTORY->setSelectionWidget(selectionWidget);
     // Link the dialog factory to the option widget:

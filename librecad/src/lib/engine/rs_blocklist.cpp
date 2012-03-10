@@ -54,6 +54,7 @@ RS_BlockList::RS_BlockList(bool owner) {
  */
 void RS_BlockList::clear() {
     blocks.clear();
+    activeBlock = NULL;
 	setModified(true);
 }
 

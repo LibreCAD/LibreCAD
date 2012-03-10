@@ -312,6 +312,11 @@ public:
         virtual void setFocus2() {
                 setFocus();
         }
+        QG_BlockWidget* getBlockWidget(void)
+        {
+            return blockWidget;
+        }
+
 
 protected:
     void closeEvent(QCloseEvent*);

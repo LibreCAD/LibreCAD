@@ -55,8 +55,11 @@ public:
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionDrawLineRelAngle;
+    virtual RS2::ActionType rtti() {
+        if( fixedAngle && RS_Math::getAngleDifference(angle,M_PI/2.) < RS_TOLERANCE )
+            return RS2::ActionDrawLineOrthogonal;
+        else
+            return RS2::ActionDrawLineRelAngle;
 	}
 
     virtual void trigger();
