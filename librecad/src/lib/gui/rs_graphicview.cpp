@@ -45,16 +45,15 @@
  * Constructor.
  */
 RS_GraphicView::RS_GraphicView()
-    : background(), foreground() {
+    : background(), foreground(),
+      savedViews(16), savedViewIndex(0),savedViewCount(0),previousViewTime(QDateTime::currentDateTime())
+{
     drawingMode = RS2::ModeFull;
     printing = false;
     deleteMode = false;
     factor = RS_Vector(1.0,1.0);
     offsetX = 0;
     offsetY = 0;
-    previousFactor = RS_Vector(1.0,1.0);
-    previousOffsetX = 0;
-    previousOffsetY = 0;
     container = NULL;
     eventHandler = new RS_EventHandler(this);
     gridColor = Qt::gray;
@@ -728,9 +727,13 @@ void RS_GraphicView::zoomPrevious() {
  * switch back later with @see restoreView().
  */
 void RS_GraphicView::saveView() {
-    previousOffsetX = offsetX;
-    previousOffsetY = offsetY;
-    previousFactor = factor;
+    QDateTime t=QDateTime::currentDateTime();
+    //do not update view within 500 milliseconds
+    if(previousViewTime.msecsTo(t)< 500) return;
+    previousViewTime = t;
+    savedViews[savedViewIndex]=std::make_tuple(offsetX,offsetY,factor);
+    savedViewIndex = (savedViewIndex+1)%savedViews.size();
+    if(savedViewCount<savedViews.size()) savedViewCount++;
 }
 
 
@@ -740,15 +743,13 @@ void RS_GraphicView::saveView() {
  * @see saveView().
  */
 void RS_GraphicView::restoreView() {
-    int pox = previousOffsetX;
-    int poy = previousOffsetY;
-    RS_Vector pf = previousFactor;
+    if(savedViewCount == 0) return;
+    savedViewCount --;
+    savedViewIndex = (savedViewIndex + savedViews.size() - 1)%savedViews.size();
 
-    saveView();
-
-    offsetX = pox;
-    offsetY = poy;
-    factor = pf;
+    offsetX = std::get<0>(savedViews[savedViewIndex]);
+    offsetY = std::get<1>(savedViews[savedViewIndex]);
+    factor = std::get<2>(savedViews[savedViewIndex]);
 
     adjustOffsetControls();
     adjustZoomControls();
