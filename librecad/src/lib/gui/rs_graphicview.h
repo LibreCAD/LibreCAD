@@ -31,8 +31,11 @@
 #include "rs_entitycontainer.h"
 #include "rs_snapper.h"
 
+#include <QDateTime>
 #include <QMap>
 #include <QKeyEvent>
+#include <QKeyEvent>
+#include <tuple>
 
 
 class RS_ActionInterface;
@@ -485,9 +488,15 @@ private:
         int offsetX;
     int offsetY;
 
-        RS_Vector previousFactor;
-        int previousOffsetX;
-    int previousOffsetY;
+
+        //circular buffer for saved views
+    std::vector<std::tuple<int, int, RS_Vector> > savedViews;
+    unsigned short savedViewIndex;
+    unsigned short savedViewCount;
+    QDateTime previousViewTime;
+//        RS_Vector previousFactor;
+//        int previousOffsetX;
+//    int previousOffsetY;
 
     int borderLeft;
     int borderTop;
