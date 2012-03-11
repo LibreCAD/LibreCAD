@@ -90,6 +90,7 @@ public:
         /** Catch hotkey for giving focus to command line. */
     virtual void keyPressEvent(QKeyEvent* e);
     virtual void keyReleaseEvent(QKeyEvent* e);
+    void setPreviousZoomEnable(bool enable);
 
 public slots:
     virtual void show();
@@ -115,6 +116,7 @@ public slots:
 
     void slotPenChanged(RS_Pen p);
     void slotSnapsChanged(RS_SnapMode s);
+    void slotEnableActions(bool enable);
 
     /** generates a new document for a graphic. */
     QC_MDIWindow* slotFileNew(RS_Document* doc=NULL);
@@ -317,7 +319,6 @@ public:
             return blockWidget;
         }
 
-
 protected:
     void closeEvent(QCloseEvent*);
     virtual void mouseReleaseEvent(QMouseEvent* e);
@@ -391,6 +392,8 @@ private:
     QToolBar* fileToolBar;
     QToolBar* editToolBar;
     QToolBar* zoomToolBar;
+    static QAction* previousZoom;
+    bool previousZoomEnable;
 
     QG_SnapToolBar* snapToolBar;
 

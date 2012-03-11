@@ -116,6 +116,7 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
  *	*/
 #define WTB_MAX_SIZE        79
 
+ QAction* QC_ApplicationWindow::previousZoom=NULL;
 
 /**
  * Constructor. Initializes the app.
@@ -199,6 +200,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     statusBar()->showMessage(XSTR(QC_APPNAME) " Ready", 2000);
     //setFocusPolicy(WheelFocus);
+    previousZoomEnable=false;
 }
 
 /**
@@ -762,10 +764,12 @@ void QC_ApplicationWindow::initActions(void)
     menu->addAction(action);
     tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action = actionFactory.createAction(RS2::ActionZoomPrevious, actionHandler);
-    menu->addAction(action);
-    tb->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    previousZoom = actionFactory.createAction(RS2::ActionZoomPrevious, actionHandler);
+    menu->addAction(previousZoom);
+    tb->addAction(previousZoom);
+//    connect(this, SIGNAL(windowsChanged(bool)), previousZoom, SLOT(setEnabled(bool)));
+    previousZoom->setEnabled(false);
+    connect(this, SIGNAL(windowsChanged(bool)), previousZoom, SLOT(slotEnableActions(bool)));
     action = actionFactory.createAction(RS2::ActionZoomWindow, actionHandler);
     menu->addAction(action);
     tb->addAction(action);
@@ -1482,6 +1486,18 @@ void QC_ApplicationWindow::initActions(void)
 
 }
 
+void QC_ApplicationWindow::setPreviousZoomEnable(bool enable){
+    previousZoomEnable=enable;
+    if(previousZoom != NULL){
+        previousZoom->setEnabled(enable);
+    }
+}
+
+void QC_ApplicationWindow::slotEnableActions(bool enable) {
+    if(previousZoom != NULL){
+        previousZoom->setEnabled(enable&& previousZoomEnable);
+    }
+}
 
 /**
  * Initializes the menu bar.

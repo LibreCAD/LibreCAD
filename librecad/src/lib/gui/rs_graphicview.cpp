@@ -24,7 +24,8 @@
 **
 **********************************************************************/
 
-
+#include <QAction>
+#include "qc_applicationwindow.h"
 #include "rs_graphicview.h"
 
 #include "rs_linetypepattern.h"
@@ -84,7 +85,7 @@ RS_GraphicView::RS_GraphicView()
 
     printPreview = false;
 
-
+    QC_ApplicationWindow::getAppWindow()->setPreviousZoomEnable(false);
     //currentInsert = NULL;
 }
 
@@ -734,6 +735,10 @@ void RS_GraphicView::saveView() {
     savedViews[savedViewIndex]=std::make_tuple(offsetX,offsetY,factor);
     savedViewIndex = (savedViewIndex+1)%savedViews.size();
     if(savedViewCount<savedViews.size()) savedViewCount++;
+
+    if(savedViewCount==1){
+        QC_ApplicationWindow::getAppWindow()->setPreviousZoomEnable(true);
+    }
 }
 
 
@@ -745,6 +750,9 @@ void RS_GraphicView::saveView() {
 void RS_GraphicView::restoreView() {
     if(savedViewCount == 0) return;
     savedViewCount --;
+    if(savedViewCount==0){
+        QC_ApplicationWindow::getAppWindow()->setPreviousZoomEnable(false);
+    }
     savedViewIndex = (savedViewIndex + savedViews.size() - 1)%savedViews.size();
 
     offsetX = std::get<0>(savedViews[savedViewIndex]);
