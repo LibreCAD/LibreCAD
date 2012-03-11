@@ -76,22 +76,22 @@ void QG_LayerDialog::setLayer(RS_Layer* l) {
 }
 
 void QG_LayerDialog::updateLayer() {
-    layer->setName(leName->text().toLatin1().data());
+    layer->setName(leName->text());
     layer->setPen(wPen->getPen());
     layer->setHelpLayer(cbHelpLayer->isChecked());
 }
 
 void QG_LayerDialog::validate() {
 	if (layerList != NULL && 
-                (editLayer == FALSE || layerName != leName->text().toLatin1().data())) {
-                RS_Layer* l = layerList->find(leName->text().toLatin1().data());
+                (editLayer == FALSE || layerName != leName->text())) {
+                RS_Layer* l = layerList->find(leName->text());
 		if (l != NULL) {
 			QMessageBox::information(parentWidget(),
 									 QMessageBox::tr("Layer Properties"),
 									 QMessageBox::tr("Layer with a name \"%1\" "
 													 "already exists. Please specify "
 													 "a different name.")
-                                                                         .arg(leName->text().toLatin1().data()),
+                                                                         .arg(leName->text()),
 									 QMessageBox::Ok);
 			leName->setFocus();
 			leName->selectAll();
