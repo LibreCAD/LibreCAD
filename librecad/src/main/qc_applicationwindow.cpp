@@ -769,7 +769,7 @@ void QC_ApplicationWindow::initActions(void)
     tb->addAction(previousZoom);
 //    connect(this, SIGNAL(windowsChanged(bool)), previousZoom, SLOT(setEnabled(bool)));
     previousZoom->setEnabled(false);
-    connect(this, SIGNAL(windowsChanged(bool)), previousZoom, SLOT(slotEnableActions(bool)));
+    connect(this, SIGNAL(windowsChanged(bool)), this, SLOT(slotEnableActions(bool)));
     action = actionFactory.createAction(RS2::ActionZoomWindow, actionHandler);
     menu->addAction(action);
     tb->addAction(action);
