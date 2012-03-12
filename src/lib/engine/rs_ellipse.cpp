@@ -800,8 +800,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double /*patter
         double r2 = getMinorRadius() * view->getFactor().x;
 
         do {
-            curR = sqrt(RS_Math::pow(getMinorRadius()*cos(curA), 2.0)
-                        + RS_Math::pow(getMajorRadius()*sin(curA), 2.0));
+            curR = RS_Vector(getMinorRadius()*cos(curA),getMajorRadius()*sin(curA)).magnitude();
 
             if (curR>1.0e-6) {
                 da[i] = fabs(pat->pattern[i] * styleFactor) / curR;
