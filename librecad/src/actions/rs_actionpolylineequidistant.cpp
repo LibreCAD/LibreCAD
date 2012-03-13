@@ -56,119 +56,186 @@ void RS_ActionPolylineEquidistant::init(int status) {
         bRightSide = false;
 }
 
+/**
+ * Helper function for makeContour
+ * Modify newEntity to parellel of orgEntity at distance dist
+ * If dist is positive the offset is in left else in right
+ * Bot newEntity and orgEntity are the same type of entity
+ * if not return NULL pointer
+ *
+ * @retval RS_Entity* of parellel entity
+ *
+ * @author Rallaz
+ */
+RS_Entity* RS_ActionPolylineEquidistant::calculateOffset(RS_Entity* newEntity,RS_Entity* orgEntity, double dist) {
+    if (orgEntity->rtti()==RS2::EntityArc && orgEntity->rtti()==RS2::EntityArc) {
+        RS_Arc* arc = (RS_Arc*)newEntity;
+        double r0 = ((RS_Arc*)orgEntity)->getRadius();
+        double r = r0 - dist;
+        if(r < 0)
+            return NULL;
+        arc->setData(((RS_Arc*)orgEntity)->getData());
+        arc->setRadius(r);
+        arc->calculateEndpoints();
+        return newEntity;
+    } else if (orgEntity->rtti()==RS2::EntityLine && orgEntity->rtti()==RS2::EntityLine) {
+        RS_Line* line0 = (RS_Line*)orgEntity;
+        RS_Line* line1 = (RS_Line*)newEntity;
+        RS_Vector v0 = line0->getStartpoint();
+        RS_Vector v1(v0.x,v0.y+dist);
+        RS_Vector v2(v0.x+line0->getLength(),v0.y+dist);
+        line1->setStartpoint(v1);
+        line1->setEndpoint(v2);
+        line1->rotate(v0, line0->getAngle1());
+        return newEntity;
+    }
+    return NULL;
+}
+
+/**
+ * Helper function for makeContour
+ * Calculate the intersection point of first and last entities
+ * The first vertex is not added and the last is returned instead of added
+ *
+ * @retval RS_Vector nearest to startpoint of last and endpoint of first or RS_Vector(false) if not
+ *
+ * @author Rallaz
+ */
+RS_Vector RS_ActionPolylineEquidistant::calculateIntersection(RS_Entity* first,RS_Entity* last) {
+    RS_VectorSolutions vsol;
+    RS_Vector v(false);
+    vsol = RS_Information::getIntersection(first, last, false);
+    if (vsol.getNumber()==0) {
+        //Parallel entities
+        return RS_Vector(false);
+    } else if (vsol.getNumber()>1 &&
+               vsol.get(0).distanceTo(last->getStartpoint()) > vsol.get(1).distanceTo(first->getStartpoint())) {
+        return vsol.get(1);
+    }
+    return vsol.get(0);
+}
+
 bool RS_ActionPolylineEquidistant::makeContour() {
-        if (container==NULL) {
-                RS_DEBUG->print("RS_ActionPolylineEquidistant::makeContour: no valid container",
-                                                RS_Debug::D_WARNING);
-                return false;
-        }
+    if (container==NULL) {
+        RS_DEBUG->print("RS_ActionPolylineEquidistant::makeContour: no valid container",
+                        RS_Debug::D_WARNING);
+        return false;
+    }
 
-        RS_Vector offset(false);
-//        QList<RS_Entity*> addList;
+    RS_Polyline* originalPolyline = (RS_Polyline*)originalEntity;
+//create a list of entities to offset without length = 0
+    QList<RS_Entity*> entities;
+    for (RS_Entity* en=originalPolyline->firstEntity(); en!=NULL; en=originalPolyline->nextEntity()) {
+        if (en->getLength() > 1.0e-12)
+            entities.append(en);
+    }
+    if (entities.isEmpty()) {
+        return false;
+    }
+    if (document!=NULL) {
+        document->startUndoCycle();
+    }
+    double neg = 1.0;
+    if(bRightSide)
+        neg = -1.0;
 
-        if (document!=NULL) {
-                document->startUndoCycle();
-        }
-        double neg = 1.0;
-        if(bRightSide)
-                neg = -1.0;
-        // Create new entites
-        RS_Line line1(NULL, RS_LineData(RS_Vector(true), RS_Vector(true)));
-        RS_Line line2(NULL, RS_LineData(RS_Vector(true), RS_Vector(true)));
-        for (int num=1;
-                        num<=number || (number==0 && num<=1);
-                        num++) {
-//            std::cout<<"copy: "<<num<<" of "<<number<<std::endl;
-                RS_Polyline* newPolyline = new RS_Polyline(container);
-                newPolyline->setClosed(((RS_Polyline*)originalEntity)->isClosed());
-//		newPolyline->setSelected((RS_Polyline*)originalEntity)->isSelected());
-                newPolyline->setLayer(((RS_Polyline*)originalEntity)->getLayer());
-                newPolyline->setPen(((RS_Polyline*)originalEntity)->getPen());
+    // Create new helper entities
+    RS_Line line1(NULL, RS_LineData(RS_Vector(true), RS_Vector(true)));//current line
+    RS_Line lineFirst(NULL, RS_LineData(RS_Vector(true), RS_Vector(true)));//previous line
+    RS_Arc arc1(NULL, RS_ArcData(RS_Vector(true), 0,0,0,false));//current arc
+    RS_Arc arcFirst(NULL, RS_ArcData(RS_Vector(true), 0,0,0,false));//previous arc
 
-                bool first = true;
-                RS_Entity* lastEntity = ((RS_Polyline*)originalEntity)->lastEntity();
-                for (RS_Entity* en=((RS_Polyline*)originalEntity)->firstEntity(); en!=NULL; en=((RS_Polyline*)originalEntity)->nextEntity()) {
-                    RS_Vector v1;
-                    RS_Vector v2;
-                        double bulge = 0.0;
-                        if (en->getLength() < 1.0e-15) continue;
-                        if (en->rtti()==RS2::EntityArc) {
-                                double r0 = ((RS_Arc*)en)->getRadius();
-                                double r = r0 - dist*neg;
-                                if(r < 0)
-                                        break;
-                                ((RS_Arc*)en)->setRadius(r);
-                                bulge = ((RS_Arc*)en)->getBulge();
-                                ((RS_Arc*)en)->calculateEndpoints();
-                                v1 = ((RS_AtomicEntity*)en)->getStartpoint();
-                                v2 = ((RS_AtomicEntity*)en)->getEndpoint();
-                                ((RS_Arc*)en)->setRadius(r0);
-                                ((RS_Arc*)en)->calculateEndpoints();
-                        } else {
-                                bulge = 0.0;
-                                v1 = ((RS_AtomicEntity*)en)->getStartpoint();
-                                v2 = ((RS_AtomicEntity*)en)->getEndpoint();
-                                offset.set(dist * cos(v1.angleTo(v2)+M_PI*0.5*neg), dist * sin(v1.angleTo(v2)+M_PI*0.5*neg));
-                                v1.move(offset*num);
-                                v2.move(offset*num);
-                        }
-                        if (first) {
-                                line1.setStartpoint(v1);
-                                line1.setEndpoint(v2);
-                                if(newPolyline->isClosed()){
-                                        RS_Vector v01 = ((RS_AtomicEntity*)lastEntity)->getStartpoint();
-                                        RS_Vector v02 = ((RS_AtomicEntity*)en)->getStartpoint();
-                                        offset.set(dist * cos(v01.angleTo(v02)+M_PI*0.5*neg), dist * sin(v01.angleTo(v02)+M_PI*0.5*neg));
-                                        v01.move(offset*num);
-                                        v02.move(offset*num);
-                                        line2.setStartpoint(v01);
-                                        line2.setEndpoint(v02);
-                                        RS_VectorSolutions vsol = RS_Information::getIntersection(&line1, &line2, false);
-                                        v1 = vsol.get(0);
-                                }
-                                newPolyline->setStartpoint(v1);
-                                newPolyline->setNextBulge(bulge);
-                                if (en == lastEntity) {
-                                    newPolyline->addVertex(v2, bulge);
-                                }
-                                first = false;
-                        }else{
-                            line2.setStartpoint(v1);
-                            line2.setEndpoint(v2);
-                            RS_VectorSolutions vsol = RS_Information::getIntersection(&line1, &line2, false);
-                            RS_Vector v;
-                            if (vsol.getNumber()>0) {
-                                v= vsol.get(0);
-                            }else {
-                                //fixme, this is not correct
-                                v=(line1.getEndpoint()+v1)*0.5;
-                            }
+    for (int num=1; num<=number || (number==0 && num<=1); num++) {
+        RS_Polyline* newPolyline = new RS_Polyline(container);
+        newPolyline->setLayer(((RS_Polyline*)originalEntity)->getLayer());
+        newPolyline->setPen(((RS_Polyline*)originalEntity)->getPen());
 
-                            newPolyline->addVertex(v, bulge);
-                            newPolyline->setEndpoint(v);
-                            line1.setStartpoint(v1);
-                            line1.setEndpoint(v2);
-                            if (en==lastEntity/* && newPolyline->isClosed()==false*/){
-                                newPolyline->addVertex(v2, bulge);
-                                }
-                        }
+        bool first = true;
+        double bulge = 0.0;
+        RS_Entity* en;
+        RS_Entity* prevEntity = entities.last();
+        RS_Entity* currEntity;
+        for (int i = 0; i < entities.size(); ++i) {
+            en = entities.at(i);
+            RS_Vector v(false);
+            if (en->rtti()==RS2::EntityArc) {
+                currEntity = &arc1;
+                calculateOffset(currEntity, en, dist*num*neg);
+                bulge = arc1.getBulge();
+            } else {
+                currEntity = &line1;
+                bulge = 0.0;
+                calculateOffset(currEntity, en, dist*num*neg);
+            }
+            if (first) {
+                if (originalPolyline->isClosed()){
+                    if (prevEntity->rtti()==RS2::EntityArc) {
+                        prevEntity = calculateOffset(&arcFirst, prevEntity, dist*num*neg);
+                        bulge = arcFirst.getBulge();
+                    } else {
+                        bulge = 0.0;
+                        prevEntity = calculateOffset(&lineFirst, prevEntity, dist*num*neg);
+                    }
+                    v = calculateIntersection(prevEntity, currEntity);
                 }
-                double bulge = lastEntity->rtti() == RS2::EntityArc? ((RS_Arc*)lastEntity)->getBulge():0.0;
-                newPolyline->setNextBulge(bulge);
-                newPolyline->endPolyline();
-                container->addEntity(newPolyline);
-                document->addUndoable(newPolyline);
+                if (!v.valid)
+                    v = currEntity->getStartpoint();
+                first = false;
+            }else{
+                v = calculateIntersection(prevEntity, currEntity);
+                if (!v.valid) {
+                    v= prevEntity->getEndpoint();
+                    double dess = currEntity->getStartpoint().distanceTo(prevEntity->getEndpoint());
+                    if (dess > 1.0e-12) {
+                        newPolyline->addVertex(v, bulge);
+                        prevEntity = NULL;
+                        break;
+                    }
+                }
+                if (prevEntity->rtti()==RS2::EntityArc) {
+                    arcFirst.setAngle2(arcFirst.getCenter().angleTo(v));
+                    arcFirst.calculateEndpoints();
+                     newPolyline->setNextBulge(arcFirst.getBulge());
+                }
+                if (currEntity->rtti()==RS2::EntityArc) {
+                    arc1.setAngle1(arc1.getCenter().angleTo(v));
+                    arc1.calculateEndpoints();
+                    bulge = arc1.getBulge();
+                }
+            }
+            if (prevEntity) {
+                newPolyline->addVertex(v, bulge, false);
+                if (currEntity->rtti()==RS2::EntityArc){
+                    arcFirst.setData(arc1.getData());
+                    arcFirst.calculateEndpoints();
+                    prevEntity = &arcFirst;
+                } else {
+                    lineFirst.setStartpoint(line1.getStartpoint());
+                    lineFirst.setEndpoint(line1.getEndpoint());
+                    prevEntity = &lineFirst;
+                }
+            }
         }
-        if (document!=NULL) {
-                document->endUndoCycle();
+        //properly terminated, check closed
+        if (prevEntity) {
+            if (originalPolyline->isClosed()){
+                newPolyline->setClosed(true, bulge);
+            } else {
+                newPolyline->addVertex(currEntity->getEndpoint(), bulge);
+            }
         }
+        container->addEntity(newPolyline);
+        document->addUndoable(newPolyline);
+    }
+    if (document!=NULL) {
+        document->endUndoCycle();
+    }
 
-        if (graphicView!=NULL) {
-                graphicView->redraw();
-        }
+    if (graphicView!=NULL) {
+        graphicView->redraw();
+    }
 
-
-        return true;
+    return true;
 }
 
 void RS_ActionPolylineEquidistant::trigger() {
@@ -229,10 +296,16 @@ void RS_ActionPolylineEquidistant::mouseReleaseEvent(QMouseEvent* e) {
                                 graphicView->drawEntity(originalEntity);
                                 double d = graphicView->toGraphDX(snapRange)*0.9;
                                 RS_Entity* Segment =  ((RS_Polyline*)originalEntity)->getNearestEntity( targetPoint, &d, RS2::ResolveNone);
+                                if (Segment->rtti() == RS2::EntityLine) {
                                 double ang = ((RS_Line*)Segment)->getAngle1();
                                 double ang1 = ((RS_Line*)Segment)->getStartpoint().angleTo(RS_Vector(targetPoint));
                                 if( ang > ang1 || ang + M_PI < ang1 )
                                         bRightSide = true;
+                                } else {
+                                    RS_Vector cen = ((RS_Arc*)Segment)->getCenter();
+                                    if (cen.distanceTo(targetPoint) > ((RS_Arc*)Segment)->getRadius() && ((RS_Arc*)Segment)->getBulge() > 0 )
+                                        bRightSide = true;
+                                }
 ////////////////////////////////////////2006/06/15
                 graphicView->redraw();
 ////////////////////////////////////////
