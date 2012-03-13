@@ -10,6 +10,13 @@ CONFIG += plugin
 VERSION = 1.0.1
 PLUGIN_NAME=sample
 
+GENERATED_DIR = ../../generated/plugin/sample
+# Use common project definitions.
+include(../../common.pro)
+
+# For plugins
+INCLUDEPATH    += ../../librecad/src/plugins
+
 SOURCES += sample.cpp
 
 HEADERS += sample.h
@@ -17,14 +24,8 @@ HEADERS += sample.h
 
 # DLLDESTDIR = ../../unix/resources/plugins/
 win32 {
-    Debug {
-        DLLDESTDIR = ../../debug/resources/plugins
+        DLLDESTDIR = ../../windows/resources/plugins
         TARGET = $$PLUGIN_NAME
-
-    } else {
-        DLLDESTDIR = ../../release/resources/plugins
-        TARGET = $$PLUGIN_NAME
-    }
 }
 unix {
     macx { 
@@ -34,15 +35,3 @@ unix {
 	TARGET = ../../unix/resources/plugins/$$PLUGIN_NAME
     }
 }
-INCLUDEPATH    += ../../src/plugins
-
-# Store intermedia stuff somewhere else
-OBJECTS_DIR = ../intermediate/obj
-MOC_DIR = ../intermediate/moc
-RCC_DIR = ../intermediate/rcc
-TS_DIR = ../intermediate/ts
-UI_DIR = ../intermediate/ui
-UI_HERADERS_DIR = ../intermediate/ui
-UI_SOURCES_DIR = ../intermediate/ui
-
-#DEFINES += sample_LIBRARY

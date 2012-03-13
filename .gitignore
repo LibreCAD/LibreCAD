@@ -3,16 +3,47 @@ LibreCAD.app/
 LibreCAD.pbproj/
 Info.plist
 
+# globs, anywhere
+*.o
+*.lo
+*.la
+
+*~
+
+# filenames, anywhere
+Makefile.in
+Makefile
+.deps
+.libs
+generated/*
+
 # Unix generated directories (except Apple)
 unix/
+
+# Win/MSVC generated files and binaries
+windows/
+*.ncb
+*.suo
+*.idb
+*.pdb
+*.dll
+*.lib
+*.exe
+*.exp
+*.ilk
+*.rc
+*.bak
+# Win/qmake generated project files
+*.vcproj
+*.sln
 
 #Doxygen
 html/
 
 # All platforms generated directories and files
 *.qm
-intermediate/
-Makefile
+*generated*
+Makefile*
 qmake_image_collection.cpp
 librecad.pro.user*
 librecad2.pro.user*
@@ -20,6 +51,8 @@ librecad2.pro.user*
 *.qhc
 plugins.pro.user*
 ttf2lff.pro.user*
+PWD
+scripts/PWD
 
 # Mac store files
 .DS_Store

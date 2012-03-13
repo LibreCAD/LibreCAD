@@ -84,7 +84,7 @@ FunctionEnd
 Section "Install Section" SecInstall
 
   SetOutPath "$INSTDIR"
-  File /r "..\..\release\*.*"
+  File /r "..\..\windows\*.*"
   File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\lib\QtCore4.dll"
   File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\lib\Qt3Support4.dll"
   File "C:\QtSDK\Desktop\Qt\4.7.3\mingw\lib\QtCore4.dll"
