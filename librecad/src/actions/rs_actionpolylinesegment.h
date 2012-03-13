@@ -65,6 +65,8 @@ public:
 	virtual bool convertPolyline(RS_Entity* selectedEntity);
 
 private:
+    RS_Vector appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed);
+
     RS_Entity* targetEntity;
 };
 
