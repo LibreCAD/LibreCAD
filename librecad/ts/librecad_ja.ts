@@ -351,6 +351,18 @@ Auto-save disabled.</source>
         <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Su&amp;b-Window mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tile &amp;Vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ta&amp;b mode</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -976,10 +988,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Draw Ellipse with by center and 3 points on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -990,6 +998,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Concentric</source>
         <translation type="unfinished">同心円</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1327,6 +1339,10 @@ p, li { white-space: pre-wrap; }
         <source>Rotate Two</source>
         <translation type="unfinished">二点で回転</translation>
     </message>
+    <message>
+        <source>Offset (Experimental Feature, work in progress)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CadToolBarPoints</name>
@@ -1641,6 +1657,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Unknown command: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command history and output</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2328,6 +2348,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Move/Copy Options</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Number of copies. Maximum 100</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgMoveRotate</name>
@@ -2673,6 +2697,18 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>Isometric Grid</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tick size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished">0</translation>
     </message>
 </context>
 <context>
@@ -3954,6 +3990,53 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
 </context>
 <context>
+    <name>QG_FileDialog</name>
+    <message>
+        <source>Drawing Exchange DXF 2000 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Drawing Exchange DXF 2000 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing Exchange DXF R12 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LFF Font %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QCad Font %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jww Drawing %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing Exchange %1</source>
+        <translation type="unfinished">図面を入れ替え %1</translation>
+    </message>
+    <message>
+        <source>QCad 1.x file %1</source>
+        <translation type="unfinished">QCad 1.x ファイル %1</translation>
+    </message>
+    <message>
+        <source>Open Drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Drawing As</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_ImageOptions</name>
     <message>
         <source>Insert Options</source>
@@ -4187,6 +4270,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
+    <message>
+        <source>A Help Layer has entities of infinite straight lines intended to be used for geometric construction.
+The contents of a Help Layer should not appear in printout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_LayerWidget</name>
@@ -4360,6 +4452,14 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>Undo the last line drawing</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">やり直し</translation>
     </message>
 </context>
 <context>
@@ -4549,6 +4649,21 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
 </context>
 <context>
+    <name>QG_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">距離:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_MouseWidget</name>
     <message>
         <source>Mouse</source>
@@ -4688,6 +4803,14 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>Fit to page</source>
         <translation>ページの大きさに合わせる</translation>
+    </message>
+    <message>
+        <source>Paper scale factor larger than 1.0e6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paper scale factor smaller than 1.0e-6</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5876,7 +5999,7 @@ Do you want to replace it?</source>
     <name>RS_ActionDrawArcTangential</name>
     <message>
         <source>Arc: Tangential</source>
-        <translation>円弧: タンジェント</translation>
+        <translation type="obsolete">円弧: タンジェント</translation>
     </message>
     <message>
         <source>&amp;Tangential</source>
@@ -5904,6 +6027,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify end point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arc &amp;Tangential</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6300,7 +6427,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Image</source>
-        <translation>イメージ(&amp;I)</translation>
+        <translation type="obsolete">イメージ(&amp;I)</translation>
     </message>
     <message>
         <source>Insert Image (Bitmap)</source>
@@ -6329,6 +6456,10 @@ Do you want to replace it?</source>
     <message>
         <source>Enter factor:</source>
         <translation>倍率入力:</translation>
+    </message>
+    <message>
+        <source>Insert &amp;Image</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6367,11 +6498,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>線分を閉じることができません: 図形の定義が不足。</translation>
+        <translation type="obsolete">線分を閉じることができません: 図形の定義が不足。</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation>取り消しができません: 図形が定義されていません。</translation>
+    </message>
+    <message>
+        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot redo: Not previous line segment defined.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6569,7 +6708,7 @@ Do you want to replace it?</source>
     <name>RS_ActionDrawLineParallel</name>
     <message>
         <source>Parallel</source>
-        <translation>平行線分</translation>
+        <translation type="obsolete">平行線分</translation>
     </message>
     <message>
         <source>Para&amp;llel</source>
@@ -6601,11 +6740,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>同心円</translation>
+        <translation type="obsolete">同心円</translation>
     </message>
     <message>
         <source>&amp;Concentric</source>
-        <translation type="obsolete">同心円(&amp;C)</translation>
+        <translation type="unfinished">同心円(&amp;C)</translation>
+    </message>
+    <message>
+        <source>&amp;Parallel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7176,15 +7319,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="obsolete">新規作成(&amp;N)</translation>
+        <translation type="unfinished">新規作成(&amp;N)</translation>
     </message>
     <message>
         <source>Creates a new drawing</source>
         <translation type="obsolete">新規図面の作成</translation>
-    </message>
-    <message>
-        <source>&amp;New...</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7323,6 +7462,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing Point: %1/%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7534,6 +7677,13 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersTogglePrint</name>
+    <message>
+        <source>Toggle Layer &amp;Print</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7926,6 +8076,10 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>戻る</translation>
     </message>
+    <message>
+        <source>Invalid number of copies, use %1 </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
@@ -7964,6 +8118,21 @@ Do you want to replace it?</source>
     <message>
         <source>Enter rotation angle:</source>
         <translation>回転角度入力:</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyOffset</name>
+    <message>
+        <source>&amp;Offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify direction of offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">戻る</translation>
     </message>
 </context>
 <context>
@@ -8504,7 +8673,11 @@ Do you want to replace it?</source>
         <translation type="unfinished">既存セグメントからポリライン作成</translation>
     </message>
     <message>
-        <source>Entity must be a line or arc.</source>
+        <source>Entity must be a line, arc or polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entity can not be a closed polyline.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8573,6 +8746,10 @@ Do you want to replace it?</source>
         <source>Shows a preview of a print</source>
         <translation type="obsolete">印刷プレビューを表示</translation>
     </message>
+    <message>
+        <source>Scale ratio too large. Keep the old scale</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionSelect</name>
@@ -8630,6 +8807,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Select to cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No entity selected!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to create offset</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9117,7 +9302,7 @@ Do you want to replace it?</source>
     <message>
         <source>r</source>
         <comment>rows</comment>
-        <translation>行数</translation>
+        <translation type="obsolete">行数</translation>
     </message>
     <message>
         <source>columnspacing</source>
@@ -9161,17 +9346,17 @@ Do you want to replace it?</source>
     <message>
         <source>reversed</source>
         <comment>reversed arc</comment>
-        <translation>逆円弧</translation>
+        <translation type="obsolete">逆円弧</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>reversed arc</comment>
-        <translation>逆円弧</translation>
+        <translation type="obsolete">逆円弧</translation>
     </message>
     <message>
         <source>r</source>
         <comment>reversed arc</comment>
-        <translation>逆円弧</translation>
+        <translation type="obsolete">逆円弧</translation>
     </message>
     <message>
         <source>point</source>
@@ -9180,7 +9365,7 @@ Do you want to replace it?</source>
     <message>
         <source>po</source>
         <comment>point</comment>
-        <translation>点</translation>
+        <translation type="obsolete">点</translation>
     </message>
     <message>
         <source>offset</source>
@@ -9258,7 +9443,7 @@ Do you want to replace it?</source>
     <message>
         <source>par</source>
         <comment>parallel</comment>
-        <translation>平行</translation>
+        <translation type="obsolete">平行</translation>
     </message>
     <message>
         <source>length1</source>
@@ -9345,7 +9530,7 @@ Do you want to replace it?</source>
     <message>
         <source>ci</source>
         <comment>circle</comment>
-        <translation>円</translation>
+        <translation type="obsolete">円</translation>
     </message>
     <message>
         <source>zw</source>
@@ -9365,52 +9550,52 @@ Do you want to replace it?</source>
     <message>
         <source>li</source>
         <comment>line</comment>
-        <translation>線分</translation>
+        <translation type="obsolete">線分</translation>
     </message>
     <message>
         <source>re</source>
         <comment>rectangle</comment>
-        <translation>矩形</translation>
+        <translation type="obsolete">矩形</translation>
     </message>
     <message>
         <source>rp</source>
         <comment>regular polygon</comment>
-        <translation>正規ポリゴン</translation>
+        <translation type="obsolete">正規ポリゴン</translation>
     </message>
     <message>
         <source>c2</source>
         <comment>2 point circle</comment>
-        <translation>二点円</translation>
+        <translation type="obsolete">二点円</translation>
     </message>
     <message>
         <source>c3</source>
         <comment>3 point circle</comment>
-        <translation>三点円</translation>
+        <translation type="obsolete">三点円</translation>
     </message>
     <message>
         <source>ar</source>
         <comment>arc</comment>
-        <translation>円弧</translation>
+        <translation type="obsolete">円弧</translation>
     </message>
     <message>
         <source>a3</source>
         <comment>3 point arc</comment>
-        <translation>３点円弧</translation>
+        <translation type="obsolete">３点円弧</translation>
     </message>
     <message>
         <source>ep</source>
         <comment>ellipse</comment>
-        <translation>楕円</translation>
+        <translation type="obsolete">楕円</translation>
     </message>
     <message>
         <source>tx</source>
         <comment>text</comment>
-        <translation>テキスト</translation>
+        <translation type="obsolete">テキスト</translation>
     </message>
     <message>
         <source>mt</source>
         <comment>text</comment>
-        <translation>テキスト</translation>
+        <translation type="obsolete">テキスト</translation>
     </message>
     <message>
         <source>da</source>
@@ -9440,22 +9625,22 @@ Do you want to replace it?</source>
     <message>
         <source>rd</source>
         <comment>redraw</comment>
-        <translation>再描画</translation>
+        <translation type="obsolete">再描画</translation>
     </message>
     <message>
         <source>zi</source>
         <comment>zoom - in</comment>
-        <translation>拡大</translation>
+        <translation type="obsolete">拡大</translation>
     </message>
     <message>
         <source>zo</source>
         <comment>zoom - out</comment>
-        <translation>縮小</translation>
+        <translation type="obsolete">縮小</translation>
     </message>
     <message>
         <source>os</source>
         <comment>snap - none</comment>
-        <translation>スナップ - 無し</translation>
+        <translation type="obsolete">スナップ - 無し</translation>
     </message>
     <message>
         <source>sg</source>
@@ -9475,7 +9660,7 @@ Do you want to replace it?</source>
     <message>
         <source>sn</source>
         <comment>snap - center</comment>
-        <translation>スナップ - 中心</translation>
+        <translation type="obsolete">スナップ - 中心</translation>
     </message>
     <message>
         <source>sm</source>
@@ -9495,12 +9680,12 @@ Do you want to replace it?</source>
     <message>
         <source>fr*</source>
         <comment>layers - freeze all</comment>
-        <translation>画層 - 全固定</translation>
+        <translation type="obsolete">画層 - 全固定</translation>
     </message>
     <message>
         <source>th*</source>
         <comment>layers - defreeze all</comment>
-        <translation>画層 - 全固定解除</translation>
+        <translation type="obsolete">画層 - 全固定解除</translation>
     </message>
     <message>
         <source>tn</source>
@@ -9565,7 +9750,7 @@ Do you want to replace it?</source>
     <message>
         <source>ex</source>
         <comment>modify - explode</comment>
-        <translation>編集 - 分解</translation>
+        <translation type="obsolete">編集 - 分解</translation>
     </message>
     <message>
         <source>dimregen</source>
@@ -9577,7 +9762,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>ln</source>
-        <translation>線分</translation>
+        <translation type="obsolete">線分</translation>
     </message>
     <message>
         <source>l</source>
@@ -9759,8 +9944,134 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>rp2</source>
-        <comment>regular polygon2</comment>
+        <source>li</source>
+        <translation type="unfinished">線分</translation>
+    </message>
+    <message>
+        <source>pl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pa</source>
+        <translation type="unfinished">平行</translation>
+    </message>
+    <message>
+        <source>ar</source>
+        <translation type="unfinished">円弧</translation>
+    </message>
+    <message>
+        <source>rect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>redraw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zr</source>
+        <translation type="unfinished">拡大／縮小 - 再描画</translation>
+    </message>
+    <message>
+        <source>zw</source>
+        <translation type="unfinished">拡大/縮小 - 窓</translation>
+    </message>
+    <message>
+        <source>za</source>
+        <translation type="unfinished">拡大/縮小 - 自動</translation>
+    </message>
+    <message>
+        <source>zp</source>
+        <translation type="unfinished">拡大/縮小 - 移動</translation>
+    </message>
+    <message>
+        <source>zv</source>
+        <translation type="unfinished">拡大／縮小 - 全画面</translation>
+    </message>
+    <message>
+        <source>u</source>
+        <translation type="unfinished">取り消し</translation>
+    </message>
+    <message>
+        <source>os</source>
+        <comment>snap - free</comment>
+        <translation type="unfinished">スナップ - 無し</translation>
+    </message>
+    <message>
+        <source>sc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sc</source>
+        <comment>snap - center</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sd</source>
+        <comment>snap - distance</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sf</source>
+        <comment>snap - free</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sa</source>
+        <comment>Select all</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number</source>
+        <comment>number</comment>
+        <translation type="unfinished">数値</translation>
+    </message>
+    <message>
+        <source>reversed</source>
+        <comment>reversed</comment>
+        <translation type="unfinished">逆円弧</translation>
+    </message>
+    <message>
+        <source>rev</source>
+        <comment>reversed</comment>
+        <translation type="unfinished">逆円弧</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>reversed</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>row</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>row</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>redo</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command not found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accepted keycode: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

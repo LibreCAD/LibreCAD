@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="hu">
 <context>
-    <name/>
+    <name></name>
     <message>
         <source>Loading..</source>
         <translation type="obsolete">Betöltés..</translation>
@@ -316,8 +317,8 @@ Dátum: %1</translation>
         <translation>Parancssor</translation>
     </message>
     <message>
-        <source>Block '%1'</source>
-        <translation>Blokk '%1'</translation>
+        <source>Block &apos;%1&apos;</source>
+        <translation>Blokk &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -393,12 +394,12 @@ Most elmentheti a munkáját.</translation>
         <translation type="obsolete">Görbék</translation>
     </message>
     <message>
-        <source>Running script '%1'</source>
-        <translation>'%1' script futtatása</translation>
+        <source>Running script &apos;%1&apos;</source>
+        <translation>&apos;%1&apos; script futtatása</translation>
     </message>
     <message>
-        <source>Inserting block '%1'</source>
-        <translation>'%1' blokk beszúrása</translation>
+        <source>Inserting block &apos;%1&apos;</source>
+        <translation>&apos;%1&apos; blokk beszúrása</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -430,7 +431,7 @@ Az automatikus mentés kikapcsolva.</translation>
         <translation>Segítség</translation>
     </message>
     <message>
-        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation>Nem találom a help fájlokat a fájlrendszerben.</translation>
     </message>
     <message>
@@ -485,6 +486,18 @@ Az automatikus mentés kikapcsolva.</translation>
         <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation>Kérjük, adományozzon a LibreCAD projectnek, segítve ezzel a forráskód, és a weboldal fenntartását.</translation>
     </message>
+    <message>
+        <source>Su&amp;b-Window mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tile &amp;Vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ta&amp;b mode</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -494,7 +507,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>Do you really want to close the file %1?</source>
-        <translation type="obsolete">Valóban be akarja zárni "%1"-t?</translation>
+        <translation type="obsolete">Valóban be akarja zárni &quot;%1&quot;-t?</translation>
     </message>
     <message>
         <source>Do you really want to close the file
@@ -2031,7 +2044,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Endpoint</source>
@@ -2039,7 +2052,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>&amp;OnEntity</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2136,8 +2149,8 @@ Az automatikus mentés kikapcsolva.</translation>
         <translation>Blokk átnevezés</translation>
     </message>
     <message>
-        <source>Could not name block. A block named "%1" already exists.</source>
-        <translation>Érvénytelen elnevezés. A "%1 " név már foglalt.</translation>
+        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <translation>Érvénytelen elnevezés. A &quot;%1 &quot; név már foglalt.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -2298,12 +2311,12 @@ in a separate window</source>
         <translation>Koncentrikus</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Circle inscribed in a triangle, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2381,19 +2394,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Draw Ellipse with by center and 3 points on ellipse</source>
-        <translation>Ellipszis rajzolása középpel és 3 ponttal</translation>
+        <translation type="obsolete">Ellipszis rajzolása középpel és 3 ponttal</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Concentric</source>
         <translation type="unfinished">Koncentrikus</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2513,27 +2530,27 @@ p, li { white-space: pre-wrap; }
         <translation>Eszköztár</translation>
     </message>
     <message>
-        <source>Show menu "Lines"</source>
+        <source>Show menu &quot;Lines&quot;</source>
         <translation type="obsolete">Vonalak menü</translation>
     </message>
     <message>
-        <source>Show menu "Arcs"</source>
+        <source>Show menu &quot;Arcs&quot;</source>
         <translation type="obsolete">Ívek menü</translation>
     </message>
     <message>
-        <source>Show menu "Circles"</source>
+        <source>Show menu &quot;Circles&quot;</source>
         <translation type="obsolete">Körök menü</translation>
     </message>
     <message>
-        <source>Show menu "Points"</source>
+        <source>Show menu &quot;Points&quot;</source>
         <translation type="obsolete">Pontok menü</translation>
     </message>
     <message>
-        <source>Show menu "Ellipses"</source>
+        <source>Show menu &quot;Ellipses&quot;</source>
         <translation type="obsolete">Ellipszisek menü</translation>
     </message>
     <message>
-        <source>Show menu "Edit"</source>
+        <source>Show menu &quot;Edit&quot;</source>
         <translation type="obsolete">Szerkesztés menü</translation>
     </message>
     <message>
@@ -2541,7 +2558,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Szövegek</translation>
     </message>
     <message>
-        <source>Show menu "Select"</source>
+        <source>Show menu &quot;Select&quot;</source>
         <translation type="obsolete">Kijelölés menü</translation>
     </message>
     <message>
@@ -2549,7 +2566,7 @@ p, li { white-space: pre-wrap; }
         <translation>Blokk létrehozás</translation>
     </message>
     <message>
-        <source>Show menu "Dimensions"</source>
+        <source>Show menu &quot;Dimensions&quot;</source>
         <translation type="obsolete">Méretezés menü</translation>
     </message>
     <message>
@@ -2561,12 +2578,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Kép beszúrása</translation>
     </message>
     <message>
-        <source>Show menu "Measure"</source>
+        <source>Show menu &quot;Measure&quot;</source>
         <translation type="obsolete">Méretellenőrzés menü</translation>
     </message>
     <message>
-        <source>Show menu "Splines"</source>
-        <translation type="obsolete">A "Görbék" menü mutatása</translation>
+        <source>Show menu &quot;Splines&quot;</source>
+        <translation type="obsolete">A &quot;Görbék&quot; menü mutatása</translation>
     </message>
     <message>
         <source>Points</source>
@@ -2577,24 +2594,24 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Görbék</translation>
     </message>
     <message>
-        <source>Show toolbar "Lines"</source>
-        <translation>"Vonalak" eszköztár mutatása</translation>
+        <source>Show toolbar &quot;Lines&quot;</source>
+        <translation>&quot;Vonalak&quot; eszköztár mutatása</translation>
     </message>
     <message>
-        <source>Show toolbar "Arcs"</source>
-        <translation>"Ívek" eszköztár mutatása</translation>
+        <source>Show toolbar &quot;Arcs&quot;</source>
+        <translation>&quot;Ívek&quot; eszköztár mutatása</translation>
     </message>
     <message>
-        <source>Show toolbar "Circles"</source>
-        <translation>"Körök" eszköztár mutatása</translation>
+        <source>Show toolbar &quot;Circles&quot;</source>
+        <translation>&quot;Körök&quot; eszköztár mutatása</translation>
     </message>
     <message>
-        <source>Show toolbar "Ellipses"</source>
-        <translation>"Ellipszisek" eszköztár mutatása</translation>
+        <source>Show toolbar &quot;Ellipses&quot;</source>
+        <translation>&quot;Ellipszisek&quot; eszköztár mutatása</translation>
     </message>
     <message>
-        <source>Show toolbar "Polylines"</source>
-        <translation>"Töröttvonalak" eszköztár mutatása</translation>
+        <source>Show toolbar &quot;Polylines&quot;</source>
+        <translation>&quot;Töröttvonalak&quot; eszköztár mutatása</translation>
     </message>
     <message>
         <source>Draw Splines</source>
@@ -2609,8 +2626,8 @@ p, li { white-space: pre-wrap; }
         <translation>Szöveg beillesztése</translation>
     </message>
     <message>
-        <source>Show toolbar "Dimensions"</source>
-        <translation>"Méretek" eszköztár mutatása</translation>
+        <source>Show toolbar &quot;Dimensions&quot;</source>
+        <translation>&quot;Méretek&quot; eszköztár mutatása</translation>
     </message>
     <message>
         <source>Create Hatch</source>
@@ -2621,16 +2638,16 @@ p, li { white-space: pre-wrap; }
         <translation>Kép beillesztése</translation>
     </message>
     <message>
-        <source>Show toolbar "Modify"</source>
-        <translation>"Módosítás" eszköztár mutatása</translation>
+        <source>Show toolbar &quot;Modify&quot;</source>
+        <translation>&quot;Módosítás&quot; eszköztár mutatása</translation>
     </message>
     <message>
-        <source>Show toolbar "Info"</source>
-        <translation>"Információ" eszköztár mutatása</translation>
+        <source>Show toolbar &quot;Info&quot;</source>
+        <translation>&quot;Információ&quot; eszköztár mutatása</translation>
     </message>
     <message>
-        <source>Show toolbar "Select"</source>
-        <translation>"Kijelölés" eszköztár mutatása</translation>
+        <source>Show toolbar &quot;Select&quot;</source>
+        <translation>&quot;Kijelölés&quot; eszköztár mutatása</translation>
     </message>
 </context>
 <context>
@@ -2730,6 +2747,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Rotate Two</source>
         <translation type="unfinished">Többszörös forgatás</translation>
+    </message>
+    <message>
+        <source>Offset (Experimental Feature, work in progress)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3042,6 +3063,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Unknown command: %1</source>
         <translation>Ismeretlen parancs: %1</translation>
+    </message>
+    <message>
+        <source>Command history and output</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3468,12 +3493,12 @@ p, li { white-space: pre-wrap; }
         <translation>Üdvözöljük</translation>
     </message>
     <message>
-        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size="+1"&gt;&lt;b&gt;Üdvözli a QCad&lt;/b&gt;&lt;/font&gt;&lt;br&gt;
+        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Üdvözli a QCad&lt;/b&gt;&lt;/font&gt;&lt;br&gt;
 Válassza ki a mértékegységet és a kezelő felület nyelvét.&lt;br&gt;
 Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
@@ -3749,6 +3774,10 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
         <source>Move/Copy Options</source>
         <translation>Mozgatás/másolás beállításai</translation>
     </message>
+    <message>
+        <source>Number of copies. Maximum 100</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgMoveRotate</name>
@@ -3988,7 +4017,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
         <translation>Radián</translation>
     </message>
     <message>
-        <source>Surveyor's units</source>
+        <source>Surveyor&apos;s units</source>
         <translation>Geodéziai egységek</translation>
     </message>
     <message>
@@ -3996,8 +4025,8 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
-        <translation>A 'Mérnöki' és 'Építészeti' formátumhoz Inch a mértékegység.</translation>
+        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <translation>A &apos;Mérnöki&apos; és &apos;Építészeti&apos; formátumhoz Inch a mértékegység.</translation>
     </message>
     <message>
         <source>&amp;Paper</source>
@@ -4133,7 +4162,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Left crosshair with isometric grid</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Left</source>
@@ -4141,7 +4170,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Top</source>
@@ -4149,7 +4178,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Right</source>
@@ -4170,6 +4199,18 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     <message>
         <source>Isometric Grid</source>
         <translation>Izometrikus háló</translation>
+    </message>
+    <message>
+        <source>Tick size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="unfinished">0</translation>
     </message>
 </context>
 <context>
@@ -4858,7 +4899,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Isotropic Scaling</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>X</source>
@@ -5615,7 +5656,54 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>again Still No Text supplied.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_FileDialog</name>
+    <message>
+        <source>Drawing Exchange DXF 2000 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Drawing Exchange DXF 2000 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing Exchange DXF R12 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LFF Font %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QCad Font %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jww Drawing %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing Exchange %1</source>
+        <translation type="unfinished">Drawing Exchange %1</translation>
+    </message>
+    <message>
+        <source>QCad 1.x file %1</source>
+        <translation type="unfinished">QCad 1.x fájl %1</translation>
+    </message>
+    <message>
+        <source>Open Drawing</source>
+        <translation type="unfinished">Rajz megnyitása</translation>
+    </message>
+    <message>
+        <source>Save Drawing As</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5860,6 +5948,15 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
+    <message>
+        <source>A Help Layer has entities of infinite straight lines intended to be used for geometric construction.
+The contents of a Help Layer should not appear in printout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_LayerWidget</name>
@@ -6033,6 +6130,14 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     <message>
         <source>Undo the last line drawing</source>
         <translation>Utolsó vonal visszavonása</translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Mégis</translation>
     </message>
 </context>
 <context>
@@ -6222,6 +6327,21 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
 </context>
 <context>
+    <name>QG_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Távolság:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_MouseWidget</name>
     <message>
         <source>Mouse</source>
@@ -6309,7 +6429,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Angle</source>
@@ -6349,6 +6469,14 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     <message>
         <source>Fit to page</source>
         <translation>Laphoz igazítás</translation>
+    </message>
+    <message>
+        <source>Paper scale factor larger than 1.0e6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paper scale factor smaller than 1.0e-6</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6393,20 +6521,20 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
         <translation>Teljes hossz</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6556,11 +6684,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6708,12 +6836,12 @@ p, li { white-space: pre-wrap; }
         <translation>Fólia törlése</translation>
     </message>
     <message>
-        <source>Layer "%1" and all entities on it will be removed.</source>
-        <translation>A "%1" fólia és minden eleme törlődik.</translation>
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
+        <translation>A &quot;%1&quot; fólia és minden eleme törlődik.</translation>
     </message>
     <message>
-        <source>Layer "%1" can never be removed.</source>
-        <translation>A "%1" fólia soha sem törölhető.</translation>
+        <source>Layer &quot;%1&quot; can never be removed.</source>
+        <translation>A &quot;%1&quot; fólia soha sem törölhető.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -6724,16 +6852,16 @@ p, li { white-space: pre-wrap; }
         <translation>Blokk törlése</translation>
     </message>
     <message>
-        <source>Block "%1" and all its entities will be removed.</source>
-        <translation>A "%1" blokk és minden eleme törlődik.</translation>
+        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
+        <translation>A &quot;%1&quot; blokk és minden eleme törlődik.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Fólia tulajdonságai</translation>
     </message>
     <message>
-        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
-        <translation>A "%1" nevű fólia már létezik. Válasszon másik nevet.</translation>
+        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
+        <translation>A &quot;%1&quot; nevű fólia már létezik. Válasszon másik nevet.</translation>
     </message>
 </context>
 <context>
@@ -6834,83 +6962,83 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Inch</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Mile</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Millimeter</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Centimeter</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Meter</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Kilometer</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Microinch</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Mil</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Yard</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Angstrom</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Nanometer</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Micron</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Decimeter</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Decameter</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Hectometer</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Gigameter</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Astro</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Lightyear</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Parsec</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Export Image</source>
@@ -6930,43 +7058,43 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>enter an integer number</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>LibreCAD query</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>enter a number</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>enter text</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Jww %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Block %1 already exist, renamed to: %2</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>All Image Files (%1) </source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>New Drawing Exchange %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7041,7 +7169,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Ex&amp;plode</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7072,11 +7200,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>&amp;Hide all</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Show all</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7126,8 +7254,8 @@ Lecseréli?</translation>
         <translation>Blokk be&amp;illesztés</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -7157,7 +7285,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Toggle Block &amp;Visibility</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7522,12 +7650,8 @@ Lecseréli?</translation>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
-        <source>Arc: Tangential</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Specify base entity</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7543,7 +7667,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify end point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arc &amp;Tangential</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7694,11 +7822,11 @@ Lecseréli?</translation>
     <name>RS_ActionDrawCircleInscribe</name>
     <message>
         <source>Circle &amp;Inscribed</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the first line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7706,7 +7834,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify the second line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -7714,18 +7842,18 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify the third line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <source>Ellipse &amp;4 Point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7733,7 +7861,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -7741,11 +7869,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the fourth point on ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7808,18 +7936,18 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseCenter3Points</name>
     <message>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the center of ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7827,11 +7955,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -7839,14 +7967,14 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseFociPoint</name>
     <message>
         <source>Ellipse &amp;Foci Point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -7854,7 +7982,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify first focus of ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7862,7 +7990,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify second focus of ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -7870,18 +7998,18 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseInscribe</name>
     <message>
         <source>Ellipse &amp;Inscribed</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the first line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7889,7 +8017,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify the second line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -7897,11 +8025,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify the third line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the fourth line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7955,15 +8083,19 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>&amp;Image</source>
-        <translation>&amp;Képek</translation>
+        <translation type="obsolete">&amp;Képek</translation>
     </message>
     <message>
         <source>Insert Image (Bitmap)</source>
         <translation type="obsolete">Kép beszúrása (Bitmap)</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Insert &amp;Image</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7990,7 +8122,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>Nem lehet lezárni a sokszöget: Nincs elég elem.</translation>
+        <translation type="obsolete">Nem lehet lezárni a sokszöget: Nincs elég elem.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
@@ -8007,6 +8139,14 @@ Lecseréli?</translation>
     <message>
         <source>Draw lines</source>
         <translation type="obsolete">Vonalak rajzolása</translation>
+    </message>
+    <message>
+        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot redo: Not previous line segment defined.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8181,11 +8321,11 @@ Lecseréli?</translation>
     <name>RS_ActionDrawLineOrthTan</name>
     <message>
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select a line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8193,7 +8333,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -8224,7 +8364,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Parallel</source>
-        <translation>Párhuzamos</translation>
+        <translation type="obsolete">Párhuzamos</translation>
     </message>
     <message>
         <source>Para&amp;llel</source>
@@ -8240,11 +8380,15 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentrikus</translation>
+        <translation type="obsolete">Koncentrikus</translation>
     </message>
     <message>
         <source>&amp;Concentric</source>
-        <translation type="obsolete">K&amp;oncentrikus</translation>
+        <translation type="unfinished">K&amp;oncentrikus</translation>
+    </message>
+    <message>
+        <source>&amp;Parallel</source>
+        <translation type="unfinished">&amp;Párhuzamos</translation>
     </message>
 </context>
 <context>
@@ -8325,8 +8469,8 @@ Lecseréli?</translation>
         <translation type="obsolete">Poligon rajzolása középponttal és sarokkal</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -8423,7 +8567,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
@@ -8587,7 +8731,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
-        <translation/>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -8672,7 +8816,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
@@ -8839,11 +8983,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Nothing to undo!</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Nothing to redo!</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8854,15 +8998,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="obsolete">Ú&amp;j</translation>
+        <translation type="unfinished">Ú&amp;j</translation>
     </message>
     <message>
         <source>Creates a new drawing</source>
         <translation type="obsolete">Új rajz létrehozása</translation>
-    </message>
-    <message>
-        <source>&amp;New...</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8950,7 +9090,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>An&amp;gle between two lines</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -9001,7 +9141,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing Point: %1/%2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9178,11 +9322,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>&amp;Hide all</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Show all</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9212,7 +9356,14 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersTogglePrint</name>
+    <message>
+        <source>Toggle Layer &amp;Print</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9231,7 +9382,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9269,12 +9420,12 @@ Lecseréli?</translation>
         <translation type="obsolete">Beilleszt egy elemet az elemkönyvtárból.</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
-        <source>Cannot open file '%1'</source>
-        <translation type="unfinished"/>
+        <source>Cannot open file &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9406,11 +9557,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle or ellipse.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9464,35 +9615,35 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Parent of second entity is NULL</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>One of the chosen entities is NULL</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Parent of first entity is NULL</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>First entity is NULL</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Second entity is NULL</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9621,6 +9772,10 @@ Lecseréli?</translation>
         <source>Move or copy entities one or multiple times</source>
         <translation type="obsolete">Elem mozgatása vagy másolása, egy vagy több példányban</translation>
     </message>
+    <message>
+        <source>Invalid number of copies, use %1 </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
@@ -9662,6 +9817,21 @@ Lecseréli?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionModifyOffset</name>
+    <message>
+        <source>&amp;Offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify direction of offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionModifyRotate</name>
     <message>
         <source>Specify reference point</source>
@@ -9685,11 +9855,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify target point to rotate to</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9933,11 +10103,11 @@ Lecseréli?</translation>
     <name>RS_ActionPolylineAdd</name>
     <message>
         <source>&amp;Add node</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add polyline's node</source>
-        <translation type="unfinished"/>
+        <source>Add polyline&apos;s node</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -9945,27 +10115,27 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Mégsem</translation>
     </message>
     <message>
-        <source>Specify adding node's point</source>
-        <translation type="unfinished"/>
+        <source>Specify adding node&apos;s point</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -9976,11 +10146,11 @@ Lecseréli?</translation>
     <name>RS_ActionPolylineAppend</name>
     <message>
         <source>A&amp;ppend node</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Append polyline's node</source>
-        <translation type="unfinished"/>
+        <source>Append polyline&apos;s node</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -9988,15 +10158,15 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10012,11 +10182,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
@@ -10027,11 +10197,11 @@ Lecseréli?</translation>
     <name>RS_ActionPolylineDel</name>
     <message>
         <source>&amp;Delete node</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete polyline's node</source>
-        <translation type="unfinished"/>
+        <source>Delete polyline&apos;s node</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10039,27 +10209,27 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Mégsem</translation>
     </message>
     <message>
-        <source>Specify deleting node's point</source>
-        <translation type="unfinished"/>
+        <source>Specify deleting node&apos;s point</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -10070,11 +10240,11 @@ Lecseréli?</translation>
     <name>RS_ActionPolylineDelBetween</name>
     <message>
         <source>Delete &amp;between two nodes</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Törlés két csomópont között</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10082,23 +10252,23 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10106,7 +10276,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify first node</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -10114,18 +10284,18 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify second node</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10133,11 +10303,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Choose the original polyline</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10148,38 +10318,42 @@ Lecseréli?</translation>
     <name>RS_ActionPolylineSegment</name>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Töröttvonal készítése meglévő részekből</translation>
     </message>
     <message>
         <source>No Entity found.</source>
         <translation type="unfinished">Nincs elem.</translation>
     </message>
     <message>
-        <source>Entity must be a line or arc.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Entity must be a line, arc or polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entity can not be a closed polyline.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineTrim</name>
     <message>
         <source>&amp;Trim segments</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Trim polyline's segments</source>
-        <translation type="unfinished"/>
+        <source>Trim polyline&apos;s segments</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10187,19 +10361,19 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specifying point is invalid.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Segment found on entity.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify polyline to trim</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10207,7 +10381,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify first segment</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -10215,7 +10389,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Specify second segment</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10232,12 +10406,16 @@ Lecseréli?</translation>
         <source>Shows a preview of a print</source>
         <translation type="obsolete">Nyomtatási előnézet</translation>
     </message>
+    <message>
+        <source>Scale ratio too large. Keep the old scale</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionSelect</name>
     <message>
         <source>Select to modify attributes</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10245,51 +10423,59 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Select to delete</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to delete immediately</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to move</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to rotate</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to scale</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to mirror</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to move and rotate</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select for two axis rotation</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to explode text</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to create block</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to copy</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to cut</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No entity selected!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to create offset</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10320,7 +10506,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10478,7 +10664,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10505,7 +10691,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Set &amp;Relative Zero</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10616,11 +10802,11 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Click and drag to pan zoom</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10628,7 +10814,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Zoom panning</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10647,7 +10833,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Previous &amp;View</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10701,7 +10887,7 @@ Lecseréli?</translation>
     <message>
         <source>po</source>
         <comment>point</comment>
-        <translation>po</translation>
+        <translation type="obsolete">po</translation>
     </message>
     <message>
         <source>line</source>
@@ -10733,7 +10919,7 @@ Lecseréli?</translation>
     <message>
         <source>par</source>
         <comment>parallel</comment>
-        <translation>par</translation>
+        <translation type="obsolete">par</translation>
     </message>
     <message>
         <source>arc</source>
@@ -10751,7 +10937,7 @@ Lecseréli?</translation>
     <message>
         <source>ci</source>
         <comment>circle</comment>
-        <translation>kr</translation>
+        <translation type="obsolete">kr</translation>
     </message>
     <message>
         <source>rectangle</source>
@@ -10828,7 +11014,7 @@ Lecseréli?</translation>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation type="obsolete">me</translation>
+        <translation type="unfinished">me</translation>
     </message>
     <message>
         <source>Command: %1</source>
@@ -10837,52 +11023,52 @@ Lecseréli?</translation>
     <message>
         <source>li</source>
         <comment>line</comment>
-        <translation>vo</translation>
+        <translation type="obsolete">vo</translation>
     </message>
     <message>
         <source>re</source>
         <comment>rectangle</comment>
-        <translation>te</translation>
+        <translation type="obsolete">te</translation>
     </message>
     <message>
         <source>rp</source>
         <comment>regular polygon</comment>
-        <translation>tp</translation>
+        <translation type="obsolete">tp</translation>
     </message>
     <message>
         <source>c2</source>
         <comment>2 point circle</comment>
-        <translation>k2</translation>
+        <translation type="obsolete">k2</translation>
     </message>
     <message>
         <source>c3</source>
         <comment>3 point circle</comment>
-        <translation>k3</translation>
+        <translation type="obsolete">k3</translation>
     </message>
     <message>
         <source>ar</source>
         <comment>arc</comment>
-        <translation>ki</translation>
+        <translation type="obsolete">ki</translation>
     </message>
     <message>
         <source>a3</source>
         <comment>3 point arc</comment>
-        <translation>i3</translation>
+        <translation type="obsolete">i3</translation>
     </message>
     <message>
         <source>ep</source>
         <comment>ellipse</comment>
-        <translation>ep</translation>
+        <translation type="obsolete">ep</translation>
     </message>
     <message>
         <source>tx</source>
         <comment>text</comment>
-        <translation>sz</translation>
+        <translation type="obsolete">sz</translation>
     </message>
     <message>
         <source>mt</source>
         <comment>text</comment>
-        <translation>bt</translation>
+        <translation type="obsolete">bt</translation>
     </message>
     <message>
         <source>da</source>
@@ -10912,17 +11098,17 @@ Lecseréli?</translation>
     <message>
         <source>rd</source>
         <comment>redraw</comment>
-        <translation>ur</translation>
+        <translation type="obsolete">ur</translation>
     </message>
     <message>
         <source>zi</source>
         <comment>zoom - in</comment>
-        <translation>nk</translation>
+        <translation type="obsolete">nk</translation>
     </message>
     <message>
         <source>zo</source>
         <comment>zoom - out</comment>
-        <translation>nt</translation>
+        <translation type="obsolete">nt</translation>
     </message>
     <message>
         <source>pa</source>
@@ -10932,7 +11118,7 @@ Lecseréli?</translation>
     <message>
         <source>os</source>
         <comment>snap - none</comment>
-        <translation>in</translation>
+        <translation type="obsolete">in</translation>
     </message>
     <message>
         <source>sg</source>
@@ -10952,7 +11138,7 @@ Lecseréli?</translation>
     <message>
         <source>sn</source>
         <comment>snap - center</comment>
-        <translation>ik</translation>
+        <translation type="obsolete">ik</translation>
     </message>
     <message>
         <source>sm</source>
@@ -10972,12 +11158,12 @@ Lecseréli?</translation>
     <message>
         <source>fr*</source>
         <comment>layers - freeze all</comment>
-        <translation>fz*</translation>
+        <translation type="obsolete">fz*</translation>
     </message>
     <message>
         <source>th*</source>
         <comment>layers - defreeze all</comment>
-        <translation>ff*</translation>
+        <translation type="obsolete">ff*</translation>
     </message>
     <message>
         <source>tn</source>
@@ -11052,7 +11238,7 @@ Lecseréli?</translation>
     <message>
         <source>ex</source>
         <comment>modify - explode</comment>
-        <translation>rb</translation>
+        <translation type="obsolete">rb</translation>
     </message>
     <message>
         <source>angle</source>
@@ -11260,22 +11446,22 @@ Lecseréli?</translation>
     <message>
         <source>reversed</source>
         <comment>reversed arc</comment>
-        <translation>forditott</translation>
+        <translation type="obsolete">forditott</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>reversed arc</comment>
-        <translation>for</translation>
+        <translation type="obsolete">for</translation>
     </message>
     <message>
         <source>r</source>
         <comment>reversed arc</comment>
-        <translation>f</translation>
+        <translation type="obsolete">f</translation>
     </message>
     <message>
         <source>r</source>
         <comment>rows</comment>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -11311,7 +11497,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>ln</source>
-        <translation>vo</translation>
+        <translation type="obsolete">vo</translation>
     </message>
     <message>
         <source>l</source>
@@ -11354,7 +11540,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>polyline</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>pa</source>
@@ -11364,7 +11550,7 @@ Lecseréli?</translation>
     <message>
         <source>tm</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>da</source>
@@ -11388,7 +11574,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>tm</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>xt</source>
@@ -11456,7 +11642,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>sn</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sm</source>
@@ -11472,25 +11658,146 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>kill</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>k</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>back</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>rp2</source>
-        <comment>regular polygon2</comment>
-        <translation type="unfinished"/>
+        <source>li</source>
+        <translation type="unfinished">vo</translation>
+    </message>
+    <message>
+        <source>pl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pa</source>
+        <translation type="unfinished">pa</translation>
+    </message>
+    <message>
+        <source>ar</source>
+        <translation type="unfinished">ki</translation>
+    </message>
+    <message>
+        <source>rect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>redraw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zr</source>
+        <translation type="unfinished">ur</translation>
+    </message>
+    <message>
+        <source>zw</source>
+        <translation type="unfinished">nb</translation>
+    </message>
+    <message>
+        <source>za</source>
+        <translation type="unfinished">na</translation>
+    </message>
+    <message>
+        <source>zp</source>
+        <translation type="unfinished">np</translation>
+    </message>
+    <message>
+        <source>zv</source>
+        <translation type="unfinished">ne</translation>
+    </message>
+    <message>
+        <source>u</source>
+        <translation type="unfinished">vi</translation>
+    </message>
+    <message>
+        <source>os</source>
+        <comment>snap - free</comment>
+        <translation type="unfinished">in</translation>
+    </message>
+    <message>
+        <source>sc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sc</source>
+        <comment>snap - center</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sd</source>
+        <comment>snap - distance</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sf</source>
+        <comment>snap - free</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sa</source>
+        <comment>Select all</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number</source>
+        <comment>number</comment>
+        <translation type="unfinished">szam</translation>
+    </message>
+    <message>
+        <source>reversed</source>
+        <comment>reversed</comment>
+        <translation type="unfinished">forditott</translation>
+    </message>
+    <message>
+        <source>rev</source>
+        <comment>reversed</comment>
+        <translation type="unfinished">for</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>reversed</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>row</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>row</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command not found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accepted keycode: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
