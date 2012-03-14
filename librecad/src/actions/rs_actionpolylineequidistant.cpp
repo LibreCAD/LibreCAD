@@ -68,7 +68,7 @@ void RS_ActionPolylineEquidistant::init(int status) {
  * @author Rallaz
  */
 RS_Entity* RS_ActionPolylineEquidistant::calculateOffset(RS_Entity* newEntity,RS_Entity* orgEntity, double dist) {
-    if (orgEntity->rtti()==RS2::EntityArc && orgEntity->rtti()==RS2::EntityArc) {
+    if (orgEntity->rtti()==RS2::EntityArc && newEntity->rtti()==RS2::EntityArc) {
         RS_Arc* arc = (RS_Arc*)newEntity;
         double r0 = ((RS_Arc*)orgEntity)->getRadius();
         double r = r0 - dist;
@@ -78,7 +78,7 @@ RS_Entity* RS_ActionPolylineEquidistant::calculateOffset(RS_Entity* newEntity,RS
         arc->setRadius(r);
         arc->calculateEndpoints();
         return newEntity;
-    } else if (orgEntity->rtti()==RS2::EntityLine && orgEntity->rtti()==RS2::EntityLine) {
+    } else if (orgEntity->rtti()==RS2::EntityLine && newEntity->rtti()==RS2::EntityLine) {
         RS_Line* line0 = (RS_Line*)orgEntity;
         RS_Line* line1 = (RS_Line*)newEntity;
         RS_Vector v0 = line0->getStartpoint();
@@ -192,10 +192,25 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                         break;
                     }
                 }
+                double startAngle = prevEntity->getStartpoint().angleTo(prevEntity->getEndpoint());
                 if (prevEntity->rtti()==RS2::EntityArc) {
                     arcFirst.setAngle2(arcFirst.getCenter().angleTo(v));
                     arcFirst.calculateEndpoints();
                      newPolyline->setNextBulge(arcFirst.getBulge());
+                }
+                //check if the entity are reverted
+                if (abs (prevEntity->getStartpoint().angleTo(prevEntity->getEndpoint())- startAngle) > 0.785){
+                    prevEntity = newPolyline->lastEntity();
+                    RS_Vector v0 = calculateIntersection(prevEntity, currEntity);
+                    if (prevEntity->rtti()==RS2::EntityArc) {
+                        ((RS_Arc*)prevEntity)->setAngle2(arcFirst.getCenter().angleTo(v0));
+                        ((RS_Arc*)prevEntity)->calculateEndpoints();
+                        newPolyline->setNextBulge( ((RS_Arc*)prevEntity)->getBulge() );
+                    } else {
+                        ((RS_Line*)prevEntity)->setEndpoint(v0);
+                        newPolyline->setNextBulge( 0.0 );
+                    }
+                    newPolyline->setEndpoint(v0);
                 }
                 if (currEntity->rtti()==RS2::EntityArc) {
                     arc1.setAngle1(arc1.getCenter().angleTo(v));
