@@ -128,6 +128,13 @@ public:
     virtual void moveEndpoint(const RS_Vector& pos);
 #ifdef  HAS_BOOST
     virtual double getLength() const;
+
+    /**
+    //Ellipse must have ratio<1, and not reversed
+    *@ x1, ellipse angle
+    *@ x2, ellipse angle
+    //@return the arc length between ellipse angle x1, x2
+    **/
     double getEllipseLength(double a1, double a2) const;
     double getEllipseLength(double a2) const;
 #else
@@ -135,7 +142,6 @@ public:
         return -1.;
    }
 #endif
-    static double ellipticIntegral_2(const double& k, const double& phi);//wrapper for elliptic integral
     virtual RS_VectorSolutions getTangentPoint(const RS_Vector& point) const;//find the tangential points seeing from given point
     virtual RS_Vector getTangentDirection(const RS_Vector& point)const;
     virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord,

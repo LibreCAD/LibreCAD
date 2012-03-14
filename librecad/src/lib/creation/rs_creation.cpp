@@ -814,117 +814,18 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 //        std::cout<<"Center: (x,y)="<<v<<std::endl;
 
 
-        RS_VectorSolutions vs0; //to hold solutions
-        {//begin of equation solver
-        /* todo, move this solver to a separate function
-                  u=a sin t
-                  v=b cos t
-                  solve the equation
-                  (1/a^2)*u^2 + (1/b^2)*v^2 - 1 =0
-                  (y^2-1)*u^2 + (x^2 -1)*v^2 +2*x*y*u*v+2.*a*b*y*u + 2.*a*b*x*v + (a*b)^2 =0
-                  */
-        double ma000(1./(a*a));
-        double ma011(1./(b*b));
-        double ma100(v.y*v.y-1.);
-        double ma101(v.x*v.y);
-        double ma111(v.x*v.x-1.);
-        double mb10(2.*a*b*v.y);
-        double mb11(2.*a*b*v.x);
-        double mc1(a*a*b*b);
-//            std::cout<<"simplified e1: "<<ma000<<"*x^2 + "<<ma011<<"*y^2 -1 =0\n";
-//            std::cout<<"simplified e2: "<<ma100<<"*x^2 + 2*("<<ma101<<")*x*y + "<<ma111<<"*y^2 "<<" + ("<<mb10<<")*x + ("<<mb11<<")*y + ("<<mc1<<") =0\n";
-        // construct the Bezout determinant
-        double v0=2.*ma000*ma101;
-        double v2=ma000*mb10;
-        double v3=ma000*mb11;
-        double v4=ma000*mc1+ma100;
-        //double v5= 2.*ma101*ma011;
-        //double v6= ma000*ma111;
-        //double v7= 2.*ma101;
-        double v8= 2.*ma011*mb10;
-        //double v9= ma100*ma011;
-        double v1=ma000*ma111-ma100*ma011;
-        //double v1= v6 - v9;
-        double u0 = v4*v4-v2*mb10;
-        double u1 = 2.*(v3*v4-v0*mb10);
-        double u2 = 2.*(v4*v1-ma101*v0)+v3*v3+0.5*v2*v8;
-        double u3 = v0*v8+2.*v3*v1;
-        double u4 = v1*v1+2.*ma101*ma011*v0;
-        double ce[4];
-        double roots[4];
-        unsigned int counts=0;
-        if ( fabs(u4) < 1.0e-75) { // this should not happen
-            if ( fabs(u3) < 1.0e-75) { // this should not happen
-                if ( fabs(u2) < 1.0e-75) { // this should not happen
-                    if( fabs(u1) > 1.0e-75) {
-                        counts=1;
-                        roots[0]=-u0/u1;
-                    } else { // can not determine y. this means overlapped, but overlap should have been detected before, therefore return empty set
-                        return ret;
-                    }
-                } else {
-                    ce[0]=u1/u2;
-                    ce[1]=u0/u2;
-                    //std::cout<<"ce[2]={ "<<ce[0]<<' '<<ce[1]<<" }\n";
-                    counts=RS_Math::quadraticSolver(ce,roots);
-                }
-            } else {
-                ce[0]=u2/u3;
-                ce[1]=u1/u3;
-                ce[2]=u0/u3;
-                //std::cout<<"ce[3]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<" }\n";
-                counts=RS_Math::cubicSolver(ce,roots);
-            }
-        } else {
-            ce[0]=u3/u4;
-            ce[1]=u2/u4;
-            ce[2]=u1/u4;
-            ce[3]=u0/u4;
-//            std::cout<<"ce[4]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<" }\n";
-            counts=RS_Math::quarticSolver(ce,roots);
-        }
+        std::vector<double> m(0,0.);
+        m.push_back(1./(a*a)); //ma000
+        m.push_back(1./(b*b)); //ma000
+        m.push_back(v.y*v.y-1.); //ma100
+        m.push_back(v.x*v.y); //ma101
+        m.push_back(v.x*v.x-1.); //ma111
+        m.push_back(2.*a*b*v.y); //mb10
+        m.push_back(2.*a*b*v.x); //mb11
+        m.push_back(a*a*b*b); //mb11
 
-        if (! counts ) { // no intersection found
-            return NULL;
-        }
-        //      std::cout<<"counts="<<counts<<": ";
-        //	for(unsigned int i=0;i<counts;i++){
-        //	std::cout<<roots[i]<<" ";
-        //	}
-        //	std::cout<<std::endl;
-        unsigned int ivs0=0;
-        for(unsigned int i=0; i<counts; i++) {
-            double y=roots[i];
-            //double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
-            double x,d=v0*y+v2;
-//                    std::cout<<i<<": v="<<y<<"\td= "<<d<<std::endl;
-            if( fabs(d)>10.*RS_TOLERANCE*sqrt(RS_TOLERANCE)) {//whether there's x^1 term in bezout determinant
-                x=-((v1*y+v3)*y+v4 )/d;
-                if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
-                    vs0.push_back(RS_Vector(x,y));
-            } else { // no x^1 term, have to use x^2 term, then, have to check plus/minus sqrt
-                x=a*sqrt(1-y*y*ma011);
-                if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE){
-                    if( fabs(ma000*x*x+ma011*y*y-1.)<1.e-7 &&
-                        fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)<1.e-7)
-                    vs0.push_back(RS_Vector(x,y));
-                }
-                x=-x;
-                if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE){
-                    if( fabs(ma000*x*x+ma011*y*y-1.)<1.e-7 &&
-                        fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)<1.e-7)
-                    vs0.push_back(RS_Vector(x,y));
-                }
-            }
-//            std::cout<<"eq1="<<ma000*x*x+ma011*y*y-1.<<std::endl;
-//            std::cout<<"eq2="<<ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1<<std::endl;
-            //            if (
-            //                fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)< RS_TOLERANCE
-            //            ) {//found
-            //                vs0.set(ivs0++, RS_Vector(x,y));
-            //            }
-        }//end of equation solver
-        }
+
+        auto&& vs0=RS_Math::simultaneusQuadraticSolver(m); //to hold solutions
         if (vs0.getNumber()<1) return NULL;
         for(int i=0;i<vs0.getNumber();i++){
 //            std::cout<<"i="<<i<<"\n";

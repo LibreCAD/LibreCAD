@@ -219,8 +219,12 @@ double RS_Ellipse::getLength() const
     return e.getEllipseLength(e.data.angle1,e.data.angle2);
 }
 
+/**
 //Ellipse must have ratio<1, and not reversed
-//return the arc length between ellipse angle x1, x2
+*@ x1, ellipse angle
+*@ x2, ellipse angle
+//@return the arc length between ellipse angle x1, x2
+**/
 double RS_Ellipse::getEllipseLength(double x1, double x2) const
 {
     double a(getMajorRadius()),k(getRatio());
@@ -246,7 +250,7 @@ double RS_Ellipse::getEllipseLength(double x1, double x2) const
     x1=fmod(x1,M_PI);
     x2=fmod(x2,M_PI);
     if( fabs(x2-x1)>RS_TOLERANCE_ANGLE)  {
-        ret += ellipticIntegral_2(k,x2)-ellipticIntegral_2(k,x1);
+        ret += RS_Math::ellipticIntegral_2(k,x2)-RS_Math::ellipticIntegral_2(k,x1);
     }
     return a*ret;
 }
@@ -258,22 +262,7 @@ double RS_Ellipse::getEllipseLength( double x2) const
 {
     return getEllipseLength(getAngle1(),x2);
 }
-/**
- * wrapper of elliptic integral of the second type, Legendre form
- *@k the elliptic modulus or eccentricity
- *@phi elliptic angle, must be within range of [0, M_PI]
- *
- *Author: Dongxu Li
- */
-double RS_Ellipse::ellipticIntegral_2(const double& k, const double& phi)
-{
-    double a= remainder(phi-M_PI/2.,M_PI);
-    if(a>0.) {
-        return boost::math::ellint_2<double,double>(k,a);
-    } else {
-        return - boost::math::ellint_2<double,double>(k,fabs(a));
-    }
-}
+
 
 /**
   * get the point on the ellipse arc and with arc distance from the start point

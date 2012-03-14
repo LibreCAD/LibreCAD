@@ -27,6 +27,7 @@
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/lu.hpp>
+#include <boost/math/special_functions/ellint_2.hpp>
 #endif
 
 #include "rs_math.h"
@@ -686,4 +687,153 @@ bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>&
     return true;
 }
 
+/**
+ * wrapper of elliptic integral of the second type, Legendre form
+ *@k the elliptic modulus or eccentricity
+ *@phi elliptic angle, must be within range of [0, M_PI]
+ *
+ *Author: Dongxu Li
+ */
+double RS_Math::ellipticIntegral_2(const double& k, const double& phi)
+{
+    double a= remainder(phi-M_PI/2.,M_PI);
+    if(a>0.) {
+        return boost::math::ellint_2<double,double>(k,a);
+    } else {
+        return - boost::math::ellint_2<double,double>(k,fabs(a));
+    }
+}
+
+/** solver quadratic simultaneous equations of set two **/
+/* solve the following quadratic simultaneous equations,
+  *  ma000 x^2 + ma011 y^2 - 1 =0
+  * ma100 x^2 + 2 ma101 xy + ma111 y^2 + mb10 x + mb11 y +mc1 =0
+  *
+  *@m, a vector of size 8 contains coefficients in the strict order of:
+  ma000 ma011 ma100 ma101 ma111 mb10 mb11 mc1
+  * m[0] m[1] must be positive
+  *@return a vector contains real roots
+  */
+RS_VectorSolutions RS_Math::simultaneusQuadraticSolver(const std::vector<double>& m)
+{
+    RS_VectorSolutions ret(0);
+    if(m.size() != 8 ) return ret; // valid m should contain exact 8 elements
+    const double& ma000= m[0];
+    const double& ma011= m[1];
+    const double& ma100= m[2];
+    const double& ma101= m[3];
+    const double& ma111= m[4];
+    const double& mb10 = m[5];
+    const double& mb11 = m[6];
+    const double& mc1 = m[7];
+
+//    std::cout<<__FILE__<<" :  line "<<__LINE__<<" "<<__FUNCTION__<<std::endl;
+//    std::cout<<"simplified e1: "<<ma000<<"*x^2 + "<<ma011<<"*y^2 -1 =0\n";
+//    std::cout<<"simplified e2: "<<ma100<<"*x^2 + 2*("<<ma101<<")*x*y + "<<ma111<<"*y^2 "<<" + ("<<mb10<<")*x + ("<<mb11<<")*y + ("<<mc1<<") =0\n";
+    // construct the Bezout determinant
+    double v0=2.*ma000*ma101;
+    double v2=ma000*mb10;
+    double v3=ma000*mb11;
+    double v4=ma000*mc1+ma100;
+    //double v5= 2.*ma101*ma011;
+    //double v6= ma000*ma111;
+    //double v7= 2.*ma101;
+    double v8= 2.*ma011*mb10;
+    //double v9= ma100*ma011;
+    double v1=ma000*ma111-ma100*ma011;
+    //double v1= v6 - v9;
+    double u0 = v4*v4-v2*mb10;
+    double u1 = 2.*(v3*v4-v0*mb10);
+    double u2 = 2.*(v4*v1-ma101*v0)+v3*v3+0.5*v2*v8;
+    double u3 = v0*v8+2.*v3*v1;
+    double u4 = v1*v1+2.*ma101*ma011*v0;
+    //std::cout<<"u0="<<u0<<"\tu1="<<u1<<"\tu2="<<u2<<"\tu3="<<u3<<"\tu4="<<u4<<std::endl;
+    //std::cout<<"("<<u4<<")*x^4+("<<u3<<")*x^3+("<<u2<<")*x^2+("<<u1<<")*x+("<<u0<<")=0\n";
+    double ce[4];
+    double roots[4];
+    unsigned int counts=0;
+    if ( fabs(u4) < 1.0e-75) { // this should not happen
+        if ( fabs(u3) < 1.0e-75) { // this should not happen
+            if ( fabs(u2) < 1.0e-75) { // this should not happen
+                if( fabs(u1) > 1.0e-75) {
+                    counts=1;
+                    roots[0]=-u0/u1;
+                } else { // can not determine y. this means overlapped, but overlap should have been detected before, therefore return empty set
+                    return ret;
+                }
+            } else {
+                ce[0]=u1/u2;
+                ce[1]=u0/u2;
+                //std::cout<<"ce[2]={ "<<ce[0]<<' '<<ce[1]<<" }\n";
+                counts=RS_Math::quadraticSolver(ce,roots);
+            }
+        } else {
+            ce[0]=u2/u3;
+            ce[1]=u1/u3;
+            ce[2]=u0/u3;
+            //std::cout<<"ce[3]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<" }\n";
+            counts=RS_Math::cubicSolver(ce,roots);
+        }
+    } else {
+        ce[0]=u3/u4;
+        ce[1]=u2/u4;
+        ce[2]=u1/u4;
+        ce[3]=u0/u4;
+        //std::cout<<"ce[4]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<" }\n";
+        counts=RS_Math::quarticSolver(ce,roots);
+    }
+//	std::cout<<"Equation for y: y^4";
+//        for(int i=3; i>=0; i--) {
+//		std::cout<<"+("<<ce[3-i]<<")";
+//	    if ( i ) {
+//		    std::cout<<"*y^"<<i;
+//	    }else {
+//		    std::cout<<" ==0\n";
+//	    }
+//    }
+
+    if (! counts ) { // no intersection found
+        return ret;
+    }
+//      std::cout<<"counts="<<counts<<": ";
+//	for(unsigned int i=0;i<counts;i++){
+//	std::cout<<roots[i]<<" ";
+//	}
+//	std::cout<<std::endl;
+//    RS_VectorSolutions vs0;
+    unsigned int ivs0=0;
+    double a1=sqrt(1./ma000);
+    for(unsigned int i=0; i<counts; i++) {
+        double y=roots[i];
+        //double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
+        double x,d=v0*y+v2;
+//        std::cout<<"d= "<<d<<std::endl;
+        if( fabs(d)>10.*RS_TOLERANCE*sqrt(RS_TOLERANCE)) {//whether there's x^1 term in bezout determinant
+            x=-((v1*y+v3)*y+v4 )/d;
+            if(ret.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
+                ret.push_back(RS_Vector(x,y));
+        } else { // no x^1 term, have to use x^2 term, then, have to check plus/minus sqrt
+            x=a1*sqrt(1-y*y*ma011);
+            if(ret.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
+                ret.push_back(RS_Vector(x,y));
+            x=-x;
+            if(ret.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
+                ret.push_back(RS_Vector(x,y));
+        }
+        //std::cout<<"eq1="<<ma000*x*x+ma011*y*y-1.<<std::endl;
+        //std::cout<<"eq2="<<ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1<<std::endl;
+//            if (
+//                fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)< RS_TOLERANCE
+//            ) {//found
+//                vs0.set(ivs0++, RS_Vector(x,y));
+//            }
+    }
+//    for(unsigned int j=0; j<vs0.getNumber(); j++) {
+//        std::cout<<" ( "<<vs0.get(j).x<<" , "<<vs0.get(j).y<<" ) ";
+//    }
+//    std::cout<<std::endl;
+//    std::cout<<"counts= "<<counts<<"\tFound "<<ivs0<<" EllipseEllipse intersections\n";
+    //ret.alloc(ivs0);
+    return ret;
+}
 //EOF
