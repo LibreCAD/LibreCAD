@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-//#include <iostream>
+#include <iostream>
 #include <QMap>
 #include <qapplication.h>
 #include <QTextCodec>
@@ -612,7 +612,23 @@ QString RS_System::languageToSymbol(const QString& lang) {
  * (e.g. 'de' to Deutsch)
  */
 QString RS_System::symbolToLanguage(const QString& symb) {
-        return RS_Locale(symb).name();
+    RS_Locale loc(symb);
+    QString ret;
+    if( symb.contains(QRegExp("^en"))){
+        ret=RS_Locale::languageToString(loc.language());
+        if( symb.contains('_') ) {
+            ret +=" ("+RS_Locale::countryToString(loc.country())+')';
+        }
+    }else{
+        ret=RS_Locale::languageToString(loc.language())+' '+loc.nativeLanguageName();
+        if( symb.contains('_') ) {
+            ret +=" ("+RS_Locale::countryToString(loc.country())+' '+ loc.nativeCountryName()+')';
+        }
+    }
+
+    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" :  line "<<__LINE__<<" :  symb="<<qPrintable(symb)<<" name="<<qPrintable(ret)<<std::endl;
+
+        return ret;
         /* testing new language names, Dongxu Li
     QString l = symb.toLower();
 
