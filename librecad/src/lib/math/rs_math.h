@@ -98,6 +98,16 @@ public:
     //solver for linear equation set
     static bool linearSolver(const QVector<QVector<double> >& m, QVector<double>& dn);
 
+    /** wrapper for elliptic integral **/
+    /**
+     * wrapper of elliptic integral of the second type, Legendre form
+     *@k the elliptic modulus or eccentricity
+     *@phi elliptic angle, must be within range of [0, M_PI]
+     *
+     *Author: Dongxu Li
+     */
+    static double ellipticIntegral_2(const double& k, const double& phi);
+
     /**
      * Evaluates a mathematical expression and returns the result.
      * If an error occured, ok will be set to false (if ok isn't NULL).

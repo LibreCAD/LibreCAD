@@ -27,6 +27,7 @@
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/lu.hpp>
+#include <boost/math/special_functions/ellint_2.hpp>
 #endif
 
 #include "rs_math.h"
@@ -686,4 +687,20 @@ bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>&
     return true;
 }
 
+/**
+ * wrapper of elliptic integral of the second type, Legendre form
+ *@k the elliptic modulus or eccentricity
+ *@phi elliptic angle, must be within range of [0, M_PI]
+ *
+ *Author: Dongxu Li
+ */
+double RS_Math::ellipticIntegral_2(const double& k, const double& phi)
+{
+    double a= remainder(phi-M_PI/2.,M_PI);
+    if(a>0.) {
+        return boost::math::ellint_2<double,double>(k,a);
+    } else {
+        return - boost::math::ellint_2<double,double>(k,fabs(a));
+    }
+}
 //EOF
