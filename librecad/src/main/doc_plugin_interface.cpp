@@ -492,8 +492,14 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         break;
     case RS2::EntitySpline:
         break;
-    case RS2::EntityPolyline:
-        break;
+    case RS2::EntityPolyline: {
+        RS_Polyline *pl = static_cast<RS_Polyline*>(entity);
+        if (hash.take(DPI::CLOSEPOLY).toBool()) {
+            pl->setClosed(true);
+        }else{
+            pl->setClosed(false);
+        }
+        break;}
     case RS2::EntityVertex:
         break;
     case RS2::EntityDimAligned:
