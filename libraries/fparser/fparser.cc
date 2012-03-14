@@ -881,7 +881,7 @@ namespace
     };
 #endif
 
-    template<unsigned offset>
+    template<const unsigned offset>
     struct SimpleSpaceMask
     {
         enum { mask =
