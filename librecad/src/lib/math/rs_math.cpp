@@ -398,7 +398,7 @@ void RS_Math::test() {
 
 // quadratic, cubic, and quartic equation solver
 // @ ce[] contains coefficent of the cubic equation:
-// @ roots[] pointed to a list of real roots
+// @ returns a vector contains real roots
 //
 // solvers assume arguments are valid, and there's no attempt to verify validity of the argument pointers
 //
@@ -756,9 +756,8 @@ RS_VectorSolutions RS_Math::simultaneusQuadraticSolver(const std::vector<double>
     //std::cout<<"u0="<<u0<<"\tu1="<<u1<<"\tu2="<<u2<<"\tu3="<<u3<<"\tu4="<<u4<<std::endl;
     //std::cout<<"("<<u4<<")*x^4+("<<u3<<")*x^3+("<<u2<<")*x^2+("<<u1<<")*x+("<<u0<<")=0\n";
     std::vector<double> ce(4,0.);
-    std::vector<double> roots(4,0.);
+    std::vector<double> roots(0,0.);
 
-    unsigned int counts=0;
     if ( fabs(u4) < 1.0e-75) { // this should not happen
         if ( fabs(u3) < 1.0e-75) { // this should not happen
             if ( fabs(u2) < 1.0e-75) { // this should not happen
