@@ -635,6 +635,10 @@ void QC_ApplicationWindow::initActions(void)
                                         actionHandler);
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    // Block:
+    action = new QAction(QIcon(":/ui/blockinsert.png"), tr("&Block"), this);
+    subMenu->addAction(action);
+    connect(action, SIGNAL(triggered()), this, SLOT(slotImportBlock()));
 
     menu->addSeparator();
     action = actionFactory.createAction(RS2::ActionFileClose, this);
@@ -3504,6 +3508,35 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
 }
 
 
+/**
+ * Menu File -> import -> importBlock
+ */
+void QC_ApplicationWindow::slotImportBlock() {
+    QG_FileDialog dlg(this);
+    RS2::FormatType type = RS2::FormatDXFRW;
+    QString dxfPath = dlg.getOpenFile(&type);
+    if (dxfPath.isEmpty()) {
+        return;
+    }
+
+    if (QFileInfo(dxfPath).isReadable()) {
+        if (actionHandler!=NULL) {
+            RS_ActionInterface* a =
+                actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
+            if (a!=NULL) {
+                RS_ActionLibraryInsert* action = (RS_ActionLibraryInsert*)a;
+                action->setFile(dxfPath);
+            } else {
+                RS_DEBUG->print(RS_Debug::D_ERROR,
+                                "QC_ApplicationWindow::slotImportBlock:"
+                                "Cannot create action RS_ActionLibraryInsert");
+            }
+        }
+    } else {
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                        "QC_ApplicationWindow::slotImportBlock: Can't read file: '%s'", dxfPath.toLatin1().data());
+    }
+}
 
 /**
  * Menu script -> show ide
