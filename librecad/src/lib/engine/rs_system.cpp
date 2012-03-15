@@ -615,17 +615,21 @@ QString RS_System::languageToSymbol(const QString& lang) {
 QString RS_System::symbolToLanguage(const QString& symb) {
     RS_Locale loc(symb);
     QString ret;
+#if QT_VERSION >= 0x040800
     if( symb.contains(QRegExp("^en"))){
+#endif
         ret=RS_Locale::languageToString(loc.language());
         if( symb.contains('_') ) {
             ret +=" ("+RS_Locale::countryToString(loc.country())+')';
         }
+#if QT_VERSION >= 0x040800
     }else{
         ret=RS_Locale::languageToString(loc.language())+' '+loc.nativeLanguageName();
         if( symb.contains('_') ) {
             ret +=" ("+RS_Locale::countryToString(loc.country())+' '+ loc.nativeCountryName()+')';
         }
     }
+#endif
 
 //    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" :  line "<<__LINE__<<" :  symb="<<qPrintable(symb)<<" name="<<qPrintable(ret)<<std::endl;
 
