@@ -162,6 +162,7 @@ public slots:
     // void slotBlocksEdit();
     void slotOptionsGeneral();
 
+    void slotImportBlock();
     void slotScriptOpenIDE();
     void slotScriptRun();
 
