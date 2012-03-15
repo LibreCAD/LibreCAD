@@ -425,9 +425,9 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     double twoax=2*a*x;
     double twoby=2*b*y;
     double a0=twoa2b2*twoa2b2;
-    double ce[4];
-    double roots[4];
-    unsigned int counts=0;
+    std::vector<double> ce(4,0.);
+    std::vector<double> roots(0,0.);
+
     //need to handle a=b
     if(a0 > RS_TOLERANCE*RS_TOLERANCE ) { // a != b , ellipse
         ce[0]=-2.*twoax/twoa2b2;
@@ -435,14 +435,13 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         ce[2]= - ce[0];
         ce[3]= -twoax*twoax/a0;
         //std::cout<<"1::find cosine, variable c, solve(c^4 +("<<ce[0]<<")*c^3+("<<ce[1]<<")*c^2+("<<ce[2]<<")*c+("<<ce[3]<<")=0,c)\n";
-        counts=RS_Math::quarticSolver(ce,roots);
+        roots=RS_Math::quarticSolver(ce);
     } else {//a=b, quadratic equation for circle
-        counts=2;
         a0=twoby/twoax;
-        roots[0]=sqrt(1./(1.+a0*a0));
-        roots[1]=-roots[0];
+        roots.push_back(sqrt(1./(1.+a0*a0)));
+        roots.push_back(-roots[0]);
     }
-    if(!counts) {
+    if(roots.size()==0) {
         //this should not happen
         std::cout<<"(a= "<<a<<" b= "<<b<<" x= "<<x<<" y= "<<y<<" )\n";
         std::cout<<"finding minimum for ("<<x<<"-"<<a<<"*cos(t))^2+("<<y<<"-"<<b<<"*sin(t))^2\n";
@@ -455,7 +454,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
 //    RS_Vector vp2(false);
     double d,d2,s,dDistance(RS_MAXDOUBLE*RS_MAXDOUBLE);
     //double ea;
-    for(unsigned int i=0; i<counts; i++) {
+    for(size_t i=0; i<roots.size(); i++) {
         //I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
         //if ( fabs(roots[i])>1.) continue;
         s=twoby*roots[i]/(twoax-twoa2b2*roots[i]); //sine

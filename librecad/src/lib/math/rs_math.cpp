@@ -404,24 +404,28 @@ void RS_Math::test() {
 //
 // @author Dongxu Li <dongxuli2011@gmail.com>
 
-unsigned int RS_Math::quadraticSolver(double * ce,  double * roots)
+std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
 //quadratic solver for
-// x^2 + ce[0] x + ce[2] =0
+// x^2 + ce[0] x + ce[1] =0
 {
+    std::vector<double> ans(0,0.);
+    if(ce.size() != 2) return ans;
     double discriminant=0.25*ce[0]*ce[0]-ce[1];
-    if (discriminant < 0. ) return 0;
-    roots[0]= -0.5*ce[0] + sqrt(discriminant);
-    roots[1]= -ce[0] - roots[0];
-    return 2;
+    if (discriminant >= 0.){
+        ans.push_back(-0.5*ce[0] + sqrt(discriminant));
+        ans.push_back(-ce[0] - ans[0]);
+    }
+    return ans;
 }
 
-unsigned int RS_Math::cubicSolver(double * ce, double *roots)
+std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
 //cubic equation solver
 // x^3 + ce[0] x^2 + ce[1] x + ce[2] = 0
 {
+    std::vector<double> ans(0,0.);
+    if(ce.size() != 3) return ans;
     // depressed cubic, Tschirnhaus transformation, x= t - b/(3a)
     // t^3 + p t +q =0
-    unsigned int ret=0;
     double shift=(1./3)*ce[0];
     double p=ce[1] -shift*ce[0];
     double q=ce[0]*( (2./27)*ce[0]*ce[0]-(1./3)*ce[1])+ce[2];
@@ -439,29 +443,28 @@ unsigned int RS_Math::cubicSolver(double * ce, double *roots)
     //std::cout<<"p="<<p<<"\tq="<<q<<std::endl;
     double discriminant= (1./27)*p*p*p+(1./4)*q*q;
     if ( fabs(p)< 1.0e-75) {
-        ret=1;
-        *roots=(q>0)?-pow(q,(1./3)):pow(-q,(1./3));
-        *roots -= shift;
-        return ret;
+        ans.push_back((q>0)?-pow(q,(1./3)):pow(-q,(1./3)));
+        ans[0] -= shift;
+        return ans;
     }
     //std::cout<<"discriminant="<<discriminant<<std::endl;
     if(discriminant>0) {
-        double ce2[2]= {q, -1./27*p*p*p},u3[2];
-        ret=quadraticSolver(ce2,u3);
-        if (! ret ) { //should not happen
-            std::cerr<<"cubicSolver()::Error cubicSolver("<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<")\n";
+        std::vector<double> ce2(2,0.);
+        ce2[0]=q;
+        ce2[1]=-1./27*p*p*p;
+        auto&& r=quadraticSolver(ce2);
+        if ( r.size()==0 ) { //should not happen
+            std::cerr<<__FILE__<<" : "<<__FUNCTION__<<" : line"<<__LINE__<<" :cubicSolver()::Error cubicSolver("<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<")\n";
         }
-        ret=1;
         double u,v;
-        u= (q<=0) ? pow(u3[0], 1./3): -pow(-u3[1],1./3);
+        u= (q<=0) ? pow(r[0], 1./3): -pow(-r[1],1./3);
         //u=(q<=0)?pow(-0.5*q+sqrt(discriminant),1./3):-pow(0.5*q+sqrt(discriminant),1./3);
         v=(-1./3)*p/u;
         //std::cout<<"u="<<u<<"\tv="<<v<<std::endl;
         //std::cout<<"u^3="<<u*u*u<<"\tv^3="<<v*v*v<<std::endl;
-        *roots=u+v - shift;
-        return ret;
+        ans.push_back(u+v - shift);
+        return ans;
     }
-    ret=3;
     std::complex<double> u(q,0),rt[3];
     u=std::pow(-0.5*u-sqrt(0.25*u*u+p*p*p/27),1./3);
     rt[0]=u-p/(3.*u)-shift;
@@ -472,17 +475,19 @@ unsigned int RS_Math::cubicSolver(double * ce, double *roots)
 //	std::cout<<rt[0]<<std::endl;
 //	std::cout<<rt[1]<<std::endl;
 //	std::cout<<rt[2]<<std::endl;
+    ans.push_back(rt[0].real());
+    ans.push_back(rt[1].real());
+    ans.push_back(rt[2].real());
 
-    roots[0]=rt[0].real();
-    roots[1]=rt[1].real();
-    roots[2]=rt[2].real();
-    return ret;
+    return ans;
 }
 
-unsigned int RS_Math::quarticSolver(double * ce, double *roots)
+std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
 //quartic solver
 // x^4 + ce[0] x^3 + ce[1] x^2 + ce[2] x + ce[3] = 0
 {
+    std::vector<double> ans(0,0.);
+    if(ce.size() != 4) return ans;
     // x^4 + a x^3 + b x^2 +c x + d = 0
     // depressed quartic, x= t - a/4
     // t^4 + ( b - 3/8 a^2 ) t^2 + (c - a b/2 + a^3/8) t + d - a c /4 + a^2 b/16 - 3 a^4/256 =0
@@ -490,7 +495,6 @@ unsigned int RS_Math::quarticSolver(double * ce, double *roots)
     // p= b - (3./8)*a*a;
     // q= c - 0.5*a*b+(1./8)*a*a*a;
     // r= d - 0.25*a*c+(1./16)*a*a*b-(3./256)*a^4
-    unsigned int ret=0;
     double shift=0.25*ce[0];
     double shift2=shift*shift;
     double a2=ce[0]*ce[0];
@@ -501,33 +505,32 @@ unsigned int RS_Math::quarticSolver(double * ce, double *roots)
     if (fabs(q) <= RS_TOLERANCE) {// Biquadratic equations
         double discriminant= 0.25*p*p -r;
         if (discriminant < 0.) {
-            return 0;
+            return ans;
         }
         double t2[2];
         t2[0]=-0.5*p-sqrt(discriminant);
         t2[1]= -p - t2[0];
-//        std::cout<<"t2[0]="<<t2[0]<<std::endl;
-//        std::cout<<"t2[1]="<<t2[1]<<std::endl;
-        if ( t2[0] >= 0. ) {// four real roots
-            roots[0]=sqrt(t2[0])-shift;
-            roots[1]= -sqrt(t2[0])-shift;
-            roots[2]=sqrt(t2[1])-shift;
-            roots[3]= -sqrt(t2[1])-shift;
-            return 4;
-        }
+        //        std::cout<<"t2[0]="<<t2[0]<<std::endl;
+        //        std::cout<<"t2[1]="<<t2[1]<<std::endl;
         if ( t2[1] >= 0.) { // two real roots
-            roots[0]=sqrt(t2[1])-shift;
-            roots[1]= -sqrt(t2[1])-shift;
-            return 2;
+            ans.push_back(sqrt(t2[1])-shift);
+            ans.push_back(-sqrt(t2[1])-shift);
         }
-        return 0;
+        if ( t2[0] >= 0. ) {// four real roots
+            ans.push_back(sqrt(t2[0])-shift);
+            ans.push_back(-sqrt(t2[0])-shift);
+        }
+        return ans;
     }
     if ( fabs(r)< 1.0e-75 ) {
-        double cubic[3]= {0.,p,q};
-        roots[0]=0.;
-        ret=1+cubicSolver(cubic,roots+1);
-        for(unsigned int i=0; i<ret; i++) roots[i] -= shift;
-        return ret;
+        std::vector<double> cubic(3,0.);
+        cubic[1]=p;
+        cubic[2]=q;
+        ans.push_back(0.);
+        auto&& r=cubicSolver(cubic);
+        std::copy(r.begin(),r.end(),back_inserter(ans));
+        for(size_t i=0; i<ans.size(); i++) ans[i] -= shift;
+        return ans;
     }
     // depressed quartic to two quadratic equations
     // t^4 + p t^2 + q t + r = ( t^2 + u t + v) ( t^2 - u t + w)
@@ -540,44 +543,47 @@ unsigned int RS_Math::quarticSolver(double * ce, double *roots)
     //  y=u^2,
     //  y^3 + 2 p y^2 + ( p^2 - 4 r) y - q^2 =0
     //
-    double cubic[3]= {2.*p,p*p-4.*r,-q*q},croots[3];
-    ret = cubicSolver(cubic,croots);
+    std::vector<double> cubic(3,0.);
+    cubic[0]=2.*p;
+    cubic[1]=p*p-4.*r;
+    cubic[2]=-q*q;
+    auto&& r3= cubicSolver(cubic);
     //std::cout<<"quartic_solver:: real roots from cubic: "<<ret<<std::endl;
     //for(unsigned int i=0; i<ret; i++)
     //   std::cout<<"cubic["<<i<<"]="<<cubic[i]<<" x= "<<croots[i]<<std::endl;
-    if (ret==1) { //one real root from cubic
-        if (croots[0]< 0.) {//this should not happen
+    if (r3.size()==1) { //one real root from cubic
+        if (r3[0]< 0.) {//this should not happen
+            std::cerr<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
             std::cerr<<"Quartic Error:: Found one real root for cubic, but negative\n";
-            return 0;
+            return ans;
         }
-        double sqrtz0=sqrt(croots[0]);
-        double ce2[2];
+        double sqrtz0=sqrt(r3[0]);
+        std::vector<double> ce2(2,0.);
         ce2[0]=	-sqrtz0;
-        ce2[1]=0.5*(p+croots[0])+0.5*q/sqrtz0;
-        ret=quadraticSolver(ce2,roots);
-        if (! ret ) {
+        ce2[1]=0.5*(p+r3[0])+0.5*q/sqrtz0;
+        auto r1=quadraticSolver(ce2);
+        if (r1.size()==0 ) {
             ce2[0]=	sqrtz0;
-            ce2[1]=0.5*(p+croots[0])-0.5*q/sqrtz0;
-            ret=quadraticSolver(ce2,roots);
+            ce2[1]=0.5*(p+r3[0])-0.5*q/sqrtz0;
+            r1=quadraticSolver(ce2);
         }
-        ret=2;
-        for(unsigned int i=0; i<ret; i++) roots[i] -= shift;
-        return ret;
+        for(size_t i=0; i<r1.size(); i++) r1[i] -= shift;
+        return r1;
     }
-    if ( croots[0]> 0. && croots[1] > 0. ) {
-        double sqrtz0=sqrt(croots[0]);
-        double ce2[2];
+    if ( r3[0]> 0. && r3[1] > 0. ) {
+        double sqrtz0=sqrt(r3[0]);
+        std::vector<double> ce2(2,0.);
         ce2[0]=	-sqrtz0;
-        ce2[1]=0.5*(p+croots[0])+0.5*q/sqrtz0;
-        ret=quadraticSolver(ce2,roots);
+        ce2[1]=0.5*(p+r3[0])+0.5*q/sqrtz0;
+        ans=quadraticSolver(ce2);
         ce2[0]=	sqrtz0;
-        ce2[1]=0.5*(p+croots[0])-0.5*q/sqrtz0;
-        ret=quadraticSolver(ce2,roots+2);
-        ret=4;
-        for(unsigned int i=0; i<ret; i++) roots[i] -= shift;
-        return ret;
+        ce2[1]=0.5*(p+r3[0])-0.5*q/sqrtz0;
+        auto&& r1=quadraticSolver(ce2);
+        std::copy(r1.begin(),r1.end(),back_inserter(ans));
+        for(size_t i=0; i<ans.size(); i++) ans[i] -= shift;
+        return ans;
     }
-    return 0;
+    return ans;
 }
 
 //linear Equation solver by Gauss-Jordan
@@ -749,30 +755,32 @@ RS_VectorSolutions RS_Math::simultaneusQuadraticSolver(const std::vector<double>
     double u4 = v1*v1+2.*ma101*ma011*v0;
     //std::cout<<"u0="<<u0<<"\tu1="<<u1<<"\tu2="<<u2<<"\tu3="<<u3<<"\tu4="<<u4<<std::endl;
     //std::cout<<"("<<u4<<")*x^4+("<<u3<<")*x^3+("<<u2<<")*x^2+("<<u1<<")*x+("<<u0<<")=0\n";
-    double ce[4];
-    double roots[4];
+    std::vector<double> ce(4,0.);
+    std::vector<double> roots(4,0.);
+
     unsigned int counts=0;
     if ( fabs(u4) < 1.0e-75) { // this should not happen
         if ( fabs(u3) < 1.0e-75) { // this should not happen
             if ( fabs(u2) < 1.0e-75) { // this should not happen
                 if( fabs(u1) > 1.0e-75) {
-                    counts=1;
-                    roots[0]=-u0/u1;
+                    roots.push_back(-u0/u1);
                 } else { // can not determine y. this means overlapped, but overlap should have been detected before, therefore return empty set
                     return ret;
                 }
             } else {
+                ce.resize(2);
                 ce[0]=u1/u2;
                 ce[1]=u0/u2;
                 //std::cout<<"ce[2]={ "<<ce[0]<<' '<<ce[1]<<" }\n";
-                counts=RS_Math::quadraticSolver(ce,roots);
+                roots=RS_Math::quadraticSolver(ce);
             }
         } else {
+            ce.resize(3);
             ce[0]=u2/u3;
             ce[1]=u1/u3;
             ce[2]=u0/u3;
             //std::cout<<"ce[3]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<" }\n";
-            counts=RS_Math::cubicSolver(ce,roots);
+            roots=RS_Math::cubicSolver(ce);
         }
     } else {
         ce[0]=u3/u4;
@@ -780,7 +788,7 @@ RS_VectorSolutions RS_Math::simultaneusQuadraticSolver(const std::vector<double>
         ce[2]=u1/u4;
         ce[3]=u0/u4;
         //std::cout<<"ce[4]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<" }\n";
-        counts=RS_Math::quarticSolver(ce,roots);
+        roots=RS_Math::quarticSolver(ce);
     }
 //	std::cout<<"Equation for y: y^4";
 //        for(int i=3; i>=0; i--) {
@@ -792,7 +800,7 @@ RS_VectorSolutions RS_Math::simultaneusQuadraticSolver(const std::vector<double>
 //	    }
 //    }
 
-    if (! counts ) { // no intersection found
+    if (roots.size()==0 ) { // no intersection found
         return ret;
     }
 //      std::cout<<"counts="<<counts<<": ";
@@ -803,7 +811,7 @@ RS_VectorSolutions RS_Math::simultaneusQuadraticSolver(const std::vector<double>
 //    RS_VectorSolutions vs0;
     unsigned int ivs0=0;
     double a1=sqrt(1./ma000);
-    for(unsigned int i=0; i<counts; i++) {
+    for(size_t i=0; i<roots.size(); i++) {
         double y=roots[i];
         //double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
         double x,d=v0*y+v2;
