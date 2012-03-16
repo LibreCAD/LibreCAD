@@ -861,7 +861,7 @@ namespace
         //       in BeginsLiteral() to '-' instead of '.'.
     };
 
-    template<typename Value_t, const unsigned offset>
+    template<typename Value_t, unsigned offset>
     struct LiteralMask
     {
         enum { mask =
