@@ -190,6 +190,14 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksEdit()));
     layButtons2->addWidget(but);
+    // save block:
+    but = new QToolButton(this);
+    but->setIcon(QIcon(":/main/filesave.png"));
+    but->setMinimumSize(QSize(22,22));
+    but->setToolTip(tr("save the active block to a file"));
+    connect(but, SIGNAL(clicked()),
+            actionHandler, SLOT(slotBlocksSave()));
+    layButtons2->addWidget(but);
     // insert block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/ui/blockinsert.png"));

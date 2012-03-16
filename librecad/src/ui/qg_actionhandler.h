@@ -222,6 +222,7 @@ public slots:
     void slotBlocksRemove();
     void slotBlocksAttributes();
     void slotBlocksEdit();
+    void slotBlocksSave();
     void slotBlocksInsert();
     void slotBlocksToggleView();
     void slotBlocksCreate();

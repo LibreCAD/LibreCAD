@@ -357,6 +357,7 @@ public:
         ActionBlocksRemove,
         ActionBlocksAttributes,
         ActionBlocksEdit,
+        ActionBlocksSave,
         ActionBlocksInsert,
         ActionBlocksToggleView,
         ActionBlocksCreate,
