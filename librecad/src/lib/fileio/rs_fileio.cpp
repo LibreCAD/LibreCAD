@@ -60,7 +60,7 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
     }
 
     std::unique_ptr<RS_FilterInterface> filter(getImportFilter(file, t));
-    if (filter.get() != nullptr){
+    if (filter.get() != NULL ){
         return filter->fileImport(graphic, file, t);
     }
     RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -97,7 +97,7 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const QString& file,
     }
 
     std::unique_ptr<RS_FilterInterface> filter(getExportFilter(file, type));
-    if (filter.get() != nullptr){
+    if (filter.get() != NULL ){
         return filter->fileExport(graphic, file, type);
     }
     RS_DEBUG->print("RS_FileIO::fileExport: no filter found");
