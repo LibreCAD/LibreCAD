@@ -133,7 +133,7 @@ public:
         EntityArc,          /**< Arc */
         EntityCircle,       /**< Circle */
         EntityEllipse,      /**< Ellipse */
-        EntitySolid,        /**< Ellipse */
+        EntitySolid,        /**< Solid */
         EntityConstructionLine, /**< Construction line */
         EntityText,         /**< Text */
         EntityDimAligned,   /**< Aligned Dimension */

@@ -58,18 +58,21 @@ void RS_ActionBlocksSave::trigger() {
             g.setOwner(false);
 
            g.clearLayers();
-           g.addLayer(b->getLayer());
+//           g.addLayer(b->getLayer());
             for (RS_Entity* e=b->firstEntity(RS2::ResolveNone);
                  e!=NULL;
                  e = b->nextEntity(RS2::ResolveNone)) {
                 g.addEntity(e);
+//           std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;
+//                g.addLayer(e->getLayer());
+//           std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;
             }
 //           std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line: "<<__LINE__<<std::endl;
 //           std::cout<<"add layer name="<<qPrintable(b->getLayer()->getName())<<std::endl;
 
             RS2::FormatType t = RS2::FormatDXF;
 
-            QG_FileDialog dlg(appWindow->getMDIWindow());
+            QG_FileDialog dlg(appWindow->getMDIWindow(),0, QG_FileDialog::BlockFile);
             QString&& fn = dlg.getSaveFile(&t);
             QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 //            g.setModified(true);
