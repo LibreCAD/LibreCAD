@@ -507,9 +507,11 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 #else
 #ifdef Q_OS_MAC
         dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
-#endif
-#ifdef Q_OS_WIN32
+#elif Q_OS_WIN32
         dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
+#else
+    // Unix home directory, it's old style but some people might have stuff there.
+    dirList.append(getHomeDir() + "/." + appDirName + "/" + subDirectory);
 #endif
 #endif // QT_VERSION < 0x040400 && defined(_MSC_VER)
 
@@ -528,9 +530,6 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 
         // Others, RVT April 25, 2011 removed, doesn anybody use that still?
         // dirList.append("/usr/X11R6/share/" + appDirName + "/" + subDirectory);
-
-        // Unix home directory, it's old style but some people might have stuff there.
-        dirList.append(getHomeDir() + "/." + appDirName + "/" + subDirectory);
 
 
 #ifdef Q_OS_MAC
