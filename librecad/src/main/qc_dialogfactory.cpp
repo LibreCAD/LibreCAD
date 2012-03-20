@@ -73,28 +73,28 @@ void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
         QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
         QMdiArea* mdiAreaCAD = appWindow->getMdiArea();
 
-    if (mdiAreaCAD!=NULL) {
-                RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: workspace found");
+        if (mdiAreaCAD!=NULL) {
+            RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: workspace found");
 
-        QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
-        for (int i = 0; i <windows.size(); ++i) {
-                        RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: window: %d",
+            QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
+            for (int i = 0; i <windows.size(); ++i) {
+                RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: window: %d",
                                 i);
-            QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
-            if (m!=NULL) {
-                                RS_DEBUG->print(
-                                        "QC_DialogFactory::closeEditBlockWindow: got mdi");
-                                if (m->getDocument()==block) {
-                                        RS_DEBUG->print(
-                                                "QC_DialogFactory::closeEditBlockWindow: closing mdi");
-                                        //m->closeMDI(true, false);
-                                        m->setAttribute(Qt::WA_DeleteOnClose);//RLZ: to ensure the window is deleted
-                                        m->close();
-                                }
-                        }
+                QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
+                if (m!=NULL) {
+                    RS_DEBUG->print(
+                                "QC_DialogFactory::closeEditBlockWindow: got mdi");
+                    if (m->getDocument()==block) {
+                        RS_DEBUG->print(
+                                    "QC_DialogFactory::closeEditBlockWindow: closing mdi");
+                        //m->closeMDI(true, false);
+                        m->setAttribute(Qt::WA_DeleteOnClose);//RLZ: to ensure the window is deleted
+                        m->close();
+                    }
                 }
+            }
         }
-    QMdiSubWindow* subWindow=NULL;
+        QMdiSubWindow* subWindow=mdiAreaCAD->currentSubWindow();
         appWindow->slotWindowActivated(subWindow);
 
         RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: OK");
