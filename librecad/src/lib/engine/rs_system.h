@@ -70,7 +70,7 @@ public:
     void init(const QString& appName, const QString& appVersion,
                   const QString& appDirName, const QString& appDir="");
 	void initLanguageList();
-        void initAllLanguagesList();
+    void initAllLanguagesList();
 
     bool checkInit();
     bool createPaths(const QString& p);
@@ -92,9 +92,14 @@ public:
 	/**
 	 * @return Application directory.
 	 */
-        QString getAppDir() {
+    QString getAppDir() {
 		return appDir;
 	}
+
+    /**
+     * @return Application Data directory.
+    */
+    QString getAppDataDir();
 
     /**
      * @return A list of absolute paths to all font files found.

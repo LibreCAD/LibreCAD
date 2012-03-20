@@ -444,6 +444,24 @@ bool RS_System::createPaths(const QString& directory) {
 }
 
 
+/**
+ * Create if not exist and return the Application data directory.
+ * In OS_WIN32 "c:\documents&settings\<user>\local configuration\application data\LibreCAD"
+ * In OS_MAC "???"
+ * In OS_LINUX "/home/<user>/.local/share/data/LibreCAD"
+ *
+ * @return Application data directory.
+ */
+QString RS_System::getAppDataDir() {
+    QString appData = QDesktopServices::storageLocation(QDesktopServices::DataLocation) ;
+    QDir dir(appData);
+    if (!dir.exists()) {
+        if (!dir.mkpath(appData))
+            return QString();
+    }
+    return appData;
+}
+
 
 /**
  * Searches for files in an application shared directory in the given
@@ -507,12 +525,12 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 #else
 #ifdef Q_OS_MAC
         dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
-#elif Q_OS_WIN32
+#endif
+#ifdef Q_OS_WIN32
         dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
-#else
+#endif
     // Unix home directory, it's old style but some people might have stuff there.
     dirList.append(getHomeDir() + "/." + appDirName + "/" + subDirectory);
-#endif
 #endif // QT_VERSION < 0x040400 && defined(_MSC_VER)
 
         //local (application) directory has priority over other dirs:
