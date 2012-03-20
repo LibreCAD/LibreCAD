@@ -67,6 +67,7 @@ public:
                              RS2::ActionType action=RS2::ActionNone);
 
     static QString msgAvailableCommands();
+    void updateAlias();
 
 protected:
     static RS_Commands* uniqueInstance;

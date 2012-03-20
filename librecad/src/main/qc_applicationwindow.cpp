@@ -88,6 +88,8 @@
 #include "main.h"
 #include "doc_plugin_interface.h"
 #include "qc_plugininterface.h"
+#include "rs_commands.h"
+
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 
@@ -192,6 +194,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     // Disable menu and toolbar items
     emit windowsChanged(FALSE);
 
+    RS_COMMANDS->updateAlias();
     //plugin load
     loadPlugins();
     QMenu *importMenu = findMenu("/File/Import", menuBar()->children(), "");

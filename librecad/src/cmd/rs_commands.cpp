@@ -25,12 +25,13 @@
 **
 **********************************************************************/
 
+#include <QTextStream>
 #include "rs_commands.h"
 
+#include "rs_system.h"
 #include "rs_dialogfactory.h"
 
 RS_Commands* RS_Commands::uniqueInstance = NULL;
-
 
 /**
  * Constructor. Initiates main command dictionary.
@@ -345,6 +346,72 @@ RS_Commands::RS_Commands() {
     cmdTranslation.insert(tr("b","back"), "back");
 }
 
+/**
+ * Read existing alias file or create one new.
+ * In OS_WIN32 "c:\documents&settings\<user>\local configuration\application data\LibreCAD\librecad.alias"
+ * In OS_MAC "??? /librecad.alias"
+ * In OS_LINUX "/home/<user>/.local/share/data/LibreCAD/librecad.alias"
+ */
+void RS_Commands::updateAlias(){
+    QString aliasName = RS_SYSTEM->getAppDataDir();
+    if (aliasName.isEmpty())
+        return;
+    aliasName += "/librecad.alias";
+    QFile f(aliasName);
+    QString line;
+    QHash<QString, QString> aliasList;
+    if (f.exists()) {
+    //alias file exists, read user defined alias
+        if (f.open(QIODevice::ReadOnly)) {
+            QTextStream ts(&f);
+            line = ts.readLine();
+            //check if is empty file or not alias file
+            if(!line.isNull() || line == "#LibreCAD alias v1") {
+                while (!ts.atEnd()) {
+                    line = ts.readLine();
+                    if (line.isEmpty() || line.at(0)=='#')
+                        continue;
+                    // Read alias
+                    QStringList txtList = line.split('\t',QString::SkipEmptyParts);
+                    if (txtList.size()> 1) {
+                        aliasList.insert(txtList.at(0), txtList.at(1));
+                    } else if (txtList.size()> 0) {
+                        aliasList.insert(txtList.at(0), "txtList.at(1)" "");
+                    }
+                }
+            }
+        }
+    } else {
+    //alias file do no exist, create one with translated shortCommands
+        if (f.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+            QTextStream ts(&f);
+            ts << "#LibreCAD alias v1" << endl << endl;
+            ts << "# lines starting with # are comments" << endl;
+            ts << "# format are:" << endl;
+            ts << "# alias<\\t>command-untranslated" << endl << endl;
+            QHash<QString, RS2::ActionType>::const_iterator i;
+            for (i = shortCommands.constBegin(); i != shortCommands.constEnd(); ++i) {
+                line = mainCommands.key(i.value());
+                ts << i.key() << "\t";
+                ts << cmdTranslation.key(line) << endl;
+            }
+            ts.flush();
+        }
+
+    }
+    //update alias file with non present commands
+//RLZ: to be writen
+
+    //add alias to shortCommands
+    QHash<QString, QString>::const_iterator it;
+    for (it = aliasList.constBegin(); it != aliasList.constEnd(); ++it) {
+        QString translated = cmdTranslation.value(it.value());
+        RS2::ActionType act = mainCommands.value(translated,RS2::ActionNone);
+        if (act != RS2::ActionNone && it.key() != " ")
+            shortCommands.insert(it.key(), act);
+    }
+    f.close();
+}
 
 
 /**
