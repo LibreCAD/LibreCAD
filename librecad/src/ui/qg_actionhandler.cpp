@@ -34,6 +34,7 @@
 #include "rs_actionblocksattributes.h"
 #include "rs_actionblockscreate.h"
 #include "rs_actionblocksedit.h"
+#include "rs_actionblockssave.h"
 #include "rs_actionblocksexplode.h"
 #include "rs_actionblocksfreezeall.h"
 #include "rs_actionblocksinsert.h"
@@ -788,6 +789,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionBlocksEdit:
         a = new RS_ActionBlocksEdit(*doc, *gv);
+        break;
+    case RS2::ActionBlocksSave:
+        a = new RS_ActionBlocksSave(*doc, *gv);
         break;
     case RS2::ActionBlocksInsert:
         a = new RS_ActionBlocksInsert(*doc, *gv);
@@ -1838,6 +1842,10 @@ void QG_ActionHandler::slotBlocksAttributes() {
 
 void QG_ActionHandler::slotBlocksEdit() {
     setCurrentAction(RS2::ActionBlocksEdit);
+}
+
+void QG_ActionHandler::slotBlocksSave() {
+    setCurrentAction(RS2::ActionBlocksSave);
 }
 
 void QG_ActionHandler::slotBlocksInsert() {

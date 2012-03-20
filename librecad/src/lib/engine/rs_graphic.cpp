@@ -837,6 +837,19 @@ void RS_Graphic::fitToPage() {
         centerToPage();
 }
 
+void RS_Graphic::addEntity(RS_Entity* entity)
+{
+    RS_EntityContainer::addEntity(entity);
+    if( entity->rtti() == RS2::EntityBlock ||
+            entity->rtti() == RS2::EntityContainer){
+        RS_EntityContainer* e=static_cast<RS_EntityContainer*>(entity);
+        for (RS_Entity* e1=e->firstEntity(RS2::ResolveNone);
+             e1!=NULL;
+             e1= e->nextEntity(RS2::ResolveNone)){
+            addEntity(e1);
+        }
+    }
+}
 
 
 /**

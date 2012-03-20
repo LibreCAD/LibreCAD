@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-//#include <iostream>
+#include <iostream>
 #include <QMap>
 #include <qapplication.h>
 #include <QTextCodec>
@@ -608,25 +608,33 @@ QString RS_System::languageToSymbol(const QString& lang) {
 
 
 /**
- * Converst a language two-letter-code into a readable string
- * (e.g. 'de' to Deutsch)
+ * Converst a locale code into a readable string
+ * (e.g. 'de' to 'German Deutsch'
+ * (e.g. 'en_au' to 'English (Australia)'
  */
 QString RS_System::symbolToLanguage(const QString& symb) {
-        return RS_Locale(symb).name();
-        /* testing new language names, Dongxu Li
-    QString l = symb.toLower();
-
-                std::cout<<"symb="<<qPrintable(symb)<<" name="<<qPrintable(RS_Locale(symb).name())<<std::endl;
-    RS_Locale *locale;
-    foreach (locale, *RS_SYSTEM->allKnownLocales) {
-        QString canon=locale->getCanonical().toLower();
-        if (canon==l || canon==l+"_"+l.toUpper() || canon.mid(0,2)==l) {
-                std::cout<<"symb="<<qPrintable(symb)<<" name="<<qPrintable(locale->getName())<<std::endl;
-            return locale->getName();
+    RS_Locale loc(symb);
+    QString ret;
+#if QT_VERSION >= 0x040800
+    if( symb.contains(QRegExp("^en"))){
+#endif
+        ret=RS_Locale::languageToString(loc.language());
+        if( symb.contains('_') ) {
+            ret +=" ("+RS_Locale::countryToString(loc.country())+')';
+        }
+#if QT_VERSION >= 0x040800
+    }else{
+        ret=RS_Locale::languageToString(loc.language())+' '+loc.nativeLanguageName();
+        if( symb.contains('_') ) {
+            ret +=" ("+RS_Locale::countryToString(loc.country())+' '+ loc.nativeCountryName()+')';
         }
     }
-    return "";
-    */
+#endif
+
+//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" :  line "<<__LINE__<<" :  symb="<<qPrintable(symb)<<" name="<<qPrintable(ret)<<std::endl;
+
+        return ret;
+
 }
 
 

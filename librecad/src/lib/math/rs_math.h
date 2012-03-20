@@ -91,12 +91,34 @@ public:
         const T ttmp(a);
         a=b;
         b=ttmp;
-    };
-    static unsigned int quadraticSolver(double * ce, double * roots);
-    static unsigned int cubicSolver(double * ce, double * roots);
-    static unsigned int quarticSolver(double * ce, double * roots);
+    }
+
+    static std::vector<double> quadraticSolver(const std::vector<double>& ce);
+    static std::vector<double> cubicSolver(const std::vector<double>& ce);
+    static std::vector<double> quarticSolver(const std::vector<double>& ce);
     //solver for linear equation set
     static bool linearSolver(const QVector<QVector<double> >& m, QVector<double>& dn);
+
+    /** solver quadratic simultaneous equations of a set of two **/
+    /* solve the following quadratic simultaneous equations,
+      *  ma000 x^2 + ma011 y^2 - 1 =0
+      * ma100 x^2 + 2 ma101 xy + ma111 y^2 + mb10 x + mb11 y +mc1 =0
+      *
+      *@m, a vector of size 8 contains coefficients in the strict order of:
+      ma000 ma011 ma100 ma101 ma111 mb10 mb11 mc1
+      *@return a RS_VectorSolutions contains real roots (x,y)
+      */
+    static RS_VectorSolutions simultaneusQuadraticSolver(const std::vector<double>& m);
+
+    /** wrapper for elliptic integral **/
+    /**
+     * wrapper of elliptic integral of the second type, Legendre form
+     *@k the elliptic modulus or eccentricity
+     *@phi elliptic angle, must be within range of [0, M_PI]
+     *
+     *Author: Dongxu Li
+     */
+    static double ellipticIntegral_2(const double& k, const double& phi);
 
     /**
      * Evaluates a mathematical expression and returns the result.

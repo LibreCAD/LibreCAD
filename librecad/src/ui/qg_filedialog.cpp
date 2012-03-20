@@ -57,8 +57,9 @@ void QG_FileDialog::getType(const QString filter) {
     }
 }
 
-QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f)
-                            :QFileDialog(parent, f) {
+QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f, FileType type)
+                            :QFileDialog(parent, f)
+{
 #if QT_VERSION >= 0x040500
 #ifdef USEQTDIALOG
     setOption ( QFileDialog::DontUseNativeDialog, true );
@@ -79,6 +80,13 @@ QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f)
     fJww = tr("Jww Drawing %1").arg("(*.jww)");
     fDxf = tr("Drawing Exchange %1").arg("(*.dxf)");
     fDxf1 = tr("QCad 1.x file %1").arg("(*.dxf)");
+    switch(type){
+    case BlockFile:
+        name=tr("Block", "block file");
+        break;
+    default:
+        name=tr("Drawing", "drawing file");
+    }
 }
 
 QG_FileDialog::~QG_FileDialog(){
@@ -116,7 +124,7 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
     filters << fDxf << fDxf1 << fLff << fCxf << fJww;
 #endif
 
-    setWindowTitle(tr("Open Drawing"));
+    setWindowTitle(tr("Open %1").arg(name));
 #if QT_VERSION >= 0x040400
     setNameFilters(filters);
 #endif
@@ -182,7 +190,7 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     filters << fDxf2000 << fDxfR12 << fLff << fCxf << fJww;
 #endif
 
-    setWindowTitle(tr("Save Drawing As"));
+    setWindowTitle(tr("Save %1 As").arg(name));
     setFileMode(QFileDialog::AnyFile);
     setDirectory(defDir);
     setFilters(filters);

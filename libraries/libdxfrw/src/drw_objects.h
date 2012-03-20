@@ -106,8 +106,8 @@ class DRW_Layer : public DRW_TableEntry {
 public:
     DRW_Layer() {
         tType = DRW::LAYER;
-        lineType = "BYLAYER";
-        color = 256; // default BYLAYER (256)
+        lineType = "CONTINUOUS";
+        color = 7; // default BYLAYER (256)
         plotF = true; // default TRUE (plot yes)
         lWeight = -3; // default BYDEFAULT (-3)
     }

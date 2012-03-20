@@ -92,6 +92,7 @@ public:
     virtual void addLayer(RS_Layer* layer) {
                 layerList.add(layer);
         }
+    virtual void addEntity(RS_Entity* entity);
     virtual void removeLayer(RS_Layer* layer);
     virtual void editLayer(RS_Layer* layer, const RS_Layer& source) {
                 layerList.edit(layer, source);

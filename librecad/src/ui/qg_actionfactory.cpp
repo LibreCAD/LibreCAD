@@ -35,6 +35,7 @@
 #include "rs_actionblocksremove.h"
 #include "rs_actionblocksattributes.h"
 #include "rs_actionblocksedit.h"
+#include "rs_actionblockssave.h"
 #include "rs_actionblocksinsert.h"
 #include "rs_actionblockstoggleview.h"
 #include "rs_actionblocksexplode.h"
@@ -1251,6 +1252,11 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 action = RS_ActionBlocksEdit::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotBlocksEdit()));
+        break;
+    case RS2::ActionBlocksSave:
+                action = RS_ActionBlocksSave::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotBlocksSave()));
         break;
     case RS2::ActionBlocksInsert:
                 action = RS_ActionBlocksInsert::createGUIAction(id, mw);
