@@ -183,19 +183,15 @@ void QG_DlgScale::updateData() {
     }
     bool okX;
     double sx=RS_Math::eval(scaleFactorX,&okX);
-    if(okX==false){
-        sx=1.;
-        leFactorX->setText(QString::number(sx));
-    }
     bool okY;
     double sy=RS_Math::eval(scaleFactorY,&okY);
-    if(okY==false){
-        sy=1.;
-        leFactorY->setText(QString::number(sy));
-    }
     if(okX && okY){
         data->factor = RS_Vector(sx,sy);
         data->useCurrentAttributes = cbCurrentAttributes->isChecked();
         data->useCurrentLayer = cbCurrentLayer->isChecked();
+    }else{
+        leFactorX->setText("1");
+        leFactorY->setText("1");
+        data->factor=RS_Vector(false);
     }
 }
