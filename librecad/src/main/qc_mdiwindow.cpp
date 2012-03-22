@@ -30,12 +30,6 @@
 //Added by qt3to4:
 #include <QCloseEvent>
 
-#include "rs_graphic.h"
-#include "qg_exitdialog.h"
-#include "qg_filedialog.h"
-#include "rs_insert.h"
-#include "rs_text.h"
-
 #include <QMainWindow>
 #include <QCursor>
 #include <QMessageBox>
@@ -43,6 +37,13 @@
 #include <QFileInfo>
 #include <QMdiArea>
 #include <QPainter>
+
+#include "qc_applicationwindow.h"
+#include "rs_graphic.h"
+#include "qg_exitdialog.h"
+#include "qg_filedialog.h"
+#include "rs_insert.h"
+#include "rs_text.h"
 
 int QC_MDIWindow::idCounter = 0;
 
@@ -89,6 +90,23 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
  * Deletes the document associated with this window.
  */
 QC_MDIWindow::~QC_MDIWindow() {
+
+    //avoid switching to invalid subwindow, bug#3509368
+    auto&& windows = cadMdiArea->subWindowList();
+    for (int i = 0; i <windows.size(); ++i) {
+//        RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: window: %d", i);
+
+        QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
+        if(m==NULL)
+            cadMdiArea->removeSubWindow(windows.at(i));
+        else{
+            windows.at(i)->showMaximized();
+            windows.at(i)->raise();
+            cadMdiArea->setActiveSubWindow(windows.at(i));
+            break;
+        }
+    }
+
     if (document->getLayerList()!=NULL) {
         document->getLayerList()->removeListener(graphicView);
     }
@@ -101,6 +119,9 @@ QC_MDIWindow::~QC_MDIWindow() {
         delete document;
     }
     document = NULL;
+    cadMdiArea->activateNextSubWindow();
+    QMdiSubWindow* subWindow=cadMdiArea->currentSubWindow();
+    QC_ApplicationWindow::getAppWindow()->slotWindowActivated(subWindow);
 }
 
 

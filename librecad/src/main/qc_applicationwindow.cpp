@@ -2026,6 +2026,15 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         activedMdiSubWindow=w;
         return;
     }
+    if(w->widget() == NULL) {
+        mdiAreaCAD->removeSubWindow(w);
+
+        mdiAreaCAD->activateNextSubWindow();
+        auto w0=mdiAreaCAD->currentSubWindow();
+        w0->showNormal();
+        if(w0!=NULL) slotWindowActivated(w0);
+        return;
+    }
     if(w==activedMdiSubWindow) return;
     activedMdiSubWindow=w;
     QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(w->widget());
