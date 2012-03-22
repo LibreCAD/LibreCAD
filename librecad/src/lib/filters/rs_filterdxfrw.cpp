@@ -297,12 +297,11 @@ void RS_FilterDXFRW::addEllipse(const DRW_Ellipse& data) {
 
     RS_Vector v1(data.basePoint.x, data.basePoint.y);
     RS_Vector v2(data.secPoint.x, data.secPoint.y);
-
-    RS_EllipseData ed(v1, v2,
-                      data.ratio,
-                      data.staparam,
-                      data.endparam,
-                      false);
+    double ang2 = data.endparam;
+    if ( (data.endparam- 6.28318530718) < 1.0e-10)
+        ang2 = 0.0;
+    RS_EllipseData ed(v1, v2, data.ratio, data.staparam,
+                                    ang2, false);
     RS_Ellipse* entity = new RS_Ellipse(currentContainer, ed);
     setEntityAttributes(entity, &data);
 
@@ -1856,7 +1855,8 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
         // Write vertex:
             if (e->rtti()==RS2::EntityArc) {
                 bulge = ((RS_Arc*)e)->getBulge();
-            }
+            } else
+                bulge = 0.0;
             pol.addVertex( DRW_Vertex2D(ae->getStartpoint().x,
                                       ae->getStartpoint().y, bulge));
     }
