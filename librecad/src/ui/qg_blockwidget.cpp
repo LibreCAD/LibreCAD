@@ -66,8 +66,10 @@ bool blockLessThan(const RS_Block *s1, const RS_Block *s2) {
 
 void QG_BlockModel::setBlockList(RS_BlockList* bl) {
     listBlock.clear();
-    if (bl == NULL)
+    if (bl == NULL){
+        reset();
         return;
+    }
     for (int i=0; i<bl->count(); ++i) {
         listBlock.append(bl->at(i));
     }
