@@ -119,6 +119,8 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 #define WTB_MAX_SIZE        79
 
  QAction* QC_ApplicationWindow::previousZoom=NULL;
+ QAction* QC_ApplicationWindow::undoButton=NULL;
+ QAction* QC_ApplicationWindow::redoButton=NULL;
 
 /**
  * Constructor. Initializes the app.
@@ -204,6 +206,9 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     statusBar()->showMessage(XSTR(QC_APPNAME) " Ready", 2000);
     //setFocusPolicy(WheelFocus);
     previousZoomEnable=false;
+    undoEnable=false;
+    redoEnable=false;
+
 }
 
 /**
@@ -678,15 +683,15 @@ void QC_ApplicationWindow::initActions(void)
 
     tb->addSeparator();
 
-    action = actionFactory.createAction(RS2::ActionEditUndo, actionHandler);
-    menu->addAction(action);
-    tb->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    undoButton = actionFactory.createAction(RS2::ActionEditUndo, actionHandler);
+    menu->addAction(undoButton);
+    tb->addAction(undoButton);
+    connect(this, SIGNAL(windowsChanged(bool)), this, SLOT(slotEnableActions(bool)));
 
-    action = actionFactory.createAction(RS2::ActionEditRedo, actionHandler);
-    menu->addAction(action);
-    tb->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    redoButton = actionFactory.createAction(RS2::ActionEditRedo, actionHandler);
+    menu->addAction(redoButton);
+    tb->addAction(redoButton);
+    connect(this, SIGNAL(windowsChanged(bool)), this, SLOT(slotEnableActions(bool)));
 
     tb->addSeparator();
     menu->addSeparator();
@@ -1503,9 +1508,27 @@ void QC_ApplicationWindow::setPreviousZoomEnable(bool enable){
     }
 }
 
+
+void QC_ApplicationWindow::setUndoEnable(bool enable){
+    undoEnable=enable;
+    if(undoButton != NULL){
+        undoButton->setEnabled(enable);
+    }
+}
+
+void QC_ApplicationWindow::setRedoEnable(bool enable){
+    redoEnable=enable;
+    if(redoButton != NULL){
+        redoButton->setEnabled(enable);
+    }
+}
+
+
 void QC_ApplicationWindow::slotEnableActions(bool enable) {
     if(previousZoom != NULL){
         previousZoom->setEnabled(enable&& previousZoomEnable);
+        undoButton->setEnabled(enable&& undoEnable);
+        redoButton->setEnabled(enable&& redoEnable);
     }
 }
 

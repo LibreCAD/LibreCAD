@@ -25,6 +25,7 @@
 **********************************************************************/
 
 
+#include "qc_applicationwindow.h"
 #include "rs_undocycle.h"
 #include "rs_undo.h"
 
@@ -150,6 +151,8 @@ void RS_Undo::addUndoable(RS_Undoable* u) {
  */
 void RS_Undo::endUndoCycle() {
     addUndoCycle(currentCycle);
+    QC_ApplicationWindow::getAppWindow()->setUndoEnable(true);
+    QC_ApplicationWindow::getAppWindow()->setRedoEnable(false);
     currentCycle = NULL;
 }
 
@@ -165,15 +168,19 @@ bool RS_Undo::undo() {
 
         RS_UndoCycle* uc=NULL;
         while( undoPointer>=0 && undoPointer < undoList.size() ) {
-            uc = undoList[undoPointer];
-            undoPointer--;
-            if (uc == NULL ) continue;
+            uc = undoList[undoPointer--];
+
+            if (uc == NULL )  continue;
             break;
         }
+        if(undoPointer==-1) {
+            QC_ApplicationWindow::getAppWindow()->setUndoEnable(false);
+       }
         if (uc != NULL) {
             for (int i = 0; i < uc->undoables.size(); ++i) {
                 (uc->undoables.at(i))->changeUndoState();
             }
+             QC_ApplicationWindow::getAppWindow()->setRedoEnable(true);
             return true;
         }
     }
@@ -199,12 +206,15 @@ bool RS_Undo::redo() {
             for (int i = 0; i < uc->undoables.size(); ++i) {
                 (uc->undoables.at(i))->changeUndoState();
             }
+            if(undoPointer+1==undoList.size()) {
+                QC_ApplicationWindow::getAppWindow()->setRedoEnable(false);
+            }
+            QC_ApplicationWindow::getAppWindow()->setUndoEnable(true);
             return true;
         }
     }
     return false;
 }
-
 
 
 /**
