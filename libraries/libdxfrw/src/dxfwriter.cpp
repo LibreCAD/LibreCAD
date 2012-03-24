@@ -254,7 +254,10 @@ bool dxfWriterAscii::writeInt64(int code, unsigned long long int data) {
 }
 
 bool dxfWriterAscii::writeDouble(int code, double data) {
+    int prec = filestr->precision();
+    filestr->precision(12);
     *filestr << code << std::endl << data << std::endl;
+    filestr->precision(prec);
     return (filestr->good());
 }
 
