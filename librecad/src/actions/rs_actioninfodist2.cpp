@@ -60,6 +60,8 @@ void RS_ActionInfoDist2::trigger() {
         QString str;
         str.sprintf("%.6f", dist);
         RS_DIALOGFACTORY->commandMessage(tr("Distance: %1").arg(str));
+        entity->setHighlighted(false);
+        graphicView->redraw(RS2::RedrawDrawing);
     }
 }
 
@@ -67,6 +69,7 @@ void RS_ActionInfoDist2::trigger() {
 
 void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent begin");
+     RS_Vector&& mouse=snapPoint(e);
 
     switch (getStatus()) {
     case SetEntity:
@@ -75,7 +78,7 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent* e) {
 
     case SetPoint:
         if (entity!=NULL) {
-            point = snapPoint(e);
+            point = mouse;
         }
         break;
 
@@ -95,6 +98,8 @@ void RS_ActionInfoDist2::mouseReleaseEvent(QMouseEvent* e) {
         case SetEntity:
             entity = catchEntity(e);
             if (entity!=NULL) {
+                entity->setHighlighted(true);
+                graphicView->redraw(RS2::RedrawDrawing);
                 setStatus(SetPoint);
             }
             break;
