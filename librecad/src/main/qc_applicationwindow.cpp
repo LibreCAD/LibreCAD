@@ -2087,6 +2087,8 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
         // Update all inserts in this graphic (blocks might have changed):
         m->getDocument()->updateInserts();
+        // whether to enable undo/redo buttons
+        m->getDocument()->setGUIButtons();
 //        m->zoomAuto();
         m->getGraphicView()->redraw();
 

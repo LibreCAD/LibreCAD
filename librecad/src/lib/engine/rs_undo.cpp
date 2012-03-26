@@ -250,6 +250,18 @@ RS_UndoCycle* RS_Undo::getRedoCycle() {
     return NULL;
 }
 
+/**
+  * enable/disable redo/undo buttons in main application window
+  * Author: Dongxu Li
+  **/
+void RS_Undo::setGUIButtons()
+{
+    if(QC_ApplicationWindow::getAppWindow() != NULL){
+        QC_ApplicationWindow::getAppWindow()->setRedoEnable(undoList.size()>0  && undoPointer+1< undoList.size());
+        QC_ApplicationWindow::getAppWindow()->setUndoEnable(undoList.size()>0 && undoPointer>=0 );
+    }
+}
+
 
 
 /**
@@ -270,8 +282,6 @@ std::ostream& operator << (std::ostream& os, RS_Undo& l) {
     }
     return os;
 }
-
-
 
 /**
  * Testing Undoables, Undo Cycles and the Undo container.

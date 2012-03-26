@@ -67,6 +67,12 @@ public:
      */
     virtual void removeUndoable(RS_Undoable* u) = 0;
 
+    /**
+      * enable/disable redo/undo buttons in main application window
+      * Author: Dongxu Li
+      **/
+    virtual void setGUIButtons();
+
     friend std::ostream& operator << (std::ostream& os, RS_Undo& a);
 
     static bool test();
