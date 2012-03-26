@@ -45,6 +45,13 @@ QAction* RS_ActionInfoDist2::createGUIAction(RS2::ActionType /*type*/, QObject* 
     return action;
 }
 
+RS_ActionInfoDist2::~RS_ActionInfoDist2() {
+    if( entity!=NULL && entity->isHighlighted()){
+        entity->setHighlighted(false);
+        graphicView->redraw(RS2::RedrawDrawing);
+    }
+}
+
 void RS_ActionInfoDist2::init(int status) {
     RS_ActionInterface::init(status);
 }
