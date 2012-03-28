@@ -50,7 +50,7 @@ public:
 public:
     RS_ActionInfoDist2(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionInfoDist2() {}
+    ~RS_ActionInfoDist2();
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     virtual RS2::ActionType rtti(){

@@ -233,7 +233,7 @@ void DRW_Header::parseCode(int code, dxfReader *reader){
 }
 
 void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
-/*TODO complete all vars to AC1024*/
+/*RLZ: TODO complete all vars to AC1024*/
     double varDouble;
     int varInt;
     std::string varStr;
@@ -241,30 +241,29 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
     writer->writeString(2, "HEADER");
     writer->writeString(9, "$ACADVER");
     switch (ver) {
-    case DRW::AC1009: //unsupported version
-    case DRW::AC1012:
-        writer->writeString(1, "AC1012");
+    case DRW::AC1006: //unsupported version acad 10
+    case DRW::AC1009: //acad 11 & 12
+        writer->writeString(1, "AC1009");
         break;
-    case DRW::AC1014:
+    case DRW::AC1012: //unsupported version acad 13
+    case DRW::AC1014: //acad 14
         writer->writeString(1, "AC1014");
         break;
-    case DRW::AC1018:
+    case DRW::AC1018: //acad 2004
         writer->writeString(1, "AC1018");
         break;
-    case DRW::AC1021:
-        writer->writeString(1, "AC1018");
+    case DRW::AC1021: //acad 2007
+        writer->writeString(1, "AC1021");
         break;
-    case DRW::AC1024:
-        writer->writeString(1, "AC1018");
+    case DRW::AC1024: //acad 2010
+        writer->writeString(1, "AC1024");
         break;
-//    case DRW::AC1015:
-//acad2000 default version
-    default:
+    default: //acad2000 default version
         writer->writeString(1, "AC1015");
         break;
     }
 
-    if (ver > DRW::AC1014) {
+    if (ver > DRW::AC1012) {
         writer->writeString(9, "$HANDSEED");
 //RLZ        dxfHex(5, 0xFFFF);
         writer->writeString(5, "20000");

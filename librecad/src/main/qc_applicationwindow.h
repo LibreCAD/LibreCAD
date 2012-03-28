@@ -90,6 +90,8 @@ public:
         /** Catch hotkey for giving focus to command line. */
     virtual void keyPressEvent(QKeyEvent* e);
     virtual void keyReleaseEvent(QKeyEvent* e);
+    void setRedoEnable(bool enable);
+    void setUndoEnable(bool enable);
     void setPreviousZoomEnable(bool enable);
 
 public slots:
@@ -394,7 +396,11 @@ private:
     QToolBar* editToolBar;
     QToolBar* zoomToolBar;
     static QAction* previousZoom;
+    static QAction* undoButton;
+    static QAction* redoButton;
     bool previousZoomEnable;
+    bool undoEnable;
+    bool redoEnable;
 
     QG_SnapToolBar* snapToolBar;
 
