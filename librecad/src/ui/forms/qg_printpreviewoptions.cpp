@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 #include "qg_printpreviewoptions.h"
+#include "rs_settings.h"
 
 #include "rs_actionprintpreview.h"
 
@@ -83,24 +84,64 @@ void QG_PrintPreviewOptions::init() {
             << "250:1" << "500:1" << "750:1" << "1000:1"
             << "2500:1" << "5000:1" << "7500:1" << "10000:1"
             << "25000:1" << "50000:1" << "75000:1" << "100000:1";
-
+    RS_SETTINGS->beginGroup("/PrintPreview");
+    updateDisabled= RS_SETTINGS->readNumEntry("/PrintScaleFixed", 0)!=0;
+    RS_SETTINGS->endGroup();
+    action=NULL;
 }
 
 void QG_PrintPreviewOptions::destroy() {
-    /*
     RS_SETTINGS->beginGroup("/PrintPreview");
-    RS_SETTINGS->writeEntry("/PrintPreviewAngle", leAngle->text());
-    RS_SETTINGS->writeEntry("/PrintPreviewFactor", leFactor->text());
+    RS_SETTINGS->writeEntry("/PrintScaleFixed", QString(updateDisabled?"1":"0"));
+    if(updateDisabled){
+        RS_SETTINGS->writeEntry("/PrintScaleValue",cbScale->currentText());
+    }
     RS_SETTINGS->endGroup();
-    */
+    action=NULL;
+}
+
+/** print scale fixed to saved value **/
+void QG_PrintPreviewOptions::setScaleFixed(bool fixed)
+{
+    if(action != NULL) action->setPaperScaleFixed(fixed);
+    updateDisabled=fixed;
+    cbScale->setDisabled(fixed);
+    bFit->setVisible(!fixed);
+    if(cFixed->isChecked() != fixed) {
+        cFixed->setChecked(fixed);
+    }
+    if(updateDisabled){
+        RS_SETTINGS->beginGroup("/PrintPreview");
+        RS_SETTINGS->writeEntry("/PrintScaleFixed", QString(updateDisabled?"1":"0"));
+        RS_SETTINGS->writeEntry("/PrintScaleValue",cbScale->currentText());
+        RS_SETTINGS->endGroup();
+    }
 }
 
 void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
     if (a!=NULL && a->rtti()==RS2::ActionPrintPreview) {
         action = static_cast<RS_ActionPrintPreview*>(a);
-        if(update==false){
-            fit();
-        }
+        /** fixed scale **/
+        if(!update){
+//                        std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//                        std::cout<<"update="<<update<<" : updateDisabled="<<updateDisabled <<std::endl;
+//                        std::cout<<"update="<<update<<" : action->getPaperScaleFixed()="<<action->getPaperScaleFixed() <<std::endl;
+            if(updateDisabled||action->getPaperScaleFixed()){
+                if(action->getPaperScaleFixed()==false){
+                    RS_SETTINGS->beginGroup("/PrintPreview");
+                    QString&& s=RS_SETTINGS->readEntry("/PrintScaleValue", "1:1");
+                    RS_SETTINGS->endGroup();
+                updateDisabled=false;
+                scale(s);
+                }
+                updateDisabled=true;
+                setScaleFixed(true);
+            }else{
+                fit();
+                setScaleFixed(false);
+            }
+        }else{
+        bool btmp=updateDisabled;
         updateDisabled = true;
         cbScale->setDuplicatesEnabled(false);
         RS2::Unit u = action->getUnit();
@@ -111,36 +152,11 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
         }
         defaultScales=cbScale->count();
         updateScaleBox();
-        //if (update) {
-        //        QString s;
-        //        s.setNum(action->getScale());
-        //        int index=cbScale->findText(s);
-        //        //add the current sccale, bug#343794
-        //        if(index<0){
-        //            cbScale->addItem(s);
-        //            index=cbScale->count()-1;
-        //        }
-        //        cbScale->setCurrentIndex(index);
-        //}
 
-        updateDisabled = false;
+        updateDisabled = btmp;
+        setScaleFixed(updateDisabled);
+        }
 
-        /*
-        QString sAngle;
-        QString sFactor;
-        if (update) {
-            sAngle = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
-            sFactor = QString("%1").arg(action->getFactor());
-    } else {
-            RS_SETTINGS->beginGroup("/PrintPreview");
-            sAngle = RS_SETTINGS->readEntry("/PrintPreviewAngle", "0.0");
-            sFactor = RS_SETTINGS->readEntry("/PrintPreviewFactor", "1.0");
-            RS_SETTINGS->endGroup();
-    }
-        leAngle->setText(sAngle);
-        leFactor->setText(sFactor);
-        updateData();
-        */
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_PrintPreviewOptions::setAction: wrong action type");
@@ -170,15 +186,19 @@ void QG_PrintPreviewOptions::setBlackWhite(bool on) {
 }
 
 void QG_PrintPreviewOptions::fit() {
+    if(updateDisabled) return;
     if (action!=NULL) {
         action->fit();
         updateScaleBox();
     }
 }
 
-void QG_PrintPreviewOptions::scale(const QString& s) {
+void QG_PrintPreviewOptions::scale(const QString& s0) {
+    QString s;
     if (updateDisabled) {
-        return;
+        s=cbScale->currentText();
+    }else{
+        s=s0;
     }
     //    std::cout<<"QG_PrintPreviewOptions::scale(const QString& s): s="<<qPrintable(s)<<std::endl;
     double factor(1.);
@@ -216,6 +236,7 @@ void QG_PrintPreviewOptions::scale(const QString& s) {
         return;
     }
     if(action->setScale(factor)){
+        //        std::cout<<"QG_PrintPreviewOptions::scale(const QString& s): line: "<<__LINE__<<" s="<<factor<<std::endl;
         updateScaleBox(factor);
     }
 }

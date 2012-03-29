@@ -89,12 +89,15 @@ public:
         //	return blackWhite;
         //}
         RS2::Unit getUnit();
+        void setPaperScaleFixed(bool fixed);
+        bool getPaperScaleFixed();
 
 protected:
         //bool blackWhite;
         bool hasOptions;
         RS_Vector v1;
         RS_Vector v2;
+        bool scaleFixed;
 };
 
 #endif

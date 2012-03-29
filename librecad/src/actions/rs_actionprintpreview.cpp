@@ -37,7 +37,7 @@
 RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView)
     :RS_ActionInterface("Print Preview",
-                        container, graphicView), hasOptions(false){
+                        container, graphicView), hasOptions(false),scaleFixed(false){
     showOptions();
 }
 
@@ -148,6 +148,7 @@ void RS_ActionPrintPreview::printWarning(const QString& s) {
         RS_DIALOGFACTORY->commandMessage(s);
     }
 }
+
 void RS_ActionPrintPreview::showOptions() {
     RS_ActionInterface::showOptions();
     if(RS_DIALOGFACTORY != NULL && ! isFinished() ) {
@@ -187,6 +188,7 @@ void RS_ActionPrintPreview::updateToolBar() {}
 void RS_ActionPrintPreview::center() {
     if (graphic!=NULL) {
         graphic->centerToPage();
+        graphicView->zoomPage();
         graphicView->redraw();
     }
 }
@@ -262,5 +264,17 @@ RS2::Unit RS_ActionPrintPreview::getUnit() {
     }
 }
 
+/** set paperscale fixed */
+void RS_ActionPrintPreview::setPaperScaleFixed(bool fixed)
+{
+    graphic->setPaperScaleFixed(fixed);
+}
+
+
+/** get paperscale fixed */
+bool RS_ActionPrintPreview::getPaperScaleFixed()
+{
+    return graphic->getPaperScaleFixed();
+}
 
 // EOF
