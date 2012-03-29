@@ -256,6 +256,18 @@ double RS_Vector::squared() const {
     }
     return RS_MAXDOUBLE;
 }
+
+/**
+  * @return square of vector length
+  */
+double RS_Vector::squaredTo(const RS_Vector& v1) const
+{
+    if (valid) {
+        return  (*this - v1).squared();
+    }
+    return RS_MAXDOUBLE;
+}
+
 /**
  *
  */

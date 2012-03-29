@@ -64,6 +64,7 @@ public:
     double angleBetween(const RS_Vector& v1, const RS_Vector& v2) const;
     double magnitude() const;
     double squared() const; //return square of length
+    double squaredTo(const RS_Vector& v1) const; //return square of length
     RS_Vector lerp(const RS_Vector& v, double t) const;
 
     bool isInWindow(const RS_Vector& firstCorner, const RS_Vector& secondCorner) const;
