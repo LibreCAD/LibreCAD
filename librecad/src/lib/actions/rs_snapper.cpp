@@ -123,18 +123,24 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     }
 
     RS_Vector mouseCoord = graphicView->toGraph(e->x(), e->y());
+    double ds2Min=RS_MAXDOUBLE*RS_MAXDOUBLE;
 
     if (snapMode.snapEndpoint) {
         t = snapEndpoint(mouseCoord);
+        double&& ds2=mouseCoord.squaredTo(t);
 
-        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+        if (ds2 < ds2Min){
+            ds2Min=ds2;
             snapSpot = t;
+        }
     }
     if (snapMode.snapCenter) {
         t = snapCenter(mouseCoord);
-
-        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+        double&& ds2=mouseCoord.squaredTo(t);
+        if (ds2 < ds2Min){
+            ds2Min=ds2;
             snapSpot = t;
+        }
     }
     if (snapMode.snapMiddle) {
         //this is still brutal force
@@ -143,9 +149,11 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
             RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, snapMode.snapMiddle);
         }
         t = snapMiddle(mouseCoord);
-
-        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+        double&& ds2=mouseCoord.squaredTo(t);
+        if (ds2 < ds2Min){
+            ds2Min=ds2;
             snapSpot = t;
+        }
     }
     if (snapMode.snapDistance) {
         //this is still brutal force
@@ -154,36 +162,53 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
             RS_DIALOGFACTORY->requestSnapDistOptions(distance, snapMode.snapDistance);
         }
         t = snapDist(mouseCoord);
-
-        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+        double&& ds2=mouseCoord.squaredTo(t);
+        if (ds2 < ds2Min){
+            ds2Min=ds2;
             snapSpot = t;
+        }
     }
     if (snapMode.snapIntersection) {
         t = snapIntersection(mouseCoord);
-
-        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+        double&& ds2=mouseCoord.squaredTo(t);
+        if (ds2 < ds2Min){
+            ds2Min=ds2;
             snapSpot = t;
+        }
     }
 
     if (snapMode.snapOnEntity &&
         snapSpot.distanceTo(mouseCoord) > snapMode.distance) {
         t = snapOnEntity(mouseCoord);
-
-        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+        double&& ds2=mouseCoord.squaredTo(t);
+        if (ds2 < ds2Min){
+            ds2Min=ds2;
             snapSpot = t;
+        }
     }
 
     if (snapMode.snapGrid) {
         t = snapGrid(mouseCoord);
-
-        if (mouseCoord.distanceTo(t) < mouseCoord.distanceTo(snapSpot))
+        double&& ds2=mouseCoord.squaredTo(t);
+        if (ds2 < ds2Min){
+            ds2Min=ds2;
             snapSpot = t;
+        }
     }
 
     if( ! snapSpot.valid ) {
         snapSpot=mouseCoord; //default to snapFree
     } else {
-        if (mouseCoord.distanceTo(snapSpot) > snapRange ) snapSpot = mouseCoord;
+//        std::cout<<"mouseCoord.distanceTo(snapSpot)="<<mouseCoord.distanceTo(snapSpot)<<std::endl;
+//        std::cout<<"snapRange="<<snapRange<<std::endl;
+
+        //retreat to snapFree when distance is more than half grid
+        RS_Vector&& ds=mouseCoord - snapSpot;
+        RS_Vector&& grid=graphicView->getGrid()->getCellVector()*0.5;
+        if( fabs(ds.x) > fabs(grid.x) ||  fabs(ds.y) > fabs(grid.y) ) snapSpot = mouseCoord;
+
+        //another choice is to keep snapRange in GUI coordinates instead of graph coordinates
+//        if (mouseCoord.distanceTo(snapSpot) > snapRange ) snapSpot = mouseCoord;
     }
     //if (snapSpot.distanceTo(mouseCoord) > snapMode.distance) {
     // handle snap restrictions that can be activated in addition
