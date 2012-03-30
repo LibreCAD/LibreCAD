@@ -395,6 +395,37 @@ bool dxfRW::writeLWPolyline(DRW_LWPolyline *ent){
     return true;
 }
 
+bool dxfRW::writeSpline(DRW_Spline *ent){
+    if (version > DRW::AC1009) {
+        writer->writeString(0, "SPLINE");
+        writeEntity(ent);
+        writer->writeString(100, "AcDbSpline");
+        writer->writeDouble(210, ent->ex);
+        writer->writeDouble(220, ent->ey);
+        writer->writeDouble(230, ent->ez);
+        writer->writeInt16(70, ent->flags);
+        writer->writeInt16(71, ent->degree);
+        writer->writeInt16(72, ent->nknots);
+        writer->writeInt16(73, ent->ncontrol);
+        writer->writeInt16(74, ent->nfit);
+        writer->writeDouble(42, ent->tolknot);
+        writer->writeDouble(43, ent->tolcontrol);
+        //RLZ: warning check if nknots are correct and ncontrol
+        for (int i = 0;  i< ent->nknots; i++){
+            writer->writeDouble(40, ent->knotslist.at(i));
+        }
+        for (int i = 0;  i< ent->ncontrol; i++){
+            DRW_Coord *crd = ent->controllist.at(i);
+            writer->writeDouble(10, crd->x);
+            writer->writeDouble(20, crd->y);
+            writer->writeDouble(30, crd->z);
+        }
+    } else {
+        //RLZ: TODO convert spline in polyline (not exist in acad 12)
+    }
+    return true;
+}
+
 bool dxfRW::writeTables() {
     char buffer[5];
     writer->writeString(0, "TABLE");

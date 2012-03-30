@@ -124,11 +124,10 @@ public:
     void writeEllipse(RS_Ellipse* s);
     void writeSolid(RS_Solid* s);
     void writeLWPolyline(RS_Polyline* l);
+    void writeSpline(RS_Spline* s);
 
     void writePolyline(DL_WriterA& dw,
                 RS_Polyline* l, const DRW_Entity& attrib);
-	void writeSpline(DL_WriterA& dw, 
-                RS_Spline* s, const DRW_Entity& attrib);
         void writeInsert(DL_WriterA& dw, RS_Insert* i, const DRW_Entity& attrib);
         void writeText(DL_WriterA& dw, RS_Text* t, const DRW_Entity& attrib);
 	void writeDimension(DL_WriterA& dw, RS_Dimension* d, 

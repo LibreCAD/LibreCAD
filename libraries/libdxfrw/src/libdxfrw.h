@@ -43,6 +43,7 @@ public:
     bool writeSolid(DRW_Solid *ent);
     bool write3dface(DRW_3Dface *ent);
     bool writeLWPolyline(DRW_LWPolyline *ent);
+    bool writeSpline(DRW_Spline *ent);
 
 private:
     bool processDxf();

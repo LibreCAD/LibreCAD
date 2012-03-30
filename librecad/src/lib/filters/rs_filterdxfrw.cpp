@@ -1732,10 +1732,10 @@ void RS_FilterDXFRW::writeEntities(){
     case RS2::EntityPolyline:
         writeLWPolyline((RS_Polyline*)e);
         break;
-/*    case RS2::EntitySpline:
-        writeSpline(dw, (RS_Spline*)e, attrib);
+    case RS2::EntitySpline:
+        writeSpline((RS_Spline*)e);
         break;
-    case RS2::EntityVertex:
+/*    case RS2::EntityVertex:
         break;
     case RS2::EntityInsert:
         writeInsert(dw, (RS_Insert*)e, attrib);
@@ -1951,69 +1951,52 @@ void RS_FilterDXFRW::writePolyline(DL_WriterA& /*dw*/,
 /**
  * Writes the given spline entity to the file.
  */
-void RS_FilterDXFRW::writeSpline(DL_WriterA& /*dw*/,
-                               RS_Spline* /*s*/,
-                               const DRW_Entity& /*attrib*/) {
+void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
 
     // split spline into atomic entities for DXF R12:
-/*    if (dxf.getVersion()==VER_R12) {
+/*RLZ: TODO    if (dxf.getVersion()==VER_R12) {
         writeAtomicEntities(dw, s, attrib, RS2::ResolveNone);
         return;
     }
-
+*/
     if (s->getNumberOfControlPoints() < s->getDegree()+1) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_FilterDXF::writeSpline: "
                         "Discarding spline: not enough control points given.");
         return;
     }
+    DRW_Spline sp;
 
-    // Number of control points:
-    int numCtrl = s->getNumberOfControlPoints();
-
-    // Number of knots (= number of control points + spline degree + 1)
-    int numKnots = numCtrl + s->getDegree() + 1;
-
-    int flags;
-    if (s->isClosed()) {
-        flags = 11;
-    } else {
-        flags = 8;
-    }
-
-    // write spline header:
-    dxf.writeSpline(
-        dw,
-        DL_SplineData(s->getDegree(),
-                      numKnots,
-                      numCtrl,
-                      flags),
-        attrib);
+    if (s->isClosed())
+        sp.flags = 11;
+    else
+        sp.flags = 8;
+    sp.ncontrol = s->getNumberOfControlPoints();
+    sp.degree = s->getDegree();
+    sp.nknots = sp.ncontrol + sp.degree + 1;
 
     // write spline knots:
-    QList<RS_Vector> cp = s->getControlPoints();
-    QList<RS_Vector>::iterator it;
-
-    int k = s->getDegree()+1;
-    DL_KnotData kd;
-    for (int i=1; i<=numKnots; i++) {
+    int k = sp.degree+1;
+    for (int i=1; i<=sp.nknots; i++) {
         if (i<=k) {
-            kd = DL_KnotData(0.0);
-        } else if (i<=numKnots-k) {
-            kd = DL_KnotData(1.0/(numKnots-2*k+1) * (i-k));
+            sp.knotslist.push_back(0.0);
+        } else if (i<=sp.nknots-k) {
+            sp.knotslist.push_back(1.0/(sp.nknots-2*k+1) * (i-k));
         } else {
-            kd = DL_KnotData(1.0);
+            sp.knotslist.push_back(1.0);
         }
-        dxf.writeKnot(dw,
-                      kd);
     }
 
     // write spline control points:
-    for (it = cp.begin(); it!=cp.end(); ++it) {
-        dxf.writeControlPoint(dw,
-                              DL_ControlPointData((*it).x,
-                                                  (*it).y,
-                                                  0.0));
-    }*/
+    QList<RS_Vector> cp = s->getControlPoints();
+    for (int i = 0; i < cp.size(); ++i) {
+        DRW_Coord *controlpoint = new DRW_Coord();
+        sp.controllist.push_back(controlpoint);
+        controlpoint->x = cp.at(i).x;
+        controlpoint->y = cp.at(i).y;
+     }
+    getEntityAttributes(&sp, s);
+    dxf->writeSpline(&sp);
+
 }
 
 
