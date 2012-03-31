@@ -96,7 +96,6 @@ QString QG_FileDialog::getExtension (RS2::FormatType type){
     switch (type) {
     case RS2::FormatLFF:
         return QString(".lff");
-        break;
     case RS2::FormatJWW:
         return QString(".jww");
     case RS2::FormatCXF:
@@ -181,15 +180,39 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
                                                  "Drawing Exchange DXF 2000 (*.dxf)");*/
     RS_SETTINGS->endGroup();
 
+    if(!defDir.endsWith("/") && !defDir.endsWith("\\"))
+        defDir += QDir::separator();
+
     RS_DEBUG->print("defDir: %s", defDir.toLatin1().data());
-    QString fn = "";
+
+    // setup filters
     QStringList filters;
+
 #ifdef USE_DXFRW
     filters << fDxf2000 << fDxfrw2000  << fDxfR12 << fLff << fCxf << fJww;
 #else
     filters << fDxf2000 << fDxfR12 << fLff << fCxf << fJww;
 #endif
 
+    ftype = RS2::FormatDXF;
+    RS_DEBUG->print("defFilter: %s", fDxf2000.toLatin1().data());
+
+    if (type!=NULL)
+        *type = ftype;
+
+    // when defFilter is added the below should use the default extension.
+    // generate an untitled name
+    QString fn = "Untitled";
+    if(QFile::exists( defDir + fn + getExtension( ftype ) ))
+    {
+        int fileCount = 1;
+        while(QFile::exists( defDir + fn + QString(" %1").arg(fileCount) +
+                             getExtension(ftype)) )
+            ++fileCount;
+        fn += QString(" %1").arg(fileCount);
+    }
+
+    // initialize dialog properties
     setWindowTitle(tr("Save %1 As").arg(name));
     setFileMode(QFileDialog::AnyFile);
     setDirectory(defDir);
@@ -197,28 +220,29 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
 #if QT_VERSION >= 0x040400
     selectNameFilter(fDxf2000);
 #endif
-    ftype= RS2::FormatDXF;
-    RS_DEBUG->print("defFilter: %s", fDxf2000.toLatin1().data());
+    selectFile(fn);
 
-    if (exec()==QDialog::Accepted) {
-        QStringList fl = selectedFiles();
-        if (!fl.isEmpty())
-            fn = fl[0];
-        fn = QDir::convertSeparators( QFileInfo(fn).absoluteFilePath() );
-        getType(selectedFilter());
-        if (type!=NULL)
-                *type = ftype;
-        // append default extension:
-        if (QFileInfo(fn).fileName().indexOf('.')==-1) {
-            fn += getExtension(ftype);
-        }
+
+    // only return non empty string when we have a complete, user approved, file name.
+    if (exec()!=QDialog::Accepted)
+        return QString("");
+
+    QStringList fl = selectedFiles();
+    if (fl.isEmpty())
+        return QString("");
+
+    QFileInfo fi = QFileInfo( fl[0] );
+    fn = QDir::convertSeparators( fi.absoluteFilePath() );
+
+    // append default extension:
+    if (fi.fileName().indexOf('.')==-1)
+        fn += getExtension(ftype);
 
     // store new default settings:
-        RS_SETTINGS->beginGroup("/Paths");
-        RS_SETTINGS->writeEntry("/Save", QFileInfo(fn).absolutePath());
-        //RS_SETTINGS->writeEntry("/SaveFilter", fileDlg->selectedFilter());
-        RS_SETTINGS->endGroup();
-    }
+    RS_SETTINGS->beginGroup("/Paths");
+    RS_SETTINGS->writeEntry("/Save", fi.absolutePath());
+    //RS_SETTINGS->writeEntry("/SaveFilter", fileDlg->selectedFilter());
+    RS_SETTINGS->endGroup();
 
     return fn;
 }
