@@ -289,6 +289,14 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         writer->writeString(9, "$DIMTXT");
         writer->writeDouble(40, varDouble);
     }
+    if (getStr("$DIMSTYLE", &varStr)) {
+        writer->writeString(9, "$DIMSTYLE");
+        writer->writeString(2, varStr);
+    }
+    if (getDouble("$DIMTSZ", &varDouble)) {
+        writer->writeString(9, "$DIMTSZ");
+        writer->writeDouble(40, varDouble);
+    }
     if (getCoord("$INSBASE", &varCoord)) {
         writer->writeString(9, "$INSBASE");
         writer->writeDouble(10, varCoord.x);

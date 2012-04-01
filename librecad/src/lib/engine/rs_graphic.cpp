@@ -44,7 +44,7 @@
 RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
         : RS_Document(parent),
         layerList(),
-blockList(true)
+blockList(true),paperScaleFixed(false)
 {
 
     RS_SETTINGS->beginGroup("/Defaults");
@@ -787,7 +787,7 @@ double RS_Graphic::getPaperScale() {
  * Sets a new scale factor for the paper space.
  */
 void RS_Graphic::setPaperScale(double s) {
-    addVariable("$PSVPSCALE", s, 40);
+    if(paperScaleFixed==false) addVariable("$PSVPSCALE", s, 40);
 }
 
 

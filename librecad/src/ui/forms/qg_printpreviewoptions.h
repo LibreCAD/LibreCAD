@@ -48,6 +48,8 @@ public slots:
     virtual void scale( const QString & s );
     virtual void updateScaleBox();
     virtual void updateScaleBox(const double& f);
+    /** print scale fixed to saved value **/
+    virtual void setScaleFixed(bool fixed);
 //    virtual void updateScaleBox(const QString& s);
 
 protected:
