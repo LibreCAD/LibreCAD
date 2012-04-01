@@ -262,7 +262,7 @@ double RS_Vector::squared() const {
   */
 double RS_Vector::squaredTo(const RS_Vector& v1) const
 {
-    if (valid) {
+    if (valid && v1.valid) {
         return  (*this - v1).squared();
     }
     return RS_MAXDOUBLE;
