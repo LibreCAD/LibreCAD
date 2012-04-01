@@ -35,7 +35,6 @@ CONFIG += qt \
 PRE_TARGETDEPS += ../../generated/lib/libdxfrw.a
 PRE_TARGETDEPS += ../../generated/lib/libdxflib.a
 PRE_TARGETDEPS += ../../generated/lib/libjwwlib.a
-PRE_TARGETDEPS += ../../generated/lib/libfparser.a
 
 DESTDIR = $${INSTALLDIR}
 
@@ -73,13 +72,13 @@ LIBS += -L../../generated/lib  \
     -ldxflib \
     -ldxfrw \
     -ljwwlib \
-    -lfparser
+    -lmuparser
+
 
 DEPENDPATH += \
     ../../libraries/dxflib/src \
     ../../libraries/libdxfrw/src \
     ../../libraries/jwwlib/src \
-    ../../libraries/fparser \
     cmd \
     lib/actions \
     lib/creation \

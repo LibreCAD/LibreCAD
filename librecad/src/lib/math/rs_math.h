@@ -41,10 +41,11 @@
 
 #include <QRegExp>
 #include <QVector>
-#include "fparser.hh"
+#include <muParser.h>
 
 #include "rs.h"
 #include "rs_vector.h"
+
 
 //#ifdef __GNUC__
 //#define min(x,y) (x<y ? x : y)
@@ -93,6 +94,8 @@ public:
         b=ttmp;
     }
 
+    static double eval(const QString& expr, bool* ok);
+
     static std::vector<double> quadraticSolver(const std::vector<double>& ce);
     static std::vector<double> cubicSolver(const std::vector<double>& ce);
     static std::vector<double> quarticSolver(const std::vector<double>& ce);
@@ -120,57 +123,10 @@ public:
      */
     static double ellipticIntegral_2(const double& k, const double& phi);
 
-    /**
-     * Evaluates a mathematical expression and returns the result.
-     * If an error occured, ok will be set to false (if ok isn't NULL).
-     */
-    // Keep that in the header file for dynamic inclusion/exclusion.
-    static double eval(const QString& expr, bool* ok) {
-        if (expr.isEmpty()) {
-            if (ok!=NULL) {
-                *ok = false;
-            }
-            return 0.0;
-        }
-
-        FunctionParser fp;
-        fp.AddConstant("pi", M_PI);
-
-        // replace '14 3/4' with '14+3/4'
-        QString s = expr;
-        bool done;
-        do {
-            done = true;
-            int i = s.indexOf(QRegExp("[0-9]* [0-9]*/[0-9]*"));
-            if (i!=-1) {
-                int i2 = s.indexOf(' ', i);
-                if (i2!=-1) {
-                    s.replace(i2, 1, "+");
-                    done = false;
-                }
-            }
-        } while (!done);
-
-        int ret = fp.Parse(s.toLatin1().data(), "", true);
-
-        if (ret>=0) {
-            if (ok!=NULL) {
-                *ok = false;
-            }
-            return 0.0;
-        }
-
-        if (ok!=NULL) {
-            *ok = true;
-        }
-
-        return fp.Eval(NULL);
-    }
-
     static QString doubleToString(double value, double prec);
     static QString doubleToString(double value, int prec);
 
     static void test();
-};
+    };
 
 #endif
