@@ -294,7 +294,28 @@ double RS_Math::eval(const QString& expr, double def) {
  * Evaluates a mathematical expression and returns the result.
  * If an error occured, ok will be set to false (if ok isn't NULL).
  */
-//double RS_Math::eval(const QString& expr, bool* ok);
+double RS_Math::eval(const QString& expr, bool* ok) {
+    bool okTmp(false);
+    if(ok==NULL) ok=&okTmp;
+    if (expr.isEmpty()) {
+        *ok = false;
+        return 0.0;
+    }
+    double ret(0.);
+    try{
+        mu::Parser p;
+        p.DefineConst("pi",M_PI);
+        p.SetExpr(expr.toStdString());
+        ret=p.Eval();
+        *ok=true;
+    }
+    catch (mu::Parser::exception_type &e)
+      {
+        std::cout << e.GetMsg() << std::endl;
+        *ok=false;
+      }
+    return ret;
+}
 
 
 /**
@@ -395,6 +416,10 @@ void RS_Math::test() {
 
     std::cout << "RS_Math::test: complete\n";
 }
+
+
+
+//Equation solvers
 
 // quadratic, cubic, and quartic equation solver
 // @ ce[] contains coefficent of the cubic equation:

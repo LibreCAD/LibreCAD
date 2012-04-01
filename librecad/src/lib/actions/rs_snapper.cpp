@@ -290,35 +290,10 @@ RS_Vector RS_Snapper::snapGrid(const RS_Vector& coord) {
 
 //    RS_DEBUG->print("RS_Snapper::snapGrid begin");
 
-//    RS_Vector vec(false);
-//    double dist=0.0;
-
-//    RS_Grid* grid = graphicView->getGrid();
+//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//    std::cout<<" mouse: = "<<coord<<std::endl;
+//    std::cout<<" snapGrid: = "<<graphicView->getGrid()->snapGrid(coord)<<std::endl;
     return  graphicView->getGrid()->snapGrid(coord);
-
-
-//    if (grid!=NULL) {
-//        RS_Vector* pts = grid->getPoints();
-//        int closest = -1;
-//        dist = 32000.00;
-//        for (int i=0; i<grid->count(); ++i) {
-//            double d = pts[i].distanceTo(coord);
-//            if (d<dist) {
-//                closest = i;
-//                dist = d;
-//            }
-//        }
-//        if (closest>=0) {
-//            vec = pts[closest];
-//        }
-//    }else {
-//        RS_DEBUG->print("RS_Snapper:: getGrid() returns NULL\n");
-//    }
-//    keyEntity = NULL;
-
-//    RS_DEBUG->print("RS_Snapper::snapGrid end");
-
-//    return vec;
 }
 
 
