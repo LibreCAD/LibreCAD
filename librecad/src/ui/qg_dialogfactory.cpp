@@ -47,6 +47,7 @@
 #include "qg_blockdialog.h"
 #include "qg_cadtoolbar.h"
 #include "qg_circleoptions.h"
+#include "qg_circletan2options.h"
 #include "qg_commandwidget.h"
 #include "qg_coordinatewidget.h"
 #include "qg_dimlinearoptions.h"
@@ -689,6 +690,10 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         requestCircleOptions(action, on, update);
         break;
 
+    case RS2::ActionDrawCircleTan2:
+        requestCircleTan2Options(action, on, update);
+        break;
+
     case RS2::ActionDrawSpline:
         requestSplineOptions(action, on, update);
         break;
@@ -1101,6 +1106,28 @@ void QG_DialogFactory::requestCircleOptions(RS_ActionInterface* action,
         }
         if (on==true) {
             toolWidget = new QG_CircleOptions();
+            optionWidget->addWidget(toolWidget);
+            toolWidget->setAction(action, update);
+            toolWidget->show();
+        }
+    }
+}
+
+
+/**
+ * Shows a widget for arc options.
+ */
+void QG_DialogFactory::requestCircleTan2Options(RS_ActionInterface* action,
+                                            bool on, bool update) {
+    static QG_CircleTan2Options* toolWidget = NULL;
+
+    if (optionWidget!=NULL) {
+        if (toolWidget!=NULL) {
+            delete toolWidget;
+            toolWidget = NULL;
+        }
+        if (on==true) {
+            toolWidget = new QG_CircleTan2Options();
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
             toolWidget->show();

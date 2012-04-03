@@ -180,7 +180,10 @@ public:
     virtual double getAngle2() const {
         return data.endpoint.angleTo(data.startpoint);
     }
-
+/**
+  * @return a perpendicular vector
+  */
+    RS_Vector getNormalVector() const;
     virtual RS_Vector getMiddlePoint()const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL)const;
@@ -207,6 +210,7 @@ public:
           * implementations must revert the direction of an atomic entity
           */
     virtual void revertDirection();
+     virtual QVector<RS_Entity* > offsetTwoSides(const double& distance) const;
     /**
       * the modify offset action
       */

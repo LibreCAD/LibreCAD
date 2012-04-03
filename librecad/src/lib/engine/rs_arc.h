@@ -198,6 +198,7 @@ public:
     virtual RS_Vector getEndpoint() const {
         return endpoint;
     }
+    virtual QVector<RS_Entity* > offsetTwoSides(const double& distance) const;
     /**
           * implementations must revert the direction of an atomic entity
           */

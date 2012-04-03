@@ -124,6 +124,7 @@ public slots:
     void slotDrawCircle3P();
     void slotDrawCircleParallel();
     void slotDrawCircleInscribe();
+    void slotDrawCircleTan2();
     void slotDrawArc();
     void slotDrawArc3P();
     void slotDrawArcParallel();

@@ -392,6 +392,23 @@ bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
     return true;
 }
 
+
+RS_Vector RS_Line::getNormalVector() const
+{
+    RS_Vector vp=data.endpoint  - data.startpoint; //direction vector
+    double&& r=vp.magnitude();
+    if(r< RS_TOLERANCE) return RS_Vector(false);
+    return RS_Vector(-vp.y,vp.x)/r;
+}
+
+  QVector<RS_Entity* > RS_Line::offsetTwoSides(const double& distance) const
+{
+      QVector<RS_Entity*> ret(0,NULL);
+      RS_Vector&& vp=getNormalVector()*distance;
+      ret<< new RS_Line(NULL,RS_LineData(data.startpoint+vp,data.endpoint+vp));
+      ret<< new RS_Line(NULL,RS_LineData(data.startpoint-vp,data.endpoint-vp));
+      return ret;
+}
 /**
   * revert the direction of line
   */

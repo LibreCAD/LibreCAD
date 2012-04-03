@@ -246,6 +246,48 @@ bool RS_Circle::createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& 
     return createFromCR(sol.get(0),tri[1]->getDistanceToPoint(sol.get(0)));
 }
 
+QVector<RS_Entity* > RS_Circle::offsetTwoSides(const double& distance) const
+{
+    QVector<RS_Entity*> ret(0,NULL);
+    ret<<new RS_Circle(NULL,RS_CircleData(getCenter(),getRadius()+distance));
+    if(getRadius()>distance)
+    ret<<new RS_Circle(NULL,RS_CircleData(getCenter(),getRadius()-distance));
+    return ret;
+}
+
+/**
+  * create a circle of radius r and tangential to two given entities
+  */
+bool RS_Circle::createTan2(const RS_Vector& coord, const QVector<RS_AtomicEntity*>& circles, const double& r)
+{
+    if(circles.size()<2) return false;
+    auto&& e0=circles[0]->offsetTwoSides(r);
+    auto&& e1=circles[1]->offsetTwoSides(r);
+    RS_VectorSolutions centers;
+    if(e0.size()>0 && e1.size()>=0) {
+        for(auto it0=e0.begin();it0!=e0.end();it0++){
+            for(auto it1=e1.begin();it1!=e1.end();it1++){
+                centers.appendTo(RS_Information::getIntersection(*it0,*it1));
+            }
+        }
+    }
+    for(auto it0=e0.begin();it0!=e0.end();it0++){
+        delete *it0;
+    }
+    for(auto it0=e1.begin();it0!=e1.end();it0++){
+        delete *it0;
+    }
+    if(centers.size()>0){
+        data.center=centers.getClosest(coord,NULL,NULL);
+        data.radius=r;
+        return true;
+    }/*else{
+        std::cout<<__FUNCTION__<<" failed"<<std::endl;
+    }*/
+
+    return false;
+
+}
 
 RS_VectorSolutions RS_Circle::getRefPoints() {
     RS_Vector v1(data.radius, 0.0);

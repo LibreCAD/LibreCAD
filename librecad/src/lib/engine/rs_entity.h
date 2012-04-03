@@ -28,6 +28,7 @@
 #ifndef RS_ENTITY_H
 #define RS_ENTITY_H
 
+#include <memory>
 #include <QMultiHash>
 
 #include "rs_math.h"
@@ -473,6 +474,15 @@ public:
      * Implementations must offset the entity by the given direction and distance.
      */
     virtual bool offset(const RS_Vector& /*coord*/, const double& /*distance*/) {return false;}
+
+    /**
+     * Implementations must offset the entity by the distance at both directions
+     * used to generate tangential circles
+     */
+    virtual QVector<RS_Entity* > offsetTwoSides(const double& /*distance*/) const
+    {
+        return QVector<RS_Entity* >();
+    }
     /**
           * implementations must revert the direction of an atomic entity
           */

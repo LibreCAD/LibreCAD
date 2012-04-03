@@ -2,7 +2,7 @@
 **
  * Draw ellipse by foci and a point on ellipse
 
-Copyright (C) 2011 Dongxu Li (dongxuli2011@gmail.com)
+Copyright (C) 2012 Dongxu Li (dongxuli2011@gmail.com)
 Copyright (C) 2011 R. van Twisk (librecad@rvt.dds.nl)
 
 This program is free software; you can redistribute it and/or
@@ -20,8 +20,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#ifndef RS_ACTIONDRAWCIRCLEINSCRIBE_H
-#define RS_ACTIONDRAWCIRCLEINSCRIBE_H
+#ifndef RS_ACTIONDRAWCIRCLETAN2_H
+#define RS_ACTIONDRAWCIRCLETAN2_H
 
 #include <QVector>
 #include "rs_previewactioninterface.h"
@@ -32,27 +32,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * @author Dongxu Li
  */
-class RS_ActionDrawCircleInscribe : public RS_PreviewActionInterface {
+class RS_ActionDrawCircleTan2 : public RS_PreviewActionInterface {
         Q_OBJECT
 public:
     /**
      * Action States.
      */
     enum Status {
-        SetLine1,   //  Setting the First Line.  */
-        SetLine2,   //  Setting the Second Line.  */
-        SetLine3   //  Setting the Third Line.  */
+        SetCircle1,   //  Setting the First Circle.  */
+        SetCircle2   //  Setting the Second Circle.  */
     };
 
 public:
-    RS_ActionDrawCircleInscribe(RS_EntityContainer& container,
+    RS_ActionDrawCircleTan2(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView);
-    ~RS_ActionDrawCircleInscribe();
+    ~RS_ActionDrawCircleTan2();
 
     static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 
     virtual RS2::ActionType rtti() {
-        return RS2::ActionDrawCircleInscribe;
+        return RS2::ActionDrawCircleTan2;
     }
     virtual void init(int status=0);
 
@@ -70,12 +69,25 @@ public:
     virtual void updateMouseCursor();
 //    virtual void updateToolBar();
 
+    virtual void showOptions();
+    virtual void hideOptions();
+    void setRadius(const double& r){
+        radius=r;
+    }
+    double getRadius(){
+        return radius;
+    }
+
+
 protected:
-    QVector<RS_Line*> lines;
+    RS_Entity* catchCircle(QMouseEvent* e);
+    QVector<RS_AtomicEntity*> circles;
     private:
     RS_CircleData cData;
     RS_Vector coord;
+    double radius;
     bool valid;
+    QVector<RS2::EntityType> enTypeList;
 };
 
 #endif

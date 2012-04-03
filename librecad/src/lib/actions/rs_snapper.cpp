@@ -64,19 +64,17 @@ void RS_Snapper::init() {
     snapSpot = RS_Vector(false);
     snapCoord = RS_Vector(false);
     distance = 1.0;
-    RS_SETTINGS->beginGroup("/Snap");
-    snapRange = RS_SETTINGS->readNumEntry("/Range", 20);
-    //middlePoints behaviors weird, add brutal force here
-    //todo, clean up middlePoints
-    //middlePoints= RS_SETTINGS->readNumEntry("/MiddlePoints", 1);
-    //distance=RS_SETTINGS->readEntry("/Distance", QString("1")).toDouble();
-    RS_SETTINGS->endGroup();
+//    RS_SETTINGS->beginGroup("/Snap");
+//    snapRange = RS_SETTINGS->readNumEntry("/Range", 20);
+//    //middlePoints behaviors weird, add brutal force here
+//    //todo, clean up middlePoints
+//    //middlePoints= RS_SETTINGS->readNumEntry("/MiddlePoints", 1);
+//    //distance=RS_SETTINGS->readEntry("/Distance", QString("1")).toDouble();
+//    RS_SETTINGS->endGroup();
     RS_SETTINGS->beginGroup("/Appearance");
     showCrosshairs = (bool)RS_SETTINGS->readNumEntry("/ShowCrosshairs", 1);
     RS_SETTINGS->endGroup();
-    if (snapRange<2) {
-        snapRange = 20;
-    }
+    snapRange=getSnapRange();
 }
 
 void RS_Snapper::finish() {
@@ -249,7 +247,12 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     return snapCoord;
 }
 
-
+double RS_Snapper::getSnapRange() const
+{
+    if(graphicView != NULL)
+    return (graphicView->getGrid()->getCellVector()*0.5).magnitude();
+    return 20.;
+}
 
 /**
  * Snaps to a free coordinate.
@@ -440,7 +443,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos,
     RS_DEBUG->print("RS_Snapper::catchEntity");
 
         // set default distance for points inside solids
-    double dist = graphicView->toGraphDX(snapRange)*0.9;
+    double dist = graphicView->toGraphDX(getSnapRange())*0.9;
 
     RS_Entity* entity = container->getNearestEntity(pos, &dist, level);
 
@@ -449,7 +452,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos,
                 idx = entity->getParent()->findEntity(entity);
         }
 
-    if (entity!=NULL && dist<=graphicView->toGraphDX(snapRange)) {
+    if (entity!=NULL && dist<=graphicView->toGraphDX(getSnapRange())) {
         // highlight:
         RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
         return entity;
@@ -497,7 +500,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
         ec.addEntity(en);
     }
     if (ec.count() == 0 ) return NULL;
-    double dist = graphicView->toGraphDX(snapRange)*0.9;
+    double dist = graphicView->toGraphDX(getSnapRange())*0.9;
 
     RS_Entity* entity = ec.getNearestEntity(pos, &dist, RS2::ResolveNone);
 
@@ -506,7 +509,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
                 idx = entity->getParent()->findEntity(entity);
         }
 
-    if (entity!=NULL && dist<=graphicView->toGraphDX(snapRange)) {
+    if (entity!=NULL && dist<=graphicView->toGraphDX(getSnapRange())) {
         // highlight:
         RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
         return entity;
@@ -567,6 +570,10 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const QVector<RS2::EntityType
         for(int i=0;i<enTypeList.size();i++){
             RS_Entity* en=catchEntity(coord, enTypeList.at(i), level);
             if(en!=NULL) ec.addEntity(en);
+            if(en!=NULL) {
+//            std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : lines "<<__LINE__<<std::endl;
+//            std::cout<<"caught id= "<<en->getId()<<std::endl;
+            }
         }
         if(ec.count()>0){
             ec.getDistanceToPoint(coord, pten, RS2::ResolveNone);
