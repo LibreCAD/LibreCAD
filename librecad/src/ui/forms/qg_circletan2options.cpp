@@ -85,9 +85,9 @@ void QG_CircleTan2Options::updateRadius(const QString& r) {
         double radius=RS_Math::eval(r,&ok);
         if(ok){
         action->setRadius(radius);
-        }else{
+        }/*else{
             leRadius->setText("10.0");
-        }
+        }*/
     }
 }
 

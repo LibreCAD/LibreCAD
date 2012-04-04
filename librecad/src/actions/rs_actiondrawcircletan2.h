@@ -40,7 +40,8 @@ public:
      */
     enum Status {
         SetCircle1,   //  Setting the First Circle.  */
-        SetCircle2   //  Setting the Second Circle.  */
+        SetCircle2,   //  Setting the Second Circle.  */
+        SetCenter   //  Setting the Second Circle.  */
     };
 
 public:
