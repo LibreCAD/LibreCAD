@@ -587,6 +587,15 @@ bool RS_Arc::offset(const RS_Vector& coord, const double& distance) {
     calculateBorders();
     return true;
 }
+QVector<RS_Entity* > RS_Arc::offsetTwoSides(const double& distance) const
+{
+    QVector<RS_Entity*> ret(0,NULL);
+    ret<<new RS_Arc(NULL,RS_ArcData(getCenter(),getRadius()+distance,getAngle1(),getAngle2(),isReversed()));
+    if(getRadius()>distance)
+    ret<<new RS_Arc(NULL,RS_ArcData(getCenter(),getRadius()-distance,getAngle1(),getAngle2(),isReversed()));
+    return ret;
+}
+
 /**
       * implementations must revert the direction of an atomic entity
       */

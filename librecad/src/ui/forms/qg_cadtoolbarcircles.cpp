@@ -117,7 +117,11 @@ void QG_CadToolBarCircles::drawCircleInscribe() {
         actionHandler->slotDrawCircleInscribe();
     }
 }
-
+void QG_CadToolBarCircles::drawCircleTan2() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawCircleTan2();
+    }
+}
 void QG_CadToolBarCircles::back() {
     if (cadToolBar!=NULL) {
         cadToolBar->back();
@@ -149,6 +153,10 @@ void QG_CadToolBarCircles::restoreAction()
     }
     if ( bCircleInscribe ->isChecked() ) {
         actionHandler->slotDrawCircleInscribe();
+        return;
+    }
+    if ( bCircleTan2 ->isChecked() ) {
+        actionHandler->slotDrawCircleTan2();
         return;
     }
     //clear all action
@@ -186,6 +194,9 @@ void QG_CadToolBarCircles::showCadToolBar(RS2::ActionType actionType){
         return;
     case RS2::ActionDrawCircleInscribe:
         bCircleInscribe->setChecked(true);
+        return;
+    case RS2::ActionDrawCircleTan2:
+        bCircleTan2->setChecked(true);
         return;
     default:
         bHidden->setChecked(true);

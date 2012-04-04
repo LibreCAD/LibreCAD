@@ -216,6 +216,7 @@ public:
 
 protected:
     void deleteSnapper();
+    double getSnapRange() const;
     RS_EntityContainer* container;
     RS_GraphicView* graphicView;
     RS_Entity* keyEntity;

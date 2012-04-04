@@ -65,7 +65,7 @@ public:
     //        virtual void coordinateEvent(RS_CoordinateEvent* e);
     //    virtual void commandEvent(RS_CommandEvent* e);
     virtual QStringList getAvailableCommands();
-//    virtual void finish(bool updateTB=true);
+    virtual void finish(bool updateTB=true);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 //    virtual void updateToolBar();

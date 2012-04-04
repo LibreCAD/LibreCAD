@@ -148,6 +148,10 @@ public:
     void clean();
     RS_Vector get(int i) const;
     int getNumber() const;
+    size_t size() const
+    {
+        return vector.size();
+    }
     bool hasValid() const;
     void set(int i, const RS_Vector& v);
     void push_back(const RS_Vector& v);

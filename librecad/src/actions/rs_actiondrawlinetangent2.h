@@ -52,7 +52,7 @@ public:
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
     virtual RS2::ActionType rtti(){
-        return RS2::ActionDrawLineTangent1;
+        return RS2::ActionDrawLineTangent2;
     }
 //    virtual void init(int status=0);
 

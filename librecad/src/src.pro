@@ -310,6 +310,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actiondrawcircle3p.h \
     actions/rs_actiondrawcirclecr.h \
     actions/rs_actiondrawcircleinscribe.h \
+    actions/rs_actiondrawcircletan2.h \
     actions/rs_actiondrawellipseaxis.h \
     actions/rs_actiondrawellipsefocipoint.h \
     actions/rs_actiondrawellipse4points.h \
@@ -435,6 +436,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actiondrawcircle3p.cpp \
     actions/rs_actiondrawcirclecr.cpp \
     actions/rs_actiondrawcircleinscribe.cpp \
+    actions/rs_actiondrawcircletan2.cpp \
     actions/rs_actiondrawellipseaxis.cpp \
     actions/rs_actiondrawellipsefocipoint.cpp \
     actions/rs_actiondrawellipse4points.cpp \
@@ -576,6 +578,7 @@ HEADERS += ui/qg_actionfactory.h \
     ui/forms/qg_commandwidget.h \
     ui/forms/qg_cadtoolbararcs.h \
     ui/forms/qg_circleoptions.h \
+    ui/forms/qg_circletan2options.h \
     ui/forms/qg_coordinatewidget.h \
     ui/forms/qg_dimensionlabeleditor.h \
     ui/forms/qg_dimlinearoptions.h \
@@ -666,6 +669,7 @@ SOURCES += ui/qg_actionfactory.cpp \
     ui/forms/qg_cadtoolbarselect.cpp \
     ui/forms/qg_cadtoolbarsplines.cpp \
     ui/forms/qg_circleoptions.cpp \
+    ui/forms/qg_circletan2options.cpp \
     ui/forms/qg_commandwidget.cpp \
     ui/forms/qg_coordinatewidget.cpp \
     ui/forms/qg_dimensionlabeleditor.cpp \
@@ -741,6 +745,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_cadtoolbarselect.ui \
     ui/forms/qg_cadtoolbarsplines.ui \
     ui/forms/qg_circleoptions.ui \
+    ui/forms/qg_circletan2options.ui \
     ui/forms/qg_coordinatewidget.ui \
     ui/forms/qg_dimensionlabeleditor.ui \
     ui/forms/qg_dimlinearoptions.ui \

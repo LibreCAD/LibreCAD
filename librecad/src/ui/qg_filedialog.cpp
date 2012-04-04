@@ -221,6 +221,7 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     selectNameFilter(fDxf2000);
 #endif
     selectFile(fn);
+    setDefaultSuffix ( getExtension(ftype));
 
 
     // only return non empty string when we have a complete, user approved, file name.

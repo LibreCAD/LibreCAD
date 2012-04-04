@@ -201,6 +201,9 @@ protected:
     virtual void requestCircleOptions(RS_ActionInterface* action,
                                       bool on, bool update);
 
+    virtual void requestCircleTan2Options(RS_ActionInterface* action,
+                                      bool on, bool update);
+
     virtual void requestSplineOptions(RS_ActionInterface* action,
                                       bool on, bool update);
 
