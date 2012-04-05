@@ -111,11 +111,13 @@ public:
     virtual void writeEntities();
     virtual void writeLTypes();
     virtual void writeLayers();
+    virtual void writeBlockRecords();
+    virtual void writeBlocks();
 
-    void writeVariables(DL_WriterA& dw);
-    void writeLayer(DL_WriterA& dw, RS_Layer* l);
-    void writeAppid(DL_WriterA& dw, const char* appid);
-    void writeBlock(DL_WriterA& dw, RS_Block* blk);
+//    void writeVariables(DL_WriterA& dw);
+//    void writeLayer(DL_WriterA& dw, RS_Layer* l);
+//    void writeAppid(DL_WriterA& dw, const char* appid);
+//    void writeBlock(DL_WriterA& dw, RS_Block* blk);
 
     void writePoint(RS_Point* p);
     void writeLine(RS_Line* l);
@@ -125,11 +127,11 @@ public:
     void writeSolid(RS_Solid* s);
     void writeLWPolyline(RS_Polyline* l);
     void writeSpline(RS_Spline* s);
+    void writeInsert(RS_Insert* i);
+    void writeText(RS_Text* t);
 
     void writePolyline(DL_WriterA& dw,
                 RS_Polyline* l, const DRW_Entity& attrib);
-        void writeInsert(DL_WriterA& dw, RS_Insert* i, const DRW_Entity& attrib);
-        void writeText(DL_WriterA& dw, RS_Text* t, const DRW_Entity& attrib);
 	void writeDimension(DL_WriterA& dw, RS_Dimension* d, 
                 const DRW_Entity& attrib);
         void writeLeader(DL_WriterA& dw, RS_Leader* l, const DRW_Entity& attrib);
@@ -145,7 +147,7 @@ public:
     void setEntityAttributes(RS_Entity* entity, const DRW_Entity* attrib);
     void getEntityAttributes(DRW_Entity* ent, const RS_Entity* entity);
 
-    static QString toDxfString(const QString& string);
+    static QString toDxfString(const QString& str);
     static QString toNativeString(const char* data, const QString& encoding);
     QString getDXFEncoding();
 
@@ -168,9 +170,12 @@ public:
 	static RS2::Unit numberToUnit(int num);
 	static int unitToNumber(RS2::Unit unit);
 	
-        static bool isVariableTwoDimensional(const QString& var);
+    static bool isVariableTwoDimensional(const QString& var);
 
     static RS_FilterInterface* createFilter(){return new RS_FilterDXFRW();}
+
+private:
+    void writeEntity(RS_Entity* e);
 
 private:
     /** Pointer to the graphic we currently operate on. */

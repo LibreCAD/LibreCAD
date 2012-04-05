@@ -305,7 +305,7 @@ public:
         eType = DRW::BLOCK;
         layer = "0";
         flags = 0;
-        name = "caca";
+        name = "*U0";
     }
 
     virtual void applyExtrusion(){}

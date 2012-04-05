@@ -44,6 +44,11 @@ public:
     bool write3dface(DRW_3Dface *ent);
     bool writeLWPolyline(DRW_LWPolyline *ent);
     bool writeSpline(DRW_Spline *ent);
+    bool writeBlockRecord(std::string name);
+    bool writeBlock(DRW_Block *ent);
+    bool writeInsert(DRW_Insert *ent);
+    bool writeMText(DRW_MText *ent);
+    bool writeText(DRW_Text *ent);
 
 private:
     bool processDxf();
@@ -97,6 +102,9 @@ private:
     int entCount;
     bool wlayer0;
     bool applyExt;
+    bool writingBlock;
+    std::map<std::string,int> blockMap;
+    int currHandle;
 
 };
 
