@@ -1419,14 +1419,6 @@ void RS_FilterDXFRW::writeBlockRecords(){
     for (uint i = 0; i < graphic->countBlocks(); i++) {
         blk = graphic->blockAt(i);
         RS_DEBUG->print("writing block record: %s", (const char*)blk->getName().toLocal8Bit());
-
-/*        DRW_Block block;
-        block.name = blk->getName().toStdString();
-        block.basePoint.x = blk->getBasePoint().x;
-        block.basePoint.y = blk->getBasePoint().y;
-#ifndef  RS_VECTOR2D
-        block.basePoint.z = blk->getBasePoint().z;
-#endif*/
         dxf->writeBlockRecord(blk->getName().toStdString());
     }
 }
@@ -1777,8 +1769,10 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
         writeText((RS_Text*)e);
         break;
 
-/*    case RS2::EntityDimAligned:
-    case RS2::EntityDimAngular:
+    case RS2::EntityDimAligned:
+            writeDimAligned( (RS_DimAligned*)e);
+            break;
+/*    case RS2::EntityDimAngular:
     case RS2::EntityDimLinear:
     case RS2::EntityDimRadial:
     case RS2::EntityDimDiametric:
@@ -1786,11 +1780,11 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
         break;
     case RS2::EntityDimLeader:
         writeLeader(dw, (RS_Leader*)e, attrib);
-        break;
+        break;*/
     case RS2::EntityHatch:
-        writeHatch(dw, (RS_Hatch*)e, attrib);
+        writeHatch((RS_Hatch*)e);
         break;
-    case RS2::EntityImage:
+/*    case RS2::EntityImage:
         writeImage(dw, (RS_Image*)e, attrib);
         break;
     case RS2::EntityContainer:
@@ -2127,35 +2121,27 @@ void RS_FilterDXFRW::writeText(RS_Text* t) {
                 else
                     text->basePoint.y += dist*i;
                 dxf->writeText(text);
-            }
+        }
         }
     } else {
         text->text = toDxfString(t->getText()).toStdString();
 //        text->widthscale =t->getWidth();
         text->widthscale =t->getSize().x;
 
-/*        dxf.writeMText(
-                    dw,
-                    DL_MTextData(t->getInsertionPoint().x,
-                                 t->getInsertionPoint().y,
-                                 0.0,
-                                 t->getHeight(),
-                                 t->getWidth(),
-                                 attachmentPoint,
-                                 t->getDrawingDirection(),
-                                 t->getLineSpacingStyle(),
-                                 t->getLineSpacingFactor(),
-                                 (const char*)toDxfString(
-                                     t->getText()).toLocal8Bit(),
-                                 (const char*)t->getStyle().toLocal8Bit(),
-                                 t->getAngle()),
-                    attrib);*/
         dxf->writeMText((DRW_MText*)text);
     }
 }
 
 
-
+void RS_FilterDXFRW::writeDimAligned(RS_DimAligned* d) {
+/*    DRW_DimAligned dim;
+    getEntityAttributes(&dim, d);
+    dim.basePoint.x = d->getExtensionPoint1().x;
+    dim.basePoint.y = d->getExtensionPoint1().y;
+    dim.secPoint.x = d->getExtensionPoint1().x;
+    dim.secPoint.y = d->getExtensionPoint1().y;
+    dxf->writeDimAligned(&dim);*/
+}
 void RS_FilterDXFRW::writeDimension(DL_WriterA& /*dw*/, RS_Dimension* /*d*/,
                                   const DRW_Entity& /*attrib*/) {
 
@@ -2323,14 +2309,13 @@ void RS_FilterDXFRW::writeLeader(DL_WriterA& /*dw*/, RS_Leader* /*l*/,
 }
 
 
-void RS_FilterDXFRW::writeHatch(DL_WriterA& /*dw*/, RS_Hatch* /*h*/,
-                              const DRW_Entity& /*attrib*/) {
-
+void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
+//In ver_r12 add as unnamed block (*u???)
     // split hatch into atomic entities:
 /*    if (dxf.getVersion()==VER_R12) {
         writeAtomicEntities(dw, h, attrib, RS2::ResolveAll);
         return;
-    }
+    }*/
 
     bool writeIt = true;
     if (h->countLoops()>0) {
@@ -2352,76 +2337,72 @@ void RS_FilterDXFRW::writeHatch(DL_WriterA& /*dw*/, RS_Hatch* /*h*/,
     if (!writeIt) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXF::writeHatch: Dropping Hatch");
-    } else {
-        DL_HatchData data(h->countLoops(),
-                          h->isSolid(),
-                          h->getScale(),
-                          h->getAngle(),
-                          (const char*)h->getPattern().toLocal8Bit());
-        dxf.writeHatch1(dw, data, attrib);
+        return;
+    }
 
-        for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
-                l!=NULL;
-                l=h->nextEntity(RS2::ResolveNone)) {
+    DRW_Hatch ha;
+    getEntityAttributes(&ha, h);
+    ha.solid = h->isSolid();
+    ha.scale = h->getScale();
+    ha.angle = h->getAngle();
+    ha.name = h->getPattern().toStdString();
+    ha.loopsnum = h->countLoops();
 
-            // Write hatch loops:
-            if (l->isContainer() && !l->getFlag(RS2::FlagTemp)) {
-                RS_EntityContainer* loop = (RS_EntityContainer*)l;
-                DL_HatchLoopData lData(loop->count());
-                dxf.writeHatchLoop1(dw, lData);
+    for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
+         l!=NULL;
+         l=h->nextEntity(RS2::ResolveNone)) {
 
-                for (RS_Entity* ed=loop->firstEntity(RS2::ResolveNone);
-                        ed!=NULL;
-                        ed=loop->nextEntity(RS2::ResolveNone)) {
+        // Write hatch loops:
+        if (l->isContainer() && !l->getFlag(RS2::FlagTemp)) {
+            RS_EntityContainer* loop = (RS_EntityContainer*)l;
+            DRW_HatchLoop *lData = new DRW_HatchLoop(0);
 
-                    // Write hatch loop edges:
-                    if (ed->rtti()==RS2::EntityLine) {
-                        RS_Line* ln = (RS_Line*)ed;
-                        dxf.writeHatchEdge(
-                            dw,
-                            DL_HatchEdgeData(ln->getStartpoint().x,
-                                             ln->getStartpoint().y,
-                                             ln->getEndpoint().x,
-                                             ln->getEndpoint().y));
-                    } else if (ed->rtti()==RS2::EntityArc) {
-                        RS_Arc* ar = (RS_Arc*)ed;
-                        if (!ar->isReversed()) {
-                            dxf.writeHatchEdge(
-                                dw,
-                                DL_HatchEdgeData(ar->getCenter().x,
-                                                 ar->getCenter().y,
-                                                 ar->getRadius(),
-                                                 ar->getAngle1(),
-                                                 ar->getAngle2(),
-                                                 true));
-                        } else {
-                            dxf.writeHatchEdge(
-                                dw,
-                                DL_HatchEdgeData(ar->getCenter().x,
-                                                 ar->getCenter().y,
-                                                 ar->getRadius(),
-                                                 2*M_PI-ar->getAngle1(),
-                                                 2*M_PI-ar->getAngle2(),
-                                                 false));
-                        }
-                    } else if (ed->rtti()==RS2::EntityCircle) {
-                        RS_Circle* ci = (RS_Circle*)ed;
-                        dxf.writeHatchEdge(
-                            dw,
-                            DL_HatchEdgeData(ci->getCenter().x,
-                                             ci->getCenter().y,
-                                             ci->getRadius(),
-                                             0.0,
-                                             2*M_PI,
-                                             true));
+            for (RS_Entity* ed=loop->firstEntity(RS2::ResolveNone);
+                 ed!=NULL;
+                 ed=loop->nextEntity(RS2::ResolveNone)) {
+
+                // Write hatch loop edges:
+                if (ed->rtti()==RS2::EntityLine) {
+                    RS_Line* ln = (RS_Line*)ed;
+                    DRW_Line *line = new DRW_Line();
+                    line->basePoint.x = ln->getStartpoint().x;
+                    line->basePoint.y = ln->getStartpoint().y;
+                    line->secPoint.x = ln->getEndpoint().x;
+                    line->secPoint.y = ln->getEndpoint().y;
+                    lData->objlist.push_back(line);
+                } else if (ed->rtti()==RS2::EntityArc) {
+                    RS_Arc* ar = (RS_Arc*)ed;
+                    DRW_Arc *arc = new DRW_Arc();
+                    arc->basePoint.x = ar->getStartpoint().x;
+                    arc->basePoint.y = ar->getStartpoint().y;
+                    arc->radious = ar->getRadius();
+                    if (!ar->isReversed()) {
+                        arc->staangle = ar->getAngle1();
+                        arc->endangle = ar->getAngle2();
+                        arc->isccw = true;
+                    } else {
+                        arc->staangle = 2*M_PI-ar->getAngle1();
+                        arc->endangle = 2*M_PI-ar->getAngle2();
+                        arc->isccw = false;
                     }
+                    lData->objlist.push_back(arc);
+                } else if (ed->rtti()==RS2::EntityCircle) {
+                    RS_Circle* ci = (RS_Circle*)ed;
+                    DRW_Arc *arc= new DRW_Arc();
+                    arc->basePoint.x = ci->getStartpoint().x;
+                    arc->basePoint.y = ci->getStartpoint().y;
+                    arc->radious = ci->getRadius();
+                    arc->staangle = 0.0;
+                    arc->endangle = 2*M_PI;
+                    arc->isccw = true;
+                    lData->objlist.push_back(arc);
                 }
-                dxf.writeHatchLoop2(dw, lData);
             }
+            lData->update(); //change to DRW_HatchLoop
+            ha.appendLoop(lData);
         }
-        dxf.writeHatch2(dw, data, attrib);
-    }*/
-
+    }
+    dxf->writeHatch(&ha);
 }
 
 
@@ -3155,7 +3136,6 @@ QString RS_FilterDXFRW::toDxfString(const QString& str) {
                 break;
             }
             j++;
-        } else {
         }
 
     }

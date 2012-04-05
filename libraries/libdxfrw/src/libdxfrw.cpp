@@ -450,6 +450,80 @@ bool dxfRW::writeSpline(DRW_Spline *ent){
     return true;
 }
 
+bool dxfRW::writeHatch(DRW_Hatch *ent){
+    if (version > DRW::AC1009) {
+        writer->writeString(0, "HATCH");
+        writeEntity(ent);
+        writer->writeString(100, "AcDbHatch");
+        writer->writeDouble(10, 0.0);
+        writer->writeDouble(20, 0.0);
+        writer->writeDouble(30, ent->basePoint.z);
+        writer->writeDouble(210, ent->extPoint.x);
+        writer->writeDouble(220, ent->extPoint.y);
+        writer->writeDouble(230, ent->extPoint.z);
+        writer->writeString(2, ent->name);
+        writer->writeInt16(70, ent->solid);
+        writer->writeInt16(71, ent->associative);
+        ent->loopsnum = ent->looplist.size();
+        writer->writeInt16(91, ent->loopsnum);
+        //write paths data
+        for (int i = 0;  i< ent->loopsnum; i++){
+            DRW_HatchLoop *loop = ent->looplist.at(i);
+            writer->writeInt16(92, loop->type);
+            if ( (loop->type & 2) == 2){
+                //RLZ: polyline boundary writeme
+            } else {
+                //boundary path
+                loop->update();
+                writer->writeInt16(93, loop->numedges);
+                for (int j = 0; j<loop->numedges; ++j) {
+                    switch ( (loop->objlist.at(j))->eType) {
+                    case DRW::LINE: {
+                        writer->writeInt16(72, 1);
+                        DRW_Line* l = (DRW_Line*)loop->objlist.at(j);
+                        writer->writeDouble(10, l->basePoint.x);
+                        writer->writeDouble(20, l->basePoint.y);
+                        writer->writeDouble(11, l->secPoint.x);
+                        writer->writeDouble(21, l->secPoint.y);
+                        break; }
+                    case DRW::ARC: {
+                        writer->writeInt16(72, 2);
+                        DRW_Arc* a = (DRW_Arc*)loop->objlist.at(j);
+                        writer->writeDouble(10, a->basePoint.x);
+                        writer->writeDouble(20, a->basePoint.y);
+                        writer->writeDouble(40, a->radious);
+                        writer->writeDouble(50, a->staangle);
+                        writer->writeDouble(51, a->endangle);
+                        writer->writeInt16(73, a->isccw);
+                        break; }
+                    case DRW::ELLIPSE:
+                        //RLZ: elliptic arc boundary writeme
+//                        writer->writeInt16(72, 3);
+                        break;
+                    case DRW::SPLINE:
+                        //RLZ: spline boundary writeme
+//                        writer->writeInt16(72, 4);
+                        break;
+                    default:
+                        break;
+                    }
+                }
+                writer->writeInt16(97, 0);
+            }
+        }
+        writer->writeInt16(75, ent->hstyle);
+        writer->writeInt16(76, ent->hpattern);
+        writer->writeDouble(52, ent->angle);
+        writer->writeDouble(41, ent->scale);
+        writer->writeInt16(77, ent->doubleflag);
+        writer->writeInt16(78, ent->deflines);
+        writer->writeInt16(98, 0);
+    } else {
+        //RLZ: TODO verify in acad12
+    }
+    return true;
+}
+
 bool dxfRW::writeInsert(DRW_Insert *ent){
     writer->writeString(0, "INSERT");
     writeEntity(ent);

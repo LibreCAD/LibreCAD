@@ -18,7 +18,7 @@
 #include "drw_objects.h"
 #include "drw_interface.h"
 
-#define DRW_VERSION     "0.1.0"
+#define DRW_VERSION     "0.3.0"
 
 class dxfReader;
 class dxfWriter;
@@ -49,6 +49,7 @@ public:
     bool writeInsert(DRW_Insert *ent);
     bool writeMText(DRW_MText *ent);
     bool writeText(DRW_Text *ent);
+    bool writeHatch(DRW_Hatch *ent);
 
 private:
     bool processDxf();

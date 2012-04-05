@@ -31,6 +31,7 @@
 #include "rs_block.h"
 #include "rs_color.h"
 #include "rs_dimension.h"
+#include "rs_dimaligned.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_leader.h"
@@ -129,13 +130,14 @@ public:
     void writeSpline(RS_Spline* s);
     void writeInsert(RS_Insert* i);
     void writeText(RS_Text* t);
+    void writeHatch(RS_Hatch* h);
+    void writeDimAligned(RS_DimAligned* d);
 
     void writePolyline(DL_WriterA& dw,
                 RS_Polyline* l, const DRW_Entity& attrib);
 	void writeDimension(DL_WriterA& dw, RS_Dimension* d, 
                 const DRW_Entity& attrib);
         void writeLeader(DL_WriterA& dw, RS_Leader* l, const DRW_Entity& attrib);
-        void writeHatch(DL_WriterA& dw, RS_Hatch* h, const DRW_Entity& attrib);
         void writeImage(DL_WriterA& dw, RS_Image* i, const DRW_Entity& attrib);
 	void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con, 
                 const DRW_Entity& attrib);
@@ -170,7 +172,7 @@ public:
 	static RS2::Unit numberToUnit(int num);
 	static int unitToNumber(RS2::Unit unit);
 	
-    static bool isVariableTwoDimensional(const QString& var);
+        static bool isVariableTwoDimensional(const QString& var);
 
     static RS_FilterInterface* createFilter(){return new RS_FilterDXFRW();}
 
