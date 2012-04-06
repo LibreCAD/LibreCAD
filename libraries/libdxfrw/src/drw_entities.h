@@ -305,7 +305,7 @@ public:
         eType = DRW::BLOCK;
         layer = "0";
         flags = 0;
-        name = "caca";
+        name = "*U0";
     }
 
     virtual void applyExtrusion(){}
@@ -622,6 +622,10 @@ public:
          }
     }
 
+    void update() {
+        numedges = objlist.size();
+    }
+
 public:
     int type;               /*!< boundary path type, code 92, polyline=2, default=0 */
     int numedges;           /*!< number of edges (if not a polyline), code 93 */
@@ -642,6 +646,7 @@ public:
         eType = DRW::HATCH;
         loopsnum = angle = scale = 0;
         hstyle = basePoint.x = basePoint.y = 0;
+        basePoint.z = associative = 0;
         solid = hpattern = 1;
         deflines = doubleflag = 0;
         loop = NULL;

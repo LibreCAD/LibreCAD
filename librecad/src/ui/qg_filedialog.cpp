@@ -197,9 +197,6 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     ftype = RS2::FormatDXF;
     RS_DEBUG->print("defFilter: %s", fDxf2000.toLatin1().data());
 
-    if (type!=NULL)
-        *type = ftype;
-
     // when defFilter is added the below should use the default extension.
     // generate an untitled name
     QString fn = "Untitled";
@@ -234,6 +231,10 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
 
     QFileInfo fi = QFileInfo( fl[0] );
     fn = QDir::convertSeparators( fi.absoluteFilePath() );
+
+    getType(selectedFilter());
+    if (type!=NULL)
+        *type = ftype;
 
     // append default extension:
     if (fi.fileName().indexOf('.')==-1)

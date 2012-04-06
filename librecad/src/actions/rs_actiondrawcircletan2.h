@@ -40,7 +40,8 @@ public:
      */
     enum Status {
         SetCircle1,   //  Setting the First Circle.  */
-        SetCircle2   //  Setting the Second Circle.  */
+        SetCircle2,   //  Setting the Second Circle.  */
+        SetCenter   //  select the closest tangential Circle.  */
     };
 
 public:
@@ -56,6 +57,7 @@ public:
     virtual void init(int status=0);
 
     virtual void trigger();
+    virtual bool getCenters();
     virtual bool preparePreview();
 
     virtual void mouseMoveEvent(QMouseEvent* e);
@@ -72,10 +74,10 @@ public:
     virtual void showOptions();
     virtual void hideOptions();
     void setRadius(const double& r){
-        radius=r;
+        cData.radius=fabs(r);
     }
     double getRadius(){
-        return radius;
+        return cData.radius;
     }
 
 
@@ -88,6 +90,9 @@ protected:
     double radius;
     bool valid;
     QVector<RS2::EntityType> enTypeList;
+    //keep a list of centers found
+    RS_VectorSolutions centers;
+
 };
 
 #endif

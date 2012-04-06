@@ -258,7 +258,7 @@ QVector<RS_Entity* > RS_Circle::offsetTwoSides(const double& distance) const
 /**
   * create a circle of radius r and tangential to two given entities
   */
-bool RS_Circle::createTan2(const RS_Vector& coord, const QVector<RS_AtomicEntity*>& circles, const double& r)
+RS_VectorSolutions RS_Circle::createTan2(const QVector<RS_AtomicEntity*>& circles, const double& r)
 {
     if(circles.size()<2) return false;
     auto&& e0=circles[0]->offsetTwoSides(r);
@@ -277,15 +277,7 @@ bool RS_Circle::createTan2(const RS_Vector& coord, const QVector<RS_AtomicEntity
     for(auto it0=e1.begin();it0!=e1.end();it0++){
         delete *it0;
     }
-    if(centers.size()>0){
-        data.center=centers.getClosest(coord,NULL,NULL);
-        data.radius=r;
-        return true;
-    }/*else{
-        std::cout<<__FUNCTION__<<" failed"<<std::endl;
-    }*/
-
-    return false;
+    return centers;
 
 }
 

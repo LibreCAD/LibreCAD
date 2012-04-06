@@ -152,7 +152,7 @@ public:
 	/**
 	 * Called for every image definition.
 	 */
-        virtual void linkImage(const DRW_ImageDef *data) = 0;
+    virtual void linkImage(const DRW_ImageDef *data) = 0;
 
     /**
      * Called for every comment in the DXF file (code 999).
@@ -171,6 +171,8 @@ public:
 //    }
 
     virtual void writeHeader(DRW_Header& data) = 0;
+    virtual void writeBlocks() = 0;
+    virtual void writeBlockRecords() = 0;
     virtual void writeEntities() = 0;
     virtual void writeLTypes() = 0;
     virtual void writeLayers() = 0;

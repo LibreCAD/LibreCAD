@@ -124,13 +124,9 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent begin");
 
     switch(getStatus() ){
-    case SetCircle2: {
+    case SetCenter: {
 //        RS_Entity*  en = catchEntity(e, enTypeList, RS2::ResolveAll);
-        RS_Entity*  en = catchCircle(e);
-        if(en==NULL) return;
         coord= graphicView->toGraph(e->x(), e->y());
-        circles.resize(getStatus());
-        circles.push_back(static_cast<RS_AtomicEntity*>(en));
 //        circles[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
             deletePreview();
@@ -147,14 +143,17 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent* e) {
 }
 
 
+bool RS_ActionDrawCircleTan2::getCenters(){
+    if(getStatus() != SetCircle2) return false;
+    RS_Circle c(NULL,cData);
+    centers=c.createTan2(circles,cData.radius);
+    valid= (centers.size()>0);
+    return valid;
+}
+
 bool RS_ActionDrawCircleTan2::preparePreview(){
-    valid=false;
-    if(getStatus() == SetCircle2) {
-        RS_Circle c(preview,cData);
-        valid= c.createTan2(coord, circles,radius);
-        if(valid){
-            cData=c.getData();
-        }
+    if(valid) {
+        cData.center=centers.getClosest(coord);
     }
     return valid;
 }
@@ -189,19 +188,22 @@ void RS_ActionDrawCircleTan2::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
 
         switch (getStatus()) {
-        case SetCircle1: {
+        case SetCircle1:
+        case SetCircle2: {
             RS_Entity*  en = catchCircle(e);
             if (en==NULL) return;
             circles.resize(getStatus());
             circles.push_back(static_cast<RS_AtomicEntity*>(en));
-            coord= graphicView->toGraph(e->x(), e->y());
-            circles.at(0)->setHighlighted(true);
-            graphicView->redraw(RS2::RedrawDrawing);
-            setStatus(SetCircle2);
+            if(getStatus()==SetCircle1 || getCenters()){
+                    circles.at(circles.size()-1)->setHighlighted(true);
+                    graphicView->redraw(RS2::RedrawDrawing);
+                    setStatus(getStatus()+1);
+            }
         }
             break;
-        case SetCircle2:
-            if( valid) trigger();
+        case SetCenter:
+            coord= graphicView->toGraph(e->x(), e->y());
+            if( preparePreview()) trigger();
             break;
 
         default:
@@ -333,6 +335,10 @@ void RS_ActionDrawCircleTan2::updateMouseButtonHints() {
                                                 tr("Back"));
             break;
 
+        case SetCenter:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Select the center of the tangent circle"),
+                                                tr("Back"));
+            break;
         default:
             RS_DIALOGFACTORY->updateMouseWidget("", "");
             break;

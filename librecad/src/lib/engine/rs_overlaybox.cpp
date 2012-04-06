@@ -64,9 +64,12 @@ void RS_OverlayBox::draw(RS_Painter* painter, RS_GraphicView* view, double& patt
 	
 	RS_Vector v1=view->toGui(getCorner1());
 	RS_Vector v2=view->toGui(getCorner2());
-	
-	QBrush brush(QColor(9,9,255,90));
-	painter->fillRect(v1.x, v1.y, v2.x-v1.x, v2.y-v1.y, QColor(9,9,255,90) );
+
+    QColor selectColor;
+
+    v1.x > v2.x ? selectColor = QColor(9, 255, 9, 90) : selectColor = QColor(9, 9, 255, 90);
+
+    painter->fillRect(v1.x, v1.y, v2.x-v1.x, v2.y-v1.y, selectColor);
 	
 
 }
