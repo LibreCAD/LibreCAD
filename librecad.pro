@@ -44,6 +44,10 @@ unix {
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_librecad"
         RC_FILE = res/main/librecad.icns
         DESTDIR = unix
+
+        exists("/usr/include/muParser") {
+           INCLUDEPATH += "/usr/include/muParser"
+        }
         
         QMAKE_POST_LINK = scripts/postprocess-unix.sh
     }
@@ -74,9 +78,10 @@ UI_HEADERS_DIR = intermediate/ui
 UI_SOURCES_DIR = intermediate/ui
 RESOURCES += res/extui/extui.qrc
 
+LIBS += -lmuparser
+
 INCLUDEPATH += \
     dxflib/src \
-    fparser \
     src/cmd \
     src/lib/actions \
     src/lib/creation \
@@ -111,7 +116,6 @@ HEADERS = \
     dxflib/src/dl_extrusion.h \
     dxflib/src/dl_writer.h \
     dxflib/src/dl_writer_ascii.h \
-    fparser/fparser.hh \
     src/lib/actions/rs_actioninterface.h \
     src/lib/actions/rs_preview.h \
     src/lib/actions/rs_previewactioninterface.h \
@@ -211,7 +215,6 @@ HEADERS = \
 SOURCES = \
     dxflib/src/dl_dxf.cpp \
     dxflib/src/dl_writer_ascii.cpp \
-    fparser/fparser.cc \
     src/lib/actions/rs_actioninterface.cpp \
     src/lib/actions/rs_preview.cpp \
     src/lib/actions/rs_previewactioninterface.cpp \
