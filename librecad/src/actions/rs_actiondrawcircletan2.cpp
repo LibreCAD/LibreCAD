@@ -143,13 +143,18 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent* e) {
 }
 
 
+bool RS_ActionDrawCircleTan2::getCenters(){
+    if(getStatus() != SetCircle2) return false;
+    RS_Circle c(NULL,cData);
+    centers=c.createTan2(circles,cData.radius);
+    valid= (centers.size()>0);
+    return valid;
+}
+
 bool RS_ActionDrawCircleTan2::preparePreview(){
-    valid=false;
-        RS_Circle c(preview,cData);
-        valid= c.createTan2(coord, circles,radius);
-        if(valid){
-            cData=c.getData();
-        }
+    if(valid) {
+        cData.center=centers.getClosest(coord);
+    }
     return valid;
 }
 
@@ -189,14 +194,16 @@ void RS_ActionDrawCircleTan2::mouseReleaseEvent(QMouseEvent* e) {
             if (en==NULL) return;
             circles.resize(getStatus());
             circles.push_back(static_cast<RS_AtomicEntity*>(en));
-            circles.at(circles.size()-1)->setHighlighted(true);
-            graphicView->redraw(RS2::RedrawDrawing);
-            setStatus(getStatus()+1);
+            if(getStatus()==SetCircle1 || getCenters()){
+                    circles.at(circles.size()-1)->setHighlighted(true);
+                    graphicView->redraw(RS2::RedrawDrawing);
+                    setStatus(getStatus()+1);
+            }
         }
             break;
         case SetCenter:
-//            coord= graphicView->toGraph(e->x(), e->y());
-            if( valid) trigger();
+            coord= graphicView->toGraph(e->x(), e->y());
+            if( preparePreview()) trigger();
             break;
 
         default:

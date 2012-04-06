@@ -154,7 +154,7 @@ public:
     bool createFrom3P(const RS_VectorSolutions& sol);
     bool createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& lines);
     virtual QVector<RS_Entity* > offsetTwoSides(const double& distance) const;
-    bool createTan2(const RS_Vector& coord, const QVector<RS_AtomicEntity*>& circles, const double& r);
+    RS_VectorSolutions createTan2(const QVector<RS_AtomicEntity*>& circles, const double& r);
 
     virtual RS_Vector getMiddlePoint(void)const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
