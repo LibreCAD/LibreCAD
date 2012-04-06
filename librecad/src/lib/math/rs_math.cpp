@@ -30,6 +30,7 @@
 #include <boost/math/special_functions/ellint_2.hpp>
 #endif
 
+#include <muParser.h>
 #include "rs_math.h"
 
 #include "rs_debug.h"

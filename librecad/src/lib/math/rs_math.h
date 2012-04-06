@@ -41,7 +41,6 @@
 
 #include <QRegExp>
 #include <QVector>
-#include <muParser.h>
 
 #include "rs.h"
 #include "rs_vector.h"
