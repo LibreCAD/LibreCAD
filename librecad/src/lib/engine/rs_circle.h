@@ -100,7 +100,7 @@ public:
     }
 
     /** @return Copy of data that defines the circle. **/
-    RS_CircleData getData() {
+    RS_CircleData getData() const {
         return data;
     }
 
@@ -155,7 +155,14 @@ public:
     bool createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& lines);
     virtual QVector<RS_Entity* > offsetTwoSides(const double& distance) const;
     RS_VectorSolutions createTan2(const QVector<RS_AtomicEntity*>& circles, const double& r);
+    /** solve one of the eight Appollonius Equations
+| Cx - Ci|^2=(Rx+Ri)^2
+with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are the Center and radius of the i-th existing circle
+**/
+    static QList<RS_Circle> solveAppolloniusSingle(const QList<RS_Circle>& circles);
 
+    QList<RS_Circle> createTan3(const QVector<RS_AtomicEntity*>& circles);
+bool testTan3(const QVector<RS_AtomicEntity*>& circles);
     virtual RS_Vector getMiddlePoint(void)const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL)const;

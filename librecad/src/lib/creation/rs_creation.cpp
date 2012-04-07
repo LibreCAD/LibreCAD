@@ -825,7 +825,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
         m.push_back(a*a*b*b); //mb11
 
 
-        auto&& vs0=RS_Math::simultaneusQuadraticSolver(m); //to hold solutions
+        auto&& vs0=RS_Math::simultaneousQuadraticSolver(m); //to hold solutions
         if (vs0.getNumber()<1) return NULL;
         for(int i=0;i<vs0.getNumber();i++){
 //            std::cout<<"i="<<i<<"\n";

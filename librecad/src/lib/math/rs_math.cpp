@@ -746,7 +746,7 @@ double RS_Math::ellipticIntegral_2(const double& k, const double& phi)
   * m[0] m[1] must be positive
   *@return a vector contains real roots
   */
-RS_VectorSolutions RS_Math::simultaneusQuadraticSolver(const std::vector<double>& m)
+RS_VectorSolutions RS_Math::simultaneousQuadraticSolver(const std::vector<double>& m)
 {
     RS_VectorSolutions ret(0);
     if(m.size() != 8 ) return ret; // valid m should contain exact 8 elements
