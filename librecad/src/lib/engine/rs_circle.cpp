@@ -293,7 +293,7 @@ QList<RS_Circle> RS_Circle::createTan3(const QVector<RS_AtomicEntity*>& circles)
     do{
         ret.append(solveAppolloniusSingle(cs));
         flags++;
-        size_t j=0;
+        unsigned short j=0;
         for(unsigned short i=1u;i<=4u;i<<=1){
             if(flags & i) {
                 cs[j].setRadius( - fabs(cs[j].getRadius()));
@@ -323,12 +323,13 @@ bool RS_Circle::testTan3(const QVector<RS_AtomicEntity*>& circles)
     if(circles.size()!=3) return false;
 
     const auto itEnd=circles.end();
-//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
-//    std::cout<<"to verify Center = ( "<<data.center.x<<" , "<<data.center.y<<" ), r= "<<data.radius<<std::endl;
+//        std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//        std::cout<<"to verify Center = ( "<<data.center.x<<" , "<<data.center.y<<" ), r= "<<data.radius<<std::endl;
     for(auto it=circles.begin();it!=itEnd;it++){
 //        std::cout<<"with Center = ( "<<(*it)->getCenter().x<<" , "<<(*it)->getCenter().y<<" ), r= "<<(*it)->getRadius()<<std::endl;
-        const double dist=(data.center - (*it)->getCenter()).magnitude();
-        if(  fabs(dist -  fabs( data.radius - (*it)->getRadius()))>RS_TOLERANCE && fabs(dist - data.radius - (*it)->getRadius())>RS_TOLERANCE ) return false;
+        const double dist=fabs((data.center - (*it)->getCenter()).magnitude());
+        if(  fabs(dist -  fabs( data.radius - (*it)->getRadius()))>1.e2*RS_TOLERANCE
+             && fabs(dist - data.radius - (*it)->getRadius())>1.e2*RS_TOLERANCE ) return false;
 //        std::cout<<"accepted"<<std::endl;
     }
     return true;
@@ -340,6 +341,10 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
 **/
 QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circles)
 {
+          std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+          for(int i=0;i<circles.size();i++){
+std::cout<<"i="<<i<<"\t center="<<circles[i].getCenter()<<"\tr="<<circles[i].getRadius()<<std::endl;
+          }
     QList<RS_Circle> ret;
 
     QList<RS_Vector> centers;
@@ -356,35 +361,53 @@ QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circl
     mat[0][1]=centers[2].y - centers[0].y;
     mat[1][0]=centers[2].x - centers[1].x;
     mat[1][1]=centers[2].y - centers[1].y;
+    if(fabs(mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0])<RS_TOLERANCE*RS_TOLERANCE){
+        std::cout<<"The provided circles are in a line, not common tangent circle"<<std::endl;
+    }
     // r^0 term
     mat[0][2]=0.5*(centers[2].squared()-centers[0].squared()+radii[0]*radii[0]-radii[2]*radii[2]);
     mat[1][2]=0.5*(centers[2].squared()-centers[1].squared()+radii[1]*radii[1]-radii[2]*radii[2]);
+    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+    for(unsigned short i=0;i<=1;i++){
+        std::cout<<"eqs P:"<<i<<" : "<<mat[i][0]<<"*x + "<<mat[i][1]<<"*y = "<<mat[i][2]<<std::endl;
+    }
     QVector<QVector<double> > sm(2,QVector<double>(2,0.));
     if(RS_Math::linearSolver(mat,sm[0])==false){
         return ret;
     }
+
+    RS_Vector vp(sm[0][0],sm[0][1]);
+      std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+      std::cout<<"vp="<<vp<<std::endl;
+
     // r term
     mat[0][2]= radii[0]-radii[2];
     mat[1][2]= radii[1]-radii[2];
+    for(unsigned short i=0;i<=1;i++){
+        std::cout<<"eqs Q:"<<i<<" : "<<mat[i][0]<<"*x + "<<mat[i][1]<<"*y = "<<mat[i][2]<<std::endl;
+    }
     if(RS_Math::linearSolver(mat,sm[1])==false){
         return ret;
     }
-    //form quadratic equation for r
-    RS_Vector vp(sm[0][0],sm[0][1]);
     RS_Vector vq(sm[1][0],sm[1][1]);
-    RS_Vector cp=vp-centers[0];
+      std::cout<<"vq="<<vq<<std::endl;
+    //form quadratic equation for r
+    RS_Vector dcp=vp-centers[0];
     double a=vq.squared()-1.;
     if(fabs(a)<RS_TOLERANCE*1e-4) {
         return ret;
     }
     std::vector<double> ce(0,0.);
-    ce.push_back(2.*(radii[0]+cp.dotP(vq))/a);
-    ce.push_back((cp.squared()-radii[0]*radii[0])/a);
+    ce.push_back(2.*(dcp.dotP(vq)-radii[0])/a);
+    ce.push_back((dcp.squared()-radii[0]*radii[0])/a);
     std::vector<double>&& vr=RS_Math::quadraticSolver(ce);
     for(size_t i=0; i < vr.size();i++){
 //        if(vr.at(i)<RS_TOLERANCE) continue;
-        ret<<RS_Circle(NULL,RS_CircleData(vp+vq*vr.at(i),fabs(vr.at(i))));
+        ret<<RS_Circle(NULL,RS_CircleData(vp+vq*vr.at(i),vr.at(i)));
     }
+    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+    std::cout<<"Found "<<ret.size()<<" solutions"<<std::endl;
+
     return ret;
 }
 

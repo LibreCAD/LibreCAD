@@ -630,7 +630,8 @@ bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>&
         if(mt[i].size() != aSize ) return false;
     }
     sn.resize(mSize);//to hold the solution
-#ifdef	HAS_BOOST
+//#ifdef	HAS_BOOST
+#if false
     boost::numeric::ublas::matrix<double> bm (mSize, mSize);
     boost::numeric::ublas::vector<double> bs(mSize);
 
@@ -643,7 +644,9 @@ bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>&
     //solve the linear equation set by LU decomposition in boost ublas
 
     if ( boost::numeric::ublas::lu_factorize<boost::numeric::ublas::matrix<double> >(bm) ) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "Those 4 points do not define an ellipse");
+        std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+        std::cout<<" linear solver failed"<<std::endl;
+//        RS_DEBUG->print(RS_Debug::D_WARNING, "linear solver failed");
         return false;
     }
 
