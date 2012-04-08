@@ -41,7 +41,6 @@
 
 #include <QRegExp>
 #include <QVector>
-#include <muParser.h>
 
 #include "rs.h"
 #include "rs_vector.h"
@@ -100,7 +99,15 @@ public:
     static std::vector<double> cubicSolver(const std::vector<double>& ce);
     static std::vector<double> quarticSolver(const std::vector<double>& ce);
     //solver for linear equation set
-    static bool linearSolver(const QVector<QVector<double> >& m, QVector<double>& dn);
+    /**
+      * Solve linear equation set
+      *@ mt holds the augmented matrix
+      *@ sn holds the solution
+      *@ return true, if the equation set has a unique solution, return false otherwise
+      *
+      *@Author: Dongxu Li
+      */
+    static bool linearSolver(const QVector<QVector<double> >& m, QVector<double>& sn);
 
     /** solver quadratic simultaneous equations of a set of two **/
     /* solve the following quadratic simultaneous equations,
@@ -111,7 +118,7 @@ public:
       ma000 ma011 ma100 ma101 ma111 mb10 mb11 mc1
       *@return a RS_VectorSolutions contains real roots (x,y)
       */
-    static RS_VectorSolutions simultaneusQuadraticSolver(const std::vector<double>& m);
+    static RS_VectorSolutions simultaneousQuadraticSolver(const std::vector<double>& m);
 
     /** wrapper for elliptic integral **/
     /**

@@ -237,6 +237,7 @@ public:
         ActionDrawCircleParallel,
         ActionDrawCircleInscribe,
         ActionDrawCircleTan2,
+        ActionDrawCircleTan3,
 
         ActionDrawEllipseArcAxis,
         ActionDrawEllipseAxis,

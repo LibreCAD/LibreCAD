@@ -522,6 +522,11 @@ RS_Vector RS_Vector::operator - () const {
 /**
  * Scalarproduct (dot product).
  */
+double RS_Vector::dotP(const RS_Vector& v1)
+{
+    return x*v1.x+y*v1.y;
+}
+
 double RS_Vector::dotP(const RS_Vector& v1, const RS_Vector& v2) {
 #ifdef  RS_VECTOR2D
     return v1.x * v2.x + v1.y * v2.y;

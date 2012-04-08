@@ -52,6 +52,7 @@ public slots:
     virtual void drawCircleParallel();
     virtual void drawCircleInscribe();
     virtual void drawCircleTan2();
+    virtual void drawCircleTan3();
     virtual void back();
     virtual void resetToolBar();
     virtual void showCadToolBar(RS2::ActionType actionType);
