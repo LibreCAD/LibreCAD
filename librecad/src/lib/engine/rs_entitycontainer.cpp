@@ -1022,13 +1022,12 @@ QListIterator<RS_Entity*> RS_EntityContainer::createIterator() {
 }
 
 
-
 /**
  * @return The point which is closest to 'coord'
  * (one of the vertexes)
  */
 RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
-                                                 double* dist)const {
+                                                 double* dist  )const {
 
     double minDist = RS_MAXDOUBLE;  // minimum measured distance
     double curDist;                 // currently measured distance
@@ -1061,6 +1060,57 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
                 minDist = curDist;
                 if (dist!=NULL) {
                     *dist = curDist;
+                }
+            }
+        }
+    }
+
+    return closestPoint;
+}
+
+
+
+/**
+ * @return The point which is closest to 'coord'
+ * (one of the vertexes)
+ */
+RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
+                                                 double* dist,  RS_Entity** pEntity)const {
+
+    double minDist = RS_MAXDOUBLE;  // minimum measured distance
+    double curDist;                 // currently measured distance
+    RS_Vector closestPoint(false);  // closest found endpoint
+    RS_Vector point;                // endpoint found
+
+    //QListIterator<RS_Entity> it = createIterator();
+    //RS_Entity* en;
+    //while ( (en = it.current()) != NULL ) {
+    //    ++it;
+    for (RS_Entity* en = const_cast<RS_EntityContainer*>(this)->firstEntity();
+         en != NULL;
+         en = const_cast<RS_EntityContainer*>(this)->nextEntity()) {
+
+        if (en->isVisible()
+                && en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
+                //&& en->rtti() != RS2::EntityPoint         /**Point*/
+                //&& en->getParent()->rtti() != RS2::EntitySpline
+                && en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
+                && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimRadial    /**< Radial Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimDiametric /**< Diametric Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimAngular   /**< Angular Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimLeader    /**< Leader Dimension */
+                ){//no end point for Insert, text, Dim
+            point = en->getNearestEndpoint(coord, &curDist);
+            if (point.valid && curDist<minDist) {
+                closestPoint = point;
+                minDist = curDist;
+                if (dist!=NULL) {
+                    *dist = curDist;
+                }
+                if(pEntity!=NULL){
+                    *pEntity=en;
                 }
             }
         }
@@ -1420,103 +1470,96 @@ RS_Entity* RS_EntityContainer::getNearestEntity(const RS_Vector& coord,
  *
  * @retval true all contours were closed
  * @retval false at least one contour is not closed
+
+ * to do: find closed contour by flood-fill
  */
 bool RS_EntityContainer::optimizeContours() {
+//    std::cout<<"RS_EntityContainer::optimizeContours: begin"<<std::endl;
 
     RS_DEBUG->print("RS_EntityContainer::optimizeContours");
 
-    RS_Vector current(false);
-    RS_Vector start(false);
     RS_EntityContainer tmp;
+    tmp.setAutoUpdateBorders(false);
+    bool closed=true;
 
-    // bool changed = false;
-    bool closed = true;
-
+    /** accept all full circles **/
+    QList<RS_Entity*> enList;
     for (uint ci=0; ci<count(); ++ci) {
         RS_Entity* e1=entityAt(ci);
-        if(e1->rtti()==RS2::EntityCircle) {
-            //directly detect circles, bug#3443277
-            e1->setProcessed(true);
-            tmp.addEntity(e1->clone());
+        if (!e1->isEdge() || e1->isContainer() ) {
+            enList<<e1;
             continue;
         }
-
-        if (e1!=NULL && e1->isEdge() && !e1->isContainer() &&
-                !e1->isProcessed()) {
-
-            RS_AtomicEntity* ce = (RS_AtomicEntity*)e1;
-
-            // next contour start:
-            ce->setProcessed(true);
-            tmp.addEntity(ce->clone());
-            current = ce->getEndpoint();
-            start = ce->getStartpoint();
-
-            // find all connected entities:
-            bool done;
-            do {
-                done = true;
-                for (uint ei=0; ei<count(); ++ei) {
-                    RS_Entity* e2=entityAt(ei);
-
-                    if (e2!=NULL && e2->isEdge() && !e2->isContainer() &&
-                            !e2->isProcessed()) {
-
-                        RS_AtomicEntity* e = (RS_AtomicEntity*)e2;
-
-                        if (e->getStartpoint().distanceTo(current) <
-                                1.0e-4) {
-
-                            e->setProcessed(true);
-                            tmp.addEntity(e->clone());
-                            current = e->getEndpoint();
-
-                            done=false;
-                        } else if (e->getEndpoint().distanceTo(current) <
-                                   1.0e-4) {
-
-                            e->setProcessed(true);
-                            RS_AtomicEntity* cl = (RS_AtomicEntity*)e->clone();
-                            cl->reverse();
-                            tmp.addEntity(cl);
-                            current = cl->getEndpoint();
-
-                            // changed = true;
-                            done=false;
-                        }
-                    }
-                }
-                if (!done) {
-                    //              changed = true;
-                }
-            } while (!done);
-
-            if (current.distanceTo(start)>1.0e-4) {
-                closed = false;
-            }
+        if(e1->rtti()==RS2::EntityCircle) {
+            //directly detect circles, bug#3443277
+            tmp.addEntity(e1->clone());
+            enList<<e1;
+            continue;
         }
     }
+    //    std::cout<<"RS_EntityContainer::optimizeContours: 1"<<std::endl;
 
-    // remove all atomic entities:
-    bool done;
-    do {
-        done = true;
-        for (RS_Entity* en=firstEntity(); en!=NULL; en=nextEntity()) {
-            if (!en->isContainer()) {
-                removeEntity(en);
-                done = false;
-                break;
+    const auto itEnd=enList.end();
+    for(auto it=enList.begin();it!=itEnd;it++){
+        removeEntity(*it);
+    }
+
+    /** check and form a closed contour **/
+//    std::cout<<"RS_EntityContainer::optimizeContours: 2"<<std::endl;
+    /** the first entity **/
+    RS_Entity* current(NULL);
+    if(count()>0) {
+        current=entityAt(0)->clone();
+        tmp.addEntity(current);
+        removeEntity(entityAt(0));
+    }else return false;
+//    std::cout<<"RS_EntityContainer::optimizeContours: 3"<<std::endl;
+    RS_Vector vpStart;
+    RS_Vector vpEnd;
+    if(current!=NULL){
+        vpStart=current->getStartpoint();
+        vpEnd=current->getEndpoint();
+    }
+        RS_Entity* next(NULL);
+//    std::cout<<"RS_EntityContainer::optimizeContours: 4"<<std::endl;
+    /** connect entities **/
+    while(count()>0){
+        double dist(0.);
+        getNearestEndpoint(vpEnd,&dist,&next);
+        if(dist>1e-4) {
+            if(vpEnd.squaredTo(vpStart)<1e-8){
+                RS_Entity* e2=entityAt(0);
+                tmp.addEntity(e2->clone());
+                vpStart=e2->getStartpoint();
+                vpEnd=e2->getEndpoint();
+                removeEntity(e2);
+                continue;
             }
+            closed=false;
         }
-    } while (!done);
+        if(vpEnd.squaredTo(next->getStartpoint())<1e-8){
+            vpEnd=next->getEndpoint();
+        }else{
+            vpEnd=next->getStartpoint();
+        }
+        next->setProcessed(true);
+        tmp.addEntity(next->clone());
+         removeEntity(next);
+    }
+    if( vpEnd.squaredTo(vpStart)>1e-8) closed=false;
+//    std::cout<<"RS_EntityContainer::optimizeContours: 5"<<std::endl;
+
 
     // add new sorted entities:
     for (RS_Entity* en=tmp.firstEntity(); en!=NULL; en=tmp.nextEntity()) {
         en->setProcessed(false);
         addEntity(en->clone());
     }
+//    std::cout<<"RS_EntityContainer::optimizeContours: 6"<<std::endl;
 
     RS_DEBUG->print("RS_EntityContainer::optimizeContours: OK");
+//    std::cout<<"RS_EntityContainer::optimizeContours: end: count()="<<count()<<std::endl;
+//    std::cout<<"RS_EntityContainer::optimizeContours: closed="<<closed<<std::endl;
     return closed;
 }
 
