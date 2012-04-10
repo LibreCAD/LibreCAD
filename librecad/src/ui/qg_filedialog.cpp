@@ -218,7 +218,11 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     selectNameFilter(fDxf2000);
 #endif
     selectFile(fn);
-    setDefaultSuffix ( getExtension(ftype));
+    auto&& ext=getExtension(ftype);
+    if(ext.size()==4){
+        if(ext[0]=='.') ext.remove(0,1);
+    }
+    if(ext.size()==3) setDefaultSuffix (ext);
 
 
     // only return non empty string when we have a complete, user approved, file name.
@@ -237,7 +241,7 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
         *type = ftype;
 
     // append default extension:
-    if (fi.fileName().indexOf('.')==-1)
+    if (fi.fileName().endsWith(".dxf",Qt::CaseInsensitive)==-1)
         fn += getExtension(ftype);
 
     // store new default settings:
