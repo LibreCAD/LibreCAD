@@ -443,7 +443,8 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos,
     RS_DEBUG->print("RS_Snapper::catchEntity");
 
         // set default distance for points inside solids
-    double dist = graphicView->toGraphDX(getSnapRange())*0.9;
+    double dist (0.);
+//    std::cout<<"getSnapRange()="<<getSnapRange()<<"\tsnap distance = "<<dist<<std::endl;
 
     RS_Entity* entity = container->getNearestEntity(pos, &dist, level);
 
@@ -452,7 +453,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos,
                 idx = entity->getParent()->findEntity(entity);
         }
 
-    if (entity!=NULL && dist<=graphicView->toGraphDX(getSnapRange())) {
+    if (entity!=NULL && dist<=getSnapRange()) {
         // highlight:
         RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
         return entity;
@@ -500,7 +501,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
         ec.addEntity(en);
     }
     if (ec.count() == 0 ) return NULL;
-    double dist = graphicView->toGraphDX(getSnapRange())*0.9;
+    double dist(0.);
 
     RS_Entity* entity = ec.getNearestEntity(pos, &dist, RS2::ResolveNone);
 
@@ -509,7 +510,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
                 idx = entity->getParent()->findEntity(entity);
         }
 
-    if (entity!=NULL && dist<=graphicView->toGraphDX(getSnapRange())) {
+    if (entity!=NULL && dist<=getSnapRange()) {
         // highlight:
         RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
         return entity;

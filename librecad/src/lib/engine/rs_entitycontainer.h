@@ -139,6 +139,8 @@ public:
 
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL)const;
+    virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
+                                         double* dist, RS_Entity** pEntity )const;
 
     RS_Entity* getNearestEntity(const RS_Vector& point,
                                 double* dist = NULL,
