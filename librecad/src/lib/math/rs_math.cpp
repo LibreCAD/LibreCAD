@@ -875,17 +875,182 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolver(const std::vector<double
 
 /** solver quadratic simultaneous equations of a set of two **/
 /* solve the following quadratic simultaneous equations,
-  * ma000 x^2 + 2 ma001 xy + ma011 y^2 + mb00 x + mb01 y + mc0 =0
-  * ma100 x^2 + 2 ma101 xy + ma111 y^2 + mb10 x + mb11 y + mc1 =0
+  * ma000 x^2 + ma001 xy + ma011 y^2 + mb00 x + mb01 y + mc0 =0
+  * ma100 x^2 + ma101 xy + ma111 y^2 + mb10 x + mb11 y + mc1 =0
   *
-  *@m, a vector of size 12 contains coefficients in the strict order of:
+  *@m, a vector of size 2 each contains a vector of size 6 coefficients in the strict order of:
   ma000 ma001 ma011 mb00 mb01 mc0
   ma100 ma101 ma111 mb10 mb11 mc1
   *@return a RS_VectorSolutions contains real roots (x,y)
   */
-RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<double>& m)
+RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<std::vector<double> >& m)
 {
+    RS_VectorSolutions ret;
+    if(m.size()!=2)  return ret;
+    if(m[0].size()!=6 || m[1].size()!=6) return ret;
+    /** eliminate x, quartic equation of y **/
+    auto& a=m[0][0];
+    auto& b=m[0][1];
+    auto& c=m[0][2];
+    auto& d=m[0][3];
+    auto& e=m[0][4];
+    auto& f=m[0][5];
 
+    auto& g=m[1][0];
+    auto& h=m[1][1];
+    auto& i=m[1][2];
+    auto& j=m[1][3];
+    auto& k=m[1][4];
+    auto& l=m[1][5];
+    /**
+      Collect[Eliminate[{ a*x^2 + b*x*y+c*y^2+d*x+e*y+f==0,g*x^2+h*x*y+i*y^2+j*x+k*y+l==0},x],y]
+      **/
+    /*
+     f^2 g^2 - d f g j + a f j^2 - 2 a f g l + (2 e f g^2 - d f g h - b f g j + 2 a f h j - 2 a f g k) y + (2 c f g^2 - b f g h + a f h^2 - 2 a f g i) y^2
+ ==
+ -(d^2 g l) + a d j l - a^2 l^2
++
+ (d e g j - a e j^2 - d^2 g k + a d j k - 2 b d g l + 2 a e g l + a d h l + a b j l - 2 a^2 k l) y
++
+ (-(e^2 g^2) + d e g h - d^2 g i + c d g j + b e g j - 2 a e h j + a d i j - a c j^2 - 2 b d g k + 2 a e g k + a d h k + a b j k - a^2 k^2 - b^2 g l + 2 a c g l + a b h l - 2 a^2 i l) y^2
+ +
+(-2 c e g^2 + c d g h + b e g h - a e h^2 - 2 b d g i + 2 a e g i + a d h i + b c g j - 2 a c h j + a b i j - b^2 g k + 2 a c g k + a b h k - 2 a^2 i k) y^3
++
+ (-(c^2 g^2) + b c g h - a c h^2 - b^2 g i + 2 a c g i + a b h i - a^2 i^2) y^4
+
+
+      */
+    double a2=a*a;
+    double b2=b*b;
+    double c2=c*c;
+    double d2=d*d;
+    double e2=e*e;
+    double f2=f*f;
+
+    double g2=g*g;
+    double  h2=h*h;
+    double  i2=i*i;
+    double  j2=j*j;
+    double  k2=k*k;
+    double  l2=l*l;
+    std::vector<double> qy(5,0.);
+    //y^4
+    qy[4]=-c2*g2 + b*c*g*h - a*c*h2 - b2*g*i + 2.*a*c*g*i + a*b*h*i - a2*i2;
+    //y^3
+    qy[3]=-2.*c*e*g2 + c*d*g*h + b*e*g*h - a*e*h2 - 2.*b*d*g*i + 2.*a*e*g*i + a*d*h*i +
+        b*c*g*j - 2.*a*c*h*j + a*b*i*j - b2*g*k + 2.*a*c*g*k + a*b*h*k - 2.*a2*i*k;
+    //y^2
+    qy[2]=(-e2*g2 + d*e*g*h - d2*g*i + c*d*g*j + b*e*g*j - 2.*a*e*h*j + a*d*i*j - a*c*j2 -
+          2.*b*d*g*k + 2.*a*e*g*k + a*d*h*k + a*b*j*k - a2*k2 - b2*g*l + 2.*a*c*g*l + a*b*h*l - 2.*a2*i*l)
+         - (2.*c*f*g2 - b*f*g*h + a*f*h2 - 2.*a*f*g*i);
+    //y
+    qy[1]=(d*e*g*j - a*e*j2 - d2*g*k + a*d*j*k - 2.*b*d*g*l + 2.*a*e*g*l + a*d*h*l + a*b*j*l - 2.*a2*k*l)
+        -(2.*e*f*g2 - d*f*g*h - b*f*g*j + 2.*a*f*h*j - 2.*a*f*g*k);
+    //y^0
+    qy[0]=-d2*g*l + a*d*j*l - a2*l2
+        - ( f2*g2 - d*f*g*j + a*f*j2 - 2.*a*f*g*l);
+
+//    std::cout<<qy[4]<<"*y^4+("<<qy[3]<<")*y^3+("<<qy[2]<<"*y^2+("<<qy[1]<<")*y+("<<qy[0]<<")==0"<<std::endl;
+    std::vector<double> ce(4,0.);
+    std::vector<double> roots(0,0.);
+
+    if ( fabs(qy[4]) < 1.0e-75) { // this should not happen
+        if ( fabs(qy[3]) < 1.0e-75) { // this should not happen
+            if ( fabs(qy[2]) < 1.0e-75) { // this should not happen
+                if( fabs(qy[1]) > 1.0e-75) {
+                    roots.push_back(-qy[0]/qy[1]);
+                } else { // can not determine y. this means overlapped, but overlap should have been detected before, therefore return empty set
+                    return ret;
+                }
+            } else {
+                ce.resize(2);
+                ce[0]=qy[1]/qy[2];
+                ce[1]=qy[0]/qy[2];
+                //std::cout<<"ce[2]={ "<<ce[0]<<' '<<ce[1]<<" }\n";
+                roots=RS_Math::quadraticSolver(ce);
+            }
+        } else {
+            ce.resize(3);
+            ce[0]=qy[2]/qy[3];
+            ce[1]=qy[1]/qy[3];
+            ce[2]=qy[0]/qy[3];
+            //std::cout<<"ce[3]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<" }\n";
+            roots=RS_Math::cubicSolver(ce);
+        }
+    } else {
+        ce[0]=qy[3]/qy[4];
+        ce[1]=qy[2]/qy[4];
+        ce[2]=qy[1]/qy[4];
+        ce[3]=qy[0]/qy[4];
+        //std::cout<<"ce[4]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<" }\n";
+        roots=RS_Math::quarticSolver(ce);
+    }
+
+    if (roots.size()==0 ) { // no intersection found
+        return ret;
+    }
+    for(size_t i0=0;i0<roots.size();i0++){
+//        std::cout<<"y="<<roots[i0]<<std::endl;
+        /*
+          Collect[Eliminate[{ a*x^2 + b*x*y+c*y^2+d*x+e*y+f==0,g*x^2+h*x*y+i*y^2+j*x+k*y+l==0},x],y]
+          */
+        ce.resize(3);
+        ce[0]=a;
+        ce[1]=b*roots[i0]+d;
+        ce[2]=c*roots[i0]*roots[i0]+e*roots[i0]+f;
+        if(fabs(ce[0])<1e-75 && fabs(ce[1])<1e-75) {
+            ce[0]=g;
+            ce[1]=h*roots[i0]+j;
+            ce[2]=i*roots[i0]*roots[i0]+k*roots[i0]+f;
+        }
+        if(fabs(ce[0])<1e-75 && fabs(ce[1])<1e-75) continue;
+
+        if(fabs(a)>1e-75){
+            std::vector<double> ce2(2,0.);
+            ce2[0]=ce[1]/ce[0];
+            ce2[1]=ce[2]/ce[0];
+//            std::cout<<"x^2 +("<<ce2[0]<<")*x+("<<ce2[1]<<")==0"<<std::endl;
+            auto&& xRoots=quadraticSolver(ce2);
+            for(size_t j0=0;j0<xRoots.size();j0++){
+                RS_Vector vp(xRoots[j0],roots[i0]);
+                if(simultaneousQuadraticVerify(m,vp)) ret.push_back(vp);
+            }
+            continue;
+        }
+                RS_Vector vp(-ce[2]/ce[1],roots[i0]);
+                if(simultaneousQuadraticVerify(m,vp)) ret.push_back(vp);
+    }
+//    std::cout<<"ret="<<ret<<std::endl;
+    return ret;
 }
 
+/** verify a solution for simultaneousQuadratic
+  *@m the coefficient matrix
+  *@v, a candidate to verify
+  *@return true, for a valid solution
+  **/
+bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> >& m, const RS_Vector& v)
+{
+    const double& x=v.x;
+    const double& y=v.y;
+    const double x2=x*x;
+    const double y2=y*y;
+    auto& a=m[0][0];
+    auto& b=m[0][1];
+    auto& c=m[0][2];
+    auto& d=m[0][3];
+    auto& e=m[0][4];
+    auto& f=m[0][5];
+
+    auto& g=m[1][0];
+    auto& h=m[1][1];
+    auto& i=m[1][2];
+    auto& j=m[1][3];
+    auto& k=m[1][4];
+    auto& l=m[1][5];
+//    std::cout<<"verifying: fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)="<<fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)<<std::endl;
+//    std::cout<<"verifying: fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)="<< fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)<<std::endl;
+    return fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)<RS_TOLERANCE
+            &&  fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)<RS_TOLERANCE;
+}
 //EOF
