@@ -17,7 +17,7 @@ make
 Make sure you have the qt-4 SDK installed
 Install the qt4 SDK by executing the following commands:
 
-$ sudo apt-get install g++ gcc make git-core libqt4-dev qt4-qmake libqt4-qt3support libqt4-help qt4-dev-tools libboost-all-dev
+$ sudo apt-get install g++ gcc make git-core libqt4-dev qt4-qmake libqt4-help qt4-dev-tools libboost-all-dev libmuparser-dev
 
 Alternatively, you make sure you have deb-src lines enabled in your sources.list file, and run,
 
@@ -35,7 +35,7 @@ NOTE 1: On systems (Ubuntu??) You might need to run qmake-qt4 instead of just qm
 
 Download a copy of QT SDk < 4.8.0, 4.7.4 for example from http://qt.nokia.com/downloads/ 
 Download boost 1.48 from https://sourceforge.net/projects/boost/files/boost/1.48.0/
-unzip into c:/boost/1_48_0 (in this directory you will find boost root directory, INSTALL, index, Jamroot etc.. etc)
+unzip into c:/boost/1_48_0 (in this directory you will find boost root directory, INSTALL, index, Jamroot etc.. etc). If the location of your boost installation is different, you should edit the BOOST ENVs in the file settings_windows.pro accordingly, before building LibreCAD.
 
 After installation, start qtCreator and load LibreCAD.pro,
 from the the build menu select 'Build All'
