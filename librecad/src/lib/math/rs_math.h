@@ -120,6 +120,23 @@ public:
       */
     static RS_VectorSolutions simultaneousQuadraticSolver(const std::vector<double>& m);
 
+    /** solver quadratic simultaneous equations of a set of two **/
+    /* solve the following quadratic simultaneous equations,
+      * ma000 x^2 + ma001 xy + ma011 y^2 + mb00 x + mb01 y + mc0 =0
+      * ma100 x^2 + ma101 xy + ma111 y^2 + mb10 x + mb11 y + mc1 =0
+      *
+  *@m, a vector of size 2 each contains a vector of size 6 coefficients in the strict order of:
+  ma000 ma001 ma011 mb00 mb01 mc0
+  ma100 ma101 ma111 mb10 mb11 mc1
+      *@return a RS_VectorSolutions contains real roots (x,y)
+      */
+    static RS_VectorSolutions simultaneousQuadraticSolverFull(const std::vector<std::vector<double> >& m);
+    /** verify a solution for simultaneousQuadratic
+      *@m the coefficient matrix
+      *@v, a candidate to verify
+      *@return true, for a valid solution
+      **/
+    static bool simultaneousQuadraticVerify(const std::vector<std::vector<double> >& m, const RS_Vector& v);
     /** wrapper for elliptic integral **/
     /**
      * wrapper of elliptic integral of the second type, Legendre form

@@ -77,7 +77,7 @@ void QG_DlgInitial::init() {
 
 
         // units:
-        for (int i=RS2::None; i<RS2::LastUnit; i++) {http://www.tvbs.com.tw/NEWS/NEWS_LIST.asp?no=anita198920120118131525
+        for (int i=RS2::None; i<RS2::LastUnit; i++) {
         cbUnit->addItem(RS_Units::unitToString((RS2::Unit)i));
     }
 
