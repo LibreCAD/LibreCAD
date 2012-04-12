@@ -1784,14 +1784,12 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     case RS2::EntityHatch:
         writeHatch((RS_Hatch*)e);
         break;
-/*    case RS2::EntityImage:
-        writeImage(dw, (RS_Image*)e, attrib);
+    case RS2::EntityImage:
+        writeImage((RS_Image*)e);
         break;
-    case RS2::EntityContainer:
+/*    case RS2::EntityContainer:
         writeEntityContainer(dw, (RS_EntityContainer*)e, attrib);
-        break;
-#endif
-*/
+        break;*/
     default:
         break;
     }
@@ -2435,27 +2433,31 @@ void RS_FilterDXFRW::writeSolid(RS_Solid* s) {
 }
 
 
-void RS_FilterDXFRW::writeImage(DL_WriterA& /*dw*/, RS_Image* /*i*/,
-                              const DRW_Entity& /*attrib*/) {
-/*    int handle = dxf.writeImage(
-                     dw,
-                     DL_ImageData(std::string(""),
-                                  i->getInsertionPoint().x,
-                                  i->getInsertionPoint().y,
-                                  0.0,
-                                  i->getUVector().x,
-                                  i->getUVector().y,
-                                  0.0,
-                                  i->getVVector().x,
-                                  i->getVVector().y,
-                                  0.0,
-                                  i->getWidth(),
-                                  i->getHeight(),
-                                  i->getBrightness(),
-                                  i->getContrast(),
-                                  i->getFade()),
-                     attrib);
-    i->setHandle(handle);*/
+void RS_FilterDXFRW::writeImage(RS_Image * i) {
+    DRW_Image image;
+    getEntityAttributes(&image, i);
+
+    image.basePoint.x = i->getInsertionPoint().x;
+    image.basePoint.y = i->getInsertionPoint().y;
+    image.secPoint.x = i->getUVector().x;
+    image.secPoint.y = i->getUVector().y;
+    image.vx = i->getVVector().x;
+    image.vy = i->getVVector().y;
+    image.sizeu = i->getWidth();
+    image.sizev = i->getHeight();
+    image.brightness = i->getBrightness();
+    image.contrast = i->getContrast();
+    image.fade = i->getFade();
+
+    DRW_ImageDef *imgDef = dxf->writeImage(&image, i->getFile().toStdString());
+    if (imgDef != NULL) {
+        imgDef->loaded = 1;
+        imgDef->u = i->getData().size.x;
+        imgDef->v = i->getData().size.y;
+        imgDef->up = 1;
+        imgDef->vp = 1;
+        imgDef->resolution = 0;
+    }
 }
 
 
@@ -2521,35 +2523,6 @@ void RS_FilterDXFRW::writeAtomicEntities(DL_WriterA& /*dw*/, RS_EntityContainer*
 //RLZ        writeEntity(dw, e, attrib);
     }
 }
-
-/**
- * Writes an IMAGEDEF object into an OBJECT section.
- */
-void RS_FilterDXFRW::writeImageDef(DL_WriterA& /*dw*/, RS_Image* i) {
-    if (i==NULL || i->getFlag(RS2::FlagUndone)) {
-        return;
-    }
-
-/*    dxf.writeImageDef(
-        dw,
-        i->getHandle(),
-        DL_ImageData((const char*)i->getFile().toLocal8Bit(),
-                     i->getInsertionPoint().x,
-                     i->getInsertionPoint().y,
-                     0.0,
-                     i->getUVector().x,
-                     i->getUVector().y,
-                     0.0,
-                     i->getVVector().x,
-                     i->getVVector().y,
-                     0.0,
-                     i->getWidth(),
-                     i->getHeight(),
-                     i->getBrightness(),
-                     i->getContrast(),
-                     i->getFade()));*/
-}
-
 
 
 /**

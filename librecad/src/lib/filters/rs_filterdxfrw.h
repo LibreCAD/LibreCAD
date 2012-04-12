@@ -131,6 +131,7 @@ public:
     void writeInsert(RS_Insert* i);
     void writeText(RS_Text* t);
     void writeHatch(RS_Hatch* h);
+    void writeImage(RS_Image* i);
     void writeDimAligned(RS_DimAligned* d);
 
     void writePolyline(DL_WriterA& dw,
@@ -138,13 +139,11 @@ public:
 	void writeDimension(DL_WriterA& dw, RS_Dimension* d, 
                 const DRW_Entity& attrib);
         void writeLeader(DL_WriterA& dw, RS_Leader* l, const DRW_Entity& attrib);
-        void writeImage(DL_WriterA& dw, RS_Image* i, const DRW_Entity& attrib);
 	void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con, 
                 const DRW_Entity& attrib);
 	void writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c, 
                 const DRW_Entity& attrib, RS2::ResolveLevel level);
 	
-    void writeImageDef(DL_WriterA& dw, RS_Image* i);
 
     void setEntityAttributes(RS_Entity* entity, const DRW_Entity* attrib);
     void getEntityAttributes(DRW_Entity* ent, const RS_Entity* entity);

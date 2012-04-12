@@ -743,7 +743,7 @@ class DRW_Image : public DRW_Line {
 public:
     DRW_Image() {
         eType = DRW::IMAGE;
-        vz = fade = 0;
+        vz = fade = clip = 0;
         brightness = contrast = 50;
     }
 
