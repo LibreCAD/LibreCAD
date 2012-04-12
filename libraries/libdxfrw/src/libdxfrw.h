@@ -50,6 +50,7 @@ public:
     bool writeMText(DRW_MText *ent);
     bool writeText(DRW_Text *ent);
     bool writeHatch(DRW_Hatch *ent);
+    DRW_ImageDef *writeImage(DRW_Image *ent, std::string name);
 
 private:
     bool processDxf();
@@ -105,6 +106,8 @@ private:
     bool applyExt;
     bool writingBlock;
     std::map<std::string,int> blockMap;
+    std::vector<DRW_ImageDef*> imageDef;  /*!< imageDef list */
+
     int currHandle;
 
 };

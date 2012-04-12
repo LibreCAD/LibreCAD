@@ -132,6 +132,7 @@ public:
 class DRW_ImageDef {
 public:
     DRW_ImageDef() {
+        version = 0;
     }
 
     void parseCode(int code, dxfReader *reader);
@@ -143,9 +144,11 @@ public:
     double u;                 /*!< image size in pixels U value, code 10 */
     double v;                 /*!< image size in pixels V value, code 20 */
     double up;                /*!< default size of one pixel U value, code 11 */
-    double vp;                /*!< default size of one pixel V value, code 12 */
+    double vp;                /*!< default size of one pixel V value, code 12 really is 21*/
     int loaded;               /*!< image is loaded flag, code 280, 0=unloaded, 1=loaded */
     int resolution;           /*!< resolution units, code 281, 0=no, 2=centimeters, 5=inch */
+
+    std::map<string,string> reactors;
 };
 
 

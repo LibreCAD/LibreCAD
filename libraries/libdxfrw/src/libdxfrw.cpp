@@ -20,7 +20,7 @@
 
 using namespace std;
 
-#ifdef DRW_DBG2
+#ifdef DRW_DBG
 #include <iostream> //for debug
 #define DBG(a) std::cerr << a
 #else
@@ -130,10 +130,12 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
     iface->writeEntities();
     writer->writeString(0, "ENDSEC");
 
-    writer->writeString(0, "SECTION");
-    writer->writeString(2, "OBJECTS");
-    writeObjects();
-    writer->writeString(0, "ENDSEC");
+    if (version > DRW::AC1009) {
+        writer->writeString(0, "SECTION");
+        writer->writeString(2, "OBJECTS");
+        writeObjects();
+        writer->writeString(0, "ENDSEC");
+    }
     writer->writeString(0, "EOF");
     filestr.flush();
     filestr.close();
@@ -145,8 +147,8 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
 
 bool dxfRW::writeEntity(DRW_Entity *ent) {
     char buffer[5];
-    entCount = 1+entCount;
-    sprintf(buffer, "%X", entCount);
+    sprintf(buffer, "%X", ++entCount);
+    ent->handle = buffer;
     writer->writeString(5, buffer);
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbEntity");
@@ -631,6 +633,54 @@ bool dxfRW::writeMText(DRW_MText *ent){
     return true;
 }
 
+DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
+    if (version > DRW::AC1009) {
+        //search if exist imagedef with this mane (image inserted more than 1 time)
+        //RLZ: imagedef_reactor seem needed to read in acad
+        DRW_ImageDef *id = NULL;
+        for (unsigned int i=0; i<imageDef.size(); i++) {
+            if (imageDef.at(i)->name == name ) {
+                id = imageDef.at(i);
+                continue;
+            }
+        }
+        char buffer[5];
+        if (id == NULL) {
+            id = new DRW_ImageDef();
+            imageDef.push_back(id);
+            sprintf(buffer, "%X", ++entCount);
+            id->handle = buffer;
+        }
+        id->name = name;
+        sprintf(buffer, "%X", ++entCount);
+
+        writer->writeString(0, "IMAGE");
+        writeEntity(ent);
+        writer->writeString(100, "AcDbRasterImage");
+        writer->writeDouble(10, ent->basePoint.x);
+        writer->writeDouble(20, ent->basePoint.y);
+        writer->writeDouble(30, ent->basePoint.z);
+        writer->writeDouble(11, ent->secPoint.x);
+        writer->writeDouble(21, ent->secPoint.y);
+        writer->writeDouble(31, ent->secPoint.z);
+        writer->writeDouble(12, ent->vx);
+        writer->writeDouble(22, ent->vy);
+        writer->writeDouble(32, ent->vz);
+        writer->writeDouble(13, ent->sizeu);
+        writer->writeDouble(23, ent->sizev);
+        writer->writeString(340, id->handle);
+        writer->writeInt16(70, 1);
+        writer->writeInt16(280, ent->clip);
+        writer->writeInt16(281, ent->brightness);
+        writer->writeInt16(282, ent->contrast);
+        writer->writeInt16(283, ent->fade);
+        writer->writeString(360, buffer);
+        id->reactors[buffer] = ent->handle;
+        return id;
+    }
+    return NULL; //not exist in acad 12
+}
+
 bool dxfRW::writeBlockRecord(std::string name){
     writer->writeString(0, "BLOCK_RECORD");
     char buffer[5];
@@ -1065,21 +1115,80 @@ bool dxfRW::writeBlocks() {
 bool dxfRW::writeObjects() {
     writer->writeString(0, "DICTIONARY");
     char buffer[5];
-    entCount = 1+entCount;
-    sprintf(buffer, "%X", entCount);
     writer->writeString(5, "C");
-    writer->writeString(330, "0");
+    if (version > DRW::AC1014) {
+        writer->writeString(330, "0");
+    }
     writer->writeString(100, "AcDbDictionary");
     writer->writeInt16(281, 1);
     writer->writeString(3, "ACAD_GROUP");
     writer->writeString(350, "D");
-    entCount = 1+entCount;
-    sprintf(buffer, "%X", entCount);
+    if (imageDef.size() != 0) {
+        sprintf(buffer, "%X", ++entCount);
+        writer->writeString(3, "ACAD_IMAGE_DICT");
+        writer->writeString(350, buffer);
+    }
     writer->writeString(0, "DICTIONARY");
     writer->writeString(5, "D");
     writer->writeString(330, "C");
     writer->writeString(100, "AcDbDictionary");
     writer->writeInt16(281, 1);
+//write IMAGEDEF_REACTOR
+    for (unsigned int i=0; i<imageDef.size(); i++) {
+        DRW_ImageDef *id = imageDef.at(i);
+        map<string, string>::iterator it;
+        for ( it=id->reactors.begin() ; it != id->reactors.end(); it++ ) {
+            writer->writeString(0, "IMAGEDEF_REACTOR");
+            writer->writeString(5, (*it).first);
+            writer->writeString(330, (*it).second);
+            writer->writeString(100, "AcDbRasterImageDefReactor");
+            writer->writeInt16(90, 2); //version 2=R14 to v2010
+            writer->writeString(330, (*it).second);
+        }
+    }
+    if (imageDef.size() != 0) {
+        writer->writeString(0, "DICTIONARY");
+        writer->writeString(5, buffer);
+        writer->writeString(330, "C");
+        writer->writeString(100, "AcDbDictionary");
+        writer->writeInt16(281, 1);
+        for (unsigned int i=0; i<imageDef.size(); i++) {
+            size_t f1, f2;
+            f1 = imageDef.at(i)->name.find_last_of("/\\");
+            f2 =imageDef.at(i)->name.find_last_of('.');
+            ++f1;
+            writer->writeString(3, imageDef.at(i)->name.substr(f1,f2-f1));
+            writer->writeString(350, imageDef.at(i)->handle);
+        }
+    }
+    for (unsigned int i=0; i<imageDef.size(); i++) {
+        DRW_ImageDef *id = imageDef.at(i);
+        writer->writeString(0, "IMAGEDEF");
+        writer->writeString(5, id->handle);
+        if (version > DRW::AC1014) {
+//            writer->writeString(330, "0"); handle to DICTIONARY
+        }
+        writer->writeString(102, "{ACAD_REACTORS");
+        map<string, string>::iterator it;
+        for ( it=id->reactors.begin() ; it != id->reactors.end(); it++ ) {
+            writer->writeString(330, (*it).first);
+        }
+        writer->writeString(102, "}");
+        writer->writeString(100, "AcDbRasterImageDef");
+        writer->writeInt16(90, 0); //version 0=R14 to v2010
+        writer->writeString(1, id->name);
+        writer->writeDouble(10, id->u);
+        writer->writeDouble(20, id->v);
+        writer->writeDouble(11, id->up);
+        writer->writeDouble(21, id->vp);
+        writer->writeInt16(280, id->loaded);
+        writer->writeInt16(281, id->resolution);
+    }
+    //no more needed imageDef, delete it
+    while (!imageDef.empty()) {
+       imageDef.pop_back();
+    }
+
     return true;
 }
 

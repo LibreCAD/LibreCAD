@@ -136,6 +136,9 @@ void DRW_ImageDef::parseCode(int code, dxfReader *reader){
     case 12:
         vp = reader->getDouble();
         break;
+    case 21:
+        vp = reader->getDouble();
+        break;
     case 280:
         loaded = reader->getInt32();
         break;
