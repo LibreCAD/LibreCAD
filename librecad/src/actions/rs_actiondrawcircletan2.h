@@ -73,9 +73,7 @@ public:
 
     virtual void showOptions();
     virtual void hideOptions();
-    void setRadius(const double& r){
-        cData.radius=fabs(r);
-    }
+    void setRadius(const double& r);
     double getRadius(){
         return cData.radius;
     }

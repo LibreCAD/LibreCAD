@@ -32,14 +32,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  */
 RS_ActionDrawCircleTan2::RS_ActionDrawCircleTan2(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw circle inscribed",
-                           container, graphicView),
-          cData(RS_Vector(0.,0.),1.),
-          enTypeList()
+        RS_EntityContainer& container,
+        RS_GraphicView& graphicView)
+    :RS_PreviewActionInterface("Draw circle inscribed",
+                               container, graphicView),
+      cData(RS_Vector(0.,0.),1.),
+      enTypeList()
 {
-//    supported types
+    //    supported types
     enTypeList<<RS2::EntityLine<<RS2::EntityArc<<RS2::EntityCircle;
 }
 
@@ -90,8 +90,8 @@ void RS_ActionDrawCircleTan2::finish(bool updateTB){
 
 
 void RS_ActionDrawCircleTan2::trigger() {
-//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
-//    std::cout<<"begin"<<std::endl;
+    //    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+    //    std::cout<<"begin"<<std::endl;
 
     RS_PreviewActionInterface::trigger();
 
@@ -109,7 +109,7 @@ void RS_ActionDrawCircleTan2::trigger() {
 
     for(int i=0;i<circles.size();i++) circles[i]->setHighlighted(false);
     graphicView->redraw(RS2::RedrawDrawing);
-//    drawSnapper();
+    //    drawSnapper();
 
     circles.clear();
     setStatus(SetCircle1);
@@ -125,9 +125,9 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent* e) {
 
     switch(getStatus() ){
     case SetCenter: {
-//        RS_Entity*  en = catchEntity(e, enTypeList, RS2::ResolveAll);
+        //        RS_Entity*  en = catchEntity(e, enTypeList, RS2::ResolveAll);
         coord= graphicView->toGraph(e->x(), e->y());
-//        circles[getStatus()]=static_cast<RS_Line*>(en);
+        //        circles[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
             deletePreview();
             RS_Circle* e=new RS_Circle(preview, cData);
@@ -136,12 +136,20 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent* e) {
         }
     }
         break;
-        default:
+    default:
         break;
     }
     RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent end");
 }
 
+void RS_ActionDrawCircleTan2::setRadius(const double& r)
+{
+    cData.radius=r;
+    if(getStatus() == SetCenter){
+        RS_Circle c(NULL,cData);
+        centers=c.createTan2(circles,cData.radius);
+    }
+}
 
 bool RS_ActionDrawCircleTan2::getCenters(){
     if(getStatus() != SetCircle2) return false;
@@ -168,17 +176,17 @@ RS_Entity* RS_ActionDrawCircleTan2::catchCircle(QMouseEvent* e) {
     }
     if(en->getParent() != NULL) {
         if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
-                || en->getParent()->rtti() == RS2::EntitySpline
-                || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-                || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-                ){
+             || en->getParent()->rtti() == RS2::EntitySpline
+             || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
+             || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
+             || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
+             || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
+             || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
+             || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
+             || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
+             ){
             return ret;
-    }
+        }
     }
     return en;
 }
@@ -195,9 +203,9 @@ void RS_ActionDrawCircleTan2::mouseReleaseEvent(QMouseEvent* e) {
             circles.resize(getStatus());
             circles.push_back(static_cast<RS_AtomicEntity*>(en));
             if(getStatus()==SetCircle1 || getCenters()){
-                    circles.at(circles.size()-1)->setHighlighted(true);
-                    graphicView->redraw(RS2::RedrawDrawing);
-                    setStatus(getStatus()+1);
+                circles.at(circles.size()-1)->setHighlighted(true);
+                graphicView->redraw(RS2::RedrawDrawing);
+                setStatus(getStatus()+1);
             }
         }
             break;
