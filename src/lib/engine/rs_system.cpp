@@ -173,7 +173,7 @@ void RS_System::initAllLanguagesList() {
     LNG("da_DK",RS2::locLeftToRight, "Danish")
     LNG("nl_NL",RS2::locLeftToRight, "Dutch (Holland)")
     LNG("nl_BE",RS2::locLeftToRight, "Dutch (Belgian)")
-//    LNG("en_GB",RS2::locLeftToRight, "English")
+    LNG("en",RS2::locLeftToRight, "English")
     LNG("en_GB",RS2::locLeftToRight, "English (U.K.)")
     LNG("en_US",RS2::locLeftToRight, "English (U.S.)")
     LNG("en_AU",RS2::locLeftToRight, "English (Australia)")

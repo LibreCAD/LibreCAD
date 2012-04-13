@@ -33,21 +33,23 @@
 /**
  * Provides a new window for editing the active block.
  */
-void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
+void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* /*blockList*/) {
     RS_DEBUG->print("QC_DialogFactory::requestEditBlockWindow()");
 
     QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
     QC_MDIWindow* parent = appWindow->getMDIWindow();
     if (parent!=NULL) {
-        //RS_BlockList* blist = blockWidget->getBlockList();
-        if (blockList!=NULL) {
-            RS_Block* blk = blockList->getActive();
+        //get blocklist from block widget, bug#3497154
+        RS_BlockList* blist = appWindow->getBlockWidget() -> getBlockList();
+        if (blist!=NULL) {
+            RS_Block* blk = blist->getActive();
             if (blk!=NULL) {
                 QC_MDIWindow* w = appWindow->slotFileNew(blk);
                 // the parent needs a pointer to the block window and
                 //   vice versa
                 parent->addChildWindow(w);
                 w->getGraphicView()->zoomAuto(false);
+                return;
             }
         }
     }

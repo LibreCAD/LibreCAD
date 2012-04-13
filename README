@@ -18,7 +18,7 @@ make
 Make sure you have the qt-4 SDK installed 
 Install the qt4 SDK by executing the following commands:
 
-sudo apt-get install g++ gcc make git-core libqt4-dev qt4-qmake libqt4-qt3support qt4-dev-tools
+sudo apt-get install g++ gcc make git-core libqt4-dev qt4-qmake libqt4-qt3support qt4-dev-tools libmuparser-dev
 
 See elso : http://www.librecad.org/2010/10/debian-64-bit-and-ubuntu-compile-how-to/
 

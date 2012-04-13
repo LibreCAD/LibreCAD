@@ -33,6 +33,7 @@ void QG_DlgOptionsGeneral::init() {
 #endif
     // Fill combobox with languages:
     QStringList languageList = RS_SYSTEM->getLanguageList();
+    languageList.sort();
     languageList.prepend("en");
     for (QStringList::Iterator it = languageList.begin();
             it!=languageList.end();
@@ -42,7 +43,7 @@ void QG_DlgOptionsGeneral::init() {
 			(*it).latin1());
 
         QString l = RS_SYSTEM->symbolToLanguage(*it);
-	if (l.isEmpty()==false) {
+    if (l.isEmpty()==false && cbLanguage->findText(l)<0 ) {
                 RS_DEBUG->print("QG_DlgOptionsGeneral::init: %s", l.latin1());
         	cbLanguage->insertItem(l);
         	cbLanguageCmd->insertItem(l);

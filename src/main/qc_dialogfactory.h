@@ -28,6 +28,7 @@
 #define QC_DIALOGFACTORY_H
 
 #include "qg_dialogfactory.h"
+#include "qg_blockwidget.h"
 
 
 /**

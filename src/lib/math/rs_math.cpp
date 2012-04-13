@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <muParser.h>
 #include "rs_math.h"
 
 #include "rs_debug.h"
@@ -564,4 +565,32 @@ unsigned int RS_Math::quarticSolver(double * ce, double *roots)
         return ret;
     }
     return 0;
+}
+
+
+/**
+ * Evaluates a mathematical expression and returns the result.
+ * If an error occured, ok will be set to false (if ok isn't NULL).
+ */
+double RS_Math::eval(const QString& expr, bool* ok) {
+    bool okTmp(false);
+    if(ok==NULL) ok=&okTmp;
+    if (expr.isEmpty()) {
+        *ok = false;
+        return 0.0;
+    }
+    double ret(0.);
+    try{
+        mu::Parser p;
+        p.DefineConst("pi",M_PI);
+        p.SetExpr(expr.toStdString());
+        ret=p.Eval();
+        *ok=true;
+    }
+    catch (mu::Parser::exception_type &e)
+      {
+        std::cout << e.GetMsg() << std::endl;
+        *ok=false;
+      }
+    return ret;
 }
