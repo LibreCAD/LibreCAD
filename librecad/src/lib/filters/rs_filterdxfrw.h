@@ -132,13 +132,20 @@ public:
     void writeText(RS_Text* t);
     void writeHatch(RS_Hatch* h);
     void writeImage(RS_Image* i);
+    void writeLeader(RS_Leader* l);
     void writeDimAligned(RS_DimAligned* d);
+
+    /*    void writeDimLinear(const DRW_DimLinear *data);
+        void writeDimRadial(const DRW_DimRadial *data);
+        void writeDimDiametric(const DRW_DimDiametric *data);
+        void writeDimAngular(const DRW_DimAngular *data);
+        void writeDimAngular3P(const DRW_DimAngular3p *data);
+        void writeDimOrdinate(const DRW_DimOrdinate *data);*/
 
     void writePolyline(DL_WriterA& dw,
                 RS_Polyline* l, const DRW_Entity& attrib);
 	void writeDimension(DL_WriterA& dw, RS_Dimension* d, 
                 const DRW_Entity& attrib);
-        void writeLeader(DL_WriterA& dw, RS_Leader* l, const DRW_Entity& attrib);
 	void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con, 
                 const DRW_Entity& attrib);
 	void writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c, 
