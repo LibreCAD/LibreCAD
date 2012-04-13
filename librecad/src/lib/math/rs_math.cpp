@@ -508,9 +508,12 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
     return ans;
 }
 
+/** quartic solver
+* x^4 + ce[0] x^3 + ce[1] x^2 + ce[2] x + ce[3] = 0
+@ce, a vector of size 4 contains the coefficient in order
+@return, a vector contains real roots
+**/
 std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
-//quartic solver
-// x^4 + ce[0] x^3 + ce[1] x^2 + ce[2] x + ce[3] = 0
 {
     std::vector<double> ans(0,0.);
     if(ce.size() != 4) return ans;
@@ -610,6 +613,53 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
         return ans;
     }
     return ans;
+}
+
+/** quartic solver
+* ce[4] x^4 + ce[3] x^3 + ce[2] x^2 + ce[1] x + ce[0] = 0
+@ce, a vector of size 5 contains the coefficient in order
+@return, a vector contains real roots
+**/
+std::vector<double> RS_Math::quarticSolverFull(const std::vector<double>& ce)
+{
+    //    std::cout<<ce[4]<<"*y^4+("<<ce[3]<<")*y^3+("<<ce[2]<<"*y^2+("<<ce[1]<<")*y+("<<ce[0]<<")==0"<<std::endl;
+
+    std::vector<double> roots(0,0.);
+    if(ce.size()!=5) return roots;
+    std::vector<double> ce2(4,0.);
+
+    if ( fabs(ce[4]) < 1.0e-75) { // this should not happen
+        if ( fabs(ce[3]) < 1.0e-75) { // this should not happen
+            if ( fabs(ce[2]) < 1.0e-75) { // this should not happen
+                if( fabs(ce[1]) > 1.0e-75) {
+                    roots.push_back(-ce[0]/ce[1]);
+                } else { // can not determine y. this means overlapped, but overlap should have been detected before, therefore return empty set
+                    return roots;
+                }
+            } else {
+                ce2.resize(2);
+                ce2[0]=ce[1]/ce[2];
+                ce2[1]=ce[0]/ce[2];
+                //std::cout<<"ce2[2]={ "<<ce2[0]<<' '<<ce2[1]<<" }\n";
+                roots=RS_Math::quadraticSolver(ce2);
+            }
+        } else {
+            ce2.resize(3);
+            ce2[0]=ce[2]/ce[3];
+            ce2[1]=ce[1]/ce[3];
+            ce2[2]=ce[0]/ce[3];
+            //std::cout<<"ce2[3]={ "<<ce2[0]<<' '<<ce2[1]<<' '<<ce2[2]<<" }\n";
+            roots=RS_Math::cubicSolver(ce2);
+        }
+    } else {
+        ce2[0]=ce[3]/ce[4];
+        ce2[1]=ce[2]/ce[4];
+        ce2[2]=ce[1]/ce[4];
+        ce2[3]=ce[0]/ce[4];
+        //std::cout<<"ce2[4]={ "<<ce2[0]<<' '<<ce2[1]<<' '<<ce2[2]<<' '<<ce2[3]<<" }\n";
+        roots=RS_Math::quarticSolver(ce2);
+    }
+    return roots;
 }
 
 //linear Equation solver by Gauss-Jordan
@@ -753,124 +803,25 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolver(const std::vector<double
 {
     RS_VectorSolutions ret(0);
     if(m.size() != 8 ) return ret; // valid m should contain exact 8 elements
-    const double& ma000= m[0];
-    const double& ma011= m[1];
-    const double& ma100= m[2];
-    const double& ma101= m[3];
-    const double& ma111= m[4];
-    const double& mb10 = m[5];
-    const double& mb11 = m[6];
-    const double& mc1 = m[7];
+    std::vector< double> c1(0,0.);
+    std::vector< std::vector<double> > m1(0,c1);
+    c1.resize(6);
+    c1[0]=m[0];
+    c1[1]=0.;
+    c1[2]=m[1];
+    c1[3]=0.;
+    c1[4]=0.;
+    c1[5]=-1.;
+    m1.push_back(c1);
+    c1[0]=m[2];
+    c1[1]=2.*m[3];
+    c1[2]=m[4];
+    c1[3]=m[5];
+    c1[4]=m[6];
+    c1[5]=m[7];
+    m1.push_back(c1);
 
-//    std::cout<<__FILE__<<" :  line "<<__LINE__<<" "<<__FUNCTION__<<std::endl;
-//    std::cout<<"simplified e1: "<<ma000<<"*x^2 + "<<ma011<<"*y^2 -1 =0\n";
-//    std::cout<<"simplified e2: "<<ma100<<"*x^2 + 2*("<<ma101<<")*x*y + "<<ma111<<"*y^2 "<<" + ("<<mb10<<")*x + ("<<mb11<<")*y + ("<<mc1<<") =0\n";
-    // construct the Bezout determinant
-    double v0=2.*ma000*ma101;
-    double v2=ma000*mb10;
-    double v3=ma000*mb11;
-    double v4=ma000*mc1+ma100;
-    //double v5= 2.*ma101*ma011;
-    //double v6= ma000*ma111;
-    //double v7= 2.*ma101;
-    double v8= 2.*ma011*mb10;
-    //double v9= ma100*ma011;
-    double v1=ma000*ma111-ma100*ma011;
-    //double v1= v6 - v9;
-    double u0 = v4*v4-v2*mb10;
-    double u1 = 2.*(v3*v4-v0*mb10);
-    double u2 = 2.*(v4*v1-ma101*v0)+v3*v3+0.5*v2*v8;
-    double u3 = v0*v8+2.*v3*v1;
-    double u4 = v1*v1+2.*ma101*ma011*v0;
-    //std::cout<<"u0="<<u0<<"\tu1="<<u1<<"\tu2="<<u2<<"\tu3="<<u3<<"\tu4="<<u4<<std::endl;
-    //std::cout<<"("<<u4<<")*x^4+("<<u3<<")*x^3+("<<u2<<")*x^2+("<<u1<<")*x+("<<u0<<")=0\n";
-    std::vector<double> ce(4,0.);
-    std::vector<double> roots(0,0.);
-
-    if ( fabs(u4) < 1.0e-75) { // this should not happen
-        if ( fabs(u3) < 1.0e-75) { // this should not happen
-            if ( fabs(u2) < 1.0e-75) { // this should not happen
-                if( fabs(u1) > 1.0e-75) {
-                    roots.push_back(-u0/u1);
-                } else { // can not determine y. this means overlapped, but overlap should have been detected before, therefore return empty set
-                    return ret;
-                }
-            } else {
-                ce.resize(2);
-                ce[0]=u1/u2;
-                ce[1]=u0/u2;
-                //std::cout<<"ce[2]={ "<<ce[0]<<' '<<ce[1]<<" }\n";
-                roots=RS_Math::quadraticSolver(ce);
-            }
-        } else {
-            ce.resize(3);
-            ce[0]=u2/u3;
-            ce[1]=u1/u3;
-            ce[2]=u0/u3;
-            //std::cout<<"ce[3]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<" }\n";
-            roots=RS_Math::cubicSolver(ce);
-        }
-    } else {
-        ce[0]=u3/u4;
-        ce[1]=u2/u4;
-        ce[2]=u1/u4;
-        ce[3]=u0/u4;
-        //std::cout<<"ce[4]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<" }\n";
-        roots=RS_Math::quarticSolver(ce);
-    }
-//	std::cout<<"Equation for y: y^4";
-//        for(int i=3; i>=0; i--) {
-//		std::cout<<"+("<<ce[3-i]<<")";
-//	    if ( i ) {
-//		    std::cout<<"*y^"<<i;
-//	    }else {
-//		    std::cout<<" ==0\n";
-//	    }
-//    }
-
-    if (roots.size()==0 ) { // no intersection found
-        return ret;
-    }
-//      std::cout<<"counts="<<counts<<": ";
-//	for(unsigned int i=0;i<counts;i++){
-//	std::cout<<roots[i]<<" ";
-//	}
-//	std::cout<<std::endl;
-//    RS_VectorSolutions vs0;
-    unsigned int ivs0=0;
-    double a1=sqrt(1./ma000);
-    for(size_t i=0; i<roots.size(); i++) {
-        double y=roots[i];
-        //double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
-        double x,d=v0*y+v2;
-//        std::cout<<"d= "<<d<<std::endl;
-        if( fabs(d)>10.*RS_TOLERANCE*sqrt(RS_TOLERANCE)) {//whether there's x^1 term in bezout determinant
-            x=-((v1*y+v3)*y+v4 )/d;
-            if(ret.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
-                ret.push_back(RS_Vector(x,y));
-        } else { // no x^1 term, have to use x^2 term, then, have to check plus/minus sqrt
-            x=a1*sqrt(1-y*y*ma011);
-            if(ret.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
-                ret.push_back(RS_Vector(x,y));
-            x=-x;
-            if(ret.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
-                ret.push_back(RS_Vector(x,y));
-        }
-        //std::cout<<"eq1="<<ma000*x*x+ma011*y*y-1.<<std::endl;
-        //std::cout<<"eq2="<<ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1<<std::endl;
-//            if (
-//                fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)< RS_TOLERANCE
-//            ) {//found
-//                vs0.set(ivs0++, RS_Vector(x,y));
-//            }
-    }
-//    for(unsigned int j=0; j<vs0.getNumber(); j++) {
-//        std::cout<<" ( "<<vs0.get(j).x<<" , "<<vs0.get(j).y<<" ) ";
-//    }
-//    std::cout<<std::endl;
-//    std::cout<<"counts= "<<counts<<"\tFound "<<ivs0<<" EllipseEllipse intersections\n";
-    //ret.alloc(ivs0);
-    return ret;
+    return simultaneousQuadraticSolverFull(m1);
 }
 
 /** solver quadratic simultaneous equations of a set of two **/
@@ -949,46 +900,14 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     //y^0
     qy[0]=-d2*g*l + a*d*j*l - a2*l2
         - ( f2*g2 - d*f*g*j + a*f*j2 - 2.*a*f*g*l);
-
-//    std::cout<<qy[4]<<"*y^4+("<<qy[3]<<")*y^3+("<<qy[2]<<"*y^2+("<<qy[1]<<")*y+("<<qy[0]<<")==0"<<std::endl;
-    std::vector<double> ce(4,0.);
-    std::vector<double> roots(0,0.);
-
-    if ( fabs(qy[4]) < 1.0e-75) { // this should not happen
-        if ( fabs(qy[3]) < 1.0e-75) { // this should not happen
-            if ( fabs(qy[2]) < 1.0e-75) { // this should not happen
-                if( fabs(qy[1]) > 1.0e-75) {
-                    roots.push_back(-qy[0]/qy[1]);
-                } else { // can not determine y. this means overlapped, but overlap should have been detected before, therefore return empty set
-                    return ret;
-                }
-            } else {
-                ce.resize(2);
-                ce[0]=qy[1]/qy[2];
-                ce[1]=qy[0]/qy[2];
-                //std::cout<<"ce[2]={ "<<ce[0]<<' '<<ce[1]<<" }\n";
-                roots=RS_Math::quadraticSolver(ce);
-            }
-        } else {
-            ce.resize(3);
-            ce[0]=qy[2]/qy[3];
-            ce[1]=qy[1]/qy[3];
-            ce[2]=qy[0]/qy[3];
-            //std::cout<<"ce[3]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<" }\n";
-            roots=RS_Math::cubicSolver(ce);
-        }
-    } else {
-        ce[0]=qy[3]/qy[4];
-        ce[1]=qy[2]/qy[4];
-        ce[2]=qy[1]/qy[4];
-        ce[3]=qy[0]/qy[4];
-        //std::cout<<"ce[4]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<" }\n";
-        roots=RS_Math::quarticSolver(ce);
-    }
+    //quarticSolver
+    auto&& roots=quarticSolverFull(qy);
 
     if (roots.size()==0 ) { // no intersection found
         return ret;
     }
+    std::vector<double> ce(0,0.);
+
     for(size_t i0=0;i0<roots.size();i0++){
 //        std::cout<<"y="<<roots[i0]<<std::endl;
         /*
