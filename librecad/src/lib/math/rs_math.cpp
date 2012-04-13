@@ -71,7 +71,7 @@ double RS_Math::pow(double x, double y) {
 
 /* pow of vector components */
 RS_Vector RS_Math::pow(RS_Vector vp, double y) {
-        return RS_Vector(pow(vp.x,y),pow(vp.y,y));
+    return RS_Vector(pow(vp.x,y),pow(vp.y,y));
 }
 
 /**
@@ -130,12 +130,12 @@ bool RS_Math::isAngleBetween(double a,
                              double a1, double a2,
                              bool reversed) {
 
-//    bool ret = false;
+    //    bool ret = false;
 
     if (reversed) swap(a1,a2);
     if ( ( correctAngle(a2 -a1) >= correctAngle(a - a1) + RS_TOLERANCE_ANGLE &&
-            correctAngle(a - a1) >= RS_TOLERANCE_ANGLE  ) || fabs( remainder(correctAngle(a2 - a1 ) , 2.*M_PI)) < RS_TOLERANCE_ANGLE) {
-            // the |a2-a1| % (2 pi)=0 means the whole angular range
+           correctAngle(a - a1) >= RS_TOLERANCE_ANGLE  ) || fabs( remainder(correctAngle(a2 - a1 ) , 2.*M_PI)) < RS_TOLERANCE_ANGLE) {
+        // the |a2-a1| % (2 pi)=0 means the whole angular range
         return true;
     } else {
         return false;
@@ -181,10 +181,10 @@ double RS_Math::getAngleDifference(double a1, double a2) {
     double ret;
     ret=M_PI + remainder(a2 -a1 -M_PI, 2*M_PI);
 
-//    if (a1>=a2) {
-//        a2+=2*M_PI;
-//    }
-//    ret = a2-a1;
+    //    if (a1>=a2) {
+    //        a2+=2*M_PI;
+    //    }
+    //    ret = a2-a1;
 
     if (ret>=2*M_PI) {
         ret=0.0;
@@ -214,10 +214,10 @@ double RS_Math::makeAngleReadable(double angle, bool readable,
 
     // quadrant 1 & 4
     if (cor) {
-//        ret = angle;
-//    }
-    // quadrant 2 & 3
-//    else {
+        //        ret = angle;
+        //    }
+        // quadrant 2 & 3
+        //    else {
         ret = correctAngle(angle+M_PI);
     }
 
@@ -311,10 +311,10 @@ double RS_Math::eval(const QString& expr, bool* ok) {
         *ok=true;
     }
     catch (mu::Parser::exception_type &e)
-      {
+    {
         std::cout << e.GetMsg() << std::endl;
         *ok=false;
-      }
+    }
     return ret;
 }
 
@@ -497,10 +497,10 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
     std::complex<double> w(-0.5,sqrt(3.)/2);
     rt[1]=u*w-p/(3.*u*w)-shift;
     rt[2]=u/w-p*w/(3.*u)-shift;
-//	std::cout<<"Roots:\n";
-//	std::cout<<rt[0]<<std::endl;
-//	std::cout<<rt[1]<<std::endl;
-//	std::cout<<rt[2]<<std::endl;
+    //	std::cout<<"Roots:\n";
+    //	std::cout<<rt[0]<<std::endl;
+    //	std::cout<<rt[1]<<std::endl;
+    //	std::cout<<rt[2]<<std::endl;
     ans.push_back(rt[0].real());
     ans.push_back(rt[1].real());
     ans.push_back(rt[2].real());
@@ -530,7 +530,7 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
     double p= ce[1] - (3./8)*a2;
     double q= ce[2] + ce[0]*((1./8)*a2 - 0.5*ce[1]);
     double r= ce[3] - shift*ce[2] + (ce[1] - 3.*shift2)*shift2;
-//    std::cout<<"quartic_solver:: p="<<p<<"\tq="<<q<<"\tr="<<r<<std::endl;
+    //    std::cout<<"quartic_solver:: p="<<p<<"\tq="<<q<<"\tr="<<r<<std::endl;
     if (fabs(q) <= RS_TOLERANCE) {// Biquadratic equations
         double discriminant= 0.25*p*p -r;
         if (discriminant < 0.) {
@@ -680,7 +680,7 @@ bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>&
         if(mt[i].size() != aSize ) return false;
     }
     sn.resize(mSize);//to hold the solution
-//#ifdef	HAS_BOOST
+    //#ifdef	HAS_BOOST
 #if false
     boost::numeric::ublas::matrix<double> bm (mSize, mSize);
     boost::numeric::ublas::vector<double> bs(mSize);
@@ -696,7 +696,7 @@ bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>&
     if ( boost::numeric::ublas::lu_factorize<boost::numeric::ublas::matrix<double> >(bm) ) {
         std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
         std::cout<<" linear solver failed"<<std::endl;
-//        RS_DEBUG->print(RS_Debug::D_WARNING, "linear solver failed");
+        //        RS_DEBUG->print(RS_Debug::D_WARNING, "linear solver failed");
         return false;
     }
 
@@ -889,17 +889,17 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     qy[4]=-c2*g2 + b*c*g*h - a*c*h2 - b2*g*i + 2.*a*c*g*i + a*b*h*i - a2*i2;
     //y^3
     qy[3]=-2.*c*e*g2 + c*d*g*h + b*e*g*h - a*e*h2 - 2.*b*d*g*i + 2.*a*e*g*i + a*d*h*i +
-        b*c*g*j - 2.*a*c*h*j + a*b*i*j - b2*g*k + 2.*a*c*g*k + a*b*h*k - 2.*a2*i*k;
+            b*c*g*j - 2.*a*c*h*j + a*b*i*j - b2*g*k + 2.*a*c*g*k + a*b*h*k - 2.*a2*i*k;
     //y^2
     qy[2]=(-e2*g2 + d*e*g*h - d2*g*i + c*d*g*j + b*e*g*j - 2.*a*e*h*j + a*d*i*j - a*c*j2 -
-          2.*b*d*g*k + 2.*a*e*g*k + a*d*h*k + a*b*j*k - a2*k2 - b2*g*l + 2.*a*c*g*l + a*b*h*l - 2.*a2*i*l)
-         - (2.*c*f*g2 - b*f*g*h + a*f*h2 - 2.*a*f*g*i);
+           2.*b*d*g*k + 2.*a*e*g*k + a*d*h*k + a*b*j*k - a2*k2 - b2*g*l + 2.*a*c*g*l + a*b*h*l - 2.*a2*i*l)
+            - (2.*c*f*g2 - b*f*g*h + a*f*h2 - 2.*a*f*g*i);
     //y
     qy[1]=(d*e*g*j - a*e*j2 - d2*g*k + a*d*j*k - 2.*b*d*g*l + 2.*a*e*g*l + a*d*h*l + a*b*j*l - 2.*a2*k*l)
-        -(2.*e*f*g2 - d*f*g*h - b*f*g*j + 2.*a*f*h*j - 2.*a*f*g*k);
+            -(2.*e*f*g2 - d*f*g*h - b*f*g*j + 2.*a*f*h*j - 2.*a*f*g*k);
     //y^0
     qy[0]=-d2*g*l + a*d*j*l - a2*l2
-        - ( f2*g2 - d*f*g*j + a*f*j2 - 2.*a*f*g*l);
+            - ( f2*g2 - d*f*g*j + a*f*j2 - 2.*a*f*g*l);
     //quarticSolver
     auto&& roots=quarticSolverFull(qy);
 
@@ -909,7 +909,7 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     std::vector<double> ce(0,0.);
 
     for(size_t i0=0;i0<roots.size();i0++){
-//        std::cout<<"y="<<roots[i0]<<std::endl;
+        //        std::cout<<"y="<<roots[i0]<<std::endl;
         /*
           Collect[Eliminate[{ a*x^2 + b*x*y+c*y^2+d*x+e*y+f==0,g*x^2+h*x*y+i*y^2+j*x+k*y+l==0},x],y]
           */
@@ -928,7 +928,7 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
             std::vector<double> ce2(2,0.);
             ce2[0]=ce[1]/ce[0];
             ce2[1]=ce[2]/ce[0];
-//            std::cout<<"x^2 +("<<ce2[0]<<")*x+("<<ce2[1]<<")==0"<<std::endl;
+            //            std::cout<<"x^2 +("<<ce2[0]<<")*x+("<<ce2[1]<<")==0"<<std::endl;
             auto&& xRoots=quadraticSolver(ce2);
             for(size_t j0=0;j0<xRoots.size();j0++){
                 RS_Vector vp(xRoots[j0],roots[i0]);
@@ -936,10 +936,10 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
             }
             continue;
         }
-                RS_Vector vp(-ce[2]/ce[1],roots[i0]);
-                if(simultaneousQuadraticVerify(m,vp)) ret.push_back(vp);
+        RS_Vector vp(-ce[2]/ce[1],roots[i0]);
+        if(simultaneousQuadraticVerify(m,vp)) ret.push_back(vp);
     }
-//    std::cout<<"ret="<<ret<<std::endl;
+    //    std::cout<<"ret="<<ret<<std::endl;
     return ret;
 }
 
@@ -967,8 +967,8 @@ bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> 
     auto& j=m[1][3];
     auto& k=m[1][4];
     auto& l=m[1][5];
-//    std::cout<<"verifying: fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)="<<fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)<<std::endl;
-//    std::cout<<"verifying: fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)="<< fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)<<std::endl;
+    //    std::cout<<"verifying: fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)="<<fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)<<std::endl;
+    //    std::cout<<"verifying: fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)="<< fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)<<std::endl;
     return fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)<RS_TOLERANCE
             &&  fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)<RS_TOLERANCE;
 }
