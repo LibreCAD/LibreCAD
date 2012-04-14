@@ -1777,10 +1777,10 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     case RS2::EntityDimRadial:
     case RS2::EntityDimDiametric:
         writeDimension(dw, (RS_Dimension*)e, attrib);
-        break;
-    case RS2::EntityDimLeader:
-        writeLeader(dw, (RS_Leader*)e, attrib);
         break;*/
+    case RS2::EntityDimLeader:
+        writeLeader((RS_Leader*)e);
+        break;
     case RS2::EntityHatch:
         writeHatch((RS_Hatch*)e);
         break;
@@ -2263,47 +2263,33 @@ void RS_FilterDXFRW::writeDimension(DL_WriterA& /*dw*/, RS_Dimension* /*d*/,
 }
 
 
-void RS_FilterDXFRW::writeLeader(DL_WriterA& /*dw*/, RS_Leader* /*l*/,
-                               const DRW_Entity& /*attrib*/) {
-/*    if (l->count()>0) {
-        dxf.writeLeader(
-            dw,
-            DL_LeaderData(l->hasArrowHead(),
-                          0,
-                          3,
-                          0,
-                          0,
-                          1.0,
-                          10.0,
-                          l->count()),
-            attrib);
-        bool first = true;
-        for (RS_Entity* v=l->firstEntity(RS2::ResolveNone);
-                v!=NULL;
-                v=l->nextEntity(RS2::ResolveNone)) {
+void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
+    if (l->count()<=0)
+        RS_DEBUG->print(RS_Debug::D_WARNING, "dropping leader with no vertices");
 
-            // Write line verties:
-            if (v->rtti()==RS2::EntityLine) {
-                RS_Line* l = (RS_Line*)v;
-                if (first) {
-                    dxf.writeLeaderVertex(
-                        dw,
-                        DL_LeaderVertexData(l->getStartpoint().x,
-                                            l->getStartpoint().y,
-                                            0.0));
-                    first = false;
-                }
-                dxf.writeLeaderVertex(
-                    dw,
-                    DL_LeaderVertexData(l->getEndpoint().x,
-                                        l->getEndpoint().y,
-                                        0.0));
-            }
+    DRW_Leader leader;
+    getEntityAttributes(&leader, l);
+    leader.style = "Standard";
+    leader.arrow = l->hasArrowHead();
+    leader.leadertype = 0;
+    leader.flag = 3;
+    leader.hookline = 0;
+    leader.hookflag = 0;
+    leader.textheight = 1;
+    leader.textwidth = 10;
+    leader.vertnum = l->count();
+    RS_Line* li =NULL;
+    for (RS_Entity* v=l->firstEntity(RS2::ResolveNone);
+            v!=NULL;   v=l->nextEntity(RS2::ResolveNone)) {
+        if (v->rtti()==RS2::EntityLine) {
+            li = (RS_Line*)v;
+            leader.vertexlist.push_back(new DRW_Coord(li->getStartpoint().x, li->getStartpoint().y, 0.0));
         }
-    } else {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "dropping leader with no vertices");
-    }*/
+    }
+    if (li != NULL) {
+        leader.vertexlist.push_back(new DRW_Coord(li->getEndpoint().x, li->getEndpoint().y, 0.0));
+    }
+    dxf->writeLeader(&leader);
 }
 
 

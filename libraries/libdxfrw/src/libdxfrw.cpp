@@ -526,6 +526,33 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
     return true;
 }
 
+bool dxfRW::writeLeader(DRW_Leader *ent){
+    if (version > DRW::AC1009) {
+        writer->writeString(0, "LEADER");
+        writeEntity(ent);
+            writer->writeString(100, "AcDbLeader");
+        writer->writeString(3, ent->style);
+        writer->writeInt16(71, ent->arrow);
+        writer->writeInt16(72, ent->leadertype);
+        writer->writeInt16(73, ent->flag);
+        writer->writeInt16(74, ent->hookline);
+        writer->writeInt16(75, ent->hookflag);
+        writer->writeDouble(40, ent->textheight);
+        writer->writeDouble(41, ent->textwidth);
+        writer->writeDouble(76, ent->vertnum);
+        writer->writeDouble(76, ent->vertexlist.size());
+        for (unsigned int i=0; i<ent->vertexlist.size(); i++) {
+            DRW_Coord *vert = ent->vertexlist.at(i);
+            writer->writeDouble(10, vert->x);
+            writer->writeDouble(20, vert->y);
+            writer->writeDouble(30, vert->z);
+        }
+    } else  {
+        //RLZ: todo not supported by acad 12 saved as unnamed block
+    }
+    return true;
+}
+
 bool dxfRW::writeInsert(DRW_Insert *ent){
     writer->writeString(0, "INSERT");
     writeEntity(ent);
