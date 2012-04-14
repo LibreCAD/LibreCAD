@@ -33,6 +33,22 @@ exists($${BOOST_DIR}){
 }
 message(Using boost libraries in $${BOOST_DIR}.)
 
+
+# muParser
+# ********
+
+exists($${MUPARSER_DIR}){
+    INCLUDEPATH += "$${MUPARSER_DIR}"/include
+    LIBS += -L"$${MUPARSER_LIBDIR}" $${MUPARSER_LIBS}
+    HEADERS += "$${MUPARSER_DIR}"
+}
+
+!exists($${MUPARSER_DIR}) {
+   # error(muParser was not found, please install muParser!)
+}
+message(Using muParser libraries in $${MUPARSER_DIR}.)
+
+
 # Windows compiler settings
 win32 {
     QMAKE_CXXFLAGS += -U__STRICT_ANSI__
