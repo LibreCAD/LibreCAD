@@ -5,7 +5,7 @@ DEFINES += QC_APPKEY="\"/LibreCAD\""
 DEFINES += QC_APPNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYKEY="\"LibreCAD\""
-DEFINES += QC_VERSION="\"1.0.1\""
+DEFINES += QC_VERSION="\"1.0.2\""
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 
 
@@ -38,7 +38,7 @@ unix {
     # SVNREVISION = $$system(svn info -R | grep -o \"Revision: [0-9]*\" | sed -e \"s/Revision: //\" | head -n1)
     # Temporary disabled getting SCM version
     #SCMREVISION=$$system(git describe --tags)
-    SCMREVISION=$$system([ "$(which git)x" != "x" -a -d .git ] && echo "$(git describe --tags)" || echo "1.0.0")
+    SCMREVISION=$$system([ "$(which git)x" != "x" -a -d .git ] && echo "$(git describe --tags)" || echo "1.0.2")
 
     DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
     macx { 
@@ -71,7 +71,10 @@ win32 {
     TARGET = LibreCAD
     DEFINES += QC_APPDIR="\"LibreCAD\""
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
-    
+
+    INCLUDEPATH += "/muparser/include"
+    LIBS += -L/muparser/lib
+
     RC_FILE = res\\main\\librecad.rc
     DESTDIR = .
     QMAKE_POST_LINK = scripts\\postprocess-win.bat
