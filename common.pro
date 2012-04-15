@@ -37,15 +37,13 @@ message(Using boost libraries in $${BOOST_DIR}.)
 # muParser
 # ********
 
-win32 {
-    exists($${MUPARSER_DIR}){
-        INCLUDEPATH += "$${MUPARSER_DIR}"/include
-        LIBS += -L"$${MUPARSER_DIR}"/lib
-    }else{
-       message("muParser was not found, please install muParser!")
-    }
-    message("Using muParser libraries in $${MUPARSER_DIR}.")
+exists($${MUPARSER_DIR}){
+    INCLUDEPATH += "$${MUPARSER_DIR}"/include
+    LIBS += -L"$${MUPARSER_DIR}"/lib
+}else{
+   message("muParser was not found, please install muParser!")
 }
+message("Using muParser libraries in $${MUPARSER_DIR}.")
 
 
 # Windows compiler settings
