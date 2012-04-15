@@ -19,6 +19,19 @@ CONFIG += qt \
 QMAKE_CXXFLAGS_DEBUG += 
 QMAKE_CXXFLAGS += 
 
+# Include any custom.pro files for personal/special builds
+exists( custom.pro ):include( custom.pro )
+
+win32{
+    !exists("$${MUPARSER_DIR}"){
+        MUPARSER_DIR = /muparser/muparser_v2_2_2
+    }
+    exists("$${MUPARSER_DIR}"){
+        LIBS += -L"$${MUPARSER_DIR}"/lib
+        INCLUDEPATH += "$${MUPARSER_DIR}"/include
+    }
+}
+
 # Make translations at the end of the process
 unix { 
     # Get SVN revision number
@@ -930,5 +943,4 @@ TRANSLATIONS = ts/librecad_cs.ts \
     ts/librecad_zh_cn.ts \
     ts/librecad_zh_tw.ts
 
-# Include any custom.pro files for personal/special builds
-exists( custom.pro ):include( custom.pro )
+
