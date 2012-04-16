@@ -518,7 +518,6 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
         RS_DEBUG->print("RS_Snapper::catchEntity: not found");
         return NULL;
     }
-    RS_DEBUG->print("RS_Snapper::catchEntity: OK");
 }
 
 

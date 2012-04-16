@@ -822,8 +822,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
         m.push_back(v.x*v.x-1.); //ma111
         m.push_back(2.*a*b*v.y); //mb10
         m.push_back(2.*a*b*v.x); //mb11
-        m.push_back(a*a*b*b); //mb11
-
+        m.push_back(a*a*b*b); //mc1
 
         auto&& vs0=RS_Math::simultaneousQuadraticSolver(m); //to hold solutions
         if (vs0.getNumber()<1) return NULL;
@@ -841,65 +840,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
             l->rotate(a0);
             l->move(m0);
             poss.push_back(l);
-            /*
-//iteration algorithm based on tangent1
-            vpe2.rotate(a2);
-            vpe2.scale(factor1);
-            vpe2.rotate(a0);
-            vpe2.move(m0);
 
-            std::cout<<"vpe2 from equation solver: vpe2="<<vpe2<<std::endl;
-
-            //fixme, this brutal force fallback should be fixed
-
-                RS_VectorSolutions solStart;
-                RS_VectorSolutions solEnd;
-            for(int i0=0;i0<32;i0++){
-                RS_VectorSolutions sol1=circle1->getTangentPoint(vpe2);
-                RS_Vector vpe20(vpe2);
-                double d2(RS_MAXDOUBLE);
-                for(int j=0;j<sol1.getNumber();j++){
-                    RS_VectorSolutions sol2=circle2->getTangentPoint(sol1.get(j));
-                    for(int k=0;k<sol2.getNumber();k++){
-                        double d3( (vpe2-sol2.get(k)).squared());
-                        if(d3<d2){
-                            d2=d3;
-                            vpe20=sol2.get(k);
-                        }
-//                        std::cout<<"i0="<<i0<<" dist= "<<d2<<std::endl;
-                        if( d2<RS_TOLERANCE*RS_TOLERANCE){
-
-                                solStart.push_back(vpe2);
-                                solEnd.push_back(sol1.get(j));
-                                k=sol2.getNumber();
-                                j=sol1.getNumber();
-                                std::cout<<"Convergence after "<<i0+1<<" steps\n";
-            std::cout<<"vpe2 from iteration: vpe2="<<vpe2<<std::endl;
-                                i0=32;
-                        }
-                    }
-                }
-                if(solStart.getNumber()>=4) break;
-                vpe2=vpe20;
-            }
-            for(int k0=0;k0<solStart.getNumber();k0++){
-                poss.push_back(new RS_Line(NULL,RS_LineData(solStart.get(k0),solEnd.get(k0))));
-            }
-
-            //            vpec.x *= -1.; //tangent line direction
-//            RS_Vector vpe1(vpe2 - vpec*(RS_Vector::dotP(vpec,vpe2)/vpec.squared()));
-//            std::cout<<"vpe1.squared()="<<vpe1.squared()<<std::endl;
-//            RS_Line* l=new RS_Line(NULL,RS_LineData(vpe1,vpe2));
-//            l->rotate(a2);
-//            factor1.set(1./factor1.x,1./factor1.y);
-//            l->scale(RS_Vector(0.,0.),factor1);
-//            l->rotate(a0);
-//            l->move(m0);
-
-////            std::cout<<"point on ellipse: "<<vpe2<<std::endl;
-//            RS_Line* l=createTangent1(coord,vpe2,circle1);//create tangent
-//            if(l != NULL) poss.push_back(l);
-*/
         }
         delete e2;
         //debugging

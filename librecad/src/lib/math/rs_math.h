@@ -97,7 +97,18 @@ public:
 
     static std::vector<double> quadraticSolver(const std::vector<double>& ce);
     static std::vector<double> cubicSolver(const std::vector<double>& ce);
+    /** quartic solver
+    * x^4 + ce[0] x^3 + ce[1] x^2 + ce[2] x + ce[3] = 0
+    @ce, a vector of size 4 contains the coefficient in order
+    @return, a vector contains real roots
+    **/
     static std::vector<double> quarticSolver(const std::vector<double>& ce);
+    /** quartic solver
+* ce[4] x^4 + ce[3] x^3 + ce[2] x^2 + ce[1] x + ce[0] = 0
+    @ce, a vector of size 5 contains the coefficient in order
+    @return, a vector contains real roots
+    **/
+    static std::vector<double> quarticSolverFull(const std::vector<double>& ce);
     //solver for linear equation set
     /**
       * Solve linear equation set

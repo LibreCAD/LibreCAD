@@ -73,7 +73,7 @@ void QG_CircleTan2Options::setAction(RS_ActionInterface* a, bool update) {
         }
         leRadius->setText(sr);
     } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR, 
+        RS_DEBUG->print(RS_Debug::D_ERROR,
             "QG_CircleTan2Options::setAction: wrong action type");
         action = NULL;
     }
@@ -84,7 +84,7 @@ void QG_CircleTan2Options::updateRadius(const QString& r) {
         bool ok;
         double radius=RS_Math::eval(r,&ok);
         if(ok){
-        action->setRadius(radius);
+            action->setRadius(radius);
         }/*else{
             leRadius->setText("10.0");
         }*/
