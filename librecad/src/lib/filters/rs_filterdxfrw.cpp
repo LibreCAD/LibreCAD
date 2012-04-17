@@ -1468,6 +1468,12 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
  active vport to save is required read/write VPORT table */
     QHash<QString, RS_Variable>vars = graphic->getVariableDict();
     QHash<QString, RS_Variable>::iterator it = vars.begin();
+    if (!vars.contains ( "$DWGCODEPAGE" )) {
+        codePage = RS_SYSTEM->localeToISO(QLocale::system().name().toLocal8Bit());
+//        RS_Variable v( QString(RS_SYSTEM->localeToISO(QLocale::system().name().toLocal8Bit())),0 );
+        vars.insert(QString("$DWGCODEPAGE"), RS_Variable(codePage, 0) );
+    }
+
     while (it != vars.end()) {
         curr = new DRW_Variant();
 
@@ -1716,7 +1722,7 @@ void RS_FilterDXFRW::writeLayers(){
     for (unsigned int i = 0; i < ll->count(); i++) {
         RS_Layer* l = ll->at(i);
         RS_Pen pen = l->getPen();
-        lay.name = l->getName().toStdString();
+        lay.name = toDxfString(l->getName()).toStdString();
         lay.color = colorToNumber(pen.getColor());
         lay.lWeight = widthToNumber(pen.getWidth());
         lay.lineType = lineTypeToName(pen.getLineType()).toStdString();
