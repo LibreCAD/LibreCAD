@@ -638,7 +638,7 @@ void RS_FilterDXFRW::addText(const DRW_Text& data) {
  */
 RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data) {
 
-    DRW_Coord crd = data->getBasePoint();
+    DRW_Coord crd = data->getDefPoint();
     RS_Vector defP(crd.x, crd.y);
     crd = data->getTextPoint();
     RS_Vector midP(crd.x, crd.y);
@@ -823,9 +823,9 @@ void RS_FilterDXFRW::addDimAngular3P(const DRW_DimAngular3p* data) {
     RS_DimensionData dimensionData = convDimensionData(data);
     RS_Vector dp1(data->getFirstLine().x, data->getFirstLine().y);
     RS_Vector dp2(data->getSecondLine().x, data->getSecondLine().y);
-    RS_Vector dp3(data->getVertex().x, data->getVertex().y);
+    RS_Vector dp3(data->getVertexPoint().x, data->getVertexPoint().y);
     RS_Vector dp4 = dimensionData.definitionPoint;
-    dimensionData.definitionPoint = RS_Vector(data->getVertex().x, data->getVertex().y);
+    dimensionData.definitionPoint = RS_Vector(data->getVertexPoint().x, data->getVertexPoint().y);
 
     RS_DimAngularData d(dp1, dp2, dp3, dp4);
 
