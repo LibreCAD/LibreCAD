@@ -731,7 +731,7 @@ void DRW_Image::parseCode(int code, dxfReader *reader){
     }
 }
 
-void DRW_DimensionData::parseCode(int code, dxfReader *reader){
+void DRW_Dimension::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 1:
         text = reader->getString();
@@ -750,6 +750,24 @@ void DRW_DimensionData::parseCode(int code, dxfReader *reader){
         break;
     case 72:
         linesty = reader->getInt32();
+        break;
+    case 10:
+        defPoint.x = reader->getDouble();
+        break;
+    case 20:
+        defPoint.y = reader->getDouble();
+        break;
+    case 30:
+        defPoint.z = reader->getDouble();
+        break;
+    case 11:
+        textPoint.x = reader->getDouble();
+        break;
+    case 21:
+        textPoint.y = reader->getDouble();
+        break;
+    case 31:
+        textPoint.z = reader->getDouble();
         break;
     case 12:
         clonePoint.x = reader->getDouble();
@@ -815,7 +833,7 @@ void DRW_DimensionData::parseCode(int code, dxfReader *reader){
         hdir = reader->getDouble();
         break;*/
     default:
-        DRW_Line::parseCode(code, reader);
+        DRW_Entity::parseCode(code, reader);
         break;
     }
 }

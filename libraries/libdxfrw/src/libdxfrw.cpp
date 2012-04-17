@@ -1884,7 +1884,7 @@ bool dxfRW::processImage() {
 bool dxfRW::processDimension() {
     DBG("dxfRW::processDimension");
     int code;
-    DRW_DimensionData dim;
+    DRW_Dimension dim;
     while (reader->readRec(&code, !binary)) {
         DBG(code); DBG("\n");
         switch (code) {

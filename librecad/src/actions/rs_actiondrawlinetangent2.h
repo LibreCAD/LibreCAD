@@ -27,6 +27,7 @@
 #ifndef RS_ACTIONDRAWLINETANGENT2_H
 #define RS_ACTIONDRAWLINETANGENT2_H
 
+#include <memory>
 #include "rs_previewactioninterface.h"
 
 
@@ -69,7 +70,8 @@ public:
 
 private:
     /** Closest tangent. */
-    RS_Line* tangent;
+    std::unique_ptr<RS_Line> tangent;
+    RS_LineData lineData;
     /** 1st chosen entity */
     RS_Entity* circle1;
     /** 2nd chosen entity */
@@ -77,6 +79,7 @@ private:
     /** Data of new tangent */
     RS_LineData data;
     QVector<RS2::EntityType> circleType;
+    bool valid;
 };
 
 #endif

@@ -638,7 +638,7 @@ void RS_FilterDXFRW::addText(const DRW_Text& data) {
  */
 RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data) {
 
-    DRW_Coord crd = data->getBasePoint();
+    DRW_Coord crd = data->getDefPoint();
     RS_Vector defP(crd.x, crd.y);
     crd = data->getTextPoint();
     RS_Vector midP(crd.x, crd.y);
@@ -823,9 +823,9 @@ void RS_FilterDXFRW::addDimAngular3P(const DRW_DimAngular3p* data) {
     RS_DimensionData dimensionData = convDimensionData(data);
     RS_Vector dp1(data->getFirstLine().x, data->getFirstLine().y);
     RS_Vector dp2(data->getSecondLine().x, data->getSecondLine().y);
-    RS_Vector dp3(data->getVertex().x, data->getVertex().y);
+    RS_Vector dp3(data->getVertexPoint().x, data->getVertexPoint().y);
     RS_Vector dp4 = dimensionData.definitionPoint;
-    dimensionData.definitionPoint = RS_Vector(data->getVertex().x, data->getVertex().y);
+    dimensionData.definitionPoint = RS_Vector(data->getVertexPoint().x, data->getVertexPoint().y);
 
     RS_DimAngularData d(dp1, dp2, dp3, dp4);
 
@@ -1468,6 +1468,12 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
  active vport to save is required read/write VPORT table */
     QHash<QString, RS_Variable>vars = graphic->getVariableDict();
     QHash<QString, RS_Variable>::iterator it = vars.begin();
+    if (!vars.contains ( "$DWGCODEPAGE" )) {
+        codePage = RS_SYSTEM->localeToISO(QLocale::system().name().toLocal8Bit());
+//        RS_Variable v( QString(RS_SYSTEM->localeToISO(QLocale::system().name().toLocal8Bit())),0 );
+        vars.insert(QString("$DWGCODEPAGE"), RS_Variable(codePage, 0) );
+    }
+
     while (it != vars.end()) {
         curr = new DRW_Variant();
 
@@ -1716,7 +1722,7 @@ void RS_FilterDXFRW::writeLayers(){
     for (unsigned int i = 0; i < ll->count(); i++) {
         RS_Layer* l = ll->at(i);
         RS_Pen pen = l->getPen();
-        lay.name = l->getName().toStdString();
+        lay.name = toDxfString(l->getName()).toStdString();
         lay.color = colorToNumber(pen.getColor());
         lay.lWeight = widthToNumber(pen.getWidth());
         lay.lineType = lineTypeToName(pen.getLineType()).toStdString();
