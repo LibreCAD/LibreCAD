@@ -91,10 +91,10 @@ void RS_ActionDrawLineTangent2::trigger() {
         }
         if(circle1!=NULL){
             circle1->setHighlighted(false);
+            graphicView->redraw(RS2::RedrawDrawing);
             circle1=NULL;
         }
 
-        graphicView->redraw(RS2::RedrawDrawing);
         setStatus(SetCircle1);
     }
     tangent.reset();
@@ -107,7 +107,13 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
     if(getStatus() != SetCircle2) return;
     circle2= catchEntity(e, circleType, RS2::ResolveAll);
     if(circle2==NULL) return;
-
+    if(circle2->rtti()!=RS2::EntityCircle &&
+            circle2->rtti()!=RS2::EntityEllipse &&
+            circle2->rtti()!=RS2::EntityArc
+            ) {
+        circle2=NULL;
+        return;
+    }
     RS_Creation creation(NULL, NULL);
     RS_Vector mouse(graphicView->toGraphX(e->x()),
                     graphicView->toGraphY(e->y()));
@@ -147,6 +153,13 @@ void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e) {
     {
         circle1 = catchEntity(e, circleType, RS2::ResolveAll);
         if(circle1==NULL) return;
+        if(circle1->rtti()!=RS2::EntityCircle &&
+                circle1->rtti()!=RS2::EntityEllipse &&
+                circle1->rtti()!=RS2::EntityArc
+                ) {
+            circle1=NULL;
+            return;
+        }
         circle1->setHighlighted(true);
         setStatus(getStatus()+1);
         graphicView->redraw(RS2::RedrawDrawing);
@@ -166,11 +179,11 @@ void RS_ActionDrawLineTangent2::updateMouseButtonHints() {
     if (RS_DIALOGFACTORY!=NULL) {
         switch (getStatus()) {
         case SetCircle1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Select first circle or arc"),
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Select first circle or ellipse"),
                                                 tr("Cancel"));
             break;
         case SetCircle2:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Select second circle or arc"),
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Select second circle or ellipse"),
                                                 tr("Back"));
             break;
         default:
