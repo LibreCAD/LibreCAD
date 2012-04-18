@@ -31,7 +31,6 @@
 #include "rs_block.h"
 #include "rs_color.h"
 #include "rs_dimension.h"
-#include "rs_dimaligned.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_leader.h"
@@ -115,11 +114,6 @@ public:
     virtual void writeBlockRecords();
     virtual void writeBlocks();
 
-//    void writeVariables(DL_WriterA& dw);
-//    void writeLayer(DL_WriterA& dw, RS_Layer* l);
-//    void writeAppid(DL_WriterA& dw, const char* appid);
-//    void writeBlock(DL_WriterA& dw, RS_Block* blk);
-
     void writePoint(RS_Point* p);
     void writeLine(RS_Line* l);
     void writeCircle(RS_Circle* c);
@@ -133,19 +127,10 @@ public:
     void writeHatch(RS_Hatch* h);
     void writeImage(RS_Image* i);
     void writeLeader(RS_Leader* l);
-    void writeDimAligned(RS_DimAligned* d);
-
-    /*    void writeDimLinear(const DRW_DimLinear *data);
-        void writeDimRadial(const DRW_DimRadial *data);
-        void writeDimDiametric(const DRW_DimDiametric *data);
-        void writeDimAngular(const DRW_DimAngular *data);
-        void writeDimAngular3P(const DRW_DimAngular3p *data);
-        void writeDimOrdinate(const DRW_DimOrdinate *data);*/
+    void writeDimension(RS_Dimension* d);
 
     void writePolyline(DL_WriterA& dw,
                 RS_Polyline* l, const DRW_Entity& attrib);
-	void writeDimension(DL_WriterA& dw, RS_Dimension* d, 
-                const DRW_Entity& attrib);
 	void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con, 
                 const DRW_Entity& attrib);
 	void writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c, 
