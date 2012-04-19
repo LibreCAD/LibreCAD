@@ -52,6 +52,7 @@ public:
     bool writeHatch(DRW_Hatch *ent);
     DRW_ImageDef *writeImage(DRW_Image *ent, std::string name);
     bool writeLeader(DRW_Leader *ent);
+    bool writeDimension(DRW_Dimension *ent);
 
 private:
     bool processDxf();

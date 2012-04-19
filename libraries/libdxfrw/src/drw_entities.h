@@ -781,60 +781,6 @@ public:
 };
 
 
-//! Class for parse dimension entity
-/*!
-*  Class for parse dimension entity
-*  @author Rallaz
-*/
-//class DRW_DimensionData : public DRW_Line {
-//public:
-//    DRW_DimensionData() {
-//        eType = DRW::DIMENSION;
-//        linesty = linefactor = 1;
-//        angle = oblique = 0;
-//    }
-
-//    void parseCode(int code, dxfReader *reader);
-
-//public:
-//    string name;               /*!< Name of the block that contains the entities, code 2 */
-//    string text;               /*!< Dimension text explicitly entered by the user, code 1 */
-//    string style;              /*!< Dimension style, code 3 */
-//    int type;                  /*!< Dimension type, code 70 */
-//    int align;                 /*!< attachment point, code 71 */
-//    int linesty;               /*!< Dimension text line spacing style, code 72, default 1 */
-//    double linefactor;         /*!< Dimension text line spacing factor, code 41, default 1? */
-//    double rot;                /*!< rotation angle of the dimension text, code 53 */
-////    double hdir;               /*!< horizontal direction for the dimension, code 51, default ? */
-////protected:
-//    DRW_Coord clonePoint;      /*!< Insertion point for clones (Baseline & Continue), code 12, 22 & 32 */
-//    DRW_Coord def1;            /*!< Definition point 1, code 13, 23 & 33 */
-//    DRW_Coord def2;            /*!< Definition point 2, code 14, 24 & 34 */
-//    DRW_Coord circlePoint;     /*!< Definition point for center, diameter & radius, code 15, 25 & 35 */
-//    DRW_Coord arcPoint;        /*!< Point defining dimension arc, x coordinate, code 16, 26 & 36 */
-//    double angle;              /*!< Angle of rotated, horizontal, or vertical dimensions, code 50 */
-//    double oblique;            /*!< oblique angle, code 52 */
-//    double length;             /*!< Leader length, code 40 */
-//};
-
-//enum DRW::ETYPE eType;     /*!< enum: entity type, code 0 */
-//string handle;             /*!< entity identifier, code 5 */
-//string handleBlock;        /*!< Soft-pointer ID/handle to owner BLOCK_RECORD object, code 330 */
-//string layer;              /*!< layer name, code 8 */
-//string lineType;           /*!< line type, code 6 */
-//int color;                 /*!< entity color, code 62 */
-////RLZ: TODO as integer or enum??
-//int lWeight;               /*!< entity lineweight, code 370 */
-////    enum DRW::LWEIGHT lWeight; /*!< entity lineweight, code 370 */
-//double ltypeScale;         /*!< linetype scale, code 48 */
-//bool visible;              /*!< entity visibility, code 60 */
-//int color24;               /*!< 24-bit color, code 420 */
-//string colorName;          /*!< color name, code 430 */
-//int space;                 /*!< space indicator 0 = model, 1 paper , code 67*/
-//DRW_Coord basePoint;      /*!<  base point, code 10, 20 & 30 */
-//DRW_Coord extPoint;       /*!<  Dir extrusion normal vector, code 210, 220 & 230 */
-//DRW_Coord secPoint;        /*!< second point, code 11, 21 & 31 */
-
 //! Base class for dimension entity
 /*!
 *  Base class for dimension entity
@@ -844,11 +790,15 @@ class DRW_Dimension : public DRW_Entity {
 public:
     DRW_Dimension() {
         eType = DRW::DIMENSION;
-        linesty = linefactor = 1;
+        linesty = linefactor = extPoint.z = 1;
         angle = oblique = rot = 0;
+        align = 5;
         style = "STANDARD";
-//        text = "";
+        defPoint.z = extPoint.x = extPoint.y = 0;
+        textPoint.z = rot = 0;
+        clonePoint.x = clonePoint.y = clonePoint.z = 0;
     }
+
     DRW_Dimension(const DRW_Dimension& d): DRW_Entity(d) {
         eType = DRW::DIMENSION;
         type =d.type;
@@ -880,7 +830,7 @@ public:
     DRW_Coord getTextPoint() const {return textPoint;}    /*!< Middle point of text, code 11, 21 & 31 */
     void setTextPoint(const DRW_Coord p) {textPoint =p;}
     string getStyle() const {return style;}               /*!< Dimension style, code 3 */
-    void getStyle(const string s) {style = s;}
+    void setStyle(const string s) {style = s;}
     int getAlign() const { return align;}                 /*!< attachment point, code 71 */
     void setAlign(const int a) { align = a;}
     int getTextLineStyle() const { return linesty;}       /*!< Dimension text line spacing style, code 72, default 1 */
@@ -889,17 +839,14 @@ public:
     void setText(const string t) {text = t;}
     double getTextLineFactor() const { return linefactor;} /*!< Dimension text line spacing factor, code 41, default 1? */
     void setTextLineFactor(const double l) { linefactor = l;}
-    double getDir() const { return rot;}                  /*!< rotation angle of the dimension text, code 53 */
+    double getDir() const { return rot;}                  /*!< rotation angle of the dimension text, code 53 (optional) default 0 */
     void setDir(const double d) { rot = d;}
 
     DRW_Coord getExtrusion(){return extPoint;}            /*!< extrusion, code 210, 220 & 230 */
+    void setExtrusion(const DRW_Coord p) {extPoint =p;}
     string getName(){return name;}                        /*!< Name of the block that contains the entities, code 2 */
+    void setName(const string s) {name = s;}
 //    int getType(){ return type;}                      /*!< Dimension type, code 70 */
-
-protected:
-//    DRW_Coord getCenArcpoint() const {return dim.circlePoint;}             /*!< Definition point for center, diameter & radius, code 15, 25 & 35 */
-//    DRW_Coord getArcpoint() const {return dim.arcPoint;}                   /*!< Point defining dimension arc, x coordinate, code 16, 26 & 36 */
-//    double getleader() const {return dim.length;}                          /*!< Leader length, code 40 */
 
 protected:
     DRW_Coord getPt2() const {return clonePoint;}
@@ -1085,9 +1032,9 @@ public:
     void setDimPoint(const DRW_Coord p) {setDefPoint(p);}
 };
 
-//! Class to handle angular 3p dimension entity
+//! Class to handle ordinate dimension entity
 /*!
-*  Class to handle angular 3p dimension entity
+*  Class to handle ordinate dimension entity
 *  @author Rallaz
 */
 class DRW_DimOrdinate : public DRW_Dimension {

@@ -530,7 +530,7 @@ bool dxfRW::writeLeader(DRW_Leader *ent){
     if (version > DRW::AC1009) {
         writer->writeString(0, "LEADER");
         writeEntity(ent);
-            writer->writeString(100, "AcDbLeader");
+        writer->writeString(100, "AcDbLeader");
         writer->writeString(3, ent->style);
         writer->writeInt16(71, ent->arrow);
         writer->writeInt16(72, ent->leadertype);
@@ -546,6 +546,123 @@ bool dxfRW::writeLeader(DRW_Leader *ent){
             writer->writeDouble(10, vert->x);
             writer->writeDouble(20, vert->y);
             writer->writeDouble(30, vert->z);
+        }
+    } else  {
+        //RLZ: todo not supported by acad 12 saved as unnamed block
+    }
+    return true;
+}
+bool dxfRW::writeDimension(DRW_Dimension *ent) {
+    if (version > DRW::AC1009) {
+        writer->writeString(0, "DIMENSION");
+        writeEntity(ent);
+        writer->writeString(100, "AcDbDimension");
+//        writer->writeString(2, ent->name);
+        writer->writeDouble(10, ent->getDefPoint().x);
+        writer->writeDouble(20, ent->getDefPoint().y);
+        writer->writeDouble(30, ent->getDefPoint().z);
+        writer->writeDouble(11, ent->getTextPoint().x);
+        writer->writeDouble(21, ent->getTextPoint().y);
+        writer->writeDouble(31, ent->getTextPoint().z);
+        if ( !(ent->type & 32))
+            ent->type = ent->type +32;
+        writer->writeInt16(70, ent->type);
+        if ( !(ent->getText().empty()) )
+            writer->writeString(1, ent->getText());
+        writer->writeInt16(71, ent->getAlign());
+        if ( ent->getTextLineStyle() != 1)
+            writer->writeInt16(72, ent->getTextLineStyle());
+        if ( ent->getTextLineFactor() != 1)
+            writer->writeDouble(41, ent->getTextLineFactor());
+        writer->writeString(3, ent->getStyle());
+        if ( ent->getTextLineFactor() != 0)
+            writer->writeDouble(53, ent->getDir());
+        writer->writeDouble(210, ent->getExtrusion().x);
+        writer->writeDouble(220, ent->getExtrusion().y);
+        writer->writeDouble(230, ent->getExtrusion().z);
+
+        switch (ent->eType) {
+        case DRW::DIMALIGNED:
+        case DRW::DIMLINEAR: {
+            DRW_DimAligned * dd = (DRW_DimAligned*)ent;
+            writer->writeString(100, "AcDbAlignedDimension");
+            DRW_Coord crd = dd->getClonepoint();
+            if (crd.x != 0 || crd.y || 0 || crd.z != 0) {
+                writer->writeDouble(12, crd.x);
+                writer->writeDouble(22, crd.y);
+                writer->writeDouble(32, crd.z);
+            }
+            writer->writeDouble(13, dd->getDef1Point().x);
+            writer->writeDouble(23, dd->getDef1Point().y);
+            writer->writeDouble(33, dd->getDef1Point().z);
+            writer->writeDouble(14, dd->getDef2Point().x);
+            writer->writeDouble(24, dd->getDef2Point().y);
+            writer->writeDouble(34, dd->getDef2Point().z);
+            if (ent->eType == DRW::DIMLINEAR) {
+                DRW_DimLinear * dl = (DRW_DimLinear*)ent;
+                writer->writeString(100, "AcDbRotatedDimension");
+                if (dl->getAngle() != 0)
+                    writer->writeDouble(50, dl->getAngle());
+                if (dl->getOblique() != 0)
+                    writer->writeDouble(52, dl->getOblique());
+            }
+            break; }
+        case DRW::DIMRADIAL: {
+            DRW_DimRadial * dd = (DRW_DimRadial*)ent;
+            writer->writeString(100, "AcDbRadialDimension");
+            writer->writeDouble(15, dd->getDiameterPoint().x);
+            writer->writeDouble(25, dd->getDiameterPoint().y);
+            writer->writeDouble(35, dd->getDiameterPoint().z);
+            writer->writeDouble(40, dd->getLeaderLength());
+            break; }
+        case DRW::DIMDIAMETRIC: {
+            DRW_DimDiametric * dd = (DRW_DimDiametric*)ent;
+            writer->writeString(100, "AcDbDiametricDimension");
+            writer->writeDouble(15, dd->getDiameter1Point().x);
+            writer->writeDouble(25, dd->getDiameter1Point().y);
+            writer->writeDouble(35, dd->getDiameter1Point().z);
+            writer->writeDouble(40, dd->getLeaderLength());
+            break; }
+        case DRW::DIMANGULAR: {
+            DRW_DimAngular * dd = (DRW_DimAngular*)ent;
+            writer->writeString(100, "AcDb2LineAngularDimension");
+            writer->writeDouble(13, dd->getFirstLine1().x);
+            writer->writeDouble(23, dd->getFirstLine1().y);
+            writer->writeDouble(33, dd->getFirstLine1().z);
+            writer->writeDouble(14, dd->getFirstLine2().x);
+            writer->writeDouble(24, dd->getFirstLine2().y);
+            writer->writeDouble(34, dd->getFirstLine2().z);
+            writer->writeDouble(15, dd->getSecondLine1().x);
+            writer->writeDouble(25, dd->getSecondLine1().y);
+            writer->writeDouble(35, dd->getSecondLine1().z);
+            writer->writeDouble(16, dd->getDimPoint().x);
+            writer->writeDouble(26, dd->getDimPoint().y);
+            writer->writeDouble(36, dd->getDimPoint().z);
+            break; }
+        case DRW::DIMANGULAR3P: {
+            DRW_DimAngular3p * dd = (DRW_DimAngular3p*)ent;
+            writer->writeDouble(13, dd->getFirstLine().x);
+            writer->writeDouble(23, dd->getFirstLine().y);
+            writer->writeDouble(33, dd->getFirstLine().z);
+            writer->writeDouble(14, dd->getSecondLine().x);
+            writer->writeDouble(24, dd->getSecondLine().y);
+            writer->writeDouble(34, dd->getSecondLine().z);
+            writer->writeDouble(15, dd->getVertexPoint().x);
+            writer->writeDouble(25, dd->getVertexPoint().y);
+            writer->writeDouble(35, dd->getVertexPoint().z);
+            break; }
+        case DRW::DIMORDINATE: {
+            DRW_DimOrdinate * dd = (DRW_DimOrdinate*)ent;
+            writer->writeString(100, "AcDbOrdinateDimension");
+            writer->writeDouble(13, dd->getFirstLine().x);
+            writer->writeDouble(23, dd->getFirstLine().y);
+            writer->writeDouble(33, dd->getFirstLine().z);
+            writer->writeDouble(14, dd->getSecondLine().x);
+            writer->writeDouble(24, dd->getSecondLine().y);
+            writer->writeDouble(34, dd->getSecondLine().z);
+            break; }
+        default:
+            break;
         }
     } else  {
         //RLZ: todo not supported by acad 12 saved as unnamed block
