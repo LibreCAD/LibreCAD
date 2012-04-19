@@ -72,10 +72,13 @@ public:
     virtual void addHeader(const DRW_Header* data);
     virtual void addLType(const DRW_LType& /*data*/){}
     virtual void addLayer(const DRW_Layer& data);
+    virtual void addDimStyle(const DRW_Dimstyle& data){}
     virtual void addBlock(const DRW_Block& data);
     virtual void endBlock();
     virtual void addPoint(const DRW_Point& data);
     virtual void addLine(const DRW_Line& data);
+    virtual void addRay(const DRW_Ray& data);
+    virtual void addXline(const DRW_Xline& data);
     virtual void addCircle(const DRW_Circle& data);
     virtual void addArc(const DRW_Arc& data);
     virtual void addEllipse(const DRW_Ellipse& data);
@@ -113,6 +116,7 @@ public:
     virtual void writeLayers();
     virtual void writeBlockRecords();
     virtual void writeBlocks();
+    virtual void writeDimstyles();
 
     void writePoint(RS_Point* p);
     void writeLine(RS_Line* l);
@@ -123,18 +127,18 @@ public:
     void writeLWPolyline(RS_Polyline* l);
     void writeSpline(RS_Spline* s);
     void writeInsert(RS_Insert* i);
-    void writeText(RS_Text* t);
+//    void writeText(RS_Text* t);
+    void writeMText(RS_Text* t);
     void writeHatch(RS_Hatch* h);
     void writeImage(RS_Image* i);
     void writeLeader(RS_Leader* l);
     void writeDimension(RS_Dimension* d);
+    void writePolyline(RS_Polyline* p);
 
-    void writePolyline(DL_WriterA& dw,
-                RS_Polyline* l, const DRW_Entity& attrib);
-	void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con, 
+/*	void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
                 const DRW_Entity& attrib);
 	void writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c, 
-                const DRW_Entity& attrib, RS2::ResolveLevel level);
+                const DRW_Entity& attrib, RS2::ResolveLevel level);*/
 	
 
     void setEntityAttributes(RS_Entity* entity, const DRW_Entity* attrib);

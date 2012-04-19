@@ -40,6 +40,52 @@ void DRW_TableEntry::parseCode(int code, dxfReader *reader){
     }
 }
 
+//! Class to handle dimstyle entries
+/*!
+*  Class to handle ldim style symbol table entries
+*  @author Rallaz
+*/
+void DRW_Dimstyle::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 105:
+        handle = reader->getString();
+        break;
+    case 3:
+        dimpost = reader->getString();
+        break;
+    case 4:
+        dimapost = reader->getString();
+        break;
+    case 5:
+        dimblk = reader->getString();
+        break;
+    case 6:
+        dimblk1 = reader->getString();
+        break;
+    case 7:
+        dimblk2 = reader->getString();
+        break;
+    case 41:
+        dimasz = reader->getDouble();
+        break;
+    case 42:
+        dimexo = reader->getDouble();
+        break;
+    case 44:
+        dimexe = reader->getDouble();
+        break;
+    case 140:
+        dimtxt = reader->getDouble();
+        break;
+    case 147:
+        dimgap = reader->getDouble();
+        break;
+    default:
+        DRW_TableEntry::parseCode(code, reader);
+        break;
+    }
+}
+
 //! Class to handle line type entries
 /*!
 *  Class to handle line type symbol table entries

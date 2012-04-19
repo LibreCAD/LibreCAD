@@ -74,6 +74,8 @@ namespace DRW {
         DIMORDINATE,
 //        OVERLAYBOX,
 //        CONSTRUCTIONLINE,
+        RAY,
+        XLINE,
         UNKNOWN
     };
 
@@ -195,6 +197,30 @@ public:
 
 public:
     DRW_Coord secPoint;        /*!< second point, code 11, 21 & 31 */
+};
+
+//! Class to handle ray entity
+/*!
+*  Class to handle ray entity
+*  @author Rallaz
+*/
+class DRW_Ray : public DRW_Line {
+public:
+    DRW_Ray() {
+        eType = DRW::RAY;
+    }
+};
+
+//! Class to handle xline entity
+/*!
+*  Class to handle xline entity
+*  @author Rallaz
+*/
+class DRW_Xline : public DRW_Line {
+public:
+    DRW_Xline() {
+        eType = DRW::XLINE;
+    }
 };
 
 //! Class to handle circle entity
@@ -523,7 +549,7 @@ public:
     DRW_Polyline() {
         eType = DRW::POLYLINE;
         flags = defstawidth = defendwidth = 0;
-        curvetype = 0;
+        basePoint.x = basePoint.y = curvetype = 0;
         vertexcount = facecount = 0;
         smoothM = smoothN = 0;
     }
