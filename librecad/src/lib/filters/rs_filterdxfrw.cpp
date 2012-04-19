@@ -1603,8 +1603,11 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
         writeInsert((RS_Insert*)e);
         break;
     case RS2::EntityText:
-        writeText((RS_Text*)e);
+        writeMText((RS_Text*)e);
         break;
+/*    case RS2::EntityMText:
+        writeMText((RS_MText*)e);
+        break;*/
     case RS2::EntityDimLinear:
     case RS2::EntityDimAligned:
     case RS2::EntityDimAngular:
@@ -1882,7 +1885,7 @@ void RS_FilterDXFRW::writeInsert(RS_Insert* i) {
 /**
  * Writes the given mText entity to the file.
  */
-void RS_FilterDXFRW::writeText(RS_Text* t) {
+void RS_FilterDXFRW::writeMText(RS_Text* t) {
     DRW_Text *text;
     DRW_Text txt1;
     DRW_MText txt2;

@@ -127,7 +127,8 @@ public:
     void writeLWPolyline(RS_Polyline* l);
     void writeSpline(RS_Spline* s);
     void writeInsert(RS_Insert* i);
-    void writeText(RS_Text* t);
+//    void writeText(RS_Text* t);
+    void writeMText(RS_Text* t);
     void writeHatch(RS_Hatch* h);
     void writeImage(RS_Image* i);
     void writeLeader(RS_Leader* l);
