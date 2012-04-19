@@ -31,6 +31,7 @@ namespace DRW {
          UNKNOWNT,
          LTYPE,
          LAYER,
+         DIMSTYLE,
          BLOCK_RECORD
      };
 
@@ -59,6 +60,36 @@ public:
     string handleBlock;              /*!< Soft-pointer ID/handle to owner BLOCK_RECORD object, code 330 */
     string name;                         /*!< entry name, code 2 */
     int flags;                               /*!< Flags relevant to entry, code 70 */
+};
+
+
+//! Class to handle dimstyle entries
+/*!
+*  Class to handle dim style symbol table entries
+*  @author Rallaz
+*/
+class DRW_Dimstyle : public DRW_TableEntry {
+public:
+    DRW_Dimstyle() {
+        tType = DRW::DIMSTYLE;
+        dimasz = dimtxt = 2.5;
+        dimexo = dimgap = 0.625;
+        dimexe = 1.25;
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    string dimpost;           /*!< code 3 */
+    string dimapost;         /*!< code 4 */
+    string dimblk;            /*!< code 5 (handle are code 105*/
+    string dimblk1;           /*!< code 6 */
+    string dimblk2;           /*!< code 7 */
+    double dimasz;            /*!< code 41 */
+    double dimexo;            /*!< code 42 */
+    double dimexe;            /*!< code 44 */
+    double dimtxt;            /*!< code 140 */
+    double dimgap;            /*!< code 147 */
 };
 
 

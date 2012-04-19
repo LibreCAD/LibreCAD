@@ -248,6 +248,62 @@ void RS_FilterDXFRW::addLine(const DRW_Line& data) {
 }
 
 
+/**
+ * Implementation of the method which handles ray entities.
+ */
+void RS_FilterDXFRW::addRay(const DRW_Ray& data) {
+    RS_DEBUG->print("RS_FilterDXF::addRay");
+
+    RS_Vector v1(data.basePoint.x, data.basePoint.y);
+    RS_Vector v2(data.basePoint.x+data.secPoint.x, data.basePoint.y+data.secPoint.y);
+
+    RS_DEBUG->print("RS_FilterDXF::addRay: create line");
+
+    if (currentContainer==NULL) {
+        RS_DEBUG->print("RS_FilterDXF::addRay: currentContainer is NULL");
+    }
+
+    RS_Line* entity = new RS_Line(currentContainer,
+                                  RS_LineData(v1, v2));
+    RS_DEBUG->print("RS_FilterDXF::addRay: set attributes");
+    setEntityAttributes(entity, &data);
+
+    RS_DEBUG->print("RS_FilterDXF::addRay: add entity");
+
+    currentContainer->addEntity(entity);
+
+    RS_DEBUG->print("RS_FilterDXF::addRay: OK");
+}
+
+
+/**
+ * Implementation of the method which handles line entities.
+ */
+void RS_FilterDXFRW::addXline(const DRW_Xline& data) {
+    RS_DEBUG->print("RS_FilterDXF::addXline");
+
+    RS_Vector v1(data.basePoint.x, data.basePoint.y);
+    RS_Vector v2(data.basePoint.x+data.secPoint.x, data.basePoint.y+data.secPoint.y);
+
+    RS_DEBUG->print("RS_FilterDXF::addXline: create line");
+
+    if (currentContainer==NULL) {
+        RS_DEBUG->print("RS_FilterDXF::addXline: currentContainer is NULL");
+    }
+
+    RS_Line* entity = new RS_Line(currentContainer,
+                                  RS_LineData(v1, v2));
+    RS_DEBUG->print("RS_FilterDXF::addXline: set attributes");
+    setEntityAttributes(entity, &data);
+
+    RS_DEBUG->print("RS_FilterDXF::addXline: add entity");
+
+    currentContainer->addEntity(entity);
+
+    RS_DEBUG->print("RS_FilterDXF::addXline: OK");
+}
+
+
 
 /**
  * Implementation of the method which handles circle entities.
@@ -1497,6 +1553,16 @@ void RS_FilterDXFRW::writeLayers(){
     }
 }
 
+void RS_FilterDXFRW::writeDimstyles(){
+    DRW_Dimstyle dsty;
+    dsty.name = "Standard";
+    dsty.dimasz = graphic->getVariableDouble("$DIMASZ", 2.5);
+    dsty.dimexe = graphic->getVariableDouble("$DIMEXE", 1.25);
+    dsty.dimexo = graphic->getVariableDouble("$DIMEXO", 0.625);
+    dsty.dimgap = graphic->getVariableDouble("$DIMGAP", 0.625);
+    dsty.dimtxt = graphic->getVariableDouble("$DIMTXT", 2.5);
+    dxf->writeDimstyle(&dsty);
+}
 
 void RS_FilterDXFRW::writeEntities(){
     for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
@@ -1624,6 +1690,11 @@ void RS_FilterDXFRW::writeArc(RS_Arc* a) {
  * Writes the given polyline entity to the file as lwpolyline.
  */
 void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
+    // version 12 are old style polyline
+    if (version==1009) {
+        writePolyline(l);
+        return;
+    }
     DRW_LWPolyline pol;
     RS_Entity* currEntity = 0;
     RS_Entity* nextEntity = 0;
@@ -1662,77 +1733,49 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
     pol.vertexnum = pol.vertlist.size();
     getEntityAttributes(&pol, l);
     dxf->writeLWPolyline(&pol);
-
 }
 
 /**
  * Writes the given polyline entity to the file.
  */
-void RS_FilterDXFRW::writePolyline(DL_WriterA& /*dw*/,
-                                 RS_Polyline* /*l*/,
-                                 const DRW_Entity& /*attrib*/) {
-
-/*        int count = l->count();
-        if (l->isClosed()==false) {
-                count++;
-        }
-
-        dxf.writePolyline(
-        dw,
-        DL_PolylineData(count,
-                        0, 0,
-                        l->isClosed()*0x1),
-        attrib);
-    bool first = true;
+void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
+    DRW_Polyline pol;
+    RS_Entity* currEntity = 0;
     RS_Entity* nextEntity = 0;
     RS_AtomicEntity* ae = NULL;
-        RS_Entity* lastEntity = l->lastEntity(RS2::ResolveNone);
-    for (RS_Entity* v=l->firstEntity(RS2::ResolveNone);
-            v!=NULL;
-            v=nextEntity) {
+    double bulge=0.0;
 
-        nextEntity = l->nextEntity(RS2::ResolveNone);
+    for (RS_Entity* e=p->firstEntity(RS2::ResolveNone);
+         e!=NULL; e=nextEntity) {
 
-        if (!v->isAtomic()) {
+        currEntity = e;
+        nextEntity = p->nextEntity(RS2::ResolveNone);
+
+        if (!e->isAtomic()) {
             continue;
         }
+        ae = (RS_AtomicEntity*)e;
 
-        ae = (RS_AtomicEntity*)v;
-        double bulge=0.0;
-
-                // Write vertex:
-        if (first) {
-            if (v->rtti()==RS2::EntityArc) {
-                bulge = ((RS_Arc*)v)->getBulge();
-            }
-            dxf.writeVertex(dw,
-                            DL_VertexData(ae->getStartpoint().x,
-                                          ae->getStartpoint().y,
-                                          0.0,
-                                                                                  bulge));
-            first = false;
-        }
-
-        //if (dxf.getVersion()==VER_R12) {
-            if (nextEntity!=NULL) {
-                if (nextEntity->rtti()==RS2::EntityArc) {
-                    bulge = ((RS_Arc*)nextEntity)->getBulge();
-                }
-                                else {
-                                        bulge = 0.0;
-                                }
-            }
-
-
-                if (l->isClosed()==false || v!=lastEntity) {
-                dxf.writeVertex(dw,
-                        DL_VertexData(ae->getEndpoint().x,
-                                      ae->getEndpoint().y,
-                                      0.0,
-                                      bulge));
-                }
+        // Write vertex:
+            if (e->rtti()==RS2::EntityArc) {
+                bulge = ((RS_Arc*)e)->getBulge();
+            } else
+                bulge = 0.0;
+            pol.addVertex( DRW_Vertex(ae->getStartpoint().x,
+                                      ae->getStartpoint().y, 0.0, bulge));
     }
-    dxf.writePolylineEnd(dw);*/
+    if (p->isClosed()) {
+        pol.flags = 1;
+    } else {
+        ae = (RS_AtomicEntity*)currEntity;
+        if (ae->rtti()==RS2::EntityArc) {
+            bulge = ((RS_Arc*)ae)->getBulge();
+        }
+        pol.addVertex( DRW_Vertex(ae->getEndpoint().x,
+                                  ae->getEndpoint().y, 0.0, bulge));
+    }
+    getEntityAttributes(&pol, p);
+    dxf->writePolyline(&pol);
 }
 
 
@@ -2191,9 +2234,9 @@ void RS_FilterDXFRW::writeImage(RS_Image * i) {
 
 
 
-void RS_FilterDXFRW::writeEntityContainer(DL_WriterA& /*dw*/, RS_EntityContainer* /*con*/,
-                                        const DRW_Entity& /*attrib*/) {
-/*    QString blkName;
+/*void RS_FilterDXFRW::writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
+                                        const DRW_Entity& attrib) {
+    QString blkName;
     blkName = "__CE";
 
     // Creating an unique ID from the element ID
@@ -2233,25 +2276,24 @@ void RS_FilterDXFRW::writeEntityContainer(DL_WriterA& /*dw*/, RS_EntityContainer
     }
     writeBlock(dw, blk);
     //delete e1;
-*/
-}
+}*/
 
 
 
 /**
  * Writes the atomic entities of the given cotnainer to the file.
  */
-void RS_FilterDXFRW::writeAtomicEntities(DL_WriterA& /*dw*/, RS_EntityContainer* c,
-                                       const DRW_Entity& /*attrib*/,
+/*void RS_FilterDXFRW::writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c,
+                                       const DRW_Entity& attrib,
                                        RS2::ResolveLevel level) {
 
     for (RS_Entity* e=c->firstEntity(level);
             e!=NULL;
             e=c->nextEntity(level)) {
 
-//RLZ        writeEntity(dw, e, attrib);
+        writeEntity(dw, e, attrib);
     }
-}
+}*/
 
 
 /**
