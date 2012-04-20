@@ -19,6 +19,8 @@ mkdir -p "${RESOURCEDIR}"/patterns
 mkdir -p "${RESOURCEDIR}"/doc
 cp "${SPTDIR}"/patterns/*.dxf "${RESOURCEDIR}"/patterns
 cp "${SPTDIR}"/fonts/*.lff* "${RESOURCEDIR}"/fonts
+cp "${SPTDIR}"/doc/*.qch "${RESOURCEDIR}"/doc
+cp "${SPTDIR}"/doc/*.qhc "${RESOURCEDIR}"/doc
 find "${SPTDIR}"/library -type d | sed 's:^.*support/::' | xargs -IFILES  mkdir "${RESOURCEDIR}"/FILES
 find "${SPTDIR}"/library -type f -iname *.dxf | sed 's/^.*support//' | xargs -IFILES  cp "${SPTDIR}"/FILES "${RESOURCEDIR}"/FILES
 
