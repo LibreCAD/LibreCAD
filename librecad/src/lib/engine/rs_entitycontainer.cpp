@@ -1537,14 +1537,21 @@ bool RS_EntityContainer::optimizeContours() {
             }
             closed=false;
         }
-        if(vpEnd.squaredTo(next->getStartpoint())<1e-8){
-            vpEnd=next->getEndpoint();
-        }else{
-            vpEnd=next->getStartpoint();
-        }
-        next->setProcessed(true);
-        tmp.addEntity(next->clone());
-         removeEntity(next);
+        if(next){ 			//workaround if next is NULL
+        	if(vpEnd.squaredTo(next->getStartpoint())<1e-8){
+        		vpEnd=next->getEndpoint();
+        	}else{
+        		vpEnd=next->getStartpoint();
+        	}
+        	next->setProcessed(true);
+        	tmp.addEntity(next->clone());
+        	removeEntity(next);
+        } else { 			//workaround if next is NULL
+//      	    std::cout<<"RS_EntityContainer::optimizeContours: next is NULL" <<std::endl;
+
+        	closed=false;	//workaround if next is NULL
+        	break;			//workaround if next is NULL
+        } 					//workaround if next is NULL
     }
     if( vpEnd.squaredTo(vpStart)>1e-8) closed=false;
 //    std::cout<<"RS_EntityContainer::optimizeContours: 5"<<std::endl;
