@@ -114,6 +114,7 @@ public:
         return count()==0;
     }
     virtual unsigned int count();
+    virtual unsigned int count() const;
     virtual unsigned int countDeep();
     //virtual unsigned long int countLayerEntities(RS_Layer* layer);
     virtual unsigned int countSelected();
