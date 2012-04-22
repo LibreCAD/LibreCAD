@@ -2968,7 +2968,7 @@ void QC_ApplicationWindow::slotFileExport() {
             dlg.setGraphicSize(w->getGraphic()->getSize());
             if (dlg.exec()) {
                 bool ret = slotFileExport(fn, format, dlg.getSize(),
-                                          dlg.isBackgroundBlack());
+                            dlg.isBackgroundBlack(), dlg.isBlackWhite());
                 if (ret) {
                     QString message = tr("Exported: %1").arg(fn);
                     statusBar()->showMessage(message, 2000);
