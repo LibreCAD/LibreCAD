@@ -35,7 +35,7 @@
 #include "emu_qt44.h"
 #endif
 
-#define USEQTDIALOG 1
+//#define USEQTDIALOG 1
 
 void QG_FileDialog::getType(const QString filter) {
     if (filter== fLff) {

@@ -1241,16 +1241,6 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
     dw->tableAppid(1);
     writeAppid(*dw, "ACAD");
     dw->tableEnd();
-
-    // DIMSTYLE:
-    RS_DEBUG->print("writing dim styles...");
-    dxf.writeDimStyle(*dw,
-                      graphic->getVariableDouble("$DIMASZ", 2.5),
-                      graphic->getVariableDouble("$DIMEXE", 1.25),
-                      graphic->getVariableDouble("$DIMEXO", 0.625),
-                      graphic->getVariableDouble("$DIMGAP", 0.625),
-                      graphic->getVariableDouble("$DIMTXT", 2.5));
-
 */
     return success;
 }
@@ -1745,7 +1735,7 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
 }
 
 /**
- * Writes the given polyline entity to the file.
+ * Writes the given polyline entity to the file (old style).
  */
 void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
     DRW_Polyline pol;
@@ -1794,17 +1784,32 @@ void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
  */
 void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
 
-    // split spline into atomic entities for DXF R12:
-/*RLZ: TODO    if (dxf.getVersion()==VER_R12) {
-        writeAtomicEntities(dw, s, attrib, RS2::ResolveNone);
-        return;
-    }
-*/
     if (s->getNumberOfControlPoints() < s->getDegree()+1) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_FilterDXF::writeSpline: "
                         "Discarding spline: not enough control points given.");
         return;
     }
+
+    // version 12 do not support Spline write as polyline
+    if (version==1009) {
+        DRW_Polyline pol;
+        RS_Entity* e;
+        for (e=s->firstEntity(RS2::ResolveNone);
+             e!=NULL; e=s->nextEntity(RS2::ResolveNone)) {
+            pol.addVertex( DRW_Vertex(e->getStartpoint().x,
+                                      e->getStartpoint().y, 0.0, 0.0));
+        }
+        if (s->isClosed()) {
+            pol.flags = 1;
+        } else {
+            pol.addVertex( DRW_Vertex(e->getEndpoint().x,
+                                      e->getEndpoint().y, 0.0, 0.0));
+        }
+        getEntityAttributes(&pol, s);
+        dxf->writePolyline(&pol);
+        return;
+    }
+
     DRW_Spline sp;
 
     if (s->isClosed())
@@ -1845,6 +1850,26 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
  * Writes the given Ellipse entity to the file.
  */
 void RS_FilterDXFRW::writeEllipse(RS_Ellipse* s) {
+    // version 12 do not support Ellipse write as polyline
+    if (version==1009) {
+/*RLZ, writeme        DRW_Polyline pol;
+        RS_Entity* e;
+        for (e=s->firstEntity(RS2::ResolveNone);
+             e!=NULL; e=s->nextEntity(RS2::ResolveNone)) {
+            pol.addVertex( DRW_Vertex(e->getStartpoint().x,
+                                      e->getStartpoint().y, 0.0, 0.0));
+        }
+        if (s->isClosed()) {
+            pol.flags = 1;
+        } else {
+            pol.addVertex( DRW_Vertex(e->getEndpoint().x,
+                                      e->getEndpoint().y, 0.0, 0.0));
+        }
+        getEntityAttributes(&pol, s);
+        dxf->writePolyline(&pol);*/
+        return;
+    }
+
     DRW_Ellipse el;
     getEntityAttributes(&el, s);
     el.basePoint.x = s->getCenter().x;
