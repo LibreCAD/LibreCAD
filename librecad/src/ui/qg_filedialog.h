@@ -56,13 +56,15 @@ private:
     void getType(const QString filter);
     QString getExtension (RS2::FormatType type);
     RS2::FormatType ftype;
-#ifdef USE_DXFRW
+    QString fDxfrw2007;
+    QString fDxfrw2004;
     QString fDxfrw2000;
+    QString fDxfrw14;
+    QString fDxfrw12;
     QString fDxfrw;
-#endif
-    QString fDxf2000;
-    QString fDxfR12;
-    QString fDxf;
+    QString fDxfOld2000;
+    QString fDxfOldR12;
+    QString fDxfOld;
     QString fDxf1;
     QString fLff;
     QString fCxf;

@@ -70,7 +70,7 @@ void RS_ActionBlocksSave::trigger() {
 //           std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line: "<<__LINE__<<std::endl;
 //           std::cout<<"add layer name="<<qPrintable(b->getLayer()->getName())<<std::endl;
 
-            RS2::FormatType t = RS2::FormatDXF;
+            RS2::FormatType t = RS2::FormatDXFRW;
 
             QG_FileDialog dlg(appWindow->getMDIWindow(),0, QG_FileDialog::BlockFile);
             QString&& fn = dlg.getSaveFile(&t);

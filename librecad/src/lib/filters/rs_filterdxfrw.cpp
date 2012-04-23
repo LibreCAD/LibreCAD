@@ -1173,7 +1173,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
 
     QString path = QFileInfo(file).absolutePath();
     if (QFileInfo(path).isWritable()==false) {
-        RS_DEBUG->print("RS_FilterDXFDW::fileExport: can't write file: "
+        RS_DEBUG->print("RS_FilterDXFRW::fileExport: can't write file: "
                         "no permission");
         return false;
     }
@@ -1182,10 +1182,16 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
 
     // set version for DXF filter:
     DRW::Version exportVersion;
-    if (type==RS2::FormatDXF12) {
+    if (type==RS2::FormatDXFRW12) {
         exportVersion = DRW::AC1009;
-    } else {
-        exportVersion = DRW::AC1015;
+    } else if (type==RS2::FormatDXFRW14) {
+            exportVersion = DRW::AC1014;
+    } else if (type==RS2::FormatDXFRW2000) {
+            exportVersion = DRW::AC1015;
+    } else if (type==RS2::FormatDXFRW2004) {
+            exportVersion = DRW::AC1018;
+        } else {
+        exportVersion = DRW::AC1021;
     }
 
     //DL_WriterA* dw = dxf.out(file, VER_R12);

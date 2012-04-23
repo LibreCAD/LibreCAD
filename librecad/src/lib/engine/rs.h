@@ -105,11 +105,13 @@ public:
     enum FormatType {
         FormatUnknown,       /**< Unknown / unsupported format. */
         FormatDXF1,          /**< QCad 1 compatibility DXF format. */
-        FormatDXF,           /**< DXF format. 2000. */
-#ifdef USE_DXFRW
-        FormatDXFRW,           /**< DXF format. new library. */
-#endif
-        FormatDXF12,         /**< DXF format. R12. */
+        FormatDXFRW,           /**< DXF format. v2007. */
+        FormatDXFRW2004,           /**< DXF format. v2004. */
+        FormatDXFRW2000,           /**< DXF format. v2000. */
+        FormatDXFRW14,           /**< DXF format. v14. */
+        FormatDXFRW12,           /**< DXF format. v12. */
+        FormatDXFOLD,           /**< DXF format. 2000. old dxflib library*/
+        FormatDXFOLD12,         /**< DXF format. R12. old dxflib library*/
         FormatLFF,           /**< LibreCAD Font File format. */
         FormatCXF,           /**< CAM Expert Font format. */
         FormatJWW,           /**< JWW Format type */
