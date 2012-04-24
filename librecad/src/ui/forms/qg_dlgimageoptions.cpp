@@ -71,9 +71,9 @@ void QG_ImageOptionsDialog::init() {
     if (RS_SETTINGS->readEntry("/BlackBackground", "0")=="1") {
         rbBlack->setChecked(true);
     }
-    /*if (RS_SETTINGS->readEntry("/Blackwhite", "0")=="1") {
-        rbBlackwhite->setChecked(true);
-    }*/
+    if (RS_SETTINGS->readEntry("/Blackwhite", "0")=="1") {
+        rbBlackWhite->setChecked(true);
+    }
     RS_SETTINGS->endGroup();
 }
 
@@ -86,7 +86,7 @@ void QG_ImageOptionsDialog::ok() {
     RS_SETTINGS->writeEntry("/Width", leWidth->text());
     RS_SETTINGS->writeEntry("/Height", leHeight->text());
     RS_SETTINGS->writeEntry("/BlackBackground", (int)rbBlack->isChecked());
-    //RS_SETTINGS->writeEntry("/Blackwhite", (int)rbBlackwhite->isChecked());
+    RS_SETTINGS->writeEntry("/Blackwhite", (int)rbBlackWhite->isChecked());
     RS_SETTINGS->endGroup();
 
     accept();
@@ -125,6 +125,6 @@ bool QG_ImageOptionsDialog::isBackgroundBlack() {
     return rbBlack->isChecked();
 }
 
-/*bool QG_ImageOptionsDialog::isBlackwhite() {
-    return rbBlackwhite->isChecked();
-}*/
+bool QG_ImageOptionsDialog::isBlackWhite() {
+    return rbBlackWhite->isChecked();
+}

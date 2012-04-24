@@ -142,7 +142,7 @@ public slots:
         /** exports the document as bitmap */
         void slotFileExport();
         bool slotFileExport(const QString& name, const QString& format,
-                QSize size, bool black, bool bw=false);
+                QSize size, bool black, bool bw=true);
     /** closes the current file */
     void slotFileClose();
     /** closing the current file */
