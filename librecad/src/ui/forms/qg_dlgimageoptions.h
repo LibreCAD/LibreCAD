@@ -39,6 +39,7 @@ public:
 
     virtual QSize getSize();
     virtual bool isBackgroundBlack();
+    virtual bool isBlackWhite();
 
 public slots:
     virtual void setGraphicSize( const RS_Vector & s );

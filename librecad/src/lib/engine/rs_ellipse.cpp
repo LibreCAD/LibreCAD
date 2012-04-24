@@ -1213,8 +1213,8 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_Vector vpEnd;
     if(isArc()){
         //only handle start/end points for ellipse arc
-        getStartpoint().scale(center,factor);
-        getEndpoint().scale(center,factor);
+        vpStart=getStartpoint().scale(center,factor);
+        vpEnd=getEndpoint().scale(center,factor);
     }
     data.center.scale(center, factor);
     RS_Vector vp1(getMajorP());
