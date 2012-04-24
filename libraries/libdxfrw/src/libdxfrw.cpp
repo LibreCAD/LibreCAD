@@ -219,8 +219,12 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbSymbolTableRecord");
         writer->writeString(100, "AcDbLayerTableRecord");
+        writer->writeString(2, ent->name);
+    } else {
+    string strname = ent->name;
+    transform(strname.begin(), strname.end(), strname.begin(),::toupper);
+    writer->writeString(2, strname);
     }
-    writer->writeString(2, ent->name);
     writer->writeInt16(70, ent->flags);
     writer->writeInt16(62, ent->color);
     writer->writeString(6, ent->lineType);

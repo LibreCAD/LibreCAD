@@ -305,7 +305,7 @@ bool RS_Graphic::save(bool isAutoSave)
                         actualName = new QString(autosaveFilename);
 
                         if (formatType == RS2::FormatUnknown)
-                                actualType = RS2::FormatDXF;
+                                actualType = RS2::FormatDXFOLD;
                 }
                 //	- This is not an AutoSave operation.  This is a manual
                 //	  save operation.  So, ...

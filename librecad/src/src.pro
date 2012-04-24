@@ -16,8 +16,6 @@ SCMREVISION="2.0.0alpha3"
 # KDE returns the first filter that match the pattern "*.dxf" instead the selected
 # DEFINES += USEQTDIALOG=1
 
-DEFINES += USE_DXFRW=1
-
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
 # Use common project definitions.

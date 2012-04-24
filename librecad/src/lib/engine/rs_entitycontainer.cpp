@@ -432,6 +432,9 @@ void RS_EntityContainer::clear() {
 unsigned int RS_EntityContainer::count() {
     return entities.size();
 }
+unsigned int RS_EntityContainer::count() const{
+    return entities.size();
+}
 
 
 /**
@@ -1086,12 +1089,15 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
     //RS_Entity* en;
     //while ( (en = it.current()) != NULL ) {
     //    ++it;
+
+    unsigned i0=0;
     for (RS_Entity* en = const_cast<RS_EntityContainer*>(this)->firstEntity();
          en != NULL;
          en = const_cast<RS_EntityContainer*>(this)->nextEntity()) {
 
-        if (en->isVisible()
-                && en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
+
+        if (/*en->isVisible()
+                &&*/ en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
                 //&& en->rtti() != RS2::EntityPoint         /**Point*/
                 //&& en->getParent()->rtti() != RS2::EntitySpline
                 && en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
@@ -1102,6 +1108,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
                 && en->getParent()->rtti() != RS2::EntityDimAngular   /**< Angular Dimension */
                 && en->getParent()->rtti() != RS2::EntityDimLeader    /**< Leader Dimension */
                 ){//no end point for Insert, text, Dim
+//            std::cout<<"find nearest for entity "<<i0<<std::endl;
             point = en->getNearestEndpoint(coord, &curDist);
             if (point.valid && curDist<minDist) {
                 closestPoint = point;
@@ -1114,8 +1121,13 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
                 }
             }
         }
+        i0++;
     }
 
+//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//    std::cout<<"count()="<<const_cast<RS_EntityContainer*>(this)->count()<<"\tminDist= "<<minDist<<"\tclosestPoint="<<closestPoint;
+//    if(pEntity != NULL) std::cout<<"\t*pEntity="<<*pEntity;
+//    std::cout<<std::endl;
     return closestPoint;
 }
 
@@ -1499,6 +1511,7 @@ bool RS_EntityContainer::optimizeContours() {
     }
     //    std::cout<<"RS_EntityContainer::optimizeContours: 1"<<std::endl;
 
+    /** remove unsupported entities */
     const auto itEnd=enList.end();
     for(auto it=enList.begin();it!=itEnd;it++){
         removeEntity(*it);
@@ -1525,6 +1538,7 @@ bool RS_EntityContainer::optimizeContours() {
     /** connect entities **/
     while(count()>0){
         double dist(0.);
+//        std::cout<<" count()="<<count()<<std::endl;
         getNearestEndpoint(vpEnd,&dist,&next);
         if(dist>1e-4) {
             if(vpEnd.squaredTo(vpStart)<1e-8){
@@ -1537,14 +1551,21 @@ bool RS_EntityContainer::optimizeContours() {
             }
             closed=false;
         }
-        if(vpEnd.squaredTo(next->getStartpoint())<1e-8){
-            vpEnd=next->getEndpoint();
-        }else{
-            vpEnd=next->getStartpoint();
-        }
-        next->setProcessed(true);
-        tmp.addEntity(next->clone());
-         removeEntity(next);
+        if(next && closed){ 			//workaround if next is NULL
+        	if(vpEnd.squaredTo(next->getStartpoint())<1e-8){
+        		vpEnd=next->getEndpoint();
+        	}else{
+        		vpEnd=next->getStartpoint();
+        	}
+        	next->setProcessed(true);
+        	tmp.addEntity(next->clone());
+        	removeEntity(next);
+        } else { 			//workaround if next is NULL
+//      	    std::cout<<"RS_EntityContainer::optimizeContours: next is NULL" <<std::endl;
+
+        	closed=false;	//workaround if next is NULL
+        	break;			//workaround if next is NULL
+        } 					//workaround if next is NULL
     }
     if( vpEnd.squaredTo(vpStart)>1e-8) closed=false;
 //    std::cout<<"RS_EntityContainer::optimizeContours: 5"<<std::endl;

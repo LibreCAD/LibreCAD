@@ -47,7 +47,7 @@ public:
         this->endpoint = endpoint;
     }
 
-    friend class RS_Lane;
+    friend class RS_Line;
     friend class RS_ActionDrawLine;
 
     friend std::ostream& operator << (std::ostream& os, const RS_LineData& ld) {

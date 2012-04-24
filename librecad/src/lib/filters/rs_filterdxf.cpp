@@ -1197,7 +1197,7 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
     // set version for DXF filter:
     DL_Codes::version exportVersion;
-    if (type==RS2::FormatDXF12) {
+    if (type==RS2::FormatDXFOLD12) {
         exportVersion = DL_Codes::AC1009;
     } else {
         exportVersion = DL_Codes::AC1015;
@@ -1229,7 +1229,7 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
     // Line types:
     RS_DEBUG->print("writing line types...");
     int numLT = (int)RS2::BorderLineX2-(int)RS2::LineByBlock;
-    if (type==RS2::FormatDXF12) {
+    if (type==RS2::FormatDXFOLD12) {
         numLT-=2;
     }
     dw->tableLineTypes(numLT);
@@ -1277,7 +1277,7 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                       graphic->getVariableDouble("$DIMTXT", 2.5));
 
     // BLOCK_RECORD:
-    if (type==RS2::FormatDXF) {
+    if (type==RS2::FormatDXFOLD) {
         RS_DEBUG->print("writing block records...");
         dxf.writeBlockRecord(*dw);
 
@@ -1310,7 +1310,7 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
     RS_DEBUG->print("writing blocks...");
     dw->sectionBlocks();
 
-    if (type==RS2::FormatDXF) {
+    if (type==RS2::FormatDXFOLD) {
         RS_Block b1(graphic, RS_BlockData("*Model_Space",
                                           RS_Vector(0.0,0.0), false));
         writeBlock(*dw, &b1);
@@ -1347,7 +1347,7 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
     RS_DEBUG->print("writing end of section ENTITIES...");
     dw->sectionEnd();
 
-    if (type==RS2::FormatDXF) {
+    if (type==RS2::FormatDXFOLD) {
         RS_DEBUG->print("writing section OBJECTS...");
         dxf.writeObjects(*dw);
 

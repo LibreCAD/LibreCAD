@@ -57,12 +57,13 @@ public:
     RS_FilterDXFRW();
     ~RS_FilterDXFRW();
 	
-	virtual bool canImport(const QString &fileName, RS2::FormatType t) const {
+    virtual bool canImport(const QString &/*fileName*/, RS2::FormatType t) const {
         return (t==RS2::FormatDXFRW);
 	}
 	
-	virtual bool canExport(const QString &fileName, RS2::FormatType t) const {
-        return (t==RS2::FormatDXFRW || t==RS2::FormatDXF12);
+    virtual bool canExport(const QString &/*fileName*/, RS2::FormatType t) const {
+        return (t==RS2::FormatDXFRW || t==RS2::FormatDXFRW2004 || t==RS2::FormatDXFRW2000
+                || t==RS2::FormatDXFRW14 || t==RS2::FormatDXFRW12);
     }
 
     // Import:

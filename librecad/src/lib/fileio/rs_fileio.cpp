@@ -89,10 +89,13 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const QString& file,
         extension = QFileInfo(file).suffix().toLower();
 
         if (extension=="dxf") {
-            type = RS2::FormatDXF;
+            type = RS2::FormatDXFOLD;
         }
         else if (extension=="cxf") {
             type = RS2::FormatCXF;
+        }
+        else if (extension=="lff") {
+            type = RS2::FormatLFF;
         }
     }
 
@@ -138,19 +141,11 @@ RS2::FormatType RS_FileIO::detectFormat(const QString& file) {
             while (!ts.atEnd() && ++c<100) {
                 line = ts.readLine();
                 if (line=="$ACADVER") {
-#ifdef USE_DXFRW
                     type = RS2::FormatDXFRW;
-#else
-                    type = RS2::FormatDXF;
-#endif
                 }
                 // very simple reduced DXF:
                 if (line=="ENTITIES" && c<10) {
-#ifdef USE_DXFRW
                     type = RS2::FormatDXFRW;
-#else
-                    type = RS2::FormatDXF;
-#endif
                 }
             }
             f.close();
