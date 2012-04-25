@@ -354,7 +354,7 @@ void RS_FilterDXFRW::addEllipse(const DRW_Ellipse& data) {
     RS_Vector v1(data.basePoint.x, data.basePoint.y);
     RS_Vector v2(data.secPoint.x, data.secPoint.y);
     double ang2 = data.endparam;
-    if ( (data.endparam- 6.28318530718) < 1.0e-10)
+    if ( fabs(ang2- 6.28318530718) < 1.0e-10 && fabs(data.staparam) < 1.0e-10 )
         ang2 = 0.0;
     RS_EllipseData ed(v1, v2, data.ratio, data.staparam,
                                     ang2, false);
@@ -1563,9 +1563,9 @@ void RS_FilterDXFRW::writeDimstyles(){
 void RS_FilterDXFRW::writeEntities(){
     for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
          e != NULL; e = graphic->nextEntity(RS2::ResolveNone)) {
-        writeEntity(e);
+            writeEntity(e);
+        }
     }
-}
 
 void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     switch (e->rtti()) {

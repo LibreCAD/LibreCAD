@@ -277,8 +277,8 @@ public:
 
 public:
     double ratio;           /*!< ratio, code 40 */
-    double staparam;      /*!< start parameter, code 41 */
-    double endparam;     /*!< z coordinate, code 42 */
+    double staparam;      /*!< start parameter, code 41, 0.0 for full ellipse*/
+    double endparam;     /*!< end parameter, code 42, 2*PI for full ellipse */
 };
 
 //! Class to handle trace entity
