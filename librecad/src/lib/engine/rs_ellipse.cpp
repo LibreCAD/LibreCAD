@@ -1232,6 +1232,10 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     double cA=0.5*a*a*(kx2*ct2+ky2*st2);
     double cB=0.5*b*b*(kx2*st2+ky2*ct2);
     double cC=a*b*ct*st*(ky2-kx2);
+    if (factor.x < 0)
+        setReversed(!isReversed());
+    if (factor.y < 0)
+        setReversed(!isReversed());
     RS_Vector vp(cA-cB,cC);
     vp1.set(a,b);
     vp1.scale(RS_Vector(0.5*vp.angle()));
