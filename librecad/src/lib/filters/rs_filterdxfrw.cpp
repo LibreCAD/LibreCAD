@@ -2395,7 +2395,7 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entit
     // Width:
     int width = widthToNumber(pen.getWidth());
 
-    ent->layer = layerName.toStdString();
+    ent->layer = toDxfString(layerName).toStdString();
     ent->color = color;
     ent->lWeight = width;
     ent->lineType = lineType.toLatin1().data();
