@@ -1563,9 +1563,11 @@ void RS_FilterDXFRW::writeDimstyles(){
 void RS_FilterDXFRW::writeEntities(){
     for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
          e != NULL; e = graphic->nextEntity(RS2::ResolveNone)) {
+        if ( !(e->getFlag(RS2::FlagUndone)) ) {
             writeEntity(e);
         }
     }
+}
 
 void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     switch (e->rtti()) {
