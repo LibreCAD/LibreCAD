@@ -59,7 +59,7 @@ void QG_DlgInsert::updateInsert() {
     insert->setInsertionPoint(RS_Vector(RS_Math::eval(leInsertionPointX->text()),
                                   RS_Math::eval(leInsertionPointY->text())));
     insert->setScale(RS_Vector(RS_Math::eval(leScale->text()), 
-                                RS_Math::eval(leScale->text())));
+                                insert->getScale().y));
     insert->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
     insert->setRows(RS_Math::round(RS_Math::eval(leRows->text())));
     insert->setCols(RS_Math::round(RS_Math::eval(leCols->text())));

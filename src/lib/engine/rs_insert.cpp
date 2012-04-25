@@ -307,9 +307,9 @@ void RS_Insert::mirror(RS_Vector axisPoint1, RS_Vector axisPoint2) {
 	RS_Vector vec;
 	vec.setPolar(1.0, data.angle);
 	vec.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
-	data.angle = vec.angle();
+    data.angle = RS_Math::correctAngle(vec.angle()+M_PI);
 
-	data.scaleFactor.y*=-1;
+    data.scaleFactor.x*=-1;
 
     update();
 }

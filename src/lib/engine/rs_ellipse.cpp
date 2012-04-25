@@ -688,6 +688,10 @@ double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) const {
 void RS_Ellipse::scale(RS_Vector center, RS_Vector factor) {
     data.center.scale(center, factor);
     data.majorP.scale(factor);
+    if (factor.x < 0)
+        setReversed(!isReversed());
+    if (factor.y < 0)
+        setReversed(!isReversed());
     //calculateEndpoints();
     calculateBorders();
 }
