@@ -60,8 +60,8 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     bool cancel = false;
     QString fn = "";
 
-    filters.append("LFF Font (*.lff)");
     filters.append("Drawing Exchange DXF 2000 (*.dxf)");
+    filters.append("LFF Font (*.lff)");
     filters.append("Drawing Exchange DXF R12 (*.dxf)");
     filters.append("Font (*.cxf)");
 
