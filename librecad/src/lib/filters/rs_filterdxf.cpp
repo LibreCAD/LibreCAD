@@ -2439,7 +2439,7 @@ DL_Attributes RS_FilterDXF::getEntityAttributes(RS_Entity* entity) {
     // Width:
     int width = widthToNumber(pen.getWidth());
 
-    DL_Attributes attrib(layerName.toLatin1().data(),
+    DL_Attributes attrib(toDxfString(layerName).toStdString(),
                          color,
                          width,
                          lineType.toLatin1().data());
