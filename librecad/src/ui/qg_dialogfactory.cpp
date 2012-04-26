@@ -1967,6 +1967,30 @@ QString QG_DialogFactory::extToFormat(const QString& ext) {
         return QObject::tr("X Bitmap Format");
     } else if (e=="xpm") {
         return QObject::tr("X Pixel Map");
+    } else if (e=="svg") {
+        return QObject::tr("Scalable Vector Graphics");
+    } else if (e=="bw") {
+        return QObject::tr("SGI Black & White");
+    } else if (e=="eps") {
+        return QObject::tr("Encapsulated PostScript");
+    } else if (e=="epsf") {
+        return QObject::tr("Encapsulated PostScript Format");
+    } else if (e=="epsi") {
+        return QObject::tr("Encapsulated PostScript Interchange");
+    } else if (e=="ico") {
+        return QObject::tr("Windows Icon");
+    } else if (e=="jp2") {
+        return QObject::tr("JPEG 2000");
+    } else if (e=="pcx") {
+        return QObject::tr("ZSoft Paintbrush");
+    } else if (e=="pic") {
+        return QObject::tr("PC Paint");
+    } else if (e=="rgb" || e=="rgba" || e=="sgi") {
+        return QObject::tr("SGI-Bilddatei");
+    } else if (e=="tga") {
+        return QObject::tr("Targa Image File");
+    } else if (e=="tif" || e=="tiff") {
+        return QObject::tr("Tagged Image File Format");
     }
     else {
         return ext.toUpper();
