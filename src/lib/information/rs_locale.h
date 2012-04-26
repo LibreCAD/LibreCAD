@@ -37,6 +37,7 @@
 class RS_Locale {
 public:
     RS_Locale();
+    virtual ~RS_Locale(){}
 
     virtual void setCanonical(const QString &_canonical);
     virtual void setDirection(RS2::TextLocaleDirection direction);

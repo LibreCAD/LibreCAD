@@ -118,8 +118,9 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetRadius:
-        if (data.center.valid) {
+        if (data.center.valid && mouse.valid) {
             data.radius = data.center.distanceTo(mouse);
+            if(data.radius < RS_TOLERANCE) return;
             deletePreview();
             preview->addEntity(new RS_Circle(preview,
                                              RS_CircleData(data.center,
