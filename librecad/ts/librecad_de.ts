@@ -7253,11 +7253,11 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade...</translation>
     </message>
     <message>
         <source>enter an integer number</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabe einer Ganzzahl</translation>
     </message>
     <message>
         <source>LibreCAD query</source>
@@ -7265,11 +7265,11 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>enter a number</source>
-        <translation type="unfinished"></translation>
+        <translation>Nummern-Eingabe</translation>
     </message>
     <message>
         <source>enter text</source>
-        <translation type="unfinished"></translation>
+        <translation>Text-Eingabe</translation>
     </message>
     <message>
         <source>LFF Font %1</source>
@@ -7281,11 +7281,11 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Block %1 already exist, renamed to: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Block %1 existiert bereits; Er wurde zu %2 umbenannt</translation>
     </message>
     <message>
         <source>All Image Files (%1) </source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Bilddateien (%1)</translation>
     </message>
     <message>
         <source>New Drawing Exchange %1</source>
@@ -7399,11 +7399,11 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>&amp;Hide all</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Verstecker alles</translation>
     </message>
     <message>
         <source>&amp;Show all</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zeige alles</translation>
     </message>
 </context>
 <context>
