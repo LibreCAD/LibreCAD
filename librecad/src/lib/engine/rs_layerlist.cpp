@@ -330,7 +330,9 @@ void RS_LayerList::toggleLock(RS_Layer* layer) {
 void RS_LayerList::freezeAll(bool freeze) {
 
     for (uint l=0; l<count(); l++) {
-        at(l)->freeze(freeze);
+        if (at(l)->isVisibleInLayerList()) {
+             at(l)->freeze(freeze);
+         }
     }
 
     for (int i=0; i<layerListListeners.size(); ++i) {
