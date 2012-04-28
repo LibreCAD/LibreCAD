@@ -128,6 +128,7 @@ void RS_ActionDimRadial::mouseMoveEvent(QMouseEvent* e) {
     case SetPos:
         if (entity!=NULL) {
             pos = snapPoint(e);
+            if(pos.valid==false) return;
 
             preparePreview();
 
@@ -177,7 +178,9 @@ void RS_ActionDimRadial::mouseReleaseEvent(QMouseEvent* e) {
             break;
 
         case SetPos: {
-                RS_CoordinateEvent ce(snapPoint(e));
+            RS_Vector vp=snapPoint(e);
+            if(vp.valid==false) return;
+                RS_CoordinateEvent ce(vp);
                 coordinateEvent(&ce);
             }
             break;

@@ -98,7 +98,7 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
                                     tr("Can not append nodes in a closed polyline."));
                             return;
                         } else {
-				RS_Vector clickCoord = snapPoint(e);
+            /*	RS_Vector clickCoord =*/ snapPoint(e);
 				RS_Entity* entFirst = ((RS_Polyline*)originalPolyline)->firstEntity();
 				RS_Entity* entLast = ((RS_Polyline*)originalPolyline)->lastEntity();
 				double dist = graphicView->toGraphDX(snapRange)*0.9;
@@ -117,8 +117,10 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
 						tr("Click somewhere near the beginning or end of existing polyline."));
 				}
 			}
-		}
-		RS_CoordinateEvent ce(snapPoint(e));
+        }
+        RS_Vector vp=snapPoint(e);
+        if(vp.valid==false) return;
+        RS_CoordinateEvent ce(vp);
 		coordinateEvent(&ce);
         } else if (e->button()==Qt::RightButton) {
 		if (getStatus()==SetNextPoint) {

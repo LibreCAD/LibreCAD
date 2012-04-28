@@ -70,7 +70,9 @@ void RS_ActionSetRelativeZero::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector vp=snapPoint(e);
+        if(vp.valid==false) return;
+        RS_CoordinateEvent ce(vp);
         coordinateEvent(&ce);
     }
 }

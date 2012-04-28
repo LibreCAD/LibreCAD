@@ -121,6 +121,7 @@ void RS_ActionModifyCut::mouseReleaseEvent(QMouseEvent* e) {
 
         case SetCutCoord:
             cutCoord = snapPoint(e);
+            if(cutCoord.valid==false) return;
             if (cutEntity==NULL) {
                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
             } else if (!cutCoord.valid) {

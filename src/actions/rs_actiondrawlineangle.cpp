@@ -123,6 +123,7 @@ void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
 
     if (getStatus()==SetPos) {
         pos = snapPoint(e);
+        if(pos.valid==false) return;
         deletePreview();
         preparePreview();
         preview->addEntity(new RS_Line(preview,
@@ -138,7 +139,9 @@ void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
 void RS_ActionDrawLineAngle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         if (getStatus()==SetPos) {
-            RS_CoordinateEvent ce(snapPoint(e));
+            RS_Vector vp=snapPoint(e);
+            if(vp.valid==false) return;
+            RS_CoordinateEvent ce(vp);
             coordinateEvent(&ce);
         }
     } else if (e->button()==Qt::RightButton) {

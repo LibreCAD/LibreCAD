@@ -108,6 +108,7 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
 
     RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point");
     RS_Vector mouse = snapPoint(e);
+    if(mouse.valid==false) return;
     RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point: OK");
     if (getStatus()==SetEndpoint && data.startpoint.valid) {
     	RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: update preview");
@@ -125,7 +126,9 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionDrawLine::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector vp=snapPoint(e);
+        if(vp.valid==false) return;
+        RS_CoordinateEvent ce(vp);
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();

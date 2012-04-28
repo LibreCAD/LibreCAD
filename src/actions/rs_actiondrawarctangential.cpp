@@ -130,6 +130,7 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
 
     case SetEndAngle: {
             point = snapPoint(e);
+            if(point.valid==false) return;
             preparePreview();
             if (data.isValid()) {
                 RS_Arc* arc = new RS_Arc(preview, data);
@@ -177,7 +178,9 @@ void RS_ActionDrawArcTangential::mouseReleaseEvent(QMouseEvent* e) {
 
             // set angle (point that defines the angle)
         case SetEndAngle: {
-                RS_CoordinateEvent ce(snapPoint(e));
+            RS_Vector vp=snapPoint(e);
+            if(vp.valid==false) return;
+                RS_CoordinateEvent ce(vp);
                 coordinateEvent(&ce);
             }
             break;

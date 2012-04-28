@@ -93,6 +93,7 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent* e) {
 
     case SetPos: {
             coord = snapPoint(e);
+            if(coord.valid==false) return;
             //RS_Vector(graphicView->toGraphX(e->x()),
             //                  graphicView->toGraphY(e->y()));
             deletePreview();
@@ -127,7 +128,9 @@ void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(QMouseEvent* e) {
             }
             break;
         case SetPos: {
-                RS_CoordinateEvent ce(snapPoint(e));
+            RS_Vector vp=snapPoint(e);
+            if(vp.valid==false) return;
+            RS_CoordinateEvent ce(vp);
                 coordinateEvent(&ce);
             }
             break;

@@ -116,6 +116,7 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e) {
     case SetPos:
         if (line1!=NULL && line2!=NULL && center.valid) {
             RS_Vector mouse = snapPoint(e);
+            if(mouse.valid==false) return;
             edata.definitionPoint4 = mouse;
 
             RS_DimAngular* d = new RS_DimAngular(preview, data, edata);
@@ -187,6 +188,8 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e) {
             break;
 
         case SetPos: {
+            RS_Vector vp=snapPoint(e);
+            if(vp.valid==false) return;
                 RS_CoordinateEvent ce(snapPoint(e));
                 coordinateEvent(&ce);
             }

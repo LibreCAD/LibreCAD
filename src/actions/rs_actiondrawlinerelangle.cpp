@@ -127,6 +127,7 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent* e) {
             //length = graphicView->toGraphDX(graphicView->getWidth());
             //RS_Vector mouse = snapPoint(e);
             pos = snapPoint(e);
+            if(pos.valid==false) return;
 
             /*RS_Creation creation(NULL, NULL);
             RS_Line* l = creation.createLineRelAngle(mouse,
@@ -187,7 +188,9 @@ void RS_ActionDrawLineRelAngle::mouseReleaseEvent(QMouseEvent* e) {
             break;
 
         case SetPos: {
-                RS_CoordinateEvent ce(snapPoint(e));
+            RS_Vector vp=snapPoint(e);
+            if(vp.valid==false) return;
+            RS_CoordinateEvent ce(vp);
                 coordinateEvent(&ce);
             }
             break;

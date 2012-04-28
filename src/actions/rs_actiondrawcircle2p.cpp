@@ -118,6 +118,7 @@ void RS_ActionDrawCircle2P::preparePreview() {
 
 void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
+    if(mouse.valid==false) return;
     switch (getStatus()) {
     case SetPoint1:
         point1 = mouse;
@@ -143,7 +144,9 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionDrawCircle2P::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector vp=snapPoint(e);
+        if(vp.valid==false) return;
+        RS_CoordinateEvent ce(vp);
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();

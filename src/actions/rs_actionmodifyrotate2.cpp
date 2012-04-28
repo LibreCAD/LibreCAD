@@ -75,6 +75,7 @@ void RS_ActionModifyRotate2::mouseMoveEvent(QMouseEvent* e) {
             getStatus()==SetReferencePoint2) {
 
         RS_Vector mouse = snapPoint(e);
+        if(mouse.valid==false) return;
         switch (getStatus()) {
         case SetReferencePoint1:
             data.center1 = mouse;
@@ -106,7 +107,9 @@ void RS_ActionModifyRotate2::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionModifyRotate2::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector vp=snapPoint(e);
+        if(vp.valid==false) return;
+        RS_CoordinateEvent ce(vp);
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();

@@ -74,6 +74,7 @@ void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent* e) {
             getStatus()==SetPoint2) {
 
         RS_Vector mouse = snapPoint(e);
+        if(mouse.valid==false) return;
         switch (getStatus()) {
         case SetPoint1:
             break;
@@ -104,7 +105,9 @@ void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionInfoDist::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector vp=snapPoint(e);
+        if(vp.valid==false) return;
+        RS_CoordinateEvent ce(vp);
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();

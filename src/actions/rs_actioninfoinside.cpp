@@ -91,6 +91,7 @@ void RS_ActionInfoInside::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     } else {
         pt = snapPoint(e);
+        if(pt.valid==false) return;
         trigger();
     }
 }

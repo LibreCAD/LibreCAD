@@ -97,6 +97,7 @@ void RS_ActionSelectIntersected::trigger() {
 void RS_ActionSelectIntersected::mouseMoveEvent(QMouseEvent* e) {
     if (getStatus()==SetPoint2 && v1.valid) {
         v2 = snapPoint(e);
+        if(v2.valid==false) return;
         deletePreview();
         preview->addEntity(new RS_Line(preview,
                                        RS_LineData(RS_Vector(v1.x, v1.y),
@@ -112,6 +113,7 @@ void RS_ActionSelectIntersected::mousePressEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case SetPoint1:
             v1 = snapPoint(e);
+            if(v1.valid==false) return;
             setStatus(SetPoint2);
             break;
 
@@ -136,6 +138,7 @@ void RS_ActionSelectIntersected::mouseReleaseEvent(QMouseEvent* e) {
     } else if (e->button()==Qt::LeftButton) {
         if (getStatus()==SetPoint2) {
             v2 = snapPoint(e);
+            if(v2.valid==false) return;
             trigger();
         }
     }

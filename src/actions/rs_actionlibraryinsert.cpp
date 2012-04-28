@@ -112,6 +112,7 @@ void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case SetTargetPoint:
         data.insertionPoint = snapPoint(e);
+        if(data.insertionPoint.valid==false) return;
 
         //if (block!=NULL) {
         deletePreview();
@@ -143,7 +144,9 @@ void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionLibraryInsert::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector vp=snapPoint(e);
+        if(vp.valid==false) return;
+        RS_CoordinateEvent ce(vp);
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         init(getStatus()-1);

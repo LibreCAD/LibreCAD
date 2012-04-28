@@ -122,7 +122,8 @@ void RS_ActionPolylineTrim::mouseReleaseEvent(QMouseEvent* e) {
 			break;
 
 		case SetSegment1:
-			cPoint = snapPoint(e);
+            cPoint = snapPoint(e);
+            if(cPoint.valid==false) return;
 			if (delEntity==NULL) {
 				RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
 			} else if (!cPoint.valid) {
@@ -141,7 +142,8 @@ void RS_ActionPolylineTrim::mouseReleaseEvent(QMouseEvent* e) {
 			}
 			break;
 		case SetSegment2:
-			cPoint = snapPoint(e);
+            cPoint = snapPoint(e);
+            if(cPoint.valid==false) return;
 			if (delEntity==NULL) {
 				RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
 			} else if (!cPoint.valid) {

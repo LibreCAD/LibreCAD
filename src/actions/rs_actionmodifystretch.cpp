@@ -80,6 +80,7 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyStretch::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
+    if(mouse.valid==false) return;
     switch (getStatus()) {
     case SetFirstCorner:
         break;
@@ -87,6 +88,7 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent* e) {
     case SetSecondCorner:
         if (firstCorner.valid) {
             secondCorner = snapPoint(e);
+            if(secondCorner.valid==false) return;
             deletePreview();
             preview->addEntity(
                 new RS_Line(preview,
@@ -143,7 +145,9 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionModifyStretch::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector vp=snapPoint(e);
+        if(vp.valid==false) return;
+        RS_CoordinateEvent ce(vp);
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();

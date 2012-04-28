@@ -203,7 +203,8 @@ void RS_ActionPolylineEquidistant::mouseReleaseEvent(QMouseEvent* e) {
 				RS_DIALOGFACTORY->commandMessage(
 					tr("Entity must be a polyline."));
 			} else {
-				targetPoint = snapPoint(e);
+                targetPoint = snapPoint(e);
+                if(targetPoint.valid==false) return;
 				originalEntity->setHighlighted(true);
 				graphicView->drawEntity(originalEntity);
 				double d = graphicView->toGraphDX(snapRange)*0.9;

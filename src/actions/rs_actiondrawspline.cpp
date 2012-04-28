@@ -112,6 +112,7 @@ void RS_ActionDrawSpline::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawSpline::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
+    if(mouse.valid==false) return;
     if (getStatus()==SetNextPoint && spline!=NULL /*&& point.valid*/) {
         deletePreview();
 		
@@ -134,7 +135,9 @@ void RS_ActionDrawSpline::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionDrawSpline::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector vp=snapPoint(e);
+        if(vp.valid==false) return;
+        RS_CoordinateEvent ce(vp);
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
 		if (getStatus()==SetNextPoint) {

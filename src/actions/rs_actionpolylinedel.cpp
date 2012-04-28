@@ -112,7 +112,7 @@ void RS_ActionPolylineDel::mouseReleaseEvent(QMouseEvent* e) {
 			RS_DIALOGFACTORY->commandMessage(
 			    tr("Entity must be a polyline."));
 		    } else {
-			    RS_Vector clickCoord = snapPoint(e);
+               /* RS_Vector clickCoord =*/ snapPoint(e);
 				delEntity->setHighlighted(true);
 				graphicView->drawEntity(delEntity);
 				setStatus(SetDelPoint);
@@ -123,7 +123,8 @@ void RS_ActionPolylineDel::mouseReleaseEvent(QMouseEvent* e) {
 		    break;
 
 		case SetDelPoint:
-		    delPoint = snapPoint(e);
+            delPoint = snapPoint(e);
+            if(delPoint.valid==false) return;
 		    if (delEntity==NULL) {
 				RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
 		    } else if (!delPoint.valid) {

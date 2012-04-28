@@ -96,6 +96,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case SetPoint:
         point = snapPoint(e);
+        if(point.valid==false) return;
         break;
 
     case SetCircle: {
@@ -141,7 +142,9 @@ void RS_ActionDrawLineTangent1::mouseReleaseEvent(QMouseEvent* e) {
     } else {
         switch (getStatus()) {
         case SetPoint: {
-                RS_CoordinateEvent ce(snapPoint(e));
+            RS_Vector vp=snapPoint(e);
+            if(vp.valid==false) return;
+            RS_CoordinateEvent ce(vp);
                 coordinateEvent(&ce);
             }
             break;

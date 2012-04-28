@@ -120,13 +120,15 @@ void RS_ActionPolylineAdd::mouseReleaseEvent(QMouseEvent* e) {
 			break;
 
 		case SetAddCoord:
-			addCoord = snapPoint(e);
+            addCoord = snapPoint(e);
+            if(addCoord.valid==false) return;
 			if (addEntity==NULL) {
 				RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
 			} else if (!addCoord.valid) {
 				RS_DIALOGFACTORY->commandMessage(tr("Adding point is invalid."));
 			} else {
-				RS_Vector clickCoord = snapPoint(e);
+                RS_Vector clickCoord = snapPoint(e);
+                if(clickCoord.valid==false) return;
 				addSegment = NULL;
 				double dist = graphicView->toGraphDX(snapRange)*0.9;
 				addSegment =  ((RS_Polyline*)addEntity)->getNearestEntity( clickCoord, &dist, RS2::ResolveNone);

@@ -60,6 +60,7 @@ void QC_ActionGetPoint::mouseMoveEvent(QMouseEvent* e) {
             getStatus()==SetTargetPoint) {
 
         RS_Vector mouse = snapPoint(e);
+        if(mouse.valid==false) return;
         switch (getStatus()) {
         case SetReferencePoint:
             targetPoint = mouse;

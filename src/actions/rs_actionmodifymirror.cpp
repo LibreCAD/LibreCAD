@@ -73,6 +73,7 @@ void RS_ActionModifyMirror::mouseMoveEvent(QMouseEvent* e) {
             getStatus()==SetAxisPoint2) {
 
         RS_Vector mouse = snapPoint(e);
+        if(mouse.valid==false) return;
         switch (getStatus()) {
         case SetAxisPoint1:
             axisPoint1 = mouse;
@@ -106,7 +107,9 @@ void RS_ActionModifyMirror::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionModifyMirror::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector vp=snapPoint(e);
+        if(vp.valid==false) return;
+        RS_CoordinateEvent ce(vp);
         coordinateEvent(&ce);
 
     } else if (e->button()==Qt::RightButton) {

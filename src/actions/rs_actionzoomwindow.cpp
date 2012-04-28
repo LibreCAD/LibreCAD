@@ -91,6 +91,7 @@ void RS_ActionZoomWindow::trigger() {
 void RS_ActionZoomWindow::mouseMoveEvent(QMouseEvent* e) {
     if (getStatus()==1 && v1.valid) {
         v2 = snapPoint(e);
+        if(v2.valid==false) return;
         deletePreview();
         preview->addEntity(new RS_Line(preview,
                                        RS_LineData(RS_Vector(v1.x, v1.y),
@@ -115,6 +116,7 @@ void RS_ActionZoomWindow::mousePressEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case 0:
             v1 = snapPoint(e);
+            if(v1.valid==false) return;
             setStatus(1);
             break;
 
@@ -140,6 +142,7 @@ void RS_ActionZoomWindow::mouseReleaseEvent(QMouseEvent* e) {
     } else if (e->button()==Qt::LeftButton) {
         if (getStatus()==1) {
             v2 = snapPoint(e);
+            if(v2.valid==false) return;
             trigger();
         }
     }

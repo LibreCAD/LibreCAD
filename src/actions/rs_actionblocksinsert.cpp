@@ -103,9 +103,11 @@ void RS_ActionBlocksInsert::trigger() {
 
 
 void RS_ActionBlocksInsert::mouseMoveEvent(QMouseEvent* e) {
+    RS_Vector vp=snapPoint(e);
+    if(vp.valid==false) return;
     switch (getStatus()) {
     case SetTargetPoint:
-        data.insertionPoint = snapPoint(e);
+        data.insertionPoint = vp;
 
         if (block!=NULL) {
             deletePreview();

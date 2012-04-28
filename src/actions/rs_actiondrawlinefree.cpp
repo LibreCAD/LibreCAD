@@ -85,6 +85,7 @@ void RS_ActionDrawLineFree::trigger() {
 void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
     if (vertex.valid && polyline!=NULL) {
         RS_Vector v = snapPoint(e);
+        if(v.valid==false) return;
         if( vertex.valid && graphicView->toGui(v - vertex).squared()< 1. ){
             //do not add the same mouse position
             return;
@@ -111,6 +112,7 @@ void RS_ActionDrawLineFree::mousePressEvent(QMouseEvent* e) {
             setStatus(Dragging);
         case Dragging:
             vertex = snapPoint(e);
+            if(vertex.valid==false) return;
             polyline = new RS_Polyline(container,
                                        RS_PolylineData(vertex, vertex, 0));
             polyline->setLayerToActive();

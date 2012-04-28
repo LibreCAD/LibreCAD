@@ -139,6 +139,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 		
     case MovingRef:
         v2 = snapPoint(e);
+        if(v2.valid==false) return;
 
         deletePreview();
         preview->addSelectionFrom(*container);
@@ -148,6 +149,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
     case Moving:
         v2 = snapPoint(e);
+        if(v2.valid==false) return;
 
         deletePreview();
         preview->addSelectionFrom(*container);
@@ -206,7 +208,8 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
             break;
 
         case Moving: {
-        		v2 = snapPoint(e);
+                v2 = snapPoint(e);
+                if(v2.valid==false) return;
                 deletePreview();
                 RS_Modification m(*container, graphicView);
                 RS_MoveData data;
@@ -224,6 +227,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
 			
         case MovingRef: {
         		v2 = snapPoint(e);
+                if(v2.valid==false) return;
                 deletePreview();
                 RS_Modification m(*container, graphicView);
                 RS_MoveRefData data;

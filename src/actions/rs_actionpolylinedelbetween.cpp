@@ -115,7 +115,7 @@ void RS_ActionPolylineDelBetween::mouseReleaseEvent(QMouseEvent* e) {
 				RS_DIALOGFACTORY->commandMessage(
 					tr("Entity must be a polyline."));
 			} else {
-				RS_Vector clickCoord = snapPoint(e);
+                snapPoint(e);
 				delSegment = NULL;
 				double dist = graphicView->toGraphDX(snapRange)*0.9;
 				delSegment =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),
@@ -132,7 +132,8 @@ void RS_ActionPolylineDelBetween::mouseReleaseEvent(QMouseEvent* e) {
 			break;
 
 		case SetNodePoint1:
-			nodePoint1 = snapPoint(e);
+            nodePoint1 = snapPoint(e);
+            if(nodePoint1.valid==false) return;
 			if (delEntity==NULL) {
 				RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
 			} else if (!nodePoint1.valid) {
@@ -145,7 +146,8 @@ void RS_ActionPolylineDelBetween::mouseReleaseEvent(QMouseEvent* e) {
 			}
 			break;
 		case SetNodePoint2:
-			nodePoint2 = snapPoint(e);
+            nodePoint2 = snapPoint(e);
+            if(nodePoint2.valid==false) return;
 			if (delEntity==NULL) {
 				RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
 			} else if (!nodePoint2.valid) {

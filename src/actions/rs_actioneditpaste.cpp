@@ -86,6 +86,7 @@ void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case SetTargetPoint:
         targetPoint = snapPoint(e);
+        if(targetPoint.valid==false) return;
 
         deletePreview();
         preview->addAllFrom(*RS_CLIPBOARD->getGraphic());
@@ -109,7 +110,9 @@ void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionEditPaste::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector vp=snapPoint(e);
+        if(vp.valid==false) return;
+        RS_CoordinateEvent ce(vp);
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         init(getStatus()-1);

@@ -77,6 +77,7 @@ void RS_ActionInfoDist2::trigger() {
 void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent begin");
      RS_Vector mouse=snapPoint(e);
+     if(mouse.valid==false) return;
 
     switch (getStatus()) {
     case SetEntity:
@@ -112,7 +113,9 @@ void RS_ActionInfoDist2::mouseReleaseEvent(QMouseEvent* e) {
             break;
 
         case SetPoint: {
-                RS_CoordinateEvent ce(snapPoint(e));
+            RS_Vector vp=snapPoint(e);
+            if(vp.valid==false) return;
+            RS_CoordinateEvent ce(vp);
                 coordinateEvent(&ce);
             }
             break;

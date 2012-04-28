@@ -191,7 +191,7 @@ void RS_ActionDrawHatch::mouseMoveEvent(QMouseEvent*) {
 
 void RS_ActionDrawHatch::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_Vector mouse = snapPoint(e);
+        snapPoint(e);
 
         switch (getStatus()) {
         case ShowDialog:

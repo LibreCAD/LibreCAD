@@ -99,6 +99,7 @@ void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
+    if(mouse.valid==false) return;
     if (getStatus()==SetEndpoint && p1.valid) {
         RS_Vector p2x = RS_Vector(mouse.x, p1.y);
         RS_Vector p2y = RS_Vector(p1.x, mouse.y);
@@ -120,6 +121,7 @@ void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent* e) {
 void RS_ActionDrawLineHorVert::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_Vector mouse = snapPoint(e);
+        if(mouse.valid==false) return;
 
         switch (getStatus()) {
         case SetStartpoint:

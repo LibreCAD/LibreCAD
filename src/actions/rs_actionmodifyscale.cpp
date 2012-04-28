@@ -71,6 +71,7 @@ void RS_ActionModifyScale::mouseMoveEvent(QMouseEvent* e) {
     if (getStatus()==SetReferencePoint) {
 
         RS_Vector mouse = snapPoint(e);
+        if(mouse.valid==false) return;
         switch (getStatus()) {
         case SetReferencePoint:
             referencePoint = mouse;
@@ -90,7 +91,9 @@ void RS_ActionModifyScale::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
 
         if (getStatus()== SetReferencePoint){
-            RS_CoordinateEvent ce(snapPoint(e));
+            RS_Vector vp=snapPoint(e);
+            if(vp.valid==false) return;
+            RS_CoordinateEvent ce(vp);
             coordinateEvent(&ce);
         }
     } else if (e->button()==Qt::RightButton) {

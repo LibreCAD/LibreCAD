@@ -117,6 +117,7 @@ void RS_ActionModifyDeleteFree::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case 0: {
                 v1 = snapPoint(e);
+                if(v1.valid==false) return;
                 e1 = getKeyEntity();
                 if (e1!=NULL) {
                     RS_EntityContainer* parent = e1->getParent();
@@ -141,6 +142,7 @@ void RS_ActionModifyDeleteFree::mouseReleaseEvent(QMouseEvent* e) {
 
         case 1: {
                 v2 = snapPoint(e);
+                if(v2.valid==false) return;
                 e2 = getKeyEntity();
 
                 if (e2!=NULL) {
