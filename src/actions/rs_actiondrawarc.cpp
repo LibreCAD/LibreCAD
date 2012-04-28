@@ -112,13 +112,14 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawArc::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
+    if(mouse.valid==false) return;
     switch (getStatus()) {
     case SetCenter:
         data.center = mouse;
         break;
 
     case SetRadius:
-        if (data.center.valid && mouse.valid) {
+        if (data.center.valid) {
             data.radius = data.center.distanceTo(mouse);
             if(data.radius < RS_TOLERANCE) return;
             deletePreview();
