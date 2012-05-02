@@ -80,4 +80,5 @@ message(We will be using CPP11 features)
 QMAKE_CXXFLAGS_DEBUG += -std=c++0x
 QMAKE_CXXFLAGS += -std=c++0x
 
-
+# svg support
+QT += svg

@@ -74,11 +74,18 @@ void QG_ImageOptionsDialog::init() {
     if (RS_SETTINGS->readEntry("/Blackwhite", "0")=="1") {
         rbBlackWhite->setChecked(true);
     }
+    leLeftRight->setText(RS_SETTINGS->readEntry("/BorderLeftRight", "5"));
+    leTopBottom->setText(RS_SETTINGS->readEntry("/BorderTopBottom", "5"));
+    if (RS_SETTINGS->readEntry("/BorderSameSize", "0")=="1") {
+        cbSameBorders->setChecked(true);
+        sameBordersChanged();
+    }
     RS_SETTINGS->endGroup();
 }
 
 void QG_ImageOptionsDialog::setGraphicSize(const RS_Vector& s) {
     graphicSize = s;
+    sizeChanged();
 }
 
 void QG_ImageOptionsDialog::ok() {
@@ -90,6 +97,22 @@ void QG_ImageOptionsDialog::ok() {
     RS_SETTINGS->endGroup();
 
     accept();
+}
+
+void QG_ImageOptionsDialog::sameBordersChanged() {
+    if(cbSameBorders->isChecked()) {
+        leTopBottom->setText(leLeftRight->text());
+        leTopBottom->setDisabled(true);
+    }
+    else {
+        leTopBottom->setEnabled(true);
+    }
+}
+
+void QG_ImageOptionsDialog::borderChanged() {
+    if(cbSameBorders->isChecked()) {
+        leTopBottom->setText(leLeftRight->text());
+    }
 }
 
 void QG_ImageOptionsDialog::sizeChanged() {
@@ -118,7 +141,12 @@ void  QG_ImageOptionsDialog::resolutionChanged() {
 
 QSize QG_ImageOptionsDialog::getSize() {
     return QSize(RS_Math::round(RS_Math::eval(leWidth->text())),
-                 RS_Math::round(RS_Math::eval(leHeight->text())));
+                    RS_Math::round(RS_Math::eval(leHeight->text())));
+}
+
+QSize QG_ImageOptionsDialog::getBorders() {
+    return QSize(RS_Math::round(RS_Math::eval(leLeftRight->text())),
+                   RS_Math::round(RS_Math::eval(leTopBottom->text())));
 }
 
 bool QG_ImageOptionsDialog::isBackgroundBlack() {

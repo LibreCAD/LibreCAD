@@ -30,9 +30,6 @@ CONFIG += qt \
     link_prl \
     help verbose
 
-# svg support
-QT += svg
-
 PRE_TARGETDEPS += ../../generated/lib/libdxfrw.a
 PRE_TARGETDEPS += ../../generated/lib/libdxflib.a
 PRE_TARGETDEPS += ../../generated/lib/libjwwlib.a
