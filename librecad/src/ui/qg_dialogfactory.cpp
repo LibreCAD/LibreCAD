@@ -32,6 +32,7 @@
 //Added by qt3to4:
 //#include <Q3StrList>
 #include <QImageReader>
+#include <QString>
 
 #include "rs_patternlist.h"
 #include "rs_settings.h"
@@ -191,20 +192,27 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList) {
 
     RS_Layer* layer = NULL;
 
-    QString layer_name = "noname";
+    QString layer_name = "", newLayerName = "";
     int i = 2;
 
     if (layerList!=NULL) {
-        while (layerList->find(layer_name) > 0)
-            layer_name.sprintf("noname%d", i++);
+        layer_name = QString(layerList->getActive()->getName());
+        if (layer_name.isEmpty() || !layer_name.compare("0", Qt::CaseInsensitive) ) {
+            layer_name = "noname";
+        }
+        newLayerName = QString(layer_name);
+        while(layerList->find(newLayerName) > 0) {
+            newLayerName = QString("%1%2").arg(layer_name).arg(i);
+        }
     }
 
     // Layer for parameter livery
-    layer = new RS_Layer(layer_name);
+    layer = new RS_Layer(newLayerName);
 
     QG_LayerDialog dlg(parent, "Layer Dialog");
     dlg.setLayer(layer);
     dlg.setLayerList(layerList);
+    dlg.getQLineEdit()->selectAll();
     if (dlg.exec()) {
         dlg.updateLayer();
     } else {

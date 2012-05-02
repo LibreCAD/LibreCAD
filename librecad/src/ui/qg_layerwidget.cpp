@@ -241,6 +241,9 @@ QG_LayerWidget::~QG_LayerWidget() {
 void QG_LayerWidget::setLayerList(RS_LayerList* layerList, bool showByBlock) {
     this->layerList = layerList;
     this->showByBlock = showByBlock;
+    if (layerList != NULL) {
+        this->layerList->setLayerWitget(this);
+    }
     update();
 }
 
