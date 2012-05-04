@@ -88,7 +88,7 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e) {
             case Qt::Key_Return:
                     historyList.append(text());
                     it = historyList.end();
-                    if(text() == "clear"){
+                    if(text().compare(tr("clear"), Qt::CaseInsensitive) == 0){
                         setText("");
                         emit(clearCommandsHistory());
                     } else {
