@@ -52,7 +52,7 @@ bool QG_CommandEdit::event(QEvent* e) {
 		if (k->key()==Qt::Key_Tab) {
 			emit tabPressed();
 			return true;
-		}
+        }
 	}
 	
 	return QLineEdit::event(e);
@@ -88,7 +88,12 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e) {
             case Qt::Key_Return:
                     historyList.append(text());
                     it = historyList.end();
-                    QLineEdit::keyPressEvent(e);
+                    if(text() == "clear"){
+                        setText("");
+                        emit(clearCommandsHistory());
+                    } else {
+                        QLineEdit::keyPressEvent(e);
+                    }
                     break;
 
             case Qt::Key_Escape:
