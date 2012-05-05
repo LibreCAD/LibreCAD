@@ -29,6 +29,7 @@
 #include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphic.h"
+#include "qg_layerwidget.h"
 
 
 
@@ -53,6 +54,7 @@ void RS_ActionLayersAdd::trigger() {
                                   graphic->getLayerList());
             if (layer!=NULL)
                 graphic->addLayer(layer);
+                graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
         }
     }
     finish(false);

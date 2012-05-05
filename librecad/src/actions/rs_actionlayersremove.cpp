@@ -29,6 +29,7 @@
 #include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphic.h"
+#include "qg_layerwidget.h"
 
 
 
@@ -76,6 +77,7 @@ void RS_ActionLayersRemove::trigger() {
 
         // Now remove the layer from the layer list:
         graphic->removeLayer(layer);
+        graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
     }
     finish(false);
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
