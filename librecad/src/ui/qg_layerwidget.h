@@ -108,6 +108,10 @@ public:
         update();
     }
 
+    QLineEdit* getMatchLayerName() {
+        return matchLayerName;
+    }
+
 signals:
     void escape();
 

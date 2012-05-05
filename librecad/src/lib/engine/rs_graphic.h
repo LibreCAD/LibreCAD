@@ -36,6 +36,7 @@
 #include "rs_units.h"
 
 class RS_VariableDict;
+class QG_LayerWidget;
 
 /**
  * A graphic document which can contain entities layers and blocks.

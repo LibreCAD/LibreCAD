@@ -45,6 +45,8 @@ public slots:
     virtual void validate();
     virtual void setLayerList( RS_LayerList * ll );
     virtual void setEditLayer( bool el );
+    //! @return a reference to the QLineEdit object.
+    virtual QLineEdit* getQLineEdit ();
 
 protected:
     RS_Layer* layer;

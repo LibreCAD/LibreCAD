@@ -32,6 +32,7 @@
 
 class RS_Layer;
 class RS_LayerListListener;
+class QG_LayerWidget;
 
 /**
  * A list of layers.
@@ -75,6 +76,15 @@ public:
     void toggle(RS_Layer* layer);
     void toggleLock(RS_Layer* layer);
     void freezeAll(bool freeze);
+
+    //! sets the layerWidget pointer in RS_LayerListClass
+    void setLayerWitget(QG_LayerWidget * lw) {
+        layerWidget=lw;
+    }
+    //! @return the layerWidget pointer inside the RS_LayerListClass
+    QG_LayerWidget* getLayerWitget() {
+        return layerWidget;
+    }
     //! @return First layer of the list.
     //RS_Layer* firstLayer() {
     //    return layers.first();
@@ -111,6 +121,7 @@ private:
     QList<RS_Layer*> layers;
     //! List of registered LayerListListeners
     QList<RS_LayerListListener*> layerListListeners;
+    QG_LayerWidget* layerWidget;
     //! Currently active layer
     RS_Layer* activeLayer;
     /** Flag set if the layer list was modified and not yet saved. */

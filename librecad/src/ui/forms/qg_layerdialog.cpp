@@ -117,3 +117,9 @@ void QG_LayerDialog::init(){
 void QG_LayerDialog::setEditLayer( bool el ){
 	editLayer = el;
 }
+
+
+//! @return a reference to the QLineEdit object.
+QLineEdit* QG_LayerDialog::getQLineEdit () {
+        return leName;
+}
