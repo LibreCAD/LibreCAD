@@ -539,12 +539,12 @@ void RS_Line::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 }
 
 
-
-
 void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
     if (painter==NULL || view==NULL) {
         return;
     }
+    //visible in grahic view
+    if(isVisibleInWindow(view)==false) return;
     RS_Vector pStart(view->toGui(getStartpoint()));
     RS_Vector pEnd(view->toGui(getEndpoint()));
 

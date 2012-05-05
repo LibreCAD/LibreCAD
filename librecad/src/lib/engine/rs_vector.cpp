@@ -298,6 +298,7 @@ bool RS_Vector::isInWindow(const RS_Vector& firstCorner,
     RS_Vector vLow( std::min(firstCorner.x, secondCorner.x), std::min(firstCorner.y, secondCorner.y));
     RS_Vector vHigh( std::max(firstCorner.x, secondCorner.x), std::max(firstCorner.y, secondCorner.y));
 
+if(valid==false) return false;
     return isInWindowOrdered(vLow,vHigh);
 }
 
@@ -307,7 +308,7 @@ bool RS_Vector::isInWindow(const RS_Vector& firstCorner,
  */
 bool RS_Vector::isInWindowOrdered(const RS_Vector& vLow,
                            const RS_Vector& vHigh) const {
-
+if(valid==false) return false;
     return (x>=vLow.x && x<=vHigh.x && y>=vLow.y && y<=vHigh.y);
 }
 

@@ -1349,6 +1349,9 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patte
     if (painter==NULL || view==NULL) {
         return;
     }
+
+    //visible in grahic view
+    if(isVisibleInWindow(view)==false) return;
     double ra(getMajorRadius()*view->getFactor().x);
     double rb(getRatio()*ra);
     if(rb<RS_TOLERANCE) {//ellipse too small

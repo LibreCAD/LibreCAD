@@ -860,6 +860,9 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     if (painter==NULL || view==NULL) {
         return;
     }
+    //visible in grahic view
+    if(isVisibleInWindow(view)==false) return;
+
     RS_Vector cp=view->toGui(getCenter());
     double ra=getRadius()*view->getFactor().x;
     double length=getLength()*view->getFactor().x;
