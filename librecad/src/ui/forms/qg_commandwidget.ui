@@ -119,6 +119,9 @@ p, li { white-space: pre-wrap; }
    <class>QG_CommandEdit</class>
    <extends>QWidget</extends>
    <header>qg_commandedit.h</header>
+   <slots>
+    <signal>clearCommandsHistory()</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>
@@ -130,8 +133,8 @@ p, li { white-space: pre-wrap; }
    <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>100</x>
+     <y>94</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -146,8 +149,8 @@ p, li { white-space: pre-wrap; }
    <slot>tabPressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>100</x>
+     <y>94</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -162,8 +165,8 @@ p, li { white-space: pre-wrap; }
    <slot>escape()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>100</x>
+     <y>94</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -178,8 +181,8 @@ p, li { white-space: pre-wrap; }
    <slot>setCommandMode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>100</x>
+     <y>94</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -194,8 +197,8 @@ p, li { white-space: pre-wrap; }
    <slot>setNormalMode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>100</x>
+     <y>94</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -216,6 +219,22 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>319</x>
      <y>34</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leCommand</sender>
+   <signal>clearCommandsHistory()</signal>
+   <receiver>teHistory</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>235</x>
+     <y>89</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>218</x>
+     <y>37</y>
     </hint>
    </hints>
   </connection>
