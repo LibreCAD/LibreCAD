@@ -83,7 +83,8 @@ public:
         void redo();
 
 protected:
-    /**
+    RS_Vector snapToAngle(const RS_Vector& currentCoord);
+     /**
     * Line data defined so far.
     */
     RS_LineData data;
