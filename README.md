@@ -12,7 +12,6 @@ Unzip or checkout a version of LibreCAD into a directory.
 CD into that directory and follow these instructions:
 
 Build makefile and compile LibreCAD
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ```
 qmake librecad.pro
