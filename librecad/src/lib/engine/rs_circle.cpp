@@ -630,6 +630,13 @@ void RS_Circle::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 }
 
 
+/** whether the entity's bounding box intersects with visible portion of graphic view
+//fix me, need to handle overlay container separately
+*/
+bool RS_Circle::isVisibleInWindow(RS_GraphicView* ) const
+{
+    return true;
+}
 void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 
     if (painter==NULL || view==NULL) {
