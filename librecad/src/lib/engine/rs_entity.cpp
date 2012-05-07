@@ -250,16 +250,17 @@ bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const
     RS_Vector vpMax(view->toGraph(view->getWidth(),0));
     if( getStartpoint().isInWindowOrdered(vpMin, vpMax) ) return true;
     if( getEndpoint().isInWindowOrdered(vpMin, vpMax) ) return true;
-    QPolygonF boundingBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
+    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
     QVector<RS_Vector> vps;
     for(unsigned short i=0;i<4;i++){
-        auto& vp(boundingBox.at(i));
+        auto& vp(visualBox.at(i));
         vps<<RS_Vector(vp.x(),vp.y());
     }
     for(unsigned short i=0;i<4;i++){
         RS_Line line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
         if( RS_Information::getIntersection(const_cast<RS_Entity*>(this), &line, true).size()>0) return true;
     }
+    if( minV.isInWindowOrdered(vpMin,vpMax)||maxV.isInWindowOrdered(vpMin,vpMax)) return true;
     return false;
 }
 
