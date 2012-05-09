@@ -49,11 +49,11 @@ RS2::FormatType rtti() {
         return RS2::FormatLFF;
 }
 	
-	virtual bool canImport(const QString &fileName, RS2::FormatType t) const {
+    virtual bool canImport(const QString& /*fileName*/, RS2::FormatType t) const {
         return (t==RS2::FormatLFF);
     }
 	
-	virtual bool canExport(const QString &fileName, RS2::FormatType t) const {
+    virtual bool canExport(const QString& /*fileName*/, RS2::FormatType t) const {
         return (t==RS2::FormatLFF);
     }
 

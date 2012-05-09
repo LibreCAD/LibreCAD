@@ -131,7 +131,7 @@ public:
     }
     enum TYPE type;
 
-    void addString(string s) {data = s; content.s = &data; setType(STRING);}
+    void addString(UTF8STRING s) {data = s; content.s = &data; setType(STRING);}
     void addInt(int i) {content.i = i; setType(INTEGER);}
     void addDouble(double d) {content.d = d; setType(DOUBLE);}
     void addCoord(DRW_Coord *v) {content.v = v; setType(COORD);}
@@ -142,7 +142,7 @@ public:
 
 private:
     typedef union {
-        string *s;
+        UTF8STRING *s;
         int i;
         double d;
         DRW_Coord *v;

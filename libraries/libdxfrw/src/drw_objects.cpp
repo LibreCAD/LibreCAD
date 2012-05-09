@@ -205,17 +205,17 @@ void DRW_Header::parseCode(int code, dxfReader *reader){
         vars[name]=curr;
         break;
     case 1:
-        curr->addString(reader->getString());
+        curr->addString(reader->getUtf8String());
         if (name =="$ACADVER")
             reader->setVersion(curr->content.s);
         curr->code = code;
         break;
     case 2:
-        curr->addString(reader->getString());
+        curr->addString(reader->getUtf8String());
         curr->code = code;
         break;
     case 3:
-        curr->addString(reader->getString());
+        curr->addString(reader->getUtf8String());
         if (name =="$DWGCODEPAGE") {
             reader->setCodePage(curr->content.s);
             curr->addString(reader->getCodePage());
@@ -223,15 +223,15 @@ void DRW_Header::parseCode(int code, dxfReader *reader){
         curr->code = code;
         break;
     case 6:
-        curr->addString(reader->getString());
+        curr->addString(reader->getUtf8String());
         curr->code = code;
         break;
     case 7:
-        curr->addString(reader->getString());
+        curr->addString(reader->getUtf8String());
         curr->code = code;
         break;
     case 8:
-        curr->addString(reader->getString());
+        curr->addString(reader->getUtf8String());
         curr->code = code;
         break;
     case 10:
@@ -279,7 +279,7 @@ void DRW_Header::parseCode(int code, dxfReader *reader){
         curr->code = code;
         break;
     case 390:
-        curr->addString(reader->getString());
+        curr->addString(reader->getUtf8String());
         curr->code = code;
         break;
     default:

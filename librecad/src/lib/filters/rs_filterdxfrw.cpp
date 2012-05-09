@@ -111,22 +111,6 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
     return true;
 }
 
-/*
- * get teh encoding of the DXF files,
- * Acad versions >= 2007 are UTF-8, others in ANSI_1252
- */
-QString RS_FilterDXFRW::getDXFEncoding() {
-
-    // >= ACAD2007
-    if (version >= 1021) {
-        return RS_System::getEncoding("UTF-8");
-    }
-
-    // < ACAD2007
-    return RS_System::getEncoding(codePage);
-}
-
-
 /**
  * Implementation of the method which handles layers.
  */
@@ -136,7 +120,7 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: creating layer");
 
-    QString name = toNativeString(data.name.c_str(),getDXFEncoding());
+    QString name = QString::fromUtf8(data.name.c_str());
     if (name != "0" && graphic->findLayer(name)!=NULL) {
         return;
     }
@@ -171,7 +155,7 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
     RS_DEBUG->print("  adding block: %s", data.name.c_str());
 /*TODO correct handle of model-space*/
 
-    QString name = QString::fromStdString (data.name);
+    QString name = QString::fromUtf8(data.name.c_str());
     QString mid = name.mid(1,11);
 // Prevent special blocks (paper_space, model_space) from being added:
     if (mid.toLower() != "paper_space" && mid.toLower() != "model_space") {
@@ -180,7 +164,7 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
             RS_Block* block =
                 new RS_Block(graphic,
 //                             RS_BlockData(QString::fromUtf8(data.name.c_str()), bp, false));
-                             RS_BlockData(toNativeString(data.name.c_str(),getDXFEncoding()), bp, false ));
+                             RS_BlockData(name, bp, false ));
             //block->setFlags(flags);
 
             if (graphic->addBlock(block)) {
@@ -195,6 +179,7 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
  * Implementation of the method which closes blocks.
  */
 void RS_FilterDXFRW::endBlock() {
+    //RLZ: TODO remove unnamed blocks *D only if version != R12
     if (currentContainer->rtti() == RS2::EntityBlock) {
         RS_Block *bk = (RS_Block *)currentContainer;
         if (bk->getName().startsWith("*D") )
@@ -478,7 +463,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
 
     //cout << "Insert: " << name << " " << ip << " " << cols << "/" << rows << endl;
 
-    RS_InsertData d(toNativeString(data.name.c_str(),getDXFEncoding()),
+    RS_InsertData d( QString::fromUtf8(data.name.c_str()),
                     ip, sc, data.angle/ARAD,
                     data.colcount, data.rowcount,
                     sp, NULL, RS2::NoUpdate);
@@ -503,7 +488,7 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     RS2::HAlign halign;
     RS2::TextDrawingDirection dir;
     RS2::TextLineSpacingStyle lss;
-    QString sty = toNativeString(data.style.c_str(),getDXFEncoding());
+    QString sty = QString::fromUtf8(data.style.c_str());
     sty=sty.toLower();
 
     if (data.textgen<=3) {
@@ -536,8 +521,7 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
         lss = RS2::Exact;
     }
 
-    QString mtext = data.text.c_str();
-    mtext = toNativeString(data.text.c_str(),getDXFEncoding());
+    QString mtext = toNativeString(QString::fromUtf8(data.text.c_str()));
     // use default style for the drawing:
     if (sty.isEmpty()) {
         // japanese, cyrillic:
@@ -574,8 +558,6 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     setEntityAttributes(entity, &data);
     entity->update();
     currentContainer->addEntity(entity);
-
-//    mtext = "";
 }
 
 
@@ -734,7 +716,7 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data) {
         lss = RS2::Exact;
     }
 
-    t = toNativeString(data->getText().c_str(), getDXFEncoding());
+    t = QString::fromUtf8(data->getText().c_str());
 
     if (sty.isEmpty()) {
         sty = dimStyle;
@@ -930,7 +912,7 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
 
     hatch = new RS_Hatch(currentContainer,
                          RS_HatchData(data->solid, data->scale, data->angle,
-                                      QString(QString::fromUtf8(data->name.c_str()))));
+                                      QString::fromUtf8(data->name.c_str())));
     setEntityAttributes(hatch, data);
     currentContainer->addEntity(hatch);
 
@@ -1129,7 +1111,7 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
 #endif
             break;
         case DRW_Variant::STRING:
-            container->addVariable(key, QString::fromStdString(*var->content.s), var->code);
+            container->addVariable(key, QString::fromUtf8(var->content.s->c_str()), var->code);
             break;
         case DRW_Variant::INTEGER:
             container->addVariable(key, var->content.i, var->code);
@@ -1150,7 +1132,7 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
     acadver.replace(QRegExp("[a-zA-Z]"), "");
     bool ok;
     version=acadver.toInt(&ok);
-    if (!ok) { version = 1015;}
+    if (!ok) { version = 1021;}
 }
 
 
@@ -1253,7 +1235,7 @@ void RS_FilterDXFRW::writeBlockRecords(){
     for (uint i = 0; i < graphic->countBlocks(); i++) {
         blk = graphic->blockAt(i);
         RS_DEBUG->print("writing block record: %s", (const char*)blk->getName().toLocal8Bit());
-        dxf->writeBlockRecord(blk->getName().toStdString());
+        dxf->writeBlockRecord(blk->getName().toUtf8().data());
     }
 }
 
@@ -1264,7 +1246,7 @@ void RS_FilterDXFRW::writeBlocks() {
         RS_DEBUG->print("writing block: %s", (const char*)blk->getName().toLocal8Bit());
 
         DRW_Block block;
-        block.name = blk->getName().toStdString();
+        block.name = blk->getName().toUtf8().data();
         block.basePoint.x = blk->getBasePoint().x;
         block.basePoint.y = blk->getBasePoint().y;
 #ifndef  RS_VECTOR2D
@@ -1286,6 +1268,7 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
     QHash<QString, RS_Variable>vars = graphic->getVariableDict();
     QHash<QString, RS_Variable>::iterator it = vars.begin();
     if (!vars.contains ( "$DWGCODEPAGE" )) {
+//RLZ: TODO verify this
         codePage = RS_SYSTEM->localeToISO(QLocale::system().name().toLocal8Bit());
 //        RS_Variable v( QString(RS_SYSTEM->localeToISO(QLocale::system().name().toLocal8Bit())),0 );
         vars.insert(QString("$DWGCODEPAGE"), RS_Variable(codePage, 0) );
@@ -1304,7 +1287,7 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
                 curr->code = it.value().getCode();
                 break;
             case RS2::VariableString:
-                curr->addString(it.value().getString().toStdString());
+                curr->addString(it.value().getString().toUtf8().data() );
                 curr->code = it.value().getCode();
                 break;
             case RS2::VariableVector:
@@ -1539,7 +1522,7 @@ void RS_FilterDXFRW::writeLayers(){
     for (unsigned int i = 0; i < ll->count(); i++) {
         RS_Layer* l = ll->at(i);
         RS_Pen pen = l->getPen();
-        lay.name = toDxfString(l->getName()).toStdString();
+        lay.name = l->getName().toUtf8().data();
         lay.color = colorToNumber(pen.getColor());
         lay.lWeight = widthToNumber(pen.getWidth());
         lay.lineType = lineTypeToName(pen.getLineType()).toStdString();
@@ -1900,7 +1883,7 @@ void RS_FilterDXFRW::writeInsert(RS_Insert* i) {
 #ifndef  RS_VECTOR2D
     in.basePoint.z = i->getInsertionPoint().z;
 #endif
-    in.name = i->getName().toStdString();
+    in.name = i->getName().toUtf8().data();
     in.xscale = i->getScale().x;
     in.yscale = i->getScale().y;
 #ifndef  RS_VECTOR2D
@@ -1963,17 +1946,17 @@ void RS_FilterDXFRW::writeMText(RS_Text* t) {
             dist = dist * -1;
         for (int i=0; i<txtList.size();++i){
             if (!txtList.at(i).isEmpty()) {
-                text->text = toDxfString(txtList.at(i)).toStdString();
+                text->text = toDxfString(txtList.at(i)).toUtf8().data();
                 if (setSec)
                     text->secPoint.y += dist*i;
                 else
                     text->basePoint.y += dist*i;
                 dxf->writeText(text);
-        }
+            }
         }
     } else {
-        text->text = toDxfString(t->getText()).toStdString();
-//        text->widthscale =t->getWidth();
+        text->text = toDxfString(t->getText()).toUtf8().data();
+        //        text->widthscale =t->getWidth();
         text->widthscale =t->getSize().x;
 
         dxf->writeMText((DRW_MText*)text);
@@ -2067,10 +2050,10 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
     getEntityAttributes(dim, d);
     dim->setDefPoint(DRW_Coord(d->getDefinitionPoint().x, d->getDefinitionPoint().y, 0));
     dim->setTextPoint(DRW_Coord(d->getMiddleOfText().x, d->getMiddleOfText().y, 0));
-    dim->setStyle (d->getStyle().toStdString());
+    dim->setStyle (d->getStyle().toUtf8().data());
     dim->setAlign (attachmentPoint);
     dim->setTextLineStyle(d->getLineSpacingStyle());
-    dim->setText (toDxfString(d->getText()).toStdString());
+    dim->setText (toDxfString(d->getText()).toUtf8().data());
     dim->setTextLineFactor(d->getLineSpacingFactor());
     //   void setName(const string s) {name = s;}
 
@@ -2151,7 +2134,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
     ha.solid = h->isSolid();
     ha.scale = h->getScale();
     ha.angle = h->getAngle();
-    ha.name = h->getPattern().toStdString();
+    ha.name = h->getPattern().toUtf8().data();
     ha.loopsnum = h->countLoops();
 
     for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
@@ -2343,7 +2326,7 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     RS_Pen pen;
     pen.setColor(Qt::black);
     pen.setLineType(RS2::SolidLine);
-    QString layName = toNativeString(attrib->layer.c_str(),getDXFEncoding());
+    QString layName = toNativeString(QString::fromUtf8(attrib->layer.c_str()));
 
     // Layer: add layer in case it doesn't exist:
     if (graphic->findLayer(layName)==NULL) {
@@ -2357,7 +2340,7 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     pen.setColor(numberToColor(attrib->color));
 
     // Linetype:
-    pen.setLineType(nameToLineType(attrib->lineType.c_str()));
+    pen.setLineType(nameToLineType( QString::fromUtf8(attrib->lineType.c_str()) ));
 
     // Width:
     pen.setWidth(numberToWidth(attrib->lWeight));
@@ -2395,10 +2378,10 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entit
     // Width:
     int width = widthToNumber(pen.getWidth());
 
-    ent->layer = toDxfString(layerName).toStdString();
+    ent->layer = toDxfString(layerName).toUtf8().data();
     ent->color = color;
     ent->lWeight = width;
-    ent->lineType = lineType.toLatin1().data();
+    ent->lineType = lineType.toUtf8().data();
 }
 
 
@@ -2410,7 +2393,7 @@ RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Layer* att) const {
 
     RS_Pen pen(numberToColor(att->color),
                numberToWidth(att->lWeight),
-               nameToLineType(att->lineType.c_str()) );
+               nameToLineType(QString::fromUtf8(att->lineType.c_str())) );
     return pen;
 }
 
@@ -2887,7 +2870,7 @@ QString RS_FilterDXFRW::toDxfString(const QString& str) {
     int j=0;
     for (int i=0; i<str.length(); ++i) {
         int c = str.at(i).unicode();
-        if (c>127 || c<11){
+        if (c>175 || c<11){
             res.append(str.mid(j,i-j));
             j=i;
 
@@ -2896,23 +2879,19 @@ QString RS_FilterDXFRW::toDxfString(const QString& str) {
                 res+="\\P";
                 break;
                 // diameter:
-            case 0x2205:
-                res+="%%c";
+            case 0x2205://RLZ: Empty_set, diameter is 0x2300 need to add in all fonts
+                res+="%%C";
                 break;
                 // degree:
             case 0x00B0:
-                res+="%%d";
+                res+="%%D";
                 break;
                 // plus/minus
             case 0x00B1:
-                res+="%%p";
+                res+="%%P";
                 break;
             default:
-                if (c>127) {
-                    QString hex = QString("%1").arg(c, 4, 16);
-                    hex = hex.replace(' ', '0');
-                    res+=QString("\\U+%1").arg(hex);
-                }
+                j--;
                 break;
             }
             j++;
@@ -2928,79 +2907,48 @@ QString RS_FilterDXFRW::toDxfString(const QString& str) {
 /**
  * Converts a DXF encoded string into a native Unicode string.
  */
-QString RS_FilterDXFRW::toNativeString(const char* data, const QString& encoding) {
-    QString res = QString(data);
+QString RS_FilterDXFRW::toNativeString(const QString& data) {
+    QString res;
 
-    /*	- If the given string doesn't contain any unicode characters, we pass
-     *	  the string through a textcoder.
-     *	--------------------------------------------------------------------- */
-    if (!res.contains("\\U+")) {
-        QTextCodec *codec = QTextCodec::codecForName(encoding.toAscii());
-        if (codec)
-            res = codec->toUnicode(data);
+    // Ignore font tags:
+    int j = 0;
+    for (int i=0; i<data.length(); ++i) {
+        if (data.at(i).unicode() == 0x7B){ //is '{' ?
+            if (data.at(i+1).unicode() == 0x5c && data.at(i+2).unicode() == 0x66){ //is "\f" ?
+                //found font tag, append parsed part
+                res.append(data.mid(j,i-j));
+                //skip to ';'
+                for (int k=i+3; k<data.length(); ++k) {
+                    if (data.at(k).unicode() == 0x3B) {
+                        i = j = ++k;
+                        break;
+                    }
+                }
+                //add to '}'
+                for (int k=i; k<data.length(); ++k) {
+                    if (data.at(k).unicode() == 0x7D) {
+                        res.append(data.mid(i,k-i));
+                        i = j = ++k;
+                        break;
+                    }
+                }
+
+            }
+        }
     }
+    res.append(data.mid(j));
 
     // Line feed:
     res = res.replace(QRegExp("\\\\P"), "\n");
     // Space:
     res = res.replace(QRegExp("\\\\~"), " ");
     // diameter:
-    res = res.replace(QRegExp("%%c"), QChar(0x2205));
+    res = res.replace(QRegExp("%%[cC]"), QChar(0x2205));//RLZ: Empty_set, diameter is 0x2300 need to add in all fonts
     // degree:
-    res = res.replace(QRegExp("%%d"), QChar(0x00B0));
+    res = res.replace(QRegExp("%%[dD]"), QChar(0x00B0));
     // plus/minus
-    res = res.replace(QRegExp("%%p"), QChar(0x00B1));
+    res = res.replace(QRegExp("%%[pP]"), QChar(0x00B1));
 
-    // Unicode characters:
-    QString cap = "";
-    int uCode = 0;
-    bool ok = false;
-    do {
-        QRegExp regexp("\\\\U\\+[0-9A-Fa-f]{4,4}");
-        regexp.indexIn(res);
-        cap = regexp.cap();
-        if (!cap.isNull()) {
-            uCode = cap.right(4).toInt(&ok, 16);
-            // workaround for Qt 3.0.x:
-            res.replace(QRegExp("\\\\U\\+" + cap.right(4)), QChar(uCode));
-            // for Qt 3.1:
-            //res.replace(cap, QChar(uCode));
-        }
-    }
-    while (!cap.isNull());
-
-    // ASCII code:
-    cap = "";
-    uCode = 0;
-    ok = false;
-    do {
-        QRegExp regexp("%%[0-9]{3,3}");
-        regexp.indexIn(res);
-        cap = regexp.cap();
-        if (!cap.isNull()) {
-            uCode = cap.right(3).toInt(&ok, 10);
-            // workaround for Qt 3.0.x:
-            res.replace(QRegExp("%%" + cap.right(3)), QChar(uCode));
-            // for Qt 3.1:
-            //res.replace(cap, QChar(uCode));
-        }
-    }
-    while (!cap.isNull());
-
-    // Ignore font tags:
-    res = res.replace(QRegExp("\\\\f[0-9A-Za-z| ]{0,};"), "");
-
-    // Ignore {}
-    res = res.replace("\\{", "#curly#");
-    res = res.replace("{", "");
-    res = res.replace("#curly#", "{");
-
-    res = res.replace("\\}", "#curly#");
-    res = res.replace("}", "");
-    res = res.replace("#curly#", "}");
-
-    RS_DEBUG->print("RS_FilterDXF::toNativeString:");
-    RS_DEBUG->printUnicode(res);
     return res;
 }
 
