@@ -103,6 +103,7 @@ private:
 private:
     DRW::Version version;
     std::string fileName;
+    std::string codePage;
     bool binary;
     dxfReader *reader;
     dxfWriter *writer;

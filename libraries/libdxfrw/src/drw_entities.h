@@ -138,8 +138,8 @@ public:
     enum DRW::ETYPE eType;     /*!< enum: entity type, code 0 */
     string handle;             /*!< entity identifier, code 5 */
     string handleBlock;        /*!< Soft-pointer ID/handle to owner BLOCK_RECORD object, code 330 */
-    string layer;              /*!< layer name, code 8 */
-    string lineType;           /*!< line type, code 6 */
+    UTF8STRING layer;              /*!< layer name, code 8 */
+    UTF8STRING lineType;           /*!< line type, code 6 */
     int color;                 /*!< entity color, code 62 */
     //RLZ: TODO as integer or enum??
     int lWeight;               /*!< entity lineweight, code 370 */
@@ -354,7 +354,7 @@ public:
     void parseCode(int code, dxfReader *reader);
 
 public:
-    string name;             /*!< block name, code 2 */
+    UTF8STRING name;             /*!< block name, code 2 */
     int flags;                   /*!< block type, code 70 */
 };
 
@@ -382,7 +382,7 @@ public:
     void parseCode(int code, dxfReader *reader);
 
 public:
-    string name;             /*!< block name, code 2 */
+    UTF8STRING name;             /*!< block name, code 2 */
     double xscale;           /*!< x scale factor, code 41 */
     double yscale;           /*!< y scale factor, code 42 */
     double zscale;           /*!< z scale factor, code 43 */
@@ -467,11 +467,11 @@ public:
 
 public:
     double height;           /*!< height text, code 40 */
-    string text;                 /*!< text string, code 1 */
+    UTF8STRING text;                 /*!< text string, code 1 */
     double angle;             /*!< rotation angle in degrees (360), code 50 */
     double widthscale;     /*!< width factor, code 41 */
     double oblique;          /*!< oblique angle, code 51 */
-    string style;                /*!< stile name, code 7 */
+    UTF8STRING style;                /*!< stile name, code 7 */
     int textgen;                 /*!< text generation, code 71 */
     enum DRW::HAlign alignH;   /*!< horizontal align, code 72 */
     enum DRW::VAlign alignV;    /*!< vertical align, code 73 */
@@ -709,7 +709,7 @@ public:
     void parseCode(int code, dxfReader *reader);
 
 public:
-    string name;               /*!< hatch pattern name, code 2 */
+    UTF8STRING name;               /*!< hatch pattern name, code 2 */
     int solid;                 /*!< solid fill flag, code 70, solid=1, pattern=0 */
     int associative;           /*!< associativity, code 71, associatve=1, non-assoc.=0 */
     int hstyle;                /*!< hatch style, code 75 */
@@ -897,8 +897,8 @@ private:
     string name;               /*!< Name of the block that contains the entities, code 2 */
     DRW_Coord defPoint;      /*!<  definition point, code 10, 20 & 30 (WCS) */
     DRW_Coord textPoint;     /*!< Middle point of text, code 11, 21 & 31 (OCS) */
-    string text;               /*!< Dimension text explicitly entered by the user, code 1 */
-    string style;              /*!< Dimension style, code 3 */
+    UTF8STRING text;               /*!< Dimension text explicitly entered by the user, code 1 */
+    UTF8STRING style;              /*!< Dimension style, code 3 */
     int align;                 /*!< attachment point, code 71 */
     int linesty;               /*!< Dimension text line spacing style, code 72, default 1 */
     double linefactor;         /*!< Dimension text line spacing factor, code 41, default 1? (value range 0.25 to 4.00*/
@@ -1105,7 +1105,7 @@ public:
     void parseCode(int code, dxfReader *reader);
 
 public:
-    string style;              /*!< Dimension style name, code 3 */
+    UTF8STRING style;              /*!< Dimension style name, code 3 */
     int arrow;                 /*!< Arrowhead flag, code 71, 0=Disabled; 1=Enabled */
     int leadertype;            /*!< Leader path type, code 72, 0=Straight line segments; 1=Spline */
     int flag;                  /*!< Leader creation flag, code 73, default 3 */

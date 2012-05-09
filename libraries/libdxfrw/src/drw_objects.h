@@ -58,7 +58,7 @@ public:
     enum DRW::TTYPE tType;  /*!< enum: entity type, code 0 */
     string handle;                       /*!< entity identifier, code 5 */
     string handleBlock;              /*!< Soft-pointer ID/handle to owner BLOCK_RECORD object, code 330 */
-    string name;                         /*!< entry name, code 2 */
+    UTF8STRING name;           /*!< entry name, code 2 */
     int flags;                               /*!< Flags relevant to entry, code 70 */
 };
 
@@ -80,11 +80,11 @@ public:
     void parseCode(int code, dxfReader *reader);
 
 public:
-    string dimpost;           /*!< code 3 */
-    string dimapost;         /*!< code 4 */
-    string dimblk;            /*!< code 5 (handle are code 105*/
-    string dimblk1;           /*!< code 6 */
-    string dimblk2;           /*!< code 7 */
+    UTF8STRING dimpost;           /*!< code 3 */
+    UTF8STRING dimapost;         /*!< code 4 */
+    UTF8STRING dimblk;            /*!< code 5 (handle are code 105*/
+    UTF8STRING dimblk1;           /*!< code 6 */
+    UTF8STRING dimblk2;           /*!< code 7 */
     double dimasz;            /*!< code 41 */
     double dimexo;            /*!< code 42 */
     double dimexe;            /*!< code 44 */
@@ -117,7 +117,7 @@ public:
     void update();
 
 public:
-    string desc;           /*!< descriptive string, code 3 */
+    UTF8STRING desc;           /*!< descriptive string, code 3 */
 //    int align;               /*!< align code, always 65 ('A') code 72 */
     int size;                 /*!< element number, code 73 */
     double length;            /*!< total length of pattern, code 40 */
@@ -146,7 +146,7 @@ public:
     void parseCode(int code, dxfReader *reader);
 
 public:
-    string lineType;           /*!< line type, code 6 */
+    UTF8STRING lineType;           /*!< line type, code 6 */
     int color;                 /*!< layer color, code 62 */
     bool plotF;                 /*!< Plot flag, code 290 */
     int lWeight;               /*!< layer lineweight, code 370 */
@@ -170,7 +170,7 @@ public:
 
 public:
     string handle;            /*!< entity identifier, code 5 */
-    string name;              /*!< File name of image, code 1 */
+    UTF8STRING name;              /*!< File name of image, code 1 */
     int version;              /*!< class version, code 90, 0=R14 version */
     double u;                 /*!< image size in pixels U value, code 10 */
     double v;                 /*!< image size in pixels V value, code 20 */

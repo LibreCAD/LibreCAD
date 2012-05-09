@@ -19,6 +19,18 @@
 
 using std::string;
 
+#define UTF8STRING std::string
+
+#if defined(WIN64) || defined(_WIN64) || defined(__WIN64__)
+#  define DRW_WIN
+#elif defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+#    define DRW_WIN
+#elif defined(__MWERKS__) && defined(__INTEL__)
+#  define DRW_WIN
+#else
+#  define DRW_POSIX
+#endif
+
 namespace DRW {
 //! Version numbers for the DXF Format.
 enum Version {

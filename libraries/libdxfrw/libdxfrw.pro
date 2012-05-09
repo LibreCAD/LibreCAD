@@ -27,6 +27,7 @@ SOURCES += \
     src/libdxfrw.cpp \
     src/drw_entities.cpp \
     src/drw_objects.cpp \
+    src/drw_textcodec.cpp \
     src/dxfreader.cpp \
     src/dxfwriter.cpp
 
@@ -35,7 +36,7 @@ HEADERS += \
     src/drw_base.h \
     src/drw_entities.h \
     src/drw_objects.h \
+    src/drw_textcodec.h \
     src/dxfreader.h \
     src/dxfwriter.h \
     src/drw_interface.h
-

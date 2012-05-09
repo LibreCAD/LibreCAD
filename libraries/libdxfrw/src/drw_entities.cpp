@@ -61,10 +61,10 @@ void DRW_Entity::parseCode(int code, dxfReader *reader){
         handleBlock = reader->getString();
         break;
     case 8:
-        layer = reader->getString();
+        layer = reader->getUtf8String();
         break;
     case 6:
-        lineType = reader->getString();
+        lineType = reader->getUtf8String();
         break;
     case 62:
         color = reader->getInt32();
@@ -244,7 +244,7 @@ void DRW_3Dface::parseCode(int code, dxfReader *reader){
 void DRW_Block::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 2:
-        name = reader->getString();
+        name = reader->getUtf8String();
         break;
     case 70:
         flags = reader->getInt32();
@@ -258,7 +258,7 @@ void DRW_Block::parseCode(int code, dxfReader *reader){
 void DRW_Insert::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 2:
-        name = reader->getString();
+        name = reader->getUtf8String();
         break;
     case 41:
         xscale = reader->getDouble();
@@ -379,10 +379,10 @@ void DRW_Text::parseCode(int code, dxfReader *reader){
         alignV = (DRW::VAlign)reader->getInt32();
         break;
     case 1:
-        text = reader->getString();
+        text = reader->getUtf8String();
         break;
     case 7:
-        style = reader->getString();
+        style = reader->getUtf8String();
         break;
     default:
         DRW_Line::parseCode(code, reader);
@@ -394,6 +394,7 @@ void DRW_MText::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 1:
         text += reader->getString();
+        text = reader->toUtf8String(text);
         break;
     case 11:
         haveXAxis = true;
@@ -499,7 +500,7 @@ void DRW_Vertex::parseCode(int code, dxfReader *reader){
 void DRW_Hatch::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 2:
-        name = reader->getString();
+        name = reader->getUtf8String();
         break;
     case 70:
         solid = reader->getInt32();
@@ -734,13 +735,13 @@ void DRW_Image::parseCode(int code, dxfReader *reader){
 void DRW_Dimension::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 1:
-        text = reader->getString();
+        text = reader->getUtf8String();
         break;
     case 2:
         name = reader->getString();
         break;
     case 3:
-        style = reader->getString();
+        style = reader->getUtf8String();
         break;
     case 70:
         type = reader->getInt32();
@@ -841,7 +842,7 @@ void DRW_Dimension::parseCode(int code, dxfReader *reader){
 void DRW_Leader::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 3:
-        style = reader->getString();
+        style = reader->getUtf8String();
         break;
     case 71:
         arrow = reader->getInt32();
