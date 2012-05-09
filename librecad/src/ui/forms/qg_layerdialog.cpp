@@ -69,6 +69,7 @@ void QG_LayerDialog::setLayer(RS_Layer* l) {
 	layerName = layer->getName();
     leName->setText(layerName);
     wPen->setPen(layer->getPen(), false, false, tr("Default Pen"));
+    cbHelpLayer->setChecked(l->isHelpLayer());
 
     if (layer->getName()=="0") {
         leName->setEnabled(false);
