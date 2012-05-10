@@ -1918,22 +1918,21 @@ void RS_FilterDXFRW::writeMText(RS_Text* t) {
     text->angle = t->getAngle();
     text->style = t->getStyle().toStdString();
 
-    if (t->getHAlign()==RS2::HAlignLeft) {
-        text->alignH =DRW::HAlignLeft;
-    } else if (t->getHAlign()==RS2::HAlignCenter) {
-        text->alignH =DRW::HAlignCenter;
-    } else if (t->getHAlign()==RS2::HAlignRight) {
-        text->alignH = DRW::HRight;
-    }
-    if (t->getVAlign()==RS2::VAlignTop) {
-        text->alignV = DRW::VAlignTop;
-    } else if (t->getVAlign()==RS2::VAlignMiddle) {
-        text->alignV = DRW::VAlignMiddle;
-    } else if (t->getVAlign()==RS2::VAlignBottom) {
-        text->alignV = DRW::VAlignBottom;
-    }
-
     if (version==1009) {
+        if (t->getHAlign()==RS2::HAlignLeft) {
+            text->alignH =DRW::HAlignLeft;
+        } else if (t->getHAlign()==RS2::HAlignCenter) {
+            text->alignH =DRW::HAlignCenter;
+        } else if (t->getHAlign()==RS2::HAlignRight) {
+            text->alignH = DRW::HRight;
+        }
+        if (t->getVAlign()==RS2::VAlignTop) {
+            text->alignV = DRW::VAlignTop;
+        } else if (t->getVAlign()==RS2::VAlignMiddle) {
+            text->alignV = DRW::VAlignMiddle;
+        } else if (t->getVAlign()==RS2::VAlignBottom) {
+            text->alignV = DRW::VAlignBottom;
+        }
         QStringList txtList = t->getText().split('\n',QString::KeepEmptyParts);
         double dist = t->getSize().y / txtList.size();
         bool setSec = false;
@@ -1955,6 +1954,27 @@ void RS_FilterDXFRW::writeMText(RS_Text* t) {
             }
         }
     } else {
+        if (t->getHAlign()==RS2::HAlignLeft) {
+            text->textgen =1;
+        } else if (t->getHAlign()==RS2::HAlignCenter) {
+            text->textgen =2;
+        } else if (t->getHAlign()==RS2::HAlignRight) {
+            text->textgen = 3;
+        }
+        if (t->getVAlign()==RS2::VAlignMiddle) {
+            text->textgen += 3;
+        } else if (t->getVAlign()==RS2::VAlignBottom) {
+            text->textgen += 6;
+        }
+        if (t->getDrawingDirection() == RS2::LeftToRight)
+            text->alignH = (DRW::HAlign)1;
+        else if (t->getDrawingDirection() == RS2::TopToBottom)
+            text->alignH = (DRW::HAlign)3;
+        else text->alignH = (DRW::HAlign)5;
+        if (t->getLineSpacingFactor() == RS2::AtLeast)
+            text->alignV = (DRW::VAlign)1;
+        else text->alignV = (DRW::VAlign)2;
+
         text->text = toDxfString(t->getText()).toUtf8().data();
         //        text->widthscale =t->getWidth();
         text->widthscale =t->getSize().x;
