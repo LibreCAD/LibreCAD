@@ -81,6 +81,11 @@ DESTDIR = $${INSTALLDIR}
 # Unquoted: main.cpp stringifies it with XSTR(), as CMakeLists.txt does.
 DEFINES += QC_APPDIR=librecad
 
+# Let RS_System find plugins installed to LIBRECAD_PLUGIN_INSTALL_DIR.
+!isEmpty(LIBRECAD_PLUGIN_INSTALL_DIR) {
+    DEFINES += "LC_PLUGIN_INSTALL_DIR=\"\\\"$$LIBRECAD_PLUGIN_INSTALL_DIR\\\"\""
+}
+
 # Make translations at the end of the process
 unix {
     LC_VERSION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --always)" || echo "$${LC_VERSION}")

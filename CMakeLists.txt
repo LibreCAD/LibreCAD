@@ -2253,6 +2253,22 @@ set_source_files_properties(
     librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp PROPERTIES
     INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/libraries/qtbidi")
 
+if(APPLE)
+    set(LIBRECAD_PLUGIN_INSTALL_DIR "bin/LibreCAD.app/Contents/PlugIns/LibreCAD"
+        CACHE STRING "Plugin destination, relative to CMAKE_INSTALL_PREFIX or absolute")
+else()
+    set(LIBRECAD_PLUGIN_INSTALL_DIR "bin/resources/plugins"
+        CACHE STRING "Plugin destination, relative to CMAKE_INSTALL_PREFIX or absolute")
+endif()
+
+# Let RS_System find plugins wherever they are installed.
+if(IS_ABSOLUTE "${LIBRECAD_PLUGIN_INSTALL_DIR}")
+    set(LC_PLUGIN_INSTALL_DIR "${LIBRECAD_PLUGIN_INSTALL_DIR}")
+else()
+    set(LC_PLUGIN_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${LIBRECAD_PLUGIN_INSTALL_DIR}")
+endif()
+file(TO_CMAKE_PATH "${LC_PLUGIN_INSTALL_DIR}" LC_PLUGIN_INSTALL_DIR)
+
 qt_add_library (librecad_lib STATIC
                 ${MUPARSER_SOURCES}
                 ${SHARED_SOURCES}
@@ -2264,6 +2280,7 @@ qt_add_library (librecad_lib STATIC
 # the target was compiled with both -D's and a -Wmacro-redefined warning.
 target_compile_definitions (librecad_lib PRIVATE
                             DWGSUPPORT
+                            LC_PLUGIN_INSTALL_DIR="${LC_PLUGIN_INSTALL_DIR}"
 )
 target_include_directories(librecad_lib PRIVATE
     ${SHARED_INCLUDES}
