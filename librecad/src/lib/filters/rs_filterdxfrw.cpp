@@ -162,9 +162,7 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
 
             RS_Vector bp(data.basePoint.x, data.basePoint.y);
             RS_Block* block =
-                new RS_Block(graphic,
-//                             RS_BlockData(QString::fromUtf8(data.name.c_str()), bp, false));
-                             RS_BlockData(name, bp, false ));
+                new RS_Block(graphic, RS_BlockData(name, bp, false ));
             //block->setFlags(flags);
 
             if (graphic->addBlock(block)) {
@@ -179,11 +177,13 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
  * Implementation of the method which closes blocks.
  */
 void RS_FilterDXFRW::endBlock() {
-    //RLZ: TODO remove unnamed blocks *D only if version != R12
     if (currentContainer->rtti() == RS2::EntityBlock) {
         RS_Block *bk = (RS_Block *)currentContainer;
-        if (bk->getName().startsWith("*D") )
-            graphic->removeBlock(bk);
+        //remove unnamed blocks *D only if version != R12
+        if (version!=1009) {
+            if (bk->getName().startsWith("*D") )
+                graphic->removeBlock(bk);
+        }
     }
     currentContainer = graphic;
 }
@@ -1188,22 +1188,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
 /*RLZ pte*/
 /*    RS_DEBUG->print("writing tables...");
     dw->sectionTables();
-
     // VPORT:
     dxf.writeVPort(*dw);
-
-    // Line types:
-    RS_DEBUG->print("writing line types...");
-    int numLT = (int)RS2::BorderLineX2-(int)RS2::LineByBlock;
-    if (type==RS2::FormatDXF12) {
-        numLT-=2;
-    }
-    dw->tableLineTypes(numLT);
-    for (int t=(int)RS2::LineByBlock; t<=(int)RS2::BorderLineX2; ++t) {
-        if ((RS2::LineType)t!=RS2::NoPen) {
-            writeLineType(*dw, (RS2::LineType)t);
-        }
-    }
     dw->tableEnd();
 
     // STYLE:
@@ -1241,6 +1227,64 @@ void RS_FilterDXFRW::writeBlockRecords(){
 
 void RS_FilterDXFRW::writeBlocks() {
     RS_Block *blk;
+
+    if (version==1009) {
+        int dimNum = 0, hatchNum= 0;
+        QString prefix, sufix;
+        //check for existing *D?? or  *U??
+        for (uint i = 0; i < graphic->countBlocks(); i++) {
+            blk = graphic->blockAt(i);
+            prefix = blk->getName().left(2).toUpper();
+            sufix = blk->getName().mid(2);
+            if (prefix == "*D") {
+                if (sufix.toInt() > dimNum) dimNum = sufix.toInt();
+            } else if (prefix == "*U") {
+                if (sufix.toInt() > hatchNum) hatchNum = sufix.toInt();
+            }
+        }
+        for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
+             e != NULL; e = graphic->nextEntity(RS2::ResolveNone)) {
+            if ( !(e->getFlag(RS2::FlagUndone)) ) {
+                switch (e->rtti()) {
+                case RS2::EntityDimLinear:
+                case RS2::EntityDimAligned:
+                case RS2::EntityDimAngular:
+                case RS2::EntityDimRadial:
+                case RS2::EntityDimDiametric:
+                case RS2::EntityDimLeader:
+                    prefix = "*D" + ++dimNum;
+                    noNameBlock[e] = prefix;
+                    break;
+                case RS2::EntityHatch:
+                    if ( !((RS_Hatch*)e)->isSolid() ) {
+                        prefix = "*U" + ++hatchNum;
+                        noNameBlock[e] = prefix;
+                    }
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
+        QHash<RS_Entity*, QString>::const_iterator it = noNameBlock.constBegin();
+        while (it != noNameBlock.constEnd()) {
+            DRW_Block block;
+            block.name = it.value().toStdString();
+            block.basePoint.x = 0.0;
+            block.basePoint.y = 0.0;
+    #ifndef  RS_VECTOR2D
+            block.basePoint.z = 0.0;
+    #endif
+            dxf->writeBlock(&block);
+            RS_EntityContainer *ct = (RS_EntityContainer *)it.key();
+            for (RS_Entity* e=ct->firstEntity(RS2::ResolveNone);
+                    e!=NULL; e=ct->nextEntity(RS2::ResolveNone)) {
+                writeEntity(e);
+            }
+            ++it;
+        }
+    } //end version R12
+
     for (uint i = 0; i < graphic->countBlocks(); i++) {
         blk = graphic->blockAt(i);
         RS_DEBUG->print("writing block: %s", (const char*)blk->getName().toLocal8Bit());
@@ -1991,9 +2035,26 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
 
     // version 12 are inserts of *D blocks
     if (version==1009) {
-//        writeAtomicEntities(dw, d, attrib, RS2::ResolveNone);
+        if (noNameBlock.contains(d)) {
+            DRW_Insert in;
+            getEntityAttributes(&in, d);
+            in.basePoint.x = in.basePoint.y = 0.0;
+#ifndef  RS_VECTOR2D
+            in.basePoint.z = 0.0;
+#endif
+            in.name = noNameBlock.value(d).toUtf8().data();
+            in.xscale = in.yscale = 1.0;
+#ifndef  RS_VECTOR2D
+            in.zscale = 1.0;
+#endif
+            in.angle = 0.0;
+            in.colcount = in.rowcount = 1;
+            in.colspace = in.rowspace = 0.0;
+            dxf->writeInsert(&in);
+        }
         return;
     }
+
     DRW_Dimension* dim;
     int attachmentPoint=1;
     if (d->getHAlign()==RS2::HAlignLeft) {
@@ -2119,12 +2180,27 @@ void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
  * Writes the given hatch entity to the file.
  */
 void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
-//In ver_r12 add as unnamed block (*u???)
-    // split hatch into atomic entities:
-/*    if (dxf.getVersion()==VER_R12) {
-        writeAtomicEntities(dw, h, attrib, RS2::ResolveAll);
+    // version 12 are inserts of *U blocks
+    if (version==1009) {
+        if (noNameBlock.contains(h)) {
+            DRW_Insert in;
+            getEntityAttributes(&in, h);
+            in.basePoint.x = in.basePoint.y = 0.0;
+#ifndef  RS_VECTOR2D
+            in.basePoint.z = 0.0;
+#endif
+            in.name = noNameBlock.value(h).toUtf8().data();
+            in.xscale = in.yscale = 1.0;
+#ifndef  RS_VECTOR2D
+            in.zscale = 1.0;
+#endif
+            in.angle = 0.0;
+            in.colcount = in.rowcount = 1;
+            in.colspace = in.rowspace = 0.0;
+            dxf->writeInsert(&in);
+        }
         return;
-    }*/
+    }
 
     bool writeIt = true;
     if (h->countLoops()>0) {

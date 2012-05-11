@@ -190,6 +190,8 @@ private:
     QString dimStyle;
     /** text style. */
     QString textStyle;
+    /** Temporary list to handle unnamed blocks fot write R12 dxf. */
+    QHash <RS_Entity*, QString> noNameBlock;
 
     dxfRW *dxf;
 };
