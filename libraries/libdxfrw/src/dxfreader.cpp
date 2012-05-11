@@ -13,7 +13,9 @@
 #include <stdlib.h>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include "dxfreader.h"
+#include "drw_textcodec.h"
 
 #ifdef DRW_DBG
 #include <iostream> //for debug
@@ -218,7 +220,8 @@ bool dxfReaderAscii::readInt64() {
 bool dxfReaderAscii::readDouble() {
     std::string text;
     if (readString(&text)){
-        doubleData = strtod(text.c_str(), NULL);
+        std::istringstream sd(text);
+        sd >> doubleData;
         DBG(doubleData); DBG("\n");
         return true;
     } else

@@ -73,7 +73,7 @@ public:
     virtual void addHeader(const DRW_Header* data);
     virtual void addLType(const DRW_LType& /*data*/){}
     virtual void addLayer(const DRW_Layer& data);
-    virtual void addDimStyle(const DRW_Dimstyle& data){}
+    virtual void addDimStyle(const DRW_Dimstyle& /*data*/){}
     virtual void addBlock(const DRW_Block& data);
     virtual void endBlock();
     virtual void addPoint(const DRW_Point& data);
@@ -146,8 +146,7 @@ public:
     void getEntityAttributes(DRW_Entity* ent, const RS_Entity* entity);
 
     static QString toDxfString(const QString& str);
-    static QString toNativeString(const char* data, const QString& encoding);
-    QString getDXFEncoding();
+    static QString toNativeString(const QString& data);
 
 public:
     RS_Pen attributesToPen(const DRW_Layer* att) const;
@@ -191,6 +190,8 @@ private:
     QString dimStyle;
     /** text style. */
     QString textStyle;
+    /** Temporary list to handle unnamed blocks fot write R12 dxf. */
+    QHash <RS_Entity*, QString> noNameBlock;
 
     dxfRW *dxf;
 };

@@ -227,14 +227,14 @@ void QG_PrintPreviewOptions::scale(const QString& s0) {
         }
     }
     factor=fabs(factor); // do we need negative factor at all?
-    if(factor<1.0e-6 || factor>1.0e6) {
-        if(factor>1.0e6){
-            action->printWarning(tr("Paper scale factor larger than 1.0e6"));
-        }else{
-            action->printWarning(tr("Paper scale factor smaller than 1.0e-6"));
-        }
-        return;
-    }
+//    if(factor<1.0e-6 || factor>1.0e6) {
+//        if(factor>1.0e6){
+//            action->printWarning(tr("Paper scale factor larger than 1.0e6"));
+//        }else{
+//            action->printWarning(tr("Paper scale factor smaller than 1.0e-6"));
+//        }
+//        return;
+//    }
     if(action->setScale(factor)){
         //        std::cout<<"QG_PrintPreviewOptions::scale(const QString& s): line: "<<__LINE__<<" s="<<factor<<std::endl;
         updateScaleBox(factor);

@@ -2739,6 +2739,8 @@ void QC_ApplicationWindow::
         // update recent files menu:
         recentFiles->add(fileName);
         openedFiles.append(fileName);
+        layerWidget->slotUpdateLayerList();
+
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: 2");
         updateRecentFilesMenu();
 

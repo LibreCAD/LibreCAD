@@ -14,6 +14,7 @@
 #include "libdxfrw.h"
 #include <fstream>
 #include <algorithm>
+#include "drw_textcodec.h"
 #include "dxfreader.h"
 #include "dxfwriter.h"
 
@@ -153,8 +154,13 @@ bool dxfRW::writeEntity(DRW_Entity *ent) {
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbEntity");
     }
-    writer->writeString(8, ent->layer);
-    writer->writeString(6, ent->lineType);
+    if (version > DRW::AC1009) {
+        writer->writeUtf8String(8, ent->layer);
+        writer->writeUtf8String(6, ent->lineType);
+    } else {
+        writer->writeUtf8Caps(8, ent->layer);
+        writer->writeUtf8Caps(6, ent->lineType);
+    }
     writer->writeInt16(62, ent->color);
     if (version > DRW::AC1014) {
         writer->writeInt16(370, ent->lWeight);
@@ -165,6 +171,7 @@ bool dxfRW::writeEntity(DRW_Entity *ent) {
 bool dxfRW::writeLineType(DRW_LType *ent){
     char buffer[5];
     string strname = ent->name;
+
     transform(strname.begin(), strname.end(), strname.begin(),::toupper);
 //do not write linetypes handled by library
     if (strname == "BYLAYER" || strname == "BYBLOCK" || strname == "CONTINUOUS") {
@@ -180,10 +187,11 @@ bool dxfRW::writeLineType(DRW_LType *ent){
         }
         writer->writeString(100, "AcDbSymbolTableRecord");
         writer->writeString(100, "AcDbLinetypeTableRecord");
-    }
-    writer->writeString(2, ent->name);
+        writer->writeUtf8String(2, ent->name);
+    } else
+        writer->writeUtf8Caps(2, ent->name);
     writer->writeInt16(70, ent->flags);
-    writer->writeString(3, ent->desc);
+    writer->writeUtf8String(3, ent->desc);
     ent->update();
     writer->writeInt16(72, 65);
     writer->writeInt16(73, ent->size);
@@ -219,21 +227,20 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbSymbolTableRecord");
         writer->writeString(100, "AcDbLayerTableRecord");
-        writer->writeString(2, ent->name);
+        writer->writeUtf8String(2, ent->name);
     } else {
-    string strname = ent->name;
-    transform(strname.begin(), strname.end(), strname.begin(),::toupper);
-    writer->writeString(2, strname);
+        writer->writeUtf8Caps(2, ent->name);
     }
     writer->writeInt16(70, ent->flags);
     writer->writeInt16(62, ent->color);
-    writer->writeString(6, ent->lineType);
     if (version > DRW::AC1009) {
-    if (! ent->plotF)
-        writer->writeBool(290, ent->plotF);
-    writer->writeInt16(370, ent->lWeight);
-    writer->writeString(390, "F");
-    }
+        writer->writeUtf8String(6, ent->lineType);
+        if (! ent->plotF)
+            writer->writeBool(290, ent->plotF);
+        writer->writeInt16(370, ent->lWeight);
+        writer->writeString(390, "F");
+    } else
+        writer->writeUtf8Caps(6, ent->lineType);
 //    writer->writeString(347, "10012");
     return true;
 }
@@ -242,13 +249,13 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     char buffer[5];
     writer->writeString(0, "DIMSTYLE");
     if (!dimstyleStd) {
-            dimstyleStd = true;
+        dimstyleStd = true;
     }
-        if (version > DRW::AC1009) {
-            ++entCount;
-            sprintf(buffer, "%X", entCount);
-            writer->writeString(105, buffer);
-        }
+    if (version > DRW::AC1009) {
+        ++entCount;
+        sprintf(buffer, "%X", entCount);
+        writer->writeString(105, buffer);
+    }
 
     if (version > DRW::AC1012) {
         writer->writeString(330, "A");
@@ -256,15 +263,20 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbSymbolTableRecord");
         writer->writeString(100, "AcDbDimStyleTableRecord");
-    }
-    writer->writeString(2, ent->name);
+        writer->writeUtf8String(2, ent->name);
+    } else
+        writer->writeUtf8Caps(2, ent->name);
     writer->writeInt16(70, ent->flags);
-    writer->writeString(2, ent->name);
-    writer->writeString(3, ent->dimpost);
-    writer->writeString(4, ent->dimapost);
-    writer->writeString(5, ent->dimblk);
-    writer->writeString(6, ent->dimblk1);
-    writer->writeString(7, ent->dimblk2);
+    if ( !(ent->dimpost.empty()) )
+        writer->writeUtf8String(3, ent->dimpost);
+    if ( !(ent->dimapost.empty()) )
+        writer->writeUtf8String(4, ent->dimapost);
+    if ( !(ent->dimblk.empty()) )
+        writer->writeUtf8String(5, ent->dimblk);
+    if ( !(ent->dimblk1.empty()) )
+        writer->writeUtf8String(6, ent->dimblk1);
+    if ( !(ent->dimblk2.empty()) )
+        writer->writeUtf8String(7, ent->dimblk2);
     writer->writeDouble(41, ent->dimasz);
     writer->writeDouble(42, ent->dimexo);
     writer->writeDouble(44, ent->dimexe);
@@ -707,7 +719,7 @@ bool dxfRW::writeLeader(DRW_Leader *ent){
         writer->writeString(0, "LEADER");
         writeEntity(ent);
         writer->writeString(100, "AcDbLeader");
-        writer->writeString(3, ent->style);
+        writer->writeUtf8String(3, ent->style);
         writer->writeInt16(71, ent->arrow);
         writer->writeInt16(72, ent->leadertype);
         writer->writeInt16(73, ent->flag);
@@ -744,13 +756,13 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
             ent->type = ent->type +32;
         writer->writeInt16(70, ent->type);
         if ( !(ent->getText().empty()) )
-            writer->writeString(1, ent->getText());
+            writer->writeUtf8String(1, ent->getText());
         writer->writeInt16(71, ent->getAlign());
         if ( ent->getTextLineStyle() != 1)
             writer->writeInt16(72, ent->getTextLineStyle());
         if ( ent->getTextLineFactor() != 1)
             writer->writeDouble(41, ent->getTextLineFactor());
-        writer->writeString(3, ent->getStyle());
+        writer->writeUtf8String(3, ent->getStyle());
         if ( ent->getTextLineFactor() != 0)
             writer->writeDouble(53, ent->getDir());
         writer->writeDouble(210, ent->getExtrusion().x);
@@ -867,8 +879,9 @@ bool dxfRW::writeInsert(DRW_Insert *ent){
     }*/
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbBlockReference");
-    }
-    writer->writeString(2, ent->name);
+        writer->writeUtf8String(2, ent->name);
+    } else
+        writer->writeUtf8Caps(2, ent->name);
     writer->writeDouble(10, ent->basePoint.x);
     writer->writeDouble(20, ent->basePoint.y);
     writer->writeDouble(30, ent->basePoint.z);
@@ -894,11 +907,14 @@ bool dxfRW::writeText(DRW_Text *ent){
     writer->writeDouble(20, ent->basePoint.y);
     writer->writeDouble(30, ent->basePoint.z);
     writer->writeDouble(40, ent->height);
-    writer->writeString(1, ent->text);
+    writer->writeUtf8String(1, ent->text);
     writer->writeDouble(50, ent->angle);
     writer->writeDouble(41, ent->widthscale);
     writer->writeDouble(51, ent->oblique);
-    writer->writeString(7, ent->style);
+    if (version > DRW::AC1009)
+        writer->writeUtf8String(1, ent->style);
+    else
+        writer->writeUtf8Caps(1, ent->style);
     writer->writeInt16(71, ent->textgen);
     if (ent->alignH != DRW::HAlignLeft) {
         writer->writeInt16(72, ent->alignH);
@@ -933,12 +949,14 @@ bool dxfRW::writeMText(DRW_MText *ent){
         writer->writeDouble(41, ent->widthscale);
         writer->writeInt16(71, ent->textgen);
         writer->writeInt16(72, ent->alignH);
+        std::string text = writer->fromUtf8String(ent->text);
+
         int i;
-        for(i =0; (ent->text.size()-i) > 250; ) {
-            writer->writeString(3, ent->text.substr(i, 250));
+        for(i =0; (text.size()-i) > 250; ) {
+            writer->writeString(3, text.substr(i, 250));
             i +=250;
         }
-        writer->writeString(1, ent->text.substr(i));
+        writer->writeString(1, text.substr(i));
         writer->writeString(7, ent->style);
         writer->writeDouble(210, ent->extPoint.x);
         writer->writeDouble(220, ent->extPoint.y);
@@ -1002,24 +1020,27 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
 }
 
 bool dxfRW::writeBlockRecord(std::string name){
-    writer->writeString(0, "BLOCK_RECORD");
-    char buffer[5];
-    entCount = 1+entCount;
-    sprintf(buffer, "%X", entCount);
-    writer->writeString(5, buffer);
-    blockMap[name] = entCount;
-    entCount = 2+entCount;//reserve 2 for BLOCK & ENDBLOCK
-    if (version > DRW::AC1014) {
-        writer->writeString(330, "1");
-    }
-    writer->writeString(100, "AcDbSymbolTableRecord");
-    writer->writeString(100, "AcDbBlockTableRecord");
-    writer->writeString(2, name);
-    if (version > DRW::AC1018) {
-    //    writer->writeInt16(340, 22);
-    writer->writeInt16(70, 0);
-    writer->writeInt16(280, 1);
-    writer->writeInt16(281, 0);
+    if (version > DRW::AC1009) {
+        writer->writeString(0, "BLOCK_RECORD");
+        char buffer[5];
+        entCount = 1+entCount;
+        sprintf(buffer, "%X", entCount);
+        writer->writeString(5, buffer);
+
+        blockMap[name] = entCount;
+        entCount = 2+entCount;//reserve 2 for BLOCK & ENDBLOCK
+        if (version > DRW::AC1014) {
+            writer->writeString(330, "1");
+        }
+        writer->writeString(100, "AcDbSymbolTableRecord");
+        writer->writeString(100, "AcDbBlockTableRecord");
+        writer->writeUtf8String(2, name);
+        if (version > DRW::AC1018) {
+            //    writer->writeInt16(340, 22);
+            writer->writeInt16(70, 0);
+            writer->writeInt16(280, 1);
+            writer->writeInt16(281, 0);
+        }
     }
     return true;
 }
@@ -1054,14 +1075,20 @@ bool dxfRW::writeBlock(DRW_Block *bk){
     }
     writer->writeString(8, "0");
     writer->writeString(100, "AcDbBlockBegin");
-    writer->writeString(2, bk->name);
+    if (version > DRW::AC1009)
+        writer->writeUtf8String(2, bk->name);
+    else
+        writer->writeUtf8Caps(2, bk->name);
     writer->writeInt16(70, bk->flags);
     writer->writeDouble(10, bk->basePoint.x);
     writer->writeDouble(20, bk->basePoint.y);
     if (bk->basePoint.z != 0.0) {
         writer->writeDouble(30, bk->basePoint.z);
     }
-    writer->writeString(3, bk->name);
+    if (version > DRW::AC1009)
+        writer->writeUtf8String(3, bk->name);
+    else
+        writer->writeUtf8Caps(3, bk->name);
     writer->writeString(1, "");
 
     return true;
@@ -1090,7 +1117,10 @@ bool dxfRW::writeTables() {
         writer->writeString(100, "AcDbSymbolTableRecord");
         writer->writeString(100, "AcDbViewportTableRecord");
     }
-    writer->writeString(2, "*Active");
+    if (version > DRW::AC1009)
+        writer->writeString(2, "*ACTIVE");
+    else
+        writer->writeString(2, "*Active");
     writer->writeInt16(70, 0);
     writer->writeDouble(10, 0.0);
     writer->writeDouble(20, 0.0);
@@ -1206,8 +1236,10 @@ bool dxfRW::writeTables() {
         }
         writer->writeString(100, "AcDbSymbolTableRecord");
         writer->writeString(100, "AcDbLinetypeTableRecord");
+        writer->writeString(2, "Continuous");
+    } else {
+        writer->writeString(2, "CONTINUOUS");
     }
-    writer->writeString(2, "CONTINUOUS");
     writer->writeInt16(70, 0);
     writer->writeString(3, "Solid line");
     writer->writeInt16(72, 65);
@@ -1371,13 +1403,19 @@ bool dxfRW::writeBlocks() {
         writer->writeString(100, "AcDbEntity");
     }
     writer->writeString(8, "0");
-    writer->writeString(100, "AcDbBlockBegin");
-    writer->writeString(2, "*Model_Space");
+    if (version > DRW::AC1009) {
+        writer->writeString(100, "AcDbBlockBegin");
+        writer->writeString(2, "*Model_Space");
+    } else
+        writer->writeString(2, "*MODEL_SPACE");
     writer->writeInt16(70, 0);
     writer->writeDouble(10, 0.0);
     writer->writeDouble(20, 0.0);
     writer->writeDouble(30, 0.0);
-    writer->writeString(3, "*Model_Space");
+    if (version > DRW::AC1009)
+        writer->writeString(3, "*Model_Space");
+    else
+        writer->writeString(3, "*MODEL_SPACE");
     writer->writeString(1, "");
     writer->writeString(0, "ENDBLK");
     if (version > DRW::AC1009) {
@@ -1388,7 +1426,8 @@ bool dxfRW::writeBlocks() {
         writer->writeString(100, "AcDbEntity");
     }
     writer->writeString(8, "0");
-    writer->writeString(100, "AcDbBlockEnd");
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbBlockEnd");
 
     writer->writeString(0, "BLOCK");
     if (version > DRW::AC1009) {
@@ -1399,13 +1438,19 @@ bool dxfRW::writeBlocks() {
         writer->writeString(100, "AcDbEntity");
     }
     writer->writeString(8, "0");
-    writer->writeString(100, "AcDbBlockBegin");
-    writer->writeString(2, "*Paper_Space");
+    if (version > DRW::AC1009) {
+        writer->writeString(100, "AcDbBlockBegin");
+        writer->writeString(2, "*Paper_Space");
+    } else
+        writer->writeString(2, "*PAPER_SPACE");
     writer->writeInt16(70, 0);
     writer->writeDouble(10, 0.0);
     writer->writeDouble(20, 0.0);
     writer->writeDouble(30, 0.0);
-    writer->writeString(3, "*Paper_Space");
+    if (version > DRW::AC1009)
+        writer->writeString(3, "*Paper_Space");
+    else
+        writer->writeString(3, "*PAPER_SPACE");
     writer->writeString(1, "");
     writer->writeString(0, "ENDBLK");
     if (version > DRW::AC1009) {
@@ -1416,7 +1461,8 @@ bool dxfRW::writeBlocks() {
         writer->writeString(100, "AcDbEntity");
     }
     writer->writeString(8, "0");
-    writer->writeString(100, "AcDbBlockEnd");
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbBlockEnd");
     writingBlock = false;
     iface->writeBlocks();
     if (writingBlock) {
@@ -1434,7 +1480,8 @@ bool dxfRW::writeBlocks() {
             writer->writeString(100, "AcDbEntity");
         }
         writer->writeString(8, "0");
-        writer->writeString(100, "AcDbBlockEnd");
+        if (version > DRW::AC1009)
+            writer->writeString(100, "AcDbBlockEnd");
     }
     return true;
 }
@@ -1503,7 +1550,7 @@ bool dxfRW::writeObjects() {
         writer->writeString(102, "}");
         writer->writeString(100, "AcDbRasterImageDef");
         writer->writeInt16(90, 0); //version 0=R14 to v2010
-        writer->writeString(1, id->name);
+        writer->writeUtf8String(1, id->name);
         writer->writeDouble(10, id->u);
         writer->writeDouble(20, id->v);
         writer->writeDouble(11, id->up);
@@ -1522,27 +1569,27 @@ bool dxfRW::writeObjects() {
 /********* Reader Process *********/
 
 bool dxfRW::processDxf() {
-    DBG("dxfRW::processDxf()\n");
+    DBG("dxfRW::processDxf() start processing dxf\n");
     int code;
     bool more = true;
     string sectionstr;
 //    section = secUnknown;
     while (reader->readRec(&code, !binary)) {
-        DBG(code); DBG("\n");
+        DBG(code); DBG(" processDxf\n");
         if (code == 0) {
             sectionstr = reader->getString();
-            DBG(sectionstr); DBG("\n");
+            DBG(sectionstr); DBG(" processDxf\n");
             if (sectionstr == "EOF") {
                 return true;  //found EOF terminate
             }
             if (sectionstr == "SECTION") {
                 more = reader->readRec(&code, !binary);
-                DBG(code); DBG("\n");
+                DBG(code); DBG(" processDxf\n");
                 if (!more)
                     return false; //wrong dxf file
                 if (code == 2) {
                     sectionstr = reader->getString();
-                    DBG(sectionstr); DBG("\n");
+                    DBG(sectionstr); DBG("  processDxf\n");
                 //found section, process it
                     if (sectionstr == "HEADER") {
                         processHeader();
@@ -1573,10 +1620,10 @@ bool dxfRW::processHeader() {
     int code;
     string sectionstr;
     while (reader->readRec(&code, !binary)) {
-        DBG(code); DBG("\n");
+        DBG(code); DBG(" processHeader\n");
         if (code == 0) {
             sectionstr = reader->getString();
-            DBG(sectionstr); DBG("\n");
+            DBG(sectionstr); DBG(" processHeader\n\n");
             if (sectionstr == "ENDSEC") {
                 iface->addHeader(&header);
                 return true;  //found ENDSEC terminate
@@ -1597,7 +1644,7 @@ bool dxfRW::processTables() {
         DBG(code); DBG("\n");
         if (code == 0) {
             sectionstr = reader->getString();
-            DBG(sectionstr); DBG("\n");
+            DBG(sectionstr); DBG(" processHeader\n\n");
             if (sectionstr == "TABLE") {
                 more = reader->readRec(&code, !binary);
                 DBG(code); DBG("\n");
@@ -1605,7 +1652,7 @@ bool dxfRW::processTables() {
                     return false; //wrong dxf file
                 if (code == 2) {
                     sectionstr = reader->getString();
-                    DBG(sectionstr); DBG("\n");
+                    DBG(sectionstr); DBG(" processHeader\n\n");
                 //found section, process it
                     if (sectionstr == "VPORT") {
 //                        processVPort();

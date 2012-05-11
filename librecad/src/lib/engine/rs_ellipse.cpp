@@ -1232,6 +1232,10 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     double cA=0.5*a*a*(kx2*ct2+ky2*st2);
     double cB=0.5*b*b*(kx2*st2+ky2*ct2);
     double cC=a*b*ct*st*(ky2-kx2);
+    if (factor.x < 0)
+        setReversed(!isReversed());
+    if (factor.y < 0)
+        setReversed(!isReversed());
     RS_Vector vp(cA-cB,cC);
     vp1.set(a,b);
     vp1.scale(RS_Vector(0.5*vp.angle()));
@@ -1339,12 +1343,38 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     correctAngles();//avoid extra 2.*M_PI in angles
 }
 
+/** whether the entity's bounding box intersects with visible portion of graphic view
+//fix me, need to handle overlay container separately
+*/
+bool RS_Ellipse::isVisibleInWindow(RS_GraphicView* view) const
+{
+    RS_Vector vpMin(view->toGraph(0,view->getHeight()));
+    RS_Vector vpMax(view->toGraph(view->getWidth(),0));
+    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
+    QVector<RS_Vector> vps;
+    for(unsigned short i=0;i<4;i++){
+        auto& vp(visualBox.at(i));
+        vps<<RS_Vector(vp.x(),vp.y());
+    }
+    for(unsigned short i=0;i<4;i++){
+        RS_Line line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
+        RS_Ellipse e0(NULL, getData());
+        if( RS_Information::getIntersection(&e0, &line, true).size()>0) return true;
+    }
+    if( getCenter().isInWindowOrdered(vpMin,vpMax)==false) return false;
+    double d2=getMajorP().squared();
+    if(getRatio()<1.) d2 *= getRatio()*getRatio();
+    return (vpMin-getCenter()).squared() > d2 ;
+}
 
 void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 //    std::cout<<"RS_Ellipse::draw(): begin\n";
     if (painter==NULL || view==NULL) {
         return;
     }
+
+    //visible in grahic view
+    if(isVisibleInWindow(view)==false) return;
     double ra(getMajorRadius()*view->getFactor().x);
     double rb(getRatio()*ra);
     if(rb<RS_TOLERANCE) {//ellipse too small

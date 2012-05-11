@@ -50,6 +50,7 @@ class RS_Point;
 class RS_Polyline;
 class RS_Text;
 class RS_Layer;
+class RS_GraphicView;
 
 
 
@@ -539,6 +540,9 @@ public:
         return;
     }
 
+
+    /** whether the entity's bounding box intersects with visible portion of graphic view */
+    virtual bool isVisibleInWindow(RS_GraphicView* view) const;
     /**
      * Implementations must draw the entity on the given device.
      */

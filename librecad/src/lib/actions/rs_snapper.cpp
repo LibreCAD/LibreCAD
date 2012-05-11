@@ -235,18 +235,26 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     //}
     //else snapCoord = snapSpot;
 
-    drawSnapper();
-
-    if (RS_DIALOGFACTORY!=NULL) {
-        RS_DIALOGFACTORY->updateCoordinateWidget(snapCoord,
-                snapCoord - graphicView->getRelativeZero());
-    }
-
-        RS_DEBUG->print("RS_Snapper::snapPoint: OK");
+    snapPoint(snapSpot, false);
 
     return snapCoord;
 }
 
+
+/**manually set snapPoint*/
+RS_Vector RS_Snapper::snapPoint(const RS_Vector& coord, bool setSpot)
+{
+    if(coord.valid){
+        snapSpot=coord;
+        if(setSpot) snapCoord = coord;
+        drawSnapper();
+        if (RS_DIALOGFACTORY!=NULL) {
+            RS_DIALOGFACTORY->updateCoordinateWidget(snapCoord,
+                    snapCoord - graphicView->getRelativeZero());
+        }
+    }
+    return coord;
+}
 double RS_Snapper::getSnapRange() const
 {
     if(graphicView != NULL)

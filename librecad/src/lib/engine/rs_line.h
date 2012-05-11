@@ -227,6 +227,8 @@ public:
                          const RS_Vector& offset);
     virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 
+    /** whether the entity's bounding box intersects with visible portion of graphic view */
+//    virtual bool isVisibleInWindow(RS_GraphicView* view) const;
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 
     friend std::ostream& operator << (std::ostream& os, const RS_Line& l);
