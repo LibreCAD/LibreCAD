@@ -75,21 +75,36 @@ public:
         dimasz = dimtxt = 2.5;
         dimexo = dimgap = 0.625;
         dimexe = 1.25;
+        dimtxsty = "Standard";
+        //dimscale dimdli dimrnd dimdle dimtp dimtm dimcen dimtsz dimaltf dimlfac dimtvp dimtfac
     }
 
     void parseCode(int code, dxfReader *reader);
 
 public:
-    UTF8STRING dimpost;           /*!< code 3 */
-    UTF8STRING dimapost;         /*!< code 4 */
-    UTF8STRING dimblk;            /*!< code 5 (handle are code 105*/
-    UTF8STRING dimblk1;           /*!< code 6 */
-    UTF8STRING dimblk2;           /*!< code 7 */
+    UTF8STRING dimpost;       /*!< code 3 */
+    UTF8STRING dimapost;      /*!< code 4 */
+    UTF8STRING dimblk;        /*!< code 5 (handle are code 105) */
+    UTF8STRING dimblk1;       /*!< code 6 */
+    UTF8STRING dimblk2;       /*!< code 7 */
+    double dimscale;          /*!< code 40 */
     double dimasz;            /*!< code 41 */
     double dimexo;            /*!< code 42 */
+    double dimdli;            /*!< code 43 */
     double dimexe;            /*!< code 44 */
+    double dimrnd;            /*!< code 45 */
+    double dimdle;            /*!< code 46 */
+    double dimtp;             /*!< code 47 */
+    double dimtm;             /*!< code 48 */
     double dimtxt;            /*!< code 140 */
+    double dimcen;            /*!< code 141 */
+    double dimtsz;            /*!< code 142 */
+    double dimaltf;           /*!< code 143 */
+    double dimlfac;           /*!< code 144 */
+    double dimtvp;            /*!< code 145 */
+    double dimtfac;           /*!< code 146 */
     double dimgap;            /*!< code 147 */
+    UTF8STRING dimtxsty;      /*!< code 340 */
 };
 
 
