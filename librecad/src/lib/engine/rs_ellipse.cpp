@@ -1353,7 +1353,7 @@ bool RS_Ellipse::isVisibleInWindow(RS_GraphicView* view) const
     QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
     QVector<RS_Vector> vps;
     for(unsigned short i=0;i<4;i++){
-        auto& vp(visualBox.at(i));
+        const QPointF& vp(visualBox.at(i));
         vps<<RS_Vector(vp.x(),vp.y());
     }
     for(unsigned short i=0;i<4;i++){
