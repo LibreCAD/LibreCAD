@@ -86,6 +86,7 @@ void QG_PrintPreviewOptions::init() {
             << "25000:1" << "50000:1" << "75000:1" << "100000:1";
     RS_SETTINGS->beginGroup("/PrintPreview");
     updateDisabled= RS_SETTINGS->readNumEntry("/PrintScaleFixed", 0)!=0;
+    blackWhiteDisabled= RS_SETTINGS->readNumEntry("/BlackWhiteSet", 0)!=0;
     RS_SETTINGS->endGroup();
     action=NULL;
 }
@@ -93,6 +94,7 @@ void QG_PrintPreviewOptions::init() {
 void QG_PrintPreviewOptions::destroy() {
     RS_SETTINGS->beginGroup("/PrintPreview");
     RS_SETTINGS->writeEntry("/PrintScaleFixed", QString(updateDisabled?"1":"0"));
+    RS_SETTINGS->writeEntry("/BlackWhiteSet", QString(blackWhiteDisabled?"1":"0"));
     if(updateDisabled){
         RS_SETTINGS->writeEntry("/PrintScaleValue",cbScale->currentText());
     }
@@ -131,8 +133,8 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
                     RS_SETTINGS->beginGroup("/PrintPreview");
                     QString&& s=RS_SETTINGS->readEntry("/PrintScaleValue", "1:1");
                     RS_SETTINGS->endGroup();
-                updateDisabled=false;
-                scale(s);
+                    updateDisabled=false;
+                    scale(s);
                 }
                 updateDisabled=true;
                 setScaleFixed(true);
@@ -141,21 +143,22 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
                 setScaleFixed(false);
             }
         }else{
-        bool btmp=updateDisabled;
-        updateDisabled = true;
-        cbScale->setDuplicatesEnabled(false);
-        RS2::Unit u = action->getUnit();
-        if (u==RS2::Inch) {
-            cbScale->insertItems(0,imperialScales);
-        } else {
-            cbScale->insertItems(0,metricScales);
-        }
-        defaultScales=cbScale->count();
-        updateScaleBox();
+            bool btmp=updateDisabled;
+            updateDisabled = true;
+            cbScale->setDuplicatesEnabled(false);
+            RS2::Unit u = action->getUnit();
+            if (u==RS2::Inch) {
+                cbScale->insertItems(0,imperialScales);
+            } else {
+                cbScale->insertItems(0,metricScales);
+            }
+            defaultScales=cbScale->count();
+            updateScaleBox();
 
-        updateDisabled = btmp;
-        setScaleFixed(updateDisabled);
+            updateDisabled = btmp;
+            setScaleFixed(updateDisabled);
         }
+        setBlackWhite(blackWhiteDisabled);
 
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
@@ -181,6 +184,10 @@ void QG_PrintPreviewOptions::center() {
 
 void QG_PrintPreviewOptions::setBlackWhite(bool on) {
     if (action!=NULL) {
+        if(bBlackWhite->isChecked() != on) {
+            bBlackWhite->setChecked(on);
+        }
+        blackWhiteDisabled = on;
         action->setBlackWhite(on);
     }
 }
