@@ -567,9 +567,18 @@ QString QG_DialogFactory::requestImageOpenDialog() {
     QString all = "";
     //filters = QStringList::fromStrList(formats);
 
+    bool haveJpeg= false;
     foreach (QByteArray format, QImageReader::supportedImageFormats()) {
-                filters.append(QString("%1 (*.%1) ").arg(QString(format)));
-                all += QString(" *.%1").arg(QString(format));
+        if (format.toUpper() == "JPG" || format.toUpper() == "JPEG" ){
+            if (!haveJpeg) {
+                haveJpeg = true;
+                filters.append("jpeg (*.jpeg *.jpg) ");
+                all += " *.jpeg *.jpg";
+            }
+        } else {
+            filters.append(QString("%1 (*.%1) ").arg(QString(format)));
+            all += QString(" *.%1").arg(QString(format));
+        }
                 /* RVT_PORT
                  QString ext = (*it);
         QString st;

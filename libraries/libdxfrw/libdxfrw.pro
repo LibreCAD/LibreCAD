@@ -40,9 +40,9 @@ HEADERS += \
     src/dxfreader.h \
     src/dxfwriter.h \
     src/drw_interface.h \
-    lib/drw_cptables.h \
-    lib/drw_cptable950.h \
-    lib/drw_cptable949.h \
-    lib/drw_cptable936.h \
-    lib/drw_cptable932.h
+    src/drw_cptables.h \
+    src/drw_cptable950.h \
+    src/drw_cptable949.h \
+    src/drw_cptable936.h \
+    src/drw_cptable932.h
 
