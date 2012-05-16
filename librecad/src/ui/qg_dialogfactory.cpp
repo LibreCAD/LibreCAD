@@ -60,6 +60,7 @@
 #include "qg_dlgdimlinear.h"
 #include "qg_dlgellipse.h"
 #include "qg_dlghatch.h"
+#include "qg_dlgimage.h"
 #include "qg_dlginsert.h"
 #include "qg_dlgline.h"
 #include "qg_dlgmirror.h"
@@ -1765,11 +1766,20 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
         break;
 
     case RS2::EntityPolyline: {
-//RLZ TODO: implement a QG_DlgPolyline dialog
         QG_DlgPolyline dlg(parent);
         dlg.setPolyline(*((RS_Polyline*)entity));
         if (dlg.exec()) {
             dlg.updatePolyline();
+            ret = true;
+        }
+    }
+        break;
+
+    case RS2::EntityImage: {
+        QG_DlgImage dlg(parent);
+        dlg.setImage(*((RS_Image*)entity));
+        if (dlg.exec()) {
+            dlg.updateImage();
             ret = true;
         }
     }

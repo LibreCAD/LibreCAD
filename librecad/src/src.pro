@@ -590,6 +590,7 @@ HEADERS += ui/qg_actionfactory.h \
     ui/forms/qg_dlgdimlinear.h \
     ui/forms/qg_dlgellipse.h \
     ui/forms/qg_dlghatch.h \
+    ui/forms/qg_dlgimage.h \
     ui/forms/qg_dlgimageoptions.h \
     ui/forms/qg_dlginitial.h \
     ui/forms/qg_dlginsert.h \
@@ -682,6 +683,7 @@ SOURCES += ui/qg_actionfactory.cpp \
     ui/forms/qg_dlgdimlinear.cpp \
     ui/forms/qg_dlgellipse.cpp \
     ui/forms/qg_dlghatch.cpp \
+    ui/forms/qg_dlgimage.cpp \
     ui/forms/qg_dlgimageoptions.cpp \
     ui/forms/qg_dlginitial.cpp \
     ui/forms/qg_dlginsert.cpp \
@@ -754,6 +756,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_dlghatch.ui \
     ui/forms/qg_dlginitial.ui \
     ui/forms/qg_dlginsert.ui \
+    ui/forms/qg_dlgimage.ui \
     ui/forms/qg_dlgimageoptions.ui \
     ui/forms/qg_dlgarc.ui \
     ui/forms/qg_dlgcircle.ui \

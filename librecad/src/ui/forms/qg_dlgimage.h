@@ -22,31 +22,35 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#ifndef QG_DLGPOLYLINE_H
-#define QG_DLGPOLYLINE_H
+#ifndef QG_DLGIMAGE_H
+#define QG_DLGIMAGE_H
 
-class RS_Polyline;
+class RS_Image;
 
-#include "ui_qg_dlgpolyline.h"
+#include "ui_qg_dlgimage.h"
 
-class QG_DlgPolyline : public QDialog, public Ui::QG_DlgPolyline
+class QG_DlgImage : public QDialog, public Ui::QG_DlgImage
 {
     Q_OBJECT
 
 public:
-    QG_DlgPolyline(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-    ~QG_DlgPolyline();
+    QG_DlgImage(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    ~QG_DlgImage();
 
 public slots:
-    virtual void setPolyline( RS_Polyline & e );
-    virtual void updatePolyline();
+    virtual void setImage( RS_Image & e );
+    virtual void changeWidth();
+    virtual void changeHeight();
+    virtual void changeScale();
+    virtual void updateImage();
 
 protected slots:
     virtual void languageChange();
 
 private:
-    RS_Polyline* polyline;
-
+    RS_Image* image;
+    double scale;
+QDoubleValidator *val;
 };
 
-#endif // QG_DLGPOLYLINE_H
+#endif // QG_DLGIMAGE_H
