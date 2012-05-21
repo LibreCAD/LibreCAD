@@ -55,7 +55,7 @@ win32 {
     QMAKE_L++FLAGS_THREAD -= -mthreads
     #qt version check for mingw
     win32-g++ {
-        contains(QT_VERSION, ^4\\.8\\.0) {
+        contains(QT_VERSION, ^4\\.8\\.[0-1]) {
             DEFINES += QT_NO_CONCURRENT=0
         }
     }
