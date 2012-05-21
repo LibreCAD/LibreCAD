@@ -709,8 +709,19 @@ void RS_Graphic::setPaperInsertionBase(const RS_Vector& p) {
  * @return Paper size in graphic units.
  */
 RS_Vector RS_Graphic::getPaperSize() {
-    RS_Vector def = RS_Units::convert(RS_Vector(210.0,297.0),
-                                      RS2::Millimeter, getUnit());
+    RS_SETTINGS->beginGroup("/Print");
+    bool okX,okY;
+    double sX = RS_SETTINGS->readEntry("/PaperSizeX", "0.0").toDouble(&okX);
+    double sY = RS_SETTINGS->readEntry("/PaperSizeY", "0.0").toDouble(&okY);
+    RS_SETTINGS->endGroup();
+    RS_Vector def ;
+    if(sX&&sY && sX>RS_TOLERANCE && sY>RS_TOLERANCE) {
+        def=RS_Units::convert(RS_Vector(sX,sY),
+                              RS2::Millimeter, getUnit());
+    }else{
+        def= RS_Units::convert(RS_Vector(210.0,297.0),
+                               RS2::Millimeter, getUnit());
+    }
 
     RS_Vector v1 = getVariableVector("$PLIMMIN", RS_Vector(0.0,0.0));
     RS_Vector v2 = getVariableVector("$PLIMMAX", def);
@@ -725,6 +736,14 @@ RS_Vector RS_Graphic::getPaperSize() {
 void RS_Graphic::setPaperSize(const RS_Vector& s) {
     addVariable("$PLIMMIN", RS_Vector(0.0,0.0), 10);
     addVariable("$PLIMMAX", s, 10);
+    //set default paper size
+    RS_Vector def = RS_Units::convert(s,
+                                     getUnit(), RS2::Millimeter);
+    RS_SETTINGS->beginGroup("/Print");
+    RS_SETTINGS->writeEntry("/PaperSizeX", def.x);
+    RS_SETTINGS->writeEntry("/PaperSizeY", def.y);
+    RS_SETTINGS->endGroup();
+
 }
 
 
