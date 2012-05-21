@@ -108,6 +108,10 @@
         <file>modifyexplodetext.png</file>
         <file>modifymirror.png</file>
         <file>modifymove.png</file>
+        <file>order_bottom.png</file>
+        <file>order_top.png</file>
+        <file>order_raise.png</file>
+        <file>order_lower.png</file>
         <file>modifymoverotate.png</file>
         <file>modifyrotate.png</file>
         <file>modifyrotate2.png</file>
