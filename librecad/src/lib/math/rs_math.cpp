@@ -133,13 +133,16 @@ bool RS_Math::isAngleBetween(double a,
     //    bool ret = false;
 
     if (reversed) swap(a1,a2);
-    if ( ( correctAngle(a2 -a1) >= correctAngle(a - a1) + RS_TOLERANCE_ANGLE &&
-           correctAngle(a - a1) >= RS_TOLERANCE_ANGLE  ) || fabs( remainder(correctAngle(a2 - a1 ) , 2.*M_PI)) < RS_TOLERANCE_ANGLE) {
+    //a1 and a2 almost the same angle
         // the |a2-a1| % (2 pi)=0 means the whole angular range
-        return true;
-    } else {
+    if(fabs( remainder(correctAngle(a2 - a1 ) , 2.*M_PI)) < RS_TOLERANCE_ANGLE) return true;
+//    std::cout<<"correctAngle(a2 -a1) ="<<correctAngle(a2 -a1) <<std::endl;
+//    std::cout<<"correctAngle(a -a1) ="<<correctAngle(a -a1) <<std::endl;
+//    std::cout<<"correctAngle(a2 -a) ="<<correctAngle(a2 -a) <<std::endl;
+    if (  correctAngle(a2 -a1) >= correctAngle(a - a1) - 0.5*RS_TOLERANCE_ANGLE
+          || correctAngle(a2 -a1) >= correctAngle(a2 - a) -0.5*RS_TOLERANCE_ANGLE
+          ) return true;
         return false;
-    }
 }
 
 //    if(a1>=a2-RS_TOLERENCE) {
