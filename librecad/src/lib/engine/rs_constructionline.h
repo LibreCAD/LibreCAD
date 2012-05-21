@@ -113,7 +113,16 @@ public:
     RS_Vector getPoint2() const {
         return data.point2;
     }
+    /** return the equation of the entity
+for quadratic,
 
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+    virtual LC_Quadratic getQuadratic() const;
     virtual RS_Vector getMiddlePoint(void);
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL)const;

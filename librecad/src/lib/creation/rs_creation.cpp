@@ -33,6 +33,7 @@
 #include "rs_constructionline.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
+#include "lc_hyperbola.h"
 
 /**
  * Default constructor.
@@ -894,6 +895,44 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
     return ret;
 }
 
+/**
+  * create the path of centers of common tangent circles of the two given circles
+  *@ return NULL, if failed
+  *@ at success return either an ellipse or hyperbola
+  */
+ std::vector<RS_Entity*> RS_Creation::createCircleTangent2( RS_Entity* circle1,RS_Entity* circle2)
+{
+      std::vector<RS_Entity*> ret(0,NULL);
+    if(circle1==NULL||circle2==NULL) return ret;
+    RS_Entity* e1=circle1;
+    RS_Entity* e2=circle2;
+
+    if(e1->getRadius() < e2->getRadius()) std::swap(e1,e2);
+
+    RS_Vector&& center1=e1->getCenter();
+    RS_Vector&& center2=e2->getCenter();
+    RS_Vector&& cp=(center1+center2)*0.5;
+    double dist=center1.distanceTo(center2);
+    if(dist<RS_TOLERANCE) return ret;
+    RS_Vector&& vp= center1 - cp;
+     double c=dist/(e1->getRadius()+e2->getRadius());
+     if( c < 1. - RS_TOLERANCE) {
+        //two circles intersection or one circle in the other, there's an ellipse path
+         ret.push_back(new RS_Ellipse(NULL, RS_EllipseData(cp,vp,sqrt(1. - c*c),0.,0.,false)));
+     }
+    if( dist + e2 ->getRadius() < e1->getRadius() +RS_TOLERANCE ) {
+        //one circle inside of another, the path is an ellipse
+        return ret;
+    }
+    if(c > 1. + RS_TOLERANCE) {
+        //not circle in circle, there's a hyperbola path
+    c= (e1->getRadius()  - e2->getRadius())/dist;
+    ret.push_back(new LC_Hyperbola(NULL, LC_HyperbolaData(cp,vp*c,sqrt(1. - c*c),0.,0.,false)));
+    return ret;
+}
+    ret.push_back( new RS_Line(NULL, RS_LineData(cp, RS_Vector(cp.x - vp.y, cp.y+vp.x))));
+    return ret;
+}
 
 /**
      * Creates a line with a relative angle to the given entity.

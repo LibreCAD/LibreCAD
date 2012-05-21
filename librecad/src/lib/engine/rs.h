@@ -135,6 +135,7 @@ public:
         EntityArc,          /**< Arc */
         EntityCircle,       /**< Circle */
         EntityEllipse,      /**< Ellipse */
+        EntityHyperbola,      /**< Hyperbola */
         EntitySolid,        /**< Solid */
         EntityConstructionLine, /**< Construction line */
         EntityText,         /**< Text */

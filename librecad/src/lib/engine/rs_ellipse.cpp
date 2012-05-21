@@ -32,6 +32,7 @@
 #include "rs_painter.h"
 #include "rs_information.h"
 #include "rs_linetypepattern.h"
+#include  "lc_quadratic.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h" /* C99 math */
@@ -201,7 +202,6 @@ RS_Vector RS_Ellipse::getTangentDirection(const RS_Vector& point) const {
     return direction;
 }
 
-#ifdef  HAS_BOOST
 /**
   * find total length of the ellipse (arc)
   *
@@ -333,18 +333,7 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
         return vp1;
     }
 }
-#else
 
-//todo , implement this
-RS_Vector RS_Ellipse::getNearestDist(double /*distance*/,
-                                     const RS_Vector& /*coord*/,
-                                     double* dist) {
-    if (dist!=NULL) {
-        *dist = RS_MAXDOUBLE;
-    }
-    return RS_Vector(false);
-}
-#endif
 
 /**
   * switch the major/minor axis naming
@@ -1365,6 +1354,32 @@ bool RS_Ellipse::isVisibleInWindow(RS_GraphicView* view) const
     double d2=getMajorP().squared();
     if(getRatio()<1.) d2 *= getRatio()*getRatio();
     return (vpMin-getCenter()).squared() > d2 ;
+}
+
+/** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+LC_Quadratic RS_Ellipse::getQuadratic() const
+{
+    std::vector<double> ce(6,0.);
+    ce[0]=data.majorP.squared();
+    ce[2]= data.ratio*data.ratio*ce[0];
+    if(ce[0]<RS_TOLERANCE*RS_TOLERANCE || ce[2]<RS_TOLERANCE*RS_TOLERANCE){
+        return LC_Quadratic();
+    }
+    ce[0]=1./ce[0];
+    ce[2]=1./ce[2];
+    ce[5]=-1.;
+    LC_Quadratic ret(ce);
+    ret.rotate(getAngle());
+    ret.move(data.center);
+    return ret;
 }
 
 void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {

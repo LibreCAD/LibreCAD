@@ -136,6 +136,7 @@ HEADERS += \
     lib/engine/rs_fontlist.h \
     lib/engine/rs_graphic.h \
     lib/engine/rs_hatch.h \
+    lib/engine/lc_hyperbola.h \
     lib/engine/rs_insert.h \
     lib/engine/rs_image.h \
     lib/engine/rs_layer.h \
@@ -190,6 +191,7 @@ HEADERS += \
     lib/modification/rs_modification.h \
     lib/modification/rs_selection.h \
     lib/math/rs_math.h \
+    lib/math/lc_quadratic.h \
     lib/scripting/rs_python.h \
     lib/scripting/rs_simplepython.h \
     lib/scripting/rs_python_wrappers.h \
@@ -224,6 +226,7 @@ SOURCES += \
     lib/engine/rs_fontlist.cpp \
     lib/engine/rs_graphic.cpp \
     lib/engine/rs_hatch.cpp \
+    lib/engine/lc_hyperbola.cpp \
     lib/engine/rs_insert.cpp \
     lib/engine/rs_image.cpp \
     lib/engine/rs_layer.cpp \
@@ -266,6 +269,7 @@ SOURCES += \
     lib/information/rs_information.cpp \
     lib/information/rs_infoarea.cpp \
     lib/math/rs_math.cpp \
+    lib/math/lc_quadratic.cpp \
     lib/modification/rs_modification.cpp \
     lib/modification/rs_selection.cpp \
     lib/scripting/rs_python.cpp \

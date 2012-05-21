@@ -29,13 +29,11 @@
 #ifndef RS_ELLIPSE_H
 #define RS_ELLIPSE_H
 
-#ifdef  HAS_BOOST
 #include <boost/version.hpp>
 #include <boost/math/tools/roots.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
 
-#endif
-
+class LC_Quadratic;
 #include "rs_atomicentity.h"
 
 /**
@@ -299,12 +297,22 @@ public:
     virtual double getDirection1() const;
     virtual double getDirection2() const;
 
+    /** return the equation of the entity
+    for quadratic,
+
+    return a vector contains:
+    m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+    for linear:
+    m0 x + m1 y + m2 =0
+    **/
+    virtual LC_Quadratic getQuadratic() const;
+
 protected:
     RS_EllipseData data;
 
 };
 
-#ifdef  HAS_BOOST
 //functor to solve for distance, used by snapDistance
 class EllipseDistanceFunctor
 {
@@ -346,7 +354,6 @@ private:
     double ra;
     double k2;
 };
-#endif
 
 
 #endif

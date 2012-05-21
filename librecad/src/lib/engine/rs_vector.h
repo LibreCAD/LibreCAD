@@ -107,6 +107,9 @@ public:
 #endif
     static double dotP(const RS_Vector& v1, const RS_Vector& v2);
 
+    /** switch x,y for all vectors */
+    RS_Vector flipXY(void) const;
+
     friend std::ostream& operator << (std::ostream&, const RS_Vector& v);
 
 #ifdef RS_TEST
@@ -171,6 +174,9 @@ public:
     void move(const RS_Vector& vp);
     void scale(const RS_Vector& center, const RS_Vector& factor);
     void scale(const RS_Vector& factor);
+
+    /** switch x,y for all vectors */
+    RS_VectorSolutions flipXY(void) const;
 
     RS_VectorSolutions operator = (const RS_VectorSolutions& s);
 

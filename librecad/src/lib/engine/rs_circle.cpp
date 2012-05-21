@@ -34,6 +34,7 @@
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 #include "rs_linetypepattern.h"
+#include "lc_quadratic.h"
 
 
 
@@ -770,6 +771,26 @@ void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     }
 }
 
+
+/** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+LC_Quadratic RS_Circle::getQuadratic() const
+{
+    std::vector<double> ce(6,0.);
+    ce[0]=1.;
+    ce[2]=1.;
+    ce[5]=-data.radius*data.radius;
+    LC_Quadratic ret(ce);
+    ret.move(data.center);
+    return ret;
+}
 
 /**
  * Dumps the circle's data to stdout.

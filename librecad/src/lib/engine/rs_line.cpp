@@ -33,6 +33,8 @@
 #include "rs_graphic.h"
 #include "rs_linetypepattern.h"
 #include "rs_information.h"
+#include "lc_quadratic.h"
+
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -313,6 +315,27 @@ double RS_Line::getDistanceToPoint(const RS_Vector& coord,
 //
 //    return dist;
 }
+
+/** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+LC_Quadratic RS_Line::getQuadratic() const
+{
+    std::vector<double> ce(3,0.);
+    auto&& dvp=data.endpoint - data.startpoint;
+    RS_Vector normal(-dvp.y,dvp.x);
+    ce[0]=normal.x;
+    ce[1]=normal.y;
+    ce[2]=- normal.dotP(data.endpoint);
+    return LC_Quadratic(ce);
+}
+
 
 RS_Vector  RS_Line::getTangentDirection(const RS_Vector& /*point*/)const{
         return getEndpoint() - getStartpoint();

@@ -32,6 +32,7 @@
 #include <QVector>
 #include "rs_atomicentity.h"
 
+class LC_Quadratic;
 
 /**
  * Holds the data that defines a circle.
@@ -200,6 +201,16 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
     /** whether the entity's bounding box intersects with visible portion of graphic view */
     virtual bool isVisibleInWindow(RS_GraphicView* view) const;
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
+    /** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+    virtual LC_Quadratic getQuadratic() const;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Circle& a);
 

@@ -537,6 +537,10 @@ double RS_Vector::dotP(const RS_Vector& v1, const RS_Vector& v2) {
 }
 
 
+/** switch x,y for all vectors */
+RS_Vector RS_Vector::flipXY(void) const{
+        return RS_Vector(y,x);
+}
 
 /**
  * += operator. Assert: both vectors must be valid.
@@ -991,6 +995,14 @@ double RS_VectorSolutions::getClosestDistance(const RS_Vector& coord,
     return sqrt(ret);
 }
 
+/** switch x,y for all vectors */
+RS_VectorSolutions RS_VectorSolutions::flipXY(void) const
+{
+        RS_VectorSolutions ret;
+        const int counts=vector.size();
+        for(int i=0;i<counts;i++) ret.push_back(vector[i].flipXY());
+        return ret;
+}
 
 RS_VectorSolutions RS_VectorSolutions::operator = (const RS_VectorSolutions& s) {
     setTangent(s.isTangent());
