@@ -380,6 +380,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionmodifytrimamount.h \
     actions/rs_actionmodifyexplodetext.h \
     actions/rs_actionoptionsdrawing.h \
+    actions/rs_actionorder.h \
     actions/rs_actionparisdebugcreatecontainer.h \
     actions/rs_actionprintpreview.h \
     actions/rs_actionselect.h \
@@ -508,6 +509,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionmodifytrimamount.cpp \
     actions/rs_actionmodifyexplodetext.cpp \
     actions/rs_actionoptionsdrawing.cpp \
+    actions/rs_actionorder.cpp \
     actions/rs_actionparisdebugcreatecontainer.cpp \
     actions/rs_actionpolylineadd.cpp \
     actions/rs_actionpolylineappend.cpp \

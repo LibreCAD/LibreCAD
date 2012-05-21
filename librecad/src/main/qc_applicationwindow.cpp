@@ -713,6 +713,21 @@ void QC_ApplicationWindow::initActions(void)
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     menu->addSeparator();
+    // Draw order:
+    subMenu= menu->addMenu(tr("Draw &Order"));
+    subMenu->setObjectName("Order");
+    action = actionFactory.createAction(RS2::ActionOrderBottom, actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionOrderLower, actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionOrderRaise, actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionOrderTop, actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     action = actionFactory.createAction(RS2::ActionOptionsGeneral, this);
     menu->addAction(action);

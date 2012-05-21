@@ -144,6 +144,7 @@
 #include "rs_actionpolylinetrim.h"
 #include "rs_actionpolylineequidistant.h"
 #include "rs_actionpolylinesegment.h"
+#include "rs_actionorder.h"
 
 /**
  * Constructor.
@@ -437,6 +438,30 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotEditPaste()));
         break;
+
+    case RS2::ActionOrderBottom:
+            action = RS_ActionOrder::createGUIAction(id, mw);
+    connect(action, SIGNAL(triggered()),
+            obj, SLOT(slotOrderBottom()));
+    break;
+
+    case RS2::ActionOrderLower:
+            action = RS_ActionOrder::createGUIAction(id, mw);
+    connect(action, SIGNAL(triggered()),
+            obj, SLOT(slotOrderLower()));
+    break;
+
+    case RS2::ActionOrderRaise:
+            action = RS_ActionOrder::createGUIAction(id, mw);
+    connect(action, SIGNAL(triggered()),
+            obj, SLOT(slotOrderRaise()));
+    break;
+
+    case RS2::ActionOrderTop:
+            action = RS_ActionOrder::createGUIAction(id, mw);
+    connect(action, SIGNAL(triggered()),
+            obj, SLOT(slotOrderTop()));
+    break;
 
         // Selecting actions:
         //
