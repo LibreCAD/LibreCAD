@@ -34,6 +34,7 @@
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 #include "rs_linetypepattern.h"
+#include "lc_quadratic.h"
 
 
 
@@ -630,11 +631,37 @@ void RS_Circle::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 }
 
 
+/** whether the entity's bounding box intersects with visible portion of graphic view
+//fix me, need to handle overlay container separately
+*/
+bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
+{
+
+    RS_Vector vpMin(view->toGraph(0,view->getHeight()));
+    RS_Vector vpMax(view->toGraph(view->getWidth(),0));
+    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
+    QVector<RS_Vector> vps;
+    for(unsigned short i=0;i<4;i++){
+        const QPointF& vp(visualBox.at(i));
+        vps<<RS_Vector(vp.x(),vp.y());
+    }
+    for(unsigned short i=0;i<4;i++){
+        RS_Line line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
+        RS_Circle c0(NULL, getData());
+        if( RS_Information::getIntersection(&c0, &line, true).size()>0) return true;
+    }
+    if( getCenter().isInWindowOrdered(vpMin,vpMax)==false) return false;
+    return (vpMin-getCenter()).squared() > getRadius()*getRadius();
+}
+
 void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 
     if (painter==NULL || view==NULL) {
         return;
     }
+
+    //visible in grahic view
+    if(isVisibleInWindow(view)==false) return;
     RS_Vector cp(view->toGui(getCenter()));
     double ra(fabs(getRadius()*view->getFactor().x));
     //double styleFactor = getStyleFactor();
@@ -744,6 +771,26 @@ void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     }
 }
 
+
+/** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+LC_Quadratic RS_Circle::getQuadratic() const
+{
+    std::vector<double> ce(6,0.);
+    ce[0]=1.;
+    ce[2]=1.;
+    ce[5]=-data.radius*data.radius;
+    LC_Quadratic ret(ce);
+    ret.move(data.center);
+    return ret;
+}
 
 /**
  * Dumps the circle's data to stdout.

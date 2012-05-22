@@ -139,10 +139,10 @@ public slots:
     void slotFileSaveAs();
     /** auto-save document */
     void slotFileAutoSave();
-        /** exports the document as bitmap */
-        void slotFileExport();
-        bool slotFileExport(const QString& name, const QString& format,
-                QSize size, bool black, bool bw=true);
+    /** exports the document as bitmap */
+    void slotFileExport();
+    bool slotFileExport(const QString& name, const QString& format,
+                QSize size, QSize borders, bool black, bool bw=true);
     /** closes the current file */
     void slotFileClose();
     /** closing the current file */

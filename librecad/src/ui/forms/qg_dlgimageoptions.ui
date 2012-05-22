@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>365</width>
-    <height>358</height>
+    <width>449</width>
+    <height>545</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,24 +43,8 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="3" column="0" colspan="2">
        <spacer name="vspacer2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>31</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="3" column="0">
-       <spacer name="vspacer1">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -194,7 +178,7 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <widget class="QGroupBox" name="bgBackground">
      <property name="title">
       <string>Background</string>
@@ -249,7 +233,7 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="0" colspan="2">
+   <item row="3" column="0" colspan="2">
     <layout class="QHBoxLayout">
      <property name="spacing">
       <number>6</number>
@@ -293,7 +277,7 @@
       <widget class="QPushButton" name="bCancel">
        <property name="text">
         <string>Cancel</string>
-       </property>
+       </property>leTopBottom-
        <property name="shortcut">
         <string>Esc</string>
        </property>
@@ -304,8 +288,8 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="1">
-    <widget class="QGroupBox" name="Colouring">
+   <item row="2" column="1">
+    <widget class="QGroupBox" name="bgColouring">
      <property name="title">
       <string>Colouring</string>
      </property>
@@ -352,6 +336,59 @@
          </size>
         </property>
        </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QGroupBox" name="bgBorders">
+     <property name="title">
+      <string>Borders</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="leLeftRight">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="leTopBottom"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="lTopBottom">
+        <property name="text">
+         <string>Top / Bottom - Border:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lLeftRight">
+        <property name="text">
+         <string>Left / Right - Border:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0" colspan="2">
+       <spacer name="vspacer5">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="cbSameBorders">
+        <property name="text">
+         <string>set same size</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -438,6 +475,38 @@
    <signal>textChanged(QString)</signal>
    <receiver>QG_ImageOptionsDialog</receiver>
    <slot>resolutionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbSameBorders</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>QG_ImageOptionsDialog</receiver>
+   <slot>sameBordersChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leLeftRight</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>QG_ImageOptionsDialog</receiver>
+   <slot>borderChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>20</x>

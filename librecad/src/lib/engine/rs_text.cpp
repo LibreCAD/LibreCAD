@@ -339,7 +339,7 @@ void RS_Text::update() {
                     letter->setPen(RS_Pen(RS2::FlagInvalid));
                     letter->setLayer(NULL);
                     letter->update();
-//                    letter->forcedCalculateBorders();
+                    letter->forcedCalculateBorders();
 
                                         // until 2.0.4.5:
                     //letterWidth = RS_Vector(letter->getSize().x, 0.0);

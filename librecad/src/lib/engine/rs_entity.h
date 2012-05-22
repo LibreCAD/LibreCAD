@@ -50,7 +50,8 @@ class RS_Point;
 class RS_Polyline;
 class RS_Text;
 class RS_Layer;
-
+class LC_Quadratic;
+class RS_GraphicView;
 
 
 /**
@@ -539,6 +540,9 @@ public:
         return;
     }
 
+
+    /** whether the entity's bounding box intersects with visible portion of graphic view */
+    virtual bool isVisibleInWindow(RS_GraphicView* view) const;
     /**
      * Implementations must draw the entity on the given device.
      */
@@ -559,6 +563,17 @@ public:
     /** whether the entity is on a helpLayer */
     //! helpLayer contains entities of infinite length, helpLayer doesn't show up in print
     bool isHelpLayer(bool typeCheck = false); // ignore certain entity types for helpLayer check
+    /** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+    virtual LC_Quadratic getQuadratic() const;
+
 
 protected:
     //! Entity's parent entity or NULL is this entity has no parent.

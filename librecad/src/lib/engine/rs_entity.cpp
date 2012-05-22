@@ -40,6 +40,9 @@
 #include "rs_point.h"
 #include "rs_polyline.h"
 #include "rs_text.h"
+#include "rs_information.h"
+#include "lc_quadratic.h"
+#include <QPolygon>
 
 /**
  * Default constructor.
@@ -241,6 +244,26 @@ bool RS_Entity::isInWindow(RS_Vector v1, RS_Vector v2) {
             getMax().y<=top);
 }
 
+/** whether the entity's bounding box intersects with visible portion of graphic view */
+bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const
+{
+    RS_Vector vpMin(view->toGraph(0,view->getHeight()));
+    RS_Vector vpMax(view->toGraph(view->getWidth(),0));
+    if( getStartpoint().isInWindowOrdered(vpMin, vpMax) ) return true;
+    if( getEndpoint().isInWindowOrdered(vpMin, vpMax) ) return true;
+    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
+    QVector<RS_Vector> vps;
+    for(unsigned short i=0;i<4;i++){
+        const QPointF& vp(visualBox.at(i));
+        vps<<RS_Vector(vp.x(),vp.y());
+    }
+    for(unsigned short i=0;i<4;i++){
+        RS_Line line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
+        if( RS_Information::getIntersection(const_cast<RS_Entity*>(this), &line, true).size()>0) return true;
+    }
+    if( minV.isInWindowOrdered(vpMin,vpMax)||maxV.isInWindowOrdered(vpMin,vpMax)) return true;
+    return false;
+}
 
 /**
  * @param tolerance Tolerance.
@@ -407,6 +430,19 @@ RS_Block* RS_Entity::getBlock() {
 }
 
 
+/** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+LC_Quadratic RS_Entity::getQuadratic() const
+{
+        return LC_Quadratic();
+}
 
 /**
  * @return The parent insert in which this entity is stored

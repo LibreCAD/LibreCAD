@@ -109,7 +109,7 @@ void RS_System::initLanguageList() {
 }
 
 void RS_System::addLocale(RS_Locale *locale) {
-    allKnownLocales->append(locale);
+    allKnownLocales.push_back(QSharedPointer<RS_Locale>(locale));
 }
 
 #define LNG(canonical, direction, name) \
@@ -121,13 +121,9 @@ void RS_System::addLocale(RS_Locale *locale) {
 
 void RS_System::initAllLanguagesList() {
 
-    if (allKnownLocales==NULL) {
-        allKnownLocales=new QList<RS_Locale* >();
-    }
-
     // RVT uk_AU renamed to uk so that we don't have to change the pootle server
     //
-    allKnownLocales->clear();
+    allKnownLocales.clear();
     RS_Locale *locale;
     LNG("ab"   ,RS2::locLeftToRight, "Abkhazian")
     LNG("aa"   ,RS2::locLeftToRight, "Afar")

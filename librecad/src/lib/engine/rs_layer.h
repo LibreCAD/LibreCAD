@@ -72,6 +72,9 @@ public:
 
     //! Help Layer, a help layer has entities of infinite length, and will never be printed out
     bool helpLayer;
+
+    //! visible in layer list
+    bool visibleInLayerList;
 };
 
 
@@ -179,6 +182,21 @@ public:
      */
     bool isLocked() {
         return data.locked;
+    }
+    /**
+     * Locks/Unlocks this layer.
+     *
+     * @param l true: lock, false: unlock
+     */
+    void visibleInLayerList(bool l) {
+        data.visibleInLayerList = l;
+    }
+
+    /**
+  * return the LOCK state of the Layer
+     */
+    bool isVisibleInLayerList() {
+        return data.visibleInLayerList;
     }
     /**
       whether the layer is a help layer

@@ -28,6 +28,7 @@
 #define RS_ARC_H
 
 #include "rs_atomicentity.h"
+class LC_Quadratic;
 
 
 /**
@@ -272,6 +273,16 @@ public:
 
     virtual void calculateEndpoints();
     virtual void calculateBorders();
+    /** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+    virtual LC_Quadratic getQuadratic() const;
 
 protected:
     RS_ArcData data;

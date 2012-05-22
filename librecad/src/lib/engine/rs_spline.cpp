@@ -617,10 +617,10 @@ void RS_Spline::rbspline(int npts, int k, int p1,
 
 
 void RS_Spline::knotu(int num, int order, int knotVector[]) {
-    int nplusc,nplus2,i;
+    int nplusc,/*nplus2,*/i;
 
     nplusc = num + order;
-    nplus2 = num + 2;
+//    nplus2 = num + 2;
 
     knotVector[1] = 0;
     for (i = 2; i <= nplusc; i++) {

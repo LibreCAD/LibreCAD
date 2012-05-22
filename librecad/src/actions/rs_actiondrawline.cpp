@@ -104,6 +104,30 @@ void RS_ActionDrawLine::trigger() {
                     line->getId());
 }
 
+RS_Vector RS_ActionDrawLine::snapToAngle(const RS_Vector &currentCoord)
+{
+    if(getStatus() != SetEndpoint)
+    {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Trying to snap to angle when not setting EndPoint!");
+        return currentCoord;
+    }
+    if(snapMode.restriction != RS2::RestrictNothing ||
+            snapMode.snapGrid) {
+        return currentCoord;
+    }
+    double angle = data.startpoint.angleTo(currentCoord)*180.0/M_PI;
+    /*Snapping to angle(15*) if shift key is pressed*/
+    const double angularResolution=15.;
+    angle -= remainder(angle,angularResolution);
+    angle *= M_PI/180.;
+    RS_Vector res = currentCoord;
+    res.setPolar(data.startpoint.distanceTo(currentCoord),
+                 angle);
+    res += data.startpoint;
+    snapPoint(res, true);
+    return res;
+}
+
 
 
 void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
@@ -114,6 +138,11 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
     //    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point: OK");
     if (getStatus()==SetEndpoint && data.startpoint.valid) {
         RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: update preview");
+
+        /*Snapping to angle(15*) if shift key is pressed*/
+        if(e->modifiers() & Qt::ShiftModifier)
+            mouse = snapToAngle(mouse);
+
         deletePreview();
         preview->addEntity(new RS_Line(preview,
                                        RS_LineData(data.startpoint, mouse)));
@@ -128,7 +157,12 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionDrawLine::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector snapped = snapPoint(e);
+
+        /*Snapping to angle(15*) if shift key is pressed*/
+        if((e->modifiers() & Qt::ShiftModifier) && getStatus() == SetEndpoint )
+            snapped = snapToAngle(snapped);
+        RS_CoordinateEvent ce(snapped);
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();

@@ -31,6 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+#include "qg_layerwidget.h"
 
 
 
@@ -72,6 +73,8 @@ void RS_ActionLayersEdit::trigger() {
         }
     }
     finish(false);
+
+    graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
 
 	graphicView->redraw(RS2::RedrawDrawing); 
 

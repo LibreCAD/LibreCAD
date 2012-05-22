@@ -34,6 +34,8 @@
 
 #include <QString>
 
+/** print out a debug header*/
+#define DEBUG_HEADER()  std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl
 #define RS_DEBUG RS_Debug::instance()
 
 /**

@@ -32,6 +32,8 @@
 #include "rs_math.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
+#include "lc_quadratic.h"
+
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -860,6 +862,9 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     if (painter==NULL || view==NULL) {
         return;
     }
+    //visible in grahic view
+    if(isVisibleInWindow(view)==false) return;
+
     RS_Vector cp=view->toGui(getCenter());
     double ra=getRadius()*view->getFactor().x;
     double length=getLength()*view->getFactor().x;
@@ -1035,6 +1040,25 @@ double RS_Arc::getBulge() const {
     return bulge;
 }
 
+/** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+LC_Quadratic RS_Arc::getQuadratic() const
+{
+    std::vector<double> ce(6,0.);
+    ce[0]=1.;
+    ce[2]=1.;
+    ce[5]=-data.radius*data.radius;
+    LC_Quadratic ret(ce);
+    ret.move(data.center);
+    return ret;
+}
 
 
 /**

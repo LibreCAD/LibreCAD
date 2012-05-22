@@ -22,8 +22,8 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#ifndef QG_DLGSPOLYLINE_H
-#define QG_DLGSPOLYLINE_H
+#ifndef QG_DLGPOLYLINE_H
+#define QG_DLGPOLYLINE_H
 
 class RS_Polyline;
 
@@ -49,4 +49,4 @@ private:
 
 };
 
-#endif // QG_DLGSPOLYLINE_H
+#endif // QG_DLGPOLYLINE_H

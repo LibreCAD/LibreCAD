@@ -30,7 +30,7 @@ void DRW_TableEntry::parseCode(int code, dxfReader *reader){
         handleBlock = reader->getString();
         break;
     case 2:
-        name = reader->getString();
+        name = reader->getUtf8String();
         break;
     case 70:
         flags = reader->getInt32();
@@ -51,19 +51,22 @@ void DRW_Dimstyle::parseCode(int code, dxfReader *reader){
         handle = reader->getString();
         break;
     case 3:
-        dimpost = reader->getString();
+        dimpost = reader->getUtf8String();
         break;
     case 4:
-        dimapost = reader->getString();
+        dimapost = reader->getUtf8String();
         break;
     case 5:
-        dimblk = reader->getString();
+        dimblk = reader->getUtf8String();
         break;
     case 6:
-        dimblk1 = reader->getString();
+        dimblk1 = reader->getUtf8String();
         break;
     case 7:
-        dimblk2 = reader->getString();
+        dimblk2 = reader->getUtf8String();
+        break;
+    case 40:
+        dimscale = reader->getDouble();
         break;
     case 41:
         dimasz = reader->getDouble();
@@ -71,14 +74,50 @@ void DRW_Dimstyle::parseCode(int code, dxfReader *reader){
     case 42:
         dimexo = reader->getDouble();
         break;
+    case 43:
+        dimdli = reader->getDouble();
+        break;
     case 44:
         dimexe = reader->getDouble();
+        break;
+    case 45:
+        dimrnd = reader->getDouble();
+        break;
+    case 46:
+        dimdle = reader->getDouble();
+        break;
+    case 47:
+        dimtp = reader->getDouble();
+        break;
+    case 48:
+        dimtm = reader->getDouble();
         break;
     case 140:
         dimtxt = reader->getDouble();
         break;
+    case 141:
+        dimcen = reader->getDouble();
+        break;
+    case 142:
+        dimtsz = reader->getDouble();
+        break;
+    case 143:
+        dimaltf = reader->getDouble();
+        break;
+    case 144:
+        dimlfac = reader->getDouble();
+        break;
+    case 145:
+        dimtvp = reader->getDouble();
+        break;
+    case 146:
+        dimtfac = reader->getDouble();
+        break;
     case 147:
         dimgap = reader->getDouble();
+        break;
+    case 340:
+        dimtxsty = reader->getUtf8String();
         break;
     default:
         DRW_TableEntry::parseCode(code, reader);
@@ -94,7 +133,7 @@ void DRW_Dimstyle::parseCode(int code, dxfReader *reader){
 void DRW_LType::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 3:
-        desc = reader->getString();
+        desc = reader->getUtf8String();
         break;
     case 73:
         size = reader->getInt32();
@@ -139,7 +178,7 @@ void DRW_LType::update(){
 void DRW_Layer::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 6:
-        lineType = reader->getString();
+        lineType = reader->getUtf8String();
         break;
     case 62:
         color = reader->getInt32();
@@ -165,7 +204,7 @@ void DRW_Layer::parseCode(int code, dxfReader *reader){
 void DRW_ImageDef::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 1:
-        name = reader->getString();
+        name = reader->getUtf8String();
         break;
     case 5:
         handle = reader->getString();
@@ -205,27 +244,33 @@ void DRW_Header::parseCode(int code, dxfReader *reader){
         vars[name]=curr;
         break;
     case 1:
-        curr->addString(reader->getString());
+        curr->addString(reader->getUtf8String());
+        if (name =="$ACADVER")
+            reader->setVersion(curr->content.s);
         curr->code = code;
         break;
     case 2:
-        curr->addString(reader->getString());
+        curr->addString(reader->getUtf8String());
         curr->code = code;
         break;
     case 3:
-        curr->addString(reader->getString());
+        curr->addString(reader->getUtf8String());
+        if (name =="$DWGCODEPAGE") {
+            reader->setCodePage(curr->content.s);
+            curr->addString(reader->getCodePage());
+        }
         curr->code = code;
         break;
     case 6:
-        curr->addString(reader->getString());
+        curr->addString(reader->getUtf8String());
         curr->code = code;
         break;
     case 7:
-        curr->addString(reader->getString());
+        curr->addString(reader->getUtf8String());
         curr->code = code;
         break;
     case 8:
-        curr->addString(reader->getString());
+        curr->addString(reader->getUtf8String());
         curr->code = code;
         break;
     case 10:
@@ -273,7 +318,7 @@ void DRW_Header::parseCode(int code, dxfReader *reader){
         curr->code = code;
         break;
     case 390:
-        curr->addString(reader->getString());
+        curr->addString(reader->getUtf8String());
         curr->code = code;
         break;
     default:
@@ -292,31 +337,42 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
     switch (ver) {
     case DRW::AC1006: //unsupported version acad 10
     case DRW::AC1009: //acad 11 & 12
-        writer->writeString(1, "AC1009");
+        varStr = "AC1009";
         break;
     case DRW::AC1012: //unsupported version acad 13
     case DRW::AC1014: //acad 14
-        writer->writeString(1, "AC1014");
+        varStr = "AC1014";
+        break;
+    case DRW::AC1015: //acad 2000
+        varStr = "AC1015";
         break;
     case DRW::AC1018: //acad 2004
-        writer->writeString(1, "AC1018");
+        varStr = "AC1018";
         break;
-    case DRW::AC1021: //acad 2007
-        writer->writeString(1, "AC1021");
-        break;
+/*    case DRW::AC1021: //acad 2007
+        varStr = "AC1021";
+        break;*/
     case DRW::AC1024: //acad 2010
-        writer->writeString(1, "AC1024");
+        varStr = "AC1024";
         break;
-    default: //acad2000 default version
-        writer->writeString(1, "AC1015");
+    default: //acad 2007 default version
+        varStr = "AC1021";
         break;
     }
+    writer->writeString(1, varStr);
+    writer->setVersion(&varStr);
 
     if (ver > DRW::AC1012) {
         writer->writeString(9, "$HANDSEED");
 //RLZ        dxfHex(5, 0xFFFF);
         writer->writeString(5, "20000");
     }
+    if (!getStr("$DWGCODEPAGE", &varStr)) {
+        varStr = "ANSI_1252";
+    }
+    writer->writeString(9, "$DWGCODEPAGE");
+    writer->setCodePage(&varStr);
+    writer->writeString(3, writer->getCodePage() );
 
     if (getDouble("$DIMASZ", &varDouble)) {
         writer->writeString(9, "$DIMASZ");
@@ -340,7 +396,11 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
     }
     if (getStr("$DIMSTYLE", &varStr)) {
         writer->writeString(9, "$DIMSTYLE");
-        writer->writeString(2, varStr);
+        if (ver > DRW::AC1012) {
+            writer->writeUtf8Caps(2, varStr);
+        } else {
+            writer->writeUtf8String(2, varStr);
+        }
     }
     if (getDouble("$DIMTSZ", &varDouble)) {
         writer->writeString(9, "$DIMTSZ");
@@ -377,10 +437,6 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
     if (getInt("$ORTHOMODE", &varInt)) {
         writer->writeString(9, "$ORTHOMODE");
         writer->writeInt16(70, varInt);
-    }
-    if (getStr("$DWGCODEPAGE", &varStr)) {
-        writer->writeString(9, "$DWGCODEPAGE");
-        writer->writeString(3, varStr);
     }
     if (getCoord("$PLIMMIN", &varCoord)) {
         writer->writeString(9, "$PLIMMIN");

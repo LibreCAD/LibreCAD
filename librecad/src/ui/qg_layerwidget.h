@@ -36,6 +36,7 @@
 
 class QG_ActionHandler;
 class QTableView;
+class QLineEdit;
 
 /**
  * Implementation of a model to use in QG_LayerWidget
@@ -107,11 +108,16 @@ public:
         update();
     }
 
+    QLineEdit* getMatchLayerName() {
+        return matchLayerName;
+    }
+
 signals:
     void escape();
 
 public slots:
     void slotActivated(QModelIndex layerIdx);
+    void slotUpdateLayerList();
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e);
@@ -120,9 +126,10 @@ protected:
 private:
     RS_LayerList* layerList;
     bool showByBlock;
+    QLineEdit* matchLayerName;
     QTableView* layerView;
     QG_LayerModel *layerModel;
-    RS_Layer* lastLayer;
+    RS_Layer* lastLayer;   
     QG_ActionHandler* actionHandler;
 };
 

@@ -27,6 +27,7 @@
 #include "rs_information.h"
 
 #include "rs_constructionline.h"
+#include "lc_quadratic.h"
 
 
 /**
@@ -234,143 +235,19 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
             return ret;
     }
 
-    // one entity is an ellipse:
-    if (e1->rtti()==RS2::EntityEllipse || e2->rtti()==RS2::EntityEllipse) {
-        if (e2->rtti()==RS2::EntityEllipse) std::swap( e1, e2);
-        if (e2->rtti()==RS2::EntityEllipse) {
-            ret = getIntersectionEllipseEllipse((RS_Ellipse*)e1, (RS_Ellipse *) e2);
-        }
-        if (e2->rtti()==RS2::EntityCircle) {
-            ret = getIntersectionCircleEllipse((RS_Circle *)e2, (RS_Ellipse *) e1);
-        }
-        if (e2->rtti()==RS2::EntityArc) {
-            ret = getIntersectionArcEllipse((RS_Arc *)e2, (RS_Ellipse *) e1);
-        }
-        if (e2->rtti()==RS2::EntityLine) {
-            ret = getIntersectionEllipseLine((RS_Line*)e2, (RS_Ellipse*) e1);
-//            tol = 1.0e-1;
-        }
-
-        // not supported:
-        else {
-            return ret;
-        }
-    } else {
-
-        RS_Entity* te1 = e1;
-        RS_Entity* te2 = e2;
-
-        // entity copies - so we only have to deal with lines and arcs
-        RS_Line l1(NULL,
-                   RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(0.0,0.0)));
-        RS_Line l2(NULL,
-                   RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(0.0,0.0)));
-
-        RS_Arc a1(NULL,
-                  RS_ArcData(RS_Vector(0.0,0.0), 1.0, 0.0, 2*M_PI, false));
-        RS_Arc a2(NULL,
-                  RS_ArcData(RS_Vector(0.0,0.0), 1.0, 0.0, 2*M_PI, false));
-
-        // convert construction lines to lines:
-        if (e1->rtti()==RS2::EntityConstructionLine) {
-            RS_ConstructionLine* cl = (RS_ConstructionLine*)e1;
-
-            l1.setStartpoint(cl->getPoint1());
-            l1.setEndpoint(cl->getPoint2());
-
-            te1 = &l1;
-        }
-        if (e2->rtti()==RS2::EntityConstructionLine) {
-            RS_ConstructionLine* cl = (RS_ConstructionLine*)e2;
-
-            l2.setStartpoint(cl->getPoint1());
-            l2.setEndpoint(cl->getPoint2());
-
-            te2 = &l2;
-        }
-
-
-        // convert circles to arcs:
-        if (e1->rtti()==RS2::EntityCircle) {
-            RS_Circle* c = (RS_Circle*)e1;
-
-            RS_ArcData data(c->getCenter(), c->getRadius(), 0.0, 2*M_PI, false);
-            a1.setData(data);
-
-            te1 = &a1;
-        }
-        if (e2->rtti()==RS2::EntityCircle) {
-            RS_Circle* c = (RS_Circle*)e2;
-
-            RS_ArcData data(c->getCenter(), c->getRadius(), 0.0, 2*M_PI, false);
-            a2.setData(data);
-
-            te2 = &a2;
-        }
-
-
-        // line / line:
-        //
-        //else
-        if (te1->rtti()==RS2::EntityLine &&
-                te2->rtti()==RS2::EntityLine) {
-            RS_Line * line1=(RS_Line*) te1;
-            RS_Line * line2=(RS_Line*) te2;
-            /* ToDo: 24 Aug 2011, Dongxu Li, if rtti() is not defined for the parent, the following check for splines may still cause segfault */
-            if ( line1->getParent() != NULL && line1->getParent() == line2->getParent()) {
-                if ( line1->getParent()->rtti()==RS2::EntitySpline ) {
-                    //do not calculate intersections from neighboring lines of a spline
-                    if ( abs(line1->getParent()->findEntity(line1) - line1->getParent()->findEntity(line2)) <= 1 ) {
-                        return ret;
-                    }
-                }
+    //avoid intersections between line segments the same spline
+    /* ToDo: 24 Aug 2011, Dongxu Li, if rtti() is not defined for the parent, the following check for splines may still cause segfault */
+    if ( e1->getParent() != NULL && e1->getParent() == e2->getParent()) {
+        if ( e1->getParent()->rtti()==RS2::EntitySpline ) {
+            //do not calculate intersections from neighboring lines of a spline
+            if ( abs(e1->getParent()->findEntity(e1) - e1->getParent()->findEntity(e2)) <= 1 ) {
+                return ret;
             }
-
-            ret = getIntersectionLineLine(line1, line2);
         }
-
-        // line / arc:
-        //
-        else if (te1->rtti()==RS2::EntityLine &&
-                 te2->rtti()==RS2::EntityArc) {
-
-            RS_Line* line = (RS_Line*)te1;
-            RS_Arc* arc = (RS_Arc*)te2;
-
-            ret = getIntersectionLineArc(line, arc);
-        }
-
-        // arc / line:
-        //
-        else if (te1->rtti()==RS2::EntityArc &&
-                 te2->rtti()==RS2::EntityLine) {
-
-            RS_Arc* arc = (RS_Arc*)te1;
-            RS_Line* line = (RS_Line*)te2;
-
-            ret = getIntersectionLineArc(line, arc);
-        }
-
-        // arc / arc:
-        //
-        else if (te1->rtti()==RS2::EntityArc &&
-                 te2->rtti()==RS2::EntityArc) {
-
-            RS_Arc* arc1 = (RS_Arc*)te1;
-            RS_Arc* arc2 = (RS_Arc*)te2;
-
-            ret = getIntersectionArcArc(arc1, arc2);
-            // ellipse / ellipse
-            //
-        } else {
-            RS_DEBUG->print("RS_Information::getIntersection:: Unsupported entity type.");
-        }
-
     }
-
-
-    // Check all intersection points for being on entities:
-    //
+    const auto&& qf1=e1->getQuadratic();
+    const auto&& qf2=e2->getQuadratic();
+    ret=LC_Quadratic::getIntersection(qf1,qf2);
     RS_VectorSolutions ret2;
     for(int i=0;i<ret.getNumber();i++) {
         if ( ! ret.get(i).valid) continue;

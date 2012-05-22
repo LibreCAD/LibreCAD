@@ -33,6 +33,7 @@
 #include <QMenu>
 #include <QBoxLayout>
 #include <QLabel>
+#include <QLineEdit>
 #include "qg_actionhandler.h"
 
 QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
@@ -204,12 +205,19 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
             actionHandler, SLOT(slotLayersEdit()));
     layButtons->addWidget(but);
 
+    // lineEdit to filter layer list with RegEx
+    matchLayerName = new QLineEdit;
+    matchLayerName->setReadOnly(false);
+    //matchLayerName->setText("*");
+    matchLayerName->setToolTip(tr("Looking for matching layer names"));
+    connect(matchLayerName, SIGNAL( textChanged(QString) ), this, SLOT( slotUpdateLayerList() ) );
+
     //lay->addWidget(caption);
+    lay->addWidget(matchLayerName);
     lay->addLayout(layButtons);
     lay->addWidget(layerView);
 
     connect(layerView, SIGNAL(pressed(QModelIndex)), this, SLOT(slotActivated(QModelIndex)));
-
 }
 
 
@@ -233,6 +241,9 @@ QG_LayerWidget::~QG_LayerWidget() {
 void QG_LayerWidget::setLayerList(RS_LayerList* layerList, bool showByBlock) {
     this->layerList = layerList;
     this->showByBlock = showByBlock;
+    if (layerList != NULL) {
+        this->layerList->setLayerWitget(this);
+    }
     update();
 }
 
@@ -329,6 +340,33 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
     }
 
     activateLayer(l);
+}
+
+/**
+ * Called when reg-expresion matchLayerName->text changed
+ */
+void QG_LayerWidget::slotUpdateLayerList() {
+    QRegExp rx("");
+    int pos=0, f;
+    QString  s, n;
+
+    n=matchLayerName->text();
+    rx.setPattern(n);
+    rx.setPatternSyntax(QRegExp::WildcardUnix);
+
+    for (unsigned int i=0; i<layerList->count() ; i++) {
+        s=layerModel->getLayer(i)->getName();
+        f=rx.indexIn(s, pos);
+        if ( f == 0 ) {
+            layerView->showRow(i);
+            layerModel->getLayer(i)->visibleInLayerList(true);
+        } else {
+            layerView->hideRow(i);
+            layerModel->getLayer(i)->visibleInLayerList(false);
+        }
+
+    }
+
 }
 
 /**

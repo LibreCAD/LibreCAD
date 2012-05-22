@@ -136,6 +136,7 @@ HEADERS += \
     lib/engine/rs_fontlist.h \
     lib/engine/rs_graphic.h \
     lib/engine/rs_hatch.h \
+    lib/engine/lc_hyperbola.h \
     lib/engine/rs_insert.h \
     lib/engine/rs_image.h \
     lib/engine/rs_layer.h \
@@ -190,6 +191,7 @@ HEADERS += \
     lib/modification/rs_modification.h \
     lib/modification/rs_selection.h \
     lib/math/rs_math.h \
+    lib/math/lc_quadratic.h \
     lib/scripting/rs_python.h \
     lib/scripting/rs_simplepython.h \
     lib/scripting/rs_python_wrappers.h \
@@ -224,6 +226,7 @@ SOURCES += \
     lib/engine/rs_fontlist.cpp \
     lib/engine/rs_graphic.cpp \
     lib/engine/rs_hatch.cpp \
+    lib/engine/lc_hyperbola.cpp \
     lib/engine/rs_insert.cpp \
     lib/engine/rs_image.cpp \
     lib/engine/rs_layer.cpp \
@@ -266,6 +269,7 @@ SOURCES += \
     lib/information/rs_information.cpp \
     lib/information/rs_infoarea.cpp \
     lib/math/rs_math.cpp \
+    lib/math/lc_quadratic.cpp \
     lib/modification/rs_modification.cpp \
     lib/modification/rs_selection.cpp \
     lib/scripting/rs_python.cpp \
@@ -376,6 +380,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionmodifytrimamount.h \
     actions/rs_actionmodifyexplodetext.h \
     actions/rs_actionoptionsdrawing.h \
+    actions/rs_actionorder.h \
     actions/rs_actionparisdebugcreatecontainer.h \
     actions/rs_actionprintpreview.h \
     actions/rs_actionselect.h \
@@ -504,6 +509,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionmodifytrimamount.cpp \
     actions/rs_actionmodifyexplodetext.cpp \
     actions/rs_actionoptionsdrawing.cpp \
+    actions/rs_actionorder.cpp \
     actions/rs_actionparisdebugcreatecontainer.cpp \
     actions/rs_actionpolylineadd.cpp \
     actions/rs_actionpolylineappend.cpp \
@@ -590,6 +596,7 @@ HEADERS += ui/qg_actionfactory.h \
     ui/forms/qg_dlgdimlinear.h \
     ui/forms/qg_dlgellipse.h \
     ui/forms/qg_dlghatch.h \
+    ui/forms/qg_dlgimage.h \
     ui/forms/qg_dlgimageoptions.h \
     ui/forms/qg_dlginitial.h \
     ui/forms/qg_dlginsert.h \
@@ -682,6 +689,7 @@ SOURCES += ui/qg_actionfactory.cpp \
     ui/forms/qg_dlgdimlinear.cpp \
     ui/forms/qg_dlgellipse.cpp \
     ui/forms/qg_dlghatch.cpp \
+    ui/forms/qg_dlgimage.cpp \
     ui/forms/qg_dlgimageoptions.cpp \
     ui/forms/qg_dlginitial.cpp \
     ui/forms/qg_dlginsert.cpp \
@@ -754,6 +762,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_dlghatch.ui \
     ui/forms/qg_dlginitial.ui \
     ui/forms/qg_dlginsert.ui \
+    ui/forms/qg_dlgimage.ui \
     ui/forms/qg_dlgimageoptions.ui \
     ui/forms/qg_dlgarc.ui \
     ui/forms/qg_dlgcircle.ui \

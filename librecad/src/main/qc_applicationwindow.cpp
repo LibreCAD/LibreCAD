@@ -43,6 +43,9 @@
 #include "qc_applicationwindow.h"
 // RVT_PORT added
 #include <QImageWriter>
+#if QT_VERSION >= 0x040300
+#include <QtSvg>
+#endif
 
 #include <fstream>
 
@@ -710,6 +713,21 @@ void QC_ApplicationWindow::initActions(void)
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     menu->addSeparator();
+    // Draw order:
+    subMenu= menu->addMenu(tr("Draw &Order"));
+    subMenu->setObjectName("Order");
+    action = actionFactory.createAction(RS2::ActionOrderBottom, actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionOrderLower, actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionOrderRaise, actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionOrderTop, actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     action = actionFactory.createAction(RS2::ActionOptionsGeneral, this);
     menu->addAction(action);
@@ -1386,9 +1404,8 @@ void QC_ApplicationWindow::initActions(void)
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
 
-        addToolBar(Qt::TopToolBarArea, penToolBar);
-        QMainWindow::addToolBarBreak(Qt::TopToolBarArea);
-
+    QMainWindow::addToolBarBreak(Qt::TopToolBarArea);
+    addToolBar(Qt::TopToolBarArea, penToolBar);
 
     addToolBar(Qt::TopToolBarArea, optionWidget);
 
@@ -2736,6 +2753,8 @@ void QC_ApplicationWindow::
         // update recent files menu:
         recentFiles->add(fileName);
         openedFiles.append(fileName);
+        layerWidget->slotUpdateLayerList();
+
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: 2");
         updateRecentFilesMenu();
 
@@ -2905,31 +2924,38 @@ void QC_ApplicationWindow::slotFileExport() {
         RS_SETTINGS->beginGroup("/Paths");
         QString defDir = RS_SETTINGS->readEntry("/ExportImage", RS_SYSTEM->getHomeDir());
         QString defFilter = RS_SETTINGS->readEntry("/ExportImageFilter",
-                                                     QString("%1 (*.%2)").arg(QG_DialogFactory::extToFormat("png")).arg("png"));
+                                                     QString("%1 (%2)(*.%2)").arg(QG_DialogFactory::extToFormat("png")).arg("png"));
         RS_SETTINGS->endGroup();
 
         bool cancel = false;
 
         QStringList filters;
-        foreach (QString format, QImageWriter::supportedImageFormats()) {
-            format.toLower();
+        QList<QByteArray> supportedImageFormats = QImageWriter::supportedImageFormats();
+    #if QT_VERSION >= 0x040300
+        supportedImageFormats.append("svg"); // add svg
+    #endif
+        foreach (QString format, supportedImageFormats) {
+            format = format.toLower();
             QString st;
             if (format=="jpeg" || format=="tiff") {
                 // Don't add the aliases
             } else {
-                st = QString("%1 (*.%2)")
+                st = QString("%1 (%2)(*.%2)")
                      .arg(QG_DialogFactory::extToFormat(format))
                      .arg(format);
             }
             if (st.length()>0)
                 filters.append(st);
         }
+        // revise list of filters
+        filters.removeDuplicates();
+        filters.sort();
 
         // set dialog options: filters, mode, accept, directory, filename
         QFileDialog fileDlg(this, "Export as");
         fileDlg.setFilters(filters);
         fileDlg.setFileMode(QFileDialog::AnyFile);
-        fileDlg.setFilter(defFilter);
+        fileDlg.selectNameFilter(defFilter);
         fileDlg.setAcceptMode(QFileDialog::AcceptSave);
         fileDlg.setDirectory(defDir);
         fn = QFileInfo(w->getDocument()->getFilename()).baseName();
@@ -2972,8 +2998,9 @@ void QC_ApplicationWindow::slotFileExport() {
             // show options dialog:
             QG_ImageOptionsDialog dlg(this);
             dlg.setGraphicSize(w->getGraphic()->getSize());
+            //dlg.setGraphicSize(w->getGraphic()->calculateBorders());
             if (dlg.exec()) {
-                bool ret = slotFileExport(fn, format, dlg.getSize(),
+                bool ret = slotFileExport(fn, format, dlg.getSize(), dlg.getBorders(),
                             dlg.isBackgroundBlack(), dlg.isBlackWhite());
                 if (ret) {
                     QString message = tr("Exported: %1").arg(fn);
@@ -2998,7 +3025,7 @@ void QC_ApplicationWindow::slotFileExport() {
  * @param bw true: black/white export, false: color
  */
 bool QC_ApplicationWindow::slotFileExport(const QString& name,
-        const QString& format, QSize size, bool black, bool bw) {
+        const QString& format, QSize size, QSize borders, bool black, bool bw) {
 
     QC_MDIWindow* w = getMDIWindow();
     if (w==NULL) {
@@ -3020,7 +3047,28 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
     bool ret = false;
-    QPixmap* buffer = new QPixmap(size);
+    // set vars for normal pictures and vectors (svg)
+    QPixmap* picture = new QPixmap(size);
+#if QT_VERSION >= 0x040300
+    QSvgGenerator* vector = new QSvgGenerator();
+#endif
+    // set buffer var
+    QPaintDevice* buffer;
+
+#if QT_VERSION >= 0x040300
+    if(format.toLower() != "svg") {
+        buffer = picture;
+    } else {
+        vector->setSize(size);
+        vector->setViewBox(QRectF(QPointF(0,0),size));
+        vector->setFileName(name);
+        buffer = vector;
+    }
+#else
+    buffer = picture;
+#endif
+
+    // set painter with buffer
     RS_PainterQt painter(buffer);
 
     // black background:
@@ -3041,7 +3089,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 
     painter.eraseRect(0,0, size.width(), size.height());
 
-    RS_StaticGraphicView gv(size.width(), size.height(), &painter);
+    RS_StaticGraphicView gv(size.width(), size.height(), &painter, borders);
     if (black) {
         gv.setBackground(RS_Color(0,0,0));
     } else {
@@ -3054,22 +3102,33 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
         gv.drawEntity(&painter, e);
     }
 
-    // RVT_PORT QImageIO iio;
-    QImageWriter iio;
-    QImage img = buffer->toImage();
-    // RVT_PORT iio.setImage(img);
-    iio.setFileName(name);
-    iio.setFormat(format.toAscii());
-    // RVT_PORT if (iio.write()) {
+    // end the picture output
+#if QT_VERSION >= 0x040300
+    if(format.toLower() != "svg") {
+#endif
+        // RVT_PORT QImageIO iio;
+        QImageWriter iio;
+        QImage img = picture->toImage();
+        // RVT_PORT iio.setImage(img);
+        iio.setFileName(name);
+        iio.setFormat(format.toAscii());
+        // RVT_PORT if (iio.write()) {
         if (iio.write(img)) {
-        ret = true;
+            ret = true;
+        }
+        QString error=iio.errorString();
+#if QT_VERSION >= 0x040300
     }
-    QString error=iio.errorString();
+#endif
     QApplication::restoreOverrideCursor();
 
     // GraphicView deletes painter
     painter.end();
-    delete buffer;
+    // delete vars
+    delete picture;
+#if QT_VERSION >= 0x040300
+    delete vector;
+#endif
 
     if (ret) {
         statusBar()->showMessage(tr("Export complete"), 2000);

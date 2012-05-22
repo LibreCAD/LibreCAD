@@ -31,7 +31,7 @@
 #include "qg_layerbox.h"*/
 
 /*
- *  Constructs a QG_DlgSpline as a child of 'parent', with the
+ *  Constructs a QG_DlgPolyline as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  *
  *  The dialog will by default be modeless, unless you set 'modal' to

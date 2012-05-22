@@ -62,6 +62,7 @@ private:
     QStringList imperialScales;
     QStringList metricScales;
     bool updateDisabled;
+    bool blackWhiteDisabled;
     int defaultScales;
 
 
