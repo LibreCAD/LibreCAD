@@ -1404,9 +1404,8 @@ void QC_ApplicationWindow::initActions(void)
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
 
-        addToolBar(Qt::TopToolBarArea, penToolBar);
-        QMainWindow::addToolBarBreak(Qt::TopToolBarArea);
-
+    QMainWindow::addToolBarBreak(Qt::TopToolBarArea);
+    addToolBar(Qt::TopToolBarArea, penToolBar);
 
     addToolBar(Qt::TopToolBarArea, optionWidget);
 
