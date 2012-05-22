@@ -349,6 +349,30 @@ void RS_EntityContainer::addEntity(RS_Entity* entity) {
 
 
 /**
+ * Insert a entity at the end of entities list and updates the
+ * borders of this entity-container if autoUpdateBorders is true.
+ */
+void RS_EntityContainer::appendEntity(RS_Entity* entity){
+    if (entity==NULL)
+        return;
+    entities.append(entity);
+    if (autoUpdateBorders)
+        adjustBorders(entity);
+}
+
+/**
+ * Insert a entity at the start of entities list and updates the
+ * borders of this entity-container if autoUpdateBorders is true.
+ */
+void RS_EntityContainer::prependEntity(RS_Entity* entity){
+    if (entity==NULL)
+        return;
+    entities.prepend(entity);
+    if (autoUpdateBorders)
+        adjustBorders(entity);
+}
+
+/**
  * Move a entity list in this container at the given position,
  * the borders of this entity-container if autoUpdateBorders is true.
  */
