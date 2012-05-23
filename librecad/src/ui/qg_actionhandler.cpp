@@ -149,6 +149,7 @@
 #include "rs_actionpolylineequidistant.h"
 #include "rs_actionpolylinesegment.h"
 #include "rs_selection.h"
+#include "rs_actionorder.h"
 
 #include "qg_mainwindowinterface.h"
 #include "qg_snaptoolbar.h"
@@ -182,6 +183,7 @@ QG_ActionHandler::QG_ActionHandler(QG_MainWindowInterface* mw) {
 
     lockRelativeZero = NULL;
     lockedRelZero=false;
+    orderType = RS2::ActionOrderTop;
     RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler: OK");
 }
 
@@ -298,6 +300,25 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionEditPaste:
         a = new RS_ActionEditPaste(*doc, *gv);
+        break;
+    case RS2::ActionOrderBottom:
+        orderType = RS2::ActionOrderBottom;
+        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+        break;
+    case RS2::ActionOrderLower:
+        orderType = RS2::ActionOrderLower;
+        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+        break;
+    case RS2::ActionOrderRaise:
+        orderType = RS2::ActionOrderRaise;
+        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+        break;
+    case RS2::ActionOrderTop:
+        orderType = RS2::ActionOrderTop;
+        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+        break;
+    case RS2::ActionOrderNoSelect:
+        a = new RS_ActionOrder(*doc, *gv, orderType);
         break;
 
         // Selecting actions:
@@ -1186,6 +1207,22 @@ void QG_ActionHandler::slotEditCopy() {
 
 void QG_ActionHandler::slotEditPaste() {
     setCurrentAction(RS2::ActionEditPaste);
+}
+
+void QG_ActionHandler::slotOrderBottom() {
+    setCurrentAction(RS2::ActionOrderBottom);
+}
+
+void QG_ActionHandler::slotOrderLower() {
+    setCurrentAction(RS2::ActionOrderLower);
+}
+
+void QG_ActionHandler::slotOrderRaise() {
+    setCurrentAction(RS2::ActionOrderRaise);
+}
+
+void QG_ActionHandler::slotOrderTop() {
+    setCurrentAction(RS2::ActionOrderTop);
 }
 
 void QG_ActionHandler::slotSelectSingle() {

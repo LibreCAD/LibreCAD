@@ -349,6 +349,66 @@ void RS_EntityContainer::addEntity(RS_Entity* entity) {
 
 
 /**
+ * Insert a entity at the end of entities list and updates the
+ * borders of this entity-container if autoUpdateBorders is true.
+ */
+void RS_EntityContainer::appendEntity(RS_Entity* entity){
+    if (entity==NULL)
+        return;
+    entities.append(entity);
+    if (autoUpdateBorders)
+        adjustBorders(entity);
+}
+
+/**
+ * Insert a entity at the start of entities list and updates the
+ * borders of this entity-container if autoUpdateBorders is true.
+ */
+void RS_EntityContainer::prependEntity(RS_Entity* entity){
+    if (entity==NULL)
+        return;
+    entities.prepend(entity);
+    if (autoUpdateBorders)
+        adjustBorders(entity);
+}
+
+/**
+ * Move a entity list in this container at the given position,
+ * the borders of this entity-container if autoUpdateBorders is true.
+ */
+void RS_EntityContainer::moveEntity(int index, QList<RS_Entity *> entList){
+    if (entList.isEmpty()) return;
+    int ci = 0; //current index for insert without invert order
+    bool ret, into = false;
+    RS_Entity *mid = NULL;
+    if (index < 1) {
+        ci = 0;
+    } else if (index >= entities.size() ) {
+        ci = entities.size() - entList.size();
+    } else {
+        into = true;
+        mid = entities.at(index);
+    }
+
+    for (int i = 0; i < entList.size(); ++i) {
+        RS_Entity *e = entList.at(i);
+        ret = entities.removeOne(e);
+        //if e not exist in entities list remove from entList
+        if (!ret) {
+            entList.removeAt(i);
+        }
+    }
+    if (into) {
+        ci = entities.indexOf(mid);
+    }
+
+    for (int i = 0; i < entList.size(); ++i) {
+        RS_Entity *e = entList.at(i);
+            entities.insert(ci++, e);
+    }
+}
+
+/**
  * Inserts a entity to this container at the given position and updates
  * the borders of this entity-container if autoUpdateBorders is true.
  */

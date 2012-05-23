@@ -87,6 +87,9 @@ public:
                 bool select=true, bool cross=false);
 
     virtual void addEntity(RS_Entity* entity);
+    virtual void appendEntity(RS_Entity* entity);
+    virtual void prependEntity(RS_Entity* entity);
+    virtual void moveEntity(int index, QList<RS_Entity *> entList);
     virtual void insertEntity(int index, RS_Entity* entity);
 //RLZ unused    virtual void replaceEntity(int index, RS_Entity* entity);
     virtual bool removeEntity(RS_Entity* entity);

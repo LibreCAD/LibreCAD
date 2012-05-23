@@ -123,6 +123,9 @@ void RS_ActionSelect::updateMouseButtonHints() {
     case RS2::ActionModifyAttributesNoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select to modify attributes"), tr("Cancel"));
         break;
+    case RS2::ActionOrderNoSelect:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Select entities to order"), tr("Cancel"));
+        break;
     case RS2::ActionModifyDeleteNoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select to delete"), tr("Cancel"));
         break;

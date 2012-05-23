@@ -914,7 +914,7 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                          RS_HatchData(data->solid, data->scale, data->angle,
                                       QString::fromUtf8(data->name.c_str())));
     setEntityAttributes(hatch, data);
-    currentContainer->addEntity(hatch);
+    currentContainer->appendEntity(hatch);
 
     for (unsigned int i=0; i < data->looplist.size(); i++) {
         DRW_HatchLoop *loop = data->looplist.at(i);
@@ -1017,7 +1017,7 @@ void RS_FilterDXFRW::addImage(const DRW_Image *data) {
                          data->contrast, data->fade));
 
     setEntityAttributes(image, data);
-    currentContainer->addEntity(image);
+    currentContainer->appendEntity(image);
 }
 
 
