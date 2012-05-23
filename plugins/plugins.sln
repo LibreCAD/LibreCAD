@@ -1,0 +1,52 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "asciifile", "C:/cygwin/home/dli/github/LibreCAD/plugins/asciifile\asciifile.vcxproj", "{F9A19D39-D612-3522-AC8E-8688A1689C1B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "align", "C:/cygwin/home/dli/github/LibreCAD/plugins/align\align.vcxproj", "{2DFB2DC7-2D15-3B8D-A76D-FF687C17ED5D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "list", "C:/cygwin/home/dli/github/LibreCAD/plugins/list\list.vcxproj", "{F65991FF-AB4E-34A9-8545-E57AA61D662E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sameprop", "C:/cygwin/home/dli/github/LibreCAD/plugins/sameprop\sameprop.vcxproj", "{61B1F60F-3CD6-32A8-8498-811AEF7DA7BE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "importshp", "C:/cygwin/home/dli/github/LibreCAD/plugins/importshp\importshp.vcxproj", "{AD504B85-96DF-39B9-9734-C4340510EF47}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample", "C:/cygwin/home/dli/github/LibreCAD/plugins/sample\sample.vcxproj", "{33DD021A-12D8-3A72-90B5-65D56369E090}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug|Win32
+		ConfigName.1 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{F9A19D39-D612-3522-AC8E-8688A1689C1B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F9A19D39-D612-3522-AC8E-8688A1689C1B}.Debug|Win32.Build.0 = Debug|Win32
+		{F9A19D39-D612-3522-AC8E-8688A1689C1B}.Release|Win32.ActiveCfg = Release|Win32
+		{F9A19D39-D612-3522-AC8E-8688A1689C1B}.Release|Win32.Build.0 = Release|Win32
+		{2DFB2DC7-2D15-3B8D-A76D-FF687C17ED5D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2DFB2DC7-2D15-3B8D-A76D-FF687C17ED5D}.Debug|Win32.Build.0 = Debug|Win32
+		{2DFB2DC7-2D15-3B8D-A76D-FF687C17ED5D}.Release|Win32.ActiveCfg = Release|Win32
+		{2DFB2DC7-2D15-3B8D-A76D-FF687C17ED5D}.Release|Win32.Build.0 = Release|Win32
+		{F65991FF-AB4E-34A9-8545-E57AA61D662E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F65991FF-AB4E-34A9-8545-E57AA61D662E}.Debug|Win32.Build.0 = Debug|Win32
+		{F65991FF-AB4E-34A9-8545-E57AA61D662E}.Release|Win32.ActiveCfg = Release|Win32
+		{F65991FF-AB4E-34A9-8545-E57AA61D662E}.Release|Win32.Build.0 = Release|Win32
+		{61B1F60F-3CD6-32A8-8498-811AEF7DA7BE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{61B1F60F-3CD6-32A8-8498-811AEF7DA7BE}.Debug|Win32.Build.0 = Debug|Win32
+		{61B1F60F-3CD6-32A8-8498-811AEF7DA7BE}.Release|Win32.ActiveCfg = Release|Win32
+		{61B1F60F-3CD6-32A8-8498-811AEF7DA7BE}.Release|Win32.Build.0 = Release|Win32
+		{AD504B85-96DF-39B9-9734-C4340510EF47}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AD504B85-96DF-39B9-9734-C4340510EF47}.Debug|Win32.Build.0 = Debug|Win32
+		{AD504B85-96DF-39B9-9734-C4340510EF47}.Release|Win32.ActiveCfg = Release|Win32
+		{AD504B85-96DF-39B9-9734-C4340510EF47}.Release|Win32.Build.0 = Release|Win32
+		{33DD021A-12D8-3A72-90B5-65D56369E090}.Debug|Win32.ActiveCfg = Debug|Win32
+		{33DD021A-12D8-3A72-90B5-65D56369E090}.Debug|Win32.Build.0 = Debug|Win32
+		{33DD021A-12D8-3A72-90B5-65D56369E090}.Release|Win32.ActiveCfg = Release|Win32
+		{33DD021A-12D8-3A72-90B5-65D56369E090}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

@@ -34,8 +34,8 @@ windows/
 *.rc
 *.bak
 # Win/qmake generated project files
-*.vcproj
-*.sln
+#*.vcproj
+#*.sln
 
 #Doxygen
 html/
