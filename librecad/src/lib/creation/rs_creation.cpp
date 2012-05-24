@@ -902,7 +902,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
   */
  std::vector<RS_Entity*> RS_Creation::createCircleTangent2( RS_Entity* circle1,RS_Entity* circle2)
 {
-      std::vector<RS_Entity*> ret(0,NULL);
+      std::vector<RS_Entity*> ret(0, (RS_Entity*)NULL);
     if(circle1==NULL||circle2==NULL) return ret;
     RS_Entity* e1=circle1;
     RS_Entity* e2=circle2;
