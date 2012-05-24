@@ -159,11 +159,19 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksFreezeAll()));
     layButtons->addWidget(but);
+    // create block:
+    but = new QToolButton(this);
+    but->setIcon(QIcon(":/extui/menublock.png"));
+    but->setMinimumSize(QSize(22,22));
+    but->setToolTip(tr("Create Block"));
+    connect(but, SIGNAL(clicked()),
+            actionHandler, SLOT(slotBlocksCreate()));
+    layButtons->addWidget(but);
     // add block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/ui/blockadd.png"));
     but->setMinimumSize(QSize(22,22));
-    but->setToolTip(tr("Add a block"));
+    but->setToolTip(tr("Add an empty block"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksAdd()));
     layButtons->addWidget(but);
@@ -182,7 +190,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     but->setToolTip(tr("Rename the active block"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksAttributes()));
-    layButtons->addWidget(but);
+    layButtons2->addWidget(but);
     // edit block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/ui/blockedit.png"));
