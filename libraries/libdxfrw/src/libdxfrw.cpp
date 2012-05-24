@@ -267,21 +267,63 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     } else
         writer->writeUtf8Caps(2, ent->name);
     writer->writeInt16(70, ent->flags);
-    if ( !(ent->dimpost.empty()) )
+    if ( version == DRW::AC1009 || !(ent->dimpost.empty()) )
         writer->writeUtf8String(3, ent->dimpost);
-    if ( !(ent->dimapost.empty()) )
+    if ( version == DRW::AC1009 || !(ent->dimapost.empty()) )
         writer->writeUtf8String(4, ent->dimapost);
-    if ( !(ent->dimblk.empty()) )
+    if ( version == DRW::AC1009 || !(ent->dimblk.empty()) )
         writer->writeUtf8String(5, ent->dimblk);
-    if ( !(ent->dimblk1.empty()) )
+    if ( version == DRW::AC1009 || !(ent->dimblk1.empty()) )
         writer->writeUtf8String(6, ent->dimblk1);
-    if ( !(ent->dimblk2.empty()) )
+    if ( version == DRW::AC1009 || !(ent->dimblk2.empty()) )
         writer->writeUtf8String(7, ent->dimblk2);
+    writer->writeDouble(40, ent->dimscale);
     writer->writeDouble(41, ent->dimasz);
     writer->writeDouble(42, ent->dimexo);
+    writer->writeDouble(43, ent->dimdli);
     writer->writeDouble(44, ent->dimexe);
+    writer->writeDouble(45, ent->dimrnd);
+    writer->writeDouble(46, ent->dimdle);
+    writer->writeDouble(47, ent->dimtp);
+    writer->writeDouble(48, ent->dimtm);
     writer->writeDouble(140, ent->dimtxt);
+    writer->writeDouble(141, ent->dimcen);
+    writer->writeDouble(142, ent->dimtsz);
+    writer->writeDouble(143, ent->dimaltf);
+    writer->writeDouble(144, ent->dimlfac);
+    writer->writeDouble(145, ent->dimtvp);
+    writer->writeDouble(146, ent->dimtfac);
     writer->writeDouble(147, ent->dimgap);
+    if (version > DRW::AC1012) {
+        writer->writeDouble(148, ent->dimaltrnd);
+    }
+    writer->writeInt16(71, ent->dimtol);
+    writer->writeInt16(72, ent->dimlim);
+    writer->writeInt16(73, ent->dimtih);
+    writer->writeInt16(74, ent->dimtoh);
+    writer->writeInt16(75, ent->dimse1);
+    writer->writeInt16(76, ent->dimse2);
+    writer->writeInt16(77, ent->dimtad);
+    writer->writeInt16(78, ent->dimzin);
+    if (version > DRW::AC1012) {
+        writer->writeDouble(79, ent->dimazin);
+    }
+    writer->writeInt16(170, ent->dimalt);
+    writer->writeInt16(171, ent->dimaltd);
+    writer->writeInt16(172, ent->dimtofl);
+    writer->writeInt16(173, ent->dimsah);
+    writer->writeInt16(174, ent->dimtix);
+    writer->writeInt16(175, ent->dimsoxd);
+    writer->writeInt16(176, ent->dimclrd);
+    writer->writeInt16(177, ent->dimclre);
+    writer->writeInt16(178, ent->dimclrt);
+    if (version > DRW::AC1012) {
+        writer->writeDouble(179, ent->dimadec);
+    }
+
+/*    if (version > DRW::AC1012) {
+        writer->writeString(340, ent->dimtxsty);
+    }//text style handle */
     return true;
 }
 
@@ -399,9 +441,9 @@ bool dxfRW::writeArc(DRW_Arc *ent) {
 }
 
 bool dxfRW::writeEllipse(DRW_Ellipse *ent){
+    if (ent->staparam == ent->endparam)
+        ent->endparam = 6.28318530718; //2*M_PI;
     if (version > DRW::AC1009) {
-        if (ent->staparam == ent->endparam)
-            ent->endparam = 6.283185307179586; //2*M_PI;
         writer->writeString(0, "ELLIPSE");
         writeEntity(ent);
         if (version > DRW::AC1009) {
@@ -417,7 +459,10 @@ bool dxfRW::writeEllipse(DRW_Ellipse *ent){
         writer->writeDouble(41, ent->staparam);
         writer->writeDouble(42, ent->endparam);
     } else {
-//RLZ: TODO convert ellipse in polyline (not exist in acad 12)
+        DRW_Polyline pol;
+        //RLZ: copy properties
+        ent->toPolyline(&pol);
+        writePolyline(&pol);
     }
     return true;
 }
@@ -522,7 +567,8 @@ bool dxfRW::writePolyline(DRW_Polyline *ent) {
             writer->writeString(100, "AcDb2dPolyline");
         else
             writer->writeString(100, "AcDb3dPolyline");
-    }
+    } else
+        writer->writeInt16(66, 1);
     writer->writeDouble(10, 0.0);
     writer->writeDouble(20, 0.0);
     writer->writeDouble(30, ent->basePoint.z);
@@ -912,9 +958,9 @@ bool dxfRW::writeText(DRW_Text *ent){
     writer->writeDouble(41, ent->widthscale);
     writer->writeDouble(51, ent->oblique);
     if (version > DRW::AC1009)
-        writer->writeUtf8String(1, ent->style);
+        writer->writeUtf8String(7, ent->style);
     else
-        writer->writeUtf8Caps(1, ent->style);
+        writer->writeUtf8Caps(7, ent->style);
     writer->writeInt16(71, ent->textgen);
     if (ent->alignH != DRW::HAlignLeft) {
         writer->writeInt16(72, ent->alignH);

@@ -1879,26 +1879,8 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
  * Writes the given Ellipse entity to the file.
  */
 void RS_FilterDXFRW::writeEllipse(RS_Ellipse* s) {
-    // version 12 do not support Ellipse write as polyline
-    if (version==1009) {
-/*RLZ, writeme        DRW_Polyline pol;
-        RS_Entity* e;
-        for (e=s->firstEntity(RS2::ResolveNone);
-             e!=NULL; e=s->nextEntity(RS2::ResolveNone)) {
-            pol.addVertex( DRW_Vertex(e->getStartpoint().x,
-                                      e->getStartpoint().y, 0.0, 0.0));
-        }
-        if (s->isClosed()) {
-            pol.flags = 1;
-        } else {
-            pol.addVertex( DRW_Vertex(e->getEndpoint().x,
-                                      e->getEndpoint().y, 0.0, 0.0));
-        }
-        getEntityAttributes(&pol, s);
-        dxf->writePolyline(&pol);*/
-        return;
-    }
-
+// version 12 do not support Ellipse but are
+// converted in polyline by library
     DRW_Ellipse el;
     getEntityAttributes(&el, s);
     el.basePoint.x = s->getCenter().x;

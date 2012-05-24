@@ -116,8 +116,68 @@ void DRW_Dimstyle::parseCode(int code, dxfReader *reader){
     case 147:
         dimgap = reader->getDouble();
         break;
+    case 148:
+        dimaltrnd = reader->getDouble();
+        break;
+    case 71:
+        dimtol = reader->getInt32();
+        break;
+    case 72:
+        dimlim = reader->getInt32();
+        break;
+    case 73:
+        dimtih = reader->getInt32();
+        break;
+    case 74:
+        dimtoh = reader->getInt32();
+        break;
+    case 75:
+        dimse1 = reader->getInt32();
+        break;
+    case 76:
+        dimse2 = reader->getInt32();
+        break;
+    case 77:
+        dimtad = reader->getInt32();
+        break;
+    case 78:
+        dimzin = reader->getInt32();
+        break;
+    case 79:
+        dimazin = reader->getInt32();
+        break;
+    case 170:
+        dimalt = reader->getInt32();
+        break;
+    case 171:
+        dimaltd = reader->getInt32();
+        break;
+    case 172:
+        dimtofl = reader->getInt32();
+        break;
+    case 173:
+        dimsah = reader->getInt32();
+        break;
+    case 174:
+        dimtix = reader->getInt32();
+        break;
+    case 175:
+        dimsoxd = reader->getInt32();
+        break;
+    case 176:
+        dimclrd = reader->getInt32();
+        break;
+    case 177:
+        dimclre = reader->getInt32();
+        break;
+    case 178:
+        dimclrt = reader->getInt32();
+        break;
+    case 179:
+        dimadec = reader->getInt32();
+        break;
     case 340:
-        dimtxsty = reader->getUtf8String();
+        dimtxsty = reader->getString();
         break;
     default:
         DRW_TableEntry::parseCode(code, reader);

@@ -72,16 +72,29 @@ class DRW_Dimstyle : public DRW_TableEntry {
 public:
     DRW_Dimstyle() {
         tType = DRW::DIMSTYLE;
-        dimasz = dimtxt = 2.5;
-        dimexo = dimgap = 0.625;
-        dimexe = 1.25;
+        dimasz = dimtxt = dimexe = 0.18;
+        dimexo = 0.0625;
+        dimgap = dimcen = 0.09;
         dimtxsty = "Standard";
-        //dimscale dimdli dimrnd dimdle dimtp dimtm dimcen dimtsz dimaltf dimlfac dimtvp dimtfac
+        dimscale = dimlfac = dimtfac = 1.0;
+        dimdli = 0.38;
+        dimrnd = dimdle = dimtp = dimtm = dimtsz = dimtvp = 0.0;
+        dimaltf = 25.4;
+        dimtol = dimlim = dimse1 = dimse2 = dimtad = dimzin = 0;
+        dimtih = dimtoh = 1;
+        dimalt = dimtofl = dimsah = dimtix = dimsoxd =0;
+        dimaltd = 2;
+        dimclrd = dimclre = dimclrt = 0;
+        dimazin = 0; //verify
+        dimadec = 0; //verify
+        dimaltrnd = 0.0; //verify
+
     }
 
     void parseCode(int code, dxfReader *reader);
 
 public:
+    //V12
     UTF8STRING dimpost;       /*!< code 3 */
     UTF8STRING dimapost;      /*!< code 4 */
     UTF8STRING dimblk;        /*!< code 5 (handle are code 105) */
@@ -104,7 +117,27 @@ public:
     double dimtvp;            /*!< code 145 */
     double dimtfac;           /*!< code 146 */
     double dimgap;            /*!< code 147 */
-    UTF8STRING dimtxsty;      /*!< code 340 */
+    double dimaltrnd;         /*!< code 148 V2000+ */
+    int dimtol;               /*!< code 71 */
+    int dimlim;               /*!< code 72 */
+    int dimtih;               /*!< code 73 */
+    int dimtoh;               /*!< code 74 */
+    int dimse1;               /*!< code 75 */
+    int dimse2;               /*!< code 76 */
+    int dimtad;               /*!< code 77 */
+    int dimzin;               /*!< code 78 */
+    int dimazin;              /*!< code 79 V2000+ */
+    int dimalt;               /*!< code 170 */
+    int dimaltd;              /*!< code 171 */
+    int dimtofl;              /*!< code 172 */
+    int dimsah;               /*!< code 173 */
+    int dimtix;               /*!< code 174 */
+    int dimsoxd;              /*!< code 175 */
+    int dimclrd;              /*!< code 176 */
+    int dimclre;              /*!< code 177 */
+    int dimclrt;              /*!< code 178 */
+    int dimadec;              /*!< code 179 V2000+ */
+    string dimtxsty;      /*!< code 340 V2000+ */
 };
 
 

@@ -19,6 +19,7 @@
 #include "drw_base.h"
 
 class dxfReader;
+class DRW_Polyline;
 
 using std::string;
 
@@ -274,7 +275,7 @@ public:
     }
 
     void parseCode(int code, dxfReader *reader);
-
+    void toPolyline(DRW_Polyline *pol);
 public:
     double ratio;           /*!< ratio, code 40 */
     double staparam;      /*!< start parameter, code 41, 0.0 for full ellipse*/

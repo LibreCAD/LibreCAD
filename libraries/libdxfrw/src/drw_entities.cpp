@@ -190,6 +190,35 @@ void DRW_Ellipse::parseCode(int code, dxfReader *reader){
     }
 }
 
+void DRW_Ellipse::toPolyline(DRW_Polyline *pol){
+    double radMajor, radMinor, cosRot, sinRot, incAngle, curAngle;
+    double cosCurr, sinCurr, staAngle, endAngle;
+    radMajor = sqrt(secPoint.x*secPoint.x + secPoint.y*secPoint.y);
+    radMinor = radMajor*ratio;
+    incAngle = atan(secPoint.y/secPoint.x);
+    cosRot = cos(incAngle);
+    sinRot = sin(incAngle);
+    incAngle = M_PI/64;
+    curAngle = staparam;
+    int i = curAngle/incAngle;
+    do {
+        if (curAngle > endparam) {
+            curAngle = endparam;
+            i = 130;
+        }
+        cosCurr = cos(curAngle);
+        sinCurr = sin(curAngle);
+        double x = basePoint.x + (cosCurr*cosRot*radMajor) - (sinCurr*sinRot*radMinor);
+        double y = basePoint.y + (cosCurr*sinRot*radMajor) + (sinCurr*cosRot*radMinor);
+        pol->addVertex( DRW_Vertex(x, y, 0.0, 0.0));
+        curAngle = (++i)*incAngle;
+    } while (i<128);
+    if (endparam - 6.28318530718 < 1E-12){
+        pol->flags = 1;
+    }
+
+}
+
 void DRW_Trace::applyExtrusion(){
     if (haveExtrusion) {
         calculateAxis(extPoint);
