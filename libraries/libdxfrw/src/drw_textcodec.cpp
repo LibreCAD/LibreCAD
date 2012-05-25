@@ -227,7 +227,7 @@ std::string DRW_ConvDBCSTable::fromUtf8(std::string *s) {
                 for (int k=0; k<cpLenght; k++){
                     if(doubleTable[k][1] == code) {
                         int data = doubleTable[k][0];
-                        char d[2];
+                        char d[3];
                         d[0] = data >> 8;
                         d[1] = data & 0xFF;
                         d[2]= '\0';
@@ -312,7 +312,7 @@ std::string DRW_Conv932Table::fromUtf8(std::string *s) {
                 for (int k=0; k<cpLenght; k++){
                     if(doubleTable[k][1] == code) {
                         int data = doubleTable[k][0];
-                        char d[2];
+                        char d[3];
                         d[0] = data >> 8;
                         d[1] = data & 0xFF;
                         d[2]= '\0';
