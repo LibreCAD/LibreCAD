@@ -943,6 +943,7 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
 
         } else {
             for (unsigned int j=0; j<loop->objlist.size(); j++) {
+                e = NULL;
                 DRW_Entity *ent = loop->objlist.at(j);
                 switch (ent->eType) {
                 case DRW::LINE: {
