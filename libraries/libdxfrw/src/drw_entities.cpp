@@ -195,7 +195,7 @@ void DRW_Ellipse::toPolyline(DRW_Polyline *pol){
     double cosCurr, sinCurr, staAngle, endAngle;
     radMajor = sqrt(secPoint.x*secPoint.x + secPoint.y*secPoint.y);
     radMinor = radMajor*ratio;
-    incAngle = atan(secPoint.y/secPoint.x);
+    incAngle = atan2(secPoint.y, secPoint.x);
     cosRot = cos(incAngle);
     sinRot = sin(incAngle);
     incAngle = M_PI/64;
@@ -213,7 +213,7 @@ void DRW_Ellipse::toPolyline(DRW_Polyline *pol){
         pol->addVertex( DRW_Vertex(x, y, 0.0, 0.0));
         curAngle = (++i)*incAngle;
     } while (i<128);
-    if (endparam - 6.28318530718 < 1E-12){
+    if ( fabs(endparam - 6.28318530718) < 1.0e-10){
         pol->flags = 1;
     }
 

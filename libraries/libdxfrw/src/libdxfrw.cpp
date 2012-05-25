@@ -583,17 +583,17 @@ bool dxfRW::writePolyline(DRW_Polyline *ent) {
         writer->writeDouble(41, ent->defendwidth);
     }
     if (ent->flags & 16 || ent->flags & 32) {
-        writer->writeInt16(71, ent->flags);
-        writer->writeInt16(72, ent->flags);
+        writer->writeInt16(71, ent->vertexcount);
+        writer->writeInt16(72, ent->facecount);
     }
     if (ent->smoothM != 0) {
         writer->writeInt16(73, ent->smoothM);
     }
     if (ent->smoothN != 0) {
-        writer->writeInt16(74, ent->smoothM);
+        writer->writeInt16(74, ent->smoothN);
     }
     if (ent->curvetype != 0) {
-        writer->writeInt16(75, ent->smoothM);
+        writer->writeInt16(75, ent->curvetype);
     }
     DRW_Coord crd  = ent->extPoint;
     if (crd.x != 0 || crd.y != 0 || crd.z != 1) {
@@ -616,7 +616,7 @@ bool dxfRW::writePolyline(DRW_Polyline *ent) {
         } else {
             writer->writeDouble(10, v->basePoint.x);
             writer->writeDouble(20, v->basePoint.y);
-            writer->writeDouble(30, v->basePoint.y);
+            writer->writeDouble(30, v->basePoint.z);
         }
         if (v->stawidth != 0)
             writer->writeDouble(40, v->stawidth);
