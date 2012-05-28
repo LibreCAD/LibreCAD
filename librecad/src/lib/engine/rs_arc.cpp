@@ -855,8 +855,66 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
 }
 
 
-
 void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
+                  double& patternOffset) {
+
+    //only draw the visible portion of line
+    QVector<RS_Vector> endPoints(0);
+    RS_Vector vpMin(view->toGraph(0,view->getHeight()));
+    RS_Vector vpMax(view->toGraph(view->getWidth(),0));
+    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
+
+    RS_Vector vpStart;
+    RS_Vector vpEnd;
+    if(isReversed()){
+        vpStart=getEndpoint();
+        vpEnd=getStartpoint();
+    }else{
+        vpStart=getStartpoint();
+        vpEnd=getEndpoint();
+    }
+    if( vpStart.isInWindowOrdered(vpMin, vpMax) ) endPoints<<vpStart;
+    if( vpEnd.isInWindowOrdered(vpMin, vpMax) ) endPoints<<vpEnd;
+
+    QVector<RS_Vector> vertex(0);
+    for(unsigned short i=0;i<4;i++){
+        const QPointF& vp(visualBox.at(i));
+        vertex<<RS_Vector(vp.x(),vp.y());
+    }
+    /** angles at cross points */
+    QVector<double> crossPoints(0);
+
+    double baseAngle=isReversed()?getAngle2():getAngle1();
+    for(unsigned short i=0;i<4;i++){
+        RS_Line line(NULL,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
+        auto&& vpIts=RS_Information::getIntersection(static_cast<RS_Entity*>(this), &line, true);
+        if( vpIts.size()==0) continue;
+        foreach(RS_Vector vp, vpIts.getList()){
+            auto&& vp1=getTangentDirection(vp);
+            auto&& vp2=line.getTangentDirection(vp);
+            //ignore tangent points, because the arc doesn't cross over
+            if( fabs(vp1.y*vp2.x-vp1.x*vp2.y)< RS_TOLERANCE*RS_TOLERANCE ) continue;
+            crossPoints.push_back(
+                        RS_Math::getAngleDifference(baseAngle, getCenter().angleTo(vp))
+                        );
+        }
+    }
+    if(vpStart.isInWindowOrdered(vpMin, vpMax)) crossPoints.push_back(0.);
+    if(vpEnd.isInWindowOrdered(vpMin, vpMax)) crossPoints.push_back(getAngleLength());
+
+    //sorting
+    qSort(crossPoints.begin(),crossPoints.end());
+    //draw visible
+    for(int i=0;i<crossPoints.size()-1;i+=2){
+        RS_Arc arc(NULL, RS_ArcData(getCenter(),getRadius(),
+                                    baseAngle+crossPoints[i],
+                                    baseAngle+crossPoints[i+1],false));
+        arc.drawVisible(painter,view,patternOffset);
+    }
+
+}
+
+void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
                   double& patternOffset) {
 
     if (painter==NULL || view==NULL) {

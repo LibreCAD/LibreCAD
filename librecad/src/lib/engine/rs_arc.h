@@ -267,7 +267,10 @@ public:
                          const RS_Vector& secondCorner,
                          const RS_Vector& offset);
 
+    /** find the visible part of the arc, and call drawVisible() to draw */
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
+    /** directly draw the arc, assuming the whole arc is within visible window */
+    virtual void drawVisible(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 
     friend std::ostream& operator << (std::ostream& os, const RS_Arc& a);
 
