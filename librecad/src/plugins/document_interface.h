@@ -260,6 +260,13 @@ public:
     virtual void addImage(int handle, QPointF *start, QPointF *uvr, QPointF *vvr,
                   int w, int h, QString name, int br, int con, int fade) = 0;
 
+    //! Add block definition from disk to current document.
+    /*! Add block definition from disk to current document.
+    *  \param fullName path+name of dxf file to add.
+    *  \return name of created block or NULL if fail.
+    */
+    virtual QString addBlockfromFromdisk(QString fullName) = 0;
+
     //! Add a entity to current document.
     /*! Add a entity to current document with the data sets with Plug_Entity.updateData().
     *  \param handle a pointer to Plug_Entity.

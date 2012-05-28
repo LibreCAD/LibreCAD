@@ -28,12 +28,14 @@
 #include <QEventLoop>
 #include <QList>
 #include <QInputDialog>
+#include <QFileInfo>
 #include "rs_graphicview.h"
 #include "rs_actioninterface.h"
 #include "rs_actionselect.h"
 #include "rs_text.h"
 #include "rs_layer.h"
 #include "rs_image.h"
+#include "rs_block.h"
 #include "rs_insert.h"
 #include "rs_polyline.h"
 #include "rs_ellipse.h"
@@ -711,6 +713,59 @@ void Doc_plugin_interface::addImage(int handle, QPointF *start, QPointF *uvr, QP
 
 //    setEntityAttributes(image, attributes);
     doc->addEntity(image);
+}
+
+QString Doc_plugin_interface::addBlockfromFromdisk(QString fullName){
+    if (fullName.isEmpty() || doc==NULL)
+        return NULL;
+    RS_BlockList* blockList = doc->getBlockList();
+    if (blockList==NULL)
+        return NULL;
+
+    QFileInfo fi(fullName);
+    QString s = fi.completeBaseName();
+
+    QString name = s;
+    if(blockList->find(name)){
+        for (int i=0; i<1e5; ++i) {
+            name = QString("%1-%2").arg(s).arg(i);
+            if (blockList->find(name)==NULL) {
+                break;
+            }
+        }
+    }
+
+    if (fi.isReadable()) {
+        RS_BlockData d(name, RS_Vector(0,0), false);
+        RS_Block *b = new RS_Block(doc, d);
+        RS_Graphic g;
+        if (!g.open(fi.absoluteFilePath(), RS2::FormatUnknown)) {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                            "Doc_plugin_interface::addBlockfromFromdisk: Cannot open file: %s");
+            delete b;
+            return NULL;
+        }
+        RS_LayerList* ll = g.getLayerList();
+        for (int i = 0; i<ll->count(); i++){
+            RS_Layer* nl = ll->at(i)->clone();
+            doc->addLayer(nl);
+        }
+        RS_BlockList* bl = g.getBlockList();
+        for (int i = 0; i<bl->count(); i++){
+            RS_Block* nb = (RS_Block*)bl->at(i)->clone();
+            doc->addBlock(nb);
+        }
+        for (int i = 0; i<g.count(); i++){
+            RS_Entity* e = g.entityAt(i)->clone();
+            e->reparent(b);
+            b->addEntity(e);
+        }
+        doc->addBlock(b);
+        return name;
+
+    } else {
+        return NULL;
+    }
 }
 
 void Doc_plugin_interface::addEntity(Plug_Entity *handle){
