@@ -15,7 +15,7 @@ SUBDIRS     = \
         list \
         sameprop \
         importshp \
-        sample 
+        sample
 
 TRANSLATIONS =
 

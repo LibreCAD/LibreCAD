@@ -82,6 +82,8 @@ public:
     void addEllipse(QPointF *start, QPointF *end, qreal ratio, qreal a1, qreal a2);
     void addImage(int handle, QPointF *start, QPointF *uvr, QPointF *vvr,
                   int w, int h, QString name, int br, int con, int fade);
+    void addInsert(QString name, QPointF ins, QPointF scale, qreal rot);
+    QString addBlockfromFromdisk(QString fullName);
     void addEntity(Plug_Entity *handle);
     Plug_Entity *newEntity( enum DPI::ETYPE type);
     void removeEntity(Plug_Entity *ent);
@@ -89,6 +91,7 @@ public:
     void setLayer(QString name);
     QString getCurrentLayer();
     QStringList getAllLayer();
+    QStringList getAllBlocks();
     bool deleteLayer(QString name);
 
     bool getPoint(QPointF *point, const QString& mesage, QPointF *base);

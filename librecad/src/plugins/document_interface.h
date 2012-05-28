@@ -260,6 +260,22 @@ public:
     virtual void addImage(int handle, QPointF *start, QPointF *uvr, QPointF *vvr,
                   int w, int h, QString name, int br, int con, int fade) = 0;
 
+    //! Add insert entity to current document.
+    /*! Add a block insert entity to current document with current attributes.
+    *  \param name name of block to insert.
+    *  \param ins insertion point coordinate.
+    *  \param scale x,y scale factor.
+    *  \param rot rotation angle.
+    */
+    virtual void addInsert(QString name, QPointF ins, QPointF scale, qreal rot) = 0;
+
+    //! Add block definition from disk to current document.
+    /*! Add block definition from disk to current document.
+    *  \param fullName path+name of dxf file to add.
+    *  \return name of created block or NULL if fail.
+    */
+    virtual QString addBlockfromFromdisk(QString fullName) = 0;
+
     //! Add a entity to current document.
     /*! Add a entity to current document with the data sets with Plug_Entity.updateData().
     *  \param handle a pointer to Plug_Entity.
@@ -294,10 +310,16 @@ public:
     virtual QString getCurrentLayer() = 0;
 
     //! Gets the layers list in current document.
-    /*! Gets the list of manes of all layers in current document.
+    /*! Gets the list of names of all layers in current document.
     *  \return A list with the name of all layers in document.
     */
     virtual QStringList getAllLayer() = 0;
+
+    //! Gets the blocks list in current document.
+    /*! Gets the list of names of all blocks in current document.
+    *  \return A list with the name of all blocks in document.
+    */
+    virtual QStringList getAllBlocks() = 0;
 
     //! Delete a layer in current document.
     /*! Delete the layer "name" in current document if it exist.

@@ -192,7 +192,7 @@ void DRW_Ellipse::parseCode(int code, dxfReader *reader){
 
 void DRW_Ellipse::toPolyline(DRW_Polyline *pol){
     double radMajor, radMinor, cosRot, sinRot, incAngle, curAngle;
-    double cosCurr, sinCurr, staAngle, endAngle;
+    double cosCurr, sinCurr;
     radMajor = sqrt(secPoint.x*secPoint.x + secPoint.y*secPoint.y);
     radMinor = radMajor*ratio;
     incAngle = atan2(secPoint.y, secPoint.x);
@@ -216,7 +216,10 @@ void DRW_Ellipse::toPolyline(DRW_Polyline *pol){
     if ( fabs(endparam - 6.28318530718) < 1.0e-10){
         pol->flags = 1;
     }
-
+    pol->layer = this->layer;
+    pol->lineType = this->lineType;
+    pol->color = this->color;
+    pol->lWeight = this->lWeight;
 }
 
 void DRW_Trace::applyExtrusion(){
