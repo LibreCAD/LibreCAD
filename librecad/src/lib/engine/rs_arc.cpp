@@ -890,10 +890,10 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
         auto&& vpIts=RS_Information::getIntersection(static_cast<RS_Entity*>(this), &line, true);
         if( vpIts.size()==0) continue;
         foreach(RS_Vector vp, vpIts.getList()){
-            auto&& vp1=getTangentDirection(vp);
-            auto&& vp2=line.getTangentDirection(vp);
+            auto&& ap1=getTangentDirection(vp).angle();
+            auto&& ap2=line.getTangentDirection(vp).angle();
             //ignore tangent points, because the arc doesn't cross over
-            if( fabs(vp1.y*vp2.x-vp1.x*vp2.y)< RS_TOLERANCE*RS_TOLERANCE ) continue;
+            if( fabs( remainder(ap2 - ap1, M_PI) ) < RS_TOLERANCE_ANGLE) continue;
             crossPoints.push_back(
                         RS_Math::getAngleDifference(baseAngle, getCenter().angleTo(vp))
                         );

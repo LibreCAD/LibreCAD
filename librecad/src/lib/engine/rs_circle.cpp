@@ -654,7 +654,12 @@ bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
     return (vpMin-getCenter()).squared() > getRadius()*getRadius();
 }
 
-void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
+void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
+    RS_Arc arc(NULL, RS_ArcData(getCenter(),getRadius(),0.,2.*M_PI, false));
+            arc.draw(painter,view,patternOffset);
+}
+
+void RS_Circle::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 
     if (painter==NULL || view==NULL) {
         return;
