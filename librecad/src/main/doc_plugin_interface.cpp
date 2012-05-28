@@ -715,6 +715,17 @@ void Doc_plugin_interface::addImage(int handle, QPointF *start, QPointF *uvr, QP
     doc->addEntity(image);
 }
 
+void Doc_plugin_interface::addInsert(QString name, QPointF ins, QPointF scale, qreal rot){
+    RS_Vector ip(ins.x(), ins.y());
+    RS_Vector sp(scale.x(), scale.y());
+
+    RS_InsertData id(name, ip, sp, rot, 1, 1, RS_Vector(0.0, 0.0));
+    RS_Insert* entity = new RS_Insert(doc, id);
+//    setEntityAttributes(entity, attributes);
+
+    doc->addEntity(entity);
+}
+
 QString Doc_plugin_interface::addBlockfromFromdisk(QString fullName){
     if (fullName.isEmpty() || doc==NULL)
         return NULL;
@@ -811,6 +822,15 @@ QStringList Doc_plugin_interface::getAllLayer(){
     RS_LayerList* listLay = doc->getLayerList();
     for (unsigned int i = 0; i < listLay->count(); ++i) {
          listName << listLay->at(i)->getName();
+     }
+    return listName;
+}
+
+QStringList Doc_plugin_interface::getAllBlocks(){
+    QStringList listName;
+    RS_BlockList* listBlk = doc->getBlockList();
+    for (unsigned int i = 0; i < listBlk->count(); ++i) {
+         listName << listBlk->at(i)->getName();
      }
     return listName;
 }
