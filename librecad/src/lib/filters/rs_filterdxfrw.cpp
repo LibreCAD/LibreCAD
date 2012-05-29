@@ -1167,17 +1167,21 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
     DRW::Version exportVersion;
     if (type==RS2::FormatDXFRW12) {
         exportVersion = DRW::AC1009;
+        version = 1009;
     } else if (type==RS2::FormatDXFRW14) {
-            exportVersion = DRW::AC1014;
+        exportVersion = DRW::AC1014;
+        version = 1014;
     } else if (type==RS2::FormatDXFRW2000) {
-            exportVersion = DRW::AC1015;
+        exportVersion = DRW::AC1015;
+        version = 1015;
     } else if (type==RS2::FormatDXFRW2004) {
-            exportVersion = DRW::AC1018;
-        } else {
+        exportVersion = DRW::AC1018;
+        version = 1018;
+    } else {
         exportVersion = DRW::AC1021;
+        version = 1021;
     }
 
-    //DL_WriterA* dw = dxf.out(file, VER_R12);
     dxf = new dxfRW(QFile::encodeName(file));
     bool success = dxf->write(this, exportVersion, false); //ascii
 //    bool success = dxf->write(this, exportVersion, true); //binary
@@ -1942,7 +1946,7 @@ void RS_FilterDXFRW::writeMText(RS_Text* t) {
     text->basePoint.x = t->getInsertionPoint().x;
     text->basePoint.y = t->getInsertionPoint().y;
     text->height = t->getHeight();
-    text->angle = t->getAngle();
+    text->angle = t->getAngle()*180/M_PI;
     text->style = t->getStyle().toStdString();
 
     if (version==1009) {

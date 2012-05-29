@@ -446,16 +446,7 @@ void DRW_MText::parseCode(int code, dxfReader *reader){
 
 void DRW_MText::updateAngle(){
     if (haveXAxis) {
-        if (fabs(secPoint.x)<1.0e-12) {
-            if (secPoint.y>0.0) {
-                angle = 90.0;
-            } else {
-                angle = 270.0;
-            }
-        } else {
-            angle = atan(secPoint.y/secPoint.x)*180/M_PI;
-        }
-
+            angle = atan2(secPoint.y, secPoint.x)*180/M_PI;
     }
 }
 
