@@ -231,6 +231,36 @@ void RS_Text::update() {
                     letterPos = RS_Vector(0.0, -9.0);
                     handled = true;
                     break;
+                    case 'f':
+                    case 'F':
+                    //font change
+                    // \f{symbol} changes font to symbol
+                    // \f{} sets font to standard
+                {
+                    i++;
+                    if(data.text.at(i).unicode()!='{') {
+                        i--;
+                        continue;
+                    }
+                    int j=data.text.indexOf('}',i);
+                    if(j>i){
+                        //
+                        QString fontName;
+                        if(j==i+1)
+                            fontName="standard";
+                        else
+                            fontName=data.text.mid(i+1,j-i-1);
+                        RS_Font* fontNew = RS_FONTLIST->requestFont(
+                                    fontName
+                                    );
+                        if(fontNew != NULL) {
+                            font=fontNew;
+                        }
+                        if(font==NULL) font = RS_FONTLIST->requestFont("standard");
+                        i=j;
+                    }
+                }
+                        continue;
 
                 case 'S': {
                         QString up;
