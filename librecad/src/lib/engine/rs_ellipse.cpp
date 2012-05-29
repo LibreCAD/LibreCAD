@@ -1382,7 +1382,70 @@ LC_Quadratic RS_Ellipse::getQuadratic() const
     return ret;
 }
 
-void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
+void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
+    if(isArc()==false){
+        RS_Ellipse arc(NULL,RS_EllipseData(getCenter(),getMajorP(),getRatio(),0.,2.*M_PI,false));
+        arc.draw(painter,view,patternOffset);
+        return;
+    }
+    //only draw the visible portion of line
+    QVector<RS_Vector> endPoints(0);
+    RS_Vector vpMin(view->toGraph(0,view->getHeight()));
+    RS_Vector vpMax(view->toGraph(view->getWidth(),0));
+    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
+
+    RS_Vector vpStart;
+    RS_Vector vpEnd;
+    if(isReversed()){
+        vpStart=getEndpoint();
+        vpEnd=getStartpoint();
+    }else{
+        vpStart=getStartpoint();
+        vpEnd=getEndpoint();
+    }
+    if( vpStart.isInWindowOrdered(vpMin, vpMax) ) endPoints<<vpStart;
+    if( vpEnd.isInWindowOrdered(vpMin, vpMax) ) endPoints<<vpEnd;
+
+    QVector<RS_Vector> vertex(0);
+    for(unsigned short i=0;i<4;i++){
+        const QPointF& vp(visualBox.at(i));
+        vertex<<RS_Vector(vp.x(),vp.y());
+    }
+    /** angles at cross points */
+    QVector<double> crossPoints(0);
+
+    double baseAngle=isReversed()?getAngle2():getAngle1();
+    for(unsigned short i=0;i<4;i++){
+        RS_Line line(NULL,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
+        auto&& vpIts=RS_Information::getIntersection(static_cast<RS_Entity*>(this), &line, true);
+        if( vpIts.size()==0) continue;
+        foreach(RS_Vector vp, vpIts.getList()){
+            auto&& ap1=getTangentDirection(vp).angle();
+            auto&& ap2=line.getTangentDirection(vp).angle();
+            //ignore tangent points, because the arc doesn't cross over
+            if( fabs( remainder(ap2 - ap1, M_PI) ) < RS_TOLERANCE_ANGLE) continue;
+            crossPoints.push_back(
+                        RS_Math::getAngleDifference(baseAngle, getEllipseAngle(vp))
+                        );
+        }
+    }
+    if(vpStart.isInWindowOrdered(vpMin, vpMax)) crossPoints.push_back(0.);
+    if(vpEnd.isInWindowOrdered(vpMin, vpMax)) crossPoints.push_back(
+                RS_Math::getAngleDifference(baseAngle,isReversed()?getAngle1():getAngle2())
+                );
+
+    //sorting
+    qSort(crossPoints.begin(),crossPoints.end());
+    //draw visible
+    for(int i=0;i<crossPoints.size()-1;i+=2){
+        RS_Ellipse arc(NULL, RS_EllipseData(getCenter(),getMajorP(),getRatio(),
+                                    baseAngle+crossPoints[i],
+                                    baseAngle+crossPoints[i+1],false));
+        arc.drawVisible(painter,view,patternOffset);
+    }
+}
+
+void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 //    std::cout<<"RS_Ellipse::draw(): begin\n";
     if (painter==NULL || view==NULL) {
         return;
@@ -1457,7 +1520,8 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patte
 
     for(i=0;notDone;i=(i+1)%j) {//draw patterned ellipse
 
-        a3 = curA + fabs(ds[i])/RS_Vector(ra*sin(curA),rb*cos(curA)).magnitude();
+        double r2=RS_Vector(ra*sin(curA),rb*cos(curA)).squared();
+        a3 = curA + fabs(ds[i])/sqrt(r2);
         if(a3>a2){
             a3=a2;
             notDone=false;

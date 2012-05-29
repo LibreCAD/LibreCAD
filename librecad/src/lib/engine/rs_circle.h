@@ -201,7 +201,6 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
     /** whether the entity's bounding box intersects with visible portion of graphic view */
     virtual bool isVisibleInWindow(RS_GraphicView* view) const;
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
-    virtual void drawVisible(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
     /** return the equation of the entity
 for quadratic,
 

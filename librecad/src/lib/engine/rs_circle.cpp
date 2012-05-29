@@ -654,111 +654,11 @@ bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
     return (vpMin-getCenter()).squared() > getRadius()*getRadius();
 }
 
+/** draw circle as a 2 pi arc */
 void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
     RS_Arc arc(NULL, RS_ArcData(getCenter(),getRadius(),0.,2.*M_PI, false));
             arc.draw(painter,view,patternOffset);
 }
-
-void RS_Circle::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-
-    if (painter==NULL || view==NULL) {
-        return;
-    }
-
-    //visible in grahic view
-    if(isVisibleInWindow(view)==false) return;
-    RS_Vector cp(view->toGui(getCenter()));
-    double ra(fabs(getRadius()*view->getFactor().x));
-    //double styleFactor = getStyleFactor();
-
-    // simple style-less lines
-    if ( !isSelected() && (
-             getPen().getLineType()==RS2::SolidLine ||
-             view->getDrawingMode()==RS2::ModePreview)) {
-
-        painter->drawArc(cp,
-                         ra,
-                         0.0, 2*M_PI,
-                         false);
-        return;
-    }
-//    double styleFactor = getStyleFactor(view);
-    //        if (styleFactor<0.0) {
-    //            painter->drawArc(cp,
-    //                             ra,
-    //                             0.0, 2*M_PI,
-    //                             false);
-    //            return;
-    //        }
-
-    // Pattern:
-    RS_LineTypePattern* pat;
-    if (isSelected()) {
-        pat = &patternSelected;
-    } else {
-        pat = view->getPattern(getPen().getLineType());
-    }
-
-    if (pat==NULL) {
-        return;
-    }
-
-    if (ra<1.){
-        painter->drawArc(cp,
-                         ra,
-                         0.0, 2*M_PI,
-                         false);
-        return;
-    }
-
-    // Pen to draw pattern is always solid:
-    RS_Pen pen = painter->getPen();
-    pen.setLineType(RS2::SolidLine);
-    painter->setPen(pen);
-
-    // create pattern:
-    double* da=new double[pat->num>0?pat->num:0];
-    int i(0),j(0);          // index counter
-    if(pat->num>0){
-        while(i<pat->num){
-            //        da[j] = pat->pattern[i++] * styleFactor;
-            //fixme, styleFactor needed
-            da[i] = pat->pattern[i]/ra ;
-            i++;
-        }
-        j=i;
-    }else {
-        //invalid pattern
-        delete[] da;
-        painter->drawArc(cp,
-                         ra,
-                         0.,2.*M_PI,
-                         false);
-        return;
-    }
-
-    double curA ( 0.0);
-    double a2;
-    bool notDone=true;
-
-    for(i=0;notDone;i=(i+1)%j) {
-        a2= curA+fabs(da[i]);
-        if(a2>2.*M_PI) {
-            a2=2.*M_PI;
-            notDone=false;
-        }
-        if (da[i]>0.){
-            painter->drawArc(cp, ra,
-                             curA,
-                             a2,
-                             false);
-        }
-        curA=a2;
-    }
-
-    delete[] da;
-}
-
 
 
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
