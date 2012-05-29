@@ -966,7 +966,6 @@ bool dxfRW::writeText(DRW_Text *ent){
         writer->writeInt16(72, ent->alignH);
     }
     if (ent->alignH != DRW::HAlignLeft || ent->alignV != DRW::VAlignBaseLine) {
-        writer->writeInt16(72, ent->alignH);
         writer->writeDouble(11, ent->secPoint.x);
         writer->writeDouble(21, ent->secPoint.y);
         writer->writeDouble(31, ent->secPoint.z);
