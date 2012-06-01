@@ -1962,10 +1962,11 @@ void RS_FilterDXFRW::writeMText(RS_Text* t) {
         } else if (t->getVAlign()==RS2::VAlignMiddle) {
             text->alignV = DRW::VAlignMiddle;
         } else if (t->getVAlign()==RS2::VAlignBottom) {
-            text->alignV = DRW::VAlignBottom;
+            text->alignV = DRW::VAlignBaseLine;
         }
         QStringList txtList = t->getText().split('\n',QString::KeepEmptyParts);
-        double dist = t->getSize().y / txtList.size();
+//        double dist = t->getSize().y / txtList.size();
+        double dist = t->getLineSpacingFactor()*1.6*t->getHeight();
         bool setSec = false;
         if (text->alignH != DRW::HAlignLeft || text->alignV != DRW::VAlignBaseLine) {
             text->secPoint.x = t->getInsertionPoint().x;
@@ -1977,10 +1978,15 @@ void RS_FilterDXFRW::writeMText(RS_Text* t) {
         for (int i=0; i<txtList.size();++i){
             if (!txtList.at(i).isEmpty()) {
                 text->text = toDxfString(txtList.at(i)).toUtf8().data();
-                if (setSec)
-                    text->secPoint.y += dist*i;
-                else
-                    text->basePoint.y += dist*i;
+                RS_Vector inc = t->getInsertionPoint();
+                inc.setPolar(dist*i, t->getAngle()+M_PI_2);
+                if (setSec) {
+                    text->secPoint.x += inc.x;
+                    text->secPoint.y += inc.y;
+                } else {
+                    text->basePoint.x += inc.x;
+                    text->basePoint.y += inc.y;
+                }
                 dxf->writeText(text);
             }
         }
@@ -2008,7 +2014,7 @@ void RS_FilterDXFRW::writeMText(RS_Text* t) {
 
         text->text = toDxfString(t->getText()).toUtf8().data();
         //        text->widthscale =t->getWidth();
-        text->widthscale =t->getSize().x;
+        text->widthscale =t->getUsedTextWidth(); //getSize().x;
 
         dxf->writeMText((DRW_MText*)text);
     }
