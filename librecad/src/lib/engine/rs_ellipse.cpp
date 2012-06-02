@@ -1389,22 +1389,12 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
         return;
     }
     //only draw the visible portion of line
-    QVector<RS_Vector> endPoints(0);
     RS_Vector vpMin(view->toGraph(0,view->getHeight()));
     RS_Vector vpMax(view->toGraph(view->getWidth(),0));
     QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
 
-    RS_Vector vpStart;
-    RS_Vector vpEnd;
-    if(isReversed()){
-        vpStart=getEndpoint();
-        vpEnd=getStartpoint();
-    }else{
-        vpStart=getStartpoint();
-        vpEnd=getEndpoint();
-    }
-    if( vpStart.isInWindowOrdered(vpMin, vpMax) ) endPoints<<vpStart;
-    if( vpEnd.isInWindowOrdered(vpMin, vpMax) ) endPoints<<vpEnd;
+    RS_Vector vpStart(isReversed()?getEndpoint():getStartpoint());
+    RS_Vector vpEnd(isReversed()?getStartpoint():getEndpoint());
 
     QVector<RS_Vector> vertex(0);
     for(unsigned short i=0;i<4;i++){
@@ -1417,7 +1407,8 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
     double baseAngle=isReversed()?getAngle2():getAngle1();
     for(unsigned short i=0;i<4;i++){
         RS_Line line(NULL,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
-        auto&& vpIts=RS_Information::getIntersection(static_cast<RS_Entity*>(this), &line, true);
+        auto&& vpIts=RS_Information::getIntersection(
+                    static_cast<RS_Entity*>(this), &line, true);
         if( vpIts.size()==0) continue;
         foreach(RS_Vector vp, vpIts.getList()){
             auto&& ap1=getTangentDirection(vp).angle();
@@ -1513,30 +1504,28 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
         return;
     }
 
-    double tot=0.0;
     double curA(a1);
-    double da,a3;
+    double nextA;
     bool notDone(true);
 
     for(i=0;notDone;i=(i+1)%j) {//draw patterned ellipse
 
         double r2=RS_Vector(ra*sin(curA),rb*cos(curA)).squared();
-        a3 = curA + fabs(ds[i])/sqrt(r2);
-        if(a3>a2){
-            a3=a2;
+        nextA = curA + fabs(ds[i])/sqrt(r2);
+        if(nextA>a2){
+            nextA=a2;
             notDone=false;
         }
-        tot += da;
         if (ds[i]>0.){
             painter->drawEllipse(cp,
                                  ra, rb,
                                  mAngle,
                                  curA,
-                                 a3,
+                                 nextA,
                                  false);
         }
 
-        curA=a3;
+        curA=nextA;
     }
 
     delete[] ds;

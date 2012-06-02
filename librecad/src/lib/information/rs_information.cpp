@@ -102,7 +102,7 @@ bool RS_Information::isTrimmable(RS_Entity* e1, RS_Entity* e2) {
                 int idx2 = pl->findEntity(e2);
                 RS_DEBUG->print("RS_Information::isTrimmable: "
                                 "idx1: %d, idx2: %d", idx1, idx2);
-                if (abs(idx1-idx2)==1 || abs(idx1-idx2)==pl->count()-1) {
+                if (abs(idx1-idx2)==1 || abs(idx1-idx2)==int(pl->count()-1)) {
                     // directly following entities
                     return true;
                 }
