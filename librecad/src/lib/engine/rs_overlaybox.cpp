@@ -57,7 +57,7 @@ RS_Entity* RS_OverlayBox::clone() {
     return l;
 } 
 
-void RS_OverlayBox::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
+void RS_OverlayBox::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
     if (painter==NULL || view==NULL) {
         return;
     }

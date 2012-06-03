@@ -1844,14 +1844,11 @@ double RS_GraphicView::toGraphDY(int d) {
 double RS_GraphicView::dpmm(void)
 {
     RS_Graphic* graphic=getGraphic();
-    double scale=graphic->getPaperScale();
-    if(fabs(scale)<RS_TOLERANCE) scale=1.;
-    //density per mm
-    double ret=toGuiDX(1./scale);
-    scale=RS_Units::convert(1., graphic->getUnit(),
+    //unit factor
+    double scale=RS_Units::convert(1., graphic->getUnit(),
                             RS2::Millimeter);
     if(fabs(scale)<RS_TOLERANCE) scale=1.;
-    return ret/scale;
+    return graphic->getPaperScale()/scale;
 }
 
 
