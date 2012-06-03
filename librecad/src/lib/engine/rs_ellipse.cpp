@@ -1382,6 +1382,7 @@ LC_Quadratic RS_Ellipse::getQuadratic() const
     return ret;
 }
 
+/** find the visible part of the arc, and call drawVisible() to draw */
 void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
     if(isArc()==false){
         RS_Ellipse arc(NULL,RS_EllipseData(getCenter(),getMajorP(),getRatio(),0.,2.*M_PI,false));
@@ -1436,6 +1437,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
     }
 }
 
+/** directly draw the arc, assuming the whole arc is within visible window */
 void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 //    std::cout<<"RS_Ellipse::draw(): begin\n";
     if (painter==NULL || view==NULL) {
@@ -1487,8 +1489,9 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
     int i(0),j(0);
     double* ds = new double[pat->num>0?pat->num:0];
     if(pat->num>0){
+        double dpmm = view->dpmm();
         while( i<pat->num){
-            ds[i]=pat->pattern[i] ;//pattern length
+            ds[i]= dpmm * pat->pattern[i] ;//pattern length
             i++;
         }
         j=i;

@@ -854,7 +854,7 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
     correctAngles(); // make sure angleLength is no more than 2*M_PI
 }
 
-
+/** find the visible part of the arc, and call drawVisible() to draw */
 void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
                   double& patternOffset) {
 
@@ -907,6 +907,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 
 }
 
+/** directly draw the arc, assuming the whole arc is within visible window */
 void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
                   double& patternOffset) {
 
@@ -975,12 +976,13 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
     double patternSegmentLength(pat->totalLength);
     int i(0);          // index counter
     if(pat->num>0) {
+        double dpmm=view->dpmm();
         da=new double[pat->num];
         while(i<pat->num){
             //        da[j] = pat->pattern[i++] * styleFactor;
             //fixme, stylefactor needed
             da[i] =isReversed()? -fabs(pat->pattern[i]):fabs(pat->pattern[i]);
-            da[i]/=ra;
+            da[i] *= dpmm/ra;
             i++;
         }
     }else {

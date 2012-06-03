@@ -25,6 +25,7 @@
 **********************************************************************/
 
 
+#include <QtGui>
 #include "rs_line.h"
 
 #include "rs_debug.h"
@@ -677,10 +678,13 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     RS_Vector* dp=new RS_Vector[pat->num > 0?pat->num:0];
     double* ds=new double[pat->num > 0?pat->num:0];
     if (pat->num >0 ){
+        double dpmm=view->dpmm();
         for (i=0; i<pat->num; ++i) {
             //        ds[j]=pat->pattern[i] * styleFactor;
             //fixme, styleFactor support needed
-            ds[i]=pat->pattern[i] ;
+
+
+            ds[i]=dpmm*pat->pattern[i];
             dp[i] = direction*fabs(ds[i]);
         }
     }else {

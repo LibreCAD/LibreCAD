@@ -62,40 +62,39 @@ public:
 };
 
 //define all line patterns in pixels
-//Author: Dongxu Li
-static RS_LineTypePattern patternSolidLine(1, 50.0);
+static RS_LineTypePattern patternSolidLine(1, 10.0);
 
-static RS_LineTypePattern patternDotLine(2, 2., -4.);
-static RS_LineTypePattern patternDotLine2(2, 2., -6.);
-static RS_LineTypePattern patternDotLineX2(2, 2., -2.);
+static RS_LineTypePattern patternDotLine(2, 0.1, -6.2);
+static RS_LineTypePattern patternDotLine2(2, 0.1, -3.1);
+static RS_LineTypePattern patternDotLineX2(2, 0.1, -12.4);
 
-static RS_LineTypePattern patternDashLine(2, 24., -12.0);
-static RS_LineTypePattern patternDashLine2(2, 12.0, -6.0);
-static RS_LineTypePattern patternDashLineX2(2, 48.0, -24.0);
+static RS_LineTypePattern patternDashLine(2, 12.0, -6.0);
+static RS_LineTypePattern patternDashLine2(2, 6.0, -3.0);
+static RS_LineTypePattern patternDashLineX2(2, 24.0, -12.0);
 
-static RS_LineTypePattern patternDashDotLine(4, 24.0, -12, 2., -12.);
-static RS_LineTypePattern patternDashDotLine2(4, 12.0, -6., 2., -6.);
-static RS_LineTypePattern patternDashDotLineX2(4, 48.0, -24., 2., -24.);
+static RS_LineTypePattern patternDashDotLine(4, 12.0, -5.95, 0.1, -5.95);
+static RS_LineTypePattern patternDashDotLine2(4, 6.0, -2.95, 0.1, -2.95);
+static RS_LineTypePattern patternDashDotLineX2(4, 24.0, -11.95, 0.1, -11.95);
 
 static RS_LineTypePattern patternDivideLine(
-    6, 24.0, -12., 2., -12., 2., -12.);
+    6, 12.0, -5.9, 0.15, -5.9, 0.15, -5.9);
 static RS_LineTypePattern patternDivideLine2(
-    6, 12.0, -6., 2., -6., 2., -6.);
+    6, 6.0, -2.9, 0.15, -2.9, 0.15, -2.9);
 static RS_LineTypePattern patternDivideLineX2(
-    6, 48.0, -24., 2., -24., 2., -24.);
+    6, 24.0, -11.9, 0.15, -11.9, 0.15, -11.9);
 
 static RS_LineTypePattern patternCenterLine(4, 32.0, -6.0, 6.0, -6.0);
 static RS_LineTypePattern patternCenterLine2(4, 16.0, -3.0, 3.0, -3.0);
 static RS_LineTypePattern patternCenterLineX2(4, 64.0, -12.0, 12.0, -12.0);
 
 static RS_LineTypePattern patternBorderLine(
-        6, 12.0, -6.0, 12.0, -6., 2., -6.);
+    6, 12.0, -6.0, 12.0, -5.95, 0.1, -5.95);
 static RS_LineTypePattern patternBorderLine2(
-        6, 6.0, -3.0, 6.0, -3., 2., -3.);
+    6, 6.0, -3.0, 6.0, -2.95, 0.1, -2.95);
 static RS_LineTypePattern patternBorderLineX2(
-        6, 24.0, -12.0, 24.0, -12., 2., -12.);
+    6, 24.0, -12.0, 24.0, -11.95, 0.1, -11.95);
 
-static RS_LineTypePattern patternBlockLine(2, 2.5, -2.5);
-static RS_LineTypePattern patternSelected(2, 2.0, -6.0);
+static RS_LineTypePattern patternBlockLine(2, 0.5, -0.5);
+static RS_LineTypePattern patternSelected(2, 1.0, -3.0);
 
 #endif
