@@ -61,7 +61,7 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
         os << "(" << ed.center <<
-           "/" << ed.majorP <<
+           " " << ed.majorP <<
            " " << ed.ratio <<
            " " << ed.angle1 <<
            "," << ed.angle2 <<

@@ -898,10 +898,11 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     //sorting
     qSort(crossPoints.begin(),crossPoints.end());
     //draw visible
+    RS_Arc arc(*this);
+    arc.setReversed(false);
     for(int i=0;i<crossPoints.size()-1;i+=2){
-        RS_Arc arc(NULL, RS_ArcData(getCenter(),getRadius(),
-                                    baseAngle+crossPoints[i],
-                                    baseAngle+crossPoints[i+1],false));
+        arc.setAngle1(baseAngle+crossPoints[i]);
+        arc.setAngle2(baseAngle+crossPoints[i+1]);
         arc.drawVisible(painter,view,patternOffset);
     }
 

@@ -1385,7 +1385,9 @@ LC_Quadratic RS_Ellipse::getQuadratic() const
 /** find the visible part of the arc, and call drawVisible() to draw */
 void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
     if(isArc()==false){
-        RS_Ellipse arc(NULL,RS_EllipseData(getCenter(),getMajorP(),getRatio(),0.,2.*M_PI,false));
+        RS_Ellipse arc(*this);
+        arc.setAngle2(2.*M_PI);
+        arc.setReversed(false);
         arc.draw(painter,view,patternOffset);
         return;
     }
@@ -1429,17 +1431,21 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
     //sorting
     qSort(crossPoints.begin(),crossPoints.end());
     //draw visible
+//    DEBUG_HEADER();
+//    std::cout<<"crossPoints.size()="<<crossPoints.size()<<std::endl;
+    RS_Ellipse arc(*this);
+    arc.setReversed(false);
     for(int i=0;i<crossPoints.size()-1;i+=2){
-        RS_Ellipse arc(NULL, RS_EllipseData(getCenter(),getMajorP(),getRatio(),
-                                    baseAngle+crossPoints[i],
-                                    baseAngle+crossPoints[i+1],false));
+        arc.setAngle1(baseAngle+crossPoints[i]);
+        arc.setAngle2(baseAngle+crossPoints[i+1]);
         arc.drawVisible(painter,view,patternOffset);
     }
 }
 
 /** directly draw the arc, assuming the whole arc is within visible window */
 void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-//    std::cout<<"RS_Ellipse::draw(): begin\n";
+//    std::cout<<"RS_Ellipse::drawVisible(): begin\n";
+//    std::cout<<*this<<std::endl;
     if (painter==NULL || view==NULL) {
         return;
     }
@@ -1513,8 +1519,8 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
 
     for(i=0;notDone;i=(i+1)%j) {//draw patterned ellipse
 
-        double r2=RS_Vector(ra*sin(curA),rb*cos(curA)).squared();
-        nextA = curA + fabs(ds[i])/sqrt(r2);
+        nextA = curA + fabs(ds[i])/
+                RS_Vector(ra*sin(curA),rb*cos(curA)).magnitude();
         if(nextA>a2){
             nextA=a2;
             notDone=false;
