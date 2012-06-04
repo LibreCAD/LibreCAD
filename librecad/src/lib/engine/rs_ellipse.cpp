@@ -1434,6 +1434,8 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
 //    DEBUG_HEADER();
 //    std::cout<<"crossPoints.size()="<<crossPoints.size()<<std::endl;
     RS_Ellipse arc(*this);
+    arc.setSelected(isSelected());
+    arc.setPen(getPen());
     arc.setReversed(false);
     for(int i=0;i<crossPoints.size()-1;i+=2){
         arc.setAngle1(baseAngle+crossPoints[i]);

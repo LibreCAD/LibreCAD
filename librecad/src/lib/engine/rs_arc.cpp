@@ -899,6 +899,8 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     qSort(crossPoints.begin(),crossPoints.end());
     //draw visible
     RS_Arc arc(*this);
+    arc.setPen(getPen());
+    arc.setSelected(isSelected());
     arc.setReversed(false);
     for(int i=0;i<crossPoints.size()-1;i+=2){
         arc.setAngle1(baseAngle+crossPoints[i]);
