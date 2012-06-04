@@ -975,17 +975,18 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
 
 
     // create scaled pattern:
-    double* da;
+    QVector<double> da(0);
     double patternSegmentLength(pat->totalLength);
+    double ira=1./ra;
     int i(0);          // index counter
     if(pat->num>0) {
         double dpmm=view->dpmm();
-        da=new double[pat->num];
+        da.resize(pat->num);
         while(i<pat->num){
             //        da[j] = pat->pattern[i++] * styleFactor;
             //fixme, stylefactor needed
             da[i] =isReversed()? -fabs(pat->pattern[i]):fabs(pat->pattern[i]);
-            da[i] *= dpmm/ra;
+            da[i] *= dpmm*ira;
             i++;
         }
     }else {
@@ -1007,10 +1008,10 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
 
     if(isReversed()) {//always draw from a1 to a2, so, patternOffset is is automatic
         if(a1<a2+RS_TOLERANCE_ANGLE) a2 -= 2.*M_PI;
-        total = a1 - total/ra; //in angle
+        total = a1 - total*ira; //in angle
     }else{
         if(a2<a1+RS_TOLERANCE_ANGLE) a2 += 2.*M_PI;
-        total = a1 + total/ra; //in angle
+        total = a1 + total*ira; //in angle
     }
     double limit(fabs(a1-a2));
     double t2;
@@ -1032,8 +1033,6 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
         }
         total=t2;
     }
-
-    delete[] da;
 }
 
 
