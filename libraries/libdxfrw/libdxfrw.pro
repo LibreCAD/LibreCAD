@@ -11,7 +11,7 @@ CONFIG += static warn_on
 
 DESTDIR = ../../generated/lib
 
-VERSION = 0.4.2
+VERSION = 0.4.3
 
 DLL_NAME = dxfrw
 TARGET = $$DLL_NAME

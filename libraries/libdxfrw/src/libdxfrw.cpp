@@ -14,6 +14,7 @@
 #include "libdxfrw.h"
 #include <fstream>
 #include <algorithm>
+#include <sstream>
 #include "drw_textcodec.h"
 #include "dxfreader.h"
 #include "dxfwriter.h"
@@ -259,7 +260,12 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     char buffer[5];
     writer->writeString(0, "DIMSTYLE");
     if (!dimstyleStd) {
-        dimstyleStd = true;
+        std::string name;
+        std::stringstream ss;
+        ss << std::uppercase << ent->name;
+        ss >> name;
+        if (name == "STANDARD")
+            dimstyleStd = true;
     }
     if (version > DRW::AC1009) {
         ++entCount;
@@ -304,7 +310,7 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     writer->writeDouble(145, ent->dimtvp);
     writer->writeDouble(146, ent->dimtfac);
     writer->writeDouble(147, ent->dimgap);
-    if (version > DRW::AC1012) {
+    if (version > DRW::AC1014) {
         writer->writeDouble(148, ent->dimaltrnd);
     }
     writer->writeInt16(71, ent->dimtol);
@@ -315,8 +321,8 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     writer->writeInt16(76, ent->dimse2);
     writer->writeInt16(77, ent->dimtad);
     writer->writeInt16(78, ent->dimzin);
-    if (version > DRW::AC1012) {
-        writer->writeDouble(79, ent->dimazin);
+    if (version > DRW::AC1014) {
+        writer->writeInt16(79, ent->dimazin);
     }
     writer->writeInt16(170, ent->dimalt);
     writer->writeInt16(171, ent->dimaltd);
@@ -327,13 +333,47 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     writer->writeInt16(176, ent->dimclrd);
     writer->writeInt16(177, ent->dimclre);
     writer->writeInt16(178, ent->dimclrt);
-    if (version > DRW::AC1012) {
-        writer->writeDouble(179, ent->dimadec);
+    if (version > DRW::AC1014) {
+        writer->writeInt16(179, ent->dimadec);
     }
-
-/*    if (version > DRW::AC1012) {
-        writer->writeString(340, ent->dimtxsty);
-    }//text style handle */
+    if (version > DRW::AC1009) {
+        if (version < DRW::AC1015)
+            writer->writeInt16(270, ent->dimunit);
+        writer->writeInt16(271, ent->dimdec);
+        writer->writeInt16(272, ent->dimtdec);
+        writer->writeInt16(273, ent->dimaltu);
+        writer->writeInt16(274, ent->dimalttd);
+        writer->writeInt16(275, ent->dimaunit);
+    }
+    if (version > DRW::AC1014) {
+        writer->writeInt16(276, ent->dimfrac);
+        writer->writeInt16(277, ent->dimlunit);
+        writer->writeInt16(278, ent->dimdsep);
+        writer->writeInt16(279, ent->dimtmove);
+    }
+    if (version > DRW::AC1009) {
+        writer->writeInt16(280, ent->dimjust);
+        writer->writeInt16(281, ent->dimsd1);
+        writer->writeInt16(282, ent->dimsd2);
+        writer->writeInt16(283, ent->dimtolj);
+        writer->writeInt16(284, ent->dimtzin);
+        writer->writeInt16(285, ent->dimaltz);
+        writer->writeInt16(286, ent->dimaltttz);
+        if (version < DRW::AC1015)
+            writer->writeInt16(287, ent->dimfit);
+        writer->writeInt16(288, ent->dimupt);
+    }
+    if (version > DRW::AC1014) {
+        writer->writeInt16(289, ent->dimatfit);
+    }
+    if (version > DRW::AC1009) {
+        writer->writeUtf8String(340, ent->dimtxsty);
+    }
+    if (version > DRW::AC1014) {
+        writer->writeUtf8String(341, ent->dimldrblk);
+        writer->writeInt16(371, ent->dimlwd);
+        writer->writeInt16(372, ent->dimlwe);
+    }
     return true;
 }
 
