@@ -35,6 +35,8 @@ public:
     bool writeLineType(DRW_LType *ent);
     bool writeLayer(DRW_Layer *ent);
     bool writeDimstyle(DRW_Dimstyle *ent);
+    bool writeTextstyle(DRW_Textstyle *ent);
+    bool writeVport(DRW_Vport *ent);
     bool writePoint(DRW_Point *ent);
     bool writeLine(DRW_Line *ent);
     bool writeRay(DRW_Ray *ent);
@@ -71,6 +73,8 @@ private:
     bool processLType();
     bool processLayer();
     bool processDimStyle();
+    bool processTextStyle();
+    bool processVports();
 
     bool processPoint();
     bool processLine();

@@ -261,6 +261,70 @@ void DRW_Layer::parseCode(int code, dxfReader *reader){
     }
 }
 
+//! Class to handle text style entries
+/*!
+*  Class to handle text style symbol table entries
+*  @author Rallaz
+*/
+void DRW_Textstyle::parseCode(int code, dxfReader *reader){
+//RLZ: implement
+    switch (code) {
+//    case 6:
+//        lineType = reader->getUtf8String();
+//        break;
+//    case 62:
+//        color = reader->getInt32();
+//        break;
+//    case 290:
+//        plotF = reader->getBool();
+//        break;
+//    case 370:
+//        lWeight = reader->getInt32();
+//        break;
+//    case 390:
+//        handlePlotS = reader->getString();
+//        break;
+//    case 347:
+//        handlePlotM = reader->getString();
+//        break;
+    default:
+        DRW_TableEntry::parseCode(code, reader);
+        break;
+    }
+}
+
+//! Class to handle vport entries
+/*!
+*  Class to handle vport symbol table entries
+*  @author Rallaz
+*/
+void DRW_Vport::parseCode(int code, dxfReader *reader){
+//RLZ: implement
+    switch (code) {
+//    case 6:
+//        lineType = reader->getUtf8String();
+//        break;
+//    case 62:
+//        color = reader->getInt32();
+//        break;
+//    case 290:
+//        plotF = reader->getBool();
+//        break;
+//    case 370:
+//        lWeight = reader->getInt32();
+//        break;
+//    case 390:
+//        handlePlotS = reader->getString();
+//        break;
+//    case 347:
+//        handlePlotM = reader->getString();
+//        break;
+    default:
+        DRW_TableEntry::parseCode(code, reader);
+        break;
+    }
+}
+
 void DRW_ImageDef::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 1:

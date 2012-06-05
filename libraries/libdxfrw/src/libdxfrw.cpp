@@ -247,6 +247,14 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
     return true;
 }
 
+bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
+    //RLZ: implement
+}
+
+bool dxfRW::writeVport(DRW_Vport *ent){
+//RLZ: implement
+}
+
 bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     char buffer[5];
     writer->writeString(0, "DIMSTYLE");
@@ -1172,6 +1180,9 @@ bool dxfRW::writeTables() {
         writer->writeString(100, "AcDbSymbolTable");
     }
     writer->writeInt16(70, 1); //end table def
+    //Aplication vports
+//RLZ: implement
+//    iface->writeVports();
     writer->writeString(0, "VPORT");
     if (version > DRW::AC1009) {
         entCount = 1+entCount;
@@ -1344,6 +1355,9 @@ bool dxfRW::writeTables() {
         writer->writeString(100, "AcDbSymbolTable");
     }
     writer->writeInt16(70, 0); //end table def
+    //Aplication text style
+//RLZ: implement
+//    iface->writeTextstyle();
     writer->writeString(0, "ENDTAB");
 
     writer->writeString(0, "TABLE");
@@ -1727,7 +1741,9 @@ bool dxfRW::processTables() {
                     } else if (sectionstr == "LAYER") {
                         processLayer();
                     } else if (sectionstr == "STYLE") {
-//                        processStyle();
+                        processTextStyle();
+                    } else if (sectionstr == "VPORT") {
+                        processVports();
                     } else if (sectionstr == "VIEW") {
 //                        processView();
                     } else if (sectionstr == "UCS") {
@@ -1818,6 +1834,54 @@ bool dxfRW::processDimStyle() {
             }
         } else if (reading)
             dimSty.parseCode(code, reader);
+    }
+    return true;
+}
+
+bool dxfRW::processTextStyle(){
+    DBG("dxfRW::processTextStyle");
+    int code;
+    string sectionstr;
+    bool reading = false;
+    DRW_Textstyle TxtSty;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        if (code == 0) {
+            if (reading)
+                iface->addTextStyle(TxtSty);
+            sectionstr = reader->getString();
+            DBG(sectionstr); DBG("\n");
+            if (sectionstr == "STYLE") {
+                reading = true;
+            } else if (sectionstr == "ENDTAB") {
+                return true;  //found ENDTAB terminate
+            }
+        } else if (reading)
+            TxtSty.parseCode(code, reader);
+    }
+    return true;
+}
+
+bool dxfRW::processVports(){
+    DBG("dxfRW::processVports");
+    int code;
+    string sectionstr;
+    bool reading = false;
+    DRW_Vport vp;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        if (code == 0) {
+            if (reading)
+                iface->addVport(vp);
+            sectionstr = reader->getString();
+            DBG(sectionstr); DBG("\n");
+            if (sectionstr == "VPORT") {
+                reading = true;
+            } else if (sectionstr == "ENDTAB") {
+                return true;  //found ENDTAB terminate
+            }
+        } else if (reading)
+            vp.parseCode(code, reader);
     }
     return true;
 }

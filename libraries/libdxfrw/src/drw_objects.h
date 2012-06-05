@@ -31,7 +31,9 @@ namespace DRW {
          UNKNOWNT,
          LTYPE,
          LAYER,
+         STYLE,
          DIMSTYLE,
+         VPORT,
          BLOCK_RECORD
      };
 
@@ -200,6 +202,58 @@ public:
     int lWeight;               /*!< layer lineweight, code 370 */
     string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
     string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
+};
+
+//! Class to handle text style entries
+/*!
+*  Class to handle text style symbol table entries
+*  @author Rallaz
+*/
+class DRW_Textstyle : public DRW_TableEntry {
+public:
+    DRW_Textstyle() {
+        tType = DRW::STYLE;
+//        lineType = "CONTINUOUS";
+//        color = 7; // default BYLAYER (256)
+//        plotF = true; // default TRUE (plot yes)
+//        lWeight = -3; // default BYDEFAULT (-3)
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+//    UTF8STRING lineType;           /*!< line type, code 6 */
+//    int color;                 /*!< layer color, code 62 */
+//    bool plotF;                 /*!< Plot flag, code 290 */
+//    int lWeight;               /*!< layer lineweight, code 370 */
+//    string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
+//    string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
+};
+
+//! Class to handle vport entries
+/*!
+*  Class to handle vport symbol table entries
+*  @author Rallaz
+*/
+class DRW_Vport : public DRW_TableEntry {
+public:
+    DRW_Vport() {
+//        tType = DRW::LAYER;
+//        lineType = "CONTINUOUS";
+//        color = 7; // default BYLAYER (256)
+//        plotF = true; // default TRUE (plot yes)
+//        lWeight = -3; // default BYDEFAULT (-3)
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+//    UTF8STRING lineType;           /*!< line type, code 6 */
+//    int color;                 /*!< layer color, code 62 */
+//    bool plotF;                 /*!< Plot flag, code 290 */
+//    int lWeight;               /*!< layer lineweight, code 370 */
+//    string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
+//    string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
 };
 
 

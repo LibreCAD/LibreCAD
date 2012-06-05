@@ -1581,6 +1581,17 @@ void RS_FilterDXFRW::writeLayers(){
     }
 }
 
+void RS_FilterDXFRW::writeTextstyles(){
+//    DRW_Textstyle ts;
+//    dxf->writeTextstyle(&ts);
+}
+
+void RS_FilterDXFRW::writeVports(){
+//    DRW_Vport vp;
+//    dxf->writeVport(&vp);
+}
+
+
 void RS_FilterDXFRW::writeDimstyles(){
     DRW_Dimstyle dsty;
     dsty.name = "Standard";

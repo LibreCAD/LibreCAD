@@ -74,6 +74,8 @@ public:
     virtual void addLType(const DRW_LType& /*data*/){}
     virtual void addLayer(const DRW_Layer& data);
     virtual void addDimStyle(const DRW_Dimstyle& /*data*/){}
+    virtual void addVport(const DRW_Vport& /*data*/){}
+    virtual void addTextStyle(const DRW_Textstyle& /*data*/){}
     virtual void addBlock(const DRW_Block& data);
     virtual void endBlock();
     virtual void addPoint(const DRW_Point& data);
@@ -116,6 +118,8 @@ public:
     virtual void writeEntities();
     virtual void writeLTypes();
     virtual void writeLayers();
+    virtual void writeTextstyles();
+    virtual void writeVports();
     virtual void writeBlockRecords();
     virtual void writeBlocks();
     virtual void writeDimstyles();
