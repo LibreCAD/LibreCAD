@@ -154,6 +154,8 @@ bool dxfRW::writeEntity(DRW_Entity *ent) {
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbEntity");
     }
+    if (ent->space == 1)
+        writer->writeInt16(67, 1);
     if (version > DRW::AC1009) {
         writer->writeUtf8String(8, ent->layer);
         writer->writeUtf8String(6, ent->lineType);
@@ -1013,6 +1015,25 @@ bool dxfRW::writeMText(DRW_MText *ent){
     } else {
         //RLZ: TODO convert mtext in text lines (not exist in acad 12)
     }
+    return true;
+}
+
+bool dxfRW::writeViewport(DRW_Viewport *ent) {
+    writer->writeString(0, "VIEWPORT");
+    writeEntity(ent);
+    if (version > DRW::AC1009) {
+        writer->writeString(100, "AcDbViewport");
+    }
+    writer->writeDouble(10, ent->basePoint.x);
+    writer->writeDouble(20, ent->basePoint.y);
+    if (ent->basePoint.z != 0.0)
+        writer->writeDouble(30, ent->basePoint.z);
+    writer->writeDouble(40, ent->pswidth);
+    writer->writeDouble(41, ent->psheight);
+    writer->writeInt16(68, ent->vpstatus);
+    writer->writeInt16(69, ent->vpID);
+    writer->writeDouble(12, ent->centerPX);//RLZ: verify if exist in V12
+    writer->writeDouble(22, ent->centerPY);//RLZ: verify if exist in V12
     return true;
 }
 
@@ -1898,6 +1919,8 @@ bool dxfRW::processEntities(bool isblock) {
             processSpline();
         } else if (nextentity == "3DFACE") {
             process3dface();
+        } else if (nextentity == "VIEWPORT") {
+            processViewport();
         } else if (nextentity == "IMAGE") {
             processImage();
         } else if (nextentity == "DIMENSION") {
@@ -2002,6 +2025,27 @@ bool dxfRW::process3dface() {
         }
         default:
             face.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
+bool dxfRW::processViewport() {
+    DBG("dxfRW::processViewport");
+    int code;
+    DRW_Viewport vp;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addViewport(vp);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            vp.parseCode(code, reader);
             break;
         }
     }

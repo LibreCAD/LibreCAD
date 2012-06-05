@@ -77,6 +77,7 @@ namespace DRW {
 //        CONSTRUCTIONLINE,
         RAY,
         XLINE,
+        VIEWPORT,
         UNKNOWN
     };
 
@@ -1126,6 +1127,34 @@ public:
 
 private:
     DRW_Coord *vertexpoint;   /*!< current control point to add data */
+};
+
+//! Class to handle viewport entity
+/*!
+*  Class to handle viewport entity
+*  @author Rallaz
+*/
+class DRW_Viewport : public DRW_Point {
+public:
+    DRW_Viewport() {
+        eType = DRW::VIEWPORT;
+        vpstatus = 0;
+        pswidth = 205;
+        psheight = 156;
+        centerPX = 128.5;
+        centerPY = 97.5;
+    }
+
+    virtual void applyExtrusion(){}
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    double pswidth;           /*!< Width in paper space units, code 40 */
+    double psheight;          /*!< Height in paper space units, code 41 */
+    int vpstatus;             /*!< Viewport status, code 68 */
+    int vpID;                 /*!< Viewport ID, code 69 */
+    double centerPX;          /*!< view center piont X, code 12 */
+    double centerPY;          /*!< view center piont Y, code 22 */
 };
 
 

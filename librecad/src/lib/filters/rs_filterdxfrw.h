@@ -102,6 +102,7 @@ public:
     virtual void addDimOrdinate(const DRW_DimOrdinate *data);
     virtual void addLeader(const DRW_Leader *data);
     virtual void addHatch(const DRW_Hatch* data);
+    virtual void addViewport(const DRW_Viewport& /*data*/){}
     virtual void addImage(const DRW_Image* data);
     virtual void linkImage(const DRW_ImageDef* data);
 

@@ -54,6 +54,7 @@ public:
     bool writeMText(DRW_MText *ent);
     bool writeText(DRW_Text *ent);
     bool writeHatch(DRW_Hatch *ent);
+    bool writeViewport(DRW_Viewport *ent);
     DRW_ImageDef *writeImage(DRW_Image *ent, std::string name);
     bool writeLeader(DRW_Leader *ent);
     bool writeDimension(DRW_Dimension *ent);
@@ -89,6 +90,7 @@ private:
     bool processHatch();
     bool processSpline();
     bool process3dface();
+    bool processViewport();
     bool processImage();
     bool processImageDef();
     bool processDimension();

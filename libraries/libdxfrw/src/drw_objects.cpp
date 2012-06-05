@@ -433,88 +433,220 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
     writer->writeString(9, "$DWGCODEPAGE");
     writer->setCodePage(&varStr);
     writer->writeString(3, writer->getCodePage() );
+    writer->writeString(9, "$INSBASE");
+    if (getCoord("$INSBASE", &varCoord)) {
+        writer->writeDouble(10, varCoord.x);
+        writer->writeDouble(20, varCoord.y);
+        writer->writeDouble(30, varCoord.z);
+    } else {
+        writer->writeDouble(10, 0.0);
+        writer->writeDouble(20, 0.0);
+        writer->writeDouble(30, 0.0);
+    }
+    writer->writeString(9, "$EXTMIN");
+    if (getCoord("$EXTMIN", &varCoord)) {
+        writer->writeDouble(10, varCoord.x);
+        writer->writeDouble(20, varCoord.y);
+        writer->writeDouble(30, varCoord.z);
+    } else {
+        writer->writeDouble(10, 1.0000000000000000E+020);
+        writer->writeDouble(20, 1.0000000000000000E+020);
+        writer->writeDouble(30, 1.0000000000000000E+020);
+    }
+    writer->writeString(9, "$EXTMAX");
+    if (getCoord("$EXTMAX", &varCoord)) {
+        writer->writeDouble(10, varCoord.x);
+        writer->writeDouble(20, varCoord.y);
+        writer->writeDouble(30, varCoord.z);
+    } else {
+        writer->writeDouble(10, -1.0000000000000000E+020);
+        writer->writeDouble(20, -1.0000000000000000E+020);
+        writer->writeDouble(30, -1.0000000000000000E+020);
+    }
+    writer->writeString(9, "$LIMMIN");
+    if (getCoord("$LIMMIN", &varCoord)) {
+        writer->writeDouble(10, varCoord.x);
+        writer->writeDouble(20, varCoord.y);
+    } else {
+        writer->writeDouble(10, 0.0);
+        writer->writeDouble(20, 0.0);
+    }
+    writer->writeString(9, "$LIMMAX");
+    if (getCoord("$LIMMAX", &varCoord)) {
+        writer->writeDouble(10, varCoord.x);
+        writer->writeDouble(20, varCoord.y);
+    } else {
+        writer->writeDouble(10, 420.0);
+        writer->writeDouble(20, 297.0);
+    }
+    writer->writeString(9, "$ORTHOMODE");
+    if (getInt("$ORTHOMODE", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$LTSCALE");
+    if (getDouble("$LTSCALE", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 1.0);
+    writer->writeString(9, "$TEXTSTYLE");
+    if (getStr("$TEXTSTYLE", &varStr))
+        if (ver == DRW::AC1009)
+            writer->writeUtf8Caps(7, varStr);
+        else
+            writer->writeUtf8String(7, varStr);
+    else
+        writer->writeString(7, "STANDARD");
 
-    if (getDouble("$DIMASZ", &varDouble)) {
-        writer->writeString(9, "$DIMASZ");
+    writer->writeString(9, "$DIMASZ");
+    if (getDouble("$DIMASZ", &varDouble))
         writer->writeDouble(40, varDouble);
-    }
-    if (getDouble("$DIMEXE", &varDouble)) {
-        writer->writeString(9, "$DIMEXE");
+    else
+        writer->writeDouble(40, 2.5);
+    writer->writeString(9, "$DIMEXO");
+    if (getDouble("$DIMEXO", &varDouble))
         writer->writeDouble(40, varDouble);
-    }
-    if (getDouble("$DIMEXO", &varDouble)) {
-        writer->writeString(9, "$DIMEXO");
+    else
+        writer->writeDouble(40, 0.625);
+    writer->writeString(9, "$DIMEXE");
+    if (getDouble("$DIMEXE", &varDouble))
         writer->writeDouble(40, varDouble);
-    }
-    if (getDouble("$DIMGAP", &varDouble)) {
-        writer->writeString(9, "$DIMGAP");
+    else
+        writer->writeDouble(40, 1.25);
+    writer->writeString(9, "$DIMTXT");
+    if (getDouble("$DIMTXT", &varDouble))
         writer->writeDouble(40, varDouble);
-    }
-    if (getDouble("$DIMTXT", &varDouble)) {
-        writer->writeString(9, "$DIMTXT");
+    else
+        writer->writeDouble(40, 2.5);
+    writer->writeString(9, "$DIMTSZ");
+    if (getDouble("$DIMTSZ", &varDouble))
         writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.0);
+    if (ver > DRW::AC1009) {
+        writer->writeString(9, "$DIMAUNIT");
+        if (getInt("$DIMAUNIT", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
+        writer->writeString(9, "$DIMADEC");
+        if (getInt("$DIMADEC", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
     }
-    if (getStr("$DIMSTYLE", &varStr)) {
-        writer->writeString(9, "$DIMSTYLE");
-        if (ver > DRW::AC1012) {
+    writer->writeString(9, "$DIMSTYLE");
+    if (getStr("$DIMSTYLE", &varStr))
+        if (ver == DRW::AC1009)
             writer->writeUtf8Caps(2, varStr);
-        } else {
+        else
             writer->writeUtf8String(2, varStr);
+    else
+        writer->writeString(7, "STANDARD");
+    writer->writeString(9, "$DIMGAP");
+    if (getDouble("$DIMGAP", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.625);
+
+    writer->writeString(9, "$LUNITS");
+    if (getInt("$LUNITS", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 2);
+    writer->writeString(9, "$LUPREC");
+    if (getInt("$LUPREC", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 4);
+    writer->writeString(9, "$AUNITS");
+    if (getInt("$AUNITS", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$AUPREC");
+    if (getInt("$AUPREC", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 2);
+    if (ver > DRW::AC1009) {
+    writer->writeString(9, "$SPLINESEGS");
+    if (getInt("$SPLINESEGS", &varInt)) {
+        writer->writeInt16(70, varInt);
+    } else
+        writer->writeInt16(70, 8);
+    }
+/* RLZ: move to active VPORT*/
+    writer->writeString(9, "$GRIDMODE");
+    if (getInt("$GRIDMODE", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$SNAPSTYLE");
+    if (getInt("$SNAPSTYLE", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$GRIDUNIT");
+    if (getCoord("$GRIDUNIT", &varCoord)) {
+        writer->writeDouble(10, varCoord.x);
+        writer->writeDouble(20, varCoord.y);
+    } else {
+        writer->writeDouble(10, 210.0);
+        writer->writeDouble(20, 150.0);
+    }
+    writer->writeString(9, "$VIEWCTR");
+    if (getCoord("$VIEWCTR", &varCoord)) {
+        writer->writeDouble(10, varCoord.x);
+        writer->writeDouble(20, varCoord.y);
+    } else {
+        writer->writeDouble(10, 210.0);
+        writer->writeDouble(20, 150.0);
+    }
+    /* RLZ: end move to active VPORT*/
+
+    if (ver > DRW::AC1009) {
+        writer->writeString(9, "$PINSBASE");
+        if (getCoord("$PINSBASE", &varCoord)) {
+            writer->writeDouble(10, varCoord.x);
+            writer->writeDouble(20, varCoord.y);
+            writer->writeDouble(30, varCoord.z);
+        } else {
+            writer->writeDouble(10, 0.0);
+            writer->writeDouble(20, 0.0);
+            writer->writeDouble(30, 0.0);
         }
     }
-    if (getDouble("$DIMTSZ", &varDouble)) {
-        writer->writeString(9, "$DIMTSZ");
-        writer->writeDouble(40, varDouble);
-    }
-    if (getCoord("$INSBASE", &varCoord)) {
-        writer->writeString(9, "$INSBASE");
-        writer->writeDouble(10, varCoord.x);
-        writer->writeDouble(20, varCoord.y);
-        writer->writeDouble(30, varCoord.z);
-    }
-    if (getCoord("$EXTMIN", &varCoord)) {
-        writer->writeString(9, "$EXTMIN");
-        writer->writeDouble(10, varCoord.x);
-        writer->writeDouble(20, varCoord.y);
-        writer->writeDouble(30, varCoord.z);
-    }
-    if (getCoord("$EXTMAX", &varCoord)) {
-        writer->writeString(9, "$EXTMAX");
-        writer->writeDouble(10, varCoord.x);
-        writer->writeDouble(20, varCoord.y);
-        writer->writeDouble(30, varCoord.z);
-    }
-    if (getCoord("$LIMMIN", &varCoord)) {
-        writer->writeString(9, "$LIMMIN");
-        writer->writeDouble(10, varCoord.x);
-        writer->writeDouble(20, varCoord.y);
-    }
-    if (getCoord("$LIMMAX", &varCoord)) {
-        writer->writeString(9, "$LIMMAX");
-        writer->writeDouble(10, varCoord.x);
-        writer->writeDouble(20, varCoord.y);
-    }
-    if (getInt("$ORTHOMODE", &varInt)) {
-        writer->writeString(9, "$ORTHOMODE");
-        writer->writeInt16(70, varInt);
-    }
+    writer->writeString(9, "$PLIMMIN");
     if (getCoord("$PLIMMIN", &varCoord)) {
-        writer->writeString(9, "$PLIMMIN");
         writer->writeDouble(10, varCoord.x);
         writer->writeDouble(20, varCoord.y);
+    } else {
+        writer->writeDouble(10, 0.0);
+        writer->writeDouble(20, 0.0);
     }
+    writer->writeString(9, "$PLIMMAX");
     if (getCoord("$PLIMMAX", &varCoord)) {
-        writer->writeString(9, "$PLIMMAX");
         writer->writeDouble(10, varCoord.x);
         writer->writeDouble(20, varCoord.y);
+    } else {
+        writer->writeDouble(10, 297.0);
+        writer->writeDouble(20, 210.0);
     }
     if (ver > DRW::AC1014) {
-        if (getInt("$INSUNITS", &varInt)) {
-            writer->writeString(9, "$INSUNITS");
+        writer->writeString(9, "$INSUNITS");
+        if (getInt("$INSUNITS", &varInt))
             writer->writeInt16(70, varInt);
-        }
+        else
+            writer->writeInt16(70, 0);
     }
-
+    if (ver > DRW::AC1009) {
+        writer->writeString(9, "$PSVPSCALE");
+        if (getDouble("$PSVPSCALE", &varDouble))
+            writer->writeDouble(40, varDouble);
+        else
+            writer->writeDouble(40, 0.0);
+    }
     std::map<std::string,DRW_Variant *>::const_iterator it;
     for ( it=vars.begin() ; it != vars.end(); it++ ){
 //        QString key = QString::fromStdString((*it).first);

@@ -152,7 +152,12 @@ public:
 	 */
     virtual void addHatch(const DRW_Hatch *data) = 0;
 	
-	/** 
+    /**
+     * Called for every viewport entity.
+     */
+    virtual void addViewport(const DRW_Viewport& data) = 0;
+
+    /**
 	 * Called for every image entity. 
 	 */
     virtual void addImage(const DRW_Image *data) = 0;

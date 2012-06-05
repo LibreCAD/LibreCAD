@@ -1312,7 +1312,7 @@ void RS_FilterDXFRW::writeBlocks() {
 
 void RS_FilterDXFRW::writeHeader(DRW_Header& data){
     DRW_Variant *curr;
-/*TODO $ISOMETRICGRID and "GRID on/off" not handled because is part of
+/*TODO $ISOMETRICGRID == $SNAPSTYLE and "GRID on/off" not handled because is part of
  active vport to save is required read/write VPORT table */
     QHash<QString, RS_Variable>vars = graphic->getVariableDict();
     QHash<QString, RS_Variable>::iterator it = vars.begin();
