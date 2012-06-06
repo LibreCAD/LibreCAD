@@ -339,26 +339,31 @@ void DRW_Layer::parseCode(int code, dxfReader *reader){
 *  @author Rallaz
 */
 void DRW_Textstyle::parseCode(int code, dxfReader *reader){
-//RLZ: implement
     switch (code) {
-//    case 6:
-//        lineType = reader->getUtf8String();
-//        break;
-//    case 62:
-//        color = reader->getInt32();
-//        break;
-//    case 290:
-//        plotF = reader->getBool();
-//        break;
-//    case 370:
-//        lWeight = reader->getInt32();
-//        break;
-//    case 390:
-//        handlePlotS = reader->getString();
-//        break;
-//    case 347:
-//        handlePlotM = reader->getString();
-//        break;
+    case 3:
+        font = reader->getUtf8String();
+        break;
+    case 4:
+        bigFont = reader->getUtf8String();
+        break;
+    case 40:
+        height = reader->getDouble();
+        break;
+    case 41:
+        width = reader->getDouble();
+        break;
+    case 50:
+        oblique = reader->getDouble();
+        break;
+    case 42:
+        lastHeight = reader->getDouble();
+        break;
+    case 71:
+        genFlag = reader->getInt32();
+        break;
+    case 1071:
+        fontFamily = reader->getUtf8String();
+        break;
     default:
         DRW_TableEntry::parseCode(code, reader);
         break;

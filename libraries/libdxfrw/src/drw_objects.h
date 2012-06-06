@@ -240,21 +240,23 @@ class DRW_Textstyle : public DRW_TableEntry {
 public:
     DRW_Textstyle() {
         tType = DRW::STYLE;
-//        lineType = "CONTINUOUS";
-//        color = 7; // default BYLAYER (256)
-//        plotF = true; // default TRUE (plot yes)
-//        lWeight = -3; // default BYDEFAULT (-3)
+        height = oblique = 0.0;
+        width = lastHeight = 1.0;
+        font="txt";
+        genFlag = 0; //2= X mirror, 4= Y mirror
     }
 
     void parseCode(int code, dxfReader *reader);
 
 public:
-//    UTF8STRING lineType;           /*!< line type, code 6 */
-//    int color;                 /*!< layer color, code 62 */
-//    bool plotF;                 /*!< Plot flag, code 290 */
-//    int lWeight;               /*!< layer lineweight, code 370 */
-//    string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
-//    string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
+    double height;          /*!< Fixed text height (0 not set), code 40 */
+    double width;           /*!< Width factor, code 41 */
+    double oblique;         /*!< Oblique angle, code 50 */
+    int genFlag;            /*!< Text generation flags, code 71 */
+    double lastHeight;      /*!< Last height used, code 42 */
+    UTF8STRING font;        /*!< primary font file name, code 3 */
+    UTF8STRING bigFont;     /*!< bigfont file name or blank if none, code 4 */
+    UTF8STRING fontFamily;  /*!< ttf font family, italic and bold flags, code 1071 */
 };
 
 //! Class to handle vport entries

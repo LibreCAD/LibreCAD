@@ -182,8 +182,7 @@ bool dxfRW::writeLineType(DRW_LType *ent){
     }
     writer->writeString(0, "LTYPE");
     if (version > DRW::AC1009) {
-        ++entCount;
-        sprintf(buffer, "%X", entCount);
+        sprintf(buffer, "%X", ++entCount);
         writer->writeString(5, buffer);
         if (version > DRW::AC1012) {
             writer->writeString(330, "5");
@@ -219,8 +218,7 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
         }
     } else {
         if (version > DRW::AC1009) {
-            ++entCount;
-            sprintf(buffer, "%X", entCount);
+            sprintf(buffer, "%X", ++entCount);
             writer->writeString(5, buffer);
         }
     }
@@ -249,7 +247,46 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
 }
 
 bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
-    //RLZ: implement
+    char buffer[5];
+    writer->writeString(0, "STYLE");
+    if (!dimstyleStd) {
+        std::string name;
+        std::stringstream ss;
+        ss << std::uppercase << ent->name;
+        ss >> name;
+        if (name == "STANDARD")
+            dimstyleStd = true;
+    }
+    if (version > DRW::AC1009) {
+        sprintf(buffer, "%X", ++entCount);
+        writer->writeString(5, buffer);
+    }
+
+    if (version > DRW::AC1012) {
+        writer->writeString(330, "2");
+    }
+    if (version > DRW::AC1009) {
+        writer->writeString(100, "AcDbSymbolTableRecord");
+        writer->writeString(100, "AcDbTextStyleTableRecord");
+        writer->writeUtf8String(2, ent->name);
+    } else {
+        writer->writeUtf8Caps(2, ent->name);
+    }
+    writer->writeInt16(70, ent->flags);
+    writer->writeDouble(40, ent->height);
+    writer->writeDouble(41, ent->width);
+    writer->writeDouble(50, ent->oblique);
+    writer->writeInt16(71, ent->genFlag);
+    writer->writeDouble(42, ent->lastHeight);
+    if (version > DRW::AC1009) {
+        writer->writeUtf8String(3, ent->font);
+        writer->writeUtf8String(4, ent->bigFont);
+        writer->writeUtf8String(1071, ent->fontFamily);
+    } else {
+        writer->writeUtf8Caps(3, ent->font);
+        writer->writeUtf8Caps(4, ent->bigFont);
+    }
+    return true;
 }
 
 bool dxfRW::writeVport(DRW_Vport *ent){
@@ -268,8 +305,7 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
             dimstyleStd = true;
     }
     if (version > DRW::AC1009) {
-        ++entCount;
-        sprintf(buffer, "%X", entCount);
+        sprintf(buffer, "%X", ++entCount);
         writer->writeString(105, buffer);
     }
 
@@ -957,22 +993,6 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
 bool dxfRW::writeInsert(DRW_Insert *ent){
     writer->writeString(0, "INSERT");
     writeEntity(ent);
-/*    char buffer[5];
-    entCount = 1+entCount;
-    sprintf(buffer, "%X", entCount);
-    writer->writeString(5, buffer);
-    if (version > DRW::AC1009) {
-        writer->writeString(100, "AcDbEntity");
-    }
-    if (version > DRW::AC1014) {
-        writer->writeString(330, "1F");
-    }
-    writer->writeString(8, ent->layer);
-    writer->writeString(6, ent->lineType);
-    writer->writeInt16(62, ent->color);
-    if (version > DRW::AC1014) {
-        writer->writeInt16(370, ent->lWeight);
-    }*/
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbBlockReference");
         writer->writeUtf8String(2, ent->name);
@@ -1137,8 +1157,7 @@ bool dxfRW::writeBlockRecord(std::string name){
     if (version > DRW::AC1009) {
         writer->writeString(0, "BLOCK_RECORD");
         char buffer[5];
-        entCount = 1+entCount;
-        sprintf(buffer, "%X", entCount);
+        sprintf(buffer, "%X", ++entCount);
         writer->writeString(5, buffer);
 
         blockMap[name] = entCount;
@@ -1225,8 +1244,7 @@ bool dxfRW::writeTables() {
 //    iface->writeVports();
     writer->writeString(0, "VPORT");
     if (version > DRW::AC1009) {
-        entCount = 1+entCount;
-        sprintf(buffer, "%X", entCount);
+        sprintf(buffer, "%X", ++entCount);
         writer->writeString(5, buffer);
         if (version > DRW::AC1014) {
             writer->writeString(330, "8");
@@ -1365,7 +1383,7 @@ bool dxfRW::writeTables() {
 //Aplication linetypes
     iface->writeLTypes();
     writer->writeString(0, "ENDTAB");
-
+/*** LAYER ***/
     writer->writeString(0, "TABLE");
     writer->writeString(2, "LAYER");
     if (version > DRW::AC1009) {
@@ -1384,7 +1402,7 @@ bool dxfRW::writeTables() {
         writeLayer(&lay0);
     }
     writer->writeString(0, "ENDTAB");
-
+/*** STYLE ***/
     writer->writeString(0, "TABLE");
     writer->writeString(2, "STYLE");
     if (version > DRW::AC1009) {
@@ -1394,10 +1412,14 @@ bool dxfRW::writeTables() {
         }
         writer->writeString(100, "AcDbSymbolTable");
     }
-    writer->writeInt16(70, 0); //end table def
-    //Aplication text style
-//RLZ: implement
-//    iface->writeTextstyle();
+    writer->writeInt16(70, 3); //end table def
+    dimstyleStd =false;
+    iface->writeTextstyles();
+    if (!dimstyleStd) {
+        DRW_Textstyle tsty;
+        tsty.name = "Standard";
+        writeTextstyle(&tsty);
+    }
     writer->writeString(0, "ENDTAB");
 
     writer->writeString(0, "TABLE");
