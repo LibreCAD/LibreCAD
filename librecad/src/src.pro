@@ -31,7 +31,6 @@ CONFIG += qt \
     help verbose
 
 PRE_TARGETDEPS += ../../generated/lib/libdxfrw.a
-PRE_TARGETDEPS += ../../generated/lib/libdxflib.a
 PRE_TARGETDEPS += ../../generated/lib/libjwwlib.a
 
 DESTDIR = $${INSTALLDIR}
@@ -67,14 +66,12 @@ win32 {
 
 # Additional libraries to load
 LIBS += -L../../generated/lib  \
-    -ldxflib \
     -ldxfrw \
     -ljwwlib \
     -lmuparser
 
 
 DEPENDPATH += \
-    ../../libraries/dxflib/src \
     ../../libraries/libdxfrw/src \
     ../../libraries/jwwlib/src \
     cmd \
@@ -166,7 +163,6 @@ HEADERS += \
     lib/engine/rs_vector.h \
     lib/fileio/rs_fileio.h \
     lib/filters/rs_filtercxf.h \
-    lib/filters/rs_filterdxf.h \
     lib/filters/rs_filterdxfrw.h \
     lib/filters/rs_filterdxf1.h \
     lib/filters/rs_filterjww.h \
@@ -252,7 +248,6 @@ SOURCES += \
     lib/engine/rs_vector.cpp \
     lib/fileio/rs_fileio.cpp \
     lib/filters/rs_filtercxf.cpp \
-    lib/filters/rs_filterdxf.cpp \
     lib/filters/rs_filterdxfrw.cpp \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \

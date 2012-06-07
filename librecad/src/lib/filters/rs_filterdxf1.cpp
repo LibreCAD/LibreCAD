@@ -25,7 +25,7 @@
 **********************************************************************/
 
 
-#include "rs_filterdxf.h"
+#include "rs_filterdxfrw.h"
 #include "rs_filterdxf1.h"
 
 #include <iostream>
@@ -39,6 +39,7 @@
 #include "rs_dimangular.h"
 #include "rs_dimdiametric.h"
 #include "rs_dimradial.h"
+#include "rs_layer.h"
 
 
 /**
@@ -555,14 +556,14 @@ bool RS_FilterDXF1::readFromBuffer() {
                                 case  6:  // style
                                     //if(currentLayer)
                                     //currentLayer->setStyle( graphic->nameToStyle(dxfLine) );
-                                    pen.setLineType(RS_FilterDXF::nameToLineType(dxfLine));
+                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
                                     break;
                                 case 39:  // Thickness
                                     //if(currentLayer) currentLayer->setWidth(dxfLine.toInt());
-                                    pen.setWidth(RS_FilterDXF::numberToWidth(dxfLine.toInt()));
+                                    pen.setWidth(RS_FilterDXFRW::numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXF::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
                                     //if(currentLayer) {
                                     //	currentLayer->setColor( graphic->numberToColor(dxfLine.toInt(), !oldColorNumbers));
                                     //}
@@ -594,7 +595,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             if(dxfLine.size()) {
                                 switch(code) {
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXF::nameToLineType(dxfLine));
+                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {
@@ -614,10 +615,10 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     vy1 = dxfLine.toDouble();
                                     break;
                                 case 39:  // Thickness
-                                    pen.setWidth(RS_FilterDXF::numberToWidth(dxfLine.toInt()));
+                                    pen.setWidth(RS_FilterDXFRW::numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXF::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -646,7 +647,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             if(dxfLine.size()) {
                                 switch(code) {
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXF::nameToLineType(dxfLine));
+                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {
@@ -674,10 +675,10 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     vy2 = dxfLine.toDouble();
                                     break;
                                 case 39:  // Thickness
-                                    pen.setWidth(RS_FilterDXF::numberToWidth(dxfLine.toInt()));
+                                    pen.setWidth(RS_FilterDXFRW::numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXF::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -708,7 +709,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             if(dxfLine.size()) {
                                 switch(code) {
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXF::nameToLineType(dxfLine));
+                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {
@@ -740,10 +741,10 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     va2 = RS_Math::correctAngle(dxfLine.toDouble()/ARAD);
                                     break;
                                 case 39:  // Thickness
-                                    pen.setWidth(RS_FilterDXF::numberToWidth(dxfLine.toInt()));
+                                    pen.setWidth(RS_FilterDXFRW::numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXF::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -773,7 +774,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             if(dxfLine.size()) {
                                 switch(code) {
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXF::nameToLineType(dxfLine));
+                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {
@@ -797,10 +798,10 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     vcr = dxfLine.toDouble();
                                     break;
                                 case 39:  // Thickness
-                                    pen.setWidth(RS_FilterDXF::numberToWidth(dxfLine.toInt()));
+                                    pen.setWidth(RS_FilterDXFRW::numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXF::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -918,7 +919,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     break;
 
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXF::nameToLineType(dxfLine));
+                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
                                     break;
 
                                 case  7:  
@@ -1027,10 +1028,10 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     }
                                     break;
                                 case 39:  // Thickness
-                                    pen.setWidth(RS_FilterDXF::numberToWidth(dxfLine.toInt()));
+                                    pen.setWidth(RS_FilterDXFRW::numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXF::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
                                     break;
                                 default:
                                     break;
@@ -1094,7 +1095,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         strDecodeDxfString(dimText);
                                     break;
                                 case  6:  // style
-                                    pen.setLineType(RS_FilterDXF::nameToLineType(dxfLine));
+                                    pen.setLineType(RS_FilterDXFRW::nameToLineType(dxfLine));
                                     break;
                                 case  8:  // Layer
                                     //if(dxfLine!=lastLayer) {
@@ -1157,10 +1158,10 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     typ = dxfLine.toInt();
                                     break;
                                 case 39:  // Thickness
-                                    pen.setWidth(RS_FilterDXF::numberToWidth(dxfLine.toInt()));
+                                    pen.setWidth(RS_FilterDXFRW::numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
-                                    pen.setColor(RS_FilterDXF::numberToColor(dxfLine.toInt()));
+                                    pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
                                     break;
 
                                 default:

@@ -62,9 +62,6 @@ private:
     QString fDxfrw14;
     QString fDxfrw12;
     QString fDxfrw;
-    QString fDxfOld2000;
-    QString fDxfOldR12;
-    QString fDxfOld;
     QString fDxf1;
     QString fLff;
     QString fCxf;

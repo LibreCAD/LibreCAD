@@ -26,8 +26,8 @@
 #include "qg_dlgoptionsdrawing.h"
 
 #include <qmessagebox.h>
+#include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
-#include "rs_filterdxf.h"
 #include "rs_settings.h"
 //#include "rs_units.h"
 
@@ -182,7 +182,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     // main drawing unit:
     int insunits = graphic->getVariableInt("$INSUNITS", 0);
     cbUnit->setCurrentIndex( cbUnit->findText(
-                                 RS_Units::unitToString(RS_FilterDXF::numberToUnit(insunits))));
+                                 RS_Units::unitToString(RS_FilterDXFRW::numberToUnit(insunits))));
 
     // units / length format:
     int lunits = graphic->getVariableInt("$LUNITS", 2);

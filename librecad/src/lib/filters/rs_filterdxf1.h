@@ -46,11 +46,11 @@ public:
     RS_FilterDXF1();
     ~RS_FilterDXF1() {}
 
-	virtual bool canImport(const QString &fileName, RS2::FormatType t) const {
+    virtual bool canImport(const QString& /*fileName*/, RS2::FormatType t) const {
 		return (t==RS2::FormatDXF1);
 	}
 	
-	virtual bool canExport(const QString &fileName, RS2::FormatType t) const {
+    virtual bool canExport(const QString& /*fileName*/, RS2::FormatType t) const {
 		return false;
     }
 

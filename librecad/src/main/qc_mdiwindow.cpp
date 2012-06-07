@@ -444,7 +444,7 @@ bool QC_MDIWindow::slotFileSaveAs(bool &cancelled) {
     RS_DEBUG->print("QC_MDIWindow::slotFileSaveAs");
     bool ret = false;
     cancelled = false;
-    RS2::FormatType t = RS2::FormatDXFOLD;
+    RS2::FormatType t = RS2::FormatDXFRW;
 
     QG_FileDialog dlg(this);
     QString fn = dlg.getSaveFile(&t);

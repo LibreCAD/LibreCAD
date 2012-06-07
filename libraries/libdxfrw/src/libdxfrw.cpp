@@ -290,7 +290,23 @@ bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
 }
 
 bool dxfRW::writeVport(DRW_Vport *ent){
-//RLZ: implement
+    char buffer[5];
+    dimstyleStd = true;
+    writer->writeString(0, "VPORT");
+    if (version > DRW::AC1009) {
+        sprintf(buffer, "%X", ++entCount);
+        writer->writeString(5, buffer);
+    }
+    if (version > DRW::AC1012) {
+        writer->writeString(330, "2");
+    }
+    if (version > DRW::AC1009) {
+        writer->writeString(100, "AcDbSymbolTableRecord");
+        writer->writeString(100, "AcDbViewportTableRecord");
+    }
+    writer->writeString(2, "*ACTIVE");
+    writer->writeInt16(70, ent->flags);
+    return true;
 }
 
 bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){

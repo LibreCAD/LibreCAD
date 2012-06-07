@@ -28,7 +28,6 @@
 #include "rs_dimangular.h"
 
 #include "rs_constructionline.h"
-#include "rs_filterdxf.h"
 #include "rs_graphic.h"
 #include "rs_information.h"
 #include "rs_solid.h"
@@ -63,7 +62,7 @@ QString RS_DimAngular::getMeasuredLabel() {
         int dimadec = getGraphicVariableInt("$DIMADEC", 0);
 
         ret = RS_Units::formatAngle(getAngle(),
-                RS_FilterDXF::numberToAngleFormat(dimaunit),
+                RS_Units::numberToAngleFormat(dimaunit),
                 dimadec);
 
     /*

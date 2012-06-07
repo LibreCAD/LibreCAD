@@ -627,6 +627,7 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
     default:
         return false;
     }
+    return false; // only for compiler warning
 }
 
 /**create from quadratic form:

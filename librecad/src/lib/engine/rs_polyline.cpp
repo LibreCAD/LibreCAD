@@ -496,10 +496,10 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
         RS_VectorSolutions sol0=RS_Information::getIntersection(pnew->entityAt(i),pnew->entityAt(i+1),true);
         if(sol0.getNumber()==0) {
             sol0=RS_Information::getIntersection(pnew->entityAt(i),pnew->entityAt(i+1));
-            RS_Vector vp0(pnew->entityAt(i)->getEndpoint());
-            RS_Vector vp1(pnew->entityAt(i+1)->getStartpoint());
-            double a0(intersections.at(i).angleTo(vp0));
-            double a1(intersections.at(i).angleTo(vp1));
+//            RS_Vector vp0(pnew->entityAt(i)->getEndpoint());
+//            RS_Vector vp1(pnew->entityAt(i+1)->getStartpoint());
+//            double a0(intersections.at(i).angleTo(vp0));
+//            double a1(intersections.at(i).angleTo(vp1));
             RS_VectorSolutions sol1;
             for(int j=0;j<sol0.getNumber();j++){
                 if(RS_Math::isAngleBetween(intersections.at(i).angleTo(sol0.get(j)),
