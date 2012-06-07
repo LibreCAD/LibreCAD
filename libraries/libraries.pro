@@ -10,7 +10,6 @@ TARGET = libraries
 
 SUBDIRS     = \
         libdxfrw \
-        dxflib \
         jwwlib
 
 

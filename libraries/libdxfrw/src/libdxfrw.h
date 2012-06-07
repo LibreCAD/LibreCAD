@@ -18,7 +18,7 @@
 #include "drw_objects.h"
 #include "drw_interface.h"
 
-#define DRW_VERSION     "0.4.2"
+#define DRW_VERSION     "0.4.3"
 
 class dxfReader;
 class dxfWriter;
@@ -35,6 +35,8 @@ public:
     bool writeLineType(DRW_LType *ent);
     bool writeLayer(DRW_Layer *ent);
     bool writeDimstyle(DRW_Dimstyle *ent);
+    bool writeTextstyle(DRW_Textstyle *ent);
+    bool writeVport(DRW_Vport *ent);
     bool writePoint(DRW_Point *ent);
     bool writeLine(DRW_Line *ent);
     bool writeRay(DRW_Ray *ent);
@@ -54,6 +56,7 @@ public:
     bool writeMText(DRW_MText *ent);
     bool writeText(DRW_Text *ent);
     bool writeHatch(DRW_Hatch *ent);
+    bool writeViewport(DRW_Viewport *ent);
     DRW_ImageDef *writeImage(DRW_Image *ent, std::string name);
     bool writeLeader(DRW_Leader *ent);
     bool writeDimension(DRW_Dimension *ent);
@@ -70,6 +73,8 @@ private:
     bool processLType();
     bool processLayer();
     bool processDimStyle();
+    bool processTextStyle();
+    bool processVports();
 
     bool processPoint();
     bool processLine();
@@ -89,6 +94,7 @@ private:
     bool processHatch();
     bool processSpline();
     bool process3dface();
+    bool processViewport();
     bool processImage();
     bool processImageDef();
     bool processDimension();

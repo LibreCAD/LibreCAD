@@ -951,3 +951,29 @@ void DRW_Leader::parseCode(int code, dxfReader *reader){
         break;
     }
 }
+
+void DRW_Viewport::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 40:
+        pswidth = reader->getDouble();
+        break;
+    case 41:
+        psheight = reader->getDouble();
+        break;
+    case 68:
+        vpstatus = reader->getInt32();
+        break;
+    case 69:
+        vpID = reader->getInt32();
+        break;
+    case 12: {
+        centerPX = reader->getDouble();
+        break; }
+    case 22:
+        centerPY = reader->getDouble();
+        break;
+    default:
+        DRW_Point::parseCode(code, reader);
+        break;
+    }
+}

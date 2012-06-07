@@ -72,6 +72,7 @@ public:
 
     static QString formatAngle(double angle, RS2::AngleFormat format,
                                  int prec);
+    static RS2::AngleFormat numberToAngleFormat(int num);
 
 	static RS_Vector paperFormatToSize(RS2::PaperFormat p);
 	static RS2::PaperFormat paperSizeToFormat(const RS_Vector s);

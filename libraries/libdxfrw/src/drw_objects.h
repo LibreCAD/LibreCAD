@@ -31,7 +31,9 @@ namespace DRW {
          UNKNOWNT,
          LTYPE,
          LAYER,
+         STYLE,
          DIMSTYLE,
+         VPORT,
          BLOCK_RECORD
      };
 
@@ -81,14 +83,17 @@ public:
         dimrnd = dimdle = dimtp = dimtm = dimtsz = dimtvp = 0.0;
         dimaltf = 25.4;
         dimtol = dimlim = dimse1 = dimse2 = dimtad = dimzin = 0;
-        dimtih = dimtoh = 1;
+        dimtih = dimtoh = dimtolj = 1;
         dimalt = dimtofl = dimsah = dimtix = dimsoxd =0;
-        dimaltd = 2;
-        dimclrd = dimclre = dimclrt = 0;
-        dimazin = 0; //verify
-        dimadec = 0; //verify
-        dimaltrnd = 0.0; //verify
-
+        dimaltd = dimunit = dimaltu = dimalttd = dimlunit = 2;
+        dimclrd = dimclre = dimclrt = dimjust = dimupt = 0;
+        dimazin = dimaltz = dimaltttz = dimtzin = dimfrac = 0;
+        dimadec = dimaunit = dimsd1 = dimsd2 = dimtmove = 0;
+        dimaltrnd = 0.0;
+        dimdec = dimtdec = 4;
+        dimfit = dimatfit = 3;
+        dimdsep = '.';
+        dimlwd = dimlwe = -2;
     }
 
     void parseCode(int code, dxfReader *reader);
@@ -97,9 +102,10 @@ public:
     //V12
     UTF8STRING dimpost;       /*!< code 3 */
     UTF8STRING dimapost;      /*!< code 4 */
-    UTF8STRING dimblk;        /*!< code 5 (handle are code 105) */
-    UTF8STRING dimblk1;       /*!< code 6 */
-    UTF8STRING dimblk2;       /*!< code 7 */
+/* handle are code 105 */
+    UTF8STRING dimblk;        /*!< code 5, code 342 V2000+ */
+    UTF8STRING dimblk1;       /*!< code 6, code 343 V2000+ */
+    UTF8STRING dimblk2;       /*!< code 7, code 344 V2000+ */
     double dimscale;          /*!< code 40 */
     double dimasz;            /*!< code 41 */
     double dimexo;            /*!< code 42 */
@@ -137,7 +143,30 @@ public:
     int dimclre;              /*!< code 177 */
     int dimclrt;              /*!< code 178 */
     int dimadec;              /*!< code 179 V2000+ */
-    string dimtxsty;      /*!< code 340 V2000+ */
+    int dimunit;              /*!< code 270 R13+ (obsolete 2000+, use dimlunit & dimfrac) */
+    int dimdec;               /*!< code 271 R13+ */
+    int dimtdec;              /*!< code 272 R13+ */
+    int dimaltu;              /*!< code 273 R13+ */
+    int dimalttd;             /*!< code 274 R13+ */
+    int dimaunit;             /*!< code 275 R13+ */
+    int dimfrac;              /*!< code 276 V2000+ */
+    int dimlunit;             /*!< code 277 V2000+ */
+    int dimdsep;              /*!< code 278 V2000+ */
+    int dimtmove;             /*!< code 279 V2000+ */
+    int dimjust;              /*!< code 280 R13+ */
+    int dimsd1;               /*!< code 281 R13+ */
+    int dimsd2;               /*!< code 282 R13+ */
+    int dimtolj;              /*!< code 283 R13+ */
+    int dimtzin;              /*!< code 284 R13+ */
+    int dimaltz;              /*!< code 285 R13+ */
+    int dimaltttz;            /*!< code 286 R13+ */
+    int dimfit;               /*!< code 287 R13+  (obsolete 2000+, use dimatfit & dimtmove)*/
+    int dimupt;               /*!< code 288 R13+ */
+    int dimatfit;             /*!< code 289 V2000+ */
+    UTF8STRING dimtxsty;      /*!< code 340 R13+ */
+    UTF8STRING dimldrblk;     /*!< code 341 V2000+ */
+    int dimlwd;               /*!< code 371 V2000+ */
+    int dimlwe;               /*!< code 372 V2000+ */
 };
 
 
@@ -200,6 +229,60 @@ public:
     int lWeight;               /*!< layer lineweight, code 370 */
     string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
     string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
+};
+
+//! Class to handle text style entries
+/*!
+*  Class to handle text style symbol table entries
+*  @author Rallaz
+*/
+class DRW_Textstyle : public DRW_TableEntry {
+public:
+    DRW_Textstyle() {
+        tType = DRW::STYLE;
+        height = oblique = 0.0;
+        width = lastHeight = 1.0;
+        font="txt";
+        genFlag = 0; //2= X mirror, 4= Y mirror
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+    double height;          /*!< Fixed text height (0 not set), code 40 */
+    double width;           /*!< Width factor, code 41 */
+    double oblique;         /*!< Oblique angle, code 50 */
+    int genFlag;            /*!< Text generation flags, code 71 */
+    double lastHeight;      /*!< Last height used, code 42 */
+    UTF8STRING font;        /*!< primary font file name, code 3 */
+    UTF8STRING bigFont;     /*!< bigfont file name or blank if none, code 4 */
+    UTF8STRING fontFamily;  /*!< ttf font family, italic and bold flags, code 1071 */
+};
+
+//! Class to handle vport entries
+/*!
+*  Class to handle vport symbol table entries
+*  @author Rallaz
+*/
+class DRW_Vport : public DRW_TableEntry {
+public:
+    DRW_Vport() {
+//        tType = DRW::LAYER;
+//        lineType = "CONTINUOUS";
+//        color = 7; // default BYLAYER (256)
+//        plotF = true; // default TRUE (plot yes)
+//        lWeight = -3; // default BYDEFAULT (-3)
+    }
+
+    void parseCode(int code, dxfReader *reader);
+
+public:
+//    UTF8STRING lineType;           /*!< line type, code 6 */
+//    int color;                 /*!< layer color, code 62 */
+//    bool plotF;                 /*!< Plot flag, code 290 */
+//    int lWeight;               /*!< layer lineweight, code 370 */
+//    string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
+//    string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
 };
 
 

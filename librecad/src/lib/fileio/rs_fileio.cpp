@@ -89,7 +89,7 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const QString& file,
         extension = QFileInfo(file).suffix().toLower();
 
         if (extension=="dxf") {
-            type = RS2::FormatDXFOLD;
+            type = RS2::FormatDXFRW;
         }
         else if (extension=="cxf") {
             type = RS2::FormatCXF;

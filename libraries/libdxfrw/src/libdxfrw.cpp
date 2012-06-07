@@ -14,6 +14,7 @@
 #include "libdxfrw.h"
 #include <fstream>
 #include <algorithm>
+#include <sstream>
 #include "drw_textcodec.h"
 #include "dxfreader.h"
 #include "dxfwriter.h"
@@ -154,6 +155,8 @@ bool dxfRW::writeEntity(DRW_Entity *ent) {
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbEntity");
     }
+    if (ent->space == 1)
+        writer->writeInt16(67, 1);
     if (version > DRW::AC1009) {
         writer->writeUtf8String(8, ent->layer);
         writer->writeUtf8String(6, ent->lineType);
@@ -179,8 +182,7 @@ bool dxfRW::writeLineType(DRW_LType *ent){
     }
     writer->writeString(0, "LTYPE");
     if (version > DRW::AC1009) {
-        ++entCount;
-        sprintf(buffer, "%X", entCount);
+        sprintf(buffer, "%X", ++entCount);
         writer->writeString(5, buffer);
         if (version > DRW::AC1012) {
             writer->writeString(330, "5");
@@ -216,8 +218,7 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
         }
     } else {
         if (version > DRW::AC1009) {
-            ++entCount;
-            sprintf(buffer, "%X", entCount);
+            sprintf(buffer, "%X", ++entCount);
             writer->writeString(5, buffer);
         }
     }
@@ -245,15 +246,82 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
     return true;
 }
 
+bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
+    char buffer[5];
+    writer->writeString(0, "STYLE");
+    if (!dimstyleStd) {
+        std::string name;
+        std::stringstream ss;
+        ss << std::uppercase << ent->name;
+        ss >> name;
+        if (name == "STANDARD")
+            dimstyleStd = true;
+    }
+    if (version > DRW::AC1009) {
+        sprintf(buffer, "%X", ++entCount);
+        writer->writeString(5, buffer);
+    }
+
+    if (version > DRW::AC1012) {
+        writer->writeString(330, "2");
+    }
+    if (version > DRW::AC1009) {
+        writer->writeString(100, "AcDbSymbolTableRecord");
+        writer->writeString(100, "AcDbTextStyleTableRecord");
+        writer->writeUtf8String(2, ent->name);
+    } else {
+        writer->writeUtf8Caps(2, ent->name);
+    }
+    writer->writeInt16(70, ent->flags);
+    writer->writeDouble(40, ent->height);
+    writer->writeDouble(41, ent->width);
+    writer->writeDouble(50, ent->oblique);
+    writer->writeInt16(71, ent->genFlag);
+    writer->writeDouble(42, ent->lastHeight);
+    if (version > DRW::AC1009) {
+        writer->writeUtf8String(3, ent->font);
+        writer->writeUtf8String(4, ent->bigFont);
+        writer->writeUtf8String(1071, ent->fontFamily);
+    } else {
+        writer->writeUtf8Caps(3, ent->font);
+        writer->writeUtf8Caps(4, ent->bigFont);
+    }
+    return true;
+}
+
+bool dxfRW::writeVport(DRW_Vport *ent){
+    char buffer[5];
+    dimstyleStd = true;
+    writer->writeString(0, "VPORT");
+    if (version > DRW::AC1009) {
+        sprintf(buffer, "%X", ++entCount);
+        writer->writeString(5, buffer);
+    }
+    if (version > DRW::AC1012) {
+        writer->writeString(330, "2");
+    }
+    if (version > DRW::AC1009) {
+        writer->writeString(100, "AcDbSymbolTableRecord");
+        writer->writeString(100, "AcDbViewportTableRecord");
+    }
+    writer->writeString(2, "*ACTIVE");
+    writer->writeInt16(70, ent->flags);
+    return true;
+}
+
 bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     char buffer[5];
     writer->writeString(0, "DIMSTYLE");
     if (!dimstyleStd) {
-        dimstyleStd = true;
+        std::string name;
+        std::stringstream ss;
+        ss << std::uppercase << ent->name;
+        ss >> name;
+        if (name == "STANDARD")
+            dimstyleStd = true;
     }
     if (version > DRW::AC1009) {
-        ++entCount;
-        sprintf(buffer, "%X", entCount);
+        sprintf(buffer, "%X", ++entCount);
         writer->writeString(105, buffer);
     }
 
@@ -294,7 +362,7 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     writer->writeDouble(145, ent->dimtvp);
     writer->writeDouble(146, ent->dimtfac);
     writer->writeDouble(147, ent->dimgap);
-    if (version > DRW::AC1012) {
+    if (version > DRW::AC1014) {
         writer->writeDouble(148, ent->dimaltrnd);
     }
     writer->writeInt16(71, ent->dimtol);
@@ -305,8 +373,8 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     writer->writeInt16(76, ent->dimse2);
     writer->writeInt16(77, ent->dimtad);
     writer->writeInt16(78, ent->dimzin);
-    if (version > DRW::AC1012) {
-        writer->writeDouble(79, ent->dimazin);
+    if (version > DRW::AC1014) {
+        writer->writeInt16(79, ent->dimazin);
     }
     writer->writeInt16(170, ent->dimalt);
     writer->writeInt16(171, ent->dimaltd);
@@ -317,13 +385,47 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     writer->writeInt16(176, ent->dimclrd);
     writer->writeInt16(177, ent->dimclre);
     writer->writeInt16(178, ent->dimclrt);
-    if (version > DRW::AC1012) {
-        writer->writeDouble(179, ent->dimadec);
+    if (version > DRW::AC1014) {
+        writer->writeInt16(179, ent->dimadec);
     }
-
-/*    if (version > DRW::AC1012) {
-        writer->writeString(340, ent->dimtxsty);
-    }//text style handle */
+    if (version > DRW::AC1009) {
+        if (version < DRW::AC1015)
+            writer->writeInt16(270, ent->dimunit);
+        writer->writeInt16(271, ent->dimdec);
+        writer->writeInt16(272, ent->dimtdec);
+        writer->writeInt16(273, ent->dimaltu);
+        writer->writeInt16(274, ent->dimalttd);
+        writer->writeInt16(275, ent->dimaunit);
+    }
+    if (version > DRW::AC1014) {
+        writer->writeInt16(276, ent->dimfrac);
+        writer->writeInt16(277, ent->dimlunit);
+        writer->writeInt16(278, ent->dimdsep);
+        writer->writeInt16(279, ent->dimtmove);
+    }
+    if (version > DRW::AC1009) {
+        writer->writeInt16(280, ent->dimjust);
+        writer->writeInt16(281, ent->dimsd1);
+        writer->writeInt16(282, ent->dimsd2);
+        writer->writeInt16(283, ent->dimtolj);
+        writer->writeInt16(284, ent->dimtzin);
+        writer->writeInt16(285, ent->dimaltz);
+        writer->writeInt16(286, ent->dimaltttz);
+        if (version < DRW::AC1015)
+            writer->writeInt16(287, ent->dimfit);
+        writer->writeInt16(288, ent->dimupt);
+    }
+    if (version > DRW::AC1014) {
+        writer->writeInt16(289, ent->dimatfit);
+    }
+    if (version > DRW::AC1009) {
+        writer->writeUtf8String(340, ent->dimtxsty);
+    }
+    if (version > DRW::AC1014) {
+        writer->writeUtf8String(341, ent->dimldrblk);
+        writer->writeInt16(371, ent->dimlwd);
+        writer->writeInt16(372, ent->dimlwe);
+    }
     return true;
 }
 
@@ -907,22 +1009,6 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
 bool dxfRW::writeInsert(DRW_Insert *ent){
     writer->writeString(0, "INSERT");
     writeEntity(ent);
-/*    char buffer[5];
-    entCount = 1+entCount;
-    sprintf(buffer, "%X", entCount);
-    writer->writeString(5, buffer);
-    if (version > DRW::AC1009) {
-        writer->writeString(100, "AcDbEntity");
-    }
-    if (version > DRW::AC1014) {
-        writer->writeString(330, "1F");
-    }
-    writer->writeString(8, ent->layer);
-    writer->writeString(6, ent->lineType);
-    writer->writeInt16(62, ent->color);
-    if (version > DRW::AC1014) {
-        writer->writeInt16(370, ent->lWeight);
-    }*/
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbBlockReference");
         writer->writeUtf8String(2, ent->name);
@@ -1016,6 +1102,25 @@ bool dxfRW::writeMText(DRW_MText *ent){
     return true;
 }
 
+bool dxfRW::writeViewport(DRW_Viewport *ent) {
+    writer->writeString(0, "VIEWPORT");
+    writeEntity(ent);
+    if (version > DRW::AC1009) {
+        writer->writeString(100, "AcDbViewport");
+    }
+    writer->writeDouble(10, ent->basePoint.x);
+    writer->writeDouble(20, ent->basePoint.y);
+    if (ent->basePoint.z != 0.0)
+        writer->writeDouble(30, ent->basePoint.z);
+    writer->writeDouble(40, ent->pswidth);
+    writer->writeDouble(41, ent->psheight);
+    writer->writeInt16(68, ent->vpstatus);
+    writer->writeInt16(69, ent->vpID);
+    writer->writeDouble(12, ent->centerPX);//RLZ: verify if exist in V12
+    writer->writeDouble(22, ent->centerPY);//RLZ: verify if exist in V12
+    return true;
+}
+
 DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
     if (version > DRW::AC1009) {
         //search if exist imagedef with this mane (image inserted more than 1 time)
@@ -1068,8 +1173,7 @@ bool dxfRW::writeBlockRecord(std::string name){
     if (version > DRW::AC1009) {
         writer->writeString(0, "BLOCK_RECORD");
         char buffer[5];
-        entCount = 1+entCount;
-        sprintf(buffer, "%X", entCount);
+        sprintf(buffer, "%X", ++entCount);
         writer->writeString(5, buffer);
 
         blockMap[name] = entCount;
@@ -1151,10 +1255,12 @@ bool dxfRW::writeTables() {
         writer->writeString(100, "AcDbSymbolTable");
     }
     writer->writeInt16(70, 1); //end table def
+    //Aplication vports
+//RLZ: implement
+//    iface->writeVports();
     writer->writeString(0, "VPORT");
     if (version > DRW::AC1009) {
-        entCount = 1+entCount;
-        sprintf(buffer, "%X", entCount);
+        sprintf(buffer, "%X", ++entCount);
         writer->writeString(5, buffer);
         if (version > DRW::AC1014) {
             writer->writeString(330, "8");
@@ -1293,7 +1399,7 @@ bool dxfRW::writeTables() {
 //Aplication linetypes
     iface->writeLTypes();
     writer->writeString(0, "ENDTAB");
-
+/*** LAYER ***/
     writer->writeString(0, "TABLE");
     writer->writeString(2, "LAYER");
     if (version > DRW::AC1009) {
@@ -1312,7 +1418,7 @@ bool dxfRW::writeTables() {
         writeLayer(&lay0);
     }
     writer->writeString(0, "ENDTAB");
-
+/*** STYLE ***/
     writer->writeString(0, "TABLE");
     writer->writeString(2, "STYLE");
     if (version > DRW::AC1009) {
@@ -1322,7 +1428,14 @@ bool dxfRW::writeTables() {
         }
         writer->writeString(100, "AcDbSymbolTable");
     }
-    writer->writeInt16(70, 0); //end table def
+    writer->writeInt16(70, 3); //end table def
+    dimstyleStd =false;
+    iface->writeTextstyles();
+    if (!dimstyleStd) {
+        DRW_Textstyle tsty;
+        tsty.name = "Standard";
+        writeTextstyle(&tsty);
+    }
     writer->writeString(0, "ENDTAB");
 
     writer->writeString(0, "TABLE");
@@ -1706,7 +1819,9 @@ bool dxfRW::processTables() {
                     } else if (sectionstr == "LAYER") {
                         processLayer();
                     } else if (sectionstr == "STYLE") {
-//                        processStyle();
+                        processTextStyle();
+                    } else if (sectionstr == "VPORT") {
+                        processVports();
                     } else if (sectionstr == "VIEW") {
 //                        processView();
                     } else if (sectionstr == "UCS") {
@@ -1797,6 +1912,54 @@ bool dxfRW::processDimStyle() {
             }
         } else if (reading)
             dimSty.parseCode(code, reader);
+    }
+    return true;
+}
+
+bool dxfRW::processTextStyle(){
+    DBG("dxfRW::processTextStyle");
+    int code;
+    string sectionstr;
+    bool reading = false;
+    DRW_Textstyle TxtSty;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        if (code == 0) {
+            if (reading)
+                iface->addTextStyle(TxtSty);
+            sectionstr = reader->getString();
+            DBG(sectionstr); DBG("\n");
+            if (sectionstr == "STYLE") {
+                reading = true;
+            } else if (sectionstr == "ENDTAB") {
+                return true;  //found ENDTAB terminate
+            }
+        } else if (reading)
+            TxtSty.parseCode(code, reader);
+    }
+    return true;
+}
+
+bool dxfRW::processVports(){
+    DBG("dxfRW::processVports");
+    int code;
+    string sectionstr;
+    bool reading = false;
+    DRW_Vport vp;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        if (code == 0) {
+            if (reading)
+                iface->addVport(vp);
+            sectionstr = reader->getString();
+            DBG(sectionstr); DBG("\n");
+            if (sectionstr == "VPORT") {
+                reading = true;
+            } else if (sectionstr == "ENDTAB") {
+                return true;  //found ENDTAB terminate
+            }
+        } else if (reading)
+            vp.parseCode(code, reader);
     }
     return true;
 }
@@ -1898,6 +2061,8 @@ bool dxfRW::processEntities(bool isblock) {
             processSpline();
         } else if (nextentity == "3DFACE") {
             process3dface();
+        } else if (nextentity == "VIEWPORT") {
+            processViewport();
         } else if (nextentity == "IMAGE") {
             processImage();
         } else if (nextentity == "DIMENSION") {
@@ -2002,6 +2167,27 @@ bool dxfRW::process3dface() {
         }
         default:
             face.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
+bool dxfRW::processViewport() {
+    DBG("dxfRW::processViewport");
+    int code;
+    DRW_Viewport vp;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DBG(nextentity); DBG("\n");
+            iface->addViewport(vp);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            vp.parseCode(code, reader);
             break;
         }
     }

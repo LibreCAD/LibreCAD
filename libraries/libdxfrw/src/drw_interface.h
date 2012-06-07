@@ -44,6 +44,10 @@ public:
     virtual void addLayer(const DRW_Layer& data) = 0;
     /** Called for every dim style. */
     virtual void addDimStyle(const DRW_Dimstyle& data) = 0;
+    /** Called for every VPORT table. */
+    virtual void addVport(const DRW_Vport& data) = 0;
+    /** Called for every text style. */
+    virtual void addTextStyle(const DRW_Textstyle& data) = 0;
 
     /**
      * Called for every block. Note: all entities added after this
@@ -152,7 +156,12 @@ public:
 	 */
     virtual void addHatch(const DRW_Hatch *data) = 0;
 	
-	/** 
+    /**
+     * Called for every viewport entity.
+     */
+    virtual void addViewport(const DRW_Viewport& data) = 0;
+
+    /**
 	 * Called for every image entity. 
 	 */
     virtual void addImage(const DRW_Image *data) = 0;
@@ -184,6 +193,8 @@ public:
     virtual void writeEntities() = 0;
     virtual void writeLTypes() = 0;
     virtual void writeLayers() = 0;
+    virtual void writeTextstyles() = 0;
+    virtual void writeVports() = 0;
     virtual void writeDimstyles() = 0;
 protected:
 //    DL_Attributes attributes;
