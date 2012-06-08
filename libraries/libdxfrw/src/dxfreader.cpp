@@ -186,8 +186,10 @@ bool dxfReaderAscii::readCode(int *code) {
 }
 bool dxfReaderAscii::readString(std::string *text) {
     std::getline(*filestr, *text);
-    if (text->at(text->size()-1) == '\r')
-        text->erase(text->size()-1);
+    if(text->size()>0) {
+        if (text->at(text->size()-1) == '\r')
+            text->erase(text->size()-1);
+    }
     return (filestr->good());
 }
 
