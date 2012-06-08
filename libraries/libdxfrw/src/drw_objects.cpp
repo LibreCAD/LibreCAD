@@ -797,34 +797,26 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
     } else
         writer->writeInt16(70, 8);
     }
-/* RLZ: move to active VPORT*/
-    writer->writeString(9, "$GRIDMODE");
-    if (getInt("$GRIDMODE", &varInt))
+/* RLZ: moved to active VPORT, but can write in header if present*/
+    if (getInt("$GRIDMODE", &varInt)) {
+        writer->writeString(9, "$GRIDMODE");
         writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$SNAPSTYLE");
-    if (getInt("$SNAPSTYLE", &varInt))
+    }
+    if (getInt("$SNAPSTYLE", &varInt)) {
+        writer->writeString(9, "$SNAPSTYLE");
         writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
-    writer->writeString(9, "$GRIDUNIT");
+    }
     if (getCoord("$GRIDUNIT", &varCoord)) {
+        writer->writeString(9, "$GRIDUNIT");
         writer->writeDouble(10, varCoord.x);
         writer->writeDouble(20, varCoord.y);
-    } else {
-        writer->writeDouble(10, 210.0);
-        writer->writeDouble(20, 150.0);
     }
-    writer->writeString(9, "$VIEWCTR");
     if (getCoord("$VIEWCTR", &varCoord)) {
+        writer->writeString(9, "$VIEWCTR");
         writer->writeDouble(10, varCoord.x);
         writer->writeDouble(20, varCoord.y);
-    } else {
-        writer->writeDouble(10, 210.0);
-        writer->writeDouble(20, 150.0);
     }
-    /* RLZ: end move to active VPORT*/
+/* RLZ: moved to active VPORT, but can write in header if present*/
 
     if (ver > DRW::AC1009) {
         writer->writeString(9, "$PINSBASE");
