@@ -893,7 +893,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                     // alignment (0=left, 1=center, 2=right)
                     //int   vattachement=7;   // 1=top left, 2, 3, 4, 5, 6, 7, 8, 9=bottom right
                     //uint  vfl=0;            // special flags
-                    bool  codeSeven=false;  // Have we found a code seven?
+//RLZ: unused                    bool  codeSeven=false;  // Have we found a code seven?
 
                     vtextStyle[0] = '\0';
                     vfont="normal";
@@ -982,7 +982,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         }*/
                                         }
                                     }
-                                    codeSeven=true;
+//RLZ: unused                                    codeSeven=true;
                                     break;
 
                                 case  8:  // Layer

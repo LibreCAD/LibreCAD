@@ -50,7 +50,7 @@ public:
 		return (t==RS2::FormatDXF1);
 	}
 	
-    virtual bool canExport(const QString& /*fileName*/, RS2::FormatType t) const {
+    virtual bool canExport(const QString& /*fileName*/, RS2::FormatType /*t*/) const {
 		return false;
     }
 

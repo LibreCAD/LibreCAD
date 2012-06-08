@@ -325,21 +325,21 @@ bool dxfRW::writeVport(DRW_Vport *ent){
     writer->writeDouble(17, ent->viewTarget.z);
     writer->writeDouble(27, ent->viewTarget.z);
     writer->writeDouble(37, ent->viewTarget.z);
-    writer->writeDouble(40, 5.13732);
-    writer->writeDouble(41, 2.4426877);
-    writer->writeDouble(42, 50.0);
-    writer->writeDouble(43, 0.0);
-    writer->writeDouble(44, 0.0);
-    writer->writeDouble(50, 0.0);
-    writer->writeDouble(51, 0.0);
-    writer->writeInt16(71, 0);
-    writer->writeInt16(72, 100);
-    writer->writeInt16(73, 1);
-    writer->writeInt16(74, 3);
-    writer->writeInt16(75, 0);
-    writer->writeInt16(76, 1);
-    writer->writeInt16(77, 0);
-    writer->writeInt16(78, 0);
+    writer->writeDouble(40, ent->height);
+    writer->writeDouble(41, ent->ratio);
+    writer->writeDouble(42, ent->lensHeight);
+    writer->writeDouble(43, ent->frontClip);
+    writer->writeDouble(44, ent->backClip);
+    writer->writeDouble(50, ent->snapAngle);
+    writer->writeDouble(51, ent->twistAngle);
+    writer->writeInt16(71, ent->viewMode);
+    writer->writeInt16(72, ent->circleZoom);
+    writer->writeInt16(73, ent->fastZoom);
+    writer->writeInt16(74, ent->ucsIcon);
+    writer->writeInt16(75, ent->snap);
+    writer->writeInt16(76, ent->grid);
+    writer->writeInt16(77, ent->snapStyle);
+    writer->writeInt16(78, ent->snapIsopair);
     if (version > DRW::AC1014) {
         writer->writeInt16(281, 0);
         writer->writeInt16(65, 1);
@@ -1304,7 +1304,6 @@ bool dxfRW::writeBlock(DRW_Block *bk){
 }
 
 bool dxfRW::writeTables() {
-    char buffer[5];
     writer->writeString(0, "TABLE");
     writer->writeString(2, "VPORT");
     if (version > DRW::AC1009) {
@@ -1315,7 +1314,7 @@ bool dxfRW::writeTables() {
         writer->writeString(100, "AcDbSymbolTable");
     }
     writer->writeInt16(70, 1); //end table def
-//Aplication vports
+/*** VPORT ***/
     dimstyleStd =false;
     iface->writeVports();
     if (!dimstyleStd) {

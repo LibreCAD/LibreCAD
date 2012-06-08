@@ -273,10 +273,14 @@ public:
         center.x = 0.651828;
         center.y = -0.16;
         viewDir.z = 1;
-//        lineType = "CONTINUOUS";
-//        color = 7; // default BYLAYER (256)
-//        plotF = true; // default TRUE (plot yes)
-//        lWeight = -3; // default BYDEFAULT (-3)
+        height = 5.13732;
+        ratio = 2.4426877;
+        lensHeight = 50;
+        frontClip = backClip = snapAngle = twistAngle = 0.0;
+        viewMode = snap = grid = snapStyle = snapIsopair = 0;
+        fastZoom = 1;
+        circleZoom = 100;
+        ucsIcon = 3;
     }
 
     void parseCode(int code, dxfReader *reader);
@@ -284,18 +288,27 @@ public:
 public:
     DRW_Coord lowerLeft;     /*!< Lower left corner, code 10 & 20 */
     DRW_Coord UpperRight;    /*!< Upper right corner, code 11 & 21 */
-    DRW_Coord center;        /*!< center point in DCS, code 12 & 22 */
+    DRW_Coord center;        /*!< center point in WCS, code 12 & 22 */
     DRW_Coord snapBase;      /*!< snap base point in DCS, code 13 & 23 */
     DRW_Coord snapSpacing;   /*!< snap Spacing, code 14 & 24 */
     DRW_Coord gridSpacing;   /*!< grid Spacing, code 15 & 25 */
     DRW_Coord viewDir;       /*!< view direction from target point, code 16, 26 & 36 */
     DRW_Coord viewTarget;    /*!< view target point, code 17, 27 & 37 */
-//    UTF8STRING lineType;           /*!< line type, code 6 */
-//    int color;                 /*!< layer color, code 62 */
-//    bool plotF;                 /*!< Plot flag, code 290 */
-//    int lWeight;               /*!< layer lineweight, code 370 */
-//    string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
-//    string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
+    double height;           /*!< view height, code 40 */
+    double ratio;            /*!< viewport aspect ratio, code 41 */
+    double lensHeight;       /*!< lens height, code 42 */
+    double frontClip;        /*!< front clipping plane, code 43 */
+    double backClip;         /*!< back clipping plane, code 44 */
+    double snapAngle;        /*!< snap rotation angle, code 50 */
+    double twistAngle;       /*!< view twist angle, code 51 */
+    int viewMode;            /*!< view mode, code 71 */
+    int circleZoom;          /*!< circle zoom percent, code 72 */
+    int fastZoom;            /*!< fast zoom setting, code 73 */
+    int ucsIcon;             /*!< UCSICON setting, code 74 */
+    int snap;                /*!< snap on/off, code 75 */
+    int grid;                /*!< grid on/off, code 76 */
+    int snapStyle;           /*!< snap style, code 77 */
+    int snapIsopair;         /*!< snap isopair, code 78 */
 };
 
 
