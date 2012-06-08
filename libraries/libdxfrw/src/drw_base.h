@@ -53,7 +53,7 @@ enum Version {
 */
 class DRW_Coord {
 public:
-    DRW_Coord() { z = 0; }
+    DRW_Coord() { x = 0; y = 0; z = 0; }
     DRW_Coord(double ix, double iy, double iz) {
         x = ix; y = iy; z = iz;
     }

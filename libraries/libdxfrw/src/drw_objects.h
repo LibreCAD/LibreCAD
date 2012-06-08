@@ -267,7 +267,12 @@ public:
 class DRW_Vport : public DRW_TableEntry {
 public:
     DRW_Vport() {
-//        tType = DRW::LAYER;
+        UpperRight.x = UpperRight.y = 1.0;
+        snapSpacing.x = snapSpacing.y = 10.0;
+        gridSpacing = snapSpacing;
+        center.x = 0.651828;
+        center.y = -0.16;
+        viewDir.z = 1;
 //        lineType = "CONTINUOUS";
 //        color = 7; // default BYLAYER (256)
 //        plotF = true; // default TRUE (plot yes)
@@ -277,6 +282,14 @@ public:
     void parseCode(int code, dxfReader *reader);
 
 public:
+    DRW_Coord lowerLeft;     /*!< Lower left corner, code 10 & 20 */
+    DRW_Coord UpperRight;    /*!< Upper right corner, code 11 & 21 */
+    DRW_Coord center;        /*!< center point in DCS, code 12 & 22 */
+    DRW_Coord snapBase;      /*!< snap base point in DCS, code 13 & 23 */
+    DRW_Coord snapSpacing;   /*!< snap Spacing, code 14 & 24 */
+    DRW_Coord gridSpacing;   /*!< grid Spacing, code 15 & 25 */
+    DRW_Coord viewDir;       /*!< view direction from target point, code 16, 26 & 36 */
+    DRW_Coord viewTarget;    /*!< view target point, code 17, 27 & 37 */
 //    UTF8STRING lineType;           /*!< line type, code 6 */
 //    int color;                 /*!< layer color, code 62 */
 //    bool plotF;                 /*!< Plot flag, code 290 */

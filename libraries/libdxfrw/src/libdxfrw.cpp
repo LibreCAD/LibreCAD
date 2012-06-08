@@ -291,21 +291,81 @@ bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
 
 bool dxfRW::writeVport(DRW_Vport *ent){
     char buffer[5];
-    dimstyleStd = true;
+    if (!dimstyleStd) {
+        ent->name = "*ACTIVE";
+        dimstyleStd = true;
+    }
     writer->writeString(0, "VPORT");
     if (version > DRW::AC1009) {
         sprintf(buffer, "%X", ++entCount);
         writer->writeString(5, buffer);
-    }
-    if (version > DRW::AC1012) {
-        writer->writeString(330, "2");
-    }
-    if (version > DRW::AC1009) {
+        if (version > DRW::AC1012)
+            writer->writeString(330, "2");
         writer->writeString(100, "AcDbSymbolTableRecord");
         writer->writeString(100, "AcDbViewportTableRecord");
-    }
-    writer->writeString(2, "*ACTIVE");
+        writer->writeUtf8String(2, ent->name);
+    } else
+        writer->writeUtf8Caps(2, ent->name);
     writer->writeInt16(70, ent->flags);
+    writer->writeDouble(10, ent->lowerLeft.x);
+    writer->writeDouble(20, ent->lowerLeft.y);
+    writer->writeDouble(11, ent->UpperRight.x);
+    writer->writeDouble(21, ent->UpperRight.y);
+    writer->writeDouble(12, ent->center.x);
+    writer->writeDouble(22, ent->center.y);
+    writer->writeDouble(13, ent->snapBase.x);
+    writer->writeDouble(23, ent->snapBase.y);
+    writer->writeDouble(14, ent->snapSpacing.x);
+    writer->writeDouble(24, ent->snapSpacing.y);
+    writer->writeDouble(15, ent->gridSpacing.x);
+    writer->writeDouble(25, ent->gridSpacing.y);
+    writer->writeDouble(16, ent->viewDir.x);
+    writer->writeDouble(26, ent->viewDir.y);
+    writer->writeDouble(36, ent->viewDir.z);
+    writer->writeDouble(17, ent->viewTarget.z);
+    writer->writeDouble(27, ent->viewTarget.z);
+    writer->writeDouble(37, ent->viewTarget.z);
+    writer->writeDouble(40, 5.13732);
+    writer->writeDouble(41, 2.4426877);
+    writer->writeDouble(42, 50.0);
+    writer->writeDouble(43, 0.0);
+    writer->writeDouble(44, 0.0);
+    writer->writeDouble(50, 0.0);
+    writer->writeDouble(51, 0.0);
+    writer->writeInt16(71, 0);
+    writer->writeInt16(72, 100);
+    writer->writeInt16(73, 1);
+    writer->writeInt16(74, 3);
+    writer->writeInt16(75, 0);
+    writer->writeInt16(76, 1);
+    writer->writeInt16(77, 0);
+    writer->writeInt16(78, 0);
+    if (version > DRW::AC1014) {
+        writer->writeInt16(281, 0);
+        writer->writeInt16(65, 1);
+        writer->writeDouble(110, 0.0);
+        writer->writeDouble(120, 0.0);
+        writer->writeDouble(130, 0.0);
+        writer->writeDouble(111, 1.0);
+        writer->writeDouble(121, 0.0);
+        writer->writeDouble(131, 0.0);
+        writer->writeDouble(112, 0.0);
+        writer->writeDouble(122, 1.0);
+        writer->writeDouble(132, 0.0);
+        writer->writeInt16(79, 0);
+        writer->writeDouble(146, 0.0);
+        if (version > DRW::AC1018) {
+            writer->writeString(348, "10020");
+            writer->writeInt16(60, 3);//v2007 undocummented
+            writer->writeInt16(61, 5);
+            writer->writeBool(292, 1);
+            writer->writeInt16(282, 1);
+            writer->writeDouble(141, 0.0);
+            writer->writeDouble(142, 0.0);
+            writer->writeInt16(63, 250);
+            writer->writeInt32(421, 3358443);
+        }
+    }
     return true;
 }
 
@@ -1255,82 +1315,13 @@ bool dxfRW::writeTables() {
         writer->writeString(100, "AcDbSymbolTable");
     }
     writer->writeInt16(70, 1); //end table def
-    //Aplication vports
-//RLZ: implement
-//    iface->writeVports();
-    writer->writeString(0, "VPORT");
-    if (version > DRW::AC1009) {
-        sprintf(buffer, "%X", ++entCount);
-        writer->writeString(5, buffer);
-        if (version > DRW::AC1014) {
-            writer->writeString(330, "8");
-        }
-        writer->writeString(100, "AcDbSymbolTableRecord");
-        writer->writeString(100, "AcDbViewportTableRecord");
-    }
-    if (version > DRW::AC1009)
-        writer->writeString(2, "*ACTIVE");
-    else
-        writer->writeString(2, "*Active");
-    writer->writeInt16(70, 0);
-    writer->writeDouble(10, 0.0);
-    writer->writeDouble(20, 0.0);
-    writer->writeDouble(11, 1.0);
-    writer->writeDouble(21, 1.0);
-    writer->writeDouble(12, 0.651828);
-    writer->writeDouble(22, -0.16);
-    writer->writeDouble(13, 0.0);
-    writer->writeDouble(23, 0.0);
-    writer->writeDouble(14, 10.0);
-    writer->writeDouble(24, 10.0);
-    writer->writeDouble(15, 10.0);
-    writer->writeDouble(25, 10.0);
-    writer->writeDouble(16, 0.0);
-    writer->writeDouble(26, 0.0);
-    writer->writeDouble(36, 1.0);
-    writer->writeDouble(17, 0.0);
-    writer->writeDouble(27, 0.0);
-    writer->writeDouble(37, 0.0);
-    writer->writeDouble(40, 5.13732);
-    writer->writeDouble(41, 2.4426877);
-    writer->writeDouble(42, 50.0);
-    writer->writeDouble(43, 0.0);
-    writer->writeDouble(44, 0.0);
-    writer->writeDouble(50, 0.0);
-    writer->writeDouble(51, 0.0);
-    writer->writeInt16(71, 0);
-    writer->writeInt16(72, 100);
-    writer->writeInt16(73, 1);
-    writer->writeInt16(74, 3);
-    writer->writeInt16(75, 0);
-    writer->writeInt16(76, 1);
-    writer->writeInt16(77, 0);
-    writer->writeInt16(78, 0);
-    if (version > DRW::AC1014) {
-        writer->writeInt16(281, 0);
-        writer->writeInt16(65, 1);
-        writer->writeDouble(110, 0.0);
-        writer->writeDouble(120, 0.0);
-        writer->writeDouble(130, 0.0);
-        writer->writeDouble(111, 1.0);
-        writer->writeDouble(121, 0.0);
-        writer->writeDouble(131, 0.0);
-        writer->writeDouble(112, 0.0);
-        writer->writeDouble(122, 1.0);
-        writer->writeDouble(132, 0.0);
-        writer->writeInt16(79, 0);
-        writer->writeDouble(146, 0.0);
-        if (version > DRW::AC1018) {
-            writer->writeString(348, "10020");
-            writer->writeInt16(60, 3);//v2007 undocummented
-            writer->writeInt16(61, 5);
-            writer->writeBool(292, 1);
-            writer->writeInt16(282, 1);
-            writer->writeDouble(141, 0.0);
-            writer->writeDouble(142, 0.0);
-            writer->writeInt16(63, 250);
-            writer->writeInt32(421, 3358443);
-        }
+//Aplication vports
+    dimstyleStd =false;
+    iface->writeVports();
+    if (!dimstyleStd) {
+        DRW_Vport portact;
+        portact.name = "*ACTIVE";
+        writeVport(&portact);
     }
     writer->writeString(0, "ENDTAB");
 /*** LTYPE ***/
