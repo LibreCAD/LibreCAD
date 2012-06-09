@@ -36,15 +36,18 @@
 RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(RS_EntityContainer& container,
         RS_GraphicView& graphicView,
         double angle,
-        bool fixedAngle)
+        bool fixedAngle, RS2::ActionType actionType)
         :RS_PreviewActionInterface("Draw lines with given angle",
                            container, graphicView) {
 
     this->angle = angle;
+    this->actionType=actionType;
+
     length = 1.0;
     snpPoint = 0;
     this->fixedAngle = fixedAngle;
     pos = RS_Vector(false);
+    RS_DIALOGFACTORY->requestOptions(this, true,false);
     reset();
 }
 
@@ -283,7 +286,7 @@ void RS_ActionDrawLineAngle::updateMouseButtonHints() {
 void RS_ActionDrawLineAngle::showOptions() {
     RS_ActionInterface::showOptions();
 
-    RS_DIALOGFACTORY->requestOptions(this, true);
+    RS_DIALOGFACTORY->requestOptions(this, true,true);
 }
 
 

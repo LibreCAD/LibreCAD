@@ -51,14 +51,15 @@ public:
     RS_ActionDrawLineAngle(RS_EntityContainer& container,
                            RS_GraphicView& graphicView,
                            double angle=0.0,
-                           bool fixedAngle=false);
+                           bool fixedAngle=false,
+                           RS2::ActionType actionType=RS2::ActionDrawLineAngle);
     ~RS_ActionDrawLineAngle();
 
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionDrawLineAngle;
-	}
+    virtual RS2::ActionType rtti() {
+        return actionType;
+    }
 
     void reset();
 
@@ -105,9 +106,15 @@ public:
 		return length;
 	}
 
-	bool hasFixedAngle() {
-		return fixedAngle;
-	}
+    bool hasFixedAngle() {
+        switch(rtti()){
+        case RS2::ActionDrawLineHorizontal:
+        case RS2::ActionDrawLineVertical:
+            return true;
+        default:
+            return false;
+        }
+    }
 
 protected:
     /**
@@ -134,6 +141,7 @@ protected:
      * Snap point (start, middle, end).
      */
     int snpPoint;
+    RS2::ActionType actionType;
 };
 
 #endif

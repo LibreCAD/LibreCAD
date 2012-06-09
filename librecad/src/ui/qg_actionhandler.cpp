@@ -407,13 +407,15 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDrawLineAngle(*doc, *gv, 0.0, false);
         break;
     case RS2::ActionDrawLineHorizontal:
-        a = new RS_ActionDrawLineAngle(*doc, *gv, 0.0, true);
+        a = new RS_ActionDrawLineAngle(*doc, *gv, 0.0, true,
+                                       RS2::ActionDrawLineHorizontal);
         break;
     case RS2::ActionDrawLineHorVert:
         a = new RS_ActionDrawLineHorVert(*doc, *gv);
         break;
     case RS2::ActionDrawLineVertical:
-        a = new RS_ActionDrawLineAngle(*doc, *gv, M_PI/2.0, true);
+        a = new RS_ActionDrawLineAngle(*doc, *gv, M_PI/2.0, true,
+                                       RS2::ActionDrawLineVertical);
         break;
     case RS2::ActionDrawLineFree:
         a = new RS_ActionDrawLineFree(*doc, *gv);

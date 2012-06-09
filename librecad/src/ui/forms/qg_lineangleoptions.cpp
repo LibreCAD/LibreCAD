@@ -59,27 +59,32 @@ void QG_LineAngleOptions::languageChange()
 }
 
 void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawLineAngle) {
+    if (a!=NULL && (
+                a->rtti()==RS2::ActionDrawLineAngle
+                ||a->rtti()==RS2::ActionDrawLineHorizontal
+                ||a->rtti()==RS2::ActionDrawLineVertical
+                )
+    ){
         action = (RS_ActionDrawLineAngle*)a;
-        if (action->hasFixedAngle()) {
-            lAngle->hide();
-            leAngle->hide();
-        }
+        leLength->show();
+        lLength->show();
+        leAngle->setVisible(!action->hasFixedAngle());
+        lAngle->setVisible(!action->hasFixedAngle());
 
         QString sa;
         QString sl;
-		int sp;
+        int sp;
 
         // settings from action:
         if (update) {
-            sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
+            if (action->hasFixedAngle()==false)
+                sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
             sl = QString("%1").arg(action->getLength());
 			sp = action->getSnapPoint();
-        }
+        } else {
         // settings from config file:
-        else {
             RS_SETTINGS->beginGroup("/Draw");
-            if (!action->hasFixedAngle()) {
+            if (action->hasFixedAngle()==false) {
                 sa = RS_SETTINGS->readEntry("/LineAngleAngle", "30.0");
             } else {
                 sa = QString("%1").arg(action->getAngle());
@@ -120,7 +125,9 @@ void QG_LineAngleOptions::updateAngle(const QString& a) {
 
 void QG_LineAngleOptions::updateLength(const QString& l) {
     if (action!=NULL) {
-        action->setLength(RS_Math::eval(l));
+        bool ok(false);
+        double length=RS_Math::eval(l,&ok);
+        if(ok) action->setLength(length);
     }
 }
 
