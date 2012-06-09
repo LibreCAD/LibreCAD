@@ -256,7 +256,7 @@ public:
     }*/
 
         void centerToPage();
-        void fitToPage();
+        bool fitToPage();
 
         /**
          * @retval true The document has been modified since it was last saved.

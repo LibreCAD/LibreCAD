@@ -197,7 +197,11 @@ void RS_ActionPrintPreview::center() {
 void RS_ActionPrintPreview::fit() {
     if (graphic!=NULL) {
         double f0=graphic->getPaperScale();
-        graphic->fitToPage();
+        if( graphic->fitToPage()==false && RS_DIALOGFACTORY!=NULL){
+            RS_DIALOGFACTORY->commandMessage(
+                        tr("RS_ActionPrintPreview::fit(): Invalid paper size")
+                        );
+        }
         if(fabs(f0-graphic->getPaperScale())>RS_TOLERANCE){
             //only zoomPage when scale changed
             graphicView->zoomPage();

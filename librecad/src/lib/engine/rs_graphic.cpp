@@ -832,31 +832,39 @@ void RS_Graphic::centerToPage() {
 /**
  * Fits drawing on page. Affects DXF variable $PINSBASE.
  */
-void RS_Graphic::fitToPage() {
-        double border = RS_Units::convert(25.0, RS2::Millimeter, getUnit());
-        RS_Vector ps = getPaperSize() - RS_Vector(border, border);
-        RS_Vector s = getSize();
-        double fx = RS_MAXDOUBLE;
-        double fy = RS_MAXDOUBLE;
-        double fxy;
-        //double factor = 1.0;
+bool RS_Graphic::fitToPage() {
+    bool ret(true);
+    double border = RS_Units::convert(25.0, RS2::Millimeter, getUnit());
+    RS_Vector ps = getPaperSize();
+    if(ps.x>border && ps.y>border) ps -= RS_Vector(border, border);
+    RS_Vector s = getSize();
+    double fx = RS_MAXDOUBLE;
+    double fy = RS_MAXDOUBLE;
+    double fxy;
+    //ps = RS_Units::convert(ps, getUnit(), RS2::Millimeter);
 
-        //ps = RS_Units::convert(ps, getUnit(), RS2::Millimeter);
+    // tin-pot 2011-12-30: TODO: can s.x < 0.0 (==> fx < 0.0) happen?
+    if (fabs(s.x) > 1.0e-10) {
+        fx = ps.x / s.x;
+    }
+    if (fabs(s.y) > 1.0e-10) {
+        fy = ps.y / s.y;
+    }
 
-        // tin-pot 2011-12-30: TODO: can s.x < 0.0 (==> fx < 0.0) happen? 
-        if (fabs(s.x) > 1.0e-6) {
-                fx = ps.x / s.x;
-        }
-        if (fabs(s.y) > 1.0e-6) {
-                fy = ps.y / s.y;
-        }
-
-        fxy = std::min(fx, fy);
-        if (fxy >= RS_MAXDOUBLE) {
-            fxy = 1.0; // Scale for empty drawing.
-        }
-        setPaperScale(fxy);
-        centerToPage();
+    fxy = std::min(fx, fy);
+    if (fxy >= RS_MAXDOUBLE || fxy <= 1.0e-10) {
+        setPaperSize(
+                    RS_Units::convert(RS_Vector(210.,297.)
+                                      , RS2::Millimeter
+                                      , getUnit()
+                                      )
+                    );
+        fitToPage();
+        ret=false;
+    }
+    setPaperScale(fxy);
+    centerToPage();
+    return ret;
 }
 
 void RS_Graphic::addEntity(RS_Entity* entity)
