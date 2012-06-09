@@ -106,6 +106,9 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
     }
 }
 
+/** fixme, action could be deleted already, moved the saving into the action
+  class
+  need to implement in shared_ptr*/
 void QG_LineAngleOptions::destroy() {
 //    if (action!=NULL) {
 //        RS_SETTINGS->beginGroup("/Draw");
