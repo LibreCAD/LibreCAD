@@ -30,8 +30,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
-
-
+#include "rs_settings.h"
 
 RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(RS_EntityContainer& container,
         RS_GraphicView& graphicView,
@@ -53,7 +52,15 @@ RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(RS_EntityContainer& container,
 
 
 
-RS_ActionDrawLineAngle::~RS_ActionDrawLineAngle() {}
+RS_ActionDrawLineAngle::~RS_ActionDrawLineAngle() {
+    RS_SETTINGS->beginGroup("/Draw");
+    if (!hasFixedAngle()) {
+        RS_SETTINGS->writeEntry("/LineAngleAngle", RS_Math::rad2deg(getAngle()));
+    }
+    RS_SETTINGS->writeEntry("/LineAngleLength", getLength());
+    RS_SETTINGS->writeEntry("/LineAngleSnapPoint", getSnapPoint());
+    RS_SETTINGS->endGroup();
+}
 
 
 QAction* RS_ActionDrawLineAngle::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {

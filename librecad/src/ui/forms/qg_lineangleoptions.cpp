@@ -66,6 +66,7 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
                 )
     ){
         action = (RS_ActionDrawLineAngle*)a;
+        m_bFixedAngle=action->hasFixedAngle();
         leLength->show();
         lLength->show();
         leAngle->setVisible(!action->hasFixedAngle());
@@ -106,15 +107,15 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_LineAngleOptions::destroy() {
-    if (action!=NULL) {
-        RS_SETTINGS->beginGroup("/Draw");
-        if (!action->hasFixedAngle()) {
-            RS_SETTINGS->writeEntry("/LineAngleAngle", RS_Math::rad2deg(action->getAngle()));
-        }
-        RS_SETTINGS->writeEntry("/LineAngleLength", action->getLength());
-        RS_SETTINGS->writeEntry("/LineAngleSnapPoint", action->getSnapPoint());
-        RS_SETTINGS->endGroup();
-    }
+//    if (action!=NULL) {
+//        RS_SETTINGS->beginGroup("/Draw");
+//        if (!action->hasFixedAngle()) {
+//            RS_SETTINGS->writeEntry("/LineAngleAngle", RS_Math::rad2deg(action->getAngle()));
+//        }
+//        RS_SETTINGS->writeEntry("/LineAngleLength", action->getLength());
+//        RS_SETTINGS->writeEntry("/LineAngleSnapPoint", action->getSnapPoint());
+//        RS_SETTINGS->endGroup();
+//    }
 }
 
 void QG_LineAngleOptions::updateAngle(const QString& a) {

@@ -116,7 +116,9 @@
  * @param ow Pointer to widget that can host option widgets.
  */
 QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
-        : RS_DialogFactoryInterface() {
+        : RS_DialogFactoryInterface()
+        ,m_pLineAngleOptions(NULL)
+{
         RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory");
 
     this->parent = parent;
@@ -935,21 +937,20 @@ void QG_DialogFactory::requestLineParallelThroughOptions(
  * Shows a widget for options for the action: "line angle"
  */
 void QG_DialogFactory::requestLineAngleOptions(RS_ActionInterface* action,
-        bool on, bool update) {
-
-    static QG_LineAngleOptions* toolWidget = NULL;
+                                               bool on, bool update) {
 
     if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
-            delete toolWidget;
-            toolWidget = NULL;
-        }
         if (on==true) {
-            toolWidget = new QG_LineAngleOptions();
-            optionWidget->addWidget(toolWidget);
-            toolWidget->setAction(action, update);
+            if(m_pLineAngleOptions==NULL)
+                m_pLineAngleOptions = new QG_LineAngleOptions();
+            optionWidget->addWidget(m_pLineAngleOptions);
+            m_pLineAngleOptions->setAction(action, update);
             //toolWidget->setData(&angle, &length, fixedAngle, update);
-                        toolWidget->show();
+            m_pLineAngleOptions->show();
+        }else{
+            if (m_pLineAngleOptions==NULL) return;
+            delete m_pLineAngleOptions;
+            m_pLineAngleOptions = NULL;
         }
     }
 }
