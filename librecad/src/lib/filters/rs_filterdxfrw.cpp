@@ -1931,7 +1931,7 @@ void RS_FilterDXFRW::writeInsert(RS_Insert* i) {
 #ifndef  RS_VECTOR2D
     in.zscale = i->getScale().z;
 #endif
-    in.angle = i->getAngle();
+    in.angle = RS_Math::rad2deg(i->getAngle());
     in.colcount = i->getCols();
     in.rowcount = i->getRows();
     in.colspace = i->getSpacing().x;
@@ -2128,7 +2128,7 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
         dim->type = 0+32;
         dd->setDef1Point(DRW_Coord (dl->getExtensionPoint1().x, dl->getExtensionPoint1().y, 0.0));
         dd->setDef2Point(DRW_Coord (dl->getExtensionPoint2().x, dl->getExtensionPoint2().y, 0.0));
-        dd->setAngle(dl->getAngle());
+        dd->setAngle( RS_Math::rad2deg(dl->getAngle()) );
         dd->setOblique(dl->getOblique());
         break; }
     }
