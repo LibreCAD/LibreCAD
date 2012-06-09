@@ -62,7 +62,8 @@ public:
 public:
     RS_ActionDimLinear(RS_EntityContainer& container,
                        RS_GraphicView& graphicView,
-                       double angle=0.0, bool fixedAngle=false);
+                       double angle=0.0, bool fixedAngle=false,
+                       RS2::ActionType type = RS2::ActionDimLinear);
     ~RS_ActionDimLinear();
 	
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
@@ -109,7 +110,8 @@ protected:
     bool fixedAngle;
 
 	/** Last status before entering text or angle. */
-	Status lastStatus;
+    Status lastStatus;
+    RS2::ActionType actionType;
 };
 
 #endif

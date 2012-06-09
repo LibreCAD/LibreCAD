@@ -561,10 +561,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDimLinear(*doc, *gv);
         break;
     case RS2::ActionDimLinearHor:
-        a = new RS_ActionDimLinear(*doc, *gv, 0.0, true);
+        a = new RS_ActionDimLinear(*doc, *gv, 0.0, true, RS2::ActionDimLinearHor);
         break;
     case RS2::ActionDimLinearVer:
-        a = new RS_ActionDimLinear(*doc, *gv, M_PI/2.0, true);
+        a = new RS_ActionDimLinear(*doc, *gv, M_PI/2.0, true, RS2::ActionDimLinearVer);
         break;
     case RS2::ActionDimRadial:
         a = new RS_ActionDimRadial(*doc, *gv);
