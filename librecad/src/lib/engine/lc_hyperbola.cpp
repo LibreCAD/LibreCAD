@@ -44,12 +44,40 @@
  */
 LC_Hyperbola::LC_Hyperbola(RS_EntityContainer* parent,
                        const LC_HyperbolaData& d)
-    :RS_AtomicEntity(parent), data(d) {
-
+    :RS_AtomicEntity(parent)
+    ,data(d)
+    ,m_bValid(true)
+{
+    if(data.majorP.squared()<RS_TOLERANCE2) {
+        m_bValid=false;
+        return;
+    }
     //calculateEndpoints();
     calculateBorders();
 }
 
+/** create data based on foci and a point on hyperbola */
+LC_HyperbolaData::LC_HyperbolaData(const RS_Vector& focus0,
+                 const RS_Vector& focus1,
+                 const RS_Vector& point):
+    center((focus0+focus1)*0.5)
+{
+    double ds0=focus0.distanceTo(point);
+    ds0 -= focus1.distanceTo(point);
+
+    majorP= (ds0>0.)?focus0-center:focus1-center;
+    double dc=focus0.distanceTo(focus1);
+    double dd=fabs(ds0);
+    //no hyperbola for middle equidistant
+    if(dc<RS_TOLERANCE||dd<RS_TOLERANCE) {
+        majorP.set(0.,0.);
+        return;
+    }
+    ratio= dc/dd;
+    majorP /= ratio;
+    ratio=sqrt(ratio*ratio - 1.);
+
+}
 
 /**
  * Recalculates the endpoints using the angles and the radius.
@@ -111,10 +139,14 @@ LC_Quadratic LC_Hyperbola::getQuadratic() const
     std::vector<double> ce(6,0.);
     ce[0]=data.majorP.squared();
     ce[2]=-data.ratio*data.ratio*ce[0];
-    if(ce[0]>RS_TOLERANCE) ce[0]=1./ce[0];
-    if(ce[2]>RS_TOLERANCE) ce[2]=1./ce[2];
+    if(ce[0]>RS_TOLERANCE2) ce[0]=1./ce[0];
+    if(fabs(ce[2])>RS_TOLERANCE2) ce[2]=1./ce[2];
     ce[5]=-1.;
     LC_Quadratic ret(ce);
+    if(ce[0]<RS_TOLERANCE2 || fabs(ce[2])<RS_TOLERANCE2) {
+        ret.m_bValid=false;
+        return ret;
+    }
     ret.rotate(data.majorP.angle());
     ret.move(data.center);
     return ret;

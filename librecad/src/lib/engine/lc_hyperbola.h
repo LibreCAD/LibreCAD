@@ -51,6 +51,10 @@ public:
         this->angle2 = angle2;
         this->reversed = reversed;
     }
+    /** create data based on foci and a point on hyperbola */
+    LC_HyperbolaData(const RS_Vector& focus0,
+                     const RS_Vector& focus1,
+                     const RS_Vector& point);
 
     friend class LC_Hyperbola;
 
@@ -263,6 +267,7 @@ public:
 
 protected:
     LC_HyperbolaData data;
+    bool m_bValid;
 
 };
 

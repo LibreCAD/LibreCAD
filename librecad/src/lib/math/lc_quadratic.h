@@ -58,6 +58,10 @@ public:
     {
             return m_bValid;
     }
+    void setValid(bool value)
+    {
+        m_bValid=value;
+    }
 
     /** switch x,y coordinates */
     LC_Quadratic flipXY(void) const;

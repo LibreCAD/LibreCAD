@@ -52,7 +52,10 @@
 //#endif
 
 #define ARAD 57.29577951308232
+//tolerance
 #define RS_TOLERANCE 1.0e-10
+//squared tolerance
+#define RS_TOLERANCE2 1.0e-20
 #define RS_TOLERANCE_ANGLE 1.0e-8
 
 typedef unsigned int uint;
