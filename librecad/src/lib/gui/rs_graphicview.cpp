@@ -1843,12 +1843,19 @@ double RS_GraphicView::toGraphDY(int d) {
   */
 double RS_GraphicView::dpmm(void)
 {
-    RS_Graphic* graphic=getGraphic();
     //unit factor
-    double scale=RS_Units::convert(1., graphic->getUnit(),
-                            RS2::Millimeter);
-    if(fabs(scale)<RS_TOLERANCE) scale=1.;
+    RS_Graphic* graphic=getGraphic();
+    //fix me, how to find dpmm when graphic is NULL
+    if(graphic != NULL){
+    double scale(1.);
+        scale=RS_Units::convert(1., graphic->getUnit(),
+                                RS2::Millimeter);
+        if(fabs(scale)<RS_TOLERANCE) scale=1.;
     return graphic->getPaperScale()/scale;
+    }
+    //editting blocks?
+
+    return 0.03937;
 }
 
 
