@@ -199,7 +199,10 @@ if(dimtsz < 0.01) {
         double dimAngle1 = dimensionLine->getAngle1();
         double textAngle;
         bool corrected=false;
-        textAngle = RS_Math::makeAngleReadable(dimAngle1, true, &corrected);
+        if (getAlignText())
+            textAngle =0.0;
+        else
+            textAngle = RS_Math::makeAngleReadable(dimAngle1, true, &corrected);
 
     if (data.middleOfText.valid && !forceAutoText) {
         textPos = data.middleOfText;
@@ -299,6 +302,20 @@ double RS_Dimension::getTextHeight() {
     return getGraphicVariable("$DIMTXT", 2.5, 40);
 }
 
+
+/**
+ * @return Dimension labels alignement text true= horizontal, false= aligned.
+ */
+bool RS_Dimension::getAlignText() {
+    bool ret;
+    int v = getGraphicVariableInt("$DIMTIH", 2);
+    if (v>1) {
+        addGraphicVariable("$DIMTIH", 0, 70);
+        getGraphicVariableInt("$DIMTIH", 0);
+    }
+    v==0 ? ret = false :ret = true;
+    return ret;
+}
 
 
 /**

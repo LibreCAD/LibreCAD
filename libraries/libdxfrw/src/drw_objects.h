@@ -83,12 +83,12 @@ public:
         dimrnd = dimdle = dimtp = dimtm = dimtsz = dimtvp = 0.0;
         dimaltf = 25.4;
         dimtol = dimlim = dimse1 = dimse2 = dimtad = dimzin = 0;
-        dimtih = dimtoh = dimtolj = 1;
+        dimtoh = dimtolj = 1;
         dimalt = dimtofl = dimsah = dimtix = dimsoxd =0;
         dimaltd = dimunit = dimaltu = dimalttd = dimlunit = 2;
         dimclrd = dimclre = dimclrt = dimjust = dimupt = 0;
         dimazin = dimaltz = dimaltttz = dimtzin = dimfrac = 0;
-        dimadec = dimaunit = dimsd1 = dimsd2 = dimtmove = 0;
+        dimtih = dimadec = dimaunit = dimsd1 = dimsd2 = dimtmove = 0;
         dimaltrnd = 0.0;
         dimdec = dimtdec = 4;
         dimfit = dimatfit = 3;

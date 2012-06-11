@@ -769,6 +769,11 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         writer->writeDouble(40, varDouble);
     else
         writer->writeDouble(40, 0.625);
+    writer->writeString(9, "$DIMTIH");
+    if (getInt("$DIMTIH", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
 
     writer->writeString(9, "$LUNITS");
     if (getInt("$LUNITS", &varInt))

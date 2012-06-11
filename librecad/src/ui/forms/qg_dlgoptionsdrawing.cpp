@@ -301,6 +301,9 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     // dimension tick size:
     double dimtsz = graphic->getVariableDouble("$DIMTSZ", 0.);
     cbDimTsz->setEditText(QString("%1").arg(dimtsz));
+    // dimension alignment:
+    int dimtih = graphic->getVariableInt("$DIMTIH", 0);
+    cbDimTih->setCurrentIndex(dimtih);
     // spline line segments per patch:
     int splinesegs = graphic->getVariableInt("$SPLINESEGS", 8);
     //RLZ    cbSplineSegs->setCurrentText(QString("%1").arg(splinesegs));
@@ -414,6 +417,7 @@ void QG_DlgOptionsDrawing::validate() {
                              RS_Math::eval(cbDimTsz->currentText()), 40);
 //dimension tick size, 0 for no tick
         //DIMTSZ
+        graphic->addVariable("$DIMTIH", cbDimTih->currentIndex(), 70);
         // splines:
         graphic->addVariable("$SPLINESEGS",
                              (int)RS_Math::eval(cbSplineSegs->currentText()), 70);

@@ -75,6 +75,8 @@ blockList(true),paperScaleFixed(false)
         addVariable("$DIMTXT",
                     RS_Units::convert(2.5, RS2::Millimeter, unit), 40);
     }
+    addVariable("$DIMTIH", 0, 70);
+
         setModified(false);
 }
 
