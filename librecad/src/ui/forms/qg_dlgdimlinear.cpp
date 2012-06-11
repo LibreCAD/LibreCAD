@@ -78,5 +78,7 @@ void QG_DlgDimLinear::setDim(RS_DimLinear& d) {
 void QG_DlgDimLinear::updateDim() {
     dim->setLabel(wLabel->getLabel());
     dim->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text(), 0.0)));
+    dim->setPen(wPen->getPen());
+    dim->setLayer(cbLayer->currentText());
 }
 
