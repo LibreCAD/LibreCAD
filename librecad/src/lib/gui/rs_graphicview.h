@@ -360,10 +360,6 @@ public:
     double toGraphY(int y);
     double toGraphDX(int d);
     double toGraphDY(int d);
-    /** get Density per millimeter on screen/print device
-      *@return density per millimeter in pixel/mm
-      */
-    double dpmm(void);
 
         /**
          * (Un-)Locks the position of the relative zero.

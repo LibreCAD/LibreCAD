@@ -33,7 +33,7 @@
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 #include "lc_quadratic.h"
-
+#include "rs_painterqt.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -980,7 +980,7 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
     double ira=1./ra;
     int i(0);          // index counter
     if(pat->num>0) {
-        double dpmm=view->dpmm();
+        double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
         da.resize(pat->num);
         while(i<pat->num){
             //        da[j] = pat->pattern[i++] * styleFactor;
