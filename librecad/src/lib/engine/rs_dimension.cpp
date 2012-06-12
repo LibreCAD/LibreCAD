@@ -262,7 +262,7 @@ if(dimtsz < 0.01) {
             d = text->getHeight()/2 +dimgap;
             double ang = p1.angleTo(p2);
             RS_Vector inc;
-            inc.setPolarRel(d, ang);
+            inc.setPolar(d, ang);
             dimensionLine2->setStartpoint(mid+inc);
             dimensionLine->setEndpoint(mid-inc);
             addEntity(dimensionLine2);
