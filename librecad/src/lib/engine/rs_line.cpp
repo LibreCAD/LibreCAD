@@ -35,6 +35,7 @@
 #include "rs_linetypepattern.h"
 #include "rs_information.h"
 #include "lc_quadratic.h"
+#include "rs_painterqt.h"
 
 
 #ifdef EMU_C99
@@ -678,11 +679,10 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     RS_Vector* dp=new RS_Vector[pat->num > 0?pat->num:0];
     double* ds=new double[pat->num > 0?pat->num:0];
     if (pat->num >0 ){
-        double dpmm=view->dpmm();
+        double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
         for (i=0; i<pat->num; ++i) {
             //        ds[j]=pat->pattern[i] * styleFactor;
             //fixme, styleFactor support needed
-
 
             ds[i]=dpmm*pat->pattern[i];
             dp[i] = direction*fabs(ds[i]);

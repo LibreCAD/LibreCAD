@@ -33,6 +33,7 @@
 #include "rs_information.h"
 #include "rs_linetypepattern.h"
 #include  "lc_quadratic.h"
+#include "rs_painterqt.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h" /* C99 math */
@@ -1498,7 +1499,7 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
     int i(0),j(0);
     double* ds = new double[pat->num>0?pat->num:0];
     if(pat->num>0){
-        double dpmm = view->dpmm();
+        double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
         while( i<pat->num){
             ds[i]= dpmm * pat->pattern[i] ;//pattern length
             i++;

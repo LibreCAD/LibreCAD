@@ -1838,26 +1838,6 @@ double RS_GraphicView::toGraphDY(int d) {
     return d/factor.y;
 }
 
-/** get Density per millimeter on screen/print device
-  *@return density per millimeter in pixel/mm
-  */
-double RS_GraphicView::dpmm(void)
-{
-    //unit factor
-    RS_Graphic* graphic=getGraphic();
-    //fix me, how to find dpmm when graphic is NULL
-    if(graphic != NULL){
-    double scale(1.);
-        scale=RS_Units::convert(1., graphic->getUnit(),
-                                RS2::Millimeter);
-        if(fabs(scale)<RS_TOLERANCE) scale=1.;
-    return graphic->getPaperScale()/scale;
-    }
-    //editting blocks?
-
-    return 0.03937;
-}
-
 
 /**
  * Sets the relative zero coordinate (if not locked)

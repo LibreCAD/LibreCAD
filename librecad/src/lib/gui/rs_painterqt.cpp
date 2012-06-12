@@ -553,6 +553,15 @@ int RS_PainterQt::getWidth() {
     return device()->width();
 }
 
+/** get Density per millimeter on screen/print device
+  *@return density per millimeter in pixel/mm
+  */
+double RS_PainterQt::getDpmm() {
+    int mm(device()->widthMM());
+    if(mm==0) mm=400;
+    return double(device()->width())/mm;
+}
+
 
 int RS_PainterQt::getHeight() {
     return device()->height();
