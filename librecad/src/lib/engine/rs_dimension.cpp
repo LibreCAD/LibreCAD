@@ -209,18 +209,20 @@ if(dimtsz < 0.01) {
     } else {
         textPos = dimensionLine->getMiddlePoint();
 
-        RS_Vector distV;
+        if (!getAlignText()) {
+            RS_Vector distV;
 
-        // rotate text so it's readable from the bottom or right (ISO)
-        // quadrant 1 & 4
-        if (corrected) {
-            distV.setPolar(dimgap + dimtxt/2.0, dimAngle1-M_PI/2.0);
-        } else {
-            distV.setPolar(dimgap + dimtxt/2.0, dimAngle1+M_PI/2.0);
+            // rotate text so it's readable from the bottom or right (ISO)
+            // quadrant 1 & 4
+            if (corrected) {
+                distV.setPolar(dimgap + dimtxt/2.0, dimAngle1-M_PI/2.0);
+            } else {
+                distV.setPolar(dimgap + dimtxt/2.0, dimAngle1+M_PI/2.0);
+            }
+
+            // move text away from dimension line:
+            textPos+=distV;
         }
-
-        // move text away from dimension line:
-        textPos+=distV;
         //// the next update should still be able to adjust this
         ////   auto text position. leave it invalid
                 data.middleOfText = textPos;
@@ -248,6 +250,25 @@ if(dimtsz < 0.01) {
     }
     text->setPen(RS_Pen(RS2::FlagInvalid));
     text->setLayer(NULL);
+    //horizontal text, split dimensionLine
+    if (getAlignText()) {
+        double d = dimensionLine->getDistanceToPoint(textPos);
+        //are text intersecting dimensionLine?
+        if (d< text->getUsedTextHeight()/2+dimgap) {
+            //yes, find nearest point in line
+            RS_Vector mid = dimensionLine->getNearestPointOnEntity(textPos, true);
+            RS_Line* dimensionLine2 = (RS_Line*)dimensionLine->clone();
+            //half distance to remove
+            d = text->getHeight()/2 +dimgap;
+            double ang = p1.angleTo(p2);
+            RS_Vector inc;
+            inc.setPolarRel(d, ang);
+            dimensionLine2->setStartpoint(mid+inc);
+            dimensionLine->setEndpoint(mid-inc);
+            addEntity(dimensionLine2);
+        }
+    }
+
     addEntity(text);
 }
 
