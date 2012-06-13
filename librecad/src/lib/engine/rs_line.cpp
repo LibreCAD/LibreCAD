@@ -685,6 +685,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
             //fixme, styleFactor support needed
 
             ds[i]=dpmm*pat->pattern[i];
+            if( fabs(ds[i]) < 1. ) ds[i] = (ds[i]>=0.)?1.:-1.;
             dp[i] = direction*fabs(ds[i]);
         }
     }else {

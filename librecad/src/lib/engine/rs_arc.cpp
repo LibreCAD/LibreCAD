@@ -985,8 +985,9 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
         while(i<pat->num){
             //        da[j] = pat->pattern[i++] * styleFactor;
             //fixme, stylefactor needed
-            da[i] =isReversed()? -fabs(pat->pattern[i]):fabs(pat->pattern[i]);
-            da[i] *= dpmm*ira;
+            da[i] =dpmm*(isReversed()? -fabs(pat->pattern[i]):fabs(pat->pattern[i]));
+            if( fabs(da[i]) < 1. ) da[i] = (da[i]>=0.)?1.:-1.;
+            da[i] *= ira;
             i++;
         }
     }else {

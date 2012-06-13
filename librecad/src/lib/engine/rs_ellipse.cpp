@@ -1502,6 +1502,8 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
         double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
         while( i<pat->num){
             ds[i]= dpmm * pat->pattern[i] ;//pattern length
+            if(fabs(ds[i])<1.)
+                ds[i]=(ds[i]>=0.)?1.:-1.;
             i++;
         }
         j=i;
