@@ -25,6 +25,7 @@
 **********************************************************************/
 
 
+#include "rs_information.h"
 #include "rs_dimension.h"
 #include "rs_solid.h"
 #include "rs_text.h"
@@ -252,19 +253,37 @@ if(dimtsz < 0.01) {
     text->setLayer(NULL);
     //horizontal text, split dimensionLine
     if (getAlignText()) {
-        double d = dimensionLine->getDistanceToPoint(textPos);
+        double w =text->getUsedTextWidth()/2+dimgap;
+        double h = text->getUsedTextHeight()/2+dimgap;
+        RS_Vector v1 = textPos - RS_Vector(w, h);
+        RS_Vector v2 = textPos + RS_Vector(w, h);
+        RS_Line l[] = {
+            RS_Line(NULL, RS_LineData(v1, RS_Vector(v2.x, v1.y))),
+            RS_Line(NULL, RS_LineData(RS_Vector(v2.x, v1.y), v2)),
+            RS_Line(NULL, RS_LineData(v2, RS_Vector(v1.x, v2.y))),
+            RS_Line(NULL, RS_LineData(RS_Vector(v1.x, v2.y), v1))
+        };
+        RS_VectorSolutions sol1, sol2;
+        int inters= 0;
+        do {
+            sol1 = RS_Information::getIntersection(dimensionLine, &(l[inters++]), true);
+        } while (!sol1.hasValid() && inters < 4);
+        do {
+            sol2 = RS_Information::getIntersection(dimensionLine, &(l[inters++]), true);
+        } while (!sol2.hasValid() && inters < 4);
         //are text intersecting dimensionLine?
-        if (d< text->getUsedTextHeight()/2+dimgap) {
-            //yes, find nearest point in line
-            RS_Vector mid = dimensionLine->getNearestPointOnEntity(textPos, true);
+        if (sol1.hasValid() && sol2.hasValid()) {
+            //yes, split dimension line
             RS_Line* dimensionLine2 = (RS_Line*)dimensionLine->clone();
-            //half distance to remove
-            d = text->getHeight()/2 +dimgap;
-            double ang = p1.angleTo(p2);
-            RS_Vector inc;
-            inc.setPolar(d, ang);
-            dimensionLine2->setStartpoint(mid+inc);
-            dimensionLine->setEndpoint(mid-inc);
+            v1 = sol1.get(0);
+            v2 = sol2.get(0);
+            if (p1.distanceTo(v1) < p1.distanceTo(v2)) {
+                dimensionLine->setEndpoint(v1);
+                dimensionLine2->setStartpoint(v2);
+            } else {
+                dimensionLine->setEndpoint(v2);
+                dimensionLine2->setStartpoint(v1);
+            }
             addEntity(dimensionLine2);
         }
     }
