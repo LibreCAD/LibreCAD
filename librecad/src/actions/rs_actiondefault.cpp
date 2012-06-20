@@ -40,11 +40,11 @@
  */
 RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
-        : RS_PreviewActionInterface("Default",
-                            container, graphicView) {
+    : RS_PreviewActionInterface("Default",
+                                container, graphicView) {
 
-        RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
-        RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault: OK");
+    RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
+    RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault: OK");
 }
 
 
@@ -55,26 +55,26 @@ RS_ActionDefault::~RS_ActionDefault() {
 
 
 QAction* RS_ActionDefault::createGUIAction(RS2::ActionType /*type*/,
-        QObject* /*parent*/) {
+                                           QObject* /*parent*/) {
 
-        return NULL;
+    return NULL;
 }
 
 
 void RS_ActionDefault::init(int status) {
-        RS_DEBUG->print("RS_ActionDefault::init");
-if(status==Neutral){
-    deletePreview();
-    deleteSnapper();
-}
-        RS_PreviewActionInterface::init(status);
+    RS_DEBUG->print("RS_ActionDefault::init");
+    if(status==Neutral){
+        deletePreview();
+        deleteSnapper();
+    }
+    RS_PreviewActionInterface::init(status);
     v1 = v2 = RS_Vector(false);
-//    snapMode.clear();
-//    snapMode.restriction = RS2::RestrictNothing;
-//    restrBak = RS2::RestrictNothing;
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+    //    snapMode.clear();
+    //    snapMode.restriction = RS2::RestrictNothing;
+    //    restrBak = RS2::RestrictNothing;
+    //        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
 
-        RS_DEBUG->print("RS_ActionDefault::init: OK");
+    RS_DEBUG->print("RS_ActionDefault::init: OK");
 }
 
 
@@ -85,7 +85,7 @@ void RS_ActionDefault::trigger() {
 }
 
 void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {
-//        std::cout<<"RS_ActionDefault::keyPressEvent(): begin"<<std::endl;
+    //        std::cout<<"RS_ActionDefault::keyPressEvent(): begin"<<std::endl;
     switch(e->key()){
     case Qt::Key_Shift:
         restrBak = snapMode.restriction;
@@ -93,7 +93,7 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {
         e->accept();
         //cleanup default action, issue#285
     case Qt::Key_Escape:
-//        std::cout<<"RS_ActionDefault::keyPressEvent(): Qt::Key_Escape"<<std::endl;
+        //        std::cout<<"RS_ActionDefault::keyPressEvent(): Qt::Key_Escape"<<std::endl;
         deletePreview();
         deleteSnapper();
         setStatus(Neutral);
@@ -105,10 +105,10 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {
 }
 
 void RS_ActionDefault::keyReleaseEvent(QKeyEvent* e) {
-        if (e->key()==Qt::Key_Shift) {
-                setSnapRestriction(restrBak);
-                e->accept();
-        }
+    if (e->key()==Qt::Key_Shift) {
+        setSnapRestriction(restrBak);
+        e->accept();
+    }
 }
 
 
@@ -132,21 +132,21 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
             double dist;
             RS_Vector ref = container->getNearestSelectedRef(v1, &dist);
             if (ref.valid==true && graphicView->toGuiDX(dist)<8) {
-                                RS_DEBUG->print("RS_ActionDefault::mouseMoveEvent: "
-                                        "moving reference point");
+                RS_DEBUG->print("RS_ActionDefault::mouseMoveEvent: "
+                                "moving reference point");
                 setStatus(MovingRef);
                 v1 = ref;
-                        graphicView->moveRelativeZero(v1);
+                graphicView->moveRelativeZero(v1);
             }
-                        else {
+            else {
                 // test for an entity to drag:
                 RS_Entity* en = catchEntity(v1);
                 if (en!=NULL && en->isSelected()) {
-                                        RS_DEBUG->print("RS_ActionDefault::mouseMoveEvent: "
-                                                "moving entity");
+                    RS_DEBUG->print("RS_ActionDefault::mouseMoveEvent: "
+                                    "moving entity");
                     setStatus(Moving);
                     v1 = en->getNearestRef(v1);
-                                graphicView->moveRelativeZero(v1);
+                    graphicView->moveRelativeZero(v1);
                 }
 
                 // no entity found. start area selection:
@@ -162,7 +162,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
         deletePreview();
         preview->addSelectionFrom(*container);
-                preview->moveRef(v1, v2-v1);
+        preview->moveRef(v1, v2-v1);
         drawPreview();
         break;
 
@@ -177,35 +177,12 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
     case SetCorner2:
         if (v1.valid) {
-            //v2 = snapPoint(e);
             v2 = mouse;
 
             deletePreview();
 
-                        RS_Pen pen_f(RS_Color(50,50,255,40), RS2::Width00, RS2::SolidLine);
-                        RS_OverlayBox* ob=new RS_OverlayBox(preview, RS_OverlayBoxData(v1, v2));
-                        ob->setPen(pen_f);
-                        preview->addEntity(ob);
-
-                        RS_Pen pen(RS_Color(218,105,24), RS2::Width00, RS2::SolidLine);
-                        pen.setScreenWidth(1);
-
-                        // TODO change to a rs_box sort of entity
-                        RS_Line* e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v1.y),  RS_Vector(v2.x, v1.y)));
-                        e->setPen(pen);
-                        preview->addEntity(e);
-
-                        e=new RS_Line(preview, RS_LineData(RS_Vector(v2.x, v1.y),  RS_Vector(v2.x, v2.y)));
-                        e->setPen(pen);
-                        preview->addEntity(e);
-
-                        e=new RS_Line(preview, RS_LineData(RS_Vector(v2.x, v2.y),  RS_Vector(v1.x, v2.y)));
-                        e->setPen(pen);
-                        preview->addEntity(e);
-
-                        e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v2.y),  RS_Vector(v1.x, v1.y)));
-                        e->setPen(pen);
-                        preview->addEntity(e);
+            RS_OverlayBox* ob=new RS_OverlayBox(preview, RS_OverlayBoxData(v1, v2));
+            preview->addEntity(ob);
 
             drawPreview();
         }
@@ -244,19 +221,19 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
             break;
 
         case MovingRef: {
-                        v2 = snapPoint(e);
-                deletePreview();
-                RS_Modification m(*container, graphicView);
-                RS_MoveRefData data;
-                                data.ref = v1;
-                                data.offset = v2-v1;
-                m.moveRef(data);
-                                //container->moveSelectedRef(v1, v2-v2);
-                setStatus(Neutral);
-                RS_DIALOGFACTORY->updateSelectionWidget(
+            v2 = snapPoint(e);
+            deletePreview();
+            RS_Modification m(*container, graphicView);
+            RS_MoveRefData data;
+            data.ref = v1;
+            data.offset = v2-v1;
+            m.moveRef(data);
+            //container->moveSelectedRef(v1, v2-v2);
+            setStatus(Neutral);
+            RS_DIALOGFACTORY->updateSelectionWidget(
                         container->countSelected(),container->totalSelectedLength());
-                                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-            }
+            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+        }
             break;
 
         default:
@@ -278,46 +255,46 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
         v2 = graphicView->toGraph(e->x(), e->y());
         switch (getStatus()) {
         case Dragging: {
-                // select single entity:
-                RS_Entity* en = catchEntity(e);
+            // select single entity:
+            RS_Entity* en = catchEntity(e);
 
-                if (en!=NULL) {
-                    deletePreview();
+            if (en!=NULL) {
+                deletePreview();
 
-                    RS_Selection s(*container, graphicView);
-                    s.selectSingle(en);
+                RS_Selection s(*container, graphicView);
+                s.selectSingle(en);
 
-                    RS_DIALOGFACTORY->updateSelectionWidget(
-                        container->countSelected(),container->totalSelectedLength());
+                RS_DIALOGFACTORY->updateSelectionWidget(
+                            container->countSelected(),container->totalSelectedLength());
 
-                    e->accept();
+                e->accept();
 
-                    setStatus(Neutral);
-                } else {
-                    setStatus(SetCorner2);
-                }
+                setStatus(Neutral);
+            } else {
+                setStatus(SetCorner2);
             }
+        }
             break;
 
         case SetCorner2: {
-                //v2 = snapPoint(e);
-                v2 = graphicView->toGraph(e->x(), e->y());
+            //v2 = snapPoint(e);
+            v2 = graphicView->toGraph(e->x(), e->y());
 
-                // select window:
-                //if (graphicView->toGuiDX(v1.distanceTo(v2))>20) {
-                deletePreview();
+            // select window:
+            //if (graphicView->toGuiDX(v1.distanceTo(v2))>20) {
+            deletePreview();
 
-                bool cross = (v2.y>v1.y);
-                RS_Selection s(*container, graphicView);
-                s.selectWindow(v1, v2, true, cross);
+            bool cross = (v2.y>v1.y);
+            RS_Selection s(*container, graphicView);
+            s.selectWindow(v1, v2, true, cross);
 
-                RS_DIALOGFACTORY->updateSelectionWidget(
-                    container->countSelected(),container->totalSelectedLength());
+            RS_DIALOGFACTORY->updateSelectionWidget(
+                        container->countSelected(),container->totalSelectedLength());
 
-                setStatus(Neutral);
-                e->accept();
-                //}
-            }
+            setStatus(Neutral);
+            e->accept();
+            //}
+        }
             break;
 
 
@@ -375,17 +352,17 @@ void RS_ActionDefault::updateMouseButtonHints() {
 }
 
 void RS_ActionDefault::updateMouseCursor() {
-        switch (getStatus()) {
-        case Neutral:
+    switch (getStatus()) {
+    case Neutral:
         graphicView->setMouseCursor(RS2::ArrowCursor);
-                break;
-        case Moving:
-        case MovingRef:
+        break;
+    case Moving:
+    case MovingRef:
         graphicView->setMouseCursor(RS2::SelectCursor);
-                break;
-        default:
-                break;
-        }
+        break;
+    default:
+        break;
+    }
 }
 
 
