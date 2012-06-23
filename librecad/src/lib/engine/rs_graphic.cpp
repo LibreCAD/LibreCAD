@@ -798,9 +798,9 @@ double RS_Graphic::getPaperScale() {
     double ret;
 
     ret = getVariableDouble("$PSVPSCALE", 1.0);
-    if (ret<1.0e-6) {
-        ret = 1.0;
-    }
+//    if (ret<1.0e-6) {
+//        ret = 1.0;
+//    }
 
     return ret;
 }

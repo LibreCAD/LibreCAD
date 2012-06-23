@@ -46,6 +46,7 @@ public slots:
     virtual void setBlackWhite( bool on );
     virtual void fit();
     virtual void scale( const QString & s );
+    virtual void scale( const double & factor );
     virtual void updateScaleBox();
     virtual void updateScaleBox(const double& f);
     /** print scale fixed to saved value **/

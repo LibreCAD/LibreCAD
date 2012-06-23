@@ -139,7 +139,11 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
                 updateDisabled=true;
                 setScaleFixed(true);
             }else{
-                fit();
+                double&& currScale = action->getScale();
+                if(  currScale > RS_TOLERANCE)
+                    scale (currScale);
+                else
+                    fit();
                 setScaleFixed(false);
             }
         }else{
@@ -197,6 +201,15 @@ void QG_PrintPreviewOptions::fit() {
     if (action!=NULL) {
         action->fit();
         updateScaleBox();
+    }
+}
+
+
+void QG_PrintPreviewOptions::scale(const double& factor) {
+    double&& f=fabs(factor); // do we need negative factor at all?
+    if(action->setScale(f)){
+        //        std::cout<<"QG_PrintPreviewOptions::scale(const QString& s): line: "<<__LINE__<<" s="<<factor<<std::endl;
+        updateScaleBox(f);
     }
 }
 
