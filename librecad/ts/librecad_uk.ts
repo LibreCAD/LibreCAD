@@ -386,6 +386,10 @@ Auto-save disabled.</source>
         <source>Ta&amp;b mode</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Draw &amp;Order</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -2025,7 +2029,7 @@ Auto-save disabled.</source>
     <name>QG_BlockWidget</name>
     <message>
         <source>Add a block</source>
-        <translation>Додати блок</translation>
+        <translation type="obsolete">Додати блок</translation>
     </message>
     <message>
         <source>Remove the active block</source>
@@ -2092,6 +2096,18 @@ in a separate window</source>
     <message>
         <source>&amp;Create New Block</source>
         <translation>С&amp;творити новий блок</translation>
+    </message>
+    <message>
+        <source>Create Block</source>
+        <translation type="unfinished">Створити блок</translation>
+    </message>
+    <message>
+        <source>Add an empty block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save the active block to a file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2169,6 +2185,30 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Побудувати коло, вписане в трикутник, &lt;span style=&quot; font-style:italic;&quot;&gt;тобто&lt;/span&gt; дотичне до 3 ліній&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of three circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2828,6 +2868,25 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_CircleTan2Options</name>
+    <message>
+        <source>Circle Tangential2 Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius of tangential circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_ColorBox</name>
     <message>
         <source>By Layer</source>
@@ -2911,6 +2970,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_CommandEdit</name>
+    <message>
+        <source>clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_CommandWidget</name>
     <message>
         <source>Command Line</source>
@@ -2926,6 +2992,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Command history and output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3328,6 +3398,69 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_DlgImage</name>
+    <message>
+        <source>Image</source>
+        <translation type="unfinished">Зображення</translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Геометрія</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation type="unfinished">Ширина:</translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation type="unfinished">Висота:</translation>
+    </message>
+    <message>
+        <source>insert (x):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale:</source>
+        <translation type="unfinished">Масштаб:</translation>
+    </message>
+    <message>
+        <source>Size (px):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>insert (y):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Кут:</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Відміна</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="unfinished">Esc</translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgInitial</name>
     <message>
         <source>Welcome</source>
@@ -3402,7 +3535,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Scale:</source>
-        <translation>Масштаб:</translation>
+        <translation type="obsolete">Масштаб:</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -3435,6 +3568,14 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>Esc</source>
         <translation>Esc</translation>
+    </message>
+    <message>
+        <source>Scale X:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale Y:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3947,6 +4088,22 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>0</source>
         <translation type="unfinished">0</translation>
+    </message>
+    <message>
+        <source>Alignment:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dimension Aligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontal</source>
+        <translation type="unfinished">Горизонтальний</translation>
     </message>
 </context>
 <context>
@@ -5254,14 +5411,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New Drawing Exchange DXF 2000 %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New Drawing Exchange %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Drawing Exchange DXF R12 %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5287,11 +5436,41 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Open Drawing</source>
-        <translation type="unfinished">Відкрити креслення</translation>
+        <translation type="obsolete">Відкрити креслення</translation>
     </message>
     <message>
         <source>Save Drawing As</source>
-        <translation type="unfinished">Зберегти креслення як</translation>
+        <translation type="obsolete">Зберегти креслення як</translation>
+    </message>
+    <message>
+        <source>Drawing Exchange DXF 2007 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing Exchange DXF 2004 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing Exchange DXF R14 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block</source>
+        <comment>block file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing</source>
+        <comment>drawing file</comment>
+        <translation type="unfinished">Креслення</translation>
+    </message>
+    <message>
+        <source>Open %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save %1 As</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5443,6 +5622,34 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>1200</source>
         <translation>1200</translation>
     </message>
+    <message>
+        <source>Colouring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Black / White</source>
+        <translation type="unfinished">Чорний/білий</translation>
+    </message>
+    <message>
+        <source>Coloured</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Borders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top / Bottom - Border:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left / Right - Border:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>set same size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_InsertOptions</name>
@@ -5587,6 +5794,10 @@ The contents of a Help Layer should not appear in printout.</source>
     <message>
         <source>&amp;Toggle Visibility</source>
         <translation>&amp;Переключити видимість</translation>
+    </message>
+    <message>
+        <source>Looking for matching layer names</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6056,11 +6267,11 @@ The contents of a Help Layer should not appear in printout.</source>
         <translation>Вписати в сторінку</translation>
     </message>
     <message>
-        <source>Paper scale factor larger than 1.0e6</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper scale factor smaller than 1.0e-6</source>
+        <source>fixed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6678,7 +6889,55 @@ Do you want to replace it?</source>
         <translation>Усі файли зображень (%1) </translation>
     </message>
     <message>
-        <source>New Drawing Exchange %1</source>
+        <source>Scalable Vector Graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SGI Black &amp; White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encapsulated PostScript</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encapsulated PostScript Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encapsulated PostScript Interchange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Windows Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JPEG 2000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ZSoft Paintbrush</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PC Paint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SGI-Bilddatei</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Targa Image File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tagged Image File Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Old Drawing Exchange %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6796,6 +7055,17 @@ Do you want to replace it?</source>
     <message>
         <source>&amp;Remove Block</source>
         <translation>Ви&amp;лучити блок</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksSave</name>
+    <message>
+        <source>&amp;Save Block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No block activated to save</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7256,6 +7526,95 @@ Do you want to replace it?</source>
     <message>
         <source>Specify the third line</source>
         <translation>Вкажіть третю лінію</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan1_2P</name>
+    <message>
+        <source>Circle Tangential 2 P&amp;oints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify an arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Відміна</translation>
+    </message>
+    <message>
+        <source>Specify the first point on the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Назад</translation>
+    </message>
+    <message>
+        <source>Specify the second point on the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2</name>
+    <message>
+        <source>Circle Tangential &amp;2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the first line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Відміна</translation>
+    </message>
+    <message>
+        <source>Specify the second line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Назад</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan3</name>
+    <message>
+        <source>Circle Tangential &amp;3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the first arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Відміна</translation>
+    </message>
+    <message>
+        <source>Specify the second arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Назад</translation>
+    </message>
+    <message>
+        <source>Specify the third arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7936,7 +8295,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Select first circle or arc</source>
-        <translation>Виділіть першу коло чи дугу</translation>
+        <translation type="obsolete">Виділіть першу коло чи дугу</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7944,11 +8303,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Select second circle or arc</source>
-        <translation>Виділити друге коло чи дугу</translation>
+        <translation type="obsolete">Виділити друге коло чи дугу</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Назад</translation>
+    </message>
+    <message>
+        <source>Select first circle or ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select second circle or ellipse</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8904,6 +9271,49 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionOrder</name>
+    <message>
+        <source>move to bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>set to bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lower after entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lower over entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>raise over entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>move to top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>set to top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Об’єкт не знайдено.</translation>
+    </message>
+    <message>
+        <source>Choose entity for order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Відміна</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionPolylineAdd</name>
     <message>
         <source>&amp;Add node</source>
@@ -9210,7 +9620,7 @@ Do you want to replace it?</source>
         <translation>&amp;Попередній перегляд  перед друком</translation>
     </message>
     <message>
-        <source>Scale ratio too large. Keep the old scale</source>
+        <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9278,6 +9688,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Select to create offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select entities to order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to explode block</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
