@@ -107,6 +107,12 @@ void QG_CadToolBarCircles::drawCircle3P() {
     }
 }
 
+void QG_CadToolBarCircles::drawCircle1_2P() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawCircleTan1_2P();
+    }
+}
+
 void QG_CadToolBarCircles::drawCircleParallel() {
     if (cadToolBar!=NULL && actionHandler!=NULL) {
         actionHandler->slotDrawCircleParallel();
@@ -209,6 +215,9 @@ void QG_CadToolBarCircles::showCadToolBar(RS2::ActionType actionType){
         return;
     case RS2::ActionDrawCircleTan3:
         bCircleTan3->setChecked(true);
+        return;
+    case RS2::ActionDrawCircleTan1_2P:
+        bCircleTan1_2P->setChecked(true);
         return;
     default:
         bHidden->setChecked(true);
