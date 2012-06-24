@@ -36,7 +36,7 @@
  */
 class RS_StaticGraphicView: public RS_GraphicView {
 public:
-    RS_StaticGraphicView(int w, int h, RS_Painter* p);
+    RS_StaticGraphicView(int w, int h, RS_Painter* p, QSize b = QSize(5,5));
     virtual ~RS_StaticGraphicView();
 
     virtual int getWidth();

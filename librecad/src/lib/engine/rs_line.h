@@ -30,6 +30,8 @@
 
 #include "rs_atomicentity.h"
 
+class LC_Quadratic;
+
 /**
  * Holds the data that defines a line.
  */
@@ -47,7 +49,7 @@ public:
         this->endpoint = endpoint;
     }
 
-    friend class RS_Lane;
+    friend class RS_Line;
     friend class RS_ActionDrawLine;
 
     friend std::ostream& operator << (std::ostream& os, const RS_LineData& ld) {
@@ -180,7 +182,10 @@ public:
     virtual double getAngle2() const {
         return data.endpoint.angleTo(data.startpoint);
     }
-
+/**
+  * @return a perpendicular vector
+  */
+    RS_Vector getNormalVector() const;
     virtual RS_Vector getMiddlePoint()const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL)const;
@@ -207,6 +212,7 @@ public:
           * implementations must revert the direction of an atomic entity
           */
     virtual void revertDirection();
+     virtual QVector<RS_Entity* > offsetTwoSides(const double& distance) const;
     /**
       * the modify offset action
       */
@@ -223,11 +229,23 @@ public:
                          const RS_Vector& offset);
     virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 
+    /** whether the entity's bounding box intersects with visible portion of graphic view */
+//    virtual bool isVisibleInWindow(RS_GraphicView* view) const;
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 
     friend std::ostream& operator << (std::ostream& os, const RS_Line& l);
 
     virtual void calculateBorders();
+    /** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+    virtual LC_Quadratic getQuadratic() const;
 
 protected:
     RS_LineData data;

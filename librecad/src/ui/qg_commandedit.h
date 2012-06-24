@@ -52,6 +52,7 @@ signals:
 	void escape();
 	void focusIn();
 	void focusOut();
+    void clearCommandsHistory();
 
 private:
 	QStringList historyList;

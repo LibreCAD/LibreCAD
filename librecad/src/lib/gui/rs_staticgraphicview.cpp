@@ -35,12 +35,12 @@
  * @param w Width
  * @param h Height
  */
-RS_StaticGraphicView::RS_StaticGraphicView(int w, int h, RS_Painter* p) {
+RS_StaticGraphicView::RS_StaticGraphicView(int w, int h, RS_Painter* p, QSize b) {
     setBackground(RS_Color(255,255,255));
     width = w;
     height = h;
     painter = p;
-    setBorders(5, 5, 5, 5);
+    setBorders(b.width(), b.height(), b.width(), b.height());
 }
 
 

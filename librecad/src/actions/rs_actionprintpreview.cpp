@@ -37,7 +37,7 @@
 RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView)
     :RS_ActionInterface("Print Preview",
-                        container, graphicView), hasOptions(false){
+                        container, graphicView), hasOptions(false),scaleFixed(false){
     showOptions();
 }
 
@@ -148,6 +148,7 @@ void RS_ActionPrintPreview::printWarning(const QString& s) {
         RS_DIALOGFACTORY->commandMessage(s);
     }
 }
+
 void RS_ActionPrintPreview::showOptions() {
     RS_ActionInterface::showOptions();
     if(RS_DIALOGFACTORY != NULL && ! isFinished() ) {
@@ -187,6 +188,7 @@ void RS_ActionPrintPreview::updateToolBar() {}
 void RS_ActionPrintPreview::center() {
     if (graphic!=NULL) {
         graphic->centerToPage();
+        graphicView->zoomPage();
         graphicView->redraw();
     }
 }
@@ -195,7 +197,11 @@ void RS_ActionPrintPreview::center() {
 void RS_ActionPrintPreview::fit() {
     if (graphic!=NULL) {
         double f0=graphic->getPaperScale();
-        graphic->fitToPage();
+        if( graphic->fitToPage()==false && RS_DIALOGFACTORY!=NULL){
+            RS_DIALOGFACTORY->commandMessage(
+                        tr("RS_ActionPrintPreview::fit(): Invalid paper size")
+                        );
+        }
         if(fabs(f0-graphic->getPaperScale())>RS_TOLERANCE){
             //only zoomPage when scale changed
             graphicView->zoomPage();
@@ -205,29 +211,15 @@ void RS_ActionPrintPreview::fit() {
 }
 
 bool RS_ActionPrintPreview::setScale(double f) {
-    bool ret=false;
     if (graphic!=NULL) {
-        double oldFactor= graphic->getPaperScale();
-        if( fabs(f -oldFactor) < RS_TOLERANCE ) return false;
+        if( fabs(f - graphic->getPaperScale()) < RS_TOLERANCE ) return false;
         graphic->setPaperScale(f);
-        graphicView->zoomPage();
-        RS_Vector vp= graphicView->toGui(graphic->getPaperSize()/graphic->getPaperScale());
-        if(std::max(fabs(vp.x),fabs(vp.y))>1e6){
-            //scale too large, bug#3450333
-            graphic->setPaperScale(oldFactor);
-            graphicView->zoomPage();
-            if(RS_DIALOGFACTORY != NULL ){
-                RS_DIALOGFACTORY->commandMessage(tr("Scale ratio too large. Keep the old scale"));
-            }
-        }else{
-            ret=true;
-        }
         graphic->centerToPage();
-        //        std::cout<<"RS_ActionPrintPreview::setScale("<<f<<"): papersize in Gui="<<vp<<std::endl;
-
+        graphicView->zoomPage();
         graphicView->redraw();
+        return true;
     }
-    return ret;
+    return false;
 }
 
 
@@ -262,5 +254,17 @@ RS2::Unit RS_ActionPrintPreview::getUnit() {
     }
 }
 
+/** set paperscale fixed */
+void RS_ActionPrintPreview::setPaperScaleFixed(bool fixed)
+{
+    graphic->setPaperScaleFixed(fixed);
+}
+
+
+/** get paperscale fixed */
+bool RS_ActionPrintPreview::getPaperScaleFixed()
+{
+    return graphic->getPaperScaleFixed();
+}
 
 // EOF

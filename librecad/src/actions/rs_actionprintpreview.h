@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software
+** GNU General Public License version 2 as published by the Free Software 
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-**
+** 
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!
+** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
 
@@ -35,14 +35,14 @@
  * @author Andrew Mustun
  */
 class RS_ActionPrintPreview : public RS_ActionInterface {
-        Q_OBJECT
+	Q_OBJECT
 public:
     /**
      * Action States.
      */
     enum Status {
-                Neutral,
-                Moving
+		Neutral,
+		Moving
     };
 
 public:
@@ -50,11 +50,11 @@ public:
                         RS_GraphicView& graphicView);
     ~RS_ActionPrintPreview();
 
-        static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-        virtual RS2::ActionType rtti() {
-                return RS2::ActionPrintPreview;
-        }
+	virtual RS2::ActionType rtti() {
+		return RS2::ActionPrintPreview;
+	}
 
     virtual void init(int status=0);
     virtual void resume();
@@ -69,16 +69,16 @@ public:
     virtual void commandEvent(RS_CommandEvent* e);
         virtual QStringList getAvailableCommands();
 
-        virtual void showOptions();
-        virtual void hideOptions();
+	virtual void showOptions();
+	virtual void hideOptions();
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
     virtual void updateToolBar();
 
-        void center();
-        void fit();
-        bool setScale(double f);
+	void center();
+	void fit();
+    bool setScale(double f);
         double getScale();
         //print warning message to command widget
         //should we add this as virtual function to rs_actioninterface?
@@ -89,12 +89,15 @@ public:
         //	return blackWhite;
         //}
         RS2::Unit getUnit();
+        void setPaperScaleFixed(bool fixed);
+        bool getPaperScaleFixed();
 
 protected:
         //bool blackWhite;
         bool hasOptions;
         RS_Vector v1;
         RS_Vector v2;
+        bool scaleFixed;
 };
 
 #endif

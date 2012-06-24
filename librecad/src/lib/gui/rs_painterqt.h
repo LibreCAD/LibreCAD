@@ -87,6 +87,10 @@ public:
     virtual void drawPath ( const QPainterPath & path );
     virtual void erase();
     virtual int getWidth();
+    /** get Density per millimeter on screen/print device
+      *@return density per millimeter in pixel/mm
+      */
+    virtual double getDpmm();
     virtual int getHeight();
 
     virtual RS_Pen getPen();

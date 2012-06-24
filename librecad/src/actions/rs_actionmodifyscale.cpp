@@ -56,11 +56,12 @@ void RS_ActionModifyScale::init(int status) {
 void RS_ActionModifyScale::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyScale::trigger()");
+    if(data.factor.valid){
+        RS_Modification m(*container, graphicView);
+        m.scale(data);
 
-    RS_Modification m(*container, graphicView);
-    m.scale(data);
-
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+    }
 }
 
 

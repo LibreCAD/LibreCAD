@@ -59,12 +59,12 @@ public:
     RS_FilterDXF();
     ~RS_FilterDXF();
 	
-	virtual bool canImport(const QString &fileName, RS2::FormatType t) const {
-		return (t==RS2::FormatDXF);
+    virtual bool canImport(const QString &/*fileName*/, RS2::FormatType t) const {
+        return (t==RS2::FormatDXFOLD);
 	}
 	
 	virtual bool canExport(const QString &fileName, RS2::FormatType t) const {
-		return (t==RS2::FormatDXF || t==RS2::FormatDXF12);
+        return (t==RS2::FormatDXFOLD || t==RS2::FormatDXFOLD12);
     }
 
     // Import:

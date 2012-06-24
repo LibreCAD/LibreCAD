@@ -25,6 +25,7 @@
 **********************************************************************/
 
 
+#include "qc_applicationwindow.h"
 #include "rs_undocycle.h"
 #include "rs_undo.h"
 
@@ -150,6 +151,8 @@ void RS_Undo::addUndoable(RS_Undoable* u) {
  */
 void RS_Undo::endUndoCycle() {
     addUndoCycle(currentCycle);
+    QC_ApplicationWindow::getAppWindow()->setUndoEnable(true);
+    QC_ApplicationWindow::getAppWindow()->setRedoEnable(false);
     currentCycle = NULL;
 }
 
@@ -165,15 +168,19 @@ bool RS_Undo::undo() {
 
         RS_UndoCycle* uc=NULL;
         while( undoPointer>=0 && undoPointer < undoList.size() ) {
-            uc = undoList[undoPointer];
-            undoPointer--;
-            if (uc == NULL ) continue;
+            uc = undoList[undoPointer--];
+
+            if (uc == NULL )  continue;
             break;
         }
+        if(undoPointer==-1) {
+            QC_ApplicationWindow::getAppWindow()->setUndoEnable(false);
+       }
         if (uc != NULL) {
             for (int i = 0; i < uc->undoables.size(); ++i) {
                 (uc->undoables.at(i))->changeUndoState();
             }
+             QC_ApplicationWindow::getAppWindow()->setRedoEnable(true);
             return true;
         }
     }
@@ -199,12 +206,15 @@ bool RS_Undo::redo() {
             for (int i = 0; i < uc->undoables.size(); ++i) {
                 (uc->undoables.at(i))->changeUndoState();
             }
+            if(undoPointer+1==undoList.size()) {
+                QC_ApplicationWindow::getAppWindow()->setRedoEnable(false);
+            }
+            QC_ApplicationWindow::getAppWindow()->setUndoEnable(true);
             return true;
         }
     }
     return false;
 }
-
 
 
 /**
@@ -240,6 +250,18 @@ RS_UndoCycle* RS_Undo::getRedoCycle() {
     return NULL;
 }
 
+/**
+  * enable/disable redo/undo buttons in main application window
+  * Author: Dongxu Li
+  **/
+void RS_Undo::setGUIButtons()
+{
+    if(QC_ApplicationWindow::getAppWindow() != NULL){
+        QC_ApplicationWindow::getAppWindow()->setRedoEnable(undoList.size()>0  && undoPointer+1< undoList.size());
+        QC_ApplicationWindow::getAppWindow()->setUndoEnable(undoList.size()>0 && undoPointer>=0 );
+    }
+}
+
 
 
 /**
@@ -260,8 +282,6 @@ std::ostream& operator << (std::ostream& os, RS_Undo& l) {
     }
     return os;
 }
-
-
 
 /**
  * Testing Undoables, Undo Cycles and the Undo container.

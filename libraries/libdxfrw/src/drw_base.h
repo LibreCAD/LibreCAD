@@ -19,6 +19,18 @@
 
 using std::string;
 
+#define UTF8STRING std::string
+
+#if defined(WIN64) || defined(_WIN64) || defined(__WIN64__)
+#  define DRW_WIN
+#elif defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+#    define DRW_WIN
+#elif defined(__MWERKS__) && defined(__INTEL__)
+#  define DRW_WIN
+#else
+#  define DRW_POSIX
+#endif
+
 namespace DRW {
 //! Version numbers for the DXF Format.
 enum Version {
@@ -41,7 +53,7 @@ enum Version {
 */
 class DRW_Coord {
 public:
-    DRW_Coord() { z = 0; }
+    DRW_Coord() { x = 0; y = 0; z = 0; }
     DRW_Coord(double ix, double iy, double iz) {
         x = ix; y = iy; z = iz;
     }
@@ -119,7 +131,7 @@ public:
     }
     enum TYPE type;
 
-    void addString(string s) {data = s; content.s = &data; setType(STRING);}
+    void addString(UTF8STRING s) {data = s; content.s = &data; setType(STRING);}
     void addInt(int i) {content.i = i; setType(INTEGER);}
     void addDouble(double d) {content.d = d; setType(DOUBLE);}
     void addCoord(DRW_Coord *v) {content.v = v; setType(COORD);}
@@ -130,7 +142,7 @@ public:
 
 private:
     typedef union {
-        string *s;
+        UTF8STRING *s;
         int i;
         double d;
         DRW_Coord *v;

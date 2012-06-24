@@ -76,5 +76,7 @@ void QG_DlgDimension::setDim(RS_Dimension& d) {
 
 void QG_DlgDimension::updateDim() {
     dim->setLabel(wLabel->getLabel());
+    dim->setPen(wPen->getPen());
+    dim->setLayer(cbLayer->currentText());
 }
 

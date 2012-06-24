@@ -33,6 +33,7 @@
 #include "rs_constructionline.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
+#include "lc_hyperbola.h"
 
 /**
  * Default constructor.
@@ -814,117 +815,17 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 //        std::cout<<"Center: (x,y)="<<v<<std::endl;
 
 
-        RS_VectorSolutions vs0; //to hold solutions
-        {//begin of equation solver
-        /* todo, move this solver to a separate function
-                  u=a sin t
-                  v=b cos t
-                  solve the equation
-                  (1/a^2)*u^2 + (1/b^2)*v^2 - 1 =0
-                  (y^2-1)*u^2 + (x^2 -1)*v^2 +2*x*y*u*v+2.*a*b*y*u + 2.*a*b*x*v + (a*b)^2 =0
-                  */
-        double ma000(1./(a*a));
-        double ma011(1./(b*b));
-        double ma100(v.y*v.y-1.);
-        double ma101(v.x*v.y);
-        double ma111(v.x*v.x-1.);
-        double mb10(2.*a*b*v.y);
-        double mb11(2.*a*b*v.x);
-        double mc1(a*a*b*b);
-//            std::cout<<"simplified e1: "<<ma000<<"*x^2 + "<<ma011<<"*y^2 -1 =0\n";
-//            std::cout<<"simplified e2: "<<ma100<<"*x^2 + 2*("<<ma101<<")*x*y + "<<ma111<<"*y^2 "<<" + ("<<mb10<<")*x + ("<<mb11<<")*y + ("<<mc1<<") =0\n";
-        // construct the Bezout determinant
-        double v0=2.*ma000*ma101;
-        double v2=ma000*mb10;
-        double v3=ma000*mb11;
-        double v4=ma000*mc1+ma100;
-        //double v5= 2.*ma101*ma011;
-        //double v6= ma000*ma111;
-        //double v7= 2.*ma101;
-        double v8= 2.*ma011*mb10;
-        //double v9= ma100*ma011;
-        double v1=ma000*ma111-ma100*ma011;
-        //double v1= v6 - v9;
-        double u0 = v4*v4-v2*mb10;
-        double u1 = 2.*(v3*v4-v0*mb10);
-        double u2 = 2.*(v4*v1-ma101*v0)+v3*v3+0.5*v2*v8;
-        double u3 = v0*v8+2.*v3*v1;
-        double u4 = v1*v1+2.*ma101*ma011*v0;
-        double ce[4];
-        double roots[4];
-        unsigned int counts=0;
-        if ( fabs(u4) < 1.0e-75) { // this should not happen
-            if ( fabs(u3) < 1.0e-75) { // this should not happen
-                if ( fabs(u2) < 1.0e-75) { // this should not happen
-                    if( fabs(u1) > 1.0e-75) {
-                        counts=1;
-                        roots[0]=-u0/u1;
-                    } else { // can not determine y. this means overlapped, but overlap should have been detected before, therefore return empty set
-                        return ret;
-                    }
-                } else {
-                    ce[0]=u1/u2;
-                    ce[1]=u0/u2;
-                    //std::cout<<"ce[2]={ "<<ce[0]<<' '<<ce[1]<<" }\n";
-                    counts=RS_Math::quadraticSolver(ce,roots);
-                }
-            } else {
-                ce[0]=u2/u3;
-                ce[1]=u1/u3;
-                ce[2]=u0/u3;
-                //std::cout<<"ce[3]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<" }\n";
-                counts=RS_Math::cubicSolver(ce,roots);
-            }
-        } else {
-            ce[0]=u3/u4;
-            ce[1]=u2/u4;
-            ce[2]=u1/u4;
-            ce[3]=u0/u4;
-//            std::cout<<"ce[4]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<" }\n";
-            counts=RS_Math::quarticSolver(ce,roots);
-        }
+        std::vector<double> m(0,0.);
+        m.push_back(1./(a*a)); //ma000
+        m.push_back(1./(b*b)); //ma000
+        m.push_back(v.y*v.y-1.); //ma100
+        m.push_back(v.x*v.y); //ma101
+        m.push_back(v.x*v.x-1.); //ma111
+        m.push_back(2.*a*b*v.y); //mb10
+        m.push_back(2.*a*b*v.x); //mb11
+        m.push_back(a*a*b*b); //mc1
 
-        if (! counts ) { // no intersection found
-            return NULL;
-        }
-        //      std::cout<<"counts="<<counts<<": ";
-        //	for(unsigned int i=0;i<counts;i++){
-        //	std::cout<<roots[i]<<" ";
-        //	}
-        //	std::cout<<std::endl;
-        unsigned int ivs0=0;
-        for(unsigned int i=0; i<counts; i++) {
-            double y=roots[i];
-            //double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
-            double x,d=v0*y+v2;
-//                    std::cout<<i<<": v="<<y<<"\td= "<<d<<std::endl;
-            if( fabs(d)>10.*RS_TOLERANCE*sqrt(RS_TOLERANCE)) {//whether there's x^1 term in bezout determinant
-                x=-((v1*y+v3)*y+v4 )/d;
-                if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
-                    vs0.push_back(RS_Vector(x,y));
-            } else { // no x^1 term, have to use x^2 term, then, have to check plus/minus sqrt
-                x=a*sqrt(1-y*y*ma011);
-                if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE){
-                    if( fabs(ma000*x*x+ma011*y*y-1.)<1.e-7 &&
-                        fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)<1.e-7)
-                    vs0.push_back(RS_Vector(x,y));
-                }
-                x=-x;
-                if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE){
-                    if( fabs(ma000*x*x+ma011*y*y-1.)<1.e-7 &&
-                        fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)<1.e-7)
-                    vs0.push_back(RS_Vector(x,y));
-                }
-            }
-//            std::cout<<"eq1="<<ma000*x*x+ma011*y*y-1.<<std::endl;
-//            std::cout<<"eq2="<<ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1<<std::endl;
-            //            if (
-            //                fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)< RS_TOLERANCE
-            //            ) {//found
-            //                vs0.set(ivs0++, RS_Vector(x,y));
-            //            }
-        }//end of equation solver
-        }
+        auto&& vs0=RS_Math::simultaneousQuadraticSolver(m); //to hold solutions
         if (vs0.getNumber()<1) return NULL;
         for(int i=0;i<vs0.getNumber();i++){
 //            std::cout<<"i="<<i<<"\n";
@@ -940,65 +841,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
             l->rotate(a0);
             l->move(m0);
             poss.push_back(l);
-            /*
-//iteration algorithm based on tangent1
-            vpe2.rotate(a2);
-            vpe2.scale(factor1);
-            vpe2.rotate(a0);
-            vpe2.move(m0);
 
-            std::cout<<"vpe2 from equation solver: vpe2="<<vpe2<<std::endl;
-
-            //fixme, this brutal force fallback should be fixed
-
-                RS_VectorSolutions solStart;
-                RS_VectorSolutions solEnd;
-            for(int i0=0;i0<32;i0++){
-                RS_VectorSolutions sol1=circle1->getTangentPoint(vpe2);
-                RS_Vector vpe20(vpe2);
-                double d2(RS_MAXDOUBLE);
-                for(int j=0;j<sol1.getNumber();j++){
-                    RS_VectorSolutions sol2=circle2->getTangentPoint(sol1.get(j));
-                    for(int k=0;k<sol2.getNumber();k++){
-                        double d3( (vpe2-sol2.get(k)).squared());
-                        if(d3<d2){
-                            d2=d3;
-                            vpe20=sol2.get(k);
-                        }
-//                        std::cout<<"i0="<<i0<<" dist= "<<d2<<std::endl;
-                        if( d2<RS_TOLERANCE*RS_TOLERANCE){
-
-                                solStart.push_back(vpe2);
-                                solEnd.push_back(sol1.get(j));
-                                k=sol2.getNumber();
-                                j=sol1.getNumber();
-                                std::cout<<"Convergence after "<<i0+1<<" steps\n";
-            std::cout<<"vpe2 from iteration: vpe2="<<vpe2<<std::endl;
-                                i0=32;
-                        }
-                    }
-                }
-                if(solStart.getNumber()>=4) break;
-                vpe2=vpe20;
-            }
-            for(int k0=0;k0<solStart.getNumber();k0++){
-                poss.push_back(new RS_Line(NULL,RS_LineData(solStart.get(k0),solEnd.get(k0))));
-            }
-
-            //            vpec.x *= -1.; //tangent line direction
-//            RS_Vector vpe1(vpe2 - vpec*(RS_Vector::dotP(vpec,vpe2)/vpec.squared()));
-//            std::cout<<"vpe1.squared()="<<vpe1.squared()<<std::endl;
-//            RS_Line* l=new RS_Line(NULL,RS_LineData(vpe1,vpe2));
-//            l->rotate(a2);
-//            factor1.set(1./factor1.x,1./factor1.y);
-//            l->scale(RS_Vector(0.,0.),factor1);
-//            l->rotate(a0);
-//            l->move(m0);
-
-////            std::cout<<"point on ellipse: "<<vpe2<<std::endl;
-//            RS_Line* l=createTangent1(coord,vpe2,circle1);//create tangent
-//            if(l != NULL) poss.push_back(l);
-*/
         }
         delete e2;
         //debugging
@@ -1052,6 +895,44 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
     return ret;
 }
 
+/**
+  * create the path of centers of common tangent circles of the two given circles
+  *@ return NULL, if failed
+  *@ at success return either an ellipse or hyperbola
+  */
+ std::vector<RS_Entity*> RS_Creation::createCircleTangent2( RS_Entity* circle1,RS_Entity* circle2)
+{
+      std::vector<RS_Entity*> ret(0, (RS_Entity*)NULL);
+    if(circle1==NULL||circle2==NULL) return ret;
+    RS_Entity* e1=circle1;
+    RS_Entity* e2=circle2;
+
+    if(e1->getRadius() < e2->getRadius()) std::swap(e1,e2);
+
+    RS_Vector&& center1=e1->getCenter();
+    RS_Vector&& center2=e2->getCenter();
+    RS_Vector&& cp=(center1+center2)*0.5;
+    double dist=center1.distanceTo(center2);
+    if(dist<RS_TOLERANCE) return ret;
+    RS_Vector&& vp= center1 - cp;
+     double c=dist/(e1->getRadius()+e2->getRadius());
+     if( c < 1. - RS_TOLERANCE) {
+        //two circles intersection or one circle in the other, there's an ellipse path
+         ret.push_back(new RS_Ellipse(NULL, RS_EllipseData(cp,vp,sqrt(1. - c*c),0.,0.,false)));
+     }
+    if( dist + e2 ->getRadius() < e1->getRadius() +RS_TOLERANCE ) {
+        //one circle inside of another, the path is an ellipse
+        return ret;
+    }
+    if(c > 1. + RS_TOLERANCE) {
+        //not circle in circle, there's a hyperbola path
+    c= (e1->getRadius()  - e2->getRadius())/dist;
+    ret.push_back(new LC_Hyperbola(NULL, LC_HyperbolaData(cp,vp*c,sqrt(1. - c*c),0.,0.,false)));
+    return ret;
+}
+    ret.push_back( new RS_Line(NULL, RS_LineData(cp, RS_Vector(cp.x - vp.y, cp.y+vp.x))));
+    return ret;
+}
 
 /**
      * Creates a line with a relative angle to the given entity.

@@ -36,6 +36,7 @@
 #include "rs_units.h"
 
 class RS_VariableDict;
+class QG_LayerWidget;
 
 /**
  * A graphic document which can contain entities layers and blocks.
@@ -92,6 +93,7 @@ public:
     virtual void addLayer(RS_Layer* layer) {
                 layerList.add(layer);
         }
+    virtual void addEntity(RS_Entity* entity);
     virtual void removeLayer(RS_Layer* layer);
     virtual void editLayer(RS_Layer* layer, const RS_Layer& source) {
                 layerList.edit(layer, source);
@@ -254,7 +256,7 @@ public:
     }*/
 
         void centerToPage();
-        void fitToPage();
+        bool fitToPage();
 
         /**
          * @retval true The document has been modified since it was last saved.
@@ -276,6 +278,16 @@ virtual QDateTime getModifyTime(void){
             return modifiedTime;
         }
 
+        //if set to true, will refuse to modify paper scale
+        void setPaperScaleFixed(bool fixed)
+        {
+            paperScaleFixed=fixed;
+        }
+        bool getPaperScaleFixed()
+        {
+            return paperScaleFixed;
+        }
+
     friend std::ostream& operator << (std::ostream& os, RS_Graphic& g);
 
 
@@ -289,6 +301,8 @@ private:
         RS_BlockList blockList;
         RS_VariableDict variableDict;
         RS2::CrosshairType crosshairType; //corss hair type used by isometric grid
+        //if set to true, will refuse to modify paper scale
+        bool paperScaleFixed;
 };
 
 

@@ -58,6 +58,7 @@ class QG_PrintPreviewOptions;
 class QG_CommandWidget;
 class QG_MainWindowInterface;
 class RS_Document;
+class QG_LineAngleOptions;
 
 #define QG_DIALOGFACTORY (RS_DialogFactory::instance()->getFactoryObject()->isAdapter()==false ? ((QG_DialogFactory*)RS_DialogFactory::instance()->getFactoryObject()) : NULL)
 
@@ -201,6 +202,9 @@ protected:
     virtual void requestCircleOptions(RS_ActionInterface* action,
                                       bool on, bool update);
 
+    virtual void requestCircleTan2Options(RS_ActionInterface* action,
+                                      bool on, bool update);
+
     virtual void requestSplineOptions(RS_ActionInterface* action,
                                       bool on, bool update);
 
@@ -299,6 +303,7 @@ private:
     QG_SnapDistOptions* snapDistOptions;
     QG_ModifyOffsetOptions* modifyOffsetOptions;
     QG_PrintPreviewOptions* printPreviewOptions;
+    QG_LineAngleOptions* m_pLineAngleOptions;
 };
 
 #endif

@@ -34,6 +34,7 @@
 #include "rs_actionblocksattributes.h"
 #include "rs_actionblockscreate.h"
 #include "rs_actionblocksedit.h"
+#include "rs_actionblockssave.h"
 #include "rs_actionblocksexplode.h"
 #include "rs_actionblocksfreezeall.h"
 #include "rs_actionblocksinsert.h"
@@ -51,8 +52,11 @@
 #include "rs_actiondrawcircle.h"
 #include "rs_actiondrawcircle2p.h"
 #include "rs_actiondrawcircle3p.h"
+#include "rs_actiondrawcircletan1_2p.h"
 #include "rs_actiondrawcirclecr.h"
 #include "rs_actiondrawcircleinscribe.h"
+#include "rs_actiondrawcircletan2.h"
+#include "rs_actiondrawcircletan3.h"
 #include "rs_actiondrawellipseaxis.h"
 #include "rs_actiondrawellipsefocipoint.h"
 #include "rs_actiondrawellipse4points.h"
@@ -146,6 +150,7 @@
 #include "rs_actionpolylineequidistant.h"
 #include "rs_actionpolylinesegment.h"
 #include "rs_selection.h"
+#include "rs_actionorder.h"
 
 #include "qg_mainwindowinterface.h"
 #include "qg_snaptoolbar.h"
@@ -179,6 +184,7 @@ QG_ActionHandler::QG_ActionHandler(QG_MainWindowInterface* mw) {
 
     lockRelativeZero = NULL;
     lockedRelZero=false;
+    orderType = RS2::ActionOrderTop;
     RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler: OK");
 }
 
@@ -296,6 +302,25 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionEditPaste:
         a = new RS_ActionEditPaste(*doc, *gv);
         break;
+    case RS2::ActionOrderBottom:
+        orderType = RS2::ActionOrderBottom;
+        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+        break;
+    case RS2::ActionOrderLower:
+        orderType = RS2::ActionOrderLower;
+        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+        break;
+    case RS2::ActionOrderRaise:
+        orderType = RS2::ActionOrderRaise;
+        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+        break;
+    case RS2::ActionOrderTop:
+        orderType = RS2::ActionOrderTop;
+        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+        break;
+    case RS2::ActionOrderNoSelect:
+        a = new RS_ActionOrder(*doc, *gv, orderType);
+        break;
 
         // Selecting actions:
         //
@@ -383,13 +408,15 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDrawLineAngle(*doc, *gv, 0.0, false);
         break;
     case RS2::ActionDrawLineHorizontal:
-        a = new RS_ActionDrawLineAngle(*doc, *gv, 0.0, true);
+        a = new RS_ActionDrawLineAngle(*doc, *gv, 0.0, true,
+                                       RS2::ActionDrawLineHorizontal);
         break;
     case RS2::ActionDrawLineHorVert:
         a = new RS_ActionDrawLineHorVert(*doc, *gv);
         break;
     case RS2::ActionDrawLineVertical:
-        a = new RS_ActionDrawLineAngle(*doc, *gv, M_PI/2.0, true);
+        a = new RS_ActionDrawLineAngle(*doc, *gv, M_PI/2.0, true,
+                                       RS2::ActionDrawLineVertical);
         break;
     case RS2::ActionDrawLineFree:
         a = new RS_ActionDrawLineFree(*doc, *gv);
@@ -464,12 +491,21 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawCircle3P:
         a = new RS_ActionDrawCircle3P(*doc, *gv);
         break;
+    case RS2::ActionDrawCircleTan1_2P:
+        a = new RS_ActionDrawCircleTan1_2P(*doc, *gv);
+        break;
     case RS2::ActionDrawCircleParallel:
         a= new RS_ActionDrawLineParallel(*doc, *gv);
         a->setActionType(id);
         break;
     case RS2::ActionDrawCircleInscribe:
         a = new RS_ActionDrawCircleInscribe(*doc, *gv);
+        break;
+    case RS2::ActionDrawCircleTan2:
+        a = new RS_ActionDrawCircleTan2(*doc, *gv);
+        break;
+    case RS2::ActionDrawCircleTan3:
+        a = new RS_ActionDrawCircleTan3(*doc, *gv);
         break;
     case RS2::ActionDrawArc:
         a = new RS_ActionDrawArc(*doc, *gv);
@@ -529,10 +565,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDimLinear(*doc, *gv);
         break;
     case RS2::ActionDimLinearHor:
-        a = new RS_ActionDimLinear(*doc, *gv, 0.0, true);
+        a = new RS_ActionDimLinear(*doc, *gv, 0.0, true, RS2::ActionDimLinearHor);
         break;
     case RS2::ActionDimLinearVer:
-        a = new RS_ActionDimLinear(*doc, *gv, M_PI/2.0, true);
+        a = new RS_ActionDimLinear(*doc, *gv, M_PI/2.0, true, RS2::ActionDimLinearVer);
         break;
     case RS2::ActionDimRadial:
         a = new RS_ActionDimRadial(*doc, *gv);
@@ -788,6 +824,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionBlocksEdit:
         a = new RS_ActionBlocksEdit(*doc, *gv);
+        break;
+    case RS2::ActionBlocksSave:
+        a = new RS_ActionBlocksSave(*doc, *gv);
         break;
     case RS2::ActionBlocksInsert:
         a = new RS_ActionBlocksInsert(*doc, *gv);
@@ -1176,6 +1215,22 @@ void QG_ActionHandler::slotEditPaste() {
     setCurrentAction(RS2::ActionEditPaste);
 }
 
+void QG_ActionHandler::slotOrderBottom() {
+    setCurrentAction(RS2::ActionOrderBottom);
+}
+
+void QG_ActionHandler::slotOrderLower() {
+    setCurrentAction(RS2::ActionOrderLower);
+}
+
+void QG_ActionHandler::slotOrderRaise() {
+    setCurrentAction(RS2::ActionOrderRaise);
+}
+
+void QG_ActionHandler::slotOrderTop() {
+    setCurrentAction(RS2::ActionOrderTop);
+}
+
 void QG_ActionHandler::slotSelectSingle() {
     setCurrentAction(RS2::ActionSelectSingle);
 }
@@ -1335,6 +1390,10 @@ void QG_ActionHandler::slotDrawCircle3P() {
     setCurrentAction(RS2::ActionDrawCircle3P);
 }
 
+void QG_ActionHandler::slotDrawCircleTan1_2P() {
+    setCurrentAction(RS2::ActionDrawCircleTan1_2P);
+}
+
 void QG_ActionHandler::slotDrawCircleParallel() {
     setCurrentAction(RS2::ActionDrawCircleParallel);
 }
@@ -1343,6 +1402,12 @@ void QG_ActionHandler::slotDrawCircleInscribe() {
     setCurrentAction(RS2::ActionDrawCircleInscribe);
 }
 
+void QG_ActionHandler::slotDrawCircleTan2() {
+    setCurrentAction(RS2::ActionDrawCircleTan2);
+}
+void QG_ActionHandler::slotDrawCircleTan3() {
+    setCurrentAction(RS2::ActionDrawCircleTan3);
+}
 void QG_ActionHandler::slotDrawArc() {
     setCurrentAction(RS2::ActionDrawArc);
 }
@@ -1838,6 +1903,10 @@ void QG_ActionHandler::slotBlocksAttributes() {
 
 void QG_ActionHandler::slotBlocksEdit() {
     setCurrentAction(RS2::ActionBlocksEdit);
+}
+
+void QG_ActionHandler::slotBlocksSave() {
+    setCurrentAction(RS2::ActionBlocksSave);
 }
 
 void QG_ActionHandler::slotBlocksInsert() {

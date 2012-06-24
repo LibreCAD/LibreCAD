@@ -32,6 +32,7 @@
 //Added by qt3to4:
 //#include <Q3StrList>
 #include <QImageReader>
+#include <QString>
 
 #include "rs_patternlist.h"
 #include "rs_settings.h"
@@ -47,6 +48,7 @@
 #include "qg_blockdialog.h"
 #include "qg_cadtoolbar.h"
 #include "qg_circleoptions.h"
+#include "qg_circletan2options.h"
 #include "qg_commandwidget.h"
 #include "qg_coordinatewidget.h"
 #include "qg_dimlinearoptions.h"
@@ -58,6 +60,7 @@
 #include "qg_dlgdimlinear.h"
 #include "qg_dlgellipse.h"
 #include "qg_dlghatch.h"
+#include "qg_dlgimage.h"
 #include "qg_dlginsert.h"
 #include "qg_dlgline.h"
 #include "qg_dlgmirror.h"
@@ -113,7 +116,9 @@
  * @param ow Pointer to widget that can host option widgets.
  */
 QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
-        : RS_DialogFactoryInterface() {
+        : RS_DialogFactoryInterface()
+        ,m_pLineAngleOptions(NULL)
+{
         RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory");
 
     this->parent = parent;
@@ -190,20 +195,27 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList) {
 
     RS_Layer* layer = NULL;
 
-    QString layer_name = "noname";
+    QString layer_name = "", newLayerName = "";
     int i = 2;
 
     if (layerList!=NULL) {
-        while (layerList->find(layer_name) > 0)
-            layer_name.sprintf("noname%d", i++);
+        layer_name = QString(layerList->getActive()->getName());
+        if (layer_name.isEmpty() || !layer_name.compare("0", Qt::CaseInsensitive) ) {
+            layer_name = "noname";
+        }
+        newLayerName = QString(layer_name);
+        while(layerList->find(newLayerName) > 0) {
+            newLayerName = QString("%1%2").arg(layer_name).arg(i);
+        }
     }
 
     // Layer for parameter livery
-    layer = new RS_Layer(layer_name);
+    layer = new RS_Layer(newLayerName);
 
     QG_LayerDialog dlg(parent, "Layer Dialog");
     dlg.setLayer(layer);
     dlg.setLayerList(layerList);
+    dlg.getQLineEdit()->selectAll();
     if (dlg.exec()) {
         dlg.updateLayer();
     } else {
@@ -558,9 +570,18 @@ QString QG_DialogFactory::requestImageOpenDialog() {
     QString all = "";
     //filters = QStringList::fromStrList(formats);
 
+    bool haveJpeg= false;
     foreach (QByteArray format, QImageReader::supportedImageFormats()) {
-                filters.append(QString("%1 (*.%1) ").arg(QString(format)));
-                all += QString(" *.%1").arg(QString(format));
+        if (format.toUpper() == "JPG" || format.toUpper() == "JPEG" ){
+            if (!haveJpeg) {
+                haveJpeg = true;
+                filters.append("jpeg (*.jpeg *.jpg) ");
+                all += " *.jpeg *.jpg";
+            }
+        } else {
+            filters.append(QString("%1 (*.%1) ").arg(QString(format)));
+            all += QString(" *.%1").arg(QString(format));
+        }
                 /* RVT_PORT
                  QString ext = (*it);
         QString st;
@@ -650,6 +671,8 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         break;
 
     case RS2::ActionDrawLineAngle:
+    case RS2::ActionDrawLineHorizontal:
+    case RS2::ActionDrawLineVertical:
         requestLineAngleOptions(action, on, update);
         break;
 
@@ -687,6 +710,10 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
 
     case RS2::ActionDrawCircleCR:
         requestCircleOptions(action, on, update);
+        break;
+
+    case RS2::ActionDrawCircleTan2:
+        requestCircleTan2Options(action, on, update);
         break;
 
     case RS2::ActionDrawSpline:
@@ -910,21 +937,20 @@ void QG_DialogFactory::requestLineParallelThroughOptions(
  * Shows a widget for options for the action: "line angle"
  */
 void QG_DialogFactory::requestLineAngleOptions(RS_ActionInterface* action,
-        bool on, bool update) {
-
-    static QG_LineAngleOptions* toolWidget = NULL;
+                                               bool on, bool update) {
 
     if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
-            delete toolWidget;
-            toolWidget = NULL;
-        }
         if (on==true) {
-            toolWidget = new QG_LineAngleOptions();
-            optionWidget->addWidget(toolWidget);
-            toolWidget->setAction(action, update);
+            if(m_pLineAngleOptions==NULL)
+                m_pLineAngleOptions = new QG_LineAngleOptions();
+            optionWidget->addWidget(m_pLineAngleOptions);
+            m_pLineAngleOptions->setAction(action, update);
             //toolWidget->setData(&angle, &length, fixedAngle, update);
-                        toolWidget->show();
+            m_pLineAngleOptions->show();
+        }else{
+            if (m_pLineAngleOptions==NULL) return;
+            delete m_pLineAngleOptions;
+            m_pLineAngleOptions = NULL;
         }
     }
 }
@@ -1101,6 +1127,28 @@ void QG_DialogFactory::requestCircleOptions(RS_ActionInterface* action,
         }
         if (on==true) {
             toolWidget = new QG_CircleOptions();
+            optionWidget->addWidget(toolWidget);
+            toolWidget->setAction(action, update);
+            toolWidget->show();
+        }
+    }
+}
+
+
+/**
+ * Shows a widget for arc options.
+ */
+void QG_DialogFactory::requestCircleTan2Options(RS_ActionInterface* action,
+                                            bool on, bool update) {
+    static QG_CircleTan2Options* toolWidget = NULL;
+
+    if (optionWidget!=NULL) {
+        if (toolWidget!=NULL) {
+            delete toolWidget;
+            toolWidget = NULL;
+        }
+        if (on==true) {
+            toolWidget = new QG_CircleTan2Options();
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
             toolWidget->show();
@@ -1721,11 +1769,20 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
         break;
 
     case RS2::EntityPolyline: {
-//RLZ TODO: implement a QG_DlgPolyline dialog
         QG_DlgPolyline dlg(parent);
         dlg.setPolyline(*((RS_Polyline*)entity));
         if (dlg.exec()) {
             dlg.updatePolyline();
+            ret = true;
+        }
+    }
+        break;
+
+    case RS2::EntityImage: {
+        QG_DlgImage dlg(parent);
+        dlg.setImage(*((RS_Image*)entity));
+        if (dlg.exec()) {
+            dlg.updateImage();
             ret = true;
         }
     }
@@ -1940,6 +1997,30 @@ QString QG_DialogFactory::extToFormat(const QString& ext) {
         return QObject::tr("X Bitmap Format");
     } else if (e=="xpm") {
         return QObject::tr("X Pixel Map");
+    } else if (e=="svg") {
+        return QObject::tr("Scalable Vector Graphics");
+    } else if (e=="bw") {
+        return QObject::tr("SGI Black & White");
+    } else if (e=="eps") {
+        return QObject::tr("Encapsulated PostScript");
+    } else if (e=="epsf") {
+        return QObject::tr("Encapsulated PostScript Format");
+    } else if (e=="epsi") {
+        return QObject::tr("Encapsulated PostScript Interchange");
+    } else if (e=="ico") {
+        return QObject::tr("Windows Icon");
+    } else if (e=="jp2") {
+        return QObject::tr("JPEG 2000");
+    } else if (e=="pcx") {
+        return QObject::tr("ZSoft Paintbrush");
+    } else if (e=="pic") {
+        return QObject::tr("PC Paint");
+    } else if (e=="rgb" || e=="rgba" || e=="sgi") {
+        return QObject::tr("SGI-Bilddatei");
+    } else if (e=="tga") {
+        return QObject::tr("Targa Image File");
+    } else if (e=="tif" || e=="tiff") {
+        return QObject::tr("Tagged Image File Format");
     }
     else {
         return ext.toUpper();

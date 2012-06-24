@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-//#include <iostream>
+#include <iostream>
 #include <QMap>
 #include <qapplication.h>
 #include <QTextCodec>
@@ -109,7 +109,7 @@ void RS_System::initLanguageList() {
 }
 
 void RS_System::addLocale(RS_Locale *locale) {
-    allKnownLocales->append(locale);
+    allKnownLocales.push_back(QSharedPointer<RS_Locale>(locale));
 }
 
 #define LNG(canonical, direction, name) \
@@ -121,13 +121,9 @@ void RS_System::addLocale(RS_Locale *locale) {
 
 void RS_System::initAllLanguagesList() {
 
-    if (allKnownLocales==NULL) {
-        allKnownLocales=new QList<RS_Locale* >();
-    }
-
     // RVT uk_AU renamed to uk so that we don't have to change the pootle server
     //
-    allKnownLocales->clear();
+    allKnownLocales.clear();
     RS_Locale *locale;
     LNG("ab"   ,RS2::locLeftToRight, "Abkhazian")
     LNG("aa"   ,RS2::locLeftToRight, "Afar")
@@ -444,6 +440,24 @@ bool RS_System::createPaths(const QString& directory) {
 }
 
 
+/**
+ * Create if not exist and return the Application data directory.
+ * In OS_WIN32 "c:\documents&settings\<user>\local configuration\application data\LibreCAD"
+ * In OS_MAC "???"
+ * In OS_LINUX "/home/<user>/.local/share/data/LibreCAD"
+ *
+ * @return Application data directory.
+ */
+QString RS_System::getAppDataDir() {
+    QString appData = QDesktopServices::storageLocation(QDesktopServices::DataLocation) ;
+    QDir dir(appData);
+    if (!dir.exists()) {
+        if (!dir.mkpath(appData))
+            return QString();
+    }
+    return appData;
+}
+
 
 /**
  * Searches for files in an application shared directory in the given
@@ -511,6 +525,8 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 #ifdef Q_OS_WIN32
         dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif
+    // Unix home directory, it's old style but some people might have stuff there.
+    dirList.append(getHomeDir() + "/." + appDirName + "/" + subDirectory);
 #endif // QT_VERSION < 0x040400 && defined(_MSC_VER)
 
         //local (application) directory has priority over other dirs:
@@ -528,9 +544,6 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 
         // Others, RVT April 25, 2011 removed, doesn anybody use that still?
         // dirList.append("/usr/X11R6/share/" + appDirName + "/" + subDirectory);
-
-        // Unix home directory, it's old style but some people might have stuff there.
-        dirList.append(getHomeDir() + "/." + appDirName + "/" + subDirectory);
 
 
 #ifdef Q_OS_MAC
@@ -608,25 +621,33 @@ QString RS_System::languageToSymbol(const QString& lang) {
 
 
 /**
- * Converst a language two-letter-code into a readable string
- * (e.g. 'de' to Deutsch)
+ * Converst a locale code into a readable string
+ * (e.g. 'de' to 'German Deutsch'
+ * (e.g. 'en_au' to 'English (Australia)'
  */
 QString RS_System::symbolToLanguage(const QString& symb) {
-        return RS_Locale(symb).name();
-        /* testing new language names, Dongxu Li
-    QString l = symb.toLower();
-
-                std::cout<<"symb="<<qPrintable(symb)<<" name="<<qPrintable(RS_Locale(symb).name())<<std::endl;
-    RS_Locale *locale;
-    foreach (locale, *RS_SYSTEM->allKnownLocales) {
-        QString canon=locale->getCanonical().toLower();
-        if (canon==l || canon==l+"_"+l.toUpper() || canon.mid(0,2)==l) {
-                std::cout<<"symb="<<qPrintable(symb)<<" name="<<qPrintable(locale->getName())<<std::endl;
-            return locale->getName();
+    RS_Locale loc(symb);
+    QString ret;
+#if QT_VERSION >= 0x040800
+    if( symb.contains(QRegExp("^en"))){
+#endif
+        ret=RS_Locale::languageToString(loc.language());
+        if( symb.contains('_') ) {
+            ret +=" ("+RS_Locale::countryToString(loc.country())+')';
+        }
+#if QT_VERSION >= 0x040800
+    }else{
+        ret=RS_Locale::languageToString(loc.language())+' '+loc.nativeLanguageName();
+        if( symb.contains('_') ) {
+            ret +=" ("+RS_Locale::countryToString(loc.country())+' '+ loc.nativeCountryName()+')';
         }
     }
-    return "";
-    */
+#endif
+
+//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" :  line "<<__LINE__<<" :  symb="<<qPrintable(symb)<<" name="<<qPrintable(ret)<<std::endl;
+
+        return ret;
+
 }
 
 

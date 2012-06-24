@@ -30,6 +30,7 @@
 
 #include <QDir>
 #include <QList>
+#include <QSharedPointer>
 
 #include "rs_debug.h"
 #include "rs_locale.h"
@@ -47,13 +48,11 @@ class RS_System {
 protected:
     RS_System() {
         initialized = false;
-        allKnownLocales=NULL;
     }
-    ~RS_System() {
-        while (!allKnownLocales->isEmpty())
-             delete allKnownLocales->takeFirst();
-        delete allKnownLocales;
-    }
+//    ~RS_System() {
+//        while (!allKnownLocales.isEmpty())
+//             delete allKnownLocales.takeFirst();
+//    }
 
 public:
     /**
@@ -62,7 +61,6 @@ public:
     static RS_System* instance() {
         if (uniqueInstance==NULL) {
             uniqueInstance = new RS_System();
-            uniqueInstance->allKnownLocales=NULL;
         }
         return uniqueInstance;
     }
@@ -70,7 +68,7 @@ public:
     void init(const QString& appName, const QString& appVersion,
                   const QString& appDirName, const QString& appDir="");
 	void initLanguageList();
-        void initAllLanguagesList();
+    void initAllLanguagesList();
 
     bool checkInit();
     bool createPaths(const QString& p);
@@ -92,9 +90,14 @@ public:
 	/**
 	 * @return Application directory.
 	 */
-        QString getAppDir() {
+    QString getAppDir() {
 		return appDir;
 	}
+
+    /**
+     * @return Application Data directory.
+    */
+    QString getAppDataDir();
 
     /**
      * @return A list of absolute paths to all font files found.
@@ -198,7 +201,7 @@ protected:
 
     QStringList languageList;
     bool initialized;
-    QList<RS_Locale* > *allKnownLocales;
+    QList<QSharedPointer<RS_Locale> > allKnownLocales;
 
 };
 

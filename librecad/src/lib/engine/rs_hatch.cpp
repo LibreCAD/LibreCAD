@@ -134,6 +134,7 @@ void RS_Hatch::update() {
     }
 
     if (data.solid==true) {
+        calculateBorders();
         return;
     }
 

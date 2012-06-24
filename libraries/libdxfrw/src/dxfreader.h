@@ -13,9 +13,7 @@
 #ifndef DXFREADER_H
 #define DXFREADER_H
 
-//#include <string>
-
-//class std::ifstream;
+#include "drw_textcodec.h"
 
 class dxfReader {
 public:
@@ -36,10 +34,15 @@ public:
     virtual bool readDouble() = 0;
     virtual bool readBool() = 0;
     std::string getString() {return strData;}
+    std::string toUtf8String(std::string t) {return decoder.toUtf8(t);}
+    std::string getUtf8String() {return decoder.toUtf8(strData);}
     double getDouble() {return doubleData;}
     int getInt32() {return intData;}
     int getInt64() {return int64;}
     bool getBool() {return intData;}
+    void setVersion(std::string *v){decoder.setVersion(v);}
+    void setCodePage(std::string *c){decoder.setCodePage(c);}
+    std::string getCodePage(){ return decoder.getCodePage();}
 #ifdef DRW_DBG
     int count;//DBG
 #endif
@@ -49,6 +52,8 @@ protected:
     double doubleData;
     signed short intData; //16 bits integer
     unsigned long long int int64; //64 bits integer
+private:
+    DRW_TextCodec decoder;
 };
 
 class dxfReaderBinary : public dxfReader {
@@ -63,8 +68,6 @@ public:
     virtual bool readInt64();
     virtual bool readDouble();
     virtual bool readBool();
-private:
-//    std::ifstream *filestr;
 };
 
 class dxfReaderAscii : public dxfReader {
@@ -79,8 +82,6 @@ public:
     virtual bool readInt32();
     virtual bool readInt64();
     virtual bool readBool();
-private:
-//    std::ifstream *filestr;
 };
 
 #endif // DXFREADER_H

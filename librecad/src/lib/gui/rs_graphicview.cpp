@@ -1839,7 +1839,6 @@ double RS_GraphicView::toGraphDY(int d) {
 }
 
 
-
 /**
  * Sets the relative zero coordinate (if not locked)
  * without deleting / drawing the point.

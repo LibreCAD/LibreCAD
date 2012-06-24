@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <fstream>
 #include <string>
+#include <algorithm>
 #include "dxfwriter.h"
 
 #ifdef DRW_DBG
@@ -97,6 +98,18 @@
     return (filestr->good());
 }*/
 
+bool dxfWriter::writeUtf8String(int code, std::string text) {
+    std::string t = encoder.fromUtf8(text);
+    return writeString(code, t);
+}
+
+bool dxfWriter::writeUtf8Caps(int code, std::string text) {
+    std::string strname = text;
+    std::transform(strname.begin(), strname.end(), strname.begin(),::toupper);
+    std::string t = encoder.fromUtf8(strname);
+    return writeString(code, t);
+}
+
 bool dxfWriterBinary::writeString(int code, std::string text) {
     char bufcode[2];
     bufcode[0] =code & 0xFF;
@@ -158,26 +171,25 @@ bool dxfWriterBinary::writeInt32(int code, int data) {
     buffer[1] =data  >> 8;
     buffer[2] =data  >> 16;
     buffer[3] =data  >> 24;
-/*    for (int i=0; i<4; i++) {
-        buffer[i] =0;
-    }
-    *buffer = data;*/
     filestr->write(buffer, 4);
     return (filestr->good());
 }
 
 bool dxfWriterBinary::writeInt64(int code, unsigned long long int data) {
-    char bufcode[2];
-    bufcode[0] =code & 0xFF;
-    bufcode[1] =code  >> 8;
-    filestr->write(bufcode, 2);
+    char buffer[8];
+    buffer[0] =code & 0xFF;
+    buffer[1] =code  >> 8;
+    filestr->write(buffer, 2);
 
-/*    char buffer[8];
-    for (int i=0; i<8; i++) {
-        buffer[i] =0;
-    }
-    *buffer = data;
-    filestr->write(buffer, 8);*/
+    buffer[0] =data & 0xFF;
+    buffer[1] =data  >> 8;
+    buffer[2] =data  >> 16;
+    buffer[3] =data  >> 24;
+    buffer[4] =data  >> 32;
+    buffer[5] =data  >> 40;
+    buffer[6] =data  >> 48;
+    buffer[7] =data  >> 56;
+    filestr->write(buffer, 8);
     return (filestr->good());
 }
 
@@ -254,7 +266,10 @@ bool dxfWriterAscii::writeInt64(int code, unsigned long long int data) {
 }
 
 bool dxfWriterAscii::writeDouble(int code, double data) {
+    int prec = filestr->precision();
+    filestr->precision(12);
     *filestr << code << std::endl << data << std::endl;
+    filestr->precision(prec);
     return (filestr->good());
 }
 

@@ -123,6 +123,9 @@ void RS_ActionSelect::updateMouseButtonHints() {
     case RS2::ActionModifyAttributesNoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select to modify attributes"), tr("Cancel"));
         break;
+    case RS2::ActionOrderNoSelect:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Select entities to order"), tr("Cancel"));
+        break;
     case RS2::ActionModifyDeleteNoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select to delete"), tr("Cancel"));
         break;
@@ -158,6 +161,9 @@ void RS_ActionSelect::updateMouseButtonHints() {
         break;
     case RS2::ActionModifyExplodeTextNoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select to explode text"), tr("Cancel"));
+        break;
+    case RS2::ActionBlocksExplodeNoSelect:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to explode block"), tr("Cancel"));
         break;
     case RS2::ActionBlocksCreateNoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select to create block"), tr("Cancel"));

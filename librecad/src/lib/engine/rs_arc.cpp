@@ -32,6 +32,8 @@
 #include "rs_math.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
+#include "lc_quadratic.h"
+#include "rs_painterqt.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -587,6 +589,15 @@ bool RS_Arc::offset(const RS_Vector& coord, const double& distance) {
     calculateBorders();
     return true;
 }
+QVector<RS_Entity* > RS_Arc::offsetTwoSides(const double& distance) const
+{
+    QVector<RS_Entity*> ret(0,NULL);
+    ret<<new RS_Arc(NULL,RS_ArcData(getCenter(),getRadius()+distance,getAngle1(),getAngle2(),isReversed()));
+    if(getRadius()>distance)
+    ret<<new RS_Arc(NULL,RS_ArcData(getCenter(),getRadius()-distance,getAngle1(),getAngle2(),isReversed()));
+    return ret;
+}
+
 /**
       * implementations must revert the direction of an atomic entity
       */
@@ -843,14 +854,72 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
     correctAngles(); // make sure angleLength is no more than 2*M_PI
 }
 
-
-
+/** find the visible part of the arc, and call drawVisible() to draw */
 void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
+                  double& patternOffset) {
+
+    //only draw the visible portion of line
+    RS_Vector vpMin(view->toGraph(0,view->getHeight()));
+    RS_Vector vpMax(view->toGraph(view->getWidth(),0));
+    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
+
+    RS_Vector vpStart(isReversed()?getEndpoint():getStartpoint());
+    RS_Vector vpEnd(isReversed()?getStartpoint():getEndpoint());
+
+    QVector<RS_Vector> vertex(0);
+    for(unsigned short i=0;i<4;i++){
+        const QPointF& vp(visualBox.at(i));
+        vertex<<RS_Vector(vp.x(),vp.y());
+    }
+    /** angles at cross points */
+    QVector<double> crossPoints(0);
+
+    double baseAngle=isReversed()?getAngle2():getAngle1();
+    for(unsigned short i=0;i<4;i++){
+        RS_Line line(NULL,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
+        auto&& vpIts=RS_Information::getIntersection(
+                    static_cast<RS_Entity*>(this),
+                    &line,
+                    true);
+        if( vpIts.size()==0) continue;
+        foreach(RS_Vector vp, vpIts.getList()){
+            auto&& ap1=getTangentDirection(vp).angle();
+            auto&& ap2=line.getTangentDirection(vp).angle();
+            //ignore tangent points, because the arc doesn't cross over
+            if( fabs( remainder(ap2 - ap1, M_PI) ) < RS_TOLERANCE_ANGLE) continue;
+            crossPoints.push_back(
+                        RS_Math::getAngleDifference(baseAngle, getCenter().angleTo(vp))
+                        );
+        }
+    }
+    if(vpStart.isInWindowOrdered(vpMin, vpMax)) crossPoints.push_back(0.);
+    if(vpEnd.isInWindowOrdered(vpMin, vpMax)) crossPoints.push_back(getAngleLength());
+
+    //sorting
+    qSort(crossPoints.begin(),crossPoints.end());
+    //draw visible
+    RS_Arc arc(*this);
+    arc.setPen(getPen());
+    arc.setSelected(isSelected());
+    arc.setReversed(false);
+    for(int i=0;i<crossPoints.size()-1;i+=2){
+        arc.setAngle1(baseAngle+crossPoints[i]);
+        arc.setAngle2(baseAngle+crossPoints[i+1]);
+        arc.drawVisible(painter,view,patternOffset);
+    }
+
+}
+
+/** directly draw the arc, assuming the whole arc is within visible window */
+void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
                   double& patternOffset) {
 
     if (painter==NULL || view==NULL) {
         return;
     }
+    //visible in grahic view
+    if(isVisibleInWindow(view)==false) return;
+
     RS_Vector cp=view->toGui(getCenter());
     double ra=getRadius()*view->getFactor().x;
     double length=getLength()*view->getFactor().x;
@@ -906,16 +975,19 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 
 
     // create scaled pattern:
-    double* da;
+    QVector<double> da(0);
     double patternSegmentLength(pat->totalLength);
+    double ira=1./ra;
     int i(0);          // index counter
     if(pat->num>0) {
-        da=new double[pat->num];
+        double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
+        da.resize(pat->num);
         while(i<pat->num){
             //        da[j] = pat->pattern[i++] * styleFactor;
             //fixme, stylefactor needed
-            da[i] =isReversed()? -fabs(pat->pattern[i]):fabs(pat->pattern[i]);
-            da[i]/=ra;
+            da[i] =dpmm*(isReversed()? -fabs(pat->pattern[i]):fabs(pat->pattern[i]));
+            if( fabs(da[i]) < 1. ) da[i] = (da[i]>=0.)?1.:-1.;
+            da[i] *= ira;
             i++;
         }
     }else {
@@ -937,10 +1009,10 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 
     if(isReversed()) {//always draw from a1 to a2, so, patternOffset is is automatic
         if(a1<a2+RS_TOLERANCE_ANGLE) a2 -= 2.*M_PI;
-        total = a1 - total/ra; //in angle
+        total = a1 - total*ira; //in angle
     }else{
         if(a2<a1+RS_TOLERANCE_ANGLE) a2 += 2.*M_PI;
-        total = a1 + total/ra; //in angle
+        total = a1 + total*ira; //in angle
     }
     double limit(fabs(a1-a2));
     double t2;
@@ -962,8 +1034,6 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
         }
         total=t2;
     }
-
-    delete[] da;
 }
 
 
@@ -1026,6 +1096,25 @@ double RS_Arc::getBulge() const {
     return bulge;
 }
 
+/** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+LC_Quadratic RS_Arc::getQuadratic() const
+{
+    std::vector<double> ce(6,0.);
+    ce[0]=1.;
+    ce[2]=1.;
+    ce[5]=-data.radius*data.radius;
+    LC_Quadratic ret(ce);
+    ret.move(data.center);
+    return ret;
+}
 
 
 /**

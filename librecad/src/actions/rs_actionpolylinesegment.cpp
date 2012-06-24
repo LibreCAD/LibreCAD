@@ -61,7 +61,7 @@ void RS_ActionPolylineSegment::init(int status) {
  *
  * @author Rallaz
  */
-RS_Vector appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed) {
+RS_Vector RS_ActionPolylineSegment::appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed) {
 
     QList<RS_Entity*> entities;
     for (RS_Entity*v=toAdd->firstEntity(RS2::ResolveNone); v!=NULL; v=toAdd->nextEntity(RS2::ResolveNone)) {
@@ -213,7 +213,10 @@ bool RS_ActionPolylineSegment::convertPolyline(RS_Entity* selectedEntity) {
                 newPolyline->addVertex(start, bulge);
         }
 
-        newPolyline->addVertex(end, bulge);
+        if (closed)
+            newPolyline->setClosed(true);
+        else
+            newPolyline->addVertex(end, bulge);
         newPolyline->endPolyline();
         container->addEntity(newPolyline);
 

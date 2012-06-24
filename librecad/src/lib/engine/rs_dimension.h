@@ -195,6 +195,7 @@ public:
     double getExtensionLineOffset();
     double getDimensionLineGap();
     double getTextHeight();
+    bool getAlignText();
 
         double getGraphicVariable(const QString& key, double defMM, int code);
 

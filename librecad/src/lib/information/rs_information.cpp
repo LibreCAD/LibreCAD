@@ -27,6 +27,7 @@
 #include "rs_information.h"
 
 #include "rs_constructionline.h"
+#include "lc_quadratic.h"
 
 
 /**
@@ -101,7 +102,7 @@ bool RS_Information::isTrimmable(RS_Entity* e1, RS_Entity* e2) {
                 int idx2 = pl->findEntity(e2);
                 RS_DEBUG->print("RS_Information::isTrimmable: "
                                 "idx1: %d, idx2: %d", idx1, idx2);
-                if (abs(idx1-idx2)==1 || abs(idx1-idx2)==pl->count()-1) {
+                if (abs(idx1-idx2)==1 || abs(idx1-idx2)==int(pl->count()-1)) {
                     // directly following entities
                     return true;
                 }
@@ -234,143 +235,19 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
             return ret;
     }
 
-    // one entity is an ellipse:
-    if (e1->rtti()==RS2::EntityEllipse || e2->rtti()==RS2::EntityEllipse) {
-        if (e2->rtti()==RS2::EntityEllipse) std::swap( e1, e2);
-        if (e2->rtti()==RS2::EntityEllipse) {
-            ret = getIntersectionEllipseEllipse((RS_Ellipse*)e1, (RS_Ellipse *) e2);
-        }
-        if (e2->rtti()==RS2::EntityCircle) {
-            ret = getIntersectionCircleEllipse((RS_Circle *)e2, (RS_Ellipse *) e1);
-        }
-        if (e2->rtti()==RS2::EntityArc) {
-            ret = getIntersectionArcEllipse((RS_Arc *)e2, (RS_Ellipse *) e1);
-        }
-        if (e2->rtti()==RS2::EntityLine) {
-            ret = getIntersectionEllipseLine((RS_Line*)e2, (RS_Ellipse*) e1);
-//            tol = 1.0e-1;
-        }
-
-        // not supported:
-        else {
-            return ret;
-        }
-    } else {
-
-        RS_Entity* te1 = e1;
-        RS_Entity* te2 = e2;
-
-        // entity copies - so we only have to deal with lines and arcs
-        RS_Line l1(NULL,
-                   RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(0.0,0.0)));
-        RS_Line l2(NULL,
-                   RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(0.0,0.0)));
-
-        RS_Arc a1(NULL,
-                  RS_ArcData(RS_Vector(0.0,0.0), 1.0, 0.0, 2*M_PI, false));
-        RS_Arc a2(NULL,
-                  RS_ArcData(RS_Vector(0.0,0.0), 1.0, 0.0, 2*M_PI, false));
-
-        // convert construction lines to lines:
-        if (e1->rtti()==RS2::EntityConstructionLine) {
-            RS_ConstructionLine* cl = (RS_ConstructionLine*)e1;
-
-            l1.setStartpoint(cl->getPoint1());
-            l1.setEndpoint(cl->getPoint2());
-
-            te1 = &l1;
-        }
-        if (e2->rtti()==RS2::EntityConstructionLine) {
-            RS_ConstructionLine* cl = (RS_ConstructionLine*)e2;
-
-            l2.setStartpoint(cl->getPoint1());
-            l2.setEndpoint(cl->getPoint2());
-
-            te2 = &l2;
-        }
-
-
-        // convert circles to arcs:
-        if (e1->rtti()==RS2::EntityCircle) {
-            RS_Circle* c = (RS_Circle*)e1;
-
-            RS_ArcData data(c->getCenter(), c->getRadius(), 0.0, 2*M_PI, false);
-            a1.setData(data);
-
-            te1 = &a1;
-        }
-        if (e2->rtti()==RS2::EntityCircle) {
-            RS_Circle* c = (RS_Circle*)e2;
-
-            RS_ArcData data(c->getCenter(), c->getRadius(), 0.0, 2*M_PI, false);
-            a2.setData(data);
-
-            te2 = &a2;
-        }
-
-
-        // line / line:
-        //
-        //else
-        if (te1->rtti()==RS2::EntityLine &&
-                te2->rtti()==RS2::EntityLine) {
-            RS_Line * line1=(RS_Line*) te1;
-            RS_Line * line2=(RS_Line*) te2;
-            /* ToDo: 24 Aug 2011, Dongxu Li, if rtti() is not defined for the parent, the following check for splines may still cause segfault */
-            if ( line1->getParent() != NULL && line1->getParent() == line2->getParent()) {
-                if ( line1->getParent()->rtti()==RS2::EntitySpline ) {
-                    //do not calculate intersections from neighboring lines of a spline
-                    if ( abs(line1->getParent()->findEntity(line1) - line1->getParent()->findEntity(line2)) <= 1 ) {
-                        return ret;
-                    }
-                }
+    //avoid intersections between line segments the same spline
+    /* ToDo: 24 Aug 2011, Dongxu Li, if rtti() is not defined for the parent, the following check for splines may still cause segfault */
+    if ( e1->getParent() != NULL && e1->getParent() == e2->getParent()) {
+        if ( e1->getParent()->rtti()==RS2::EntitySpline ) {
+            //do not calculate intersections from neighboring lines of a spline
+            if ( abs(e1->getParent()->findEntity(e1) - e1->getParent()->findEntity(e2)) <= 1 ) {
+                return ret;
             }
-
-            ret = getIntersectionLineLine(line1, line2);
         }
-
-        // line / arc:
-        //
-        else if (te1->rtti()==RS2::EntityLine &&
-                 te2->rtti()==RS2::EntityArc) {
-
-            RS_Line* line = (RS_Line*)te1;
-            RS_Arc* arc = (RS_Arc*)te2;
-
-            ret = getIntersectionLineArc(line, arc);
-        }
-
-        // arc / line:
-        //
-        else if (te1->rtti()==RS2::EntityArc &&
-                 te2->rtti()==RS2::EntityLine) {
-
-            RS_Arc* arc = (RS_Arc*)te1;
-            RS_Line* line = (RS_Line*)te2;
-
-            ret = getIntersectionLineArc(line, arc);
-        }
-
-        // arc / arc:
-        //
-        else if (te1->rtti()==RS2::EntityArc &&
-                 te2->rtti()==RS2::EntityArc) {
-
-            RS_Arc* arc1 = (RS_Arc*)te1;
-            RS_Arc* arc2 = (RS_Arc*)te2;
-
-            ret = getIntersectionArcArc(arc1, arc2);
-            // ellipse / ellipse
-            //
-        } else {
-            RS_DEBUG->print("RS_Information::getIntersection:: Unsupported entity type.");
-        }
-
     }
-
-
-    // Check all intersection points for being on entities:
-    //
+    const auto&& qf1=e1->getQuadratic();
+    const auto&& qf2=e2->getQuadratic();
+    ret=LC_Quadratic::getIntersection(qf1,qf2);
     RS_VectorSolutions ret2;
     for(int i=0;i<ret.getNumber();i++) {
         if ( ! ret.get(i).valid) continue;
@@ -686,120 +563,16 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     double cs2=cs*cs,si2=1-cs2;
     double tcssi=2.*cs*si;
     double ia2=1./(a2*a2),ib2=1./(b2*b2);
-//    std::cout<<"e1: x^2/("<<a1<<")^2+y^2/("<<b1<<")^2-1 =0\n";
-//    std::cout<<"e2: ( (x-("<<x2<<"))*("<<cs<<")-(y-("<<y2<<"))*("<<si<<"))^2/"<<a2<<"^2+( ( x - ("<<x2<<"))*("<<si<<")+(y-("<<y2<<"))*("<<cs<<"))^2/"<<b2<<"^2 -1 =0\n";
-    double mc1=(ucs - vsi)*(ucs-vsi)*ia2+(usi+vcs)*(usi+vcs)*ib2 -1.;
-    double mb10= ( y2*tcssi - 2.*x2*cs2)*ia2 - ( y2*tcssi+2*x2*si2)*ib2; //x
-    double mb11= ( x2*tcssi - 2.*y2*si2)*ia2 - ( x2*tcssi+2*y2*cs2)*ib2; //y
-    double ma100= cs2*ia2 + si2*ib2; // x^2
-    double ma101= cs*si*(ib2 - ia2); // xy term is 2*ma101*x*y
-    double ma111= si2*ia2 + cs2*ib2; // y^2
-    double ma000= 1./(a1*a1),ma011=1./(b1*b1);
-//    std::cout<<"simplified e1: "<<ma000<<"*x^2 + "<<ma011<<"*y^2 -1 =0\n";
-//    std::cout<<"simplified e2: "<<ma100<<"*x^2 + 2*("<<ma101<<")*x*y + "<<ma111<<"*y^2 "<<" + ("<<mb10<<")*x + ("<<mb11<<")*y + ("<<mc1<<") =0\n";
-    // construct the Bezout determinant
-    double v0=2.*ma000*ma101;
-    double v2=ma000*mb10;
-    double v3=ma000*mb11;
-    double v4=ma000*mc1+ma100;
-    //double v5= 2.*ma101*ma011;
-    //double v6= ma000*ma111;
-    //double v7= 2.*ma101;
-    double v8= 2.*ma011*mb10;
-    //double v9= ma100*ma011;
-    double v1=ma000*ma111-ma100*ma011;
-    //double v1= v6 - v9;
-    double u0 = v4*v4-v2*mb10;
-    double u1 = 2.*(v3*v4-v0*mb10);
-    double u2 = 2.*(v4*v1-ma101*v0)+v3*v3+0.5*v2*v8;
-    double u3 = v0*v8+2.*v3*v1;
-    double u4 = v1*v1+2.*ma101*ma011*v0;
-    //std::cout<<"u0="<<u0<<"\tu1="<<u1<<"\tu2="<<u2<<"\tu3="<<u3<<"\tu4="<<u4<<std::endl;
-    //std::cout<<"("<<u4<<")*x^4+("<<u3<<")*x^3+("<<u2<<")*x^2+("<<u1<<")*x+("<<u0<<")=0\n";
-    double ce[4];
-    double roots[4];
-    unsigned int counts=0;
-    if ( fabs(u4) < 1.0e-75) { // this should not happen
-        if ( fabs(u3) < 1.0e-75) { // this should not happen
-            if ( fabs(u2) < 1.0e-75) { // this should not happen
-                if( fabs(u1) > 1.0e-75) {
-                    counts=1;
-                    roots[0]=-u0/u1;
-                } else { // can not determine y. this means overlapped, but overlap should have been detected before, therefore return empty set
-                    return ret;
-                }
-            } else {
-                ce[0]=u1/u2;
-                ce[1]=u0/u2;
-                //std::cout<<"ce[2]={ "<<ce[0]<<' '<<ce[1]<<" }\n";
-                counts=RS_Math::quadraticSolver(ce,roots);
-            }
-        } else {
-            ce[0]=u2/u3;
-            ce[1]=u1/u3;
-            ce[2]=u0/u3;
-            //std::cout<<"ce[3]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<" }\n";
-            counts=RS_Math::cubicSolver(ce,roots);
-        }
-    } else {
-        ce[0]=u3/u4;
-        ce[1]=u2/u4;
-        ce[2]=u1/u4;
-        ce[3]=u0/u4;
-        //std::cout<<"ce[4]={ "<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<" }\n";
-        counts=RS_Math::quarticSolver(ce,roots);
-    }
-//	std::cout<<"Equation for y: y^4";
-//        for(int i=3; i>=0; i--) {
-//		std::cout<<"+("<<ce[3-i]<<")";
-//	    if ( i ) {
-//		    std::cout<<"*y^"<<i;
-//	    }else {
-//		    std::cout<<" ==0\n";
-//	    }
-//    }
-
-    if (! counts ) { // no intersection found
-        return ret;
-    }
-//      std::cout<<"counts="<<counts<<": ";
-//	for(unsigned int i=0;i<counts;i++){
-//	std::cout<<roots[i]<<" ";
-//	}
-//	std::cout<<std::endl;
-    RS_VectorSolutions vs0;
-    unsigned int ivs0=0;
-    for(unsigned int i=0; i<counts; i++) {
-        double y=roots[i];
-        //double x=(ma100*(ma011*y*y-1.)-ma000*(ma111*y*y+mb11*y+mc1))/(ma000*(2.*ma101*y+mb11));
-        double x,d=v0*y+v2;
-//        std::cout<<"d= "<<d<<std::endl;
-        if( fabs(d)>10.*RS_TOLERANCE*sqrt(RS_TOLERANCE)) {//whether there's x^1 term in bezout determinant
-            x=-((v1*y+v3)*y+v4 )/d;
-            if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
-                vs0.push_back(RS_Vector(x,y));
-        } else { // no x^1 term, have to use x^2 term, then, have to check plus/minus sqrt
-            x=a1*sqrt(1-y*y*ma011);
-            if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
-                vs0.push_back(RS_Vector(x,y));
-            x=-x;
-            if(vs0.getClosestDistance(RS_Vector(x,y),ivs0)>RS_TOLERANCE)
-                vs0.push_back(RS_Vector(x,y));
-        }
-        //std::cout<<"eq1="<<ma000*x*x+ma011*y*y-1.<<std::endl;
-        //std::cout<<"eq2="<<ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1<<std::endl;
-//            if (
-//                fabs(ma100*x*x + 2.*ma101*x*y+ma111*y*y+mb10*x+mb11*y+mc1)< RS_TOLERANCE
-//            ) {//found
-//                vs0.set(ivs0++, RS_Vector(x,y));
-//            }
-    }
-//    for(unsigned int j=0; j<vs0.getNumber(); j++) {
-//        std::cout<<" ( "<<vs0.get(j).x<<" , "<<vs0.get(j).y<<" ) ";
-//    }
-//    std::cout<<std::endl;
-//    std::cout<<"counts= "<<counts<<"\tFound "<<ivs0<<" EllipseEllipse intersections\n";
-    //ret.alloc(ivs0);
+    std::vector<double> m(0,0.);
+    m.push_back( 1./(a1*a1)); //ma000
+    m.push_back( 1./(b1*b1)); //ma011
+    m.push_back(cs2*ia2 + si2*ib2); //ma100
+    m.push_back(cs*si*(ib2 - ia2)); //ma101
+    m.push_back(si2*ia2 + cs2*ib2); //ma111
+    m.push_back(( y2*tcssi - 2.*x2*cs2)*ia2 - ( y2*tcssi+2*x2*si2)*ib2); //mb10
+    m.push_back( ( x2*tcssi - 2.*y2*si2)*ia2 - ( x2*tcssi+2*y2*cs2)*ib2); //mb11
+    m.push_back((ucs - vsi)*(ucs-vsi)*ia2+(usi+vcs)*(usi+vcs)*ib2 -1.); //mc1
+    auto&& vs0=RS_Math::simultaneousQuadraticSolver(m);
     shifta1 = - shifta1;
     shiftc1 = - shiftc1;
     for(int i=0; i<vs0.getNumber(); i++) {

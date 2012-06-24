@@ -57,12 +57,13 @@ public:
     RS_FilterDXFRW();
     ~RS_FilterDXFRW();
 	
-	virtual bool canImport(const QString &fileName, RS2::FormatType t) const {
+    virtual bool canImport(const QString &/*fileName*/, RS2::FormatType t) const {
         return (t==RS2::FormatDXFRW);
 	}
 	
-	virtual bool canExport(const QString &fileName, RS2::FormatType t) const {
-        return (t==RS2::FormatDXFRW || t==RS2::FormatDXF12);
+    virtual bool canExport(const QString &/*fileName*/, RS2::FormatType t) const {
+        return (t==RS2::FormatDXFRW || t==RS2::FormatDXFRW2004 || t==RS2::FormatDXFRW2000
+                || t==RS2::FormatDXFRW14 || t==RS2::FormatDXFRW12);
     }
 
     // Import:
@@ -72,10 +73,15 @@ public:
     virtual void addHeader(const DRW_Header* data);
     virtual void addLType(const DRW_LType& /*data*/){}
     virtual void addLayer(const DRW_Layer& data);
+    virtual void addDimStyle(const DRW_Dimstyle& /*data*/){}
+    virtual void addVport(const DRW_Vport& /*data*/){}
+    virtual void addTextStyle(const DRW_Textstyle& /*data*/){}
     virtual void addBlock(const DRW_Block& data);
     virtual void endBlock();
     virtual void addPoint(const DRW_Point& data);
     virtual void addLine(const DRW_Line& data);
+    virtual void addRay(const DRW_Ray& data);
+    virtual void addXline(const DRW_Xline& data);
     virtual void addCircle(const DRW_Circle& data);
     virtual void addArc(const DRW_Arc& data);
     virtual void addEllipse(const DRW_Ellipse& data);
@@ -98,6 +104,7 @@ public:
     virtual void addDimOrdinate(const DRW_DimOrdinate *data);
     virtual void addLeader(const DRW_Leader *data);
     virtual void addHatch(const DRW_Hatch* data);
+    virtual void addViewport(const DRW_Viewport& /*data*/){}
     virtual void addImage(const DRW_Image* data);
     virtual void linkImage(const DRW_ImageDef* data);
 
@@ -111,11 +118,11 @@ public:
     virtual void writeEntities();
     virtual void writeLTypes();
     virtual void writeLayers();
-
-    void writeVariables(DL_WriterA& dw);
-    void writeLayer(DL_WriterA& dw, RS_Layer* l);
-    void writeAppid(DL_WriterA& dw, const char* appid);
-    void writeBlock(DL_WriterA& dw, RS_Block* blk);
+    virtual void writeTextstyles();
+    virtual void writeVports();
+    virtual void writeBlockRecords();
+    virtual void writeBlocks();
+    virtual void writeDimstyles();
 
     void writePoint(RS_Point* p);
     void writeLine(RS_Line* l);
@@ -124,31 +131,27 @@ public:
     void writeEllipse(RS_Ellipse* s);
     void writeSolid(RS_Solid* s);
     void writeLWPolyline(RS_Polyline* l);
+    void writeSpline(RS_Spline* s);
+    void writeInsert(RS_Insert* i);
+//    void writeText(RS_Text* t);
+    void writeMText(RS_Text* t);
+    void writeHatch(RS_Hatch* h);
+    void writeImage(RS_Image* i);
+    void writeLeader(RS_Leader* l);
+    void writeDimension(RS_Dimension* d);
+    void writePolyline(RS_Polyline* p);
 
-    void writePolyline(DL_WriterA& dw,
-                RS_Polyline* l, const DRW_Entity& attrib);
-	void writeSpline(DL_WriterA& dw, 
-                RS_Spline* s, const DRW_Entity& attrib);
-        void writeInsert(DL_WriterA& dw, RS_Insert* i, const DRW_Entity& attrib);
-        void writeText(DL_WriterA& dw, RS_Text* t, const DRW_Entity& attrib);
-	void writeDimension(DL_WriterA& dw, RS_Dimension* d, 
-                const DRW_Entity& attrib);
-        void writeLeader(DL_WriterA& dw, RS_Leader* l, const DRW_Entity& attrib);
-        void writeHatch(DL_WriterA& dw, RS_Hatch* h, const DRW_Entity& attrib);
-        void writeImage(DL_WriterA& dw, RS_Image* i, const DRW_Entity& attrib);
-	void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con, 
+/*	void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
                 const DRW_Entity& attrib);
 	void writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c, 
-                const DRW_Entity& attrib, RS2::ResolveLevel level);
+                const DRW_Entity& attrib, RS2::ResolveLevel level);*/
 	
-    void writeImageDef(DL_WriterA& dw, RS_Image* i);
 
     void setEntityAttributes(RS_Entity* entity, const DRW_Entity* attrib);
     void getEntityAttributes(DRW_Entity* ent, const RS_Entity* entity);
 
-    static QString toDxfString(const QString& string);
-    static QString toNativeString(const char* data, const QString& encoding);
-    QString getDXFEncoding();
+    static QString toDxfString(const QString& str);
+    static QString toNativeString(const QString& data);
 
 public:
     RS_Pen attributesToPen(const DRW_Layer* att) const;
@@ -174,6 +177,9 @@ public:
     static RS_FilterInterface* createFilter(){return new RS_FilterDXFRW();}
 
 private:
+    void writeEntity(RS_Entity* e);
+
+private:
     /** Pointer to the graphic we currently operate on. */
     RS_Graphic* graphic;
     /** File name. Used to find out the full path of images. */
@@ -189,6 +195,8 @@ private:
     QString dimStyle;
     /** text style. */
     QString textStyle;
+    /** Temporary list to handle unnamed blocks fot write R12 dxf. */
+    QHash <RS_Entity*, QString> noNameBlock;
 
     dxfRW *dxf;
 };

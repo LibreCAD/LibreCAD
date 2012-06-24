@@ -44,14 +44,15 @@
 RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
         : RS_Document(parent),
         layerList(),
-blockList(true)
+blockList(true),paperScaleFixed(false)
 {
 
     RS_SETTINGS->beginGroup("/Defaults");
     setUnit(RS_Units::stringToUnit(RS_SETTINGS->readEntry("/Unit", "None")));
     RS_SETTINGS->endGroup();
     RS_SETTINGS->beginGroup("/Appearance");
-    addVariable("$ISOMETRICGRID",static_cast<int>(RS_SETTINGS->readNumEntry("/IsometricGrid", 0)),70);
+    //$ISOMETRICGRID == $SNAPSTYLE
+    addVariable("$SNAPSTYLE",static_cast<int>(RS_SETTINGS->readNumEntry("/IsometricGrid", 0)),70);
    crosshairType=static_cast<RS2::CrosshairType>(RS_SETTINGS->readNumEntry("/CrosshairType",0));
     RS_SETTINGS->endGroup();
     RS2::Unit unit = getUnit();
@@ -74,6 +75,8 @@ blockList(true)
         addVariable("$DIMTXT",
                     RS_Units::convert(2.5, RS2::Millimeter, unit), 40);
     }
+    addVariable("$DIMTIH", 0, 70);
+
         setModified(false);
 }
 
@@ -305,7 +308,7 @@ bool RS_Graphic::save(bool isAutoSave)
                         actualName = new QString(autosaveFilename);
 
                         if (formatType == RS2::FormatUnknown)
-                                actualType = RS2::FormatDXF;
+                                actualType = RS2::FormatDXFRW;
                 }
                 //	- This is not an AutoSave operation.  This is a manual
                 //	  save operation.  So, ...
@@ -549,10 +552,11 @@ void RS_Graphic::setGridOn(bool on) {
 }
 
 /**
- * @return true if the grid is switched on (visible).
+ * @return true if the isometric grid is switched on (visible).
  */
 bool RS_Graphic::isIsometricGrid() {
-        int on = getVariableInt("$ISOMETRICGRID", 0);
+    //$ISOMETRICGRID == $SNAPSTYLE
+        int on = getVariableInt("$SNAPSTYLE", 0);
         return on!=0;
 }
 
@@ -562,7 +566,8 @@ bool RS_Graphic::isIsometricGrid() {
  * Enables / disables isometric grid.
  */
 void RS_Graphic::setIsometricGrid(bool on) {
-        addVariable("$ISOMETRICGRID", (int)on, 70);
+    //$ISOMETRICGRID == $SNAPSTYLE
+        addVariable("$SNAPSTYLE", (int)on, 70);
 }
 
 void RS_Graphic::setCrosshairType(RS2::CrosshairType chType){
@@ -709,8 +714,19 @@ void RS_Graphic::setPaperInsertionBase(const RS_Vector& p) {
  * @return Paper size in graphic units.
  */
 RS_Vector RS_Graphic::getPaperSize() {
-    RS_Vector def = RS_Units::convert(RS_Vector(210.0,297.0),
-                                      RS2::Millimeter, getUnit());
+    RS_SETTINGS->beginGroup("/Print");
+    bool okX,okY;
+    double sX = RS_SETTINGS->readEntry("/PaperSizeX", "0.0").toDouble(&okX);
+    double sY = RS_SETTINGS->readEntry("/PaperSizeY", "0.0").toDouble(&okY);
+    RS_SETTINGS->endGroup();
+    RS_Vector def ;
+    if(okX&&okY && sX>RS_TOLERANCE && sY>RS_TOLERANCE) {
+        def=RS_Units::convert(RS_Vector(sX,sY),
+                              RS2::Millimeter, getUnit());
+    }else{
+        def= RS_Units::convert(RS_Vector(210.0,297.0),
+                               RS2::Millimeter, getUnit());
+    }
 
     RS_Vector v1 = getVariableVector("$PLIMMIN", RS_Vector(0.0,0.0));
     RS_Vector v2 = getVariableVector("$PLIMMAX", def);
@@ -725,6 +741,14 @@ RS_Vector RS_Graphic::getPaperSize() {
 void RS_Graphic::setPaperSize(const RS_Vector& s) {
     addVariable("$PLIMMIN", RS_Vector(0.0,0.0), 10);
     addVariable("$PLIMMAX", s, 10);
+    //set default paper size
+    RS_Vector def = RS_Units::convert(s,
+                                     getUnit(), RS2::Millimeter);
+    RS_SETTINGS->beginGroup("/Print");
+    RS_SETTINGS->writeEntry("/PaperSizeX", def.x);
+    RS_SETTINGS->writeEntry("/PaperSizeY", def.y);
+    RS_SETTINGS->endGroup();
+
 }
 
 
@@ -774,9 +798,9 @@ double RS_Graphic::getPaperScale() {
     double ret;
 
     ret = getVariableDouble("$PSVPSCALE", 1.0);
-    if (ret<1.0e-6) {
-        ret = 1.0;
-    }
+//    if (ret<1.0e-6) {
+//        ret = 1.0;
+//    }
 
     return ret;
 }
@@ -787,7 +811,7 @@ double RS_Graphic::getPaperScale() {
  * Sets a new scale factor for the paper space.
  */
 void RS_Graphic::setPaperScale(double s) {
-    addVariable("$PSVPSCALE", s, 40);
+    if(paperScaleFixed==false) addVariable("$PSVPSCALE", s, 40);
 }
 
 
@@ -810,33 +834,54 @@ void RS_Graphic::centerToPage() {
 /**
  * Fits drawing on page. Affects DXF variable $PINSBASE.
  */
-void RS_Graphic::fitToPage() {
-        double border = RS_Units::convert(25.0, RS2::Millimeter, getUnit());
-        RS_Vector ps = getPaperSize() - RS_Vector(border, border);
-        RS_Vector s = getSize();
-        double fx = RS_MAXDOUBLE;
-        double fy = RS_MAXDOUBLE;
-        double fxy;
-        //double factor = 1.0;
+bool RS_Graphic::fitToPage() {
+    bool ret(true);
+    double border = RS_Units::convert(25.0, RS2::Millimeter, getUnit());
+    RS_Vector ps = getPaperSize();
+    if(ps.x>border && ps.y>border) ps -= RS_Vector(border, border);
+    RS_Vector s = getSize();
+    double fx = RS_MAXDOUBLE;
+    double fy = RS_MAXDOUBLE;
+    double fxy;
+    //ps = RS_Units::convert(ps, getUnit(), RS2::Millimeter);
 
-        //ps = RS_Units::convert(ps, getUnit(), RS2::Millimeter);
+    // tin-pot 2011-12-30: TODO: can s.x < 0.0 (==> fx < 0.0) happen?
+    if (fabs(s.x) > 1.0e-10) {
+        fx = ps.x / s.x;
+    }
+    if (fabs(s.y) > 1.0e-10) {
+        fy = ps.y / s.y;
+    }
 
-        // tin-pot 2011-12-30: TODO: can s.x < 0.0 (==> fx < 0.0) happen? 
-        if (fabs(s.x) > 1.0e-6) {
-                fx = ps.x / s.x;
-        }
-        if (fabs(s.y) > 1.0e-6) {
-                fy = ps.y / s.y;
-        }
-
-        fxy = std::min(fx, fy);
-        if (fxy >= RS_MAXDOUBLE) {
-            fxy = 1.0; // Scale for empty drawing.
-        }
-        setPaperScale(fxy);
-        centerToPage();
+    fxy = std::min(fx, fy);
+    if (fxy >= RS_MAXDOUBLE || fxy <= 1.0e-10) {
+        setPaperSize(
+                    RS_Units::convert(RS_Vector(210.,297.)
+                                      , RS2::Millimeter
+                                      , getUnit()
+                                      )
+                    );
+        fitToPage();
+        ret=false;
+    }
+    setPaperScale(fxy);
+    centerToPage();
+    return ret;
 }
 
+void RS_Graphic::addEntity(RS_Entity* entity)
+{
+    RS_EntityContainer::addEntity(entity);
+    if( entity->rtti() == RS2::EntityBlock ||
+            entity->rtti() == RS2::EntityContainer){
+        RS_EntityContainer* e=static_cast<RS_EntityContainer*>(entity);
+        for (RS_Entity* e1=e->firstEntity(RS2::ResolveNone);
+             e1!=NULL;
+             e1= e->nextEntity(RS2::ResolveNone)){
+            addEntity(e1);
+        }
+    }
+}
 
 
 /**

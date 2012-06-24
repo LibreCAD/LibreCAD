@@ -90,6 +90,8 @@ public:
         /** Catch hotkey for giving focus to command line. */
     virtual void keyPressEvent(QKeyEvent* e);
     virtual void keyReleaseEvent(QKeyEvent* e);
+    void setRedoEnable(bool enable);
+    void setUndoEnable(bool enable);
     void setPreviousZoomEnable(bool enable);
 
 public slots:
@@ -137,10 +139,10 @@ public slots:
     void slotFileSaveAs();
     /** auto-save document */
     void slotFileAutoSave();
-        /** exports the document as bitmap */
-        void slotFileExport();
-        bool slotFileExport(const QString& name, const QString& format,
-                QSize size, bool black, bool bw=false);
+    /** exports the document as bitmap */
+    void slotFileExport();
+    bool slotFileExport(const QString& name, const QString& format,
+                QSize size, QSize borders, bool black, bool bw=true);
     /** closes the current file */
     void slotFileClose();
     /** closing the current file */
@@ -162,6 +164,7 @@ public slots:
     // void slotBlocksEdit();
     void slotOptionsGeneral();
 
+    void slotImportBlock();
     void slotScriptOpenIDE();
     void slotScriptRun();
 
@@ -393,7 +396,11 @@ private:
     QToolBar* editToolBar;
     QToolBar* zoomToolBar;
     static QAction* previousZoom;
+    static QAction* undoButton;
+    static QAction* redoButton;
     bool previousZoomEnable;
+    bool undoEnable;
+    bool redoEnable;
 
     QG_SnapToolBar* snapToolBar;
 

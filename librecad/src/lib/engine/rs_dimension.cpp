@@ -25,6 +25,7 @@
 **********************************************************************/
 
 
+#include "rs_information.h"
 #include "rs_dimension.h"
 #include "rs_solid.h"
 #include "rs_text.h"
@@ -199,25 +200,30 @@ if(dimtsz < 0.01) {
         double dimAngle1 = dimensionLine->getAngle1();
         double textAngle;
         bool corrected=false;
-        textAngle = RS_Math::makeAngleReadable(dimAngle1, true, &corrected);
+        if (getAlignText())
+            textAngle =0.0;
+        else
+            textAngle = RS_Math::makeAngleReadable(dimAngle1, true, &corrected);
 
     if (data.middleOfText.valid && !forceAutoText) {
         textPos = data.middleOfText;
     } else {
         textPos = dimensionLine->getMiddlePoint();
 
-        RS_Vector distV;
+        if (!getAlignText()) {
+            RS_Vector distV;
 
-        // rotate text so it's readable from the bottom or right (ISO)
-        // quadrant 1 & 4
-        if (corrected) {
-            distV.setPolar(dimgap + dimtxt/2.0, dimAngle1-M_PI/2.0);
-        } else {
-            distV.setPolar(dimgap + dimtxt/2.0, dimAngle1+M_PI/2.0);
+            // rotate text so it's readable from the bottom or right (ISO)
+            // quadrant 1 & 4
+            if (corrected) {
+                distV.setPolar(dimgap + dimtxt/2.0, dimAngle1-M_PI/2.0);
+            } else {
+                distV.setPolar(dimgap + dimtxt/2.0, dimAngle1+M_PI/2.0);
+            }
+
+            // move text away from dimension line:
+            textPos+=distV;
         }
-
-        // move text away from dimension line:
-        textPos+=distV;
         //// the next update should still be able to adjust this
         ////   auto text position. leave it invalid
                 data.middleOfText = textPos;
@@ -245,6 +251,43 @@ if(dimtsz < 0.01) {
     }
     text->setPen(RS_Pen(RS2::FlagInvalid));
     text->setLayer(NULL);
+    //horizontal text, split dimensionLine
+    if (getAlignText()) {
+        double w =text->getUsedTextWidth()/2+dimgap;
+        double h = text->getUsedTextHeight()/2+dimgap;
+        RS_Vector v1 = textPos - RS_Vector(w, h);
+        RS_Vector v2 = textPos + RS_Vector(w, h);
+        RS_Line l[] = {
+            RS_Line(NULL, RS_LineData(v1, RS_Vector(v2.x, v1.y))),
+            RS_Line(NULL, RS_LineData(RS_Vector(v2.x, v1.y), v2)),
+            RS_Line(NULL, RS_LineData(v2, RS_Vector(v1.x, v2.y))),
+            RS_Line(NULL, RS_LineData(RS_Vector(v1.x, v2.y), v1))
+        };
+        RS_VectorSolutions sol1, sol2;
+        int inters= 0;
+        do {
+            sol1 = RS_Information::getIntersection(dimensionLine, &(l[inters++]), true);
+        } while (!sol1.hasValid() && inters < 4);
+        do {
+            sol2 = RS_Information::getIntersection(dimensionLine, &(l[inters++]), true);
+        } while (!sol2.hasValid() && inters < 4);
+        //are text intersecting dimensionLine?
+        if (sol1.hasValid() && sol2.hasValid()) {
+            //yes, split dimension line
+            RS_Line* dimensionLine2 = (RS_Line*)dimensionLine->clone();
+            v1 = sol1.get(0);
+            v2 = sol2.get(0);
+            if (p1.distanceTo(v1) < p1.distanceTo(v2)) {
+                dimensionLine->setEndpoint(v1);
+                dimensionLine2->setStartpoint(v2);
+            } else {
+                dimensionLine->setEndpoint(v2);
+                dimensionLine2->setStartpoint(v1);
+            }
+            addEntity(dimensionLine2);
+        }
+    }
+
     addEntity(text);
 }
 
@@ -299,6 +342,20 @@ double RS_Dimension::getTextHeight() {
     return getGraphicVariable("$DIMTXT", 2.5, 40);
 }
 
+
+/**
+ * @return Dimension labels alignement text true= horizontal, false= aligned.
+ */
+bool RS_Dimension::getAlignText() {
+    bool ret;
+    int v = getGraphicVariableInt("$DIMTIH", 2);
+    if (v>1) {
+        addGraphicVariable("$DIMTIH", 0, 70);
+        getGraphicVariableInt("$DIMTIH", 0);
+    }
+    v==0 ? ret = false :ret = true;
+    return ret;
+}
 
 
 /**

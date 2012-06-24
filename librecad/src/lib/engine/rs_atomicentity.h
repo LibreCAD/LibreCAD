@@ -108,7 +108,12 @@ public:
     virtual double getDirection2() const {
         return 0.0;
     }
-
+ virtual RS_Vector getCenter() const {
+        return RS_Vector(false);
+    }
+    virtual double getRadius() const {
+           return 0.;
+       }
     /**
     * return the nearest center for snapping
     * @param coord Coordinate (typically a mouse coordinate)

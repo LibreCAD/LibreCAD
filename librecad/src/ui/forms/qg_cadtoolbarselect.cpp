@@ -90,7 +90,7 @@ void QG_CadToolBarSelect::setCadToolBar(QG_CadToolBar* tb) {
 
 void QG_CadToolBarSelect::selectSingle() {
     if (actionHandler!=NULL) {
-       if(actionHandler->getCurrentAction()->rtti() == RS2::ActionSelect){
+       if(actionHandler->getCurrentAction()->rtti() != RS2::ActionSelect){
         actionHandler->slotSelectSingle();
        }
     }

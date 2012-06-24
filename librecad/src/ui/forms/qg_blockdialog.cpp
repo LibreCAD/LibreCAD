@@ -67,10 +67,11 @@ void QG_BlockDialog::setBlockList(RS_BlockList* l) {
         RS_Block* block = blockList->getActive();
         if (block!=NULL) {
             leName->setText(block->getName());
-        } else {
-            RS_DEBUG->print(RS_Debug::D_ERROR,
-                                "QG_BlockDialog::setBlockList: No block active.");
         }
+//        else {
+//            RS_DEBUG->print(RS_Debug::D_ERROR,
+//                                "QG_BlockDialog::setBlockList: No block active.");
+//        }
     }
 }
 

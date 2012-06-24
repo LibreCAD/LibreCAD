@@ -28,6 +28,7 @@
 #include "rs_constructionline.h"
 
 #include "rs_debug.h"
+#include "lc_quadratic.h"
 
 
 
@@ -125,6 +126,25 @@ RS_Vector RS_ConstructionLine::getNearestCenter(const RS_Vector& /*coord*/,
 }
 
 
+/** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+LC_Quadratic RS_ConstructionLine::getQuadratic() const
+{
+    std::vector<double> ce(3,0.);
+    auto&& dvp=data.point2 - data.point1;
+    RS_Vector normal(-dvp.y,dvp.x);
+    ce[0]=normal.x;
+    ce[1]=normal.y;
+    ce[2]=- normal.dotP(data.point2);
+    return LC_Quadratic(ce);
+}
 
 RS_Vector RS_ConstructionLine::getMiddlePoint(){
     return RS_Vector(false);

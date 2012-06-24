@@ -159,6 +159,8 @@ public:
                 snapRange = r;
         }
 
+        /**manually set snapPoint*/
+    RS_Vector snapPoint(const RS_Vector& coord, bool setSpot = false);
     RS_Vector snapPoint(QMouseEvent* e);
     RS_Vector snapFree(QMouseEvent* e);
 
@@ -216,6 +218,7 @@ public:
 
 protected:
     void deleteSnapper();
+    double getSnapRange() const;
     RS_EntityContainer* container;
     RS_GraphicView* graphicView;
     RS_Entity* keyEntity;

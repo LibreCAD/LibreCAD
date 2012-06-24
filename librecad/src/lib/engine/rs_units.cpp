@@ -780,6 +780,39 @@ QString RS_Units::formatAngle(double angle, RS2::AngleFormat format,
     return ret;
 }
 
+/**
+ * Converts the given number from a DXF file into an AngleFormat enum.
+ *
+ * @param num $DIMAUNIT from DXF (0: decimal deg, 1: deg/min/sec, 2: gradians,
+ *                                3: radians, 4: surveyor's units)
+ *
+ * @ret Matching AngleFormat enum value.
+ */
+RS2::AngleFormat RS_Units::numberToAngleFormat(int num) {
+
+    RS2::AngleFormat af;
+
+    switch (num) {
+    default:
+    case 0:
+        af = RS2::DegreesDecimal;
+        break;
+    case 1:
+        af = RS2::DegreesMinutesSeconds;
+        break;
+    case 2:
+        af = RS2::Gradians;
+        break;
+    case 3:
+        af = RS2::Radians;
+        break;
+    case 4:
+        af = RS2::Surveyors;
+        break;
+    }
+
+    return af;
+}
 
 
 /**

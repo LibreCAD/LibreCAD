@@ -10,13 +10,11 @@ DEFINES += QC_VERSION="\"master\""
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 DEFINES += HAS_BOOST=1
 
-SCMREVISION="2.0.0alpha2"
+SCMREVISION="2.0.0alpha3"
 
 # uncomment USEQTDIALOG=1 to use QFileDialog instead "native" FileDialog
 # KDE returns the first filter that match the pattern "*.dxf" instead the selected
 # DEFINES += USEQTDIALOG=1
-
-DEFINES += USE_DXFRW=1
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
@@ -33,9 +31,7 @@ CONFIG += qt \
     help verbose
 
 PRE_TARGETDEPS += ../../generated/lib/libdxfrw.a
-PRE_TARGETDEPS += ../../generated/lib/libdxflib.a
 PRE_TARGETDEPS += ../../generated/lib/libjwwlib.a
-PRE_TARGETDEPS += ../../generated/lib/libfparser.a
 
 DESTDIR = $${INSTALLDIR}
 
@@ -70,16 +66,14 @@ win32 {
 
 # Additional libraries to load
 LIBS += -L../../generated/lib  \
-    -ldxflib \
     -ldxfrw \
     -ljwwlib \
-    -lfparser
+    -lmuparser
+
 
 DEPENDPATH += \
-    ../../libraries/dxflib/src \
     ../../libraries/libdxfrw/src \
     ../../libraries/jwwlib/src \
-    ../../libraries/fparser \
     cmd \
     lib/actions \
     lib/creation \
@@ -139,6 +133,7 @@ HEADERS += \
     lib/engine/rs_fontlist.h \
     lib/engine/rs_graphic.h \
     lib/engine/rs_hatch.h \
+    lib/engine/lc_hyperbola.h \
     lib/engine/rs_insert.h \
     lib/engine/rs_image.h \
     lib/engine/rs_layer.h \
@@ -168,7 +163,6 @@ HEADERS += \
     lib/engine/rs_vector.h \
     lib/fileio/rs_fileio.h \
     lib/filters/rs_filtercxf.h \
-    lib/filters/rs_filterdxf.h \
     lib/filters/rs_filterdxfrw.h \
     lib/filters/rs_filterdxf1.h \
     lib/filters/rs_filterjww.h \
@@ -193,6 +187,7 @@ HEADERS += \
     lib/modification/rs_modification.h \
     lib/modification/rs_selection.h \
     lib/math/rs_math.h \
+    lib/math/lc_quadratic.h \
     lib/scripting/rs_python.h \
     lib/scripting/rs_simplepython.h \
     lib/scripting/rs_python_wrappers.h \
@@ -227,6 +222,7 @@ SOURCES += \
     lib/engine/rs_fontlist.cpp \
     lib/engine/rs_graphic.cpp \
     lib/engine/rs_hatch.cpp \
+    lib/engine/lc_hyperbola.cpp \
     lib/engine/rs_insert.cpp \
     lib/engine/rs_image.cpp \
     lib/engine/rs_layer.cpp \
@@ -252,7 +248,6 @@ SOURCES += \
     lib/engine/rs_vector.cpp \
     lib/fileio/rs_fileio.cpp \
     lib/filters/rs_filtercxf.cpp \
-    lib/filters/rs_filterdxf.cpp \
     lib/filters/rs_filterdxfrw.cpp \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \
@@ -269,6 +264,7 @@ SOURCES += \
     lib/information/rs_information.cpp \
     lib/information/rs_infoarea.cpp \
     lib/math/rs_math.cpp \
+    lib/math/lc_quadratic.cpp \
     lib/modification/rs_modification.cpp \
     lib/modification/rs_selection.cpp \
     lib/scripting/rs_python.cpp \
@@ -289,6 +285,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionblocksattributes.h \
     actions/rs_actionblockscreate.h \
     actions/rs_actionblocksedit.h \
+    actions/rs_actionblockssave.h \
     actions/rs_actionblocksexplode.h \
     actions/rs_actionblocksinsert.h \
     actions/rs_actionblocksfreezeall.h \
@@ -310,6 +307,9 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actiondrawcircle3p.h \
     actions/rs_actiondrawcirclecr.h \
     actions/rs_actiondrawcircleinscribe.h \
+    actions/rs_actiondrawcircletan1_2p.h \
+    actions/rs_actiondrawcircletan2.h \
+    actions/rs_actiondrawcircletan3.h \
     actions/rs_actiondrawellipseaxis.h \
     actions/rs_actiondrawellipsefocipoint.h \
     actions/rs_actiondrawellipse4points.h \
@@ -376,6 +376,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionmodifytrimamount.h \
     actions/rs_actionmodifyexplodetext.h \
     actions/rs_actionoptionsdrawing.h \
+    actions/rs_actionorder.h \
     actions/rs_actionparisdebugcreatecontainer.h \
     actions/rs_actionprintpreview.h \
     actions/rs_actionselect.h \
@@ -413,6 +414,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionblocksattributes.cpp \
     actions/rs_actionblockscreate.cpp \
     actions/rs_actionblocksedit.cpp \
+    actions/rs_actionblockssave.cpp \
     actions/rs_actionblocksexplode.cpp \
     actions/rs_actionblocksinsert.cpp \
     actions/rs_actionblocksfreezeall.cpp \
@@ -434,6 +436,9 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actiondrawcircle3p.cpp \
     actions/rs_actiondrawcirclecr.cpp \
     actions/rs_actiondrawcircleinscribe.cpp \
+    actions/rs_actiondrawcircletan1_2p.cpp \
+    actions/rs_actiondrawcircletan2.cpp \
+    actions/rs_actiondrawcircletan3.cpp \
     actions/rs_actiondrawellipseaxis.cpp \
     actions/rs_actiondrawellipsefocipoint.cpp \
     actions/rs_actiondrawellipse4points.cpp \
@@ -501,6 +506,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionmodifytrimamount.cpp \
     actions/rs_actionmodifyexplodetext.cpp \
     actions/rs_actionoptionsdrawing.cpp \
+    actions/rs_actionorder.cpp \
     actions/rs_actionparisdebugcreatecontainer.cpp \
     actions/rs_actionpolylineadd.cpp \
     actions/rs_actionpolylineappend.cpp \
@@ -575,6 +581,7 @@ HEADERS += ui/qg_actionfactory.h \
     ui/forms/qg_commandwidget.h \
     ui/forms/qg_cadtoolbararcs.h \
     ui/forms/qg_circleoptions.h \
+    ui/forms/qg_circletan2options.h \
     ui/forms/qg_coordinatewidget.h \
     ui/forms/qg_dimensionlabeleditor.h \
     ui/forms/qg_dimlinearoptions.h \
@@ -586,6 +593,7 @@ HEADERS += ui/qg_actionfactory.h \
     ui/forms/qg_dlgdimlinear.h \
     ui/forms/qg_dlgellipse.h \
     ui/forms/qg_dlghatch.h \
+    ui/forms/qg_dlgimage.h \
     ui/forms/qg_dlgimageoptions.h \
     ui/forms/qg_dlginitial.h \
     ui/forms/qg_dlginsert.h \
@@ -665,6 +673,7 @@ SOURCES += ui/qg_actionfactory.cpp \
     ui/forms/qg_cadtoolbarselect.cpp \
     ui/forms/qg_cadtoolbarsplines.cpp \
     ui/forms/qg_circleoptions.cpp \
+    ui/forms/qg_circletan2options.cpp \
     ui/forms/qg_commandwidget.cpp \
     ui/forms/qg_coordinatewidget.cpp \
     ui/forms/qg_dimensionlabeleditor.cpp \
@@ -677,6 +686,7 @@ SOURCES += ui/qg_actionfactory.cpp \
     ui/forms/qg_dlgdimlinear.cpp \
     ui/forms/qg_dlgellipse.cpp \
     ui/forms/qg_dlghatch.cpp \
+    ui/forms/qg_dlgimage.cpp \
     ui/forms/qg_dlgimageoptions.cpp \
     ui/forms/qg_dlginitial.cpp \
     ui/forms/qg_dlginsert.cpp \
@@ -740,6 +750,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_cadtoolbarselect.ui \
     ui/forms/qg_cadtoolbarsplines.ui \
     ui/forms/qg_circleoptions.ui \
+    ui/forms/qg_circletan2options.ui \
     ui/forms/qg_coordinatewidget.ui \
     ui/forms/qg_dimensionlabeleditor.ui \
     ui/forms/qg_dimlinearoptions.ui \
@@ -748,6 +759,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_dlghatch.ui \
     ui/forms/qg_dlginitial.ui \
     ui/forms/qg_dlginsert.ui \
+    ui/forms/qg_dlgimage.ui \
     ui/forms/qg_dlgimageoptions.ui \
     ui/forms/qg_dlgarc.ui \
     ui/forms/qg_dlgcircle.ui \

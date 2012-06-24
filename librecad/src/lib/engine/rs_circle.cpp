@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2011-2012 Dongxu Li (dongxuli2011@gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -34,6 +35,8 @@
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 #include "rs_linetypepattern.h"
+#include "lc_hyperbola.h"
+#include "lc_quadratic.h"
 
 
 
@@ -246,6 +249,181 @@ bool RS_Circle::createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& 
     return createFromCR(sol.get(0),tri[1]->getDistanceToPoint(sol.get(0)));
 }
 
+QVector<RS_Entity* > RS_Circle::offsetTwoSides(const double& distance) const
+{
+    QVector<RS_Entity*> ret(0,NULL);
+    ret<<new RS_Circle(NULL,RS_CircleData(getCenter(),getRadius()+distance));
+    if(getRadius()>distance)
+    ret<<new RS_Circle(NULL,RS_CircleData(getCenter(),getRadius()-distance));
+    return ret;
+}
+
+RS_VectorSolutions RS_Circle::createTan1_2P(const RS_AtomicEntity* circle, const QVector<RS_Vector> points)
+{
+    RS_VectorSolutions ret;
+    if(circle==NULL||points.size()<2) return ret;
+    return LC_Quadratic::getIntersection(
+                LC_Quadratic(circle,points[0]),
+                LC_Quadratic(circle,points[1])
+                );
+}
+
+/**
+  * create a circle of radius r and tangential to two given entities
+  */
+RS_VectorSolutions RS_Circle::createTan2(const QVector<RS_AtomicEntity*>& circles, const double& r)
+{
+    if(circles.size()<2) return false;
+    auto&& e0=circles[0]->offsetTwoSides(r);
+    auto&& e1=circles[1]->offsetTwoSides(r);
+    RS_VectorSolutions centers;
+    if(e0.size()>0 && e1.size()>=0) {
+        for(auto it0=e0.begin();it0!=e0.end();it0++){
+            for(auto it1=e1.begin();it1!=e1.end();it1++){
+                centers.appendTo(RS_Information::getIntersection(*it0,*it1));
+            }
+        }
+    }
+    for(auto it0=e0.begin();it0!=e0.end();it0++){
+        delete *it0;
+    }
+    for(auto it0=e1.begin();it0!=e1.end();it0++){
+        delete *it0;
+    }
+    return centers;
+
+}
+
+QList<RS_Circle> RS_Circle::createTan3(const QVector<RS_AtomicEntity*>& circles)
+{
+    QList<RS_Circle> ret;
+    if(circles.size()!=3) return ret;
+     QList<RS_Circle> cs;
+     for(unsigned short i=0;i<3;i++){
+         cs<<RS_Circle(NULL,RS_CircleData(circles.at(i)->getCenter(),circles.at(i)->getRadius()));
+     }
+    unsigned short flags=0;
+    do{
+        ret.append(solveAppolloniusSingle(cs));
+        flags++;
+        unsigned short j=0;
+        for(unsigned short i=1u;i<=4u;i<<=1){
+            if(flags & i) {
+                cs[j].setRadius( - fabs(cs[j].getRadius()));
+            }else{
+                cs[j].setRadius( fabs(cs[j].getRadius()));
+            }
+            j++;
+        }
+
+    }while(flags<8u);
+//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//    std::cout<<"before testing, ret.size()="<<ret.size()<<std::endl;
+    for(int i=0;i<ret.size();){
+        if(ret[i].testTan3(circles) == false) {
+            ret.erase(ret.begin()+i);
+        }else{
+            i++;
+        }
+    }
+//    std::cout<<"after testing, ret.size()="<<ret.size()<<std::endl;
+    return ret;
+}
+
+bool RS_Circle::testTan3(const QVector<RS_AtomicEntity*>& circles)
+{
+
+    if(circles.size()!=3) return false;
+
+    const auto itEnd=circles.end();
+//        std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//        std::cout<<"to verify Center = ( "<<data.center.x<<" , "<<data.center.y<<" ), r= "<<data.radius<<std::endl;
+    for(auto it=circles.begin();it!=itEnd;it++){
+//        std::cout<<"with Center = ( "<<(*it)->getCenter().x<<" , "<<(*it)->getCenter().y<<" ), r= "<<(*it)->getRadius()<<std::endl;
+        const double dist=fabs((data.center - (*it)->getCenter()).magnitude());
+        if(  fabs(dist -  fabs( data.radius - (*it)->getRadius()))>RS_TOLERANCE
+             && fabs(dist - data.radius - (*it)->getRadius())>RS_TOLERANCE ) return false;
+//        std::cout<<"accepted"<<std::endl;
+    }
+    return true;
+}
+
+/** solve one of the eight Appollonius Equations
+| Cx - Ci|^2=(Rx+Ri)^2
+with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are the Center and radius of the i-th existing circle
+**/
+QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circles)
+{
+//          std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//          for(int i=0;i<circles.size();i++){
+//std::cout<<"i="<<i<<"\t center="<<circles[i].getCenter()<<"\tr="<<circles[i].getRadius()<<std::endl;
+//          }
+    QList<RS_Circle> ret;
+
+    QList<RS_Vector> centers;
+    QList<double> radii;
+
+    for(size_t i=0;i<3;i++){
+        if(circles[i].getCenter().valid==false) return ret;
+        centers.push_back(circles[i].getCenter());
+        radii.push_back(circles[i].getRadius());
+    }
+/** form the linear equation to solve center in radius **/
+    QVector<QVector<double> > mat(2,QVector<double>(3,0.));
+    mat[0][0]=centers[2].x - centers[0].x;
+    mat[0][1]=centers[2].y - centers[0].y;
+    mat[1][0]=centers[2].x - centers[1].x;
+    mat[1][1]=centers[2].y - centers[1].y;
+    if(fabs(mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0])<RS_TOLERANCE*RS_TOLERANCE){
+        std::cout<<"The provided circles are in a line, not common tangent circle"<<std::endl;
+    }
+    // r^0 term
+    mat[0][2]=0.5*(centers[2].squared()-centers[0].squared()+radii[0]*radii[0]-radii[2]*radii[2]);
+    mat[1][2]=0.5*(centers[2].squared()-centers[1].squared()+radii[1]*radii[1]-radii[2]*radii[2]);
+//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//    for(unsigned short i=0;i<=1;i++){
+//        std::cout<<"eqs P:"<<i<<" : "<<mat[i][0]<<"*x + "<<mat[i][1]<<"*y = "<<mat[i][2]<<std::endl;
+//    }
+//    QVector<QVector<double> > sm(2,QVector<double>(2,0.));
+    QVector<double> sm(2,0.);
+    if(RS_Math::linearSolver(mat,sm)==false){
+        return ret;
+    }
+
+    RS_Vector vp(sm[0],sm[1]);
+//      std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//      std::cout<<"vp="<<vp<<std::endl;
+
+    // r term
+    mat[0][2]= radii[0]-radii[2];
+    mat[1][2]= radii[1]-radii[2];
+//    for(unsigned short i=0;i<=1;i++){
+//        std::cout<<"eqs Q:"<<i<<" : "<<mat[i][0]<<"*x + "<<mat[i][1]<<"*y = "<<mat[i][2]<<std::endl;
+//    }
+    if(RS_Math::linearSolver(mat,sm)==false){
+        return ret;
+    }
+    RS_Vector vq(sm[0],sm[1]);
+//      std::cout<<"vq="<<vq<<std::endl;
+    //form quadratic equation for r
+    RS_Vector dcp=vp-centers[0];
+    double a=vq.squared()-1.;
+    if(fabs(a)<RS_TOLERANCE*1e-4) {
+        return ret;
+    }
+    std::vector<double> ce(0,0.);
+    ce.push_back(2.*(dcp.dotP(vq)-radii[0])/a);
+    ce.push_back((dcp.squared()-radii[0]*radii[0])/a);
+    std::vector<double>&& vr=RS_Math::quadraticSolver(ce);
+    for(size_t i=0; i < vr.size();i++){
+        if(vr.at(i)<RS_TOLERANCE) continue;
+        ret<<RS_Circle(NULL,RS_CircleData(vp+vq*vr.at(i),vr.at(i)));
+    }
+//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//    std::cout<<"Found "<<ret.size()<<" solutions"<<std::endl;
+
+    return ret;
+}
 
 RS_VectorSolutions RS_Circle::getRefPoints() {
     RS_Vector v1(data.radius, 0.0);
@@ -465,103 +643,36 @@ void RS_Circle::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 }
 
 
-void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
+/** whether the entity's bounding box intersects with visible portion of graphic view
+//fix me, need to handle overlay container separately
+*/
+bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
+{
 
-    if (painter==NULL || view==NULL) {
-        return;
+    RS_Vector vpMin(view->toGraph(0,view->getHeight()));
+    RS_Vector vpMax(view->toGraph(view->getWidth(),0));
+    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
+    QVector<RS_Vector> vps;
+    for(unsigned short i=0;i<4;i++){
+        const QPointF& vp(visualBox.at(i));
+        vps<<RS_Vector(vp.x(),vp.y());
     }
-    RS_Vector cp(view->toGui(getCenter()));
-    double ra(fabs(getRadius()*view->getFactor().x));
-    //double styleFactor = getStyleFactor();
-
-    // simple style-less lines
-    if ( !isSelected() && (
-             getPen().getLineType()==RS2::SolidLine ||
-             view->getDrawingMode()==RS2::ModePreview)) {
-
-        painter->drawArc(cp,
-                         ra,
-                         0.0, 2*M_PI,
-                         false);
-        return;
+    for(unsigned short i=0;i<4;i++){
+        RS_Line line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
+        RS_Circle c0(NULL, getData());
+        if( RS_Information::getIntersection(&c0, &line, true).size()>0) return true;
     }
-//    double styleFactor = getStyleFactor(view);
-    //        if (styleFactor<0.0) {
-    //            painter->drawArc(cp,
-    //                             ra,
-    //                             0.0, 2*M_PI,
-    //                             false);
-    //            return;
-    //        }
-
-    // Pattern:
-    RS_LineTypePattern* pat;
-    if (isSelected()) {
-        pat = &patternSelected;
-    } else {
-        pat = view->getPattern(getPen().getLineType());
-    }
-
-    if (pat==NULL) {
-        return;
-    }
-
-    if (ra<1.){
-        painter->drawArc(cp,
-                         ra,
-                         0.0, 2*M_PI,
-                         false);
-        return;
-    }
-
-    // Pen to draw pattern is always solid:
-    RS_Pen pen = painter->getPen();
-    pen.setLineType(RS2::SolidLine);
-    painter->setPen(pen);
-
-    // create pattern:
-    double* da=new double[pat->num>0?pat->num:0];
-    int i(0),j(0);          // index counter
-    if(pat->num>0){
-        while(i<pat->num){
-            //        da[j] = pat->pattern[i++] * styleFactor;
-            //fixme, styleFactor needed
-            da[i] = pat->pattern[i]/ra ;
-            i++;
-        }
-        j=i;
-    }else {
-        //invalid pattern
-        delete[] da;
-        painter->drawArc(cp,
-                         ra,
-                         0.,2.*M_PI,
-                         false);
-        return;
-    }
-
-    double curA ( 0.0);
-    double a2;
-    bool notDone=true;
-
-    for(i=0;notDone;i=(i+1)%j) {
-        a2= curA+fabs(da[i]);
-        if(a2>2.*M_PI) {
-            a2=2.*M_PI;
-            notDone=false;
-        }
-        if (da[i]>0.){
-            painter->drawArc(cp, ra,
-                             curA,
-                             a2,
-                             false);
-        }
-        curA=a2;
-    }
-
-    delete[] da;
+    if( getCenter().isInWindowOrdered(vpMin,vpMax)==false) return false;
+    return (vpMin-getCenter()).squared() > getRadius()*getRadius();
 }
 
+/** draw circle as a 2 pi arc */
+void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
+    RS_Arc arc(getParent(), RS_ArcData(getCenter(),getRadius(),0.,2.*M_PI, false));
+    arc.setSelected(isSelected());
+    arc.setPen(getPen());
+    arc.draw(painter,view,patternOffset);
+}
 
 
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
@@ -579,6 +690,26 @@ void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     }
 }
 
+
+/** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+LC_Quadratic RS_Circle::getQuadratic() const
+{
+    std::vector<double> ce(6,0.);
+    ce[0]=1.;
+    ce[2]=1.;
+    ce[5]=-data.radius*data.radius;
+    LC_Quadratic ret(ce);
+    ret.move(data.center);
+    return ret;
+}
 
 /**
  * Dumps the circle's data to stdout.

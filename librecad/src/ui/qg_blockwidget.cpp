@@ -66,8 +66,10 @@ bool blockLessThan(const RS_Block *s1, const RS_Block *s2) {
 
 void QG_BlockModel::setBlockList(RS_BlockList* bl) {
     listBlock.clear();
-    if (bl == NULL)
+    if (bl == NULL){
+        reset();
         return;
+    }
     for (int i=0; i<bl->count(); ++i) {
         listBlock.append(bl->at(i));
     }
@@ -157,11 +159,19 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksFreezeAll()));
     layButtons->addWidget(but);
+    // create block:
+    but = new QToolButton(this);
+    but->setIcon(QIcon(":/extui/menublock.png"));
+    but->setMinimumSize(QSize(22,22));
+    but->setToolTip(tr("Create Block"));
+    connect(but, SIGNAL(clicked()),
+            actionHandler, SLOT(slotBlocksCreate()));
+    layButtons->addWidget(but);
     // add block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/ui/blockadd.png"));
     but->setMinimumSize(QSize(22,22));
-    but->setToolTip(tr("Add a block"));
+    but->setToolTip(tr("Add an empty block"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksAdd()));
     layButtons->addWidget(but);
@@ -180,7 +190,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     but->setToolTip(tr("Rename the active block"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksAttributes()));
-    layButtons->addWidget(but);
+    layButtons2->addWidget(but);
     // edit block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/ui/blockedit.png"));
@@ -189,6 +199,14 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
                           "in a separate window"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksEdit()));
+    layButtons2->addWidget(but);
+    // save block:
+    but = new QToolButton(this);
+    but->setIcon(QIcon(":/main/filesave.png"));
+    but->setMinimumSize(QSize(22,22));
+    but->setToolTip(tr("save the active block to a file"));
+    connect(but, SIGNAL(clicked()),
+            actionHandler, SLOT(slotBlocksSave()));
     layButtons2->addWidget(but);
     // insert block:
     but = new QToolButton(this);

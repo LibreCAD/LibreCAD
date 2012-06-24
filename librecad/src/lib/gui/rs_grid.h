@@ -125,6 +125,10 @@ public:
     RS_Vector getMetaGridWidth() const {
         return metaGridWidth;
     }
+    RS_Vector getCellVector()
+    {
+        return cellV;
+    }
 
 protected:
     //! Graphic view this grid is connected to.

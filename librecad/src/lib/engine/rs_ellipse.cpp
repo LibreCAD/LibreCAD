@@ -32,6 +32,8 @@
 #include "rs_painter.h"
 #include "rs_information.h"
 #include "rs_linetypepattern.h"
+#include  "lc_quadratic.h"
+#include "rs_painterqt.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h" /* C99 math */
@@ -201,7 +203,6 @@ RS_Vector RS_Ellipse::getTangentDirection(const RS_Vector& point) const {
     return direction;
 }
 
-#ifdef  HAS_BOOST
 /**
   * find total length of the ellipse (arc)
   *
@@ -219,8 +220,12 @@ double RS_Ellipse::getLength() const
     return e.getEllipseLength(e.data.angle1,e.data.angle2);
 }
 
+/**
 //Ellipse must have ratio<1, and not reversed
-//return the arc length between ellipse angle x1, x2
+*@ x1, ellipse angle
+*@ x2, ellipse angle
+//@return the arc length between ellipse angle x1, x2
+**/
 double RS_Ellipse::getEllipseLength(double x1, double x2) const
 {
     double a(getMajorRadius()),k(getRatio());
@@ -246,7 +251,7 @@ double RS_Ellipse::getEllipseLength(double x1, double x2) const
     x1=fmod(x1,M_PI);
     x2=fmod(x2,M_PI);
     if( fabs(x2-x1)>RS_TOLERANCE_ANGLE)  {
-        ret += ellipticIntegral_2(k,x2)-ellipticIntegral_2(k,x1);
+        ret += RS_Math::ellipticIntegral_2(k,x2)-RS_Math::ellipticIntegral_2(k,x1);
     }
     return a*ret;
 }
@@ -258,22 +263,7 @@ double RS_Ellipse::getEllipseLength( double x2) const
 {
     return getEllipseLength(getAngle1(),x2);
 }
-/**
- * wrapper of elliptic integral of the second type, Legendre form
- *@k the elliptic modulus or eccentricity
- *@phi elliptic angle, must be within range of [0, M_PI]
- *
- *Author: Dongxu Li
- */
-double RS_Ellipse::ellipticIntegral_2(const double& k, const double& phi)
-{
-    double a= remainder(phi-M_PI/2.,M_PI);
-    if(a>0.) {
-        return boost::math::ellint_2<double,double>(k,a);
-    } else {
-        return - boost::math::ellint_2<double,double>(k,fabs(a));
-    }
-}
+
 
 /**
   * get the point on the ellipse arc and with arc distance from the start point
@@ -344,18 +334,7 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
         return vp1;
     }
 }
-#else
 
-//todo , implement this
-RS_Vector RS_Ellipse::getNearestDist(double /*distance*/,
-                                     const RS_Vector& /*coord*/,
-                                     double* dist) {
-    if (dist!=NULL) {
-        *dist = RS_MAXDOUBLE;
-    }
-    return RS_Vector(false);
-}
-#endif
 
 /**
   * switch the major/minor axis naming
@@ -436,9 +415,9 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     double twoax=2*a*x;
     double twoby=2*b*y;
     double a0=twoa2b2*twoa2b2;
-    double ce[4];
-    double roots[4];
-    unsigned int counts=0;
+    std::vector<double> ce(4,0.);
+    std::vector<double> roots(0,0.);
+
     //need to handle a=b
     if(a0 > RS_TOLERANCE*RS_TOLERANCE ) { // a != b , ellipse
         ce[0]=-2.*twoax/twoa2b2;
@@ -446,14 +425,13 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         ce[2]= - ce[0];
         ce[3]= -twoax*twoax/a0;
         //std::cout<<"1::find cosine, variable c, solve(c^4 +("<<ce[0]<<")*c^3+("<<ce[1]<<")*c^2+("<<ce[2]<<")*c+("<<ce[3]<<")=0,c)\n";
-        counts=RS_Math::quarticSolver(ce,roots);
+        roots=RS_Math::quarticSolver(ce);
     } else {//a=b, quadratic equation for circle
-        counts=2;
         a0=twoby/twoax;
-        roots[0]=sqrt(1./(1.+a0*a0));
-        roots[1]=-roots[0];
+        roots.push_back(sqrt(1./(1.+a0*a0)));
+        roots.push_back(-roots[0]);
     }
-    if(!counts) {
+    if(roots.size()==0) {
         //this should not happen
         std::cout<<"(a= "<<a<<" b= "<<b<<" x= "<<x<<" y= "<<y<<" )\n";
         std::cout<<"finding minimum for ("<<x<<"-"<<a<<"*cos(t))^2+("<<y<<"-"<<b<<"*sin(t))^2\n";
@@ -466,7 +444,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
 //    RS_Vector vp2(false);
     double d,d2,s,dDistance(RS_MAXDOUBLE*RS_MAXDOUBLE);
     //double ea;
-    for(unsigned int i=0; i<counts; i++) {
+    for(size_t i=0; i<roots.size(); i++) {
         //I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
         //if ( fabs(roots[i])>1.) continue;
         s=twoby*roots[i]/(twoax-twoa2b2*roots[i]); //sine
@@ -650,6 +628,7 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
     default:
         return false;
     }
+    return false; // only for compiler warning
 }
 
 /**create from quadratic form:
@@ -1225,8 +1204,8 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_Vector vpEnd;
     if(isArc()){
         //only handle start/end points for ellipse arc
-        getStartpoint().scale(center,factor);
-        getEndpoint().scale(center,factor);
+        vpStart=getStartpoint().scale(center,factor);
+        vpEnd=getEndpoint().scale(center,factor);
     }
     data.center.scale(center, factor);
     RS_Vector vp1(getMajorP());
@@ -1244,6 +1223,10 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     double cA=0.5*a*a*(kx2*ct2+ky2*st2);
     double cB=0.5*b*b*(kx2*st2+ky2*ct2);
     double cC=a*b*ct*st*(ky2-kx2);
+    if (factor.x < 0)
+        setReversed(!isReversed());
+    if (factor.y < 0)
+        setReversed(!isReversed());
     RS_Vector vp(cA-cB,cC);
     vp1.set(a,b);
     vp1.scale(RS_Vector(0.5*vp.angle()));
@@ -1351,12 +1334,128 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     correctAngles();//avoid extra 2.*M_PI in angles
 }
 
+/** whether the entity's bounding box intersects with visible portion of graphic view
+//fix me, need to handle overlay container separately
+*/
+bool RS_Ellipse::isVisibleInWindow(RS_GraphicView* view) const
+{
+    RS_Vector vpMin(view->toGraph(0,view->getHeight()));
+    RS_Vector vpMax(view->toGraph(view->getWidth(),0));
+    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
+    QVector<RS_Vector> vps;
+    for(unsigned short i=0;i<4;i++){
+        const QPointF& vp(visualBox.at(i));
+        vps<<RS_Vector(vp.x(),vp.y());
+    }
+    for(unsigned short i=0;i<4;i++){
+        RS_Line line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
+        RS_Ellipse e0(NULL, getData());
+        if( RS_Information::getIntersection(&e0, &line, true).size()>0) return true;
+    }
+    if( getCenter().isInWindowOrdered(vpMin,vpMax)==false) return false;
+    double d2=getMajorP().squared();
+    if(getRatio()<1.) d2 *= getRatio()*getRatio();
+    return (vpMin-getCenter()).squared() > d2 ;
+}
 
-void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-//    std::cout<<"RS_Ellipse::draw(): begin\n";
+/** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+LC_Quadratic RS_Ellipse::getQuadratic() const
+{
+    std::vector<double> ce(6,0.);
+    ce[0]=data.majorP.squared();
+    ce[2]= data.ratio*data.ratio*ce[0];
+    if(ce[0]<RS_TOLERANCE*RS_TOLERANCE || ce[2]<RS_TOLERANCE*RS_TOLERANCE){
+        return LC_Quadratic();
+    }
+    ce[0]=1./ce[0];
+    ce[2]=1./ce[2];
+    ce[5]=-1.;
+    LC_Quadratic ret(ce);
+    ret.rotate(getAngle());
+    ret.move(data.center);
+    return ret;
+}
+
+/** find the visible part of the arc, and call drawVisible() to draw */
+void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
+    if(isArc()==false){
+        RS_Ellipse arc(*this);
+        arc.setAngle2(2.*M_PI);
+        arc.setReversed(false);
+        arc.draw(painter,view,patternOffset);
+        return;
+    }
+    //only draw the visible portion of line
+    RS_Vector vpMin(view->toGraph(0,view->getHeight()));
+    RS_Vector vpMax(view->toGraph(view->getWidth(),0));
+    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
+
+    RS_Vector vpStart(isReversed()?getEndpoint():getStartpoint());
+    RS_Vector vpEnd(isReversed()?getStartpoint():getEndpoint());
+
+    QVector<RS_Vector> vertex(0);
+    for(unsigned short i=0;i<4;i++){
+        const QPointF& vp(visualBox.at(i));
+        vertex<<RS_Vector(vp.x(),vp.y());
+    }
+    /** angles at cross points */
+    QVector<double> crossPoints(0);
+
+    double baseAngle=isReversed()?getAngle2():getAngle1();
+    for(unsigned short i=0;i<4;i++){
+        RS_Line line(NULL,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
+        auto&& vpIts=RS_Information::getIntersection(
+                    static_cast<RS_Entity*>(this), &line, true);
+        if( vpIts.size()==0) continue;
+        foreach(RS_Vector vp, vpIts.getList()){
+            auto&& ap1=getTangentDirection(vp).angle();
+            auto&& ap2=line.getTangentDirection(vp).angle();
+            //ignore tangent points, because the arc doesn't cross over
+            if( fabs( remainder(ap2 - ap1, M_PI) ) < RS_TOLERANCE_ANGLE) continue;
+            crossPoints.push_back(
+                        RS_Math::getAngleDifference(baseAngle, getEllipseAngle(vp))
+                        );
+        }
+    }
+    if(vpStart.isInWindowOrdered(vpMin, vpMax)) crossPoints.push_back(0.);
+    if(vpEnd.isInWindowOrdered(vpMin, vpMax)) crossPoints.push_back(
+                RS_Math::getAngleDifference(baseAngle,isReversed()?getAngle1():getAngle2())
+                );
+
+    //sorting
+    qSort(crossPoints.begin(),crossPoints.end());
+    //draw visible
+//    DEBUG_HEADER();
+//    std::cout<<"crossPoints.size()="<<crossPoints.size()<<std::endl;
+    RS_Ellipse arc(*this);
+    arc.setSelected(isSelected());
+    arc.setPen(getPen());
+    arc.setReversed(false);
+    for(int i=0;i<crossPoints.size()-1;i+=2){
+        arc.setAngle1(baseAngle+crossPoints[i]);
+        arc.setAngle2(baseAngle+crossPoints[i+1]);
+        arc.drawVisible(painter,view,patternOffset);
+    }
+}
+
+/** directly draw the arc, assuming the whole arc is within visible window */
+void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
+//    std::cout<<"RS_Ellipse::drawVisible(): begin\n";
+//    std::cout<<*this<<std::endl;
     if (painter==NULL || view==NULL) {
         return;
     }
+
+    //visible in grahic view
+    if(isVisibleInWindow(view)==false) return;
     double ra(getMajorRadius()*view->getFactor().x);
     double rb(getRatio()*ra);
     if(rb<RS_TOLERANCE) {//ellipse too small
@@ -1400,8 +1499,11 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patte
     int i(0),j(0);
     double* ds = new double[pat->num>0?pat->num:0];
     if(pat->num>0){
+        double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
         while( i<pat->num){
-            ds[i]=pat->pattern[i] ;//pattern length
+            ds[i]= dpmm * pat->pattern[i] ;//pattern length
+            if(fabs(ds[i])<1.)
+                ds[i]=(ds[i]>=0.)?1.:-1.;
             i++;
         }
         j=i;
@@ -1417,29 +1519,28 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patte
         return;
     }
 
-    double tot=0.0;
     double curA(a1);
-    double da,a3;
+    double nextA;
     bool notDone(true);
 
     for(i=0;notDone;i=(i+1)%j) {//draw patterned ellipse
 
-        a3 = curA + fabs(ds[i])/RS_Vector(ra*sin(curA),rb*cos(curA)).magnitude();
-        if(a3>a2){
-            a3=a2;
+        nextA = curA + fabs(ds[i])/
+                RS_Vector(ra*sin(curA),rb*cos(curA)).magnitude();
+        if(nextA>a2){
+            nextA=a2;
             notDone=false;
         }
-        tot += da;
         if (ds[i]>0.){
             painter->drawEllipse(cp,
                                  ra, rb,
                                  mAngle,
                                  curA,
-                                 a3,
+                                 nextA,
                                  false);
         }
 
-        curA=a3;
+        curA=nextA;
     }
 
     delete[] ds;

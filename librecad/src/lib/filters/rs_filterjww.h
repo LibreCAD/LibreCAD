@@ -196,11 +196,11 @@ public:
 	
 	static bool isVariableTwoDimensional(const QString& var);
 
-    virtual bool canImport(const QString &fileName, RS2::FormatType t) const {
+    virtual bool canImport(const QString & /*fileName*/, RS2::FormatType t) const {
         return (t==RS2::FormatJWW);
     }
 
-    virtual bool canExport(const QString &fileName, RS2::FormatType t) const {
+    virtual bool canExport(const QString& /*fileName*/, RS2::FormatType t) const {
         return (t==RS2::FormatJWW);
     }
 

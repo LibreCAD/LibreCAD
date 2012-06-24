@@ -29,13 +29,11 @@
 #ifndef RS_ELLIPSE_H
 #define RS_ELLIPSE_H
 
-#ifdef  HAS_BOOST
 #include <boost/version.hpp>
 #include <boost/math/tools/roots.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
 
-#endif
-
+class LC_Quadratic;
 #include "rs_atomicentity.h"
 
 /**
@@ -63,7 +61,7 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
         os << "(" << ed.center <<
-           "/" << ed.majorP <<
+           " " << ed.majorP <<
            " " << ed.ratio <<
            " " << ed.angle1 <<
            "," << ed.angle2 <<
@@ -128,6 +126,13 @@ public:
     virtual void moveEndpoint(const RS_Vector& pos);
 #ifdef  HAS_BOOST
     virtual double getLength() const;
+
+    /**
+    //Ellipse must have ratio<1, and not reversed
+    *@ x1, ellipse angle
+    *@ x2, ellipse angle
+    //@return the arc length between ellipse angle x1, x2
+    **/
     double getEllipseLength(double a1, double a2) const;
     double getEllipseLength(double a2) const;
 #else
@@ -135,7 +140,6 @@ public:
         return -1.;
    }
 #endif
-    static double ellipticIntegral_2(const double& k, const double& phi);//wrapper for elliptic integral
     virtual RS_VectorSolutions getTangentPoint(const RS_Vector& point) const;//find the tangential points seeing from given point
     virtual RS_Vector getTangentDirection(const RS_Vector& point)const;
     virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
@@ -279,7 +283,11 @@ public:
     virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
     virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 
+    /** whether the entity's bounding box intersects with visible portion of graphic view
+    */
+    bool isVisibleInWindow(RS_GraphicView* view) const;
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
+    virtual void drawVisible(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 
     friend std::ostream& operator << (std::ostream& os, const RS_Ellipse& a);
 
@@ -290,12 +298,22 @@ public:
     virtual double getDirection1() const;
     virtual double getDirection2() const;
 
+    /** return the equation of the entity
+    for quadratic,
+
+    return a vector contains:
+    m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+    for linear:
+    m0 x + m1 y + m2 =0
+    **/
+    virtual LC_Quadratic getQuadratic() const;
+
 protected:
     RS_EllipseData data;
 
 };
 
-#ifdef  HAS_BOOST
 //functor to solve for distance, used by snapDistance
 class EllipseDistanceFunctor
 {
@@ -337,7 +355,6 @@ private:
     double ra;
     double k2;
 };
-#endif
 
 
 #endif

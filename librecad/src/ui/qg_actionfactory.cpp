@@ -35,6 +35,7 @@
 #include "rs_actionblocksremove.h"
 #include "rs_actionblocksattributes.h"
 #include "rs_actionblocksedit.h"
+#include "rs_actionblockssave.h"
 #include "rs_actionblocksinsert.h"
 #include "rs_actionblockstoggleview.h"
 #include "rs_actionblocksexplode.h"
@@ -52,6 +53,9 @@
 #include "rs_actiondrawcircle3p.h"
 #include "rs_actiondrawcirclecr.h"
 #include "rs_actiondrawcircleinscribe.h"
+#include "rs_actiondrawcircletan2.h"
+#include "rs_actiondrawcircletan3.h"
+#include "rs_actiondrawcircletan1_2p.h"
 #include "rs_actiondrawellipseaxis.h"
 #include "rs_actiondrawellipsefocipoint.h"
 #include "rs_actiondrawellipse4points.h"
@@ -141,6 +145,7 @@
 #include "rs_actionpolylinetrim.h"
 #include "rs_actionpolylineequidistant.h"
 #include "rs_actionpolylinesegment.h"
+#include "rs_actionorder.h"
 
 /**
  * Constructor.
@@ -435,6 +440,30 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 obj, SLOT(slotEditPaste()));
         break;
 
+    case RS2::ActionOrderBottom:
+            action = RS_ActionOrder::createGUIAction(id, mw);
+    connect(action, SIGNAL(triggered()),
+            obj, SLOT(slotOrderBottom()));
+    break;
+
+    case RS2::ActionOrderLower:
+            action = RS_ActionOrder::createGUIAction(id, mw);
+    connect(action, SIGNAL(triggered()),
+            obj, SLOT(slotOrderLower()));
+    break;
+
+    case RS2::ActionOrderRaise:
+            action = RS_ActionOrder::createGUIAction(id, mw);
+    connect(action, SIGNAL(triggered()),
+            obj, SLOT(slotOrderRaise()));
+    break;
+
+    case RS2::ActionOrderTop:
+            action = RS_ActionOrder::createGUIAction(id, mw);
+    connect(action, SIGNAL(triggered()),
+            obj, SLOT(slotOrderTop()));
+    break;
+
         // Selecting actions:
         //
     case RS2::ActionSelectSingle:
@@ -658,6 +687,24 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 action = RS_ActionDrawCircleInscribe::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotDrawCircleInscribe()));
+        break;
+
+    case RS2::ActionDrawCircleTan2:
+                action = RS_ActionDrawCircleTan2::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotDrawCircleTan2()));
+        break;
+
+    case RS2::ActionDrawCircleTan3:
+                action = RS_ActionDrawCircleTan3::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotDrawCircleTan3()));
+        break;
+
+    case RS2::ActionDrawCircleTan1_2P:
+                action = RS_ActionDrawCircleTan1_2P::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotDrawCircleTan1_2P()));
         break;
 
     case RS2::ActionDrawArc:
@@ -1251,6 +1298,11 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 action = RS_ActionBlocksEdit::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotBlocksEdit()));
+        break;
+    case RS2::ActionBlocksSave:
+                action = RS_ActionBlocksSave::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotBlocksSave()));
         break;
     case RS2::ActionBlocksInsert:
                 action = RS_ActionBlocksInsert::createGUIAction(id, mw);

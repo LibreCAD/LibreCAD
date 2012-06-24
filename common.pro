@@ -33,6 +33,19 @@ exists($${BOOST_DIR}){
 }
 message(Using boost libraries in $${BOOST_DIR}.)
 
+
+# muParser
+# ********
+
+exists($${MUPARSER_DIR}){
+    INCLUDEPATH += "$${MUPARSER_DIR}"/include
+    LIBS += -L"$${MUPARSER_DIR}"/lib
+}else{
+   message("muParser was not found, please install muParser!")
+}
+message("Using muParser libraries in $${MUPARSER_DIR}.")
+
+
 # Windows compiler settings
 win32 {
     QMAKE_CXXFLAGS += -U__STRICT_ANSI__
@@ -42,7 +55,7 @@ win32 {
     QMAKE_L++FLAGS_THREAD -= -mthreads
     #qt version check for mingw
     win32-g++ {
-        contains(QT_VERSION, ^4\\.8\\.0) {
+        contains(QT_VERSION, ^4\\.8\\.[0-1]) {
             DEFINES += QT_NO_CONCURRENT=0
         }
     }
@@ -67,4 +80,5 @@ message(We will be using CPP11 features)
 QMAKE_CXXFLAGS_DEBUG += -std=c++0x
 QMAKE_CXXFLAGS += -std=c++0x
 
-
+# svg support
+QT += svg

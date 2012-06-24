@@ -28,6 +28,7 @@
 #ifndef RS_ENTITY_H
 #define RS_ENTITY_H
 
+#include <memory>
 #include <QMultiHash>
 
 #include "rs_math.h"
@@ -49,7 +50,8 @@ class RS_Point;
 class RS_Polyline;
 class RS_Text;
 class RS_Layer;
-
+class LC_Quadratic;
+class RS_GraphicView;
 
 
 /**
@@ -473,6 +475,15 @@ public:
      * Implementations must offset the entity by the given direction and distance.
      */
     virtual bool offset(const RS_Vector& /*coord*/, const double& /*distance*/) {return false;}
+
+    /**
+     * Implementations must offset the entity by the distance at both directions
+     * used to generate tangential circles
+     */
+    virtual QVector<RS_Entity* > offsetTwoSides(const double& /*distance*/) const
+    {
+        return QVector<RS_Entity* >();
+    }
     /**
           * implementations must revert the direction of an atomic entity
           */
@@ -529,6 +540,9 @@ public:
         return;
     }
 
+
+    /** whether the entity's bounding box intersects with visible portion of graphic view */
+    virtual bool isVisibleInWindow(RS_GraphicView* view) const;
     /**
      * Implementations must draw the entity on the given device.
      */
@@ -549,6 +563,17 @@ public:
     /** whether the entity is on a helpLayer */
     //! helpLayer contains entities of infinite length, helpLayer doesn't show up in print
     bool isHelpLayer(bool typeCheck = false); // ignore certain entity types for helpLayer check
+    /** return the equation of the entity
+for quadratic,
+
+return a vector contains:
+m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+for linear:
+m0 x + m1 y + m2 =0
+**/
+    virtual LC_Quadratic getQuadratic() const;
+
 
 protected:
     //! Entity's parent entity or NULL is this entity has no parent.

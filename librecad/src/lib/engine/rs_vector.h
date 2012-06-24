@@ -64,6 +64,7 @@ public:
     double angleBetween(const RS_Vector& v1, const RS_Vector& v2) const;
     double magnitude() const;
     double squared() const; //return square of length
+    double squaredTo(const RS_Vector& v1) const; //return square of length
     RS_Vector lerp(const RS_Vector& v, double t) const;
 
     bool isInWindow(const RS_Vector& firstCorner, const RS_Vector& secondCorner) const;
@@ -80,6 +81,7 @@ public:
     RS_Vector scale(const RS_Vector& factor);
     RS_Vector scale(const RS_Vector& center, const RS_Vector& factor);
     RS_Vector mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+    double dotP(const RS_Vector& v1);
 
     RS_Vector operator + (const RS_Vector& v) const;
     RS_Vector operator - (const RS_Vector& v) const;
@@ -104,6 +106,9 @@ public:
     static RS_Vector crossP(const RS_Vector& v1, const RS_Vector& v2);
 #endif
     static double dotP(const RS_Vector& v1, const RS_Vector& v2);
+
+    /** switch x,y for all vectors */
+    RS_Vector flipXY(void) const;
 
     friend std::ostream& operator << (std::ostream&, const RS_Vector& v);
 
@@ -147,6 +152,10 @@ public:
     void clean();
     RS_Vector get(int i) const;
     int getNumber() const;
+    size_t size() const
+    {
+        return vector.size();
+    }
     bool hasValid() const;
     void set(int i, const RS_Vector& v);
     void push_back(const RS_Vector& v);
@@ -165,6 +174,9 @@ public:
     void move(const RS_Vector& vp);
     void scale(const RS_Vector& center, const RS_Vector& factor);
     void scale(const RS_Vector& factor);
+
+    /** switch x,y for all vectors */
+    RS_VectorSolutions flipXY(void) const;
 
     RS_VectorSolutions operator = (const RS_VectorSolutions& s);
 

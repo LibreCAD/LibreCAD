@@ -88,6 +88,10 @@ public slots:
     void slotEditCut();
     void slotEditCopy();
     void slotEditPaste();
+    void slotOrderBottom();
+    void slotOrderLower();
+    void slotOrderRaise();
+    void slotOrderTop();
 
     void slotSelectSingle();
     void slotSelectContour();
@@ -124,6 +128,9 @@ public slots:
     void slotDrawCircle3P();
     void slotDrawCircleParallel();
     void slotDrawCircleInscribe();
+    void slotDrawCircleTan2();
+    void slotDrawCircleTan3();
+    void slotDrawCircleTan1_2P();
     void slotDrawArc();
     void slotDrawArc3P();
     void slotDrawArcParallel();
@@ -222,6 +229,7 @@ public slots:
     void slotBlocksRemove();
     void slotBlocksAttributes();
     void slotBlocksEdit();
+    void slotBlocksSave();
     void slotBlocksInsert();
     void slotBlocksToggleView();
     void slotBlocksCreate();
@@ -296,6 +304,8 @@ private:
 
     QAction* lockRelativeZero;
     bool lockedRelZero;
+    // Type of draw order selected command
+    RS2::ActionType orderType;
     // a list of entity types accepted by action offset
     static QVector<RS2::EntityType> offsetEntities;
 };

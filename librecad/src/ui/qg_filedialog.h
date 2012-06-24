@@ -36,7 +36,14 @@
 class QG_FileDialog : public QFileDialog {
 
 public:
-    QG_FileDialog(QWidget* parent=0, Qt::WindowFlags f=0);
+    enum FileType{
+        DrawingFile=0,
+        BlockFile=1
+    };
+    /**
+*@ FileType, used to set dialog window title, currently, should be either "drawing" or "block"
+**/
+    QG_FileDialog(QWidget* parent=0, Qt::WindowFlags f=0, FileType type = DrawingFile);
     virtual ~QG_FileDialog();
 
     QString getOpenFile(RS2::FormatType* type=NULL);
@@ -49,17 +56,17 @@ private:
     void getType(const QString filter);
     QString getExtension (RS2::FormatType type);
     RS2::FormatType ftype;
-#ifdef USE_DXFRW
+    QString fDxfrw2007;
+    QString fDxfrw2004;
     QString fDxfrw2000;
+    QString fDxfrw14;
+    QString fDxfrw12;
     QString fDxfrw;
-#endif
-    QString fDxf2000;
-    QString fDxfR12;
-    QString fDxf;
     QString fDxf1;
     QString fLff;
     QString fCxf;
     QString fJww;
+    QString name;
 
 };
 

@@ -42,13 +42,10 @@ QSplashScreen *splash;
 #include "rs_system.h"
 #include "rs_fileio.h"
 #include "rs_filtercxf.h"
-#include "rs_filterdxf.h"
 #include "rs_filterdxf1.h"
 #include "rs_filterjww.h"
 #include "rs_filterlff.h"
-#ifdef USE_DXFRW
 #include "rs_filterdxfrw.h"
-#endif
 #include "qg_dlginitial.h"
 
 #include "qc_applicationwindow.h"
@@ -110,11 +107,8 @@ int main(int argc, char** argv) {
     RS_SYSTEM->init(XSTR(QC_APPNAME), XSTR(QC_VERSION), XSTR(QC_APPDIR), prgDir);
 
         RS_FileIO::instance()->registerFilter(&( RS_FilterLFF::createFilter));
-#ifdef USE_DXFRW
         RS_FileIO::instance()->registerFilter( &(RS_FilterDXFRW::createFilter));
-#endif
         RS_FileIO::instance()->registerFilter( &(RS_FilterCXF::createFilter));
-        RS_FileIO::instance()->registerFilter( &(RS_FilterDXF::createFilter));
         RS_FileIO::instance()->registerFilter( &(RS_FilterJWW::createFilter));
         RS_FileIO::instance()->registerFilter( &(RS_FilterDXF1::createFilter));
 

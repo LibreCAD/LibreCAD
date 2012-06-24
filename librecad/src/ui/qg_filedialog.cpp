@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -42,23 +42,26 @@ void QG_FileDialog::getType(const QString filter) {
         ftype = RS2::FormatLFF;
     } else if (filter == fCxf) {
         ftype = RS2::FormatCXF;
-    } else if (filter == fDxfR12) {
-        ftype = RS2::FormatDXF12;
-    } else if (filter == fDxfrw2000 || filter == fDxfrw) {
+    } else if (filter == fDxfrw2007 || filter == fDxfrw) {
         ftype = RS2::FormatDXFRW;
+    } else if (filter == fDxfrw2004) {
+        ftype = RS2::FormatDXFRW2004;
+    } else if (filter == fDxfrw2000) {
+        ftype = RS2::FormatDXFRW2000;
+    } else if (filter == fDxfrw14) {
+        ftype = RS2::FormatDXFRW14;
+    } else if (filter == fDxfrw12) {
+        ftype = RS2::FormatDXFRW12;
     } else if (filter == fJww) {
         ftype = RS2::FormatJWW;
     } else if (filter == fDxf1) {
         ftype = RS2::FormatDXF1;
-    } else if (filter == fDxfR12) {
-        ftype = RS2::FormatDXF12;
-    } else  if (filter == fDxf2000 || filter == fDxf){
-        ftype = RS2::FormatDXF;
     }
 }
 
-QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f)
-                            :QFileDialog(parent, f) {
+QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f, FileType type)
+                            :QFileDialog(parent, f)
+{
 #if QT_VERSION >= 0x040500
 #ifdef USEQTDIALOG
     setOption ( QFileDialog::DontUseNativeDialog, true );
@@ -67,18 +70,26 @@ QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f)
 #endif
     setOption ( QFileDialog::HideNameFilterDetails, false );
 #endif // QT_VERSION
-    ftype= RS2::FormatDXF;
-    fDxf2000 = tr("Drawing Exchange DXF 2000 %1").arg("(*.dxf)");
-#ifdef USE_DXFRW
-    fDxfrw2000 = tr("New Drawing Exchange DXF 2000 %1").arg("(*.dxf)");
-    fDxfrw = tr("New Drawing Exchange %1").arg("(*.dxf)");
-#endif
-    fDxfR12 = tr("Drawing Exchange DXF R12 %1").arg("(*.dxf)");
+    ftype= RS2::FormatDXFRW;
+
+    fDxfrw2007 = tr("Drawing Exchange DXF 2007 %1").arg("(*.dxf)");
+    fDxfrw2004 = tr("Drawing Exchange DXF 2004 %1").arg("(*.dxf)");
+    fDxfrw2000 = tr("Drawing Exchange DXF 2000 %1").arg("(*.dxf)");
+    fDxfrw14 = tr("Drawing Exchange DXF R14 %1").arg("(*.dxf)");
+    fDxfrw12 = tr("Drawing Exchange DXF R12 %1").arg("(*.dxf)");
+    fDxfrw = tr("Drawing Exchange %1").arg("(*.dxf)");
+
     fLff = tr("LFF Font %1").arg("(*.lff)");
     fCxf = tr("QCad Font %1").arg("(*.cxf)");
     fJww = tr("Jww Drawing %1").arg("(*.jww)");
-    fDxf = tr("Drawing Exchange %1").arg("(*.dxf)");
     fDxf1 = tr("QCad 1.x file %1").arg("(*.dxf)");
+    switch(type){
+    case BlockFile:
+        name=tr("Block", "block file");
+        break;
+    default:
+        name=tr("Drawing", "drawing file");
+    }
 }
 
 QG_FileDialog::~QG_FileDialog(){
@@ -88,7 +99,6 @@ QString QG_FileDialog::getExtension (RS2::FormatType type){
     switch (type) {
     case RS2::FormatLFF:
         return QString(".lff");
-        break;
     case RS2::FormatJWW:
         return QString(".jww");
     case RS2::FormatCXF:
@@ -110,13 +120,9 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
     RS_DEBUG->print("defDir: %s", defDir.toLatin1().data());
     QString fn = "";
     QStringList filters;
-#ifdef USE_DXFRW
-    filters << fDxf << fDxfrw  << fDxf1 << fLff << fCxf << fJww;
-#else
-    filters << fDxf << fDxf1 << fLff << fCxf << fJww;
-#endif
+    filters << fDxfrw  << fDxf1 << fLff << fCxf << fJww;
 
-    setWindowTitle(tr("Open Drawing"));
+    setWindowTitle(tr("Open %1").arg(name));
 #if QT_VERSION >= 0x040400
     setNameFilters(filters);
 #endif
@@ -173,44 +179,69 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
                                                  "Drawing Exchange DXF 2000 (*.dxf)");*/
     RS_SETTINGS->endGroup();
 
-    RS_DEBUG->print("defDir: %s", defDir.toLatin1().data());
-    QString fn = "";
-    QStringList filters;
-#ifdef USE_DXFRW
-    filters << fDxf2000 << fDxfrw2000  << fDxfR12 << fLff << fCxf << fJww;
-#else
-    filters << fDxf2000 << fDxfR12 << fLff << fCxf << fJww;
-#endif
+    if(!defDir.endsWith("/") && !defDir.endsWith("\\"))
+        defDir += QDir::separator();
 
-    setWindowTitle(tr("Save Drawing As"));
+    RS_DEBUG->print("defDir: %s", defDir.toLatin1().data());
+
+    // setup filters
+    QStringList filters;
+
+    filters << fDxfrw2007 << fDxfrw2004 << fDxfrw2000 << fDxfrw14 << fDxfrw12 << fLff << fCxf << fJww;
+
+    ftype = RS2::FormatDXFRW;
+    RS_DEBUG->print("defFilter: %s", fDxfrw2007.toLatin1().data());
+
+    // when defFilter is added the below should use the default extension.
+    // generate an untitled name
+    QString fn = "Untitled";
+    if(QFile::exists( defDir + fn + getExtension( ftype ) ))
+    {
+        int fileCount = 1;
+        while(QFile::exists( defDir + fn + QString("%1").arg(fileCount) +
+                             getExtension(ftype)) )
+            ++fileCount;
+        fn += QString("%1").arg(fileCount);
+    }
+
+    // initialize dialog properties
+    setWindowTitle(tr("Save %1 As").arg(name));
     setFileMode(QFileDialog::AnyFile);
     setDirectory(defDir);
     setFilters(filters);
-#if QT_VERSION >= 0x040400
-    selectNameFilter(fDxf2000);
-#endif
-    ftype= RS2::FormatDXF;
-    RS_DEBUG->print("defFilter: %s", fDxf2000.toLatin1().data());
+    selectNameFilter(fDxfrw2007);
+    selectFile(fn);
+    auto&& ext=getExtension(ftype);
+    if(ext.size()==4){
+        if(ext[0]=='.') ext.remove(0,1);
+    }
+    if(ext.size()==3) setDefaultSuffix (ext);
 
-    if (exec()==QDialog::Accepted) {
-        QStringList fl = selectedFiles();
-        if (!fl.isEmpty())
-            fn = fl[0];
-        fn = QDir::convertSeparators( QFileInfo(fn).absoluteFilePath() );
-        getType(selectedFilter());
-        if (type!=NULL)
-                *type = ftype;
-        // append default extension:
-        if (QFileInfo(fn).fileName().indexOf('.')==-1) {
-            fn += getExtension(ftype);
-        }
+
+    // only return non empty string when we have a complete, user approved, file name.
+    if (exec()!=QDialog::Accepted)
+        return QString("");
+
+    QStringList fl = selectedFiles();
+    if (fl.isEmpty())
+        return QString("");
+
+    QFileInfo fi = QFileInfo( fl[0] );
+    fn = QDir::convertSeparators( fi.absoluteFilePath() );
+
+    getType(selectedFilter());
+    if (type!=NULL)
+        *type = ftype;
+
+    // append default extension:
+    if (fi.fileName().endsWith(".dxf",Qt::CaseInsensitive)==-1)
+        fn += getExtension(ftype);
 
     // store new default settings:
-        RS_SETTINGS->beginGroup("/Paths");
-        RS_SETTINGS->writeEntry("/Save", QFileInfo(fn).absolutePath());
-        //RS_SETTINGS->writeEntry("/SaveFilter", fileDlg->selectedFilter());
-        RS_SETTINGS->endGroup();
-    }
+    RS_SETTINGS->beginGroup("/Paths");
+    RS_SETTINGS->writeEntry("/Save", fi.absolutePath());
+    //RS_SETTINGS->writeEntry("/SaveFilter", fileDlg->selectedFilter());
+    RS_SETTINGS->endGroup();
 
     return fn;
 }
@@ -232,7 +263,7 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     QString defDir = RS_SETTINGS->readEntry("/Save",
                                               RS_SYSTEM->getHomeDir());
     QString defFilter = RS_SETTINGS->readEntry("/SaveFilter",
-                                                 "Drawing Exchange DXF 2000 (*.dxf)");
+                                                 "Drawing Exchange DXF 2007 (*.dxf)");
     //QString defFilter = "Drawing Exchange (*.dxf)";
     RS_SETTINGS->endGroup();
 
@@ -243,10 +274,10 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     bool cancel = false;
     QString fn = "";
 
+    filters.append("Drawing Exchange DXF 2007 (*.dxf)");
+    filters.append("Drawing Exchange DXF 2004 (*.dxf)");
     filters.append("Drawing Exchange DXF 2000 (*.dxf)");
-#ifdef USE_DXFRW
-    filters.append("New Drawing Exchange DXF 2000 (*.DXF)");
-#endif
+    filters.append("Drawing Exchange DXF R14 (*.dxf)");
     filters.append("Drawing Exchange DXF R12 (*.dxf)");
     filters.append("LFF Font (*.lff)");
     filters.append("Font (*.cxf)");
@@ -283,22 +314,22 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
 
             // set format:
             if (type!=NULL) {
-                if (fileDlg->selectedFilter()=="LFF Font (*.lff)") {
+                if (fileDlg->selectedNameFilter()=="LFF Font (*.lff)") {
                     *type = RS2::FormatLFF;
-                } else if (fileDlg->selectedFilter()=="Font (*.cxf)") {
+                } else if (fileDlg->selectedNameFilter()=="Font (*.cxf)") {
                     *type = RS2::FormatCXF;
-                } else if (fileDlg->selectedFilter()=="Drawing Exchange DXF R12 (*.dxf)") {
-                    *type = RS2::FormatDXF12;
-#ifdef USE_DXFRW
-#if QT_VERSION >= 0x040400
-                } else if (fileDlg->selectedNameFilter()=="New Drawing Exchange DXF 2000 (*.DXF)") {
-                    *type = RS2::FormatDXFRW;
-#endif // QT_VERSION
-#endif // USE_DXFFRW
-                } else if (fileDlg->selectedFilter()=="JWW (*.jww)") {
+                } else if (fileDlg->selectedNameFilter()=="Drawing Exchange DXF 2004 (*.dxf)") {
+                    *type = RS2::FormatDXFRW2004;
+                } else if (fileDlg->selectedNameFilter()=="Drawing Exchange DXF 2000 (*.dxf)") {
+                    *type = RS2::FormatDXFRW2000;
+                } else if (fileDlg->selectedNameFilter()=="Drawing Exchange DXF R14 (*.dxf)") {
+                    *type = RS2::FormatDXFRW14;
+                } else if (fileDlg->selectedNameFilter()=="Drawing Exchange DXF R12 (*.dxf)") {
+                    *type = RS2::FormatDXFRW12;
+                } else if (fileDlg->selectedNameFilter()=="JWW (*.jww)") {
                     *type = RS2::FormatJWW;
                 } else {
-                    *type = RS2::FormatDXF;
+                    *type = RS2::FormatDXFRW;
                 }
             }
 
@@ -366,25 +397,21 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
                                               RS_SYSTEM->getHomeDir());
     //QString defFilter = RS_SETTINGS->readEntry("/OpenFilter",
     //                      "Drawing Exchange (*.dxf *.DXF)");
-    QString defFilter = "Drawing Exchange (*.dxf *.DXF)";
+    QString defFilter = "Drawing Exchange (*.dxf)";
     RS_SETTINGS->endGroup();
 
     RS_DEBUG->print("defDir: %s", defDir.toLatin1().data());
     RS_DEBUG->print("defFilter: %s", defFilter.toLatin1().data());
 
-    QString fDxf(QObject::tr("Drawing Exchange %1").arg("(*.dxf *.DXF)"));
-#ifdef USE_DXFRW
-    QString fDxfrw(QObject::tr("New Drawing Exchange %1").arg("(*.dxf)"));
-#endif
+    QString fDxfOld(QObject::tr("Old Drawing Exchange %1").arg("(*.dxf *.DXF)"));
+    QString fDxfrw(QObject::tr("Drawing Exchange %1").arg("(*.dxf)"));
+
     QString fDxf1(QObject::tr("QCad 1.x file %1").arg("(*.dxf *.DXF)"));
     QString fLff(QObject::tr("LFF Font %1").arg("(*.lff)"));
     QString fCxf(QObject::tr("Font %1").arg("(*.cxf)"));
     QString fJww(QObject::tr("Jww %1").arg("(*.jww)"));
 
-    RS_DEBUG->print("fDxf: %s", fDxf.toLatin1().data());
-#ifdef USE_DXFRW
     RS_DEBUG->print("fDxfrw: %s", fDxfrw.toLatin1().data());
-#endif
     RS_DEBUG->print("fDxf1: %s", fDxf1.toLatin1().data());
     RS_DEBUG->print("fCxf: %s", fCxf.toLatin1().data());
     RS_DEBUG->print("fJww: %s", fJww.toLatin1().data());
@@ -395,26 +422,17 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
     QFileDialog* fileDlg = new QFileDialog(parent, "File Dialog");
 
     QStringList filters;
-    filters.append(fDxf);
-#ifdef USE_DXFRW
     filters.append(fDxfrw);
-#endif
     filters.append(fDxf1);
     filters.append(fLff);
     filters.append(fCxf);
     filters.append(fJww);
 
-#if QT_VERSION >= 0x040400
     fileDlg->setNameFilters(filters);
-#else
-    emu_qt44_QFileDialog_setNameFilters(*fileDlg, filters);
-#endif
     fileDlg->setFileMode(QFileDialog::ExistingFile);
     fileDlg->setWindowTitle(QObject::tr("Open Drawing"));
     fileDlg->setDirectory(defDir);
-#if QT_VERSION >= 0x040400
     fileDlg->selectNameFilter(defFilter);
-#endif
 
     /** preview RVT PORT preview is currently not supported by QT4
     RS_Graphic* gr = new RS_Graphic;
@@ -430,23 +448,17 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
         if (!fl.isEmpty())
             fn = fl[0];
         fn = QDir::convertSeparators( QFileInfo(fn).absoluteFilePath() );
-#if QT_VERSION >= 0x040400
         if (type!=NULL) {
             if (fileDlg->selectedNameFilter()==fDxf1) {
                 *type = RS2::FormatDXF1;
-            } else if (fileDlg->selectedNameFilter()==fDxf) {
-                *type = RS2::FormatDXF;
-#ifdef USE_DXFRW
             } else if (fileDlg->selectedNameFilter()==fDxfrw) {
                 *type = RS2::FormatDXFRW;
-#endif
             } else if (fileDlg->selectedNameFilter()==fCxf) {
                 *type = RS2::FormatCXF;
             } else if (fileDlg->selectedNameFilter()==fJww) {
                 *type = RS2::FormatJWW;
             }
         }
-#endif
         cancel = false;
     } else {
         cancel = true;

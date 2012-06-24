@@ -28,12 +28,14 @@
 #include <QEventLoop>
 #include <QList>
 #include <QInputDialog>
+#include <QFileInfo>
 #include "rs_graphicview.h"
 #include "rs_actioninterface.h"
 #include "rs_actionselect.h"
 #include "rs_text.h"
 #include "rs_layer.h"
 #include "rs_image.h"
+#include "rs_block.h"
 #include "rs_insert.h"
 #include "rs_polyline.h"
 #include "rs_ellipse.h"
@@ -492,8 +494,14 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         break;
     case RS2::EntitySpline:
         break;
-    case RS2::EntityPolyline:
-        break;
+    case RS2::EntityPolyline: {
+        RS_Polyline *pl = static_cast<RS_Polyline*>(entity);
+        if (hash.take(DPI::CLOSEPOLY).toBool()) {
+            pl->setClosed(true);
+        }else{
+            pl->setClosed(false);
+        }
+        break;}
     case RS2::EntityVertex:
         break;
     case RS2::EntityDimAligned:
@@ -707,6 +715,70 @@ void Doc_plugin_interface::addImage(int handle, QPointF *start, QPointF *uvr, QP
     doc->addEntity(image);
 }
 
+void Doc_plugin_interface::addInsert(QString name, QPointF ins, QPointF scale, qreal rot){
+    RS_Vector ip(ins.x(), ins.y());
+    RS_Vector sp(scale.x(), scale.y());
+
+    RS_InsertData id(name, ip, sp, rot, 1, 1, RS_Vector(0.0, 0.0));
+    RS_Insert* entity = new RS_Insert(doc, id);
+//    setEntityAttributes(entity, attributes);
+
+    doc->addEntity(entity);
+}
+
+QString Doc_plugin_interface::addBlockfromFromdisk(QString fullName){
+    if (fullName.isEmpty() || doc==NULL)
+        return NULL;
+    RS_BlockList* blockList = doc->getBlockList();
+    if (blockList==NULL)
+        return NULL;
+
+    QFileInfo fi(fullName);
+    QString s = fi.completeBaseName();
+
+    QString name = s;
+    if(blockList->find(name)){
+        for (int i=0; i<1e5; ++i) {
+            name = QString("%1-%2").arg(s).arg(i);
+            if (blockList->find(name)==NULL) {
+                break;
+            }
+        }
+    }
+
+    if (fi.isReadable()) {
+        RS_BlockData d(name, RS_Vector(0,0), false);
+        RS_Block *b = new RS_Block(doc, d);
+        RS_Graphic g;
+        if (!g.open(fi.absoluteFilePath(), RS2::FormatUnknown)) {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                            "Doc_plugin_interface::addBlockfromFromdisk: Cannot open file: %s");
+            delete b;
+            return NULL;
+        }
+        RS_LayerList* ll = g.getLayerList();
+        for (int i = 0; i<ll->count(); i++){
+            RS_Layer* nl = ll->at(i)->clone();
+            doc->addLayer(nl);
+        }
+        RS_BlockList* bl = g.getBlockList();
+        for (int i = 0; i<bl->count(); i++){
+            RS_Block* nb = (RS_Block*)bl->at(i)->clone();
+            doc->addBlock(nb);
+        }
+        for (int i = 0; i<g.count(); i++){
+            RS_Entity* e = g.entityAt(i)->clone();
+            e->reparent(b);
+            b->addEntity(e);
+        }
+        doc->addBlock(b);
+        return name;
+
+    } else {
+        return NULL;
+    }
+}
+
 void Doc_plugin_interface::addEntity(Plug_Entity *handle){
     RS_Entity *ent = (reinterpret_cast<Plugin_Entity*>(handle))->getEnt();
     if (ent != NULL)
@@ -750,6 +822,15 @@ QStringList Doc_plugin_interface::getAllLayer(){
     RS_LayerList* listLay = doc->getLayerList();
     for (unsigned int i = 0; i < listLay->count(); ++i) {
          listName << listLay->at(i)->getName();
+     }
+    return listName;
+}
+
+QStringList Doc_plugin_interface::getAllBlocks(){
+    QStringList listName;
+    RS_BlockList* listBlk = doc->getBlockList();
+    for (unsigned int i = 0; i < listBlk->count(); ++i) {
+         listName << listBlk->at(i)->getName();
      }
     return listName;
 }

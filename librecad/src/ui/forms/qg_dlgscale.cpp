@@ -27,6 +27,7 @@
 
 #include "rs_settings.h"
 #include "rs_modification.h"
+#include "rs_math.h"
 
 #include <QDoubleValidator>
 
@@ -120,8 +121,9 @@ void QG_DlgScale::init() {
     }
     leNumber->setText(copies);
     cbIsotropic->setChecked(isotropic);
+    /*
     leFactorX->setValidator(new QDoubleValidator(1.e-10,1.e+10,10,leFactorX));
-    leFactorY->setValidator(new QDoubleValidator(1.e-10,1.e+10,10,leFactorY));
+    leFactorY->setValidator(new QDoubleValidator(1.e-10,1.e+10,10,leFactorY));*/
     leFactorX->setText(scaleFactorX);
     leFactorY->setDisabled(isotropic);
     leFactorY->setReadOnly(isotropic);
@@ -179,7 +181,17 @@ void QG_DlgScale::updateData() {
     } else {
             scaleFactorY=leFactorY->text();
     }
-    data->factor = RS_Vector(scaleFactorX.toDouble(), scaleFactorY.toDouble());
-    data->useCurrentAttributes = cbCurrentAttributes->isChecked();
-    data->useCurrentLayer = cbCurrentLayer->isChecked();
+    bool okX;
+    double sx=RS_Math::eval(scaleFactorX,&okX);
+    bool okY;
+    double sy=RS_Math::eval(scaleFactorY,&okY);
+    if(okX && okY){
+        data->factor = RS_Vector(sx,sy);
+        data->useCurrentAttributes = cbCurrentAttributes->isChecked();
+        data->useCurrentLayer = cbCurrentLayer->isChecked();
+    }else{
+        leFactorX->setText("1");
+        leFactorY->setText("1");
+        data->factor=RS_Vector(false);
+    }
 }

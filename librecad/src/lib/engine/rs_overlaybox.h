@@ -50,8 +50,8 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const RS_OverlayBoxData& ld) {
         os << "(" << ld.corner1 <<
-        "/" << ld.corner2 <<
-        ")";
+              "/" << ld.corner2 <<
+              ")";
         return os;
     }
 
@@ -78,7 +78,7 @@ public:
     }
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 
-        /** @return Start point of the entity */
+    /** @return Start point of the entity */
     virtual RS_Vector getCorner1() const {
         return data.corner1;
     }
@@ -86,24 +86,24 @@ public:
     virtual RS_Vector getCorner2() const {
         return data.corner2;
     }
-        /** @return Copy of data that defines the line. */
+    /** @return Copy of data that defines the line. */
     RS_OverlayBoxData getData() const {
         return data;
     }
 
-        /** We should make a seperate drawing meganism for overlays and not use entities */
-        virtual void move(const RS_Vector& offset){}
-    virtual void rotate(const RS_Vector& center, const double& angle){}
-    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector){}
-    virtual void scale(const RS_Vector& center, const RS_Vector& factor){}
-    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2){}
-        virtual void calculateBorders(){}
-        virtual RS_Vector getNearestEndpoint(const RS_Vector&, double*)const{return RS_Vector(false);}
-        virtual RS_Vector getNearestPointOnEntity(const RS_Vector&, bool, double*, RS_Entity**)const{return RS_Vector();}
-        virtual RS_Vector getNearestCenter(const RS_Vector&, double*){return RS_Vector();}
-        virtual RS_Vector getNearestMiddle(const RS_Vector&, double*,int)const{return RS_Vector();}
-        virtual RS_Vector getNearestDist(double, const RS_Vector&, double*){return RS_Vector();}
-        virtual double getDistanceToPoint(const RS_Vector&, RS_Entity**, RS2::ResolveLevel, double)const{return -1;}//is -1 right here
+    /** We should make a seperate drawing meganism for overlays and not use entities */
+    virtual void move(const RS_Vector& /*offset*/){}
+    virtual void rotate(const RS_Vector& /*center*/, const double& /*angle*/){}
+    virtual void rotate(const RS_Vector& /*center*/, const RS_Vector& /*angleVector*/){}
+    virtual void scale(const RS_Vector& /*center*/, const RS_Vector& /*factor*/){}
+    virtual void mirror(const RS_Vector& /*axisPoint1*/, const RS_Vector& /*axisPoint2*/){}
+    virtual void calculateBorders(){}
+    virtual RS_Vector getNearestEndpoint(const RS_Vector&, double*)const{return RS_Vector(false);}
+    virtual RS_Vector getNearestPointOnEntity(const RS_Vector&, bool, double*, RS_Entity**)const{return RS_Vector();}
+    virtual RS_Vector getNearestCenter(const RS_Vector&, double*){return RS_Vector();}
+    virtual RS_Vector getNearestMiddle(const RS_Vector&, double*,int)const{return RS_Vector();}
+    virtual RS_Vector getNearestDist(double, const RS_Vector&, double*){return RS_Vector();}
+    virtual double getDistanceToPoint(const RS_Vector&, RS_Entity**, RS2::ResolveLevel, double)const{return -1;}//is -1 right here
 
 protected:
     RS_OverlayBoxData data;

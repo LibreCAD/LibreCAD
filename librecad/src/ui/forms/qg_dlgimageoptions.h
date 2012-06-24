@@ -38,13 +38,17 @@ public:
     ~QG_ImageOptionsDialog();
 
     virtual QSize getSize();
+    virtual QSize getBorders();
     virtual bool isBackgroundBlack();
+    virtual bool isBlackWhite();
 
 public slots:
     virtual void setGraphicSize( const RS_Vector & s );
     virtual void ok();
     virtual void sizeChanged();
     virtual void resolutionChanged();
+    virtual void sameBordersChanged();
+    virtual void borderChanged();
 
 protected slots:
     virtual void languageChange();

@@ -53,6 +53,7 @@ protected slots:
 
 private:
     void destroy();
+    bool m_bFixedAngle;
 
 };
 

@@ -87,6 +87,9 @@ public:
                 bool select=true, bool cross=false);
 
     virtual void addEntity(RS_Entity* entity);
+    virtual void appendEntity(RS_Entity* entity);
+    virtual void prependEntity(RS_Entity* entity);
+    virtual void moveEntity(int index, QList<RS_Entity *> entList);
     virtual void insertEntity(int index, RS_Entity* entity);
 //RLZ unused    virtual void replaceEntity(int index, RS_Entity* entity);
     virtual bool removeEntity(RS_Entity* entity);
@@ -114,6 +117,7 @@ public:
         return count()==0;
     }
     virtual unsigned int count();
+    virtual unsigned int count() const;
     virtual unsigned int countDeep();
     //virtual unsigned long int countLayerEntities(RS_Layer* layer);
     virtual unsigned int countSelected();
@@ -139,6 +143,8 @@ public:
 
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL)const;
+    virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
+                                         double* dist, RS_Entity** pEntity )const;
 
     RS_Entity* getNearestEntity(const RS_Vector& point,
                                 double* dist = NULL,

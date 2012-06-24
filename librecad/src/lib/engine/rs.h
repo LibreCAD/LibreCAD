@@ -105,11 +105,11 @@ public:
     enum FormatType {
         FormatUnknown,       /**< Unknown / unsupported format. */
         FormatDXF1,          /**< QCad 1 compatibility DXF format. */
-        FormatDXF,           /**< DXF format. 2000. */
-#ifdef USE_DXFRW
-        FormatDXFRW,           /**< DXF format. new library. */
-#endif
-        FormatDXF12,         /**< DXF format. R12. */
+        FormatDXFRW,           /**< DXF format. v2007. */
+        FormatDXFRW2004,           /**< DXF format. v2004. */
+        FormatDXFRW2000,           /**< DXF format. v2000. */
+        FormatDXFRW14,           /**< DXF format. v14. */
+        FormatDXFRW12,           /**< DXF format. v12. */
         FormatLFF,           /**< LibreCAD Font File format. */
         FormatCXF,           /**< CAM Expert Font format. */
         FormatJWW,           /**< JWW Format type */
@@ -133,7 +133,8 @@ public:
         EntityArc,          /**< Arc */
         EntityCircle,       /**< Circle */
         EntityEllipse,      /**< Ellipse */
-        EntitySolid,        /**< Ellipse */
+        EntityHyperbola,      /**< Hyperbola */
+        EntitySolid,        /**< Solid */
         EntityConstructionLine, /**< Construction line */
         EntityText,         /**< Text */
         EntityDimAligned,   /**< Aligned Dimension */
@@ -188,6 +189,11 @@ public:
         ActionEditCopy,
         ActionEditCopyNoSelect,
         ActionEditPaste,
+        ActionOrderNoSelect,
+        ActionOrderBottom,
+        ActionOrderLower,
+        ActionOrderRaise,
+        ActionOrderTop,
 
         ActionViewStatusBar,
         ActionViewLayerList,
@@ -236,6 +242,9 @@ public:
         ActionDrawCircleCR,
         ActionDrawCircleParallel,
         ActionDrawCircleInscribe,
+        ActionDrawCircleTan1_2P,
+        ActionDrawCircleTan2,
+        ActionDrawCircleTan3,
 
         ActionDrawEllipseArcAxis,
         ActionDrawEllipseAxis,
@@ -269,13 +278,13 @@ public:
         ActionDrawPolyline,
         ActionDrawText,
 
-                ActionPolylineAdd,
-                ActionPolylineAppend,
-                ActionPolylineDel,
-                ActionPolylineDelBetween,
-                ActionPolylineTrim,
-                ActionPolylineEquidistant,
-                ActionPolylineSegment,
+        ActionPolylineAdd,
+        ActionPolylineAppend,
+        ActionPolylineDel,
+        ActionPolylineDelBetween,
+        ActionPolylineTrim,
+        ActionPolylineEquidistant,
+        ActionPolylineSegment,
 
         ActionDimAligned,
         ActionDimLinear,
@@ -357,6 +366,7 @@ public:
         ActionBlocksRemove,
         ActionBlocksAttributes,
         ActionBlocksEdit,
+        ActionBlocksSave,
         ActionBlocksInsert,
         ActionBlocksToggleView,
         ActionBlocksCreate,

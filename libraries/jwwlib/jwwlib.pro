@@ -21,14 +21,23 @@ GENERATED_DIR = ../../generated/lib/jwwlib
 include(../../settings.pro)
 include(../../common.pro)
 
-INCLUDEPATH += \
-    ../dxflib/src
+#INCLUDEPATH += \
+#    ../dxflib/src
 
 SOURCES += \
+    src/dl_writer_ascii.cpp \
     src/dl_jww.cpp \
     src/jwwdoc.cpp
 
 HEADERS += \
+    ../jwwlib/src/dl_attributes.h \
+    ../jwwlib/src/dl_codes.h \
+    ../jwwlib/src/dl_creationinterface.h \
+    ../jwwlib/src/dl_entities.h \
+    ../jwwlib/src/dl_extrusion.h \
+    ../jwwlib/src/dl_exception.h \
+    ../jwwlib/src/dl_writer.h \
+    ../jwwlib/src/dl_writer_ascii.h \
     ../jwwlib/src/dl_jww.h \
     ../jwwlib/src/jwtype.h \
     ../jwwlib/src/jwwdoc.h
