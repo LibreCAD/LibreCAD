@@ -144,10 +144,10 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
         RS_Vector&& mouse=snapPoint(e);
         points.resize(1);
         points<<mouse;
+        deletePreview();
         if(getCenters()==false) break;
         coord=mouse;
         if(preparePreview()) {
-            deletePreview();
             RS_Circle* e=new RS_Circle(preview, cData);
             preview->addEntity(e);
             drawPreview();
@@ -185,7 +185,18 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
 bool RS_ActionDrawCircleTan1_2P::getCenters(){
     if(getStatus() != SetPoint2) return false;
     RS_Circle c(NULL,cData);
-    centers=c.createTan1_2P(circle,points);
+    auto&& list=c.createTan1_2P(circle,points);
+    centers.clean();
+    for(unsigned int i=0;i<list.size();i++){
+        auto vp=list.get(i);
+        double&& r0=vp.distanceTo(points[0]);
+        double&& r1=vp.distanceTo(points[1]);
+        if(fabs(r0-r1)>=RS_TOLERANCE ||
+                fabs(
+                    fabs(circle->getCenter().distanceTo(vp)-circle->getRadius())
+                    - r0)>=RS_TOLERANCE) continue;
+        centers.push_back(list.get(i));
+    }
     valid= (centers.size()>0);
     return valid;
 }
@@ -275,7 +286,10 @@ void RS_ActionDrawCircleTan1_2P::coordinateEvent(RS_CoordinateEvent* e) {
     case SetPoint2:
         points.reserve(1);
         points<<mouse;
-        if(getCenters()) setStatus(getStatus()+1);
+        if(getCenters()) {
+            if(centers.size()==1) trigger();
+            setStatus(getStatus()+1);
+        }
         break;
     }
 
