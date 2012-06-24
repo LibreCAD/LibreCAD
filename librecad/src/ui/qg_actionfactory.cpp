@@ -55,6 +55,7 @@
 #include "rs_actiondrawcircleinscribe.h"
 #include "rs_actiondrawcircletan2.h"
 #include "rs_actiondrawcircletan3.h"
+#include "rs_actiondrawcircletan1_2p.h"
 #include "rs_actiondrawellipseaxis.h"
 #include "rs_actiondrawellipsefocipoint.h"
 #include "rs_actiondrawellipse4points.h"
@@ -698,6 +699,12 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 action = RS_ActionDrawCircleTan3::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotDrawCircleTan3()));
+        break;
+
+    case RS2::ActionDrawCircleTan1_2P:
+                action = RS_ActionDrawCircleTan1_2P::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotDrawCircleTan1_2P()));
         break;
 
     case RS2::ActionDrawArc:

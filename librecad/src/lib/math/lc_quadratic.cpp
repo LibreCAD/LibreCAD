@@ -85,15 +85,10 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point
     }
     RS_Vector center;
     double r;
-    if(circle->rtti()==RS2::EntityArc) {
-        const RS_Arc* p= static_cast<const RS_Arc*>(circle);
-        center=p->getCenter();
-        r=p->getRadius();
-    }else if (circle->rtti()==RS2::EntityCircle) {
-        const RS_Circle* p= static_cast<const RS_Circle*>(circle);
-        center=p->getCenter();
-        r=p->getRadius();
-    }else{
+
+    center=circle->getCenter();
+    r=circle->getRadius();
+    if(center.valid==false){
         m_bValid=false;
         return;
     }

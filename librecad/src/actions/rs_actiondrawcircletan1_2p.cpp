@@ -26,6 +26,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
 
 /**
  * Constructor.
@@ -53,7 +55,7 @@ RS_ActionDrawCircleTan1_2P::~RS_ActionDrawCircleTan1_2P() {
 QAction* RS_ActionDrawCircleTan1_2P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
 
-    action = new QAction(tr("Circle Tangential 2 &Points"), NULL);
+    action = new QAction(tr("Circle Tangential 2 P&oints"), NULL);
     action->setIcon(QIcon(":/extui/circletan1_2p.png"));
     return action;
 }
@@ -121,7 +123,39 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::mouseMoveEvent begin");
 
     switch(getStatus() ){
+    case SetPoint1:
+    {
+        RS_Vector&& mouse=snapPoint(e);
+        points.clear();
+        points<<mouse;
+        RS_Vector&& dvp=mouse - circle->getCenter();
+        double&& rvp=dvp.magnitude();
+        if(rvp<RS_TOLERANCE2) break;
+        cData.radius=(circle->getRadius()+rvp)*0.5;
+        cData.center=circle->getCenter()+dvp*(cData.radius/rvp);
+        cData.radius=fabs(circle->getRadius()-cData.radius);
+        deletePreview();
+        RS_Circle* e=new RS_Circle(preview, cData);
+        preview->addEntity(e);
+        drawPreview();
+        break;
+    }
+    case SetPoint2: {
+        RS_Vector&& mouse=snapPoint(e);
+        points.resize(1);
+        points<<mouse;
+        if(getCenters()==false) break;
+        coord=mouse;
+        if(preparePreview()) {
+            deletePreview();
+            RS_Circle* e=new RS_Circle(preview, cData);
+            preview->addEntity(e);
+            drawPreview();
+        }
+        break;
+    }
     case SetCenter: {
+
         //        RS_Entity*  en = catchEntity(e, enTypeList, RS2::ResolveAll);
         coord= graphicView->toGraph(e->x(), e->y());
         //        circles[getStatus()]=static_cast<RS_Line*>(en);
@@ -347,7 +381,7 @@ void RS_ActionDrawCircleTan1_2P::updateMouseButtonHints() {
     if (RS_DIALOGFACTORY!=NULL) {
         switch (getStatus()) {
         case SetCircle1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first line/arc/circle"),
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify an arc/circle"),
                                                 tr("Cancel"));
             break;
 
