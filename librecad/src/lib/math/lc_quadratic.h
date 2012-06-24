@@ -77,6 +77,7 @@ public:
     friend std::ostream& operator << (std::ostream& os, const LC_Quadratic& l);
 
 //    private:
+    // the equation form: {x, y}.m_mQuad.{{x},{y}} + m_vLinear.{{x},{y}}+m_dConst=0
     boost::numeric::ublas::matrix<double> m_mQuad;
     boost::numeric::ublas::vector<double> m_vLinear;
     double m_dConst;
