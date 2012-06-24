@@ -32,6 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <boost/numeric/ublas/io.hpp>
 
 class RS_VectorSolutions;
+class RS_AtomicEntity;
 
 /**
  * Class for generic linear and quadratic equation
@@ -42,6 +43,9 @@ class RS_VectorSolutions;
 class LC_Quadratic {
 public:
     explicit LC_Quadratic();
+    /** construct a ellipse or hyperbola as the path of center of tangent circles
+      passing the point */
+    LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point);
     LC_Quadratic(std::vector<double> ce);
     std::vector<double> getCoefficients() const;
     LC_Quadratic move(const RS_Vector& v);

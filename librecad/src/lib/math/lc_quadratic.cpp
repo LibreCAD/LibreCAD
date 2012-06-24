@@ -26,6 +26,8 @@
 
 #include "rs_math.h"
 #include "lc_quadratic.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
 #include "rs_debug.h"
 
 #ifdef EMU_C99
@@ -67,6 +69,50 @@ LC_Quadratic::LC_Quadratic(std::vector<double> ce):
         return;
     }
         m_bValid=false;
+}
+
+/** construct a ellipse or hyperbola as the path of center of tangent circles
+  passing the point */
+LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point)
+    :m_bIsQuadratic(true)
+    ,m_mQuad(2,2)
+    ,m_vLinear(2)
+    ,m_bValid(true)
+{
+    if(circle==NULL) {
+        m_bValid=false;
+        return;
+    }
+    RS_Vector center;
+    double r;
+    if(circle->rtti()==RS2::EntityArc) {
+        const RS_Arc* p= static_cast<const RS_Arc*>(circle);
+        center=p->getCenter();
+        r=p->getRadius();
+    }else if (circle->rtti()==RS2::EntityCircle) {
+        const RS_Circle* p= static_cast<const RS_Circle*>(circle);
+        center=p->getCenter();
+        r=p->getRadius();
+    }else{
+        m_bValid=false;
+        return;
+    }
+    double c=0.5*(center.distanceTo(point));
+    double d=0.5*r;
+    if(fabs(c)<RS_TOLERANCE ||fabs(d)<RS_TOLERANCE || fabs(c-d)<RS_TOLERANCE){
+        m_bValid=false;
+        return;
+    }
+    m_mQuad(0,0)=1./(d*d);
+    m_mQuad(0,1)=0.;
+    m_mQuad(1,0)=0.;
+    m_mQuad(1,1)=1./(d*d - c*c);
+    m_vLinear(0)=0.;
+    m_vLinear(1)=0.;
+    m_dConst=-1.;
+    center=(center + point)*0.5;
+    rotate(center.angleTo(point));
+    move(center);
 }
 
 std::vector<double>  LC_Quadratic::getCoefficients() const

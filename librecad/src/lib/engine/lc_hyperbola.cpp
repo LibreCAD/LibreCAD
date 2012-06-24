@@ -79,6 +79,14 @@ LC_HyperbolaData::LC_HyperbolaData(const RS_Vector& focus0,
 
 }
 
+///** create data based on foci and a point on hyperbola */
+//LC_Hyperbola::LC_Hyperbola(const RS_Vector& focus0,
+//                 const RS_Vector& focus1,
+//                 const RS_Vector& point):
+//    data(focus0,focus1,point)
+//{
+//    m_bValid = data.majorP.squared()> RS_TOLERANCE2;
+//}
 /**
  * Recalculates the endpoints using the angles and the radius.
  */

@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2011-2012 Dongxu Li (dongxuli2011@gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -34,6 +35,7 @@
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 #include "rs_linetypepattern.h"
+#include "lc_hyperbola.h"
 #include "lc_quadratic.h"
 
 
@@ -254,6 +256,16 @@ QVector<RS_Entity* > RS_Circle::offsetTwoSides(const double& distance) const
     if(getRadius()>distance)
     ret<<new RS_Circle(NULL,RS_CircleData(getCenter(),getRadius()-distance));
     return ret;
+}
+
+RS_VectorSolutions RS_Circle::createTan1_2P(const RS_AtomicEntity* circle, const QVector<RS_Vector> points)
+{
+    RS_VectorSolutions ret;
+    if(circle==NULL||points.size()<2) return ret;
+    return LC_Quadratic::getIntersection(
+                LC_Quadratic(circle,points[0]),
+                LC_Quadratic(circle,points[1])
+                );
 }
 
 /**

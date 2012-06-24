@@ -307,6 +307,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actiondrawcircle3p.h \
     actions/rs_actiondrawcirclecr.h \
     actions/rs_actiondrawcircleinscribe.h \
+    actions/rs_actiondrawcircletan1_2p.h \
     actions/rs_actiondrawcircletan2.h \
     actions/rs_actiondrawcircletan3.h \
     actions/rs_actiondrawellipseaxis.h \
@@ -435,6 +436,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actiondrawcircle3p.cpp \
     actions/rs_actiondrawcirclecr.cpp \
     actions/rs_actiondrawcircleinscribe.cpp \
+    actions/rs_actiondrawcircletan1_2p.cpp \
     actions/rs_actiondrawcircletan2.cpp \
     actions/rs_actiondrawcircletan3.cpp \
     actions/rs_actiondrawellipseaxis.cpp \

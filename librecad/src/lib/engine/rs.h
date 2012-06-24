@@ -242,6 +242,7 @@ public:
         ActionDrawCircleCR,
         ActionDrawCircleParallel,
         ActionDrawCircleInscribe,
+        ActionDrawCircleTan1_2P,
         ActionDrawCircleTan2,
         ActionDrawCircleTan3,
 
