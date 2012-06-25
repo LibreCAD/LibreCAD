@@ -322,6 +322,10 @@ void QG_CadToolBar::resetToolBar() {
         tbInfo->resetToolBar();
         return;
     }
+    if(currentTb == tbModify) {
+        tbModify->resetToolBar();
+        return;
+    }
 }
 
 void QG_CadToolBar::showToolBarMain() {
