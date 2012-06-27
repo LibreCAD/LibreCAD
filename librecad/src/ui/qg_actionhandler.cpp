@@ -53,6 +53,7 @@
 #include "rs_actiondrawcircle2p.h"
 #include "rs_actiondrawcircle3p.h"
 #include "rs_actiondrawcircletan1_2p.h"
+#include "rs_actiondrawcircletan2_1p.h"
 #include "rs_actiondrawcirclecr.h"
 #include "rs_actiondrawcircleinscribe.h"
 #include "rs_actiondrawcircletan2.h"
@@ -493,6 +494,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionDrawCircleTan1_2P:
         a = new RS_ActionDrawCircleTan1_2P(*doc, *gv);
+        break;
+    case RS2::ActionDrawCircleTan2_1P:
+        a = new RS_ActionDrawCircleTan2_1P(*doc, *gv);
         break;
     case RS2::ActionDrawCircleParallel:
         a= new RS_ActionDrawLineParallel(*doc, *gv);
@@ -1392,6 +1396,10 @@ void QG_ActionHandler::slotDrawCircle3P() {
 
 void QG_ActionHandler::slotDrawCircleTan1_2P() {
     setCurrentAction(RS2::ActionDrawCircleTan1_2P);
+}
+
+void QG_ActionHandler::slotDrawCircleTan2_1P() {
+    setCurrentAction(RS2::ActionDrawCircleTan2_1P);
 }
 
 void QG_ActionHandler::slotDrawCircleParallel() {
