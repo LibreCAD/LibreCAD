@@ -38,9 +38,10 @@ RS_ActionDrawCircleTan1_2P::RS_ActionDrawCircleTan1_2P(
         RS_EntityContainer& container,
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw tangent circle 2P",
-                               container, graphicView),
-      cData(RS_Vector(0.,0.),1.),
-      enTypeList()
+                               container, graphicView)
+      ,circle(NULL)
+      ,cData(RS_Vector(0.,0.),1.)
+      ,enTypeList()
 {
     //    supported types
     enTypeList<<RS2::EntityArc<<RS2::EntityCircle;
@@ -67,7 +68,13 @@ void RS_ActionDrawCircleTan1_2P::init(int status) {
         RS_Snapper::suspend();
     }
 
-    if (status==SetCircle1) {
+    if (status<=SetCircle1) {
+        if(circle!=NULL) {
+            if(circle->isHighlighted()){
+                circle->setHighlighted(false);
+                graphicView->redraw(RS2::RedrawDrawing);
+            }
+        }
         points.clear();
     }
 }
