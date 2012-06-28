@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_commandevent.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
+#include "lc_quadratic.h"
 
 /**
  * Constructor.
@@ -114,7 +115,7 @@ void RS_ActionDrawCircleTan1_2P::trigger() {
     setStatus(SetCircle1);
 
     RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::trigger():"
-                    " entity added: %d", circle->getId());
+                    " entity added: %d", c->getId());
 }
 
 
@@ -184,8 +185,10 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
 
 bool RS_ActionDrawCircleTan1_2P::getCenters(){
     if(getStatus() != SetPoint2) return false;
-    RS_Circle c(NULL,cData);
-    auto&& list=c.createTan1_2P(circle,points);
+
+    LC_Quadratic lc0(circle, points[0]);
+    LC_Quadratic lc1(circle, points[1]);
+    auto&& list=LC_Quadratic::getIntersection(lc0,lc1);
     centers.clean();
     for(unsigned int i=0;i<list.size();i++){
         auto vp=list.get(i);
@@ -197,6 +200,8 @@ bool RS_ActionDrawCircleTan1_2P::getCenters(){
                     - r0)>=RS_TOLERANCE) continue;
         centers.push_back(list.get(i));
     }
+//    DEBUG_HEADER();
+//    std::cout<<"centers.size()="<<centers.size()<<std::endl;
     valid= (centers.size()>0);
     return valid;
 }
@@ -288,7 +293,7 @@ void RS_ActionDrawCircleTan1_2P::coordinateEvent(RS_CoordinateEvent* e) {
         points<<mouse;
         if(getCenters()) {
             if(centers.size()==1) trigger();
-            setStatus(getStatus()+1);
+            else setStatus(getStatus()+1);
         }
         break;
     }
