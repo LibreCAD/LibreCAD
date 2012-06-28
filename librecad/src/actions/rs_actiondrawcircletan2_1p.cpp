@@ -67,9 +67,23 @@ void RS_ActionDrawCircleTan2_1P::init(int status) {
         RS_Snapper::suspend();
     }
 
-//    if (status<=SetCircle1) {
-//        circles.clear();
-//    }
+    if (status<=SetCircle2) {
+        bool updateNeeded(false);
+        if(circles.size()>=2 && circles[1]!=NULL) {
+            if(circles[1]->isHighlighted()){
+                circles[1]->setHighlighted(false);
+                updateNeeded=true;
+            }
+        }
+        if(status<= SetCircle1 && circles.size()>=1&&circles[0]!=NULL) {
+            if(circles[0]->isHighlighted()){
+                circles[0]->setHighlighted(false);
+                updateNeeded=true;
+            }
+        }
+        if(updateNeeded) graphicView->redraw(RS2::RedrawDrawing);
+        circles.clear();
+    }
 }
 
 
