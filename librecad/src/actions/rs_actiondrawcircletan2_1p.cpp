@@ -139,9 +139,24 @@ void RS_ActionDrawCircleTan2_1P::trigger() {
 bool RS_ActionDrawCircleTan2_1P::getCenters()
 {
     if(circles.size()<2) return false;
-    LC_Quadratic lc0(circles[0], coord);
-    LC_Quadratic lc1(circles[1], coord);
-    centers=LC_Quadratic::getIntersection(lc0,lc1);
+    LC_Quadratic lc0(circles[0], point);
+    LC_Quadratic lc1(circles[1], point);
+
+    auto&& list=LC_Quadratic::getIntersection(lc0,lc1);
+    centers.clean();
+    for(int i=0;i<list.size();i++){
+        auto&& vp=list.get(i);
+        double r0=fabs(
+                    vp.distanceTo(circles[0]->getCenter())-
+                    circles[0]->getRadius()
+                    );
+        double r1=fabs(
+                    vp.distanceTo(circles[1]->getCenter())-
+                    circles[1]->getRadius()
+                    );
+        if( fabs(r0-r1)>=RS_TOLERANCE) continue;
+        centers.push_back(vp);
+    }
     return centers.size()>0;
 }
 
@@ -155,6 +170,7 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent* e) {
         break;
     case SetCenter:
         coord=graphicView->toGraph(e->x(),e->y());
+        break;
     default:
         return;
     }
@@ -183,7 +199,9 @@ bool RS_ActionDrawCircleTan2_1P::preparePreview(){
 //        if( (centers[i]-circles[0]).squared()<ds2
 //    }
     cData.center=centers.getClosest(coord);
-    cData.radius=point.distanceTo(cData.center);
+    cData.radius=fabs(cData.center.distanceTo(circles[0]->getCenter())
+                      -circles[0]->getRadius());
+//    cData.radius=point.distanceTo(cData.center);
     return true;
 }
 
