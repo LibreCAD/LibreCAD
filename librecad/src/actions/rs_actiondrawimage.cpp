@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_creation.h"
+#include "rs_units.h"
 
 /**
  * Constructor.
@@ -68,6 +69,7 @@ void RS_ActionDrawImage::init(int status) {
         //qDebug() << "file: " << data.file;
 
         img = QImage(data.file);
+
         setStatus(SetTargetPoint);
     } else {
         setFinished();
@@ -187,6 +189,10 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
             deletePreview();
             lastStatus = (Status)getStatus();
             setStatus(SetFactor);
+        } else if (checkCommand("dpi",c)) {
+            deletePreview();
+            lastStatus =(Status)getStatus();
+            setStatus(SetDPI);
         }
         break;
 
@@ -216,6 +222,21 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
     }
         break;
 
+    case SetDPI : {
+        bool ok;
+        double dots_per_inch = RS_Math::eval(c, &ok);
+        double factor = RS_Units::convert(data.size.x / dots_per_inch, RS2::Inch, document->getGraphicUnit())
+                        / data.size.x;
+        if(ok==true) {
+            setFactor(factor);
+        } else {
+            RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+        }
+        RS_DIALOGFACTORY->requestOptions(this, true, true);
+        setStatus(lastStatus);
+    }
+        break;
+
     default:
         break;
     }
@@ -230,6 +251,7 @@ QStringList RS_ActionDrawImage::getAvailableCommands() {
     case SetTargetPoint:
         cmd += command("angle");
         cmd += command("factor");
+        cmd += command("dpi");
         break;
     default:
         break;

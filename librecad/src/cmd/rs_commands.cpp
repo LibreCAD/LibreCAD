@@ -253,6 +253,7 @@ RS_Commands::RS_Commands() {
     shortCommands.insert(tr("tn"), RS2::ActionDeselectAll);
 
     cmdTranslation.insert( "angle", tr("angle"));
+    cmdTranslation.insert( "dpi", tr("dpi"));
     cmdTranslation.insert( "close", tr("close"));
     cmdTranslation.insert( "chord length", tr("chord length"));
     cmdTranslation.insert( "columns", tr("columns"));

@@ -46,7 +46,8 @@ public:
 		ShowDialog,        /**< Dialog. */
         SetTargetPoint,    /**< Setting the reference point. */
 		SetAngle,          /**< Setting angle in the command line. */
-		SetFactor          /**< Setting factor in the command line. */
+                SetFactor,          /**< Setting factor in the command line. */
+                SetDPI
 		//SetColumns,        /**< Setting columns in the command line. */
 		//SetRows,           /**< Setting rows in the command line. */
 		//SetColumnSpacing,  /**< Setting column spacing in the command line. */
