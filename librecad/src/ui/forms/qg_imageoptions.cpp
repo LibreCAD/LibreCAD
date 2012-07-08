@@ -96,3 +96,14 @@ void QG_ImageOptions::updateData() {
         action->setFactor(RS_Math::eval(leFactor->text()));
     }
 }
+
+void QG_ImageOptions::updateDPI() {
+    if (action!=NULL) {
+        double f = action->setDPI(RS_Math::eval(leDPI->text()));
+        leFactor->blockSignals(true);
+        leFactor->setText(QString::number(f));
+        leFactor->blockSignals(false);
+    }
+}
+
+

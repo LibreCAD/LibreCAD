@@ -32,7 +32,6 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_creation.h"
-#include "rs_units.h"
 
 /**
  * Constructor.
@@ -224,11 +223,10 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
 
     case SetDPI : {
         bool ok;
-        double dots_per_inch = RS_Math::eval(c, &ok);
-        double factor = RS_Units::convert(data.size.x / dots_per_inch, RS2::Inch, document->getGraphicUnit())
-                        / data.size.x;
+        double dpi = RS_Math::eval(c, &ok);
+
         if(ok==true) {
-            setFactor(factor);
+            setDPI(dpi);
         } else {
             RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
@@ -304,6 +302,13 @@ void RS_ActionDrawImage::updateMouseButtonHints() {
 
 void RS_ActionDrawImage::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
+}
+
+double RS_ActionDrawImage::setDPI(double dpi){
+    double factor = RS_Units::convert(data.size.x / dpi, RS2::Inch, document->getGraphicUnit())
+                    / data.size.x;
+    setFactor(factor);
+    return factor;
 }
 
 

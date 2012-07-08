@@ -29,6 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 #include "rs_image.h"
+#include "rs_units.h"
 
 /**
  * This action class can handle user events for inserting bitmaps into the
@@ -104,6 +105,9 @@ public:
 		data.uVector.setPolar(f, a);
 		data.vVector.setPolar(f, a+M_PI/2);
 	}
+
+        double setDPI(double dpi);
+
 
 protected:
 	RS_ImageData data;
