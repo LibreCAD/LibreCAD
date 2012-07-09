@@ -68,7 +68,7 @@
    <item>
     <widget class="QLineEdit" name="leFactor">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -130,13 +130,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>leFactor</sender>
+   <sender>leDPI</sender>
    <signal>textChanged(QString)</signal>
    <receiver>QG_ImageOptions</receiver>
-   <slot>updateData()</slot>
+   <slot>updateDPI()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>128</x>
+     <x>223</x>
      <y>21</y>
     </hint>
     <hint type="destinationlabel">
@@ -146,20 +146,23 @@
    </hints>
   </connection>
   <connection>
-   <sender>leDPI</sender>
+   <sender>leFactor</sender>
    <signal>textChanged(QString)</signal>
    <receiver>QG_ImageOptions</receiver>
-   <slot>updateDPI()</slot>
+   <slot>updateFactor()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>149</x>
+     <y>6</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>171</x>
+     <y>53</y>
     </hint>
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>updateFactor()</slot>
+ </slots>
 </ui>

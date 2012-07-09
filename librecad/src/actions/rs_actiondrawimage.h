@@ -45,10 +45,10 @@ public:
      */
     enum Status {
 		ShowDialog,        /**< Dialog. */
-        SetTargetPoint,    /**< Setting the reference point. */
+                SetTargetPoint,    /**< Setting the reference point. */
 		SetAngle,          /**< Setting angle in the command line. */
                 SetFactor,          /**< Setting factor in the command line. */
-                SetDPI
+                SetDPI              /**< Setting dpi in the command line. */
 		//SetColumns,        /**< Setting columns in the command line. */
 		//SetRows,           /**< Setting rows in the command line. */
 		//SetColumnSpacing,  /**< Setting column spacing in the command line. */
@@ -106,8 +106,8 @@ public:
 		data.vVector.setPolar(f, a+M_PI/2);
 	}
 
-        double setDPI(double dpi);
-
+    double scaleToDpi(double scale);
+    double dpiToScale(double dpi);
 
 protected:
 	RS_ImageData data;
