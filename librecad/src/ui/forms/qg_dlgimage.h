@@ -42,14 +42,16 @@ public slots:
     virtual void changeWidth();
     virtual void changeHeight();
     virtual void changeScale();
+    virtual void changeDPI();
     virtual void updateImage();
+
 
 protected slots:
     virtual void languageChange();
 
 private:
     RS_Image* image;
-    double scale;
+    double scale;    
 QDoubleValidator *val;
 };
 
