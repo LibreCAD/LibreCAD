@@ -80,9 +80,10 @@ void QG_ImageOptions::setAction(RS_ActionInterface* a, bool update) {
             sFactor = RS_SETTINGS->readEntry("/ImageFactor", "1.0");
             RS_SETTINGS->endGroup();
         }
-	leAngle->setText(sAngle);
-	leFactor->setText(sFactor);
+    leAngle->setText(sAngle);
+    leFactor->setText(sFactor);
         updateData();
+        updateFactor();
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_ImageOptions::setAction: wrong action type");
@@ -98,6 +99,7 @@ void QG_ImageOptions::updateData() {
 
 void QG_ImageOptions::updateDPI() {
     if (action!=NULL) {
+
         double f = action->dpiToScale(RS_Math::eval(leDPI->text()));
         leFactor->blockSignals(true);
         leFactor->setText(QString::number(f));

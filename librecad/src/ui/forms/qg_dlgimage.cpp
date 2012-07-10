@@ -89,7 +89,7 @@ void QG_DlgImage::setImage(RS_Image& e) {
     leAngle->setText(QString("%1").arg( RS_Math::rad2deg(image->getUVector().angle()) ));
     lePath->setText(image->getFile());
     leSize->setText(QString("%1 x %2").arg(image->getWidth()).arg(image->getHeight()));    
-    leDPI->setText(QString("%1").arg(scaleToDpi(scale)));
+    leDPI->setText(QString("%1").arg(RS_Units::scaleToDpi(scale,image->getGraphicUnit())));
 }
 
 
@@ -109,11 +109,11 @@ void QG_DlgImage::changeScale() {
     scale = leScale->text().toDouble();
     leWidth->setText(QString("%1").arg(image->getWidth() * scale));
     leHeight->setText(QString("%1").arg(image->getHeight() * scale));
-    leDPI->setText(QString("%1").arg(scaleToDpi(scale)));
+    leDPI->setText(QString("%1").arg(RS_Units::scaleToDpi(scale, image->getGraphicUnit())));
 }
 
 void QG_DlgImage::changeDPI(){
-    scale = dpiToScale(leDPI->text().toDouble());
+    scale = RS_Units::dpiToScale(leDPI->text().toDouble(), image->getGraphicUnit());
     leScale->setText(QString("%1").arg(scale));
     leWidth->setText(QString("%1").arg(image->getWidth() * scale));
     leHeight->setText(QString("%1").arg(image->getHeight() * scale));    
@@ -131,16 +131,6 @@ void QG_DlgImage::updateImage() {
     image->rotate(image->getInsertionPoint(), angle - orgAngle);
 
     image->update();
-}
-
-double QG_DlgImage::dpiToScale(double dpi) {
-    double scale = RS_Units::convert(1.0, RS2::Inch, image->getDocument()->getGraphicUnit()) / dpi;
-    return scale;
-}
-
-double QG_DlgImage::scaleToDpi(double scale) {
-    double dpi = RS_Units::convert(1.0, RS2::Inch, image->getDocument()->getGraphicUnit()) / scale;
-    return dpi;
 }
 
 

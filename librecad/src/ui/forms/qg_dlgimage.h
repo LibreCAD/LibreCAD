@@ -51,9 +51,7 @@ protected slots:
 
 private:
     RS_Image* image;
-    double scale;
-    double dpiToScale(double dpi);
-    double scaleToDpi(double scale);
+    double scale;    
 QDoubleValidator *val;
 };
 

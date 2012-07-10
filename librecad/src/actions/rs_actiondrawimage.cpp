@@ -226,7 +226,7 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
         double dpi = RS_Math::eval(c, &ok);
 
         if(ok==true) {
-            setFactor(dpiToScale(dpi));
+            setFactor(RS_Units::dpiToScale(dpi, document->getGraphicUnit()));
         } else {
             RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
@@ -303,19 +303,24 @@ void RS_ActionDrawImage::updateMouseButtonHints() {
     }
 }
 
+
+
+double RS_ActionDrawImage::dpiToScale(double dpi) {
+    return RS_Units::dpiToScale(dpi, document->getGraphicUnit());
+}
+
+
+
+double RS_ActionDrawImage::scaleToDpi(double scale) {
+    return RS_Units::scaleToDpi(scale, document->getGraphicUnit());
+}
+
+
+
 void RS_ActionDrawImage::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-double RS_ActionDrawImage::dpiToScale(double dpi) {
-    double scale = RS_Units::convert(1.0, RS2::Inch, document->getGraphicUnit()) / dpi;
-    return scale;
-}
-
-double RS_ActionDrawImage::scaleToDpi(double scale) {
-    double dpi = RS_Units::convert(1.0, RS2::Inch, document->getGraphicUnit()) / scale;
-    return dpi;
-}
 
 //void RS_ActionDrawImage::updateToolBar() {
 //    if(RS_DIALOGFACTORY==NULL) return;

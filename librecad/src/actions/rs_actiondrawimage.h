@@ -106,8 +106,10 @@ public:
 		data.vVector.setPolar(f, a+M_PI/2);
 	}
 
-    double scaleToDpi(double scale);
     double dpiToScale(double dpi);
+
+    double scaleToDpi(double scale);
+
 
 protected:
 	RS_ImageData data;
