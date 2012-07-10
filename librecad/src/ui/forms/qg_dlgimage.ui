@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>394</width>
-    <height>307</height>
+    <width>426</width>
+    <height>331</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -131,7 +131,7 @@
           </property>
          </widget>
         </item>
-        <item row="8" column="0">
+        <item row="9" column="0">
          <spacer name="spacer58">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -184,7 +184,7 @@
           </property>
          </widget>
         </item>
-        <item row="8" column="1">
+        <item row="9" column="1">
          <spacer name="spacer61">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -254,6 +254,16 @@
           </property>
          </widget>
         </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="lDPI">
+          <property name="text">
+           <string>DPI</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QLineEdit" name="leDPI"/>
+        </item>
        </layout>
       </widget>
      </item>
@@ -318,6 +328,15 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>leInsertX</tabstop>
+  <tabstop>leInsertY</tabstop>
+  <tabstop>leWidth</tabstop>
+  <tabstop>leHeight</tabstop>
+  <tabstop>leScale</tabstop>
+  <tabstop>leAngle</tabstop>
+  <tabstop>lePath</tabstop>
+  <tabstop>leSize</tabstop>
+  <tabstop>leDPI</tabstop>
   <tabstop>bOk</tabstop>
   <tabstop>bCancel</tabstop>
  </tabstops>
@@ -331,7 +350,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>299</y>
+     <y>301</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -346,8 +365,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>341</x>
-     <y>299</y>
+     <x>348</x>
+     <y>301</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -395,11 +414,27 @@
    <hints>
     <hint type="sourcelabel">
      <x>325</x>
-     <y>148</y>
+     <y>149</y>
     </hint>
     <hint type="destinationlabel">
      <x>196</x>
      <y>153</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leDPI</sender>
+   <signal>editingFinished()</signal>
+   <receiver>QG_DlgImage</receiver>
+   <slot>changeDPI()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>267</x>
+     <y>258</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>282</y>
     </hint>
    </hints>
   </connection>
@@ -408,5 +443,6 @@
   <slot>changeWidth()</slot>
   <slot>changeHeight()</slot>
   <slot>changeScale()</slot>
+  <slot>changeDPI()</slot>
  </slots>
 </ui>

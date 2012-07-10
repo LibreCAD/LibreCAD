@@ -68,6 +68,7 @@ void RS_ActionDrawImage::init(int status) {
         //qDebug() << "file: " << data.file;
 
         img = QImage(data.file);
+
         setStatus(SetTargetPoint);
     } else {
         setFinished();
@@ -187,6 +188,10 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
             deletePreview();
             lastStatus = (Status)getStatus();
             setStatus(SetFactor);
+        } else if (checkCommand("dpi",c)) {
+            deletePreview();
+            lastStatus =(Status)getStatus();
+            setStatus(SetDPI);
         }
         break;
 
@@ -216,6 +221,20 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
     }
         break;
 
+    case SetDPI : {
+        bool ok;
+        double dpi = RS_Math::eval(c, &ok);
+
+        if(ok==true) {
+            setFactor(RS_Units::dpiToScale(dpi, document->getGraphicUnit()));
+        } else {
+            RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+        }
+        RS_DIALOGFACTORY->requestOptions(this, true, true);
+        setStatus(lastStatus);
+    }
+        break;
+
     default:
         break;
     }
@@ -230,6 +249,7 @@ QStringList RS_ActionDrawImage::getAvailableCommands() {
     case SetTargetPoint:
         cmd += command("angle");
         cmd += command("factor");
+        cmd += command("dpi");
         break;
     default:
         break;
@@ -237,6 +257,7 @@ QStringList RS_ActionDrawImage::getAvailableCommands() {
 
     return cmd;
 }
+
 
 
 void RS_ActionDrawImage::showOptions() {
@@ -272,6 +293,10 @@ void RS_ActionDrawImage::updateMouseButtonHints() {
         RS_DIALOGFACTORY->updateMouseWidget(tr("Enter factor:"),
                                             "");
         break;
+    case SetDPI:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter dpi:"),
+                                            "");
+        break;
     default:
         RS_DIALOGFACTORY->updateMouseWidget("", "");
         break;
@@ -280,10 +305,21 @@ void RS_ActionDrawImage::updateMouseButtonHints() {
 
 
 
+double RS_ActionDrawImage::dpiToScale(double dpi) {
+    return RS_Units::dpiToScale(dpi, document->getGraphicUnit());
+}
+
+
+
+double RS_ActionDrawImage::scaleToDpi(double scale) {
+    return RS_Units::scaleToDpi(scale, document->getGraphicUnit());
+}
+
+
+
 void RS_ActionDrawImage::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
 
 
 //void RS_ActionDrawImage::updateToolBar() {

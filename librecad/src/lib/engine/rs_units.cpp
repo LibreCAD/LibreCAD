@@ -1277,6 +1277,21 @@ RS2::PaperFormat RS_Units::stringToPaperFormat(const QString& p) {
     return ret;
 }
 
+/**
+  * Calculates a scaling factor from given dpi and units.
+  */
+double RS_Units::dpiToScale(double dpi, RS2::Unit unit) {
+    double scale = RS_Units::convert(1.0, RS2::Inch, unit) / dpi;
+    return scale;
+}
+
+/**
+  * Calculates a dpi value from given scaling factor and units.
+  */
+double RS_Units::scaleToDpi(double scale, RS2::Unit unit) {
+    double dpi = RS_Units::convert(1.0, RS2::Inch, unit) / scale;
+    return dpi;
+}
 
 /**
  * Performs some testing for the math class.
