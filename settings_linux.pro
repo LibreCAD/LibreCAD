@@ -1,6 +1,6 @@
 
 
-SUBDIRS += ttff2lff
+SUBDIRS += ttf2lff
 INSTALLDIR = ../../unix
 
 

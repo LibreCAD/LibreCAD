@@ -42,6 +42,8 @@ public:
 public slots:
     virtual void setAction( RS_ActionInterface * a, bool update );
     virtual void updateData();
+    virtual void updateDPI();
+    virtual void updateFactor();
 
 protected:
     RS_ActionDrawImage* action;
@@ -51,6 +53,8 @@ protected slots:
 
 private:
     void destroy();
+
+
 
 };
 
