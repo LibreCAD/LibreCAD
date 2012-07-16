@@ -43,7 +43,7 @@ RS_ActionDrawCircleTan2_1P::RS_ActionDrawCircleTan2_1P(
       enTypeList()
 {
     //    supported types
-    enTypeList<<RS2::EntityArc<<RS2::EntityCircle;
+    enTypeList<<RS2::EntityLine<<RS2::EntityArc<<RS2::EntityCircle;
 }
 
 

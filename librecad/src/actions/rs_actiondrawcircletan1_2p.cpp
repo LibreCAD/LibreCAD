@@ -44,7 +44,7 @@ RS_ActionDrawCircleTan1_2P::RS_ActionDrawCircleTan1_2P(
       ,enTypeList()
 {
     //    supported types
-    enTypeList<<RS2::EntityArc<<RS2::EntityCircle;
+    enTypeList<<RS2::EntityLine<<RS2::EntityArc<<RS2::EntityCircle;
 }
 
 
@@ -136,12 +136,25 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
         RS_Vector&& mouse=snapPoint(e);
         points.clear();
         points<<mouse;
+        switch(circle->rtti()){
+        case RS2::EntityArc:
+        case RS2::EntityCircle:
+        {
         RS_Vector&& dvp=mouse - circle->getCenter();
         double&& rvp=dvp.magnitude();
         if(rvp<RS_TOLERANCE2) break;
         cData.radius=(circle->getRadius()+rvp)*0.5;
         cData.center=circle->getCenter()+dvp*(cData.radius/rvp);
         cData.radius=fabs(circle->getRadius()-cData.radius);
+        }
+            break;
+            case RS2::EntityLine:
+        {
+
+        }
+            default:
+            return;
+        }
         deletePreview();
         RS_Circle* e=new RS_Circle(preview, cData);
         preview->addEntity(e);
