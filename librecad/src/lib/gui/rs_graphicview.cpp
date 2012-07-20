@@ -728,10 +728,10 @@ void RS_GraphicView::zoomPrevious() {
  * switch back later with @see restoreView().
  */
 void RS_GraphicView::saveView() {
-    QDateTime t=QDateTime::currentDateTime();
+    QDateTime noUpdateWindow=QDateTime::currentDateTime().addMSecs(-500);
     //do not update view within 500 milliseconds
-    if(previousViewTime.msecsTo(t)< 500) return;
-    previousViewTime = t;
+    if(previousViewTime > noUpdateWindow) return;
+    previousViewTime = QDateTime::currentDateTime();
     savedViews[savedViewIndex]=std::make_tuple(offsetX,offsetY,factor);
     savedViewIndex = (savedViewIndex+1)%savedViews.size();
     if(savedViewCount<savedViews.size()) savedViewCount++;
