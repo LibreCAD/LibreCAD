@@ -265,6 +265,13 @@ void Plugin_Entity::getData(QHash<int, QVariant> *data){
         RS_ImageData d = static_cast<RS_Image*>(entity)->getData();
         data->insert(DPI::STARTX, d.insertionPoint.x );
         data->insert(DPI::STARTY, d.insertionPoint.y );
+        data->insert(DPI::ENDX, d.uVector.x );
+        data->insert(DPI::ENDY, d.uVector.y );
+        data->insert(DPI::VVECTORX, d.vVector.x );
+        data->insert(DPI::VVECTORY, d.vVector.y );
+        data->insert(DPI::SIZEU, d.size.x );
+        data->insert(DPI::SIZEV, d.size.y );
+        data->insert(DPI::BLKNAME, d.file );
         break;}
     case RS2::EntityOverlayBox:
         //Unused ?
@@ -459,6 +466,40 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         //Unused ?
         break;
     case RS2::EntityImage: {
+        RS_Image *img = static_cast<RS_Image*>(entity);
+        vec = img->getInsertionPoint();
+        if (hash.contains(DPI::STARTX)) {
+            vec.x = (hash.take(DPI::STARTX)).toDouble();
+        }
+        if (hash.contains(DPI::STARTY)) {
+            vec.y = (hash.take(DPI::STARTY)).toDouble();
+        }
+        img->setInsertionPoint(vec);
+        if (hash.contains(DPI::BLKNAME)) {
+            img->setFile( (hash.take(DPI::BLKNAME)).toString() );
+        }
+        vec = img->getUVector();
+        RS_Vector vec2 = img->getVVector();
+        RS_Vector vec3(img->getWidth(),img->getHeight());
+        if (hash.contains(DPI::ENDX)) {
+            vec.x = (hash.take(DPI::ENDX)).toDouble();
+        }
+        if (hash.contains(DPI::ENDY)) {
+            vec.y = (hash.take(DPI::ENDY)).toDouble();
+        }
+        if (hash.contains(DPI::VVECTORX)) {
+            vec2.x = (hash.take(DPI::VVECTORX)).toDouble();
+        }
+        if (hash.contains(DPI::VVECTORY)) {
+            vec2.y = (hash.take(DPI::VVECTORY)).toDouble();
+        }
+        if (hash.contains(DPI::SIZEU)) {
+            vec3.x = (hash.take(DPI::SIZEU)).toDouble();
+        }
+        if (hash.contains(DPI::SIZEV)) {
+            vec3.y = (hash.take(DPI::SIZEV)).toDouble();
+        }
+        img->updateData(vec3, vec, vec2);
         break;}
     case RS2::EntityOverlayBox:
         //Unused ?
@@ -829,7 +870,7 @@ QStringList Doc_plugin_interface::getAllLayer(){
 QStringList Doc_plugin_interface::getAllBlocks(){
     QStringList listName;
     RS_BlockList* listBlk = doc->getBlockList();
-    for (unsigned int i = 0; i < listBlk->count(); ++i) {
+    for (int i = 0; i < listBlk->count(); ++i) {
          listName << listBlk->at(i)->getName();
      }
     return listName;

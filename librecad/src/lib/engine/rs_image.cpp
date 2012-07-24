@@ -68,6 +68,14 @@ RS_Entity* RS_Image::clone() {
 }
 
 
+void RS_Image::updateData(RS_Vector size, RS_Vector Uv, RS_Vector Vv) {
+    data.size = size;
+    data.uVector = Uv;
+    data.vVector = Vv;
+    update();
+    calculateBorders();
+}
+
 
 void RS_Image::update() {
 
