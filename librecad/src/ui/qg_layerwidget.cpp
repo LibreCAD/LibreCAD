@@ -352,7 +352,11 @@ void QG_LayerWidget::slotUpdateLayerList() {
 
     n=matchLayerName->text();
     rx.setPattern(n);
+#if QT_VERSION < 0x040600
+    rx.setPatternSyntax(QRegExp::Wildcard);
+#else
     rx.setPatternSyntax(QRegExp::WildcardUnix);
+#endif
 
     for (unsigned int i=0; i<layerList->count() ; i++) {
         s=layerModel->getLayer(i)->getName();
