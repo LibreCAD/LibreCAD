@@ -407,10 +407,10 @@ void dibSHP::readPolyline(DBFHandle dh, int i){
     }
 }
 
-void dibSHP::readPolylineC(DBFHandle dh, int i){
+void dibSHP::readPolylineC(DBFHandle /*dh*/, int /*i*/){
 }
 
-void dibSHP::readMultiPolyline(DBFHandle dh, int i){
+void dibSHP::readMultiPolyline(DBFHandle /*dh*/, int /*i*/){
 }
 
 void dibSHP::readAttributes(DBFHandle dh, int i){

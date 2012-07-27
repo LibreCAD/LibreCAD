@@ -1,6 +1,71 @@
+2012-01-27  Frank Warmerdam  <warmerdam@pobox.com>
+
+	* shptree.c: optimize quadtree generation (gdal #4472)
+
+2012-01-24  Frank Warmerdam  <warmerdam@google.com>
+
+	* shpopen.c: fix memory leaks on failure to open .shp file.
+
+2011-12-11  Frank Warmerdam  <warmerdam@pobox.com>
+
+	* shptree.c,h: Use SAHooks for .qix access (gdal #3365)
+
+2011-09-14  Frank Warmerdam  <warmerdam@pobox.com>
+
+	* shpopen.c: fix missing cast (#2344)
+
+2011-07-24    <warmerdam@pobox.com>
+
+	* shpopen.c, dbfopen.c, shptree.c, shapefil.h: Minimize use of 
+	CPL services in favor of SAHooks.Error(). 
+
+	* Makefile: Remove all the shared library building stuff, it is just
+	too half assed, and results in all sorts of bug reports and complaints.
+	Instead just install a static libshp.a.
+
+2011-07-23    <warmerdam@pobox.com>
+
+	* Makefile: build shpdumptree as part of all target (#1648).
+
+	* shpopen.c: fix memory leaks in error cases (#2061)
+
+	* contrib/*.c: Include stdlib.h and strings.h (#2146)
+
+	* shpdump.c: change to use %.15g for coordinate reporting. (#2277)
+
+2011-05-13  Frank Warmerdam  <warmerdam@pobox.com>
+
+	* dbfopen.c, shapelib.h: Add functions to reorder and alter
+	field definitions.  DBFReorderFields() and DBFAlterFields().
+
+2011-05-07  Frank Warmerdam  <warmerdam@pobox.com>
+
+	* dbfopen.c: Ensure pending record is flushed when adding a native
+	field (gdal #4073).
+
+2011-04-16  Frank Warmerdam  <warmerdam@pobox.com>
+
+	* shapefil.h: avoid warnings with SHP_CVSID on gcc.
+
+2010-12-06  Frank Warmerdam  <warmerdam@pobox.com>
+
+	* dbfopen.c: fix read past end of init data fetching code page 
+	http://bugzilla.maptools.org/show_bug.cgi?id=2276
+
+2010-07-01  Frank Warmerdam  <warmerdam@pobox.com>
+
+	* shpopen.c: do not error out on a shape with zero vertices.
+
+	* shpdump.c: do not crash if null shape returned by read object.
+
+2010-06-29  Frank Warmerdam  <warmerdam@pobox.com>
+
+	* shptree.c: fix sign of Z and M comparisons in SHPCheckObjectContained.
+	(http://bugzilla.maptools.org/show_bug.cgi?id=2223)
+
 2010-01-28  Frank Warmerdam  <warmerdam@pobox.com>
 
-	* shpopen.c/shapefil.h: Handle the .shp file length limits more 
+	* shpopen.c/shapefil.h: Handle the .shp file length limits more
 	gracefully. (http://trac.osgeo.org/gdal/ticket/3236)
 
 	* shpopen.c: Improve the numerical accurancy of algorithms in
@@ -13,7 +78,7 @@
 
 2009-10-29  Frank Warmerdam  <warmerdam@pobox.com>
 
-	* dbfopen.c: avoid crash risk for truncated files. 
+	* dbfopen.c: avoid crash risk for truncated files.
 	http://trac.osgeo.org/gdal/ticket/3093
 
 2009-09-17  Bram de Greve <bram.degreve@bramz.net>
@@ -22,11 +87,11 @@
 
 2008-11-12  Frank Warmerdam  <warmerdam@pobox.com>
 
-	* shptree.c: improve safety in face of buggy .shp file. 
+	* shptree.c: improve safety in face of buggy .shp file.
 	http://trac.osgeo.org/gdal/ticket/2610
 
 	* dbfopen.c: DBFCreateField() can now also operate on files with
-	records, c/o Martin Dobias. 
+	records, c/o Martin Dobias.
 	https://trac.osgeo.org/gdal/ticket/2672
 
 2008-11-11  Frank Warmerdam  <warmerdam@pobox.com>
@@ -45,9 +110,9 @@
 	encoded filenames on some platforms.  Use SASetupUtf8Hooks
 	to setup the hooks and check SHPAPI_UTF8_HOOKS for its
 	availability.  Currently, this is only available on the Windows
-	platform that decodes the UTF-8 filenames to wide character 
+	platform that decodes the UTF-8 filenames to wide character
 	strings and feed them to _wfopen and _wremove.
-	
+
 2008-01-10  Frank Warmerdam  <warmerdam@pobox.com>
 
 	* shapefil.h: Avoid _ prefix on #defines.
@@ -56,21 +121,21 @@
 2008-01-03  Bram de Greve <bram.degreve@bramz.net>
 
 	* dbfopen.c: in DBFCreate, use default code page
-	LDID/87 (= 0x57, ANSI) instead of LDID/3.  This seems 
+	LDID/87 (= 0x57, ANSI) instead of LDID/3.  This seems
 	to be the same as what ESRI would be doing by default.
 
 2007-12-30  Frank Warmerdam  <warmerdam@pobox.com>
 
 	* shpadd.c/shpcreate.c: Add support for z and m files.
 
-	* Massive overhaul to use hooks for file io, etc. 
+	* Massive overhaul to use hooks for file io, etc.
 
 2007-12-18  Bram de Greve <bram.degreve@bramz.net>
 
-	* dbfopen.c/shapefil.h/safileio.c:  create hook for client 
+	* dbfopen.c/shapefil.h/safileio.c:  create hook for client
 	specific atof http://bugzilla.maptools.org/show_bug.cgi?id=1615
-	
-	* dbfopen.c: check for NULL handle before closing cpCPG file, 
+
+	* dbfopen.c: check for NULL handle before closing cpCPG file,
 	and close after reading.
 
 2007-12-15  Bram de Greve <bram.degreve@bramz.net>
