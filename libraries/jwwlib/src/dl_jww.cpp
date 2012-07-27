@@ -52,9 +52,9 @@
 #endif
 */
 
-static const char* UTF8_CES = "UTF-8";
-static const char* SHIFTJIS_CES = "SJIS";
-static const char* EUCJP_CES = "EUC-JP";
+//static const char* UTF8_CES = "UTF-8";
+//static const char* SHIFTJIS_CES = "SJIS";
+//static const char* EUCJP_CES = "EUC-JP";
 
 /*        black = 250,
         green = 3,
@@ -610,7 +610,7 @@ std::cout << *text;
 #endif
 }
 
-void DL_Jww::CreateSolid(DL_CreationInterface* creationInterface, CDataSolid& DSolid)
+void DL_Jww::CreateSolid(DL_CreationInterface* /*creationInterface*/, CDataSolid& /*DSolid*/)
 {
 }
 
@@ -650,7 +650,7 @@ void DL_Jww::CreateSunpou(DL_CreationInterface* creationInterface, CDataSunpou& 
 #endif
 }
 
-void DL_Jww::CreateBlock(DL_CreationInterface* creationInterface, CDataBlock& DBlock)
+void DL_Jww::CreateBlock(DL_CreationInterface* /*creationInterface*/, CDataBlock& /*DBlock*/)
 {
 #ifdef FINISHED
 /*	int BlockSize=jwdoc->pBlockList->getBlockListCount();
@@ -723,13 +723,13 @@ bool DL_Jww::in(const string& file, DL_CreationInterface* creationInterface) {
 	for( unsigned int i = 0; i < jwdoc->vMoji.size(); i++ )
 		CreateMoji(creationInterface, jwdoc->vMoji[i]);
 	//寸法
-	for(int i=0 ; i < jwdoc->vSunpou.size(); i++ )
+    for(unsigned int i=0 ; i < jwdoc->vSunpou.size(); i++ )
 		CreateSunpou(creationInterface, jwdoc->vSunpou[i]);
 	//ソリッド
-	for(int i=0 ; i < jwdoc->vSolid.size(); i++ )
+    for(unsigned int i=0 ; i < jwdoc->vSolid.size(); i++ )
 		CreateSolid(creationInterface, jwdoc->vSolid[i]);
 	//部品
-	for(int i=0 ; i < jwdoc->vBlock.size(); i++)
+    for(unsigned int i=0 ; i < jwdoc->vBlock.size(); i++)
 		CreateBlock(creationInterface, jwdoc->vBlock[i]);
 	delete jwdoc;
 
@@ -748,8 +748,8 @@ bool DL_Jww::in(const string& file, DL_CreationInterface* creationInterface) {
  * @retval true if done processing current entity and new entity begun
  * @retval false if not done processing current entity
 */
-bool DL_Jww::processJwwGroup(DL_CreationInterface* creationInterface,
-							 int groupCode, const char *groupValue) {
+bool DL_Jww::processJwwGroup(DL_CreationInterface* /*creationInterface*/,
+                             int /*groupCode*/, const char */*groupValue*/) {
 	return true;
 }
 
@@ -758,7 +758,7 @@ bool DL_Jww::processJwwGroup(DL_CreationInterface* creationInterface,
 /**
  * Adds a variable from the DXF file.
  */
-void DL_Jww::addSetting(DL_CreationInterface* creationInterface) {
+void DL_Jww::addSetting(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -766,7 +766,7 @@ void DL_Jww::addSetting(DL_CreationInterface* creationInterface) {
 /**
  * Adds a layer that was read from the file via the creation interface.
  */
-void DL_Jww::addLayer(DL_CreationInterface* creationInterface) {
+void DL_Jww::addLayer(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -774,7 +774,7 @@ void DL_Jww::addLayer(DL_CreationInterface* creationInterface) {
 /**
  * Adds a block that was read from the file via the creation interface.
  */
-void DL_Jww::addBlock(DL_CreationInterface* creationInterface) {
+void DL_Jww::addBlock(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -791,7 +791,7 @@ void DL_Jww::endBlock(DL_CreationInterface* creationInterface) {
 /**
  * Adds a point entity that was read from the file via the creation interface.
  */
-void DL_Jww::addPoint(DL_CreationInterface* creationInterface) {
+void DL_Jww::addPoint(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -799,7 +799,7 @@ void DL_Jww::addPoint(DL_CreationInterface* creationInterface) {
 /**
  * Adds a line entity that was read from the file via the creation interface.
  */
-void DL_Jww::addLine(DL_CreationInterface* creationInterface) {
+void DL_Jww::addLine(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -807,7 +807,7 @@ void DL_Jww::addLine(DL_CreationInterface* creationInterface) {
 /**
  * Adds a polyline entity that was read from the file via the creation interface.
  */
-void DL_Jww::addPolyline(DL_CreationInterface* creationInterface) {
+void DL_Jww::addPolyline(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -816,7 +816,7 @@ void DL_Jww::addPolyline(DL_CreationInterface* creationInterface) {
  * Adds a polyline vertex entity that was read from the file 
  * via the creation interface.
  */
-void DL_Jww::addVertex(DL_CreationInterface* creationInterface) {
+void DL_Jww::addVertex(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -824,7 +824,7 @@ void DL_Jww::addVertex(DL_CreationInterface* creationInterface) {
 /**
  * Adds a spline entity that was read from the file via the creation interface.
  */
-void DL_Jww::addSpline(DL_CreationInterface* creationInterface) {
+void DL_Jww::addSpline(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -854,7 +854,7 @@ void DL_Jww::addControlPoint(DL_CreationInterface* creationInterface) {
 /**
  * Adds an arc entity that was read from the file via the creation interface.
  */
-void DL_Jww::addArc(DL_CreationInterface* creationInterface) {
+void DL_Jww::addArc(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -862,7 +862,7 @@ void DL_Jww::addArc(DL_CreationInterface* creationInterface) {
 /**
  * Adds a circle entity that was read from the file via the creation interface.
  */
-void DL_Jww::addCircle(DL_CreationInterface* creationInterface) {
+void DL_Jww::addCircle(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -870,7 +870,7 @@ void DL_Jww::addCircle(DL_CreationInterface* creationInterface) {
 /**
  * Adds an ellipse entity that was read from the file via the creation interface.
  */
-void DL_Jww::addEllipse(DL_CreationInterface* creationInterface) {
+void DL_Jww::addEllipse(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -878,7 +878,7 @@ void DL_Jww::addEllipse(DL_CreationInterface* creationInterface) {
 /**
  * Adds an insert entity that was read from the file via the creation interface.
  */
-void DL_Jww::addInsert(DL_CreationInterface* creationInterface) {
+void DL_Jww::addInsert(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -887,7 +887,7 @@ void DL_Jww::addInsert(DL_CreationInterface* creationInterface) {
  *
  * @author AHM
  */
-void DL_Jww::addTrace(DL_CreationInterface* creationInterface) {
+void DL_Jww::addTrace(DL_CreationInterface* /*creationInterface*/) {
 }
 
 /**
@@ -895,20 +895,20 @@ void DL_Jww::addTrace(DL_CreationInterface* creationInterface) {
  * 
  * @author AHM
  */
-void DL_Jww::addSolid(DL_CreationInterface* creationInterface) {
+void DL_Jww::addSolid(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
 /**
  * Adds an MText entity that was read from the file via the creation interface.
  */
-void DL_Jww::addMText(DL_CreationInterface* creationInterface) {
+void DL_Jww::addMText(DL_CreationInterface* /*creationInterface*/) {
 }
 
 /**
  * Handles additional MText data.
  */
-bool DL_Jww::handleMTextData(DL_CreationInterface* creationInterface) {
+bool DL_Jww::handleMTextData(DL_CreationInterface* /*creationInterface*/) {
 	return true;
 }
 
@@ -954,7 +954,7 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
 /**
  * Adds an text entity that was read from the file via the creation interface.
  */
-void DL_Jww::addText(DL_CreationInterface* creationInterface) {
+void DL_Jww::addText(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -963,7 +963,7 @@ void DL_Jww::addText(DL_CreationInterface* creationInterface) {
  * Adds an attrib entity that was read from the file via the creation interface.
  * @todo add attrib instead of normal text
  */
-void DL_Jww::addAttrib(DL_CreationInterface* creationInterface) {
+void DL_Jww::addAttrib(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -982,7 +982,7 @@ DL_DimensionData DL_Jww::getDimData() {
 /**
  * Adds a linear dimension entity that was read from the file via the creation interface.
  */
-void DL_Jww::addDimLinear(DL_CreationInterface* creationInterface) {
+void DL_Jww::addDimLinear(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -990,7 +990,7 @@ void DL_Jww::addDimLinear(DL_CreationInterface* creationInterface) {
 /**
  * Adds an aligned dimension entity that was read from the file via the creation interface.
  */
-void DL_Jww::addDimAligned(DL_CreationInterface* creationInterface) {
+void DL_Jww::addDimAligned(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -998,7 +998,7 @@ void DL_Jww::addDimAligned(DL_CreationInterface* creationInterface) {
 /**
  * Adds a radial dimension entity that was read from the file via the creation interface.
  */
-void DL_Jww::addDimRadial(DL_CreationInterface* creationInterface) {
+void DL_Jww::addDimRadial(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -1006,7 +1006,7 @@ void DL_Jww::addDimRadial(DL_CreationInterface* creationInterface) {
 /**
  * Adds a diametric dimension entity that was read from the file via the creation interface.
  */
-void DL_Jww::addDimDiametric(DL_CreationInterface* creationInterface) {
+void DL_Jww::addDimDiametric(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -1014,14 +1014,14 @@ void DL_Jww::addDimDiametric(DL_CreationInterface* creationInterface) {
 /**
  * Adds an angular dimension entity that was read from the file via the creation interface.
  */
-void DL_Jww::addDimAngular(DL_CreationInterface* creationInterface) {
+void DL_Jww::addDimAngular(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
 /**
  * Adds an angular dimension entity that was read from the file via the creation interface.
  */
-void DL_Jww::addDimAngular3P(DL_CreationInterface* creationInterface) {
+void DL_Jww::addDimAngular3P(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -1029,7 +1029,7 @@ void DL_Jww::addDimAngular3P(DL_CreationInterface* creationInterface) {
 /**
  * Adds a leader entity that was read from the file via the creation interface.
  */
-void DL_Jww::addLeader(DL_CreationInterface* creationInterface) {
+void DL_Jww::addLeader(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -1037,7 +1037,7 @@ void DL_Jww::addLeader(DL_CreationInterface* creationInterface) {
 /**
  * Adds a hatch entity that was read from the file via the creation interface.
  */
-void DL_Jww::addHatch(DL_CreationInterface* creationInterface) {
+void DL_Jww::addHatch(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -1045,7 +1045,7 @@ void DL_Jww::addHatch(DL_CreationInterface* creationInterface) {
 /**
  * Adds an image entity that was read from the file via the creation interface.
  */
-void DL_Jww::addImage(DL_CreationInterface* creationInterface) {
+void DL_Jww::addImage(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -1053,7 +1053,7 @@ void DL_Jww::addImage(DL_CreationInterface* creationInterface) {
 /**
  * Adds an image definition that was read from the file via the creation interface.
  */
-void DL_Jww::addImageDef(DL_CreationInterface* creationInterface) {
+void DL_Jww::addImageDef(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -1061,14 +1061,14 @@ void DL_Jww::addImageDef(DL_CreationInterface* creationInterface) {
 /**
  * Ends some special entities like hatches or old style polylines.
  */
-void DL_Jww::endEntity(DL_CreationInterface* creationInterface) {
+void DL_Jww::endEntity(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
 /**
  * Ends a sequence and notifies the creation interface.
  */
-void DL_Jww::endSequence(DL_CreationInterface* creationInterface) {
+void DL_Jww::endSequence(DL_CreationInterface* /*creationInterface*/) {
 }
 
 
@@ -1081,7 +1081,7 @@ void DL_Jww::endSequence(DL_CreationInterface* creationInterface) {
  *
  * @return Pointer to an ascii dxf writer object.
  */
-DL_WriterA* DL_Jww::out(const char* file, DL_Codes::version version) {
+DL_WriterA* DL_Jww::out(const char* /*file*/, DL_Codes::version /*version*/) {
 #ifdef DEBUG
 //	jwdoc->Save();
 #endif
@@ -1094,7 +1094,7 @@ DL_WriterA* DL_Jww::out(const char* file, DL_Codes::version version) {
  * @brief Writes a DXF header to the file currently opened 
  * by the given DXF writer object.
  */
-void DL_Jww::writeHeader(DL_WriterA& dw) {
+void DL_Jww::writeHeader(DL_WriterA& /*dw*/) {
 }
 
 
@@ -1107,9 +1107,9 @@ void DL_Jww::writeHeader(DL_WriterA& dw) {
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writePoint(DL_WriterA& dw,
-						const DL_PointData& data,
-						const DL_Attributes& attrib) {
+void DL_Jww::writePoint(DL_WriterA& /*dw*/,
+                        const DL_PointData& /*data*/,
+                        const DL_Attributes& /*attrib*/) {
 }
 
 
@@ -1121,9 +1121,9 @@ void DL_Jww::writePoint(DL_WriterA& dw,
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeLine(DL_WriterA& dw,
-					   const DL_LineData& data,
-					   const DL_Attributes& attrib) {
+void DL_Jww::writeLine(DL_WriterA& /*dw*/,
+                       const DL_LineData& /*data*/,
+                       const DL_Attributes& /*attrib*/) {
 }
 
 
@@ -1136,9 +1136,9 @@ void DL_Jww::writeLine(DL_WriterA& dw,
  * @param attrib Attributes
  * @see writeVertex
  */
-void DL_Jww::writePolyline(DL_WriterA& dw,
-						   const DL_PolylineData& data,
-						   const DL_Attributes& attrib) {
+void DL_Jww::writePolyline(DL_WriterA& /*dw*/,
+                           const DL_PolylineData& /*data*/,
+                           const DL_Attributes& /*attrib*/) {
 }
 
 
@@ -1150,8 +1150,8 @@ void DL_Jww::writePolyline(DL_WriterA& dw,
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeVertex(DL_WriterA& dw,
-						 const DL_VertexData& data) {
+void DL_Jww::writeVertex(DL_WriterA& /*dw*/,
+                         const DL_VertexData& /*data*/) {
 }
 
 	
@@ -1159,7 +1159,7 @@ void DL_Jww::writeVertex(DL_WriterA& dw,
 /**
  * Writes the polyline end. Only needed for DXF R12.
  */
-void DL_Jww::writePolylineEnd(DL_WriterA& dw) {
+void DL_Jww::writePolylineEnd(DL_WriterA& /*dw*/) {
 }
 
 
@@ -1171,9 +1171,9 @@ void DL_Jww::writePolylineEnd(DL_WriterA& dw) {
  * @param attrib Attributes
  * @see writeControlPoint
  */
-void DL_Jww::writeSpline(DL_WriterA& dw,
-						 const DL_SplineData& data,
-						 const DL_Attributes& attrib) {
+void DL_Jww::writeSpline(DL_WriterA& /*dw*/,
+                         const DL_SplineData& /*data*/,
+                         const DL_Attributes& /*attrib*/) {
 }
 
 
@@ -1185,8 +1185,8 @@ void DL_Jww::writeSpline(DL_WriterA& dw,
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeControlPoint(DL_WriterA& dw,
-							   const DL_ControlPointData& data) {
+void DL_Jww::writeControlPoint(DL_WriterA& /*dw*/,
+                               const DL_ControlPointData& /*data*/) {
 }
 
 
@@ -1198,8 +1198,8 @@ void DL_Jww::writeControlPoint(DL_WriterA& dw,
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeKnot(DL_WriterA& dw,
-					   const DL_KnotData& data) {
+void DL_Jww::writeKnot(DL_WriterA& /*dw*/,
+                       const DL_KnotData& /*data*/) {
 }
 
 
@@ -1211,9 +1211,9 @@ void DL_Jww::writeKnot(DL_WriterA& dw,
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeCircle(DL_WriterA& dw,
-						 const DL_CircleData& data,
-						 const DL_Attributes& attrib) {
+void DL_Jww::writeCircle(DL_WriterA& /*dw*/,
+                         const DL_CircleData& /*data*/,
+                         const DL_Attributes& /*attrib*/) {
 }
 
 
@@ -1225,9 +1225,9 @@ void DL_Jww::writeCircle(DL_WriterA& dw,
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeArc(DL_WriterA& dw,
-					  const DL_ArcData& data,
-					  const DL_Attributes& attrib) {
+void DL_Jww::writeArc(DL_WriterA& /*dw*/,
+                      const DL_ArcData& /*data*/,
+                      const DL_Attributes& /*attrib*/) {
 }
 
 
@@ -1239,9 +1239,9 @@ void DL_Jww::writeArc(DL_WriterA& dw,
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeEllipse(DL_WriterA& dw,
-						  const DL_EllipseData& data,
-						  const DL_Attributes& attrib) {
+void DL_Jww::writeEllipse(DL_WriterA& /*dw*/,
+                          const DL_EllipseData& /*data*/,
+                          const DL_Attributes& /*attrib*/) {
 }
 
 
@@ -1253,9 +1253,9 @@ void DL_Jww::writeEllipse(DL_WriterA& dw,
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeInsert(DL_WriterA& dw,
-						 const DL_InsertData& data,
-						 const DL_Attributes& attrib) {
+void DL_Jww::writeInsert(DL_WriterA& /*dw*/,
+                         const DL_InsertData& /*data*/,
+                         const DL_Attributes& /*attrib*/) {
 }
 
 
@@ -1267,9 +1267,9 @@ void DL_Jww::writeInsert(DL_WriterA& dw,
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeMText(DL_WriterA& dw,
-						const DL_MTextData& data,
-						const DL_Attributes& attrib) {
+void DL_Jww::writeMText(DL_WriterA& /*dw*/,
+                        const DL_MTextData& /*data*/,
+                        const DL_Attributes& /*attrib*/) {
 }
 
 
@@ -1281,9 +1281,9 @@ void DL_Jww::writeMText(DL_WriterA& dw,
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeText(DL_WriterA& dw,
-					   const DL_TextData& data,
-					   const DL_Attributes& attrib) {
+void DL_Jww::writeText(DL_WriterA& /*dw*/,
+                       const DL_TextData& /*data*/,
+                       const DL_Attributes& /*attrib*/) {
 }
 
 
@@ -1295,10 +1295,10 @@ void DL_Jww::writeText(DL_WriterA& dw,
  * @param data Specific aligned dimension data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeDimAligned(DL_WriterA& dw,
-							 const DL_DimensionData& data,
-							 const DL_DimAlignedData& edata,
-							 const DL_Attributes& attrib) {
+void DL_Jww::writeDimAligned(DL_WriterA& /*dw*/,
+                             const DL_DimensionData& /*data*/,
+                             const DL_DimAlignedData& /*edata*/,
+                             const DL_Attributes& /*attrib*/) {
 }
 
 /**
@@ -1309,10 +1309,10 @@ void DL_Jww::writeDimAligned(DL_WriterA& dw,
  * @param data Specific linear dimension data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeDimLinear(DL_WriterA& dw,
-							const DL_DimensionData& data,
-							const DL_DimLinearData& edata,
-							const DL_Attributes& attrib) {
+void DL_Jww::writeDimLinear(DL_WriterA& /*dw*/,
+                            const DL_DimensionData& /*data*/,
+                            const DL_DimLinearData& /*edata*/,
+                            const DL_Attributes& /*attrib*/) {
 }
 
 /**
@@ -1323,10 +1323,10 @@ void DL_Jww::writeDimLinear(DL_WriterA& dw,
  * @param data Specific radial dimension data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeDimRadial(DL_WriterA& dw,
-							const DL_DimensionData& data,
-							const DL_DimRadialData& edata,
-							const DL_Attributes& attrib) {
+void DL_Jww::writeDimRadial(DL_WriterA& /*dw*/,
+                            const DL_DimensionData& /*data*/,
+                            const DL_DimRadialData& /*edata*/,
+                            const DL_Attributes& /*attrib*/) {
 }
 
 /**
@@ -1337,10 +1337,10 @@ void DL_Jww::writeDimRadial(DL_WriterA& dw,
  * @param data Specific diametric dimension data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeDimDiametric(DL_WriterA& dw,
-							   const DL_DimensionData& data,
-							   const DL_DimDiametricData& edata,
-							   const DL_Attributes& attrib) {
+void DL_Jww::writeDimDiametric(DL_WriterA& /*dw*/,
+                               const DL_DimensionData& /*data*/,
+                               const DL_DimDiametricData& /*edata*/,
+                               const DL_Attributes& /*attrib*/) {
 }
 
 
@@ -1353,10 +1353,10 @@ void DL_Jww::writeDimDiametric(DL_WriterA& dw,
  * @param data Specific angular dimension data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeDimAngular(DL_WriterA& dw,
-							 const DL_DimensionData& data,
-							 const DL_DimAngularData& edata,
-							 const DL_Attributes& attrib) {
+void DL_Jww::writeDimAngular(DL_WriterA& /*dw*/,
+                             const DL_DimensionData& /*data*/,
+                             const DL_DimAngularData& /*edata*/,
+                             const DL_Attributes& /*attrib*/) {
 }
 
 /**
@@ -1367,10 +1367,10 @@ void DL_Jww::writeDimAngular(DL_WriterA& dw,
  * @param data Specific angular dimension data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeDimAngular3P(DL_WriterA& dw,
-							   const DL_DimensionData& data,
-							   const DL_DimAngular3PData& edata,
-							   const DL_Attributes& attrib) {
+void DL_Jww::writeDimAngular3P(DL_WriterA& /*dw*/,
+                               const DL_DimensionData& /*data*/,
+                               const DL_DimAngular3PData& /*edata*/,
+                               const DL_Attributes& /*attrib*/) {
 }
 
 /**
@@ -1381,9 +1381,9 @@ void DL_Jww::writeDimAngular3P(DL_WriterA& dw,
  * @param attrib Attributes
  * @see writeVertex
  */
-void DL_Jww::writeLeader(DL_WriterA& dw,
-						 const DL_LeaderData& data,
-						 const DL_Attributes& attrib) {
+void DL_Jww::writeLeader(DL_WriterA& /*dw*/,
+                         const DL_LeaderData& /*data*/,
+                         const DL_Attributes& /*attrib*/) {
 }
 
 
@@ -1394,8 +1394,8 @@ void DL_Jww::writeLeader(DL_WriterA& dw,
  * @param dw DXF writer
  * @param data Entity data
  */
-void DL_Jww::writeLeaderVertex(DL_WriterA& dw,
-							   const DL_LeaderVertexData& data) {
+void DL_Jww::writeLeaderVertex(DL_WriterA& /*dw*/,
+                               const DL_LeaderVertexData& /*data*/) {
 }
 
 
@@ -1409,9 +1409,9 @@ void DL_Jww::writeLeaderVertex(DL_WriterA& dw,
  * @param data Entity data.
  * @param attrib Attributes
  */
-void DL_Jww::writeHatch1(DL_WriterA& dw,
-						 const DL_HatchData& data,
-						 const DL_Attributes& attrib) {
+void DL_Jww::writeHatch1(DL_WriterA& /*dw*/,
+                         const DL_HatchData& /*data*/,
+                         const DL_Attributes& /*attrib*/) {
 }
 
 
@@ -1423,8 +1423,8 @@ void DL_Jww::writeHatch1(DL_WriterA& dw,
  * @param data Entity data.
  * @param attrib Attributes
  */
-void DL_Jww::writeHatch2(DL_WriterA& dw,
-						 const DL_HatchData& data,
+void DL_Jww::writeHatch2(DL_WriterA& /*dw*/,
+                         const DL_HatchData& /*data*/,
 						 const DL_Attributes& /*attrib*/) {
 }
 
@@ -1438,8 +1438,8 @@ void DL_Jww::writeHatch2(DL_WriterA& dw,
  * @param data Entity data.
  * @param attrib Attributes
  */
-void DL_Jww::writeHatchLoop1(DL_WriterA& dw,
-							 const DL_HatchLoopData& data) {
+void DL_Jww::writeHatchLoop1(DL_WriterA& /*dw*/,
+                             const DL_HatchLoopData& /*data*/) {
 }
 
 
@@ -1451,7 +1451,7 @@ void DL_Jww::writeHatchLoop1(DL_WriterA& dw,
  * @param data Entity data.
  * @param attrib Attributes
  */
-void DL_Jww::writeHatchLoop2(DL_WriterA& dw,
+void DL_Jww::writeHatchLoop2(DL_WriterA& /*dw*/,
 							 const DL_HatchLoopData& /*data*/) {
 
 }
@@ -1464,8 +1464,8 @@ void DL_Jww::writeHatchLoop2(DL_WriterA& dw,
  * @param data Entity data.
  * @param attrib Attributes
  */
-void DL_Jww::writeHatchEdge(DL_WriterA& dw,
-							const DL_HatchEdgeData& data) {
+void DL_Jww::writeHatchEdge(DL_WriterA& /*dw*/,
+                            const DL_HatchEdgeData& /*data*/) {
 }
 
 
@@ -1475,9 +1475,9 @@ void DL_Jww::writeHatchEdge(DL_WriterA& dw,
  *
  * @return IMAGEDEF handle. Needed for the IMAGEDEF counterpart.
  */
-int DL_Jww::writeImage(DL_WriterA& dw,
-					   const DL_ImageData& data,
-					   const DL_Attributes& attrib) {
+int DL_Jww::writeImage(DL_WriterA& /*dw*/,
+                       const DL_ImageData& /*data*/,
+                       const DL_Attributes& /*attrib*/) {
 
     return -1; // tin-pot@gmx.net 2011-12-29: Make compiler happy.
 }
@@ -1487,9 +1487,9 @@ int DL_Jww::writeImage(DL_WriterA& dw,
 /**
  * Writes an image definiition entity.
  */
-void DL_Jww::writeImageDef(DL_WriterA& dw,
-						   int handle,
-						   const DL_ImageData& data) {
+void DL_Jww::writeImageDef(DL_WriterA& /*dw*/,
+                           int /*handle*/,
+                           const DL_ImageData& /*data*/) {
 }
 
 
@@ -1501,9 +1501,9 @@ void DL_Jww::writeImageDef(DL_WriterA& dw,
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeLayer(DL_WriterA& dw,
-						const DL_LayerData& data,
-						const DL_Attributes& attrib) {
+void DL_Jww::writeLayer(DL_WriterA& /*dw*/,
+                        const DL_LayerData& /*data*/,
+                        const DL_Attributes& /*attrib*/) {
 }
 
 
@@ -1512,8 +1512,8 @@ void DL_Jww::writeLayer(DL_WriterA& dw,
  * Writes a line type to the file. Line types are stored in the 
  * tables section of a DXF file.
  */
-void DL_Jww::writeLineType(DL_WriterA& dw,
-						   const DL_LineTypeData& data) {
+void DL_Jww::writeLineType(DL_WriterA& /*dw*/,
+                           const DL_LineTypeData& /*data*/) {
 }
 
 /**
@@ -1521,7 +1521,7 @@ void DL_Jww::writeLineType(DL_WriterA& dw,
  *
  * @param name Application name
  */
-void DL_Jww::writeAppid(DL_WriterA& dw, const string& name) {
+void DL_Jww::writeAppid(DL_WriterA& /*dw*/, const string& /*name*/) {
 }
 
 
@@ -1529,7 +1529,7 @@ void DL_Jww::writeAppid(DL_WriterA& dw, const string& name) {
 /**
  * Writes a block's definition (no entities) to the DXF file.
  */
-void DL_Jww::writeBlock(DL_WriterA& dw, const DL_BlockData& data) {
+void DL_Jww::writeBlock(DL_WriterA& /*dw*/, const DL_BlockData& /*data*/) {
 }
 
 
@@ -1539,7 +1539,7 @@ void DL_Jww::writeBlock(DL_WriterA& dw, const DL_BlockData& data) {
  *
  * @param name Block name
  */
-void DL_Jww::writeEndBlock(DL_WriterA& dw, const string& name) {
+void DL_Jww::writeEndBlock(DL_WriterA& /*dw*/, const string& /*name*/) {
 }
 
 
@@ -1549,7 +1549,7 @@ void DL_Jww::writeEndBlock(DL_WriterA& dw, const string& name) {
  * Note that this method currently only writes a faked VPORT section
  * to make the file readable by Aut*cad.
  */
-void DL_Jww::writeVPort(DL_WriterA& dw) {
+void DL_Jww::writeVPort(DL_WriterA& /*dw*/) {
 }
 
 
@@ -1559,7 +1559,7 @@ void DL_Jww::writeVPort(DL_WriterA& dw) {
  * Note that this method currently only writes a faked STYLE section
  * to make the file readable by Aut*cad.
  */
-void DL_Jww::writeStyle(DL_WriterA& dw) {
+void DL_Jww::writeStyle(DL_WriterA& /*dw*/) {
 }
 
 
@@ -1569,7 +1569,7 @@ void DL_Jww::writeStyle(DL_WriterA& dw) {
  * Note that this method currently only writes a faked VIEW section
  * to make the file readable by Aut*cad.
  */
-void DL_Jww::writeView(DL_WriterA& dw) {
+void DL_Jww::writeView(DL_WriterA& /*dw*/) {
 }
 
 
@@ -1579,7 +1579,7 @@ void DL_Jww::writeView(DL_WriterA& dw) {
  * Note that this method currently only writes a faked UCS section
  * to make the file readable by Aut*cad.
  */
-void DL_Jww::writeUcs(DL_WriterA& dw) {
+void DL_Jww::writeUcs(DL_WriterA& /*dw*/) {
 }
 
 /**
@@ -1587,9 +1587,9 @@ void DL_Jww::writeUcs(DL_WriterA& dw) {
  * Note that this method currently only writes a faked DIMSTYLE section
  * to make the file readable by Aut*cad.
  */
-void DL_Jww::writeDimStyle(DL_WriterA& dw, 
-					double dimasz, double dimexe, double dimexo,
-					   double dimgap, double dimtxt) {
+void DL_Jww::writeDimStyle(DL_WriterA& /*dw*/,
+                    double /*dimasz*/, double /*dimexe*/, double /*dimexo*/,
+                       double /*dimgap*/, double /*dimtxt*/) {
 }
 
 
@@ -1599,13 +1599,13 @@ void DL_Jww::writeDimStyle(DL_WriterA& dw,
  * Note that this method currently only writes a faked BLOCKRECORD section
  * to make the file readable by Aut*cad.
  */
-void DL_Jww::writeBlockRecord(DL_WriterA& dw) {
+void DL_Jww::writeBlockRecord(DL_WriterA& /*dw*/) {
 }
 
 /**
  * Writes a single block record with the given name.
  */
-void DL_Jww::writeBlockRecord(DL_WriterA& dw, const string& name) {
+void DL_Jww::writeBlockRecord(DL_WriterA& /*dw*/, const string& /*name*/) {
 }
 
 
@@ -1615,7 +1615,7 @@ void DL_Jww::writeBlockRecord(DL_WriterA& dw, const string& name) {
  * Note that this method currently only writes a faked OBJECTS section
  * to make the file readable by Aut*cad.
  */
-void DL_Jww::writeObjects(DL_WriterA& dw) {
+void DL_Jww::writeObjects(DL_WriterA& /*dw*/) {
 }
 
 
@@ -1624,7 +1624,7 @@ void DL_Jww::writeObjects(DL_WriterA& dw) {
  * Note that this method currently only writes a faked OBJECTS section
  * to make the file readable by Aut*cad.
  */
-void DL_Jww::writeObjectsEnd(DL_WriterA& dw) {
+void DL_Jww::writeObjectsEnd(DL_WriterA& /*dw*/) {
 }
 
 
@@ -1632,7 +1632,7 @@ void DL_Jww::writeObjectsEnd(DL_WriterA& dw) {
 /**
  * Checks if the given variable is known by the given DXF version.
  */
-bool DL_Jww::checkVariable(const char* var, DL_Codes::version version) {
+bool DL_Jww::checkVariable(const char* /*var*/, DL_Codes::version /*version*/) {
 	return true;
 }
 
@@ -1642,6 +1642,6 @@ bool DL_Jww::checkVariable(const char* var, DL_Codes::version version) {
  * @returns the library version as int (4 bytes, each byte one version number).
  * e.g. if str = "2.0.2.0" getLibVersion returns 0x02000200
  */
-int DL_Jww::getLibVersion(const char* str) {
+int DL_Jww::getLibVersion(const char* /*str*/) {
     return -1; // tin-pot@gmx.net 2011-12-29: Make compiler happy.
 }

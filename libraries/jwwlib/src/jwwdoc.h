@@ -468,7 +468,7 @@ inline std::ostream& operator<< (std::ostream& ostr, const CDataTen& output)
 	return ostr;
 } 
 
-inline std::istream& operator>> (std::istream& istr, CDataTen& input) 
+inline std::istream& operator>> (std::istream& istr, CDataTen& /*input*/)
 {
 	return istr;
 }
@@ -595,12 +595,12 @@ cout << "MojiData4:"  << m_string << endl;
 	}
 };
 typedef CDataMoji*	PCDataMoji;
-inline std::ostream& operator<< (std::ostream& ostr, const CDataMoji& output) 
+inline std::ostream& operator<< (std::ostream& ostr, const CDataMoji& /*output*/)
 {
 	return ostr;
 } 
 
-inline std::istream& operator>> (std::istream& istr, CDataMoji& input) 
+inline std::istream& operator>> (std::istream& istr, CDataMoji& /*input*/)
 {
 	return istr;
 }
@@ -654,12 +654,12 @@ public:
 	}
 };
 typedef CDataSunpou* PCDataSunpou;
-inline std::ostream& operator<< (std::ostream& ostr, const CDataSunpou& output) 
+inline std::ostream& operator<< (std::ostream& ostr, const CDataSunpou& /*output*/)
 {
 	return ostr;
 } 
 
-inline std::istream& operator>> (std::istream& istr, CDataSunpou& input) 
+inline std::istream& operator>> (std::istream& istr, CDataSunpou& /*input*/)
 {
 	return istr;
 }
@@ -724,12 +724,12 @@ public:
 	}
 };
 typedef CDataSolid*	PCDataSolid;
-inline std::ostream& operator<< (std::ostream& ostr, const CDataSolid& output) 
+inline std::ostream& operator<< (std::ostream& ostr, const CDataSolid& /*output*/)
 {
 	return ostr;
 } 
 
-inline std::istream& operator>> (std::istream& istr, CDataSolid& input) 
+inline std::istream& operator>> (std::istream& istr, CDataSolid& /*input*/)
 {
 	return istr;
 }
@@ -771,12 +771,12 @@ public:
 	}
 };
 typedef	CDataBlock*	PCDataBlock;
-inline std::ostream& operator<< (std::ostream& ostr, const CDataBlock& output) 
+inline std::ostream& operator<< (std::ostream& ostr, const CDataBlock& /*output*/)
 {
 	return ostr;
 } 
 
-inline std::istream& operator>> (std::istream& istr, CDataBlock& input) 
+inline std::istream& operator>> (std::istream& istr, CDataBlock& /*input*/)
 {
 	return istr;
 }
@@ -858,12 +858,12 @@ cout << "MojiData1:"  << m_strName << endl;
 	}
 };
 typedef	CDataList* PCDataList;
-inline std::ostream& operator<< (std::ostream& ostr, const CDataList& output) 
+inline std::ostream& operator<< (std::ostream& ostr, const CDataList& /*output*/)
 {
 	return ostr;
 } 
 
-inline std::istream& operator>> (std::istream& istr, CDataList& input) 
+inline std::istream& operator>> (std::istream& istr, CDataList& /*input*/)
 {
 	return istr;
 }
@@ -892,11 +892,11 @@ private:
 	vector<CDataType> FDataType;
 protected:
 public:
-	CDataList& GetBlockList(int i);
+    CDataList& GetBlockList(unsigned int i);
 	int getBlockListCount();
-	int GetDataListCount(int i);
-	void* GetData(int i, int j );
-	CDataType GetDataType(int i, int j );
+    int GetDataListCount(unsigned int i);
+    void* GetData(unsigned int i, int j );
+    CDataType GetDataType(unsigned int i, int j );
 
 	CDataEnko& GetCDataEnko(int i, int j );
 	CDataMoji& GetCDataMoji(int i, int j );

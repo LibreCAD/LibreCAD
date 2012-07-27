@@ -1090,7 +1090,7 @@ void RS_FilterJWW::endEntity() {
         }
 }
 
-void RS_FilterJWW::add3dFace(const DL_3dFaceData& data) {
+void RS_FilterJWW::add3dFace(const DL_3dFaceData& /*data*/) {
     RS_DEBUG->print("RS_FilterDXF::add3dFace(const DL_3dFaceData& data) not yet implemented");
 }
 void RS_FilterJWW::addDimOrdinate(const DL_DimensionData&, const DL_DimOrdinateData&) {
@@ -2962,7 +2962,7 @@ QString RS_FilterJWW::toDxfString(const QString& string) {
 
         QString res = "";
 
-        for (uint i=0; i<string.length(); ++i) {
+        for (int i=0; i<string.length(); ++i) {
                 int c = string.at(i).unicode();
                 switch (c) {
                 case 0x0A:
