@@ -209,16 +209,16 @@ bool RS_ActionDrawCircleTan1_2P::getCenters(){
     LC_Quadratic lc0(circle, points[0]);
     LC_Quadratic lc1(circle, points[1]);
     auto&& list=LC_Quadratic::getIntersection(lc0,lc1);
-    centers.clean();
+    DEBUG_HEADER();
     for(unsigned int i=0;i<list.size();i++){
         auto vp=list.get(i);
-        double&& r0=vp.distanceTo(points[0]);
-        double&& r1=vp.distanceTo(points[1]);
-        if(fabs(r0-r1)>=RS_TOLERANCE ||
-                fabs(
-                    fabs(circle->getCenter().distanceTo(vp)-circle->getRadius())
-                    - r0)>=RS_TOLERANCE) continue;
-        centers.push_back(list.get(i));
+        //when taking the path of center of tangent circle passing a given point,
+        // the center is never closer to the circle center than the point, for internal and external tangent circles
+    if(circle->rtti()==RS2::EntityCircle){
+                auto&& ds=vp.distanceTo(circle->getCenter()) - RS_TOLERANCE;
+                if( vp.distanceTo(points[0]) <= ds || vp.distanceTo(points[1]) <= ds ) continue;
+    }
+        centers.push_back(vp);
     }
 //    DEBUG_HEADER();
 //    std::cout<<"centers.size()="<<centers.size()<<std::endl;
