@@ -146,16 +146,17 @@ bool RS_ActionDrawCircleTan2_1P::getCenters()
     centers.clean();
     for(int i=0;i<list.size();i++){
         auto&& vp=list.get(i);
-        double r0=fabs(
-                    vp.distanceTo(circles[0]->getCenter())-
-                    circles[0]->getRadius()
-                    );
-        double r1=fabs(
-                    vp.distanceTo(circles[1]->getCenter())-
-                    circles[1]->getRadius()
-                    );
-        if( fabs(r0-r1)>=RS_TOLERANCE) continue;
-        centers.push_back(vp);
+        auto&& ds=vp.distanceTo(point)-RS_TOLERANCE;
+        bool validBranch(true);
+        for(int j=0;j<2;j++){
+            if(circles[j]->rtti()==RS2::EntityCircle||circles[j]->rtti()==RS2::EntityArc){
+                if( vp.distanceTo(circles[j]->getCenter()) <= ds) {
+                    validBranch=false;
+                    break;
+                }
+            }
+        }
+        if(validBranch)  centers.push_back(vp);
     }
     return centers.size()>0;
 }
@@ -199,9 +200,7 @@ bool RS_ActionDrawCircleTan2_1P::preparePreview(){
 //        if( (centers[i]-circles[0]).squared()<ds2
 //    }
     cData.center=centers.getClosest(coord);
-    cData.radius=fabs(cData.center.distanceTo(circles[0]->getCenter())
-                      -circles[0]->getRadius());
-//    cData.radius=point.distanceTo(cData.center);
+    cData.radius=point.distanceTo(cData.center);
     return true;
 }
 

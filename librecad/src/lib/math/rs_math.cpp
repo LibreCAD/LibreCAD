@@ -636,6 +636,7 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
 * ce[4] x^4 + ce[3] x^3 + ce[2] x^2 + ce[1] x + ce[0] = 0
 @ce, a vector of size 5 contains the coefficient in order
 @return, a vector contains real roots
+*ToDo, need a robust algorithm to locate zero terms, better handling of tolerances
 **/
 std::vector<double> RS_Math::quarticSolverFull(const std::vector<double>& ce)
 {
@@ -645,10 +646,10 @@ std::vector<double> RS_Math::quarticSolverFull(const std::vector<double>& ce)
     if(ce.size()!=5) return roots;
     std::vector<double> ce2(4,0.);
 
-    if ( fabs(ce[4]) < 1.0e-75) { // this should not happen
-        if ( fabs(ce[3]) < 1.0e-75) { // this should not happen
-            if ( fabs(ce[2]) < 1.0e-75) { // this should not happen
-                if( fabs(ce[1]) > 1.0e-75) {
+    if ( fabs(ce[4]) < 1.0e-14) { // this should not happen
+        if ( fabs(ce[3]) < 1.0e-14) { // this should not happen
+            if ( fabs(ce[2]) < 1.0e-14) { // this should not happen
+                if( fabs(ce[1]) > 1.0e-14) {
                     roots.push_back(-ce[0]/ce[1]);
                 } else { // can not determine y. this means overlapped, but overlap should have been detected before, therefore return empty set
                     return roots;
@@ -924,6 +925,7 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
 //    std::cout<<qy[4]<<"*y^4 +("<<qy[3]<<")*y^3+("<<qy[2]<<")*y^2+("<<qy[1]<<")*y+("<<qy[0]<<")==0"<<std::endl;
     //quarticSolver
     auto&& roots=quarticSolverFull(qy);
+//    std::cout<<"roots.size()= "<<roots.size()<<std::endl;
 
     if (roots.size()==0 ) { // no intersection found
         return ret;
