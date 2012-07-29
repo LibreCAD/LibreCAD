@@ -2,7 +2,7 @@
 **
  * This action class can handle user events to draw tangents normal to lines
 
-Copyright (C) 2011 Dongxu Li (dongxuli2011@gmail.com)
+Copyright (C) 2011-2012 Dongxu Li (dongxuli2011@gmail.com)
 Copyright (C) 2011 R. van Twisk (librecad@rvt.dds.nl)
 
 This program is free software; you can redistribute it and/or
@@ -35,14 +35,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * @author Dongxu Li
  */
 RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-    :RS_PreviewActionInterface("Draw Tangent Orthogonal", container, graphicView) {
-
-    normal = NULL;
-    tangent = NULL;
-    circle = NULL;
-    circleList.clear();
+        RS_EntityContainer& container,
+        RS_GraphicView& graphicView)
+    :RS_PreviewActionInterface("Draw Tangent Orthogonal", container, graphicView)
+    ,normal(NULL)
+    ,tangent(NULL)
+    ,circle(NULL)
+{
+    //    circleList.clear();
     circleList.push_back(RS2::EntityArc);
     circleList.push_back(RS2::EntityCircle);
     circleList.push_back(RS2::EntityEllipse);
@@ -50,9 +50,11 @@ RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(
 
 
 void RS_ActionDrawLineOrthTan::finish(bool updateTB){
-    normal->setHighlighted(false);
-    if(graphicView==NULL){
-        graphicView->drawEntity(normal);
+    if(normal!=NULL){
+        normal->setHighlighted(false);
+        if(graphicView==NULL){
+            graphicView->drawEntity(normal);
+        }
     }
     RS_PreviewActionInterface::finish(updateTB);
 }
