@@ -240,7 +240,7 @@ LC_Quadratic LC_Quadratic::flipXY(void) const
 RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const LC_Quadratic& l2)
 {
     RS_VectorSolutions ret;
-    if( l1.isValid() && l2.isValid() == false ) return ret;
+    if( (l1.isValid() && l2.isValid()) == false ) return ret;
     auto p1=&l1;
     auto p2=&l2;
     if(p1->isQuadratic()==false){
