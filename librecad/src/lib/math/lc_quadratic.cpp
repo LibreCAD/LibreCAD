@@ -61,11 +61,11 @@ LC_Quadratic::LC_Quadratic(std::vector<double> ce):
         m_bValid=true;
         return;
     }
-    m_bIsQuadratic=false;
     if(ce.size()==3){
         m_vLinear(0)=ce[0];
         m_vLinear(1)=ce[1];
         m_dConst=ce[2];
+        m_bIsQuadratic=false;
         m_bValid=true;
         return;
     }
@@ -129,8 +129,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point
             m_bValid=false;
             return;
         }
-        RS_Vector projection=line->getStartpoint()+
-                direction*direction.dotP(point-line->getStartpoint())/l2;
+        RS_Vector projection=line->getNearestPointOnEntity(point,false);
 //        DEBUG_HEADER();
 //        std::cout<<"projection="<<projection<<std::endl;
         double p2=(projection-point).squared();
@@ -155,12 +154,17 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point
         m_vLinear(0)=-2.*p;
         m_vLinear(1)=0.;
         m_dConst=0.;
+//        DEBUG_HEADER();
 //        std::cout<<*this<<std::endl;
+//        std::cout<<"rotation by ";
 //        std::cout<<"angle="<<center.angleTo(point)<<std::endl;
         rotate(center.angleTo(point));
+//        std::cout<<"move by ";
+//        std::cout<<"center="<<center<<std::endl;
         move(center);
-//        std::cout<<*line<<std::endl;
 //        std::cout<<*this<<std::endl;
+//        std::cout<<"point="<<point<<std::endl;
+//        std::cout<<"finished"<<std::endl;
         return;
     }
     default:
@@ -236,7 +240,7 @@ LC_Quadratic LC_Quadratic::flipXY(void) const
 RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const LC_Quadratic& l2)
 {
     RS_VectorSolutions ret;
-    if( l1.isValid() && l2.isValid() == false ) return ret;
+    if( (l1.isValid() && l2.isValid()) == false ) return ret;
     auto p1=&l1;
     auto p2=&l2;
     if(p1->isQuadratic()==false){
@@ -268,7 +272,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
     std::vector<std::vector<double> >  ce(0);
     ce.push_back(p1->getCoefficients());
     ce.push_back(p2->getCoefficients());
-//DEBUG_HEADER();
+//DEBUG_HEADER();)
 //std::cout<<*p1<<std::endl;
 //std::cout<<*p2<<std::endl;
     return RS_Math::simultaneousQuadraticSolverFull(ce);

@@ -479,6 +479,14 @@ void RS_PainterQt::drawImg(QImage& img, const RS_Vector& pos,
                            int sx, int sy, int sw, int sh) {
     save();
 
+    // Render smooth only at close zooms
+    if (factor.x < 1 || factor.y < 1) {
+       RS_PainterQt::setRenderHint(SmoothPixmapTransform , TRUE);
+    }
+    else {
+      RS_PainterQt::setRenderHint(SmoothPixmapTransform);
+    }
+
     QMatrix wm;
     wm.translate(pos.x, pos.y);
     wm.scale(factor.x, factor.y);

@@ -138,7 +138,7 @@ void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e) {
 
     if (e->button()==Qt::RightButton) {
         deletePreview();
-        if(getStatus()>0){
+        if(getStatus()>=0){
             init(getStatus()-1);
             if(circle1!=NULL){
                 circle1->setHighlighted(false);
