@@ -898,8 +898,9 @@ bool Doc_plugin_interface::getPoint(QPointF *point, const QString& mesage, QPoin
         {
             ev.processEvents (QEventLoop::ExcludeSocketNotifiers);
         }
+        if (a->isCompleted() ){
         a->getPoint(point);
-        status = true;
+        status = true;}
 //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
         gView->killAllActions();
     }
