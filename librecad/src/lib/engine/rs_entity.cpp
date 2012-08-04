@@ -880,7 +880,7 @@ QList<QString> RS_Entity::getAllKeys() {
 }
 
 //! helpLayer contains entities of infinite length, helpLayer doesn't show up in print
-bool RS_Entity::isHelpLayer(bool typeCheck)  {
+bool RS_Entity::isHelpLayer(bool typeCheck) const  {
     if(typeCheck && getParent() != NULL){
         //ignore
         switch(rtti()){

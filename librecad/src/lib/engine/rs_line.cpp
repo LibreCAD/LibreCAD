@@ -130,7 +130,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
     }else{
         //find projection on line
         vpc = data.startpoint + direction*RS_Vector::dotP(vpc,direction)/a;
-        if( onEntity &&
+        if( !isHelpLayer() && onEntity &&
                 ! vpc.isInWindowOrdered(minV,maxV) ){
 //                !( vpc.x>= minV.x && vpc.x <= maxV.x && vpc.y>= minV.y && vpc.y<=maxV.y) ) {
             //projection point not within range, find the nearest endpoint
