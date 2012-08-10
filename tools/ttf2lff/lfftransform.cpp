@@ -71,7 +71,7 @@ public:
         do {
             found=data.find(',', start);
             if (found!=std::string::npos) {
-                verts.push_back(data.substr(start, found));
+                verts.push_back(data.substr(start, found-start));
                 start = ++found;
             } else
                 verts.push_back(data.substr(start));
@@ -127,22 +127,35 @@ double defVert::angleTo(defVert e) const{
 
 class defRect {
 public:
-    defRect() {xVal = yVal = wVal = hVal = 0.0;}
+    defRect() {xVal = yVal = wVal = hVal = 0.0; valid = false;}
     defRect(double x, double y, double w, double h) {
         xVal = x;
         yVal = y;
         wVal = w;
         hVal = h;
+        valid = true;
     }
     defRect(defVert p1, defVert p2) {
         xVal = std::min(p1.x(), p2.x());
         yVal = std::min(p1.y(), p2.y());
         wVal = abs(p1.x() - p2.x());
         hVal = abs(p1.y() - p2.y());
+        valid = true;
     }
+    bool isValid(){return valid;}
     double x() const { return xVal;}
     double y() const { return yVal;}
+    double w() const { return wVal;}
+    double h() const { return hVal;}
     defRect united(defRect r) {
+        if (!valid) {
+            if (r.isValid())
+                return defRect(r.x(),r.y(),r.w(),r.h());
+            else
+                return defRect();
+        } else if(!r.isValid())
+            return defRect(xVal,yVal,wVal,hVal);
+
         defVert v = r.bottomRight();
         double w = std::max(xVal+wVal, v.x());
         double h = std::max(yVal+hVal, v.y());
@@ -156,6 +169,7 @@ private:
     double yVal;
     double wVal;
     double hVal;
+    bool valid;
 };
 
 
@@ -171,7 +185,9 @@ public:
     void scale (double factor){
         if (vertex.empty()) return;
         std::ostringstream strS(std::ostringstream::out);
-        strS << (vertex.at(0).x()* factor) << ',' << (vertex.at(0).y())* factor;
+        vertex[0].setX( vertex.at(0).x()* factor);
+        vertex[0].setY( vertex.at(0).y()* factor);
+        strS << vertex.at(0).x() << ',' << vertex.at(0).y();
         for (unsigned int i=1 ; i<vertex.size(); i++) {
             vertex[i].setX( vertex.at(i).x()* factor);
             vertex[i].setY( vertex.at(i).y()* factor);
@@ -244,6 +260,35 @@ public:
         return contour;
     }
 
+    void moveH(double d){
+        if (vertex.empty()) return;
+        std::ostringstream strS(std::ostringstream::out);
+        vertex[0].setX( vertex.at(0).x() + d);
+        strS << vertex.at(0).x() << ',' << vertex.at(0).y();
+        for (unsigned int i=1 ; i<vertex.size(); i++) {
+            vertex[i].setX( vertex.at(i).x() + d);
+            strS << ';' << vertex.at(i).x() << ',' << vertex.at(i).y();
+            if (vertex.at(i).hasBulge) {
+                strS << ",A" << vertex.at(i).bulge;
+            }
+        }
+        defStr = strS.str();
+    }
+    void moveV(double d){
+        if (vertex.empty()) return;
+        std::ostringstream strS(std::ostringstream::out);
+        vertex[0].setY( vertex.at(0).y() + d);
+        strS << vertex.at(0).x() << ',' << vertex.at(0).y();
+        for (unsigned int i=1 ; i<vertex.size(); i++) {
+            vertex[i].setY( vertex.at(i).y() + d);
+            strS << ';' << vertex.at(i).x() << ',' << vertex.at(i).y();
+            if (vertex.at(i).hasBulge) {
+                strS << ",A" << vertex.at(i).bulge;
+            }
+        }
+        defStr = strS.str();
+    }
+
 private:
     std::vector <defVert> vertex;
     std::string defStr;
@@ -260,7 +305,7 @@ void defPath::addString(std::string s) {
         do {
             found=s.find(';', start);
             if (found!=std::string::npos) {
-                verts.push_back(s.substr(start, found));
+                verts.push_back(s.substr(start, found-start));
                 start = ++found;
             } else
                 verts.push_back(s.substr(start));
@@ -299,6 +344,28 @@ public:
         }
         return rect;
     }
+    void move (bool toLeft){
+        if (paths.empty())
+            return;
+        defRect rect = paths.at(0)->getRect();
+        if (paths.size() > 1) {
+            for (unsigned int i=1 ; i<paths.size(); i++) {
+                rect = rect.united( paths.at(i)->getRect() );
+            }
+        }
+        if (toLeft) {
+            double pos = rect.x();
+            for (unsigned int i=0 ; i<paths.size(); i++) {
+                paths.at(i)->moveH(-pos);
+            }
+        }else {
+            double pos = rect.y();
+            for (unsigned int i=0 ; i<paths.size(); i++) {
+                paths.at(i)->moveV(-pos);
+            }
+        }
+    }
+
     void scale (double factor){
         for (unsigned int i=0 ; i<paths.size(); i++) {
             paths.at(i)->scale(factor);
@@ -322,27 +389,79 @@ private:
 
 class fontLFF {
 public:
-    fontLFF(std::string in, std::string out, int def) {
+    fontLFF(std::string in, std::string out) {
         input = in;
         output =out;
-        defFont = def;
         scaleF = 1;
+//        defFont = 65;
     }
-    int scale();
+    int scale(int def);
     int shortChar();
+    int move(std::string dir);
 
 private:
-    bool getScale();
+    bool getScale(int defFont);
 
     std::string input;
     std::string output;
-    int defFont;
+//    int defFont;
     double scaleF;
 };
 
 
-int fontLFF::scale(){
-    if (!getScale()) {
+int fontLFF::move(std::string dir){
+    bool moveLeft;
+    if (dir == "b")
+        moveLeft = false;
+    else if (dir == "l")
+        moveLeft = true;
+    else
+        return 5;
+    std::string line;
+    std::ifstream fi(input.c_str(), std::ios::in);
+    std::ofstream fo(output.c_str(), std::ios::out | std::ios::trunc);
+    if (!fi.is_open())
+        return 2;
+    if (!fo.is_open())
+        return 3;
+    while (fi.good()) {
+        std::getline(fi, line);
+        if (line.empty()) {
+            fo << "\n";
+            continue;
+        }
+        if (line.at(0)=='#') {
+            fo << line << "\n";
+        } else if (line.at(0)=='[') {
+            std::istringstream sd(line.substr(1,4));
+            int code;
+            sd >> std::hex >> code;
+            defChar dataChar(code, line);
+            do {
+                std::getline(fi, line);
+                if(line.empty()) {
+                    dataChar.move(moveLeft);
+                    fo << "\n";
+                    std::string data = dataChar.getString();
+                    fo << data << "\n";
+                    break;
+                }
+                defPath *pt = new defPath();
+                pt->addString(line);
+                dataChar.addPath(pt);
+            } while(true);
+        }
+    }//end while parsing file
+    fi.close();
+    fo << "\n";
+    fo.close();
+
+    return 0;
+}
+
+
+int fontLFF::scale(int def){
+    if (!getScale(def)) {
         return 4;
     }
     std::string line;
@@ -388,7 +507,7 @@ int fontLFF::scale(){
     return 0;
 }
 
-bool fontLFF::getScale(){
+bool fontLFF::getScale(int defFont){
     std::string line;
     std::ifstream fi(input.c_str(), std::ios::in);
     bool success = false;
@@ -473,9 +592,11 @@ int fontLFF::shortChar(){
 }
 
 void usage(){
-    std::cout << "usage: lfftransform -scale char infile outfile\n";
+    std::cout << "usage: lfftransform -scale \"char\" infile outfile\n";
     std::cout << "usage: lfftransform -short infile outfile\n";
+    std::cout << "usage: lfftransform -move \"to\" infile outfile\n";
     std::cout << "char: char ex-code to use as base like 41 (A)\n";
+    std::cout << "to: valid value are b (bottom) or l (left)\n";
 }
 
 int main(int argc, char *argv[])
@@ -487,23 +608,28 @@ int main(int argc, char *argv[])
     int success = 1;
     int param = 1;
     std::string option(argv[param++]);
+    std::string dir;
     int code;
 
     if (option == "-scale" && argc == 5) {
         std::istringstream sd(argv[param++]);
         sd >> std::hex >> code;
-    } else if (option == "-short" && argc == 4){}
-    else {
+    } else if (option == "-short" && argc == 4){
+    } else if (option == "-move" && argc == 5){
+        dir =argv[param++];
+    } else {
         usage();
         return 1;
     }
     std::string input = argv[param++];
     std::string output = argv[param];
-    fontLFF reader = fontLFF(input, output, code);
+    fontLFF reader = fontLFF(input, output);
     if (option == "-scale")
-        success = reader.scale();
+        success = reader.scale(code);
     else if (option == "-short")
         success = reader.shortChar();
+    else if (option == "-move")
+        success = reader.move(dir);
 
     if (success==2)
         std::cout << "Failed reading input file: " << input << "\n";
@@ -511,6 +637,8 @@ int main(int argc, char *argv[])
         std::cout << "Failed writing output file: " << output << "\n";
     if (success==4)
         std::cout << "Font "<< argv[3] << " not found in input file\n";
+    if (success==5)
+        std::cout << "Bad direction to move, valid value are b or l\n";
 
     return success;
 }
