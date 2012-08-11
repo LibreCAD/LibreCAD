@@ -394,7 +394,7 @@ void RS_ActionDrawCircleTan2_1P::updateMouseButtonHints() {
     if (RS_DIALOGFACTORY!=NULL) {
         switch (getStatus()) {
         case SetCircle1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify an arc/circle"),
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify a line/arc/circle"),
                                                 tr("Cancel"));
             break;
 
