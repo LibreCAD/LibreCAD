@@ -244,6 +244,7 @@ public:
         width = lastHeight = 1.0;
         font="txt";
         genFlag = 0; //2= X mirror, 4= Y mirror
+        fontFamily = 0;
     }
 
     void parseCode(int code, dxfReader *reader);
@@ -256,7 +257,7 @@ public:
     double lastHeight;      /*!< Last height used, code 42 */
     UTF8STRING font;        /*!< primary font file name, code 3 */
     UTF8STRING bigFont;     /*!< bigfont file name or blank if none, code 4 */
-    UTF8STRING fontFamily;  /*!< ttf font family, italic and bold flags, code 1071 */
+    int fontFamily;         /*!< ttf font family, italic and bold flags, code 1071 */
 };
 
 //! Class to handle vport entries

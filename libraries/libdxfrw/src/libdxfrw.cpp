@@ -281,7 +281,8 @@ bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
     if (version > DRW::AC1009) {
         writer->writeUtf8String(3, ent->font);
         writer->writeUtf8String(4, ent->bigFont);
-        writer->writeUtf8String(1071, ent->fontFamily);
+        if (ent->fontFamily != 0)
+            writer->writeInt32(1071, ent->fontFamily);
     } else {
         writer->writeUtf8Caps(3, ent->font);
         writer->writeUtf8Caps(4, ent->bigFont);
@@ -373,10 +374,8 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     char buffer[5];
     writer->writeString(0, "DIMSTYLE");
     if (!dimstyleStd) {
-        std::string name;
-        std::stringstream ss;
-        ss << std::uppercase << ent->name;
-        ss >> name;
+        std::string name = ent->name;
+        std::transform(name.begin(), name.end(), name.begin(),::toupper);
         if (name == "STANDARD")
             dimstyleStd = true;
     }
