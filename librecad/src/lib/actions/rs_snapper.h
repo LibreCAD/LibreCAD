@@ -46,6 +46,7 @@ class QMouseEvent;
   */
 struct RS_SnapMode {
 public:
+    bool snapFree;     /// Whether to snap freely
     bool snapGrid;     /// Whether to snap to grid or not.
     bool snapEndpoint;     /// Whether to snap to endpoints or not.
     bool snapMiddle;       /// Whether to snap to midpoints or not.

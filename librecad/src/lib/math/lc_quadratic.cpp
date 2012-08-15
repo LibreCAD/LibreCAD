@@ -174,6 +174,22 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point
 
 }
 
+/** construct a ellipse or hyperbola as the path of center of common tangent circles
+  of this two given entities*/
+LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
+                           const RS_AtomicEntity* circle1):
+    m_bValid(false)
+{
+    if(circle0->rtti() != RS2::EntityArc &&
+            circle0->rtti() != RS2::EntityCircle&&
+            circle0->rtti() != RS2::EntityLine) return;
+    if(circle1->rtti() != RS2::EntityArc &&
+            circle1->rtti() != RS2::EntityCircle&&
+            circle1->rtti() != RS2::EntityLine) return;
+
+
+}
+
 std::vector<double>  LC_Quadratic::getCoefficients() const
 {
     std::vector<double> ret(0,0.);

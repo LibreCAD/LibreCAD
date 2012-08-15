@@ -1243,66 +1243,13 @@ void QC_ApplicationWindow::initActions(void)
     //
     menu = menuBar()->addMenu(tr("&Snap"));
     menu->setObjectName("Snap");
-    action = actionFactory.createAction(RS2::ActionSnapFree, actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action->setChecked(true);
-    action = actionFactory.createAction(RS2::ActionSnapGrid, actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action = actionFactory.createAction(RS2::ActionSnapEndpoint,
-                                        actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action = actionFactory.createAction(RS2::ActionSnapOnEntity,
-                                        actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action = actionFactory.createAction(RS2::ActionSnapCenter, actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action = actionFactory.createAction(RS2::ActionSnapMiddle, actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action = actionFactory.createAction(RS2::ActionSnapDist, actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action = actionFactory.createAction(RS2::ActionSnapIntersection,
-                                        actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-//    action = actionFactory.createAction(RS2::ActionSnapIntersectionManual,
-//                                        actionHandler);
-//    menu->addAction(action);
-//    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-//    menu->addSeparator();
-    action = actionFactory.createAction(RS2::ActionRestrictNothing,
-                                        actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action->setChecked(true);
-    action = actionFactory.createAction(RS2::ActionRestrictOrthogonal,
-                                        actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action = actionFactory.createAction(RS2::ActionRestrictHorizontal,
-                                        actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action = actionFactory.createAction(RS2::ActionRestrictVertical,
-                                        actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    menu->addSeparator();
-    action = actionFactory.createAction(RS2::ActionSetRelativeZero,
-                                        actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action = actionFactory.createAction(RS2::ActionLockRelativeZero,
-                                        actionHandler);
-    menu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-
+    if(snapToolBar!=NULL) {
+        auto&& actions = snapToolBar->getActions();
+        foreach(QAction* a, actions){
+            menu->addAction(a);
+            connect(this, SIGNAL(windowsChanged(bool)), a, SLOT(setEnabled(bool)));
+        }
+    }
     // Info actions:
     //
     menu = menuBar()->addMenu(tr("&Info"));

@@ -34,7 +34,9 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_SnapToolBar::QG_SnapToolBar( const QString & title, QG_ActionHandler* ah, QWidget * parent )
-    : QToolBar(title, parent) {
+    : QToolBar(title, parent)
+,m_iActionCounts(0)
+{
     actionHandler=ah;
     actionHandler->setSnapToolBar(this);
     init();
@@ -63,6 +65,7 @@ void QG_SnapToolBar::saveSnapMode()
 
 void QG_SnapToolBar::setSnaps ( RS_SnapMode s )
 {
+    snapFree->setChecked(s.snapFree);
     snapGrid->setChecked(s.snapGrid);
     snapEnd->setChecked(s.snapEndpoint);
     snapOnEntity->setChecked(s.snapOnEntity);
@@ -78,6 +81,7 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void )
 {
     RS_SnapMode s;
 
+    s.snapFree         = snapFree->isChecked();
     s.snapGrid         = snapGrid->isChecked();
     s.snapEndpoint     = snapEnd->isChecked();
     s.snapOnEntity     = snapOnEntity->isChecked();
@@ -106,34 +110,47 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void )
 
 void QG_SnapToolBar::init()
 {
+    snapFree = new QAction(QIcon(":/extui/snapfree.png"), "Free Snap", this);
+    snapFree->setCheckable(true);
+    connect(snapFree, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    m_vSnapActions<<snapFree;
+    this->addAction(snapFree);
     snapGrid = new QAction(QIcon(":/extui/snapgrid.png"), "Snap on grid", this);
     snapGrid->setCheckable(true);
     connect(snapGrid, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    m_vSnapActions<<snapGrid;
     this->addAction(snapGrid);
     snapEnd = new QAction(QIcon(":/extui/snapendpoint.png"), "Snap on Endpoints", this);
     snapEnd->setCheckable(true);
     connect(snapEnd, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    m_vSnapActions<<snapEnd;
     this->addAction(snapEnd);
     snapOnEntity = new QAction(QIcon(":/extui/snaponentity.png"), "Snap on Entity", this);
     snapOnEntity->setCheckable(true);
     connect(snapOnEntity, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    m_vSnapActions<<snapOnEntity;
     this->addAction(snapOnEntity);
     snapCenter = new QAction(QIcon(":/extui/snapcenter.png"), "Snap Center", this);
     snapCenter->setCheckable(true);
     connect(snapCenter, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    m_vSnapActions<<snapCenter;
     this->addAction(snapCenter);
     snapMiddle = new QAction(QIcon(":/extui/snapmiddle.png"), "Snap Middle", this);
     snapMiddle->setCheckable(true);
     connect(snapMiddle, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    m_vSnapActions<<snapMiddle;
     this->addAction(snapMiddle);
     snapDistance = new QAction(QIcon(":/extui/snapdist.png"), "Snap Distance", this);
     snapDistance ->setCheckable(true);
     connect(snapDistance, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    m_vSnapActions<<snapDistance;
     this->addAction(snapDistance);
     snapIntersection = new QAction(QIcon(":/extui/snapintersection.png"), "Snap Intersection", this);
     snapIntersection->setCheckable(true);
     connect(snapIntersection, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    m_vSnapActions<<snapIntersection;
     this->addAction(snapIntersection);
+    m_iActionCounts = m_vSnapActions.size();
 
     this->addSeparator();
 
@@ -152,6 +169,7 @@ void QG_SnapToolBar::init()
     //connect(restrictHorizontal, SIGNAL(triggered(bool)),
     //        this, SLOT(restrictHorizontalTriggered(bool)));
     connect(restrictHorizontal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    m_vSnapActions<<restrictHorizontal;
     this->addAction(restrictHorizontal);
     restrictVertical = new QAction(QIcon(":/extui/restrictvertical.png"),
                                    "Restrict Vertical", this);
@@ -159,17 +177,20 @@ void QG_SnapToolBar::init()
     //connect(restrictVertical, SIGNAL(triggered(bool)),
     //        this, SLOT(restrictVerticalTriggered(bool)));
     connect(restrictVertical, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    m_vSnapActions<<restrictVertical;
     this->addAction(restrictVertical);
 
     this->addSeparator();
     bRelZero = new QAction(QIcon(":/extui/relzeromove.png"), "Set relative zero position", this);
     bRelZero->setCheckable(false);
     connect(bRelZero, SIGNAL(triggered()), actionHandler, SLOT(slotSetRelativeZero()));
+    m_vSnapActions<<bRelZero;
     //connect(bRelZero, SIGNAL(triggered()), this, SLOT(slotSetRelativeZero()));
     this->addAction(bRelZero);
     bLockRelZero = new QAction(QIcon(":/extui/relzerolock.png"), "Lock relative zero position", this);
     bLockRelZero->setCheckable(true);
     connect(bLockRelZero, SIGNAL(toggled(bool)),actionHandler, SLOT(slotLockRelativeZero(bool)));
+    m_vSnapActions<<bLockRelZero;
     this->addAction(bLockRelZero);
     //restore snapMode from saved preferences
     RS_SETTINGS->beginGroup("/Snap");
@@ -185,6 +206,10 @@ void QG_SnapToolBar::setLockedRelativeZero(bool on)
 {
     bLockRelZero->setChecked(on);
 }
+QVector<QAction*> QG_SnapToolBar::getActions() const
+{
+    return m_vSnapActions;
+}
 void QG_SnapToolBar::setActionHandler(QG_ActionHandler* ah){
     actionHandler=ah;
 }
@@ -193,6 +218,14 @@ void QG_SnapToolBar::setActionHandler(QG_ActionHandler* ah){
 
 void QG_SnapToolBar::actionTriggered()
 {
+//    bool isFree=true;
+//    for(int i=1;i<m_iActionCounts;i++){
+//        if(m_vSnapActions[i]->isChecked()) {
+//            isFree=false;
+//            break;
+//        }
+//    }
+//    snapFree->setChecked(isFree);
     actionHandler->slotSetSnaps(getSnaps());
     //emit snapsChanged(getSnaps());
 }

@@ -198,12 +198,14 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
         snapSpot=mouseCoord; //default to snapFree
     } else {
 //        std::cout<<"mouseCoord.distanceTo(snapSpot)="<<mouseCoord.distanceTo(snapSpot)<<std::endl;
-//        std::cout<<"snapRange="<<snapRange<<std::endl;
+        //        std::cout<<"snapRange="<<snapRange<<std::endl;
 
         //retreat to snapFree when distance is more than half grid
-        RS_Vector&& ds=mouseCoord - snapSpot;
-        RS_Vector&& grid=graphicView->getGrid()->getCellVector()*0.5;
-        if( fabs(ds.x) > fabs(grid.x) ||  fabs(ds.y) > fabs(grid.y) ) snapSpot = mouseCoord;
+        if(snapMode.snapFree){
+            RS_Vector&& ds=mouseCoord - snapSpot;
+            RS_Vector&& grid=graphicView->getGrid()->getCellVector()*0.5;
+            if( fabs(ds.x) > fabs(grid.x) ||  fabs(ds.y) > fabs(grid.y) ) snapSpot = mouseCoord;
+        }
 
         //another choice is to keep snapRange in GUI coordinates instead of graph coordinates
 //        if (mouseCoord.distanceTo(snapSpot) > snapRange ) snapSpot = mouseCoord;
@@ -731,6 +733,7 @@ unsigned int RS_Snapper::snapModeToInt(const RS_SnapMode& s)
     default:
         ret=0;
     }
+    ret <<=1;ret |= s.snapFree;
     ret <<=1;ret |= s.snapGrid;
     ret <<=1;ret |= s.snapEndpoint;
     ret <<=1;ret |= s.snapMiddle;

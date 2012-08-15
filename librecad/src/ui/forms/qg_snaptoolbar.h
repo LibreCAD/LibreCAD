@@ -49,6 +49,7 @@ public:
     virtual void setActionHandler(QG_ActionHandler* ah);
     bool lockedRelativeZero();
     void setLockedRelativeZero(bool on);
+    QVector<QAction*> getActions() const;
 
 protected:
     QG_ActionHandler* actionHandler;
@@ -70,7 +71,7 @@ signals:
     void snapsChanged(RS_SnapMode);
 
 private:
-    //QAction *snapFree;
+    QAction *snapFree;
     QAction *snapGrid;
     QAction *snapEnd;
     QAction *snapOnEntity;
@@ -86,6 +87,8 @@ private:
     QAction *bRelZero;
     QAction *bLockRelZero;
     RS_SnapMode snapMode;
+    QVector<QAction*> m_vSnapActions;
+    int m_iActionCounts;
 
     void init();
 
