@@ -56,13 +56,8 @@ protected:
 
 private slots:
     void actionTriggered(void);
-    //void slotSetRelativeZero(void);
-    //void slotLockRelativeZero(void);
-
-    //following restriction slots are not needed any more
-    //void restrictOrthoagonalTriggered(bool);
-    //void restrictHorizontalTriggered(bool);
-    //void restrictVerticalTriggered(bool);
+    void slotRestrictOrthogonal();
+    void slotRestrictNothing();
 
 public slots:
     void setSnaps(RS_SnapMode);
@@ -81,9 +76,10 @@ private:
     QAction *snapIntersection;
 
 
-    QAction *restrictOrthoagonal;
     QAction *restrictHorizontal;
     QAction *restrictVertical;
+    QAction *restrictOrthogonal;
+    QAction *restrictNothing;
     QAction *bRelZero;
     QAction *bLockRelZero;
     RS_SnapMode snapMode;

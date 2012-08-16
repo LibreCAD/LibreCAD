@@ -166,19 +166,27 @@ void QG_SnapToolBar::init()
     restrictHorizontal = new QAction(QIcon(":/extui/restricthorizontal.png"),
                                      "Restrict Horizontal", this);
     restrictHorizontal->setCheckable(true);
-    //connect(restrictHorizontal, SIGNAL(triggered(bool)),
-    //        this, SLOT(restrictHorizontalTriggered(bool)));
     connect(restrictHorizontal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     m_vSnapActions<<restrictHorizontal;
     this->addAction(restrictHorizontal);
     restrictVertical = new QAction(QIcon(":/extui/restrictvertical.png"),
                                    "Restrict Vertical", this);
     restrictVertical->setCheckable(true);
-    //connect(restrictVertical, SIGNAL(triggered(bool)),
-    //        this, SLOT(restrictVerticalTriggered(bool)));
     connect(restrictVertical, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     m_vSnapActions<<restrictVertical;
     this->addAction(restrictVertical);
+
+    restrictOrthogonal = new QAction(QIcon(":/extui/restrictorthogonal.png"),
+                                   "Restrict Orthogonal", this);
+    restrictOrthogonal->setCheckable(true);
+    connect(restrictOrthogonal, SIGNAL(clicked()), this, SLOT(slotRestrictOrthogonal()));
+    m_vSnapActions<<restrictOrthogonal;
+
+    restrictNothing = new QAction(QIcon(":/extui/restrictorthogonal.png"),
+                                   "Restrict Nothing", this);
+    restrictNothing->setCheckable(true);
+    connect(restrictNothing, SIGNAL(clicked()), this, SLOT(slotRestrictNothing()));
+    m_vSnapActions<<restrictNothing;
 
     this->addSeparator();
     bRelZero = new QAction(QIcon(":/extui/relzeromove.png"), "Set relative zero position", this);
@@ -216,17 +224,24 @@ void QG_SnapToolBar::setActionHandler(QG_ActionHandler* ah){
 
 /* Slots */
 
+void QG_SnapToolBar::slotRestrictNothing()
+{
+    if( restrictVertical != NULL) restrictVertical->setChecked(false);
+    if( restrictHorizontal != NULL) restrictHorizontal->setChecked(false);
+    if( restrictOrthogonal != NULL) restrictOrthogonal->setChecked(false);
+    actionTriggered();
+}
+
+void QG_SnapToolBar::slotRestrictOrthogonal()
+{
+    if( restrictVertical != NULL) restrictVertical->setChecked(true);
+    if( restrictHorizontal != NULL) restrictHorizontal->setChecked(true);
+    if( restrictNothing != NULL) restrictNothing->setChecked(false);
+    actionTriggered();
+}
+
 void QG_SnapToolBar::actionTriggered()
 {
-//    bool isFree=true;
-//    for(int i=1;i<m_iActionCounts;i++){
-//        if(m_vSnapActions[i]->isChecked()) {
-//            isFree=false;
-//            break;
-//        }
-//    }
-//    snapFree->setChecked(isFree);
     actionHandler->slotSetSnaps(getSnaps());
-    //emit snapsChanged(getSnaps());
 }
 

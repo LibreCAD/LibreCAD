@@ -238,48 +238,48 @@ public slots:
     void slotOptionsDrawing();
     void slotFocusNormal();
 
-    void setActionSnapFree(QAction* a) {
-        snapFree = a;
-    }
-    void setActionSnapGrid(QAction* a) {
-        snapGrid = a;
-    }
-    void setActionSnapEndpoint(QAction* a) {
-        snapEndpoint = a;
-    }
-    void setActionSnapOnEntity(QAction* a) {
-        snapOnEntity = a;
-    }
-    void setActionSnapCenter(QAction* a) {
-        snapCenter = a;
-    }
-    void setActionSnapMiddle(QAction* a) {
-        snapMiddle = a;
-    }
-    void setActionSnapDist(QAction* a) {
-        snapDistance = a;
-    }
-    void setActionSnapIntersection(QAction* a) {
-        snapIntersection = a;
-    }
-    void setActionSnapIntersectionManual(QAction* a) {
-        snapIntersectionManual = a;
-    }
-    void setActionRestrictNothing(QAction* a) {
-        restrictNothing = a;
-    }
-    void setActionRestrictOrthogonal(QAction* a) {
-        restrictOrthogonal = a;
-    }
-    void setActionRestrictHorizontal(QAction* a) {
-        restrictHorizontal = a;
-    }
-    void setActionRestrictVertical(QAction* a) {
-        restrictVertical = a;
-    }
-    void setActionLockRelativeZero(QAction* a) {
-        lockRelativeZero = a;
-    }
+//    void setActionSnapFree(QAction* a) {
+//        snapFree = a;
+//    }
+//    void setActionSnapGrid(QAction* a) {
+//        snapGrid = a;
+//    }
+//    void setActionSnapEndpoint(QAction* a) {
+//        snapEndpoint = a;
+//    }
+//    void setActionSnapOnEntity(QAction* a) {
+//        snapOnEntity = a;
+//    }
+//    void setActionSnapCenter(QAction* a) {
+//        snapCenter = a;
+//    }
+//    void setActionSnapMiddle(QAction* a) {
+//        snapMiddle = a;
+//    }
+//    void setActionSnapDist(QAction* a) {
+//        snapDistance = a;
+//    }
+//    void setActionSnapIntersection(QAction* a) {
+//        snapIntersection = a;
+//    }
+//    void setActionSnapIntersectionManual(QAction* a) {
+//        snapIntersectionManual = a;
+//    }
+//    void setActionRestrictNothing(QAction* a) {
+//        restrictNothing = a;
+//    }
+//    void setActionRestrictOrthogonal(QAction* a) {
+//        restrictOrthogonal = a;
+//    }
+//    void setActionRestrictHorizontal(QAction* a) {
+//        restrictHorizontal = a;
+//    }
+//    void setActionRestrictVertical(QAction* a) {
+//        restrictVertical = a;
+//    }
+//    void setActionLockRelativeZero(QAction* a) {
+//        lockRelativeZero = a;
+//    }
 
     //not needed any more, will be removed
     void setSnapToolBar(QG_SnapToolBar* tb);
@@ -288,23 +288,23 @@ private:
     QG_MainWindowInterface* mainWindow;
     QG_SnapToolBar* snapToolBar;
 
-    QAction* snapFree;
-    QAction* snapGrid;
-    QAction* snapEndpoint;
-    QAction* snapOnEntity;
-    QAction* snapCenter;
-    QAction* snapMiddle;
-    QAction* snapDistance;
-    QAction* snapIntersection;
-    QAction* snapIntersectionManual;
+//    QAction* snapFree;
+//    QAction* snapGrid;
+//    QAction* snapEndpoint;
+//    QAction* snapOnEntity;
+//    QAction* snapCenter;
+//    QAction* snapMiddle;
+//    QAction* snapDistance;
+//    QAction* snapIntersection;
+//    QAction* snapIntersectionManual;
 
-    QAction* restrictNothing;
-    QAction* restrictOrthogonal;
-    QAction* restrictHorizontal;
-    QAction* restrictVertical;
+//    QAction* restrictNothing;
+//    QAction* restrictOrthogonal;
+//    QAction* restrictHorizontal;
+//    QAction* restrictVertical;
 
-    QAction* lockRelativeZero;
-    bool lockedRelZero;
+//    QAction* lockRelativeZero;
+//    bool lockedRelZero;
     // Type of draw order selected command
     RS2::ActionType orderType;
     // a list of entity types accepted by action offset
