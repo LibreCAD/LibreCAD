@@ -56,8 +56,8 @@ protected:
 
 private slots:
     void actionTriggered(void);
-    void slotRestrictOrthogonal();
-    void slotRestrictNothing();
+    void slotRestrictOrthogonal(bool checked);
+    void slotRestrictNothing(bool checked);
 
 public slots:
     void setSnaps(RS_SnapMode);
