@@ -55,6 +55,18 @@ RS_FilterDXFRW::RS_FilterDXFRW()
 
     currentContainer = NULL;
     graphic = NULL;
+// Init hash to change the QCAD "normal" style to the more correct ISO-3059
+// or draftsight symbol (AR*.shx) to sy*.lff
+    fontList["normal"] = "iso";
+    fontList["normallatin1"] = "iso";
+    fontList["normallatin2"] = "iso";
+    fontList["arastro"] = "syastro";
+    fontList["armap"] = "symap";
+    fontList["math"] = "symath";
+    fontList["armeteo"] = "symeteo";
+    fontList["armusic"] = "symusic";
+
+
     RS_DEBUG->print("RS_FilterDXFRW::RS_FilterDXFRW(): OK");
 }
 
@@ -531,10 +543,7 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
             sty = textStyle;
         }
     } else {
-        // Change the QCAD "normal" style to the more correct ISO-3059
-        if  (sty=="normal" || sty=="normallatin1" || sty=="normallatin2") {
-            sty="iso";
-        }
+        sty = fontList.value(sty, sty);
     }
 
 
@@ -3288,6 +3297,7 @@ bool RS_FilterDXFRW::isVariableTwoDimensional(const QString& var) {
         return false;
     }
 }
+
 
 // EOF
 

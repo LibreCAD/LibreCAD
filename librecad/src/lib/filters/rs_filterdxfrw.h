@@ -178,7 +178,6 @@ public:
 
 private:
     void writeEntity(RS_Entity* e);
-
 private:
     /** Pointer to the graphic we currently operate on. */
     RS_Graphic* graphic;
@@ -197,6 +196,7 @@ private:
     QString textStyle;
     /** Temporary list to handle unnamed blocks fot write R12 dxf. */
     QHash <RS_Entity*, QString> noNameBlock;
+    QHash <QString, QString> fontList;
 
     dxfRW *dxf;
 };
