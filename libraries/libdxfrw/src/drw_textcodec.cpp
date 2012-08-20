@@ -10,7 +10,6 @@
 
 DRW_TextCodec::DRW_TextCodec() {
     version = DRW::AC1021;
-    cp = "ANSI_1252";
     conv = new DRW_Converter(NULL, 0);
 }
 
@@ -24,12 +23,17 @@ void DRW_TextCodec::setVersion(std::string *v){
         version = DRW::AC1009;
         cp = "ANSI_1252";
         setCodePage(&cp);
-    }
-    else if (versionStr == "AC1012" || versionStr == "AC1014"
-             || versionStr == "AC1015" || versionStr == "AC1018")
+    } else if (versionStr == "AC1012" || versionStr == "AC1014"
+             || versionStr == "AC1015" || versionStr == "AC1018") {
         version = DRW::AC1015;
-    else
+        if (cp.empty()) { //codepage not set, initialize
+            cp = "ANSI_1252";
+            setCodePage(&cp);
+        }
+    } else {
         version = DRW::AC1021;
+        cp = "ANSI_1252";
+    }
 }
 
 void DRW_TextCodec::setCodePage(std::string *c){
@@ -82,6 +86,32 @@ std::string DRW_TextCodec::toUtf8(std::string s) {
 
 std::string DRW_TextCodec::fromUtf8(std::string s) {
     return conv->fromUtf8(&s);
+}
+
+std::string DRW_Converter::toUtf8(std::string *s) {
+    std::string result;
+    int j = 0;
+    unsigned int i= 0;
+    for (i=0; i < s->length(); i++) {
+        unsigned char c = s->at(i);
+        if (c < 0x80) { //ascii check for /U+????
+            if (c == '\\' && i+6 < s->length() && s->at(i+1) == 'U' && s->at(i+2) == '+') {
+                result += s->substr(j,i-j);
+                result += encodeText(s->substr(i,7));
+                i +=6;
+                j = i+1;
+            }
+        } else if (c < 0xE0 ) {//2 bits
+            i++;
+        } else if (c < 0xF0 ) {//3 bits
+            i +=2;
+        } else if (c < 0xF8 ) {//4 bits
+            i +=3;
+        }
+    }
+    result += s->substr(j);
+
+    return result;
 }
 
 std::string DRW_ConvTable::fromUtf8(std::string *s) {
