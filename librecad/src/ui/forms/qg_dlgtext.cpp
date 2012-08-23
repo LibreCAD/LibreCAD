@@ -72,6 +72,7 @@ void QG_DlgText::init() {
     font=NULL;
     text = NULL;
     isNew = false;
+    leOblique->setDisabled(true);
     updateUniCharComboBox(0);
     updateUniCharButton(0);
 }
@@ -103,7 +104,7 @@ void QG_DlgText::destroy() {
         RS_SETTINGS->beginGroup("/Draw");
         RS_SETTINGS->writeEntry("/TextHeight", leHeight->text());
         RS_SETTINGS->writeEntry("/TextFont", cbFont->currentText());
-        RS_SETTINGS->writeEntry("/TextAlignment", getAlignment());
+        RS_SETTINGS->writeEntry("/TextAlignmentT", getAlignment());
         //RS_SETTINGS->writeEntry("/TextLetterSpacing", leLetterSpacing->text());
         //RS_SETTINGS->writeEntry("/TextWordSpacing", leWordSpacing->text());
         RS_SETTINGS->writeEntry("/TextString", teText->text());
@@ -128,7 +129,7 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
     QString alignment;
     //QString letterSpacing;
     //QString wordSpacing;
-    QString lineSpacingFactor;
+    QString widthRelation;
     QString str;
     //QString shape;
     QString angle;
@@ -152,10 +153,10 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
                 }
         height = RS_SETTINGS->readEntry("/TextHeight", "1.0");
         def = RS_SETTINGS->readEntry("/TextDefault", "1");
-        alignment = RS_SETTINGS->readEntry("/TextAlignment", "1");
+        alignment = RS_SETTINGS->readEntry("/TextAlignmentT", "7");
         //letterSpacing = RS_SETTINGS->readEntry("/TextLetterSpacing", "0");
         //wordSpacing = RS_SETTINGS->readEntry("/TextWordSpacing", "0");
-        lineSpacingFactor = RS_SETTINGS->readEntry("/TextLineSpacingFactor", "1");
+        widthRelation = RS_SETTINGS->readEntry("/TextWidthRelation", "1");
         str = RS_SETTINGS->readEntry("/TextString", "");
         //shape = RS_SETTINGS->readEntry("/TextShape", "0");
         angle = RS_SETTINGS->readEntry("/TextAngle", "0");
@@ -165,6 +166,7 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
         fon = text->getStyle();
         setFont(fon);
         height = QString("%1").arg(text->getHeight());
+        widthRelation = QString("%1").arg(text->getWidthRel());
 /*        if (font!=NULL) {
             if (font->getLineSpacingFactor()==text->getLineSpacingFactor()) {
                 def = "1";
@@ -196,6 +198,8 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
     setFont(fon);
     leHeight->setText(height);
     setAlignment(alignment.toInt());
+//    setwidthRel(widthRelation.toDouble());
+    leWidthRel->setText(widthRelation);
     teText->setText(str);
     //setShape(shape.toInt());
     leAngle->setText(angle);
@@ -232,6 +236,10 @@ void QG_DlgText::updateText() {
 }
 
 
+/*void QG_DlgText::setwidthRel(double rel) {
+    lWidthRel->setText(rel);
+}*/
+
 void QG_DlgText::setAlignmentTL() {
     setAlignment(1);
 }
@@ -256,16 +264,40 @@ void QG_DlgText::setAlignmentMR() {
     setAlignment(6);
 }
 
-void QG_DlgText::setAlignmentBL() {
+void QG_DlgText::setAlignmentLL() {
     setAlignment(7);
 }
 
-void QG_DlgText::setAlignmentBC() {
+void QG_DlgText::setAlignmentLC() {
     setAlignment(8);
 }
 
-void QG_DlgText::setAlignmentBR() {
+void QG_DlgText::setAlignmentLR() {
     setAlignment(9);
+}
+
+void QG_DlgText::setAlignmentBL() {
+    setAlignment(10);
+}
+
+void QG_DlgText::setAlignmentBC() {
+    setAlignment(11);
+}
+
+void QG_DlgText::setAlignmentBR() {
+    setAlignment(12);
+}
+
+void QG_DlgText::setAlignmentFit() {
+    setAlignment(13);
+}
+
+void QG_DlgText::setAlignmentAlign() {
+    setAlignment(14);
+}
+
+void QG_DlgText::setAlignmentMiddle() {
+    setAlignment(15);
 }
 
 void QG_DlgText::setAlignment(int a) {
@@ -275,9 +307,15 @@ void QG_DlgText::setAlignment(int a) {
     bML->setChecked(false);
     bMC->setChecked(false);
     bMR->setChecked(false);
+    bLL->setChecked(false);
+    bLC->setChecked(false);
+    bLR->setChecked(false);
     bBL->setChecked(false);
     bBC->setChecked(false);
     bBR->setChecked(false);
+    rbFit->setChecked(false);
+    rbAligned->setChecked(false);
+    rbMiddle->setChecked(false);
 
     switch (a) {
     case 1:
@@ -299,13 +337,31 @@ void QG_DlgText::setAlignment(int a) {
         bMR->setChecked(true);
         break;
     case 7:
-        bBL->setChecked(true);
+        bLL->setChecked(true);
         break;
     case 8:
-        bBC->setChecked(true);
+        bLC->setChecked(true);
         break;
     case 9:
+        bLR->setChecked(true);
+        break;
+    case 10:
+        bBL->setChecked(true);
+        break;
+    case 11:
+        bBC->setChecked(true);
+        break;
+    case 12:
         bBR->setChecked(true);
+        break;
+    case 13:
+        rbFit->setChecked(true);
+        break;
+    case 14:
+        rbAligned->setChecked(true);
+        break;
+    case 15:
+        rbMiddle->setChecked(true);
         break;
     default:
         break;
@@ -325,15 +381,27 @@ int QG_DlgText::getAlignment() {
         return 5;
     } else if (bMR->isChecked()) {
         return 6;
-    } else if (bBL->isChecked()) {
+    } else if (bLL->isChecked()) {
         return 7;
-    } else if (bBC->isChecked()) {
+    } else if (bLC->isChecked()) {
         return 8;
-    } else if (bBR->isChecked()) {
+    } else if (bLR->isChecked()) {
         return 9;
+    } else if (bBL->isChecked()) {
+        return 10;
+    } else if (bBC->isChecked()) {
+        return 11;
+    } else if (bBR->isChecked()) {
+        return 12;
+    } else if (rbFit->isChecked()) {
+        return 13;
+    } else if (rbAligned->isChecked()) {
+        return 14;
+    } else if (rbMiddle->isChecked()) {
+        return 15;
     }
 
-    return 1;
+    return 7;
 }
 
 void QG_DlgText::setFont(const QString& f) {

@@ -49,9 +49,15 @@ public slots:
     virtual void setAlignmentML();
     virtual void setAlignmentMC();
     virtual void setAlignmentMR();
+    virtual void setAlignmentLL();
+    virtual void setAlignmentLC();
+    virtual void setAlignmentLR();
     virtual void setAlignmentBL();
     virtual void setAlignmentBC();
     virtual void setAlignmentBR();
+    virtual void setAlignmentFit();
+    virtual void setAlignmentAlign();
+    virtual void setAlignmentMiddle();
     virtual void setAlignment( int a );
     virtual void setFont( const QString & f );
 //    virtual void defaultChanged( bool );

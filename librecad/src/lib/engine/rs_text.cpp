@@ -95,7 +95,7 @@ int RS_Text::getAlignment() {
         } else if (data.halign==RS_TextData::HARight) {
             return 6;
         }
-    } else if (data.valign==RS_TextData::VABottom) {
+    } else if (data.valign==RS_TextData::VABaseline) {
         if (data.halign==RS_TextData::HALeft) {
             return 7;
         } else if (data.halign==RS_TextData::HACenter) {
@@ -103,6 +103,21 @@ int RS_Text::getAlignment() {
         } else if (data.halign==RS_TextData::HARight) {
             return 9;
         }
+    } else if (data.valign==RS_TextData::VABottom) {
+        if (data.halign==RS_TextData::HALeft) {
+            return 10;
+        } else if (data.halign==RS_TextData::HACenter) {
+            return 11;
+        } else if (data.halign==RS_TextData::HARight) {
+            return 12;
+        }
+    }
+    if (data.halign==RS_TextData::HAFit) {
+        return 13;
+    } else if (data.halign==RS_TextData::HAAligned) {
+        return 14;
+    } else if (data.halign==RS_TextData::HAMiddle) {
+        return 15;
     }
 
     return 1;
@@ -139,8 +154,21 @@ void RS_Text::setAlignment(int a) {
         data.valign = RS_TextData::VAMiddle;
         break;
     case 3:
+        data.valign = RS_TextData::VABaseline;
+        break;
+    case 4:
         data.valign = RS_TextData::VABottom;
         break;
+    }
+    if (a > 12) {
+        data.valign = RS_TextData::VABaseline;
+        if (a == 13) {
+            data.halign = RS_TextData::HAFit;
+        } else if (a == 14) {
+            data.halign = RS_TextData::HAAligned;
+        } else if (a == 15) {
+            data.halign = RS_TextData::HAMiddle;
+        }
     }
 
 }
