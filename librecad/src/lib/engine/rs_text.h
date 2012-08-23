@@ -36,6 +36,37 @@
 class RS_TextData {
 public:
     /**
+     * Vertical alignments.
+     */
+    enum VAlign {
+        VABaseline, /**< Bottom */
+        VABottom,   /**< Bottom */
+        VAMiddle,   /**< Middle */
+        VATop       /**< Top. */
+    };
+
+    /**
+     * Horizontal alignments.
+     */
+    enum HAlign {
+        HALeft,     /**< Left */
+        HACenter,   /**< Centered */
+        HARight,    /**< Right */
+        HAAligned,  /**< Aligned */
+        HAMiddle,   /**< Middle */
+        HAFit       /**< Fit */
+    };
+
+    /**
+     * Text drawing direction.
+     */
+    enum TextGeneration {
+        None,      /**< Normal text */
+        Backward,  /**< Mirrored in X */
+        UpsideDown /**< Mirrored in Y */
+    };
+
+    /**
      * Default constructor. Leaves the data object uninitialized.
      */
     RS_TextData() {}
@@ -48,9 +79,7 @@ public:
      * @param width Reference rectangle width
      * @param valign Vertical alignment
      * @param halign Horizontal alignment
-     * @param drawingDirection Drawing direction
-     * @param lineSpacingStyle Line spacing style
-     * @param lineSpacingFactor Line spacing factor
+     * @param textGeneration Text Generation
      * @param text Text string
      * @param style Text style name
      * @param angle Rotation angle
@@ -63,11 +92,9 @@ public:
     RS_TextData(const RS_Vector& insertionPoint,
                 double height,
                 double width,
-                RS2::VAlign valign,
-                RS2::HAlign halign,
-                RS2::TextDrawingDirection drawingDirection,
-                RS2::TextLineSpacingStyle lineSpacingStyle,
-                double lineSpacingFactor,
+                VAlign valign,
+                HAlign halign,
+                TextGeneration textGeneration,
                 const QString& text,
                 const QString& style,
                 double angle,
@@ -77,9 +104,7 @@ public:
         this->width = width;
         this->valign = valign;
         this->halign = halign;
-        this->drawingDirection = drawingDirection;
-        this->lineSpacingStyle = lineSpacingStyle;
-        this->lineSpacingFactor = lineSpacingFactor;
+        this->textGeneration = textGeneration;
         this->style = style;
         this->angle = angle;
         this->text = text;
@@ -101,15 +126,11 @@ public:
     /** Reference rectangle width */
     double width;
     /** Vertical alignment */
-    RS2::VAlign valign;
+    VAlign valign;
     /** Horizontal alignment */
-    RS2::HAlign halign;
-    /** Drawing direction */
-    RS2::TextDrawingDirection drawingDirection;
-    /** Line spacing style */
-    RS2::TextLineSpacingStyle lineSpacingStyle;
-    /** Line spacing factor */
-    double lineSpacingFactor;
+    HAlign halign;
+    /** Text Generation */
+    TextGeneration textGeneration;
     /** Text string */
     QString text;
     /** Text style name */
@@ -174,29 +195,20 @@ public:
     }
     void setAlignment(int a);
     int getAlignment();
-    RS2::VAlign getVAlign() {
+    RS_TextData::VAlign getVAlign() {
         return data.valign;
     }
-        void setVAlign(RS2::VAlign va) {
-                data.valign = va;
-        }
-    RS2::HAlign getHAlign() {
+    void setVAlign(RS_TextData::VAlign va) {
+        data.valign = va;
+    }
+    RS_TextData::HAlign getHAlign() {
         return data.halign;
     }
-        void setHAlign(RS2::HAlign ha) {
-                data.halign = ha;
-        }
-    RS2::TextDrawingDirection getDrawingDirection() {
-        return data.drawingDirection;
+    void setHAlign(RS_TextData::HAlign ha) {
+        data.halign = ha;
     }
-    RS2::TextLineSpacingStyle getLineSpacingStyle() {
-        return data.lineSpacingStyle;
-    }
-    void setLineSpacingFactor(double f) {
-        data.lineSpacingFactor = f;
-    }
-    double getLineSpacingFactor() {
-        return data.lineSpacingFactor;
+    RS_TextData::TextGeneration getTextGeneration() {
+        return data.textGeneration;
     }
     void setText(const QString& t);
     QString getText() {

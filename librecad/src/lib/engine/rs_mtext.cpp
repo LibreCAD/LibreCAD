@@ -55,13 +55,13 @@ void RS_MText::setText(const QString& t) {
     // handle some special flags embedded in the text:
     if (data.text.left(4)=="\\A0;") {
         data.text = data.text.mid(4);
-        data.valign = RS2::VAlignBottom;
+        data.valign = RS_MTextData::VABottom;
     } else if (data.text.left(4)=="\\A1;") {
         data.text = data.text.mid(4);
-        data.valign = RS2::VAlignMiddle;
+        data.valign = RS_MTextData::VAMiddle;
     } else if (data.text.left(4)=="\\A2;") {
         data.text = data.text.mid(4);
-        data.valign = RS2::VAlignTop;
+        data.valign = RS_MTextData::VATop;
     }
 
     if (data.updateMode==RS2::Update) {
@@ -78,28 +78,28 @@ void RS_MText::setText(const QString& t) {
  * @return  1: top left ... 9: bottom right
  */
 int RS_MText::getAlignment() {
-    if (data.valign==RS2::VAlignTop) {
-        if (data.halign==RS2::HAlignLeft) {
+    if (data.valign==RS_MTextData::VATop) {
+        if (data.halign==RS_MTextData::HALeft) {
             return 1;
-        } else if (data.halign==RS2::HAlignCenter) {
+        } else if (data.halign==RS_MTextData::HACenter) {
             return 2;
-        } else if (data.halign==RS2::HAlignRight) {
+        } else if (data.halign==RS_MTextData::HARight) {
             return 3;
         }
-    } else if (data.valign==RS2::VAlignMiddle) {
-        if (data.halign==RS2::HAlignLeft) {
+    } else if (data.valign==RS_MTextData::VAMiddle) {
+        if (data.halign==RS_MTextData::HALeft) {
             return 4;
-        } else if (data.halign==RS2::HAlignCenter) {
+        } else if (data.halign==RS_MTextData::HACenter) {
             return 5;
-        } else if (data.halign==RS2::HAlignRight) {
+        } else if (data.halign==RS_MTextData::HARight) {
             return 6;
         }
-    } else if (data.valign==RS2::VAlignBottom) {
-        if (data.halign==RS2::HAlignLeft) {
+    } else if (data.valign==RS_MTextData::VABottom) {
+        if (data.halign==RS_MTextData::HALeft) {
             return 7;
-        } else if (data.halign==RS2::HAlignCenter) {
+        } else if (data.halign==RS_MTextData::HACenter) {
             return 8;
-        } else if (data.halign==RS2::HAlignRight) {
+        } else if (data.halign==RS_MTextData::HARight) {
             return 9;
         }
     }
@@ -118,26 +118,26 @@ void RS_MText::setAlignment(int a) {
     switch (a%3) {
     default:
     case 1:
-        data.halign = RS2::HAlignLeft;
+        data.halign = RS_MTextData::HALeft;
         break;
     case 2:
-        data.halign = RS2::HAlignCenter;
+        data.halign = RS_MTextData::HACenter;
         break;
     case 0:
-        data.halign = RS2::HAlignRight;
+        data.halign = RS_MTextData::HARight;
         break;
     }
 
     switch ((int)ceil(a/3.0)) {
     default:
     case 1:
-        data.valign = RS2::VAlignTop;
+        data.valign = RS_MTextData::VATop;
         break;
     case 2:
-        data.valign = RS2::VAlignMiddle;
+        data.valign = RS_MTextData::VAMiddle;
         break;
     case 3:
-        data.valign = RS2::VAlignBottom;
+        data.valign = RS_MTextData::VABottom;
         break;
     }
 
@@ -297,25 +297,23 @@ void RS_MText::update() {
                             new RS_MText(
                                 oneLine,
                                 RS_MTextData(letterPos + RS_Vector(0.0,9.0),
-                                            4.0, 100.0, RS2::VAlignTop,
-                                                                                        RS2::HAlignLeft,
-                                            RS2::LeftToRight, RS2::Exact,
+                                            4.0, 100.0, RS_MTextData::VATop, RS_MTextData::HALeft,
+                                            RS_MTextData::LeftToRight, RS_MTextData::Exact,
                                             1.0, up, data.style,
                                             0.0, RS2::Update));
-                                                upper->setLayer(NULL);
+                                            upper->setLayer(NULL);
                         upper->setPen(RS_Pen(RS2::FlagInvalid));
-                                                oneLine->addEntity(upper);
+                        oneLine->addEntity(upper);
 
                         RS_MText* lower =
                             new RS_MText(
                                 oneLine,
                                 RS_MTextData(letterPos+RS_Vector(0.0,4.0),
-                                            4.0, 100.0, RS2::VAlignTop,
-                                                                                        RS2::HAlignLeft,
-                                            RS2::LeftToRight, RS2::Exact,
+                                            4.0, 100.0, RS_MTextData::VATop, RS_MTextData::HALeft,
+                                            RS_MTextData::LeftToRight, RS_MTextData::Exact,
                                             1.0, dw, data.style,
                                             0.0, RS2::Update));
-                                                lower->setLayer(NULL);
+                                            lower->setLayer(NULL);
                         lower->setPen(RS_Pen(RS2::FlagInvalid));
                         oneLine->addEntity(lower);
 
@@ -426,12 +424,12 @@ void RS_MText::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
 
     // Horizontal Align:
     switch (data.halign) {
-    case RS2::HAlignCenter:
+    case RS_MTextData::HACenter:
                 RS_DEBUG->print("RS_Text::updateAddLine: move by: %f", -textSize.x/2.0);
         textLine->move(RS_Vector(-textSize.x/2.0, 0.0));
         break;
 
-    case RS2::HAlignRight:
+    case RS_MTextData::HARight:
         textLine->move(RS_Vector(-textSize.x, 0.0));
         break;
 
@@ -444,11 +442,11 @@ void RS_MText::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
                    - (9.0*data.lineSpacingFactor*1.6 - 9.0);
 
     switch (data.valign) {
-    case RS2::VAlignMiddle:
+    case RS_MTextData::VAMiddle:
         textLine->move(RS_Vector(0.0, vSize/2.0));
         break;
 
-    case RS2::VAlignBottom:
+    case RS_MTextData::VABottom:
         textLine->move(RS_Vector(0.0, vSize));
         break;
 
@@ -544,16 +542,16 @@ void RS_MText::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
     data.angle = RS_Math::makeAngleReadable(data.angle, readable, &corr);
 
     if (corr) {
-        if (data.halign==RS2::HAlignLeft) {
-            data.halign=RS2::HAlignRight;
-        } else if (data.halign==RS2::HAlignRight) {
-            data.halign=RS2::HAlignLeft;
+        if (data.halign==RS_MTextData::HALeft) {
+            data.halign=RS_MTextData::HARight;
+        } else if (data.halign==RS_MTextData::HARight) {
+            data.halign=RS_MTextData::HALeft;
         }
     } else {
-        if (data.valign==RS2::VAlignTop) {
-            data.valign=RS2::VAlignBottom;
-        } else if (data.valign==RS2::VAlignBottom) {
-            data.valign=RS2::VAlignTop;
+        if (data.valign==RS_MTextData::VATop) {
+            data.valign=RS_MTextData::VABottom;
+        } else if (data.valign==RS_MTextData::VABottom) {
+            data.valign=RS_MTextData::VATop;
         }
     }
     update();

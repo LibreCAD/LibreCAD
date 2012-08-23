@@ -28,7 +28,6 @@
 #include "rs_information.h"
 #include "rs_dimension.h"
 #include "rs_solid.h"
-#include "rs_mtext.h"
 #include "rs_units.h"
 
 /**
@@ -231,10 +230,10 @@ if(dimtsz < 0.01) {
 
     textData = RS_MTextData(textPos,
                            dimtxt, 30.0,
-                           RS2::VAlignMiddle,
-                           RS2::HAlignCenter,
-                           RS2::LeftToRight,
-                           RS2::Exact,
+                           RS_MTextData::VAMiddle,
+                           RS_MTextData::HACenter,
+                           RS_MTextData::LeftToRight,
+                           RS_MTextData::Exact,
                            1.0,
                            getLabel(),
                            "standard",

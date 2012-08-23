@@ -4456,13 +4456,13 @@ void QC_ApplicationWindow::slotTestInsertMText() {
 
         textData = RS_MTextData(RS_Vector(10.0,10.0),
                                10.0, 100.0,
-                               RS2::VAlignTop,
-                               RS2::HAlignLeft,
-                               RS2::LeftToRight,
-                               RS2::Exact,
+                               RS_MTextData::VATop,
+                               RS_MTextData::HALeft,
+                               RS_MTextData::LeftToRight,
+                               RS_MTextData::Exact,
                                1.0,
-                               "Andrew",
-                               "normal",
+                               "LibreCAD",
+                               "iso",
                                0.0);
         text = new RS_MText(graphic, textData);
 
@@ -4495,13 +4495,11 @@ void QC_ApplicationWindow::slotTestInsertText() {
 
         textData = RS_TextData(RS_Vector(10.0,10.0),
                                10.0, 100.0,
-                               RS2::VAlignTop,
-                               RS2::HAlignLeft,
-                               RS2::LeftToRight,
-                               RS2::Exact,
-                               1.0,
-                               "Andrew",
-                               "normal",
+                               RS_TextData::VATop,
+                               RS_TextData::HALeft,
+                               RS_TextData::None,
+                               "LibreCAD",
+                               "iso",
                                0.0);
         text = new RS_Text(graphic, textData);
 

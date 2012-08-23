@@ -54,7 +54,7 @@ public slots:
     virtual void setAlignmentBR();
     virtual void setAlignment( int a );
     virtual void setFont( const QString & f );
-    virtual void defaultChanged( bool );
+//    virtual void defaultChanged( bool );
     virtual void loadText();
     virtual void load( const QString & fn );
     virtual void saveText();

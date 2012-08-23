@@ -482,40 +482,40 @@ void RS_FilterJWW::addMText(const DL_MTextData& data) {
         RS_DEBUG->print("RS_FilterJWW::addMText: %s", data.text.c_str());
 
         RS_Vector ip(data.ipx, data.ipy);
-        RS2::VAlign valign;
-        RS2::HAlign halign;
-        RS2::TextDrawingDirection dir;
-        RS2::TextLineSpacingStyle lss;
+        RS_MTextData::VAlign valign;
+        RS_MTextData::HAlign halign;
+        RS_MTextData::MTextDrawingDirection dir;
+        RS_MTextData::MTextLineSpacingStyle lss;
         QString sty = data.style.c_str();
 
         if (data.attachmentPoint<=3) {
-                valign=RS2::VAlignTop;
+                valign=RS_MTextData::VATop;
         } else if (data.attachmentPoint<=6) {
-                valign=RS2::VAlignMiddle;
+                valign=RS_MTextData::VAMiddle;
         } else {
-                valign=RS2::VAlignBottom;
+                valign=RS_MTextData::VABottom;
         }
 
         if (data.attachmentPoint%3==1) {
-                halign=RS2::HAlignLeft;
+                halign=RS_MTextData::HALeft;
         } else if (data.attachmentPoint%3==2) {
-                halign=RS2::HAlignCenter;
+                halign=RS_MTextData::HACenter;
         } else {
-                halign=RS2::HAlignRight;
+                halign=RS_MTextData::HARight;
         }
 
         if (data.drawingDirection==1) {
-                dir = RS2::LeftToRight;
+                dir = RS_MTextData::LeftToRight;
         } else if (data.drawingDirection==3) {
-                dir = RS2::TopToBottom;
+                dir = RS_MTextData::TopToBottom;
         } else {
-                dir = RS2::ByStyle;
+                dir = RS_MTextData::ByStyle;
         }
 
         if (data.lineSpacingStyle==1) {
-                lss = RS2::AtLeast;
+                lss = RS_MTextData::AtLeast;
         } else {
-                lss = RS2::Exact;
+                lss = RS_MTextData::Exact;
         }
 
     mtext+=data.text.c_str();
@@ -637,7 +637,7 @@ void RS_FilterJWW::addText(const DL_TextData& data) {
                                  data.height, width,
                                  attachmentPoint,
                                  drawingDirection,
-                                 RS2::Exact,
+                                 RS_MTextData::Exact,
                                  1.0,
                                  data.text.c_str(), data.style,
                                  angle));
@@ -654,9 +654,9 @@ RS_DimensionData RS_FilterJWW::convDimensionData(
 
         RS_Vector defP(data.dpx, data.dpy);
         RS_Vector midP(data.mpx, data.mpy);
-        RS2::VAlign valign;
-        RS2::HAlign halign;
-        RS2::TextLineSpacingStyle lss;
+        RS_MTextData::VAlign valign;
+        RS_MTextData::HAlign halign;
+        RS_MTextData::MTextLineSpacingStyle lss;
         QString sty = data.style.c_str();
         QString t; //= data.text;
 
@@ -668,25 +668,25 @@ RS_DimensionData RS_FilterJWW::convDimensionData(
         }
 
         if (data.attachmentPoint<=3) {
-                valign=RS2::VAlignTop;
+                valign=RS_MTextData::VATop;
         } else if (data.attachmentPoint<=6) {
-                valign=RS2::VAlignMiddle;
+                valign=RS_MTextData::VAMiddle;
         } else {
-                valign=RS2::VAlignBottom;
+                valign=RS_MTextData::VABottom;
         }
 
         if (data.attachmentPoint%3==1) {
-                halign=RS2::HAlignLeft;
+                halign=RS_MTextData::HALeft;
         } else if (data.attachmentPoint%3==2) {
-                halign=RS2::HAlignCenter;
+                halign=RS_MTextData::HACenter;
         } else {
-                halign=RS2::HAlignRight;
+                halign=RS_MTextData::HARight;
         }
 
         if (data.lineSpacingStyle==1) {
-                lss = RS2::AtLeast;
+                lss = RS_MTextData::AtLeast;
         } else {
-                lss = RS2::Exact;
+                lss = RS_MTextData::Exact;
         }
 
         t = toNativeString(data.text.c_str(), getDXFEncoding());
@@ -1913,18 +1913,18 @@ void RS_FilterJWW::writeText(DL_WriterA& dw, RS_MText* t,
         if (jww.getVersion()==VER_R12) {
                 int hJust=0;
                 int vJust=0;
-                if (t->getHAlign()==RS2::HAlignLeft) {
+                if (t->getHAlign()==RS_MTextData::HALeft) {
                         hJust=0;
-                } else if (t->getHAlign()==RS2::HAlignCenter) {
+                } else if (t->getHAlign()==RS_MTextData::HACenter) {
                         hJust=1;
-                } else if (t->getHAlign()==RS2::HAlignRight) {
+                } else if (t->getHAlign()==RS_MTextData::HARight) {
                         hJust=2;
                 }
-                if (t->getVAlign()==RS2::VAlignTop) {
+                if (t->getVAlign()==RS_MTextData::VATop) {
                         vJust=3;
-                } else if (t->getVAlign()==RS2::VAlignMiddle) {
+                } else if (t->getVAlign()==RS_MTextData::VAMiddle) {
                         vJust=2;
-                } else if (t->getVAlign()==RS2::VAlignBottom) {
+                } else if (t->getVAlign()==RS_MTextData::VABottom) {
                         vJust=1;
                 }
                 jww.writeText(
@@ -1947,18 +1947,18 @@ void RS_FilterJWW::writeText(DL_WriterA& dw, RS_MText* t,
 
         } else {
                 int attachmentPoint=1;
-                if (t->getHAlign()==RS2::HAlignLeft) {
+                if (t->getHAlign()==RS_MTextData::HALeft) {
                         attachmentPoint=1;
-                } else if (t->getHAlign()==RS2::HAlignCenter) {
+                } else if (t->getHAlign()==RS_MTextData::HACenter) {
                         attachmentPoint=2;
-                } else if (t->getHAlign()==RS2::HAlignRight) {
+                } else if (t->getHAlign()==RS_MTextData::HARight) {
                         attachmentPoint=3;
                 }
-                if (t->getVAlign()==RS2::VAlignTop) {
+                if (t->getVAlign()==RS_MTextData::VATop) {
                         attachmentPoint+=0;
-                } else if (t->getVAlign()==RS2::VAlignMiddle) {
+                } else if (t->getVAlign()==RS_MTextData::VAMiddle) {
                         attachmentPoint+=3;
-                } else if (t->getVAlign()==RS2::VAlignBottom) {
+                } else if (t->getVAlign()==RS_MTextData::VABottom) {
                         attachmentPoint+=6;
                 }
 
@@ -1994,18 +1994,18 @@ void RS_FilterJWW::writeDimension(DL_WriterA& dw, RS_Dimension* d,
 
         int type;
         int attachmentPoint=1;
-        if (d->getHAlign()==RS2::HAlignLeft) {
+        if (d->getHAlign()==RS_MTextData::HALeft) {
                 attachmentPoint=1;
-        } else if (d->getHAlign()==RS2::HAlignCenter) {
+        } else if (d->getHAlign()==RS_MTextData::HACenter) {
                 attachmentPoint=2;
-        } else if (d->getHAlign()==RS2::HAlignRight) {
+        } else if (d->getHAlign()==RS_MTextData::HARight) {
                 attachmentPoint=3;
         }
-        if (d->getVAlign()==RS2::VAlignTop) {
+        if (d->getVAlign()==RS_MTextData::VATop) {
                 attachmentPoint+=0;
-        } else if (d->getVAlign()==RS2::VAlignMiddle) {
+        } else if (d->getVAlign()==RS_MTextData::VAMiddle) {
                 attachmentPoint+=3;
-        } else if (d->getVAlign()==RS2::VAlignBottom) {
+        } else if (d->getVAlign()==RS_MTextData::VABottom) {
                 attachmentPoint+=6;
         }
 

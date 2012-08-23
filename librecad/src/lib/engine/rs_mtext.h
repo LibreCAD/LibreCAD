@@ -36,6 +36,41 @@
 class RS_MTextData {
 public:
     /**
+     * Vertical alignments.
+     */
+    enum VAlign {
+        VATop,      /**< Top. */
+        VAMiddle,   /**< Middle */
+        VABottom    /**< Bottom */
+    };
+
+    /**
+     * Horizontal alignments.
+     */
+    enum HAlign {
+        HALeft,     /**< Left */
+        HACenter,   /**< Centered */
+        HARight     /**< Right */
+    };
+
+    /**
+     * MText drawing direction.
+     */
+    enum MTextDrawingDirection {
+        LeftToRight,     /**< Left to right */
+        TopToBottom,     /**< Top to bottom */
+        ByStyle          /**< Inherited from associated text style */
+    };
+
+    /**
+     * Line spacing style for MTexts.
+     */
+    enum MTextLineSpacingStyle {
+        AtLeast,        /**< Taller characters will override */
+        Exact           /**< Taller characters will not override */
+    };
+
+    /**
      * Default constructor. Leaves the data object uninitialized.
      */
     RS_MTextData() {}
@@ -63,10 +98,10 @@ public:
     RS_MTextData(const RS_Vector& insertionPoint,
                 double height,
                 double width,
-                RS2::VAlign valign,
-                RS2::HAlign halign,
-                RS2::TextDrawingDirection drawingDirection,
-                RS2::TextLineSpacingStyle lineSpacingStyle,
+                VAlign valign,
+                HAlign halign,
+                MTextDrawingDirection drawingDirection,
+                MTextLineSpacingStyle lineSpacingStyle,
                 double lineSpacingFactor,
                 const QString& text,
                 const QString& style,
@@ -101,13 +136,13 @@ public:
     /** Reference rectangle width */
     double width;
     /** Vertical alignment */
-    RS2::VAlign valign;
+    VAlign valign;
     /** Horizontal alignment */
-    RS2::HAlign halign;
+    HAlign halign;
     /** Drawing direction */
-    RS2::TextDrawingDirection drawingDirection;
+    MTextDrawingDirection drawingDirection;
     /** Line spacing style */
-    RS2::TextLineSpacingStyle lineSpacingStyle;
+    MTextLineSpacingStyle lineSpacingStyle;
     /** Line spacing factor */
     double lineSpacingFactor;
     /** Text string */
@@ -174,22 +209,22 @@ public:
     }
     void setAlignment(int a);
     int getAlignment();
-    RS2::VAlign getVAlign() {
+    RS_MTextData::VAlign getVAlign() {
         return data.valign;
     }
-        void setVAlign(RS2::VAlign va) {
-                data.valign = va;
-        }
-    RS2::HAlign getHAlign() {
+    void setVAlign(RS_MTextData::VAlign va) {
+        data.valign = va;
+    }
+    RS_MTextData::HAlign getHAlign() {
         return data.halign;
     }
-        void setHAlign(RS2::HAlign ha) {
-                data.halign = ha;
-        }
-    RS2::TextDrawingDirection getDrawingDirection() {
+    void setHAlign(RS_MTextData::HAlign ha) {
+        data.halign = ha;
+    }
+    RS_MTextData::MTextDrawingDirection getDrawingDirection() {
         return data.drawingDirection;
     }
-    RS2::TextLineSpacingStyle getLineSpacingStyle() {
+    RS_MTextData::MTextLineSpacingStyle getLineSpacingStyle() {
         return data.lineSpacingStyle;
     }
     void setLineSpacingFactor(double f) {
@@ -208,9 +243,9 @@ public:
     QString getStyle() {
         return data.style;
     }
-        void setAngle(double a) {
-                data.angle = a;
-        }
+    void setAngle(double a) {
+        data.angle = a;
+    }
     double getAngle() {
         return data.angle;
     }

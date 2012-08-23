@@ -383,8 +383,8 @@ void QC_MDIWindow::drawChars() {
         document->addEntity(in);
         QFileInfo info(document->getFilename() );
         QString uCode = (ch->getName()).mid(1,4);
-        RS_MTextData datatx(RS_Vector(i*sep,-h), h, 4*h, RS2::VAlignTop,
-                           RS2::HAlignLeft, RS2::ByStyle, RS2::AtLeast,
+        RS_MTextData datatx(RS_Vector(i*sep,-h), h, 4*h, RS_MTextData::VATop,
+                           RS_MTextData::HALeft, RS_MTextData::ByStyle, RS_MTextData::AtLeast,
                            1, uCode, "standard", 0);
 /*        RS_MTextData datatx(RS_Vector(i*sep,-h), h, 4*h, RS2::VAlignTop,
                            RS2::HAlignLeft, RS2::ByStyle, RS2::AtLeast,

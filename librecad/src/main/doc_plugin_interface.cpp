@@ -726,10 +726,10 @@ void Doc_plugin_interface::addMText(QString txt, QString sty, QPointF *start,
     }
     double width = 100.0;
 
-    RS2::VAlign valign = static_cast <RS2::VAlign>(va);
-    RS2::HAlign halign = static_cast <RS2::HAlign>(ha);
+    RS_MTextData::VAlign valign = static_cast <RS_MTextData::VAlign>(va);
+    RS_MTextData::HAlign halign = static_cast <RS_MTextData::HAlign>(ha);
     RS_MTextData d(v1, height, width, valign, halign,
-                  RS2::ByStyle, RS2::Exact, 0.0,
+                  RS_MTextData::ByStyle, RS_MTextData::Exact, 0.0,
                   txt, sty, angle, RS2::Update);
     RS_MText* entity = new RS_MText(doc, d);
 
@@ -746,11 +746,10 @@ void Doc_plugin_interface::addText(QString txt, QString sty, QPointF *start,
     }
     double width = 100.0;
 
-    RS2::VAlign valign = static_cast <RS2::VAlign>(va);
-    RS2::HAlign halign = static_cast <RS2::HAlign>(ha);
+    RS_TextData::VAlign valign = static_cast <RS_TextData::VAlign>(va);
+    RS_TextData::HAlign halign = static_cast <RS_TextData::HAlign>(ha);
     RS_TextData d(v1, height, width, valign, halign,
-                  RS2::ByStyle, RS2::Exact, 0.0,
-                  txt, sty, angle, RS2::Update);
+                  RS_TextData::None, txt, sty, angle, RS2::Update);
     RS_Text* entity = new RS_Text(doc, d);
 
 //    setEntityAttributes(entity, attributes);
