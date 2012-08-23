@@ -246,7 +246,7 @@ void RS_Text::update() {
 
     updateAddLine(oneLine, 0);
     //RLZ: verify
-    usedTextHeight -= data.height;
+    usedTextHeight = data.height;
     forcedCalculateBorders();
 
     RS_DEBUG->print("RS_Text::update: OK");

@@ -573,9 +573,11 @@ void RS_FilterDXFRW::addText(const DRW_Text& data) {
     RS_Vector secPoint = RS_Vector(data.secPoint.x, data.secPoint.y);;
     double angle = data.angle;
 
-    if (data.alignV !=0 || data.alignH ==DRW_Text::HMiddle){
-            secPoint = RS_Vector(data.basePoint.x, data.basePoint.y);;
-            refPoint = RS_Vector(data.secPoint.x, data.secPoint.y);;
+    if (data.alignV !=0 || data.alignH !=0 ||data.alignH ==DRW_Text::HMiddle){
+        if (data.alignH !=DRW_Text::HAligned && data.alignH !=DRW_Text::HFit){
+            secPoint = RS_Vector(data.basePoint.x, data.basePoint.y);
+            refPoint = RS_Vector(data.secPoint.x, data.secPoint.y);
+        }
     }
 
     RS_TextData::VAlign valign = (RS_TextData::VAlign)data.alignV;
@@ -1985,32 +1987,37 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
  * Writes the given Text entity to the file.
  */
 void RS_FilterDXFRW::writeText(RS_Text* t){
-    DRW_Text *text;
-    DRW_Text txt1;
-    text = &txt1;
+    DRW_Text text;
 
-    getEntityAttributes(text, t);
-    text->basePoint.x = t->getInsertionPoint().x;
-    text->basePoint.y = t->getInsertionPoint().y;
-    text->height = t->getHeight();
-    text->angle = t->getAngle()*180/M_PI;
-    text->style = t->getStyle().toStdString();
-    text->alignH =(DRW_Text::HAlign)t->getHAlign();
-    text->alignV =(DRW_Text::VAlign)t->getVAlign();
+    getEntityAttributes(&text, t);
+    text.basePoint.x = t->getInsertionPoint().x;
+    text.basePoint.y = t->getInsertionPoint().y;
+    text.height = t->getHeight();
+    text.angle = t->getAngle()*180/M_PI;
+    text.style = t->getStyle().toStdString();
+    text.alignH =(DRW_Text::HAlign)t->getHAlign();
+    text.alignV =(DRW_Text::VAlign)t->getVAlign();
 
-    if (text->alignV != DRW_Text::VBaseLine || text->alignH == DRW_Text::HMiddle) {
-        text->secPoint.x = t->getInsertionPoint().x;
-        text->secPoint.y = t->getInsertionPoint().y;
+    if (text.alignV != DRW_Text::VBaseLine || text.alignH != DRW_Text::HLeft) {
+//    if (text.alignV != DRW_Text::VBaseLine || text.alignH == DRW_Text::HMiddle) {
+//        if (text.alignH != DRW_Text::HLeft) {
+        if (text.alignH == DRW_Text::HAligned || text.alignH == DRW_Text::HFit) {
+            text.secPoint.x = t->getSecondPoint().x;
+            text.secPoint.y = t->getSecondPoint().y;
+        } else {
+            text.secPoint.x = t->getInsertionPoint().x;
+            text.secPoint.y = t->getInsertionPoint().y;
+        }
     }
 
-    if (text->alignH == DRW_Text::HAligned || text->alignH != DRW_Text::HFit) {
-        text->basePoint.x = t->getSecondPoint().x;
-        text->basePoint.y = t->getSecondPoint().y;
-    }
+/*    if (text.alignH == DRW_Text::HAligned || text.alignH == DRW_Text::HFit) {
+        text.secPoint.x = t->getSecondPoint().x;
+        text.secPoint.y = t->getSecondPoint().y;
+    }*/
 
     if (!t->getText().isEmpty()) {
-        text->text = toDxfString(t->getText()).toUtf8().data();
-        dxf->writeText(text);
+        text.text = toDxfString(t->getText()).toUtf8().data();
+        dxf->writeText(&text);
     }
 }
 
