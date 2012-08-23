@@ -1150,10 +1150,6 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
     dxf.writeVPort(*dw);
     dw->tableEnd();
 
-    // STYLE:
-    RS_DEBUG->print("writing styles...");
-    dxf.writeStyle(*dw);
-
     // VIEW:
     RS_DEBUG->print("writing views...");
     dxf.writeView(*dw);
@@ -1535,8 +1531,59 @@ void RS_FilterDXFRW::writeLayers(){
 }
 
 void RS_FilterDXFRW::writeTextstyles(){
-//    DRW_Textstyle ts;
-//    dxf->writeTextstyle(&ts);
+    QHash<QString, QString> styles;
+    QString sty;
+    //Find fonts used by text entities in drawing
+    for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
+         e != NULL; e = graphic->nextEntity(RS2::ResolveNone)) {
+        if ( !(e->getFlag(RS2::FlagUndone)) ) {
+            switch (e->rtti()) {
+            case RS2::EntityMText:
+                sty = ((RS_MText*)e)->getStyle();
+                break;
+            case RS2::EntityText:
+                sty = ((RS_Text*)e)->getStyle();
+                break;
+            default:
+                sty.clear();
+                break;
+            }
+            if (!sty.isEmpty() && !styles.contains(sty))
+                styles.insert(sty, sty);
+        }
+    }
+    //Find fonts used by text entities in blocks
+    RS_Block *blk;
+    for (uint i = 0; i < graphic->countBlocks(); i++) {
+        blk = graphic->blockAt(i);
+        for (RS_Entity *e = blk->firstEntity(RS2::ResolveNone);
+             e != NULL; e = blk->nextEntity(RS2::ResolveNone)) {
+            if ( !(e->getFlag(RS2::FlagUndone)) ) {
+                switch (e->rtti()) {
+                case RS2::EntityMText:
+                    sty = ((RS_MText*)e)->getStyle();
+                    break;
+                case RS2::EntityText:
+                    sty = ((RS_Text*)e)->getStyle();
+                    break;
+                default:
+                    sty.clear();
+                    break;
+                }
+                if (!sty.isEmpty() && !styles.contains(sty))
+                    styles.insert(sty, sty);
+            }
+        }
+    }
+    DRW_Textstyle ts;
+    QHash<QString, QString>::const_iterator it = styles.constBegin();
+     while (it != styles.constEnd()) {
+         ts.name = (it.key()).toStdString();
+         ts.font = it.value().toStdString();
+//         ts.flags;
+         dxf->writeTextstyle( &ts );
+         ++it;
+     }
 }
 
 void RS_FilterDXFRW::writeVports(){
