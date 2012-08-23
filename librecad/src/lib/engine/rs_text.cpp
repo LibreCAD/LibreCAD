@@ -328,7 +328,6 @@ void RS_Text::updateAddLine(RS_EntityContainer* textLine, int /*lineCounter*/) {
     // Horizontal Align:
     switch (data.halign) {
     case RS_TextData::HAMiddle:{
-        double xv = textSize.y/2.0 + textLine->getMin().y;
         textLine->move(RS_Vector(-textSize.x/2.0, -(textSize.y/2.0 + textLine->getMin().y) ));
         break;}
     case RS_TextData::HACenter:
@@ -354,7 +353,7 @@ void RS_Text::updateAddLine(RS_EntityContainer* textLine, int /*lineCounter*/) {
                         RS_Vector(dist, data.height/9.0));
     } else
         textLine->scale(RS_Vector(0.0,0.0),
-                    RS_Vector(data.height/9.0, data.height/9.0));
+                        RS_Vector(data.height*data.widthRel/9.0, data.height/9.0));
 
     textLine->forcedCalculateBorders();
 

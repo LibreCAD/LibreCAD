@@ -201,6 +201,9 @@ public:
     double getWidthRel() {
         return data.widthRel;
     }
+    void setWidthRel(double w) {
+        data.widthRel = w;
+    }
     //RLZ: bad functions, this is MText style align
     void setAlignment(int a);
     int getAlignment();
