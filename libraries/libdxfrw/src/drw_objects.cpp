@@ -516,6 +516,11 @@ void DRW_ImageDef::parseCode(int code, dxfReader *reader){
     }
 }
 
+void DRW_Header::addComment(string c){
+    if (!comments.empty())
+        comments += '\n';
+    comments += c;
+}
 
 void DRW_Header::parseCode(int code, dxfReader *reader){
     switch (code) {

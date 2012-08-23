@@ -547,12 +547,35 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
 
     RS_DEBUG->print("Text as unicode:");
     RS_DEBUG->printUnicode(mtext);
+    double interlin = data.interlin;
+    double angle = data.angle*M_PI/180;
+    RS_Vector ip = RS_Vector(data.basePoint.x, data.basePoint.y);
 
-    RS_MTextData d(RS_Vector(data.basePoint.x, data.basePoint.y), data.height, data.widthscale,
+//Correct bad alignment of older dxflib or libdxfrw < 0.5.4
+    if (oldMText) {
+        interlin = data.interlin*0.96;
+        if (valign == RS_MTextData::VABottom) {
+            QStringList tl = mtext.split('\n', QString::SkipEmptyParts);
+            if (!tl.isEmpty()) {
+                QString txt = tl.at(tl.size()-1);
+                RS_TextData d(RS_Vector(0,0,0), RS_Vector(0,0,0),
+                              data.height, 1, RS_TextData::VABaseline, RS_TextData::HALeft,
+                              RS_TextData::None, txt, sty, 0,
+                              RS2::Update);
+                RS_Text* entity = new RS_Text(NULL, d);
+                double textTail = entity->getMin().y;
+                delete entity;
+                RS_Vector ot = RS_Vector(0.0,textTail).rotate(angle);
+                ip.move(ot);
+            }
+        }
+    }
+
+    RS_MTextData d(ip, data.height, data.widthscale,
                   valign, halign,
                   dir, lss,
-                  data.interlin,
-                  mtext, sty, data.angle*M_PI/180,
+                  interlin,
+                  mtext, sty, angle,
                   RS2::NoUpdate);
     RS_MText* entity = new RS_MText(currentContainer, d);
 
@@ -1087,6 +1110,25 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
     bool ok;
     version=acadver.toInt(&ok);
     if (!ok) { version = 1021;}
+
+    //detect if dxf lib are a old dxflib or libdxfrw<0.5.4 (used to correct mtext alignment)
+    oldMText = false;
+    QStringList comm = QString::fromStdString(data->getComments()).split('\n',QString::SkipEmptyParts);
+    for (int i = 0; i < comm.size(); ++i) {
+        QStringList comstr = comm.at(i).split(' ',QString::SkipEmptyParts);
+        if (!comstr.isEmpty() && comstr.at(0) == "dxflib") {
+            oldMText = true;
+            break;
+        } else if (comstr.size()>1 && comstr.at(0) == "dxfrw"){
+            QStringList libversionstr = comstr.at(1).split('.',QString::SkipEmptyParts);
+            if (libversionstr.size()<3) break;
+            int libRelease = (libversionstr.at(1)+ libversionstr.at(2)).toInt();
+            if (libversionstr.at(0)=="0" && libRelease < 54){
+                oldMText = true;
+                break;
+            }
+        }
+    }
 }
 
 
@@ -1976,7 +2018,7 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
             text->alignV = DRW_Text::VBaseLine;
         }
         QStringList txtList = t->getText().split('\n',QString::KeepEmptyParts);
-        double dist = t->getLineSpacingFactor()*1.6*t->getHeight();//RLZ: the correct valie are 5/3 instead 1.6
+        double dist = t->getLineSpacingFactor()*5*t->getHeight()/3;
         bool setSec = false;
         if (text->alignH != DRW_Text::HLeft || text->alignV != DRW_Text::VBaseLine) {
             text->secPoint.x = t->getInsertionPoint().x;

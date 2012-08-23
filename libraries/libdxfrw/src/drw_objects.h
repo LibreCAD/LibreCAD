@@ -356,6 +356,8 @@ public:
 
     void parseCode(int code, dxfReader *reader);
     void write(dxfWriter *writer, DRW::Version ver);
+    void addComment(string c);
+    string getComments() const {return comments;}
 private:
     bool getDouble(string key, double *varDouble);
     bool getInt(string key, int *varInt);
@@ -365,6 +367,7 @@ private:
 public:
     std::map<string,DRW_Variant*> vars;
 private:
+    string comments;
     string name;
     DRW_Variant *curr;
 };

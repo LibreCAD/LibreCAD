@@ -198,7 +198,7 @@ private:
     /** Temporary list to handle unnamed blocks fot write R12 dxf. */
     QHash <RS_Entity*, QString> noNameBlock;
     QHash <QString, QString> fontList;
-
+    bool oldMText;
     dxfRW *dxf;
 };
 

@@ -387,8 +387,13 @@ void RS_MText::update() {
         }
     }
 
-    updateAddLine(oneLine, lineCounter);
-    usedTextHeight -= data.height*data.lineSpacingFactor*1.6
+    double tt = updateAddLine(oneLine, lineCounter);
+    if (data.valign == RS_MTextData::VABottom) {
+        RS_Vector ot = RS_Vector(0.0,-tt).rotate(data.angle);
+        RS_EntityContainer::move(ot);
+    }
+
+    usedTextHeight -= data.height*data.lineSpacingFactor*5.0/3.0
                       - data.height;
     forcedCalculateBorders();
 
@@ -403,8 +408,12 @@ void RS_MText::update() {
  *
  * @param textLine The text line.
  * @param lineCounter Line number.
+ *
+ * @return  distance over the text base-line
  */
-void RS_MText::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
+double RS_MText::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
+    double ls =5.0/3.0;
+
     RS_DEBUG->print("RS_Text::updateAddLine: width: %f", textLine->getSize().x);
 
         //textLine->forcedCalculateBorders();
@@ -412,7 +421,7 @@ void RS_MText::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
 
     // Move to correct line position:
     textLine->move(RS_Vector(0.0, -9.0 * lineCounter
-                             * data.lineSpacingFactor * 1.6));
+                             * data.lineSpacingFactor * ls));
 
     if( ! RS_EntityContainer::autoUpdateBorders) {
         //only update borders when needed
@@ -438,8 +447,8 @@ void RS_MText::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
     }
 
     // Vertical Align:
-    double vSize = getNumberOfLines()*9.0*data.lineSpacingFactor*1.6
-                   - (9.0*data.lineSpacingFactor*1.6 - 9.0);
+    double vSize = getNumberOfLines()*9.0*data.lineSpacingFactor*ls
+                   - (9.0*data.lineSpacingFactor*ls - 9.0);
 
     switch (data.valign) {
     case RS_MTextData::VAMiddle:
@@ -465,7 +474,10 @@ void RS_MText::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
         usedTextWidth = textLine->getSize().x;
     }
 
-    usedTextHeight += data.height*data.lineSpacingFactor*1.6;
+    usedTextHeight += data.height*data.lineSpacingFactor*ls;
+
+    // Gets the distance over text base-line (before rotating, after scaling!):
+    double textTail = textLine->getMin().y;
 
     // Rotate:
     textLine->rotate(RS_Vector(0.0,0.0), data.angle);
@@ -477,6 +489,7 @@ void RS_MText::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
     textLine->forcedCalculateBorders();
 
     addEntity(textLine);
+    return textTail;
 }
 
 

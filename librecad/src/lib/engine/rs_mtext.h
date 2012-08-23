@@ -190,7 +190,6 @@ public:
     }
 
     void update();
-    void updateAddLine(RS_EntityContainer* textLine, int lineCounter);
 
     int getNumberOfLines();
 
@@ -275,6 +274,9 @@ public:
                          const RS_Vector& offset);
 
     friend std::ostream& operator << (std::ostream& os, const RS_Text& p);
+
+private:
+    double updateAddLine(RS_EntityContainer* textLine, int lineCounter);
 
 protected:
     RS_MTextData data;

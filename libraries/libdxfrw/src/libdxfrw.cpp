@@ -1723,7 +1723,9 @@ bool dxfRW::processDxf() {
 //    section = secUnknown;
     while (reader->readRec(&code, !binary)) {
         DBG(code); DBG(" processDxf\n");
-        if (code == 0) {
+        if (code == 999) {
+            header.addComment(reader->getString());
+        } else if (code == 0) {
             sectionstr = reader->getString();
             DBG(sectionstr); DBG(" processDxf\n");
             if (sectionstr == "EOF") {
