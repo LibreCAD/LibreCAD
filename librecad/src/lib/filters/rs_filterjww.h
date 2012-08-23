@@ -41,7 +41,7 @@
 #include "rs_polyline.h"
 #include "rs_spline.h"
 #include "rs_solid.h"
-#include "rs_text.h"
+#include "rs_mtext.h"
 #include "rs_image.h"
 
 #include "dl_creationinterface.h"
@@ -154,7 +154,7 @@ public:
 	void writeArc(DL_WriterA& dw, RS_Arc* a, const DL_Attributes& attrib);
 	void writeEllipse(DL_WriterA& dw, RS_Ellipse* s, const DL_Attributes& attrib);
 	void writeInsert(DL_WriterA& dw, RS_Insert* i, const DL_Attributes& attrib);
-	void writeText(DL_WriterA& dw, RS_Text* t, const DL_Attributes& attrib);
+    void writeText(DL_WriterA& dw, RS_MText* t, const DL_Attributes& attrib);
 	void writeDimension(DL_WriterA& dw, RS_Dimension* d, 
 		const DL_Attributes& attrib);
 	void writeLeader(DL_WriterA& dw, RS_Leader* l, const DL_Attributes& attrib);

@@ -45,7 +45,8 @@ public:
     enum Status {
         ShowDialog,           /**< Showing the text dialog. */
         SetPos,               /**< Setting the position. */
-                SetText               /**< Settting the text in the command line. */
+        SetSecPos,            /**< Setting the second point for aligned of fit text. */
+        SetText               /**< Settting the text in the command line. */
     };
 
 public:
@@ -90,7 +91,8 @@ private:
     RS_TextData data;
         //RS_Text* text;
     RS_Vector pos;
-        bool textChanged;
+    RS_Vector secPos;
+    bool textChanged;
 };
 
 #endif

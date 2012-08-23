@@ -85,8 +85,8 @@ void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
                 actionHandler, SLOT(slotDrawPoint()));
 
         connect(bMenuText, SIGNAL(clicked()),
-                //actionHandler, SLOT(slotDrawText()));
-                this, SLOT(slotDrawText()));
+                //actionHandler, SLOT(slotDrawMText()));
+                this, SLOT(slotDrawMText()));
         connect(bMenuDim, SIGNAL(clicked()),
                 tb, SLOT(showToolBarDim()));
         connect(bMenuHatch, SIGNAL(clicked()),
@@ -120,10 +120,10 @@ void QG_CadToolBarMain::finishCurrentAction(bool resetToolBar)
     }
 }
 
-void QG_CadToolBarMain::slotDrawText()
+void QG_CadToolBarMain::slotDrawMText()
 {
     finishCurrentAction();
-    actionHandler->slotDrawText();
+    actionHandler->slotDrawMText();
 }
 
 void QG_CadToolBarMain::slotDrawImage()
@@ -170,7 +170,7 @@ void QG_CadToolBarMain::showCadToolBar(RS2::ActionType actionType) {
     case RS2::ActionDrawSpline:
         bMenuSpline->setChecked(true);
         break;
-    case RS2::ActionDrawText:
+    case RS2::ActionDrawMText:
         bMenuText->setChecked(true);
         break;
     default:

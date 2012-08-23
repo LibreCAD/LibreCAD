@@ -136,7 +136,8 @@ public:
         EntityHyperbola,      /**< Hyperbola */
         EntitySolid,        /**< Solid */
         EntityConstructionLine, /**< Construction line */
-        EntityText,         /**< Text */
+        EntityMText,         /**< Multi-line Text */
+        EntityText,         /**< Single-line Text */
         EntityDimAligned,   /**< Aligned Dimension */
         EntityDimLinear,    /**< Linear Dimension */
         EntityDimRadial,    /**< Radial Dimension */
@@ -274,6 +275,7 @@ public:
         ActionDrawLineTangent1,
         ActionDrawLineTangent2,
         ActionDrawLineVertical,
+        ActionDrawMText,
         ActionDrawPoint,
         ActionDrawSpline,
         ActionDrawPolyline,
@@ -553,37 +555,37 @@ public:
     /**
      * Vertical alignments.
      */
-    enum VAlign {
-        VAlignTop,      /**< Top. */
-        VAlignMiddle,   /**< Middle */
-        VAlignBottom    /**< Bottom */
-    };
+//    enum VAlign {
+//        VAlignTop,      /**< Top. */
+//        VAlignMiddle,   /**< Middle */
+//        VAlignBottom    /**< Bottom */
+//    };
 
     /**
      * Horizontal alignments.
      */
-    enum HAlign {
-        HAlignLeft,     /**< Left */
-        HAlignCenter,   /**< Centered */
-        HAlignRight     /**< Right */
-    };
+//    enum HAlign {
+//        HAlignLeft,     /**< Left */
+//        HAlignCenter,   /**< Centered */
+//        HAlignRight     /**< Right */
+//    };
 
     /**
      * Text drawing direction.
      */
-    enum TextDrawingDirection {
-        LeftToRight,     /**< Left to right */
-        TopToBottom,     /**< Top to bottom */
-        ByStyle          /**< Inherited from associated text style */
-    };
+//    enum TextDrawingDirection {
+//        LeftToRight,     /**< Left to right */
+//        TopToBottom,     /**< Top to bottom */
+//        ByStyle          /**< Inherited from associated text style */
+//    };
 
     /**
      * Line spacing style for texts.
      */
-    enum TextLineSpacingStyle {
-        AtLeast,        /**< Taller characters will override */
-        Exact           /**< Taller characters will not override */
-    };
+//    enum TextLineSpacingStyle {
+//        AtLeast,        /**< Taller characters will override */
+//        Exact           /**< Taller characters will not override */
+//    };
 
     /**
      * Leader path type.

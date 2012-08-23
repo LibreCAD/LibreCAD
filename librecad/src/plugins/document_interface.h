@@ -57,6 +57,7 @@ namespace DPI {
         IMAGE,
         OVERLAYBOX,
         SOLID,/*end atomicEntity, start entityContainer*/
+        MTEXT,
         TEXT,
         INSERT,
         POLYLINE,

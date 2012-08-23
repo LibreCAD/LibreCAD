@@ -79,6 +79,7 @@
 #include "rs_actiondrawlineorthtan.h"
 #include "rs_actiondrawlinetangent1.h"
 #include "rs_actiondrawlinetangent2.h"
+#include "rs_actiondrawmtext.h"
 #include "rs_actiondrawpoint.h"
 #include "rs_actiondrawspline.h"
 #include "rs_actiondrawtext.h"
@@ -546,6 +547,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionDrawSpline:
         a = new RS_ActionDrawSpline(*doc, *gv);
+        break;
+    case RS2::ActionDrawMText:
+        a = new RS_ActionDrawMText(*doc, *gv);
         break;
     case RS2::ActionDrawText:
         a = new RS_ActionDrawText(*doc, *gv);
@@ -1416,6 +1420,10 @@ void QG_ActionHandler::slotDrawEllipseInscribe() {
 
 void QG_ActionHandler::slotDrawSpline() {
     setCurrentAction(RS2::ActionDrawSpline);
+}
+
+void QG_ActionHandler::slotDrawMText() {
+    setCurrentAction(RS2::ActionDrawMText);
 }
 
 void QG_ActionHandler::slotDrawText() {

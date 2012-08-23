@@ -72,6 +72,7 @@ void QG_DlgText::init() {
     font=NULL;
     text = NULL;
     isNew = false;
+    leOblique->setDisabled(true);
     updateUniCharComboBox(0);
     updateUniCharButton(0);
 }
@@ -103,16 +104,10 @@ void QG_DlgText::destroy() {
         RS_SETTINGS->beginGroup("/Draw");
         RS_SETTINGS->writeEntry("/TextHeight", leHeight->text());
         RS_SETTINGS->writeEntry("/TextFont", cbFont->currentText());
-        RS_SETTINGS->writeEntry("/TextDefault", (int)cbDefault->isChecked());
-        RS_SETTINGS->writeEntry("/TextAlignment", getAlignment());
-        //RS_SETTINGS->writeEntry("/TextLetterSpacing", leLetterSpacing->text());
-        //RS_SETTINGS->writeEntry("/TextWordSpacing", leWordSpacing->text());
-        RS_SETTINGS->writeEntry("/TextLineSpacingFactor",
-                                leLineSpacingFactor->text());
-        RS_SETTINGS->writeEntry("/TextString", teText->toPlainText());
-        //RS_SETTINGS->writeEntry("/TextShape", getShape());
+        RS_SETTINGS->writeEntry("/TextAlignmentT", getAlignment());
+        RS_SETTINGS->writeEntry("/TextWidthRelation", leWidthRel->text());
+        RS_SETTINGS->writeEntry("/TextStringT", teText->text());
         RS_SETTINGS->writeEntry("/TextAngle", leAngle->text());
-        //RS_SETTINGS->writeEntry("/TextRadius", leRadius->text());
         RS_SETTINGS->endGroup();
     }
 }
@@ -131,7 +126,7 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
     QString alignment;
     //QString letterSpacing;
     //QString wordSpacing;
-    QString lineSpacingFactor;
+    QString widthRelation;
     QString str;
     //QString shape;
     QString angle;
@@ -155,65 +150,28 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
                 }
         height = RS_SETTINGS->readEntry("/TextHeight", "1.0");
         def = RS_SETTINGS->readEntry("/TextDefault", "1");
-        alignment = RS_SETTINGS->readEntry("/TextAlignment", "1");
-        //letterSpacing = RS_SETTINGS->readEntry("/TextLetterSpacing", "0");
-        //wordSpacing = RS_SETTINGS->readEntry("/TextWordSpacing", "0");
-        lineSpacingFactor = RS_SETTINGS->readEntry("/TextLineSpacingFactor", "1");
-        str = RS_SETTINGS->readEntry("/TextString", "");
-        //shape = RS_SETTINGS->readEntry("/TextShape", "0");
+        alignment = RS_SETTINGS->readEntry("/TextAlignmentT", "7");
+        widthRelation = RS_SETTINGS->readEntry("/TextWidthRelation", "1");
+        str = RS_SETTINGS->readEntry("/TextStringT", "");
         angle = RS_SETTINGS->readEntry("/TextAngle", "0");
-        //radius = RS_SETTINGS->readEntry("/TextRadius", "10");
         RS_SETTINGS->endGroup();
     } else {
         fon = text->getStyle();
         setFont(fon);
         height = QString("%1").arg(text->getHeight());
-        if (font!=NULL) {
-            if (font->getLineSpacingFactor()==text->getLineSpacingFactor()) {
-                def = "1";
-            } else {
-                def = "0";
-            }
-        }
+        widthRelation = QString("%1").arg(text->getWidthRel());
         alignment = QString("%1").arg(text->getAlignment());
-        //QString letterSpacing = RS_SETTINGS->readEntry("/TextLetterSpacing", "0");
-        //QString wordSpacing = RS_SETTINGS->readEntry("/TextWordSpacing", "0");
-        lineSpacingFactor = QString("%1").arg(text->getLineSpacingFactor());
-
-/* // Doesn't make sense. We don't want to show native DXF strings in the Dialog.
-#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
-        QCString iso = RS_System::localeToISO( QTextCodec::locale() );
-        QTextCodec *codec = QTextCodec::codecForName(iso);
-        if (codec!=NULL) {
-            str = codec->toUnicode(RS_FilterDXF::toNativeString(text->getText().local8Bit()));
-        } else {
-            str = RS_FilterDXF::toNativeString(text->getText().local8Bit());
-        }
-#else*/
-       str = text->getText();
-//#endif
-        //QString shape = RS_SETTINGS->readEntry("/TextShape", "0");
+        str = text->getText();
         angle = QString("%1").arg(RS_Math::rad2deg(text->getAngle()));
     }
 
-    cbDefault->setChecked(def=="1");
     setFont(fon);
     leHeight->setText(height);
     setAlignment(alignment.toInt());
-    if (def!="1" || font==NULL) {
-        //leLetterSpacing->setText(letterSpacing);
-        //leWordSpacing->setText(wordSpacing);
-        leLineSpacingFactor->setText(lineSpacingFactor);
-    } else {
-        //leLetterSpacing->setText(font->getLetterSpacing());
-        //leWordSpacing->setText(font->getWordSpacing());
-        leLineSpacingFactor->setText(
-            QString("%1").arg(font->getLineSpacingFactor()));
-    }
+//    setwidthRel(widthRelation.toDouble());
+    leWidthRel->setText(widthRelation);
     teText->setText(str);
-    //setShape(shape.toInt());
     leAngle->setText(angle);
-    //leRadius->setText(radius);
     teText->setFocus();
     teText->selectAll();
 }
@@ -226,25 +184,18 @@ void QG_DlgText::updateText() {
     if (text!=NULL) {
         text->setStyle(cbFont->currentText());
         text->setHeight(leHeight->text().toDouble());
+        text->setWidthRel(leWidthRel->text().toDouble());
 
-//fix for windows (causes troubles if locale returns en_us):
-/*#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
-        QCString iso = RS_System::localeToISO( QTextCodec::locale() );
-        text->setText(
-            RS_FilterDXF::toNativeString(
-             QString::fromLocal8Bit( QTextCodec::codecForName( iso )->fromUnicode( teText->text() ) )
-            )
-        );
-#else*/
-        text->setText(teText->toPlainText());
-//#endif
-        //text->setLetterSpacing(leLetterSpacing.toDouble());
-        text->setLineSpacingFactor(leLineSpacingFactor->text().toDouble());
+        text->setText(teText->text());
         text->setAlignment(getAlignment());
         text->setAngle(RS_Math::deg2rad(leAngle->text().toDouble()));
     }
 }
 
+
+/*void QG_DlgText::setwidthRel(double rel) {
+    lWidthRel->setText(rel);
+}*/
 
 void QG_DlgText::setAlignmentTL() {
     setAlignment(1);
@@ -270,16 +221,40 @@ void QG_DlgText::setAlignmentMR() {
     setAlignment(6);
 }
 
-void QG_DlgText::setAlignmentBL() {
+void QG_DlgText::setAlignmentLL() {
     setAlignment(7);
 }
 
-void QG_DlgText::setAlignmentBC() {
+void QG_DlgText::setAlignmentLC() {
     setAlignment(8);
 }
 
-void QG_DlgText::setAlignmentBR() {
+void QG_DlgText::setAlignmentLR() {
     setAlignment(9);
+}
+
+void QG_DlgText::setAlignmentBL() {
+    setAlignment(10);
+}
+
+void QG_DlgText::setAlignmentBC() {
+    setAlignment(11);
+}
+
+void QG_DlgText::setAlignmentBR() {
+    setAlignment(12);
+}
+
+void QG_DlgText::setAlignmentFit() {
+    setAlignment(13);
+}
+
+void QG_DlgText::setAlignmentAlign() {
+    setAlignment(14);
+}
+
+void QG_DlgText::setAlignmentMiddle() {
+    setAlignment(15);
 }
 
 void QG_DlgText::setAlignment(int a) {
@@ -289,9 +264,15 @@ void QG_DlgText::setAlignment(int a) {
     bML->setChecked(false);
     bMC->setChecked(false);
     bMR->setChecked(false);
+    bLL->setChecked(false);
+    bLC->setChecked(false);
+    bLR->setChecked(false);
     bBL->setChecked(false);
     bBC->setChecked(false);
     bBR->setChecked(false);
+    rbFit->setChecked(false);
+    rbAligned->setChecked(false);
+    rbMiddle->setChecked(false);
 
     switch (a) {
     case 1:
@@ -313,13 +294,31 @@ void QG_DlgText::setAlignment(int a) {
         bMR->setChecked(true);
         break;
     case 7:
-        bBL->setChecked(true);
+        bLL->setChecked(true);
         break;
     case 8:
-        bBC->setChecked(true);
+        bLC->setChecked(true);
         break;
     case 9:
+        bLR->setChecked(true);
+        break;
+    case 10:
+        bBL->setChecked(true);
+        break;
+    case 11:
+        bBC->setChecked(true);
+        break;
+    case 12:
         bBR->setChecked(true);
+        break;
+    case 13:
+        rbFit->setChecked(true);
+        break;
+    case 14:
+        rbAligned->setChecked(true);
+        break;
+    case 15:
+        rbMiddle->setChecked(true);
         break;
     default:
         break;
@@ -339,58 +338,41 @@ int QG_DlgText::getAlignment() {
         return 5;
     } else if (bMR->isChecked()) {
         return 6;
-    } else if (bBL->isChecked()) {
+    } else if (bLL->isChecked()) {
         return 7;
-    } else if (bBC->isChecked()) {
+    } else if (bLC->isChecked()) {
         return 8;
-    } else if (bBR->isChecked()) {
+    } else if (bLR->isChecked()) {
         return 9;
+    } else if (bBL->isChecked()) {
+        return 10;
+    } else if (bBC->isChecked()) {
+        return 11;
+    } else if (bBR->isChecked()) {
+        return 12;
+    } else if (rbFit->isChecked()) {
+        return 13;
+    } else if (rbAligned->isChecked()) {
+        return 14;
+    } else if (rbMiddle->isChecked()) {
+        return 15;
     }
 
-    return 1;
+    return 7;
 }
 
 void QG_DlgText::setFont(const QString& f) {
     cbFont->setCurrentIndex( cbFont->findText(f) );
     font = cbFont->getFont();
-    defaultChanged(false);
+//    defaultChanged(false);
 }
 
-/*
-void QG_DlgText::setShape(int s) {
-    switch (s) {
-    case 0:
-        rbStraight->setChecked(true);
-        break;
-    case 1:
-        rbRound1->setChecked(true);
-        break;
-    case 2:
-        rbRound2->setChecked(true);
-        break;
-    default:
-        break;
-    }
-}
-
-int QG_DlgText::getShape() {
-    if (rbStraight->isOn()) {
-        return 0;
-    } else if (rbRound1->isOn()) {
-        return 1;
-    } else if (rbRound2->isOn()) {
-        return 2;
-    }
-    return 1;
-}
-*/
-
-void QG_DlgText::defaultChanged(bool) {
+/*void QG_DlgText::defaultChanged(bool) {
     if (cbDefault->isChecked() && font!=NULL) {
         leLineSpacingFactor->setText(
                         QString("%1").arg(font->getLineSpacingFactor()));
     }
-}
+}*/
 
 void QG_DlgText::loadText() {
     QString fn = QFileDialog::getOpenFileName( this, QString::null, QString::null);
@@ -417,7 +399,7 @@ void QG_DlgText::saveText() {
 }
 
 void QG_DlgText::save(const QString& fn) {
-    QString text = teText->toPlainText();
+    QString text = teText->text();
     QFile f(fn);
     if (f.open(QIODevice::WriteOnly)) {
         QTextStream t(&f);
@@ -430,7 +412,8 @@ void QG_DlgText::insertSymbol(int) {
     QString str = cbSymbol->currentText();
     int i=str.indexOf('(');
     if (i!=-1) {
-        teText->textCursor().insertText(QString("%1").arg(str.at(i+1)));
+//        teText->textCursor().insertText(QString("%1").arg(str.at(i+1)));
+        teText->insert(QString("%1").arg(str.at(i+1)));
     }
 }
 
@@ -445,6 +428,7 @@ void QG_DlgText::insertChar() {
     QString t = cbUniChar->currentText();
     int i1 = t.indexOf(']');
     int c = t.mid(1, i1-1).toInt(NULL, 16);
-    teText->textCursor().insertText( QString("%1").arg(QChar(c)) );
+//    teText->textCursor().insertText( QString("%1").arg(QChar(c)) );
+    teText->insert( QString("%1").arg(QChar(c)) );
 }
 

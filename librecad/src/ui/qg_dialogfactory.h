@@ -208,6 +208,9 @@ protected:
     virtual void requestSplineOptions(RS_ActionInterface* action,
                                       bool on, bool update);
 
+    virtual void requestMTextOptions(RS_ActionInterface* action,
+                                   bool on, bool update);
+
     virtual void requestTextOptions(RS_ActionInterface* action,
                                    bool on, bool update);
 
@@ -254,6 +257,7 @@ public:
 
     virtual bool requestModifyEntityDialog(RS_Entity* entity);
     virtual void requestModifyOffsetOptions(double& dist, bool on);
+    virtual bool requestMTextDialog(RS_MText* text);
     virtual bool requestTextDialog(RS_Text* text);
     virtual bool requestHatchDialog(RS_Hatch* hatch);
     virtual void requestOptionsGeneralDialog();

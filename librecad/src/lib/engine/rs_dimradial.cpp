@@ -27,7 +27,7 @@
 
 #include "rs_dimradial.h"
 //#include "rs_constructionline.h"
-#include "rs_text.h"
+#include "rs_mtext.h"
 #include "rs_solid.h"
 #include "rs_graphic.h"
 
@@ -108,20 +108,20 @@ void RS_DimRadial::update(bool autoText) {
     // length of dimension line:
     double length = p1.distanceTo(p2);
 
-    RS_TextData textData;
+    RS_MTextData textData;
 
-    textData = RS_TextData(RS_Vector(0.0,0.0),
+    textData = RS_MTextData(RS_Vector(0.0,0.0),
                            dimtxt, 30.0,
-                           RS2::VAlignMiddle,
-                           RS2::HAlignCenter,
-                           RS2::LeftToRight,
-                           RS2::Exact,
+                           RS_MTextData::VAMiddle,
+                           RS_MTextData::HACenter,
+                           RS_MTextData::LeftToRight,
+                           RS_MTextData::Exact,
                            1.0,
                            getLabel(),
                            "standard",
                            0.0);
 
-    RS_Text* text = new RS_Text(this, textData);
+    RS_MText* text = new RS_MText(this, textData);
     double textWidth = text->getSize().x;
 
     // do we have to put the arrow / text outside of the arc?

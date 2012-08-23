@@ -29,6 +29,7 @@
 #define RS_DIMENSION_H
 
 #include "rs_entitycontainer.h"
+#include "rs_mtext.h"
 
 /**
  * Holds the data that is common to all dimension entities.
@@ -58,9 +59,9 @@ public:
      */
     RS_DimensionData(const RS_Vector& definitionPoint,
                      const RS_Vector& middleOfText,
-                     RS2::VAlign valign,
-                     RS2::HAlign halign,
-                     RS2::TextLineSpacingStyle lineSpacingStyle,
+                     RS_MTextData::VAlign valign,
+                     RS_MTextData::HAlign halign,
+                     RS_MTextData::MTextLineSpacingStyle lineSpacingStyle,
                      double lineSpacingFactor,
                      QString text,
                      QString style,
@@ -95,11 +96,11 @@ public:
     /** Middle point of dimension text */
     RS_Vector middleOfText;
     /** Vertical alignment */
-    RS2::VAlign valign;
+    RS_MTextData::VAlign valign;
     /** Horizontal alignment */
-    RS2::HAlign halign;
+    RS_MTextData::HAlign halign;
     /** Line spacing style */
-    RS2::TextLineSpacingStyle lineSpacingStyle;
+    RS_MTextData::MTextLineSpacingStyle lineSpacingStyle;
     /** Line spacing factor */
     double lineSpacingFactor;
     /**
@@ -161,15 +162,15 @@ public:
         return data.middleOfText;
     }
 
-    RS2::VAlign getVAlign() {
+    RS_MTextData::VAlign getVAlign() {
         return data.valign;
     }
 
-    RS2::HAlign getHAlign() {
+    RS_MTextData::HAlign getHAlign() {
         return data.halign;
     }
 
-    RS2::TextLineSpacingStyle getLineSpacingStyle() {
+    RS_MTextData::MTextLineSpacingStyle getLineSpacingStyle() {
         return data.lineSpacingStyle;
     }
 

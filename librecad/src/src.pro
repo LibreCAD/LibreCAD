@@ -141,6 +141,7 @@ HEADERS += \
     lib/engine/rs_layerlistlistener.h \
     lib/engine/rs_leader.h \
     lib/engine/rs_line.h \
+    lib/engine/rs_mtext.h \
     lib/engine/rs_overlayline.h \
     lib/engine/rs_overlaybox.h \
     lib/engine/rs_pattern.h \
@@ -229,6 +230,7 @@ SOURCES += \
     lib/engine/rs_layerlist.cpp \
     lib/engine/rs_leader.cpp \
     lib/engine/rs_line.cpp \
+    lib/engine/rs_mtext.cpp \
     lib/engine/rs_overlayline.cpp \
     lib/engine/rs_overlaybox.cpp \
     lib/engine/rs_pattern.cpp \
@@ -332,7 +334,9 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actiondrawlinerelangle.h \
     actions/rs_actiondrawlinetangent1.h \
     actions/rs_actiondrawlinetangent2.h \
+    actions/rs_actiondrawmtext.h \
     actions/rs_actiondrawpoint.h \
+    actions/rs_actiondrawpolyline.h \
     actions/rs_actiondrawspline.h \
     actions/rs_actiondrawtext.h \
     actions/rs_actioneditcopy.h \
@@ -379,6 +383,13 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionoptionsdrawing.h \
     actions/rs_actionorder.h \
     actions/rs_actionparisdebugcreatecontainer.h \
+    actions/rs_actionpolylineadd.h \
+    actions/rs_actionpolylineappend.h \
+    actions/rs_actionpolylinedel.h \
+    actions/rs_actionpolylinedelbetween.h \
+    actions/rs_actionpolylinetrim.h \
+    actions/rs_actionpolylineequidistant.h \
+    actions/rs_actionpolylinesegment.h \
     actions/rs_actionprintpreview.h \
     actions/rs_actionselect.h \
     actions/rs_actionselectall.h \
@@ -401,15 +412,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionzoomprevious.h \
     actions/rs_actionzoomredraw.h \
     actions/rs_actionzoomscroll.h \
-    actions/rs_actionzoomwindow.h \
-    actions/rs_actiondrawpolyline.h \
-    actions/rs_actionpolylineadd.h \
-    actions/rs_actionpolylineappend.h \
-    actions/rs_actionpolylinedel.h \
-    actions/rs_actionpolylinedelbetween.h \
-    actions/rs_actionpolylinetrim.h \
-    actions/rs_actionpolylineequidistant.h \
-    actions/rs_actionpolylinesegment.h
+    actions/rs_actionzoomwindow.h
 
 SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionblocksattributes.cpp \
@@ -462,6 +465,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actiondrawlinerelangle.cpp \
     actions/rs_actiondrawlinetangent1.cpp \
     actions/rs_actiondrawlinetangent2.cpp \
+    actions/rs_actiondrawmtext.cpp \
     actions/rs_actiondrawpoint.cpp \
     actions/rs_actiondrawpolyline.cpp \
     actions/rs_actiondrawspline.cpp \
@@ -603,6 +607,7 @@ HEADERS += ui/qg_actionfactory.h \
     ui/forms/qg_dlgmirror.h \
     ui/forms/qg_dlgmove.h \
     ui/forms/qg_dlgmoverotate.h \
+    ui/forms/qg_dlgmtext.h \
     ui/forms/qg_dlgoptionsdrawing.h \
     ui/forms/qg_dlgoptionsgeneral.h \
     ui/forms/qg_dlgpoint.h \
@@ -628,6 +633,7 @@ HEADERS += ui/qg_actionfactory.h \
     ui/forms/qg_modifyoffsetoptions.h \
     ui/forms/qg_mousewidget.h \
     ui/forms/qg_moverotateoptions.h \
+    ui/forms/qg_mtextoptions.h \
     ui/forms/qg_polylineoptions.h \
     ui/forms/qg_polylineequidistantoptions.h \
     ui/forms/qg_printpreviewoptions.h \
@@ -696,6 +702,7 @@ SOURCES += ui/qg_actionfactory.cpp \
     ui/forms/qg_dlgmirror.cpp \
     ui/forms/qg_dlgmove.cpp \
     ui/forms/qg_dlgmoverotate.cpp \
+    ui/forms/qg_dlgmtext.cpp \
     ui/forms/qg_dlgoptionsdrawing.cpp \
     ui/forms/qg_dlgoptionsgeneral.cpp \
     ui/forms/qg_dlgpoint.cpp \
@@ -721,6 +728,7 @@ SOURCES += ui/qg_actionfactory.cpp \
     ui/forms/qg_modifyoffsetoptions.cpp \
     ui/forms/qg_mousewidget.cpp \
     ui/forms/qg_moverotateoptions.cpp \
+    ui/forms/qg_mtextoptions.cpp \
     ui/forms/qg_polylineoptions.cpp \
     ui/forms/qg_polylineequidistantoptions.cpp \
     ui/forms/qg_printpreviewoptions.cpp \
@@ -772,6 +780,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_dlgmirror.ui \
     ui/forms/qg_dlgmove.ui \
     ui/forms/qg_dlgmoverotate.ui \
+    ui/forms/qg_dlgmtext.ui \
     ui/forms/qg_dlgoptionsdrawing.ui \
     ui/forms/qg_dlgoptionsgeneral.ui \
     ui/forms/qg_dlgpoint.ui \
@@ -797,6 +806,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_modifyoffsetoptions.ui \
     ui/forms/qg_mousewidget.ui \
     ui/forms/qg_moverotateoptions.ui \
+    ui/forms/qg_mtextoptions.ui \
     ui/forms/qg_polylineoptions.ui \
     ui/forms/qg_polylineequidistantoptions.ui \
     ui/forms/qg_printpreviewoptions.ui \

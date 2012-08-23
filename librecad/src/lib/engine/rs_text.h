@@ -36,6 +36,37 @@
 class RS_TextData {
 public:
     /**
+     * Vertical alignments.
+     */
+    enum VAlign {
+        VABaseline, /**< Bottom */
+        VABottom,   /**< Bottom */
+        VAMiddle,   /**< Middle */
+        VATop       /**< Top. */
+    };
+
+    /**
+     * Horizontal alignments.
+     */
+    enum HAlign {
+        HALeft,     /**< Left */
+        HACenter,   /**< Centered */
+        HARight,    /**< Right */
+        HAAligned,  /**< Aligned */
+        HAMiddle,   /**< Middle */
+        HAFit       /**< Fit */
+    };
+
+    /**
+     * Text drawing direction.
+     */
+    enum TextGeneration {
+        None,      /**< Normal text */
+        Backward,  /**< Mirrored in X */
+        UpsideDown /**< Mirrored in Y */
+    };
+
+    /**
      * Default constructor. Leaves the data object uninitialized.
      */
     RS_TextData() {}
@@ -44,13 +75,12 @@ public:
      * Constructor with initialisation.
      *
      * @param insertionPoint Insertion point
+     * @param secondPoint Second point for aligned-fit
      * @param height Nominal (initial) text height
-     * @param width Reference rectangle width
+     * @param widthRel Reference rectangle width
      * @param valign Vertical alignment
      * @param halign Horizontal alignment
-     * @param drawingDirection Drawing direction
-     * @param lineSpacingStyle Line spacing style
-     * @param lineSpacingFactor Line spacing factor
+     * @param textGeneration Text Generation
      * @param text Text string
      * @param style Text style name
      * @param angle Rotation angle
@@ -61,25 +91,23 @@ public:
      *    after creating a text entity.
      */
     RS_TextData(const RS_Vector& insertionPoint,
+                const RS_Vector& secondPoint,
                 double height,
-                double width,
-                RS2::VAlign valign,
-                RS2::HAlign halign,
-                RS2::TextDrawingDirection drawingDirection,
-                RS2::TextLineSpacingStyle lineSpacingStyle,
-                double lineSpacingFactor,
+                double widthRel,
+                VAlign valign,
+                HAlign halign,
+                TextGeneration textGeneration,
                 const QString& text,
                 const QString& style,
                 double angle,
                 RS2::UpdateMode updateMode = RS2::Update) {
         this->insertionPoint = insertionPoint;
+        this->secondPoint = secondPoint;
         this->height = height;
-        this->width = width;
+        this->widthRel = widthRel;
         this->valign = valign;
         this->halign = halign;
-        this->drawingDirection = drawingDirection;
-        this->lineSpacingStyle = lineSpacingStyle;
-        this->lineSpacingFactor = lineSpacingFactor;
+        this->textGeneration = textGeneration;
         this->style = style;
         this->angle = angle;
         this->text = text;
@@ -96,20 +124,18 @@ public:
 public:
     /** Insertion point */
     RS_Vector insertionPoint;
+    /** Second point for fit or aligned*/
+    RS_Vector secondPoint;
     /** Nominal (initial) text height */
     double height;
-    /** Reference rectangle width */
-    double width;
+    /** Width/Height relation */
+    double widthRel;
     /** Vertical alignment */
-    RS2::VAlign valign;
+    VAlign valign;
     /** Horizontal alignment */
-    RS2::HAlign halign;
-    /** Drawing direction */
-    RS2::TextDrawingDirection drawingDirection;
-    /** Line spacing style */
-    RS2::TextLineSpacingStyle lineSpacingStyle;
-    /** Line spacing factor */
-    double lineSpacingFactor;
+    HAlign halign;
+    /** Text Generation */
+    TextGeneration textGeneration;
     /** Text string */
     QString text;
     /** Text style name */
@@ -163,40 +189,39 @@ public:
     RS_Vector getInsertionPoint() {
         return data.insertionPoint;
     }
+    RS_Vector getSecondPoint() {
+        return data.secondPoint;
+    }
     double getHeight() {
         return data.height;
     }
     void setHeight(double h) {
         data.height = h;
     }
-    double getWidth() {
-        return data.width;
+    double getWidthRel() {
+        return data.widthRel;
     }
+    void setWidthRel(double w) {
+        data.widthRel = w;
+    }
+    //RLZ: bad functions, this is MText style align
     void setAlignment(int a);
     int getAlignment();
-    RS2::VAlign getVAlign() {
+
+    RS_TextData::VAlign getVAlign() {
         return data.valign;
     }
-        void setVAlign(RS2::VAlign va) {
-                data.valign = va;
-        }
-    RS2::HAlign getHAlign() {
+    void setVAlign(RS_TextData::VAlign va) {
+        data.valign = va;
+    }
+    RS_TextData::HAlign getHAlign() {
         return data.halign;
     }
-        void setHAlign(RS2::HAlign ha) {
-                data.halign = ha;
-        }
-    RS2::TextDrawingDirection getDrawingDirection() {
-        return data.drawingDirection;
+    void setHAlign(RS_TextData::HAlign ha) {
+        data.halign = ha;
     }
-    RS2::TextLineSpacingStyle getLineSpacingStyle() {
-        return data.lineSpacingStyle;
-    }
-    void setLineSpacingFactor(double f) {
-        data.lineSpacingFactor = f;
-    }
-    double getLineSpacingFactor() {
-        return data.lineSpacingFactor;
+    RS_TextData::TextGeneration getTextGeneration() {
+        return data.textGeneration;
     }
     void setText(const QString& t);
     QString getText() {
