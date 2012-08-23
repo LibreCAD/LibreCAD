@@ -74,6 +74,8 @@ public:
     void updateView();
     void addPoint(QPointF *start);
     void addLine(QPointF *start, QPointF *end);
+    void addMText(QString txt, QString sty, QPointF *start,
+            double height, double angle, DPI::HAlign ha,  DPI::VAlign va);
     void addText(QString txt, QString sty, QPointF *start,
             double height, double angle, DPI::HAlign ha,  DPI::VAlign va);
 

@@ -1044,8 +1044,8 @@ bool RS_FilterDXF1::readFromBuffer() {
                         i[0] = '\0';
                     }
                     graphic->addEntity(
-                        new RS_Text(graphic,
-                                    RS_TextData(
+                        new RS_MText(graphic,
+                                    RS_MTextData(
                                         RS_Vector(vx1, vy1),
                                         vheight,
                                         100.0,

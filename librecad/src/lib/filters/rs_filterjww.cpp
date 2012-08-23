@@ -535,13 +535,13 @@ void RS_FilterJWW::addMText(const DL_MTextData& data) {
         RS_DEBUG->print("Text as unicode:");
         RS_DEBUG->printUnicode(mtext);
 
-        RS_TextData d(ip, data.height, data.width,
+        RS_MTextData d(ip, data.height, data.width,
                                   valign, halign,
                                   dir, lss,
                                   data.lineSpacingFactor,
                                   mtext, sty, data.angle,
                                   RS2::NoUpdate);
-        RS_Text* entity = new RS_Text(currentContainer, d);
+        RS_MText* entity = new RS_MText(currentContainer, d);
 
         setEntityAttributes(entity, attributes);
         entity->update();
@@ -1600,8 +1600,8 @@ void RS_FilterJWW::writeEntity(DL_WriterA& dw, RS_Entity* e,
         case RS2::EntityInsert:
                 writeInsert(dw, (RS_Insert*)e, attrib);
                 break;
-        case RS2::EntityText:
-                writeText(dw, (RS_Text*)e, attrib);
+        case RS2::EntityMText:
+                writeText(dw, (RS_MText*)e, attrib);
                 break;
 
         case RS2::EntityDimAligned:
@@ -1907,7 +1907,7 @@ void RS_FilterJWW::writeInsert(DL_WriterA& dw, RS_Insert* i,
 }
 
 
-void RS_FilterJWW::writeText(DL_WriterA& dw, RS_Text* t,
+void RS_FilterJWW::writeText(DL_WriterA& dw, RS_MText* t,
                                                          const DL_Attributes& attrib) {
 
         if (jww.getVersion()==VER_R12) {

@@ -218,6 +218,7 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
 
     // unsupported entities / entity combinations:
     if (
+        e1->rtti()==RS2::EntityMText || e2->rtti()==RS2::EntityMText ||
         e1->rtti()==RS2::EntityText || e2->rtti()==RS2::EntityText ||
         isDimension(e1->rtti()) || isDimension(e2->rtti())) {
         return ret;

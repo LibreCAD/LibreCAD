@@ -136,7 +136,8 @@ public:
         EntityHyperbola,      /**< Hyperbola */
         EntitySolid,        /**< Solid */
         EntityConstructionLine, /**< Construction line */
-        EntityText,         /**< Text */
+        EntityMText,         /**< Multi-line Text */
+        EntityText,         /**< Single-line Text */
         EntityDimAligned,   /**< Aligned Dimension */
         EntityDimLinear,    /**< Linear Dimension */
         EntityDimRadial,    /**< Radial Dimension */
@@ -274,6 +275,7 @@ public:
         ActionDrawLineTangent1,
         ActionDrawLineTangent2,
         ActionDrawLineVertical,
+        ActionDrawMText,
         ActionDrawPoint,
         ActionDrawSpline,
         ActionDrawPolyline,

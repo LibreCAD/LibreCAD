@@ -556,13 +556,13 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
         interlin = ppp->interlin;
     }
 
-    RS_TextData d(ip, data.height, data.widthscale,
+    RS_MTextData d(ip, data.height, data.widthscale,
                   valign, halign,
                   dir, lss,
                   interlin,
                   mtext, sty, data.angle*M_PI/180,
                   RS2::NoUpdate);
-    RS_Text* entity = new RS_Text(currentContainer, d);
+    RS_MText* entity = new RS_MText(currentContainer, d);
 
     setEntityAttributes(entity, &data);
     entity->update();
@@ -1652,12 +1652,12 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     case RS2::EntityInsert:
         writeInsert((RS_Insert*)e);
         break;
-    case RS2::EntityText:
-        writeMText((RS_Text*)e);
-        break;
-/*    case RS2::EntityMText:
+    case RS2::EntityMText:
         writeMText((RS_MText*)e);
-        break;*/
+        break;
+    case RS2::EntityText:
+//        writeText((RS_Text*)e); //RLZ: TODO writeme
+        break;
     case RS2::EntityDimLinear:
     case RS2::EntityDimAligned:
     case RS2::EntityDimAngular:
@@ -1952,7 +1952,7 @@ void RS_FilterDXFRW::writeInsert(RS_Insert* i) {
 /**
  * Writes the given mText entity to the file.
  */
-void RS_FilterDXFRW::writeMText(RS_Text* t) {
+void RS_FilterDXFRW::writeMText(RS_MText* t) {
     DRW_Text *text;
     DRW_Text txt1;
     DRW_MText txt2;

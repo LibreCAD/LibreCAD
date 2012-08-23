@@ -35,6 +35,7 @@
 #include "rs_insert.h"
 #include "rs_block.h"
 #include "rs_polyline.h"
+#include "rs_mtext.h"
 #include "rs_text.h"
 #include "rs_layer.h"
 
@@ -2916,6 +2917,7 @@ bool RS_Modification::explode() {
                 bool resolveLayer;
 
                 switch (ec->rtti()) {
+                case RS2::EntityMText:
                 case RS2::EntityText:
                 case RS2::EntityHatch:
                 case RS2::EntityPolyline:
@@ -3005,14 +3007,14 @@ bool RS_Modification::explodeTextIntoLetters() {
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
     }
-
+//RLZ: TODO add support for single text (needed a base class for text)
     for (RS_Entity* e=container->firstEntity();
             e!=NULL;
             e=container->nextEntity()) {
         if (e!=NULL && e->isSelected()) {
-            if (e->rtti()==RS2::EntityText) {
+            if (e->rtti()==RS2::EntityMText) {
                 // add letters of text:
-                RS_Text* text = (RS_Text*)e;
+                RS_MText* text = (RS_MText*)e;
                 explodeTextIntoLetters(text, addList);
             } else {
                 e->setSelected(false);
@@ -3035,8 +3037,8 @@ bool RS_Modification::explodeTextIntoLetters() {
 }
 
 
-
-bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& addList) {
+//RLZ: TODO use a base class for text
+bool RS_Modification::explodeTextIntoLetters(RS_MText* text, QList<RS_Entity*>& addList) {
 
     if (text==NULL) {
         return false;
@@ -3067,8 +3069,8 @@ bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& a
                 }
 
                 // super / sub texts:
-                if (e3->rtti()==RS2::EntityText) {
-                    explodeTextIntoLetters((RS_Text*)e3, addList);
+                if (e3->rtti()==RS2::EntityMText) {
+                    explodeTextIntoLetters((RS_MText*)e3, addList);
                 }
 
                 // normal letters:
@@ -3076,9 +3078,9 @@ bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& a
 
                     RS_Insert* letter = (RS_Insert*)e3;
 
-                    RS_Text* tl = new RS_Text(
+                    RS_MText* tl = new RS_MText(
                         container,
-                        RS_TextData(letter->getInsertionPoint(),
+                        RS_MTextData(letter->getInsertionPoint(),
                                     text->getHeight(),
                                     100.0,
                                     RS2::VAlignBottom, RS2::HAlignLeft,

@@ -191,6 +191,8 @@ public slots:
     void slotTestInsertBlock();
     /** inserts a test ellipse */
     void slotTestInsertEllipse();
+    /** inserts a test mtext */
+    void slotTestInsertMText();
     /** inserts a test text */
     void slotTestInsertText();
     /** inserts a test image */
@@ -427,6 +429,7 @@ private:
     QAction *testUpdateInserts;
     QAction *testDrawFreehand;
     QAction *testInsertBlock;
+    QAction *testInsertMText;
     QAction *testInsertText;
     QAction *testInsertImage;
     QAction *testUnicode;

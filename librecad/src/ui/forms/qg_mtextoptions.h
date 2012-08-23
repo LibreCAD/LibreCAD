@@ -23,39 +23,33 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#ifndef QG_CADTOOLBARMAIN_H
-#define QG_CADTOOLBARMAIN_H
+#ifndef QG_MTEXTOPTIONS_H
+#define QG_MTEXTOPTIONS_H
 
+#include "ui_qg_mtextoptions.h"
 
-#include "ui_qg_cadtoolbarmain.h"
-#include "qg_actionhandler.h"
-class QG_CadToolBar;
+class RS_ActionInterface;
+class RS_ActionDrawMText;
 
-class QG_CadToolBarMain : public QWidget, public Ui::QG_CadToolBarMain
+class QG_MTextOptions : public QWidget, public Ui::QG_MTextOptions
 {
     Q_OBJECT
 
 public:
-    QG_CadToolBarMain(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-    ~QG_CadToolBarMain();
-    void restoreAction(); //restore action from checked button
-    void finishCurrentAction(bool resetToolBar=false); //clear current action
-    void resetToolBar();
-    virtual void showCadToolBar(RS2::ActionType actionType);
+    QG_MTextOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    ~QG_MTextOptions();
 
 public slots:
-    virtual void init();
-    virtual void setCadToolBar( QG_CadToolBar * tb );
+    virtual void setAction( RS_ActionInterface * a, bool update );
+    virtual void updateText();
+    virtual void updateAngle();
+
+protected:
+    RS_ActionDrawMText* action;
 
 protected slots:
     virtual void languageChange();
-    virtual void mouseReleaseEvent(QMouseEvent* e);
 
-private:
-    QG_ActionHandler* actionHandler;
-private slots:
-    void slotDrawMText();
-    void slotDrawImage();
 };
 
-#endif
+#endif // QG_TEXTOPTIONS_H

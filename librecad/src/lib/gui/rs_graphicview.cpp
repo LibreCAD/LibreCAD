@@ -33,6 +33,7 @@
 #include "rs_graphic.h"
 #include "rs_grid.h"
 #include "rs_painter.h"
+#include "rs_mtext.h"
 #include "rs_text.h"
 #include "rs_settings.h"
 #include "rs_dialogfactory.h"
@@ -1274,8 +1275,16 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 
     //RS_DEBUG->print("draw plain");
     if (isDraftMode()) {
+        // large mtexts as rectangles:
+        if (e->rtti()==RS2::EntityMText) {
+            if (toGuiDX(((RS_MText*)e)->getHeight())<4 || e->countDeep()>100) {
+                painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
+            } else {
+                drawEntityPlain(painter, e, patternOffset);
+            }
+        }
         // large texts as rectangles:
-        if (e->rtti()==RS2::EntityText) {
+        else if (e->rtti()==RS2::EntityText) {
             if (toGuiDX(((RS_Text*)e)->getHeight())<4 || e->countDeep()>100) {
                 painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
             } else {

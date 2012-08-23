@@ -1109,6 +1109,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
                 && en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
                 //&& en->rtti() != RS2::EntityPoint         /**Point*/
                 //&& en->getParent()->rtti() != RS2::EntitySpline
+                && en->getParent()->rtti() != RS2::EntityMText        /**< Text 15*/
                 && en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
                 && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
                 && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
@@ -1160,6 +1161,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
                 &&*/ en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
                 //&& en->rtti() != RS2::EntityPoint         /**Point*/
                 //&& en->getParent()->rtti() != RS2::EntitySpline
+                && en->getParent()->rtti() != RS2::EntityMText        /**< Text 15*/
                 && en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
                 && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
                 && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
@@ -1205,6 +1207,7 @@ RS_Vector RS_EntityContainer::getNearestPointOnEntity(const RS_Vector& coord,
              && en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
              //&& en->rtti() != RS2::EntityPoint         /**Point*/
              && en->getParent()->rtti() != RS2::EntitySpline
+             && en->getParent()->rtti() != RS2::EntityMText        /**< Text 15*/
              && en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
              && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
              && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
@@ -1240,6 +1243,7 @@ RS_Vector RS_EntityContainer::getNearestCenter(const RS_Vector& coord,
                     en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
                     //|| en->rtti() == RS2::EntityPoint         /**Point*/
                     || en->getParent()->rtti() == RS2::EntitySpline
+                    || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
                     || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
@@ -1287,6 +1291,7 @@ RS_Vector RS_EntityContainer::getNearestMiddle(const RS_Vector& coord,
                     en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
                     //|| en->rtti() == RS2::EntityPoint         /**Point*/
                     || en->getParent()->rtti() == RS2::EntitySpline
+                    || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
                     || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
@@ -1356,6 +1361,7 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
                     || en == closestEntity
                     || en->rtti() == RS2::EntityPoint         /**Point*/
                     || en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
+                    || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
                     || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
