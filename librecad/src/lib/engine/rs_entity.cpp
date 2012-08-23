@@ -37,6 +37,7 @@
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_line.h"
+#include "rs_mtext.h"
 #include "rs_point.h"
 #include "rs_polyline.h"
 #include "rs_text.h"
@@ -958,6 +959,10 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
 
     case RS2::EntityInsert:
         os << (RS_Insert&)e;
+        break;
+
+    case RS2::EntityMText:
+        os << (RS_MText&)e;
         break;
 
     case RS2::EntityText:

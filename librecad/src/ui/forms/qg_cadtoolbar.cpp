@@ -490,7 +490,7 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     case RS2::ActionDrawImage:
     case RS2::ActionDrawPoint:
     case RS2::ActionDrawSpline:
-    case RS2::ActionDrawText:
+    case RS2::ActionDrawMText:
         showToolBar(RS2::ToolBarMain, false);
         if(tbMain != NULL){
             tbMain->showCadToolBar(actionType);

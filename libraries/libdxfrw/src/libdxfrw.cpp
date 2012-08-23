@@ -1107,10 +1107,10 @@ bool dxfRW::writeText(DRW_Text *ent){
     else
         writer->writeUtf8Caps(7, ent->style);
     writer->writeInt16(71, ent->textgen);
-    if (ent->alignH != DRW::HAlignLeft) {
+    if (ent->alignH != DRW_Text::HLeft) {
         writer->writeInt16(72, ent->alignH);
     }
-    if (ent->alignH != DRW::HAlignLeft || ent->alignV != DRW::VAlignBaseLine) {
+    if (ent->alignH != DRW_Text::HLeft || ent->alignV != DRW_Text::VBaseLine) {
         writer->writeDouble(11, ent->secPoint.x);
         writer->writeDouble(21, ent->secPoint.y);
         writer->writeDouble(31, ent->secPoint.z);
@@ -1121,7 +1121,7 @@ bool dxfRW::writeText(DRW_Text *ent){
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbText");
     }
-    if (ent->alignV != DRW::VAlignBaseLine) {
+    if (ent->alignV != DRW_Text::VBaseLine) {
         writer->writeInt16(73, ent->alignV);
     }
     return true;

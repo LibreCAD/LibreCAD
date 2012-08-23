@@ -80,6 +80,7 @@
 #include "rs_actiondrawpoint.h"
 #include "rs_actiondrawspline.h"
 #include "rs_actiondrawtext.h"
+#include "rs_actiondrawmtext.h"
 #include "rs_actioneditcopy.h"
 #include "rs_actioneditpaste.h"
 #include "rs_actioneditundo.h"
@@ -814,6 +815,12 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
     connect(action, SIGNAL(triggered()),
             obj, SLOT(slotPolylineSegment()));
     break;
+
+    case RS2::ActionDrawMText:
+                action = RS_ActionDrawMText::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotDrawMText()));
+        break;
 
     case RS2::ActionDrawText:
                 action = RS_ActionDrawText::createGUIAction(id, mw);

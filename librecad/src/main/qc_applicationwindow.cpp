@@ -64,6 +64,7 @@
 #include "rs_hatch.h"
 #include "rs_image.h"
 #include "rs_insert.h"
+#include "rs_mtext.h"
 #include "rs_text.h"
 #include "rs_settings.h"
 #include "rs_staticgraphicview.h"
@@ -1107,10 +1108,16 @@ void QC_ApplicationWindow::initActions(void)
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Text:
+    action = actionFactory.createAction(RS2::ActionDrawMText,
+                                        actionHandler);
+    menu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+
     action = actionFactory.createAction(RS2::ActionDrawText,
                                         actionHandler);
     menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+
     // Hatch:
     action = actionFactory.createAction(RS2::ActionDrawHatch,
                                         actionHandler);
@@ -1424,6 +1431,9 @@ void QC_ApplicationWindow::initActions(void)
 
 /* RVT_PORT    testInsertText = new QAction("Insert Text",
                                  "Insert Text", 0, this); */
+    testInsertMText = new QAction("Insert MText", this);
+    connect(testInsertMText, SIGNAL(triggered()),
+            this, SLOT(slotTestInsertMText()));
     testInsertText = new QAction("Insert Text", this);
     connect(testInsertText, SIGNAL(triggered()),
             this, SLOT(slotTestInsertText()));
@@ -3946,6 +3956,24 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                 }
                 break;
 
+            case RS2::EntityMText: {
+                    RS_MText* t = (RS_MText*)e;
+                    dumpFile
+                    << "<table><tr><td>"
+                    << "<b>Text:</b>"
+                    << "</td></tr>";
+                    dumpFile
+                    << "<tr>"
+                    << "<td>Text:"
+                    << t->getText().toLatin1().data()
+                    << "</td>"
+                    << "<td>Height:"
+                    << t->getHeight()
+                    << "</td>"
+                    << "</tr></table>";
+                }
+                break;
+
             case RS2::EntityText: {
                     RS_Text* t = (RS_Text*)e;
                     dumpFile
@@ -4412,8 +4440,47 @@ void QC_ApplicationWindow::slotTestInsertEllipse() {
 /**
  * Testing function.
  */
+void QC_ApplicationWindow::slotTestInsertMText() {
+    RS_DEBUG->print("QC_ApplicationWindow::slotTestInsertMText()");
+
+
+    RS_Document* d = getDocument();
+    if (d!=NULL) {
+        RS_Graphic* graphic = (RS_Graphic*)d;
+        if (graphic==NULL) {
+            return;
+        }
+
+        RS_MText* text;
+        RS_MTextData textData;
+
+        textData = RS_MTextData(RS_Vector(10.0,10.0),
+                               10.0, 100.0,
+                               RS_MTextData::VATop,
+                               RS_MTextData::HALeft,
+                               RS_MTextData::LeftToRight,
+                               RS_MTextData::Exact,
+                               1.0,
+                               "LibreCAD",
+                               "iso",
+                               0.0);
+        text = new RS_MText(graphic, textData);
+
+        text->setLayerToActive();
+        text->setPen(RS_Pen(RS_Color(255, 0, 0),
+                            RS2::Width01,
+                            RS2::SolidLine));
+        graphic->addEntity(text);
+    }
+}
+
+
+
+/**
+ * Testing function.
+ */
 void QC_ApplicationWindow::slotTestInsertText() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestInsertText()");
+    RS_DEBUG->print("QC_ApplicationWindow::slotTestInsertMText()");
 
 
     RS_Document* d = getDocument();
@@ -4426,15 +4493,13 @@ void QC_ApplicationWindow::slotTestInsertText() {
         RS_Text* text;
         RS_TextData textData;
 
-        textData = RS_TextData(RS_Vector(10.0,10.0),
-                               10.0, 100.0,
-                               RS2::VAlignTop,
-                               RS2::HAlignLeft,
-                               RS2::LeftToRight,
-                               RS2::Exact,
-                               1.0,
-                               "Andrew",
-                               "normal",
+        textData = RS_TextData(RS_Vector(10.0,10.0),RS_Vector(10.0,10.0),
+                               10.0, 1.0,
+                               RS_TextData::VABaseline,
+                               RS_TextData::HALeft,
+                               RS_TextData::None,
+                               "LibreCAD",
+                               "iso",
                                0.0);
         text = new RS_Text(graphic, textData);
 

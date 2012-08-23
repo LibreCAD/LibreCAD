@@ -371,7 +371,7 @@ void dibSHP::readPoint(DBFHandle dh, int i){
         ent = currDoc->newEntity(DPI::POINT);
         ent->getData(&data);
     } else {
-        ent = currDoc->newEntity(DPI::TEXT);
+        ent = currDoc->newEntity(DPI::MTEXT);
         ent->getData(&data);
         data.insert(DPI::TEXTCONTENT, DBFReadStringAttribute( dh, i, pointF ) );
     }

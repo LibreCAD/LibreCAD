@@ -155,8 +155,8 @@ QString LC_List::getStrData(Plug_Entity *ent) {
         return QString("SOLID: ").append(str);
         break;
 //container entities
-    case DPI::TEXT:
-        return QString("TEXT: ").append(str);
+    case DPI::MTEXT:
+        return QString("MTEXT: ").append(str);
         break;
     case DPI::INSERT:
         return QString("INSERT: ").append(str);

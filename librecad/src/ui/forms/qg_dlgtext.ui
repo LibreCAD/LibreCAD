@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>619</width>
-    <height>454</height>
+    <width>524</width>
+    <height>342</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Text</string>
@@ -18,581 +24,624 @@
   </property>
   <layout class="QVBoxLayout">
    <item>
-    <layout class="QHBoxLayout">
+    <layout class="QVBoxLayout" name="_4">
      <item>
-      <layout class="QVBoxLayout">
+      <layout class="QHBoxLayout">
        <item>
-        <widget class="QGroupBox" name="bgFont">
+        <widget class="QLabel" name="lText">
+         <property name="text">
+          <string>Text:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="spacer4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>110</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QToolButton" name="bClear">
+         <property name="toolTip">
+          <string>Clear Text</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../res/extui/extui.qrc">
+           <normaloff>:/extui/filenew.png</normaloff>:/extui/filenew.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="bLoad">
+         <property name="toolTip">
+          <string>Load Text From File</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../res/extui/extui.qrc">
+           <normaloff>:/extui/fileopen.png</normaloff>:/extui/fileopen.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="bSave">
+         <property name="toolTip">
+          <string>Save Text To File</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../res/extui/extui.qrc">
+           <normaloff>:/extui/filesave.png</normaloff>:/extui/filesave.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="bCut">
+         <property name="toolTip">
+          <string>Cut</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../res/extui/extui.qrc">
+           <normaloff>:/extui/editcut.png</normaloff>:/extui/editcut.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="bCopy">
+         <property name="toolTip">
+          <string>Copy</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../res/extui/extui.qrc">
+           <normaloff>:/extui/editcopy.png</normaloff>:/extui/editcopy.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="bPaste">
+         <property name="toolTip">
+          <string>Paste</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../res/extui/extui.qrc">
+           <normaloff>:/extui/editpaste.png</normaloff>:/extui/editpaste.png</iconset>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="teText">
+       <property name="linkUnderline" stdset="0">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="_5">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <item>
+      <widget class="QGroupBox" name="bgFont">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="title">
+        <string>Font</string>
+       </property>
+       <layout class="QGridLayout">
+        <property name="spacing">
+         <number>2</number>
+        </property>
+        <item row="2" column="2">
+         <widget class="QLineEdit" name="leAngle">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="lHeight">
+          <property name="text">
+           <string>&amp;Height:</string>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
+          </property>
+          <property name="buddy">
+           <cstring>leHeight</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="lAngle">
+          <property name="text">
+           <string>Angle:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <spacer name="spacer2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>16</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLineEdit" name="leHeight">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Oblique:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="2">
+         <spacer name="spacer2_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>16</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="1" colspan="2">
+         <widget class="QG_FontBox" name="cbFont" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLabel" name="lWidthRel">
+          <property name="text">
+           <string>Width Rel:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QLineEdit" name="leOblique"/>
+        </item>
+        <item row="4" column="2">
+         <widget class="QLineEdit" name="leWidthRel"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>-1</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QGroupBox" name="bgAlignment">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="title">
-          <string>Font</string>
+          <string>Alignment</string>
          </property>
          <layout class="QGridLayout">
-          <property name="spacing">
-           <number>2</number>
-          </property>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="leHeight">
+          <item row="3" column="1">
+           <widget class="QToolButton" name="bBC">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>25</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Bottom Center</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/extui/extui.qrc">
+              <normaloff>:/extui/aligntext_bc.png</normaloff>:/extui/aligntext_bc.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QToolButton" name="bBR">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>25</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Bottom Right</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/extui/extui.qrc">
+              <normaloff>:/extui/aligntext_br.png</normaloff>:/extui/aligntext_br.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QToolButton" name="bMR">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>25</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Middle Right</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/extui/extui.qrc">
+              <normaloff>:/extui/aligntext_mr.png</normaloff>:/extui/aligntext_mr.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QToolButton" name="bBL">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>25</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Bottom Left</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/extui/extui.qrc">
+              <normaloff>:/extui/aligntext_bl.png</normaloff>:/extui/aligntext_bl.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="lHeight">
-            <property name="text">
-             <string>&amp;Height:</string>
+           <widget class="QToolButton" name="bML">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>leHeight</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <spacer name="spacer2_2">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Expanding</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
+            <property name="minimumSize">
              <size>
-              <width>20</width>
-              <height>16</height>
+              <width>25</width>
+              <height>25</height>
              </size>
             </property>
-           </spacer>
+            <property name="toolTip">
+             <string>Middle Left</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/extui/extui.qrc">
+              <normaloff>:/extui/aligntext_ml.png</normaloff>:/extui/aligntext_ml.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QG_FontBox" name="cbFont" native="true">
+          <item row="2" column="0">
+           <widget class="QToolButton" name="bLL">
+            <property name="toolTip">
+             <string>Baseline Left</string>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/extui/extui.qrc">
+              <normaloff>:/extui/aligntext_ll.png</normaloff>:/extui/aligntext_ll.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QToolButton" name="bTC">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <spacer name="spacer2">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Expanding</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
+            <property name="minimumSize">
              <size>
-              <width>20</width>
-              <height>16</height>
+              <width>25</width>
+              <height>25</height>
              </size>
             </property>
-           </spacer>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="lLineSpacingFactor">
-            <property name="text">
-             <string>Line &amp;spacing:</string>
+            <property name="toolTip">
+             <string>Top Center</string>
             </property>
-            <property name="wordWrap">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/extui/extui.qrc">
+              <normaloff>:/extui/aligntext_tc.png</normaloff>:/extui/aligntext_tc.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QToolButton" name="bLR">
+            <property name="toolTip">
+             <string>Baseline Right</string>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/extui/extui.qrc">
+              <normaloff>:/extui/aligntext_lr.png</normaloff>:/extui/aligntext_lr.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QToolButton" name="bLC">
+            <property name="toolTip">
+             <string>Baseline Center</string>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/extui/extui.qrc">
+              <normaloff>:/extui/aligntext_lc.png</normaloff>:/extui/aligntext_lc.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QToolButton" name="bTL">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>25</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Top Left</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/extui/extui.qrc">
+              <normaloff>:/extui/aligntext_tl.png</normaloff>:/extui/aligntext_tl.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QToolButton" name="bTR">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>25</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Top Right</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/extui/extui.qrc">
+              <normaloff>:/extui/aligntext_tr.png</normaloff>:/extui/aligntext_tr.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QToolButton" name="bMC">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>25</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Middle Center</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/extui/extui.qrc">
+              <normaloff>:/extui/aligntext_mc.png</normaloff>:/extui/aligntext_mc.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QRadioButton" name="rbFit">
+            <property name="text">
+             <string>Fit</string>
+            </property>
+            <property name="autoExclusive">
              <bool>false</bool>
             </property>
-            <property name="buddy">
-             <cstring>leLineSpacingFactor</cstring>
-            </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="leLineSpacingFactor">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbDefault">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+          <item row="1" column="3">
+           <widget class="QRadioButton" name="rbAligned">
             <property name="text">
-             <string>&amp;Default line spacing</string>
+             <string>Aligned</string>
             </property>
-            <property name="shortcut">
-             <string>Alt+D</string>
+            <property name="autoExclusive">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QRadioButton" name="rbMiddle">
+            <property name="text">
+             <string>Middle</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
          </layout>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout">
-         <item>
-          <widget class="QGroupBox" name="bgAlignment">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="title">
-            <string>Alignment</string>
-           </property>
-           <layout class="QGridLayout">
-            <item row="0" column="2">
-             <widget class="QToolButton" name="bTR">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>25</width>
-                <height>25</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Top Right</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>:/extui/align_tr.png</normaloff>:/extui/align_tr.png</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QToolButton" name="bTL">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>25</width>
-                <height>25</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Top Left</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>:/extui/align_tl.png</normaloff>:/extui/align_tl.png</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QToolButton" name="bML">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>25</width>
-                <height>25</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Middle Left</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>:/extui/align_ml.png</normaloff>:/extui/align_ml.png</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QToolButton" name="bMC">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>25</width>
-                <height>25</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Middle Center</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>:/extui/align_mc.png</normaloff>:/extui/align_mc.png</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QToolButton" name="bMR">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>25</width>
-                <height>25</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Middle Right</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>:/extui/align_mr.png</normaloff>:/extui/align_mr.png</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QToolButton" name="bBL">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>25</width>
-                <height>25</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Bottom Left</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>:/extui/align_bl.png</normaloff>:/extui/align_bl.png</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="2">
-             <widget class="QToolButton" name="bBR">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>25</width>
-                <height>25</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Bottom Right</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>:/extui/align_br.png</normaloff>:/extui/align_br.png</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QToolButton" name="bBC">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>25</width>
-                <height>25</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Bottom Center</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>:/extui/align_bc.png</normaloff>:/extui/align_bc.png</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QToolButton" name="bTC">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>25</width>
-                <height>25</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Top Center</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>:/extui/align_tc.png</normaloff>:/extui/align_tc.png</iconset>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="bgShape">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="title">
-            <string>Angle</string>
-           </property>
-           <layout class="QVBoxLayout">
-            <item>
-             <widget class="QLineEdit" name="leAngle">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="spacer13">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout">
-       <item>
-        <layout class="QHBoxLayout">
-         <item>
-          <widget class="QLabel" name="lText">
-           <property name="text">
-            <string>Text:</string>
-           </property>
-           <property name="wordWrap">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="spacer4">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Expanding</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>110</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QToolButton" name="bClear">
-           <property name="toolTip">
-            <string>Clear Text</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>:/extui/filenew.png</normaloff>:/extui/filenew.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="bLoad">
-           <property name="toolTip">
-            <string>Load Text From File</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>:/extui/fileopen.png</normaloff>:/extui/fileopen.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="bSave">
-           <property name="toolTip">
-            <string>Save Text To File</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>:/extui/filesave.png</normaloff>:/extui/filesave.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="bCut">
-           <property name="toolTip">
-            <string>Cut</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>:/extui/editcut.png</normaloff>:/extui/editcut.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="bCopy">
-           <property name="toolTip">
-            <string>Copy</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>:/extui/editcopy.png</normaloff>:/extui/editcopy.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="bPaste">
-           <property name="toolTip">
-            <string>Paste</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>:/extui/editpaste.png</normaloff>:/extui/editpaste.png</iconset>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QTextEdit" name="teText">
-         <property name="linkUnderline" stdset="0">
-          <bool>false</bool>
-         </property>
         </widget>
        </item>
       </layout>
@@ -600,7 +649,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout">
+    <layout class="QHBoxLayout" name="_2">
      <item>
       <widget class="QGroupBox" name="buttonGroup7">
        <property name="sizePolicy">
@@ -1331,7 +1380,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout">
+    <layout class="QHBoxLayout" name="_3">
      <item>
       <spacer name="Horizontal Spacing2">
        <property name="orientation">
@@ -1386,7 +1435,9 @@
    <header>qg_fontbox.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../res/extui/extui.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonOk</sender>
@@ -1395,8 +1446,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>424</x>
+     <y>332</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1411,280 +1462,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bTL</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_DlgText</receiver>
-   <slot>setAlignmentTL()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bTC</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_DlgText</receiver>
-   <slot>setAlignmentTC()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bTR</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_DlgText</receiver>
-   <slot>setAlignmentTR()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bML</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_DlgText</receiver>
-   <slot>setAlignmentML()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bMC</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_DlgText</receiver>
-   <slot>setAlignmentMC()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bMR</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_DlgText</receiver>
-   <slot>setAlignmentMR()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bBL</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_DlgText</receiver>
-   <slot>setAlignmentBL()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bBC</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_DlgText</receiver>
-   <slot>setAlignmentBC()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bBR</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_DlgText</receiver>
-   <slot>setAlignmentBR()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbDefault</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>leLineSpacingFactor</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbDefault</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>QG_DlgText</receiver>
-   <slot>defaultChanged(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bClear</sender>
-   <signal>clicked()</signal>
-   <receiver>teText</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bCut</sender>
-   <signal>clicked()</signal>
-   <receiver>teText</receiver>
-   <slot>cut()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bCopy</sender>
-   <signal>clicked()</signal>
-   <receiver>teText</receiver>
-   <slot>copy()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bPaste</sender>
-   <signal>clicked()</signal>
-   <receiver>teText</receiver>
-   <slot>paste()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bLoad</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_DlgText</receiver>
-   <slot>loadText()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bSave</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_DlgText</receiver>
-   <slot>saveText()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>471</x>
+     <y>332</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1699,8 +1478,8 @@
    <slot>updateUniCharComboBox(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>223</x>
+     <y>268</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1715,8 +1494,8 @@
    <slot>insertChar()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>507</x>
+     <y>267</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1731,8 +1510,8 @@
    <slot>updateUniCharButton(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>223</x>
+     <y>268</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1747,8 +1526,8 @@
    <slot>updateUniCharButton(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>223</x>
+     <y>296</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1763,12 +1542,348 @@
    <slot>insertSymbol(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>32</x>
+     <y>281</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bCopy</sender>
+   <signal>clicked()</signal>
+   <receiver>teText</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>482</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>25</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bClear</sender>
+   <signal>clicked()</signal>
+   <receiver>teText</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>362</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>25</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bCut</sender>
+   <signal>clicked()</signal>
+   <receiver>teText</receiver>
+   <slot>cut()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>452</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>25</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bPaste</sender>
+   <signal>clicked()</signal>
+   <receiver>teText</receiver>
+   <slot>paste()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>512</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>25</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bSave</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>saveText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>422</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bLoad</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>loadText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>392</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bMC</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentMC()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>400</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bMR</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentMR()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>430</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bBR</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentBR()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>430</x>
+     <y>200</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bBL</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentBL()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>370</x>
+     <y>200</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bTL</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentTL()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>370</x>
+     <y>114</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bBC</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentBC()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>400</x>
+     <y>200</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bTC</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentTC()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>400</x>
+     <y>114</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bLC</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentLC()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>392</x>
+     <y>163</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>261</x>
+     <y>169</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bLL</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentLL()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>355</x>
+     <y>170</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>318</x>
+     <y>319</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bLR</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentLR()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>422</x>
+     <y>163</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>261</x>
+     <y>169</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bML</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentML()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>362</x>
+     <y>135</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>261</x>
+     <y>170</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bTR</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentTR()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>422</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>261</x>
+     <y>170</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rbFit</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentFit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>475</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>261</x>
+     <y>170</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rbAligned</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentAlign()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>475</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>261</x>
+     <y>170</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rbMiddle</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>setAlignmentMiddle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>475</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>261</x>
+     <y>170</y>
     </hint>
    </hints>
   </connection>

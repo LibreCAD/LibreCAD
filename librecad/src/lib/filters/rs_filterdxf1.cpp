@@ -889,7 +889,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                     //double vletterspace=2.0; // Text letter space
                     //double vwordspace=6.0;   // Text wordspace
                     QString vfont;         // font "normal", "cursive", ...
-                    RS2::HAlign vhalign=RS2::HAlignLeft;
+                    RS_MTextData::HAlign vhalign=RS_MTextData::HALeft;
                     // alignment (0=left, 1=center, 2=right)
                     //int   vattachement=7;   // 1=top left, 2, 3, 4, 5, 6, 7, 8, 9=bottom right
                     //uint  vfl=0;            // special flags
@@ -1019,11 +1019,11 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         //if(!mtext) {
                                         int v = dxfLine.toInt();
                                         if(v==1)
-                                            vhalign = RS2::HAlignCenter;
+                                            vhalign = RS_MTextData::HACenter;
                                         else if(v==2)
-                                            vhalign = RS2::HAlignRight;
+                                            vhalign = RS_MTextData::HARight;
                                         else
-                                            vhalign = RS2::HAlignLeft;
+                                            vhalign = RS_MTextData::HALeft;
                                         //}
                                     }
                                     break;
@@ -1044,15 +1044,15 @@ bool RS_FilterDXF1::readFromBuffer() {
                         i[0] = '\0';
                     }
                     graphic->addEntity(
-                        new RS_Text(graphic,
-                                    RS_TextData(
+                        new RS_MText(graphic,
+                                    RS_MTextData(
                                         RS_Vector(vx1, vy1),
                                         vheight,
                                         100.0,
-                                        RS2::VAlignBottom,
+                                        RS_MTextData::VABottom,
                                         vhalign,
-                                        RS2::LeftToRight,
-                                        RS2::Exact,
+                                        RS_MTextData::LeftToRight,
+                                        RS_MTextData::Exact,
                                         1.0,
                                         vtext,
                                         vtextStyle,
@@ -1190,9 +1190,9 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     RS_DimensionData(
                                         RS_Vector(v10, v20),
                                         RS_Vector(0.0, 0.0),
-                                        RS2::VAlignBottom,
-                                        RS2::HAlignCenter,
-                                        RS2::Exact,
+                                        RS_MTextData::VABottom,
+                                        RS_MTextData::HACenter,
+                                        RS_MTextData::Exact,
                                         1.0,
                                         dimText,
                                         "ISO-25",
@@ -1227,9 +1227,9 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     RS_DimensionData(
                                         defP,
                                         RS_Vector(0.0, 0.0),
-                                        RS2::VAlignBottom,
-                                        RS2::HAlignCenter,
-                                        RS2::Exact,
+                                        RS_MTextData::VABottom,
+                                        RS_MTextData::HACenter,
+                                        RS_MTextData::Exact,
                                         1.0,
                                         dimText,
                                         "ISO-25",
@@ -1295,9 +1295,9 @@ bool RS_FilterDXF1::readFromBuffer() {
                                         RS_DimensionData(
                                             RS_Vector(v10, v20),
                                             RS_Vector(0.0, 0.0),
-                                            RS2::VAlignBottom,
-                                            RS2::HAlignCenter,
-                                            RS2::Exact,
+                                            RS_MTextData::VABottom,
+                                            RS_MTextData::HACenter,
+                                            RS_MTextData::Exact,
                                             1.0,
                                             dimText,
                                             "ISO-25",
@@ -1338,9 +1338,9 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     RS_DimensionData(
                                         RS_Vector(v10, v20),
                                         RS_Vector(0.0, 0.0),
-                                        RS2::VAlignBottom,
-                                        RS2::HAlignCenter,
-                                        RS2::Exact,
+                                        RS_MTextData::VABottom,
+                                        RS_MTextData::HACenter,
+                                        RS_MTextData::Exact,
                                         1.0,
                                         dimText,
                                         "ISO-25",

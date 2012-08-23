@@ -36,6 +36,7 @@
 #include "rs_leader.h"
 #include "rs_polyline.h"
 #include "rs_solid.h"
+#include "rs_mtext.h"
 #include "rs_text.h"
 #include "rs_image.h"
 
@@ -133,8 +134,8 @@ public:
     void writeLWPolyline(RS_Polyline* l);
     void writeSpline(RS_Spline* s);
     void writeInsert(RS_Insert* i);
-//    void writeText(RS_Text* t);
-    void writeMText(RS_Text* t);
+    void writeMText(RS_MText* t);
+    void writeText(RS_Text* t);
     void writeHatch(RS_Hatch* h);
     void writeImage(RS_Image* i);
     void writeLeader(RS_Leader* l);

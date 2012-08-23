@@ -405,10 +405,10 @@ void DRW_Text::parseCode(int code, dxfReader *reader){
         textgen = reader->getInt32();
         break;
     case 72:
-        alignH = (DRW::HAlign)reader->getInt32();
+        alignH = (HAlign)reader->getInt32();
         break;
     case 73:
-        alignV = (DRW::VAlign)reader->getInt32();
+        alignV = (VAlign)reader->getInt32();
         break;
     case 1:
         text = reader->getUtf8String();
