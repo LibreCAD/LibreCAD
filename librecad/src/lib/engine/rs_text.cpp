@@ -490,6 +490,7 @@ void RS_Text::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
 
 void RS_Text::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.insertionPoint.scale(center, factor);
+    //RLZ: verify for aligned/fit
     data.width*=factor.x;
     data.height*=factor.x;
     update();
@@ -510,6 +511,7 @@ void RS_Text::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     bool corr;
     data.angle = RS_Math::makeAngleReadable(data.angle, readable, &corr);
 
+    //RLZ: verify
     if (corr) {
         if (data.halign==RS_TextData::HALeft) {
             data.halign=RS_TextData::HARight;

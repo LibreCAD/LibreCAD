@@ -744,7 +744,7 @@ void Doc_plugin_interface::addText(QString txt, QString sty, QPointF *start,
     if (doc==NULL) {
         RS_DEBUG->print("Doc_plugin_interface::addLine: currentContainer is NULL");
     }
-    double width = 100.0;
+    double width = 1.0;
 
     RS_TextData::VAlign valign = static_cast <RS_TextData::VAlign>(va);
     RS_TextData::HAlign halign = static_cast <RS_TextData::HAlign>(ha);

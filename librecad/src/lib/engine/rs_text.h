@@ -193,8 +193,10 @@ public:
     double getWidth() {
         return data.width;
     }
+    //RLZ: bad functions, this is MText style align
     void setAlignment(int a);
     int getAlignment();
+
     RS_TextData::VAlign getVAlign() {
         return data.valign;
     }
