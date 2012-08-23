@@ -748,7 +748,7 @@ void Doc_plugin_interface::addText(QString txt, QString sty, QPointF *start,
 
     RS_TextData::VAlign valign = static_cast <RS_TextData::VAlign>(va);
     RS_TextData::HAlign halign = static_cast <RS_TextData::HAlign>(ha);
-    RS_TextData d(v1, height, width, valign, halign,
+    RS_TextData d(v1, v1, height, width, valign, halign,
                   RS_TextData::None, txt, sty, angle, RS2::Update);
     RS_Text* entity = new RS_Text(doc, d);
 

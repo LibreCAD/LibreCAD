@@ -75,8 +75,9 @@ public:
      * Constructor with initialisation.
      *
      * @param insertionPoint Insertion point
+     * @param secondPoint Second point for aligned-fit
      * @param height Nominal (initial) text height
-     * @param width Reference rectangle width
+     * @param widthRel Reference rectangle width
      * @param valign Vertical alignment
      * @param halign Horizontal alignment
      * @param textGeneration Text Generation
@@ -90,8 +91,9 @@ public:
      *    after creating a text entity.
      */
     RS_TextData(const RS_Vector& insertionPoint,
+                const RS_Vector& secondPoint,
                 double height,
-                double width,
+                double widthRel,
                 VAlign valign,
                 HAlign halign,
                 TextGeneration textGeneration,
@@ -100,8 +102,9 @@ public:
                 double angle,
                 RS2::UpdateMode updateMode = RS2::Update) {
         this->insertionPoint = insertionPoint;
+        this->secondPoint = secondPoint;
         this->height = height;
-        this->width = width;
+        this->widthRel = widthRel;
         this->valign = valign;
         this->halign = halign;
         this->textGeneration = textGeneration;
@@ -121,10 +124,12 @@ public:
 public:
     /** Insertion point */
     RS_Vector insertionPoint;
+    /** Second point for fit or aligned*/
+    RS_Vector secondPoint;
     /** Nominal (initial) text height */
     double height;
-    /** Reference rectangle width */
-    double width;
+    /** Width/Height relation */
+    double widthRel;
     /** Vertical alignment */
     VAlign valign;
     /** Horizontal alignment */
@@ -184,14 +189,17 @@ public:
     RS_Vector getInsertionPoint() {
         return data.insertionPoint;
     }
+    RS_Vector getSecondPoint() {
+        return data.secondPoint;
+    }
     double getHeight() {
         return data.height;
     }
     void setHeight(double h) {
         data.height = h;
     }
-    double getWidth() {
-        return data.width;
+    double getWidthRel() {
+        return data.widthRel;
     }
     //RLZ: bad functions, this is MText style align
     void setAlignment(int a);

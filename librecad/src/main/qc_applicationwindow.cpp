@@ -4493,9 +4493,9 @@ void QC_ApplicationWindow::slotTestInsertText() {
         RS_Text* text;
         RS_TextData textData;
 
-        textData = RS_TextData(RS_Vector(10.0,10.0),
-                               10.0, 100.0,
-                               RS_TextData::VATop,
+        textData = RS_TextData(RS_Vector(10.0,10.0),RS_Vector(10.0,10.0),
+                               10.0, 1.0,
+                               RS_TextData::VABaseline,
                                RS_TextData::HALeft,
                                RS_TextData::None,
                                "LibreCAD",

@@ -89,8 +89,8 @@ void RS_ActionDrawText::init(int status) {
 
 
 void RS_ActionDrawText::reset() {
-    data = RS_TextData(RS_Vector(0.0,0.0),
-                       1.0, 100.0,
+    data = RS_TextData(RS_Vector(0.0,0.0), RS_Vector(0.0,0.0),
+                       1.0, 1.0,
                        RS_TextData::VABaseline,
                        RS_TextData::HALeft,
                        RS_TextData::None,

@@ -608,9 +608,8 @@ void RS_FilterDXFRW::addText(const DRW_Text& data) {
     RS_DEBUG->print("Text as unicode:");
     RS_DEBUG->printUnicode(mtext);
 
-    RS_TextData d(refPoint, data.height, data.widthscale,
-                  valign, halign,
-                  dir,
+    RS_TextData d(refPoint, secPoint, data.height, data.widthscale,
+                  valign, halign, dir,
                   mtext, sty, angle*M_PI/180,
                   RS2::NoUpdate);
     RS_Text* entity = new RS_Text(currentContainer, d);
@@ -1999,10 +1998,16 @@ void RS_FilterDXFRW::writeText(RS_Text* t){
     text->alignH =(DRW_Text::HAlign)t->getHAlign();
     text->alignV =(DRW_Text::VAlign)t->getVAlign();
 
-    if (text->alignH != DRW_Text::HLeft || text->alignV != DRW_Text::VBaseLine) {
+    if (text->alignV != DRW_Text::VBaseLine || text->alignH == DRW_Text::HMiddle) {
         text->secPoint.x = t->getInsertionPoint().x;
         text->secPoint.y = t->getInsertionPoint().y;
     }
+
+    if (text->alignH == DRW_Text::HAligned || text->alignH != DRW_Text::HFit) {
+        text->basePoint.x = t->getSecondPoint().x;
+        text->basePoint.y = t->getSecondPoint().y;
+    }
+
     if (!t->getText().isEmpty()) {
         text->text = toDxfString(t->getText()).toUtf8().data();
         dxf->writeText(text);
