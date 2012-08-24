@@ -221,10 +221,6 @@ void RS_Text::update() {
     RS_Vector letterSpace = RS_Vector(font->getLetterSpacing(), 0.0);
     RS_Vector space = RS_Vector(font->getWordSpacing(), 0.0);
 
-    // Every single text line gets stored in this entity container
-    //  so we can move the whole line around easely:
-    RS_EntityContainer* oneLine = new RS_EntityContainer(this);
-
     // First every text line is created with
     //   alignement: top left
     //   angle: 0
@@ -264,7 +260,8 @@ void RS_Text::update() {
             if (letterWidth.x < 0)
                 letterWidth.x = -letterSpace.x;
 
-            oneLine->addEntity(letter);
+//            oneLine->addEntity(letter);
+            addEntity(letter);
 
             // next letter position:
             letterPos += letterWidth;
@@ -272,31 +269,13 @@ void RS_Text::update() {
         }
     }
 
-    updateAddLine(oneLine, 0);
-    //RLZ: verify
-    usedTextHeight = data.height;
-    forcedCalculateBorders();
-
-    RS_DEBUG->print("RS_Text::update: OK");
-}
-
-
-
-/**
- * Used internally by update() to add a text line created with
- * default values and alignment to this text container.
- *
- * @param textLine The text line.
- * @param lineCounter Line number.
- */
-void RS_Text::updateAddLine(RS_EntityContainer* textLine, int /*lineCounter*/) {
-    RS_DEBUG->print("RS_Text::updateAddLine: width: %f", textLine->getSize().x);
-
+//    updateAddLine(oneLine, 0);
+///////
     if( ! RS_EntityContainer::autoUpdateBorders) {
         //only update borders when needed
-        textLine->forcedCalculateBorders();
+        forcedCalculateBorders();
     }
-    RS_Vector textSize = textLine->getSize();
+    RS_Vector textSize = getSize();
 
     RS_DEBUG->print("RS_Text::updateAddLine: width 2: %f", textSize.x);
 
@@ -308,17 +287,18 @@ void RS_Text::updateAddLine(RS_EntityContainer* textLine, int /*lineCounter*/) {
             || data.halign == RS_TextData::HAMiddle) {
         data.valign = RS_TextData::VABaseline;
     }
+    RS_Vector offset(0.0, 0.0);
     switch (data.valign) {
     case RS_TextData::VAMiddle:
-        textLine->move(RS_Vector(0.0, vSize/2.0));
+        offset.move(RS_Vector(0.0, vSize/2.0));
         break;
 
     case RS_TextData::VABottom:
-        textLine->move(RS_Vector(0.0, vSize+3));
+        offset.move(RS_Vector(0.0, vSize+3));
         break;
 
     case RS_TextData::VABaseline:
-        textLine->move(RS_Vector(0.0, vSize));
+        offset.move(RS_Vector(0.0, vSize));
         break;
 
     default:
@@ -328,62 +308,71 @@ void RS_Text::updateAddLine(RS_EntityContainer* textLine, int /*lineCounter*/) {
     // Horizontal Align:
     switch (data.halign) {
     case RS_TextData::HAMiddle:{
-        textLine->move(RS_Vector(-textSize.x/2.0, -(textSize.y/2.0 + textLine->getMin().y) ));
+        offset.move(RS_Vector(-textSize.x/2.0, -(vSize + textSize.y/2.0 + getMin().y) ));
         break;}
     case RS_TextData::HACenter:
         RS_DEBUG->print("RS_Text::updateAddLine: move by: %f", -textSize.x/2.0);
-        textLine->move(RS_Vector(-textSize.x/2.0, 0.0));
+        offset.move(RS_Vector(-textSize.x/2.0, 0.0));
         break;
     case RS_TextData::HARight:
-        textLine->move(RS_Vector(-textSize.x, 0.0));
+        offset.move(RS_Vector(-textSize.x, 0.0));
         break;
 
     default:
         break;
     }
 
+    if (data.halign!=RS_TextData::HAAligned && data.halign!=RS_TextData::HAFit){
+        data.secondPoint = RS_Vector(offset.x, offset.y - vSize);
+    }
+    RS_EntityContainer::move(offset);
+
+
     // Scale:
     if (data.halign==RS_TextData::HAAligned){
         double dist = data.insertionPoint.distanceTo(data.secondPoint)/textSize.x;
-        textLine->scale(RS_Vector(0.0,0.0),
+        data.height = data.height*dist;
+        RS_EntityContainer::scale(RS_Vector(0.0,0.0),
                         RS_Vector(dist, dist));
     } else if (data.halign==RS_TextData::HAFit){
         double dist = data.insertionPoint.distanceTo(data.secondPoint)/textSize.x;
-        textLine->scale(RS_Vector(0.0,0.0),
+        RS_EntityContainer::scale(RS_Vector(0.0,0.0),
                         RS_Vector(dist, data.height/9.0));
-    } else
-        textLine->scale(RS_Vector(0.0,0.0),
+    } else {
+        RS_EntityContainer::scale(RS_Vector(0.0,0.0),
                         RS_Vector(data.height*data.widthRel/9.0, data.height/9.0));
+        data.secondPoint.scale(RS_Vector(0.0,0.0),
+                               RS_Vector(data.height*data.widthRel/9.0, data.height/9.0));
+    }
 
-    textLine->forcedCalculateBorders();
+    forcedCalculateBorders();
 
     // Update actual text size (before rotating, after scaling!):
-    if (textLine->getSize().x>usedTextWidth) {
-        usedTextWidth = textLine->getSize().x;
-    }
-//RLZ: not correct for Aligned
+    usedTextWidth = getSize().x;
     usedTextHeight = data.height;
 
     // Rotate:
     if (data.halign==RS_TextData::HAAligned || data.halign==RS_TextData::HAFit){
         double angle = data.insertionPoint.angleTo(data.secondPoint);
         data.angle = angle;
+    } else {
+        data.secondPoint.rotate(RS_Vector(0.0,0.0), data.angle);
+        data.secondPoint.move(data.insertionPoint);
     }
-    textLine->rotate(RS_Vector(0.0,0.0), data.angle);
+    RS_EntityContainer::rotate(RS_Vector(0.0,0.0), data.angle);
 
-    // Move:
-    textLine->move(data.insertionPoint);
-    textLine->setPen(RS_Pen(RS2::FlagInvalid));
-    textLine->setLayer(NULL);
-    textLine->forcedCalculateBorders();
+    // Move to insertion point:
+    RS_EntityContainer::move(data.insertionPoint);
 
-    addEntity(textLine);
+    forcedCalculateBorders();
+
+    RS_DEBUG->print("RS_Text::update: OK");
 }
 
 
 
 RS_VectorSolutions RS_Text::getRefPoints() {
-        RS_VectorSolutions ret(data.insertionPoint);
+        RS_VectorSolutions ret(data.insertionPoint, data.secondPoint);
         return ret;
 }
 
@@ -399,6 +388,7 @@ RS_Vector RS_Text::getNearestRef(const RS_Vector& coord,
 void RS_Text::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
     data.insertionPoint.move(offset);
+    data.secondPoint.move(offset);
 //    update();
 }
 
@@ -408,12 +398,14 @@ void RS_Text::rotate(const RS_Vector& center, const double& angle) {
     RS_Vector angleVector(angle);
     RS_EntityContainer::rotate(center, angleVector);
     data.insertionPoint.rotate(center, angleVector);
+    data.secondPoint.rotate(center, angleVector);
     data.angle = RS_Math::correctAngle(data.angle+angle);
 //    update();
 }
 void RS_Text::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     RS_EntityContainer::rotate(center, angleVector);
     data.insertionPoint.rotate(center, angleVector);
+    data.secondPoint.rotate(center, angleVector);
     data.angle = RS_Math::correctAngle(data.angle+angleVector.angle());
 //    update();
 }
@@ -422,9 +414,8 @@ void RS_Text::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
 
 void RS_Text::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.insertionPoint.scale(center, factor);
-    //RLZ: verify for aligned/fit
-//    data.width*=factor.x;
-    data.height*=factor.y;
+    data.secondPoint.scale(center, factor);
+    data.height*=factor.x;
     update();
 }
 

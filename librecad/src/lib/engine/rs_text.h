@@ -181,7 +181,6 @@ public:
     }
 
     void update();
-    void updateAddLine(RS_EntityContainer* textLine, int lineCounter);
 
     int getNumberOfLines();
 
