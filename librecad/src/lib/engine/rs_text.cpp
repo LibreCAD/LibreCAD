@@ -269,8 +269,6 @@ void RS_Text::update() {
         }
     }
 
-//    updateAddLine(oneLine, 0);
-///////
     if( ! RS_EntityContainer::autoUpdateBorders) {
         //only update borders when needed
         forcedCalculateBorders();
@@ -422,8 +420,6 @@ void RS_Text::scale(const RS_Vector& center, const RS_Vector& factor) {
 
 
 void RS_Text::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-    data.insertionPoint.mirror(axisPoint1, axisPoint2);
-    //double ang = axisPoint1.angleTo(axisPoint2);
     bool readable = RS_Math::isAngleReadable(data.angle);
 
     RS_Vector vec;
@@ -434,19 +430,26 @@ void RS_Text::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     bool corr;
     data.angle = RS_Math::makeAngleReadable(data.angle, readable, &corr);
 
-    //RLZ: verify
     if (corr) {
+        data.insertionPoint.mirror(axisPoint1, axisPoint2);
+        data.secondPoint.mirror(axisPoint1, axisPoint2);
         if (data.halign==RS_TextData::HALeft) {
             data.halign=RS_TextData::HARight;
         } else if (data.halign==RS_TextData::HARight) {
             data.halign=RS_TextData::HALeft;
+        } else if (data.halign==RS_TextData::HAFit || data.halign==RS_TextData::HAAligned) {
+            RS_Vector tmp = data.insertionPoint;
+            data.insertionPoint = data.secondPoint;
+            data.secondPoint = tmp;
         }
     } else {
-        if (data.valign==RS_TextData::VATop) {
-            data.valign=RS_TextData::VABottom;
-        } else if (data.valign==RS_TextData::VABottom) {
-            data.valign=RS_TextData::VATop;
-        }
+        RS_Vector minP = RS_Vector(getMin().x, getMax().y);
+        minP = minP.mirror(axisPoint1, axisPoint2);
+        double mirrAngle = axisPoint1.angleTo(axisPoint2)*2.0;
+        data.insertionPoint.move(minP - getMin());
+        data.secondPoint.move(minP - getMin());
+        data.insertionPoint.rotate(minP, mirrAngle);
+        data.secondPoint.rotate(minP, mirrAngle);
     }
     update();
 }
