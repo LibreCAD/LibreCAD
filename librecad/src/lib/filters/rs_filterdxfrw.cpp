@@ -548,7 +548,7 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     RS_DEBUG->print("Text as unicode:");
     RS_DEBUG->printUnicode(mtext);
     double interlin = data.interlin;
-    double angle = data.angle*M_PI/180;
+    double angle = data.angle*M_PI/180.;
     RS_Vector ip = RS_Vector(data.basePoint.x, data.basePoint.y);
 
 //Correct bad alignment of older dxflib or libdxfrw < 0.5.4
@@ -558,7 +558,12 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
             QStringList tl = mtext.split('\n', QString::SkipEmptyParts);
             if (!tl.isEmpty()) {
                 QString txt = tl.at(tl.size()-1);
-                RS_TextData d(RS_Vector(0,0,0), RS_Vector(0,0,0),
+#ifdef  RS_VECTOR2D
+                RS_TextData d(RS_Vector(0.,0.), RS_Vector(0.,0.),
+#else
+                RS_TextData d(RS_Vector(0.,0.,0.), RS_Vector(0.,0.,0.),
+#endif
+
                               data.height, 1, RS_TextData::VABaseline, RS_TextData::HALeft,
                               RS_TextData::None, txt, sty, 0,
                               RS2::Update);
