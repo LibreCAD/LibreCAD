@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>524</width>
-    <height>342</height>
+    <height>346</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -162,13 +162,16 @@
         </sizepolicy>
        </property>
        <property name="title">
-        <string>Font</string>
+        <string>Font settings</string>
        </property>
        <layout class="QGridLayout">
         <property name="spacing">
          <number>2</number>
         </property>
-        <item row="2" column="2">
+        <item row="5" column="2">
+         <widget class="QLineEdit" name="leWidthRel"/>
+        </item>
+        <item row="3" column="2">
          <widget class="QLineEdit" name="leAngle">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -178,7 +181,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
+        <item row="2" column="1">
          <widget class="QLabel" name="lHeight">
           <property name="text">
            <string>&amp;Height:</string>
@@ -191,14 +194,14 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
+        <item row="3" column="1">
          <widget class="QLabel" name="lAngle">
           <property name="text">
            <string>Angle:</string>
           </property>
          </widget>
         </item>
-        <item row="5" column="1">
+        <item row="6" column="1">
          <spacer name="spacer2">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -214,7 +217,7 @@
           </property>
          </spacer>
         </item>
-        <item row="1" column="2">
+        <item row="2" column="2">
          <widget class="QLineEdit" name="leHeight">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -224,14 +227,7 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Oblique:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="2">
+        <item row="6" column="2">
          <spacer name="spacer2_2">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -247,7 +243,31 @@
           </property>
          </spacer>
         </item>
-        <item row="0" column="1" colspan="2">
+        <item row="4" column="1">
+         <widget class="QLabel" name="lOblique">
+          <property name="text">
+           <string>Oblique:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QLineEdit" name="leOblique"/>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLabel" name="lWidthFactor">
+          <property name="text">
+           <string>Width factor:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="lFont">
+          <property name="text">
+           <string>Font:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
          <widget class="QG_FontBox" name="cbFont" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -255,20 +275,13 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLabel" name="lWidthRel">
-          <property name="text">
-           <string>Width Rel:</string>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
           </property>
          </widget>
-        </item>
-        <item row="3" column="2">
-         <widget class="QLineEdit" name="leOblique"/>
-        </item>
-        <item row="4" column="2">
-         <widget class="QLineEdit" name="leWidthRel"/>
         </item>
        </layout>
       </widget>
@@ -323,6 +336,12 @@
              <iconset resource="../../../res/extui/extui.qrc">
               <normaloff>:/extui/aligntext_bc.png</normaloff>:/extui/aligntext_bc.png</iconset>
             </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
             <property name="checkable">
              <bool>true</bool>
             </property>
@@ -351,6 +370,12 @@
             <property name="icon">
              <iconset resource="../../../res/extui/extui.qrc">
               <normaloff>:/extui/aligntext_br.png</normaloff>:/extui/aligntext_br.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -381,6 +406,12 @@
              <iconset resource="../../../res/extui/extui.qrc">
               <normaloff>:/extui/aligntext_mr.png</normaloff>:/extui/aligntext_mr.png</iconset>
             </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
             <property name="checkable">
              <bool>true</bool>
             </property>
@@ -409,6 +440,12 @@
             <property name="icon">
              <iconset resource="../../../res/extui/extui.qrc">
               <normaloff>:/extui/aligntext_bl.png</normaloff>:/extui/aligntext_bl.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -439,6 +476,12 @@
              <iconset resource="../../../res/extui/extui.qrc">
               <normaloff>:/extui/aligntext_ml.png</normaloff>:/extui/aligntext_ml.png</iconset>
             </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
             <property name="checkable">
              <bool>true</bool>
             </property>
@@ -455,6 +498,12 @@
             <property name="icon">
              <iconset resource="../../../res/extui/extui.qrc">
               <normaloff>:/extui/aligntext_ll.png</normaloff>:/extui/aligntext_ll.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -485,6 +534,12 @@
              <iconset resource="../../../res/extui/extui.qrc">
               <normaloff>:/extui/aligntext_tc.png</normaloff>:/extui/aligntext_tc.png</iconset>
             </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
             <property name="checkable">
              <bool>true</bool>
             </property>
@@ -502,6 +557,12 @@
              <iconset resource="../../../res/extui/extui.qrc">
               <normaloff>:/extui/aligntext_lr.png</normaloff>:/extui/aligntext_lr.png</iconset>
             </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
             <property name="checkable">
              <bool>true</bool>
             </property>
@@ -518,6 +579,12 @@
             <property name="icon">
              <iconset resource="../../../res/extui/extui.qrc">
               <normaloff>:/extui/aligntext_lc.png</normaloff>:/extui/aligntext_lc.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -548,6 +615,12 @@
              <iconset resource="../../../res/extui/extui.qrc">
               <normaloff>:/extui/aligntext_tl.png</normaloff>:/extui/aligntext_tl.png</iconset>
             </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
             <property name="checkable">
              <bool>true</bool>
             </property>
@@ -577,6 +650,12 @@
              <iconset resource="../../../res/extui/extui.qrc">
               <normaloff>:/extui/aligntext_tr.png</normaloff>:/extui/aligntext_tr.png</iconset>
             </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
             <property name="checkable">
              <bool>true</bool>
             </property>
@@ -605,6 +684,12 @@
             <property name="icon">
              <iconset resource="../../../res/extui/extui.qrc">
               <normaloff>:/extui/aligntext_mc.png</normaloff>:/extui/aligntext_mc.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
             </property>
             <property name="checkable">
              <bool>true</bool>
