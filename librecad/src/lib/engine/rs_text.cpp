@@ -329,7 +329,7 @@ void RS_Text::update() {
     // Scale:
     if (data.halign==RS_TextData::HAAligned){
         double dist = data.insertionPoint.distanceTo(data.secondPoint)/textSize.x;
-        data.height = data.height*dist;
+        data.height = vSize*dist;
         RS_EntityContainer::scale(RS_Vector(0.0,0.0),
                         RS_Vector(dist, dist));
     } else if (data.halign==RS_TextData::HAFit){

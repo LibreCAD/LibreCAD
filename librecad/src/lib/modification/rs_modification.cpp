@@ -3007,7 +3007,6 @@ bool RS_Modification::explodeTextIntoLetters() {
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
     }
-//RLZ: TODO add support for single text (needed a base class for text)
     for (RS_Entity* e=container->firstEntity();
             e!=NULL;
             e=container->nextEntity()) {
@@ -3015,6 +3014,10 @@ bool RS_Modification::explodeTextIntoLetters() {
             if (e->rtti()==RS2::EntityMText) {
                 // add letters of text:
                 RS_MText* text = (RS_MText*)e;
+                explodeTextIntoLetters(text, addList);
+            } else if (e->rtti()==RS2::EntityText) {
+                // add letters of text:
+                RS_Text* text = (RS_Text*)e;
                 explodeTextIntoLetters(text, addList);
             } else {
                 e->setSelected(false);
@@ -3037,7 +3040,6 @@ bool RS_Modification::explodeTextIntoLetters() {
 }
 
 
-//RLZ: TODO use a base class for text
 bool RS_Modification::explodeTextIntoLetters(RS_MText* text, QList<RS_Entity*>& addList) {
 
     if (text==NULL) {
@@ -3104,6 +3106,48 @@ bool RS_Modification::explodeTextIntoLetters(RS_MText* text, QList<RS_Entity*>& 
     return true;
 }
 
+bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& addList) {
+
+    if (text==NULL) {
+        return false;
+    }
+
+    if(text->isLocked() || ! text->isVisible()) return false;
+
+    // iterate though letters:
+    for (RS_Entity* e2 = text->firstEntity(); e2!=NULL;
+            e2 = text->nextEntity()) {
+
+        if (e2==NULL) {
+            break;
+        }
+
+        if (e2->rtti()==RS2::EntityInsert) {
+
+            RS_Insert* letter = (RS_Insert*)e2;
+
+            RS_Text* tl = new RS_Text(
+                        container,
+                        RS_TextData(letter->getInsertionPoint(),
+                                    letter->getInsertionPoint(),
+                                    text->getHeight(),
+                                    text->getWidthRel(), RS_TextData::VABaseline,
+                                    RS_TextData::HALeft, RS_TextData::None, /*text->getTextGeneration(),*/
+                                    letter->getName(),
+                                    text->getStyle(),
+                                    letter->getAngle(),
+                                    RS2::Update));
+
+            tl->setLayer(text->getLayer());
+            tl->setPen(text->getPen());
+
+            addList.append(tl);
+            tl->update();
+        }
+    }
+
+    return true;
+}
 
 
 /**

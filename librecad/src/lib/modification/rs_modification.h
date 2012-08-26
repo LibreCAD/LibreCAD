@@ -272,9 +272,9 @@ public:
 
         bool explode();
         bool explodeTextIntoLetters();
-        //RLZ: TODO use a base class for text
         bool explodeTextIntoLetters(RS_MText* text, QList<RS_Entity*>& addList);
-    bool moveRef(RS_MoveRefData& data);
+        bool explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& addList);
+        bool moveRef(RS_MoveRefData& data);
 
     bool splitPolyline(RS_Polyline& polyline,
                        RS_Entity& e1, RS_Vector v1,
