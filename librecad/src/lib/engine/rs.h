@@ -171,6 +171,7 @@ public:
         ActionDefault,
 
         ActionFileNew,
+        ActionFileNewTemplate,
         ActionFileOpen,
         ActionFileSave,
         ActionFileSaveAs,

@@ -40,6 +40,7 @@
 
 #include "qc_applicationwindow.h"
 #include "rs_graphic.h"
+#include "rs_settings.h"
 #include "qg_exitdialog.h"
 #include "qg_filedialog.h"
 #include "rs_insert.h"
@@ -67,6 +68,15 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
     id = idCounter++;
     //childWindows.setAutoDelete(false);
     parentWindow = NULL;
+    //tried to load template file indicated in RS_Settings
+    RS_SETTINGS->beginGroup("/Paths");
+    QString fileTemplate = RS_SETTINGS->readEntry("/Template");
+    RS_SETTINGS->endGroup();
+    QFileInfo finfo(fileTemplate);
+    if (!fileTemplate.isEmpty() && finfo.isReadable()) {
+        slotFileNewTemplate(fileTemplate, RS2::FormatDXFRW);
+        return;
+    }
 
     if (document!=NULL) {
         if (document->getLayerList()!=NULL) {
@@ -318,6 +328,30 @@ void QC_MDIWindow::slotFileNew() {
         graphicView->redraw();
     }
     RS_DEBUG->print("QC_MDIWindow::slotFileNew end");
+}
+
+
+/**
+ * Creates a new document, loading template, in this MDI window.
+ */
+bool QC_MDIWindow::slotFileNewTemplate(const QString& fileName, RS2::FormatType type) {
+    RS_DEBUG->print("QC_MDIWindow::slotFileNewTemplate begin");
+
+    bool ret = false;
+
+    if (document==NULL || fileName.isEmpty())
+        return ret;
+
+    document->newDoc();
+    ret = document->loadTemplate(fileName, type);
+    if (ret) {
+        RS_DEBUG->print("QC_MDIWindow::slotFileNewTemplate: autoZoom");
+        graphicView->zoomAuto(false);
+    } else
+        RS_DEBUG->print("QC_MDIWindow::slotFileNewTemplate: failed");
+
+    RS_DEBUG->print("QC_MDIWindow::slotFileNewTemplate end");
+    return true;
 }
 
 

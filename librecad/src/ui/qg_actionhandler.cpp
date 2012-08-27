@@ -86,6 +86,7 @@
 #include "rs_actioneditcopy.h"
 #include "rs_actioneditpaste.h"
 #include "rs_actioneditundo.h"
+#include "rs_actionfilenewtemplate.h"
 #include "rs_actionfileopen.h"
 #include "rs_actionfilesaveas.h"
 #include "rs_actioninfoangle.h"
@@ -254,6 +255,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         //case RS2::ActionFileNew:
         //    a = new RS_ActionFileNew(*doc, *gv);
         //	break;
+    case RS2::ActionFileNewTemplate:
+        a = new RS_ActionFileNewTemplate(*doc, *gv);
+        break;
         //case RS2::ActionFileSave:
         //    a = new RS_ActionFileSave(*doc, *gv);
         //	break;
@@ -1105,6 +1109,10 @@ bool QG_ActionHandler::command(const QString& cmd) {
 //void QG_ActionHandler::slotFileNew() {
 //	setCurrentAction(RS2::ActionFileNew);
 //}
+
+void QG_ActionHandler::slotFileNewTemplate() {
+    setCurrentAction(RS2::ActionFileNewTemplate);
+}
 
 void QG_ActionHandler::slotFileOpen() {
     setCurrentAction(RS2::ActionFileOpen);

@@ -61,6 +61,7 @@ public:
 
 public slots:
     /*void slotFileNew();*/
+    void slotFileNewTemplate();
     void slotFileOpen();
     /*
           void slotFileOpen(const QString& fileName);

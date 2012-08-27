@@ -24,8 +24,7 @@
 **
 **********************************************************************/
 
-#include <qfile.h>
-#include <qfileinfo.h>
+#include <QDir>
 
 #include "rs_graphic.h"
 
@@ -497,9 +496,37 @@ bool RS_Graphic::saveAs(const QString &filename, RS2::FormatType type)
 }
 
 
+/**
+ * Loads the given file into this graphic.
+ */
+bool RS_Graphic::loadTemplate(const QString &filename, RS2::FormatType type) {
+    RS_DEBUG->print("RS_Graphic::loadTemplate(%s)", filename.toLatin1().data());
+
+    bool ret = false;
+
+    // Construct new autosave filename by prepending # to the filename part,
+    // using system temporary dir.
+    this->autosaveFilename = QDir::tempPath () + "/#" + "Unnamed.dxf";
+
+    // clean all:
+    newDoc();
+
+    // import template file:
+    ret = RS_FileIO::instance()->fileImport(*this, filename, type);
+
+    setModified(false);
+    layerList.setModified(false);
+    blockList.setModified(false);
+    QFileInfo finfo;
+    modifiedTime = finfo.lastModified();
+
+    RS_DEBUG->print("RS_Graphic::loadTemplate(%s): OK", filename.toLatin1().data());
+
+    return ret;
+}
 
 /**
- * Loads the given fils into this graphic.
+ * Loads the given file into this graphic.
  */
 bool RS_Graphic::open(const QString &filename, RS2::FormatType type) {
     RS_DEBUG->print("RS_Graphic::open(%s)", filename.toLatin1().data());

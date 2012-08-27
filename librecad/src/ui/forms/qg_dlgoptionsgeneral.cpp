@@ -26,10 +26,10 @@
 #include "qg_dlgoptionsgeneral.h"
 
 #include <qmessagebox.h>
-//#include <q3listbox.h>
 #include "rs_system.h"
 #include "rs_settings.h"
 #include "rs_units.h"
+#include "qg_filedialog.h"
 
 /*
  *  Constructs a QG_DlgOptionsGeneral as a child of 'parent', with the
@@ -175,6 +175,7 @@ void QG_DlgOptionsGeneral::init() {
     lePathFonts->setText(RS_SETTINGS->readEntry("/Fonts", ""));
     lePathScripts->setText(RS_SETTINGS->readEntry("/Scripts", ""));
     lePathLibrary->setText(RS_SETTINGS->readEntry("/Library", "").trimmed());
+    leTemplate->setText(RS_SETTINGS->readEntry("/Template", "").trimmed());
 
     RS_SETTINGS->endGroup();
 
@@ -206,6 +207,12 @@ void QG_DlgOptionsGeneral::destroy() {
 
 void QG_DlgOptionsGeneral::setRestartNeeded() {
     restartNeeded = true;
+}
+void QG_DlgOptionsGeneral::setTemplateFile() {
+    RS2::FormatType type = RS2::FormatDXFRW;
+    QG_FileDialog dlg(this);
+    QString fileName = dlg.getOpenFile(&type);
+    leTemplate->setText(fileName);
 }
 
 void QG_DlgOptionsGeneral::ok() {
@@ -241,6 +248,7 @@ void QG_DlgOptionsGeneral::ok() {
     RS_SETTINGS->writeEntry("/Fonts", lePathFonts->text());
     RS_SETTINGS->writeEntry("/Scripts", lePathScripts->text());
     RS_SETTINGS->writeEntry("/Library", lePathLibrary->text());
+    RS_SETTINGS->writeEntry("/Template", leTemplate->text());
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Defaults");

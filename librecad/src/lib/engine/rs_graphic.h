@@ -70,6 +70,7 @@ public:
     virtual bool save(bool isAutoSave = false);
     virtual bool saveAs(const QString& filename, RS2::FormatType type);
     virtual bool open(const QString& filename, RS2::FormatType type);
+    bool loadTemplate(const QString &filename, RS2::FormatType type);
 
         // Wrappers for Layer functions:
     void clearLayers() {

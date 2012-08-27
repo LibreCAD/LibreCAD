@@ -122,6 +122,8 @@ public slots:
 
     /** generates a new document for a graphic. */
     QC_MDIWindow* slotFileNew(RS_Document* doc=NULL);
+    /** generates a new document basend in selected template */
+    void slotFileNewTemplate();
     /** opens a document */
     void slotFileOpen();
     /**

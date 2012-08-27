@@ -85,6 +85,7 @@
 #include "rs_actioneditpaste.h"
 #include "rs_actioneditundo.h"
 #include "rs_actionfilenew.h"
+#include "rs_actionfilenewtemplate.h"
 #include "rs_actionfileopen.h"
 #include "rs_actionfilesave.h"
 #include "rs_actionfilesaveas.h"
@@ -221,6 +222,12 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 action = RS_ActionFileNew::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotFileNew()));
+        break;
+
+    case RS2::ActionFileNewTemplate:
+                action = RS_ActionFileNewTemplate::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotFileNewTemplate()));
         break;
 
     case RS2::ActionFileOpen:

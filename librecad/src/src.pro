@@ -343,6 +343,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actioneditpaste.h \
     actions/rs_actioneditundo.h \
     actions/rs_actionfilenew.h \
+    actions/rs_actionfilenewtemplate.h \
     actions/rs_actionfileopen.h \
     actions/rs_actionfilesave.h \
     actions/rs_actionfilesaveas.h \
@@ -474,6 +475,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actioneditpaste.cpp \
     actions/rs_actioneditundo.cpp \
     actions/rs_actionfilenew.cpp \
+    actions/rs_actionfilenewtemplate.cpp \
     actions/rs_actionfileopen.cpp \
     actions/rs_actionfilesave.cpp \
     actions/rs_actionfilesaveas.cpp \

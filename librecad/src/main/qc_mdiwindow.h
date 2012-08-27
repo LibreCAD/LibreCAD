@@ -62,6 +62,7 @@ public slots:
     void slotPenChanged(RS_Pen p);
 
     void slotFileNew();
+    bool slotFileNewTemplate(const QString& fileName, RS2::FormatType type);
     bool slotFileOpen(const QString& fileName, RS2::FormatType type);
     bool slotFileSave(bool &cancelled, bool isAutoSave=false);
     bool slotFileSaveAs(bool &cancelled);

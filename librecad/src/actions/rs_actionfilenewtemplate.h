@@ -23,33 +23,29 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#ifndef QG_DLGOPTIONSGENERAL_H
-#define QG_DLGOPTIONSGENERAL_H
 
-#include "ui_qg_dlgoptionsgeneral.h"
+#ifndef RS_ACTIONFILENEWTEMPLATE_H
+#define RS_ACTIONFILENEWTEMPLATE_H
 
-class QG_DlgOptionsGeneral : public QDialog, public Ui::QG_DlgOptionsGeneral
-{
-    Q_OBJECT
+#include "rs_actioninterface.h"
 
+
+/**
+ * This action class can handle user events to create new blank documents loading a template.
+ *
+ * @author Rallaz
+ */
+class RS_ActionFileNewTemplate : public RS_ActionInterface {
+	Q_OBJECT
 public:
-    QG_DlgOptionsGeneral(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-    ~QG_DlgOptionsGeneral();
+    RS_ActionFileNewTemplate(RS_EntityContainer& container,
+                      RS_GraphicView& graphicView);
+    ~RS_ActionFileNewTemplate() {}
 
-public slots:
-    virtual void setRestartNeeded();
-    virtual void ok();
+	static QAction* createGUIAction(RS2::ActionType type, QObject* parent);
 
-protected slots:
-    virtual void languageChange();
-    virtual void setTemplateFile();
-
-private:
-    bool restartNeeded;
-
-    void init();
-    void destroy();
-
+    virtual void init(int status=0);
+    virtual void trigger();
 };
 
-#endif // QG_DLGOPTIONSGENERAL_H
+#endif

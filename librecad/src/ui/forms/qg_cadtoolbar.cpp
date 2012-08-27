@@ -393,6 +393,7 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     switch(actionType){
     //no op
     case RS2::ActionFileNew:
+    case RS2::ActionFileNewTemplate:
     case RS2::ActionFileOpen:
     case RS2::ActionFileSave:
     case RS2::ActionFileSaveAs:
