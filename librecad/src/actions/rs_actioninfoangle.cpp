@@ -122,7 +122,7 @@ void RS_ActionInfoAngle::mouseReleaseEvent(QMouseEvent* e) {
 
         switch (getStatus()) {
         case SetEntity1:
-            entity1 = catchEntity(e, RS2::ResolveAllButInserts);
+            entity1 = catchEntity(e, RS2::ResolveAll);
             if (entity1!=NULL && entity1->rtti()==RS2::EntityLine) {
                 point1 = entity1->getNearestPointOnEntity(mouse);
                 setStatus(SetEntity2);
@@ -130,7 +130,7 @@ void RS_ActionInfoAngle::mouseReleaseEvent(QMouseEvent* e) {
             break;
 
         case SetEntity2:
-            entity2 = catchEntity(e, RS2::ResolveAllButInserts);
+            entity2 = catchEntity(e, RS2::ResolveAll);
             if (entity2!=NULL && entity2->rtti()==RS2::EntityLine) {
                 point2 = entity2->getNearestPointOnEntity(mouse);
                 trigger();
