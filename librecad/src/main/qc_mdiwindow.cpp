@@ -68,15 +68,6 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
     id = idCounter++;
     //childWindows.setAutoDelete(false);
     parentWindow = NULL;
-    //tried to load template file indicated in RS_Settings
-    RS_SETTINGS->beginGroup("/Paths");
-    QString fileTemplate = RS_SETTINGS->readEntry("/Template");
-    RS_SETTINGS->endGroup();
-    QFileInfo finfo(fileTemplate);
-    if (!fileTemplate.isEmpty() && finfo.isReadable()) {
-        slotFileNewTemplate(fileTemplate, RS2::FormatDXFRW);
-        return;
-    }
 
     if (document!=NULL) {
         if (document->getLayerList()!=NULL) {

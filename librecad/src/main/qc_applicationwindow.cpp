@@ -2541,7 +2541,85 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     return w;
 }
 
+/**
+ * Helper function for Menu file -> New & New....
+ */
+bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) {
+    RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper()");
+    bool ret = false;
+    RS2::FormatType type = RS2::FormatDXFRW;
 
+    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+
+    RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper: creating new doc window");
+    /*QC_MDIWindow* */ w = slotFileNew();
+    qApp->processEvents(QEventLoop::AllEvents, 1000);
+
+    // link the layer widget to the new document:
+    layerWidget->setLayerList(w->getDocument()->getLayerList(), false);
+    // link the block widget to the new document:
+    blockWidget->setBlockList(w->getDocument()->getBlockList());
+    // link coordinate widget to graphic
+    coordinateWidget->setGraphic(w->getGraphic());
+
+    qApp->processEvents(QEventLoop::AllEvents, 1000);
+
+    // loads the template file in the new view:
+    if (!fileName.isEmpty()) {
+        ret = w->slotFileNewTemplate(fileName, type);
+    } else
+        //new without template is OK;
+        ret = true;
+
+    if (!ret) {
+        // error loading template
+        QApplication::restoreOverrideCursor();
+        return ret;
+    }
+
+    RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper: load Template: OK");
+
+    layerWidget->slotUpdateLayerList();
+
+    RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper: update coordinate widget");
+    // update coordinate widget format:
+    RS_DIALOGFACTORY->updateCoordinateWidget(RS_Vector(0.0,0.0),
+                                             RS_Vector(0.0,0.0), true);
+
+    // show output of filter (if any):
+    commandWidget->processStderr();
+    QString message=tr("New document with template: ")+fileName;
+    commandWidget->appendHistory(message);
+    statusBar()->showMessage(message, 2000);
+
+    QApplication::restoreOverrideCursor();
+    RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper() OK");
+    return ret;
+}
+
+/**
+ * Menu file -> New (using a predefined Template).
+ */
+void QC_ApplicationWindow::slotFileNewNew() {
+    RS_DEBUG->print("QC_ApplicationWindow::slotFileNewNew()");
+
+//    RS2::FormatType type = RS2::FormatDXFRW;
+    //tried to load template file indicated in RS_Settings
+    RS_SETTINGS->beginGroup("/Paths");
+    QString fileName = RS_SETTINGS->readEntry("/Template");
+    RS_SETTINGS->endGroup();
+/*    QFileInfo finfo(fileName);
+    if (!fileName.isEmpty() && finfo.isReadable()) {
+        slotFileNewTemplate(fileName, RS2::FormatDXFRW);
+        return;
+    }*/
+
+    if (slotFileNewHelper(fileName)==false) {
+        // error opening template
+        RS_DEBUG->print("QC_ApplicationWindow::slotFileNewNew: load Template failed");
+    } else
+        RS_DEBUG->print("QC_ApplicationWindow::slotFileNewNew() OK");
+}
 
 /**
  * Menu file -> New with Template.
@@ -2552,8 +2630,6 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
     RS2::FormatType type = RS2::FormatDXFRW;
     QG_FileDialog dlg(this);
     QString fileName = dlg.getOpenFile(&type);
-
-    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
     if (fileName.isEmpty()) {
            statusBar()->showMessage(tr("Select Template aborted"), 2000);
@@ -2569,32 +2645,20 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
         geo=activedMdiSubWindow->geometry();
         maximized=activedMdiSubWindow->isMaximized();
     }
-
-    QC_MDIWindow* w = slotFileNew();
-    qApp->processEvents(QEventLoop::AllEvents, 1000);
-
-    // link the layer widget to the new document:
-    layerWidget->setLayerList(w->getDocument()->getLayerList(), false);
-    // link the block widget to the new document:
-    blockWidget->setBlockList(w->getDocument()->getBlockList());
-    // link coordinate widget to graphic
-    coordinateWidget->setGraphic(w->getGraphic());
-
-    qApp->processEvents(QEventLoop::AllEvents, 1000);
-
-        // loads the template file in the new view:
-    if (w->slotFileNewTemplate(fileName, type)==false) {
+    QC_MDIWindow* w =NULL;
+    if (slotFileNewHelper(fileName, w)==false) {
         // error
-        QApplication::restoreOverrideCursor();
         QString msg=tr("Cannot open the file\n%1\nPlease "
                        "check the permissions.").arg(fileName);
         commandWidget->appendHistory(msg);
         QMessageBox::information(this, QMessageBox::tr("Warning"),
                                  msg,QMessageBox::Ok);
         //file opening failed, clean up QC_MDIWindow and QMdiSubWindow
-        w->setForceClosing(true);
-        mdiAreaCAD->removeSubWindow(mdiAreaCAD->currentSubWindow());
-        w->closeMDI(true,false); //force closing, without asking user for confirmation
+        if (w) {
+            w->setForceClosing(true);
+            mdiAreaCAD->removeSubWindow(mdiAreaCAD->currentSubWindow());
+            w->closeMDI(true,false); //force closing, without asking user for confirmation
+        }
         QMdiSubWindow* active=mdiAreaCAD->currentSubWindow();
         activedMdiSubWindow=NULL; //to allow reactivate the previous active
         if( active != NULL ){//restore old geometry
@@ -2608,26 +2672,9 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
             }
             //            qobject_cast<QC_MDIWindow*>(active->widget())->zoomAuto();
         }
-        return;
-    }
-
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileNewTemplate: load Template: OK");
-
-    layerWidget->slotUpdateLayerList();
-
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileNewTemplate: update coordinate widget");
-    // update coordinate widget format:
-    RS_DIALOGFACTORY->updateCoordinateWidget(RS_Vector(0.0,0.0),
-                                             RS_Vector(0.0,0.0), true);
-
-    // show output of filter (if any):
-    commandWidget->processStderr();
-    QString message=tr("New document with template: ")+fileName;
-    commandWidget->appendHistory(message);
-    statusBar()->showMessage(message, 2000);
-
-    QApplication::restoreOverrideCursor();
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileNewTemplate() OK");
+        RS_DEBUG->print("QC_ApplicationWindow::slotFileNewTemplate: load Template failed");
+    } else
+        RS_DEBUG->print("QC_ApplicationWindow::slotFileNewTemplate() OK");
 }
 
 

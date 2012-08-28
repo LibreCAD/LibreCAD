@@ -221,7 +221,7 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
     case RS2::ActionFileNew:
                 action = RS_ActionFileNew::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
-                obj, SLOT(slotFileNew()));
+                obj, SLOT(slotFileNewNew()));
         break;
 
     case RS2::ActionFileNewTemplate:

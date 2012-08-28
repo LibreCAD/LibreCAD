@@ -261,7 +261,7 @@ int main(int argc, char** argv) {
         RS_DEBUG->print("main: app.exec()");
 
         if (!files_loaded) {
-                appWin->slotFileNew();
+                appWin->slotFileNewNew();
         }
 
         appWin->slotRunStartScript();
