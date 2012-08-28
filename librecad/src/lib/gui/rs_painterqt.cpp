@@ -422,16 +422,19 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
 
     const RS_Vector vr(radius1,radius2);
     const RS_Vector rvp(radius2,radius1);
-    double ea1(a1);
-    double ea2(a2);
+    double ea1=a1;
+    double ea2=a2;
     if(reversed) std::swap(ea1,ea2);
     if(ea2<ea1+RS_TOLERANCE_ANGLE) {
         ea2 += 2.*M_PI; //potential bug
     }
     const RS_Vector angleVector(-angle);
-    double aStep(0.01/(radius1*radius2));         // Angle Step (0.01 rad)
+    // minimum angular step is limited to one pixel
+    double rmax=(radius1>radius2)?radius1:radius2;
+    double aStep(1./rmax/(radius1*radius2));
     /*
       draw a new line after tangent changes by 0.01 rad
+      ds^2 = (a^2 sin^2 + b^2 cos^2) da^2
       */
     RS_Vector vp(-ea1);
     ea1 += aStep*RS_Vector(vp.x*radius2,vp.y*radius1).squared();
