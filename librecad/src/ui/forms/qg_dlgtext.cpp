@@ -32,6 +32,7 @@
 #include "rs_system.h"
 #include "rs_settings.h"
 #include "rs_font.h"
+#include "rs_graphic.h"
 
 /*
  *  Constructs a QG_DlgText as a child of 'parent', with the
@@ -132,6 +133,11 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
     QString angle;
 
     if (isNew) {
+//        vlAttributes->activate();
+        wPen->hide();
+        lLayer->hide();
+        cbLayer->hide();
+//        vlAttributes->h   ->setEnabled(false);
         RS_SETTINGS->beginGroup("/Draw");
         //default font depending on locale
         //default font depending on locale (RLZ-> check this: QLocale::system().name() returns "fr_FR")
@@ -163,6 +169,15 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
         alignment = QString("%1").arg(text->getAlignment());
         str = text->getText();
         angle = QString("%1").arg(RS_Math::rad2deg(text->getAngle()));
+        wPen->setPen(text->getPen(false), true, false, "Pen");
+        RS_Graphic* graphic = text->getGraphic();
+        if (graphic!=NULL) {
+            cbLayer->init(*(graphic->getLayerList()), false, false);
+        }
+        RS_Layer* lay = text->getLayer(false);
+        if (lay!=NULL) {
+            cbLayer->setLayer(*lay);
+        }
     }
 
     setFont(fon);
@@ -189,6 +204,10 @@ void QG_DlgText::updateText() {
         text->setText(teText->text());
         text->setAlignment(getAlignment());
         text->setAngle(RS_Math::deg2rad(leAngle->text().toDouble()));
+    } else if (!isNew) {
+        text->setPen(wPen->getPen());
+        text->setLayer(cbLayer->currentText());
+        text->update();
     }
 }
 
