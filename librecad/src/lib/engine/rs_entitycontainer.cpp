@@ -1591,7 +1591,9 @@ bool RS_EntityContainer::optimizeContours() {
         current=entityAt(0)->clone();
         tmp.addEntity(current);
         removeEntity(entityAt(0));
-    }else return false;
+    }else {
+        if(tmp.count()==0) return false;
+    }
 //    std::cout<<"RS_EntityContainer::optimizeContours: 3"<<std::endl;
     RS_Vector vpStart;
     RS_Vector vpEnd;
