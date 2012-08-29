@@ -204,7 +204,8 @@ void QG_DlgText::updateText() {
         text->setText(teText->text());
         text->setAlignment(getAlignment());
         text->setAngle(RS_Math::deg2rad(leAngle->text().toDouble()));
-    } else if (!isNew) {
+    }
+    if (text!=NULL && !isNew) {
         text->setPen(wPen->getPen());
         text->setLayer(cbLayer->currentText());
         text->update();
