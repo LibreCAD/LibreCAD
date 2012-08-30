@@ -432,6 +432,8 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
     // minimum angular step is limited to one pixel
     double rmax=(radius1>radius2)?radius1:radius2;
     double aStep(1./rmax/(radius1*radius2));
+    //avoid division by zero;
+    if(radius1<1. || radius2<1.) aStep=0.2;
     /*
       draw a new line after tangent changes by 0.01 rad
       ds^2 = (a^2 sin^2 + b^2 cos^2) da^2
