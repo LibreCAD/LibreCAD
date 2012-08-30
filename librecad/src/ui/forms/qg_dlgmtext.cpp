@@ -32,6 +32,7 @@
 #include "rs_system.h"
 #include "rs_settings.h"
 #include "rs_font.h"
+#include "rs_graphic.h"
 
 /*
  *  Constructs a QG_DlgMText as a child of 'parent', with the
@@ -137,6 +138,9 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
     QString angle;
 
     if (isNew) {
+        wPen->hide();
+        lLayer->hide();
+        cbLayer->hide();
         RS_SETTINGS->beginGroup("/Draw");
         //default font depending on locale
         //default font depending on locale (RLZ-> check this: QLocale::system().name() returns "fr_FR")
@@ -194,6 +198,15 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
 //#endif
         //QString shape = RS_SETTINGS->readEntry("/TextShape", "0");
         angle = QString("%1").arg(RS_Math::rad2deg(text->getAngle()));
+        wPen->setPen(text->getPen(false), true, false, "Pen");
+        RS_Graphic* graphic = text->getGraphic();
+        if (graphic!=NULL) {
+            cbLayer->init(*(graphic->getLayerList()), false, false);
+        }
+        RS_Layer* lay = text->getLayer(false);
+        if (lay!=NULL) {
+            cbLayer->setLayer(*lay);
+        }
     }
 
     cbDefault->setChecked(def=="1");
@@ -242,6 +255,11 @@ void QG_DlgMText::updateText() {
         text->setLineSpacingFactor(leLineSpacingFactor->text().toDouble());
         text->setAlignment(getAlignment());
         text->setAngle(RS_Math::deg2rad(leAngle->text().toDouble()));
+    }
+    if (text!=NULL && !isNew) {
+        text->setPen(wPen->getPen());
+        text->setLayer(cbLayer->currentText());
+        text->update();
     }
 }
 

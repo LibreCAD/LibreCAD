@@ -133,11 +133,9 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
     QString angle;
 
     if (isNew) {
-//        vlAttributes->activate();
         wPen->hide();
         lLayer->hide();
         cbLayer->hide();
-//        vlAttributes->h   ->setEnabled(false);
         RS_SETTINGS->beginGroup("/Draw");
         //default font depending on locale
         //default font depending on locale (RLZ-> check this: QLocale::system().name() returns "fr_FR")
