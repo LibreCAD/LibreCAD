@@ -2588,9 +2588,14 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) 
 
     // show output of filter (if any):
     commandWidget->processStderr();
-    QString message=tr("New document with template: ")+fileName;
-    commandWidget->appendHistory(message);
-    statusBar()->showMessage(message, 2000);
+    if (!fileName.isEmpty()) {
+        QString message=tr("New document from template: ")+fileName;
+        commandWidget->appendHistory(message);
+        statusBar()->showMessage(message, 2000);
+    }
+    if (w->getGraphic()!=NULL) {
+        emit(gridChanged(w->getGraphic()->isGridOn()));
+    }
 
     QApplication::restoreOverrideCursor();
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper() OK");
@@ -2850,6 +2855,9 @@ void QC_ApplicationWindow::
         recentFiles->add(fileName);
         openedFiles.append(fileName);
         layerWidget->slotUpdateLayerList();
+        if (w->getGraphic()!=NULL) {
+            emit(gridChanged(w->getGraphic()->isGridOn()));
+        }
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: 2");
         updateRecentFilesMenu();
