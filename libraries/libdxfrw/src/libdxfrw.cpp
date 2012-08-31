@@ -357,7 +357,7 @@ bool dxfRW::writeVport(DRW_Vport *ent){
         writer->writeDouble(146, 0.0);
         if (version > DRW::AC1018) {
             writer->writeString(348, "10020");
-            writer->writeInt16(60, 3);//v2007 undocummented
+            writer->writeInt16(60, ent->gridBehavior);//v2007 undocummented see DRW_Vport class
             writer->writeInt16(61, 5);
             writer->writeBool(292, 1);
             writer->writeInt16(282, 1);

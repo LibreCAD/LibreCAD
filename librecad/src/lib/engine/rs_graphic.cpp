@@ -76,7 +76,7 @@ blockList(true),paperScaleFixed(false)
     }
     addVariable("$DIMTIH", 0, 70);
 
-        setModified(false);
+    setModified(false);
 }
 
 

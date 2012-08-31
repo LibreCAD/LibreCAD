@@ -45,6 +45,8 @@ RS_Document::RS_Document(RS_EntityContainer* parent)
     setModified(false);
     RS_Color col(RS2::FlagByLayer);
     activePen = RS_Pen(col, RS2::WidthByLayer, RS2::LineByLayer);
+
+    gv = NULL;//used to read/save current view
 }
 
 

@@ -38,6 +38,7 @@
 #include "rs_leader.h"
 #include "rs_spline.h"
 #include "rs_system.h"
+#include "rs_graphicview.h"
 
 #include <QStringList>
 
@@ -1634,8 +1635,21 @@ void RS_FilterDXFRW::writeTextstyles(){
 }
 
 void RS_FilterDXFRW::writeVports(){
-//    DRW_Vport vp;
-//    dxf->writeVport(&vp);
+    DRW_Vport vp;
+    vp.name = "*Active";
+    graphic->isGridOn()? vp.grid = 1 : vp.grid = 0;
+    vp.gridBehavior = 7; //auto
+    vp.gridSpacing.x = 10;
+    vp.gridSpacing.y = 10;
+    RS_GraphicView *gv = graphic->getGraphicView();
+    if (gv != NULL) {
+        RS_Vector fac =gv->getFactor();
+        vp.height = gv->getHeight()/fac.y;
+        vp.ratio = (double)gv->getWidth() / (double)gv->getHeight();
+        vp.center.x = ( gv->getWidth() - gv->getOffsetX() )/ (fac.x * 2.0);
+        vp.center.y = ( gv->getHeight() - gv->getOffsetY() )/ (fac.y * 2.0);
+    }
+    dxf->writeVport(&vp);
 }
 
 

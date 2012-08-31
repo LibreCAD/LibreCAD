@@ -135,6 +135,8 @@ public:
 		RS_Undo::startUndoCycle();
 	}
 
+    void setGraphicView(RS_GraphicView * g) {gv = g;}
+    RS_GraphicView* getGraphicView() {return gv;}
 
 protected:
     /** Flag set if the document was modified and not yet saved. */
@@ -147,6 +149,8 @@ protected:
         QString autosaveFilename;
 	/** Format type */
 	RS2::FormatType formatType;
+    RS_GraphicView * gv;//used to read/save current view
+
 };
 
 

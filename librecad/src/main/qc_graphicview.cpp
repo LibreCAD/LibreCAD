@@ -40,6 +40,7 @@ QC_GraphicView::QC_GraphicView(RS_Document* doc, QWidget* parent)
     RS_DEBUG->print("  Setting Container..");
     if (doc!=NULL) {
         setContainer(doc);
+        doc->setGraphicView(this);
     }
     RS_DEBUG->print("  container set.");
     setFactorX(4.0);
