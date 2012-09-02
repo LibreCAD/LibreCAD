@@ -39,6 +39,7 @@
 #include "rs_spline.h"
 #include "rs_system.h"
 #include "rs_graphicview.h"
+#include "rs_grid.h"
 
 #include <QStringList>
 
@@ -154,6 +155,30 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
     RS_DEBUG->print("RS_FilterDXF::addLayer: add layer to graphic");
     graphic->addLayer(layer);
     RS_DEBUG->print("RS_FilterDXF::addLayer: OK");
+}
+
+/**
+ * Implementation of the method which handles vports.
+ */
+void RS_FilterDXFRW::addVport(const DRW_Vport &data) {
+    QString name = QString::fromStdString(data.name);
+    if (name.toLower() == "*active") {
+        data.grid == 1? graphic->setGridOn(true):graphic->setGridOn(false);
+        graphic->setIsometricGrid(data.snapStyle);
+        graphic->setCrosshairType( (RS2::CrosshairType)data.snapIsopair);
+        RS_GraphicView *gv = graphic->getGraphicView();
+        if (gv != NULL) {
+            double width = data.height * data.ratio;
+            double factorX= gv->getWidth() / width;
+            double factorY= gv->getHeight() / data.height;
+            if (factorX > factorY)
+                factorX = factorY;
+            int ox = gv->getWidth() -data.center.x*2*factorX;
+            int oy = gv->getHeight() -data.center.y*2*factorX;
+            gv->setOffset(ox, oy);
+            gv->setFactor(factorX);
+        }
+    }
 }
 
 /**
@@ -1638,9 +1663,23 @@ void RS_FilterDXFRW::writeVports(){
     DRW_Vport vp;
     vp.name = "*Active";
     graphic->isGridOn()? vp.grid = 1 : vp.grid = 0;
-    vp.gridBehavior = 7; //auto
-    vp.gridSpacing.x = 10;
-    vp.gridSpacing.y = 10;
+    RS_Vector spacing = graphic->getVariableVector("$GRIDUNIT",
+                                                   RS_Vector(0.0,0.0));
+    vp.gridBehavior = 3;
+    vp.gridSpacing.x = spacing.x;
+    vp.gridSpacing.y = spacing.y;
+    vp.snapStyle = graphic->isIsometricGrid();
+    vp.snapIsopair = graphic->getCrosshairType();
+    if (vp.snapIsopair > 2)
+        vp.snapIsopair = 0;
+    if (fabs(spacing.x) < 1.0e-6) {
+        vp.gridBehavior = 7; //auto
+        vp.gridSpacing.x = 10;
+    }
+    if (fabs(spacing.y) < 1.0e-6) {
+        vp.gridBehavior = 7; //auto
+        vp.gridSpacing.y = 10;
+    }
     RS_GraphicView *gv = graphic->getGraphicView();
     if (gv != NULL) {
         RS_Vector fac =gv->getFactor();

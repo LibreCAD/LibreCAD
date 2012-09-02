@@ -1803,9 +1803,7 @@ bool dxfRW::processTables() {
                     sectionstr = reader->getString();
                     DBG(sectionstr); DBG(" processHeader\n\n");
                 //found section, process it
-                    if (sectionstr == "VPORT") {
-//                        processVPort();
-                    } else if (sectionstr == "LTYPE") {
+                    if (sectionstr == "LTYPE") {
                         processLType();
                     } else if (sectionstr == "LAYER") {
                         processLayer();
