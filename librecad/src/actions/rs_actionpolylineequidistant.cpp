@@ -71,7 +71,11 @@ RS_Entity* RS_ActionPolylineEquidistant::calculateOffset(RS_Entity* newEntity,RS
     if (orgEntity->rtti()==RS2::EntityArc && newEntity->rtti()==RS2::EntityArc) {
         RS_Arc* arc = (RS_Arc*)newEntity;
         double r0 = ((RS_Arc*)orgEntity)->getRadius();
-        double r = r0 - dist;
+        double r;
+        if ( ((RS_Arc*)orgEntity)->isReversed())
+            r = r0 + dist;
+        else
+            r = r0 - dist;
         if(r < 0)
             return NULL;
         arc->setData(((RS_Arc*)orgEntity)->getData());
@@ -109,7 +113,7 @@ RS_Vector RS_ActionPolylineEquidistant::calculateIntersection(RS_Entity* first,R
         //Parallel entities
         return RS_Vector(false);
     } else if (vsol.getNumber()>1 &&
-               vsol.get(0).distanceTo(last->getStartpoint()) > vsol.get(1).distanceTo(first->getStartpoint())) {
+               vsol.get(0).distanceTo(last->getStartpoint()) > vsol.get(1).distanceTo(last->getStartpoint())) {
         return vsol.get(1);
     }
     return vsol.get(0);
