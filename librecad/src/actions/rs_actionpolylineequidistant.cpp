@@ -155,6 +155,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
         newPolyline->setPen(((RS_Polyline*)originalEntity)->getPen());
 
         bool first = true;
+        bool closed = originalPolyline->isClosed();
         double bulge = 0.0;
         RS_Entity* en;
         RS_Entity* prevEntity = entities.last();
@@ -172,19 +173,25 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                 calculateOffset(currEntity, en, dist*num*neg);
             }
             if (first) {
-                if (originalPolyline->isClosed()){
+                if (closed){
                     if (prevEntity->rtti()==RS2::EntityArc) {
                         prevEntity = calculateOffset(&arcFirst, prevEntity, dist*num*neg);
-                        bulge = arcFirst.getBulge();
                     } else {
-                        bulge = 0.0;
                         prevEntity = calculateOffset(&lineFirst, prevEntity, dist*num*neg);
                     }
                     v = calculateIntersection(prevEntity, currEntity);
                 }
-                if (!v.valid)
+                if (!v.valid) {
                     v = currEntity->getStartpoint();
+                    closed = false;
+                } else if (currEntity->rtti()==RS2::EntityArc) {
+                    //update bulge
+                    arc1.setAngle1(arc1.getCenter().angleTo(v));
+                    arc1.calculateEndpoints();
+                    bulge = arc1.getBulge();
+                }
                 first = false;
+                if (!prevEntity) break; //prevent crash if not exist offset for prevEntity
             }else{
                 v = calculateIntersection(prevEntity, currEntity);
                 if (!v.valid) {
@@ -220,7 +227,8 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                     arc1.setAngle1(arc1.getCenter().angleTo(v));
                     arc1.calculateEndpoints();
                     bulge = arc1.getBulge();
-                }
+                } else
+                    bulge = 0.0;
             }
             if (prevEntity) {
                 newPolyline->addVertex(v, bulge, false);
@@ -237,14 +245,22 @@ bool RS_ActionPolylineEquidistant::makeContour() {
         }
         //properly terminated, check closed
         if (prevEntity) {
-            if (originalPolyline->isClosed()){
+            if (closed){
+                if (currEntity->rtti()==RS2::EntityArc) {
+                    arc1.setAngle2(arc1.getCenter().angleTo(newPolyline->getStartpoint()));
+                    arc1.calculateEndpoints();
+                    newPolyline->setNextBulge(arc1.getBulge());
+                    bulge = arc1.getBulge();
+                }
                 newPolyline->setClosed(true, bulge);
             } else {
                 newPolyline->addVertex(currEntity->getEndpoint(), bulge);
             }
         }
-        container->addEntity(newPolyline);
-        document->addUndoable(newPolyline);
+        if (!newPolyline->isEmpty()) {
+            container->addEntity(newPolyline);
+            document->addUndoable(newPolyline);
+        }
     }
     if (document!=NULL) {
         document->endUndoCycle();
