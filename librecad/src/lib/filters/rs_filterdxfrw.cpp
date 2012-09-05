@@ -2370,7 +2370,10 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
     ha.solid = h->isSolid();
     ha.scale = h->getScale();
     ha.angle = h->getAngle();
-    ha.name = h->getPattern().toUtf8().data();
+    if (ha.solid)
+        ha.name = "SOLID";
+    else
+        ha.name = h->getPattern().toUtf8().data();
     ha.loopsnum = h->countLoops();
 
     for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
@@ -2398,27 +2401,27 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
                 } else if (ed->rtti()==RS2::EntityArc) {
                     RS_Arc* ar = (RS_Arc*)ed;
                     DRW_Arc *arc = new DRW_Arc();
-                    arc->basePoint.x = ar->getStartpoint().x;
-                    arc->basePoint.y = ar->getStartpoint().y;
+                    arc->basePoint.x = ar->getCenter().x;
+                    arc->basePoint.y = ar->getCenter().y;
                     arc->radious = ar->getRadius();
                     if (!ar->isReversed()) {
-                        arc->staangle = ar->getAngle1();
-                        arc->endangle = ar->getAngle2();
+                        arc->staangle = RS_Math::rad2deg(ar->getAngle1());
+                        arc->endangle = RS_Math::rad2deg(ar->getAngle2());
                         arc->isccw = true;
                     } else {
-                        arc->staangle = 2*M_PI-ar->getAngle1();
-                        arc->endangle = 2*M_PI-ar->getAngle2();
+                        arc->staangle = RS_Math::rad2deg(2*M_PI-ar->getAngle1());
+                        arc->endangle = RS_Math::rad2deg(2*M_PI-ar->getAngle2());
                         arc->isccw = false;
                     }
                     lData->objlist.push_back(arc);
                 } else if (ed->rtti()==RS2::EntityCircle) {
                     RS_Circle* ci = (RS_Circle*)ed;
                     DRW_Arc *arc= new DRW_Arc();
-                    arc->basePoint.x = ci->getStartpoint().x;
-                    arc->basePoint.y = ci->getStartpoint().y;
+                    arc->basePoint.x = ci->getCenter().x;
+                    arc->basePoint.y = ci->getCenter().y;
                     arc->radious = ci->getRadius();
                     arc->staangle = 0.0;
-                    arc->endangle = 2*M_PI;
+                    arc->endangle = 360.0; //2*M_PI;
                     arc->isccw = true;
                     lData->objlist.push_back(arc);
                 }

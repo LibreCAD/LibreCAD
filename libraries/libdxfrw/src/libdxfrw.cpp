@@ -910,10 +910,14 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
         }
         writer->writeInt16(75, ent->hstyle);
         writer->writeInt16(76, ent->hpattern);
-        writer->writeDouble(52, ent->angle);
-        writer->writeDouble(41, ent->scale);
-        writer->writeInt16(77, ent->doubleflag);
-        writer->writeInt16(78, ent->deflines);
+        if (!ent->solid){
+            writer->writeDouble(52, ent->angle);
+            writer->writeDouble(41, ent->scale);
+            writer->writeInt16(77, ent->doubleflag);
+        }
+        if (ent->deflines > 0){
+            writer->writeInt16(78, ent->deflines);
+        }
         writer->writeInt16(98, 0);
     } else {
         //RLZ: TODO verify in acad12
