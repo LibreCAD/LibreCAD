@@ -388,7 +388,7 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
 
     return ret;
 }
-void QC_MDIWindow::zoomAuto() {
+void QC_MDIWindow::slotZoomAuto() {
     if(graphicView!=NULL){
         if(graphicView->isPrintPreview()){
             graphicView->zoomPage();

@@ -68,7 +68,7 @@ public slots:
     bool slotFileSaveAs(bool &cancelled);
     bool slotFileClose(bool force);
     void slotFilePrint();
-    void zoomAuto();
+    void slotZoomAuto();
 
 
 public:
