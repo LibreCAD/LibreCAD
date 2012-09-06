@@ -1620,13 +1620,12 @@ bool RS_EntityContainer::optimizeContours() {
             closed=false;
         }
         if(next && closed){ 			//workaround if next is NULL
-        	if(vpEnd.squaredTo(next->getStartpoint())<1e-8){
-        		vpEnd=next->getEndpoint();
-        	}else{
-        		vpEnd=next->getStartpoint();
-        	}
-        	next->setProcessed(true);
-        	tmp.addEntity(next->clone());
+            next->setProcessed(true);
+            RS_Entity* eTmp = next->clone();
+            if(vpEnd.squaredTo(next->getStartpoint())>1e-8)
+                eTmp->revertDirection();
+            vpEnd=eTmp->getEndpoint();
+            tmp.addEntity(eTmp);
         	removeEntity(next);
         } else { 			//workaround if next is NULL
 //      	    std::cout<<"RS_EntityContainer::optimizeContours: next is NULL" <<std::endl;
