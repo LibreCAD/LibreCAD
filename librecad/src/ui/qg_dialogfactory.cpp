@@ -433,7 +433,7 @@ RS_Block* QG_DialogFactory::requestBlockRemovalDialog(RS_BlockList* blockList) {
                                      QMessageBox::tr("Block \"%1\" and all "
                                                      "its entities will be removed.")
                                      .arg(block->getName()),
-                                     QMessageBox::Ok,
+                                     QMessageBox::Ok | QMessageBox::Cancel,
                                      QMessageBox::Cancel);
         if (remove==QMessageBox::Ok) {}
         else {
