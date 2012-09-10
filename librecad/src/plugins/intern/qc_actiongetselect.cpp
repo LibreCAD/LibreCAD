@@ -65,7 +65,7 @@ void QC_ActionGetSelect::setMesage(QString msg){
 void QC_ActionGetSelect::init(int status) {
         RS_ActionInterface::init(status);
         graphicView->setCurrentAction(
-                new RS_ActionSelectSingle(*container, *graphicView));
+                new RS_ActionSelectSingle(*container, *graphicView, this));
 }
 
 
