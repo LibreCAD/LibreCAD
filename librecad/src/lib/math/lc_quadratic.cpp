@@ -285,6 +285,26 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
         }
 
     }
+    if( fabs(p1->m_mQuad(0,0))<RS_TOLERANCE && fabs(p1->m_mQuad(0,1))<RS_TOLERANCE
+            &&
+            fabs(p2->m_mQuad(0,0))<RS_TOLERANCE && fabs(p2->m_mQuad(0,1))<RS_TOLERANCE
+            ){
+        if(fabs(p1->m_mQuad(1,1))<RS_TOLERANCE && fabs(p2->m_mQuad(1,1))<RS_TOLERANCE){
+            //linear
+            std::vector<double> ce(0);
+            ce.push_back(p1->m_vLinear(0));
+            ce.push_back(p1->m_vLinear(1));
+            ce.push_back(p1->m_dConst);
+            LC_Quadratic lc10(ce);
+            ce.clear();
+            ce.push_back(p2->m_vLinear(0));
+            ce.push_back(p2->m_vLinear(1));
+            ce.push_back(p2->m_dConst);
+            LC_Quadratic lc11(ce);
+            return getIntersection(lc10,lc11);
+        }
+        return getIntersection(p1->flipXY(),p2->flipXY()).flipXY();
+    }
     std::vector<std::vector<double> >  ce(0);
     ce.push_back(p1->getCoefficients());
     ce.push_back(p2->getCoefficients());
