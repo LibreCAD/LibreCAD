@@ -25,7 +25,8 @@
 **********************************************************************/
 #include "qg_exitdialog.h"
 
-#include <qmessagebox.h>
+#include <QMessageBox>
+#include <QPushButton>
 
 /*
  *  Constructs a QG_ExitDialog as a child of 'parent', with the
@@ -73,16 +74,37 @@ static void makeLetterAccell(QButton *btn)
 
 void QG_ExitDialog::init()
 {
+    QPushButton * bSave = buttonBox->button ( QDialogButtonBox::Save );
+    QPushButton * bSaveAs = buttonBox->button ( QDialogButtonBox::SaveAll );
+    bSaveAs->setText(tr("Save As..."));
+    bSaveAs->setIcon(bSave->icon());
     //set dlg icon
-    QMessageBox mb("","",QMessageBox::Warning, QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
-    // RVT_PORT l_icon->setPixmap( *mb.iconPixmap() );
-    bLeave->setIcon(QIcon(":/actions/fileclose.png"));
+    QMessageBox mb("","",QMessageBox::Question, QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
+    l_icon->setPixmap( mb.iconPixmap());
+//    bLeave->setIcon(QIcon(":/actions/fileclose.png"));
     // RVT_PORT makeLetterAccell( bLeave );
-    bSave->setIcon(QIcon(":/actions/filesave2.png"));
+//    bSave->setIcon(QIcon(":/actions/filesave2.png"));
      // RVT_PORT makeLetterAccell( bSave );
-    bSaveAs->setIcon(QIcon(":/actions/filesaveas.png"));
+//    bSaveAs->setIcon(QIcon(":/actions/filesaveas.png"));
      // RVT_PORT makeLetterAccell( bSaveAs );
     // RVT_PORT  makeLetterAccell( bCancel );
+}
+
+void QG_ExitDialog::clicked(QAbstractButton * button){
+    QDialogButtonBox::StandardButton bt = buttonBox->standardButton ( button );
+    switch (bt){
+    case QDialogButtonBox::Close:
+        emit accept();
+        break;
+    case QDialogButtonBox::Save:
+        slotSave();
+        break;
+    case QDialogButtonBox::SaveAll:
+        slotSaveAs();
+        break;
+    default:
+        emit reject();
+    };
 }
 
 void QG_ExitDialog::setText(const QString& text) {
@@ -98,6 +120,7 @@ void QG_ExitDialog::setTitle(const QString& text) {
 }
 
 void QG_ExitDialog::setForce(bool force) {
+     QPushButton * bCancel = buttonBox->button ( QDialogButtonBox::Cancel );
      bCancel->setDisabled(force);
 }
 
