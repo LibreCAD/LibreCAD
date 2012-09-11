@@ -23,6 +23,17 @@
    <bool>false</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="2">
+    <widget class="QCheckBox" name="cbHelpLayer">
+     <property name="toolTip">
+      <string>A Help Layer has entities of infinite straight lines intended to be used for geometric construction.
+The contents of a Help Layer should not appear in printout.</string>
+     </property>
+     <property name="text">
+      <string>Help Layer</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="lName">
      <property name="frameShape">
@@ -38,6 +49,16 @@
       <bool>false</bool>
      </property>
     </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="QG_WidgetPen" name="wPen" native="true"/>
    </item>
    <item row="0" column="1">
     <spacer name="spacer87">
@@ -62,69 +83,6 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="2">
-    <widget class="QCheckBox" name="cbHelpLayer">
-     <property name="toolTip">
-      <string>A Help Layer has entities of infinite straight lines intended to be used for geometric construction.
-The contents of a Help Layer should not appear in printout.</string>
-     </property>
-     <property name="text">
-      <string>Help Layer</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="3">
-    <widget class="QG_WidgetPen" name="wPen" native="true"/>
-   </item>
-   <item row="3" column="0" colspan="3">
-    <layout class="QHBoxLayout">
-     <item>
-      <spacer name="spacer1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>79</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bOk">
-       <property name="text">
-        <string>&amp;OK</string>
-       </property>
-       <property name="shortcut">
-        <string>Alt+O</string>
-       </property>
-       <property name="autoDefault">
-        <bool>true</bool>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bCancel">
-       <property name="text">
-        <string>Cancel</string>
-       </property>
-       <property name="shortcut">
-        <string>Esc</string>
-       </property>
-       <property name="autoDefault">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -138,14 +96,14 @@ The contents of a Help Layer should not appear in printout.</string>
  <resources/>
  <connections>
   <connection>
-   <sender>bCancel</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
    <receiver>QG_LayerDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>126</x>
+     <y>186</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -154,14 +112,14 @@ The contents of a Help Layer should not appear in printout.</string>
    </hints>
   </connection>
   <connection>
-   <sender>bOk</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
    <receiver>QG_LayerDialog</receiver>
    <slot>validate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>126</x>
+     <y>186</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>

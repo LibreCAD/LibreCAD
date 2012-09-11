@@ -1108,53 +1108,11 @@
     </widget>
    </item>
    <item row="1" column="0">
-    <layout class="QHBoxLayout">
-     <item>
-      <spacer name="Horizontal Spacing2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonOk">
-       <property name="text">
-        <string>&amp;OK</string>
-       </property>
-       <property name="shortcut">
-        <string>Alt+O</string>
-       </property>
-       <property name="autoDefault">
-        <bool>true</bool>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonCancel">
-       <property name="text">
-        <string>Cancel</string>
-       </property>
-       <property name="shortcut">
-        <string>Esc</string>
-       </property>
-       <property name="autoDefault">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -1166,8 +1124,6 @@
   <tabstop>rbPortrait</tabstop>
   <tabstop>lePaperWidth</tabstop>
   <tabstop>lePaperHeight</tabstop>
-  <tabstop>buttonOk</tabstop>
-  <tabstop>buttonCancel</tabstop>
   <tabstop>cbUnit</tabstop>
   <tabstop>cbLengthFormat</tabstop>
   <tabstop>cbLengthPrecision</tabstop>
@@ -1184,14 +1140,14 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buttonOk</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
    <receiver>QG_DlgOptionsDrawing</receiver>
    <slot>validate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>252</x>
+     <y>355</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1200,14 +1156,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonCancel</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
    <receiver>QG_DlgOptionsDrawing</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>252</x>
+     <y>355</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>

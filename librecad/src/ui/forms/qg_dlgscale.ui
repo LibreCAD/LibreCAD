@@ -116,54 +116,6 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>240</y>
-     <width>224</width>
-     <height>29</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout">
-    <item>
-     <spacer name="spacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Expanding</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
-     <widget class="QPushButton" name="bOk">
-      <property name="text">
-       <string>&amp;OK</string>
-      </property>
-      <property name="default">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="bCancel">
-      <property name="text">
-       <string>&amp;Cancel</string>
-      </property>
-      <property name="shortcut">
-       <string>Esc</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QToolButton" name="toolButton">
    <property name="geometry">
     <rect>
@@ -300,6 +252,19 @@
     </item>
    </layout>
   </widget>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>250</y>
+     <width>401</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
@@ -355,14 +320,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>bOk</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
    <receiver>QG_DlgScale</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>89</x>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -371,14 +336,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>bCancel</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
    <receiver>QG_DlgScale</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>89</x>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>

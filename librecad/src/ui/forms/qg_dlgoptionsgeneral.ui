@@ -683,7 +683,7 @@
          <property name="icon">
           <iconset resource="../../../res/extui/extui.qrc">
            <normaloff>:/extui/fileopen.png</normaloff>:/extui/fileopen.png</iconset>
-	 </property>
+         </property>
         </widget>
        </item>
        <item row="6" column="0">
@@ -861,53 +861,11 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout">
-     <item>
-      <spacer name="Horizontal Spacing2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonOk">
-       <property name="text">
-        <string>&amp;OK</string>
-       </property>
-       <property name="shortcut">
-        <string>Alt+O</string>
-       </property>
-       <property name="autoDefault">
-        <bool>true</bool>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonCancel">
-       <property name="text">
-        <string>Cancel</string>
-       </property>
-       <property name="shortcut">
-        <string>Esc</string>
-       </property>
-       <property name="autoDefault">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -926,8 +884,6 @@
   <tabstop>cbSelectedColor</tabstop>
   <tabstop>cbHighlightedColor</tabstop>
   <tabstop>cbSizeStatus</tabstop>
-  <tabstop>buttonOk</tabstop>
-  <tabstop>buttonCancel</tabstop>
   <tabstop>lePathTranslations</tabstop>
   <tabstop>lePathHatch</tabstop>
   <tabstop>lePathFonts</tabstop>
@@ -935,17 +891,19 @@
   <tabstop>lePathLibrary</tabstop>
   <tabstop>cbUnit</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../../res/extui/extui.qrc"/>
+ </resources>
  <connections>
   <connection>
-   <sender>buttonOk</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
    <receiver>QG_DlgOptionsGeneral</receiver>
    <slot>ok()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>322</x>
+     <y>380</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -954,14 +912,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonCancel</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
    <receiver>QG_DlgOptionsGeneral</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>322</x>
+     <y>380</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
