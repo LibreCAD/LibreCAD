@@ -127,10 +127,47 @@ RS_Vector RS_Solid::getNearestEndpoint(const RS_Vector& coord, double* dist)cons
 /**
  * @todo Implement this.
  */
-RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& /*coord*/,
-        bool /*onEntity*/, double* /*dist*/, RS_Entity** /*entity*/)const {
-
+RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
+        bool onEntity, double* dist, RS_Entity** entity)const {
     RS_Vector ret(false);
+    double currDist = RS_MAXDOUBLE;
+    double tmpDist;
+    if (entity!=NULL) {
+        *entity = const_cast<RS_Solid*>(this);
+    }
+    //Find nearest distance from each edge
+    for (int i=0; i<3; ++i) {
+        if (data.corner[i].valid && data.corner[i+1].valid) {
+            RS_Vector direction = data.corner[i+1]-data.corner[i];
+            RS_Vector vpc=coord-data.corner[i];
+            double a=direction.squared();
+            if( a < RS_TOLERANCE*RS_TOLERANCE) {
+                //line too short
+                vpc=data.corner[i];
+            }else{
+                //find projection on line
+                vpc = data.corner[i] + direction*RS_Vector::dotP(vpc,direction)/a;
+            }
+            tmpDist = vpc.distanceTo(coord);
+            if (tmpDist < currDist) {
+                currDist = tmpDist;
+                ret = vpc;
+            }
+
+        } else
+            continue;
+    }
+    //verify this part
+    if( onEntity && !ret.isInWindowOrdered(minV,maxV) ){
+        //projection point not within range, find the nearest endpoint
+        ret = getNearestEndpoint(coord,dist);
+        currDist = ret.distanceTo(coord);
+    }
+
+    if (dist!=NULL) {
+        *dist = currDist;
+    }
+
     return ret;
 }
 
@@ -173,13 +210,17 @@ RS_Vector RS_Solid::getNearestDist(double /*distance*/,
 /**
  * @return Distance from one of the boundry lines of this solid to given point.
  *
- * @todo implement
  */
-double RS_Solid::getDistanceToPoint(const RS_Vector& /*coord*/,
-                                    RS_Entity** /*entity*/,
+double RS_Solid::getDistanceToPoint(const RS_Vector& coord,
+                                    RS_Entity** entity,
                                     RS2::ResolveLevel /*level*/,
-                                                                    double /*solidDist*/)const {
-    return RS_MAXDOUBLE;
+                                    double /*solidDist*/)const {
+    if (entity!=NULL) {
+        *entity = const_cast<RS_Solid*>(this);
+    }
+    double ret;
+    getNearestPointOnEntity(coord,true,&ret,entity);
+    return ret;
 }
 
 
