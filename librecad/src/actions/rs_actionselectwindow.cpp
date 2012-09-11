@@ -79,7 +79,7 @@ void RS_ActionSelectWindow::trigger() {
     if (v1.valid && v2.valid) {
         if (graphicView->toGuiDX(v1.distanceTo(v2))>10) {
 
-            bool cross = (v2.y>v1.y);
+            bool cross = (v1.x>v2.x);
 
             RS_Selection s(*container, graphicView);
             s.selectWindow(v1, v2, select, cross);
@@ -104,7 +104,8 @@ void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
                 ob->setPen(pen_f);
                 preview->addEntity(ob);
 
-                RS_Pen pen(RS_Color(218,105,24), RS2::Width00, RS2::SolidLine);
+                //RLZ: not needed overlay have contour
+/*                RS_Pen pen(RS_Color(218,105,24), RS2::Width00, RS2::SolidLine);
 
                 // TODO change to a rs_box sort of entity
                 RS_Line* e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v1.y),  RS_Vector(v2.x, v1.y)));
@@ -121,7 +122,7 @@ void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
 
                 e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v2.y),  RS_Vector(v1.x, v1.y)));
                 e->setPen(pen);
-        preview->addEntity(e);
+        preview->addEntity(e);*/
 
         drawPreview();
     }

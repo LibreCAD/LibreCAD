@@ -69,8 +69,10 @@ void RS_OverlayBox::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pa
                 v2.x - v1.x,
                 v2.y - v1.y);
 
-    if (v1.y > v2.y) {
-        painter->setPen(QColor(50, 255, 50));
+    if (v1.x > v2.x) {
+        RS_Pen p(RS_Color(50,255,50),RS2::Width00,RS2::DashLine);
+        painter->setPen(p);
+//        painter->setPen(QColor(50, 255, 50));
         painter->fillRect(selectRect, RS_Color(9, 255, 9, 90));
     }
     else {
