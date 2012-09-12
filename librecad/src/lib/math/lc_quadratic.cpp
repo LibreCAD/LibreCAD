@@ -28,6 +28,7 @@
 #include "lc_quadratic.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
+#include "rs_ellipse.h"
 #include "rs_line.h"
 #include "rs_debug.h"
 
@@ -79,9 +80,9 @@ LC_Quadratic::LC_Quadratic(std::vector<double> ce):
 *@return, a path of center tangential circles which pass the point
 */
 LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point)
-    :m_bIsQuadratic(true)
-    ,m_mQuad(2,2)
+    : m_mQuad(2,2)
     ,m_vLinear(2)
+    ,m_bIsQuadratic(true)
     ,m_bValid(true)
 {
     if(circle==NULL) {
@@ -186,8 +187,67 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
     if(circle1->rtti() != RS2::EntityArc &&
             circle1->rtti() != RS2::EntityCircle&&
             circle1->rtti() != RS2::EntityLine) return;
-
-
+    if(circle0->rtti() == RS2::EntityLine)
+        std::swap(circle0, circle1);
+    if(circle0->rtti() == RS2::EntityLine) {
+        //two lines
+        const RS_Line* line0=static_cast<const RS_Line*>(circle0);
+        const RS_Line* line1=static_cast<const RS_Line*>(circle1);
+        auto&& centers=getIntersection(line0->getQuadratic(),
+                                           line0->getQuadratic());
+        if(centers.size()!=1) return;
+        double angle=0.5*(line0->getAngle1()+line1->getAngle1());
+        m_bValid=true;
+        m_mQuad(0,0)=0.;
+        m_mQuad(0,1)=0.5;
+        m_mQuad(1,0)=0.5;
+        m_mQuad(1,1)=0.;
+        m_vLinear(0)=0.;
+        m_vLinear(1)=0.;
+        m_dConst=0.;
+        rotate(angle);
+        move(centers.get(0));
+        return;
+    }
+    if(circle1->rtti() == RS2::EntityLine) {
+        //one line, one circle
+        const RS_Line* line1=static_cast<const RS_Line*>(circle1);
+        RS_Vector disp=line1->getNearestPointOnEntity(circle0->getCenter(),
+                                                           false)-circle0->getCenter();
+        RS_Line directrix(NULL,RS_LineData(line1->getStartpoint()+disp,
+                                           line1->getEndpoint()+disp));
+        LC_Quadratic lc0(&directrix,circle0->getCenter());
+        *this=lc0;
+        return;
+    }
+    //two circles
+    double f=(circle0->getCenter()-circle1->getCenter()).magnitude()*0.5;
+    double a=(circle0->getRadius()+circle1->getRadius())*0.5;
+    if(a<RS_TOLERANCE) return;
+    RS_Vector&& center=(circle0->getCenter()+circle1->getCenter())*0.5;
+    double angle=center.angleTo(circle0->getCenter());
+    if( f < std::max(circle0->getRadius(),circle1->getRadius())){
+        //ellipse
+        double ratio=sqrt(a*a - f*f)/a;
+        RS_Vector&& majorP=RS_Vector(angle)*a;
+        RS_Ellipse ellipse(NULL,RS_EllipseData(center,majorP,ratio,0.,0.,false));
+        *this=ellipse.getQuadratic();
+        return;
+    }
+//hyperbola
+    a=fabs(circle0->getRadius()-circle1->getRadius())*0.5;
+    double b2= f*f - a*a;
+    m_bValid=true;
+    m_mQuad(0,0)=1./(a*a);
+    m_mQuad(0,1)=0.;
+    m_mQuad(1,0)=0.;
+    m_mQuad(1,1)=-1./b2;
+    m_vLinear(0)=0.;
+    m_vLinear(1)=0.;
+    m_dConst=-1.;
+    rotate(angle);
+    move(center);
+    return;
 }
 
 std::vector<double>  LC_Quadratic::getCoefficients() const
