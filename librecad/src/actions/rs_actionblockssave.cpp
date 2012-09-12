@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "qc_applicationwindow.h"
 #include "rs_graphic.h"
 #include "rs_dialogfactory.h"
+#include "rs_insert.h"
 
 
 
@@ -42,6 +43,20 @@ QAction* RS_ActionBlocksSave::createGUIAction(RS2::ActionType /*type*/, QObject*
 	return action;
 }
 
+/*recursive add blocks in graphic*/
+void RS_ActionBlocksSave::addBlock(RS_Insert* in, RS_Graphic* g) {
+
+    for (RS_Entity* e=in->firstEntity(RS2::ResolveNone);
+         e!=NULL;
+         e = in->nextEntity(RS2::ResolveNone)) {
+
+        if (e->rtti() == RS2::EntityInsert) {
+            addBlock((RS_Insert *)e,g);
+            RS_Insert *in = (RS_Insert *)e;
+            g->addBlock(in->getBlockForInsert());
+        }
+    }
+}
 
 void RS_ActionBlocksSave::trigger() {
     RS_DEBUG->print("save block to file");
@@ -63,6 +78,11 @@ void RS_ActionBlocksSave::trigger() {
                  e!=NULL;
                  e = b->nextEntity(RS2::ResolveNone)) {
                 g.addEntity(e);
+                if (e->rtti() == RS2::EntityInsert) {
+                    RS_Insert *in = (RS_Insert *)e;
+                    g.addBlock(in->getBlockForInsert());
+                    addBlock((RS_Insert *)e,&g);
+                }
 //           std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;
 //                g.addLayer(e->getLayer());
 //           std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;

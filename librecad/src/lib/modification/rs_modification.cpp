@@ -481,6 +481,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         }
     }
 
+    int noBlockIndex = 0;
     // insert entities:
     for (RS_Entity* e=((RS_EntityContainer*)source)->firstEntity();
             e!=NULL;
@@ -500,7 +501,20 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
             // don't adjust insert factor - block was already adjusted to unit
             if (e2->rtti()==RS2::EntityInsert) {
                 RS_Insert *in = (RS_Insert*)e2;
-                in->setName( in->getBlockForInsert()->getName() );
+                RS_Block *bk = in->getBlockForInsert();
+                //if block not found create a new empty block
+                if (bk == NULL) {
+                    QString noBlockName= "noname0";
+                    while ( graphic->findBlock(noBlockName)) {
+                        noBlockIndex++;
+                        noBlockName= QString("noname%1").arg(noBlockIndex);
+                    }
+                    bk = new RS_Block(graphic,
+                                      RS_BlockData(QString("noname%1").arg(noBlockIndex),
+                                      RS_Vector(0.0,0.0), false));
+                    graphic->addBlock(bk);
+                }
+                in->setName( bk->getName() );
                 RS_Vector ip = in->getInsertionPoint();
                 ip.scale(data.insertionPoint, RS_Vector(factor, factor));
                 in->setInsertionPoint(ip);

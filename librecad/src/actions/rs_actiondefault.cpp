@@ -284,7 +284,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
             //if (graphicView->toGuiDX(v1.distanceTo(v2))>20) {
             deletePreview();
 
-            bool cross = (v2.y>v1.y);
+            bool cross = (v1.x>v2.x);
             RS_Selection s(*container, graphicView);
             s.selectWindow(v1, v2, true, cross);
 
