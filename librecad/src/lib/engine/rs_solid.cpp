@@ -122,13 +122,40 @@ RS_Vector RS_Solid::getNearestEndpoint(const RS_Vector& coord, double* dist)cons
     return ret;
 }
 
-
+/**
+*
+* @return true if positive o zero, false if negative.
+*/
+bool RS_Solid::sign (const RS_Vector v1, const RS_Vector v2, const RS_Vector v3)const {
+    double res = (v1.x-v3.x)*(v2.y-v3.y)-(v2.x-v3.x)*(v1.y-v3.y);
+    return (res>=0.0);
+}
 
 /**
  * @todo Implement this.
  */
 RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
         bool onEntity, double* dist, RS_Entity** entity)const {
+//first check if point is inside solid
+    bool s1 = sign(data.corner[0], data.corner[1], coord);
+    bool s2 = sign(data.corner[1], data.corner[2], coord);
+    bool s3 = sign(data.corner[2], data.corner[0], coord);
+    if ( (s1 == s2) && (s2 == s3) ) {
+        if (dist!=NULL)
+            *dist = 0.0;
+        return coord;
+    }
+    if (data.corner[3].valid) {
+        s1 = sign(data.corner[0], data.corner[2], coord);
+        s2 = sign(data.corner[2], data.corner[3], coord);
+        s3 = sign(data.corner[3], data.corner[0], coord);
+        if ( (s1 == s2) && (s2 == s3) ) {
+            if (dist!=NULL)
+                *dist = 0.0;
+            return coord;
+        }
+    }
+    //not inside of solid
     RS_Vector ret(false);
     double currDist = RS_MAXDOUBLE;
     double tmpDist;
@@ -136,26 +163,29 @@ RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
         *entity = const_cast<RS_Solid*>(this);
     }
     //Find nearest distance from each edge
-    for (int i=0; i<3; ++i) {
-        if (data.corner[i].valid && data.corner[i+1].valid) {
-            RS_Vector direction = data.corner[i+1]-data.corner[i];
-            RS_Vector vpc=coord-data.corner[i];
-            double a=direction.squared();
-            if( a < RS_TOLERANCE*RS_TOLERANCE) {
-                //line too short
-                vpc=data.corner[i];
-            }else{
-                //find projection on line
-                vpc = data.corner[i] + direction*RS_Vector::dotP(vpc,direction)/a;
-            }
-            tmpDist = vpc.distanceTo(coord);
-            if (tmpDist < currDist) {
-                currDist = tmpDist;
-                ret = vpc;
-            }
+    int totalV = 3;
+    if (data.corner[3].valid)
+        totalV = 4;
+    for (int i=0; i<=totalV; ++i) {
+        int next =i+1;
+        //closing edge
+        if (next == totalV) next =0;
 
-        } else
-            continue;
+        RS_Vector direction = data.corner[next]-data.corner[i];
+        RS_Vector vpc=coord-data.corner[i];
+        double a=direction.squared();
+        if( a < RS_TOLERANCE*RS_TOLERANCE) {
+            //line too short
+            vpc=data.corner[i];
+        }else{
+            //find projection on line
+            vpc = data.corner[i] + direction*RS_Vector::dotP(vpc,direction)/a;
+        }
+        tmpDist = vpc.distanceTo(coord);
+        if (tmpDist < currDist) {
+            currDist = tmpDist;
+            ret = vpc;
+        }
     }
     //verify this part
     if( onEntity && !ret.isInWindowOrdered(minV,maxV) ){
