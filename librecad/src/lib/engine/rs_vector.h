@@ -149,8 +149,20 @@ public:
     ~RS_VectorSolutions();
 
     void alloc(int num);
-    void clean();
-    RS_Vector get(int i) const;
+    void clean()
+    {
+        clear();
+    }
+    void clear();
+    RS_Vector get(int i) const
+    {
+        return at(i);
+    }
+    RS_Vector at(int i) const;
+    RS_Vector operator [] (const int i) const
+    {
+        return at(i);
+    }
     int getNumber() const;
     size_t size() const
     {
