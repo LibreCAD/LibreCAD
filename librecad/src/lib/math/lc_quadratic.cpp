@@ -220,6 +220,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         if(centers.size()!=1) return;
         double angle=0.5*(line0->getAngle1()+line1->getAngle1());
         m_bValid=true;
+        m_bIsQuadratic=true;
         m_mQuad(0,0)=0.;
         m_mQuad(0,1)=0.5;
         m_mQuad(1,0)=0.5;
@@ -275,6 +276,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
     a=fabs(circle0->getRadius()-circle1->getRadius())*0.5;
     double b2= f*f - a*a;
     m_bValid=true;
+    m_bIsQuadratic=true;
     m_mQuad(0,0)=1./(a*a);
     m_mQuad(0,1)=0.;
     m_mQuad(1,0)=0.;
@@ -352,6 +354,7 @@ LC_Quadratic LC_Quadratic::flipXY(void) const
 
 RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const LC_Quadratic& l2)
 {
+    DEBUG_HEADER();
     RS_VectorSolutions ret;
     if( (l1.isValid() && l2.isValid()) == false ) return ret;
     auto p1=&l1;
@@ -359,6 +362,8 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
     if(p1->isQuadratic()==false){
         std::swap(p1,p2);
     }
+    std::cout<<*p1<<std::endl;
+    std::cout<<*p2<<std::endl;
     if(p1->isQuadratic()==false){
         //two lines
         QVector<QVector<double> > ce(2,QVector<double>(3,0.));

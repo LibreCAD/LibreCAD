@@ -149,12 +149,11 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent* e) {
 bool RS_ActionDrawCircleTan3::getData(){
     if(getStatus() != SetCircle3) return false;
     if(circles.size()<3) return false;
-    DEBUG_HEADER();
     LC_Quadratic lc0(circles[0],circles[1]);
-    DEBUG_HEADER();
     LC_Quadratic lc1(circles[0],circles[2]);
-    DEBUG_HEADER();
     auto&& sol=LC_Quadratic::getIntersection(lc0,lc1);
+    DEBUG_HEADER();
+    std::cout<<"sol.size()="<<sol.size()<<std::endl;
     centers.clean();
     for(size_t i=0;i<sol.size();i++){
         auto&& vp=sol.get(i);
@@ -165,6 +164,8 @@ bool RS_ActionDrawCircleTan3::getData(){
         if(fabs(l0-l1)>RS_TOLERANCE*1.e3) continue;
         centers.push_back(vp);
     }
+    DEBUG_HEADER();
+    std::cout<<"centers.size()="<<centers.size()<<std::endl;
     valid = centers.size()>0;
     return valid;
 }
