@@ -29,6 +29,7 @@
 
 #include "rs_graphicview.h"
 #include "rs_painter.h"
+#include "rs_information.h"
 
 
 /**
@@ -120,6 +121,82 @@ RS_Vector RS_Solid::getNearestEndpoint(const RS_Vector& coord, double* dist)cons
     }
 
     return ret;
+}
+
+bool RS_Solid::isInCrossWindow(const RS_Vector& v1,const RS_Vector& v2)const {
+//    bool sol = false;
+    RS_Vector vBL, vTR;
+    RS_VectorSolutions sol;
+//sort imput vectors to BottomLeft & TopRight
+    if (v1.x<v2.x) {
+        vBL.x = v1.x;
+        vTR.x = v2.x;
+    } else {
+        vBL.x = v2.x;
+        vTR.x = v1.x;
+    }
+    if (v1.y<v2.y) {
+        vBL.y = v1.y;
+        vTR.y = v2.y;
+    } else {
+        vBL.y = v2.y;
+        vTR.y = v1.y;
+    }
+    //Check if is out of window
+    if ( getMin().x > vTR.x || getMax().x < vBL.x
+           || getMin().y > vTR.y || getMax().y < vBL.y) {
+        return false;
+    }
+    int totalV = 3;
+    if (data.corner[3].valid)
+        totalV = 4;
+    RS_Line l[totalV];
+    l[0] = RS_Line(NULL, RS_LineData(data.corner[0], data.corner[1]));
+    l[1] = RS_Line(NULL, RS_LineData(data.corner[1], data.corner[2]));
+    if (data.corner[3].valid) {
+        l[2] = RS_Line(NULL, RS_LineData(data.corner[2], data.corner[3]));
+        l[3] = RS_Line(NULL, RS_LineData(data.corner[3], data.corner[0]));
+    } else {
+        l[2] = RS_Line(NULL, RS_LineData(data.corner[2], data.corner[0]));
+    }
+    //Find crossing edge
+    if (getMax().x > vBL.x && getMin().x < vBL.x) {//left
+        RS_Line edge = RS_Line(NULL, RS_LineData(vBL, RS_Vector(vBL.x, vTR.y)));
+        for (int i=0; i<totalV; ++i) {
+            sol = RS_Information::getIntersection(&edge, &l[i], true);
+            if (sol.hasValid()) {
+                return true;
+            }
+        }
+    }
+    if (getMax().x < vTR.x && getMin().x > vTR.x) {//right
+        RS_Line edge = RS_Line(NULL, RS_LineData(RS_Vector(vTR.x, vBL.y), vTR));
+        for (int i=0; i<totalV; ++i) {
+            sol = RS_Information::getIntersection(&edge, &l[i], true);
+            if (sol.hasValid()) {
+                return true;
+            }
+        }
+    }
+    if (getMax().y > vBL.y && getMin().y < vBL.y) {//bottom
+        RS_Line edge = RS_Line(NULL, RS_LineData(vBL, RS_Vector(vTR.x, vBL.y)));
+        for (int i=0; i<totalV; ++i) {
+            sol = RS_Information::getIntersection(&edge, &l[i], true);
+            if (sol.hasValid()) {
+                return true;
+            }
+        }
+    }
+    if(getMax().y < vBL.y && getMin().y > vBL.y) {//top
+        RS_Line edge = RS_Line(NULL, RS_LineData(RS_Vector(vBL.x, vTR.y), vTR));
+        for (int i=0; i<totalV; ++i) {
+            sol = RS_Information::getIntersection(&edge, &l[i], true);
+            if (sol.hasValid()) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 /**

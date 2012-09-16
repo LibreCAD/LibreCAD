@@ -33,6 +33,7 @@
 #include "rs_line.h"
 #include "rs_insert.h"
 #include "rs_spline.h"
+#include "rs_solid.h"
 #include "rs_information.h"
 #include "rs_graphicview.h"
 
@@ -286,15 +287,21 @@ void RS_EntityContainer::selectWindow(RS_Vector v1, RS_Vector v2,
                          se!=NULL && included==false;
                          se=ec->nextEntity(RS2::ResolveAll)) {
 
-                        for (int i=0; i<4; ++i) {
-                            sol = RS_Information::getIntersection(
-                                        se, &l[i], true);
-                            if (sol.hasValid()) {
-                                included = true;
-                                break;
+                        if (se->rtti() == RS2::EntitySolid){
+                            included = ((RS_Solid *)se)->isInCrossWindow(v1,v2);
+                        } else {
+                            for (int i=0; i<4; ++i) {
+                                sol = RS_Information::getIntersection(
+                                            se, &l[i], true);
+                                if (sol.hasValid()) {
+                                    included = true;
+                                    break;
+                                }
                             }
                         }
                     }
+                } else if (e->rtti() == RS2::EntitySolid){
+                    included = ((RS_Solid *)e)->isInCrossWindow(v1,v2);
                 } else {
                     for (int i=0; i<4; ++i) {
                         sol = RS_Information::getIntersection(e, &l[i], true);
