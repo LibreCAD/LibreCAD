@@ -44,6 +44,25 @@ LC_Quadratic::LC_Quadratic():
     m_mQuad(2,2),
     m_vLinear(2),
     m_bValid(false){}
+LC_Quadratic::LC_Quadratic(const LC_Quadratic& lc0):
+  m_bIsQuadratic(lc0.isQuadratic())
+  ,m_bValid(lc0.isValid())
+{
+    if(m_bValid==false) return;
+  if(m_bIsQuadratic) m_mQuad=lc0.getQuad();
+  m_vLinear=lc0.getLinear();
+  m_dConst=lc0.m_dConst;
+}
+
+LC_Quadratic& LC_Quadratic::operator = (const LC_Quadratic& lc0)
+{
+    m_mQuad=lc0.getQuad();
+    m_vLinear=lc0.getLinear();
+    m_dConst=lc0.m_dConst;
+    m_bIsQuadratic=lc0.isQuadratic();
+    m_bValid=lc0.isValid();
+}
+
 
 LC_Quadratic::LC_Quadratic(std::vector<double> ce):
     m_mQuad(2,2),
@@ -179,7 +198,9 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point
   of this two given entities*/
 LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
                            const RS_AtomicEntity* circle1):
-    m_bValid(false)
+    m_mQuad(2,2)
+    ,m_vLinear(2)
+    ,m_bValid(false)
 {
     if(circle0->rtti() != RS2::EntityArc &&
             circle0->rtti() != RS2::EntityCircle&&
@@ -190,6 +211,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
     if(circle0->rtti() == RS2::EntityLine)
         std::swap(circle0, circle1);
     if(circle0->rtti() == RS2::EntityLine) {
+        DEBUG_HEADER();
         //two lines
         const RS_Line* line0=static_cast<const RS_Line*>(circle0);
         const RS_Line* line1=static_cast<const RS_Line*>(circle1);
@@ -210,6 +232,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         return;
     }
     if(circle1->rtti() == RS2::EntityLine) {
+        DEBUG_HEADER();
         //one line, one circle
         const RS_Line* line1=static_cast<const RS_Line*>(circle1);
         RS_Vector disp=line1->getNearestPointOnEntity(circle0->getCenter(),
@@ -217,7 +240,13 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         RS_Line directrix(NULL,RS_LineData(line1->getStartpoint()+disp,
                                            line1->getEndpoint()+disp));
         LC_Quadratic lc0(&directrix,circle0->getCenter());
-        *this=lc0;
+
+        m_mQuad=lc0.getQuad();
+        m_vLinear=lc0.getLinear();
+        m_bIsQuadratic=lc0.isQuadratic();
+        m_bValid=lc0.isValid();
+        m_dConst=lc0.m_dConst;
+
         return;
     }
     //two circles
@@ -231,9 +260,17 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         double ratio=sqrt(a*a - f*f)/a;
         RS_Vector&& majorP=RS_Vector(angle)*a;
         RS_Ellipse ellipse(NULL,RS_EllipseData(center,majorP,ratio,0.,0.,false));
-        *this=ellipse.getQuadratic();
+        auto&& lc0=ellipse.getQuadratic();
+
+        m_mQuad=lc0.getQuad();
+        m_vLinear=lc0.getLinear();
+        m_bIsQuadratic=lc0.isQuadratic();
+        m_bValid=lc0.isValid();
+        m_dConst=lc0.m_dConst;
         return;
     }
+
+       DEBUG_HEADER();
 //hyperbola
     a=fabs(circle0->getRadius()-circle1->getRadius())*0.5;
     double b2= f*f - a*a;

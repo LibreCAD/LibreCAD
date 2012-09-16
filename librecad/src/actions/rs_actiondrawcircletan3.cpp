@@ -149,8 +149,11 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent* e) {
 bool RS_ActionDrawCircleTan3::getData(){
     if(getStatus() != SetCircle3) return false;
     if(circles.size()<3) return false;
+    DEBUG_HEADER();
     LC_Quadratic lc0(circles[0],circles[1]);
+    DEBUG_HEADER();
     LC_Quadratic lc1(circles[0],circles[2]);
+    DEBUG_HEADER();
     auto&& sol=LC_Quadratic::getIntersection(lc0,lc1);
     centers.clean();
     for(size_t i=0;i<sol.size();i++){
@@ -167,6 +170,7 @@ bool RS_ActionDrawCircleTan3::getData(){
 }
 
 bool RS_ActionDrawCircleTan3::preparePreview(){
+    DEBUG_HEADER();
     if(getStatus() != SetCenter || valid==false) {
         valid=false;
         return false;
