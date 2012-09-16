@@ -171,7 +171,7 @@ bool RS_ActionDrawCircleTan3::getData(){
 }
 
 bool RS_ActionDrawCircleTan3::preparePreview(){
-    DEBUG_HEADER();
+//    DEBUG_HEADER();
     if(getStatus() != SetCenter || valid==false) {
         valid=false;
         return false;

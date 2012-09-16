@@ -253,10 +253,12 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
     //two circles
     double f=(circle0->getCenter()-circle1->getCenter()).magnitude()*0.5;
     double a=(circle0->getRadius()+circle1->getRadius())*0.5;
+    double c=fabs(circle0->getRadius()-circle1->getRadius())*0.5;
+
     if(a<RS_TOLERANCE) return;
     RS_Vector&& center=(circle0->getCenter()+circle1->getCenter())*0.5;
     double angle=center.angleTo(circle0->getCenter());
-    if( f < std::max(circle0->getRadius(),circle1->getRadius())){
+    if( f<a){
         //ellipse
         double ratio=sqrt(a*a - f*f)/a;
         RS_Vector&& majorP=RS_Vector(angle)*a;
@@ -273,8 +275,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
 
        DEBUG_HEADER();
 //hyperbola
-    a=fabs(circle0->getRadius()-circle1->getRadius())*0.5;
-    double b2= f*f - a*a;
+    double b2= f*f - c*c;
     m_bValid=true;
     m_bIsQuadratic=true;
     m_mQuad(0,0)=1./(a*a);
