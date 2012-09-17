@@ -231,12 +231,12 @@ void RS_ActionDrawCircleTan3::mouseReleaseEvent(QMouseEvent* e) {
             RS_Entity*  en = catchCircle(e);
             if (en==NULL) return;
             circles.resize(getStatus());
-            for(int i=0;i<circles.size();i++){
-                if(
-                        (circles.at(i)->getCenter() - en->getCenter()).squared() < RS_TOLERANCE*RS_TOLERANCE
-                        && fabs( circles.at(i)->getRadius() - en->getRadius())<RS_TOLERANCE
-                        ) return;
-            }
+//            for(int i=0;i<circles.size();i++){
+//                if(
+//                        (circles.at(i)->getCenter() - en->getCenter()).squared() < RS_TOLERANCE*RS_TOLERANCE
+//                        && fabs( circles.at(i)->getRadius() - en->getRadius())<RS_TOLERANCE
+//                        ) return;
+//            }
             circles.push_back(static_cast<RS_AtomicEntity*>(en));
             if(getStatus()<=SetCircle2 || (getStatus()==SetCircle3 && getData())){
                     circles.at(circles.size()-1)->setHighlighted(true);
