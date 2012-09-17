@@ -154,19 +154,19 @@ bool RS_ActionDrawCircleTan3::getData(){
     auto&& sol=LC_Quadratic::getIntersection(lc0,lc1);
     DEBUG_HEADER();
     std::cout<<"sol.size()="<<sol.size()<<std::endl;
-    centers.clean();
+    valid=false;
+    m_vCandidates.clear();
     for(size_t i=0;i<sol.size();i++){
-        auto&& vp=sol.get(i);
-        double l0=fabs( vp.distanceTo(circles[0]->getCenter()) -circles[0]->getRadius());
-        double l1=fabs( vp.distanceTo(circles[1]->getCenter()) -circles[1]->getRadius());
-        if(fabs(l0-l1)>RS_TOLERANCE*1.e3) continue;
-        l1=fabs( vp.distanceTo(circles[2]->getCenter()) -circles[2]->getRadius());
-        if(fabs(l0-l1)>RS_TOLERANCE*1.e3) continue;
-        centers.push_back(vp);
+        auto&& vr=verifyCenter(sol[i]);
+        foreach(double r, vr){
+            m_vCandidates<<RS_CircleData(sol[i],r);
+        }
     }
     DEBUG_HEADER();
-    std::cout<<"centers.size()="<<centers.size()<<std::endl;
-    valid = centers.size()>0;
+    std::cout<<"m_vCandidates.size()="<<m_vCandidates.size()<<std::endl;
+    if(m_vCandidates.size()==0) return false;
+
+    valid = m_vCandidates.size()>0;
     return valid;
 }
 
@@ -179,29 +179,20 @@ bool RS_ActionDrawCircleTan3::preparePreview(){
         valid=false;
     if(getData()==false) return false;
     //tangent circles
-    QVector<RS_CircleData> tcs;
-    for(size_t i=0;i<centers.size();i++){
-        auto&& vr=verifyCenter(centers[i]);
-        foreach(double r, vr){
-            tcs<<RS_CircleData(centers[i],r);
-        }
-    }
-    if(tcs.size()==0) return false;
 
     DEBUG_HEADER();
     double dist=RS_MAXDOUBLE;
-    for(int i=0;i<tcs.size();i++){
-        RS_Circle c0(NULL,tcs[i]);
+    for(int i=0;i<m_vCandidates.size();i++){
+        RS_Circle c0(NULL,m_vCandidates[i]);
         double d=RS_MAXDOUBLE;
         c0.getNearestPointOnEntity(coord,false, &d);
         if(d<dist) {
             dist=d;
-            cData=tcs[i];
+            cData=m_vCandidates[i];
+            valid=true;
         }
     }
-    valid=true;
-    DEBUG_HEADER();
-    return true;
+    return valid;
  }
 
 QVector<double> RS_ActionDrawCircleTan3::verifyCenter(const RS_Vector& center) const

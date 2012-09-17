@@ -85,6 +85,7 @@ public:
     RS_Entity* catchCircle(QMouseEvent* e);
     QVector<RS_AtomicEntity*> circles;
     RS_CircleData cData;
+    QVector<RS_CircleData> m_vCandidates;
     RS_Vector coord;
     bool valid;
     QVector<RS2::EntityType> enTypeList;
