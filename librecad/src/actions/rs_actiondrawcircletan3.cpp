@@ -23,10 +23,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_actiondrawcircletan3.h"
 
 #include <QAction>
-#include "lc_quadratic.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "lc_quadratic.h"
 
 /**
  * Constructor.
@@ -41,8 +41,8 @@ RS_ActionDrawCircleTan3::RS_ActionDrawCircleTan3(
           enTypeList()
 {
 //    supported types
+//    enTypeList<<RS2::EntityLine<<RS2::EntityArc<<RS2::EntityCircle;
     enTypeList<<RS2::EntityLine<<RS2::EntityArc<<RS2::EntityCircle;
-//    enTypeList<<RS2::EntityArc<<RS2::EntityCircle;
 }
 
 
@@ -68,7 +68,6 @@ void RS_ActionDrawCircleTan3::init(int status) {
 
     if (status==SetCircle1) {
         circles.clear();
-        centers.clean();
     }
 }
 
@@ -148,90 +147,51 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent* e) {
 
 bool RS_ActionDrawCircleTan3::getData(){
     if(getStatus() != SetCircle3) return false;
-    if(circles.size()<3) return false;
-    LC_Quadratic lc0(circles[0],circles[1]);
-    LC_Quadratic lc1(circles[0],circles[2]);
-    auto&& sol=LC_Quadratic::getIntersection(lc0,lc1);
-    DEBUG_HEADER();
-    std::cout<<"sol.size()="<<sol.size()<<std::endl;
-    valid=false;
-    m_vCandidates.clear();
-    for(size_t i=0;i<sol.size();i++){
-        auto&& vr=verifyCenter(sol[i]);
-        foreach(double r, vr){
-            m_vCandidates<<RS_CircleData(sol[i],r);
+    //find the nearest circle
+    int i=0;
+    for(i=0;i<circles.size();i++)
+        if(circles[i]->rtti() == RS2::EntityLine) break;
+    candidates.clear();
+    if(i<circles.size() && circles[i]->rtti() == RS2::EntityLine){
+        LC_Quadratic lc0(circles[i],circles[(i+1)%3]);
+        LC_Quadratic lc1(circles[i],circles[(i+2)%3]);
+        auto&& sol=LC_Quadratic::getIntersection(lc0,lc1);
+        for(size_t j=0;j<sol.size();j++){
+            double d;
+            circles[i]->getNearestPointOnEntity(sol[j],false,&d);
+            candidates<<RS_Circle(NULL,RS_CircleData(sol[j],d));
         }
+    }else{
+        RS_Circle c(NULL,cData);
+        candidates=c.createTan3(circles);
     }
-    DEBUG_HEADER();
-    std::cout<<"m_vCandidates.size()="<<m_vCandidates.size()<<std::endl;
-    if(m_vCandidates.size()==0) return false;
-
-    valid = m_vCandidates.size()>0;
+    valid = ( candidates.size() >0);
     return valid;
 }
 
 bool RS_ActionDrawCircleTan3::preparePreview(){
-//    DEBUG_HEADER();
     if(getStatus() != SetCenter || valid==false) {
         valid=false;
         return false;
     }
-        valid=false;
-    if(getData()==false) return false;
-    //tangent circles
-
-    DEBUG_HEADER();
-    double dist=RS_MAXDOUBLE;
-    for(int i=0;i<m_vCandidates.size();i++){
-        RS_Circle c0(NULL,m_vCandidates[i]);
-        double d=RS_MAXDOUBLE;
-        c0.getNearestPointOnEntity(coord,false, &d);
-        if(d<dist) {
+    //find the nearest circle
+    int index=candidates.size();
+    double dist=RS_MAXDOUBLE*RS_MAXDOUBLE;
+    for(int i=0;i<candidates.size();i++){
+        double d;
+        candidates.at(i).getNearestPointOnEntity(coord,false,&d);
+        if(d<dist){
             dist=d;
-            cData=m_vCandidates[i];
-            valid=true;
+            index=i;
         }
+    }
+    if( index<candidates.size()){
+        cData= candidates.at(index).getData();
+        valid=true;
+    }else{
+        valid=false;
     }
     return valid;
- }
-
-QVector<double> RS_ActionDrawCircleTan3::verifyCenter(const RS_Vector& center) const
-{
-    DEBUG_HEADER();
-    auto&& ret=getRadii(circles[0],center);
-    for(size_t i=1;i<=2;i++){
-        auto&& vr=getRadii(circles[i],center);
-        QVector<double> ret2;
-        foreach(double a, vr){
-            for(size_t j=0;j<ret.size();j++){
-                if(fabs(a - ret[j])<RS_TOLERANCE) {
-                    ret2<<a;
-                    break;
-                }
-            }
-        }
-        ret=ret2;
-        if(ret.size()==0) break;
-    }
-    return ret;
-}
-
-QVector<double> RS_ActionDrawCircleTan3::getRadii(RS_AtomicEntity* entity, const RS_Vector& center) const
-{
-    QVector<double> ret;
-    if(entity->rtti()==RS2::EntityLine){
-        double dist=0.;
-        entity->getNearestPointOnEntity(center,false,&dist);
-        ret<<dist;
-        return ret;
-    }
-    if(entity->rtti()==RS2::EntityCircle||entity->rtti()==RS2::EntityArc){
-        double dist=0.;
-        entity->getNearestPointOnEntity(center,false,&dist);
-        ret<<dist;
-        ret<<dist+2.*entity->getRadius();
-    }
-    return ret;
 }
 
 RS_Entity* RS_ActionDrawCircleTan3::catchCircle(QMouseEvent* e) {
