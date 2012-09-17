@@ -169,7 +169,7 @@ bool RS_Solid::isInCrossWindow(const RS_Vector& v1,const RS_Vector& v2)const {
             }
         }
     }
-    if (getMax().x < vTR.x && getMin().x > vTR.x) {//right
+    if (getMax().x > vTR.x && getMin().x < vTR.x) {//right
         RS_Line edge = RS_Line(NULL, RS_LineData(RS_Vector(vTR.x, vBL.y), vTR));
         for (int i=0; i<totalV; ++i) {
             sol = RS_Information::getIntersection(&edge, &l[i], true);
@@ -187,7 +187,7 @@ bool RS_Solid::isInCrossWindow(const RS_Vector& v1,const RS_Vector& v2)const {
             }
         }
     }
-    if(getMax().y < vBL.y && getMin().y > vBL.y) {//top
+    if(getMax().y > vTR.y && getMin().y < vTR.y) {//top
         RS_Line edge = RS_Line(NULL, RS_LineData(RS_Vector(vBL.x, vTR.y), vTR));
         for (int i=0; i<totalV; ++i) {
             sol = RS_Information::getIntersection(&edge, &l[i], true);
