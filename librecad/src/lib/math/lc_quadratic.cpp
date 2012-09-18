@@ -241,11 +241,13 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         RS_Line directrix(NULL,RS_LineData(line1->getStartpoint()+disp,
                                            line1->getEndpoint()+disp));
         LC_Quadratic lc0(&directrix,circle0->getCenter());
+        *this = lc0;
+        return;
 
         m_mQuad=lc0.getQuad();
         m_vLinear=lc0.getLinear();
-        m_bIsQuadratic=lc0.isQuadratic();
-        m_bValid=lc0.isValid();
+        m_bIsQuadratic=true;
+        m_bValid=true;
         m_dConst=lc0.m_dConst;
 
         return;
