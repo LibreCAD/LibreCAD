@@ -56,11 +56,16 @@ LC_Quadratic::LC_Quadratic(const LC_Quadratic& lc0):
 
 LC_Quadratic& LC_Quadratic::operator = (const LC_Quadratic& lc0)
 {
-    m_mQuad=lc0.getQuad();
+    if(lc0.isQuadratic()){
+        m_mQuad.resize(2,2,false);
+        m_mQuad=lc0.getQuad();
+    }
+    m_vLinear.resize(2);
     m_vLinear=lc0.getLinear();
     m_dConst=lc0.m_dConst;
     m_bIsQuadratic=lc0.isQuadratic();
     m_bValid=lc0.isValid();
+    return *this;
 }
 
 
@@ -236,7 +241,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         DEBUG_HEADER();
         //one line, one circle
         const RS_Line* line1=static_cast<const RS_Line*>(circle1);
-	RS_Vector normal=line1->getNormal()*circle0->getRadius();
+    RS_Vector normal=line1->getNormalVector()*circle0->getRadius();
         RS_Vector disp=line1->getNearestPointOnEntity(circle0->getCenter(),
                                                            false)-circle0->getCenter();
 	if(normal.dotP(disp)>0.) normal *= -1.;
