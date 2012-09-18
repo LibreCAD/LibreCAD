@@ -236,10 +236,13 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         DEBUG_HEADER();
         //one line, one circle
         const RS_Line* line1=static_cast<const RS_Line*>(circle1);
+	RS_Vector normal=line1->getNormal()*circle0->getRadius();
         RS_Vector disp=line1->getNearestPointOnEntity(circle0->getCenter(),
                                                            false)-circle0->getCenter();
-        RS_Line directrix(NULL,RS_LineData(line1->getStartpoint()+disp,
-                                           line1->getEndpoint()+disp));
+	if(normal.dotP(disp)>0.) normal *= -1.;
+							   
+        RS_Line directrix(NULL,RS_LineData(line1->getStartpoint()+normal,
+                                           line1->getEndpoint()+normal));
         LC_Quadratic lc0(&directrix,circle0->getCenter());
         *this = lc0;
         return;
