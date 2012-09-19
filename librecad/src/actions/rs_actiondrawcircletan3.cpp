@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "lc_quadratic.h"
 
 /**
  * Constructor.
@@ -41,7 +42,7 @@ RS_ActionDrawCircleTan3::RS_ActionDrawCircleTan3(
 {
 //    supported types
 //    enTypeList<<RS2::EntityLine<<RS2::EntityArc<<RS2::EntityCircle;
-    enTypeList<<RS2::EntityArc<<RS2::EntityCircle;
+    enTypeList<<RS2::EntityLine<<RS2::EntityArc<<RS2::EntityCircle;
 }
 
 
@@ -147,8 +148,41 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent* e) {
 bool RS_ActionDrawCircleTan3::getData(){
     if(getStatus() != SetCircle3) return false;
     //find the nearest circle
-    RS_Circle c(NULL,cData);
-    candidates=c.createTan3(circles);
+    int i=0;
+    for(i=0;i<circles.size();i++)
+        if(circles[i]->rtti() == RS2::EntityLine) break;
+    candidates.clear();
+    if(i<circles.size() && circles[i]->rtti() == RS2::EntityLine){
+        LC_Quadratic lc0(circles[i],circles[(i+1)%3]);
+        LC_Quadratic lc1(circles[i],circles[(i+2)%3]);
+        auto&& sol=LC_Quadratic::getIntersection(lc0,lc1);
+        double d;
+
+        //line passes circle center, need a second parabola as the image of the line
+        for(int j=1;j<=2;j++){
+            if(circles[(i+j)%3]->rtti() == RS2::EntityCircle){
+                circles[i]->getNearestPointOnEntity(circles[(i+j)%3]->getCenter(),
+                                                    false,&d);
+                if(d<RS_TOLERANCE) {
+                    LC_Quadratic lc2(circles[i],circles[(i+j)%3], true);
+                    sol.appendTo(LC_Quadratic::getIntersection(lc2,lc1));
+                }
+            }
+        }
+
+
+        for(size_t j=0;j<sol.size();j++){
+            circles[i]->getNearestPointOnEntity(sol[j],false,&d);
+            RS_CircleData data(sol[j],d);
+            if(circles[(i+1)%3]->isTangent(data)==false) continue;
+            if(circles[(i+2)%3]->isTangent(data)==false) continue;
+
+            candidates<<RS_Circle(NULL,data);
+        }
+    }else{
+        RS_Circle c(NULL,cData);
+        candidates=c.createTan3(circles);
+    }
     valid = ( candidates.size() >0);
     return valid;
 }
@@ -215,12 +249,12 @@ void RS_ActionDrawCircleTan3::mouseReleaseEvent(QMouseEvent* e) {
             RS_Entity*  en = catchCircle(e);
             if (en==NULL) return;
             circles.resize(getStatus());
-            for(int i=0;i<circles.size();i++){
-                if(
-                        (circles.at(i)->getCenter() - en->getCenter()).squared() < RS_TOLERANCE*RS_TOLERANCE
-                        && fabs( circles.at(i)->getRadius() - en->getRadius())<RS_TOLERANCE
-                        ) return;
-            }
+//            for(int i=0;i<circles.size();i++){
+//                if(
+//                        (circles.at(i)->getCenter() - en->getCenter()).squared() < RS_TOLERANCE*RS_TOLERANCE
+//                        && fabs( circles.at(i)->getRadius() - en->getRadius())<RS_TOLERANCE
+//                        ) return;
+//            }
             circles.push_back(static_cast<RS_AtomicEntity*>(en));
             if(getStatus()<=SetCircle2 || (getStatus()==SetCircle3 && getData())){
                     circles.at(circles.size()-1)->setHighlighted(true);

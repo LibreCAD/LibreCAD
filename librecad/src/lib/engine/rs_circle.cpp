@@ -75,6 +75,13 @@ double RS_Circle::getLength() const {
     return 2*M_PI*data.radius;
 }
 
+bool RS_Circle::isTangent(const RS_CircleData&  circleData){
+    double d=circleData.center.distanceTo(data.center);
+    if( fabs(d-fabs(circleData.radius - data.radius))<RS_TOLERANCE ||
+            fabs(d-fabs(circleData.radius + data.radius))<RS_TOLERANCE ) return true;
+    return false;
+}
+
 
 /**
  * Creates this circle from a center point and a radius.

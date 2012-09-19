@@ -49,8 +49,11 @@ public:
       passing the point */
     LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point);
     /** construct a ellipse or hyperbola as the path of center of common tangent circles
-      of this two given entities*/
-    LC_Quadratic(const RS_AtomicEntity* circle0,const RS_AtomicEntity* circle1);
+      of this two given entities,
+      mirror option allows to specify the mirror quadratic around the line
+*/
+    LC_Quadratic(const RS_AtomicEntity* circle0,const RS_AtomicEntity* circle1,
+                 bool mirror = false);
     LC_Quadratic(std::vector<double> ce);
     std::vector<double> getCoefficients() const;
     LC_Quadratic move(const RS_Vector& v);

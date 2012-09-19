@@ -30,6 +30,7 @@
 
 #include "rs_entity.h"
 
+class RS_CircleData;
 
 /**
  * Class representing an atomic entity
@@ -149,6 +150,9 @@ public:
         } else {
             delFlag(RS2::FlagSelected2);
         }
+    }
+    virtual bool isTangent(const RS_CircleData& /* circleData */) {
+        return false;
     }
 
     /**
