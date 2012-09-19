@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include "rs_math.h"
+#include "rs_information.h"
 #include "lc_quadratic.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -202,7 +203,8 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point
 /** construct a ellipse or hyperbola as the path of center of common tangent circles
   of this two given entities*/
 LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
-                           const RS_AtomicEntity* circle1):
+                           const RS_AtomicEntity* circle1,
+                           bool mirror):
     m_mQuad(2,2)
     ,m_vLinear(2)
     ,m_bValid(false)
@@ -216,12 +218,14 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
     if(circle0->rtti() == RS2::EntityLine)
         std::swap(circle0, circle1);
     if(circle0->rtti() == RS2::EntityLine) {
-        DEBUG_HEADER();
         //two lines
-        const RS_Line* line0=static_cast<const RS_Line*>(circle0);
-        const RS_Line* line1=static_cast<const RS_Line*>(circle1);
-        auto&& centers=getIntersection(line0->getQuadratic(),
-                                           line0->getQuadratic());
+        RS_Line* line0=(RS_Line*) circle0;
+        RS_Line* line1=(RS_Line*) circle1;
+
+//        auto&& centers=getIntersection(line0->getQuadratic(),
+//                                           line0->getQuadratic());
+        auto&& centers=RS_Information::getIntersection(line0,line1);
+//        DEBUG_HEADER();
         if(centers.size()!=1) return;
         double angle=0.5*(line0->getAngle1()+line1->getAngle1());
         m_bValid=true;
@@ -235,6 +239,8 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         m_dConst=0.;
         rotate(angle);
         move(centers.get(0));
+//        DEBUG_HEADER();
+//        std::cout<<*this<<std::endl;
         return;
     }
     if(circle1->rtti() == RS2::EntityLine) {
@@ -245,6 +251,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         RS_Vector disp=line1->getNearestPointOnEntity(circle0->getCenter(),
                                                            false)-circle0->getCenter();
 	if(normal.dotP(disp)>0.) normal *= -1.;
+    if(mirror) normal *= -1.;
 							   
         RS_Line directrix(NULL,RS_LineData(line1->getStartpoint()+normal,
                                            line1->getEndpoint()+normal));
@@ -372,8 +379,8 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
     if(p1->isQuadratic()==false){
         std::swap(p1,p2);
     }
-    std::cout<<*p1<<std::endl;
-    std::cout<<*p2<<std::endl;
+//    std::cout<<*p1<<std::endl;
+//    std::cout<<*p2<<std::endl;
     if(p1->isQuadratic()==false){
         //two lines
         QVector<QVector<double> > ce(2,QVector<double>(3,0.));

@@ -156,12 +156,27 @@ bool RS_ActionDrawCircleTan3::getData(){
         LC_Quadratic lc0(circles[i],circles[(i+1)%3]);
         LC_Quadratic lc1(circles[i],circles[(i+2)%3]);
         auto&& sol=LC_Quadratic::getIntersection(lc0,lc1);
+        double d;
+
+        //line passes circle center, need a second parabola as the image of the line
+        for(int j=1;j<=2;j++){
+            if(circles[(i+j)%3]->rtti() == RS2::EntityCircle){
+                circles[i]->getNearestPointOnEntity(circles[(i+j)%3]->getCenter(),
+                                                    false,&d);
+                if(d<RS_TOLERANCE) {
+                    LC_Quadratic lc2(circles[i],circles[(i+j)%3], true);
+                    sol.appendTo(LC_Quadratic::getIntersection(lc2,lc1));
+                }
+            }
+        }
+
+
         for(size_t j=0;j<sol.size();j++){
-            double d;
             circles[i]->getNearestPointOnEntity(sol[j],false,&d);
             RS_CircleData data(sol[j],d);
             if(circles[(i+1)%3]->isTangent(data)==false) continue;
             if(circles[(i+2)%3]->isTangent(data)==false) continue;
+
             candidates<<RS_Circle(NULL,data);
         }
     }else{
