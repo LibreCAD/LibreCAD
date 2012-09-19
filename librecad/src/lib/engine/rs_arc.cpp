@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include "rs_arc.h"
+#include <cmath>
 
 #include "rs_constructionline.h"
 #include "rs_linetypepattern.h"
@@ -34,6 +35,7 @@
 #include "rs_painter.h"
 #include "lc_quadratic.h"
 #include "rs_painterqt.h"
+
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -536,6 +538,8 @@ void RS_Arc::moveStartpoint(const RS_Vector& pos) {
     // polyline arcs: move point not angle:
     //if (parent!=NULL && parent->rtti()==RS2::EntityPolyline) {
     double bulge = getBulge();
+    if(fabs(bulge - M_PI/2.)<RS_TOLERANCE_ANGLE) return;
+
     createFrom2PBulge(pos, getEndpoint(), bulge);
     correctAngles(); // make sure angleLength is no more than 2*M_PI
     //}
@@ -821,10 +825,13 @@ void RS_Arc::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
 
 
 void RS_Arc::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
+    if(fabs(fabs(getAngleLength()-M_PI)-M_PI)<RS_TOLERANCE_ANGLE){
+        move(offset);
+        return;
+    }
     if (ref.distanceTo(startpoint)<1.0e-4) {
         moveStartpoint(startpoint+offset);
-    }
-    if (ref.distanceTo(endpoint)<1.0e-4) {
+    }else if (ref.distanceTo(endpoint)<1.0e-4) {
         moveEndpoint(endpoint+offset);
     }
     correctAngles(); // make sure angleLength is no more than 2*M_PI
