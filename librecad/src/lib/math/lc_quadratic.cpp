@@ -238,10 +238,10 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         return;
     }
     if(circle1->rtti() == RS2::EntityLine) {
-        DEBUG_HEADER();
+//        DEBUG_HEADER();
         //one line, one circle
         const RS_Line* line1=static_cast<const RS_Line*>(circle1);
-    RS_Vector normal=line1->getNormalVector()*circle0->getRadius();
+        RS_Vector normal=line1->getNormalVector()*circle0->getRadius();
         RS_Vector disp=line1->getNearestPointOnEntity(circle0->getCenter(),
                                                            false)-circle0->getCenter();
 	if(normal.dotP(disp)>0.) normal *= -1.;
@@ -365,7 +365,6 @@ LC_Quadratic LC_Quadratic::flipXY(void) const
 
 RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const LC_Quadratic& l2)
 {
-    DEBUG_HEADER();
     RS_VectorSolutions ret;
     if( (l1.isValid() && l2.isValid()) == false ) return ret;
     auto p1=&l1;

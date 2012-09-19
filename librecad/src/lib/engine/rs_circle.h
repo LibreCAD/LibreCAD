@@ -147,6 +147,7 @@ public:
     }
     double getAngleLength() const;
     virtual double getLength() const;
+    virtual bool isTangent(const RS_CircleData&  circleData);
 
     bool createFromCR(const RS_Vector& c, double r);
     bool createFrom2P(const RS_Vector& p1, const RS_Vector& p2);

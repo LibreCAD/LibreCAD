@@ -159,7 +159,10 @@ bool RS_ActionDrawCircleTan3::getData(){
         for(size_t j=0;j<sol.size();j++){
             double d;
             circles[i]->getNearestPointOnEntity(sol[j],false,&d);
-            candidates<<RS_Circle(NULL,RS_CircleData(sol[j],d));
+            RS_CircleData data(sol[j],d);
+            if(circles[(i+1)%3]->isTangent(data)==false) continue;
+            if(circles[(i+2)%3]->isTangent(data)==false) continue;
+            candidates<<RS_Circle(NULL,data);
         }
     }else{
         RS_Circle c(NULL,cData);
