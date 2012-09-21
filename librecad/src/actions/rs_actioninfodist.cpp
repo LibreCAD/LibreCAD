@@ -58,10 +58,14 @@ void RS_ActionInfoDist::trigger() {
     RS_DEBUG->print("RS_ActionInfoDist::trigger()");
 
     if (point1.valid && point2.valid) {
-        double dist = point1.distanceTo(point2);
-        QString str;
-        str.sprintf("%.6f", dist);
-        RS_DIALOGFACTORY->commandMessage(tr("Distance: %1").arg(str));
+        auto&& dV = point2 - point1;
+        RS_DIALOGFACTORY->commandMessage(
+                    tr("Distance: %1 Cartesian: (%2 , %3), Polar: (%4<%5 ").arg(dV.magnitude())
+                                         .arg(dV.x).arg(dV.y)
+                                         .arg(dV.magnitude())
+                                         .arg(RS_Math::rad2deg(dV.angle()))
+                    + QString::fromUtf8("°)")
+                                              );
     }
 }
 
