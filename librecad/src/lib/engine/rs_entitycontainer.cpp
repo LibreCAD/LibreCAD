@@ -1561,8 +1561,8 @@ RS_Entity* RS_EntityContainer::getNearestEntity(const RS_Vector& coord,
 bool RS_EntityContainer::optimizeContours() {
 //    std::cout<<"RS_EntityContainer::optimizeContours: begin"<<std::endl;
 
-    DEBUG_HEADER();
-    std::cout<<"loop with count()="<<count()<<std::endl;
+//    DEBUG_HEADER();
+//    std::cout<<"loop with count()="<<count()<<std::endl;
     RS_DEBUG->print("RS_EntityContainer::optimizeContours");
 
     RS_EntityContainer tmp;
@@ -1650,9 +1650,9 @@ bool RS_EntityContainer::optimizeContours() {
         	break;			//workaround if next is NULL
         } 					//workaround if next is NULL
     }
-    DEBUG_HEADER();
+//    DEBUG_HEADER();
     if( vpEnd.squaredTo(vpStart)>1e-8) {
-        std::cout<<"ds2="<<vpEnd.squaredTo(vpStart)<<std::endl;
+//        std::cout<<"ds2="<<vpEnd.squaredTo(vpStart)<<std::endl;
         closed=false;
     }
 //    std::cout<<"RS_EntityContainer::optimizeContours: 5"<<std::endl;

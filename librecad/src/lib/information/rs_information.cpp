@@ -809,6 +809,41 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
                             } else if (i==1 || sol.get(1).valid==true) {
                                 counter++;
                             }
+                        } else if (e->rtti()==RS2::EntityEllipse) {
+                            RS_Ellipse* ellipse=static_cast<RS_Ellipse*>(e);
+                            if(ellipse->isArc()){
+                                if (p.distanceTo(ellipse->getStartpoint())<1.0e-4) {
+                                    double dir = ellipse->getDirection1();
+                                    if ((dir<M_PI && dir>=1.0e-5) ||
+                                            ((dir>2*M_PI-1.0e-5 || dir<1.0e-5) &&
+                                             ellipse->getCenter().y>p.y)) {
+                                        counter++;
+                                        sure = false;
+                                    }
+                                }
+                                else if (p.distanceTo(ellipse->getEndpoint())<1.0e-4) {
+                                    double dir = ellipse->getDirection2();
+                                    if ((dir<M_PI && dir>=1.0e-5) ||
+                                            ((dir>2*M_PI-1.0e-5 || dir<1.0e-5) &&
+                                             ellipse->getCenter().y>p.y)) {
+                                        counter++;
+                                        sure = false;
+                                    }
+                                } else {
+                                    counter++;
+                                }
+                            }else{
+                                // tangent:
+                                if (i==0 && sol.get(1).valid==false) {
+                                    if (!sol.isTangent()) {
+                                        counter++;
+                                    } else {
+                                        sure = false;
+                                    }
+                                } else if (i==1 || sol.get(1).valid==true) {
+                                    counter++;
+                                }
+                            }
                         }
                     }
                 }

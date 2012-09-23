@@ -25,6 +25,8 @@
 **********************************************************************/
 
 
+#include <QPainterPath>
+#include <memory>
 #include "rs_hatch.h"
 
 #include "rs_graphicview.h"
@@ -33,7 +35,6 @@
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
 
-#include <QPainterPath>
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"
@@ -334,7 +335,7 @@ void RS_Hatch::update() {
         RS_Vector sp = startPoint;
         double sa = center.angleTo(sp);
         if(ellipse != NULL) sa=ellipse->getEllipseAngle(sp);
-        QList<RS_Vector*> is2;
+        QList<std::shared_ptr<RS_Vector> > is2;
         bool done;
         double minDist;
         double dist = 0.0;
@@ -378,7 +379,7 @@ void RS_Hatch::update() {
             // copy to sorted list, removing double points
             if (!done && av!=NULL) {
                 if (last.valid==false || last.distanceTo(*av)>1.0e-10) {
-                    is2.append(new RS_Vector(*av));
+                    is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(*av)));
                     last = *av;
                 }
 #if QT_VERSION < 0x040400
@@ -393,8 +394,8 @@ void RS_Hatch::update() {
 
         // add small cut lines / arcs to tmp2:
             for (int i = 1; i < is2.size(); ++i) {
-                RS_Vector *v1 = is2.at(i-1);
-                RS_Vector *v2 = is2.at(i);
+                RS_Vector *v1 = is2.at(i-1).get();
+                RS_Vector *v2 = is2.at(i).get();
 
                 if (line!=NULL) {
                     tmp2.addEntity(new RS_Line(&tmp2,
@@ -406,7 +407,7 @@ void RS_Hatch::update() {
                                                          center.angleTo(*v1),
                                                          center.angleTo(*v2),
                                                          reversed)));
-                } else if (ellipse != NULL) {
+                } /*else if (ellipse != NULL) {
                     tmp2.addEntity(new RS_Ellipse(&tmp2,
                                               RS_EllipseData(center,
                                                              ellipse->getMajorP(),
@@ -414,13 +415,13 @@ void RS_Hatch::update() {
                                                              ellipse->getEllipseAngle(*v1),
                                                              ellipse->getEllipseAngle(*v2),
                                                          reversed)));
-                }
+                }*/
             }
 
         while (!is.isEmpty())
             delete is.takeFirst();
-        while (!is2.isEmpty())
-            delete is2.takeFirst();
+//        while (!is2.isEmpty())
+//            delete is2.takeFirst();
     }
 
     // updating hatch / adding entities that are inside
