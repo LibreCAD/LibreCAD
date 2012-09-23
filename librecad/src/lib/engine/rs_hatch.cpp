@@ -189,7 +189,7 @@ void RS_Hatch::update() {
 
     // create a pattern over the whole contour.
     RS_Vector pSize = pat->getSize();
-    RS_Vector cPos = getMin();
+//    RS_Vector cPos = getMin();
     RS_Vector cSize = getSize();
 
 
@@ -254,6 +254,7 @@ void RS_Hatch::update() {
     RS_Line* line = NULL;
     RS_Arc* arc = NULL;
     RS_Circle* circle = NULL;
+    RS_Ellipse* ellipse = NULL;
     for (RS_Entity* e=tmp.firstEntity(); e!=NULL;
             e=tmp.nextEntity()) {
 
@@ -266,6 +267,7 @@ void RS_Hatch::update() {
             line = (RS_Line*)e;
             arc = NULL;
             circle = NULL;
+            ellipse = NULL;
             startPoint = line->getStartpoint();
             endPoint = line->getEndpoint();
             center = RS_Vector(false);
@@ -282,14 +284,23 @@ void RS_Hatch::update() {
             circle = (RS_Circle*)e;
             line = NULL;
             arc = NULL;
+            ellipse = NULL;
             startPoint = circle->getCenter()
                          + RS_Vector(circle->getRadius(), 0.0);
             endPoint = startPoint;
             center = circle->getCenter();
             reversed = false;
-        } else {
-            continue;
-        }
+        } else if (e->rtti()==RS2::EntityEllipse ) {
+            DEBUG_HEADER();
+            arc = NULL;
+            line = NULL;
+            circle = NULL;
+            ellipse = static_cast<RS_Ellipse*>(e);
+            startPoint = ellipse->getStartpoint();
+            endPoint = ellipse->getEndpoint();
+            center = ellipse->getCenter();
+            reversed = ellipse->isReversed();
+        } else continue;
 
         // getting all intersections of this pattern line with the contour:
         QList<RS_Vector*> is;
@@ -322,6 +333,7 @@ void RS_Hatch::update() {
         // sort the intersection points into is2:
         RS_Vector sp = startPoint;
         double sa = center.angleTo(sp);
+        if(ellipse != NULL) sa=ellipse->getEllipseAngle(sp);
         QList<RS_Vector*> is2;
         bool done;
         double minDist;
@@ -337,8 +349,9 @@ void RS_Hatch::update() {
                 v = is.at(i);
                 if (line!=NULL) {
                     dist = sp.distanceTo(*v);
-                } else if (arc!=NULL || circle!=NULL) {
+                } else if (arc!=NULL || circle!=NULL || ellipse!=NULL) {
                     double a = center.angleTo(*v);
+                    if(ellipse != NULL) a=ellipse->getEllipseAngle(*v);
                     if (reversed) {
                         if (a>sa) {
                             a-=2*M_PI;
@@ -393,8 +406,16 @@ void RS_Hatch::update() {
                                                          center.angleTo(*v1),
                                                          center.angleTo(*v2),
                                                          reversed)));
+                } else if (ellipse != NULL) {
+                    tmp2.addEntity(new RS_Ellipse(&tmp2,
+                                              RS_EllipseData(center,
+                                                             ellipse->getMajorP(),
+                                                             ellipse->getRatio(),
+                                                             ellipse->getEllipseAngle(*v1),
+                                                             ellipse->getEllipseAngle(*v2),
+                                                         reversed)));
                 }
-        }
+            }
 
         while (!is.isEmpty())
             delete is.takeFirst();

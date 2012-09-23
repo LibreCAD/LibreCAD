@@ -244,6 +244,9 @@ public:
         return data.majorP.magnitude()*data.ratio;
     }
     bool isArc() const; //is the ellipse an Arc, i.e., angle1/angle2 not both 0
+    virtual bool isEdge() const {
+        return true;
+    }
     bool createFrom4P(const RS_VectorSolutions& sol);
     bool createFromCenter3Points(const RS_VectorSolutions& sol);
     bool createFromQuadratic(const QVector<double>& dn);//from quadratic form: dn[0] x^2 + dn[1] xy + dn[2] y^2 =1
