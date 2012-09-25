@@ -893,10 +893,18 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
                         writer->writeDouble(51, a->endangle);
                         writer->writeInt16(73, a->isccw);
                         break; }
-                    case DRW::ELLIPSE:
-                        //RLZ: elliptic arc boundary writeme
-//                        writer->writeInt16(72, 3);
-                        break;
+                    case DRW::ELLIPSE: {
+                        writer->writeInt16(72, 3);
+                        DRW_Ellipse* a = (DRW_Ellipse*)loop->objlist.at(j);
+                        writer->writeDouble(10, a->basePoint.x);
+                        writer->writeDouble(20, a->basePoint.y);
+                        writer->writeDouble(11, a->secPoint.x);
+                        writer->writeDouble(21, a->secPoint.y);
+                        writer->writeDouble(40, a->ratio);
+                        writer->writeDouble(50, a->staparam);
+                        writer->writeDouble(51, a->endparam);
+                        writer->writeInt16(73, a->isccw);
+                        break; }
                     case DRW::SPLINE:
                         //RLZ: spline boundary writeme
 //                        writer->writeInt16(72, 4);
@@ -914,10 +922,11 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
             writer->writeDouble(52, ent->angle);
             writer->writeDouble(41, ent->scale);
             writer->writeInt16(77, ent->doubleflag);
-        }
-        if (ent->deflines > 0){
             writer->writeInt16(78, ent->deflines);
         }
+/*        if (ent->deflines > 0){
+            writer->writeInt16(78, ent->deflines);
+        }*/
         writer->writeInt16(98, 0);
     } else {
         //RLZ: TODO verify in acad12
