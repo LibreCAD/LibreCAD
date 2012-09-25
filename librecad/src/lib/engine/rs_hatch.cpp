@@ -606,7 +606,33 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 #endif
                 }
                     break;
-
+                case RS2::EntityEllipse:
+                if(static_cast<RS_Ellipse*>(e)->isArc()) {
+                    QPolygon pa2;
+                    auto ellipse=static_cast<RS_Ellipse*>(e);
+                    painter->createEllipse(pa2,
+                                           view->toGui(ellipse->getCenter()),
+                                           view->toGuiDX(ellipse->getMajorRadius()),
+                                           view->toGuiDX(ellipse->getMinorRadius()),
+                                           ellipse->getAngle(),
+                                           ellipse->getAngle1(), ellipse->getAngle2(),
+                                           ellipse->isReversed()
+                                           );
+                    pa<<pa2;
+                }else{
+                    QPolygon pa2;
+                    auto ellipse=static_cast<RS_Ellipse*>(e);
+                    painter->createEllipse(pa2,
+                                           view->toGui(ellipse->getCenter()),
+                                           view->toGuiDX(ellipse->getMajorRadius()),
+                                           view->toGuiDX(ellipse->getMinorRadius()),
+                                           ellipse->getAngle(),
+                                           ellipse->getAngle1(), ellipse->getAngle2(),
+                                           ellipse->isReversed()
+                                           );
+                    path.addPolygon(pa2);
+                }
+                    break;
                 default:
                     break;
                 }
