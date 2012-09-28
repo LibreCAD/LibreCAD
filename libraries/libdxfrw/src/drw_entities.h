@@ -248,20 +248,24 @@ public:
 //! Class to handle ellipse entity
 /*!
 *  Class to handle ellipse and elliptic arc entity
+*  Note: start/end parameter are in radians for ellipse entity but
+*  for hatch boundary are in degrees
 *  @author Rallaz
 */
 class DRW_Ellipse : public DRW_Line {
 public:
     DRW_Ellipse() {
         eType = DRW::ELLIPSE;
+        isccw = 1;
     }
 
     void parseCode(int code, dxfReader *reader);
     void toPolyline(DRW_Polyline *pol);
 public:
     double ratio;           /*!< ratio, code 40 */
-    double staparam;      /*!< start parameter, code 41, 0.0 for full ellipse*/
-    double endparam;     /*!< end parameter, code 42, 2*PI for full ellipse */
+    double staparam;        /*!< start parameter, code 41, 0.0 for full ellipse*/
+    double endparam;        /*!< end parameter, code 42, 2*PI for full ellipse */
+    double isccw;           /*!< is counter clockwise arc?, only used in hatch, code 73 */
 };
 
 //! Class to handle trace entity

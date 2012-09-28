@@ -984,6 +984,18 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                     }
                     break;
                 }
+                case DRW::ELLIPSE: {
+                    DRW_Ellipse *e2 = (DRW_Ellipse *)ent;
+                    double ang1 = RS_Math::deg2rad(e2->staparam);
+                    double ang2 = RS_Math::deg2rad(e2->endparam);
+                    if ( fabs(ang2 - 6.28318530718) < 1.0e-10 && fabs(ang1) < 1.0e-10 )
+                        ang2 = 0.0;
+                    e = new RS_Ellipse(hatchLoop,
+                                       RS_EllipseData(RS_Vector(e2->basePoint.x, e2->basePoint.y),
+                                                      RS_Vector(e2->secPoint.x, e2->secPoint.y),
+                                                      e2->ratio, ang1, ang2, e2->isccw));
+                    break;
+                }
                 default:
                     break;
                 }
@@ -2424,6 +2436,25 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
                     arc->endangle = 360.0; //2*M_PI;
                     arc->isccw = true;
                     lData->objlist.push_back(arc);
+                } else if (ed->rtti()==RS2::EntityEllipse) {
+                    RS_Ellipse* el = (RS_Ellipse*)ed;
+                    DRW_Ellipse *ell= new DRW_Ellipse();
+                    ell->basePoint.x = el->getCenter().x;
+                    ell->basePoint.y = el->getCenter().y;
+                    ell->secPoint.x = el->getMajorP().x;
+                    ell->secPoint.y = el->getMajorP().y;
+                    ell->ratio = el->getRatio();
+                    ell->staparam = RS_Math::rad2deg(el->getAngle1());
+                    ell->endparam = RS_Math::rad2deg(el->getAngle2());
+                    ell->isccw = el->isReversed();
+                    if (!el->isReversed()) {
+                        ell->staparam = RS_Math::rad2deg(el->getAngle1());
+                        ell->endparam = RS_Math::rad2deg(el->getAngle2());
+                    } else {
+                        ell->staparam = RS_Math::rad2deg(2*M_PI-el->getAngle1());
+                        ell->endparam = RS_Math::rad2deg(2*M_PI-el->getAngle2());
+                    }
+                    lData->objlist.push_back(ell);
                 }
             }
             lData->update(); //change to DRW_HatchLoop
