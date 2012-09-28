@@ -48,9 +48,3 @@ RS_Document::RS_Document(RS_EntityContainer* parent)
 
     gv = NULL;//used to read/save current view
 }
-
-
-RS_Document::~RS_Document() {
-    gv=NULL;
-}
-

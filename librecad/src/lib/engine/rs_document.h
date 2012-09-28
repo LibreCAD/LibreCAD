@@ -46,7 +46,7 @@ class RS_Document : public RS_EntityContainer,
     public RS_Undo {
 public:
     RS_Document(RS_EntityContainer* parent=NULL);
-    virtual ~RS_Document();
+    virtual ~RS_Document(){}
 
     virtual RS_LayerList* getLayerList() = 0;
     virtual RS_BlockList* getBlockList() = 0;
