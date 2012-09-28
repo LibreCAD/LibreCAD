@@ -687,6 +687,7 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         requestLineBisectorOptions(action, on, update);
         break;
 
+    case RS2::ActionDrawLineOrthogonal:
     case RS2::ActionDrawLineRelAngle:
         requestLineRelAngleOptions(action, on, update);
         break;

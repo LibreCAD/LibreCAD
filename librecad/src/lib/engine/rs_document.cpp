@@ -50,5 +50,7 @@ RS_Document::RS_Document(RS_EntityContainer* parent)
 }
 
 
-RS_Document::~RS_Document() {}
+RS_Document::~RS_Document() {
+    gv=NULL;
+}
 
