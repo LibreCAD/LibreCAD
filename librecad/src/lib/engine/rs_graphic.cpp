@@ -850,8 +850,19 @@ void RS_Graphic::centerToPage() {
     RS_Vector size = getPaperSize();
 
     double scale = getPaperScale();
+    auto&& s=getSize();
+    auto&& sMin=getMin();
+    /** avoid zero size, bug#3573158 */
+    if(fabs(s.x)<RS_TOLERANCE) {
+        s.x=10.;
+        sMin.x=-5.;
+    }
+    if(fabs(s.y)<RS_TOLERANCE) {
+        s.y=10.;
+        sMin.y=-5.;
+    }
 
-    RS_Vector pinsbase = (size-getSize()*scale)/2.0 - getMin()*scale;
+    RS_Vector pinsbase = (size-s*scale)/2.0 - sMin*scale;
 
     setPaperInsertionBase(pinsbase);
 }
@@ -867,6 +878,9 @@ bool RS_Graphic::fitToPage() {
     RS_Vector ps = getPaperSize();
     if(ps.x>border && ps.y>border) ps -= RS_Vector(border, border);
     RS_Vector s = getSize();
+    /** avoid zero size, bug#3573158 */
+    if(fabs(s.x)<RS_TOLERANCE) s.x=10.;
+    if(fabs(s.y)<RS_TOLERANCE) s.y=10.;
     double fx = RS_MAXDOUBLE;
     double fy = RS_MAXDOUBLE;
     double fxy;
@@ -875,9 +889,11 @@ bool RS_Graphic::fitToPage() {
     // tin-pot 2011-12-30: TODO: can s.x < 0.0 (==> fx < 0.0) happen?
     if (fabs(s.x) > 1.0e-10) {
         fx = ps.x / s.x;
+        ret=false;
     }
     if (fabs(s.y) > 1.0e-10) {
         fy = ps.y / s.y;
+        ret=false;
     }
 
     fxy = std::min(fx, fy);
@@ -888,8 +904,7 @@ bool RS_Graphic::fitToPage() {
                                       , getUnit()
                                       )
                     );
-        fitToPage();
-        ret=false;
+        ret=fitToPage();
     }
     setPaperScale(fxy);
     centerToPage();
