@@ -144,6 +144,7 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
                     scale (currScale);
                 else
                     fit();
+                updateScaleBox();
                 setScaleFixed(false);
             }
         }else{
