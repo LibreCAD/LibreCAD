@@ -40,10 +40,11 @@
 
 #include "qc_applicationwindow.h"
 #include "rs_graphic.h"
+#include "rs_settings.h"
 #include "qg_exitdialog.h"
 #include "qg_filedialog.h"
 #include "rs_insert.h"
-#include "rs_text.h"
+#include "rs_mtext.h"
 
 int QC_MDIWindow::idCounter = 0;
 
@@ -321,6 +322,30 @@ void QC_MDIWindow::slotFileNew() {
 }
 
 
+/**
+ * Creates a new document, loading template, in this MDI window.
+ */
+bool QC_MDIWindow::slotFileNewTemplate(const QString& fileName, RS2::FormatType type) {
+    RS_DEBUG->print("QC_MDIWindow::slotFileNewTemplate begin");
+
+    bool ret = false;
+
+    if (document==NULL || fileName.isEmpty())
+        return ret;
+
+    document->newDoc();
+    ret = document->loadTemplate(fileName, type);
+    if (ret) {
+        RS_DEBUG->print("QC_MDIWindow::slotFileNewTemplate: autoZoom");
+        graphicView->zoomAuto(false);
+    } else
+        RS_DEBUG->print("QC_MDIWindow::slotFileNewTemplate: failed");
+
+    RS_DEBUG->print("QC_MDIWindow::slotFileNewTemplate end");
+    return true;
+}
+
+
 
 /**
  * Opens the given file in this MDI window.
@@ -343,12 +368,14 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
             //QString message=tr("Loaded document: ")+fileName;
             //statusBar()->showMessage(message, 2000);
 
-            if (fileName.endsWith(".lff") || fileName.endsWith(".cxf"))
+            if (fileName.endsWith(".lff") || fileName.endsWith(".cxf")) {
                 drawChars();
 
-            RS_DEBUG->print("QC_MDIWindow::slotFileOpen: autoZoom");
-            graphicView->zoomAuto(false);
-            RS_DEBUG->print("QC_MDIWindow::slotFileOpen: autoZoom: OK");
+                RS_DEBUG->print("QC_MDIWindow::slotFileOpen: autoZoom");
+                graphicView->zoomAuto(false);
+                RS_DEBUG->print("QC_MDIWindow::slotFileOpen: autoZoom: OK");
+            } else
+                graphicView->redraw();
         } else {
             RS_DEBUG->print("QC_MDIWindow::slotFileOpen: failed");
         }
@@ -361,7 +388,7 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
 
     return ret;
 }
-void QC_MDIWindow::zoomAuto() {
+void QC_MDIWindow::slotZoomAuto() {
     if(graphicView!=NULL){
         if(graphicView->isPrintPreview()){
             graphicView->zoomPage();
@@ -383,13 +410,13 @@ void QC_MDIWindow::drawChars() {
         document->addEntity(in);
         QFileInfo info(document->getFilename() );
         QString uCode = (ch->getName()).mid(1,4);
-        RS_TextData datatx(RS_Vector(i*sep,-h), h, 4*h, RS2::VAlignTop,
-                           RS2::HAlignLeft, RS2::ByStyle, RS2::AtLeast,
+        RS_MTextData datatx(RS_Vector(i*sep,-h), h, 4*h, RS_MTextData::VATop,
+                           RS_MTextData::HALeft, RS_MTextData::ByStyle, RS_MTextData::AtLeast,
                            1, uCode, "standard", 0);
-/*        RS_TextData datatx(RS_Vector(i*sep,-h), h, 4*h, RS2::VAlignTop,
+/*        RS_MTextData datatx(RS_Vector(i*sep,-h), h, 4*h, RS2::VAlignTop,
                            RS2::HAlignLeft, RS2::ByStyle, RS2::AtLeast,
                            1, uCode, info.baseName(), 0);*/
-        RS_Text *tx = new RS_Text(document, datatx);
+        RS_MText *tx = new RS_MText(document, datatx);
         document->addEntity(tx);
     }
 

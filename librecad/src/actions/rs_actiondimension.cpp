@@ -48,9 +48,9 @@ RS_ActionDimension::~RS_ActionDimension() {}
 void RS_ActionDimension::reset() {
     data = RS_DimensionData(RS_Vector(false),
                             RS_Vector(false),
-                            RS2::VAlignMiddle,
-                            RS2::HAlignCenter,
-                            RS2::Exact,
+                            RS_MTextData::VAMiddle,
+                            RS_MTextData::HACenter,
+                            RS_MTextData::Exact,
                             1.0,
                             "",
                             "Standard",

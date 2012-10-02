@@ -32,82 +32,6 @@
    <property name="margin">
     <number>11</number>
    </property>
-   <item row="1" column="0" colspan="2">
-    <layout class="QHBoxLayout">
-     <item>
-      <spacer name="Horizontal Spacing2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bLeave">
-       <property name="text">
-        <string>C&amp;lose</string>
-       </property>
-       <property name="autoDefault">
-        <bool>true</bool>
-       </property>
-       <property name="default">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bSave">
-       <property name="text">
-        <string>&amp;Save</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bSaveAs">
-       <property name="text">
-        <string>Save &amp;As..</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bCancel">
-       <property name="text">
-        <string>&amp;Cancel</string>
-       </property>
-       <property name="autoDefault">
-        <bool>true</bool>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="spacer2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
    <item row="0" column="1">
     <widget class="QLabel" name="lQuestion">
      <property name="sizePolicy">
@@ -137,82 +61,39 @@
      </property>
     </widget>
    </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Close|QDialogButtonBox::Save|QDialogButtonBox::SaveAll</set>
+     </property>
+     <property name="centerButtons">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <tabstops>
-  <tabstop>bCancel</tabstop>
-  <tabstop>bLeave</tabstop>
-  <tabstop>bSave</tabstop>
-  <tabstop>bSaveAs</tabstop>
- </tabstops>
- <resources>
-  <include location="../../../res/extui/extui.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
-   <sender>bLeave</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>clicked(QAbstractButton*)</signal>
    <receiver>QG_ExitDialog</receiver>
-   <slot>accept()</slot>
+   <slot>clicked(QAbstractButton*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>224</x>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bCancel</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_ExitDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bSave</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_ExitDialog</receiver>
-   <slot>slotSave()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bSaveAs</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_ExitDialog</receiver>
-   <slot>slotSaveAs()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>224</x>
+     <y>52</y>
     </hint>
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>clicked(QAbstractButton*)</slot>
+ </slots>
 </ui>

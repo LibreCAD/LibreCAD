@@ -781,7 +781,7 @@ void RS_VectorSolutions::alloc(int num) {
 /**
  * Deletes vector array and resets everything.
  */
-void RS_VectorSolutions::clean() {
+void RS_VectorSolutions::clear() {
     vector.clear();
     tangent = false;
 }
@@ -792,7 +792,7 @@ void RS_VectorSolutions::clean() {
  * @return vector solution number i or an invalid vector if there
  * are less solutions.
  */
-RS_Vector RS_VectorSolutions::get(int i) const {
+RS_Vector RS_VectorSolutions::at(int i) const {
     if (i<vector.size()) {
         return vector[i];
     } else {

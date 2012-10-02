@@ -29,6 +29,7 @@
 
 #include "rs_graphicview.h"
 #include "rs_painter.h"
+#include "rs_information.h"
 
 
 /**
@@ -122,15 +123,158 @@ RS_Vector RS_Solid::getNearestEndpoint(const RS_Vector& coord, double* dist)cons
     return ret;
 }
 
+bool RS_Solid::isInCrossWindow(const RS_Vector& v1,const RS_Vector& v2)const {
+//    bool sol = false;
+    RS_Vector vBL, vTR;
+    RS_VectorSolutions sol;
+//sort imput vectors to BottomLeft & TopRight
+    if (v1.x<v2.x) {
+        vBL.x = v1.x;
+        vTR.x = v2.x;
+    } else {
+        vBL.x = v2.x;
+        vTR.x = v1.x;
+    }
+    if (v1.y<v2.y) {
+        vBL.y = v1.y;
+        vTR.y = v2.y;
+    } else {
+        vBL.y = v2.y;
+        vTR.y = v1.y;
+    }
+    //Check if is out of window
+    if ( getMin().x > vTR.x || getMax().x < vBL.x
+           || getMin().y > vTR.y || getMax().y < vBL.y) {
+        return false;
+    }
+    int totalV = 3;
+    if (data.corner[3].valid)
+        totalV = 4;
+    RS_Line l[totalV];
+    l[0] = RS_Line(NULL, RS_LineData(data.corner[0], data.corner[1]));
+    l[1] = RS_Line(NULL, RS_LineData(data.corner[1], data.corner[2]));
+    if (data.corner[3].valid) {
+        l[2] = RS_Line(NULL, RS_LineData(data.corner[2], data.corner[3]));
+        l[3] = RS_Line(NULL, RS_LineData(data.corner[3], data.corner[0]));
+    } else {
+        l[2] = RS_Line(NULL, RS_LineData(data.corner[2], data.corner[0]));
+    }
+    //Find crossing edge
+    if (getMax().x > vBL.x && getMin().x < vBL.x) {//left
+        RS_Line edge = RS_Line(NULL, RS_LineData(vBL, RS_Vector(vBL.x, vTR.y)));
+        for (int i=0; i<totalV; ++i) {
+            sol = RS_Information::getIntersection(&edge, &l[i], true);
+            if (sol.hasValid()) {
+                return true;
+            }
+        }
+    }
+    if (getMax().x > vTR.x && getMin().x < vTR.x) {//right
+        RS_Line edge = RS_Line(NULL, RS_LineData(RS_Vector(vTR.x, vBL.y), vTR));
+        for (int i=0; i<totalV; ++i) {
+            sol = RS_Information::getIntersection(&edge, &l[i], true);
+            if (sol.hasValid()) {
+                return true;
+            }
+        }
+    }
+    if (getMax().y > vBL.y && getMin().y < vBL.y) {//bottom
+        RS_Line edge = RS_Line(NULL, RS_LineData(vBL, RS_Vector(vTR.x, vBL.y)));
+        for (int i=0; i<totalV; ++i) {
+            sol = RS_Information::getIntersection(&edge, &l[i], true);
+            if (sol.hasValid()) {
+                return true;
+            }
+        }
+    }
+    if(getMax().y > vTR.y && getMin().y < vTR.y) {//top
+        RS_Line edge = RS_Line(NULL, RS_LineData(RS_Vector(vBL.x, vTR.y), vTR));
+        for (int i=0; i<totalV; ++i) {
+            sol = RS_Information::getIntersection(&edge, &l[i], true);
+            if (sol.hasValid()) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
+/**
+*
+* @return true if positive o zero, false if negative.
+*/
+bool RS_Solid::sign (const RS_Vector v1, const RS_Vector v2, const RS_Vector v3)const {
+    double res = (v1.x-v3.x)*(v2.y-v3.y)-(v2.x-v3.x)*(v1.y-v3.y);
+    return (res>=0.0);
+}
 
 /**
  * @todo Implement this.
  */
-RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& /*coord*/,
-        bool /*onEntity*/, double* /*dist*/, RS_Entity** /*entity*/)const {
-
+RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
+        bool onEntity, double* dist, RS_Entity** entity)const {
+//first check if point is inside solid
+    bool s1 = sign(data.corner[0], data.corner[1], coord);
+    bool s2 = sign(data.corner[1], data.corner[2], coord);
+    bool s3 = sign(data.corner[2], data.corner[0], coord);
+    if ( (s1 == s2) && (s2 == s3) ) {
+        if (dist!=NULL)
+            *dist = 0.0;
+        return coord;
+    }
+    if (data.corner[3].valid) {
+        s1 = sign(data.corner[0], data.corner[2], coord);
+        s2 = sign(data.corner[2], data.corner[3], coord);
+        s3 = sign(data.corner[3], data.corner[0], coord);
+        if ( (s1 == s2) && (s2 == s3) ) {
+            if (dist!=NULL)
+                *dist = 0.0;
+            return coord;
+        }
+    }
+    //not inside of solid
     RS_Vector ret(false);
+    double currDist = RS_MAXDOUBLE;
+    double tmpDist;
+    if (entity!=NULL) {
+        *entity = const_cast<RS_Solid*>(this);
+    }
+    //Find nearest distance from each edge
+    int totalV = 3;
+    if (data.corner[3].valid)
+        totalV = 4;
+    for (int i=0; i<=totalV; ++i) {
+        int next =i+1;
+        //closing edge
+        if (next == totalV) next =0;
+
+        RS_Vector direction = data.corner[next]-data.corner[i];
+        RS_Vector vpc=coord-data.corner[i];
+        double a=direction.squared();
+        if( a < RS_TOLERANCE*RS_TOLERANCE) {
+            //line too short
+            vpc=data.corner[i];
+        }else{
+            //find projection on line
+            vpc = data.corner[i] + direction*RS_Vector::dotP(vpc,direction)/a;
+        }
+        tmpDist = vpc.distanceTo(coord);
+        if (tmpDist < currDist) {
+            currDist = tmpDist;
+            ret = vpc;
+        }
+    }
+    //verify this part
+    if( onEntity && !ret.isInWindowOrdered(minV,maxV) ){
+        //projection point not within range, find the nearest endpoint
+        ret = getNearestEndpoint(coord,dist);
+        currDist = ret.distanceTo(coord);
+    }
+
+    if (dist!=NULL) {
+        *dist = currDist;
+    }
+
     return ret;
 }
 
@@ -173,13 +317,17 @@ RS_Vector RS_Solid::getNearestDist(double /*distance*/,
 /**
  * @return Distance from one of the boundry lines of this solid to given point.
  *
- * @todo implement
  */
-double RS_Solid::getDistanceToPoint(const RS_Vector& /*coord*/,
-                                    RS_Entity** /*entity*/,
+double RS_Solid::getDistanceToPoint(const RS_Vector& coord,
+                                    RS_Entity** entity,
                                     RS2::ResolveLevel /*level*/,
-                                                                    double /*solidDist*/)const {
-    return RS_MAXDOUBLE;
+                                    double /*solidDist*/)const {
+    if (entity!=NULL) {
+        *entity = const_cast<RS_Solid*>(this);
+    }
+    double ret;
+    getNearestPointOnEntity(coord,true,&ret,entity);
+    return ret;
 }
 
 

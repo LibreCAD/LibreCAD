@@ -155,10 +155,15 @@ QString LC_List::getStrData(Plug_Entity *ent) {
         return QString("SOLID: ").append(str);
         break;
 //container entities
-    case DPI::TEXT:
-        return QString("TEXT: ").append(str);
+    case DPI::MTEXT:
+        return QString("MTEXT: ").append(str);
         break;
     case DPI::INSERT:
+        ptA.setX( data.value(DPI::STARTX).toDouble() );
+        ptA.setY( data.value(DPI::STARTY).toDouble() );
+        str.append( QString("   Name: %1\n").arg( data.value(DPI::BLKNAME).toString()) );
+        str.append( QString("   Insertion point: X=%1 Y=%2\n").arg(
+                ptA.x()).arg(ptA.y()) );
         return QString("INSERT: ").append(str);
         break;
     case DPI::POLYLINE: {

@@ -42,6 +42,7 @@ public slots:
 
 protected slots:
     virtual void languageChange();
+    virtual void setTemplateFile();
 
 private:
     bool restartNeeded;

@@ -29,6 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 #include "rs_image.h"
+#include "rs_units.h"
 
 /**
  * This action class can handle user events for inserting bitmaps into the
@@ -44,9 +45,10 @@ public:
      */
     enum Status {
 		ShowDialog,        /**< Dialog. */
-        SetTargetPoint,    /**< Setting the reference point. */
+                SetTargetPoint,    /**< Setting the reference point. */
 		SetAngle,          /**< Setting angle in the command line. */
-		SetFactor          /**< Setting factor in the command line. */
+                SetFactor,          /**< Setting factor in the command line. */
+                SetDPI              /**< Setting dpi in the command line. */
 		//SetColumns,        /**< Setting columns in the command line. */
 		//SetRows,           /**< Setting rows in the command line. */
 		//SetColumnSpacing,  /**< Setting column spacing in the command line. */
@@ -103,6 +105,11 @@ public:
 		data.uVector.setPolar(f, a);
 		data.vVector.setPolar(f, a+M_PI/2);
 	}
+
+    double dpiToScale(double dpi);
+
+    double scaleToDpi(double scale);
+
 
 protected:
 	RS_ImageData data;

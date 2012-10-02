@@ -28,9 +28,6 @@
 
 #include <qmessagebox.h>
 #include <qfiledialog.h>
-//#include <q3filedialog.h>
-//Added by qt3to4:
-//#include <Q3StrList>
 #include <QImageReader>
 #include <QString>
 
@@ -66,6 +63,7 @@
 #include "qg_dlgmirror.h"
 #include "qg_dlgmove.h"
 #include "qg_dlgmoverotate.h"
+#include "qg_dlgmtext.h"
 #include "qg_dlgoptionsdrawing.h"
 #include "qg_dlgoptionsgeneral.h"
 #include "qg_dlgpoint.h"
@@ -90,6 +88,7 @@
 #include "qg_modifyoffsetoptions.h"
 #include "qg_mousewidget.h"
 #include "qg_moverotateoptions.h"
+#include "qg_mtextoptions.h"
 #include "qg_printpreviewoptions.h"
 #include "qg_roundoptions.h"
 #include "qg_selectionwidget.h"
@@ -434,7 +433,7 @@ RS_Block* QG_DialogFactory::requestBlockRemovalDialog(RS_BlockList* blockList) {
                                      QMessageBox::tr("Block \"%1\" and all "
                                                      "its entities will be removed.")
                                      .arg(block->getName()),
-                                     QMessageBox::Ok,
+                                     QMessageBox::Ok | QMessageBox::Cancel,
                                      QMessageBox::Cancel);
         if (remove==QMessageBox::Ok) {}
         else {
@@ -688,6 +687,7 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         requestLineBisectorOptions(action, on, update);
         break;
 
+    case RS2::ActionDrawLineOrthogonal:
     case RS2::ActionDrawLineRelAngle:
         requestLineRelAngleOptions(action, on, update);
         break;
@@ -718,6 +718,10 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
 
     case RS2::ActionDrawSpline:
         requestSplineOptions(action, on, update);
+        break;
+
+    case RS2::ActionDrawMText:
+        requestMTextOptions(action, on, update);
         break;
 
     case RS2::ActionDrawText:
@@ -1178,6 +1182,29 @@ void QG_DialogFactory::requestSplineOptions(RS_ActionInterface* action,
     }
 }
 
+
+
+/**
+ * Shows a widget for multi-line text options.
+ */
+void QG_DialogFactory::requestMTextOptions(RS_ActionInterface* action,
+        bool on, bool update) {
+
+    static QG_MTextOptions* toolWidget = NULL;
+
+    if (optionWidget!=NULL) {
+        if (toolWidget!=NULL) {
+            delete toolWidget;
+            toolWidget = NULL;
+        }
+        if (on==true) {
+            toolWidget = new QG_MTextOptions();
+            optionWidget->addWidget(toolWidget);
+            toolWidget->setAction(action, update);
+                        toolWidget->show();
+        }
+    }
+}
 
 
 /**
@@ -1746,6 +1773,17 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
         }
         break;
 
+    case RS2::EntityMText: {
+            QG_DlgMText dlg(parent);
+            dlg.setText(*((RS_MText*)entity), false);
+            if (dlg.exec()) {
+                dlg.updateText();
+                ret = true;
+                ((RS_MText*)entity)->update();
+            }
+        }
+        break;
+
     case RS2::EntityText: {
             QG_DlgText dlg(parent);
             dlg.setText(*((RS_Text*)entity), false);
@@ -1817,6 +1855,25 @@ bool QG_DialogFactory::requestDimAlignedDialog(RS_DimAligned* dim) {
 }
 */
 
+
+
+/**
+ * Shows a dialog to edit the attributes of the given multi-line text entity.
+ */
+bool QG_DialogFactory::requestMTextDialog(RS_MText* text) {
+    if (text==NULL) {
+        return false;
+    }
+
+    QG_DlgMText dlg(parent);
+    dlg.setText(*text, true);
+    if (dlg.exec()) {
+        dlg.updateText();
+        return true;
+    }
+
+    return false;
+}
 
 
 /**

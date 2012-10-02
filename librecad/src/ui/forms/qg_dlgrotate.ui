@@ -26,46 +26,6 @@
    <string>Rotation Options</string>
   </property>
   <layout class="QGridLayout">
-   <item row="1" column="0" colspan="2">
-    <layout class="QHBoxLayout">
-     <item>
-      <spacer name="spacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bOk">
-       <property name="text">
-        <string>&amp;OK</string>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bCancel">
-       <property name="text">
-        <string>&amp;Cancel</string>
-       </property>
-       <property name="shortcut">
-        <string>Esc</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
    <item row="0" column="0">
     <widget class="QGroupBox" name="bgNumber">
      <property name="title">
@@ -229,6 +189,13 @@
      </item>
     </layout>
    </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -285,14 +252,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>bOk</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
    <receiver>QG_DlgRotate</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>201</x>
+     <y>235</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -301,14 +268,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>bCancel</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
    <receiver>QG_DlgRotate</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>201</x>
+     <y>235</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>

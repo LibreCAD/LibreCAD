@@ -141,6 +141,10 @@ public:
         // do nothing
         return false;
     }
+    virtual bool loadTemplate(const QString& , RS2::FormatType) {
+        // do nothing
+        return false;
+    }
 
     friend std::ostream& operator << (std::ostream& os, const RS_Block& b) {
         os << " name: " << b.getName().toLatin1().data() << "\n";

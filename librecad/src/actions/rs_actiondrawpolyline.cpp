@@ -323,12 +323,14 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e) {
     case SetNextPoint:
         if (checkCommand("close", c)) {
             close();
+            e->accept();
             updateMouseButtonHints();
             return;
         }
 
         if (checkCommand("undo", c)) {
             undo();
+            e->accept();
             updateMouseButtonHints();
             return;
         }

@@ -40,6 +40,7 @@ RS_ActionDrawText::RS_ActionDrawText(RS_EntityContainer& container,
 
     //text = NULL;
     pos = RS_Vector(false);
+    secPos = RS_Vector(false);
     textChanged = true;
 }
 
@@ -89,13 +90,11 @@ void RS_ActionDrawText::init(int status) {
 
 
 void RS_ActionDrawText::reset() {
-    data = RS_TextData(RS_Vector(0.0,0.0),
-                       1.0, 100.0,
-                       RS2::VAlignTop,
-                       RS2::HAlignLeft,
-                       RS2::LeftToRight,
-                       RS2::Exact,
-                       1.0,
+    data = RS_TextData(RS_Vector(0.0,0.0), RS_Vector(0.0,0.0),
+                       1.0, 1.0,
+                       RS_TextData::VABaseline,
+                       RS_TextData::HALeft,
+                       RS_TextData::None,
                        data.text,
                        "standard",
                        0.0,
@@ -124,16 +123,24 @@ void RS_ActionDrawText::trigger() {
                 graphicView->redraw(RS2::RedrawDrawing);
 
         textChanged = true;
+        secPos = RS_Vector(false);
         setStatus(SetPos);
     }
 }
 
 
 void RS_ActionDrawText::preparePreview() {
-    data.insertionPoint = pos;
-    RS_Text* text = new RS_Text(preview, data);
-    text->update();
-    preview->addEntity(text);
+    if (data.halign == RS_TextData::HAFit || data.halign == RS_TextData::HAAligned) {
+        if (secPos.valid) {
+            RS_Line* text = new RS_Line(pos, secPos);
+            preview->addEntity(text);
+        }
+    } else {
+        data.insertionPoint = pos;
+        RS_Text* text = new RS_Text(preview, data);
+        text->update();
+        preview->addEntity(text);
+    }
     textChanged = false;
 }
 
@@ -152,6 +159,11 @@ void RS_ActionDrawText::mouseMoveEvent(QMouseEvent* e) {
             preview->move(mov);
             preview->setVisible(true);
         }
+        drawPreview();
+    } else if (getStatus()==SetSecPos) {
+        secPos = snapPoint(e);
+        deletePreview();
+        preparePreview();
         drawPreview();
     }
 
@@ -186,6 +198,14 @@ void RS_ActionDrawText::coordinateEvent(RS_CoordinateEvent* e) {
 
     case SetPos:
         data.insertionPoint = mouse;
+        if (data.halign == RS_TextData::HAFit || data.halign == RS_TextData::HAAligned)
+            setStatus(SetSecPos);
+        else
+            trigger();
+        break;
+
+    case SetSecPos:
+        data.secondPoint = mouse;
         trigger();
         break;
 
@@ -268,6 +288,10 @@ void RS_ActionDrawText::updateMouseButtonHints() {
         switch (getStatus()) {
         case SetPos:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify insertion point"),
+                                                tr("Cancel"));
+            break;
+        case SetSecPos:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second point"),
                                                 tr("Cancel"));
             break;
         case ShowDialog:

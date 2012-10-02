@@ -71,7 +71,11 @@ RS_Entity* RS_ActionPolylineEquidistant::calculateOffset(RS_Entity* newEntity,RS
     if (orgEntity->rtti()==RS2::EntityArc && newEntity->rtti()==RS2::EntityArc) {
         RS_Arc* arc = (RS_Arc*)newEntity;
         double r0 = ((RS_Arc*)orgEntity)->getRadius();
-        double r = r0 - dist;
+        double r;
+        if ( ((RS_Arc*)orgEntity)->isReversed())
+            r = r0 + dist;
+        else
+            r = r0 - dist;
         if(r < 0)
             return NULL;
         arc->setData(((RS_Arc*)orgEntity)->getData());
@@ -109,7 +113,7 @@ RS_Vector RS_ActionPolylineEquidistant::calculateIntersection(RS_Entity* first,R
         //Parallel entities
         return RS_Vector(false);
     } else if (vsol.getNumber()>1 &&
-               vsol.get(0).distanceTo(last->getStartpoint()) > vsol.get(1).distanceTo(first->getStartpoint())) {
+               vsol.get(0).distanceTo(last->getStartpoint()) > vsol.get(1).distanceTo(last->getStartpoint())) {
         return vsol.get(1);
     }
     return vsol.get(0);
@@ -151,6 +155,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
         newPolyline->setPen(((RS_Polyline*)originalEntity)->getPen());
 
         bool first = true;
+        bool closed = originalPolyline->isClosed();
         double bulge = 0.0;
         RS_Entity* en;
         RS_Entity* prevEntity = entities.last();
@@ -168,19 +173,25 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                 calculateOffset(currEntity, en, dist*num*neg);
             }
             if (first) {
-                if (originalPolyline->isClosed()){
+                if (closed){
                     if (prevEntity->rtti()==RS2::EntityArc) {
                         prevEntity = calculateOffset(&arcFirst, prevEntity, dist*num*neg);
-                        bulge = arcFirst.getBulge();
                     } else {
-                        bulge = 0.0;
                         prevEntity = calculateOffset(&lineFirst, prevEntity, dist*num*neg);
                     }
                     v = calculateIntersection(prevEntity, currEntity);
                 }
-                if (!v.valid)
+                if (!v.valid) {
                     v = currEntity->getStartpoint();
+                    closed = false;
+                } else if (currEntity->rtti()==RS2::EntityArc) {
+                    //update bulge
+                    arc1.setAngle1(arc1.getCenter().angleTo(v));
+                    arc1.calculateEndpoints();
+                    bulge = arc1.getBulge();
+                }
                 first = false;
+                if (!prevEntity) break; //prevent crash if not exist offset for prevEntity
             }else{
                 v = calculateIntersection(prevEntity, currEntity);
                 if (!v.valid) {
@@ -216,7 +227,8 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                     arc1.setAngle1(arc1.getCenter().angleTo(v));
                     arc1.calculateEndpoints();
                     bulge = arc1.getBulge();
-                }
+                } else
+                    bulge = 0.0;
             }
             if (prevEntity) {
                 newPolyline->addVertex(v, bulge, false);
@@ -233,14 +245,22 @@ bool RS_ActionPolylineEquidistant::makeContour() {
         }
         //properly terminated, check closed
         if (prevEntity) {
-            if (originalPolyline->isClosed()){
+            if (closed){
+                if (currEntity->rtti()==RS2::EntityArc) {
+                    arc1.setAngle2(arc1.getCenter().angleTo(newPolyline->getStartpoint()));
+                    arc1.calculateEndpoints();
+                    newPolyline->setNextBulge(arc1.getBulge());
+                    bulge = arc1.getBulge();
+                }
                 newPolyline->setClosed(true, bulge);
             } else {
                 newPolyline->addVertex(currEntity->getEndpoint(), bulge);
             }
         }
-        container->addEntity(newPolyline);
-        document->addUndoable(newPolyline);
+        if (!newPolyline->isEmpty()) {
+            container->addEntity(newPolyline);
+            document->addUndoable(newPolyline);
+        }
     }
     if (document!=NULL) {
         document->endUndoCycle();

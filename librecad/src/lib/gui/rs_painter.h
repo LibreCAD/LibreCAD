@@ -95,6 +95,12 @@ public:
                    const RS_Vector& cp, double radius,
                    double a1, double a2,
                    bool reversed);
+    void createEllipse(QPolygon& pa,
+                       const RS_Vector& cp,
+                             double radius1, double radius2,
+                             double angle,
+                             double angle1, double angle2,
+                             bool reversed);
     virtual void drawCircle(const RS_Vector& cp, double radius) = 0;
     virtual void drawEllipse(const RS_Vector& cp,
                              double radius1, double radius2,

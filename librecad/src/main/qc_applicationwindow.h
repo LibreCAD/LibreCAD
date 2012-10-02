@@ -122,8 +122,13 @@ public slots:
 
     /** generates a new document for a graphic. */
     QC_MDIWindow* slotFileNew(RS_Document* doc=NULL);
+    /** generates a new document based in predefined template */
+    void slotFileNewNew();
+    /** generates a new document based in selected template */
+    void slotFileNewTemplate();
     /** opens a document */
     void slotFileOpen();
+
     /**
     * opens a recent file document
     * @param id File Menu id of the file
@@ -191,6 +196,8 @@ public slots:
     void slotTestInsertBlock();
     /** inserts a test ellipse */
     void slotTestInsertEllipse();
+    /** inserts a test mtext */
+    void slotTestInsertMText();
     /** inserts a test text */
     void slotTestInsertText();
     /** inserts a test image */
@@ -330,6 +337,8 @@ protected:
 private:
 
     QString format_filename_caption(const QString &qstring_in);
+    /** Helper function for Menu file -> New & New.... */
+    bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = NULL);
 
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
@@ -427,6 +436,7 @@ private:
     QAction *testUpdateInserts;
     QAction *testDrawFreehand;
     QAction *testInsertBlock;
+    QAction *testInsertMText;
     QAction *testInsertText;
     QAction *testInsertImage;
     QAction *testUnicode;

@@ -196,16 +196,22 @@ void RS_ActionPrintPreview::center() {
 
 void RS_ActionPrintPreview::fit() {
     if (graphic!=NULL) {
-        double f0=graphic->getPaperScale();
+    if(fabs(graphic->getPaperSize().x)<10.||
+            fabs(graphic->getPaperSize().y)<10.)
+        printWarning("Warning:: Paper size less than 10mm."
+                     " Paper is too small for fitting to page\n"
+                     "Please set paper size by Menu: Edit->Current Drawing Preferences->Paper");
+//        double f0=graphic->getPaperScale();
         if( graphic->fitToPage()==false && RS_DIALOGFACTORY!=NULL){
             RS_DIALOGFACTORY->commandMessage(
                         tr("RS_ActionPrintPreview::fit(): Invalid paper size")
                         );
         }
-        if(fabs(f0-graphic->getPaperScale())>RS_TOLERANCE){
+//        if(fabs(f0-graphic->getPaperScale())>RS_TOLERANCE){
             //only zoomPage when scale changed
-            graphicView->zoomPage();
-        }
+//        }
+        graphic->centerToPage();
+        graphicView->zoomPage();
         graphicView->redraw();
     }
 }

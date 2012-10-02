@@ -68,6 +68,7 @@ public:
     void getPoint(QPointF *point);
     void setBasepoint(QPointF* basepoint);
     void setMesage(QString msg);
+    bool isCompleted(){return completed;}
 
 private:
     RS_MoveData data;

@@ -126,40 +126,11 @@ You can changes these settings later in the Options Dialog of QCad.</string>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout">
-     <item>
-      <spacer name="Horizontal Spacing2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonOk">
-       <property name="text">
-        <string>OK</string>
-       </property>
-       <property name="shortcut">
-        <string>Enter</string>
-       </property>
-       <property name="autoDefault">
-        <bool>true</bool>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -168,21 +139,18 @@ You can changes these settings later in the Options Dialog of QCad.</string>
   <tabstop>cbUnit</tabstop>
   <tabstop>cbLanguage</tabstop>
   <tabstop>cbLanguageCmd</tabstop>
-  <tabstop>buttonOk</tabstop>
  </tabstops>
- <resources>
-  <include location="../../../res/extui/extui.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
-   <sender>buttonOk</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
    <receiver>QG_DlgInitial</receiver>
    <slot>ok()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>206</x>
+     <y>323</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>

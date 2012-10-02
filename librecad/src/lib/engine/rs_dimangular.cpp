@@ -31,7 +31,7 @@
 #include "rs_graphic.h"
 #include "rs_information.h"
 #include "rs_solid.h"
-#include "rs_text.h"
+#include "rs_mtext.h"
 
 
 /**
@@ -365,7 +365,7 @@ void RS_DimAngular::update(bool /*autoText*/) {
 
 
     // text label:
-    RS_TextData textData;
+    RS_MTextData textData;
     RS_Vector textPos = arc->getMiddlePoint();
 
     RS_Vector distV;
@@ -389,18 +389,18 @@ void RS_DimAngular::update(bool /*autoText*/) {
     // move text away from dimension line:
     textPos+=distV;
 
-    textData = RS_TextData(textPos,
+    textData = RS_MTextData(textPos,
                            dimtxt, 30.0,
-                           RS2::VAlignBottom,
-                           RS2::HAlignCenter,
-                           RS2::LeftToRight,
-                           RS2::Exact,
+                           RS_MTextData::VABottom,
+                           RS_MTextData::HACenter,
+                           RS_MTextData::LeftToRight,
+                           RS_MTextData::Exact,
                            1.0,
                            getLabel(),
                            "standard",
                            textAngle);
 
-    RS_Text* text = new RS_Text(this, textData);
+    RS_MText* text = new RS_MText(this, textData);
 
     // move text to the side:
     text->setPen(RS_Pen(RS2::FlagInvalid));

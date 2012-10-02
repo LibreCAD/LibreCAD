@@ -369,7 +369,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>33</x>
-     <y>120</y>
+     <y>153</y>
      <width>32</width>
      <height>32</height>
     </rect>
@@ -435,6 +435,48 @@ p, li { white-space: pre-wrap; }
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/circletan1_2p.png</normaloff>:/extui/circletan1_2p.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bCircleTan2_1P">
+   <property name="geometry">
+    <rect>
+     <x>33</x>
+     <y>120</y>
+     <width>32</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="toolTip">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif';&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/circletan2_1p.png</normaloff>:/extui/circletan2_1p.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -600,6 +642,22 @@ p, li { white-space: pre-wrap; }
     <hint type="sourcelabel">
      <x>15</x>
      <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>32</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bCircleTan2_1P</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarCircles</receiver>
+   <slot>drawCircle2_1P()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>48</x>
+     <y>135</y>
     </hint>
     <hint type="destinationlabel">
      <x>32</x>

@@ -33,6 +33,7 @@
 #include "rs_line.h"
 #include "rs_insert.h"
 #include "rs_spline.h"
+#include "rs_solid.h"
 #include "rs_information.h"
 #include "rs_graphicview.h"
 
@@ -286,15 +287,21 @@ void RS_EntityContainer::selectWindow(RS_Vector v1, RS_Vector v2,
                          se!=NULL && included==false;
                          se=ec->nextEntity(RS2::ResolveAll)) {
 
-                        for (int i=0; i<4; ++i) {
-                            sol = RS_Information::getIntersection(
-                                        se, &l[i], true);
-                            if (sol.hasValid()) {
-                                included = true;
-                                break;
+                        if (se->rtti() == RS2::EntitySolid){
+                            included = ((RS_Solid *)se)->isInCrossWindow(v1,v2);
+                        } else {
+                            for (int i=0; i<4; ++i) {
+                                sol = RS_Information::getIntersection(
+                                            se, &l[i], true);
+                                if (sol.hasValid()) {
+                                    included = true;
+                                    break;
+                                }
                             }
                         }
                     }
+                } else if (e->rtti() == RS2::EntitySolid){
+                    included = ((RS_Solid *)e)->isInCrossWindow(v1,v2);
                 } else {
                     for (int i=0; i<4; ++i) {
                         sol = RS_Information::getIntersection(e, &l[i], true);
@@ -1109,6 +1116,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
                 && en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
                 //&& en->rtti() != RS2::EntityPoint         /**Point*/
                 //&& en->getParent()->rtti() != RS2::EntitySpline
+                && en->getParent()->rtti() != RS2::EntityMText        /**< Text 15*/
                 && en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
                 && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
                 && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
@@ -1160,6 +1168,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
                 &&*/ en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
                 //&& en->rtti() != RS2::EntityPoint         /**Point*/
                 //&& en->getParent()->rtti() != RS2::EntitySpline
+                && en->getParent()->rtti() != RS2::EntityMText        /**< Text 15*/
                 && en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
                 && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
                 && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
@@ -1205,6 +1214,7 @@ RS_Vector RS_EntityContainer::getNearestPointOnEntity(const RS_Vector& coord,
              && en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
              //&& en->rtti() != RS2::EntityPoint         /**Point*/
              && en->getParent()->rtti() != RS2::EntitySpline
+             && en->getParent()->rtti() != RS2::EntityMText        /**< Text 15*/
              && en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
              && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
              && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
@@ -1240,6 +1250,7 @@ RS_Vector RS_EntityContainer::getNearestCenter(const RS_Vector& coord,
                     en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
                     //|| en->rtti() == RS2::EntityPoint         /**Point*/
                     || en->getParent()->rtti() == RS2::EntitySpline
+                    || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
                     || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
@@ -1287,6 +1298,7 @@ RS_Vector RS_EntityContainer::getNearestMiddle(const RS_Vector& coord,
                     en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
                     //|| en->rtti() == RS2::EntityPoint         /**Point*/
                     || en->getParent()->rtti() == RS2::EntitySpline
+                    || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
                     || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
@@ -1356,6 +1368,7 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
                     || en == closestEntity
                     || en->rtti() == RS2::EntityPoint         /**Point*/
                     || en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
+                    || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
                     || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
@@ -1548,6 +1561,8 @@ RS_Entity* RS_EntityContainer::getNearestEntity(const RS_Vector& coord,
 bool RS_EntityContainer::optimizeContours() {
 //    std::cout<<"RS_EntityContainer::optimizeContours: begin"<<std::endl;
 
+//    DEBUG_HEADER();
+//    std::cout<<"loop with count()="<<count()<<std::endl;
     RS_DEBUG->print("RS_EntityContainer::optimizeContours");
 
     RS_EntityContainer tmp;
@@ -1568,6 +1583,13 @@ bool RS_EntityContainer::optimizeContours() {
             enList<<e1;
             continue;
         }
+        if(e1->rtti()==RS2::EntityEllipse) {
+            if(static_cast<RS_Ellipse*>(e1)->isArc() == false){
+            tmp.addEntity(e1->clone());
+            enList<<e1;
+            continue;
+            }
+}
     }
     //    std::cout<<"RS_EntityContainer::optimizeContours: 1"<<std::endl;
 
@@ -1585,7 +1607,9 @@ bool RS_EntityContainer::optimizeContours() {
         current=entityAt(0)->clone();
         tmp.addEntity(current);
         removeEntity(entityAt(0));
-    }else return false;
+    }else {
+        if(tmp.count()==0) return false;
+    }
 //    std::cout<<"RS_EntityContainer::optimizeContours: 3"<<std::endl;
     RS_Vector vpStart;
     RS_Vector vpEnd;
@@ -1612,13 +1636,12 @@ bool RS_EntityContainer::optimizeContours() {
             closed=false;
         }
         if(next && closed){ 			//workaround if next is NULL
-        	if(vpEnd.squaredTo(next->getStartpoint())<1e-8){
-        		vpEnd=next->getEndpoint();
-        	}else{
-        		vpEnd=next->getStartpoint();
-        	}
-        	next->setProcessed(true);
-        	tmp.addEntity(next->clone());
+            next->setProcessed(true);
+            RS_Entity* eTmp = next->clone();
+            if(vpEnd.squaredTo(next->getStartpoint())>1e-8)
+                eTmp->revertDirection();
+            vpEnd=eTmp->getEndpoint();
+            tmp.addEntity(eTmp);
         	removeEntity(next);
         } else { 			//workaround if next is NULL
 //      	    std::cout<<"RS_EntityContainer::optimizeContours: next is NULL" <<std::endl;
@@ -1627,7 +1650,11 @@ bool RS_EntityContainer::optimizeContours() {
         	break;			//workaround if next is NULL
         } 					//workaround if next is NULL
     }
-    if( vpEnd.squaredTo(vpStart)>1e-8) closed=false;
+//    DEBUG_HEADER();
+    if( vpEnd.squaredTo(vpStart)>1e-8) {
+//        std::cout<<"ds2="<<vpEnd.squaredTo(vpStart)<<std::endl;
+        closed=false;
+    }
 //    std::cout<<"RS_EntityContainer::optimizeContours: 5"<<std::endl;
 
 

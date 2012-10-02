@@ -31,7 +31,7 @@ public:
     DRW_Converter(const int *t, int l){table = t;
                                cpLenght = l;}
     virtual std::string fromUtf8(std::string *s) {return *s;}
-    virtual std::string toUtf8(std::string *s) {return *s;}
+    virtual std::string toUtf8(std::string *s);
     std::string encodeText(std::string stmp);
     std::string decodeText(int c);
     std::string encodeNum(int c);

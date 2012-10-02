@@ -38,6 +38,8 @@
 #include "rs_leader.h"
 #include "rs_spline.h"
 #include "rs_system.h"
+#include "rs_graphicview.h"
+#include "rs_grid.h"
 
 #include <QStringList>
 
@@ -55,6 +57,18 @@ RS_FilterDXFRW::RS_FilterDXFRW()
 
     currentContainer = NULL;
     graphic = NULL;
+// Init hash to change the QCAD "normal" style to the more correct ISO-3059
+// or draftsight symbol (AR*.shx) to sy*.lff
+    fontList["normal"] = "iso";
+    fontList["normallatin1"] = "iso";
+    fontList["normallatin2"] = "iso";
+    fontList["arastro"] = "syastro";
+    fontList["armap"] = "symap";
+    fontList["math"] = "symath";
+    fontList["armeteo"] = "symeteo";
+    fontList["armusic"] = "symusic";
+
+
     RS_DEBUG->print("RS_FilterDXFRW::RS_FilterDXFRW(): OK");
 }
 
@@ -141,6 +155,30 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
     RS_DEBUG->print("RS_FilterDXF::addLayer: add layer to graphic");
     graphic->addLayer(layer);
     RS_DEBUG->print("RS_FilterDXF::addLayer: OK");
+}
+
+/**
+ * Implementation of the method which handles vports.
+ */
+void RS_FilterDXFRW::addVport(const DRW_Vport &data) {
+    QString name = QString::fromStdString(data.name);
+    if (name.toLower() == "*active") {
+        data.grid == 1? graphic->setGridOn(true):graphic->setGridOn(false);
+        graphic->setIsometricGrid(data.snapStyle);
+        graphic->setCrosshairType( (RS2::CrosshairType)data.snapIsopair);
+        RS_GraphicView *gv = graphic->getGraphicView();
+        if (gv != NULL) {
+            double width = data.height * data.ratio;
+            double factorX= gv->getWidth() / width;
+            double factorY= gv->getHeight() / data.height;
+            if (factorX > factorY)
+                factorX = factorY;
+            int ox = gv->getWidth() -data.center.x*2*factorX;
+            int oy = gv->getHeight() -data.center.y*2*factorX;
+            gv->setOffset(ox, oy);
+            gv->setFactor(factorX);
+        }
+    }
 }
 
 /**
@@ -483,42 +521,41 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
 void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     RS_DEBUG->print("RS_FilterDXF::addMText: %s", data.text.c_str());
 
-    RS_Vector ip(data.basePoint.x, data.basePoint.y);
-    RS2::VAlign valign;
-    RS2::HAlign halign;
-    RS2::TextDrawingDirection dir;
-    RS2::TextLineSpacingStyle lss;
+    RS_MTextData::VAlign valign;
+    RS_MTextData::HAlign halign;
+    RS_MTextData::MTextDrawingDirection dir;
+    RS_MTextData::MTextLineSpacingStyle lss;
     QString sty = QString::fromUtf8(data.style.c_str());
     sty=sty.toLower();
 
     if (data.textgen<=3) {
-        valign=RS2::VAlignTop;
+        valign=RS_MTextData::VATop;
     } else if (data.textgen<=6) {
-        valign=RS2::VAlignMiddle;
+        valign=RS_MTextData::VAMiddle;
     } else {
-        valign=RS2::VAlignBottom;
+        valign=RS_MTextData::VABottom;
     }
 
     if (data.textgen%3==1) {
-        halign=RS2::HAlignLeft;
+        halign=RS_MTextData::HALeft;
     } else if (data.textgen%3==2) {
-        halign=RS2::HAlignCenter;
+        halign=RS_MTextData::HACenter;
     } else {
-        halign=RS2::HAlignRight;
+        halign=RS_MTextData::HARight;
     }
 
     if (data.alignH==1) {
-        dir = RS2::LeftToRight;
+        dir = RS_MTextData::LeftToRight;
     } else if (data.alignH==3) {
-        dir = RS2::TopToBottom;
+        dir = RS_MTextData::TopToBottom;
     } else {
-        dir = RS2::ByStyle;
+        dir = RS_MTextData::ByStyle;
     }
 
     if (data.alignV==1) {
-        lss = RS2::AtLeast;
+        lss = RS_MTextData::AtLeast;
     } else {
-        lss = RS2::Exact;
+        lss = RS_MTextData::Exact;
     }
 
     QString mtext = toNativeString(QString::fromUtf8(data.text.c_str()));
@@ -531,29 +568,47 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
             sty = textStyle;
         }
     } else {
-        // Change the QCAD "normal" style to the more correct ISO-3059
-        if  (sty=="normal" || sty=="normallatin1" || sty=="normallatin2") {
-            sty="iso";
-        }
+        sty = fontList.value(sty, sty);
     }
-
 
     RS_DEBUG->print("Text as unicode:");
     RS_DEBUG->printUnicode(mtext);
+    double interlin = data.interlin;
+    double angle = data.angle*M_PI/180.;
+    RS_Vector ip = RS_Vector(data.basePoint.x, data.basePoint.y);
 
-    double interlin = 1.0;
-    if (data.eType == DRW::MTEXT) {
-        DRW_MText *ppp = (DRW_MText*)&data;
-        interlin = ppp->interlin;
+//Correct bad alignment of older dxflib or libdxfrw < 0.5.4
+    if (oldMText) {
+        interlin = data.interlin*0.96;
+        if (valign == RS_MTextData::VABottom) {
+            QStringList tl = mtext.split('\n', QString::SkipEmptyParts);
+            if (!tl.isEmpty()) {
+                QString txt = tl.at(tl.size()-1);
+#ifdef  RS_VECTOR2D
+                RS_TextData d(RS_Vector(0.,0.), RS_Vector(0.,0.),
+#else
+                RS_TextData d(RS_Vector(0.,0.,0.), RS_Vector(0.,0.,0.),
+#endif
+
+                              data.height, 1, RS_TextData::VABaseline, RS_TextData::HALeft,
+                              RS_TextData::None, txt, sty, 0,
+                              RS2::Update);
+                RS_Text* entity = new RS_Text(NULL, d);
+                double textTail = entity->getMin().y;
+                delete entity;
+                RS_Vector ot = RS_Vector(0.0,textTail).rotate(angle);
+                ip.move(ot);
+            }
+        }
     }
 
-    RS_TextData d(ip, data.height, data.widthscale,
+    RS_MTextData d(ip, data.height, data.widthscale,
                   valign, halign,
                   dir, lss,
                   interlin,
-                  mtext, sty, data.angle*M_PI/180,
+                  mtext, sty, angle,
                   RS2::NoUpdate);
-    RS_Text* entity = new RS_Text(currentContainer, d);
+    RS_MText* entity = new RS_MText(currentContainer, d);
 
     setEntityAttributes(entity, &data);
     entity->update();
@@ -568,104 +623,56 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
  */
 void RS_FilterDXFRW::addText(const DRW_Text& data) {
     RS_DEBUG->print("RS_FilterDXFRW::addText");
-    int attachmentPoint;
-    RS_Vector refPoint;
+    RS_Vector refPoint = RS_Vector(data.basePoint.x, data.basePoint.y);;
+    RS_Vector secPoint = RS_Vector(data.secPoint.x, data.secPoint.y);;
     double angle = data.angle;
-    DRW_MText text;
-    // TODO: check, maybe implement a separate TEXT instead of using MTEXT
 
-    // baseline has 5 vertical alignment modes:
-    if (data.alignV !=0 || data.alignH!=0) {
-        switch (data.alignH) {
-        default:
-        case 0: // left aligned
-            attachmentPoint = 1;
+    if (data.alignV !=0 || data.alignH !=0 ||data.alignH ==DRW_Text::HMiddle){
+        if (data.alignH !=DRW_Text::HAligned && data.alignH !=DRW_Text::HFit){
+            secPoint = RS_Vector(data.basePoint.x, data.basePoint.y);
             refPoint = RS_Vector(data.secPoint.x, data.secPoint.y);
-            break;
-        case 1: // centered
-            attachmentPoint = 2;
-            refPoint = RS_Vector(data.secPoint.x, data.secPoint.y);
-            break;
-        case 2: // right aligned
-            attachmentPoint = 3;
-            refPoint = RS_Vector(data.secPoint.x, data.secPoint.y);
-            break;
-        case 3: // aligned (TODO)
-            attachmentPoint = 2;
-            refPoint = RS_Vector((data.basePoint.x+data.secPoint.x)/2.0,
-                                 (data.basePoint.y+data.secPoint.y)/2.0);
-            angle =
-                RS_Vector(data.basePoint.x, data.basePoint.y).angleTo(
-                    RS_Vector(data.secPoint.x, data.secPoint.y));
-            break;
-        case 4: // Middle (TODO)
-            attachmentPoint = 2;
-            refPoint = RS_Vector(data.secPoint.x, data.secPoint.y);
-            break;
-        case 5: // fit (TODO)
-            attachmentPoint = 2;
-            refPoint = RS_Vector((data.basePoint.x+data.secPoint.x)/2.0,
-                                 (data.basePoint.y+data.secPoint.y)/2.0);
-            angle =
-                RS_Vector(data.basePoint.x, data.basePoint.y).angleTo(
-                    RS_Vector(data.secPoint.x, data.secPoint.y))*180/M_PI;
-            break;
         }
-
-        switch (data.alignV) {
-        default:
-        case 0: // baseline
-        case 1: // bottom
-            attachmentPoint += 6;
-            break;
-
-        case 2: // middle
-            attachmentPoint += 3;
-            break;
-
-        case 3: // top
-            break;
-        }
-    } else {
-        //attachmentPoint = (data.hJustification+1)+(3-data.vJustification)*3;
-        attachmentPoint = 7;
-        refPoint = RS_Vector(data.basePoint.x, data.basePoint.y);
     }
 
-//    int drawingDirection = 5;
-//    double width = 100.0;
+    RS_TextData::VAlign valign = (RS_TextData::VAlign)data.alignV;
+    RS_TextData::HAlign halign = (RS_TextData::HAlign)data.alignH;
+    RS_TextData::TextGeneration dir;
+    QString sty = QString::fromUtf8(data.style.c_str());
+    sty=sty.toLower();
 
-    text.basePoint.x = refPoint.x;
-    text.basePoint.y = refPoint.y;
-    text.widthscale = 100.0;
-    text.height = data.height;
-    text.textgen = attachmentPoint;
-    text.alignH = (DRW::HAlign)5;
-    text.interlin = 1.0;
-    text.text = data.text;
-    text.style = data.style;
-    text.angle = angle;
-    text.color = data.color;
-    text.layer = data.layer;
-    text.lineType = data.lineType;
-//    text.by = attachmentPoint.y;
-//    mtext = "";
-/*    addMText(DL_MTextData(
-                 refPoint.x,
-                 refPoint.y,
-#ifdef  RS_VECTOR2D
-                 0.,
-#else
-                 refPoint.z,
-#endif
-                 data.height, width,
-                 attachmentPoint,
-                 drawingDirection,
-                 RS2::Exact,
-                 1.0,
-                 data.text.c_str(), data.style,
-                 angle), data);*/
-    addMText(text);
+    if (data.textgen==2) {
+        dir = RS_TextData::Backward;
+    } else if (data.textgen==4) {
+        dir = RS_TextData::UpsideDown;
+    } else {
+        dir = RS_TextData::None;
+    }
+
+    QString mtext = toNativeString(QString::fromUtf8(data.text.c_str()));
+    // use default style for the drawing:
+    if (sty.isEmpty()) {
+        // japanese, cyrillic:
+        if (codePage=="ANSI_932" || codePage=="ANSI_1251") {
+            sty = "Unicode";
+        } else {
+            sty = textStyle;
+        }
+    } else {
+        sty = fontList.value(sty, sty);
+    }
+
+    RS_DEBUG->print("Text as unicode:");
+    RS_DEBUG->printUnicode(mtext);
+
+    RS_TextData d(refPoint, secPoint, data.height, data.widthscale,
+                  valign, halign, dir,
+                  mtext, sty, angle*M_PI/180,
+                  RS2::NoUpdate);
+    RS_Text* entity = new RS_Text(currentContainer, d);
+
+    setEntityAttributes(entity, &data);
+    entity->update();
+    currentContainer->addEntity(entity);
 }
 
 
@@ -680,9 +687,9 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data) {
     RS_Vector defP(crd.x, crd.y);
     crd = data->getTextPoint();
     RS_Vector midP(crd.x, crd.y);
-    RS2::VAlign valign;
-    RS2::HAlign halign;
-    RS2::TextLineSpacingStyle lss;
+    RS_MTextData::VAlign valign;
+    RS_MTextData::HAlign halign;
+    RS_MTextData::MTextLineSpacingStyle lss;
     QString sty = QString::fromUtf8(data->getStyle().c_str());
 
     QString t; //= data.text;
@@ -695,25 +702,25 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data) {
     }
 
     if (data->getAlign()<=3) {
-        valign=RS2::VAlignTop;
+        valign=RS_MTextData::VATop;
     } else if (data->getAlign()<=6) {
-        valign=RS2::VAlignMiddle;
+        valign=RS_MTextData::VAMiddle;
     } else {
-        valign=RS2::VAlignBottom;
+        valign=RS_MTextData::VABottom;
     }
 
     if (data->getAlign()%3==1) {
-        halign=RS2::HAlignLeft;
+        halign=RS_MTextData::HALeft;
     } else if (data->getAlign()%3==2) {
-        halign=RS2::HAlignCenter;
+        halign=RS_MTextData::HACenter;
     } else {
-        halign=RS2::HAlignRight;
+        halign=RS_MTextData::HARight;
     }
 
     if (data->getTextLineStyle()==1) {
-        lss = RS2::AtLeast;
+        lss = RS_MTextData::AtLeast;
     } else {
-        lss = RS2::Exact;
+        lss = RS_MTextData::Exact;
     }
 
     t = QString::fromUtf8(data->getText().c_str());
@@ -977,6 +984,18 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                     }
                     break;
                 }
+                case DRW::ELLIPSE: {
+                    DRW_Ellipse *e2 = (DRW_Ellipse *)ent;
+                    double ang1 = RS_Math::deg2rad(e2->staparam);
+                    double ang2 = RS_Math::deg2rad(e2->endparam);
+                    if ( fabs(ang2 - 6.28318530718) < 1.0e-10 && fabs(ang1) < 1.0e-10 )
+                        ang2 = 0.0;
+                    e = new RS_Ellipse(hatchLoop,
+                                       RS_EllipseData(RS_Vector(e2->basePoint.x, e2->basePoint.y),
+                                                      RS_Vector(e2->secPoint.x, e2->secPoint.y),
+                                                      e2->ratio, ang1, ang2, e2->isccw));
+                    break;
+                }
                 default:
                     break;
                 }
@@ -1134,6 +1153,25 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
     bool ok;
     version=acadver.toInt(&ok);
     if (!ok) { version = 1021;}
+
+    //detect if dxf lib are a old dxflib or libdxfrw<0.5.4 (used to correct mtext alignment)
+    oldMText = false;
+    QStringList comm = QString::fromStdString(data->getComments()).split('\n',QString::SkipEmptyParts);
+    for (int i = 0; i < comm.size(); ++i) {
+        QStringList comstr = comm.at(i).split(' ',QString::SkipEmptyParts);
+        if (!comstr.isEmpty() && comstr.at(0) == "dxflib") {
+            oldMText = true;
+            break;
+        } else if (comstr.size()>1 && comstr.at(0) == "dxfrw"){
+            QStringList libversionstr = comstr.at(1).split('.',QString::SkipEmptyParts);
+            if (libversionstr.size()<3) break;
+            int libRelease = (libversionstr.at(1)+ libversionstr.at(2)).toInt();
+            if (libversionstr.at(0)=="0" && libRelease < 54){
+                oldMText = true;
+                break;
+            }
+        }
+    }
 }
 
 
@@ -1196,10 +1234,6 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
     // VPORT:
     dxf.writeVPort(*dw);
     dw->tableEnd();
-
-    // STYLE:
-    RS_DEBUG->print("writing styles...");
-    dxf.writeStyle(*dw);
 
     // VIEW:
     RS_DEBUG->print("writing views...");
@@ -1582,13 +1616,91 @@ void RS_FilterDXFRW::writeLayers(){
 }
 
 void RS_FilterDXFRW::writeTextstyles(){
-//    DRW_Textstyle ts;
-//    dxf->writeTextstyle(&ts);
+    QHash<QString, QString> styles;
+    QString sty;
+    //Find fonts used by text entities in drawing
+    for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
+         e != NULL; e = graphic->nextEntity(RS2::ResolveNone)) {
+        if ( !(e->getFlag(RS2::FlagUndone)) ) {
+            switch (e->rtti()) {
+            case RS2::EntityMText:
+                sty = ((RS_MText*)e)->getStyle();
+                break;
+            case RS2::EntityText:
+                sty = ((RS_Text*)e)->getStyle();
+                break;
+            default:
+                sty.clear();
+                break;
+            }
+            if (!sty.isEmpty() && !styles.contains(sty))
+                styles.insert(sty, sty);
+        }
+    }
+    //Find fonts used by text entities in blocks
+    RS_Block *blk;
+    for (uint i = 0; i < graphic->countBlocks(); i++) {
+        blk = graphic->blockAt(i);
+        for (RS_Entity *e = blk->firstEntity(RS2::ResolveNone);
+             e != NULL; e = blk->nextEntity(RS2::ResolveNone)) {
+            if ( !(e->getFlag(RS2::FlagUndone)) ) {
+                switch (e->rtti()) {
+                case RS2::EntityMText:
+                    sty = ((RS_MText*)e)->getStyle();
+                    break;
+                case RS2::EntityText:
+                    sty = ((RS_Text*)e)->getStyle();
+                    break;
+                default:
+                    sty.clear();
+                    break;
+                }
+                if (!sty.isEmpty() && !styles.contains(sty))
+                    styles.insert(sty, sty);
+            }
+        }
+    }
+    DRW_Textstyle ts;
+    QHash<QString, QString>::const_iterator it = styles.constBegin();
+     while (it != styles.constEnd()) {
+         ts.name = (it.key()).toStdString();
+         ts.font = it.value().toStdString();
+//         ts.flags;
+         dxf->writeTextstyle( &ts );
+         ++it;
+     }
 }
 
 void RS_FilterDXFRW::writeVports(){
-//    DRW_Vport vp;
-//    dxf->writeVport(&vp);
+    DRW_Vport vp;
+    vp.name = "*Active";
+    graphic->isGridOn()? vp.grid = 1 : vp.grid = 0;
+    RS_Vector spacing = graphic->getVariableVector("$GRIDUNIT",
+                                                   RS_Vector(0.0,0.0));
+    vp.gridBehavior = 3;
+    vp.gridSpacing.x = spacing.x;
+    vp.gridSpacing.y = spacing.y;
+    vp.snapStyle = graphic->isIsometricGrid();
+    vp.snapIsopair = graphic->getCrosshairType();
+    if (vp.snapIsopair > 2)
+        vp.snapIsopair = 0;
+    if (fabs(spacing.x) < 1.0e-6) {
+        vp.gridBehavior = 7; //auto
+        vp.gridSpacing.x = 10;
+    }
+    if (fabs(spacing.y) < 1.0e-6) {
+        vp.gridBehavior = 7; //auto
+        vp.gridSpacing.y = 10;
+    }
+    RS_GraphicView *gv = graphic->getGraphicView();
+    if (gv != NULL) {
+        RS_Vector fac =gv->getFactor();
+        vp.height = gv->getHeight()/fac.y;
+        vp.ratio = (double)gv->getWidth() / (double)gv->getHeight();
+        vp.center.x = ( gv->getWidth() - gv->getOffsetX() )/ (fac.x * 2.0);
+        vp.center.y = ( gv->getHeight() - gv->getOffsetY() )/ (fac.y * 2.0);
+    }
+    dxf->writeVport(&vp);
 }
 
 
@@ -1643,12 +1755,12 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     case RS2::EntityInsert:
         writeInsert((RS_Insert*)e);
         break;
-    case RS2::EntityText:
-        writeMText((RS_Text*)e);
-        break;
-/*    case RS2::EntityMText:
+    case RS2::EntityMText:
         writeMText((RS_MText*)e);
-        break;*/
+        break;
+    case RS2::EntityText:
+        writeText((RS_Text*)e);
+        break;
     case RS2::EntityDimLinear:
     case RS2::EntityDimAligned:
     case RS2::EntityDimAngular:
@@ -1943,7 +2055,7 @@ void RS_FilterDXFRW::writeInsert(RS_Insert* i) {
 /**
  * Writes the given mText entity to the file.
  */
-void RS_FilterDXFRW::writeMText(RS_Text* t) {
+void RS_FilterDXFRW::writeMText(RS_MText* t) {
     DRW_Text *text;
     DRW_Text txt1;
     DRW_MText txt2;
@@ -1961,30 +2073,29 @@ void RS_FilterDXFRW::writeMText(RS_Text* t) {
     text->style = t->getStyle().toStdString();
 
     if (version==1009) {
-        if (t->getHAlign()==RS2::HAlignLeft) {
-            text->alignH =DRW::HAlignLeft;
-        } else if (t->getHAlign()==RS2::HAlignCenter) {
-            text->alignH =DRW::HAlignCenter;
-        } else if (t->getHAlign()==RS2::HAlignRight) {
-            text->alignH = DRW::HRight;
+        if (t->getHAlign()==RS_MTextData::HALeft) {
+            text->alignH =DRW_Text::HLeft;
+        } else if (t->getHAlign()==RS_MTextData::HACenter) {
+            text->alignH =DRW_Text::HCenter;
+        } else if (t->getHAlign()==RS_MTextData::HARight) {
+            text->alignH = DRW_Text::HRight;
         }
-        if (t->getVAlign()==RS2::VAlignTop) {
-            text->alignV = DRW::VAlignTop;
-        } else if (t->getVAlign()==RS2::VAlignMiddle) {
-            text->alignV = DRW::VAlignMiddle;
-        } else if (t->getVAlign()==RS2::VAlignBottom) {
-            text->alignV = DRW::VAlignBaseLine;
+        if (t->getVAlign()==RS_MTextData::VATop) {
+            text->alignV = DRW_Text::VTop;
+        } else if (t->getVAlign()==RS_MTextData::VAMiddle) {
+            text->alignV = DRW_Text::VMiddle;
+        } else if (t->getVAlign()==RS_MTextData::VABottom) {
+            text->alignV = DRW_Text::VBaseLine;
         }
         QStringList txtList = t->getText().split('\n',QString::KeepEmptyParts);
-//        double dist = t->getSize().y / txtList.size();
-        double dist = t->getLineSpacingFactor()*1.6*t->getHeight();
+        double dist = t->getLineSpacingFactor()*5*t->getHeight()/3;
         bool setSec = false;
-        if (text->alignH != DRW::HAlignLeft || text->alignV != DRW::VAlignBaseLine) {
+        if (text->alignH != DRW_Text::HLeft || text->alignV != DRW_Text::VBaseLine) {
             text->secPoint.x = t->getInsertionPoint().x;
             text->secPoint.y = t->getInsertionPoint().y;
             setSec = true;
         }
-        if (text->alignV == DRW::VAlignTop)
+        if (text->alignV == DRW_Text::VTop)
             dist = dist * -1;
         for (int i=0; i<txtList.size();++i){
             if (!txtList.at(i).isEmpty()) {
@@ -2002,26 +2113,26 @@ void RS_FilterDXFRW::writeMText(RS_Text* t) {
             }
         }
     } else {
-        if (t->getHAlign()==RS2::HAlignLeft) {
+        if (t->getHAlign()==RS_MTextData::HALeft) {
             text->textgen =1;
-        } else if (t->getHAlign()==RS2::HAlignCenter) {
+        } else if (t->getHAlign()==RS_MTextData::HACenter) {
             text->textgen =2;
-        } else if (t->getHAlign()==RS2::HAlignRight) {
+        } else if (t->getHAlign()==RS_MTextData::HARight) {
             text->textgen = 3;
         }
-        if (t->getVAlign()==RS2::VAlignMiddle) {
+        if (t->getVAlign()==RS_MTextData::VAMiddle) {
             text->textgen += 3;
-        } else if (t->getVAlign()==RS2::VAlignBottom) {
+        } else if (t->getVAlign()==RS_MTextData::VABottom) {
             text->textgen += 6;
         }
-        if (t->getDrawingDirection() == RS2::LeftToRight)
-            text->alignH = (DRW::HAlign)1;
-        else if (t->getDrawingDirection() == RS2::TopToBottom)
-            text->alignH = (DRW::HAlign)3;
-        else text->alignH = (DRW::HAlign)5;
-        if (t->getLineSpacingFactor() == RS2::AtLeast)
-            text->alignV = (DRW::VAlign)1;
-        else text->alignV = (DRW::VAlign)2;
+        if (t->getDrawingDirection() == RS_MTextData::LeftToRight)
+            text->alignH = (DRW_Text::HAlign)1;
+        else if (t->getDrawingDirection() == RS_MTextData::TopToBottom)
+            text->alignH = (DRW_Text::HAlign)3;
+        else text->alignH = (DRW_Text::HAlign)5;
+        if (t->getLineSpacingFactor() == RS_MTextData::AtLeast)
+            text->alignV = (DRW_Text::VAlign)1;
+        else text->alignV = (DRW_Text::VAlign)2;
 
         text->text = toDxfString(t->getText()).toUtf8().data();
         //        text->widthscale =t->getWidth();
@@ -2031,6 +2142,43 @@ void RS_FilterDXFRW::writeMText(RS_Text* t) {
     }
 }
 
+/**
+ * Writes the given Text entity to the file.
+ */
+void RS_FilterDXFRW::writeText(RS_Text* t){
+    DRW_Text text;
+
+    getEntityAttributes(&text, t);
+    text.basePoint.x = t->getInsertionPoint().x;
+    text.basePoint.y = t->getInsertionPoint().y;
+    text.height = t->getHeight();
+    text.angle = t->getAngle()*180/M_PI;
+    text.style = t->getStyle().toStdString();
+    text.alignH =(DRW_Text::HAlign)t->getHAlign();
+    text.alignV =(DRW_Text::VAlign)t->getVAlign();
+
+    if (text.alignV != DRW_Text::VBaseLine || text.alignH != DRW_Text::HLeft) {
+//    if (text.alignV != DRW_Text::VBaseLine || text.alignH == DRW_Text::HMiddle) {
+//        if (text.alignH != DRW_Text::HLeft) {
+        if (text.alignH == DRW_Text::HAligned || text.alignH == DRW_Text::HFit) {
+            text.secPoint.x = t->getSecondPoint().x;
+            text.secPoint.y = t->getSecondPoint().y;
+        } else {
+            text.secPoint.x = t->getInsertionPoint().x;
+            text.secPoint.y = t->getInsertionPoint().y;
+        }
+    }
+
+/*    if (text.alignH == DRW_Text::HAligned || text.alignH == DRW_Text::HFit) {
+        text.secPoint.x = t->getSecondPoint().x;
+        text.secPoint.y = t->getSecondPoint().y;
+    }*/
+
+    if (!t->getText().isEmpty()) {
+        text.text = toDxfString(t->getText()).toUtf8().data();
+        dxf->writeText(&text);
+    }
+}
 
 /**
  * Writes the given dimension entity to the file.
@@ -2061,18 +2209,18 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
 
     DRW_Dimension* dim;
     int attachmentPoint=1;
-    if (d->getHAlign()==RS2::HAlignLeft) {
+    if (d->getHAlign()==RS_MTextData::HALeft) {
         attachmentPoint=1;
-    } else if (d->getHAlign()==RS2::HAlignCenter) {
+    } else if (d->getHAlign()==RS_MTextData::HACenter) {
         attachmentPoint=2;
-    } else if (d->getHAlign()==RS2::HAlignRight) {
+    } else if (d->getHAlign()==RS_MTextData::HARight) {
         attachmentPoint=3;
     }
-    if (d->getVAlign()==RS2::VAlignTop) {
+    if (d->getVAlign()==RS_MTextData::VATop) {
         attachmentPoint+=0;
-    } else if (d->getVAlign()==RS2::VAlignMiddle) {
+    } else if (d->getVAlign()==RS_MTextData::VAMiddle) {
         attachmentPoint+=3;
-    } else if (d->getVAlign()==RS2::VAlignBottom) {
+    } else if (d->getVAlign()==RS_MTextData::VABottom) {
         attachmentPoint+=6;
     }
 
@@ -2234,7 +2382,10 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
     ha.solid = h->isSolid();
     ha.scale = h->getScale();
     ha.angle = h->getAngle();
-    ha.name = h->getPattern().toUtf8().data();
+    if (ha.solid)
+        ha.name = "SOLID";
+    else
+        ha.name = h->getPattern().toUtf8().data();
     ha.loopsnum = h->countLoops();
 
     for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
@@ -2262,29 +2413,48 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
                 } else if (ed->rtti()==RS2::EntityArc) {
                     RS_Arc* ar = (RS_Arc*)ed;
                     DRW_Arc *arc = new DRW_Arc();
-                    arc->basePoint.x = ar->getStartpoint().x;
-                    arc->basePoint.y = ar->getStartpoint().y;
+                    arc->basePoint.x = ar->getCenter().x;
+                    arc->basePoint.y = ar->getCenter().y;
                     arc->radious = ar->getRadius();
                     if (!ar->isReversed()) {
-                        arc->staangle = ar->getAngle1();
-                        arc->endangle = ar->getAngle2();
+                        arc->staangle = RS_Math::rad2deg(ar->getAngle1());
+                        arc->endangle = RS_Math::rad2deg(ar->getAngle2());
                         arc->isccw = true;
                     } else {
-                        arc->staangle = 2*M_PI-ar->getAngle1();
-                        arc->endangle = 2*M_PI-ar->getAngle2();
+                        arc->staangle = RS_Math::rad2deg(2*M_PI-ar->getAngle1());
+                        arc->endangle = RS_Math::rad2deg(2*M_PI-ar->getAngle2());
                         arc->isccw = false;
                     }
                     lData->objlist.push_back(arc);
                 } else if (ed->rtti()==RS2::EntityCircle) {
                     RS_Circle* ci = (RS_Circle*)ed;
                     DRW_Arc *arc= new DRW_Arc();
-                    arc->basePoint.x = ci->getStartpoint().x;
-                    arc->basePoint.y = ci->getStartpoint().y;
+                    arc->basePoint.x = ci->getCenter().x;
+                    arc->basePoint.y = ci->getCenter().y;
                     arc->radious = ci->getRadius();
                     arc->staangle = 0.0;
-                    arc->endangle = 2*M_PI;
+                    arc->endangle = 360.0; //2*M_PI;
                     arc->isccw = true;
                     lData->objlist.push_back(arc);
+                } else if (ed->rtti()==RS2::EntityEllipse) {
+                    RS_Ellipse* el = (RS_Ellipse*)ed;
+                    DRW_Ellipse *ell= new DRW_Ellipse();
+                    ell->basePoint.x = el->getCenter().x;
+                    ell->basePoint.y = el->getCenter().y;
+                    ell->secPoint.x = el->getMajorP().x;
+                    ell->secPoint.y = el->getMajorP().y;
+                    ell->ratio = el->getRatio();
+                    ell->staparam = RS_Math::rad2deg(el->getAngle1());
+                    ell->endparam = RS_Math::rad2deg(el->getAngle2());
+                    ell->isccw = el->isReversed();
+                    if (!el->isReversed()) {
+                        ell->staparam = RS_Math::rad2deg(el->getAngle1());
+                        ell->endparam = RS_Math::rad2deg(el->getAngle2());
+                    } else {
+                        ell->staparam = RS_Math::rad2deg(2*M_PI-el->getAngle1());
+                        ell->endparam = RS_Math::rad2deg(2*M_PI-el->getAngle2());
+                    }
+                    lData->objlist.push_back(ell);
                 }
             }
             lData->update(); //change to DRW_HatchLoop
@@ -3288,6 +3458,7 @@ bool RS_FilterDXFRW::isVariableTwoDimensional(const QString& var) {
         return false;
     }
 }
+
 
 // EOF
 

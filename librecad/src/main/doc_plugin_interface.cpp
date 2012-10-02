@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_actioninterface.h"
 #include "rs_actionselect.h"
+#include "rs_mtext.h"
 #include "rs_text.h"
 #include "rs_layer.h"
 #include "rs_image.h"
@@ -155,6 +156,9 @@ Plugin_Entity::Plugin_Entity(RS_EntityContainer* parent, enum DPI::ETYPE type){
     case DPI::SOLID:
         entity = new RS_Solid();
         break;*/
+    case DPI::MTEXT:
+        entity = new RS_MText(parent, RS_MTextData());
+        break;
     case DPI::TEXT:
         entity = new RS_Text(parent, RS_TextData());
         break;
@@ -265,6 +269,13 @@ void Plugin_Entity::getData(QHash<int, QVariant> *data){
         RS_ImageData d = static_cast<RS_Image*>(entity)->getData();
         data->insert(DPI::STARTX, d.insertionPoint.x );
         data->insert(DPI::STARTY, d.insertionPoint.y );
+        data->insert(DPI::ENDX, d.uVector.x );
+        data->insert(DPI::ENDY, d.uVector.y );
+        data->insert(DPI::VVECTORX, d.vVector.x );
+        data->insert(DPI::VVECTORY, d.vVector.y );
+        data->insert(DPI::SIZEU, d.size.x );
+        data->insert(DPI::SIZEV, d.size.y );
+        data->insert(DPI::BLKNAME, d.file );
         break;}
     case RS2::EntityOverlayBox:
         //Unused ?
@@ -280,6 +291,15 @@ void Plugin_Entity::getData(QHash<int, QVariant> *data){
         data->insert(DPI::STARTANGLE, d.angle );
         data->insert(DPI::XSCALE, d.scaleFactor.x );
         data->insert(DPI::YSCALE, d.scaleFactor.y );
+        break;}
+    case RS2::EntityMText: {
+        data->insert(DPI::ETYPE, DPI::MTEXT);
+        RS_MTextData d = static_cast<RS_MText*>(entity)->getData();
+        data->insert(DPI::STARTX, d.insertionPoint.x );
+        data->insert(DPI::STARTY, d.insertionPoint.y );
+        data->insert(DPI::STARTANGLE, d.angle );
+        data->insert(DPI::HEIGHT, d.height );
+        data->insert(DPI::TEXTCONTENT, d.text );
         break;}
     case RS2::EntityText: {
         data->insert(DPI::ETYPE, DPI::TEXT);
@@ -459,12 +479,70 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         //Unused ?
         break;
     case RS2::EntityImage: {
+        RS_Image *img = static_cast<RS_Image*>(entity);
+        vec = img->getInsertionPoint();
+        if (hash.contains(DPI::STARTX)) {
+            vec.x = (hash.take(DPI::STARTX)).toDouble();
+        }
+        if (hash.contains(DPI::STARTY)) {
+            vec.y = (hash.take(DPI::STARTY)).toDouble();
+        }
+        img->setInsertionPoint(vec);
+        if (hash.contains(DPI::BLKNAME)) {
+            img->setFile( (hash.take(DPI::BLKNAME)).toString() );
+        }
+        vec = img->getUVector();
+        RS_Vector vec2 = img->getVVector();
+        RS_Vector vec3(img->getWidth(),img->getHeight());
+        if (hash.contains(DPI::ENDX)) {
+            vec.x = (hash.take(DPI::ENDX)).toDouble();
+        }
+        if (hash.contains(DPI::ENDY)) {
+            vec.y = (hash.take(DPI::ENDY)).toDouble();
+        }
+        if (hash.contains(DPI::VVECTORX)) {
+            vec2.x = (hash.take(DPI::VVECTORX)).toDouble();
+        }
+        if (hash.contains(DPI::VVECTORY)) {
+            vec2.y = (hash.take(DPI::VVECTORY)).toDouble();
+        }
+        if (hash.contains(DPI::SIZEU)) {
+            vec3.x = (hash.take(DPI::SIZEU)).toDouble();
+        }
+        if (hash.contains(DPI::SIZEV)) {
+            vec3.y = (hash.take(DPI::SIZEV)).toDouble();
+        }
+        img->updateData(vec3, vec, vec2);
         break;}
     case RS2::EntityOverlayBox:
         //Unused ?
         break;
 //EntityContainer
     case RS2::EntityInsert: {
+        break;}
+    case RS2::EntityMText: {
+        RS_MText *txt = static_cast<RS_MText*>(entity);
+        bool move = false;
+        vec = txt->getInsertionPoint();
+        if (hash.contains(DPI::STARTX)) {
+            vec.x = (hash.take(DPI::STARTX)).toDouble() - vec.x;
+            move = true;
+        } else vec.x = 0;
+        if (hash.contains(DPI::STARTY)) {
+            vec.y = (hash.take(DPI::STARTY)).toDouble() - vec.y;
+            move = true;
+        } else vec.y = 0;
+        if (move)
+            txt->move(vec);
+        if (hash.contains(DPI::TEXTCONTENT)) {
+            txt->setText( (hash.take(DPI::TEXTCONTENT)).toString() );
+        }
+        if (hash.contains(DPI::STARTANGLE)) {
+            txt->setAngle( (hash.take(DPI::STARTANGLE)).toDouble() );
+        }
+        if (hash.contains(DPI::HEIGHT)) {
+            txt->setHeight( (hash.take(DPI::HEIGHT)).toDouble() );
+        }
         break;}
     case RS2::EntityText: {
         RS_Text *txt = static_cast<RS_Text*>(entity);
@@ -639,7 +717,7 @@ void Doc_plugin_interface::addLine(QPointF *start, QPointF *end){
     doc->addEntity(entity);
 }
 
-void Doc_plugin_interface::addText(QString txt, QString sty, QPointF *start,
+void Doc_plugin_interface::addMText(QString txt, QString sty, QPointF *start,
             double height, double angle, DPI::HAlign ha,  DPI::VAlign va){
 
     RS_Vector v1(start->x(), start->y());
@@ -648,11 +726,30 @@ void Doc_plugin_interface::addText(QString txt, QString sty, QPointF *start,
     }
     double width = 100.0;
 
-    RS2::VAlign valign = static_cast <RS2::VAlign>(va);
-    RS2::HAlign halign = static_cast <RS2::HAlign>(ha);
-    RS_TextData d(v1, height, width, valign, halign,
-                  RS2::ByStyle, RS2::Exact, 0.0,
+    RS_MTextData::VAlign valign = static_cast <RS_MTextData::VAlign>(va);
+    RS_MTextData::HAlign halign = static_cast <RS_MTextData::HAlign>(ha);
+    RS_MTextData d(v1, height, width, valign, halign,
+                  RS_MTextData::ByStyle, RS_MTextData::Exact, 0.0,
                   txt, sty, angle, RS2::Update);
+    RS_MText* entity = new RS_MText(doc, d);
+
+//    setEntityAttributes(entity, attributes);
+    doc->addEntity(entity);
+}
+
+void Doc_plugin_interface::addText(QString txt, QString sty, QPointF *start,
+            double height, double angle, DPI::HAlign ha,  DPI::VAlign va){
+
+    RS_Vector v1(start->x(), start->y());
+    if (doc==NULL) {
+        RS_DEBUG->print("Doc_plugin_interface::addLine: currentContainer is NULL");
+    }
+    double width = 1.0;
+
+    RS_TextData::VAlign valign = static_cast <RS_TextData::VAlign>(va);
+    RS_TextData::HAlign halign = static_cast <RS_TextData::HAlign>(ha);
+    RS_TextData d(v1, v1, height, width, valign, halign,
+                  RS_TextData::None, txt, sty, angle, RS2::Update);
     RS_Text* entity = new RS_Text(doc, d);
 
 //    setEntityAttributes(entity, attributes);
@@ -829,7 +926,7 @@ QStringList Doc_plugin_interface::getAllLayer(){
 QStringList Doc_plugin_interface::getAllBlocks(){
     QStringList listName;
     RS_BlockList* listBlk = doc->getBlockList();
-    for (unsigned int i = 0; i < listBlk->count(); ++i) {
+    for (int i = 0; i < listBlk->count(); ++i) {
          listName << listBlk->at(i)->getName();
      }
     return listName;
@@ -857,8 +954,9 @@ bool Doc_plugin_interface::getPoint(QPointF *point, const QString& mesage, QPoin
         {
             ev.processEvents (QEventLoop::ExcludeSocketNotifiers);
         }
+        if (a->isCompleted() ){
         a->getPoint(point);
-        status = true;
+        status = true;}
 //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
         gView->killAllActions();
     }

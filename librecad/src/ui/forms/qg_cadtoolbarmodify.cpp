@@ -324,6 +324,10 @@ void QG_CadToolBarModify::restoreAction() {
     }
 }
 
+void QG_CadToolBarModify::resetToolBar() {
+    bHidden->setChecked(true);
+}
+
 void QG_CadToolBarModify::on_bBack_clicked()
 {
    parentTB->showToolBar(RS2::ToolBarMain);

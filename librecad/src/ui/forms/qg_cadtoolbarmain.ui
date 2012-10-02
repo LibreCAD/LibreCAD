@@ -302,7 +302,7 @@
       </size>
      </property>
      <property name="toolTip">
-      <string>Insert Text</string>
+      <string>Insert Multi-line Text</string>
      </property>
      <property name="text">
       <string/>

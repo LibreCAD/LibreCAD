@@ -126,6 +126,9 @@ public:
         calculateBorders();
     }
 
+    /** Update image data ONLY for plugins. */
+    void updateData(RS_Vector size, RS_Vector Uv, RS_Vector Vv);
+
         /** @return File name of the image. */
         QString getFile() const {
                 return data.file;

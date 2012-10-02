@@ -35,6 +35,7 @@
 #include "rs_insert.h"
 #include "rs_block.h"
 #include "rs_polyline.h"
+#include "rs_mtext.h"
 #include "rs_text.h"
 #include "rs_layer.h"
 
@@ -480,6 +481,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         }
     }
 
+    int noBlockIndex = 0;
     // insert entities:
     for (RS_Entity* e=((RS_EntityContainer*)source)->firstEntity();
             e!=NULL;
@@ -499,7 +501,20 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
             // don't adjust insert factor - block was already adjusted to unit
             if (e2->rtti()==RS2::EntityInsert) {
                 RS_Insert *in = (RS_Insert*)e2;
-                in->setName( in->getBlockForInsert()->getName() );
+                RS_Block *bk = in->getBlockForInsert();
+                //if block not found create a new empty block
+                if (bk == NULL) {
+                    QString noBlockName= "noname0";
+                    while ( graphic->findBlock(noBlockName)) {
+                        noBlockIndex++;
+                        noBlockName= QString("noname%1").arg(noBlockIndex);
+                    }
+                    bk = new RS_Block(graphic,
+                                      RS_BlockData(QString("noname%1").arg(noBlockIndex),
+                                      RS_Vector(0.0,0.0), false));
+                    graphic->addBlock(bk);
+                }
+                in->setName( bk->getName() );
                 RS_Vector ip = in->getInsertionPoint();
                 ip.scale(data.insertionPoint, RS_Vector(factor, factor));
                 in->setInsertionPoint(ip);
@@ -2916,6 +2931,7 @@ bool RS_Modification::explode() {
                 bool resolveLayer;
 
                 switch (ec->rtti()) {
+                case RS2::EntityMText:
                 case RS2::EntityText:
                 case RS2::EntityHatch:
                 case RS2::EntityPolyline:
@@ -3005,12 +3021,15 @@ bool RS_Modification::explodeTextIntoLetters() {
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
     }
-
     for (RS_Entity* e=container->firstEntity();
             e!=NULL;
             e=container->nextEntity()) {
         if (e!=NULL && e->isSelected()) {
-            if (e->rtti()==RS2::EntityText) {
+            if (e->rtti()==RS2::EntityMText) {
+                // add letters of text:
+                RS_MText* text = (RS_MText*)e;
+                explodeTextIntoLetters(text, addList);
+            } else if (e->rtti()==RS2::EntityText) {
                 // add letters of text:
                 RS_Text* text = (RS_Text*)e;
                 explodeTextIntoLetters(text, addList);
@@ -3035,8 +3054,7 @@ bool RS_Modification::explodeTextIntoLetters() {
 }
 
 
-
-bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& addList) {
+bool RS_Modification::explodeTextIntoLetters(RS_MText* text, QList<RS_Entity*>& addList) {
 
     if (text==NULL) {
         return false;
@@ -3067,8 +3085,8 @@ bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& a
                 }
 
                 // super / sub texts:
-                if (e3->rtti()==RS2::EntityText) {
-                    explodeTextIntoLetters((RS_Text*)e3, addList);
+                if (e3->rtti()==RS2::EntityMText) {
+                    explodeTextIntoLetters((RS_MText*)e3, addList);
                 }
 
                 // normal letters:
@@ -3076,13 +3094,13 @@ bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& a
 
                     RS_Insert* letter = (RS_Insert*)e3;
 
-                    RS_Text* tl = new RS_Text(
+                    RS_MText* tl = new RS_MText(
                         container,
-                        RS_TextData(letter->getInsertionPoint(),
+                        RS_MTextData(letter->getInsertionPoint(),
                                     text->getHeight(),
                                     100.0,
-                                    RS2::VAlignBottom, RS2::HAlignLeft,
-                                    RS2::LeftToRight, RS2::Exact,
+                                    RS_MTextData::VABottom, RS_MTextData::HALeft,
+                                    RS_MTextData::LeftToRight, RS_MTextData::Exact,
                                     1.0,
                                     letter->getName(),
                                     text->getStyle(),
@@ -3102,6 +3120,48 @@ bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& a
     return true;
 }
 
+bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& addList) {
+
+    if (text==NULL) {
+        return false;
+    }
+
+    if(text->isLocked() || ! text->isVisible()) return false;
+
+    // iterate though letters:
+    for (RS_Entity* e2 = text->firstEntity(); e2!=NULL;
+            e2 = text->nextEntity()) {
+
+        if (e2==NULL) {
+            break;
+        }
+
+        if (e2->rtti()==RS2::EntityInsert) {
+
+            RS_Insert* letter = (RS_Insert*)e2;
+
+            RS_Text* tl = new RS_Text(
+                        container,
+                        RS_TextData(letter->getInsertionPoint(),
+                                    letter->getInsertionPoint(),
+                                    text->getHeight(),
+                                    text->getWidthRel(), RS_TextData::VABaseline,
+                                    RS_TextData::HALeft, RS_TextData::None, /*text->getTextGeneration(),*/
+                                    letter->getName(),
+                                    text->getStyle(),
+                                    letter->getAngle(),
+                                    RS2::Update));
+
+            tl->setLayer(text->getLayer());
+            tl->setPen(text->getPen());
+
+            addList.append(tl);
+            tl->update();
+        }
+    }
+
+    return true;
+}
 
 
 /**

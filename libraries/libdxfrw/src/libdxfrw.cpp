@@ -281,7 +281,8 @@ bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
     if (version > DRW::AC1009) {
         writer->writeUtf8String(3, ent->font);
         writer->writeUtf8String(4, ent->bigFont);
-        writer->writeUtf8String(1071, ent->fontFamily);
+        if (ent->fontFamily != 0)
+            writer->writeInt32(1071, ent->fontFamily);
     } else {
         writer->writeUtf8Caps(3, ent->font);
         writer->writeUtf8Caps(4, ent->bigFont);
@@ -356,7 +357,7 @@ bool dxfRW::writeVport(DRW_Vport *ent){
         writer->writeDouble(146, 0.0);
         if (version > DRW::AC1018) {
             writer->writeString(348, "10020");
-            writer->writeInt16(60, 3);//v2007 undocummented
+            writer->writeInt16(60, ent->gridBehavior);//v2007 undocummented see DRW_Vport class
             writer->writeInt16(61, 5);
             writer->writeBool(292, 1);
             writer->writeInt16(282, 1);
@@ -373,10 +374,8 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     char buffer[5];
     writer->writeString(0, "DIMSTYLE");
     if (!dimstyleStd) {
-        std::string name;
-        std::stringstream ss;
-        ss << std::uppercase << ent->name;
-        ss >> name;
+        std::string name = ent->name;
+        std::transform(name.begin(), name.end(), name.begin(),::toupper);
         if (name == "STANDARD")
             dimstyleStd = true;
     }
@@ -894,10 +893,18 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
                         writer->writeDouble(51, a->endangle);
                         writer->writeInt16(73, a->isccw);
                         break; }
-                    case DRW::ELLIPSE:
-                        //RLZ: elliptic arc boundary writeme
-//                        writer->writeInt16(72, 3);
-                        break;
+                    case DRW::ELLIPSE: {
+                        writer->writeInt16(72, 3);
+                        DRW_Ellipse* a = (DRW_Ellipse*)loop->objlist.at(j);
+                        writer->writeDouble(10, a->basePoint.x);
+                        writer->writeDouble(20, a->basePoint.y);
+                        writer->writeDouble(11, a->secPoint.x);
+                        writer->writeDouble(21, a->secPoint.y);
+                        writer->writeDouble(40, a->ratio);
+                        writer->writeDouble(50, a->staparam);
+                        writer->writeDouble(51, a->endparam);
+                        writer->writeInt16(73, a->isccw);
+                        break; }
                     case DRW::SPLINE:
                         //RLZ: spline boundary writeme
 //                        writer->writeInt16(72, 4);
@@ -911,10 +918,15 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
         }
         writer->writeInt16(75, ent->hstyle);
         writer->writeInt16(76, ent->hpattern);
-        writer->writeDouble(52, ent->angle);
-        writer->writeDouble(41, ent->scale);
-        writer->writeInt16(77, ent->doubleflag);
-        writer->writeInt16(78, ent->deflines);
+        if (!ent->solid){
+            writer->writeDouble(52, ent->angle);
+            writer->writeDouble(41, ent->scale);
+            writer->writeInt16(77, ent->doubleflag);
+            writer->writeInt16(78, ent->deflines);
+        }
+/*        if (ent->deflines > 0){
+            writer->writeInt16(78, ent->deflines);
+        }*/
         writer->writeInt16(98, 0);
     } else {
         //RLZ: TODO verify in acad12
@@ -1108,10 +1120,10 @@ bool dxfRW::writeText(DRW_Text *ent){
     else
         writer->writeUtf8Caps(7, ent->style);
     writer->writeInt16(71, ent->textgen);
-    if (ent->alignH != DRW::HAlignLeft) {
+    if (ent->alignH != DRW_Text::HLeft) {
         writer->writeInt16(72, ent->alignH);
     }
-    if (ent->alignH != DRW::HAlignLeft || ent->alignV != DRW::VAlignBaseLine) {
+    if (ent->alignH != DRW_Text::HLeft || ent->alignV != DRW_Text::VBaseLine) {
         writer->writeDouble(11, ent->secPoint.x);
         writer->writeDouble(21, ent->secPoint.y);
         writer->writeDouble(31, ent->secPoint.z);
@@ -1122,7 +1134,7 @@ bool dxfRW::writeText(DRW_Text *ent){
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbText");
     }
-    if (ent->alignV != DRW::VAlignBaseLine) {
+    if (ent->alignV != DRW_Text::VBaseLine) {
         writer->writeInt16(73, ent->alignV);
     }
     return true;
@@ -1724,7 +1736,9 @@ bool dxfRW::processDxf() {
 //    section = secUnknown;
     while (reader->readRec(&code, !binary)) {
         DBG(code); DBG(" processDxf\n");
-        if (code == 0) {
+        if (code == 999) {
+            header.addComment(reader->getString());
+        } else if (code == 0) {
             sectionstr = reader->getString();
             DBG(sectionstr); DBG(" processDxf\n");
             if (sectionstr == "EOF") {
@@ -1802,9 +1816,7 @@ bool dxfRW::processTables() {
                     sectionstr = reader->getString();
                     DBG(sectionstr); DBG(" processHeader\n\n");
                 //found section, process it
-                    if (sectionstr == "VPORT") {
-//                        processVPort();
-                    } else if (sectionstr == "LTYPE") {
+                    if (sectionstr == "LTYPE") {
                         processLType();
                     } else if (sectionstr == "LAYER") {
                         processLayer();

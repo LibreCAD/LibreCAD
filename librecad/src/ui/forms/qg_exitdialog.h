@@ -42,6 +42,7 @@ public slots:
     virtual void setForce( bool force );
     virtual void slotSaveAs();
     virtual void slotSave();
+    virtual void clicked(QAbstractButton * button);
 
 protected slots:
     virtual void languageChange();

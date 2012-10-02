@@ -119,6 +119,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
         if(en->getParent() != NULL) {
             if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
                  || en->getParent()->rtti() == RS2::EntitySpline
+                 || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
                  || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
                  || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
                  || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
@@ -172,6 +173,7 @@ void RS_ActionDrawEllipseInscribe::mouseReleaseEvent(QMouseEvent* e) {
         if(en->getParent() != NULL) {
             if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
                     || en->getParent()->rtti() == RS2::EntitySpline
+                    || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
                     || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */

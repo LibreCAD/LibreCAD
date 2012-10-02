@@ -225,6 +225,7 @@ void RS_BlockList::editBlock(RS_Block* block, const RS_Block& source) {
 RS_Block* RS_BlockList::find(const QString& name) {
     //RS_DEBUG->print("RS_BlockList::find");
 	RS_Block* ret = NULL;
+    RS_Block* retSimilar = NULL;
 // Todo : reduce this from O(N) to O(log(N)) complexity based on sorted list or hash
     for (int i=0; i<count(); ++i) {
         RS_Block* b = at(i);
@@ -232,7 +233,9 @@ RS_Block* RS_BlockList::find(const QString& name) {
             ret=b;
 			break;
         }
+        if(retSimilar==NULL && b->getName().indexOf(name) == 0) retSimilar=b;
     }
+    if(ret==NULL && retSimilar!=NULL) ret=retSimilar;
 
     return ret;
 }

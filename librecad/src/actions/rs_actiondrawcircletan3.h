@@ -78,16 +78,20 @@ public:
 
 
 
-protected:
+//protected:
+    private:
+    QVector<double> verifyCenter(const RS_Vector& center) const;
+    QVector<double> getRadii(RS_AtomicEntity* entity, const RS_Vector& center) const;
     RS_Entity* catchCircle(QMouseEvent* e);
     QVector<RS_AtomicEntity*> circles;
-    private:
     RS_CircleData cData;
+    QVector<RS_CircleData> m_vCandidates;
     RS_Vector coord;
     bool valid;
     QVector<RS2::EntityType> enTypeList;
     //keep a list of centers found
     QList<RS_Circle> candidates;
+    RS_VectorSolutions centers;
 
 };
 

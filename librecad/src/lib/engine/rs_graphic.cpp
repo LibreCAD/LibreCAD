@@ -24,8 +24,7 @@
 **
 **********************************************************************/
 
-#include <qfile.h>
-#include <qfileinfo.h>
+#include <QDir>
 
 #include "rs_graphic.h"
 
@@ -77,7 +76,7 @@ blockList(true),paperScaleFixed(false)
     }
     addVariable("$DIMTIH", 0, 70);
 
-        setModified(false);
+    setModified(false);
 }
 
 
@@ -497,9 +496,37 @@ bool RS_Graphic::saveAs(const QString &filename, RS2::FormatType type)
 }
 
 
+/**
+ * Loads the given file into this graphic.
+ */
+bool RS_Graphic::loadTemplate(const QString &filename, RS2::FormatType type) {
+    RS_DEBUG->print("RS_Graphic::loadTemplate(%s)", filename.toLatin1().data());
+
+    bool ret = false;
+
+    // Construct new autosave filename by prepending # to the filename part,
+    // using system temporary dir.
+    this->autosaveFilename = QDir::tempPath () + "/#" + "Unnamed.dxf";
+
+    // clean all:
+    newDoc();
+
+    // import template file:
+    ret = RS_FileIO::instance()->fileImport(*this, filename, type);
+
+    setModified(false);
+    layerList.setModified(false);
+    blockList.setModified(false);
+    QFileInfo finfo;
+    modifiedTime = finfo.lastModified();
+
+    RS_DEBUG->print("RS_Graphic::loadTemplate(%s): OK", filename.toLatin1().data());
+
+    return ret;
+}
 
 /**
- * Loads the given fils into this graphic.
+ * Loads the given file into this graphic.
  */
 bool RS_Graphic::open(const QString &filename, RS2::FormatType type) {
     RS_DEBUG->print("RS_Graphic::open(%s)", filename.toLatin1().data());
@@ -823,8 +850,19 @@ void RS_Graphic::centerToPage() {
     RS_Vector size = getPaperSize();
 
     double scale = getPaperScale();
+    auto&& s=getSize();
+    auto&& sMin=getMin();
+    /** avoid zero size, bug#3573158 */
+    if(fabs(s.x)<RS_TOLERANCE) {
+        s.x=10.;
+        sMin.x=-5.;
+    }
+    if(fabs(s.y)<RS_TOLERANCE) {
+        s.y=10.;
+        sMin.y=-5.;
+    }
 
-    RS_Vector pinsbase = (size-getSize()*scale)/2.0 - getMin()*scale;
+    RS_Vector pinsbase = (size-s*scale)/2.0 - sMin*scale;
 
     setPaperInsertionBase(pinsbase);
 }
@@ -840,6 +878,9 @@ bool RS_Graphic::fitToPage() {
     RS_Vector ps = getPaperSize();
     if(ps.x>border && ps.y>border) ps -= RS_Vector(border, border);
     RS_Vector s = getSize();
+    /** avoid zero size, bug#3573158 */
+    if(fabs(s.x)<RS_TOLERANCE) s.x=10.;
+    if(fabs(s.y)<RS_TOLERANCE) s.y=10.;
     double fx = RS_MAXDOUBLE;
     double fy = RS_MAXDOUBLE;
     double fxy;
@@ -848,9 +889,11 @@ bool RS_Graphic::fitToPage() {
     // tin-pot 2011-12-30: TODO: can s.x < 0.0 (==> fx < 0.0) happen?
     if (fabs(s.x) > 1.0e-10) {
         fx = ps.x / s.x;
+        ret=false;
     }
     if (fabs(s.y) > 1.0e-10) {
         fy = ps.y / s.y;
+        ret=false;
     }
 
     fxy = std::min(fx, fy);
@@ -861,8 +904,7 @@ bool RS_Graphic::fitToPage() {
                                       , getUnit()
                                       )
                     );
-        fitToPage();
-        ret=false;
+        ret=fitToPage();
     }
     setPaperScale(fxy);
     centerToPage();

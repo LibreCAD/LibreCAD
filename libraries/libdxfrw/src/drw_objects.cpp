@@ -362,7 +362,7 @@ void DRW_Textstyle::parseCode(int code, dxfReader *reader){
         genFlag = reader->getInt32();
         break;
     case 1071:
-        fontFamily = reader->getUtf8String();
+        fontFamily = reader->getInt32();
         break;
     default:
         DRW_TableEntry::parseCode(code, reader);
@@ -516,6 +516,11 @@ void DRW_ImageDef::parseCode(int code, dxfReader *reader){
     }
 }
 
+void DRW_Header::addComment(string c){
+    if (!comments.empty())
+        comments += '\n';
+    comments += c;
+}
 
 void DRW_Header::parseCode(int code, dxfReader *reader){
     switch (code) {
@@ -763,7 +768,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         else
             writer->writeUtf8String(2, varStr);
     else
-        writer->writeString(7, "STANDARD");
+        writer->writeString(2, "STANDARD");
     writer->writeString(9, "$DIMGAP");
     if (getDouble("$DIMGAP", &varDouble))
         writer->writeDouble(40, varDouble);

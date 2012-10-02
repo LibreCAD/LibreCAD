@@ -322,6 +322,10 @@ void QG_CadToolBar::resetToolBar() {
         tbInfo->resetToolBar();
         return;
     }
+    if(currentTb == tbModify) {
+        tbModify->resetToolBar();
+        return;
+    }
 }
 
 void QG_CadToolBar::showToolBarMain() {
@@ -389,6 +393,7 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     switch(actionType){
     //no op
     case RS2::ActionFileNew:
+    case RS2::ActionFileNewTemplate:
     case RS2::ActionFileOpen:
     case RS2::ActionFileSave:
     case RS2::ActionFileSaveAs:
@@ -486,7 +491,7 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     case RS2::ActionDrawImage:
     case RS2::ActionDrawPoint:
     case RS2::ActionDrawSpline:
-    case RS2::ActionDrawText:
+    case RS2::ActionDrawMText:
         showToolBar(RS2::ToolBarMain, false);
         if(tbMain != NULL){
             tbMain->showCadToolBar(actionType);

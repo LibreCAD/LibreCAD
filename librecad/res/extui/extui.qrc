@@ -11,6 +11,18 @@
         <file>align_tc.png</file>
         <file>align_tl.png</file>
         <file>align_tr.png</file>
+        <file>aligntext_bc.png</file>
+        <file>aligntext_bl.png</file>
+        <file>aligntext_br.png</file>
+        <file>aligntext_lc.png</file>
+        <file>aligntext_ll.png</file>
+        <file>aligntext_lr.png</file>
+        <file>aligntext_mc.png</file>
+        <file>aligntext_ml.png</file>
+        <file>aligntext_mr.png</file>
+        <file>aligntext_tc.png</file>
+        <file>aligntext_tl.png</file>
+        <file>aligntext_tr.png</file>
         <file>arcs3p.png</file>
         <file>arcscraa.png</file>
         <file>arcspara.png</file>
@@ -173,5 +185,6 @@
         <file>circletan2.png</file>
         <file>circletan3.png</file>
         <file>circletan1_2p.png</file>
+        <file>circletan2_1p.png</file>
     </qresource>
 </RCC>

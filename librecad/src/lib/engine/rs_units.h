@@ -81,6 +81,9 @@ public:
         static RS2::PaperFormat stringToPaperFormat(const QString& p);
 
 	static void test();
+    static double dpiToScale(double dpi, RS2::Unit unit);
+    static double scaleToDpi(double scale, RS2::Unit unit);
+
 };
 
 

@@ -83,6 +83,8 @@ RS_Commands::RS_Commands() {
     shortCommands.insert(tr("rect"), RS2::ActionDrawLineRectangle);
     shortCommands.insert(tr("rec"), RS2::ActionDrawLineRectangle);
 
+    cmdTranslation.insert("mtext", tr("mtext"));
+    mainCommands.insert(tr("mtext"), RS2::ActionDrawMText);
     cmdTranslation.insert("text", tr("text"));
     mainCommands.insert(tr("text"), RS2::ActionDrawText);
 
@@ -253,6 +255,7 @@ RS_Commands::RS_Commands() {
     shortCommands.insert(tr("tn"), RS2::ActionDeselectAll);
 
     cmdTranslation.insert( "angle", tr("angle"));
+    cmdTranslation.insert( "dpi", tr("dpi"));
     cmdTranslation.insert( "close", tr("close"));
     cmdTranslation.insert( "chord length", tr("chord length"));
     cmdTranslation.insert( "columns", tr("columns"));

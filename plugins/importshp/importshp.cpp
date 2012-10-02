@@ -371,7 +371,7 @@ void dibSHP::readPoint(DBFHandle dh, int i){
         ent = currDoc->newEntity(DPI::POINT);
         ent->getData(&data);
     } else {
-        ent = currDoc->newEntity(DPI::TEXT);
+        ent = currDoc->newEntity(DPI::MTEXT);
         ent->getData(&data);
         data.insert(DPI::TEXTCONTENT, DBFReadStringAttribute( dh, i, pointF ) );
     }
@@ -407,10 +407,10 @@ void dibSHP::readPolyline(DBFHandle dh, int i){
     }
 }
 
-void dibSHP::readPolylineC(DBFHandle dh, int i){
+void dibSHP::readPolylineC(DBFHandle /*dh*/, int /*i*/){
 }
 
-void dibSHP::readMultiPolyline(DBFHandle dh, int i){
+void dibSHP::readMultiPolyline(DBFHandle /*dh*/, int /*i*/){
 }
 
 void dibSHP::readAttributes(DBFHandle dh, int i){

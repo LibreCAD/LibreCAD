@@ -6,4 +6,4 @@ BOOST_LIB =
 
 INSTALLDIR = ../../
 
-SUBDIRS += attf2lff
+SUBDIRS += ttf2lff

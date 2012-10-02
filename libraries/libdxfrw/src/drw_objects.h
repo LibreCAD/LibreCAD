@@ -244,6 +244,7 @@ public:
         width = lastHeight = 1.0;
         font="txt";
         genFlag = 0; //2= X mirror, 4= Y mirror
+        fontFamily = 0;
     }
 
     void parseCode(int code, dxfReader *reader);
@@ -256,7 +257,7 @@ public:
     double lastHeight;      /*!< Last height used, code 42 */
     UTF8STRING font;        /*!< primary font file name, code 3 */
     UTF8STRING bigFont;     /*!< bigfont file name or blank if none, code 4 */
-    UTF8STRING fontFamily;  /*!< ttf font family, italic and bold flags, code 1071 */
+    int fontFamily;         /*!< ttf font family, italic and bold flags, code 1071 */
 };
 
 //! Class to handle vport entries
@@ -281,6 +282,7 @@ public:
         fastZoom = 1;
         circleZoom = 100;
         ucsIcon = 3;
+        gridBehavior = 7;
     }
 
     void parseCode(int code, dxfReader *reader);
@@ -309,6 +311,13 @@ public:
     int grid;                /*!< grid on/off, code 76 */
     int snapStyle;           /*!< snap style, code 77 */
     int snapIsopair;         /*!< snap isopair, code 78 */
+    int gridBehavior;        /*!< grid behavior, code 60, undocummented */
+    /** code 60, bit coded possible value are
+    * bit 1 (1) show out of limits
+    * bit 2 (2) adaptive grid
+    * bit 3 (4) allow subdivision
+    * bit 4 (8) follow dinamic SCP
+    **/
 };
 
 
@@ -355,6 +364,8 @@ public:
 
     void parseCode(int code, dxfReader *reader);
     void write(dxfWriter *writer, DRW::Version ver);
+    void addComment(string c);
+    string getComments() const {return comments;}
 private:
     bool getDouble(string key, double *varDouble);
     bool getInt(string key, int *varInt);
@@ -364,6 +375,7 @@ private:
 public:
     std::map<string,DRW_Variant*> vars;
 private:
+    string comments;
     string name;
     DRW_Variant *curr;
 };

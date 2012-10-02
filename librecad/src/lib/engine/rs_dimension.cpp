@@ -28,7 +28,6 @@
 #include "rs_information.h"
 #include "rs_dimension.h"
 #include "rs_solid.h"
-#include "rs_text.h"
 #include "rs_units.h"
 
 /**
@@ -194,7 +193,7 @@ if(dimtsz < 0.01) {
     }
 }
     // Text label:
-    RS_TextData textData;
+    RS_MTextData textData;
     RS_Vector textPos;
 
         double dimAngle1 = dimensionLine->getAngle1();
@@ -229,18 +228,18 @@ if(dimtsz < 0.01) {
                 data.middleOfText = textPos;
     }
 
-    textData = RS_TextData(textPos,
+    textData = RS_MTextData(textPos,
                            dimtxt, 30.0,
-                           RS2::VAlignMiddle,
-                           RS2::HAlignCenter,
-                           RS2::LeftToRight,
-                           RS2::Exact,
+                           RS_MTextData::VAMiddle,
+                           RS_MTextData::HACenter,
+                           RS_MTextData::LeftToRight,
+                           RS_MTextData::Exact,
                            1.0,
                            getLabel(),
                            "standard",
                            textAngle);
 
-    RS_Text* text = new RS_Text(this, textData);
+    RS_MText* text = new RS_MText(this, textData);
 
     // move text to the side:
     RS_Vector distH;

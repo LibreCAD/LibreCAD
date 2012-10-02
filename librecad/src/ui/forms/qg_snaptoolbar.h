@@ -49,19 +49,15 @@ public:
     virtual void setActionHandler(QG_ActionHandler* ah);
     bool lockedRelativeZero();
     void setLockedRelativeZero(bool on);
+    QVector<QAction*> getActions() const;
 
 protected:
     QG_ActionHandler* actionHandler;
 
 private slots:
     void actionTriggered(void);
-    //void slotSetRelativeZero(void);
-    //void slotLockRelativeZero(void);
-
-    //following restriction slots are not needed any more
-    //void restrictOrthoagonalTriggered(bool);
-    //void restrictHorizontalTriggered(bool);
-    //void restrictVerticalTriggered(bool);
+    void slotRestrictOrthogonal(bool checked);
+    void slotRestrictNothing(bool checked);
 
 public slots:
     void setSnaps(RS_SnapMode);
@@ -70,7 +66,7 @@ signals:
     void snapsChanged(RS_SnapMode);
 
 private:
-    //QAction *snapFree;
+    QAction *snapFree;
     QAction *snapGrid;
     QAction *snapEnd;
     QAction *snapOnEntity;
@@ -80,12 +76,15 @@ private:
     QAction *snapIntersection;
 
 
-    QAction *restrictOrthoagonal;
     QAction *restrictHorizontal;
     QAction *restrictVertical;
+    QAction *restrictOrthogonal;
+    QAction *restrictNothing;
     QAction *bRelZero;
     QAction *bLockRelZero;
     RS_SnapMode snapMode;
+    QVector<QAction*> m_vSnapActions;
+    int m_iActionCounts;
 
     void init();
 

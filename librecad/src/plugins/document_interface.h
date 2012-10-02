@@ -57,6 +57,7 @@ namespace DPI {
         IMAGE,
         OVERLAYBOX,
         SOLID,/*end atomicEntity, start entityContainer*/
+        MTEXT,
         TEXT,
         INSERT,
         POLYLINE,
@@ -82,9 +83,13 @@ namespace DPI {
         TXTSTYLE=7,     /*!< QString: text style */
         LAYER=8,        /*!< QString: layer */
         STARTX=10,      /*!< double: start x coordinate */
-        ENDX=11,        /*!< double: end x coordinate */
+        ENDX=11,        /*!< double: end x coordinate, or U-vector for images */
+        VVECTORX=12,    /*!< double: V-vector for images, x coordinate */
+        SIZEU=13,       /*!< double: image U size (width) */
         STARTY=20,      /*!< double: start y coordinate */
-        ENDY=21,        /*!< double: end y coordinate */
+        ENDY=21,        /*!< double: end y coordinate, or U-vector for images */
+        VVECTORY=22,    /*!< double: V-vector for images, y coordinate */
+        SIZEV=23,       /*!< double: image V size (height) */
         STARTZ=30,      /*!< double: start z coordinate always 0 */
         ENDZ=30,        /*!< double: end z coordinate always 0 */
         LWIDTH=38,      /*!< QString: line width */  //verify number

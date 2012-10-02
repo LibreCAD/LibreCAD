@@ -54,7 +54,7 @@ protected slots:
 private:
     QG_ActionHandler* actionHandler;
 private slots:
-    void slotDrawText();
+    void slotDrawMText();
     void slotDrawImage();
 };
 

@@ -40,6 +40,8 @@ public:
     virtual void init(int status=0);
     virtual void trigger();
 
+private:
+    void addBlock(RS_Insert* in, RS_Graphic* g);
 };
 
 #endif

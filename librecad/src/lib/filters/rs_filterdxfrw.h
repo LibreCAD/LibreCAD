@@ -36,6 +36,7 @@
 #include "rs_leader.h"
 #include "rs_polyline.h"
 #include "rs_solid.h"
+#include "rs_mtext.h"
 #include "rs_text.h"
 #include "rs_image.h"
 
@@ -74,7 +75,7 @@ public:
     virtual void addLType(const DRW_LType& /*data*/){}
     virtual void addLayer(const DRW_Layer& data);
     virtual void addDimStyle(const DRW_Dimstyle& /*data*/){}
-    virtual void addVport(const DRW_Vport& /*data*/){}
+    virtual void addVport(const DRW_Vport& data);
     virtual void addTextStyle(const DRW_Textstyle& /*data*/){}
     virtual void addBlock(const DRW_Block& data);
     virtual void endBlock();
@@ -133,8 +134,8 @@ public:
     void writeLWPolyline(RS_Polyline* l);
     void writeSpline(RS_Spline* s);
     void writeInsert(RS_Insert* i);
-//    void writeText(RS_Text* t);
-    void writeMText(RS_Text* t);
+    void writeMText(RS_MText* t);
+    void writeText(RS_Text* t);
     void writeHatch(RS_Hatch* h);
     void writeImage(RS_Image* i);
     void writeLeader(RS_Leader* l);
@@ -178,7 +179,6 @@ public:
 
 private:
     void writeEntity(RS_Entity* e);
-
 private:
     /** Pointer to the graphic we currently operate on. */
     RS_Graphic* graphic;
@@ -197,7 +197,8 @@ private:
     QString textStyle;
     /** Temporary list to handle unnamed blocks fot write R12 dxf. */
     QHash <RS_Entity*, QString> noNameBlock;
-
+    QHash <QString, QString> fontList;
+    bool oldMText;
     dxfRW *dxf;
 };
 

@@ -32,6 +32,7 @@
 class RS_AtomicEntity;
 class RS_Entity;
 class RS_EntityContainer;
+class RS_MText;
 class RS_Text;
 class RS_Polyline;
 class RS_Document;
@@ -271,8 +272,9 @@ public:
 
         bool explode();
         bool explodeTextIntoLetters();
+        bool explodeTextIntoLetters(RS_MText* text, QList<RS_Entity*>& addList);
         bool explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& addList);
-    bool moveRef(RS_MoveRefData& data);
+        bool moveRef(RS_MoveRefData& data);
 
     bool splitPolyline(RS_Polyline& polyline,
                        RS_Entity& e1, RS_Vector v1,

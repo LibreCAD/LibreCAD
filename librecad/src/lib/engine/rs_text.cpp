@@ -55,13 +55,13 @@ void RS_Text::setText(const QString& t) {
     // handle some special flags embedded in the text:
     if (data.text.left(4)=="\\A0;") {
         data.text = data.text.mid(4);
-        data.valign = RS2::VAlignBottom;
+        data.valign = RS_TextData::VABottom;
     } else if (data.text.left(4)=="\\A1;") {
         data.text = data.text.mid(4);
-        data.valign = RS2::VAlignMiddle;
+        data.valign = RS_TextData::VAMiddle;
     } else if (data.text.left(4)=="\\A2;") {
         data.text = data.text.mid(4);
-        data.valign = RS2::VAlignTop;
+        data.valign = RS_TextData::VATop;
     }
 
     if (data.updateMode==RS2::Update) {
@@ -77,31 +77,47 @@ void RS_Text::setText(const QString& t) {
  *
  * @return  1: top left ... 9: bottom right
  */
+//RLZ: bad function, this is MText style align
 int RS_Text::getAlignment() {
-    if (data.valign==RS2::VAlignTop) {
-        if (data.halign==RS2::HAlignLeft) {
+    if (data.valign==RS_TextData::VATop) {
+        if (data.halign==RS_TextData::HALeft) {
             return 1;
-        } else if (data.halign==RS2::HAlignCenter) {
+        } else if (data.halign==RS_TextData::HACenter) {
             return 2;
-        } else if (data.halign==RS2::HAlignRight) {
+        } else if (data.halign==RS_TextData::HARight) {
             return 3;
         }
-    } else if (data.valign==RS2::VAlignMiddle) {
-        if (data.halign==RS2::HAlignLeft) {
+    } else if (data.valign==RS_TextData::VAMiddle) {
+        if (data.halign==RS_TextData::HALeft) {
             return 4;
-        } else if (data.halign==RS2::HAlignCenter) {
+        } else if (data.halign==RS_TextData::HACenter) {
             return 5;
-        } else if (data.halign==RS2::HAlignRight) {
+        } else if (data.halign==RS_TextData::HARight) {
             return 6;
         }
-    } else if (data.valign==RS2::VAlignBottom) {
-        if (data.halign==RS2::HAlignLeft) {
+    } else if (data.valign==RS_TextData::VABaseline) {
+        if (data.halign==RS_TextData::HALeft) {
             return 7;
-        } else if (data.halign==RS2::HAlignCenter) {
+        } else if (data.halign==RS_TextData::HACenter) {
             return 8;
-        } else if (data.halign==RS2::HAlignRight) {
+        } else if (data.halign==RS_TextData::HARight) {
             return 9;
         }
+    } else if (data.valign==RS_TextData::VABottom) {
+        if (data.halign==RS_TextData::HALeft) {
+            return 10;
+        } else if (data.halign==RS_TextData::HACenter) {
+            return 11;
+        } else if (data.halign==RS_TextData::HARight) {
+            return 12;
+        }
+    }
+    if (data.halign==RS_TextData::HAFit) {
+        return 13;
+    } else if (data.halign==RS_TextData::HAAligned) {
+        return 14;
+    } else if (data.halign==RS_TextData::HAMiddle) {
+        return 15;
     }
 
     return 1;
@@ -114,31 +130,45 @@ int RS_Text::getAlignment() {
  *
  * @param a 1: top left ... 9: bottom right
  */
+//RLZ: bad function, this is MText style align
 void RS_Text::setAlignment(int a) {
     switch (a%3) {
     default:
     case 1:
-        data.halign = RS2::HAlignLeft;
+        data.halign = RS_TextData::HALeft;
         break;
     case 2:
-        data.halign = RS2::HAlignCenter;
+        data.halign = RS_TextData::HACenter;
         break;
     case 0:
-        data.halign = RS2::HAlignRight;
+        data.halign = RS_TextData::HARight;
         break;
     }
 
     switch ((int)ceil(a/3.0)) {
     default:
     case 1:
-        data.valign = RS2::VAlignTop;
+        data.valign = RS_TextData::VATop;
         break;
     case 2:
-        data.valign = RS2::VAlignMiddle;
+        data.valign = RS_TextData::VAMiddle;
         break;
     case 3:
-        data.valign = RS2::VAlignBottom;
+        data.valign = RS_TextData::VABaseline;
         break;
+    case 4:
+        data.valign = RS_TextData::VABottom;
+        break;
+    }
+    if (a > 12) {
+        data.valign = RS_TextData::VABaseline;
+        if (a == 13) {
+            data.halign = RS_TextData::HAFit;
+        } else if (a == 14) {
+            data.halign = RS_TextData::HAAligned;
+        } else if (a == 15) {
+            data.halign = RS_TextData::HAMiddle;
+        }
     }
 
 }
@@ -190,11 +220,6 @@ void RS_Text::update() {
     RS_Vector letterPos = RS_Vector(0.0, -9.0);
     RS_Vector letterSpace = RS_Vector(font->getLetterSpacing(), 0.0);
     RS_Vector space = RS_Vector(font->getWordSpacing(), 0.0);
-    int lineCounter = 0;
-
-    // Every single text line gets stored in this entity container
-    //  so we can move the whole line around easely:
-    RS_EntityContainer* oneLine = new RS_EntityContainer(this);
 
     // First every text line is created with
     //   alignement: top left
@@ -204,194 +229,139 @@ void RS_Text::update() {
 
     // For every letter:
     for (int i=0; i<(int)data.text.length(); ++i) {
-        bool handled = false;
-        switch (data.text.at(i).unicode()) {
-        case 0x0A:
-            // line feed:
-            updateAddLine(oneLine, lineCounter++);
-            oneLine = new RS_EntityContainer(this);
-            letterPos = RS_Vector(0.0, -9.0);
-            handled = true;
-            break;
-
-        case 0x20:
-            // Space:
+        // Space:
+        if (data.text.at(i).unicode() == 0x20) {
             letterPos+=space;
-            handled = true;
-            break;
-
-        case 0x5C: {
-                // code (e.g. \S, \P, ..)
-                i++;
-                int ch = data.text.at(i).unicode();
-                switch (ch) {
-                case 'P':
-                    updateAddLine(oneLine, lineCounter++);
-                    oneLine = new RS_EntityContainer(this);
-                    letterPos = RS_Vector(0.0, -9.0);
-                    handled = true;
-                    break;
-                    case 'f':
-                    case 'F':
-                    //font change
-                    // \f{symbol} changes font to symbol
-                    // \f{} sets font to standard
-                {
-                    i++;
-                    if(data.text.at(i).unicode()!='{') {
-                        i--;
-                        continue;
-                    }
-                    int j=data.text.indexOf('}',i);
-                    if(j>i){
-                        //
-                        QString fontName;
-                        if(j==i+1)
-                            fontName="standard";
-                        else
-                            fontName=data.text.mid(i+1,j-i-1);
-                        RS_Font* fontNew = RS_FONTLIST->requestFont(
-                                    fontName
-                                    );
-                        if(fontNew != NULL) {
-                            font=fontNew;
-                        }
-                        if(font==NULL) font = RS_FONTLIST->requestFont("standard");
-                        i=j;
-                    }
-                }
-                        continue;
-
-                case 'S': {
-                        QString up;
-                        QString dw;
-                        //letterPos += letterSpace;
-
-                        // get upper string:
-                        i++;
-                        while (data.text.at(i).unicode()!='^' &&
-                                                       //data.text.at(i).unicode()!='/' &&
-                                                       data.text.at(i).unicode()!='\\' &&
-                                                       //data.text.at(i).unicode()!='#' &&
-                                i<(int)data.text.length()) {
-                            up += data.text.at(i);
-                            i++;
-                        }
-
-                        i++;
-
-                                                if (data.text.at(i-1).unicode()=='^' &&
-                                                     data.text.at(i).unicode()==' ') {
-                                                        i++;
-                                                }
-
-                        // get lower string:
-                        while (data.text.at(i).unicode()!=';' &&
-                                i<(int)data.text.length()) {
-                            dw += data.text.at(i);
-                            i++;
-                        }
-
-                        // add texts:
-                        RS_Text* upper =
-                            new RS_Text(
-                                oneLine,
-                                RS_TextData(letterPos + RS_Vector(0.0,9.0),
-                                            4.0, 100.0, RS2::VAlignTop,
-                                                                                        RS2::HAlignLeft,
-                                            RS2::LeftToRight, RS2::Exact,
-                                            1.0, up, data.style,
-                                            0.0, RS2::Update));
-                                                upper->setLayer(NULL);
-                        upper->setPen(RS_Pen(RS2::FlagInvalid));
-                                                oneLine->addEntity(upper);
-
-                        RS_Text* lower =
-                            new RS_Text(
-                                oneLine,
-                                RS_TextData(letterPos+RS_Vector(0.0,4.0),
-                                            4.0, 100.0, RS2::VAlignTop,
-                                                                                        RS2::HAlignLeft,
-                                            RS2::LeftToRight, RS2::Exact,
-                                            1.0, dw, data.style,
-                                            0.0, RS2::Update));
-                                                lower->setLayer(NULL);
-                        lower->setPen(RS_Pen(RS2::FlagInvalid));
-                        oneLine->addEntity(lower);
-
-                        // move cursor:
-                        upper->calculateBorders();
-                        lower->calculateBorders();
-
-                        double w1 = upper->getSize().x;
-                        double w2 = lower->getSize().x;
-
-                        if (w1>w2) {
-                            letterPos += RS_Vector(w1, 0.0);
-                        } else {
-                            letterPos += RS_Vector(w2, 0.0);
-                        }
-                        letterPos += letterSpace;
-                    }
-                    handled = true;
-                    break;
-
-                default:
-                    i--;
-                    break;
-                }
+        } else {
+            // One Letter:
+            QString letterText = QString(data.text.at(i));
+            if (font->findLetter(letterText) == NULL) {
+                RS_DEBUG->print("RS_Text::update: missing font for letter( %s ), replaced it with QChar(0xfffd)",qPrintable(letterText));
+                letterText = QChar(0xfffd);
             }
-            //if char is not handled continue in default: statement
-            if (handled)
-                break;
+            RS_DEBUG->print("RS_Text::update: insert a "
+                            "letter at pos: %f/%f", letterPos.x, letterPos.y);
 
-        default: {
-                // One Letter:
-                QString letterText = QString(data.text.at(i));
-                if (font->findLetter(letterText) == NULL) {
-                    RS_DEBUG->print("RS_Text::update: missing font for letter( %s ), replaced it with QChar(0xfffd)",qPrintable(letterText));
-                    letterText = QChar(0xfffd);
-                }
-//                if (font->findLetter(QString(data.text.at(i))) != NULL) {
+            RS_InsertData d(letterText,
+                            letterPos,
+                            RS_Vector(1.0, 1.0),
+                            0.0,
+                            1,1, RS_Vector(0.0,0.0),
+                            font->getLetterList(), RS2::NoUpdate);
 
-                                        RS_DEBUG->print("RS_Text::update: insert a "
-                                          "letter at pos: %f/%f", letterPos.x, letterPos.y);
+            RS_Insert* letter = new RS_Insert(this, d);
+            RS_Vector letterWidth;
+            letter->setPen(RS_Pen(RS2::FlagInvalid));
+            letter->setLayer(NULL);
+            letter->update();
+            letter->forcedCalculateBorders();
 
-                    RS_InsertData d(letterText,
-                                    letterPos,
-                                    RS_Vector(1.0, 1.0),
-                                    0.0,
-                                    1,1, RS_Vector(0.0,0.0),
-                                    font->getLetterList(), RS2::NoUpdate);
+            letterWidth = RS_Vector(letter->getMax().x-letterPos.x, 0.0);
+            if (letterWidth.x < 0)
+                letterWidth.x = -letterSpace.x;
 
-                    RS_Insert* letter = new RS_Insert(this, d);
-                    RS_Vector letterWidth;
-                    letter->setPen(RS_Pen(RS2::FlagInvalid));
-                    letter->setLayer(NULL);
-                    letter->update();
-                    letter->forcedCalculateBorders();
+//            oneLine->addEntity(letter);
+            addEntity(letter);
 
-                                        // until 2.0.4.5:
-                    //letterWidth = RS_Vector(letter->getSize().x, 0.0);
-                                        // from 2.0.4.6:
-                    letterWidth = RS_Vector(letter->getMax().x-letterPos.x, 0.0);
-                    if (letterWidth.x < 0)
-                        letterWidth.x = -letterSpace.x;
-
-                    oneLine->addEntity(letter);
-
-                    // next letter position:
-                    letterPos += letterWidth;
-                    letterPos += letterSpace;
-//                }
-            }
-            break;
+            // next letter position:
+            letterPos += letterWidth;
+            letterPos += letterSpace;
         }
     }
 
-    updateAddLine(oneLine, lineCounter);
-    usedTextHeight -= data.height*data.lineSpacingFactor*1.6
-                      - data.height;
+    if( ! RS_EntityContainer::autoUpdateBorders) {
+        //only update borders when needed
+        forcedCalculateBorders();
+    }
+    RS_Vector textSize = getSize();
+
+    RS_DEBUG->print("RS_Text::updateAddLine: width 2: %f", textSize.x);
+
+    // Vertical Align:
+    double vSize = 9.0;
+    //HAAligned, HAFit, HAMiddle require VABaseline
+    if (data.halign == RS_TextData::HAAligned
+            || data.halign == RS_TextData::HAFit
+            || data.halign == RS_TextData::HAMiddle) {
+        data.valign = RS_TextData::VABaseline;
+    }
+    RS_Vector offset(0.0, 0.0);
+    switch (data.valign) {
+    case RS_TextData::VAMiddle:
+        offset.move(RS_Vector(0.0, vSize/2.0));
+        break;
+
+    case RS_TextData::VABottom:
+        offset.move(RS_Vector(0.0, vSize+3));
+        break;
+
+    case RS_TextData::VABaseline:
+        offset.move(RS_Vector(0.0, vSize));
+        break;
+
+    default:
+        break;
+    }
+
+    // Horizontal Align:
+    switch (data.halign) {
+    case RS_TextData::HAMiddle:{
+        offset.move(RS_Vector(-textSize.x/2.0, -(vSize + textSize.y/2.0 + getMin().y) ));
+        break;}
+    case RS_TextData::HACenter:
+        RS_DEBUG->print("RS_Text::updateAddLine: move by: %f", -textSize.x/2.0);
+        offset.move(RS_Vector(-textSize.x/2.0, 0.0));
+        break;
+    case RS_TextData::HARight:
+        offset.move(RS_Vector(-textSize.x, 0.0));
+        break;
+
+    default:
+        break;
+    }
+
+    if (data.halign!=RS_TextData::HAAligned && data.halign!=RS_TextData::HAFit){
+        data.secondPoint = RS_Vector(offset.x, offset.y - vSize);
+    }
+    RS_EntityContainer::move(offset);
+
+
+    // Scale:
+    if (data.halign==RS_TextData::HAAligned){
+        double dist = data.insertionPoint.distanceTo(data.secondPoint)/textSize.x;
+        data.height = vSize*dist;
+        RS_EntityContainer::scale(RS_Vector(0.0,0.0),
+                        RS_Vector(dist, dist));
+    } else if (data.halign==RS_TextData::HAFit){
+        double dist = data.insertionPoint.distanceTo(data.secondPoint)/textSize.x;
+        RS_EntityContainer::scale(RS_Vector(0.0,0.0),
+                        RS_Vector(dist, data.height/9.0));
+    } else {
+        RS_EntityContainer::scale(RS_Vector(0.0,0.0),
+                        RS_Vector(data.height*data.widthRel/9.0, data.height/9.0));
+        data.secondPoint.scale(RS_Vector(0.0,0.0),
+                               RS_Vector(data.height*data.widthRel/9.0, data.height/9.0));
+    }
+
+    forcedCalculateBorders();
+
+    // Update actual text size (before rotating, after scaling!):
+    usedTextWidth = getSize().x;
+    usedTextHeight = data.height;
+
+    // Rotate:
+    if (data.halign==RS_TextData::HAAligned || data.halign==RS_TextData::HAFit){
+        double angle = data.insertionPoint.angleTo(data.secondPoint);
+        data.angle = angle;
+    } else {
+        data.secondPoint.rotate(RS_Vector(0.0,0.0), data.angle);
+        data.secondPoint.move(data.insertionPoint);
+    }
+    RS_EntityContainer::rotate(RS_Vector(0.0,0.0), data.angle);
+
+    // Move to insertion point:
+    RS_EntityContainer::move(data.insertionPoint);
+
     forcedCalculateBorders();
 
     RS_DEBUG->print("RS_Text::update: OK");
@@ -399,92 +369,8 @@ void RS_Text::update() {
 
 
 
-/**
- * Used internally by update() to add a text line created with
- * default values and alignment to this text container.
- *
- * @param textLine The text line.
- * @param lineCounter Line number.
- */
-void RS_Text::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
-    RS_DEBUG->print("RS_Text::updateAddLine: width: %f", textLine->getSize().x);
-
-        //textLine->forcedCalculateBorders();
-    //RS_DEBUG->print("RS_Text::updateAddLine: width 2: %f", textLine->getSize().x);
-
-    // Move to correct line position:
-    textLine->move(RS_Vector(0.0, -9.0 * lineCounter
-                             * data.lineSpacingFactor * 1.6));
-
-    if( ! RS_EntityContainer::autoUpdateBorders) {
-        //only update borders when needed
-        textLine->forcedCalculateBorders();
-    }
-    RS_Vector textSize = textLine->getSize();
-
-        RS_DEBUG->print("RS_Text::updateAddLine: width 2: %f", textSize.x);
-
-    // Horizontal Align:
-    switch (data.halign) {
-    case RS2::HAlignCenter:
-                RS_DEBUG->print("RS_Text::updateAddLine: move by: %f", -textSize.x/2.0);
-        textLine->move(RS_Vector(-textSize.x/2.0, 0.0));
-        break;
-
-    case RS2::HAlignRight:
-        textLine->move(RS_Vector(-textSize.x, 0.0));
-        break;
-
-    default:
-        break;
-    }
-
-    // Vertical Align:
-    double vSize = getNumberOfLines()*9.0*data.lineSpacingFactor*1.6
-                   - (9.0*data.lineSpacingFactor*1.6 - 9.0);
-
-    switch (data.valign) {
-    case RS2::VAlignMiddle:
-        textLine->move(RS_Vector(0.0, vSize/2.0));
-        break;
-
-    case RS2::VAlignBottom:
-        textLine->move(RS_Vector(0.0, vSize));
-        break;
-
-    default:
-        break;
-    }
-
-    // Scale:
-    textLine->scale(RS_Vector(0.0,0.0),
-                    RS_Vector(data.height/9.0, data.height/9.0));
-
-    textLine->forcedCalculateBorders();
-
-    // Update actual text size (before rotating, after scaling!):
-    if (textLine->getSize().x>usedTextWidth) {
-        usedTextWidth = textLine->getSize().x;
-    }
-
-    usedTextHeight += data.height*data.lineSpacingFactor*1.6;
-
-    // Rotate:
-    textLine->rotate(RS_Vector(0.0,0.0), data.angle);
-
-    // Move:
-    textLine->move(data.insertionPoint);
-    textLine->setPen(RS_Pen(RS2::FlagInvalid));
-    textLine->setLayer(NULL);
-    textLine->forcedCalculateBorders();
-
-    addEntity(textLine);
-}
-
-
-
 RS_VectorSolutions RS_Text::getRefPoints() {
-        RS_VectorSolutions ret(data.insertionPoint);
+        RS_VectorSolutions ret(data.insertionPoint, data.secondPoint);
         return ret;
 }
 
@@ -500,6 +386,7 @@ RS_Vector RS_Text::getNearestRef(const RS_Vector& coord,
 void RS_Text::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
     data.insertionPoint.move(offset);
+    data.secondPoint.move(offset);
 //    update();
 }
 
@@ -509,12 +396,14 @@ void RS_Text::rotate(const RS_Vector& center, const double& angle) {
     RS_Vector angleVector(angle);
     RS_EntityContainer::rotate(center, angleVector);
     data.insertionPoint.rotate(center, angleVector);
+    data.secondPoint.rotate(center, angleVector);
     data.angle = RS_Math::correctAngle(data.angle+angle);
 //    update();
 }
 void RS_Text::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     RS_EntityContainer::rotate(center, angleVector);
     data.insertionPoint.rotate(center, angleVector);
+    data.secondPoint.rotate(center, angleVector);
     data.angle = RS_Math::correctAngle(data.angle+angleVector.angle());
 //    update();
 }
@@ -523,7 +412,7 @@ void RS_Text::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
 
 void RS_Text::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.insertionPoint.scale(center, factor);
-    data.width*=factor.x;
+    data.secondPoint.scale(center, factor);
     data.height*=factor.x;
     update();
 }
@@ -531,8 +420,6 @@ void RS_Text::scale(const RS_Vector& center, const RS_Vector& factor) {
 
 
 void RS_Text::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-    data.insertionPoint.mirror(axisPoint1, axisPoint2);
-    //double ang = axisPoint1.angleTo(axisPoint2);
     bool readable = RS_Math::isAngleReadable(data.angle);
 
     RS_Vector vec;
@@ -544,17 +431,25 @@ void RS_Text::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     data.angle = RS_Math::makeAngleReadable(data.angle, readable, &corr);
 
     if (corr) {
-        if (data.halign==RS2::HAlignLeft) {
-            data.halign=RS2::HAlignRight;
-        } else if (data.halign==RS2::HAlignRight) {
-            data.halign=RS2::HAlignLeft;
+        data.insertionPoint.mirror(axisPoint1, axisPoint2);
+        data.secondPoint.mirror(axisPoint1, axisPoint2);
+        if (data.halign==RS_TextData::HALeft) {
+            data.halign=RS_TextData::HARight;
+        } else if (data.halign==RS_TextData::HARight) {
+            data.halign=RS_TextData::HALeft;
+        } else if (data.halign==RS_TextData::HAFit || data.halign==RS_TextData::HAAligned) {
+            RS_Vector tmp = data.insertionPoint;
+            data.insertionPoint = data.secondPoint;
+            data.secondPoint = tmp;
         }
     } else {
-        if (data.valign==RS2::VAlignTop) {
-            data.valign=RS2::VAlignBottom;
-        } else if (data.valign==RS2::VAlignBottom) {
-            data.valign=RS2::VAlignTop;
-        }
+        RS_Vector minP = RS_Vector(getMin().x, getMax().y);
+        minP = minP.mirror(axisPoint1, axisPoint2);
+        double mirrAngle = axisPoint1.angleTo(axisPoint2)*2.0;
+        data.insertionPoint.move(minP - getMin());
+        data.secondPoint.move(minP - getMin());
+        data.insertionPoint.rotate(minP, mirrAngle);
+        data.secondPoint.rotate(minP, mirrAngle);
     }
     update();
 }

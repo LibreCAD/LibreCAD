@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>394</width>
-    <height>307</height>
+    <width>426</width>
+    <height>331</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -131,7 +131,7 @@
           </property>
          </widget>
         </item>
-        <item row="8" column="0">
+        <item row="9" column="0">
          <spacer name="spacer58">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -184,7 +184,7 @@
           </property>
          </widget>
         </item>
-        <item row="8" column="1">
+        <item row="9" column="1">
          <spacer name="spacer61">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -254,53 +254,27 @@
           </property>
          </widget>
         </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="lDPI">
+          <property name="text">
+           <string>DPI</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QLineEdit" name="leDPI"/>
+        </item>
        </layout>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout">
-     <item>
-      <spacer name="spacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bOk">
-       <property name="text">
-        <string>&amp;OK</string>
-       </property>
-       <property name="shortcut">
-        <string>Alt+O</string>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bCancel">
-       <property name="text">
-        <string>Cancel</string>
-       </property>
-       <property name="shortcut">
-        <string>Esc</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -318,20 +292,27 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>bOk</tabstop>
-  <tabstop>bCancel</tabstop>
+  <tabstop>leInsertX</tabstop>
+  <tabstop>leInsertY</tabstop>
+  <tabstop>leWidth</tabstop>
+  <tabstop>leHeight</tabstop>
+  <tabstop>leScale</tabstop>
+  <tabstop>leAngle</tabstop>
+  <tabstop>lePath</tabstop>
+  <tabstop>leSize</tabstop>
+  <tabstop>leDPI</tabstop>
  </tabstops>
  <resources/>
  <connections>
   <connection>
-   <sender>bOk</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
    <receiver>QG_DlgImage</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>294</x>
-     <y>299</y>
+     <x>212</x>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -340,14 +321,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>bCancel</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
    <receiver>QG_DlgImage</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>341</x>
-     <y>299</y>
+     <x>212</x>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -395,11 +376,27 @@
    <hints>
     <hint type="sourcelabel">
      <x>325</x>
-     <y>148</y>
+     <y>149</y>
     </hint>
     <hint type="destinationlabel">
      <x>196</x>
      <y>153</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leDPI</sender>
+   <signal>editingFinished()</signal>
+   <receiver>QG_DlgImage</receiver>
+   <slot>changeDPI()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>267</x>
+     <y>258</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>282</y>
     </hint>
    </hints>
   </connection>
@@ -408,5 +405,6 @@
   <slot>changeWidth()</slot>
   <slot>changeHeight()</slot>
   <slot>changeScale()</slot>
+  <slot>changeDPI()</slot>
  </slots>
 </ui>

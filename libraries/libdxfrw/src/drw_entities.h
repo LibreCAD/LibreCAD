@@ -25,25 +25,6 @@ using std::string;
 
 namespace DRW {
 
-//! Vertical alignments.
-    enum VAlign {
-        VAlignBaseLine =0,  /*!< Top. */
-        VAlignBottom,           /*!< Bottom */
-        VAlignMiddle,            /*!< Middle */
-        VAlignTop                  /*!< Top. */
-    };
-
-    //! Horizontal alignments.
-    enum HAlign {
-        HAlignLeft = 0,  /*!< Left */
-        HAlignCenter,     /*!< Centered */
-        HRight,               /*!< Right */
-        HAligned,            /*!< Right */
-        HAlignMiddle,     /*!< middle */
-        HAlignFit             /*!< fit into point */
-    };
-
-
    //! Entity's type.
     enum ETYPE {
         POINT,
@@ -267,20 +248,24 @@ public:
 //! Class to handle ellipse entity
 /*!
 *  Class to handle ellipse and elliptic arc entity
+*  Note: start/end parameter are in radians for ellipse entity but
+*  for hatch boundary are in degrees
 *  @author Rallaz
 */
 class DRW_Ellipse : public DRW_Line {
 public:
     DRW_Ellipse() {
         eType = DRW::ELLIPSE;
+        isccw = 1;
     }
 
     void parseCode(int code, dxfReader *reader);
     void toPolyline(DRW_Polyline *pol);
 public:
     double ratio;           /*!< ratio, code 40 */
-    double staparam;      /*!< start parameter, code 41, 0.0 for full ellipse*/
-    double endparam;     /*!< end parameter, code 42, 2*PI for full ellipse */
+    double staparam;        /*!< start parameter, code 41, 0.0 for full ellipse*/
+    double endparam;        /*!< end parameter, code 42, 2*PI for full ellipse */
+    double isccw;           /*!< is counter clockwise arc?, only used in hatch, code 73 */
 };
 
 //! Class to handle trace entity
@@ -453,6 +438,24 @@ public:
 */
 class DRW_Text : public DRW_Line {
 public:
+    //! Vertical alignments.
+        enum VAlign {
+            VBaseLine = 0,  /*!< Top = 0 */
+            VBottom,        /*!< Bottom = 1 */
+            VMiddle,        /*!< Middle = 2 */
+            VTop            /*!< Top = 3 */
+        };
+
+    //! Horizontal alignments.
+        enum HAlign {
+            HLeft = 0,     /*!< Left = 0 */
+            HCenter,       /*!< Centered = 1 */
+            HRight,        /*!< Right = 2 */
+            HAligned,      /*!< Aligned = 3 (if VAlign==0) */
+            HMiddle,       /*!< middle = 4 (if VAlign==0) */
+            HFit           /*!< fit into point = 5 (if VAlign==0) */
+        };
+
     DRW_Text() {
         eType = DRW::TEXT;
         angle = 0;
@@ -460,23 +463,23 @@ public:
         oblique = 0;
         style = "STANDARD";
         textgen = 0;
-        alignH = DRW::HAlignLeft;
-        alignV = DRW::VAlignBaseLine;
+        alignH = HLeft;
+        alignV = VBaseLine;
     }
 
     virtual void applyExtrusion(){} //RLZ TODO
     void parseCode(int code, dxfReader *reader);
 
 public:
-    double height;           /*!< height text, code 40 */
-    UTF8STRING text;                 /*!< text string, code 1 */
-    double angle;             /*!< rotation angle in degrees (360), code 50 */
-    double widthscale;     /*!< width factor, code 41 */
-    double oblique;          /*!< oblique angle, code 51 */
-    UTF8STRING style;                /*!< stile name, code 7 */
-    int textgen;                 /*!< text generation, code 71 */
-    enum DRW::HAlign alignH;   /*!< horizontal align, code 72 */
-    enum DRW::VAlign alignV;    /*!< vertical align, code 73 */
+    double height;             /*!< height text, code 40 */
+    UTF8STRING text;           /*!< text string, code 1 */
+    double angle;              /*!< rotation angle in degrees (360), code 50 */
+    double widthscale;         /*!< width factor, code 41 */
+    double oblique;            /*!< oblique angle, code 51 */
+    UTF8STRING style;          /*!< stile name, code 7 */
+    int textgen;               /*!< text generation, code 71 */
+    enum HAlign alignH;        /*!< horizontal align, code 72 */
+    enum VAlign alignV;        /*!< vertical align, code 73 */
 };
 
 //! Class to handle insert entries
@@ -486,10 +489,24 @@ public:
 */
 class DRW_MText : public DRW_Text {
 public:
+    //! Attachments.
+    enum Attach {
+        TopLeft = 1,
+        TopCenter,
+        TopRight,
+        MiddleLeft,
+        MiddleCenter,
+        MiddleRight,
+        BottomLeft,
+        BottomCenter,
+        BottomRight
+    };
+
     DRW_MText() {
         eType = DRW::MTEXT;
         interlin = 1;
-        alignV = (DRW::VAlign)2;
+        alignV = (VAlign)TopLeft;
+        textgen = 1;
         haveXAxis = false;    //if true needed to recalculate angle
     }
 

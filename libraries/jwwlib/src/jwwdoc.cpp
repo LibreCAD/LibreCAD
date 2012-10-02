@@ -171,9 +171,9 @@ BOOL JWWDocument::ReadHeader()
     DWORD dw;
     DOUBLE db;
     string s;
-    WORD wd;
-    BYTE bt;
-    BOOL	Result = false;
+//    WORD wd;
+//    BYTE bt;
+//    BOOL	Result = false;
 
     if(ifs)
     {
@@ -627,7 +627,7 @@ BOOL JWWDocument::ReadHeader()
 BOOL JWWDocument::WriteHeader()
 {
     DWORD dw;
-    WORD wd;
+//    WORD wd;
     DOUBLE db;
     string s;
 
@@ -1060,11 +1060,11 @@ BOOL JWWDocument::Read()
         return false;
 
     DWORD dw;
-    DOUBLE db;
+//    DOUBLE db;
     string s, t;
     WORD wd;
-    BYTE bt;
-    int	i,j,k;
+//    BYTE bt;
+    int	i,j/*,k*/;
 
     BOOL ListFlag;
     int ListCount;
@@ -1283,7 +1283,7 @@ cout << DSunpou;
             i++;
         s = "";
     }
-exitloop:
+//exitloop:
     return true;
 }
 
@@ -1299,7 +1299,7 @@ BOOL JWWDocument::SaveBich16(DWORD id)
 BOOL JWWDocument::SaveSen(CDataSen& DSen)
 {
     WORD wd;
-    DWORD dw;
+//    DWORD dw;
     string s;
     if( SaveSenCount == 0 )
     {
@@ -1603,7 +1603,7 @@ BOOL JWWDocument::Save()
         return false;
     DWORD dw;
     WORD wd;
-    DOUBLE db;
+//    DOUBLE db;
     string s;
     SaveSenCount=0;
     SaveEnkoCount=0;
@@ -1626,7 +1626,8 @@ BOOL JWWDocument::Save()
         *ofs << dw;
     }
     Mpoint=1;
-    int i,j;
+    unsigned int i;
+    int j;
     for( i=0 ; i < vSen.size(); i++ )
         SaveSen(vSen[i]);
     for( i=0 ; i < vEnko.size(); i++ )
@@ -1695,7 +1696,7 @@ JWWList::JWWList()
 
 JWWList::~JWWList()
 {
-    for( int i=0; i < FList.size(); i++)
+    for( unsigned int i=0; i < FList.size(); i++)
         if(FList[i])
             delete FList[i];
     FList.clear();
@@ -1716,7 +1717,7 @@ NoList& JWWList::GetNoByItem(int No)
 {
 //	vector<PNoList>::iterator   itr    = vect.begin();
 //	vector<PNoList>::iterator   itrEnd = vect.end();
-    for( int i=0; i < FList.size(); i++)
+    for( unsigned int i=0; i < FList.size(); i++)
     {
         if(FList[i]->No == No){
             return *FList[i];
@@ -1753,11 +1754,12 @@ JWWBlockList::~JWWBlockList()
 */
 }
 
-CDataList& JWWBlockList::GetBlockList(int i)
+CDataList& JWWBlockList::GetBlockList(unsigned int i)
 {
-    for(int k=0; k < FBlockList.size(); k++)
+    for(unsigned int k=0; k < FBlockList.size(); k++)
         if(i == FBlockList[k]->m_n_Number)
             return *(PCDataList)FBlockList[k];
+    return *PCDataList();
 }
 
 int JWWBlockList::getBlockListCount()
@@ -1769,36 +1771,42 @@ CDataEnko& JWWBlockList::GetCDataEnko(int i, int j)
 {
     if( GetCDataType(i,j) == Enko )
         return *(PCDataEnko)GetData(i,j);
+    return *PCDataEnko();
 }
 
 CDataMoji& JWWBlockList::GetCDataMoji(int i, int j)
 {
     if( GetCDataType(i,j) == Moji )
         return *(PCDataMoji)GetData(i,j);
+    return *PCDataMoji();
 }
 
 CDataSen& JWWBlockList::GetCDataSen(int i, int j)
 {
     if( GetCDataType(i,j) == Sen )
         return *(PCDataSen)GetData(i,j);
+    return *PCDataSen();
 }
 
 CDataSolid& JWWBlockList::GetCDataSolid(int i, int j)
 {
     if( GetCDataType(i,j) == Solid )
         return *(PCDataSolid)GetData(i,j);
+    return *PCDataSolid();
 }
 
 CDataSunpou& JWWBlockList::GetCDataSunpou(int i, int j)
 {
     if( GetCDataType(i,j) == Sunpou )
         return *(PCDataSunpou)GetData(i,j);
+    return *PCDataSunpou();
 }
 
 CDataTen& JWWBlockList::GetCDataTen(int i, int j)
 {
     if( GetCDataType(i,j) == Ten )
         return *(PCDataTen)GetData(i,j);
+    return *PCDataTen();
 }
 
 CDataType JWWBlockList::GetCDataType(int i, int j)
@@ -1806,10 +1814,10 @@ CDataType JWWBlockList::GetCDataType(int i, int j)
     return GetDataType(i,j);
 }
 
-void* JWWBlockList::GetData(int i, int j)
+void* JWWBlockList::GetData(unsigned int i, int j)
 {
     int l = 0;
-    for( int k=0; k < FBlockList.size(); k++ )
+    for( unsigned int k=0; k < FBlockList.size(); k++ )
     {
         if( i == PCDataList(FBlockList[k])->m_nNumber )
             return FDataList[l+j];
@@ -1818,9 +1826,9 @@ void* JWWBlockList::GetData(int i, int j)
     return (void *)NULL;
 }
 
-int JWWBlockList::GetDataListCount(int i)
+int JWWBlockList::GetDataListCount(unsigned int i)
 {
-    for(int k=0; k < FBlockList.size(); k++)
+    for(unsigned int k=0; k < FBlockList.size(); k++)
     {
         if( i == PCDataList(FBlockList[k])->m_nNumber )
             return PCDataList(FBlockList[k])->Count;
@@ -1828,10 +1836,10 @@ int JWWBlockList::GetDataListCount(int i)
     return 0;
 }
 
-CDataType JWWBlockList::GetDataType(int i, int j)
+CDataType JWWBlockList::GetDataType(unsigned int i, int j)
 {
     int l = 0;
-    for( int k=0; k < FBlockList.size(); k++ )
+    for( unsigned int k=0; k < FBlockList.size(); k++ )
     {
         if( i == PCDataList(FBlockList[k])->m_nNumber )
             return FDataType[l+j];
@@ -1897,14 +1905,14 @@ void JWWBlockList::AddDataListTen(CDataTen& D)
 
 void JWWBlockList::Init()
 {
-    for(int i=0; i < FBlockList.size(); i++)
+    for(unsigned int i=0; i < FBlockList.size(); i++)
     {
         if(FBlockList[i])
             delete FBlockList[i];
     }
     FBlockList.clear();
 
-    for(int i=0; i < FDataList.size(); i++)
+    for(unsigned int i=0; i < FDataList.size(); i++)
     {
         if(FDataList[i])
             delete FDataList[i];
@@ -1925,4 +1933,5 @@ CDataBlock& JWWBlockList::GetCDataBlock(int i, int j)
 {
     if( GetCDataType(i,j) == Block )
         return *PCDataBlock(GetData(i,j));
+    return *PCDataBlock();
 }

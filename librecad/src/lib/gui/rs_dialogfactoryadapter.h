@@ -81,6 +81,7 @@ public:
                                       RS2::ActionType ) {}
     virtual void showCadToolBar(RS2::ActionType /*actionType*/){}
     virtual bool requestModifyEntityDialog(RS_Entity* ) { return false; }
+    virtual bool requestMTextDialog(RS_MText* ) { return false; }
     virtual bool requestTextDialog(RS_Text* ) { return false; }
     virtual bool requestHatchDialog(RS_Hatch* ) { return false; }
     virtual void requestOptionsGeneralDialog() {}

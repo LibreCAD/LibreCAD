@@ -26,6 +26,44 @@
    <string>Mirroring Options</string>
   </property>
   <layout class="QGridLayout">
+   <item row="4" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QCheckBox" name="cbCurrentAttributes">
+     <property name="text">
+      <string>Use current &amp;attributes</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QCheckBox" name="cbCurrentLayer">
+     <property name="text">
+      <string>Use current &amp;layer</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QToolButton" name="toolButton">
+     <property name="text">
+      <string>...</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/dlgmodifymirror.png</normaloff>:/extui/dlgmodifymirror.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>80</width>
+       <height>80</height>
+      </size>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0" rowspan="4">
     <widget class="QGroupBox" name="bgNumber">
      <property name="title">
@@ -89,77 +127,6 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QCheckBox" name="cbCurrentAttributes">
-     <property name="text">
-      <string>Use current &amp;attributes</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QCheckBox" name="cbCurrentLayer">
-     <property name="text">
-      <string>Use current &amp;layer</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
-    <layout class="QHBoxLayout">
-     <item>
-      <spacer name="spacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bOk">
-       <property name="text">
-        <string>&amp;OK</string>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bCancel">
-       <property name="text">
-        <string>Cancel</string>
-       </property>
-       <property name="shortcut">
-        <string>Esc</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="0" column="1">
-    <widget class="QToolButton" name="toolButton">
-     <property name="text">
-      <string>...</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
-       <normaloff>:/extui/dlgmodifymirror.png</normaloff>:/extui/dlgmodifymirror.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>80</width>
-       <height>80</height>
-      </size>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -168,14 +135,14 @@
  </resources>
  <connections>
   <connection>
-   <sender>bOk</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
    <receiver>QG_DlgMirror</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>178</x>
+     <y>178</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -184,14 +151,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>bCancel</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
    <receiver>QG_DlgMirror</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>178</x>
+     <y>178</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>

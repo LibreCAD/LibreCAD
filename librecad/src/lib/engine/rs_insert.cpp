@@ -114,9 +114,28 @@ void RS_Insert::update() {
 
 //                                RS_DEBUG->print("RS_Insert::update: cloning entity");
 
-                RS_Entity* ne = e->clone();
+                RS_Entity* ne;
+                if ( (data.scaleFactor.x - data.scaleFactor.y)>1.0e-6) {
+                    if (e->rtti()== RS2::EntityArc) {
+                        RS_Arc* a= (RS_Arc*)e;
+                        ne = new RS_Ellipse(this, RS_EllipseData(a->getCenter(),
+                                                        RS_Vector(a->getRadius(), 0), 1, a->getAngle1(),
+                                                        a->getAngle2(), a->isReversed() ));
+                        ne->setLayer(e->getLayer());
+                        ne->setPen(e->getPen(false));
+                    } else if (e->rtti()== RS2::EntityCircle) {
+                        RS_Circle* a= (RS_Circle*)e;
+                        ne = new RS_Ellipse(this, RS_EllipseData(a->getCenter(),
+                                                        RS_Vector(a->getRadius(), 0),
+                                                        1, 0.0,2.0*M_PI, false));
+                        ne->setLayer(e->getLayer());
+                        ne->setPen(e->getPen(false));
+                    } else
+                        ne = e->clone();
+                } else
+                    ne = e->clone();
                 ne->initId();
-                                ne->setUpdateEnabled(false);
+                ne->setUpdateEnabled(false);
                 ne->setParent(this);
                 ne->setVisible(getFlag(RS2::FlagVisible));
 

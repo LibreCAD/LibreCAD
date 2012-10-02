@@ -53,6 +53,7 @@ class RS_LayerList;
 class RS_MirrorData;
 class RS_MoveData;
 class RS_MoveRotateData;
+class RS_MText;
 class RS_Painter;
 class RS_Rotate2Data;
 class RS_RotateData;
@@ -334,6 +335,14 @@ public:
      * @param entity Pointer to the entity.
      */
     virtual bool requestModifyEntityDialog(RS_Entity* entity) = 0;
+
+    /**
+     * This virtual method must be overwritten and must present
+     * a dialog to edit multi-line text entity attributes.
+     *
+     * @param entity Pointer to the mtext entity.
+     */
+    virtual bool requestMTextDialog(RS_MText* text) = 0;
 
     /**
      * This virtual method must be overwritten and must present

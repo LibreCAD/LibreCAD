@@ -46,7 +46,7 @@ class RS_Document : public RS_EntityContainer,
     public RS_Undo {
 public:
     RS_Document(RS_EntityContainer* parent=NULL);
-    virtual ~RS_Document();
+    virtual ~RS_Document(){}
 
     virtual RS_LayerList* getLayerList() = 0;
     virtual RS_BlockList* getBlockList() = 0;
@@ -55,7 +55,8 @@ public:
     virtual bool save(bool isAutoSave = false) = 0;
     virtual bool saveAs(const QString &filename, RS2::FormatType type) = 0;
     virtual bool open(const QString &filename, RS2::FormatType type) = 0;
-	
+    virtual bool loadTemplate(const QString &filename, RS2::FormatType type) = 0;
+
 
     /**
      * @return true for all document entities (e.g. Graphics or Blocks).
@@ -134,6 +135,8 @@ public:
 		RS_Undo::startUndoCycle();
 	}
 
+    void setGraphicView(RS_GraphicView * g) {gv = g;}
+    RS_GraphicView* getGraphicView() {return gv;}
 
 protected:
     /** Flag set if the document was modified and not yet saved. */
@@ -146,6 +149,8 @@ protected:
         QString autosaveFilename;
 	/** Format type */
 	RS2::FormatType formatType;
+    RS_GraphicView * gv;//used to read/save current view
+
 };
 
 

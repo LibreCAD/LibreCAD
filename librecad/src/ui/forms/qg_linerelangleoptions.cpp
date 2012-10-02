@@ -58,11 +58,18 @@ void QG_LineRelAngleOptions::languageChange()
 }
 
 void QG_LineRelAngleOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawLineRelAngle) {
+    if (a!=NULL &&
+            ( a->rtti()==RS2::ActionDrawLineRelAngle
+              ||
+              a->rtti()==RS2::ActionDrawLineOrthogonal )
+            ) {
         action = (RS_ActionDrawLineRelAngle*)a;
         if (action->hasFixedAngle()) {
-            lAngle->setDisabled(true);
-            leAngle->setDisabled(true);
+            lAngle->hide();
+            leAngle->hide();
+        }else{
+            lAngle->show();
+            leAngle->show();
         }
 
         QString sa;

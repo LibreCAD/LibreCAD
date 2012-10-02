@@ -43,9 +43,17 @@ class RS_AtomicEntity;
 class LC_Quadratic {
 public:
     explicit LC_Quadratic();
+    LC_Quadratic(const LC_Quadratic& lc0);
+    LC_Quadratic& operator = (const LC_Quadratic& lc0);
     /** construct a ellipse or hyperbola as the path of center of tangent circles
       passing the point */
     LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point);
+    /** construct a ellipse or hyperbola as the path of center of common tangent circles
+      of this two given entities,
+      mirror option allows to specify the mirror quadratic around the line
+*/
+    LC_Quadratic(const RS_AtomicEntity* circle0,const RS_AtomicEntity* circle1,
+                 bool mirror = false);
     LC_Quadratic(std::vector<double> ce);
     std::vector<double> getCoefficients() const;
     LC_Quadratic move(const RS_Vector& v);
@@ -66,6 +74,22 @@ public:
     {
         m_bValid=value;
     }
+    boost::numeric::ublas::vector<double>& getLinear()
+    {
+        return m_vLinear;
+    }
+     const boost::numeric::ublas::vector<double>& getLinear() const
+     {
+         return m_vLinear;
+     }
+     boost::numeric::ublas::matrix<double>& getQuad()
+     {
+         return m_mQuad;
+     }
+     const boost::numeric::ublas::matrix<double>& getQuad() const
+     {
+         return m_mQuad;
+     }
 
     /** switch x,y coordinates */
     LC_Quadratic flipXY(void) const;
